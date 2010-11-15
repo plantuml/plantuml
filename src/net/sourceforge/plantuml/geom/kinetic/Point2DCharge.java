@@ -1,0 +1,101 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009, Arnaud Roques
+ *
+ * Project Info:  http://plantuml.sourceforge.net
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
+ * in the United States and other countries.]
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ * Revision $Revision: 3831 $
+ *
+ */
+package net.sourceforge.plantuml.geom.kinetic;
+
+import java.awt.geom.Point2D;
+
+public class Point2DCharge extends Point2D.Double {
+
+	private double charge = 1.0;
+
+	private MoveObserver moveObserver = null;
+
+	public Point2DCharge(double x, double y) {
+		super(x, y);
+	}
+
+	public Point2DCharge(Point2D pt, double ch) {
+		super(pt.getX(), pt.getY());
+		this.charge = ch;
+	}
+
+	public void apply(VectorForce value) {
+		System.err.println("Applying " + value);
+		x += value.getX();
+		y += value.getY();
+		if (moveObserver != null) {
+			moveObserver.pointMoved(this);
+		}
+	}
+
+	@Override
+	final public void setLocation(double x, double y) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	final public void setLocation(Point2D p) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String toString() {
+		return System.identityHashCode(this) + " " + String.format("[%8.2f %8.2f]", x, y);
+	}
+
+	public final double getCharge() {
+		return charge;
+	}
+
+	public final void setCharge(double charge) {
+		this.charge = charge;
+	}
+
+	private final int hash = System.identityHashCode(this);
+
+	@Override
+	public int hashCode() {
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this == obj;
+	}
+
+	public final void setMoveObserver(MoveObserver moveObserver) {
+		this.moveObserver = moveObserver;
+	}
+
+}
