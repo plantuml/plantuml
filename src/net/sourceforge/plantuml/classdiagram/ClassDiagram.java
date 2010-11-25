@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5536 $
+ * Revision $Revision: 5616 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
@@ -85,7 +86,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	@Override
 	public IEntity getOrCreateClass(String code) {
-		return getOrCreateEntity(code, EntityType.CLASS);
+		return getOrCreateEntity(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code), EntityType.CLASS);
 	}
 
 	final public IEntity getOrCreateClass(String code, EntityType type) {

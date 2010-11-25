@@ -64,7 +64,7 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 				new RegexLeaf("HEADER", "^(?:@(\\d+)\\s+)?"),
 				new RegexOr(
 						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "\\s+)?"
-								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)"),
+								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")"),
 						new RegexLeaf("COUPLE1",
 								"\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)")),
 				new RegexLeaf("\\s*"),
@@ -83,7 +83,7 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 				new RegexLeaf("\\s*"),
 				new RegexOr(
 						new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "\\s+)?"
-								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)"),
+								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")"),
 						new RegexLeaf("COUPLE2",
 								"\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)")),
 				new RegexLeaf("\\s*"), new RegexLeaf("LABEL_LINK", "(?::\\s*([^\"]+))?$"));
@@ -101,14 +101,16 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 
 	@Override
 	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-		final String ent1 = arg.get("ENT1").get(1);
-		final String ent2 = arg.get("ENT2").get(1);
+		String ent1 = arg.get("ENT1").get(1);
+		String ent2 = arg.get("ENT2").get(1);
 		if (ent1 == null) {
 			return executeArgSpecial1(arg);
 		}
 		if (ent2 == null) {
 			return executeArgSpecial2(arg);
 		}
+		ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1);
+		ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2);
 		if (getSystem().isGroup(ent1) && getSystem().isGroup(ent2)) {
 			return executePackageLink(arg);
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5540 $
+ * Revision $Revision: 5584 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -291,7 +291,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return maker.createFiles(suggestedFile);
 	}
 
-	public static boolean BETA = false;
+	public static boolean BETA;
 
 	final public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
@@ -484,5 +484,5 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	public int getNbImages() {
 		return this.horizontalPages * this.verticalPages;
 	}
-
+	
 }

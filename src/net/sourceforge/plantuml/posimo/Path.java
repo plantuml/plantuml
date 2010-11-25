@@ -49,6 +49,9 @@ public class Path {
 		if (start == null || end == null) {
 			throw new IllegalArgumentException();
 		}
+		if (length < 1) {
+			throw new IllegalArgumentException("length=" + length);
+		}
 		this.start = start;
 		this.end = end;
 		this.label = label;

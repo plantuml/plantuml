@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4239 $
+ * Revision $Revision: 5616 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.command.AbstractCommandMultilinesNoteEntity;
 public class CommandMultilinesClassNote extends AbstractCommandMultilinesNoteEntity {
 
 	public CommandMultilinesClassNote(final AbstractEntityDiagram system) {
-		super(system, "(?i)^note\\s+(right|left|top|bottom)\\s+(?:of\\s+)?([\\p{L}0-9_.]+)\\s*(#\\w+)?$");
+		super(system, "(?i)^note\\s+(right|left|top|bottom)\\s+(?:of\\s+)?([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?$");
 	}
 
 }

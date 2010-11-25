@@ -28,13 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5425 $
+ * Revision $Revision: 5649 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.geom.Dimension2D;
+import java.util.Arrays;
+
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
 public class Link implements Imaged {
 
@@ -243,6 +253,28 @@ public class Link implements Imaged {
 			return true;
 		}
 		return false;
+	}
+
+	public double getMarginDecors1(StringBounder stringBounder, Font fontQualif) {
+		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier1);
+		final LinkDecor decor = type.getDecor1();
+		return decor.getSize() + q;
+	}
+
+	public double getMarginDecors2(StringBounder stringBounder, Font fontQualif) {
+		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier2);
+		final LinkDecor decor = type.getDecor2();
+		return decor.getSize() + q;
+	}
+
+	private double getQualifierMargin(StringBounder stringBounder, Font fontQualif, String qualif) {
+		if (qualif != null) {
+			final TextBlock b = TextBlockUtils.create(Arrays.asList(qualif), fontQualif, Color.BLACK,
+					HorizontalAlignement.LEFT);
+			final Dimension2D dim = b.calculateDimension(stringBounder);
+			return Math.max(dim.getWidth(), dim.getHeight());
+		}
+		return 0;
 	}
 
 }

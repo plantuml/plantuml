@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5019 $
+ * Revision $Revision: 5616 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -49,7 +49,7 @@ final public class CommandNoteEntity extends SingleLineCommand<AbstractEntityDia
 	public CommandNoteEntity(AbstractEntityDiagram classDiagram) {
 		super(
 				classDiagram,
-				"(?i)^note\\s+(right|left|top|bottom)\\s+of\\s+([\\p{L}0-9_.]+|\\((?!\\*\\))[^\\)]+\\)|\\[[^\\]*]+[^\\]]*\\]|\\(\\)\\s*[\\p{L}0-9_.]+|\\(\\)\\s*\"[^\"]+\"|:[^:]+:)"
+				"(?i)^note\\s+(right|left|top|bottom)\\s+of\\s+([\\p{L}0-9_.]+|\\((?!\\*\\))[^\\)]+\\)|\\[[^\\]*]+[^\\]]*\\]|\\(\\)\\s*[\\p{L}0-9_.]+|\\(\\)\\s*\"[^\"]+\"|:[^:]+:|\"[^\"]+\")"
 						+ "\\s*(#\\w+)?\\s*:\\s*(.*)$");
 	}
 

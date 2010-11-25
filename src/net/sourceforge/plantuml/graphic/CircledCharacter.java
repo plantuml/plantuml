@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4917 $
+ * Revision $Revision: 5594 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -42,6 +42,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.PathIterator;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.skin.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -49,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
-public class CircledCharacter implements UDrawable {
+public class CircledCharacter implements UDrawable, TextBlock {
 
 	private final String c;
 	private final Font font;
@@ -77,8 +78,8 @@ public class CircledCharacter implements UDrawable {
 			ug.getParam().setColor(circle);
 		}
 
-//		final Color circleToUse = circle == null ? ug.getParam().getColor() : circle;
-//		ug.getParam().setColor(circleToUse);
+		// final Color circleToUse = circle == null ? ug.getParam().getColor() : circle;
+		// ug.getParam().setColor(circleToUse);
 
 		ug.getParam().setBackcolor(innerCircle);
 
@@ -131,6 +132,14 @@ public class CircledCharacter implements UDrawable {
 		}
 
 		return result;
+	}
+
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		return new Dimension2DDouble(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
+	}
+
+	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+		throw new UnsupportedOperationException();
 	}
 
 }

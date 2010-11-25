@@ -46,7 +46,9 @@ public class Member {
 	private boolean publicModifier;
 	private boolean packagePrivateModifier;
 
-	public Member(String display) {
+	private final VisibilityModifier visibilityModifier;
+
+	public Member(String display, boolean isMethod) {
 		final String lower = display.toLowerCase();
 		this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 		this.abstractModifier = lower.contains("{abstract}");
@@ -54,9 +56,11 @@ public class Member {
 
 		if (VisibilityModifier.isVisibilityCharacter(displayClean.charAt(0))) {
 			updateVisibility(display.charAt(0));
+			visibilityModifier = VisibilityModifier.getVisibilityModifier(display.charAt(0), isMethod == false);
 			this.display = displayClean.substring(1).trim();
 		} else {
 			this.display = displayClean;
+			visibilityModifier = null;
 		}
 		assert VisibilityModifier.isVisibilityCharacter(this.display.charAt(0)) == false;
 
@@ -85,12 +89,10 @@ public class Member {
 		return getDisplayWithoutVisibilityChar();
 	}
 
-	
 	public String getDisplayWithoutVisibilityChar() {
 		assert VisibilityModifier.isVisibilityCharacter(display.charAt(0)) == false;
 		return display;
 	}
-	
 
 	public String getDisplayWithVisibilityChar() {
 		if (isPrivate()) {
@@ -145,6 +147,10 @@ public class Member {
 
 	public final boolean isPackagePrivate() {
 		return packagePrivateModifier;
+	}
+
+	public final VisibilityModifier getVisibilityModifier() {
+		return visibilityModifier;
 	}
 
 }

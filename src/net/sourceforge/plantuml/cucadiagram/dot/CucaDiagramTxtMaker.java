@@ -75,7 +75,7 @@ public final class CucaDiagramTxtMaker {
 		this.diagram = diagram;
 		this.fileFormat = fileFormat;
 
-		final Cluster root = new Cluster(null);
+		final Cluster root = new Cluster(null, 0, 0);
 		int uid = 0;
 
 		final Map<Entity, Block> blocks = new HashMap<Entity, Block>();
@@ -85,7 +85,7 @@ public final class CucaDiagramTxtMaker {
 			// ug.translate(0, getHeight(ent) + 1);
 			final double width = getWidth(ent) * getXPixelPerChar();
 			final double height = getHeight(ent) * getYPixelPerChar();
-			final Block b = new Block(uid++, width, height);
+			final Block b = new Block(uid++, width, height, null);
 			root.addBloc(b);
 			blocks.put(ent, b);
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5386 $
+ * Revision $Revision: 5609 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class MethodsOrFieldsArea {
@@ -58,8 +59,12 @@ public class MethodsOrFieldsArea {
 	public MethodsOrFieldsArea(List<Member> attributes, Font font) {
 		this.font = font;
 		for (Member att : attributes) {
-			this.strings.add(att.getDisplayWithVisibilityChar());
+			this.strings.add(att.getDisplayWithoutVisibilityChar());
 		}
+	}
+
+	public VisibilityModifier getVisibilityModifier() {
+		throw new UnsupportedOperationException();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

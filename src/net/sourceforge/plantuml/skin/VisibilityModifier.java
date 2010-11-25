@@ -34,8 +34,13 @@
 package net.sourceforge.plantuml.skin;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -50,18 +55,39 @@ public enum VisibilityModifier {
 			ColorParam.iconPackage, ColorParam.iconPackageBackground), PUBLIC_METHOD(ColorParam.iconPublic,
 			ColorParam.iconPublicBackground);
 
-	private final ColorParam foreground;
-	private final ColorParam background;
+	private final ColorParam foregroundParam;
+	private final ColorParam backgroundParam;
 
 	private VisibilityModifier(ColorParam foreground, ColorParam background) {
-		this.foreground = foreground;
-		this.background = background;
+		this.foregroundParam = foreground;
+		this.backgroundParam = background;
 	}
 
 	public UDrawable getUDrawable(final int size, final Color foregroundColor, final Color backgoundColor) {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
 				drawInternal(ug, size, foregroundColor, backgoundColor);
+			}
+		};
+	}
+
+	public TextBlock getUBlock(final int size, final Color foregroundColor, final Color backgoundColor) {
+		return new TextBlock() {
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(size + 1, size + 1);
+			}
+
+			public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+				throw new UnsupportedOperationException();
+			}
+
+			public void drawU(UGraphic ug, double x, double y) {
+				final double tx = ug.getTranslateX();
+				final double ty = ug.getTranslateY();
+				ug.translate(x, y);
+				drawInternal(ug, size, foregroundColor, backgoundColor);
+				ug.setTranslate(tx, ty);
 			}
 		};
 	}
@@ -198,11 +224,11 @@ public enum VisibilityModifier {
 	}
 
 	public final ColorParam getForeground() {
-		return foreground;
+		return foregroundParam;
 	}
 
 	public final ColorParam getBackground() {
-		return background;
+		return backgroundParam;
 	}
 
 }

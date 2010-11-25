@@ -27,73 +27,37 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4236 $
  * 
+ * Revision $Revision: 3837 $
+ *
  */
-package net.sourceforge.plantuml.posimo;
+package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.Locale;
+import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.TextBlock;
 
-public class Block implements Clusterable {
+public class UGroup {
 
-	private final int uid;
-	private final double width;
-	private final double height;
-	private double x;
-	private double y;
-	private final Cluster parent;
+	private final PlacementStrategy placementStrategy;
 
-	public Block(int uid, double width, double height, Cluster parent) {
-		this.uid = uid;
-		this.width = width;
-		this.height = height;
-		this.parent = parent;
+	public UGroup(PlacementStrategy placementStrategy) {
+		this.placementStrategy = placementStrategy;
 	}
 
-	@Override
-	public String toString() {
-		return "BLOCK " + uid;
+	public void drawU(UGraphic ug, double x, double y, double width, double height) {
+		for (Map.Entry<TextBlock, Point2D> ent : placementStrategy.getPositions(width, height).entrySet()) {
+			final TextBlock block = ent.getKey();
+			final Point2D pos = ent.getValue();
+			block.drawU(ug, x + pos.getX(), y + pos.getY());
+		}
 	}
 
-	public String toStringPosition() {
-		return String.format(Locale.US, "x=%9.2f y=%9.2f w=%9.2f h=%9.2f", x, y, width, height);
-	}
+	public void add(TextBlock block) {
+		placementStrategy.add(block);
 
-	public int getUid() {
-		return uid;
-	}
-
-	public Cluster getParent() {
-		return parent;
-	}
-
-	public Point2D getPosition() {
-		return new Point2D.Double(x, y);
-	}
-
-	public Dimension2D getSize() {
-		return new Dimension2DDouble(width, height);
-	}
-
-	public void setCenterX(double center) {
-		this.x = center - width / 2;
-	}
-
-	public void setCenterY(double center) {
-		this.y = center - height / 2;
-	}
-
-	public final void setX(double x) {
-		this.x = x;
-	}
-
-	public final void setY(double y) {
-		this.y = y;
 	}
 
 }

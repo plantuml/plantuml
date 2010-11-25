@@ -42,25 +42,25 @@ public class MargedBlock {
 
 	private final Block block;
 	private final IEntityImageBlock imageBlock;
-	private final int marginDecorator;
+	private final double marginDecorator;
 	private final Dimension2D imageDimension;
 
 	static private int uid = 1;
 
-	public MargedBlock(StringBounder stringBounder, IEntityImageBlock imageBlock, int marginDecorator) {
+	public MargedBlock(StringBounder stringBounder, IEntityImageBlock imageBlock, double marginDecorator, Cluster parent) {
 		this.imageBlock = imageBlock;
 		this.marginDecorator = marginDecorator;
 		this.imageDimension = imageBlock.getDimension(stringBounder);
 		this.block = new Block(uid++, imageDimension.getWidth() + 2
 				* marginDecorator, imageDimension.getHeight() + 2
-				* marginDecorator);
+				* marginDecorator, parent);
 	}
 
 	public Block getBlock() {
 		return block;
 	}
 
-	public int getMarginDecorator() {
+	public double getMarginDecorator() {
 		return marginDecorator;
 	}
 	

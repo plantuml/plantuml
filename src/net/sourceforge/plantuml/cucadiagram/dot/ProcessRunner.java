@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3829 $
+ * Revision $Revision: 5650 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -49,6 +49,8 @@ public class ProcessRunner {
 	public ProcessRunner(String cmd) {
 		this.cmd = cmd;
 	}
+	
+	static private int cpt = 0;
 
 	public void run(byte in[], OutputStream redirection) throws IOException, InterruptedException {
 		final Process process = Runtime.getRuntime().exec(cmd);
@@ -66,6 +68,7 @@ public class ProcessRunner {
 		outStream.join(10000L);
 		this.out = outStream.sb.toString();
 		this.error = errorStream.sb.toString();
+		Log.info("RUN nb = "+(++cpt));
 	}
 
 	static class ThreadStream extends Thread {

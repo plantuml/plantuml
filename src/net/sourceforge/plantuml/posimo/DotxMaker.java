@@ -46,9 +46,14 @@ public class DotxMaker {
 		this.paths = paths;
 	}
 
-	public String createDotString() {
+	public String createDotString(String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("digraph unix {");
+
+		for (String s : dotStrings) {
+			sb.append(s);
+		}
+
 		sb.append("compound=true;");
 
 		printCluster(sb, root);
@@ -63,11 +68,16 @@ public class DotxMaker {
 	}
 
 	private void printCluster(StringBuilder sb, Cluster cl) {
-		if (cl.getContents().size() == 0) {
+		if (cl.getContents().size() == 0 && cl.getSubClusters().size() == 0) {
 			throw new IllegalStateException(cl.toString());
 		}
 		for (Cluster sub : cl.getSubClusters()) {
 			sb.append("subgraph cluster" + sub.getUid() + " {");
+			if (sub.getTitleWidth() > 0 && sub.getTitleHeight() > 0) {
+				sb.append("label=<<TABLE FIXEDSIZE=\"TRUE\" WIDTH=\"" + sub.getTitleWidth() + "\" HEIGHT=\""
+						+ sub.getTitleHeight() + "\"><TR><TD></TD></TR></TABLE>>");
+			}
+
 			printCluster(sb, sub);
 			sb.append("}");
 
@@ -83,8 +93,11 @@ public class DotxMaker {
 			throw new IllegalArgumentException();
 		}
 		final StringBuilder sb = new StringBuilder("b" + p.getStart().getUid() + " -> b" + p.getEnd().getUid());
-		//sb.append(" [dir=none, arrowhead=none, headclip=false, tailclip=false");
 		sb.append(" [dir=none, arrowhead=none, headclip=true, tailclip=true");
+		final int len = p.getLength();
+		if (len >= 3) {
+			sb.append(",minlen=" + (len - 1));
+		}
 		if (p.getLabel() == null) {
 			sb.append("]");
 		} else {
@@ -94,7 +107,12 @@ public class DotxMaker {
 		}
 
 		if (p.getLength() <= 1) {
-			sb.append("{rank=same; b" + p.getStart().getUid() + "; b" + p.getEnd().getUid() + "}");
+			final boolean samePackage = p.getStart().getParent() == p.getEnd().getParent();
+			if (samePackage == false) {
+				System.err.println("!!!!!!!!!!!!!!!!!TURNING ARROUND DOT BUG!!!!!!!!!!!!!!!!!!");
+			} else {
+				sb.append("{rank=same; b" + p.getStart().getUid() + "; b" + p.getEnd().getUid() + "}");
+			}
 		}
 
 		return sb.toString();

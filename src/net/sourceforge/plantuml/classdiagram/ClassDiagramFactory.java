@@ -28,14 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5472 $
+ * Revision $Revision: 5613 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
 
 import net.sourceforge.plantuml.classdiagram.command.CommandAddMethod;
-import net.sourceforge.plantuml.classdiagram.command.CommandCreateEntityClass;
-import net.sourceforge.plantuml.classdiagram.command.CommandCreateEntityClassMultilines;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateEntityClass2;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateEntityClassMultilines2;
 import net.sourceforge.plantuml.classdiagram.command.CommandEndNamespace;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow;
 import net.sourceforge.plantuml.classdiagram.command.CommandImport;
@@ -70,7 +70,8 @@ public class ClassDiagramFactory extends AbstractUmlSystemCommandFactory {
 		addCommand(new CommandPage(system));
 		addCommand(new CommandAddMethod(system));
 
-		addCommand(new CommandCreateEntityClass(system));
+		//addCommand(new CommandCreateEntityClass(system));
+		addCommand(new CommandCreateEntityClass2(system));
 		addCommand(new CommandCreateNote(system));
 		
 		addCommand(new CommandPackage(system));
@@ -89,7 +90,8 @@ public class ClassDiagramFactory extends AbstractUmlSystemCommandFactory {
 
 		addCommand(new CommandMultilinesClassNote(system));
 		addCommand(new CommandMultilinesStandaloneNote(system));
-		addCommand(new CommandCreateEntityClassMultilines(system));
+//		addCommand(new CommandCreateEntityClassMultilines(system));
+		addCommand(new CommandCreateEntityClassMultilines2(system));
 		
 		addCommand(new CommandHideShow(system));
 

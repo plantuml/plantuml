@@ -38,34 +38,46 @@ import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Frame implements Component {
 
 	private final List<String> name;
-	private final Color textColor;
-	private final Color lineColor;
-	private final Font font;
+	private final ISkinParam skinParam;
+	private final Rose rose = new Rose();
 
-	public Frame(List<String> name, Color textColor, Font font, Color lineColor) {
+	// private final Color textColor;
+	// private final Color lineColor;
+	// private final Font font;
+
+	public Frame(List<String> name, ISkinParam skinParam) {
 		this.name = name;
-		this.textColor = textColor;
-		this.lineColor = lineColor;
-		this.font = font;
+		this.skinParam = skinParam;
+		// this.textColor = textColor;
+		// this.lineColor = lineColor;
+		// this.font = font;
 	}
 
 	public void drawU(UGraphic ug, Dimension2D dimensionToUse, Context2D context) {
+		final Color lineColor = rose.getHtmlColor(skinParam, ColorParam.packageBorder).getColor();
 		ug.getParam().setColor(lineColor);
 		ug.getParam().setBackcolor(null);
+		ug.getParam().setStroke(new UStroke(1.4));
 		ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
+		ug.getParam().setStroke(new UStroke());
 
 		final TextBlock textBlock = createTextBloc();
 		textBlock.drawU(ug, 2, 2);
@@ -80,7 +92,9 @@ public class Frame implements Component {
 		poly.addPoint(0, y);
 		poly.addPoint(0, 0);
 		ug.getParam().setColor(lineColor);
+		ug.getParam().setStroke(new UStroke(1.4));
 		ug.draw(0, 0, poly);
+		ug.getParam().setStroke(new UStroke());
 
 	}
 
@@ -94,12 +108,14 @@ public class Frame implements Component {
 		return dim.getWidth() + 8;
 	}
 
-	private Dimension2D getTextDim(StringBounder stringBounder) {
+	public Dimension2D getTextDim(StringBounder stringBounder) {
 		final TextBlock bloc = createTextBloc();
 		return bloc.calculateDimension(stringBounder);
 	}
 
 	private TextBlock createTextBloc() {
+		final Font font = skinParam.getFont(FontParam.PACKAGE);
+		final Color textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE).getColor();
 		final TextBlock bloc = TextBlockUtils.create(name, font, textColor, HorizontalAlignement.LEFT);
 		return bloc;
 	}

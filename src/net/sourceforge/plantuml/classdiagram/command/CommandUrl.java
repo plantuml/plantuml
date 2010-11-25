@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.Entity;
 public class CommandUrl extends SingleLineCommand<ClassDiagram> {
 
 	public CommandUrl(ClassDiagram classDiagram) {
-		super(classDiagram, "(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+)\\s+(?:is)?\\s*\\[\\[(.*)\\]\\]$");
+		super(classDiagram, "(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s+(?:is)?\\s*\\[\\[(.*)\\]\\]$");
 	}
 
 	@Override

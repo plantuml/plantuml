@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3824 $
+ * Revision $Revision: 5579 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,6 +44,7 @@ public class EmptyImageBuilder {
 	private final Graphics2D g2d;
 
 	public EmptyImageBuilder(int width, int height, Color background) {
+		Log.info("Creating image " + width + "x" + height);
 		im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		g2d = im.createGraphics();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

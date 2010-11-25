@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5186 $
+ * Revision $Revision: 5593 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -94,14 +94,14 @@ public class Entity implements IEntity {
 
 	public void addFieldOrMethod(String s) {
 		if (isMethod(s)) {
-			methods2.add(new Member(s));
+			methods2.add(new Member(s, true));
 		} else {
 			addField(s);
 		}
 	}
 
 	public void addField(String s) {
-		fields2.add(new Member(s));
+		fields2.add(new Member(s, false));
 	}
 
 	public void addField(Member s) {

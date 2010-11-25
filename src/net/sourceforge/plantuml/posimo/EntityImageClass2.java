@@ -34,87 +34,133 @@
 package net.sourceforge.plantuml.posimo;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.graph.MethodsOrFieldsArea;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graph.MethodsOrFieldsArea2;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.PlacementStrategyX1Y2Y3;
+import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGroup;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 
 public class EntityImageClass2 extends AbstractEntityImage2 {
 
 	final private TextBlock name;
-	final private MethodsOrFieldsArea methods;
-	final private MethodsOrFieldsArea fields;
+	final private TextBlock stereo;
+	final private MethodsOrFieldsArea2 methods;
+	final private MethodsOrFieldsArea2 fields;
 	final private CircledCharacter circledCharacter;
 
-	// private final int xMargin = 0;
-	// private final int yMargin = 0;
-	// public static final int MARGIN = 20;
-
-	public EntityImageClass2(IEntity entity, Rose rose, ISkinParam skinParam, Collection<Link> links) {
-		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), getFont14(), Color.BLACK,
-				HorizontalAlignement.CENTER);
-		this.methods = new MethodsOrFieldsArea(entity.methods2(), getFont14());
-		this.fields = new MethodsOrFieldsArea(entity.fields2(), getFont14());
+	public EntityImageClass2(IEntity entity, ISkinParam skinParam, Collection<Link> links) {
+		super(entity, skinParam);
+		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), getFont(FontParam.CLASS),
+				Color.BLACK, HorizontalAlignement.CENTER);
+		final Stereotype stereotype = entity.getStereotype();
+		if (stereotype == null || stereotype.getLabel() == null) {
+			this.stereo = null;
+		} else {
+			this.stereo = TextBlockUtils.create(StringUtils.getWithNewlines(stereotype.getLabel()),
+					getFont(FontParam.CLASS_STEREOTYPE), getFontColor(FontParam.CLASS_STEREOTYPE),
+					HorizontalAlignement.CENTER);
+		}
+		this.methods = new MethodsOrFieldsArea2(entity.methods2(), FontParam.CLASS_ATTRIBUTE, skinParam);
+		this.fields = new MethodsOrFieldsArea2(entity.fields2(), FontParam.CLASS_ATTRIBUTE, skinParam);
 
 		circledCharacter = getCircledCharacter(entity);
 	}
 
 	private CircledCharacter getCircledCharacter(IEntity entity) {
-		// if (entity.getStereotype() != null) {
-		// return new CircledCharacter(entity.getStereotype().getCharacter(),
-		// font, entity.getStereotype().getColor(),
-		// red, Color.BLACK);
-		// }
-		final double radius = 10;
+		final Stereotype stereotype = entity.getStereotype();
+		if (stereotype != null && stereotype.getCharacter() != 0) {
+			final Color classBorder = getColor(ColorParam.classBorder);
+			final Font font = getFont(FontParam.CIRCLED_CHARACTER);
+			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
+					stereotype.getColor(), classBorder, getFontColor(FontParam.CIRCLED_CHARACTER));
+		}
 		if (entity.getType() == EntityType.ABSTRACT_CLASS) {
-			return new CircledCharacter('A', radius, getFont17(), getBlue(), getRed(), Color.BLACK);
+			return new CircledCharacter('A', getSkinParam().getCircledCharacterRadius(),
+					getFont(FontParam.CIRCLED_CHARACTER), getColor(ColorParam.stereotypeABackground),
+					getColor(ColorParam.classBorder), getFontColor(FontParam.CIRCLED_CHARACTER));
 		}
 		if (entity.getType() == EntityType.CLASS) {
-			return new CircledCharacter('C', radius, getFont17(), getGreen(), getRed(), Color.BLACK);
+			return new CircledCharacter('C', getSkinParam().getCircledCharacterRadius(),
+					getFont(FontParam.CIRCLED_CHARACTER), getColor(ColorParam.stereotypeCBackground),
+					getColor(ColorParam.classBorder), getFontColor(FontParam.CIRCLED_CHARACTER));
 		}
 		if (entity.getType() == EntityType.INTERFACE) {
-			return new CircledCharacter('I', radius, getFont17(), getViolet(), getRed(), Color.BLACK);
+			return new CircledCharacter('I', getSkinParam().getCircledCharacterRadius(),
+					getFont(FontParam.CIRCLED_CHARACTER), getColor(ColorParam.stereotypeIBackground),
+					getColor(ColorParam.classBorder), getFontColor(FontParam.CIRCLED_CHARACTER));
 		}
 		if (entity.getType() == EntityType.ENUM) {
-			return new CircledCharacter('E', radius, getFont17(), getRose(), getRed(), Color.BLACK);
+			return new CircledCharacter('E', getSkinParam().getCircledCharacterRadius(),
+					getFont(FontParam.CIRCLED_CHARACTER), getColor(ColorParam.stereotypeEBackground),
+					getColor(ColorParam.classBorder), getFontColor(FontParam.CIRCLED_CHARACTER));
 		}
 		assert false;
 		return null;
 	}
 
+	private int xMarginFieldsOrMethod = 5;
+	private int marginEmptyFieldsOrMethod = 13;
+
 	@Override
 	public Dimension2D getDimension(StringBounder stringBounder) {
-		final Dimension2D dimName = getNameDimension(stringBounder);
+		final Dimension2D dimTitle = getTitleDimension(stringBounder);
 		final Dimension2D dimMethods = methods.calculateDimension(stringBounder);
 		final Dimension2D dimFields = fields.calculateDimension(stringBounder);
-		final double width = Math.max(Math.max(dimMethods.getWidth(), dimFields.getWidth()), dimName.getWidth());
-		final double height = dimMethods.getHeight() + dimFields.getHeight() + dimName.getHeight();
+		final double width = Math.max(
+				Math.max(dimMethods.getWidth() + 2 * xMarginFieldsOrMethod, dimFields.getWidth() + 2
+						* xMarginFieldsOrMethod), dimTitle.getWidth() + 2 * xMarginCircle);
+		final double height = getMethodOrFieldHeight(dimMethods) + getMethodOrFieldHeight(dimFields)
+				+ dimTitle.getHeight();
 		return new Dimension2DDouble(width, height);
 	}
 
-	private Dimension2D getNameDimension(StringBounder stringBounder) {
-		final Dimension2D nameDim = name.calculateDimension(stringBounder);
-		if (circledCharacter == null) {
-			return nameDim;
+	private double getMethodOrFieldHeight(final Dimension2D dim) {
+		final double fieldsHeight = dim.getHeight();
+		if (fieldsHeight == 0) {
+			return marginEmptyFieldsOrMethod;
 		}
-		return new Dimension2DDouble(nameDim.getWidth() + getCircledWidth(stringBounder), Math.max(nameDim.getHeight(),
-				circledCharacter.getPreferredHeight(stringBounder)));
+		return fieldsHeight;
+	}
+
+	private int xMarginCircle = 5;
+	private int yMarginCircle = 5;
+
+	private Dimension2D getTitleDimension(StringBounder stringBounder) {
+		final Dimension2D nameAndStereo = getNameAndSteretypeDimension(stringBounder);
+		if (circledCharacter == null) {
+			return nameAndStereo;
+		}
+		return new Dimension2DDouble(nameAndStereo.getWidth() + getCircledWidth(stringBounder), Math.max(
+				nameAndStereo.getHeight(), circledCharacter.getPreferredHeight(stringBounder) + 2 * yMarginCircle));
+	}
+
+	private Dimension2D getNameAndSteretypeDimension(StringBounder stringBounder) {
+		final Dimension2D nameDim = name.calculateDimension(stringBounder);
+		final Dimension2D stereoDim = stereo == null ? new Dimension2DDouble(0, 0) : stereo
+				.calculateDimension(stringBounder);
+		final Dimension2D nameAndStereo = new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
+				nameDim.getHeight() + stereoDim.getHeight());
+		return nameAndStereo;
 	}
 
 	private double getCircledWidth(StringBounder stringBounder) {
@@ -126,38 +172,45 @@ public class EntityImageClass2 extends AbstractEntityImage2 {
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition, double marginWidth,
 			double marginHeight) {
-		final Dimension2D dimTotal = getDimension(ug.getStringBounder());
-		final Dimension2D dimName = getNameDimension(ug.getStringBounder());
-		final Dimension2D dimFields = fields.calculateDimension(ug.getStringBounder());
+		final StringBounder stringBounder = ug.getStringBounder();
+		final Dimension2D dimTotal = getDimension(stringBounder);
+		final Dimension2D dimTitle = getTitleDimension(stringBounder);
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final URectangle rect = new URectangle(widthTotal, heightTotal);
 
-		ug.getParam().setColor(getRed());
-		ug.getParam().setBackcolor(getYellow());
+		ug.getParam().setColor(getColor(ColorParam.classBorder));
+		ug.getParam().setBackcolor(getColor(ColorParam.classBackground));
 
 		double x = xTheoricalPosition;
 		double y = yTheoricalPosition;
 		ug.draw(x, y, rect);
 
-		if (circledCharacter != null) {
-			circledCharacter.drawU(ug, x, y);
-			x += circledCharacter.getPreferredWidth(ug.getStringBounder());
+		final UGroup header;
+		if (circledCharacter == null) {
+			header = new UGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
+		} else {
+			header = new UGroup(new PlacementStrategyX1Y2Y3(ug.getStringBounder()));
+			header.add(circledCharacter);
 		}
-		name.drawU(ug, x, y);
+		if (stereo != null) {
+			header.add(stereo);
+		}
+		header.add(name);
+		header.drawU(ug, x, y, dimTotal.getWidth(), dimTitle.getHeight());
 
-		y += dimName.getHeight();
+		y += dimTitle.getHeight();
 
 		x = xTheoricalPosition;
-		ug.getParam().setColor(getRed());
+		ug.getParam().setColor(getColor(ColorParam.classBorder));
 		ug.draw(x, y, new ULine(widthTotal, 0));
-		fields.draw(ug, x, y);
+		fields.draw(ug, x + xMarginFieldsOrMethod, y);
 
-		y += dimFields.getHeight();
-		ug.getParam().setColor(getRed());
+		y += getMethodOrFieldHeight(fields.calculateDimension(stringBounder));
+		ug.getParam().setColor(getColor(ColorParam.classBorder));
 		ug.draw(x, y, new ULine(widthTotal, 0));
 
-		methods.draw(ug, x, y);
+		methods.draw(ug, x + xMarginFieldsOrMethod, y);
 	}
 }

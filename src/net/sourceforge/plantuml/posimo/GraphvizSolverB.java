@@ -87,11 +87,13 @@ public class GraphvizSolverB {
 	}
 
 	public Dimension2D solve(Cluster root, Collection<Path> paths) throws IOException, InterruptedException {
-		final String dotString = new DotxMaker(root, paths).createDotString();
+		final String dotString = new DotxMaker(root, paths).createDotString("nodesep=0.2;", "ranksep=0.2;");
 
 		if (OptionFlags.getInstance().isKeepTmpFiles()) {
 			traceDotString(dotString);
 		}
+
+		final MinMax minMax = new MinMax();
 
 		// System.err.println("dotString=" + dotString);
 
@@ -126,6 +128,7 @@ public class GraphvizSolverB {
 			final List<Point2D.Double> pointsList = extractPointsList(s, p1);
 			b.setX(getMinX(pointsList));
 			b.setY(getMinY(pointsList) + height);
+			minMax.manage(b.getPosition());
 		}
 
 		for (Cluster cl : root.getSubClusters()) {
@@ -141,6 +144,7 @@ public class GraphvizSolverB {
 			final double h = getMaxY(pointsList) - getMinY(pointsList);
 			cl.setHeight(h);
 			cl.setWidth(w);
+			minMax.manage(cl.getPosition());
 		}
 
 		for (Path p : paths) {
@@ -154,15 +158,22 @@ public class GraphvizSolverB {
 			final int p2 = s.indexOf(" d=\"", p1);
 			final int p3 = s.indexOf("\"", p2 + " d=\"".length());
 			final String points = s.substring(p2 + " d=\"".length(), p3);
-			p.setDotPath(new DotPath(points, height));
+			final DotPath dotPath = new DotPath(points, height);
+			p.setDotPath(dotPath);
+			minMax.manage(dotPath.getMinMax());
 
 			// System.err.println("pointsList=" + pointsList);
 			if (p.getLabel() != null) {
 				final List<Point2D.Double> pointsList = extractPointsList(s, p1);
-				p.setLabelPosition(getMinX(pointsList), getMinY(pointsList) + height);
+				final double x = getMinX(pointsList);
+				final double y = getMinY(pointsList) + height;
+				p.setLabelPosition(x, y);
+				minMax.manage(x, y);
 			}
 
 		}
+
+		System.err.println("minMax=" + minMax);
 
 		return new Dimension2DDouble(width, height);
 	}

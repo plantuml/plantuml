@@ -37,9 +37,11 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,17 +72,30 @@ public class DotPath implements UShape {
 		private final double x;
 		private final double y;
 
-//		@Override
-//		public String toString() {
-//			return "[" + x1 + "," + y1 + " " + x2 + "," + y2 + " " + x + "," + y + "]";
-//		}
+		// @Override
+		// public String toString() {
+		// return "[" + x1 + "," + y1 + " " + x2 + "," + y2 + " " + x + "," + y
+		// + "]";
+		// }
 	}
 
 	private final List<CubicCurve2D.Double> beziers = new ArrayList<CubicCurve2D.Double>();
-	//private final String print;
+
+	// private final String print;
 
 	public Point2D getStartPoint() {
 		return beziers.get(0).getP1();
+	}
+
+	public MinMax getMinMax() {
+		final MinMax result = new MinMax();
+		for (CubicCurve2D.Double c : beziers) {
+			result.manage(c.x1, c.y1);
+			result.manage(c.x2, c.y2);
+			result.manage(c.ctrlx1, c.ctrly1);
+			result.manage(c.ctrlx2, c.ctrly2);
+		}
+		return result;
 	}
 
 	public DotPath() {
@@ -90,10 +105,50 @@ public class DotPath implements UShape {
 	public Point2D getEndPoint() {
 		return beziers.get(beziers.size() - 1).getP2();
 	}
-	
+
+	public Line2D getEndTangeante() {
+		final CubicCurve2D.Double last = beziers.get(beziers.size() - 1);
+		double dx = last.x2 - last.ctrlx2;
+		double dy = last.y2 - last.ctrly2;
+		if (dx == 0 && dy == 0) {
+			dx = last.x2 - last.x1;
+			dy = last.y2 - last.y1;
+		}
+		return new Line2D.Double(last.x2, last.y2, last.x2 + dx, last.y2 + dy);
+	}
+
+	public double getEndAngle() {
+		final Line2D tan = getEndTangeante();
+		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
+		return theta1;
+	}
+
+	public double getStartAngle() {
+		final Line2D tan = getStartTangeante();
+		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
+		return theta1;
+	}
+
+	public Line2D getStartTangeante() {
+		final CubicCurve2D.Double first = beziers.get(0);
+		double dx = first.ctrlx1 - first.x1;
+		double dy = first.ctrly1 - first.y1;
+		if (dx == 0 && dy == 0) {
+			dx = first.x2 - first.x1;
+			dy = first.y2 - first.y1;
+		}
+		return new Line2D.Double(first.x1, first.y1, first.x1 + dx, first.y1 + dy);
+	}
+
 	public DotPath addBefore(CubicCurve2D.Double before) {
 		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
 		copy.add(0, before);
+		return new DotPath(copy);
+	}
+
+	public DotPath addBefore(DotPath other) {
+		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		copy.addAll(0, other.beziers);
 		return new DotPath(copy);
 	}
 
@@ -109,15 +164,16 @@ public class DotPath implements UShape {
 		return new DotPath(copy);
 	}
 
+
 	private DotPath(List<CubicCurve2D.Double> beziers) {
 		this.beziers.addAll(beziers);
-		//this.print = super.toString();
+		// this.print = super.toString();
 	}
 
-//	@Override
-//	public String toString() {
-//		return print;
-//	}
+	// @Override
+	// public String toString() {
+	// return print;
+	// }
 
 	public DotPath(String init, double deltaY) {
 		if (init.startsWith("M") == false) {
@@ -164,14 +220,15 @@ public class DotPath implements UShape {
 		return result;
 	}
 
-//	public void drawOld(Graphics2D g2d, double x, double y) {
-//		for (CubicCurve2D.Double bez : beziers) {
-//			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
-//					+ bez.ctrly2, x + bez.x2, y + bez.y2);
-//			g2d.draw(bez);
-//		}
-//	}
-//
+	// public void drawOld(Graphics2D g2d, double x, double y) {
+	// for (CubicCurve2D.Double bez : beziers) {
+	// bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y +
+	// bez.ctrly1, x + bez.ctrlx2, y
+	// + bez.ctrly2, x + bez.x2, y + bez.y2);
+	// g2d.draw(bez);
+	// }
+	// }
+	//
 	public void draw(Graphics2D g2d, double x, double y) {
 		final GeneralPath p = new GeneralPath();
 		for (CubicCurve2D.Double bez : beziers) {
@@ -275,11 +332,35 @@ public class DotPath implements UShape {
 		}
 	}
 
-	private String toString(CubicCurve2D.Double c) {
+	static String toString(CubicCurve2D.Double c) {
 		return "(" + c.x1 + "," + c.y1 + ") " + "(" + c.ctrlx1 + "," + c.ctrly1 + ") " + "(" + c.ctrlx2 + ","
 				+ c.ctrly2 + ") " + "(" + c.x2 + "," + c.y2 + ") ";
 
 	}
 
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		for (CubicCurve2D.Double c : beziers) {
+			sb.append(toString(c));
+		}
+		return sb.toString();
+	}
+
+	public static CubicCurve2D.Double reverse(CubicCurve2D curv) {
+		return new CubicCurve2D.Double(curv.getX2(), curv.getY2(), curv.getCtrlX2(), curv.getCtrlY2(),
+				curv.getCtrlX1(), curv.getCtrlY1(), curv.getX1(), curv.getY1());
+	}
+
+	public DotPath reverse() {
+		final List<CubicCurve2D.Double> reverse = new ArrayList<CubicCurve2D.Double>(beziers);
+		Collections.reverse(reverse);
+		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>();
+		for (CubicCurve2D.Double cub : reverse) {
+			copy.add(reverse(cub));
+		}
+		return new DotPath(copy);
+
+	}
 
 }

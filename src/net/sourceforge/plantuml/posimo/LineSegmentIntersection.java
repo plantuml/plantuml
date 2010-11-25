@@ -33,67 +33,47 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Dimension2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.Locale;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+public class LineSegmentIntersection {
 
-public class Block implements Clusterable {
+	private final Point2D inter;
+	
+	// http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/
 
-	private final int uid;
-	private final double width;
-	private final double height;
-	private double x;
-	private double y;
-	private final Cluster parent;
+	public LineSegmentIntersection(Line2D segment, Line2D lineB) {
+		final double x1 = segment.getX1();
+		final double y1 = segment.getY1();
+		final double x2 = segment.getX2();
+		final double y2 = segment.getY2();
+		final double x3 = lineB.getX1();
+		final double y3 = lineB.getY1();
+		final double x4 = lineB.getX2();
+		final double y4 = lineB.getY2();
 
-	public Block(int uid, double width, double height, Cluster parent) {
-		this.uid = uid;
-		this.width = width;
-		this.height = height;
-		this.parent = parent;
+		final double den = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+
+		if (den == 0) {
+			inter = null;
+		} else {
+
+			final double uA1 = (x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3);
+			final double uA = uA1 / den;
+
+			final double x = x1 + uA * (x2 - x1);
+			final double y = y1 + uA * (y2 - y1);
+
+			if (uA >= 0 && uA <= 1) {
+				inter = new Point2D.Double(x, y);
+			} else {
+				inter = null;
+			}
+		}
 	}
 
-	@Override
-	public String toString() {
-		return "BLOCK " + uid;
-	}
-
-	public String toStringPosition() {
-		return String.format(Locale.US, "x=%9.2f y=%9.2f w=%9.2f h=%9.2f", x, y, width, height);
-	}
-
-	public int getUid() {
-		return uid;
-	}
-
-	public Cluster getParent() {
-		return parent;
-	}
-
-	public Point2D getPosition() {
-		return new Point2D.Double(x, y);
-	}
-
-	public Dimension2D getSize() {
-		return new Dimension2DDouble(width, height);
-	}
-
-	public void setCenterX(double center) {
-		this.x = center - width / 2;
-	}
-
-	public void setCenterY(double center) {
-		this.y = center - height / 2;
-	}
-
-	public final void setX(double x) {
-		this.x = x;
-	}
-
-	public final void setY(double y) {
-		this.y = y;
+	public final Point2D getIntersection() {
+		return inter;
 	}
 
 }

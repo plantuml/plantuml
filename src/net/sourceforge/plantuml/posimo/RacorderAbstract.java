@@ -33,67 +33,24 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-import java.util.Locale;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+public abstract class RacorderAbstract implements Racorder {
 
-public class Block implements Clusterable {
-
-	private final int uid;
-	private final double width;
-	private final double height;
-	private double x;
-	private double y;
-	private final Cluster parent;
-
-	public Block(int uid, double width, double height, Cluster parent) {
-		this.uid = uid;
-		this.width = width;
-		this.height = height;
-		this.parent = parent;
+	public final DotPath getRacordOut(Rectangle2D rect, Line2D tangeante) {
+		tangeante = symetric(tangeante);
+		return getRacordIn(rect, tangeante).reverse();
 	}
 
-	@Override
-	public String toString() {
-		return "BLOCK " + uid;
-	}
-
-	public String toStringPosition() {
-		return String.format(Locale.US, "x=%9.2f y=%9.2f w=%9.2f h=%9.2f", x, y, width, height);
-	}
-
-	public int getUid() {
-		return uid;
-	}
-
-	public Cluster getParent() {
-		return parent;
-	}
-
-	public Point2D getPosition() {
-		return new Point2D.Double(x, y);
-	}
-
-	public Dimension2D getSize() {
-		return new Dimension2DDouble(width, height);
-	}
-
-	public void setCenterX(double center) {
-		this.x = center - width / 2;
-	}
-
-	public void setCenterY(double center) {
-		this.y = center - height / 2;
-	}
-
-	public final void setX(double x) {
-		this.x = x;
-	}
-
-	public final void setY(double y) {
-		this.y = y;
+	private static Line2D symetric(Line2D line) {
+		final double x1 = line.getX1();
+		final double y1 = line.getY1();
+		final double x2 = line.getX2();
+		final double y2 = line.getY2();
+		final double dx = x2 - x1;
+		final double dy = y2 - y1;
+		return new Line2D.Double(x1, y1, x1 - dx, y1 - dy);
 	}
 
 }

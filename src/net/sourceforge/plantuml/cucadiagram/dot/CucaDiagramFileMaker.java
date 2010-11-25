@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5503 $
+ * Revision $Revision: 5655 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -391,14 +391,14 @@ public final class CucaDiagramFileMaker {
 
 			final byte[] imageData = getImageData(dotString, cmap);
 
-			if (isPngHeader(imageData, 0) == false) {
-				createError(os, imageData.length, FileFormat.PNG, "No PNG header found",
-						"Try -forcegd or -forcecairo flag");
+			if (imageData.length == 0) {
+				createError(os, imageData.length, FileFormat.PNG, "imageData.length == 0");
 				return null;
 			}
 
-			if (imageData.length == 0) {
-				createError(os, imageData.length, FileFormat.PNG, "imageData.length == 0");
+			if (isPngHeader(imageData, 0) == false) {
+				createError(os, imageData.length, FileFormat.PNG, "No PNG header found",
+						"Try -forcegd or -forcecairo flag");
 				return null;
 			}
 

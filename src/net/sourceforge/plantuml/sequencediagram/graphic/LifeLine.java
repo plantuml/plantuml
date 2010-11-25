@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5275 $
+ * Revision $Revision: 5636 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -82,7 +82,7 @@ class LifeLine {
 			if (y < last.y) {
 				throw new IllegalArgumentException();
 			}
-			if (y==last.y && type != last.type) {
+			if (y == last.y && type != last.type) {
 				throw new IllegalArgumentException();
 			}
 		}
@@ -119,8 +119,12 @@ class LifeLine {
 				level++;
 			} else {
 				level--;
+				if (level < 0) {
+					level = 0;
+				}
 			}
 		}
+		assert level >= 0;
 		return level;
 	}
 
@@ -192,10 +196,9 @@ class LifeLine {
 		return new Segment(events.get(i).y, events.get(events.size() - 1).y, events.get(i).backcolor);
 	}
 
-
 	public void drawU(UGraphic ug, Skin skin, ISkinParam skinParam) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		
+
 		final double atX = ug.getTranslateX();
 		final double atY = ug.getTranslateY();
 

@@ -33,67 +33,33 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.Locale;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+public class MinMax {
 
-public class Block implements Clusterable {
+	private double minX = Double.MAX_VALUE;
+	private double minY = Double.MAX_VALUE;
 
-	private final int uid;
-	private final double width;
-	private final double height;
-	private double x;
-	private double y;
-	private final Cluster parent;
+	public void manage(double x, double y) {
+		if (x < minX) {
+			minX = x;
+		}
+		if (y < minY) {
+			minY = y;
+		}
+	}
 
-	public Block(int uid, double width, double height, Cluster parent) {
-		this.uid = uid;
-		this.width = width;
-		this.height = height;
-		this.parent = parent;
+	public void manage(Point2D p) {
+		manage(p.getX(), p.getY());
+	}
+
+	public void manage(MinMax other) {
+		manage(other.minX, other.minY);
 	}
 
 	@Override
 	public String toString() {
-		return "BLOCK " + uid;
-	}
-
-	public String toStringPosition() {
-		return String.format(Locale.US, "x=%9.2f y=%9.2f w=%9.2f h=%9.2f", x, y, width, height);
-	}
-
-	public int getUid() {
-		return uid;
-	}
-
-	public Cluster getParent() {
-		return parent;
-	}
-
-	public Point2D getPosition() {
-		return new Point2D.Double(x, y);
-	}
-
-	public Dimension2D getSize() {
-		return new Dimension2DDouble(width, height);
-	}
-
-	public void setCenterX(double center) {
-		this.x = center - width / 2;
-	}
-
-	public void setCenterY(double center) {
-		this.y = center - height / 2;
-	}
-
-	public final void setX(double x) {
-		this.x = x;
-	}
-
-	public final void setY(double y) {
-		this.y = y;
+		return "minX=" + minX + " minY=" + minY;
 	}
 
 }

@@ -28,56 +28,57 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3831 $
+ * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-abstract class AbstractEntityImage2 implements IEntityImageBlock {
+public class EntityImageNote2 extends AbstractEntityImage2 {
 
-	private final IEntity entity;
-	private final ISkinParam skinParam;
-	
-	private final Rose rose = new Rose();
+	private final Component comp;
 
-	public AbstractEntityImage2(IEntity entity, ISkinParam skinParam) {
-		if (entity == null) {
-			throw new IllegalArgumentException("entity null");
-		}
-		this.entity = entity;
-		this.skinParam = skinParam;
+	public EntityImageNote2(IEntity entity, ISkinParam skinParam,
+			Collection<Link> links) {
+		super(entity, skinParam);
+
+		final Rose skin = new Rose();
+
+		comp = skin.createComponent(ComponentType.NOTE, skinParam, StringUtils
+				.getWithNewlines(entity.getDisplay()));
+
 	}
 
-	public abstract Dimension2D getDimension(StringBounder stringBounder);
-
-	protected final IEntity getEntity() {
-		return entity;
+	@Override
+	public Dimension2D getDimension(StringBounder stringBounder) {
+		final double height =  comp.getPreferredHeight(stringBounder);
+		final double width =  comp.getPreferredWidth(stringBounder);
+		return new Dimension2DDouble(width, height);
 	}
 
-	protected Font getFont(FontParam fontParam) {
-		return skinParam.getFont(fontParam);
+	public void drawU(UGraphic ug, double xTheoricalPosition,
+			double yTheoricalPosition, double marginWidth, double marginHeight) {
+		final double dx = ug.getTranslateX();
+		final double dy = ug.getTranslateY();
+		ug.translate(xTheoricalPosition, yTheoricalPosition);
+		comp.drawU(ug, getDimension(ug.getStringBounder()), new SimpleContext2D(false));
+		ug.setTranslate(dx, dy);
+
 	}
 
-	protected Color getFontColor(FontParam fontParam) {
-		return skinParam.getFontHtmlColor(fontParam).getColor();
-	}
-
-	protected final Color getColor(ColorParam colorParam) {
-		return rose.getHtmlColor(skinParam, colorParam).getColor();
-	}
-
-	protected final ISkinParam getSkinParam() {
-		return skinParam;
-	}
 }

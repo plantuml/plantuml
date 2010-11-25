@@ -113,7 +113,7 @@ public final class CucaDiagramFileMakerBeta {
 		final PlayField playField = new PlayField(diagram.getSkinParam());
 
 		final Collection<IEntity> entities = getFirstLevelEntities();
-		System.err.println("entities=" + entities);
+		// System.err.println("entities=" + entities);
 		// final Collection<Link> links = getLinks(entities);
 		final Collection<Link> links = diagram.getLinks();
 
@@ -148,32 +148,32 @@ public final class CucaDiagramFileMakerBeta {
 	private Collection<IEntity> getFirstLevelEntities() {
 		final Collection<IEntity> result = new HashSet<IEntity>();
 		diagram.computeAutonomyOfGroups();
-		System.err.println("diagramEntities = " + diagram.entities());
-		System.err.println("diagramGroups = " + diagram.getGroups());
+//		System.err.println("diagramEntities = " + diagram.entities());
+//		System.err.println("diagramGroups = " + diagram.getGroups());
 		addEntitiesOfGroup(result, null);
 		return result;
 	}
 
 	private void addEntitiesOfGroup(final Collection<IEntity> result, Group parent) {
-		System.err.println("addEntitiesOfGroup parent=" + parent);
+//		System.err.println("addEntitiesOfGroup parent=" + parent);
 		for (IEntity ent : diagram.entities().values()) {
 			if (ent.getParent() == parent) {
 				result.add(ent);
-				System.err.println("addingA " + ent);
+				// System.err.println("addingA " + ent);
 			}
 		}
 		final Collection<Group> groups = parent == null ? diagram.getGroups() : parent.getChildren();
 		for (Group g : groups) {
-			System.err.println("g=" + g + " parent = " + g.getParent());
+			// System.err.println("g=" + g + " parent = " + g.getParent());
 			if (g.isAutonom() == false) {
 				addEntitiesOfGroup(result, g);
 				result.add(g.getEntityCluster());
-				System.err.println("addingB " + g.getEntityCluster());
+				// System.err.println("addingB " + g.getEntityCluster());
 			} else if (g.getParent() == parent) {
 				assert g.isAutonom();
 				assert result.contains(g.getEntityCluster()) == false;
 				result.add(g.getEntityCluster());
-				System.err.println("addingC " + g.getEntityCluster());
+				// System.err.println("addingC " + g.getEntityCluster());
 			}
 
 		}

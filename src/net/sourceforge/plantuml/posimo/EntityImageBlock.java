@@ -62,24 +62,46 @@ public class EntityImageBlock implements IEntityImageBlock {
 	private final IEntity entity;
 	private final ISkinParam param;
 	private final Rose rose;
-	private final int margin = 6;
+	// private final int margin = 6;
 	private final TextBlock name;
 	private final Collection<Link> links;
 
 	private PlayField playField;
 	private Frame frame;
+	private Dimension2D dimension;
 
-	public EntityImageBlock(IEntity entity, Rose rose, ISkinParam param, Collection<Link> links) {
+	public EntityImageBlock(IEntity entity, Rose rose, ISkinParam param, Collection<Link> links, FontParam titleParam) {
 		this.entity = entity;
 		this.param = param;
 		this.rose = rose;
 		this.links = links;
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), param
-				.getFont(FontParam.CLASS), Color.BLACK, HorizontalAlignement.CENTER);
+
+		if (StringUtils.isNotEmpty(entity.getDisplay())) {
+			this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()),
+					param.getFont(titleParam), Color.BLACK, HorizontalAlignement.CENTER);
+		} else {
+			this.name = null;
+		}
 
 	}
 
 	public Dimension2D getDimension(StringBounder stringBounder) {
+		if (dimension == null) {
+			dimension = getDimensionSlow(stringBounder);
+
+			if (name != null) {
+				final Dimension2D dimName = name.calculateDimension(stringBounder);
+				final double widthName = dimName.getWidth();
+				if (widthName > dimension.getWidth()) {
+					dimension = new Dimension2DDouble(widthName, dimension.getHeight());
+				}
+
+			}
+		}
+		return dimension;
+	}
+
+	private Dimension2D getDimensionSlow(StringBounder stringBounder) {
 		initPlayField(stringBounder);
 		Dimension2D dim;
 		if (playField == null) {
@@ -99,7 +121,8 @@ public class EntityImageBlock implements IEntityImageBlock {
 				throw new RuntimeException();
 			}
 		}
-		return Dimension2DDouble.delta(dim, margin * 2);
+		return dim;
+		// return Dimension2DDouble.delta(dim, margin * 2);
 	}
 
 	private void initPlayField(StringBounder stringBounder) {
@@ -109,13 +132,14 @@ public class EntityImageBlock implements IEntityImageBlock {
 		this.playField = new PlayField(param);
 		final Collection<IEntity> entities = new ArrayList<IEntity>();
 		for (IEntity ent : entity.getParent().entities().values()) {
-			//entities.add(EntityUtils.withNoParent(ent));
+			// entities.add(EntityUtils.withNoParent(ent));
 			entities.add(ent);
 		}
 		playField.initInternal(entities, links, stringBounder);
 
-		this.frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), Color.BLACK, param
-				.getFont(FontParam.CLASS), rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+		// this.frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), Color.BLACK, param
+		// .getFont(FontParam.CLASS), rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+		this.frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), param);
 
 	}
 
@@ -127,15 +151,17 @@ public class EntityImageBlock implements IEntityImageBlock {
 		final double heightTotal = dim.getHeight() + 2 * marginHeight;
 		final URectangle rect = new URectangle(widthTotal, heightTotal);
 
-		//if (entity.getParent() == null) {
+		// if (entity.getParent() == null) {
 		if (entity.getType() != EntityType.GROUP) {
 			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBackground).getColor());
 			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
 			ug.draw(xTheoricalPosition - marginWidth, yTheoricalPosition - marginHeight, rect);
-			name.drawU(ug, xTheoricalPosition + margin, yTheoricalPosition + margin);
+			// name.drawU(ug, xTheoricalPosition + margin, yTheoricalPosition + margin);
+			name.drawU(ug, xTheoricalPosition + 0, yTheoricalPosition + 0);
 		} else {
-			final Frame frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), Color.BLACK, param
-					.getFont(FontParam.CLASS), rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			// final Frame frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), Color.BLACK, param
+			// .getFont(FontParam.CLASS), rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			final Frame frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), param);
 
 			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background).getColor());
 			ug.getParam().setColor(null);
@@ -149,8 +175,11 @@ public class EntityImageBlock implements IEntityImageBlock {
 			// -yTheoricalPosition + marginHeight);
 			ug.setTranslate(oldX, oldY);
 
-			playField.drawInternal(UGraphicUtils.translate(ug, xTheoricalPosition + margin, yTheoricalPosition + margin
-					+ frame.getPreferredHeight(ug.getStringBounder())));
+			// playField.drawInternal(UGraphicUtils.translate(ug, xTheoricalPosition + margin, yTheoricalPosition +
+			// margin
+			// + frame.getPreferredHeight(ug.getStringBounder())));
+			playField.drawInternal(UGraphicUtils.translate(ug, xTheoricalPosition + 0,
+					yTheoricalPosition + 0 + frame.getPreferredHeight(ug.getStringBounder())));
 		}
 	}
 }

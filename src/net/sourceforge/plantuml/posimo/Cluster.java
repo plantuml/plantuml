@@ -53,9 +53,18 @@ public class Cluster implements Clusterable {
 	private double y;
 	private double width;
 	private double height;
+	
+	private final double titleWidth;
+	private final double titleHeight;
 
-	public Cluster(Cluster parent) {
+//	public Cluster(Cluster parent) {
+//		this(parent, 100, 20);
+//	}
+//	
+	public Cluster(Cluster parent, double titleWidth, double titleHeight) {
 		this.parent = parent;
+		this.titleWidth = titleWidth;
+		this.titleHeight = titleHeight;
 		if (parent != null) {
 			parent.children.add(this);
 		}
@@ -132,6 +141,14 @@ public class Cluster implements Clusterable {
 
 	public final void setHeight(double height) {
 		this.height = height;
+	}
+
+	public final double getTitleWidth() {
+		return titleWidth;
+	}
+
+	public final double getTitleHeight() {
+		return titleHeight;
 	}
 
 

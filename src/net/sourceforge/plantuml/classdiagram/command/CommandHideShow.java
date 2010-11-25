@@ -56,7 +56,7 @@ public class CommandHideShow extends SingleLineCommand<ClassDiagram> {
 	public CommandHideShow(ClassDiagram classDiagram) {
 		super(
 				classDiagram,
-				"(?i)^(hide|show)\\s+(?:(class|interface|enum|abstract|[\\p{L}0-9_.]+|\\<\\<.*\\>\\>)\\s+)*?(?:(empty)\\s+)?(members?|attributes?|fields?|methods?|circle\\w*|stereotypes?)$");
+				"(?i)^(hide|show)\\s+(?:(class|interface|enum|abstract|[\\p{L}0-9_.]+|\"[^\"]+\"|\\<\\<.*\\>\\>)\\s+)*?(?:(empty)\\s+)?(members?|attributes?|fields?|methods?|circle\\w*|stereotypes?)$");
 	}
 
 	private final EntityGender emptyByGender(Set<EntityPortion> portion) {
