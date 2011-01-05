@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4179 $
+ * Revision $Revision: 5793 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -137,7 +137,7 @@ public class PngTitler {
 		}
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		textBloc.drawU(new UGraphicG2d(g2d, null), xText, yText);
+		textBloc.drawU(new UGraphicG2d(g2d, null, 1.0), xText, yText);
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		final double delta2 = (width - im.getWidth()) / 2;

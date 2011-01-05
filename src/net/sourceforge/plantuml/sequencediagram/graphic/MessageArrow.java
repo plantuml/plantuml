@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4855 $
+ * Revision $Revision: 5870 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -166,4 +166,5 @@ class MessageArrow extends Arrow {
 	public String toString(StringBounder stringBounder) {
 		return getMinX(stringBounder) + "-" + getMaxX(stringBounder);
 	}
+	
 }

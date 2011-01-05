@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5019 $
+ * Revision $Revision: 5751 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -56,7 +56,7 @@ public class CommandMultilinesNoteActivity extends CommandMultilines<ActivityDia
 
 	public final CommandExecutionResult execute(List<String> lines) {
 
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0));
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
 		final String pos = line0.get(0);
 
 		IEntity activity = getSystem().getLastEntityConsulted();
@@ -64,7 +64,7 @@ public class CommandMultilinesNoteActivity extends CommandMultilines<ActivityDia
 			activity = getSystem().getStart();
 		}
 
-		final List<String> strings = lines.subList(1, lines.size() - 1);
+		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		final String s = StringUtils.getMergedLines(strings);
 
 		final Entity note = getSystem().createEntity("GMN" + UniqueSequence.getValue(), s, EntityType.NOTE);

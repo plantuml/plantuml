@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5507 $
+ * Revision $Revision: 5794 $
  */
 package net.sourceforge.plantuml;
 
@@ -79,7 +79,10 @@ public class PSystemError extends AbstractPSystem {
 		this(source, Arrays.asList(errorUml));
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
+		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
+			throw new IllegalArgumentException("File is a directory "+suggestedFile);
+		}
 		OutputStream os = null;
 		try {
 			os = new FileOutputStream(suggestedFile);
@@ -92,7 +95,7 @@ public class PSystemError extends AbstractPSystem {
 		return Arrays.asList(suggestedFile);
 	}
 
-	public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
 		getPngError().writeImage(os, getMetadata(), fileFormat);
 	}
 

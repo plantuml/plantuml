@@ -78,7 +78,7 @@ public abstract class RegexComposed implements IRegex {
 	public Map<String, RegexPartialMatch> matcher(String s) {
 		final Matcher matcher = getFull().matcher(s);
 		if (matcher.find() == false) {
-			throw new IllegalArgumentException(s);
+			throw new IllegalArgumentException(getClass()+" "+s);
 		}
 
 		final Iterator<String> it = new MatcherIterator(matcher);

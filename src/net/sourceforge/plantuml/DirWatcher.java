@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5229 $
+ * Revision $Revision: 5794 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -77,7 +77,7 @@ public class DirWatcher {
 
 			if (previousModified == null || previousModified.longValue() != modified) {
 				final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
-						option.getConfig(), option.getCharset(), option.getFileFormat());
+						option.getConfig(), option.getCharset(), option.getFileFormatOption());
 				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
 					result.add(g);
 				}

@@ -46,43 +46,31 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.usecasediagram.UsecaseDiagram;
 
 public class CommandLinkUsecase2 extends SingleLineCommand2<UsecaseDiagram> {
 
-	private static final int FIRST_UC_AC_OR_GROUP = 0;
-	private static final int LEFT_TO_RIGHT = 1;
-	private static final int LEFT_TO_RIGHT_QUEUE = 2;
-	private static final int LEFT_TO_RIGHT_HEAD = 3;
-	private static final int RIGHT_TO_LEFT = 4;
-	private static final int RIGHT_TO_LEFT_HEAD = 5;
-	private static final int RIGHT_TO_LEFT_QUEUE = 6;
-	private static final int SECOND_UC_AC_OR_GROUP = 7;
-	private static final int LINK_LABEL = 8;
-
 	public CommandLinkUsecase2(UsecaseDiagram diagram) {
 		super(diagram, getRegexConcat());
-		// "(?i)^([\\p{L}0-9_.]+|:[^:]+:|\\((?!\\*\\))[^)]+\\))\\s*"
-		// + "(?:("
-		// +
-		// "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*|\\.+(?:left|right|up|down|le?|ri?|up?|do?)?\\.*)([\\]>]|\\|[>\\]])?"
-		// + ")|("
-		// +
-		// "([\\[<]|[<\\[]\\|)?([=-]*(?:left|right|up|down|le?|ri?|up?|do?)?[=-]+|\\.*(?:left|right|up|down|le?|ri?|up?|do?)?\\.+)"
-		// + "))" +
-		// "\\s*([\\p{L}0-9_.]+|:[^:]+:|\\((?!\\*\\))[^)]+\\))\\s*(?::\\s*([^\"]+))?$");
 	}
 
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), getGroup("ENT1"), new RegexLeaf("\\s*"), new RegexOr(new RegexLeaf(
-				"LEFT_TO_RIGHT", "(([-=.]+)(left|right|up|down|le?|ri?|up?|do?)?([-=.]*)([\\]>]|\\|[>\\]])?)"),
-				new RegexLeaf("RIGHT_TO_LEFT",
-						"(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")), new RegexLeaf(
-				"\\s*"), getGroup("ENT2"), new RegexLeaf("\\s*"), new RegexLeaf("LABEL_LINK", "(?::\\s*([^\"]+))?$"));
+		return new RegexConcat(
+				new RegexLeaf("^"),
+				getGroup("ENT1"),
+				new RegexLeaf("\\s*"),
+				new RegexOr(
+						new RegexLeaf("LEFT_TO_RIGHT", "(([-=.]+)(left|right|up|down|le?|ri?|up?|do?)?([-=.]*)([\\]>]|\\|[>\\]])?)"),
+						new RegexLeaf("RIGHT_TO_LEFT", "(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
+				new RegexLeaf("\\s*"),
+				getGroup("ENT2"),
+				new RegexLeaf("\\s*"),
+				new RegexLeaf("LABEL_LINK", "(?::\\s*([^\"]+))?$"));
 	}
 
 	private static RegexLeaf getGroup(String name) {
-		return new RegexLeaf(name, "([\\p{L}0-9_.]+|:[^:]+:|\\((?!\\*\\))[^)]+\\))");
+		return new RegexLeaf(name, "([\\p{L}0-9_.]+|:[^:]+:|\\((?!\\*\\))[^)]+\\))(?:\\s*(\\<\\<.*\\>\\>))?");
 	}
 
 	@Override
@@ -99,6 +87,13 @@ public class CommandLinkUsecase2 extends SingleLineCommand2<UsecaseDiagram> {
 
 		final IEntity cl1 = getSystem().getOrCreateClass(ent1);
 		final IEntity cl2 = getSystem().getOrCreateClass(ent2);
+		
+		if (arg.get("ENT1").get(1) != null) {
+			cl1.setStereotype(new Stereotype(arg.get("ENT1").get(1)));
+		}
+		if (arg.get("ENT2").get(1) != null) {
+			cl2.setStereotype(new Stereotype(arg.get("ENT2").get(1)));
+		}
 
 		final LinkType linkType = getLinkType(arg);
 		Direction dir = getDirection(arg);

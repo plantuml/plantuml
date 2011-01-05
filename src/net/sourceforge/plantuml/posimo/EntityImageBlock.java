@@ -78,7 +78,7 @@ public class EntityImageBlock implements IEntityImageBlock {
 
 		if (StringUtils.isNotEmpty(entity.getDisplay())) {
 			this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()),
-					param.getFont(titleParam), Color.BLACK, HorizontalAlignement.CENTER);
+					param.getFont(titleParam, null), Color.BLACK, HorizontalAlignement.CENTER);
 		} else {
 			this.name = null;
 		}

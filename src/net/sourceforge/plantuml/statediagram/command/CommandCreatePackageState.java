@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5742 $
  *
  */
 package net.sourceforge.plantuml.statediagram.command;
@@ -39,12 +39,13 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandCreatePackageState extends SingleLineCommand<StateDiagram> {
 
 	public CommandCreatePackageState(StateDiagram diagram) {
-		super(diagram, "(?i)^state\\s+(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)(?:\\s*\\{|\\s+begin)$");
+		super(diagram, "(?i)^state\\s+(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?(?:\\s*\\{|\\s+begin)$");
 	}
 
 	@Override
@@ -57,6 +58,13 @@ public class CommandCreatePackageState extends SingleLineCommand<StateDiagram> {
 		}
 		final Group p = getSystem().getOrCreateGroup(code, display, null, GroupType.STATE, currentPackage);
 		p.setRounded(true);
+		final String stereotype = arg.get(2);
+		if (stereotype != null) {
+			p.setStereotype(stereotype);
+		}
+		if (arg.get(3) != null && HtmlColor.isValid(arg.get(3))) {
+			p.setBackColor(new HtmlColor(arg.get(3)));
+		}
 		return CommandExecutionResult.ok();
 	}
 

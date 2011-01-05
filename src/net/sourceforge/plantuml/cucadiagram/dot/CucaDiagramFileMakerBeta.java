@@ -79,7 +79,7 @@ public final class CucaDiagramFileMakerBeta {
 
 		if (fileFormat == FileFormat.PNG) {
 			final List<File> result = new PngSplitter(suggested, diagram.getHorizontalPages(), diagram
-					.getVerticalPages(), diagram.getMetadata()).getFiles();
+					.getVerticalPages(), diagram.getMetadata(), 96).getFiles();
 			for (File f : result) {
 				Log.info("Creating file: " + f);
 			}
@@ -109,7 +109,7 @@ public final class CucaDiagramFileMakerBeta {
 		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, background);
 		BufferedImage im = builder.getBufferedImage();
 		Graphics2D g2d = builder.getGraphics2D();
-		UGraphicG2d ug = new UGraphicG2d(g2d, im);
+		UGraphicG2d ug = new UGraphicG2d(g2d, im, 1.0);
 		final PlayField playField = new PlayField(diagram.getSkinParam());
 
 		final Collection<IEntity> entities = getFirstLevelEntities();
@@ -122,15 +122,15 @@ public final class CucaDiagramFileMakerBeta {
 
 		final Dimension2D dim = playField.solve();
 
-		builder = new EmptyImageBuilder((int) (dim.getWidth() + 1), (int) (dim.getHeight() + 1), background);
+		builder = new EmptyImageBuilder(dim.getWidth() + 1, dim.getHeight() + 1, background);
 		im = builder.getBufferedImage();
 		g2d = builder.getGraphics2D();
 		g2d.translate(10, 0);
-		ug = new UGraphicG2d(g2d, im);
+		ug = new UGraphicG2d(g2d, im, 1.0);
 
 		playField.drawInternal(ug);
 
-		PngIO.write(im, os);
+		PngIO.write(im, os, 96);
 
 	}
 

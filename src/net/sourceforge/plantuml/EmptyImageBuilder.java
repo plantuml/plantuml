@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5579 $
+ * Revision $Revision: 5810 $
  *
  */
 package net.sourceforge.plantuml;
@@ -36,12 +36,17 @@ package net.sourceforge.plantuml;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
+
+	public EmptyImageBuilder(double width, double height, Color background) {
+		this((int) width, (int) height, background);
+	}
 
 	public EmptyImageBuilder(int width, int height, Color background) {
 		Log.info("Creating image " + width + "x" + height);
@@ -50,6 +55,13 @@ public class EmptyImageBuilder {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(background);
 		g2d.fillRect(0, 0, width, height);
+	}
+
+	public EmptyImageBuilder(int width, int height, Color background, double dpiFactor) {
+		this(width * dpiFactor, height * dpiFactor, background);
+		if (dpiFactor != 1.0) {
+			g2d.setTransform(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));
+		}
 	}
 
 	public BufferedImage getBufferedImage() {

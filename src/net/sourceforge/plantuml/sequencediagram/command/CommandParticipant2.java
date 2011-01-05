@@ -68,7 +68,7 @@ public class CommandParticipant2 extends SingleLineCommand<SequenceDiagram> {
 		if (stereotype != null) {
 			participant.setStereotype(new Stereotype(stereotype,
 					getSystem().getSkinParam().getCircledCharacterRadius(), getSystem().getSkinParam().getFont(
-							FontParam.CIRCLED_CHARACTER)));
+							FontParam.CIRCLED_CHARACTER, null)));
 		}
 		participant.setSpecificBackcolor(arg.get(4));
 

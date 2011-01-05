@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5218 $
+ * Revision $Revision: 5823 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -81,15 +81,17 @@ public class Rose implements Skin {
 
 		defaultsColor.put(ColorParam.stateBackground, new HtmlColor("#FEFECE"));
 		defaultsColor.put(ColorParam.stateBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.stateStart, new HtmlColor("black"));
+		defaultsColor.put(ColorParam.stateEnd, new HtmlColor("black"));
 
 		defaultsColor.put(ColorParam.usecaseBackground, new HtmlColor("#FEFECE"));
 		defaultsColor.put(ColorParam.usecaseBorder, new HtmlColor("#A80036"));
 		defaultsColor.put(ColorParam.componentBackground, new HtmlColor("#FEFECE"));
 		defaultsColor.put(ColorParam.componentBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.interfaceBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.interfaceBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.actorBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.actorBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.componentInterfaceBackground, new HtmlColor("#FEFECE"));
+		defaultsColor.put(ColorParam.componentInterfaceBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.usecaseActorBackground, new HtmlColor("#FEFECE"));
+		defaultsColor.put(ColorParam.usecaseActorBorder, new HtmlColor("#A80036"));
 
 		defaultsColor.put(ColorParam.sequenceActorBackground, new HtmlColor("#FEFECE"));
 		defaultsColor.put(ColorParam.sequenceActorBorder, new HtmlColor("#A80036"));
@@ -120,11 +122,16 @@ public class Rose implements Skin {
 	}
 
 	public Color getFontColor(ISkinParam skin, FontParam fontParam) {
-		return skin.getFontHtmlColor(fontParam).getColor();
+		return skin.getFontHtmlColor(fontParam, null).getColor();
+	}
+	
+	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color) {
+		return getHtmlColor(param, color, null);
 	}
 
-	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color) {
-		HtmlColor result = param.getHtmlColor(color);
+
+	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color, String stereotype) {
+		HtmlColor result = param.getHtmlColor(color, stereotype);
 		if (result == null) {
 			result = defaultsColor.get(color);
 			if (result == null) {
@@ -146,10 +153,10 @@ public class Rose implements Skin {
 		// final Color borderColor = getHtmlColor(param,
 		// ColorParam.border).getColor();
 
-		final Font fontArrow = param.getFont(FontParam.SEQUENCE_ARROW);
-		final Font fontGrouping = param.getFont(FontParam.SEQUENCE_GROUPING);
-		final Font fontParticipant = param.getFont(FontParam.SEQUENCE_PARTICIPANT);
-		final Font fontActor = param.getFont(FontParam.SEQUENCE_ACTOR);
+		final Font fontArrow = param.getFont(FontParam.SEQUENCE_ARROW, null);
+		final Font fontGrouping = param.getFont(FontParam.SEQUENCE_GROUPING, null);
+		final Font fontParticipant = param.getFont(FontParam.SEQUENCE_PARTICIPANT, null);
+		final Font fontActor = param.getFont(FontParam.SEQUENCE_ACTOR, null);
 
 		if (type == ComponentType.SELF_ARROW) {
 			return new ComponentRoseSelfArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
@@ -224,12 +231,12 @@ public class Rose implements Skin {
 		if (type == ComponentType.NOTE) {
 			final Color noteBackgroundColor = getHtmlColor(param, ColorParam.noteBackground).getColor();
 			final Color borderColor = getHtmlColor(param, ColorParam.noteBorder).getColor();
-			final Font fontNote = param.getFont(FontParam.NOTE);
+			final Font fontNote = param.getFont(FontParam.NOTE, null);
 			return new ComponentRoseNote(noteBackgroundColor, borderColor, getFontColor(param, FontParam.NOTE),
 					fontNote, stringsToDisplay);
 		}
 		if (type == ComponentType.GROUPING_HEADER) {
-			final Font fontGroupingHeader = param.getFont(FontParam.SEQUENCE_GROUPING_HEADER);
+			final Font fontGroupingHeader = param.getFont(FontParam.SEQUENCE_GROUPING_HEADER, null);
 			return new ComponentRoseGroupingHeader(getFontColor(param, FontParam.SEQUENCE_GROUPING_HEADER), background,
 					groundBackgroundColor, fontGroupingHeader, fontGrouping, stringsToDisplay);
 		}
@@ -256,11 +263,11 @@ public class Rose implements Skin {
 		}
 		if (type == ComponentType.DIVIDER) {
 			return new ComponentRoseDivider(getFontColor(param, FontParam.SEQUENCE_DIVIDER), param
-					.getFont(FontParam.SEQUENCE_DIVIDER), sequenceDividerBackground, stringsToDisplay);
+					.getFont(FontParam.SEQUENCE_DIVIDER, null), sequenceDividerBackground, stringsToDisplay);
 		}
 		if (type == ComponentType.TITLE) {
 			return new ComponentRoseTitle(getFontColor(param, FontParam.SEQUENCE_TITLE), param
-					.getFont(FontParam.SEQUENCE_TITLE), stringsToDisplay);
+					.getFont(FontParam.SEQUENCE_TITLE, null), stringsToDisplay);
 		}
 		if (type == ComponentType.SIGNATURE) {
 			return new ComponentRoseTitle(Color.BLACK, fontGrouping, Arrays.asList("This skin was created ",
@@ -270,7 +277,7 @@ public class Rose implements Skin {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceEngloberLine).getColor();
 			final Color backColor = getHtmlColor(param, ColorParam.sequenceEngloberBackground).getColor();
 			return new ComponentRoseEnglober(borderColor, backColor, stringsToDisplay, getFontColor(param,
-					FontParam.SEQUENCE_ENGLOBER), param.getFont(FontParam.SEQUENCE_ENGLOBER));
+					FontParam.SEQUENCE_ENGLOBER), param.getFont(FontParam.SEQUENCE_ENGLOBER, null));
 		}
 		return null;
 	}

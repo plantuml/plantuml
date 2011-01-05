@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5019 $
+ * Revision $Revision: 5727 $
  *
  */
 package net.sourceforge.plantuml.statediagram.command;
@@ -38,18 +38,14 @@ import java.util.List;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandCreateState extends SingleLineCommand<StateDiagram> {
 
 	public CommandCreateState(StateDiagram diagram) {
-		super(diagram, "(?i)^(?:state\\s+)(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)$");
+		super(diagram, "(?i)^(?:state\\s+)(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?$");
 	}
-
-	/*
-	 * @Override protected boolean isForbidden(String line) { if
-	 * (line.matches("^[\\p{L}0-9_.]+$")) { return true; } return false; }
-	 */
 
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
@@ -60,6 +56,14 @@ public class CommandCreateState extends SingleLineCommand<StateDiagram> {
 		}
 		final Entity ent = (Entity) getSystem().getOrCreateClass(code);
 		ent.setDisplay(display);
+
+		final String stereotype = arg.get(2);
+		if (stereotype != null) {
+			ent.setStereotype(new Stereotype(stereotype));
+		}
+		if (arg.get(3)!=null) {
+			ent.setSpecificBackcolor(arg.get(3));
+		}
 		return CommandExecutionResult.ok();
 	}
 

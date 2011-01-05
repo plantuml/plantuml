@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5884 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -45,13 +45,13 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandNoteOverSeveral extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandNoteOverSeveral(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^note\\s+over\\s+([\\p{L}0-9_.]+)\\s*\\,\\s*([\\p{L}0-9_.]+)\\s*(#\\w+)?\\s*:\\s*(.*)$");
+		super(sequenceDiagram, "(?i)^note\\s+over\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s*\\,\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?\\s*:\\s*(.*)$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Participant p1 = getSystem().getOrCreateParticipant(arg.get(0));
-		final Participant p2 = getSystem().getOrCreateParticipant(arg.get(1));
+		final Participant p1 = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0)));
+		final Participant p2 = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1)));
 		final List<String> strings = StringUtils.getWithNewlines(arg.get(3));
 		final Note note = new Note(p1, p2, strings);
 		note.setSpecificBackcolor(arg.get(2));

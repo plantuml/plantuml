@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5223 $
+ * Revision $Revision: 5721 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram;
@@ -52,7 +52,6 @@ public class ActivityDiagram extends CucaDiagram {
 	private IEntity lastEntityConsulted;
 	private IEntity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
-	private boolean acceptOldSyntaxForBranch = true;
 
 	private String getAutoBranch() {
 		return "#" + UniqueSequence.getValue();
@@ -63,7 +62,7 @@ public class ActivityDiagram extends CucaDiagram {
 		if (entityExist(code)) {
 			result = super.getOrCreateEntity(code, type);
 			if (result.getType() != type) {
-				throw new IllegalArgumentException("Already known: " + code);
+				throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
 				// return null;
 			}
 		} else {
@@ -73,8 +72,8 @@ public class ActivityDiagram extends CucaDiagram {
 		return result;
 	}
 
-	public void startIf() {
-		final IEntity br = createEntity(getAutoBranch(), "", EntityType.BRANCH);
+	public void startIf(String optionalCode) {
+		final IEntity br = createEntity(optionalCode == null ? getAutoBranch() : optionalCode, "", EntityType.BRANCH);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
 
@@ -151,14 +150,6 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public final void setLastEntityConsulted(IEntity lastEntityConsulted) {
 		this.lastEntityConsulted = lastEntityConsulted;
-	}
-
-	public final boolean isAcceptOldSyntaxForBranch() {
-		return acceptOldSyntaxForBranch;
-	}
-
-	public final void setAcceptOldSyntaxForBranch(boolean acceptOldSyntaxForBranch) {
-		this.acceptOldSyntaxForBranch = acceptOldSyntaxForBranch;
 	}
 
 	public IEntity createInnerActivity() {

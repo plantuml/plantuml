@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5190 $
+ * Revision $Revision: 5743 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -258,6 +258,16 @@ public class Group {
 
 	public final void setRankdir(Rankdir rankdir) {
 		this.rankdir = rankdir;
+	}
+	
+	private String stereotype;
+
+	public final void setStereotype(String stereotype) {
+		this.stereotype = stereotype;
+	}
+
+	public final String getStereotype() {
+		return stereotype;
 	}
 
 }

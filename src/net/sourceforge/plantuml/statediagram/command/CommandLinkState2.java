@@ -46,26 +46,30 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandLinkState2 extends SingleLineCommand2<StateDiagram> {
 
 	public CommandLinkState2(StateDiagram diagram) {
 		super(diagram, getRegex());
-		// "(?i)^([\\p{L}0-9_.]+|\\[\\*\\])\\s*" +
-		// "(-+(?:left|right|up|down|le?|ri?|up?|do?)?-*[\\]>])"
-		// + "\\s*([\\p{L}0-9_.]+|\\[\\*\\])\\s*(?::\\s*([^\"]+))?$");
 	}
 
 	static RegexConcat getRegex() {
-		return new RegexConcat(new RegexLeaf("^"), getStatePattern("ENT1"), new RegexLeaf("\\s*"), new RegexLeaf(
-				"ARROW", "((-+)(left|right|up|down|le?|ri?|up?|do?)?(-*)([\\]>]))"), new RegexLeaf("\\s*"),
-				getStatePattern("ENT2"), new RegexLeaf("\\s*"), new RegexLeaf("LABEL", "(?::\\s*([^\"]+))?"),
+		return new RegexConcat(
+				new RegexLeaf("^"),
+				getStatePattern("ENT1"),
+				new RegexLeaf("\\s*"),
+				new RegexLeaf("ARROW", "((-+)(left|right|up|down|le?|ri?|up?|do?)?(-*)([\\]>]))"),
+				new RegexLeaf("\\s*"),
+				getStatePattern("ENT2"),
+				new RegexLeaf("\\s*"),
+				new RegexLeaf("LABEL", "(?::\\s*([^\"]+))?"),
 				new RegexLeaf("$"));
 	}
 
 	private static RegexLeaf getStatePattern(String name) {
-		return new RegexLeaf(name, "([\\p{L}0-9_.]+|\\[\\*\\])");
+		return new RegexLeaf(name, "([\\p{L}0-9_.]+|\\[\\*\\])\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?");
 	}
 
 	@Override
@@ -75,6 +79,19 @@ public class CommandLinkState2 extends SingleLineCommand2<StateDiagram> {
 
 		final IEntity cl1 = getEntityStart(ent1);
 		final IEntity cl2 = getEntityEnd(ent2);
+		
+		if (arg.get("ENT1").get(1) != null) {
+			cl1.setStereotype(new Stereotype(arg.get("ENT1").get(1)));
+		}
+		if (arg.get("ENT1").get(2) != null) {
+			cl1.setSpecificBackcolor(arg.get("ENT1").get(2));
+		}
+		if (arg.get("ENT2").get(1) != null) {
+			cl2.setStereotype(new Stereotype(arg.get("ENT2").get(1)));
+		}
+		if (arg.get("ENT2").get(2) != null) {
+			cl2.setSpecificBackcolor(arg.get("ENT2").get(2));
+		}
 
 		String queue = arg.get("ARROW").get(1) + arg.get("ARROW").get(3);
 		final Direction dir = getDirection(arg);

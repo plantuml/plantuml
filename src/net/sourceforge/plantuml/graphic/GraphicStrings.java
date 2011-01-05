@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5326 $
+ * Revision $Revision: 5872 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -47,6 +47,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -95,14 +96,15 @@ public class GraphicStrings {
 		this.disableTextAliasing = disableTextAliasing;
 	}
 
-	public void writeImage(OutputStream os, FileFormat fileFormat) throws IOException {
+	public void writeImage(OutputStream os, FileFormatOption fileFormat) throws IOException {
 		writeImage(os, null, fileFormat);
 	}
 
-	public void writeImage(OutputStream os, String metadata, FileFormat fileFormat) throws IOException {
+	public void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption) throws IOException {
+		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final BufferedImage im = createImage();
-			PngIO.write(im, os, metadata);
+			PngIO.write(im, os, metadata, 96);
 		} else if (fileFormat == FileFormat.SVG || fileFormat == FileFormat.EPS_VIA_SVG) {
 			final UGraphicSvg svg = new UGraphicSvg(HtmlColor.getAsHtml(background), false);
 			drawU(svg);
@@ -121,16 +123,16 @@ public class GraphicStrings {
 		// BufferedImage im = builder.getBufferedImage();
 		Graphics2D g2d = builder.getGraphics2D();
 
-		final Dimension2D size = drawU(new UGraphicG2d(g2d, null));
+		final Dimension2D size = drawU(new UGraphicG2d(g2d, null, 1.0));
 		g2d.dispose();
 
-		builder = new EmptyImageBuilder((int) size.getWidth(), (int) size.getHeight(), background);
+		builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(), background);
 		final BufferedImage im = builder.getBufferedImage();
 		g2d = builder.getGraphics2D();
 		if (disableTextAliasing) {
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		}
-		drawU(new UGraphicG2d(g2d, null));
+		drawU(new UGraphicG2d(g2d, null, 1.0));
 		g2d.dispose();
 		return im;
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5436 $
+ * Revision $Revision: 5848 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -86,7 +86,7 @@ final public class CommandLinkClass extends SingleLineCommand<AbstractClassOrObj
 	public CommandLinkClass(AbstractClassOrObjectDiagram diagram) {
 		super(
 				diagram,
-				"(?i)^(?:@(\\d+)\\s+)?((?:"
+				"(?i)^(?:@([\\d.]+)\\s+)?((?:"
 						+ optionalKeywords(diagram.getUmlDiagramType())
 						+ "\\s+)?"
 						+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)|\\(\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*,\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*\\)"
@@ -225,7 +225,7 @@ final public class CommandLinkClass extends SingleLineCommand<AbstractClassOrObj
 			// }
 			// }
 		} else {
-			link.setWeight(Integer.parseInt(arg0));
+			link.setWeight(Double.parseDouble(arg0));
 		}
 	}
 

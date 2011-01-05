@@ -33,7 +33,6 @@ package net.sourceforge.plantuml.usecasediagram.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
@@ -69,13 +68,12 @@ public class CommandCreateActor extends SingleLineCommand<UsecaseDiagram> {
 			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
 			code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1));
 		}
-		final String stereotype = arg.get(2);
 		final Entity entity = (Entity) getSystem().getOrCreateClass(code);
 		entity.setDisplay(display);
 
+		final String stereotype = arg.get(2);
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER)));
+			entity.setStereotype(new Stereotype(stereotype));
 		}
 		return CommandExecutionResult.ok();
 	}

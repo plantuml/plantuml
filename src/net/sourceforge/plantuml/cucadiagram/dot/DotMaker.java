@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5581 $
+ * Revision $Revision: 5847 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -49,6 +49,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
@@ -100,7 +101,7 @@ final public class DotMaker implements GraphvizMaker {
 		this.dotStrings = dotStrings;
 		this.fileFormat = fileFormat;
 		if (data.getSkinParam().classAttributeIconSize() > 0) {
-			this.isVisibilityModifierPresent = data.getVisibilityImages().size() > 0;
+			this.isVisibilityModifierPresent = data.isThereVisibilityImages();
 		} else {
 			this.isVisibilityModifierPresent = false;
 		}
@@ -129,11 +130,11 @@ final public class DotMaker implements GraphvizMaker {
 		final boolean huge = data.getEntities().size() > 800;
 
 		sb.append("digraph unix {");
-		if (isJunit == false) {
+		//if (isJunit == false) {
 			for (String s : dotStrings) {
 				sb.append(s);
 			}
-		}
+		// }
 		sb.append("bgcolor=\"" + data.getSkinParam().getBackgroundColor().getAsHtml() + "\";");
 		if (huge) {
 			sb.append("size=\"400,400;\"");
@@ -146,6 +147,11 @@ final public class DotMaker implements GraphvizMaker {
 		sb.append("searchsize=500;");
 		if (data.getRankdir() == Rankdir.LEFT_TO_RIGHT) {
 			sb.append("rankdir=LR;");
+		}
+
+		if (data.getDpi() != 96) {
+			sb.append("dpi=" + data.getDpi() + ";");
+			sb.append("imagescale=both;");
 		}
 	}
 
@@ -185,27 +191,31 @@ final public class DotMaker implements GraphvizMaker {
 
 	private void printGroupNormal(StringBuilder sb, Group g) throws IOException {
 
+		final String stereo = g.getStereotype();
+
 		sb.append("subgraph " + g.getUid() + " {");
 		// sb.append("margin=10;");
 
-		sb.append("fontsize=\"" + data.getSkinParam().getFontSize(getFontParamForGroup()) + "\";");
-		final String fontFamily = data.getSkinParam().getFontFamily(getFontParamForGroup());
+		sb.append("fontsize=\"" + data.getSkinParam().getFontSize(getFontParamForGroup(), stereo) + "\";");
+		final String fontFamily = data.getSkinParam().getFontFamily(getFontParamForGroup(), stereo);
 		if (fontFamily != null) {
 			sb.append("fontname=\"" + fontFamily + "\";");
 		}
 
 		if (g.getDisplay() != null) {
-			sb.append("label=<" + manageHtmlIB(g.getDisplay(), getFontParamForGroup()) + ">;");
+			sb.append("label=<" + manageHtmlIB(g.getDisplay(), getFontParamForGroup(), stereo) + ">;");
 		}
-		final String fontColor = data.getSkinParam().getFontHtmlColor(getFontParamForGroup()).getAsHtml();
+		final String fontColor = data.getSkinParam().getFontHtmlColor(getFontParamForGroup(), stereo).getAsHtml();
 		sb.append("fontcolor=\"" + fontColor + "\";");
+
 		if (getGroupBackColor(g) != null) {
 			sb.append("fillcolor=\"" + getGroupBackColor(g).getAsHtml() + "\";");
 		}
+
 		if (g.getType() == GroupType.STATE) {
-			sb.append("color=" + getColorString(ColorParam.stateBorder) + ";");
+			sb.append("color=" + getColorString(ColorParam.stateBorder, stereo) + ";");
 		} else {
-			sb.append("color=" + getColorString(ColorParam.packageBorder) + ";");
+			sb.append("color=" + getColorString(ColorParam.packageBorder, stereo) + ";");
 		}
 		sb.append("style=\"" + getStyle(g) + "\";");
 
@@ -221,7 +231,7 @@ final public class DotMaker implements GraphvizMaker {
 	private HtmlColor getGroupBackColor(Group g) {
 		HtmlColor value = g.getBackColor();
 		if (value == null) {
-			value = data.getSkinParam().getHtmlColor(ColorParam.packageBackground);
+			value = data.getSkinParam().getHtmlColor(ColorParam.packageBackground, null);
 			// value = rose.getHtmlColor(this.data.getSkinParam(),
 			// ColorParam.packageBackground);
 		}
@@ -302,34 +312,35 @@ final public class DotMaker implements GraphvizMaker {
 		}
 		// sb.append(g.getUid() + "min->" + g.getUid() + "max;");
 
-		sb.append("fontsize=\"" + data.getSkinParam().getFontSize(getFontParamForGroup()) + "\";");
-		final String fontFamily = data.getSkinParam().getFontFamily(getFontParamForGroup());
+		sb.append("fontsize=\"" + data.getSkinParam().getFontSize(getFontParamForGroup(), null) + "\";");
+		final String fontFamily = data.getSkinParam().getFontFamily(getFontParamForGroup(), null);
 		if (fontFamily != null) {
 			sb.append("fontname=\"" + fontFamily + "\";");
 		}
 
 		if (g.getDisplay() != null) {
-			final StringBuilder label = new StringBuilder(manageHtmlIB(g.getDisplay(), getFontParamForGroup()));
+			final StringBuilder label = new StringBuilder(manageHtmlIB(g.getDisplay(), getFontParamForGroup(), null));
 			if (g.getEntityCluster().fields2().size() > 0) {
 				label.append("<BR ALIGN=\"LEFT\"/>");
 				for (Member att : g.getEntityCluster().fields2()) {
 					label.append(manageHtmlIB("  " + att.getDisplayWithVisibilityChar() + "  ",
-							FontParam.STATE_ATTRIBUTE));
+							FontParam.STATE_ATTRIBUTE, null));
 					label.append("<BR ALIGN=\"LEFT\"/>");
 				}
 			}
 			sb.append("label=<" + label + ">;");
 		}
 
-		final String fontColor = data.getSkinParam().getFontHtmlColor(getFontParamForGroup()).getAsHtml();
+		final String fontColor = data.getSkinParam().getFontHtmlColor(getFontParamForGroup(), null).getAsHtml();
 		sb.append("fontcolor=\"" + fontColor + "\";");
-		if (getGroupBackColor(g) != null) {
-			sb.append("fillcolor=\"" + getGroupBackColor(g).getAsHtml() + "\";");
+		final HtmlColor groupBackColor = getGroupBackColor(g);
+		if (groupBackColor != null) {
+			sb.append("fillcolor=\"" + groupBackColor.getAsHtml() + "\";");
 		}
 		if (g.getType() == GroupType.STATE) {
-			sb.append("color=" + getColorString(ColorParam.stateBorder) + ";");
+			sb.append("color=" + getColorString(ColorParam.stateBorder, null) + ";");
 		} else {
-			sb.append("color=" + getColorString(ColorParam.packageBorder) + ";");
+			sb.append("color=" + getColorString(ColorParam.packageBorder, null) + ";");
 		}
 		sb.append("style=\"" + getStyle(g) + "\";");
 
@@ -339,8 +350,17 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append("style=dotted;");
 			sb.append("label=\"i\";");
 		} else {
-			sb.append("style=invis;");
+
+			if (groupBackColor == null) {
+				sb.append("style=invis;");
+			} else {
+				final String colorBack = getColorString(ColorParam.background, null);
+				sb.append("fillcolor=" + colorBack + ";");
+				sb.append("color=" + colorBack + ";");
+				sb.append("style=\"filled,rounded\";");
+			}
 			sb.append("label=\"\";");
+
 		}
 
 		printGroups(sb, g);
@@ -373,14 +393,14 @@ final public class DotMaker implements GraphvizMaker {
 				sb.append("style=invis;");
 				sb.append("label=\"\";");
 			}
-			final String decorationColor = ",color=" + getColorString(getArrowColorParam());
+			final String decorationColor = ",color=" + getColorString(getArrowColorParam(), null);
 
 			sb.append(g.getUid() + "lab0 [shape=point,width=.01,label=\"\"" + decorationColor + "]");
 			String autolabel = autolinks.get(0).getLabel();
 			if (autolabel == null) {
 				autolabel = "";
 			}
-			sb.append(g.getUid() + "lab1 [label=<" + manageHtmlIB(autolabel, getArrowFontParam())
+			sb.append(g.getUid() + "lab1 [label=<" + manageHtmlIB(autolabel, getArrowFontParam(), null)
 					+ ">,shape=plaintext,margin=0];");
 			sb.append(g.getUid() + "lab0 -> " + g.getUid() + "lab1 [minlen=0,style=invis];");
 			sb.append("}"); // end of l
@@ -400,7 +420,7 @@ final public class DotMaker implements GraphvizMaker {
 				sb.append("style=invis;");
 				sb.append("label=\"\";");
 			}
-			final String decorationColor = ",color=" + getColorString(getArrowColorParam());
+			final String decorationColor = ",color=" + getColorString(getArrowColorParam(), null);
 			String label = fromEdgeLinks.get(i).getLabel();
 			if (label == null) {
 				label = "";
@@ -412,7 +432,7 @@ final public class DotMaker implements GraphvizMaker {
 					+ "v,arrowtail=none,arrowhead=none" + decorationColor + "];");
 			sb.append(g.getUid() + "fedge" + i + " -> " + fromEdgeLinks.get(i).getEntity2().getUid()
 					+ "[arrowtail=none,arrowhead=open" + decorationColor);
-			sb.append(",label=<" + manageHtmlIB(label, getArrowFontParam()) + ">];");
+			sb.append(",label=<" + manageHtmlIB(label, getArrowFontParam(), null) + ">];");
 
 		}
 		sb.append("}"); // end of a
@@ -481,17 +501,17 @@ final public class DotMaker implements GraphvizMaker {
 		final DrawFile noteLink = link.getImageFile();
 
 		if (link.getLabel() != null) {
-			decoration.append("label=<" + manageHtmlIB(link.getLabel(), getArrowFontParam()) + ">,");
+			decoration.append("label=<" + manageHtmlIB(link.getLabel(), getArrowFontParam(), null) + ">,");
 		} else if (noteLink != null) {
 			decoration
 					.append("label=<" + getHtmlForLinkNote(noteLink.getPngOrEps(fileFormat == FileFormat.EPS)) + ">,");
 		}
 
 		if (link.getQualifier1() != null) {
-			decoration.append("taillabel=<" + manageHtmlIB(link.getQualifier1(), getArrowFontParam()) + ">,");
+			decoration.append("taillabel=<" + manageHtmlIB(link.getQualifier1(), getArrowFontParam(), null) + ">,");
 		}
 		if (link.getQualifier2() != null) {
-			decoration.append("headlabel=<" + manageHtmlIB(link.getQualifier2(), getArrowFontParam()) + ">,");
+			decoration.append("headlabel=<" + manageHtmlIB(link.getQualifier2(), getArrowFontParam(), null) + ">,");
 		}
 		decoration.append(link.getType().getSpecificDecoration());
 		if (link.isInvis()) {
@@ -552,12 +572,12 @@ final public class DotMaker implements GraphvizMaker {
 	}
 
 	private StringBuilder getLinkDecoration() {
-		final StringBuilder decoration = new StringBuilder("[color=" + getColorString(getArrowColorParam()) + ",");
+		final StringBuilder decoration = new StringBuilder("[color=" + getColorString(getArrowColorParam(), null) + ",");
 
-		decoration.append("fontcolor=" + getFontColorString(getArrowFontParam()) + ",");
-		decoration.append("fontsize=\"" + data.getSkinParam().getFontSize(getArrowFontParam()) + "\",");
+		decoration.append("fontcolor=" + getFontColorString(getArrowFontParam(), null) + ",");
+		decoration.append("fontsize=\"" + data.getSkinParam().getFontSize(getArrowFontParam(), null) + "\",");
 
-		final String fontName = data.getSkinParam().getFontFamily(getArrowFontParam());
+		final String fontName = data.getSkinParam().getFontFamily(getArrowFontParam(), null);
 		if (fontName != null) {
 			decoration.append("fontname=\"" + fontName + "\",");
 		}
@@ -624,16 +644,16 @@ final public class DotMaker implements GraphvizMaker {
 		throw new IllegalStateException();
 	}
 
-	private String getColorString(ColorParam colorParam) {
-		return "\"" + rose.getHtmlColor(data.getSkinParam(), colorParam).getAsHtml() + "\"";
+	private String getColorString(ColorParam colorParam, String stereotype) {
+		return "\"" + rose.getHtmlColor(data.getSkinParam(), colorParam, stereotype).getAsHtml() + "\"";
 	}
 
-	private String getFontColorString(FontParam fontParam) {
-		return "\"" + getFontHtmlColor(fontParam).getAsHtml() + "\"";
+	private String getFontColorString(FontParam fontParam, String stereotype) {
+		return "\"" + getFontHtmlColor(fontParam, stereotype).getAsHtml() + "\"";
 	}
 
-	private HtmlColor getFontHtmlColor(FontParam fontParam) {
-		return data.getSkinParam().getFontHtmlColor(fontParam);
+	private HtmlColor getFontHtmlColor(FontParam fontParam, String stereotype) {
+		return data.getSkinParam().getFontHtmlColor(fontParam, stereotype);
 	}
 
 	private void eventuallySameRank(StringBuilder sb, Group entityPackage, Link link) {
@@ -718,10 +738,10 @@ final public class DotMaker implements GraphvizMaker {
 	private void printEntity(StringBuilder sb, IEntity entity, String headOrTail) throws IOException {
 		final EntityType type = entity.getType();
 		if (type == EntityType.LOLLIPOP) {
-			final String color1 = getColorString(ColorParam.classBackground);
-			final String color2 = getColorString(ColorParam.classBorder);
-			final String colorBack = getColorString(ColorParam.background);
-			final String labelLo = manageHtmlIB(entity.getDisplay(), FontParam.CLASS_ATTRIBUTE);
+			final String color1 = getColorString(ColorParam.classBackground, null);
+			final String color2 = getColorString(ColorParam.classBorder, null);
+			final String colorBack = getColorString(ColorParam.background, null);
+			final String labelLo = manageHtmlIB(entity.getDisplay(), FontParam.CLASS_ATTRIBUTE, null);
 			sb.append(entity.getUid() + " [fillcolor=" + color1 + ",color=" + color2 + ",style=\"filled\","
 					+ "shape=circle,width=0.12,height=0.12,label=\"\"];");
 			sb.append(entity.getUid() + " -> " + entity.getUid() + "[color=" + colorBack
@@ -738,39 +758,40 @@ final public class DotMaker implements GraphvizMaker {
 		if (type == EntityType.GROUP) {
 			return;
 		}
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 		if (type == EntityType.ABSTRACT_CLASS || type == EntityType.CLASS || type == EntityType.INTERFACE
 				|| type == EntityType.ENUM) {
-			String dec = " [fontcolor=" + getFontColorString(FontParam.CLASS) + ",margin=0,fillcolor="
-					+ getColorString(ColorParam.classBackground) + ",color=" + getColorString(ColorParam.classBorder)
-					+ ",style=filled,shape=box," + label;
+			String dec = " [fontcolor=" + getFontColorString(FontParam.CLASS, stereo) + ",margin=0,fillcolor="
+					+ getColorString(ColorParam.classBackground, stereo) + ",color="
+					+ getColorString(ColorParam.classBorder, stereo) + ",style=filled,shape=box," + label;
 			if (this.data.hasUrl() && entity.getUrl() != null) {
 				dec += ",URL=\"" + entity.getUrl() + "\"";
 			}
 			dec += "];";
 			sb.append(entity.getUid() + dec);
 		} else if (type == EntityType.OBJECT) {
-			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.CLASS) + ",margin=0,fillcolor="
-					+ getColorString(ColorParam.classBackground) + ",color=" + getColorString(ColorParam.classBorder)
-					+ ",style=filled,shape=record," + label + "];");
+			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.CLASS, stereo)
+					+ ",margin=0,fillcolor=" + getColorString(ColorParam.classBackground, stereo) + ",color="
+					+ getColorString(ColorParam.classBorder, stereo) + ",style=filled,shape=record," + label + "];");
 		} else if (type == EntityType.USECASE) {
-			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.USECASE) + ",fillcolor="
-					+ getColorString(ColorParam.usecaseBackground) + ",color="
-					+ getColorString(ColorParam.usecaseBorder) + ",style=filled," + label + "];");
+			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.USECASE, stereo) + ",fillcolor="
+					+ getColorString(ColorParam.usecaseBackground, stereo) + ",color="
+					+ getColorString(ColorParam.usecaseBorder, stereo) + ",style=filled," + label + "];");
 		} else if (type == EntityType.ACTOR) {
-			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.USECASE_ACTOR)
+			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.USECASE_ACTOR, stereo)
 					+ ",margin=0,shape=plaintext," + label + "];");
 		} else if (type == EntityType.CIRCLE_INTERFACE) {
 			sb.append(entity.getUid() + " [margin=0,shape=plaintext," + label + "];");
 		} else if (type == EntityType.COMPONENT) {
-			sb.append(entity.getUid() + " [margin=0.2,fontcolor=" + getFontColorString(FontParam.COMPONENT)
-					+ ",fillcolor=" + getColorString(ColorParam.componentBackground) + ",color="
-					+ getColorString(ColorParam.componentBorder) + ",style=filled,shape=component," + label + "];");
+			sb.append(entity.getUid() + " [margin=0.2,fontcolor=" + getFontColorString(FontParam.COMPONENT, stereo)
+					+ ",fillcolor=" + getColorString(ColorParam.componentBackground, stereo) + ",color="
+					+ getColorString(ColorParam.componentBorder, stereo) + ",style=filled,shape=component," + label
+					+ "];");
+		} else if (type == EntityType.NOTE && data.getDpi() != 96) {
+			sb.append(entity.getUid() + " [margin=0,pad=0,shape=plaintext,label=" + getLabelForNoteDpi(entity) + "];");
 		} else if (type == EntityType.NOTE) {
 			final DrawFile file = entity.getImageFile();
 			if (file == null) {
-				// sb.append(entity.getUid() + ";");
-				// Log.error("Warning : no file for NOTE");
-				// return;
 				throw new IllegalStateException("No file for NOTE");
 			}
 			if (file.getPngOrEps(fileFormat == FileFormat.EPS).exists() == false) {
@@ -784,13 +805,12 @@ final public class DotMaker implements GraphvizMaker {
 			if (entity.getImageFile() != null) {
 				shape = "rect";
 			}
-			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.ACTIVITY) + ",fillcolor="
-					+ getColorString(ColorParam.activityBackground) + ",color="
-					+ getColorString(ColorParam.activityBorder) + ",style=\"rounded,filled\",shape=" + shape + ","
-					+ label + "];");
+			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.ACTIVITY, stereo) + ",fillcolor="
+					+ getBackColorOfEntity(entity) + ",color=" + getColorString(ColorParam.activityBorder, stereo)
+					+ ",style=\"rounded,filled\",shape=" + shape + "," + label + "];");
 		} else if (type == EntityType.BRANCH) {
-			sb.append(entity.getUid() + " [fillcolor=" + getColorString(ColorParam.activityBackground) + ",color="
-					+ getColorString(ColorParam.activityBorder)
+			sb.append(entity.getUid() + " [fillcolor=" + getBackColorOfEntity(entity) + ",color="
+					+ getColorString(ColorParam.activityBorder, stereo)
 					+ ",style=\"filled\",shape=diamond,height=.25,width=.25,label=\"\"];");
 			// if (StringUtils.isNotEmpty(entity.getDisplay())) {
 			// sb.append(entity.getUid() + "->" + entity.getUid() +
@@ -798,27 +818,27 @@ final public class DotMaker implements GraphvizMaker {
 			// + "\",arrowtail=none,arrowhead=none,color=\"white\"];");
 			// }
 		} else if (type == EntityType.SYNCHRO_BAR) {
-			final String color = getColorString(ColorParam.activityBar);
+			final String color = getColorString(ColorParam.activityBar, null);
 			sb.append(entity.getUid() + " [fillcolor=" + color + ",color=" + color + ",style=\"filled\","
 					+ "shape=rect,height=.08,width=1.30,label=\"\"];");
 		} else if (type == EntityType.CIRCLE_START) {
-			final String color = getColorString(ColorParam.activityStart);
+			final String color = getColorString(getStartColorParam(), null);
 			sb.append(entity.getUid() + " [fillcolor=" + color + ",color=" + color + ",style=\"filled\","
 					+ "shape=circle,width=.20,height=.20,label=\"\"];");
 		} else if (type == EntityType.CIRCLE_END) {
-			final String color = getColorString(ColorParam.activityEnd);
+			final String color = getColorString(getEndColorParam(), null);
 			sb.append(entity.getUid() + " [fillcolor=" + color + ",color=" + color + ",style=\"filled\","
 					+ "shape=doublecircle,width=.13,height=.13,label=\"\"];");
 		} else if (type == EntityType.POINT_FOR_ASSOCIATION) {
-			sb.append(entity.getUid() + " [width=.05,shape=point,color=" + getColorString(ColorParam.classBorder)
+			sb.append(entity.getUid() + " [width=.05,shape=point,color=" + getColorString(ColorParam.classBorder, null)
 					+ "];");
 		} else if (type == EntityType.STATE) {
-			sb.append(entity.getUid() + " [color=" + getColorString(ColorParam.stateBorder)
-					+ ",shape=record,style=\"rounded,filled\",color=" + getColorString(ColorParam.stateBorder));
+			sb.append(entity.getUid() + " [color=" + getColorString(ColorParam.stateBorder, stereo)
+					+ ",shape=record,style=\"rounded,filled\",color=" + getColorString(ColorParam.stateBorder, stereo));
 			if (entity.getImageFile() == null) {
-				sb.append(",fillcolor=" + getColorString(ColorParam.stateBackground));
+				sb.append(",fillcolor=" + getBackColorOfEntity(entity));
 			} else {
-				sb.append(",fillcolor=" + getColorString(ColorParam.stateBackground));
+				sb.append(",fillcolor=" + getBackColorOfEntity(entity));
 				// sb.append(",fillcolor=\"" +
 				// data.getSkinParam().getBackgroundColor().getAsHtml() + "\"");
 			}
@@ -846,12 +866,32 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append(entity.getUid() + " [margin=0,pad=0," + label + ",style=dashed,shape=box,image=\"" + absolutePath
 					+ "\"];");
 		} else if (type == EntityType.EMPTY_PACKAGE) {
-			sb.append(entity.getUid() + " [margin=0.2,fontcolor=" + getFontColorString(FontParam.PACKAGE)
-					+ ",fillcolor=" + getColorString(ColorParam.packageBackground) + ",color="
-					+ getColorString(ColorParam.packageBorder) + ",style=filled,shape=tab," + label + "];");
+			sb.append(entity.getUid() + " [margin=0.2,fontcolor=" + getFontColorString(FontParam.PACKAGE, null)
+					+ ",fillcolor=" + getColorString(ColorParam.packageBackground, null) + ",color="
+					+ getColorString(ColorParam.packageBorder, null) + ",style=filled,shape=tab," + label + "];");
 		} else {
 			throw new IllegalStateException(type.toString() + " " + data.getUmlDiagramType());
 		}
+	}
+
+	private ColorParam getEndColorParam() {
+		if (data.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			return ColorParam.activityEnd;
+		}
+		if (data.getUmlDiagramType() == UmlDiagramType.STATE) {
+			return ColorParam.stateEnd;
+		}
+		throw new IllegalStateException(data.getUmlDiagramType().toString());
+	}
+
+	private ColorParam getStartColorParam() {
+		if (data.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			return ColorParam.activityStart;
+		}
+		if (data.getUmlDiagramType() == UmlDiagramType.STATE) {
+			return ColorParam.stateStart;
+		}
+		throw new IllegalStateException(data.getUmlDiagramType().toString());
 	}
 
 	private String getHeadOrTail(IEntity lollipop, Link link) {
@@ -897,9 +937,10 @@ final public class DotMaker implements GraphvizMaker {
 				sb.append(">");
 				return sb.toString();
 			}
-			return "label=" + getSimpleLabelAsHtml(entity, FontParam.ACTIVITY);
+			final String stereotype = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+			return "label=" + getSimpleLabelAsHtml(entity, FontParam.ACTIVITY, stereotype);
 		} else if (entity.getType() == EntityType.EMPTY_PACKAGE) {
-			return "label=" + getSimpleLabelAsHtml(entity, getFontParamForGroup());
+			return "label=" + getSimpleLabelAsHtml(entity, getFontParamForGroup(), null);
 		} else if (entity.getType() == EntityType.USECASE) {
 			return "label=" + getLabelForUsecase(entity);
 		} else if (entity.getType() == EntityType.STATE) {
@@ -908,23 +949,40 @@ final public class DotMaker implements GraphvizMaker {
 		return "label=\"" + entity.getDisplay() + "\"";
 	}
 
-	private String getSimpleLabelAsHtml(IEntity entity, FontParam param) {
-		return "<" + manageHtmlIB(entity.getDisplay(), param) + ">";
+	private String getSimpleLabelAsHtml(IEntity entity, FontParam param, String stereotype) {
+		return "<" + manageHtmlIB(entity.getDisplay(), param, stereotype) + ">";
+	}
+
+	private String getBackColorOfEntity(IEntity entity) {
+		if (entity.getSpecificBackColor() != null) {
+			return "\"" + entity.getSpecificBackColor().getAsHtml() + "\"";
+		}
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+		if (entity.getType() == EntityType.STATE || entity.getType() == EntityType.STATE_CONCURRENT) {
+			return getColorString(ColorParam.stateBackground, stereo);
+		}
+		if (entity.getType() == EntityType.ACTIVITY || entity.getType() == EntityType.ACTIVITY_CONCURRENT
+				|| entity.getType() == EntityType.BRANCH) {
+			return getColorString(ColorParam.activityBackground, stereo);
+		}
+		throw new IllegalArgumentException(entity.getType().toString());
 	}
 
 	private String getLabelForState(IEntity entity) throws IOException {
 		final DrawFile cFile = entity.getImageFile();
-		final String stateBgcolor = getColorString(ColorParam.stateBackground);
+		final String stateBgcolor = getBackColorOfEntity(entity);
+
+		final String stereotype = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 
 		final StringBuilder sb = new StringBuilder("<{<TABLE BGCOLOR=" + stateBgcolor
 				+ " BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
-		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.STATE) + "</TD></TR>");
+		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.STATE, stereotype) + "</TD></TR>");
 		sb.append("</TABLE>");
 
 		if (entity.fields2().size() > 0) {
 			sb.append("|");
 			for (Member att : entity.fields2()) {
-				sb.append(manageHtmlIB(att.getDisplayWithVisibilityChar(), FontParam.STATE_ATTRIBUTE));
+				sb.append(manageHtmlIB(att.getDisplayWithVisibilityChar(), FontParam.STATE_ATTRIBUTE, stereotype));
 				sb.append("<BR ALIGN=\"LEFT\"/>");
 			}
 		}
@@ -932,7 +990,13 @@ final public class DotMaker implements GraphvizMaker {
 		if (cFile != null) {
 			sb.append("|");
 			final String path = StringUtils.getPlateformDependentAbsolutePath(cFile.getPng());
-			final String bgcolor = "\"" + data.getSkinParam().getBackgroundColor().getAsHtml() + "\"";
+			final String bgcolor;
+			if (OptionFlags.PBBACK) {
+				bgcolor = stateBgcolor;
+			} else {
+				bgcolor = "\"" + data.getSkinParam().getBackgroundColor().getAsHtml() + "\"";
+			}
+			// PBBACK
 
 			sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 			sb.append("<TR>");
@@ -952,14 +1016,16 @@ final public class DotMaker implements GraphvizMaker {
 
 	private String getLabelForUsecase(IEntity entity) {
 		final Stereotype stereotype = getStereotype(entity);
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 		if (stereotype == null) {
-			return getSimpleLabelAsHtml(entity, FontParam.USECASE);
+			return getSimpleLabelAsHtml(entity, FontParam.USECASE, stereo);
 		}
 		final StringBuilder sb = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
 		if (isThereLabel(stereotype)) {
-			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.USECASE_STEREOTYPE) + "</TD></TR>");
+			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.USECASE_STEREOTYPE, stereo)
+					+ "</TD></TR>");
 		}
-		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.USECASE) + "</TD></TR>");
+		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.USECASE, stereo) + "</TD></TR>");
 		sb.append("</TABLE>>");
 		return sb.toString();
 	}
@@ -967,61 +1033,129 @@ final public class DotMaker implements GraphvizMaker {
 	private String getLabelForComponent(IEntity entity) {
 		final Stereotype stereotype = getStereotype(entity);
 		if (stereotype == null) {
-			return getSimpleLabelAsHtml(entity, FontParam.COMPONENT);
+			return getSimpleLabelAsHtml(entity, FontParam.COMPONENT, null);
 		}
+		final String stereo = stereotype.getLabel();
 		final StringBuilder sb = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
 		if (isThereLabel(stereotype)) {
-			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.COMPONENT_STEREOTYPE) + "</TD></TR>");
+			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.COMPONENT_STEREOTYPE, stereo)
+					+ "</TD></TR>");
 		}
-		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.COMPONENT) + "</TD></TR>");
+		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.COMPONENT, stereo) + "</TD></TR>");
 		sb.append("</TABLE>>");
 		return sb.toString();
 	}
 
+	private String getLabelForNoteDpi(IEntity entity) throws IOException {
+		final DrawFile file = entity.getImageFile();
+		if (file == null) {
+			throw new IllegalStateException("No file for NOTE");
+		}
+		if (file.getPngOrEps(fileFormat == FileFormat.EPS).exists() == false) {
+			throw new IllegalStateException();
+		}
+		final String absolutePath = StringUtils.getPlateformDependentAbsolutePath(file
+				.getPngOrEps(fileFormat == FileFormat.EPS));
+
+		final StringBuilder sb = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
+		sb.append("<TR>");
+		addTdImageBugB1983(sb, absolutePath);
+		sb.append("</TR>");
+		sb.append("</TABLE>>");
+		return sb.toString();
+	}
+
+	private void addTdImageBugB1983(final StringBuilder sb, final String absolutePath) throws IOException {
+		// http://www.graphviz.org/bugs/b1983.html
+		final BufferedImage im = ImageIO.read(new File(absolutePath));
+		final int height = im.getHeight();
+		final int width = im.getWidth();
+		final double f = 1.0 / data.getDpiFactor();
+		final int w = (int) (width * f);
+		final int h = (int) (height * f);
+		final int w2 = (int) (width * getMagicFactorForImageDpi());
+		final int h2 = (int) (height * getMagicFactorForImageDpi());
+		sb.append(getTdHeaderForDpi(w, h));
+		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
+		sb.append("<TR>");
+		sb.append(getTdHeaderForDpi(w2, h2));
+		sb.append("<IMG SCALE=\"TRUE\" SRC=\"" + absolutePath + "\"/>");
+		sb.append("</TD>");
+		sb.append("</TR>");
+		sb.append("</TABLE>");
+		sb.append("</TD>");
+	}
+
+	private double getMagicFactorForImageDpi() {
+		return 10500 / 100000.0;
+	}
+
 	private String getLabelForActor(IEntity entity) throws IOException {
-		final String actorAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(data.getStaticImages().get(
-				EntityType.ACTOR).getPngOrEps(fileFormat == FileFormat.EPS));
+		final String actorAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(entity.getImageFile()
+				.getPngOrEps(fileFormat == FileFormat.EPS));
 		final Stereotype stereotype = getStereotype(entity);
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 
 		final StringBuilder sb = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
 		if (isThereLabel(stereotype)) {
-			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.USECASE_ACTOR_STEREOTYPE)
+			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.USECASE_ACTOR_STEREOTYPE, stereo)
 					+ "</TD></TR>");
 		}
-		sb.append("<TR><TD><IMG SRC=\"" + actorAbsolutePath + "\"/></TD></TR>");
-		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.USECASE_ACTOR) + "</TD></TR>");
+		if (data.getDpi() == 96) {
+			sb.append("<TR><TD><IMG SRC=\"" + actorAbsolutePath + "\"/></TD></TR>");
+		} else {
+			sb.append("<TR>");
+			addTdImageBugB1983(sb, actorAbsolutePath);
+			sb.append("</TR>");
+		}
+		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.USECASE_ACTOR, stereo) + "</TD></TR>");
 		sb.append("</TABLE>>");
 		return sb.toString();
 
 	}
 
 	private String getLabelForCircleInterface(IEntity entity) throws IOException {
-		final String circleInterfaceAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(data.getStaticImages()
-				.get(EntityType.CIRCLE_INTERFACE).getPngOrEps(fileFormat == FileFormat.EPS));
+		final String circleInterfaceAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(entity.getImageFile()
+				.getPngOrEps(fileFormat == FileFormat.EPS));
 		final Stereotype stereotype = getStereotype(entity);
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 
 		final StringBuilder sb = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
 		if (isThereLabel(stereotype)) {
-			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.COMPONENT_STEREOTYPE) + "</TD></TR>");
+			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.COMPONENT_STEREOTYPE, stereo)
+					+ "</TD></TR>");
 		}
-		sb.append("<TR><TD><IMG SRC=\"" + circleInterfaceAbsolutePath + "\"/></TD></TR>");
-		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.COMPONENT) + "</TD></TR>");
+		sb.append("<TR>");
+		if (data.getDpi() == 96) {
+			sb.append("<TD><IMG SRC=\"" + circleInterfaceAbsolutePath + "\"/></TD>");
+		} else {
+			addTdImageBugB1983(sb, circleInterfaceAbsolutePath);
+		}
+		sb.append("</TR>");
+		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.COMPONENT, stereo) + "</TD></TR>");
 		sb.append("</TABLE>>");
 		return sb.toString();
 
 	}
 
 	private String getLabelForLollipop(IEntity entity) throws IOException {
-		final String circleInterfaceAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(data.getStaticImages()
-				.get(EntityType.LOLLIPOP).getPngOrEps(fileFormat == FileFormat.EPS));
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+		final String circleInterfaceAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(data.getStaticImages(
+				EntityType.LOLLIPOP, stereo).getPngOrEps(fileFormat == FileFormat.EPS));
 		final Stereotype stereotype = getStereotype(entity);
 
 		final StringBuilder sb = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">");
 		if (isThereLabel(stereotype)) {
-			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.CLASS) + "</TD></TR>");
+			sb.append("<TR><TD>" + manageHtmlIB(stereotype.getLabel(), FontParam.CLASS, null) + "</TD></TR>");
 		}
-		sb.append("<TR><TD><IMG SRC=\"" + circleInterfaceAbsolutePath + "\"/></TD></TR>");
-		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.CLASS) + "</TD></TR>");
+		sb.append("<TR>");
+		if (data.getDpi() == 96) {
+			sb.append("<TD><IMG SRC=\"" + circleInterfaceAbsolutePath + "\"/></TD>");
+		} else {
+			addTdImageBugB1983(sb, circleInterfaceAbsolutePath);
+		}
+		sb.append("</TR>");
+		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.CLASS, null) + "</TD></TR>");
 		sb.append("</TABLE>>");
 		return sb.toString();
 
@@ -1038,7 +1172,8 @@ final public class DotMaker implements GraphvizMaker {
 	private String getLabelForClassOrInterfaceOrEnumOld(IEntity entity) throws IOException {
 		DrawFile cFile = entity.getImageFile();
 		if (cFile == null) {
-			cFile = data.getStaticImages().get(entity.getType());
+			final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+			cFile = data.getStaticImages(entity.getType(), stereo);
 		}
 		if (cFile == null) {
 			throw new IllegalStateException();
@@ -1056,10 +1191,12 @@ final public class DotMaker implements GraphvizMaker {
 		final boolean showFields = data.showPortion(EntityPortion.FIELD, entity);
 		final boolean showMethods = data.showPortion(EntityPortion.METHOD, entity);
 
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+
 		if (showFields == false && showMethods == false) {
 			sb.append(getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(entity, circleAbsolutePath, 1, true, 1));
 		} else {
-			sb.append("<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground)
+			sb.append("<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground, stereo)
 					+ " BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">");
 			sb.append("<TR><TD>");
 			final int longuestFieldOrAttribute = getLongestFieldOrAttribute(entity);
@@ -1075,10 +1212,10 @@ final public class DotMaker implements GraphvizMaker {
 				// sb.append(addFieldsEps(entity.fields2(), true));
 				// } else {
 				final boolean hasStatic = hasStatic(entity.fields2());
-				sb.append("<TR ALIGN=\"LEFT\"><TD WIDTH=\"55\" ALIGN=\"LEFT\">");
+				sb.append("<TR ALIGN=\"LEFT\"><TD " + getWitdh55() + " ALIGN=\"LEFT\">");
 				for (Member att : entity.fields2()) {
-					sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic,
-							getColorString(ColorParam.classBackground), true));
+					sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic, getColorString(
+							ColorParam.classBackground, stereo), true));
 					sb.append("<BR ALIGN=\"LEFT\"/>");
 				}
 				sb.append("</TD></TR>");
@@ -1091,8 +1228,8 @@ final public class DotMaker implements GraphvizMaker {
 				final boolean hasStatic = hasStatic(entity.methods2());
 				sb.append("<TR ALIGN=\"LEFT\"><TD ALIGN=\"LEFT\">");
 				for (Member att : entity.methods2()) {
-					sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic,
-							getColorString(ColorParam.classBackground), true));
+					sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic, getColorString(
+							ColorParam.classBackground, stereo), true));
 					sb.append("<BR ALIGN=\"LEFT\"/>");
 				}
 				sb.append("</TD></TR>");
@@ -1119,10 +1256,10 @@ final public class DotMaker implements GraphvizMaker {
 			}
 			texts.add(s);
 		}
-		final Font font = data.getSkinParam().getFont(FontParam.CLASS_ATTRIBUTE);
-		final Color color = getFontHtmlColor(FontParam.CLASS_ATTRIBUTE).getColor();
+		final Font font = data.getSkinParam().getFont(FontParam.CLASS_ATTRIBUTE, null);
+		final Color color = getFontHtmlColor(FontParam.CLASS_ATTRIBUTE, null).getColor();
 		final TextBlock text = TextBlockUtils.create(texts, font, color, HorizontalAlignement.LEFT);
-		final File feps = CucaDiagramFileMaker.createTempFile("member", ".eps");
+		final File feps = FileUtils.createTempFile("member", ".eps");
 		UGraphicEps.copyEpsToFile(new UDrawable() {
 			public void drawU(UGraphic ug) {
 				text.drawU(ug, 0, 0);
@@ -1134,8 +1271,6 @@ final public class DotMaker implements GraphvizMaker {
 
 		return "<TR ALIGN=\"LEFT\"><TD ALIGN=\"LEFT\">" + "<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\">"
 				+ "<TR><TD><IMG SRC=\"" + path + "\"/>" + "</TD>" + "<TD></TD>" + "</TR></TABLE></TD></TR>";
-		// return "<TR ALIGN=\"LEFT\"><TD WIDTH=\"55\"
-		// ALIGN=\"LEFT\">toto</TD></TR>";
 	}
 
 	private boolean hasStatic(Collection<Member> attributes) {
@@ -1150,7 +1285,8 @@ final public class DotMaker implements GraphvizMaker {
 	private String getLabelForClassOrInterfaceOrEnumWithVisibilityImage(IEntity entity) throws IOException {
 		DrawFile cFile = entity.getImageFile();
 		if (cFile == null) {
-			cFile = data.getStaticImages().get(entity.getType());
+			final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+			cFile = data.getStaticImages(entity.getType(), stereo);
 		}
 		if (cFile == null) {
 			throw new IllegalStateException();
@@ -1170,6 +1306,7 @@ final public class DotMaker implements GraphvizMaker {
 		if (showFields == false && showMethods == false) {
 			sb.append(getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(entity, circleAbsolutePath, 1, true, 1));
 		} else {
+			final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 			final int longuestHeader = getLonguestHeader(entity);
 			final int spring = computeSpring(longuestHeader, getLongestFieldOrAttribute(entity), 30);
 			final int springField = computeSpring(getLongestField(entity), Math.max(longuestHeader,
@@ -1177,7 +1314,7 @@ final public class DotMaker implements GraphvizMaker {
 			final int springMethod = computeSpring(getLongestMethods(entity), Math.max(longuestHeader,
 					getLongestField(entity)), 30);
 
-			sb.append("<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground)
+			sb.append("<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground, stereo)
 					+ " BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">");
 			sb.append("<TR><TD>");
 
@@ -1185,7 +1322,7 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append("</TD></TR>");
 
 			if (showFields) {
-				sb.append("<TR><TD WIDTH=\"55\">");
+				sb.append("<TR><TD " + getWitdh55() + ">");
 				if (entity.fields2().size() > 0) {
 					buildTableVisibility(entity, true, sb, springField);
 				}
@@ -1222,21 +1359,32 @@ final public class DotMaker implements GraphvizMaker {
 		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 
 		final boolean hasStatic = hasStatic(entity.methods2());
+		final boolean dpiNormal = data.getDpi() == 96;
 		for (Member att : isField ? entity.fields2() : entity.methods2()) {
-			sb.append("<TR><TD WIDTH=\"10\">");
+			sb.append("<TR>");
+			if (dpiNormal) {
+				sb.append("<TD WIDTH=\"10\">");
+			}
 			String s = att.getDisplayWithVisibilityChar();
 			final VisibilityModifier visibilityModifier = VisibilityModifier
 					.getVisibilityModifier(s.charAt(0), isField);
 			if (visibilityModifier != null) {
-				final String modifierFile = StringUtils.getPlateformDependentAbsolutePath(data.getVisibilityImages()
-						.get(visibilityModifier).getPngOrEps(fileFormat == FileFormat.EPS));
-				sb.append("<IMG SRC=\"" + modifierFile + "\"/>");
+				final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+				final String modifierFile = StringUtils.getPlateformDependentAbsolutePath(data.getVisibilityImages(
+						visibilityModifier, stereo).getPngOrEps(fileFormat == FileFormat.EPS));
+				if (dpiNormal) {
+					sb.append("<IMG SRC=\"" + modifierFile + "\"/>");
+				} else {
+					addTdImageBugB1983(sb, modifierFile);
+				}
 				s = s.substring(1);
 			}
-			sb.append("</TD><TD ALIGN=\"LEFT\">");
-			sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic,
-					getColorString(ColorParam.classBackground), false));
-			// sb.append(manageHtmlIB(s, FontParam.CLASS_ATTRIBUTE));
+			if (dpiNormal) {
+				sb.append("</TD>");
+			}
+			sb.append("<TD ALIGN=\"LEFT\">");
+			sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic, getColorString(
+					ColorParam.classBackground, null), false));
 			sb.append("</TD>");
 			for (int i = 0; i < spring; i++) {
 				sb.append("<TD></TD>");
@@ -1299,17 +1447,20 @@ final public class DotMaker implements GraphvizMaker {
 		final int springField = computeSpring(getLongestField(entity), Math.max(longuestHeader,
 				getLongestMethods(entity)), 30);
 
-		final StringBuilder sb = new StringBuilder("<<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground)
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+
+		final StringBuilder sb = new StringBuilder("<<TABLE BGCOLOR="
+				+ getColorString(ColorParam.classBackground, stereo)
 				+ " BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">");
 		sb.append("<TR><TD>");
 
 		sb.append(getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(entity, null, spring, false, 0));
 
 		sb.append("</TD></TR>");
-		sb.append("<TR><TD WIDTH=\"55\">");
+		sb.append("<TR><TD " + getWitdh55() + ">");
 
 		if (entity.fields2().size() == 0) {
-			sb.append(manageHtmlIB(" ", FontParam.OBJECT_ATTRIBUTE));
+			sb.append(manageHtmlIB(" ", FontParam.OBJECT_ATTRIBUTE, stereo));
 		} else {
 			buildTableVisibility(entity, true, sb, springField);
 		}
@@ -1322,7 +1473,11 @@ final public class DotMaker implements GraphvizMaker {
 	}
 
 	private String getLabelForObjectOld(IEntity entity) throws IOException {
-		final StringBuilder sb = new StringBuilder("<<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground)
+
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+
+		final StringBuilder sb = new StringBuilder("<<TABLE BGCOLOR="
+				+ getColorString(ColorParam.classBackground, stereo)
 				+ " BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">");
 		sb.append("<TR><TD>");
 
@@ -1333,13 +1488,13 @@ final public class DotMaker implements GraphvizMaker {
 		sb.append(getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(entity, null, spring, false, 0));
 
 		sb.append("</TD></TR>");
-		sb.append("<TR ALIGN=\"LEFT\"><TD WIDTH=\"55\" ALIGN=\"LEFT\">");
+		sb.append("<TR ALIGN=\"LEFT\"><TD " + getWitdh55() + " ALIGN=\"LEFT\">");
 
 		if (entity.fields2().size() == 0) {
-			sb.append(manageHtmlIB(" ", FontParam.OBJECT_ATTRIBUTE));
+			sb.append(manageHtmlIB(" ", FontParam.OBJECT_ATTRIBUTE, stereo));
 		} else {
 			for (Member att : entity.fields2()) {
-				sb.append(manageHtmlIB(att.getDisplayWithVisibilityChar(), FontParam.OBJECT_ATTRIBUTE));
+				sb.append(manageHtmlIB(att.getDisplayWithVisibilityChar(), FontParam.OBJECT_ATTRIBUTE, stereo));
 				sb.append("<BR ALIGN=\"LEFT\"/>");
 			}
 		}
@@ -1350,13 +1505,20 @@ final public class DotMaker implements GraphvizMaker {
 		return sb.toString();
 	}
 
-	private String manageHtmlIB(String s, FontParam param) {
+	private String getWitdh55() {
+		if (data.getDpi() == 96) {
+			return "WIDTH=\"55\"";
+		}
+		return "WIDTH=\"55\"";
+	}
+
+	private String manageHtmlIB(String s, FontParam param, String stereotype) {
 		s = unicode(s);
-		final int fontSize = data.getSkinParam().getFontSize(param);
-		final int style = data.getSkinParam().getFontStyle(param);
-		final String fontFamily = data.getSkinParam().getFontFamily(param);
-		final DotExpression dotExpression = new DotExpression(s, fontSize, getFontHtmlColor(param), fontFamily, style,
-				fileFormat);
+		final int fontSize = data.getSkinParam().getFontSize(param, stereotype);
+		final int style = data.getSkinParam().getFontStyle(param, stereotype);
+		final String fontFamily = data.getSkinParam().getFontFamily(param, stereotype);
+		final DotExpression dotExpression = new DotExpression(s, fontSize, getFontHtmlColor(param, stereotype),
+				fontFamily, style, fileFormat);
 		final String result = dotExpression.getDotHtml();
 		if (dotExpression.isUnderline()) {
 			underline = true;
@@ -1371,12 +1533,12 @@ final public class DotMaker implements GraphvizMaker {
 			prefix = "<FONT COLOR=" + backColor + ">_</FONT>";
 		}
 		if (att.isAbstract()) {
-			return prefix + manageHtmlIB("<i>" + att.getDisplay(withVisibilityChar), param);
+			return prefix + manageHtmlIB("<i>" + att.getDisplay(withVisibilityChar), param, null);
 		}
 		if (att.isStatic()) {
-			return manageHtmlIB("<u>" + att.getDisplay(withVisibilityChar), param);
+			return manageHtmlIB("<u>" + att.getDisplay(withVisibilityChar), param, null);
 		}
-		return prefix + manageHtmlIB(att.getDisplay(withVisibilityChar), param);
+		return prefix + manageHtmlIB(att.getDisplay(withVisibilityChar), param, null);
 	}
 
 	private String manageSpace(int size) {
@@ -1400,21 +1562,32 @@ final public class DotMaker implements GraphvizMaker {
 	}
 
 	private String getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnumNoSpring(IEntity entity,
-			final String circleAbsolutePath, int cellSpacing, boolean classes) {
+			final String circleAbsolutePath, int cellSpacing, boolean classes) throws IOException {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"" + cellSpacing + "\" CELLPADDING=\"0\">");
 		sb.append("<TR>");
 		if (circleAbsolutePath == null) {
 			sb.append("<TD>");
 		} else {
-			sb.append("<TD ALIGN=\"RIGHT\">");
-			sb.append("<IMG SRC=\"" + circleAbsolutePath + "\"/></TD>");
+			if (data.getDpi() == 96) {
+				sb.append("<TD ALIGN=\"RIGHT\">");
+				sb.append("<IMG SRC=\"" + circleAbsolutePath + "\"/></TD>");
+			} else {
+				addTdImageBugB1983(sb, circleAbsolutePath);
+
+			}
 			sb.append("<TD ALIGN=\"LEFT\">");
 		}
 
 		appendLabelAndStereotype(entity, sb, classes);
 		sb.append("</TD></TR></TABLE>");
 		return sb.toString();
+	}
+
+	private String getTdHeaderForDpi(final double w, final double h) {
+		// return "<TD BGCOLOR=\"#000000\" FIXEDSIZE=\"TRUE\" WIDTH=\"" + w +
+		// "\" HEIGHT=\"" + h + "\">";
+		return "<TD FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">";
 	}
 
 	private String getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(IEntity entity, final String circleAbsolutePath,
@@ -1435,11 +1608,15 @@ final public class DotMaker implements GraphvizMaker {
 
 		if (circleAbsolutePath != null) {
 			if (circleAbsolutePath.endsWith(".png")) {
-				final BufferedImage im = ImageIO.read(new File(circleAbsolutePath));
-				final int height = im.getHeight();
-				final int width = im.getWidth();
-				sb.append("<TD FIXEDSIZE=\"TRUE\" WIDTH=\"" + width + "\" HEIGHT=\"" + height + "\"><IMG SRC=\""
-						+ circleAbsolutePath + "\"/></TD>");
+				if (data.getDpi() == 96) {
+					final BufferedImage im = ImageIO.read(new File(circleAbsolutePath));
+					final int height = im.getHeight();
+					final int width = im.getWidth();
+					sb.append("<TD FIXEDSIZE=\"TRUE\" WIDTH=\"" + width + "\" HEIGHT=\"" + height + "\"><IMG SRC=\""
+							+ circleAbsolutePath + "\"/></TD>");
+				} else {
+					addTdImageBugB1983(sb, circleAbsolutePath);
+				}
 			} else if (circleAbsolutePath.endsWith(".eps")) {
 				sb.append("<TD><IMG SRC=\"" + circleAbsolutePath + "\"/></TD>");
 			}
@@ -1458,10 +1635,11 @@ final public class DotMaker implements GraphvizMaker {
 
 	private void appendLabelAndStereotype(IEntity entity, final StringBuilder sb, boolean classes) {
 		final Stereotype stereotype = getStereotype(entity);
+		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 		if (isThereLabel(stereotype)) {
 			sb.append("<BR ALIGN=\"LEFT\"/>");
 			sb.append(manageHtmlIB(stereotype.getLabel(), classes ? FontParam.CLASS_STEREOTYPE
-					: FontParam.OBJECT_STEREOTYPE));
+					: FontParam.OBJECT_STEREOTYPE, stereo));
 			sb.append("<BR/>");
 		}
 		String display = entity.getDisplay();
@@ -1470,7 +1648,7 @@ final public class DotMaker implements GraphvizMaker {
 		if (italic) {
 			display = "<i>" + display;
 		}
-		sb.append(manageHtmlIB(display, classes ? FontParam.CLASS : FontParam.OBJECT));
+		sb.append(manageHtmlIB(display, classes ? FontParam.CLASS : FontParam.OBJECT, stereo));
 	}
 
 	private String getHtmlHeaderTableForClassOrInterfaceOrEnumNew(Entity entity, final String circleAbsolutePath) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4826 $
+ * Revision $Revision: 5794 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
@@ -85,7 +86,7 @@ abstract class AbstractGraphviz implements Graphviz {
 		}
 
 		if (illegalDotExe()) {
-			createPngNoGraphviz(os, FileFormat.valueOf(type[0].toUpperCase()));
+			createPngNoGraphviz(os, new FileFormatOption(FileFormat.valueOf(type[0].toUpperCase())));
 			return;
 		}
 		final String cmd = getCommandLine();
@@ -133,7 +134,7 @@ abstract class AbstractGraphviz implements Graphviz {
 		return sb.toString().replace('\n', ' ').trim();
 	}
 
-	final private void createPngNoGraphviz(OutputStream os, FileFormat format) throws IOException {
+	final private void createPngNoGraphviz(OutputStream os, FileFormatOption format) throws IOException {
 		final List<String> msg = new ArrayList<String>();
 		msg.add("Dot Executable: " + dotExe);
 		if (dotExe != null) {

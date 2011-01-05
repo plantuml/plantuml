@@ -28,11 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3883 $
+ * Revision $Revision: 5877 $
  *
  */
 package net.sourceforge.plantuml;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -58,7 +61,8 @@ public class SignatureUtils {
 	}
 
 	public static String getSignatureWithoutImgSrc(String s) {
-		return getSignature(purge(s));
+		s = getSignature(purge(s));
+		return s;
 	}
 
 	public static String purge(String s) {
@@ -67,5 +71,26 @@ public class SignatureUtils {
 		final String regex2 = "(?i)image=\"(?:[^\"]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\"";
 		s = s.replaceAll(regex2, "image=\"$1$2\"");
 		return s;
+	}
+
+	public static String getSignature(File f) throws IOException {
+		try {
+			final AsciiEncoder coder = new AsciiEncoder();
+			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
+			final FileInputStream is = new FileInputStream(f);
+			int read = -1;
+			while ((read = is.read()) != -1) {
+				msgDigest.update((byte) read);
+			}
+			is.close();
+			final byte[] digest = msgDigest.digest();
+			return coder.encode(digest);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			throw new IllegalStateException();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new IllegalStateException();
+		}
 	}
 }

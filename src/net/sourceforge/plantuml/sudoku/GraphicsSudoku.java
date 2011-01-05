@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4125 $
+ * Revision $Revision: 5872 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -61,7 +61,7 @@ public class GraphicsSudoku {
 
 	public void writeImage(OutputStream os) throws IOException {
 		final BufferedImage im = createImage();
-		PngIO.write(im, os);
+		PngIO.write(im, os, 96);
 	}
 
 	final private int xOffset = 5;

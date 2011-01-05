@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5884 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -46,12 +46,12 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandNoteSequence extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandNoteSequence(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^note\\s+(right|left|over)\\s+(?:of\\s+)?([\\p{L}0-9_.]+)\\s*(#\\w+)?\\s*:\\s*(.*)$");
+		super(sequenceDiagram, "(?i)^note\\s+(right|left|over)\\s+(?:of\\s+)?([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?\\s*:\\s*(.*)$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Participant p = getSystem().getOrCreateParticipant(arg.get(1));
+		final Participant p = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1)));
 
 		final NotePosition position = NotePosition.valueOf(arg.get(0).toUpperCase());
 

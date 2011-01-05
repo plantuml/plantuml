@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5271 $
+ * Revision $Revision: 5829 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -116,16 +116,6 @@ class DrawableSet {
 	public GraphicalElement getEvent(Event ev) {
 		return events.get(ev);
 	}
-
-	// public double getHeadHeightOld(StringBounder stringBounder) {
-	// double r = 0;
-	// for (LivingParticipantBox livingParticipantBox : participants.values()) {
-	// final double y =
-	// livingParticipantBox.getParticipantBox().getHeadHeight(stringBounder);
-	// r = Math.max(r, y);
-	// }
-	// return r;
-	// }
 
 	public double getHeadHeight(StringBounder stringBounder) {
 		double r = 0;

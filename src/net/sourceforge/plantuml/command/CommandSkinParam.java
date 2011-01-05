@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5769 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 public class CommandSkinParam extends SingleLineCommand<UmlDiagram> {
 
 	public CommandSkinParam(UmlDiagram diagram) {
-		super(diagram, "(?i)^skinparam\\s+(\\w+)\\s+(.*)$");
+		super(diagram, "(?i)^skinparam\\s+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)\\s+([^{}]*)$");
 	}
 
 	@Override

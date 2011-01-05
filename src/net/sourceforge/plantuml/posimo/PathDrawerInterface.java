@@ -153,6 +153,9 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private Point2D drawSymbol(UGraphic ug, double theta, final Point2D position, LinkDecor decor) {
+		if (1==1) {
+			return null;
+		}
 		Point2D middle1 = null;
 		// final double theta = Math.atan2(
 		// -direction.getX() + position.getX(), direction.getY()

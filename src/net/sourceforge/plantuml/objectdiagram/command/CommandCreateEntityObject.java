@@ -61,7 +61,7 @@ public class CommandCreateEntityObject extends SingleLineCommand<ObjectDiagram> 
 		final Entity entity = getSystem().createEntity(code, display, EntityType.OBJECT);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER)));
+					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
 		}
 		return CommandExecutionResult.ok();
 	}

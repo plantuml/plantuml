@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5636 $
+ * Revision $Revision: 5870 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -101,5 +101,5 @@ public class LivingParticipantBox implements InGroupable {
 	public String toString(StringBounder stringBounder) {
 		return toString();
 	}
-
+	
 }

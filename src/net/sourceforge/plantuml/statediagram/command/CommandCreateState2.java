@@ -38,12 +38,13 @@ import java.util.List;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandCreateState2 extends SingleLineCommand<StateDiagram> {
 
 	public CommandCreateState2(StateDiagram diagram) {
-		super(diagram, "(?i)^(?:state\\s+)([\\p{L}0-9_.]+)\\s+as\\s+\"([^\"]+)\"$");
+		super(diagram, "(?i)^(?:state\\s+)([\\p{L}0-9_.]+)\\s+as\\s+\"([^\"]+)\"\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?$");
 	}
 
 	@Override
@@ -52,7 +53,14 @@ public class CommandCreateState2 extends SingleLineCommand<StateDiagram> {
 		final String display = arg.get(1);
 		final Entity ent = (Entity) getSystem().getOrCreateClass(code);
 		ent.setDisplay(display);
+
+		final String stereotype = arg.get(2);
+		if (stereotype != null) {
+			ent.setStereotype(new Stereotype(stereotype));
+		}
+		if (arg.get(3) != null) {
+			ent.setSpecificBackcolor(arg.get(3));
+		}
 		return CommandExecutionResult.ok();
 	}
-
 }

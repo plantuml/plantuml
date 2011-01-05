@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5072 $
+ * Revision $Revision: 5697 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -42,7 +42,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.FileSystem;
 
-class Img implements HtmlCommand {
+public class Img implements HtmlCommand {
 
 	final static private Pattern srcPattern = Pattern.compile("(?i)src\\s*=\\s*[\"']?([^ \">]+)[\"']?");
 	final static private Pattern vspacePattern = Pattern.compile("(?i)vspace\\s*=\\s*[\"']?(\\d+)[\"']?");
@@ -50,9 +50,11 @@ class Img implements HtmlCommand {
 	final static private Pattern srcPattern2 = Pattern.compile("(?i)" + Splitter.imgPattern2);
 
 	private final TileImage tileImage;
+	private final String filePath;
 
-	private Img(TileImage image) throws IOException {
+	private Img(TileImage image, String filePath) throws IOException {
 		this.tileImage = image;
+		this.filePath = filePath;
 	}
 
 	static int getVspace(String html) {
@@ -82,10 +84,9 @@ class Img implements HtmlCommand {
 			if (f.exists() == false) {
 				return new Text("(File not found: " + f + ")");
 			}
-
 			final int vspace = getVspace(html);
 			final ImgValign valign = getValign(html);
-			return new Img(new TileImage(ImageIO.read(f), valign, vspace));
+			return new Img(new TileImage(ImageIO.read(f), valign, vspace), src);
 		} catch (IOException e) {
 			return new Text("ERROR " + e.toString());
 		}
@@ -102,8 +103,7 @@ class Img implements HtmlCommand {
 			if (f.exists() == false) {
 				return new Text("(File not found: " + f + ")");
 			}
-
-			return new Img(new TileImage(ImageIO.read(f), ImgValign.TOP, 0));
+			return new Img(new TileImage(ImageIO.read(f), ImgValign.TOP, 0), src);
 		} catch (IOException e) {
 			return new Text("ERROR " + e.toString());
 		}
@@ -111,5 +111,9 @@ class Img implements HtmlCommand {
 
 	public TileImage createMonoImage() {
 		return tileImage;
+	}
+
+	public final String getFilePath() {
+		return filePath;
 	}
 }

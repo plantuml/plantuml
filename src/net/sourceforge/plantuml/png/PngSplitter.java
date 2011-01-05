@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4165 $
+ * Revision $Revision: 5872 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -50,7 +50,7 @@ public class PngSplitter {
 
 	private final List<File> files = new ArrayList<File>();
 
-	public PngSplitter(File pngFile, int horizontalPages, int verticalPages, String source) throws IOException {
+	public PngSplitter(File pngFile, int horizontalPages, int verticalPages, String source, int dpi) throws IOException {
 		if (horizontalPages == 1 && verticalPages == 1) {
 			this.files.add(pngFile);
 			return;
@@ -81,7 +81,7 @@ public class PngSplitter {
 				final BufferedImage imPiece = im.getSubimage(horizontalSegment.getStart(i),
 						verticalSegment.getStart(j), horizontalSegment.getLen(i), verticalSegment.getLen(j));
 				Thread.yield();
-				PngIO.write(imPiece, f, source);
+				PngIO.write(imPiece, f, source, dpi);
 				Thread.yield();
 			}
 		}

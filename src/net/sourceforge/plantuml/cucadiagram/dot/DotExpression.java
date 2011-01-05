@@ -28,21 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5396 $
+ * Revision $Revision: 5705 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontChange;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlCommand;
+import net.sourceforge.plantuml.graphic.Img;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.Text;
 
@@ -60,7 +67,12 @@ final class DotExpression {
 
 	private final FileFormat fileFormat;
 
+	private boolean hasImg;
+
 	DotExpression(String html, int defaultFontSize, HtmlColor color, String fontFamily, int style, FileFormat fileFormat) {
+		if (html.contains("\n")) {
+			throw new IllegalArgumentException(html);
+		}
 		this.fontFamily = fontFamily;
 		this.normalFont = new Font("SansSerif", Font.PLAIN, defaultFontSize);
 		this.fontConfiguration = new FontConfiguration(normalFont, color.getColor());
@@ -78,15 +90,66 @@ final class DotExpression {
 		html = html.replaceAll("\\</[uU]\\> ", "</u>");
 		underline = html.contains("<u>") || html.contains("<U>");
 		final Splitter splitter = new Splitter(html);
-		for (HtmlCommand command : splitter.getHtmlCommands()) {
+		List<HtmlCommand> htmlCommands = splitter.getHtmlCommands(false);
+		for (HtmlCommand command : htmlCommands) {
+			if (command instanceof Img) {
+				hasImg = true;
+			}
+		}
+		if (hasImg) {
+			htmlCommands = splitter.getHtmlCommands(true);
+			sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\">");
+			for (Collection<HtmlCommand> cmds : split(htmlCommands)) {
+				sb.append("<TR><TD><TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\"><TR>");
+				manageCommands(cmds);
+				sb.append("</TR></TABLE></TD></TR>");
+			}
+			sb.append("</TABLE>");
+		} else {
+			manageCommands(htmlCommands);
+		}
+	}
+
+	private static List<Collection<HtmlCommand>> split(Collection<HtmlCommand> all) {
+		final List<Collection<HtmlCommand>> result = new ArrayList<Collection<HtmlCommand>>();
+		Collection<HtmlCommand> current = null;
+		for (HtmlCommand c : all) {
+			if (c instanceof Text && ((Text) c).isNewline()) {
+				current = null;
+			} else {
+				if (current == null) {
+					current = new ArrayList<HtmlCommand>();
+					result.add(current);
+				}
+				current.add(c);
+			}
+		}
+		return result;
+	}
+
+	private void manageCommands(Collection<HtmlCommand> htmlCommands) {
+		for (HtmlCommand command : htmlCommands) {
 			if (command instanceof Text) {
 				manage((Text) command);
 			} else if (command instanceof FontChange) {
 				manage((FontChange) command);
+			} else if (command instanceof Img) {
+				manageImage((Img) command);
 			} else {
 				Log.error("Cannot manage " + command);
 			}
+		}
+	}
 
+	private void manageImage(Img img) {
+		try {
+			final File f = FileSystem.getInstance().getFile(img.getFilePath());
+			if (f.exists() == false) {
+				throw new IOException();
+			}
+			sb.append("<TD><IMG SRC=\"" + f.getAbsolutePath() + "\"/></TD>");
+		} catch (IOException e) {
+			sb.append("<TD>File Not Found</TD>");
 		}
 	}
 
@@ -95,17 +158,29 @@ final class DotExpression {
 	}
 
 	private void manage(Text command) {
+		if (hasImg) {
+			sb.append("<TD>");
+		}
 		underline(false);
 		sb.append(getFontTag());
 
 		String text = command.getText();
 		text = text.replace("<", "&lt;");
 		text = text.replace(">", "&gt;");
-		text = text.replace("\\n", "<BR/>");
+
+		if (hasImg == false) {
+			text = text.replace("\\n", "<BR/>");
+		}
 
 		sb.append(text);
 		sb.append("</FONT>");
 		underline(true);
+		if (hasImg) {
+			sb.append("</TD>");
+			if (text.contains("\\n")) {
+				throw new IllegalStateException();
+			}
+		}
 	}
 
 	private String getFontTag() {

@@ -33,9 +33,12 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import net.sourceforge.plantuml.SpecificBackcolorable;
+import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 
 public interface IEntity extends Imaged, SpecificBackcolorable {
 
@@ -53,8 +56,12 @@ public interface IEntity extends Imaged, SpecificBackcolorable {
 	
 	public Stereotype getStereotype();
 
+	public void setStereotype(Stereotype stereotype);
+	
 	public List<Member> methods2();
 
 	public String getCode();
+
+	public DrawFile getImageFile(File searched) throws IOException;
 
 }

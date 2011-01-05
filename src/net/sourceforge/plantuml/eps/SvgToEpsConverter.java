@@ -40,8 +40,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
 
 public class SvgToEpsConverter {
 
@@ -53,7 +53,7 @@ public class SvgToEpsConverter {
 			throw new IllegalArgumentException();
 		}
 		this.inkscape = InkscapeUtils.create();
-		this.svgFile = CucaDiagramFileMaker.createTempFile("convert", ".svg");
+		this.svgFile = FileUtils.createTempFile("convert", ".svg");
 		final PrintWriter pw = new PrintWriter(svgFile);
 		pw.println(svg);
 		pw.close();
@@ -73,7 +73,7 @@ public class SvgToEpsConverter {
 
 
 	public void createEps(OutputStream os) throws IOException, InterruptedException {
-		final File epsFile = CucaDiagramFileMaker.createTempFile("eps", ".eps");
+		final File epsFile = FileUtils.createTempFile("eps", ".eps");
 		createEps(epsFile);
 		int read;
 		final InputStream is = new FileInputStream(epsFile);

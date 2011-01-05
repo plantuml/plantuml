@@ -67,7 +67,7 @@ public class MethodsOrFieldsArea2 {
 	public MethodsOrFieldsArea2(List<Member> attributes, FontParam fontParam, ISkinParam skinParam) {
 		this.members.addAll(attributes);
 		this.skinParam = skinParam;
-		this.font = skinParam.getFont(fontParam);
+		this.font = skinParam.getFont(fontParam, null);
 		this.color = rose.getFontColor(skinParam, FontParam.CLASS_ATTRIBUTE);
 
 	}

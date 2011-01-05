@@ -54,7 +54,6 @@ public class CommandElse extends SingleLineCommand<ActivityDiagram> {
 		final IEntity branch = getSystem().getCurrentContext().getBranch();
 
 		getSystem().setLastEntityConsulted(branch);
-		getSystem().setAcceptOldSyntaxForBranch(false);
 
 		return CommandExecutionResult.ok();
 	}

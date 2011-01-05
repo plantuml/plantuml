@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5354 $
+ * Revision $Revision: 5877 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -145,7 +145,7 @@ public class PlantUmlTask extends Task {
 	private void processingSingleFile(final File f) throws IOException, InterruptedException {
 		this.log("Processing " + f.getAbsolutePath());
 		final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(), option
-				.getConfig(), option.getCharset(), option.getFileFormat());
+				.getConfig(), option.getCharset(), option.getFileFormatOption());
 		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
 		for (GeneratedImage g : result) {
 			this.log(g + " " + g.getDescription());
@@ -198,6 +198,15 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setFormat(String s) {
+		if ("xmi".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.XMI_STANDARD);
+		}
+		if ("xmi:argo".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.XMI_ARGO);
+		}
+		if ("xmi:start".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.XMI_STAR);
+		}
 		if ("eps".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.EPS);
 		}

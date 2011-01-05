@@ -65,31 +65,31 @@ public class SkinParamBackcolored implements ISkinParam {
 		return skinParam.getCircledCharacterRadius();
 	}
 
-	public Font getFont(FontParam fontParam) {
-		return skinParam.getFont(fontParam);
+	public Font getFont(FontParam fontParam, String stereotype) {
+		return skinParam.getFont(fontParam, stereotype);
 	}
 
-	public String getFontFamily(FontParam param) {
-		return skinParam.getFontFamily(param);
+	public String getFontFamily(FontParam param, String stereotype) {
+		return skinParam.getFontFamily(param, stereotype);
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param) {
-		return skinParam.getFontHtmlColor(param);
+	public HtmlColor getFontHtmlColor(FontParam param, String stereotype) {
+		return skinParam.getFontHtmlColor(param, stereotype);
 	}
 
-	public int getFontSize(FontParam param) {
-		return skinParam.getFontSize(param);
+	public int getFontSize(FontParam param, String stereotype) {
+		return skinParam.getFontSize(param, stereotype);
 	}
 
-	public int getFontStyle(FontParam param) {
-		return skinParam.getFontStyle(param);
+	public int getFontStyle(FontParam param, String stereotype) {
+		return skinParam.getFontStyle(param, stereotype);
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param) {
+	public HtmlColor getHtmlColor(ColorParam param, String stereotype) {
 		if (param.isBackground() && backColorElement != null) {
 			return backColorElement;
 		}
-		return skinParam.getHtmlColor(param);
+		return skinParam.getHtmlColor(param, stereotype);
 	}
 
 	public String getValue(String key) {
@@ -106,5 +106,9 @@ public class SkinParamBackcolored implements ISkinParam {
 
 	public boolean isMonochrome() {
 		return skinParam.isMonochrome();
+	}
+
+	public int getDpi() {
+		return skinParam.getDpi();
 	}
 }

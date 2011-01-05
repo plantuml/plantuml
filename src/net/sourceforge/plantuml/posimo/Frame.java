@@ -114,8 +114,8 @@ public class Frame implements Component {
 	}
 
 	private TextBlock createTextBloc() {
-		final Font font = skinParam.getFont(FontParam.PACKAGE);
-		final Color textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE).getColor();
+		final Font font = skinParam.getFont(FontParam.PACKAGE, null);
+		final Color textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null).getColor();
 		final TextBlock bloc = TextBlockUtils.create(name, font, textColor, HorizontalAlignement.LEFT);
 		return bloc;
 	}

@@ -48,6 +48,10 @@ public class RegexOr extends RegexComposed implements IRegex {
 	}
 
 	public RegexOr(String name, IRegex... partial) {
+		this(name, false, partial);
+	}
+
+	public RegexOr(String name, boolean optionnal, IRegex... partial) {
 		super(partial);
 		this.name = name;
 		final StringBuilder sb = new StringBuilder("(");
@@ -60,6 +64,9 @@ public class RegexOr extends RegexComposed implements IRegex {
 		}
 		sb.setLength(sb.length() - 1);
 		sb.append(')');
+		if (optionnal) {
+			sb.append('?');
+		}
 		this.full = Pattern.compile(sb.toString());
 	}
 

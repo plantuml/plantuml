@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5503 $
+ * Revision $Revision: 5811 $
  *
  */
 package net.sourceforge.plantuml;
@@ -126,9 +126,20 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 	final public void setScale(Scale scale) {
 		this.scale = scale;
 	}
-	
+
 	final public Scale getScale() {
 		return scale;
+	}
+
+	public final double getDpiFactor(FileFormatOption fileFormatOption) {
+		if (getSkinParam().getDpi() == 96) {
+			return 1.0;
+		}
+		return getSkinParam().getDpi() / 96.0;
+	}
+
+	public final int getDpi(FileFormatOption fileFormatOption) {
+		return getSkinParam().getDpi();
 	}
 
 }

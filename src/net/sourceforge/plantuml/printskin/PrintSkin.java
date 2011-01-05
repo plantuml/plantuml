@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4633 $
+ * Revision $Revision: 5872 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -47,7 +47,7 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -73,18 +73,18 @@ class PrintSkin extends AbstractPSystem {
 	private float ypos = 0;
 	private float maxYpos = 0;
 
-	public List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
 		final List<File> result = Arrays.asList(suggestedFile);
 		final BufferedImage im = createImage();
 
-		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), suggestedFile);
+		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), suggestedFile, 96);
 		return result;
 
 	}
 
-	public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
 		final BufferedImage im = createImage();
-		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), os);
+		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), os, 96);
 	}
 
 	private BufferedImage createImage() {
@@ -93,7 +93,7 @@ class PrintSkin extends AbstractPSystem {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 		
-		ug = new UGraphicG2d(g2d, null);
+		ug = new UGraphicG2d(g2d, null, 1.0);
 
 		for (ComponentType type : EnumSet.allOf(ComponentType.class)) {
 			printComponent(type);

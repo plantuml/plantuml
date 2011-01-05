@@ -45,10 +45,14 @@ public class LazyCached<O> implements Lazy<O> {
 	}
 
 	public O getNow() throws IOException {
-		if (data == null) {
+		if (isLoaded() == false) {
 			this.data = this.lazy.getNow();
 		}
 		return this.data;
+	}
+
+	protected O getRowData() {
+		return data;
 	}
 
 	public boolean isLoaded() {

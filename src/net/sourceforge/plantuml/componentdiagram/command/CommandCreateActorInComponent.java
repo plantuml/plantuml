@@ -76,7 +76,7 @@ public class CommandCreateActorInComponent extends SingleLineCommand<ComponentDi
 
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER)));
+					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
 		}
 		return CommandExecutionResult.ok();
 	}

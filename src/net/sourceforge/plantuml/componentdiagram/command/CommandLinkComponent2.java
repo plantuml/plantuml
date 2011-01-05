@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
 public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> {
 
@@ -68,7 +69,7 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 
 	private static RegexLeaf getRegexGroup(String name) {
 		return new RegexLeaf(name,
-				"([\\p{L}0-9_.]+|:[^:]+:|\\[[^\\]*]+[^\\]]*\\]|\\(\\)\\s*[\\p{L}0-9_.]+|\\(\\)\\s*\"[^\"]+\")");
+				"([\\p{L}0-9_.]+|:[^:]+:|\\[[^\\]*]+[^\\]]*\\]|\\(\\)\\s*[\\p{L}0-9_.]+|\\(\\)\\s*\"[^\"]+\")(?:\\s*(\\<\\<.*\\>\\>))?");
 	}
 
 	@Override
@@ -85,6 +86,14 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 
 		final IEntity cl1 = getSystem().getOrCreateClass(g1);
 		final IEntity cl2 = getSystem().getOrCreateClass(g2);
+		
+		
+		if (arg.get("G1").get(1) != null) {
+			cl1.setStereotype(new Stereotype(arg.get("G1").get(1)));
+		}
+		if (arg.get("G2").get(1) != null) {
+			cl2.setStereotype(new Stereotype(arg.get("G2").get(1)));
+		}
 
 		final LinkType linkType;
 		String queue;

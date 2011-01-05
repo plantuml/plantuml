@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4855 $
+ * Revision $Revision: 5872 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -95,5 +95,10 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	protected final void setPaddingArrowHead(double paddingArrowHead) {
 		this.paddingArrowHead = paddingArrowHead;
 	}
+	
+	final public double getMargin() {
+		return 5;
+	}
+
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5272 $
+ * Revision $Revision: 5728 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -151,7 +151,7 @@ public class BlueModern implements Skin {
 		}
 		if (type == ComponentType.ENGLOBER) {
 			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, Color.BLACK, param
-					.getFont(FontParam.SEQUENCE_ENGLOBER));
+					.getFont(FontParam.SEQUENCE_ENGLOBER, null));
 		}
 
 		return null;

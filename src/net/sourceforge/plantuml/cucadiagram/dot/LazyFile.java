@@ -28,12 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3836 $
+ * Revision $Revision: 3977 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram.graphic;
+package net.sourceforge.plantuml.cucadiagram.dot;
 
-public enum VirtualHBarType {
-	START, END
+import java.io.File;
+
+public class LazyFile extends LazyCached<File> {
+
+	public LazyFile(Lazy<File> f) {
+		super(f);
+	}
+
+	@Override
+	public boolean isLoaded() {
+		if (super.isLoaded() == false) {
+			return false;
+		}
+		if (getRowData().exists() == false) {
+			return false;
+		}
+		return true;
+	}
 
 }

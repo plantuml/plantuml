@@ -28,83 +28,38 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3836 $
+ * Revision $Revision: 5873 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 
-public class VirtualHBar implements Pushable {
+abstract class GroupingGraphicalElement extends GraphicalElement {
 
-	private static int CPT = 0;
+	private final InGroupableList inGroupableList;
 
-	private final double width;
-	private final VirtualHBarType type;
-	private double x;
-	private final double startingY;
-	private double endingY;
+	public GroupingGraphicalElement(double currentY, InGroupableList inGroupableList) {
+		super(currentY);
+		this.inGroupableList = inGroupableList;
+		if (inGroupableList == null) {
+			throw new IllegalArgumentException();
+		}
+	}
 
-	private int cpt = CPT++;
-
-	public VirtualHBar(double width, VirtualHBarType type, double startingY) {
-		this.width = width;
-		this.type = type;
-		this.x = width / 2;
-		this.startingY = startingY;
+	final public double getActualWidth(StringBounder stringBounder) {
+		return Math.max(getPreferredWidth(stringBounder), inGroupableList.getMaxX(stringBounder)
+				- inGroupableList.getMinX(stringBounder) + 2 * InGroupableList.MARGIN10);
 	}
 
 	@Override
-	public String toString() {
-		return "VHB" + cpt + " " + x + " " + startingY + "-" + endingY;
+	final public double getStartingX(StringBounder stringBounder) {
+		return inGroupableList.getMinX(stringBounder) - InGroupableList.MARGIN10;
 	}
 
-	public VirtualHBarType getType() {
-		return type;
-	}
-
-	public double getWidth() {
-		return width;
-	}
-
-	public double getCenterX(StringBounder stringBounder) {
-		return x;
-	}
-
-	public void pushToLeft(double deltaX) {
-		x += deltaX;
-	}
-
-	public final double getEndingY() {
-		return endingY;
-	}
-
-	public final void setEndingY(double endingY) {
-		if (endingY <= startingY) {
-			throw new IllegalArgumentException();
-		}
-		this.endingY = endingY;
-	}
-
-	public final double getStartingY() {
-		return startingY;
-	}
-
-	public boolean canBeOnTheSameLine(VirtualHBar bar) {
-		if (this.x != bar.x) {
-			return false;
-		}
-		if (this.startingY >= bar.endingY) {
-			return true;
-		}
-		if (this.endingY <= bar.startingY) {
-			return true;
-		}
-		return false;
-	}
-
-	public double getPreferredWidth(StringBounder stringBounder) {
-		throw new UnsupportedOperationException();
+	protected final InGroupableList getInGroupableList() {
+		return inGroupableList;
 	}
 
 }

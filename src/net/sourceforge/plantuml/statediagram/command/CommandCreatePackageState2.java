@@ -39,12 +39,14 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandCreatePackageState2 extends SingleLineCommand<StateDiagram> {
 
 	public CommandCreatePackageState2(StateDiagram diagram) {
-		super(diagram, "(?i)^state\\s+([\\p{L}0-9_.]+)\\s+as\\s+\"([^\"]+)\"(?:\\s*\\{|\\s+begin)$");
+		super(diagram,
+				"(?i)^state\\s+([\\p{L}0-9_.]+)\\s+as\\s+\"([^\"]+)\"\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?(?:\\s*\\{|\\s+begin)$");
 	}
 
 	@Override
@@ -54,6 +56,13 @@ public class CommandCreatePackageState2 extends SingleLineCommand<StateDiagram> 
 		final String display = arg.get(1);
 		final Group p = getSystem().getOrCreateGroup(code, display, null, GroupType.STATE, currentPackage);
 		p.setRounded(true);
+		final String stereotype = arg.get(2);
+		if (stereotype != null) {
+			p.setStereotype(stereotype);
+		}
+		if (arg.get(3) != null && HtmlColor.isValid(arg.get(3))) {
+			p.setBackColor(new HtmlColor(arg.get(3)));
+		}
 		return CommandExecutionResult.ok();
 	}
 

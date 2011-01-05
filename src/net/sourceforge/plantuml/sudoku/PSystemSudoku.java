@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
+ * Revision $Revision: 5794 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -41,13 +41,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 
 public class PSystemSudoku extends AbstractPSystem {
 
 	final private ISudoku sudoku;
 
-	public List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
 		OutputStream os = null;
 		try {
 			os = new FileOutputStream(suggestedFile);
@@ -60,7 +60,7 @@ public class PSystemSudoku extends AbstractPSystem {
 		return Arrays.asList(suggestedFile);
 	}
 
-	public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
 		new GraphicsSudoku(sudoku).writeImage(os);
 	}
 

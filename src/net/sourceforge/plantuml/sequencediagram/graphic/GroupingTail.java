@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5528 $
+ * Revision $Revision: 5874 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -42,21 +42,17 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-class GroupingTail extends GraphicalElement {
+class GroupingTail extends GroupingGraphicalElement {
 
 	private final double initY;
-	private final double xpos;
 	private final Component body;
 	private final Component tail;
-	private final InGroupableList inGroupableList;
 
-	public GroupingTail(double currentY, double initY, double xpos, Component body, Component tail,
-			InGroupableList inGroupableList) {
-		super(currentY);
+	public GroupingTail(double currentY, double initY, Component body, Component tail, InGroupableList inGroupableList) {
+		super(currentY, inGroupableList);
 		if (currentY < initY) {
-			// throw new IllegalArgumentException("currentY=" + currentY + " initY=" + initY);
-			System.err.println("currentY=" + currentY + " initY=" + initY);
-
+			throw new IllegalArgumentException("currentY=" + currentY + " initY=" + initY);
+			// System.err.println("currentY=" + currentY + " initY=" + initY);
 		}
 		if (inGroupableList == null) {
 			throw new IllegalArgumentException();
@@ -64,22 +60,13 @@ class GroupingTail extends GraphicalElement {
 		this.body = body;
 		this.tail = tail;
 		this.initY = initY;
-		this.xpos = xpos;
-		this.inGroupableList = inGroupableList;
-	}
-
-	@Override
-	public double getStartingX(StringBounder stringBounder) {
-		return xpos;
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		// final double x1 = inGroupableList.getMinX(stringBounder);
-		final double x1 = inGroupableList.getBarStart().getCenterX(stringBounder);
-		final double x2 = inGroupableList.getBarEnd().getCenterX(stringBounder);
-		// final double x2 = inGroupableList.getMaxX(stringBounder);
+		final double x1 = getInGroupableList().getMinX(stringBounder);
+		final double x2 = getInGroupableList().getMaxX(stringBounder);
 		ug.translate(x1, initY);
 		final Dimension2D dimBody = new Dimension2DDouble(x2 - x1, getPreferredHeight(stringBounder));
 		body.drawU(ug, dimBody, context);

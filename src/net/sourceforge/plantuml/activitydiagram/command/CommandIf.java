@@ -33,47 +33,63 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 
-public class CommandIf extends SingleLineCommand<ActivityDiagram> {
+public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 
 	public CommandIf(ActivityDiagram diagram) {
-		super(
-				diagram,
-				"(?i)^(?:(\\(\\*\\))|([\\p{L}0-9_.]+)|(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)|\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?)?"
-						+ "\\s*([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)?\\s*(?:\\[([^\\]*]+[^\\]]*)\\])?\\s*if\\s*\"([^\"]*)\"\\s*then$");
+		super(diagram, getRegexConcat());
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final IEntity entity1 = CommandLinkActivity2.getEntity(getSystem(), arg, true);
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"),
+					new RegexOr("FIRST", true,
+							new RegexLeaf("STAR", "(\\(\\*\\))"),
+							new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"),
+							new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"),
+							new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
+					new RegexLeaf("\\s*"),
+					new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)?"),
+					new RegexLeaf("\\s*"),
+					new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"),
+					new RegexLeaf("\\s*"),
+					new RegexLeaf("IF", "if\\s*\"([^\"]*)\"\\s*(?:as\\s+([\\p{L}0-9_.]+)\\s+)?then$"));
+	}
 
-		getSystem().startIf();
+
+	@Override
+	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
+		final IEntity entity1 = CommandLinkActivity.getEntity(getSystem(), arg, true);
+
+		getSystem().startIf(arg.get("IF").get(1));
 
 		int lenght = 2;
 
-		if (arg.get(5) != null) {
-			final String arrow = StringUtils.manageArrowForCuca(arg.get(5));
+		if (arg.get("ARROW").get(0) != null) {
+			final String arrow = StringUtils.manageArrowForCuca(arg.get("ARROW").get(0));
 			lenght = arrow.length() - 1;
 		}
 
 		final IEntity branch = getSystem().getCurrentContext().getBranch();
 
-
-		Link link = new Link(entity1, branch, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), arg.get(6), lenght, null,
-				arg.get(7), getSystem().getLabeldistance(), getSystem().getLabelangle());
-		if (arg.get(5) != null) {
-			final Direction direction = StringUtils.getArrowDirection(arg.get(5));
+		Link link = new Link(entity1, branch, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), arg.get("BRACKET").get(0),
+				lenght, null, arg.get("IF").get(0), getSystem().getLabeldistance(), getSystem().getLabelangle());
+		if (arg.get("ARROW").get(0) != null) {
+			final Direction direction = StringUtils.getArrowDirection(arg.get("ARROW").get(0));
 			if (direction == Direction.LEFT || direction == Direction.UP) {
 				link = link.getInv();
 			}
@@ -81,7 +97,6 @@ public class CommandIf extends SingleLineCommand<ActivityDiagram> {
 
 		getSystem().addLink(link);
 
-		getSystem().setAcceptOldSyntaxForBranch(false);
 		return CommandExecutionResult.ok();
 	}
 

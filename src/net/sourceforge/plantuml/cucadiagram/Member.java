@@ -62,7 +62,7 @@ public class Member {
 			this.display = displayClean;
 			visibilityModifier = null;
 		}
-		assert VisibilityModifier.isVisibilityCharacter(this.display.charAt(0)) == false;
+		// assert VisibilityModifier.isVisibilityCharacter(this.display.charAt(0)) == false;
 
 	}
 

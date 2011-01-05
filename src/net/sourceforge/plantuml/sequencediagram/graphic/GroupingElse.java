@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4696 $
+ * Revision $Revision: 5874 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -42,42 +42,29 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-class GroupingElse extends GraphicalElement {
+class GroupingElse extends GroupingGraphicalElement {
 
-	private final double xpos;
 	private final Component comp;
 	private final double initY;
 	private final Component body;
-	private final InGroupableList inGroupableList;
 
-	public GroupingElse(double startingY, double initY, Component body,
-			Component comp, double xpos, InGroupableList inGroupableList) {
-		super(startingY);
-		this.xpos = xpos;
+	public GroupingElse(double startingY, double initY, Component body, Component comp, InGroupableList inGroupableList) {
+		super(startingY, inGroupableList);
 		this.comp = comp;
 		this.initY = initY;
 		this.body = body;
-		this.inGroupableList = inGroupableList;
-		if (inGroupableList == null) {
-			throw new IllegalArgumentException();
-		}
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		// final double x1 = inGroupableList.getMinX(stringBounder);
-		final double x1 = inGroupableList.getBarStart().getCenterX(
-				stringBounder);
-		// final double x2 = inGroupableList.getMaxX(stringBounder);
-		final double x2 = inGroupableList.getBarEnd().getCenterX(stringBounder);
+		final double x1 = getInGroupableList().getMinX(stringBounder);
+		final double x2 = getInGroupableList().getMaxX(stringBounder);
 		ug.translate(x1, getStartingY());
 
-		final Dimension2D dim = new Dimension2DDouble(x2 - x1, comp
-				.getPreferredHeight(stringBounder));
+		final Dimension2D dim = new Dimension2DDouble(x2 - x1, comp.getPreferredHeight(stringBounder));
 
-		final Dimension2D dimBody = new Dimension2DDouble(x2 - x1,
-				getStartingY() - initY);
+		final Dimension2D dimBody = new Dimension2DDouble(x2 - x1, getStartingY() - initY);
 		comp.drawU(ug, dim, context);
 
 		ug.translate(0, initY - getStartingY());
@@ -93,11 +80,6 @@ class GroupingElse extends GraphicalElement {
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return comp.getPreferredWidth(stringBounder);
-	}
-
-	@Override
-	public double getStartingX(StringBounder stringBounder) {
-		return xpos;
 	}
 
 }

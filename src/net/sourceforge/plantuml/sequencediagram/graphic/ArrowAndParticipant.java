@@ -130,5 +130,5 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	public String toString(StringBounder stringBounder) {
 		return arrow.toString(stringBounder);
 	}
-
+	
 }

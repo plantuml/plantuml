@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5728 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -71,7 +71,7 @@ public class CommandParticipant extends SingleLineCommand<SequenceDiagram> {
 		if (stereotype != null) {
 			participant.setStereotype(new Stereotype(stereotype,
 					getSystem().getSkinParam().getCircledCharacterRadius(), getSystem().getSkinParam().getFont(
-							FontParam.CIRCLED_CHARACTER)));
+							FontParam.CIRCLED_CHARACTER, null)));
 		}
 		participant.setSpecificBackcolor(arg.get(4));
 

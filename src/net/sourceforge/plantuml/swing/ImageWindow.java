@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 5885 $
  *
  */
 package net.sourceforge.plantuml.swing;
@@ -36,26 +36,51 @@ package net.sourceforge.plantuml.swing;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 
 class ImageWindow extends JFrame {
 
-	private final SimpleLine simpleLine;
+	private SimpleLine simpleLine;
 	final private JScrollPane scrollPane;
+	private final JButton next = new JButton("Next");
+	private final JButton previous = new JButton("Previous");
+	private final ListModel listModel;
+	private int index;
 
-	public ImageWindow(SimpleLine simpleLine, final MainWindow main) {
+	public ImageWindow(SimpleLine simpleLine, final MainWindow main, ListModel listModel, int index) {
 		super(simpleLine.toString());
-
 		this.simpleLine = simpleLine;
+		this.listModel = listModel;
+		this.index = index;
+
+		final JPanel north = new JPanel();
+		north.add(previous);
+		north.add(next);
+		next.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				next();
+			}
+		});
+		previous.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				previous();
+			}
+		});
 
 		scrollPane = new JScrollPane(buildScrollablePicture());
+		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		setSize(640, 400);
 		setVisible(true);
@@ -67,6 +92,28 @@ class ImageWindow extends JFrame {
 				main.closing(ImageWindow.this);
 			}
 		});
+	}
+
+	private void next() {
+		index++;
+		updateSimpleLine();
+	}
+
+	private void previous() {
+		index--;
+		updateSimpleLine();
+	}
+
+	private void updateSimpleLine() {
+		if (index < 0) {
+			index = 0;
+		}
+		if (index > listModel.getSize() - 1) {
+			index = listModel.getSize() - 1;
+		}
+		simpleLine = (SimpleLine) listModel.getElementAt(index);
+		setTitle(simpleLine.toString());
+		refreshImage();
 	}
 
 	private ScrollablePicture buildScrollablePicture() {

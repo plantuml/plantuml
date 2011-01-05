@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4494 $
+ * Revision $Revision: 5885 $
  *
  */
 package net.sourceforge.plantuml.swing;
@@ -65,6 +65,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -178,7 +179,7 @@ public class MainWindow extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					final int index = jList1.locationToIndex(e.getPoint());
-					doubleClick((SimpleLine) jList1.getModel().getElementAt(index));
+					doubleClick((SimpleLine) jList1.getModel().getElementAt(index), jList1.getModel(), index);
 				}
 			}
 		};
@@ -248,7 +249,7 @@ public class MainWindow extends JFrame {
 		jList1.setVisible(true);
 	}
 
-	private void doubleClick(SimpleLine simpleLine) {
+	private void doubleClick(SimpleLine simpleLine, ListModel listModel, int index) {
 		for (ImageWindow win : openWindows) {
 			if (win.getSimpleLine().equals(simpleLine)) {
 				win.setVisible(true);
@@ -256,7 +257,7 @@ public class MainWindow extends JFrame {
 				return;
 			}
 		}
-		openWindows.add(new ImageWindow(simpleLine, this));
+		openWindows.add(new ImageWindow(simpleLine, this, listModel, index));
 	}
 
 	private void tick() {

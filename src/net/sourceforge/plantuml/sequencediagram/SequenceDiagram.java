@@ -44,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -65,10 +67,15 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private Skin skin = new ProtectedSkin(new Rose());
 
+	@Deprecated
 	public Participant getOrCreateParticipant(String code) {
+		return getOrCreateParticipant(code, StringUtils.getWithNewlines(code));
+	}
+
+	public Participant getOrCreateParticipant(String code, List<String> display) {
 		Participant result = participants.get(code);
 		if (result == null) {
-			result = new Participant(ParticipantType.PARTICIPANT, code, Arrays.asList(code));
+			result = new Participant(ParticipantType.PARTICIPANT, code, display);
 			participants.put(code, result);
 		}
 		return result;
@@ -140,26 +147,22 @@ public class SequenceDiagram extends UmlDiagram {
 		return Collections.unmodifiableList(events);
 	}
 
-	private FileMaker getSequenceDiagramPngMaker(FileFormat fileFormat) {
+	private FileMaker getSequenceDiagramPngMaker(FileFormatOption fileFormatOption) {
+
+		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 		}
 
-		return new SequenceDiagramFileMaker(this, skin, fileFormat);
-		// if (fileFormat == FileFormat.TXT) {
-		// return new SequenceDiagramPngMaker(this, new TextSkin());
-		// } else if (OptionFlags.getInstance().useU()) {
-		// return new SequenceDiagramFileMaker(this, skin, fileFormat);
-		// }
-		// return new SequenceDiagramPngMaker(this, skin);
+		return new SequenceDiagramFileMaker(this, skin, fileFormatOption);
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException {
 		return getSequenceDiagramPngMaker(fileFormat).createMany(suggestedFile);
 	}
 
-	public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
 		getSequenceDiagramPngMaker(fileFormat).createOne(os, index);
 	}
 
@@ -314,10 +317,10 @@ public class SequenceDiagram extends UmlDiagram {
 	public final List<ParticipantEnglober> getParticipantEnglobers() {
 		return Collections.unmodifiableList(participantEnglobers);
 	}
-	
+
 	@Override
 	public int getNbImages() {
-		return getSequenceDiagramPngMaker(FileFormat.PNG).getNbPages();
+		return getSequenceDiagramPngMaker(new FileFormatOption(FileFormat.PNG)).getNbPages();
 	}
 
 }

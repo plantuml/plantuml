@@ -28,37 +28,49 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5427 $
+ * Revision $Revision: 5749 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
 
-	static private final Pattern multiLines = Pattern.compile("((?:\\\\\\\\|[^\\\\])+)(\\\\n)?");
-
 	public static String getPlateformDependentAbsolutePath(File file) {
 		return file.getAbsolutePath();
-
 	}
 
 	public static List<String> getWithNewlines(String s) {
 		if (s == null) {
 			throw new IllegalArgumentException();
 		}
-		final Matcher matcher = multiLines.matcher(s);
-		final List<String> strings = new ArrayList<String>();
-
-		while (matcher.find()) {
-			strings.add(matcher.group(1).replace("\\\\", "\\"));
+		final List<String> result = new ArrayList<String>();
+		final StringBuilder current = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c == '\\' && i < s.length() + 1) {
+				final char c2 = s.charAt(i + 1);
+				i++;
+				if (c2 == 'n') {
+					result.add(current.toString());
+					current.setLength(0);
+				} else if (c2 == 't') {
+					current.append('\t');
+				} else if (c2 == '\\') {
+					current.append(c2);
+				}
+			} else {
+				current.append(c);
+			}
 		}
-		return strings;
+		result.add(current.toString());
+		return Collections.unmodifiableList(result);
 	}
 
 	public static String getMergedLines(List<String> strings) {
@@ -258,6 +270,48 @@ public class StringUtils {
 
 	public static int getHeight(List<? extends CharSequence> stringsToDisplay) {
 		return stringsToDisplay.size();
+	}
+
+	private static boolean firstColumnRemovable(List<String> data) {
+		boolean allEmpty = true;
+		for (String s : data) {
+			if (s.length() == 0) {
+				continue;
+			}
+			allEmpty = false;
+			final char c = s.charAt(0);
+			if (c != ' ' && c != '\t') {
+				return false;
+			}
+		}
+		return allEmpty == false;
+	}
+
+	private static void removeFirstColumn(List<String> data) {
+		for (int i = 0; i < data.size(); i++) {
+			final String s = data.get(i);
+			if (s.length() > 0) {
+				data.set(i, s.substring(1));
+			}
+		}
+	}
+
+	public static List<String> removeEmptyColumns(List<String> data) {
+		if (firstColumnRemovable(data) == false) {
+			return data;
+		}
+		final List<String> result = new ArrayList<String>(data);
+		do {
+			removeFirstColumn(result);
+		} while (firstColumnRemovable(result));
+		return Collections.unmodifiableList(result);
+	}
+
+	public static void trim(List<String> data) {
+		for (int i = 0; i < data.size(); i++) {
+			final String s = data.get(i);
+			data.set(i, s.trim());
+		}
 	}
 
 }

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -68,12 +69,16 @@ public class CommandCreateEntityClassMultilines2 extends CommandMultilines2<Clas
 
 
 	public CommandExecutionResult execute(List<String> lines) {
-		final Map<String, RegexPartialMatch> line0 = getStartingPattern().matcher(lines.get(0));
+		StringUtils.trim(lines);
+		final Map<String, RegexPartialMatch> line0 = getStartingPattern().matcher(lines.get(0).trim());
 		final Entity entity = executeArg0(line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
 		for (String s : lines.subList(1, lines.size() - 1)) {
+			if (s.length()==0) {
+				continue;
+			}
 			if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
 				getSystem().setVisibilityModifierPresent(true);
 			}
@@ -107,7 +112,7 @@ public class CommandCreateEntityClassMultilines2 extends CommandMultilines2<Clas
 		final Entity entity = getSystem().createEntity(code, display, type);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER)));
+					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
 		}
 		return entity;
 	}

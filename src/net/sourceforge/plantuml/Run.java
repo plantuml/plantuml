@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5391 $
+ * Revision $Revision: 5810 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,6 +44,7 @@ import java.util.List;
 import javax.swing.UIManager;
 
 import net.sourceforge.plantuml.code.Transcoder;
+import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.swing.MainWindow;
@@ -113,7 +114,7 @@ public class Run {
 				Log.error("InterruptedException " + e);
 			}
 		} else if (option.isPipe()) {
-			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormat());
+			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
 		}
 	}
 
@@ -127,7 +128,7 @@ public class Run {
 			System.out.println("------------------------");
 		} else {
 			final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option
-					.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormat());
+					.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
 			if (option.isComputeurl()) {
 				final List<String> urls = sourceFileReader.getEncodedUrl();
 				for (String s : urls) {
@@ -162,7 +163,7 @@ public class Run {
 	private static void processArgs(Option option) throws IOException, InterruptedException {
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
-				final Transcoder transcoder = new Transcoder();
+				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 				System.out.println("@startuml");
 				System.out.println(transcoder.decode(s));
 				System.out.println("@enduml");

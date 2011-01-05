@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5594 $
+ * Revision $Revision: 5804 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -41,13 +41,24 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.PathIterator;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
+import net.sourceforge.plantuml.cucadiagram.dot.Lazy;
 import net.sourceforge.plantuml.skin.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class CircledCharacter implements UDrawable, TextBlock {
@@ -68,8 +79,8 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		this.fontColor = fontColor;
 	}
 
-	public void draw(Graphics2D g2d, int x, int y) {
-		drawU(new UGraphicG2d(g2d, null), x, y);
+	public void draw(Graphics2D g2d, int x, int y, double dpiFactor) {
+		drawU(new UGraphicG2d(g2d, null, 1.0), x, y);
 	}
 
 	public void drawU(UGraphic ug, double x, double y) {
@@ -78,26 +89,12 @@ public class CircledCharacter implements UDrawable, TextBlock {
 			ug.getParam().setColor(circle);
 		}
 
-		// final Color circleToUse = circle == null ? ug.getParam().getColor() : circle;
-		// ug.getParam().setColor(circleToUse);
-
 		ug.getParam().setBackcolor(innerCircle);
 
 		ug.draw(x, y, new UEllipse(radius * 2, radius * 2));
-
 		ug.getParam().setColor(fontColor);
-
-		// if (ug instanceof UGraphicSvg) {
-		// final UPath p = getUPath(new FontRenderContext(null, true, true));
-		// ug.draw(x + radius, y + radius, p);
-		// } else {
 		ug.centerChar(x + radius, y + radius, c.charAt(0), font);
-		// }
 
-	}
-
-	private Dimension2D getStringDimension(StringBounder stringBounder) {
-		return stringBounder.calculateDimension(font, c);
 	}
 
 	final public double getPreferredWidth(StringBounder stringBounder) {
@@ -125,7 +122,6 @@ public class CircledCharacter implements UDrawable, TextBlock {
 
 		final double coord[] = new double[6];
 		while (path.isDone() == false) {
-			// final int w = path.getWindingRule();
 			final int code = path.currentSegment(coord);
 			result.add(coord, USegmentType.getByCode(code));
 			path.next();
@@ -140,6 +136,47 @@ public class CircledCharacter implements UDrawable, TextBlock {
 
 	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
 		throw new UnsupportedOperationException();
+	}
+
+	public DrawFile generateCircleCharacter(final Color background, final double dpiFactor) throws IOException {
+
+		final Lazy<File> lpng = new Lazy<File>() {
+
+			public File getNow() throws IOException {
+				final File png = FileUtils.createTempFile("circle", ".png");
+				final EmptyImageBuilder builder = new EmptyImageBuilder((int)(60 * dpiFactor), (int)(60 * dpiFactor), background, dpiFactor);
+				BufferedImage im = builder.getBufferedImage();
+				final Graphics2D g2d = builder.getGraphics2D();
+				final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
+
+				draw(g2d, 0, 0, dpiFactor);
+				im = im.getSubimage(0, 0, (int) (getPreferredWidth(stringBounder) * dpiFactor) + 5,
+						(int) (getPreferredHeight(stringBounder) * dpiFactor) + 1);
+
+				ImageIO.write(im, "png", png);
+				return png;
+			}
+		};
+
+		final Lazy<File> leps = new Lazy<File>() {
+			public File getNow() throws IOException {
+				final File epsFile = FileUtils.createTempFile("circle", ".eps");
+				UGraphicEps.copyEpsToFile(CircledCharacter.this, epsFile);
+				return epsFile;
+			}
+		};
+
+		final Lazy<String> lsvg = new Lazy<String>() {
+			public String getNow() throws IOException {
+				return UGraphicG2d.getSvgString(CircledCharacter.this);
+			}
+
+		};
+
+		final Object signature = Arrays.asList("circle", c, font, innerCircle, circle, fontColor, radius, background,
+				dpiFactor);
+
+		return DrawFile.create(lpng, lsvg, leps, signature);
 	}
 
 }

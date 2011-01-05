@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5507 $
+ * Revision $Revision: 5757 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -37,6 +37,7 @@ import java.awt.BasicStroke;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
+import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
@@ -61,7 +62,8 @@ class TileText implements Tile {
 		if (h < 10) {
 			h = 10;
 		}
-		return new Dimension2DDouble(rect.getWidth(), h);
+		final double width = text.indexOf('\t') == -1 ? rect.getWidth() : getWidth(stringBounder);
+		return new Dimension2DDouble(width, h);
 	}
 
 	public double getFontSize2D() {
@@ -91,11 +93,47 @@ class TileText implements Tile {
 		}
 	}
 
-	public void drawU(UGraphic ug, double x, double y) {
-		final UText utext = new UText(text, fontConfiguration);
-		ug.getParam().setColor(fontConfiguration.getColor());
-		ug.draw(x, y, utext);
+	double getTabSize(StringBounder stringBounder) {
+		return stringBounder.calculateDimension(fontConfiguration.getFont(), "        ").getWidth();
+	}
 
+	public void drawU(UGraphic ug, double x, double y) {
+		ug.getParam().setColor(fontConfiguration.getColor());
+
+		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+
+		if (tokenizer.hasMoreTokens()) {
+			final double tabSize = getTabSize(ug.getStringBounder());
+			while (tokenizer.hasMoreTokens()) {
+				final String s = tokenizer.nextToken();
+				if (s.equals("\t")) {
+					final double remainder = x % tabSize;
+					x += tabSize - remainder;
+				} else {
+					final UText utext = new UText(s, fontConfiguration);
+					ug.draw(x, y, utext);
+					final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);
+					x += dim.getWidth();
+				}
+			}
+		}
+	}
+
+	double getWidth(StringBounder stringBounder) {
+		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+		final double tabSize = getTabSize(stringBounder);
+		double x = 0;
+		while (tokenizer.hasMoreTokens()) {
+			final String s = tokenizer.nextToken();
+			if (s.equals("\t")) {
+				final double remainder = x % tabSize;
+				x += tabSize - remainder;
+			} else {
+				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
+				x += dim.getWidth();
+			}
+		}
+		return x;
 	}
 
 }

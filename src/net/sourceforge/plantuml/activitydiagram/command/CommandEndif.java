@@ -51,7 +51,6 @@ public class CommandEndif extends SingleLineCommand<ActivityDiagram> {
 			return CommandExecutionResult.error("No if for this endif");
 		}
 		getSystem().endif();
-		getSystem().setAcceptOldSyntaxForBranch(false);
 
 		return CommandExecutionResult.ok();
 	}

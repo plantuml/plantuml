@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
@@ -59,6 +61,10 @@ public abstract class EntityUtils {
 
 			public Stereotype getStereotype() {
 				return ent.getStereotype();
+			}
+
+			public void setStereotype(Stereotype stereotype) {
+				ent.setStereotype(stereotype);
 			}
 
 			public EntityType getType() {
@@ -106,6 +112,10 @@ public abstract class EntityUtils {
 
 			public String getCode() {
 				return ent.getCode();
+			}
+
+			public DrawFile getImageFile(File searched) throws IOException {
+				return ent.getImageFile(searched);
 			}
 
 		};

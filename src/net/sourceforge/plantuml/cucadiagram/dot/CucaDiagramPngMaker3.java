@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5047 $
+ * Revision $Revision: 5872 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -91,7 +91,7 @@ public final class CucaDiagramPngMaker3 {
 		final List<Graph5> graphs = getGraphs3(zoda2.getHeaps());
 
 		final Dimension2D totalDim = getTotalDimension(graphs);
-		final EmptyImageBuilder im = new EmptyImageBuilder((int) totalDim.getWidth(), (int) totalDim.getHeight(),
+		final EmptyImageBuilder im = new EmptyImageBuilder(totalDim.getWidth(), totalDim.getHeight(),
 				Color.WHITE);
 
 		double x = 0;
@@ -156,7 +156,7 @@ public final class CucaDiagramPngMaker3 {
 			}
 		}
 
-		return new PngSplitter(pngFile, diagram.getHorizontalPages(), diagram.getVerticalPages(), diagram.getMetadata())
+		return new PngSplitter(pngFile, diagram.getHorizontalPages(), diagram.getVerticalPages(), diagram.getMetadata(), 96)
 				.getFiles();
 	}
 }

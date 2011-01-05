@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4111 $
+ * Revision $Revision: 5771 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -77,6 +77,14 @@ public class Stereotype implements CharSequence {
 		}
 	}
 
+	public Stereotype(String stereotype) {
+		this.label = stereotype;
+		this.htmlColor = null;
+		this.character = '\0';
+		this.radius = 0;
+		this.circledFont = null;
+	}
+
 	public Color getColor() {
 		if (htmlColor == null) {
 			return null;
@@ -89,6 +97,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	public String getLabel() {
+		assert label == null || label.length() > 0;
 		return label;
 	}
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5277 $
+ * Revision $Revision: 5741 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
@@ -72,7 +73,11 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		this.marginY = marginY;
 		this.strings = strings;
 
-		textBlock = TextBlockUtils.create(strings, font, fontColor, horizontalAlignement);
+		if (strings.size() == 1 && strings.get(0).length() == 0) {
+			textBlock = new TextBlockEmpty();
+		} else {
+			textBlock = TextBlockUtils.create(strings, font, fontColor, horizontalAlignement);
+		}
 	}
 
 	final protected TextBlock getTextBlock() {

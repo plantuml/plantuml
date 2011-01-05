@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5507 $
+ * Revision $Revision: 5735 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -38,9 +38,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -51,6 +53,19 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 
 public class DriverTextG2d implements UDriver<Graphics2D> {
+
+//	static {
+//		printFont();
+//	}
+
+	private static void printFont() {
+		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		final String fontNames[] = ge.getAvailableFontFamilyNames();
+		final int j = fontNames.length;
+		for (int i = 0; i < j; i++) {
+			Log.info("Available fonts: " + fontNames[i]);
+		}
+	}
 
 	public void draw(UShape ushape, double x, double y, UParam param, Graphics2D g2d) {
 		final UText shape = (UText) ushape;

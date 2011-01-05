@@ -33,35 +33,38 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox;
+import net.sourceforge.plantuml.sequencediagram.graphic.MessageExoArrow;
 import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
-import net.sourceforge.plantuml.sequencediagram.graphic.VirtualHBar;
-import net.sourceforge.plantuml.sequencediagram.graphic.VirtualHBarType;
 
 public class InGroupableList implements InGroupable {
 
-	//public static boolean NEW_METHOD = true;
+	private static final int MARGIN5 = 5;
+	public static final int MARGIN10 = 10;
 
 	private final GroupingStart groupingStart;
 	private final Set<InGroupable> inGroupables = new HashSet<InGroupable>();
-	private final VirtualHBar barStart;
-	private final VirtualHBar barEnd;
 
 	private double minWidth;
 
-	public InGroupableList(GroupingStart groupingStart, double startingY) {
-		this.groupingStart = groupingStart;
-		this.barStart = new VirtualHBar(10, VirtualHBarType.START, startingY);
-		this.barEnd = new VirtualHBar(10, VirtualHBarType.END, startingY);
+	public List<InGroupableList> getInnerList() {
+		final List<InGroupableList> result = new ArrayList<InGroupableList>();
+		for (InGroupable i : inGroupables) {
+			if (i instanceof InGroupableList) {
+				result.add((InGroupableList) i);
+			}
+		}
+		return result;
 	}
 
-	public final void setEndingY(double endingY) {
-		this.barStart.setEndingY(endingY);
-		this.barEnd.setEndingY(endingY);
+	public InGroupableList(GroupingStart groupingStart, double startingY) {
+		this.groupingStart = groupingStart;
 	}
 
 	public void addInGroupable(InGroupable in) {
@@ -86,34 +89,22 @@ public class InGroupableList implements InGroupable {
 		return sb.toString();
 	}
 
-	public double getMinX(StringBounder stringBounder) {
-		if (inGroupables.size() == 0) {
-			return 0;
-		}
-		double result = Double.MAX_VALUE;
+	private InGroupable getMin(StringBounder stringBounder) {
+		InGroupable result = null;
 		for (InGroupable in : inGroupables) {
-			final double v = in.getMinX(stringBounder);
-			if (v < result) {
-				result = v;
+			if (result == null || in.getMinX(stringBounder) < result.getMinX(stringBounder)) {
+				result = in;
 			}
 		}
 		return result;
 	}
 
-	public double getMaxX(StringBounder stringBounder) {
-		if (inGroupables.size() == 0) {
-			return minWidth;
-		}
-		double result = 0;
+	private InGroupable getMax(StringBounder stringBounder) {
+		InGroupable result = null;
 		for (InGroupable in : inGroupables) {
-			final double v = in.getMaxX(stringBounder);
-			if (v > result) {
-				result = v;
+			if (result == null || in.getMaxX(stringBounder) > result.getMaxX(stringBounder)) {
+				result = in;
 			}
-		}
-		final double minX = getMinX(stringBounder);
-		if (result < minX + minWidth) {
-			return minX + minWidth;
 		}
 		return result;
 	}
@@ -148,28 +139,48 @@ public class InGroupableList implements InGroupable {
 		return last;
 	}
 
-	// public void pushAllToLeft(double delta) {
-	// for (InGroupable in : inGroupables) {
-	// System.err.println("in=" + in);
-	// if (in instanceof LivingParticipantBox) {
-	// final ParticipantBox participantBox = ((LivingParticipantBox)
-	// in).getParticipantBox();
-	// System.err.println("PUSHING " + participantBox + " " + delta);
-	// participantBox.pushToLeft(delta);
-	// }
-	// }
-	// }
-	//
-	// public final double getBarStartX(StringBounder stringBounder) {
-	// return getMinX(stringBounder) - barStart.getWidth() / 2;
-	// }
-
-	public final VirtualHBar getBarStart() {
-		return barStart;
+	public double getMinX(StringBounder stringBounder) {
+		final InGroupable min = getMin(stringBounder);
+		if (min == null) {
+			return 0;
+		}
+		double m = min.getMinX(stringBounder);
+		if (min instanceof MessageExoArrow
+				&& (((MessageExoArrow) min).getType() == MessageExoType.FROM_LEFT || ((MessageExoArrow) min).getType() == MessageExoType.TO_LEFT)) {
+			m += 3;
+		} else if (min instanceof InGroupableList) {
+			m -= MARGIN10;
+		} else {
+			m -= MARGIN5;
+		}
+		return m;
 	}
 
-	public final VirtualHBar getBarEnd() {
-		return barEnd;
+	public double getMaxX(StringBounder stringBounder) {
+		final double min = getMinX(stringBounder);
+		final double max = getMaxXInternal(stringBounder);
+		assert max - min >= 0;
+		if (max - min < minWidth) {
+			return min + minWidth;
+		}
+		return max;
+	}
+
+	private final double getMaxXInternal(StringBounder stringBounder) {
+		final InGroupable max = getMax(stringBounder);
+		if (max == null) {
+			return minWidth;
+		}
+		double m = max.getMaxX(stringBounder);
+		if (max instanceof MessageExoArrow
+				&& (((MessageExoArrow) max).getType() == MessageExoType.FROM_RIGHT || ((MessageExoArrow) max).getType() == MessageExoType.TO_RIGHT)) {
+			m -= 3;
+		} else if (max instanceof InGroupableList) {
+			m += MARGIN10;
+		} else {
+			m += MARGIN5;
+		}
+		return m;
 	}
 
 }

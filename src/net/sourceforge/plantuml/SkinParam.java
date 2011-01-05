@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5403 $
+ * Revision $Revision: 5845 $
  *
  */
 package net.sourceforge.plantuml;
@@ -41,6 +41,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
@@ -49,11 +51,26 @@ public class SkinParam implements ISkinParam {
 	private final Map<String, String> params = new HashMap<String, String>();
 
 	public void setParam(String key, String value) {
-		params.put(key.toLowerCase().trim(), value.trim());
+		params.put(cleanForKey(key), value.trim());
+	}
+
+	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
+	private static final Pattern stereoPattern = Pattern.compile(stereoPatternString);
+
+	static String cleanForKey(String key) {
+		key = key.toLowerCase().trim();
+		key = key.replaceAll("_|\\.|\\s", "");
+		final Matcher m = stereoPattern.matcher(key);
+		if (m.find()) {
+			final String s = m.group(1);
+			key = key.replaceAll(stereoPatternString, "");
+			key += "<<" + s + ">>";
+		}
+		return key;
 	}
 
 	public HtmlColor getBackgroundColor() {
-		final HtmlColor result = getHtmlColor(ColorParam.background);
+		final HtmlColor result = getHtmlColor(ColorParam.background, null);
 		if (result == null) {
 			return new HtmlColor("white");
 		}
@@ -61,7 +78,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public String getValue(String key) {
-		return params.get(key.toLowerCase().replaceAll("_", ""));
+		return params.get(cleanForKey(key));
 	}
 
 	static String humanName(String key) {
@@ -79,7 +96,14 @@ public class SkinParam implements ISkinParam {
 		return sb.toString();
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param) {
+	public HtmlColor getHtmlColor(ColorParam param, String stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue(param.name() + "color" + stereotype);
+			if (value2 != null && HtmlColor.isValid(value2)) {
+				return new HtmlColor(value2);
+			}
+		}
 		final String value = getValue(param.name() + "color");
 		if (value == null || HtmlColor.isValid(value) == false) {
 			return null;
@@ -87,7 +111,20 @@ public class SkinParam implements ISkinParam {
 		return new HtmlColor(value);
 	}
 
-	public int getFontSize(FontParam param) {
+	private void checkStereotype(String stereotype) {
+		if (stereotype.startsWith("<<") == false || stereotype.endsWith(">>") == false) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public int getFontSize(FontParam param, String stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue(param.name() + "fontsize" + stereotype);
+			if (value2 != null && value2.matches("\\d+")) {
+				return Integer.parseInt(value2);
+			}
+		}
 		String value = getValue(param.name() + "fontsize");
 		if (value == null || value.matches("\\d+") == false) {
 			value = getValue("defaultfontsize");
@@ -98,34 +135,55 @@ public class SkinParam implements ISkinParam {
 		return Integer.parseInt(value);
 	}
 
-	public String getFontFamily(FontParam param) {
+	public String getFontFamily(FontParam param, String stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue(param.name() + "fontname" + stereotype);
+			if (value2 != null) {
+				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value2);
+			}
+		}
 		// Times, Helvetica, Courier or Symbol
 		String value = getValue(param.name() + "fontname");
 		if (value != null) {
-			return value;
+			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
 		}
 		if (param != FontParam.CIRCLED_CHARACTER) {
 			value = getValue("defaultfontname");
 			if (value != null) {
-				return value;
+				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
 			}
 		}
 		return param.getDefaultFamily();
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param) {
-		String value = getValue(param.name() + "fontcolor");
-		if (value == null) {
+	public HtmlColor getFontHtmlColor(FontParam param, String stereotype) {
+		String value = null;
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			value = getValue(param.name() + "fontcolor" + stereotype);
+		}
+		if (value == null || HtmlColor.isValid(value) == false) {
+			value = getValue(param.name() + "fontcolor");
+		}
+		if (value == null || HtmlColor.isValid(value) == false) {
 			value = getValue("defaultfontcolor");
 		}
-		if (value == null) {
+		if (value == null || HtmlColor.isValid(value) == false) {
 			value = param.getDefaultColor();
 		}
 		return new HtmlColor(value);
 	}
 
-	public int getFontStyle(FontParam param) {
-		String value = getValue(param.name() + "fontstyle");
+	public int getFontStyle(FontParam param, String stereotype) {
+		String value = null;
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			value = getValue(param.name() + "fontstyle" + stereotype);
+		}
+		if (value == null) {
+			value = getValue(param.name() + "fontstyle");
+		}
 		if (value == null) {
 			value = getValue("defaultfontstyle");
 		}
@@ -142,8 +200,12 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public Font getFont(FontParam fontParam) {
-		return new Font(getFontFamily(fontParam), getFontStyle(fontParam), getFontSize(fontParam));
+	public Font getFont(FontParam fontParam, String stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+		}
+		return new Font(getFontFamily(fontParam, stereotype), getFontStyle(fontParam, stereotype), getFontSize(
+				fontParam, stereotype));
 	}
 
 	public int getCircledCharacterRadius() {
@@ -154,7 +216,7 @@ public class SkinParam implements ISkinParam {
 		// return 11;
 		// System.err.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER));
 		// System.err.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER)/3);
-		return getFontSize(FontParam.CIRCLED_CHARACTER) / 3 + 6;
+		return getFontSize(FontParam.CIRCLED_CHARACTER, null) / 3 + 6;
 	}
 
 	public boolean isClassCollapse() {
@@ -191,6 +253,14 @@ public class SkinParam implements ISkinParam {
 			result.add(h + "FontColor");
 		}
 		return Collections.unmodifiableSet(result);
+	}
+
+	public int getDpi() {
+		final String value = getValue("dpi");
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return 96;
 	}
 
 }

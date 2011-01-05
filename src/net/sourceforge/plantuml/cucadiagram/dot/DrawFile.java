@@ -36,48 +36,53 @@ package net.sourceforge.plantuml.cucadiagram.dot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 
 public class DrawFile {
 
-	private final LazyCached<File> png2;
+	private static final Map<Object, DrawFile> cache = new HashMap<Object, DrawFile>();
+
+	private final LazyFile png2;
 	private final LazyCached<String> svg2;
-	private final LazyCached<File> eps2;
+	private final LazyFile eps2;
 
 	private int widthPng = -1;
 	private int heightPng = -1;
 
-	public DrawFile(Lazy<File> png) {
-		this(png, (Lazy<String>) null, null);
+	public static DrawFile create(Lazy<File> png, Lazy<String> svg, Lazy<File> eps, Object signature) {
+		DrawFile result = cache.get(signature);
+		if (result == null) {
+			result = new DrawFile(png, svg, eps);
+			cache.put(signature, result);
+			Log.info("DrawFile cache size = " + cache.size());
+			FileUtils.deleteOnExit(result);
+		}
+		return result;
 	}
 
-	public DrawFile(Lazy<File> png, Lazy<String> svg) {
-		this(png, svg, null);
+	public static DrawFile createFromFile(File fPng, String svg, File fEps) {
+		final DrawFile result = new DrawFile(fPng, svg, fEps);
+		FileUtils.deleteOnExit(result);
+		return result;
 	}
 
-	public DrawFile(Lazy<File> png, Lazy<String> svg, Lazy<File> eps) {
-		this.png2 = new LazyCached<File>(png);
+	private DrawFile(Lazy<File> png, Lazy<String> svg, Lazy<File> eps) {
+		this.png2 = new LazyFile(png);
 		this.svg2 = new LazyCached<String>(svg);
-		this.eps2 = new LazyCached<File>(eps);
+		this.eps2 = new LazyFile(eps);
 	}
 
-	public DrawFile(File fPng, String svg, File fEps) {
+	private DrawFile(File fPng, String svg, File fEps) {
 		this(new Unlazy<File>(fPng), new Unlazy<String>(svg), new Unlazy<File>(fEps));
-	}
-
-	public DrawFile(File fPng, String svg, Lazy<File> eps) {
-		this(new Unlazy<File>(fPng), new Unlazy<String>(svg), eps);
-	}
-
-	public DrawFile(Lazy<File> png, String svg, Lazy<File> eps) {
-		this(png, new Unlazy<String>(svg), eps);
-	}
-
-	public DrawFile(File f, String svg) {
-		this(f, svg, (File) null);
+		if (svg.contains("\\")) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public File getPngOrEps(boolean isEps) throws IOException {

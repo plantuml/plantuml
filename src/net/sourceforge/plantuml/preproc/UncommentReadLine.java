@@ -57,10 +57,10 @@ public class UncommentReadLine implements ReadLine {
 	}
 
 	public static String cleanLineFromSource(String s) {
-		s = s.trim();
-		while (s.startsWith(" ") || s.startsWith("\t")) {
-			s = s.substring(1).trim();
-		}
+//		s = s.trim();
+//		while (s.startsWith(" ") || s.startsWith("\t")) {
+//			s = s.substring(1).trim();
+//		}
 		return s;
 	}
 

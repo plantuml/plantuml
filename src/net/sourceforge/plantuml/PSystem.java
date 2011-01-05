@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5520 $
+ * Revision $Revision: 5794 $
  *
  */
 package net.sourceforge.plantuml;
@@ -40,9 +40,9 @@ import java.util.List;
 
 public interface PSystem {
 
-	List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException, InterruptedException;
+	List<File> createFiles(File suggestedFile, FileFormatOption fileFormatOption) throws IOException, InterruptedException;
 
-	void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException;
+	void createFile(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException;
 	
 	int getNbImages();
 

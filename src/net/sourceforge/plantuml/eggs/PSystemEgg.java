@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4984 $
+ * Revision $Revision: 5794 $
  *
  */
 package net.sourceforge.plantuml.eggs;
@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 
 public class PSystemEgg extends AbstractPSystem {
@@ -59,7 +59,7 @@ public class PSystemEgg extends AbstractPSystem {
 		}
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
 		OutputStream os = null;
 		try {
 			os = new FileOutputStream(suggestedFile);
@@ -72,7 +72,7 @@ public class PSystemEgg extends AbstractPSystem {
 		return Arrays.asList(suggestedFile);
 	}
 
-	public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
 		getGraphicStrings().writeImage(os, fileFormat);
 	}
 

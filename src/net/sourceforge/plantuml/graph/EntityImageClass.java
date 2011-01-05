@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5609 $
+ * Revision $Revision: 5798 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -146,7 +146,7 @@ class EntityImageClass extends AbstractEntityImage {
 		methods.drawTOBEREMOVED(g2d, xMargin, line2 + yMargin);
 
 		if (circledCharacter != null) {
-			circledCharacter.draw(g2d, xMargin, yMargin);
+			circledCharacter.draw(g2d, xMargin, yMargin, 1.0);
 		}
 
 	}

@@ -69,7 +69,7 @@ final public class PSystemSingleBuilder {
 	public PSystemSingleBuilder(List<String> strings, PSystemFactory systemFactory) throws IOException {
 		source = new UmlSource(strings);
 		it = strings.iterator();
-		if (next().startsWith("@startuml") == false) {
+		if (BlockUmlBuilder.isArobaseStartuml(next()) == false) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -84,7 +84,7 @@ final public class PSystemSingleBuilder {
 		systemFactory.reset();
 		while (hasNext()) {
 			final String s = next();
-			if (s.equals("@enduml")) {
+			if (BlockUmlBuilder.isArobaseEnduml(s)) {
 				if (source.getSize() == 2) {
 					sys = buildEmptyError(source);
 				} else {
@@ -116,7 +116,7 @@ final public class PSystemSingleBuilder {
 		systemFactory.reset();
 		while (hasNext()) {
 			final String s = next();
-			if (s.equals("@enduml")) {
+			if (BlockUmlBuilder.isArobaseEnduml(s)) {
 				if (source.getSize() == 2) {
 					sys = buildEmptyError(source);
 				} else {
@@ -174,7 +174,7 @@ final public class PSystemSingleBuilder {
 		lines.add(init);
 		while (hasNext()) {
 			final String s = next();
-			if (s.equals("@enduml")) {
+			if (BlockUmlBuilder.isArobaseEnduml(s)) {
 				return false;
 			}
 			lines.add(s);

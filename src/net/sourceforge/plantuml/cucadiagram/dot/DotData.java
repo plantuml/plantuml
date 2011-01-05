@@ -28,16 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5084 $
+ * Revision $Revision: 5813 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +64,10 @@ final public class DotData implements PortionShower {
 	final private GroupHierarchy groupHierarchy;
 	final private Group topParent;
 	final private PortionShower portionShower;
+	private int dpi = 96;
 
-	final private Map<EntityType, DrawFile> staticImages = new HashMap<EntityType, DrawFile>();
-	final private Map<VisibilityModifier, DrawFile> visibilityImages = new EnumMap<VisibilityModifier, DrawFile>(
-			VisibilityModifier.class);
+	private StaticFilesMap staticFilesMap;
+	private boolean visibilityModifierPresent;
 
 	public DotData(Group topParent, List<Link> links, Map<String, ? extends IEntity> entities,
 			UmlDiagramType umlDiagramType, ISkinParam skinParam, Rankdir rankdir, GroupHierarchy groupHierarchy,
@@ -96,20 +95,38 @@ final public class DotData implements PortionShower {
 		return true;
 	}
 
-	public Map<EntityType, DrawFile> getStaticImages() {
-		return staticImages;
+	public DrawFile getStaticImages(EntityType type, String stereo) throws IOException {
+		checkObjectOrClassDiagram();
+		assert type == EntityType.ABSTRACT_CLASS || type == EntityType.CLASS || type == EntityType.ENUM
+				|| type == EntityType.INTERFACE || type == EntityType.LOLLIPOP;
+		return staticFilesMap.getStaticFiles(stereo).getStaticImages(type);
 	}
 
-	public void putAllStaticImages(Map<EntityType, DrawFile> staticImages) {
-		this.staticImages.putAll(staticImages);
+	public DrawFile getVisibilityImages(VisibilityModifier visibilityModifier, String stereo) throws IOException {
+		checkObjectOrClassDiagram();
+		return staticFilesMap.getStaticFiles(stereo).getVisibilityImages(visibilityModifier);
+	}
+	
+	public boolean isThereVisibilityImages() {
+		return visibilityModifierPresent;
+	}
+	
+	public void setVisibilityModifierPresent(boolean b) {
+		checkObjectOrClassDiagram();
+		this.visibilityModifierPresent = b;
 	}
 
-	public Map<VisibilityModifier, DrawFile> getVisibilityImages() {
-		return visibilityImages;
+
+
+	public void setStaticImagesMap(StaticFilesMap staticFilesMap) {
+		checkObjectOrClassDiagram();
+		this.staticFilesMap = staticFilesMap;
 	}
 
-	public void putAllVisibilityImages(Map<VisibilityModifier, DrawFile> visibilityImages) {
-		this.visibilityImages.putAll(visibilityImages);
+	private void checkObjectOrClassDiagram() {
+		if (umlDiagramType != UmlDiagramType.CLASS && umlDiagramType != UmlDiagramType.OBJECT) {
+			throw new IllegalStateException();
+		}
 	}
 
 	public UmlDiagramType getUmlDiagramType() {
@@ -229,6 +246,21 @@ final public class DotData implements PortionShower {
 
 	public boolean showPortion(EntityPortion portion, IEntity entity) {
 		return portionShower.showPortion(portion, entity);
+	}
+
+	public final int getDpi() {
+		return dpi;
+	}
+	
+	public double getDpiFactor() {
+		if (dpi == 96) {
+			return 1.0;
+		}
+		return dpi / 96.0;
+	}
+
+	public final void setDpi(int dpi) {
+		this.dpi = dpi;
 	}
 
 }

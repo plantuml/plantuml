@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5019 $
+ * Revision $Revision: 5751 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -53,12 +53,12 @@ public abstract class AbstractCommandMultilinesNoteEntity extends CommandMultili
 
 	public final CommandExecutionResult execute(List<String> lines) {
 
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0));
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
 		final String pos = line0.get(0);
 
 		final IEntity cl1 = getSystem().getOrCreateClass(line0.get(1));
 
-		final List<String> strings = lines.subList(1, lines.size() - 1);
+		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		final String s = StringUtils.getMergedLines(strings);
 
 		final Entity note = getSystem().createEntity("GMN" + UniqueSequence.getValue(), s, EntityType.NOTE);

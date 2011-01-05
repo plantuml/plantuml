@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4696 $
+ * Revision $Revision: 5870 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -135,4 +135,5 @@ class NoteBox extends GraphicalElement implements InGroupable {
 		return toString();
 	}
 
+	
 }

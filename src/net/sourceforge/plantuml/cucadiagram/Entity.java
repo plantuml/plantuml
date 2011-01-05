@@ -28,11 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5593 $
+ * Revision $Revision: 5694 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -226,4 +228,24 @@ public class Entity implements IEntity {
 		return uid.equals(other.getUid());
 	}
 
+	private final List<DrawFile> subImages = new ArrayList<DrawFile>();
+
+	public void addSubImage(DrawFile subImage) {
+		if (subImage == null) {
+			throw new IllegalArgumentException();
+		}
+		subImages.add(subImage);
+	}
+
+	public DrawFile getImageFile(File searched) throws IOException {
+		if (imageFile != null && imageFile.getPng().getCanonicalFile().equals(searched)) {
+			return imageFile;
+		}
+		for (DrawFile f : subImages) {
+			if (f.getPng().getCanonicalFile().equals(searched)) {
+				return f;
+			}
+		}
+		return null;
+	}
 }

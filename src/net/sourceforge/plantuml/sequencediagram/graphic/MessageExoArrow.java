@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-class MessageExoArrow extends Arrow {
+public class MessageExoArrow extends Arrow {
 
 	private final LivingParticipantBox p;
 	private final MessageExoType type;
@@ -159,5 +159,5 @@ class MessageExoArrow extends Arrow {
 	public double getActualWidth(StringBounder stringBounder) {
 		return getActualWidth(stringBounder, getMaxX());
 	}
-
+	
 }

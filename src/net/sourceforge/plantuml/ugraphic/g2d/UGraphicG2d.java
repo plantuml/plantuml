@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5326 $
+ * Revision $Revision: 5793 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -60,8 +61,16 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 
 	private final BufferedImage bufferedImage;
 
-	public UGraphicG2d(Graphics2D g2d, BufferedImage bufferedImage) {
+	private final double dpiFactor;
+
+	public UGraphicG2d(Graphics2D g2d, BufferedImage bufferedImage, double dpiFactor) {
 		super(g2d);
+		this.dpiFactor = dpiFactor;
+		if (dpiFactor != 1.0) {
+			final AffineTransform at = g2d.getTransform();
+			at.concatenate(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));
+			g2d.setTransform(at);
+		}
 		this.bufferedImage = bufferedImage;
 		registerDriver(URectangle.class, new DriverRectangleG2d());
 		registerDriver(UText.class, new DriverTextG2d());
@@ -99,14 +108,18 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 
 		getGraphicObject().setFont(font);
 		getGraphicObject().drawString("" + c, (float) (xpos + getTranslateX()), (float) (ypos + getTranslateY()));
-		//getGraphicObject().drawString("" + c, Math.round(xpos + getTranslateX()), Math.round(ypos + getTranslateY()));
+		// getGraphicObject().drawString("" + c, Math.round(xpos +
+		// getTranslateX()), Math.round(ypos + getTranslateY()));
 	}
-	
+
 	static public String getSvgString(UDrawable udrawable) throws IOException {
 		final UGraphicSvg ug = new UGraphicSvg(false);
 		udrawable.drawU(ug);
 		return CucaDiagramFileMaker.getSvg(ug);
 	}
 
+	protected final double getDpiFactor() {
+		return dpiFactor;
+	}
 
 }

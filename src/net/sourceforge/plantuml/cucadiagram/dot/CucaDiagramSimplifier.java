@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5378 $
+ * Revision $Revision: 5789 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -41,21 +41,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.cucadiagram.Member;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.Member;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.skin.rose.Rose;
 
 public final class CucaDiagramSimplifier {
 
 	private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
 
-	public CucaDiagramSimplifier(CucaDiagram diagram, List<String> dotStrings, FileFormat fileFormat) throws IOException,
-			InterruptedException {
+	public CucaDiagramSimplifier(CucaDiagram diagram, List<String> dotStrings, FileFormat fileFormat)
+			throws IOException, InterruptedException {
 		this.diagram = diagram;
 		this.fileFormat = fileFormat;
 		boolean changed;
@@ -77,27 +84,66 @@ public final class CucaDiagramSimplifier {
 						throw new IllegalStateException();
 					}
 					final Entity proxy = new Entity("#" + g.getCode(), g.getDisplay(), type, g.getParent());
+					if (type == EntityType.STATE) {
+						manageBackColorForState(diagram, g, proxy);
+					}
 					for (Member field : g.getEntityCluster().fields2()) {
 						proxy.addField(field);
 					}
 					computeImageGroup(g, proxy, dotStrings);
 					diagram.overideGroup(g, proxy);
+
+					for (IEntity sub : g.entities().values()) {
+						final DrawFile subImage = sub.getImageFile();
+						if (subImage != null) {
+							proxy.addSubImage(subImage);
+						}
+					}
+
 					changed = true;
 				}
 			}
 		} while (changed);
 	}
 
+	private void manageBackColorForState(CucaDiagram diagram, Group g, final Entity proxy) {
+		if (OptionFlags.PBBACK == false) {
+			return;
+		}
+		if (g.getBackColor() != null) {
+			proxy.setSpecificBackcolor(g.getBackColor().getAsHtml());
+			return;
+		}
+		assert g.getBackColor() == null;
+		if (g.getStereotype() != null) {
+			proxy.setStereotype(new Stereotype(g.getStereotype()));
+		}
+		//PBBACK
+		final Rose rose = new Rose();
+		final HtmlColor back = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.stateBackground, g.getStereotype());
+//		final HtmlColor back = diagram.getSkinParam().getHtmlColor(ColorParam.stateBackground, g.getStereotype());
+//		if (back != null) {
+//			proxy.setSpecificBackcolor(back.getAsHtml());
+//		}
+		assert g.getBackColor() == null;
+		g.setBackColor(back);
+	}
+
 	private void computeImageGroup(final Group group, final Entity entity, List<String> dotStrings) throws IOException,
 			FileNotFoundException, InterruptedException {
 		final GroupPngMaker maker = new GroupPngMaker(diagram, group, fileFormat);
-		final File f = CucaDiagramFileMaker.createTempFile("inner", ".png");
+		final File f = FileUtils.createTempFile("inner", ".png");
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(f);
 			maker.createPng(fos, dotStrings);
 			final String svg = maker.createSvg(dotStrings);
-			entity.setImageFile(new DrawFile(f, svg));
+			// final Pattern pImage = Pattern.compile("(?i)<image\\W[^>]*>");
+			// final Matcher mImage = pImage.matcher(svg);
+			// if (mImage.find()) {
+			// throw new IllegalStateException();
+			// }
+			entity.setImageFile(DrawFile.createFromFile(f, svg, null));
 		} finally {
 			if (fos != null) {
 				fos.close();

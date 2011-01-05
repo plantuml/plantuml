@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4765 $
+ * Revision $Revision: 5752 $
  *
  */
 package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 
 public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
@@ -44,7 +45,7 @@ public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {
-		final List<String> strings = lines.subList(1, lines.size() - 1);
+		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		if (strings.size() > 0) {
 			getSystem().setTitle(strings);
 			return CommandExecutionResult.ok();

@@ -63,8 +63,7 @@ public abstract class CommandMultilines2<S extends PSystem> implements Command {
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		//Matcher m1 = starting.matcher(lines.get(0));
-		final boolean result1 = starting.match(lines.get(0));
+		final boolean result1 = starting.match(lines.get(0).trim());
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -72,7 +71,7 @@ public abstract class CommandMultilines2<S extends PSystem> implements Command {
 			return CommandControl.OK_PARTIAL;
 		}
 
-		Matcher m1 = ending.matcher(lines.get(lines.size() - 1));
+		Matcher m1 = ending.matcher(lines.get(lines.size() - 1).trim());
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}

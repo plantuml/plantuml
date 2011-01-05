@@ -31,8 +31,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.awt.Color;
-
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UDriver;

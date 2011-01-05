@@ -58,7 +58,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand<SequenceDiagram> {
 	@Override
 	final protected CommandExecutionResult executeArg(List<String> arg) {
 		final String arrow = StringUtils.manageArrowForSequence(arg.get(posArrow));
-		final Participant p = getSystem().getOrCreateParticipant(arg.get(posParticipant));
+		final Participant p = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(posParticipant)));
 
 		final boolean full = (arrow.endsWith(">>") || arrow.startsWith("<<")) == false;
 		final boolean dotted = arrow.contains("--");

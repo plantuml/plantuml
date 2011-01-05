@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5751 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -49,12 +49,12 @@ public class CommandMultilinesNoteOnArrow extends CommandMultilines<SequenceDiag
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0));
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
 
 		final NotePosition position = NotePosition.valueOf(line0.get(0).toUpperCase());
 		final AbstractMessage m = getSystem().getLastMessage();
 		if (m != null) {
-			final List<String> strings = lines.subList(1, lines.size() - 1);
+			final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 			m.setNote(strings, position, line0.get(1));
 		}
 

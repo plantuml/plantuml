@@ -45,7 +45,7 @@ public class RegexConcat extends RegexComposed implements IRegex {
 		for (IRegex p : partial) {
 			sb.append(p.getPattern());
 		}
-		this.full = Pattern.compile(sb.toString());
+		this.full = Pattern.compile(sb.toString(), Pattern.CASE_INSENSITIVE);
 	}
 	
 	@Override

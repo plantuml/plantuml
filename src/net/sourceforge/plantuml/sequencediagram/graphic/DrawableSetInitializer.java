@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5528 $
+ * Revision $Revision: 5875 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -69,13 +69,12 @@ class DrawableSetInitializer {
 	private double freeX = 0;
 	private double freeY = 0;
 
-	private final double groupingMargin = 10;
+	// private final double groupingMargin = 10;
 	private final double autonewpage;
 
-	private int maxGrouping = 0;
+	// private int maxGrouping = 0;
 
 	private ConstraintSet constraintSet;
-	private ConstraintSetHBar constraintSetHBar;
 
 	public DrawableSetInitializer(Skin skin, ISkinParam skinParam, boolean showTail, double autonewpage) {
 		this.drawableSet = new DrawableSet(skin, skinParam);
@@ -96,15 +95,10 @@ class DrawableSetInitializer {
 		}
 
 		this.freeY = drawableSet.getHeadHeight(stringBounder);
-		// this.freeY += drawableSet.getOffsetForEnglobers(stringBounder);
+
 		this.lastFreeY = this.freeY;
 
 		drawableSet.setTopStartingY(this.freeY);
-
-		// for (LivingParticipantBox p :
-		// drawableSet.getAllLivingParticipantBox()) {
-		// p.getParticipantBox().setTopStartingY(this.freeY);
-		// }
 
 		for (Participant p : drawableSet.getAllParticipants()) {
 			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);
@@ -120,7 +114,6 @@ class DrawableSetInitializer {
 		}
 
 		constraintSet = new ConstraintSet(col, freeX);
-		constraintSetHBar = new ConstraintSetHBar(col);
 
 		for (Event ev : new ArrayList<Event>(drawableSet.getAllEvents())) {
 			final double diffY = freeY - lastFreeY;
@@ -154,9 +147,7 @@ class DrawableSetInitializer {
 
 		prepareMissingSpace(stringBounder);
 
-		final double diagramWidth = constraintSetHBar.takeConstraintIntoAccount(stringBounder, freeX) + 1;
-
-		drawableSet.setDimension(new Dimension2DDouble(diagramWidth, getTotalHeight(freeY, stringBounder)));
+		drawableSet.setDimension(new Dimension2DDouble(freeX, getTotalHeight(freeY, stringBounder)));
 		return drawableSet;
 	}
 
@@ -175,18 +166,10 @@ class DrawableSetInitializer {
 			} else {
 				final Pushable beforeFirst = constraintSet.getPrevious(first);
 				final Pushable afterLast = constraintSet.getNext(last);
-				// final Constraint constraint1 =
-				// constraintSet.getConstraint(first, last);
 				final Constraint constraint1 = constraintSet.getConstraint(beforeFirst, afterLast);
 				constraint1.ensureValue(preferredWidth + beforeFirst.getPreferredWidth(stringBounder) / 2
 						+ afterLast.getPreferredWidth(stringBounder) / 2 + 10);
 			}
-			// final double x1 = drawableSet.getX1(pe);
-			// final double x2 = drawableSet.getX2(stringBounder, pe);
-			// assert x2 > x1;
-			// final double diff = preferredWidth - (x2 - x1);
-			// if (diff > 0) {
-			// }
 		}
 	}
 
@@ -226,12 +209,19 @@ class DrawableSetInitializer {
 					width = a.getActualWidth(stringBounder);
 				}
 			}
+			if (ev instanceof GroupingHeader) {
+				final GroupingHeader gh = (GroupingHeader) ev;
+				if (width < gh.getActualWidth(stringBounder)) {
+					width = gh.getActualWidth(stringBounder);
+				}
+			}
 			final double endX = startX + width;
 			final double delta2 = endX - freeX;
 			if (delta2 > missingSpace2) {
 				missingSpace2 = delta2;
 			}
 		}
+
 		if (missingSpace1 > 0) {
 			constraintSet.pushToLeft(missingSpace1);
 		}
@@ -267,11 +257,11 @@ class DrawableSetInitializer {
 		if (m.getType() != GroupingType.START) {
 			throw new IllegalStateException();
 		}
-		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), m.getBackColorElement(),
-				m.getBackColorGeneral());
-		this.maxGrouping++;
-		final List<String> strings = m.getTitle().equals("group") ? Arrays.asList(m.getComment())
-				: Arrays.asList(m.getTitle(), m.getComment());
+		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), m.getBackColorElement(), m
+				.getBackColorGeneral());
+		// this.maxGrouping++;
+		final List<String> strings = m.getTitle().equals("group") ? Arrays.asList(m.getComment()) : Arrays.asList(m
+				.getTitle(), m.getComment());
 		final Component header = drawableSet.getSkin().createComponent(ComponentType.GROUPING_HEADER, skinParam,
 				strings);
 		final InGroupableList inGroupableList = new InGroupableList(m, freeY);
@@ -279,10 +269,8 @@ class DrawableSetInitializer {
 			other.addInGroupable(inGroupableList);
 		}
 		inGroupableLists.add(inGroupableList);
-		constraintSetHBar.add(inGroupableList);
 
-		final GraphicalElement element = new GroupingHeader(freeY, header, (m.getLevel() + 1) * groupingMargin,
-				inGroupableList);
+		final GraphicalElement element = new GroupingHeader(freeY, header, inGroupableList);
 		inGroupableList.setMinWidth(element.getPreferredWidth(stringBounder));
 		freeY += element.getPreferredHeight(stringBounder);
 		drawableSet.addEvent(m, element);
@@ -301,8 +289,7 @@ class DrawableSetInitializer {
 			if (before instanceof GroupingHeader) {
 				initY += before.getPreferredHeight(stringBounder);
 			}
-			element = new GroupingElse(freeY, initY, body, comp, (m.getLevel() + 1) * groupingMargin,
-					getTopGroupingStructure());
+			element = new GroupingElse(freeY, initY, body, comp, getTopGroupingStructure());
 			freeY += element.getPreferredHeight(stringBounder);
 		} else if (m.getType() == GroupingType.END) {
 			final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), null, m.getJustBefore()
@@ -318,11 +305,10 @@ class DrawableSetInitializer {
 				// initY += 7;
 				initY += tail.getPreferredHeight(stringBounder);
 			}
-			element = new GroupingTail(freeY, initY, (m.getLevel() + 1) * groupingMargin, body, tail,
-					getTopGroupingStructure());
+			element = new GroupingTail(freeY, initY, body, tail, getTopGroupingStructure());
 			freeY += tail.getPreferredHeight(stringBounder);
 			final int idx = inGroupableLists.size() - 1;
-			inGroupableLists.get(idx).setEndingY(freeY);
+			// inGroupableLists.get(idx).setEndingY(freeY);
 			inGroupableLists.remove(idx);
 		} else {
 			throw new IllegalStateException();

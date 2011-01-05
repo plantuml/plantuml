@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5751 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -49,7 +49,7 @@ public class CommandMultilinesNoteActivityLink extends CommandMultilines<Activit
 
 	public final CommandExecutionResult execute(List<String> lines) {
 
-		final List<String> strings = lines.subList(1, lines.size() - 1);
+		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		final String s = StringUtils.getMergedLines(strings);
 
 		final Link link = getSystem().getLastActivityLink();

@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.code.Transcoder;
+import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.preproc.Defines;
 
 public class SourceFileReader {
@@ -53,24 +54,24 @@ public class SourceFileReader {
 	private final File outputDirectory;
 
 	private final BlockUmlBuilder builder;
-	private FileFormat fileFormat;
+	private FileFormatOption fileFormatOption;
 
 	public SourceFileReader(File file) throws IOException {
 		this(file, file.getAbsoluteFile().getParentFile());
 	}
 
 	public SourceFileReader(final File file, File outputDirectory) throws IOException {
-		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, FileFormat.PNG);
+		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, new FileFormatOption(FileFormat.PNG));
 	}
 
-	public SourceFileReader(final File file, File outputDirectory, FileFormat fileFormat) throws IOException {
-		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, fileFormat);
+	public SourceFileReader(final File file, File outputDirectory, FileFormatOption fileFormatOption) throws IOException {
+		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, fileFormatOption);
 	}
 
 	public SourceFileReader(Defines defines, final File file, File outputDirectory, List<String> config,
-			String charset, FileFormat fileFormat) throws IOException {
+			String charset, FileFormatOption fileFormatOption) throws IOException {
 		this.file = file;
-		this.fileFormat = fileFormat;
+		this.fileFormatOption = fileFormatOption;
 		if (file.exists() == false) {
 			throw new IllegalArgumentException();
 		}
@@ -98,13 +99,13 @@ public class SourceFileReader {
 			String newName = blockUml.getFilename();
 
 			if (newName == null) {
-				newName = changeName(file.getName(), cpt++, fileFormat);
+				newName = changeName(file.getName(), cpt++, fileFormatOption.getFileFormat());
 			}
 
 			final File suggested = new File(outputDirectory, newName);
 			suggested.getParentFile().mkdirs();
 
-			for (File f : blockUml.getSystem().createFiles(suggested, fileFormat)) {
+			for (File f : blockUml.getSystem().createFiles(suggested, fileFormatOption)) {
 				final String desc = "[" + file.getName() + "] " + blockUml.getSystem().getDescription();
 				final GeneratedImage generatedImage = new GeneratedImage(f, desc);
 				result.add(generatedImage);
@@ -119,7 +120,7 @@ public class SourceFileReader {
 
 	public List<String> getEncodedUrl() throws IOException, InterruptedException {
 		final List<String> result = new ArrayList<String>();
-		final Transcoder transcoder = new Transcoder();
+		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final String source = blockUml.getSystem().getSource().getPlainString();
 			final String encoded = transcoder.encode(source);
@@ -144,8 +145,8 @@ public class SourceFileReader {
 		return new InputStreamReader(new FileInputStream(file), charset);
 	}
 
-	public final void setFileFormat(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
+		this.fileFormatOption = fileFormatOption;
 	}
 
 }

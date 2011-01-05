@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5584 $
+ * Revision $Revision: 5877 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -49,6 +49,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -57,6 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMakerBeta;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramPngMaker3;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
+import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower {
 
@@ -268,11 +270,17 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	abstract protected List<String> getDotStrings();
 
-	final public List<File> createFiles(File suggestedFile, FileFormat fileFormat) throws IOException,
+	final public List<File> createFiles(File suggestedFile, FileFormatOption fileFormatOption) throws IOException,
 			InterruptedException {
+		
+		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
 			return createFilesTxt(suggestedFile, fileFormat);
+		}
+
+		if (fileFormat.name().startsWith("XMI")) {
+			return createFilesXmi(suggestedFile, fileFormat);
 		}
 
 		if (OptionFlags.getInstance().useJavaInsteadOfDot()) {
@@ -283,7 +291,12 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return maker.createFile(suggestedFile, getDotStrings(), fileFormat);
 		}
 		final CucaDiagramFileMaker maker = new CucaDiagramFileMaker(this);
-		return maker.createFile(suggestedFile, getDotStrings(), fileFormat);
+		return maker.createFile(suggestedFile, getDotStrings(), fileFormatOption);
+	}
+
+	private List<File> createFilesXmi(File suggestedFile, FileFormat fileFormat) throws IOException {
+		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);
+		return maker.createFiles(suggestedFile);
 	}
 
 	private List<File> createFilesTxt(File suggestedFile, FileFormat fileFormat) throws IOException {
@@ -293,7 +306,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public static boolean BETA;
 
-	final public void createFile(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+	final public void createFile(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
+		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
 			createFilesTxt(os, index, fileFormat);
 			return;
@@ -311,7 +325,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 		final CucaDiagramFileMaker maker = new CucaDiagramFileMaker(this);
 		try {
-			maker.createFile(os, getDotStrings(), fileFormat);
+			maker.createFile(os, getDotStrings(), fileFormatOption);
 		} catch (InterruptedException e) {
 			Log.error(e.toString());
 			throw new IOException(e.toString());

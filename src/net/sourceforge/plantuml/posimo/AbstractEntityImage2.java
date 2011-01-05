@@ -66,11 +66,11 @@ abstract class AbstractEntityImage2 implements IEntityImageBlock {
 	}
 
 	protected Font getFont(FontParam fontParam) {
-		return skinParam.getFont(fontParam);
+		return skinParam.getFont(fontParam, null);
 	}
 
 	protected Color getFontColor(FontParam fontParam) {
-		return skinParam.getFontHtmlColor(fontParam).getColor();
+		return skinParam.getFontHtmlColor(fontParam, null).getColor();
 	}
 
 	protected final Color getColor(ColorParam colorParam) {

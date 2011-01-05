@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -51,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
 final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
@@ -61,10 +63,10 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 
 	static RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
 		return new RegexConcat(
-				new RegexLeaf("HEADER", "^(?:@(\\d+)\\s+)?"),
+				new RegexLeaf("HEADER", "^(?:@([\\d.]+)\\s+)?"),
 				new RegexOr(
 						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "\\s+)?"
-								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")"),
+								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)?"),
 						new RegexLeaf("COUPLE1",
 								"\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)")),
 				new RegexLeaf("\\s*"),
@@ -83,7 +85,7 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 				new RegexLeaf("\\s*"),
 				new RegexOr(
 						new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "\\s+)?"
-								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")"),
+								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)?"),
 						new RegexLeaf("COUPLE2",
 								"\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)")),
 				new RegexLeaf("\\s*"), new RegexLeaf("LABEL_LINK", "(?::\\s*([^\"]+))?$"));
@@ -133,6 +135,14 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 				cl2.muteToType(type);
 			}
 		}
+		if (arg.get("ENT1").get(2) != null) {
+			cl1.setStereotype(new Stereotype(arg.get("ENT1").get(2), getSystem().getSkinParam().getCircledCharacterRadius(),
+					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+		}
+		if (arg.get("ENT2").get(2) != null) {
+			cl2.setStereotype(new Stereotype(arg.get("ENT2").get(2), getSystem().getSkinParam().getCircledCharacterRadius(),
+					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+		}
 
 		final LinkType linkType = getLinkType(arg);
 		Direction dir = getDirection(arg);
@@ -177,7 +187,7 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 			// }
 			// }
 		} else {
-			link.setWeight(Integer.parseInt(arg0));
+			link.setWeight(Double.parseDouble(arg0));
 		}
 	}
 

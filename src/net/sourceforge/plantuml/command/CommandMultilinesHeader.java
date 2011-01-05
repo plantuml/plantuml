@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5750 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.command;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 
@@ -46,7 +47,8 @@ public class CommandMultilinesHeader extends CommandMultilines<UmlDiagram> {
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {
-		final Matcher m = getStartingPattern().matcher(lines.get(0));
+		StringUtils.trim(lines);
+		final Matcher m = getStartingPattern().matcher(lines.get(0).trim());
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

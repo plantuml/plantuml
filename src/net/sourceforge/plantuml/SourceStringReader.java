@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -64,18 +66,25 @@ public class SourceStringReader {
 		return generateImage(os, 0);
 	}
 
-	public String generateImage(OutputStream os, FileFormat fileFormat) throws IOException {
-		return generateImage(os, 0, fileFormat);
+	public String generateImage(File f) throws IOException {
+		final FileOutputStream os = new FileOutputStream(f);
+		final String result = generateImage(os, 0);
+		os.close();
+		return result;
+	}
+
+	public String generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+		return generateImage(os, 0, fileFormatOption);
 	}
 
 	public String generateImage(OutputStream os, int numImage) throws IOException {
-		return generateImage(os, numImage, FileFormat.PNG);
+		return generateImage(os, numImage, new FileFormatOption(FileFormat.PNG));
 	}
 
-	public String generateImage(OutputStream os, int numImage, FileFormat fileFormat) throws IOException {
+	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
 		if (blocks.size() == 0) {
 			final GraphicStrings error = new GraphicStrings(Arrays.asList("No @startuml found"));
-			error.writeImage(os, fileFormat);
+			error.writeImage(os, fileFormatOption);
 			return null;
 		}
 		try {
@@ -83,7 +92,7 @@ public class SourceStringReader {
 				final PSystem system = b.getSystem();
 				final int nbInSystem = system.getNbImages();
 				if (numImage < nbInSystem) {
-					system.createFile(os, numImage, fileFormat);
+					system.createFile(os, numImage, fileFormatOption);
 					return system.getDescription();
 				}
 				numImage -= nbInSystem;

@@ -42,5 +42,5 @@ public interface InGroupable {
 	public double getMaxX(StringBounder stringBounder);
 	
 	public String toString(StringBounder stringBounder);
-
+	
 }

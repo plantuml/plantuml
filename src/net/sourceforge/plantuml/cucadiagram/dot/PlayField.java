@@ -96,7 +96,7 @@ public final class PlayField {
 
 	public PlayField(ISkinParam skinParam) {
 		this.skinParam = skinParam;
-		this.fontQualif = skinParam.getFont(FontParam.CLASS_ARROW);
+		this.fontQualif = skinParam.getFont(FontParam.CLASS_ARROW, null);
 	}
 
 	public void initInternal(Collection<IEntity> entities, Collection<Link> links, StringBounder stringBounder) {
@@ -259,7 +259,7 @@ public final class PlayField {
 			final String qual1 = link.getQualifier1();
 			if (qual1 != null) {
 				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual1), fontQualif,
-						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW).getColor(), HorizontalAlignement.LEFT);
+						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor(), HorizontalAlignement.LEFT);
 				final Point2D pos = p.getDotPath().getStartPoint();
 				b.drawU(ug, pos.getX(), pos.getY());
 			}
@@ -267,7 +267,7 @@ public final class PlayField {
 			final String qual2 = link.getQualifier2();
 			if (qual2 != null) {
 				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual2), fontQualif,
-						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW).getColor(), HorizontalAlignement.LEFT);
+						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor(), HorizontalAlignement.LEFT);
 				final Point2D pos = p.getDotPath().getEndPoint();
 				b.drawU(ug, pos.getX(), pos.getY());
 			}

@@ -28,12 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5072 $
+ * Revision $Revision: 5705 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -79,8 +80,7 @@ public class Splitter {
 		sb.append(imgPattern2);
 
 		htmlTag = sb.toString();
-		tagOrText = Pattern.compile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$",
-				Pattern.CASE_INSENSITIVE);
+		tagOrText = Pattern.compile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$", Pattern.CASE_INSENSITIVE);
 	}
 
 	private final List<String> splitted = new ArrayList<String>();
@@ -98,13 +98,34 @@ public class Splitter {
 		return splitted;
 	}
 
-	public List<HtmlCommand> getHtmlCommands() {
+	public List<HtmlCommand> getHtmlCommands(boolean newLineAlone) {
 		final HtmlCommandFactory factory = new HtmlCommandFactory();
 		final List<HtmlCommand> result = new ArrayList<HtmlCommand>();
 		for (String s : getSplittedInternal()) {
-			result.add(factory.getHtmlCommand(s));
+			final HtmlCommand cmd = factory.getHtmlCommand(s);
+			if (newLineAlone && cmd instanceof Text) {
+				result.addAll(splitText((Text) cmd));
+			} else {
+				result.add(cmd);
+			}
 		}
 		return Collections.unmodifiableList(result);
 	}
 
+	private Collection<Text> splitText(Text cmd) {
+		String s = cmd.getText();
+		final Collection<Text> result = new ArrayList<Text>();
+		while (true) {
+			int x = s.indexOf(Text.NEWLINE.getText());
+			if (x == -1) {
+				result.add(new Text(s));
+				return result;
+			}
+			if (x > 0) {
+				result.add(new Text(s.substring(0, x)));
+			}
+			result.add(Text.NEWLINE);
+			s = s.substring(x + 2);
+		}
+	}
 }

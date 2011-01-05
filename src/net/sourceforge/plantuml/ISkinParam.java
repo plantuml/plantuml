@@ -43,17 +43,17 @@ public interface ISkinParam {
 
 	public String getValue(String key);
 
-	public HtmlColor getHtmlColor(ColorParam param);
+	public HtmlColor getHtmlColor(ColorParam param, String stereotype);
 
-	public int getFontSize(FontParam param);
+	public int getFontSize(FontParam param, String stereotype);
 
-	public String getFontFamily(FontParam param);
+	public String getFontFamily(FontParam param, String stereotype);
 
-	public HtmlColor getFontHtmlColor(FontParam param);
+	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
 
-	public int getFontStyle(FontParam param);
+	public int getFontStyle(FontParam param, String stereotype);
 
-	public Font getFont(FontParam fontParam);
+	public Font getFont(FontParam fontParam, String stereotype);
 
 	public int getCircledCharacterRadius();
 
@@ -62,5 +62,7 @@ public interface ISkinParam {
 	public int classAttributeIconSize();
 	
 	public boolean isMonochrome();
+	
+	public int getDpi();
 
 }

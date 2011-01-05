@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5218 $
+ * Revision $Revision: 5823 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -44,8 +44,8 @@ public enum ColorParam {
 	activityBar,
 	activityArrow,
 
-	actorBackground,
-	actorBorder,
+	usecaseActorBackground,
+	usecaseActorBorder,
 	usecaseBorder,
 	usecaseBackground,
 	usecaseArrow,
@@ -67,13 +67,15 @@ public enum ColorParam {
 
 	componentBackground,
 	componentBorder,
-	interfaceBackground,
-	interfaceBorder,
+	componentInterfaceBackground,
+	componentInterfaceBorder,
 	componentArrow,
 
 	stateBackground,
 	stateBorder,
 	stateArrow,
+	stateStart,
+	stateEnd,
 
 	noteBackground(true),
 	noteBorder,

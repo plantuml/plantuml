@@ -73,7 +73,7 @@ final public class CommandLinkLollipop extends SingleLineCommand<AbstractClassOr
 	public CommandLinkLollipop(AbstractClassOrObjectDiagram diagram) {
 		super(
 				diagram,
-				"(?i)^(?:@(\\d+)\\s+)?((?:(interface|enum|abstract\\s+class|abstract|class)\\s+)?(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)|\\(\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*,\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*\\))\\s*(?:\"([^\"]+)\")?\\s*"
+				"(?i)^(?:@([\\d.])\\s+)?((?:(interface|enum|abstract\\s+class|abstract|class)\\s+)?(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)|\\(\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*,\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*\\))\\s*(?:\"([^\"]+)\")?\\s*"
 						// +
 						// "(?:(([-=.]+)([\\]>o*+]|\\|[>\\]])?)|(([\\[<o*+]|[<\\[]\\|)?([-=.]+))|(\\<([-=.]+)([o*]))|(([o*])([-=.]+)\\>))"
 						+ "(?:\\(\\)([-=.]+)|([-=.]+)\\(\\))"
@@ -158,7 +158,7 @@ final public class CommandLinkLollipop extends SingleLineCommand<AbstractClassOr
 			// }
 			// }
 		} else {
-			link.setWeight(Integer.parseInt(arg0));
+			link.setWeight(Double.parseDouble(arg0));
 		}
 	}
 

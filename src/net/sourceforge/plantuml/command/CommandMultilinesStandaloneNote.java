@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5751 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -47,9 +47,9 @@ public class CommandMultilinesStandaloneNote extends CommandMultilines<AbstractE
 
 	public CommandExecutionResult execute(List<String> lines) {
 
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0));
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
 
-		final List<String> strings = lines.subList(1, lines.size() - 1);
+		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		final String display = StringUtils.getMergedLines(strings);
 
 		final EntityType type = EntityType.NOTE;
