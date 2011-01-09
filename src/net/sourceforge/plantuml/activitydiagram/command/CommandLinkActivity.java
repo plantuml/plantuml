@@ -54,42 +54,32 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 	public CommandLinkActivity(ActivityDiagram diagram) {
-		super(
-				diagram, getRegexConcat());
+		super(diagram, getRegexConcat());
 	}
-	
+
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-					new RegexOr("FIRST", true,
-							new RegexLeaf("STAR", "(\\(\\*\\))"),
-							new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"),
-							new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"),
-							new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
-					new RegexLeaf("\\s*"),
-					new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"),
-					new RegexLeaf("\\s*"),
-					new RegexLeaf("BACKCOLOR", "(#\\w+)?"),
-					new RegexLeaf("\\s*"),
-					new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"),
-					new RegexLeaf("\\s*"),
-					new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"),
-					new RegexLeaf("\\s*"),
-					new RegexOr("FIRST2",
-							new RegexLeaf("STAR2", "(\\(\\*\\))"),
-							new RegexLeaf("OPENBRACKET2", "(\\{)"),
-							new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"),
-							new RegexLeaf("BAR2", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"),
-							new RegexLeaf("QUOTED2", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
-					new RegexLeaf("\\s*"),
-					new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"),
-					new RegexLeaf("\\s*"),
-					new RegexLeaf("BACKCOLOR2", "(#\\w+)?"),
-					new RegexLeaf("$"));
+		return new RegexConcat(new RegexLeaf("^"), new RegexOr("FIRST", true, new RegexLeaf("STAR", "(\\(\\*\\))"),
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), new RegexLeaf("BAR",
+						"(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), new RegexLeaf("QUOTED",
+						"\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")), new RegexLeaf("\\s*"), new RegexLeaf(
+				"STEREOTYPE", "(\\<\\<.*\\>\\>)?"), new RegexLeaf("\\s*"), new RegexLeaf("BACKCOLOR", "(#\\w+)?"),
+				new RegexLeaf("\\s*"),
+				new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"),
+				new RegexLeaf("\\s*"), new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), new RegexLeaf("\\s*"),
+				new RegexOr("FIRST2", new RegexLeaf("STAR2", "(\\(\\*\\))"), new RegexLeaf("OPENBRACKET2", "(\\{)"),
+						new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), new RegexLeaf("BAR2",
+								"(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), new RegexLeaf("QUOTED2",
+								"\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")), new RegexLeaf("\\s*"), new RegexLeaf(
+						"STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), new RegexLeaf("\\s*"), new RegexLeaf("BACKCOLOR2",
+						"(#\\w+)?"), new RegexLeaf("$"));
 	}
-	
+
 	@Override
 	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg2) {
 		final IEntity entity1 = getEntity(getSystem(), arg2, true);
+		if (entity1 == null) {
+			return CommandExecutionResult.error("No such activity");
+		}
 		if (arg2.get("STEREOTYPE").get(0) != null) {
 			entity1.setStereotype(new Stereotype(arg2.get("STEREOTYPE").get(0)));
 		}
@@ -98,6 +88,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 
 		final IEntity entity2 = getEntity(getSystem(), arg2, false);
+		if (entity2 == null) {
+			return CommandExecutionResult.error("No such activity");
+		}
 		if (arg2.get("BACKCOLOR2").get(0) != null) {
 			entity2.setSpecificBackcolor(arg2.get("BACKCOLOR2").get(0));
 		}
@@ -122,14 +115,11 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 	}
 
-
-
-
 	static IEntity getEntity(ActivityDiagram system, Map<String, RegexPartialMatch> arg, final boolean start) {
 		final String suf = start ? "" : "2";
 
 		final RegexPartialMatch openBracket = arg.get("OPENBRACKET" + suf);
-		if (openBracket!=null && openBracket.get(0) != null) {
+		if (openBracket != null && openBracket.get(0) != null) {
 			return system.createInnerActivity();
 		}
 		if (arg.get("STAR" + suf).get(0) != null) {
@@ -149,8 +139,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
 		if (quoted.get(0) != null) {
 			final String quotedCode = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
-			return system.getOrCreate(quotedCode, quoted.get(0), getTypeIfExisting(system,
-					quotedCode));
+			return system.getOrCreate(quotedCode, quoted.get(0), getTypeIfExisting(system, quotedCode));
 		}
 		final String first = arg.get("FIRST" + suf).get(0);
 		if (first == null) {
@@ -158,7 +147,6 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		throw new UnsupportedOperationException();
 	}
-	
 
 	static EntityType getTypeIfExisting(ActivityDiagram system, String code) {
 		if (system.entityExist(code)) {
@@ -169,7 +157,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		return EntityType.ACTIVITY;
 	}
-	
+
 	static EntityType getTypeFromString(String type, final EntityType circle) {
 		if (type == null) {
 			return EntityType.ACTIVITY;
@@ -182,6 +170,5 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		throw new IllegalArgumentException();
 	}
-
 
 }

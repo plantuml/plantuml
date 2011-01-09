@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5848 $
+ * Revision $Revision: 5908 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -52,7 +52,7 @@ public class Link implements Imaged {
 	final private LinkType type;
 	final private String label;
 
-	final private int length;
+	private int length;
 	final private String qualifier1;
 	final private String qualifier2;
 	final private String uid = "LNK" + UniqueSequence.getValue();
@@ -167,6 +167,10 @@ public class Link implements Imaged {
 
 	public int getLength() {
 		return length;
+	}
+
+	public final void setLength(int length) {
+		this.length = length;
 	}
 
 	public String getQualifier1() {

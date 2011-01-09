@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -136,12 +137,16 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 			}
 		}
 		if (arg.get("ENT1").get(2) != null) {
-			cl1.setStereotype(new Stereotype(arg.get("ENT1").get(2), getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+			cl1
+					.setStereotype(new Stereotype(arg.get("ENT1").get(2), getSystem().getSkinParam()
+							.getCircledCharacterRadius(), getSystem().getSkinParam().getFont(
+							FontParam.CIRCLED_CHARACTER, null)));
 		}
 		if (arg.get("ENT2").get(2) != null) {
-			cl2.setStereotype(new Stereotype(arg.get("ENT2").get(2), getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+			cl2
+					.setStereotype(new Stereotype(arg.get("ENT2").get(2), getSystem().getSkinParam()
+							.getCircledCharacterRadius(), getSystem().getSkinParam().getFont(
+							FontParam.CIRCLED_CHARACTER, null)));
 		}
 
 		final LinkType linkType = getLinkType(arg);
@@ -163,15 +168,15 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 			link = link.getInv();
 		}
 
-		//		getSystem().resetPragmaLabel();
+		// getSystem().resetPragmaLabel();
 		addLink(link, arg.get("HEADER").get(0));
 
 		return CommandExecutionResult.ok();
 	}
 
-	private void addLink(Link link, String arg0) {
+	private void addLink(Link link, String weight) {
 		getSystem().addLink(link);
-		if (arg0 == null) {
+		if (weight == null) {
 			final LinkType type = link.getType();
 			// --|> highest
 			// --*, -->, --o normal
@@ -187,7 +192,7 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 			// }
 			// }
 		} else {
-			link.setWeight(Double.parseDouble(arg0));
+			link.setWeight(Double.parseDouble(weight));
 		}
 	}
 
@@ -206,9 +211,9 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 			queue = getQueue(arg);
 		}
 
-		Link link = new Link(cl1.getEntityCluster(), cl2.getEntityCluster(), linkType, arg.get("LABEL_LINK").get(
-				0), queue.length(), arg.get("FIRST_LABEL").get(0), arg.get("SECOND_LABEL").get(0), getSystem()
-				.getLabeldistance(), getSystem().getLabelangle());
+		Link link = new Link(cl1.getEntityCluster(), cl2.getEntityCluster(), linkType, arg.get("LABEL_LINK").get(0),
+				queue.length(), arg.get("FIRST_LABEL").get(0), arg.get("SECOND_LABEL").get(0), getSystem()
+						.getLabeldistance(), getSystem().getLabelangle());
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
@@ -227,16 +232,19 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 		if (getSystem().entityExist(clName2) == false) {
 			return CommandExecutionResult.error("No class " + clName2);
 		}
-		final Entity node = createAssociationPoint(clName1, clName2);
 
 		final String ent2 = arg.get("ENT2").get(1);
 		final IEntity cl2 = getSystem().getOrCreateClass(ent2);
 
 		final LinkType linkType = getLinkType(arg);
-		final String queue = getQueue(arg);
+		final String label = arg.get("LABEL_LINK").get(0);
+		final int length = getQueue(arg).length();
+		final String weight = arg.get("HEADER").get(0);
 
-		final Link link = new Link(node, cl2, linkType, arg.get("LABEL_LINK").get(0), queue.length());
-		addLink(link, arg.get("HEADER").get(0));
+		final boolean result = getSystem().associationClass(1, clName1, clName2, cl2, linkType, label);
+		if (result == false) {
+			return CommandExecutionResult.error("Cannot have more than 2 assocications");
+		}
 
 		return CommandExecutionResult.ok();
 	}
@@ -250,28 +258,21 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 		if (getSystem().entityExist(clName2) == false) {
 			return CommandExecutionResult.error("No class " + clName2);
 		}
-		final Entity node = createAssociationPoint(clName1, clName2);
 
 		final String ent1 = arg.get("ENT1").get(1);
 		final IEntity cl1 = getSystem().getOrCreateClass(ent1);
 
 		final LinkType linkType = getLinkType(arg);
-		final String queue = getQueue(arg);
+		final String label = arg.get("LABEL_LINK").get(0);
+		final int length = getQueue(arg).length();
+		final String weight = arg.get("HEADER").get(0);
 
-		final Link link = new Link(cl1, node, linkType, arg.get("LABEL_LINK").get(0), queue.length());
-		addLink(link, arg.get("HEADER").get(0));
+		final boolean result = getSystem().associationClass(2, clName1, clName2, cl1, linkType, label);
+		if (result == false) {
+			return CommandExecutionResult.error("Cannot have more than 2 assocications");
+		}
 
 		return CommandExecutionResult.ok();
-	}
-
-	private Entity createAssociationPoint(final String clName1, final String clName2) {
-		final IEntity entity1 = getSystem().getOrCreateClass(clName1);
-		final IEntity entity2 = getSystem().getOrCreateClass(clName2);
-
-		final Entity node = getSystem().createEntity(clName1 + "," + clName2, "node", EntityType.POINT_FOR_ASSOCIATION);
-
-		getSystem().insertBetween(entity1, entity2, node);
-		return node;
 	}
 
 	private LinkType getLinkTypeNormal(RegexPartialMatch regexPartialMatch) {

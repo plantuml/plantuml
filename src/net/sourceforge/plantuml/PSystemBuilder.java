@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
+import net.sourceforge.plantuml.activitydiagram2.ActivityDiagramFactory2;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
@@ -63,9 +64,11 @@ public class PSystemBuilder {
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
+		factories.add(new ActivityDiagramFactory2());
 		factories.add(new UsecaseDiagramFactory());
 		factories.add(new ComponentDiagramFactory());
 		factories.add(new StateDiagramFactory());
+		factories.add(new ActivityDiagramFactory2());
 		factories.add(new CompositeDiagramFactory());
 		factories.add(new ObjectDiagramFactory());
 		factories.add(new PrintSkinFactory());

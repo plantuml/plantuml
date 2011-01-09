@@ -33,14 +33,21 @@
  */
 package net.sourceforge.plantuml.objectdiagram;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
+
+	// private Link last = null;
+	// private IEntity lastNode = null;
 
 	final public boolean insertBetween(IEntity entity1, IEntity entity2, IEntity node) {
 		final Link link = foundLink(entity1, entity2);
@@ -85,4 +92,158 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 		return result;
 	}
+
+	// final public void insertBetweenNew(IEntity entity1, IEntity entity2,
+	// IEntity node) {
+	// Link link = foundLink(entity1, entity2);
+	// if (link == null) {
+	// link = last;
+	// }
+	// final Link l1 = new Link(entity1, node, link.getType(), link.getLabel(),
+	// link.getLength(),
+	// link.getQualifier1(), null, link.getLabeldistance(),
+	// link.getLabelangle());
+	// final Link l2 = new Link(node, entity2, link.getType(), link.getLabel(),
+	// link.getLength(), null, link
+	// .getQualifier2(), link.getLabeldistance(), link.getLabelangle());
+	// addLink(l1);
+	// addLink(l2);
+	// if (last == null) {
+	// removeLink(link);
+	// } else {
+	// final Link lnode = new Link(lastNode, node, link.getType(),
+	// link.getLabel(), 1);
+	// lnode.setInvis(true);
+	// // lnode.setWeight(100);
+	// addLink(lnode);
+	// }
+	// last = link;
+	// lastNode = node;
+	// // return true;
+	// }
+
+	private final List<Association> assocations = new ArrayList<Association>();
+
+	public boolean associationClass(int mode, String clName1, String clName2, IEntity associed, LinkType linkType,
+			String label) {
+		final IEntity entity1 = getOrCreateClass(clName1);
+		final IEntity entity2 = getOrCreateClass(clName2);
+		final List<Association> same = new ArrayList<Association>();
+		for (Association existing : assocations) {
+			if (existing.sameCouple(entity1, entity2)) {
+				same.add(existing);
+			}
+		}
+		if (same.size() > 1) {
+			return false;
+		} else if (same.size() == 0) {
+			final Association association = new Association(mode, entity1, entity2, associed);
+			association.createNew(mode, linkType, label);
+
+			this.assocations.add(association);
+			return true;
+		}
+		assert same.size() == 1;
+		final Association association = same.get(0).createSecondAssociation(mode, associed, label);
+		association.createInSecond(linkType, label);
+
+		this.assocations.add(association);
+		return true;
+	}
+
+	class Association {
+		private IEntity entity1;
+		private IEntity entity2;
+		private IEntity associed;
+		private IEntity point;
+
+		private Link existingLink;
+
+		private Link entity1ToPoint;
+		private Link pointToEntity2;
+		private Link pointToAssocied;
+
+		private Association other;
+
+		public Association(int mode, IEntity entity1, IEntity entity2, IEntity associed) {
+			this.entity1 = entity1;
+			this.entity2 = entity2;
+			this.associed = associed;
+			point = getOrCreateEntity("apoint" + UniqueSequence.getValue(), EntityType.POINT_FOR_ASSOCIATION);
+
+		}
+
+		public Association createSecondAssociation(int mode2, IEntity associed2, String label) {
+			final Association result = new Association(mode2, entity1, entity2, associed2);
+			result.existingLink = this.existingLink;
+			result.other = this;
+
+			if (this.existingLink.getLength() == 1) {
+				this.entity1ToPoint.setLength(2);
+				this.pointToEntity2.setLength(2);
+				this.pointToAssocied.setLength(1);
+			}
+			return result;
+		}
+
+		void createNew(int mode, LinkType linkType, String label) {
+			existingLink = foundLink(entity1, entity2);
+			if (existingLink == null) {
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null, 2);
+			} else {
+				removeLink(existingLink);
+			}
+
+			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(), existingLink
+					.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(), existingLink
+					.getLabelangle());
+			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), existingLink.getLabel(), existingLink
+					.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(), existingLink
+					.getLabelangle());
+			addLink(entity1ToPoint);
+			addLink(pointToEntity2);
+
+			int length = 1;
+			if (existingLink.getLength() == 1) {
+				length = 2;
+			}
+
+			if (mode == 1) {
+				pointToAssocied = new Link(point, associed, linkType, label, length);
+			} else {
+				pointToAssocied = new Link(associed, point, linkType, label, length);
+			}
+			addLink(pointToAssocied);
+		}
+
+		void createInSecond(LinkType linkType, String label) {
+			entity1ToPoint = new Link(entity1, point, existingLink.getType(), null, 2);
+			pointToEntity2 = new Link(point, entity2, existingLink.getType(), null, 2);
+			addLink(entity1ToPoint);
+			addLink(pointToEntity2);
+			if (other.pointToAssocied.getEntity1().getType() == EntityType.POINT_FOR_ASSOCIATION) {
+				removeLink(other.pointToAssocied);
+				other.pointToAssocied = other.pointToAssocied.getInv();
+				addLink(other.pointToAssocied);
+			}
+			pointToAssocied = new Link(point, associed, linkType, label, 1);
+			addLink(pointToAssocied);
+
+			final Link lnode = new Link(other.point, this.point, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null, 1);
+			lnode.setInvis(true);
+			addLink(lnode);
+
+		}
+
+		boolean sameCouple(IEntity entity1, IEntity entity2) {
+			if (this.entity1 == entity1 && this.entity2 == entity2) {
+				return true;
+			}
+			if (this.entity1 == entity2 && this.entity2 == entity1) {
+				return true;
+			}
+			return false;
+		}
+	}
+
 }

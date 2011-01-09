@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5616 $
+ * Revision $Revision: 5895 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -48,7 +48,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	public IEntity getOrCreateEntity(String code, EntityType defaultType) {
 		assert defaultType == EntityType.ABSTRACT_CLASS || defaultType == EntityType.CLASS
 				|| defaultType == EntityType.INTERFACE || defaultType == EntityType.ENUM
-				|| defaultType == EntityType.LOLLIPOP;
+				|| defaultType == EntityType.LOLLIPOP || defaultType == EntityType.POINT_FOR_ASSOCIATION;
 		code = getFullyQualifiedCode(code);
 		if (super.entityExist(code)) {
 			return super.getOrCreateEntity(code, defaultType);

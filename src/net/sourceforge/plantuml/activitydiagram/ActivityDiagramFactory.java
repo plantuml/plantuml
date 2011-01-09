@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5847 $
+ * Revision $Revision: 5890 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram;
@@ -37,7 +37,6 @@ import net.sourceforge.plantuml.activitydiagram.command.CommandElse;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
-import net.sourceforge.plantuml.activitydiagram.command.CommandInnerConcurrent;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandMultilinesNoteActivity;

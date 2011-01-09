@@ -33,15 +33,25 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 	public CommandExoArrowLeft(SequenceDiagram sequenceDiagram) {
-		super(
-				sequenceDiagram,
-				"(?i)^(\\[[=-]+>{1,2}|\\[\\<{1,2}[=-]+)\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$",
-				0, 1);
+		super(sequenceDiagram,
+				"(?i)^(\\[?[=-]+>{1,2}|\\[?\\<{1,2}[=-]+)\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$", 0, 1);
+	}
+
+	@Override
+	MessageExoType getMessageExoType(String arrow) {
+		if (arrow.contains(">")) {
+			return MessageExoType.FROM_LEFT;
+		}
+		if (arrow.contains("<")) {
+			return MessageExoType.TO_LEFT;
+		}
+		throw new IllegalArgumentException(arrow);
 	}
 
 }

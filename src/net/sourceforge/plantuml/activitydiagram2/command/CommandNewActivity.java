@@ -27,20 +27,31 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 5912 $
+ *
+ * Revision $Revision: 4762 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.activitydiagram2.command;
 
-public class Version {
+import java.util.List;
 
-	public static int version() {
-		return 5911;
+import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand;
+
+public class CommandNewActivity extends SingleLineCommand<ActivityDiagram2> {
+
+	public CommandNewActivity(ActivityDiagram2 diagram) {
+		super(diagram, "(?i)^\"([^\"]+)\"$");
 	}
 
-	public static long compileTime() {
-		return 1294598580421L;
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
+		if (getSystem().entities().size() == 0) {
+			return CommandExecutionResult.error("Missing start keyword");
+		}
+		getSystem().newActivity(arg.get(0));
+		return CommandExecutionResult.ok();
 	}
 
 }

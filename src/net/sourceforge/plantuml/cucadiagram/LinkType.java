@@ -147,4 +147,12 @@ public class LinkType {
 				|| decor2 == LinkDecor.COMPOSITION;
 	}
 
+	public LinkType getPart1() {
+		return new LinkType(decor1, style, LinkDecor.NONE);
+	}
+
+	public LinkType getPart2() {
+		return new LinkType(LinkDecor.NONE, style, decor2);
+	}
+
 }

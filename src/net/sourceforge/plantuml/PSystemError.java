@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5794 $
+ * Revision $Revision: 5898 $
  */
 package net.sourceforge.plantuml;
 
@@ -59,19 +59,38 @@ public class PSystemError extends AbstractPSystem {
 		this.errorsUml.addAll(errorUml);
 		this.setSource(source);
 
-		final Collection<ErrorUml> executions = getErrors(ErrorUmlType.EXECUTION_ERROR);
-		if (executions.size() > 0) {
-			higherErrorPosition = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR);
-			errs = getErrorsAt(higherErrorPosition, ErrorUmlType.EXECUTION_ERROR);
-			appendSource(higherErrorPosition, errs);
-		} else {
-			higherErrorPosition = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR);
-			errs = getErrorsAt(higherErrorPosition, ErrorUmlType.SYNTAX_ERROR);
-			if (errs.size() != 1) {
-				throw new UnsupportedOperationException(errs.toString());
-			}
-			appendSource(higherErrorPosition, errs);
+		final int higherErrorPositionExecution = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR);
+		final int higherErrorPositionSyntax = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR);
+		
+		if (higherErrorPositionExecution == Integer.MIN_VALUE && higherErrorPositionSyntax == Integer.MIN_VALUE) {
+			throw new IllegalStateException();
 		}
+
+		if (higherErrorPositionExecution >= higherErrorPositionSyntax) {
+			higherErrorPosition = higherErrorPositionExecution;
+			errs = getErrorsAt(higherErrorPositionExecution, ErrorUmlType.EXECUTION_ERROR);
+		} else {
+			assert higherErrorPositionSyntax > higherErrorPositionExecution;
+			higherErrorPosition = higherErrorPositionSyntax;
+			errs = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR);
+		}
+		appendSource(higherErrorPosition, errs);
+			
+
+
+//		final Collection<ErrorUml> executions = getErrors(ErrorUmlType.EXECUTION_ERROR);
+//		if (executions.size() > 0) {
+//			higherErrorPosition = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR);
+//			errs = getErrorsAt(higherErrorPosition, ErrorUmlType.EXECUTION_ERROR);
+//			appendSource(higherErrorPosition, errs);
+//		} else {
+//			higherErrorPosition = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR);
+//			errs = getErrorsAt(higherErrorPosition, ErrorUmlType.SYNTAX_ERROR);
+//			if (errs.size() != 1) {
+//				throw new UnsupportedOperationException(errs.toString());
+//			}
+//			appendSource(higherErrorPosition, errs);
+//		}
 
 	}
 
@@ -154,9 +173,9 @@ public class PSystemError extends AbstractPSystem {
 				max = error.getPosition();
 			}
 		}
-		if (max == Integer.MIN_VALUE) {
-			throw new IllegalStateException();
-		}
+//		if (max == Integer.MIN_VALUE) {
+//			throw new IllegalStateException();
+//		}
 		return max;
 	}
 

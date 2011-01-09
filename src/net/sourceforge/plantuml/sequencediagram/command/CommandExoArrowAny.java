@@ -76,20 +76,22 @@ abstract class CommandExoArrowAny extends SingleLineCommand<SequenceDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	final MessageExoType getMessageExoType(String arrow) {
-		if (arrow.startsWith("[") && arrow.endsWith(">")) {
-			return MessageExoType.FROM_LEFT;
-		}
-		if (arrow.startsWith("[<")) {
-			return MessageExoType.TO_LEFT;
-		}
-		if (arrow.startsWith("<") && arrow.endsWith("]")) {
-			return MessageExoType.FROM_RIGHT;
-		}
-		if (arrow.endsWith(">]")) {
-			return MessageExoType.TO_RIGHT;
-		}
-		throw new IllegalArgumentException(arrow);
-	}
+	abstract MessageExoType getMessageExoType(String arrow);
+
+//	final MessageExoType getMessageExoType(String arrow) {
+//		if (arrow.startsWith("[") && arrow.endsWith(">")) {
+//			return MessageExoType.FROM_LEFT;
+//		}
+//		if (arrow.startsWith("[<")) {
+//			return MessageExoType.TO_LEFT;
+//		}
+//		if (arrow.startsWith("<") && arrow.endsWith("]")) {
+//			return MessageExoType.FROM_RIGHT;
+//		}
+//		if (arrow.endsWith(">]")) {
+//			return MessageExoType.TO_RIGHT;
+//		}
+//		throw new IllegalArgumentException(arrow);
+//	}
 
 }

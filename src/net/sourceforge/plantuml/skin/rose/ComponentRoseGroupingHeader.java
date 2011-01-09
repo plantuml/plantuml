@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4258 $
+ * Revision $Revision: 5889 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -133,9 +133,11 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		ug.getParam().setBackcolor(this.groupBackground);
 		ug.draw(0, 0, polygon);
 
+		final double heightWithoutPadding = dimensionToUse.getHeight() - getPaddingY();
+		
 		ug.draw(0, 0, new ULine(dimensionToUse.getWidth(), 0));
-		ug.draw(dimensionToUse.getWidth(), 0, new ULine(0, dimensionToUse.getHeight()));
-		ug.draw(0, textHeight, new ULine(0, dimensionToUse.getHeight()-textHeight));
+		ug.draw(dimensionToUse.getWidth(), 0, new ULine(0, heightWithoutPadding));
+		ug.draw(0, textHeight, new ULine(0, heightWithoutPadding-textHeight));
 		ug.getParam().setStroke(new UStroke());
 
 		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
