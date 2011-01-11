@@ -38,12 +38,14 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public abstract class AbstractMessage implements Event {
 
 	final private List<String> label;
-	final private boolean dotted;
-	final private boolean full;
+//	final private boolean dotted;
+//	final private boolean full;
+	final private ArrowConfiguration arrowConfiguration;
 	final private List<LifeEvent> lifeEvents = new ArrayList<LifeEvent>();
 
 	private List<String> notes;
@@ -51,10 +53,9 @@ public abstract class AbstractMessage implements Event {
 	private HtmlColor noteBackColor;
 	private final String messageNumber;
 
-	public AbstractMessage(List<String> label, boolean dotted, boolean full, String messageNumber) {
+	public AbstractMessage(List<String> label, ArrowConfiguration arrowConfiguration, String messageNumber) {
 		this.label = label;
-		this.dotted = dotted;
-		this.full = full;
+		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
 	}
 
@@ -87,12 +88,8 @@ public abstract class AbstractMessage implements Event {
 		return Collections.unmodifiableList(label);
 	}
 
-	public final boolean isDotted() {
-		return dotted;
-	}
-
-	public final boolean isFull() {
-		return full;
+	public final ArrowConfiguration getArrowConfiguration() {
+		return arrowConfiguration;
 	}
 
 	public final List<String> getNote() {

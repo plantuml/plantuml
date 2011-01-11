@@ -65,15 +65,15 @@ public class ComponentTextArrow implements Component {
 
 		final int yarrow = height - 2;
 		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);
-		if (type == ComponentType.DOTTED_ARROW || type == ComponentType.RETURN_DOTTED_ARROW) {
+		if (type.getArrowConfiguration().isDotted()) {
 			for (int i = 1; i < width; i += 2) {
 				charArea.drawChar(' ', i, yarrow);
 			}
 		}
 
-		if (type == ComponentType.ARROW || type == ComponentType.DOTTED_ARROW) {
+		if (type.getArrowConfiguration().isLeftToRightNormal()) {
 			charArea.drawChar('>', width - 1, yarrow);
-		} else if (type == ComponentType.RETURN_ARROW || type == ComponentType.RETURN_DOTTED_ARROW) {
+		} else if (type.getArrowConfiguration().isRightToLeftReverse()) {
 			charArea.drawChar('<', 1, yarrow);
 		} else {
 			throw new UnsupportedOperationException();

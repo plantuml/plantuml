@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4632 $
+ * Revision $Revision: 5926 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -40,6 +40,8 @@ import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -47,15 +49,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
-	private final int direction;
-
 	public ComponentRoseArrow(Color foregroundColor, Color fontColor, Font font,
-			List<? extends CharSequence> stringsToDisplay, int direction, boolean dotted, boolean full) {
-		super(foregroundColor, fontColor, font, stringsToDisplay, dotted, full);
-		this.direction = direction;
-		if (direction != 1 && direction != -1) {
-			throw new IllegalArgumentException();
-		}
+			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
+		super(foregroundColor, fontColor, font, stringsToDisplay, arrowConfiguration);
 	}
 
 	@Override
@@ -66,49 +62,87 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		final int x2 = (int) dimensionToUse.getWidth();
 
-		if (isDotted()) {
+		if (getArrowConfiguration().isDotted()) {
 			stroke(ug, 2);
 		}
 
 		//
 		ug.draw(0, textHeight, new ULine(x2, 0));
-		if (isDotted()) {
+		if (getArrowConfiguration().isDotted()) {
 			ug.getParam().setStroke(new UStroke());
 		}
 		final int direction = getDirection();
 		if (direction == 1) {
-			if (isFull()) {
+			if (getArrowConfiguration().isASync()) {
+				if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
+					ug.draw(x2, textHeight, new ULine(-getArrowDeltaX(), -getArrowDeltaY()));
+				}
+				if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
+					ug.draw(x2, textHeight, new ULine(-getArrowDeltaX(), getArrowDeltaY()));
+				}
+			} else {
 				ug.getParam().setBackcolor(getForegroundColor());
-				final UPolygon polygon = new UPolygon();
-				polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
-				polygon.addPoint(x2, textHeight);
-				polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+				final UPolygon polygon = getPolygonNormal(textHeight, x2);
 				ug.draw(0, 0, polygon);
 				ug.getParam().setBackcolor(null);
-			} else {
-				ug.draw(x2, textHeight, new ULine(-getArrowDeltaX(), -getArrowDeltaY()));
-				ug.draw(x2, textHeight, new ULine(-getArrowDeltaX(), getArrowDeltaY()));
 			}
 		} else {
-			if (isFull()) {
+			if (getArrowConfiguration().isASync()) {
+				if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
+					ug.draw(0, textHeight, new ULine(getArrowDeltaX(), -getArrowDeltaY()));
+				}
+				if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
+					ug.draw(0, textHeight, new ULine(getArrowDeltaX(), getArrowDeltaY()));
+				}
+			} else {
 				ug.getParam().setBackcolor(getForegroundColor());
-				final UPolygon polygon = new UPolygon();
-				polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
-				polygon.addPoint(0, textHeight);
-				polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+				final UPolygon polygon = getPolygonReverse(textHeight);
 				ug.draw(0, 0, polygon);
 				ug.getParam().setBackcolor(null);
-			} else {
-				ug.draw(0, textHeight, new ULine(getArrowDeltaX(), -getArrowDeltaY()));
-				ug.draw(0, textHeight, new ULine(getArrowDeltaX(), getArrowDeltaY()));
 			}
 		}
 		getTextBlock().drawU(ug, getMarginX1(), 0);
 	}
 
+	private UPolygon getPolygonNormal(final int textHeight, final int x2) {
+		final UPolygon polygon = new UPolygon();
+		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(x2, textHeight);
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+			polygon.addPoint(x2, textHeight);
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+		} else {
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(x2, textHeight);
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+		}
+		return polygon;
+	}
+
+	private UPolygon getPolygonReverse(final int textHeight) {
+		final UPolygon polygon = new UPolygon();
+		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
+			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(0, textHeight);
+			polygon.addPoint(getArrowDeltaX(), textHeight);
+		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
+			polygon.addPoint(getArrowDeltaX(), textHeight);
+			polygon.addPoint(0, textHeight);
+			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+		} else {
+			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(0, textHeight);
+			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+		}
+		return polygon;
+	}
+
 	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
 		final int textHeight = (int) getTextHeight(stringBounder);
-		if (direction == 1) {
+		if (getDirection() == 1) {
 			return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
 		}
 		return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), textHeight + getPaddingY());
@@ -116,14 +150,20 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
 		final int textHeight = (int) getTextHeight(stringBounder);
-		if (direction == 1) {
+		if (getDirection() == 1) {
 			return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), textHeight + getPaddingY());
 		}
 		return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
 	}
 
 	final protected int getDirection() {
-		return direction;
+		if (getArrowConfiguration().isLeftToRightNormal()) {
+			return 1;
+		}
+		if (getArrowConfiguration().isRightToLeftReverse()) {
+			return -1;
+		}
+		throw new IllegalStateException();
 	}
 
 	@Override

@@ -28,21 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4663 $
+ * Revision $Revision: 5923 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+
 public class Message extends AbstractMessage {
 
 	final private Participant p1;
 	final private Participant p2;
 
-	public Message(Participant p1, Participant p2, List<String> label,
-			boolean dotted, boolean full, String messageNumber) {
-		super(label, dotted, full, messageNumber);
+	public Message(Participant p1, Participant p2, List<String> label, ArrowConfiguration arrowConfiguration,
+			String messageNumber) {
+		super(label, arrowConfiguration, messageNumber);
 		this.p1 = p1;
 		this.p2 = p2;
 	}

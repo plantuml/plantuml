@@ -33,98 +33,134 @@
  */
 package net.sourceforge.plantuml.skin;
 
-public enum ComponentType {
-	ACTOR_HEAD, ACTOR_LINE, ACTOR_TAIL,
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-	ALIVE_LINE, DESTROY,
+public class ComponentType {
 
-	ARROW, DOTTED_ARROW, DOTTED_SELF_ARROW, RETURN_ARROW, RETURN_DOTTED_ARROW, SELF_ARROW,
+	private static final Map<ArrowConfiguration, ComponentType> arrows = new HashMap<ArrowConfiguration, ComponentType>();
+	private static final List<ComponentType> nonArrows = new ArrayList<ComponentType>();
 
-	ASYNC_ARROW, ASYNC_DOTTED_ARROW, ASYNC_RETURN_ARROW, ASYNC_RETURN_DOTTED_ARROW,
+	static public final ComponentType ACTOR_HEAD = new ComponentType("ACTOR_HEAD");
+	static public final ComponentType ACTOR_LINE = new ComponentType("ACTOR_LINE");
+	static public final ComponentType ACTOR_TAIL = new ComponentType("ACTOR_TAIL");
 
-	GROUPING_BODY, GROUPING_ELSE, GROUPING_HEADER, GROUPING_TAIL,
+	//
+	static public final ComponentType ALIVE_LINE = new ComponentType("ALIVE_LINE");
+	static public final ComponentType DESTROY = new ComponentType("DESTROY");
 
-	NEWPAGE, NOTE, DIVIDER,
-	
-	ENGLOBER,
+	//
+	static public final ComponentType GROUPING_BODY = new ComponentType("GROUPING_BODY");
+	static public final ComponentType GROUPING_ELSE = new ComponentType("GROUPING_ELSE");
+	static public final ComponentType GROUPING_HEADER = new ComponentType("GROUPING_HEADER");
+	static public final ComponentType GROUPING_TAIL = new ComponentType("GROUPING_TAIL");
+	//
+	static public final ComponentType NEWPAGE = new ComponentType("NEWPAGE");
+	static public final ComponentType NOTE = new ComponentType("NOTE");
+	static public final ComponentType DIVIDER = new ComponentType("DIVIDER");
+	static public final ComponentType ENGLOBER = new ComponentType("ENGLOBER");
 
-	PARTICIPANT_HEAD, PARTICIPANT_LINE, PARTICIPANT_TAIL,
+	//
+	static public final ComponentType PARTICIPANT_HEAD = new ComponentType("PARTICIPANT_HEAD");
+	static public final ComponentType PARTICIPANT_LINE = new ComponentType("PARTICIPANT_LINE");
+	static public final ComponentType PARTICIPANT_TAIL = new ComponentType("PARTICIPANT_TAIL");
 
-	TITLE, SIGNATURE;
+	//
+	static public final ComponentType TITLE = new ComponentType("TITLE");
+	static public final ComponentType SIGNATURE = new ComponentType("SIGNATURE");
 
-	public ComponentType getDotted() {
-		if (this == ComponentType.ARROW) {
-			return ComponentType.DOTTED_ARROW;
-		} else if (this == ComponentType.DOTTED_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.DOTTED_SELF_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.RETURN_ARROW) {
-			return ComponentType.RETURN_DOTTED_ARROW;
-		} else if (this == ComponentType.RETURN_DOTTED_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.SELF_ARROW) {
-			return ComponentType.DOTTED_SELF_ARROW;
-		} else if (this == ComponentType.ASYNC_ARROW) {
-			return ComponentType.ASYNC_DOTTED_ARROW;
-		} else if (this == ComponentType.ASYNC_DOTTED_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_RETURN_ARROW) {
-			return ComponentType.ASYNC_RETURN_DOTTED_ARROW;
-		} else if (this == ComponentType.ASYNC_RETURN_DOTTED_ARROW) {
-			throw new IllegalStateException();
-		}
-		throw new UnsupportedOperationException();
-	}
-	
-	public ComponentType getAsync() {
-		if (this == ComponentType.ARROW) {
-			return ComponentType.ASYNC_ARROW;
-		} else if (this == ComponentType.DOTTED_ARROW) {
-			return ComponentType.ASYNC_DOTTED_ARROW;
-		} else if (this == ComponentType.DOTTED_SELF_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.RETURN_ARROW) {
-			return ComponentType.ASYNC_RETURN_ARROW;
-		} else if (this == ComponentType.RETURN_DOTTED_ARROW) {
-			return ComponentType.ASYNC_RETURN_DOTTED_ARROW;
-		} else if (this == ComponentType.SELF_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_DOTTED_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_RETURN_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_RETURN_DOTTED_ARROW) {
-			throw new IllegalStateException();
-		}
-		throw new UnsupportedOperationException();
+	private final ArrowConfiguration arrowConfiguration;
+	private final String name;
+
+	private ComponentType(String name) {
+		this(name, null);
+		nonArrows.add(this);
 	}
 
-	public ComponentType getReverse() {
-		if (this == ComponentType.ARROW) {
-			return ComponentType.RETURN_ARROW;
-		} else if (this == ComponentType.DOTTED_ARROW) {
-			return ComponentType.RETURN_DOTTED_ARROW;
-		} else if (this == ComponentType.DOTTED_SELF_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.RETURN_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.RETURN_DOTTED_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.SELF_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_ARROW) {
-			return ComponentType.ASYNC_RETURN_ARROW;
-		} else if (this == ComponentType.ASYNC_DOTTED_ARROW) {
-			return ComponentType.ASYNC_RETURN_DOTTED_ARROW;
-		} else if (this == ComponentType.ASYNC_RETURN_ARROW) {
-			throw new IllegalStateException();
-		} else if (this == ComponentType.ASYNC_RETURN_DOTTED_ARROW) {
-			throw new IllegalStateException();
+	private ComponentType(String name, ArrowConfiguration arrowConfiguration) {
+		this.name = name;
+		this.arrowConfiguration = arrowConfiguration;
+	}
+
+	public static ComponentType getArrow(ArrowDirection direction) {
+		final ArrowConfiguration config = ArrowConfiguration.withDirection(direction);
+		return getArrow(config);
+	}
+
+	private static ComponentType getArrow(ArrowConfiguration config) {
+		ComponentType result = arrows.get(config);
+		if (result == null) {
+			result = new ComponentType(config.name(), config);
+			arrows.put(config, result);
 		}
-		throw new UnsupportedOperationException();
+		return result;
+	}
+
+	public ComponentType withAsync() {
+		checkArrow();
+		return ComponentType.getArrow(arrowConfiguration.withAsync());
+	}
+
+	public ComponentType withDotted() {
+		checkArrow();
+		return ComponentType.getArrow(arrowConfiguration.withDotted());
+	}
+
+	public ComponentType withPart(ArrowPart part) {
+		checkArrow();
+		return ComponentType.getArrow(arrowConfiguration.withPart(part));
+	}
+
+	public String name() {
+		return name;
+	}
+
+	public boolean isArrow() {
+		return this.arrowConfiguration != null;
+	}
+
+	private void checkArrow() {
+		if (this.arrowConfiguration == null) {
+			throw new IllegalArgumentException(name());
+		}
+	}
+
+	public static Collection<ComponentType> all() {
+		// ARROW, DOTTED_ARROW, DOTTED_SELF_ARROW, RETURN_ARROW,
+		// RETURN_DOTTED_ARROW, SELF_ARROW,
+		// ASYNC_ARROW, ASYNC_DOTTED_ARROW, ASYNC_RETURN_ARROW,
+		// ASYNC_RETURN_DOTTED_ARROW,
+
+		final List<ComponentType> all = new ArrayList<ComponentType>();
+		all.add(ComponentType.getArrow(ArrowDirection.LEFT_TO_RIGHT_NORMAL));
+		all.add(ComponentType.getArrow(ArrowDirection.RIGHT_TO_LEFT_REVERSE));
+		all.add(ComponentType.getArrow(ArrowDirection.SELF));
+		all.add(ComponentType.getArrow(ArrowDirection.LEFT_TO_RIGHT_NORMAL).withDotted());
+		all.add(ComponentType.getArrow(ArrowDirection.RIGHT_TO_LEFT_REVERSE).withDotted());
+		all.add(ComponentType.getArrow(ArrowDirection.SELF).withDotted());
+
+		for (ComponentType type : new ArrayList<ComponentType>(all)) {
+			all.add(type.withAsync());
+		}
+		
+		final List<ComponentType> simples = new ArrayList<ComponentType>(all);
+		for (ComponentType type : simples) {
+			all.add(type.withPart(ArrowPart.TOP_PART));
+		}
+		for (ComponentType type : simples) {
+			all.add(type.withPart(ArrowPart.BOTTOM_PART));
+		}
+
+		all.addAll(nonArrows);
+		return Collections.unmodifiableCollection(all);
+	}
+
+	public final ArrowConfiguration getArrowConfiguration() {
+		return arrowConfiguration;
 	}
 
 }

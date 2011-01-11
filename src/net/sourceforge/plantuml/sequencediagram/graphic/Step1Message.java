@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5275 $
+ * Revision $Revision: 5928 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.ComponentType;
 
 class Step1Message extends Step1Abstract {
@@ -78,8 +79,8 @@ class Step1Message extends Step1Abstract {
 		final Arrow graphic = createArrow();
 		final double arrowYStartLevel = graphic.getArrowYStartLevel(getStringBounder());
 		final double arrowYEndLevel = graphic.getArrowYEndLevel(getStringBounder());
-		
-		//final double delta1 = isSelfMessage() ? 4 : 0;
+
+		// final double delta1 = isSelfMessage() ? 4 : 0;
 		final double delta1 = 0;
 
 		for (LifeEvent lifeEvent : getMessage().getLiveEvents()) {
@@ -192,22 +193,32 @@ class Step1Message extends Step1Abstract {
 	}
 
 	private ComponentType getSelfArrowType(Message m) {
-		return m.isDotted() ? ComponentType.DOTTED_SELF_ARROW : ComponentType.SELF_ARROW;
+		ComponentType result = m.getArrowConfiguration().isDotted() ? ComponentType.getArrow(ArrowDirection.SELF)
+				.withDotted() : ComponentType.getArrow(ArrowDirection.SELF);
+		if (m.getArrowConfiguration().isDotted()) {
+			result = result.withDotted();
+		}
+		if (m.getArrowConfiguration().isASync()) {
+			result = result.withAsync();
+		}
+		result = result.withPart(m.getArrowConfiguration().getPart());
+		return result;
 	}
 
 	private ComponentType getArrowType(Message m, final double x1, final double x2) {
 		ComponentType result = null;
 		if (x2 > x1) {
-			result = ComponentType.ARROW;
+			result = ComponentType.getArrow(ArrowDirection.LEFT_TO_RIGHT_NORMAL);
 		} else {
-			result = ComponentType.RETURN_ARROW;
+			result = ComponentType.getArrow(ArrowDirection.RIGHT_TO_LEFT_REVERSE);
 		}
-		if (m.isDotted()) {
-			result = result.getDotted();
+		if (m.getArrowConfiguration().isDotted()) {
+			result = result.withDotted();
 		}
-		if (m.isFull() == false) {
-			result = result.getAsync();
+		if (m.getArrowConfiguration().isASync()) {
+			result = result.withAsync();
 		}
+		result = result.withPart(m.getArrowConfiguration().getPart());
 		return result;
 	}
 

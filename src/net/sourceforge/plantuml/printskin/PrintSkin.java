@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 5924 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -88,18 +88,18 @@ class PrintSkin extends AbstractPSystem {
 	}
 
 	private BufferedImage createImage() {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(1000, 1000, Color.WHITE);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(1500, 830, Color.WHITE);
 
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 		
 		ug = new UGraphicG2d(g2d, null, 1.0);
 
-		for (ComponentType type : EnumSet.allOf(ComponentType.class)) {
+		for (ComponentType type : ComponentType.all() ) {
 			printComponent(type);
 			ypos += 10;
 			maxYpos = Math.max(maxYpos, ypos);
-			if (ypos > 500) {
+			if (ypos > 620) {
 				ypos = 0;
 				xpos += 200;
 			}

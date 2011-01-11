@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram2;
 
+import net.sourceforge.plantuml.activitydiagram2.command.CommandEndif2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandIf2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandNewActivity;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandStart;
@@ -54,6 +55,7 @@ public class ActivityDiagramFactory2 extends AbstractUmlSystemCommandFactory {
 		addCommand(new CommandStart(system));
 		addCommand(new CommandNewActivity(system));
 		addCommand(new CommandIf2(system));
+		addCommand(new CommandEndif2(system));
 
 //		addCommand(new CommandLinkActivity(system));
 //		addCommand(new CommandPartition(system));

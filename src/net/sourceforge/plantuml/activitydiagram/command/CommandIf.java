@@ -67,7 +67,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 					new RegexLeaf("\\s*"),
 					new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"),
 					new RegexLeaf("\\s*"),
-					new RegexLeaf("IF", "if\\s*\"([^\"]*)\"\\s*(?:as\\s+([\\p{L}0-9_.]+)\\s+)?then$"));
+					new RegexLeaf("IF", "if\\s*\"([^\"]*)\"\\s*(?:as\\s+([\\p{L}0-9_.]+)\\s+)?(?:then)?$"));
 	}
 
 

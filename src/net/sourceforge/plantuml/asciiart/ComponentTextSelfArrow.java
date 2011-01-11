@@ -66,24 +66,24 @@ public class ComponentTextSelfArrow implements Component {
 		charArea.fillRect(' ', 0, 0, width, height);
 
 		if (fileFormat == FileFormat.UTXT) {
-			if (type == ComponentType.SELF_ARROW) {
-				charArea.drawStringLR("\u2500\u2500\u2500\u2500\u2510", 0, 0);
-				charArea.drawStringLR("\u2502", 4, 1);
-				charArea.drawStringLR("<\u2500\u2500\u2500\u2518", 0, 2);
-			} else if (type == ComponentType.DOTTED_SELF_ARROW) {
+			if (type.getArrowConfiguration().isDotted()) {
 				charArea.drawStringLR("\u2500 \u2500 \u2510", 0, 0);
 				charArea.drawStringLR("|", 4, 1);
 				charArea.drawStringLR("< \u2500 \u2518", 0, 2);
+			} else {
+				charArea.drawStringLR("\u2500\u2500\u2500\u2500\u2510", 0, 0);
+				charArea.drawStringLR("\u2502", 4, 1);
+				charArea.drawStringLR("<\u2500\u2500\u2500\u2518", 0, 2);
 			}
 		} else {
-			if (type == ComponentType.SELF_ARROW) {
-				charArea.drawStringLR("----.", 0, 0);
-				charArea.drawStringLR("|", 4, 1);
-				charArea.drawStringLR("<---'", 0, 2);
-			} else if (type == ComponentType.DOTTED_SELF_ARROW) {
+			if (type.getArrowConfiguration().isDotted()) {
 				charArea.drawStringLR("- - .", 0, 0);
 				charArea.drawStringLR("|", 4, 1);
 				charArea.drawStringLR("< - '", 0, 2);
+			} else {
+				charArea.drawStringLR("----.", 0, 0);
+				charArea.drawStringLR("|", 4, 1);
+				charArea.drawStringLR("<---'", 0, 2);
 			}
 		}
 

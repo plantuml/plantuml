@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5823 $
+ * Revision $Revision: 5922 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -124,11 +124,10 @@ public class Rose implements Skin {
 	public Color getFontColor(ISkinParam skin, FontParam fontParam) {
 		return skin.getFontHtmlColor(fontParam, null).getColor();
 	}
-	
+
 	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color) {
 		return getHtmlColor(param, color, null);
 	}
-
 
 	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color, String stereotype) {
 		HtmlColor result = param.getHtmlColor(color, stereotype);
@@ -158,48 +157,15 @@ public class Rose implements Skin {
 		final Font fontParticipant = param.getFont(FontParam.SEQUENCE_PARTICIPANT, null);
 		final Font fontActor = param.getFont(FontParam.SEQUENCE_ACTOR, null);
 
-		if (type == ComponentType.SELF_ARROW) {
-			return new ComponentRoseSelfArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, false, true);
-		}
-		if (type == ComponentType.DOTTED_SELF_ARROW) {
-			return new ComponentRoseSelfArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, true, true);
-		}
-		if (type == ComponentType.ARROW) {
+		if (type.isArrow()) {
+			if (type.getArrowConfiguration().isSelfArrow()) {
+				return new ComponentRoseSelfArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW),
+						fontArrow, stringsToDisplay, type.getArrowConfiguration());
+			}
 			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, 1, false, true);
-		}
-		if (type == ComponentType.ASYNC_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, 1, false, false);
-		}
+					stringsToDisplay, type.getArrowConfiguration());
 
-		if (type == ComponentType.RETURN_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, -1, false, true);
 		}
-		if (type == ComponentType.ASYNC_RETURN_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, -1, false, false);
-		}
-		if (type == ComponentType.DOTTED_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, 1, true, true);
-		}
-		if (type == ComponentType.ASYNC_DOTTED_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, 1, true, false);
-		}
-		if (type == ComponentType.RETURN_DOTTED_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, -1, true, true);
-		}
-		if (type == ComponentType.ASYNC_RETURN_DOTTED_ARROW) {
-			return new ComponentRoseArrow(sequenceArrow, getFontColor(param, FontParam.SEQUENCE_ARROW), fontArrow,
-					stringsToDisplay, -1, true, false);
-		}
-
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceParticipantBorder).getColor();
 			return new ComponentRoseParticipant(sequenceParticipantBackground, borderColor, getFontColor(param,
@@ -262,12 +228,12 @@ public class Rose implements Skin {
 			return new ComponentRoseNewpage(getFontColor(param, FontParam.SEQUENCE_GROUPING));
 		}
 		if (type == ComponentType.DIVIDER) {
-			return new ComponentRoseDivider(getFontColor(param, FontParam.SEQUENCE_DIVIDER), param
-					.getFont(FontParam.SEQUENCE_DIVIDER, null), sequenceDividerBackground, stringsToDisplay);
+			return new ComponentRoseDivider(getFontColor(param, FontParam.SEQUENCE_DIVIDER), param.getFont(
+					FontParam.SEQUENCE_DIVIDER, null), sequenceDividerBackground, stringsToDisplay);
 		}
 		if (type == ComponentType.TITLE) {
-			return new ComponentRoseTitle(getFontColor(param, FontParam.SEQUENCE_TITLE), param
-					.getFont(FontParam.SEQUENCE_TITLE, null), stringsToDisplay);
+			return new ComponentRoseTitle(getFontColor(param, FontParam.SEQUENCE_TITLE), param.getFont(
+					FontParam.SEQUENCE_TITLE, null), stringsToDisplay);
 		}
 		if (type == ComponentType.SIGNATURE) {
 			return new ComponentRoseTitle(Color.BLACK, fontGrouping, Arrays.asList("This skin was created ",

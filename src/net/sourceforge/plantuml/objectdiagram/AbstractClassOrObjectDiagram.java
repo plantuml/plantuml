@@ -194,12 +194,12 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 				removeLink(existingLink);
 			}
 
-			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(), existingLink
-					.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(), existingLink
-					.getLabelangle());
-			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), existingLink.getLabel(), existingLink
-					.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(), existingLink
-					.getLabelangle());
+			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(),
+					existingLink.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(),
+					existingLink.getLabelangle());
+			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null,
+					existingLink.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(),
+					existingLink.getLabelangle());
 			addLink(entity1ToPoint);
 			addLink(pointToEntity2);
 
@@ -217,8 +217,21 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 
 		void createInSecond(LinkType linkType, String label) {
-			entity1ToPoint = new Link(entity1, point, existingLink.getType(), null, 2);
-			pointToEntity2 = new Link(point, entity2, existingLink.getType(), null, 2);
+			existingLink = foundLink(entity1, entity2);
+			if (existingLink == null) {
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null, 2);
+			} else {
+				removeLink(existingLink);
+			}
+
+			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(), 2,
+					existingLink.getQualifier1(), null, existingLink.getLabeldistance(), existingLink.getLabelangle());
+			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null, 2, null, existingLink
+					.getQualifier2(), existingLink.getLabeldistance(), existingLink.getLabelangle());
+			// entity1ToPoint = new Link(entity1, point, existingLink.getType(),
+			// null, 2);
+			// pointToEntity2 = new Link(point, entity2, existingLink.getType(),
+			// null, 2);
 			addLink(entity1ToPoint);
 			addLink(pointToEntity2);
 			if (other.pointToAssocied.getEntity1().getType() == EntityType.POINT_FOR_ASSOCIATION) {

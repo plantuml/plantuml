@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4633 $
+ * Revision $Revision: 5926 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -40,6 +40,8 @@ import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -50,8 +52,8 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	private final double arrowWidth = 45;
 
 	public ComponentRoseSelfArrow(Color foregroundColor, Color colorFont, Font font,
-			List<? extends CharSequence> stringsToDisplay, boolean dotted, boolean full) {
-		super(foregroundColor, colorFont, font, stringsToDisplay, dotted, full);
+			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
+		super(foregroundColor, colorFont, font, stringsToDisplay, arrowConfiguration);
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		ug.getParam().setColor(getForegroundColor());
 		final double x2 = arrowWidth;
 
-		if (isDotted()) {
+		if (getArrowConfiguration().isDotted()) {
 			stroke(ug, 2);
 		}
 
@@ -73,26 +75,43 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		ug.draw(x2, textHeight, new ULine(0, textAndArrowHeight - textHeight));
 		ug.draw(0, textAndArrowHeight, new ULine(x2, 0));
 
-		if (isDotted()) {
+		if (getArrowConfiguration().isDotted()) {
 			ug.getParam().setStroke(new UStroke());
 		}
 
-//		ug.draw(0, textAndArrowHeight, new ULine(getArrowDeltaX(), -getArrowDeltaY()));
-//		ug.draw(0, textAndArrowHeight, new ULine(getArrowDeltaX(), getArrowDeltaY()));
-		if (isFull()) {
+		if (getArrowConfiguration().isASync()) {
+			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
+				ug.draw(0, textAndArrowHeight, new ULine(getArrowDeltaX(), -getArrowDeltaY()));
+			}
+			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
+				ug.draw(0, textAndArrowHeight, new ULine(getArrowDeltaX(), getArrowDeltaY()));
+			}
+		} else {
 			ug.getParam().setBackcolor(getForegroundColor());
-			final UPolygon polygon = new UPolygon();
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
-			polygon.addPoint(0, textAndArrowHeight);
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
+			final UPolygon polygon = getPolygon(textAndArrowHeight);
 			ug.draw(0, 0, polygon);
 			ug.getParam().setBackcolor(null);
-		} else {
-			ug.draw(0, textHeight, new ULine(getArrowDeltaX(), -getArrowDeltaY()));
-			ug.draw(0, textHeight, new ULine(getArrowDeltaX(), getArrowDeltaY()));
 		}
 
 		getTextBlock().drawU(ug, getMarginX1(), 0);
+	}
+
+	private UPolygon getPolygon(final double textAndArrowHeight) {
+		final UPolygon polygon = new UPolygon();
+		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
+			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
+			polygon.addPoint(0, textAndArrowHeight);
+			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight);
+		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
+			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight);
+			polygon.addPoint(0, textAndArrowHeight);
+			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
+		} else {
+			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
+			polygon.addPoint(0, textAndArrowHeight);
+			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
+		}
+		return polygon;
 	}
 
 	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {

@@ -28,36 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4636 $
+ * Revision $Revision: 5191 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram.command;
+package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.sequencediagram.MessageExoType;
-import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-
-public class CommandExoArrowRight extends CommandExoArrowAny {
-
-	public CommandExoArrowRight(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram,
-				"(?i)^([\\p{L}0-9_.]+|\"[^\"]+\")\\s*([=-]+(?:>>?|//?|\\\\\\\\?)\\]?|(?:<<?|//?|\\\\\\\\?)[=-]+\\]?)\\s*(?::\\s*(.*))?$", 1, 0);
-	}
-
-	@Override
-	MessageExoType getMessageExoType(String arrow) {
-		if (arrow.contains("<")) {
-			return MessageExoType.FROM_RIGHT;
-		}
-		if (arrow.contains(">")) {
-			return MessageExoType.TO_RIGHT;
-		}
-		if (arrow.startsWith("/") || arrow.startsWith("\\")) {
-			return MessageExoType.FROM_RIGHT;
-		}
-		if (arrow.endsWith("\\]") || arrow.endsWith("/]") || arrow.endsWith("\\") || arrow.endsWith("/")) {
-			return MessageExoType.TO_RIGHT;
-		}
-		throw new IllegalArgumentException(arrow);
-	}
-	
+public enum ArrowBody {
+	NORMAL, DOTTED;
 }

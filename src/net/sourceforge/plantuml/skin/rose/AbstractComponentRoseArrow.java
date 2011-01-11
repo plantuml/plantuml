@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4631 $
+ * Revision $Revision: 5922 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -40,20 +40,21 @@ import java.util.List;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public abstract class AbstractComponentRoseArrow extends AbstractTextualComponent implements ArrowComponent {
 
 	private final int arrowDeltaX = 10;
 	private final int arrowDeltaY = 4;
-	private final boolean dotted;
-	private final boolean full;
+//	private final boolean dotted;
+//	private final boolean full;
 	private final Color foregroundColor;
+	private final ArrowConfiguration arrowConfiguration;
 
 	public AbstractComponentRoseArrow(Color foregroundColor, Color fontColor, Font font,
-			List<? extends CharSequence> stringsToDisplay, boolean dotted, boolean full) {
+			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
 		super(stringsToDisplay, fontColor, font, HorizontalAlignement.LEFT, 7, 7, 2);
-		this.dotted = dotted;
-		this.full = full;
+		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}
 
@@ -74,12 +75,16 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 		return 6;
 	}
 
-	final protected boolean isDotted() {
-		return dotted;
+	public final ArrowConfiguration getArrowConfiguration() {
+		return arrowConfiguration;
 	}
 
-	final protected boolean isFull() {
-		return full;
-	}
+//	final protected boolean isDotted() {
+//		return dotted;
+//	}
+//
+//	final protected boolean isFull() {
+//		return full;
+//	}
 
 }

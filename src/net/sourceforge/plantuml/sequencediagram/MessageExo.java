@@ -35,14 +35,16 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+
 public class MessageExo extends AbstractMessage {
 
 	final private MessageExoType type;
 	final private Participant participant;
 
-	public MessageExo(Participant p, MessageExoType type, List<String> label,
-			boolean dotted, boolean full, String messageNumber) {
-		super(label, dotted, full, messageNumber);
+	public MessageExo(Participant p, MessageExoType type, List<String> label, ArrowConfiguration arrowConfiguration,
+			String messageNumber) {
+		super(label, arrowConfiguration, messageNumber);
 		this.participant = p;
 		this.type = type;
 	}

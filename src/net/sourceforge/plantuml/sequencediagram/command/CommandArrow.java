@@ -47,34 +47,36 @@ import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.ArrowPart;
 
-public class CommandArrow2 extends SingleLineCommand2<SequenceDiagram> {
+public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
-	public CommandArrow2(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram,
-				getRegexConcat());
+	public CommandArrow(SequenceDiagram sequenceDiagram) {
+		super(sequenceDiagram, getRegexConcat());
 	}
-	
+
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(
-				new RegexLeaf("^"),
-				new RegexOr("PART1",
-						new RegexLeaf("PART1CODE", "([\\p{L}0-9_.]+)"),
-						new RegexLeaf("PART1LONG", "\"([^\"]+)\""),
-						new RegexLeaf("PART1LONGCODE", "\"([^\"]+)\"\\s*as\\s+([\\p{L}0-9_.]+)"),
+				new RegexLeaf("^"), //
+				new RegexOr("PART1", //
+						new RegexLeaf("PART1CODE", "([\\p{L}0-9_.]+)"), //
+						new RegexLeaf("PART1LONG", "\"([^\"]+)\""), //
+						new RegexLeaf("PART1LONGCODE", "\"([^\"]+)\"\\s*as\\s+([\\p{L}0-9_.]+)"), //
 						new RegexLeaf("PART1CODELONG", "([\\p{L}0-9_.]+)\\s+as\\s*\"([^\"]+)\"")),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("ARROW", "([=-]+[>\\]]{1,2}|[<\\[]{1,2}[=-]+)"),
-				new RegexLeaf("\\s*"),
-				new RegexOr("PART2",
-						new RegexLeaf("PART2CODE", "([\\p{L}0-9_.]+)"),
-						new RegexLeaf("PART2LONG", "\"([^\"]+)\""),
-						new RegexLeaf("PART2LONGCODE", "\"([^\"]+)\"\\s*as\\s+([\\p{L}0-9_.]+)"),
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("ARROW", "([=-]+(?:>>?|//?|\\\\\\\\?)|(?:<<?|//?|\\\\\\\\?)[=-]+)"), //
+				new RegexLeaf("\\s*"), // 
+				new RegexOr("PART2", // 
+						new RegexLeaf("PART2CODE", "([\\p{L}0-9_.]+)"), // 
+						new RegexLeaf("PART2LONG", "\"([^\"]+)\""), // 
+						new RegexLeaf("PART2LONGCODE", "\"([^\"]+)\"\\s*as\\s+([\\p{L}0-9_.]+)"), // 
 						new RegexLeaf("PART2CODELONG", "([\\p{L}0-9_.]+)\\s+as\\s*\"([^\"]+)\"")),
-				new RegexLeaf("\\s*"),
+				new RegexLeaf("\\s*"), // 
 				new RegexLeaf("MESSAGE", "(?::\\s*(.*))?$"));
 	}
-	
+
 	private Participant getOrCreateParticipant(Map<String, RegexPartialMatch> arg2, String n) {
 		final String code;
 		final List<String> display;
@@ -104,17 +106,18 @@ public class CommandArrow2 extends SingleLineCommand2<SequenceDiagram> {
 
 		final String arrow = StringUtils.manageArrowForSequence(arg2.get("ARROW").get(0));
 
-		if (arrow.endsWith(">")) {
+		if (arrow.endsWith(">") || arrow.endsWith("\\") || arrow.endsWith("/")) {
 			p1 = getOrCreateParticipant(arg2, "PART1");
 			p2 = getOrCreateParticipant(arg2, "PART2");
-		} else if (arrow.startsWith("<")) {
+		} else if (arrow.startsWith("<") || arrow.startsWith("\\") || arrow.startsWith("/")) {
 			p2 = getOrCreateParticipant(arg2, "PART1");
 			p1 = getOrCreateParticipant(arg2, "PART2");
 		} else {
 			throw new IllegalStateException(arg2.toString());
 		}
-		
-		final boolean full = (arrow.endsWith(">>") || arrow.startsWith("<<"))==false;
+
+		final boolean sync = arrow.endsWith(">>") || arrow.startsWith("<<") || arrow.contains("\\\\")
+				|| arrow.contains("//");
 
 		final boolean dotted = arrow.contains("--");
 
@@ -125,7 +128,21 @@ public class CommandArrow2 extends SingleLineCommand2<SequenceDiagram> {
 			labels = StringUtils.getWithNewlines(arg2.get("MESSAGE").get(0));
 		}
 
-		getSystem().addMessage(new Message(p1, p2, labels, dotted, full, getSystem().getNextMessageNumber()));
+		ArrowConfiguration config = ArrowConfiguration.withDirection(ArrowDirection.LEFT_TO_RIGHT_NORMAL);
+		if (dotted) {
+			config = config.withDotted();
+		}
+		if (sync) {
+			config = config.withAsync();
+		}
+		if (arrow.endsWith("\\") || arrow.startsWith("/")) {
+			config = config.withPart(ArrowPart.TOP_PART);
+		}
+		if (arrow.endsWith("/") || arrow.startsWith("\\")) {
+			config = config.withPart(ArrowPart.BOTTOM_PART);
+		}
+
+		getSystem().addMessage(new Message(p1, p2, labels, config, getSystem().getNextMessageNumber()));
 		return CommandExecutionResult.ok();
 	}
 

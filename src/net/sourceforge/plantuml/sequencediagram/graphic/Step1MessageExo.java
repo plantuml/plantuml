@@ -46,6 +46,9 @@ import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
+import net.sourceforge.plantuml.skin.ArrowBody;
+import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ComponentType;
 
 class Step1MessageExo extends Step1Abstract {
@@ -139,16 +142,17 @@ class Step1MessageExo extends Step1Abstract {
 		ComponentType result = null;
 		final MessageExoType type = m.getType();
 		if (type.getDirection() == 1) {
-			result = ComponentType.ARROW;
+			result = ComponentType.getArrow(ArrowDirection.LEFT_TO_RIGHT_NORMAL);
 		} else {
-			result = ComponentType.RETURN_ARROW;
+			result = ComponentType.getArrow(ArrowDirection.RIGHT_TO_LEFT_REVERSE);
 		}
-		if (m.isDotted()) {
-			result = result.getDotted();
+		if (m.getArrowConfiguration().isDotted()) {
+			result = result.withDotted();
 		}
-		if (m.isFull() == false) {
-			result = result.getAsync();
+		if (m.getArrowConfiguration().isASync()) {
+			result = result.withAsync();
 		}
+		result = result.withPart(m.getArrowConfiguration().getPart());
 		return result;
 	}
 

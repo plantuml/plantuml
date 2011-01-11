@@ -43,12 +43,15 @@ import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.ArrowPart;
 
 abstract class CommandExoArrowAny extends SingleLineCommand<SequenceDiagram> {
 
 	private final int posArrow;
 	private final int posParticipant;
-	
+
 	public CommandExoArrowAny(SequenceDiagram sequenceDiagram, String pattern, int posArrow, int posParticipant) {
 		super(sequenceDiagram, pattern);
 		this.posArrow = posArrow;
@@ -58,9 +61,11 @@ abstract class CommandExoArrowAny extends SingleLineCommand<SequenceDiagram> {
 	@Override
 	final protected CommandExecutionResult executeArg(List<String> arg) {
 		final String arrow = StringUtils.manageArrowForSequence(arg.get(posArrow));
-		final Participant p = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(posParticipant)));
+		final Participant p = getSystem().getOrCreateParticipant(
+				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(posParticipant)));
 
-		final boolean full = (arrow.endsWith(">>") || arrow.startsWith("<<")) == false;
+		final boolean sync = arrow.endsWith(">>") || arrow.startsWith("<<") || arrow.contains("//")
+				|| arrow.contains("\\\\");
 		final boolean dotted = arrow.contains("--");
 
 		final List<String> labels;
@@ -70,28 +75,30 @@ abstract class CommandExoArrowAny extends SingleLineCommand<SequenceDiagram> {
 			labels = StringUtils.getWithNewlines(arg.get(2));
 		}
 
+		ArrowConfiguration config = ArrowConfiguration.withDirection(ArrowDirection.LEFT_TO_RIGHT_NORMAL);
+		if (dotted) {
+			config = config.withDotted();
+		}
+		if (sync) {
+			config = config.withAsync();
+		}
+		config = config.withPart(getArrowPart(arrow));
+
 		getSystem().addMessage(
-				new MessageExo(p, getMessageExoType(arrow), labels, dotted,
-						full, getSystem().getNextMessageNumber()));
+				new MessageExo(p, getMessageExoType(arrow), labels, config, getSystem().getNextMessageNumber()));
 		return CommandExecutionResult.ok();
 	}
 
-	abstract MessageExoType getMessageExoType(String arrow);
+	private ArrowPart getArrowPart(String arrow) {
+		if (arrow.contains("/")) {
+			return ArrowPart.BOTTOM_PART;
+		}
+		if (arrow.contains("\\")) {
+			return ArrowPart.TOP_PART;
+		}
+		return ArrowPart.FULL;
+	}
 
-//	final MessageExoType getMessageExoType(String arrow) {
-//		if (arrow.startsWith("[") && arrow.endsWith(">")) {
-//			return MessageExoType.FROM_LEFT;
-//		}
-//		if (arrow.startsWith("[<")) {
-//			return MessageExoType.TO_LEFT;
-//		}
-//		if (arrow.startsWith("<") && arrow.endsWith("]")) {
-//			return MessageExoType.FROM_RIGHT;
-//		}
-//		if (arrow.endsWith(">]")) {
-//			return MessageExoType.TO_RIGHT;
-//		}
-//		throw new IllegalArgumentException(arrow);
-//	}
+	abstract MessageExoType getMessageExoType(String arrow);
 
 }

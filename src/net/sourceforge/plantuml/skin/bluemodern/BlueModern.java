@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5728 $
+ * Revision $Revision: 5926 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -65,6 +65,15 @@ public class BlueModern implements Skin {
 
 	public Component createComponent(ComponentType type, ISkinParam param, List<? extends CharSequence> stringsToDisplay) {
 
+		if (type.isArrow()) {
+			if (type.getArrowConfiguration().isSelfArrow()) {
+				return new ComponentBlueModernSelfArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, type
+						.getArrowConfiguration().isDotted(), true);
+			}
+			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, type
+					.getArrowConfiguration().isLeftToRightNormal() ? 1 : -1, type.getArrowConfiguration().isDotted(),
+					type.getArrowConfiguration().isASync()==false);
+		}
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentBlueModernParticipant(blue1, blue2, Color.WHITE, participantFont, stringsToDisplay);
 		}
@@ -73,37 +82,6 @@ public class BlueModern implements Skin {
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			return new ComponentBlueModernLine(lineColor);
-		}
-		if (type == ComponentType.SELF_ARROW) {
-			return new ComponentBlueModernSelfArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, false, true);
-		}
-		if (type == ComponentType.DOTTED_SELF_ARROW) {
-			return new ComponentBlueModernSelfArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, true, true);
-		}
-		if (type == ComponentType.ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, 1, false, true);
-		}
-		if (type == ComponentType.ASYNC_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, 1, false, false);
-		}
-		if (type == ComponentType.DOTTED_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, 1, true, true);
-		}
-		if (type == ComponentType.ASYNC_DOTTED_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, 1, true, false);
-		}
-		if (type == ComponentType.RETURN_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, -1, false, true);
-		}
-		if (type == ComponentType.ASYNC_RETURN_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, -1, false,
-					false);
-		}
-		if (type == ComponentType.RETURN_DOTTED_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, -1, true, true);
-		}
-		if (type == ComponentType.ASYNC_RETURN_DOTTED_ARROW) {
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, -1, true, false);
 		}
 		if (type == ComponentType.ACTOR_HEAD) {
 			return new ComponentBlueModernActor(blue2, blue1, blue1, participantFont, stringsToDisplay, true);
@@ -150,8 +128,8 @@ public class BlueModern implements Skin {
 					"in April 2009."));
 		}
 		if (type == ComponentType.ENGLOBER) {
-			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, Color.BLACK, param
-					.getFont(FontParam.SEQUENCE_ENGLOBER, null));
+			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, Color.BLACK, param.getFont(
+					FontParam.SEQUENCE_ENGLOBER, null));
 		}
 
 		return null;

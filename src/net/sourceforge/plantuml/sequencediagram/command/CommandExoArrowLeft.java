@@ -39,8 +39,10 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 	public CommandExoArrowLeft(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram,
-				"(?i)^(\\[?[=-]+>{1,2}|\\[?\\<{1,2}[=-]+)\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$", 0, 1);
+		super(
+				sequenceDiagram,
+				"(?i)^(\\[?[=-]+(?:>>?|//?|\\\\\\\\?)|\\[?(?:<<?|//?|\\\\\\\\?)[=-]+)\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$",
+				0, 1);
 	}
 
 	@Override
@@ -50,6 +52,12 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 		}
 		if (arrow.contains("<")) {
 			return MessageExoType.TO_LEFT;
+		}
+		if (arrow.startsWith("/") || arrow.startsWith("[/") || arrow.startsWith("\\") || arrow.startsWith("[\\")) {
+			return MessageExoType.TO_LEFT;
+		}
+		if (arrow.endsWith("\\") || arrow.endsWith("/")) {
+			return MessageExoType.FROM_LEFT;
 		}
 		throw new IllegalArgumentException(arrow);
 	}
