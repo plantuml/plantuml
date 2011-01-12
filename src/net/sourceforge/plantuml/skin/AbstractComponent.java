@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4168 $
+ * Revision $Revision: 5939 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -48,16 +48,16 @@ public abstract class AbstractComponent implements Component {
 		g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, style, 0));
 	}
 
-	final protected void stroke(UGraphic ug, int dash, double thickness) {
-		ug.getParam().setStroke(new UStroke(dash, thickness));
+	final protected void stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
+		ug.getParam().setStroke(new UStroke(dashVisible, dashSpace, thickness));
 	}
 
 	final protected void stroke(Graphics2D g2d, float dash) {
 		stroke(g2d, dash, 1);
 	}
 
-	final protected void stroke(UGraphic ug, int dash) {
-		stroke(ug, dash, 1);
+	final protected void stroke(UGraphic ug, double dashVisible, double dashSpace) {
+		stroke(ug, dashVisible, dashSpace, 1);
 	}
 
 	abstract protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse);

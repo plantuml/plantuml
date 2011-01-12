@@ -143,6 +143,10 @@ public class SequenceDiagram extends UmlDiagram {
 		events.add(new Divider(strings));
 	}
 
+	public void delay(List<String> strings) {
+		events.add(new Delay(strings));
+	}
+
 	public List<Event> events() {
 		return Collections.unmodifiableList(events);
 	}

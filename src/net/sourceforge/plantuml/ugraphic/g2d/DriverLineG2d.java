@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5546 $
+ * Revision $Revision: 5939 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -58,11 +58,12 @@ public class DriverLineG2d implements UDriver<Graphics2D> {
 	static void manageStroke(UParam param, Graphics2D g2d) {
 		final UStroke stroke = param.getStroke();
 		final float thickness = (float) stroke.getThickness();
-		if (stroke.getDash() == 0) {
+		if (stroke.getDashVisible() == 0) {
 			g2d.setStroke(new BasicStroke(thickness));
 		} else {
-			final float dash = (float) stroke.getDash();
-			final float[] style = { dash, dash };
+			final float dash1 = (float) stroke.getDashVisible();
+			final float dash2 = (float) stroke.getDashSpace();
+			final float[] style = { dash1, dash2 };
 			g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, style, 0));
 		}
 	}

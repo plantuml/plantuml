@@ -28,45 +28,50 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5937 $
+ * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.Dimension2D;
+import java.util.List;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class ComponentRoseLine extends AbstractComponent {
+public class ComponentRoseDelayText extends AbstractTextualComponent {
 
-	private final Color color;
-
-	public ComponentRoseLine(Color color) {
-		this.color = color;
+	public ComponentRoseDelayText(Color fontColor, Font font, List<? extends CharSequence> stringsToDisplay) {
+		super(stringsToDisplay, fontColor, font, HorizontalAlignement.CENTER, 4, 4, 4);
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
-		ug.getParam().setColor(color);
-		stroke(ug, 5, 5);
-		final int x = (int) (dimensionToUse.getWidth() / 2);
-		ug.draw(x, 0, new ULine(0, dimensionToUse.getHeight()));
-		ug.getParam().setStroke(new UStroke());
+		final TextBlock textBlock = getTextBlock();
+		final StringBounder stringBounder = ug.getStringBounder();
+		final double textWidth = getTextWidth(stringBounder);
+		final double textHeight = getTextHeight(stringBounder);
+
+		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;
+		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;
+
+		ug.getParam().setColor(getFontColor());
+		textBlock.drawU(ug, xpos, ypos + getMarginY());
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return 20;
+		return getTextHeight(stringBounder) + 20;
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return 1;
+		return getTextWidth(stringBounder) + 30;
 	}
 
 }

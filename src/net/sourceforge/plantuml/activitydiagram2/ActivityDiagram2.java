@@ -33,13 +33,14 @@
  */
 package net.sourceforge.plantuml.activitydiagram2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UniqueSequence;
-import net.sourceforge.plantuml.activitydiagram.ConditionalContext;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
@@ -50,8 +51,9 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public class ActivityDiagram2 extends CucaDiagram {
 
-	private IEntity last;
-	private ConditionalContext currentContext;
+	private Collection<IEntity> last2 = new ArrayList<IEntity>();
+	private ConditionalContext2 currentContext;
+	private int futureLength = 2;
 
 	final protected List<String> getDotStrings() {
 		return Arrays.asList("nodesep=.20;", "ranksep=0.4;", "edge [fontsize=11,labelfontsize=11];",
@@ -68,12 +70,16 @@ public class ActivityDiagram2 extends CucaDiagram {
 	}
 
 	public void newActivity(String display) {
-		if (last == null) {
+		if (last2.size() == 0) {
 			throw new IllegalStateException();
 		}
 		final Entity act = createEntity(getAutoCode(), display, EntityType.ACTIVITY);
-		this.addLink(new Link(last, act, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, 2));
-		last = act;
+		for (IEntity last : this.last2) {
+			this.addLink(new Link(last, act, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
+		}
+		this.last2.clear();
+		this.last2.add(act);
+		this.futureLength = 2;
 
 	}
 
@@ -82,25 +88,36 @@ public class ActivityDiagram2 extends CucaDiagram {
 	}
 
 	public void start() {
-		if (last != null) {
+		if (last2.size() != 0) {
 			throw new IllegalStateException();
 		}
-		last = createEntity("start", "start", EntityType.CIRCLE_START);
+		this.last2.add(createEntity("start", "start", EntityType.CIRCLE_START));
 	}
 
 	public void startIf(String test) {
 		final IEntity br = createEntity(getAutoCode(), "", EntityType.BRANCH);
-		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
-		this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, 2));
-		last = br;
+		currentContext = new ConditionalContext2(currentContext, br, Direction.DOWN);
+		for (IEntity last : this.last2) {
+			this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
+		}
+		this.last2.clear();
+		this.last2.add(br);
+		this.futureLength = 1;
 	}
 
-	public IEntity getLastEntityConsulted() {
-		return last;
+	public Collection<IEntity> getLastEntityConsulted2() {
+		return this.last2;
 	}
 
 	public void endif() {
+		this.last2.add(currentContext.getPending());
 		currentContext = currentContext.getParent();
+	}
+
+	public void else2() {
+		this.currentContext.setPending(this.last2.iterator().next());
+		this.last2.clear();
+		this.last2.add(currentContext.getBranch());
 	}
 
 }

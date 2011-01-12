@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5875 $
+ * Revision $Revision: 5942 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
@@ -136,6 +137,8 @@ class DrawableSetInitializer {
 				prepareNewpage(stringBounder, (Newpage) ev);
 			} else if (ev instanceof Divider) {
 				prepareDivider(stringBounder, (Divider) ev);
+			} else if (ev instanceof Delay) {
+				prepareDelay(stringBounder, (Delay) ev, col);
 			} else {
 				throw new IllegalStateException();
 			}
@@ -249,6 +252,17 @@ class DrawableSetInitializer {
 				ComponentType.DIVIDER, drawableSet.getSkinParam(), divider.getText()));
 		freeY += graphicalDivider.getPreferredHeight(stringBounder);
 		drawableSet.addEvent(divider, graphicalDivider);
+	}
+
+	private void prepareDelay(StringBounder stringBounder, Delay delay, Collection<ParticipantBox> participants) {
+		final Component compText = drawableSet.getSkin().createComponent(ComponentType.DELAY_TEXT,
+				drawableSet.getSkinParam(), delay.getText());
+		final GraphicalDelayText graphicalDivider = new GraphicalDelayText(freeY, compText);
+		for (ParticipantBox p : participants) {
+			p.addDelay(graphicalDivider);
+		}
+		freeY += graphicalDivider.getPreferredHeight(stringBounder);
+		drawableSet.addEvent(delay, graphicalDivider);
 	}
 
 	private List<InGroupableList> inGroupableLists = new ArrayList<InGroupableList>();
@@ -375,7 +389,9 @@ class DrawableSetInitializer {
 					p.getDisplay());
 			final Component line = drawableSet.getSkin().createComponent(ComponentType.PARTICIPANT_LINE,
 					drawableSet.getSkinParam(), p.getDisplay());
-			box = new ParticipantBox(head, line, tail, this.freeX);
+			final Component delayLine = drawableSet.getSkin().createComponent(ComponentType.DELAY_LINE,
+					drawableSet.getSkinParam(), p.getDisplay());
+			box = new ParticipantBox(head, line, tail, delayLine, this.freeX);
 		} else if (p.getType() == ParticipantType.ACTOR) {
 			final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), p.getSpecificBackColor());
 			final Component head = drawableSet.getSkin().createComponent(ComponentType.ACTOR_HEAD, skinParam,
@@ -384,7 +400,9 @@ class DrawableSetInitializer {
 					p.getDisplay());
 			final Component line = drawableSet.getSkin().createComponent(ComponentType.ACTOR_LINE,
 					drawableSet.getSkinParam(), p.getDisplay());
-			box = new ParticipantBox(head, line, tail, this.freeX);
+			final Component delayLine = drawableSet.getSkin().createComponent(ComponentType.DELAY_LINE,
+					drawableSet.getSkinParam(), p.getDisplay());
+			box = new ParticipantBox(head, line, tail, delayLine, this.freeX);
 		} else {
 			throw new IllegalArgumentException();
 		}

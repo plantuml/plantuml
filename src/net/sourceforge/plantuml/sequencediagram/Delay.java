@@ -27,42 +27,24 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4762 $
+ * 
+ * Revision $Revision: 3835 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram2.command;
+package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.Map;
+import java.util.List;
 
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+public class Delay implements Event {
 
-public class CommandEndif2 extends SingleLineCommand2<ActivityDiagram2> {
+	private final List<String> text;
 
-	public CommandEndif2(ActivityDiagram2 diagram) {
-		super(diagram, getRegexConcat());
+	public Delay(List<String> text) {
+		this.text = text;
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-					new RegexLeaf("endif"),
-					new RegexLeaf("$"));
-	}
-
-
-	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-//		if (getSystem().getLastEntityConsulted() == null) {
-//			return CommandExecutionResult.error("No if for this endif");
-//		}
-		getSystem().endif();
-
-		return CommandExecutionResult.ok();
+	public final List<String> getText() {
+		return text;
 	}
 
 }

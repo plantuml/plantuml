@@ -51,6 +51,8 @@ public class ComponentType {
 
 	//
 	static public final ComponentType ALIVE_LINE = new ComponentType("ALIVE_LINE");
+	static public final ComponentType DELAY_LINE = new ComponentType("DELAY_LINE");
+	static public final ComponentType DELAY_TEXT = new ComponentType("DELAY_TEXT");
 	static public final ComponentType DESTROY = new ComponentType("DESTROY");
 
 	//

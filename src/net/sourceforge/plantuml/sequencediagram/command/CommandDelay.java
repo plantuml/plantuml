@@ -27,42 +27,31 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4762 $
+ * 
+ * Revision $Revision: 5158 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram2.command;
+package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandEndif2 extends SingleLineCommand2<ActivityDiagram2> {
+public class CommandDelay extends SingleLineCommand<SequenceDiagram> {
 
-	public CommandEndif2(ActivityDiagram2 diagram) {
-		super(diagram, getRegexConcat());
+	public CommandDelay(SequenceDiagram sequenceDiagram) {
+		super(sequenceDiagram, "(?i)^\\.{3}(?:(.*)\\.{3})?$$");
 	}
-
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-					new RegexLeaf("endif"),
-					new RegexLeaf("$"));
-	}
-
 
 	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-//		if (getSystem().getLastEntityConsulted() == null) {
-//			return CommandExecutionResult.error("No if for this endif");
-//		}
-		getSystem().endif();
-
+	protected CommandExecutionResult executeArg(List<String> arg) {
+		final List<String> strings = arg.get(0) == null ? Collections.<String> emptyList() : StringUtils
+				.getWithNewlines(arg.get(0));
+		getSystem().delay(strings);
 		return CommandExecutionResult.ok();
 	}
-
 }

@@ -27,42 +27,47 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4762 $
+ * 
+ * Revision $Revision: 5937 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram2.command;
+package net.sourceforge.plantuml.skin.rose;
 
-import java.util.Map;
+import java.awt.Color;
+import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class CommandEndif2 extends SingleLineCommand2<ActivityDiagram2> {
+public class ComponentRoseDelayLine extends AbstractComponent {
 
-	public CommandEndif2(ActivityDiagram2 diagram) {
-		super(diagram, getRegexConcat());
+	private final Color color;
+
+	public ComponentRoseDelayLine(Color color) {
+		this.color = color;
 	}
-
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-					new RegexLeaf("endif"),
-					new RegexLeaf("$"));
-	}
-
 
 	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-//		if (getSystem().getLastEntityConsulted() == null) {
-//			return CommandExecutionResult.error("No if for this endif");
-//		}
-		getSystem().endif();
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+		ug.getParam().setColor(color);
+		//stroke(ug, 0.4, 2.5);
+		stroke(ug, 0.2, 1.5);
+		final int x = (int) (dimensionToUse.getWidth() / 2);
+		ug.draw(x, 0, new ULine(0, dimensionToUse.getHeight()));
+		ug.getParam().setStroke(new UStroke());
+	}
 
-		return CommandExecutionResult.ok();
+	@Override
+	public double getPreferredHeight(StringBounder stringBounder) {
+		return 20;
+	}
+
+	@Override
+	public double getPreferredWidth(StringBounder stringBounder) {
+		return 1;
 	}
 
 }

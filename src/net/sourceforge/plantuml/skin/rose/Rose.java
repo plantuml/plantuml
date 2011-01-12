@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5922 $
+ * Revision $Revision: 5943 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -219,6 +219,15 @@ public class Rose implements Skin {
 		if (type == ComponentType.ALIVE_LINE) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
 			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor);
+		}
+		if (type == ComponentType.DELAY_LINE) {
+			// final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
+			final Color borderColor = getFontColor(param, FontParam.SEQUENCE_DELAY);
+			return new ComponentRoseDelayLine(borderColor);
+		}
+		if (type == ComponentType.DELAY_TEXT) {
+			return new ComponentRoseDelayText(getFontColor(param, FontParam.SEQUENCE_DELAY), param.getFont(
+					FontParam.SEQUENCE_DELAY, null), stringsToDisplay);
 		}
 		if (type == ComponentType.DESTROY) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();

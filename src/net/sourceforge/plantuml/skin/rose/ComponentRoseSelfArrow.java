@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5926 $
+ * Revision $Revision: 5937 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -65,7 +65,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		final double x2 = arrowWidth;
 
 		if (getArrowConfiguration().isDotted()) {
-			stroke(ug, 2);
+			stroke(ug, 2, 2);
 		}
 
 		ug.draw(0, textHeight, new ULine(x2, 0));

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5355 $
+ * Revision $Revision: 5944 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public abstract class AbstractComponentBlueModernArrow extends AbstractTextualComponent {
 
@@ -47,15 +48,13 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 
 	private final int arrowDeltaX2 = 10;
 	private final int arrowDeltaY2 = 5;
-	private final boolean dotted;
-	private final boolean full;
+	private final ArrowConfiguration arrowConfiguration;
 	private final Color foregroundColor;
 
 	public AbstractComponentBlueModernArrow(Color foregroundColor, Color fontColor, Font font,
-			List<? extends CharSequence> stringsToDisplay, boolean dotted, boolean full) {
+			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
 		super(stringsToDisplay, fontColor, font, HorizontalAlignement.LEFT, 17, 17, 2);
-		this.dotted = dotted;
-		this.full = full;
+		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}
 
@@ -84,12 +83,8 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 		return 6;
 	}
 
-	final protected boolean isDotted() {
-		return dotted;
-	}
-
-	final protected boolean isFull() {
-		return full;
+	final protected ArrowConfiguration getArrowConfiguration() {
+		return arrowConfiguration;
 	}
 
 }

@@ -27,42 +27,55 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4762 $
+ * 
+ * Revision $Revision: 3828 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram2.command;
+package net.sourceforge.plantuml.activitydiagram2;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 
-public class CommandEndif2 extends SingleLineCommand2<ActivityDiagram2> {
+public class ConditionalContext2 {
 
-	public CommandEndif2(ActivityDiagram2 diagram) {
-		super(diagram, getRegexConcat());
+	private IEntity pending;
+	private final IEntity branch;
+	private final Direction direction;
+	private final ConditionalContext2 parent;
+
+	public ConditionalContext2(ConditionalContext2 parent, IEntity branch, Direction direction) {
+		if (branch.getType() != EntityType.BRANCH) {
+			throw new IllegalArgumentException();
+		}
+		this.branch = branch;
+		this.direction = direction;
+		this.parent = parent;
+		this.pending = branch;
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-					new RegexLeaf("endif"),
-					new RegexLeaf("$"));
+	public Direction getDirection() {
+		return direction;
 	}
 
+	public final ConditionalContext2 getParent() {
+		return parent;
+	}
 
-	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-//		if (getSystem().getLastEntityConsulted() == null) {
-//			return CommandExecutionResult.error("No if for this endif");
-//		}
-		getSystem().endif();
+	public final IEntity getPending() {
+		return pending;
+	}
 
-		return CommandExecutionResult.ok();
+	public final void setPending(IEntity pending) {
+		this.pending = pending;
+	}
+
+	public final IEntity getBranch() {
+		return branch;
 	}
 
 }

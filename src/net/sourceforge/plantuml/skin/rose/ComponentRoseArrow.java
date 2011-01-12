@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5926 $
+ * Revision $Revision: 5937 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -63,7 +63,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		final int x2 = (int) dimensionToUse.getWidth();
 
 		if (getArrowConfiguration().isDotted()) {
-			stroke(ug, 2);
+			stroke(ug, 2, 2);
 		}
 
 		//

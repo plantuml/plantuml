@@ -28,45 +28,53 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5937 $
+ * Revision $Revision: 3916 $
  *
  */
-package net.sourceforge.plantuml.skin.rose;
+package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class ComponentRoseLine extends AbstractComponent {
+class GraphicalDelayText extends GraphicalElement {
 
-	private final Color color;
+	private final Component compText;
 
-	public ComponentRoseLine(Color color) {
-		this.color = color;
+	public GraphicalDelayText(double startingY, Component compText) {
+		super(startingY);
+		this.compText = compText;
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
-		ug.getParam().setColor(color);
-		stroke(ug, 5, 5);
-		final int x = (int) (dimensionToUse.getWidth() / 2);
-		ug.draw(x, 0, new ULine(0, dimensionToUse.getHeight()));
-		ug.getParam().setStroke(new UStroke());
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+		ug.translate(0, getStartingY());
+		final StringBounder stringBounder = ug.getStringBounder();
+		final Dimension2D dim = new Dimension2DDouble(maxX, compText.getPreferredHeight(stringBounder));
+		compText.drawU(ug, dim, context);
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return 20;
+		return compText.getPreferredHeight(stringBounder);
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return 1;
+		return compText.getPreferredWidth(stringBounder);
+	}
+
+	@Override
+	public double getStartingX(StringBounder stringBounder) {
+		return 0;
+	}
+
+	public double getEndingY(StringBounder stringBounder) {
+		return getStartingY() + compText.getPreferredHeight(stringBounder);
 	}
 
 }

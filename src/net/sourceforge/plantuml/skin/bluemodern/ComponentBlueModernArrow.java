@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4634 $
+ * Revision $Revision: 5945 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -40,6 +40,8 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -47,15 +49,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentBlueModernArrow extends AbstractComponentBlueModernArrow {
 
-	private final int direction;
-
 	public ComponentBlueModernArrow(Color foregroundColor, Color fontColor, Font font,
-			List<? extends CharSequence> stringsToDisplay, int direction, boolean dotted, boolean full) {
-		super(foregroundColor, fontColor, font, stringsToDisplay, dotted, full);
-		this.direction = direction;
-		if (direction != 1 && direction != -1) {
-			throw new IllegalArgumentException();
-		}
+			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
+		super(foregroundColor, fontColor, font, stringsToDisplay, arrowConfiguration);
 	}
 
 	@Override
@@ -68,7 +64,7 @@ public class ComponentBlueModernArrow extends AbstractComponentBlueModernArrow {
 
 		final int x2 = (int) dimensionToUse.getWidth();
 
-		if (isDotted()) {
+		if (getArrowConfiguration().isDotted()) {
 			stroke(ug, 5, 2);
 		} else {
 			ug.getParam().setStroke(new UStroke(2));
@@ -80,40 +76,82 @@ public class ComponentBlueModernArrow extends AbstractComponentBlueModernArrow {
 		final int direction = getDirection();
 		final UPolygon polygon = new UPolygon();
 
-		if (isFull() == false) {
+		if (getArrowConfiguration().isASync()) {
 			ug.getParam().setStroke(new UStroke(1.5));
 			if (direction == 1) {
-				ug.draw(x2 - getArrowDeltaX2(), textHeight - getArrowDeltaY2(), new ULine(getArrowDeltaX2(),
-						getArrowDeltaY2()));
-				ug.draw(x2 - getArrowDeltaX2(), textHeight + getArrowDeltaY2(), new ULine(getArrowDeltaX2(),
-						-getArrowDeltaY2()));
+				if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
+					ug.draw(x2 - getArrowDeltaX2(), textHeight - getArrowDeltaY2(), new ULine(getArrowDeltaX2(),
+							getArrowDeltaY2()));
+				}
+				if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
+					ug.draw(x2 - getArrowDeltaX2(), textHeight + getArrowDeltaY2(), new ULine(getArrowDeltaX2(),
+							-getArrowDeltaY2()));
+				}
 			} else {
-				ug.draw(getArrowDeltaX2(), textHeight - getArrowDeltaY2(), new ULine(-getArrowDeltaX2(),
-						getArrowDeltaY2()));
-				ug.draw(getArrowDeltaX2(), textHeight + getArrowDeltaY2(), new ULine(-getArrowDeltaX2(),
-						-getArrowDeltaY2()));
+				if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
+					ug.draw(getArrowDeltaX2(), textHeight - getArrowDeltaY2(), new ULine(-getArrowDeltaX2(),
+							getArrowDeltaY2()));
+				}
+				if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
+					ug.draw(getArrowDeltaX2(), textHeight + getArrowDeltaY2(), new ULine(-getArrowDeltaX2(),
+							-getArrowDeltaY2()));
+				}
 			}
 			ug.getParam().setStroke(new UStroke());
 		} else if (direction == 1) {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(x2, textHeight);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+			createPolygonNormal(textHeight, x2, polygon);
 		} else {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(0, textHeight);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+			createPolygonReverse(textHeight, polygon);
 		}
 		ug.draw(0, 0, polygon);
 
 		getTextBlock().drawU(ug, getMarginX1(), 0);
 	}
 
+	private void createPolygonReverse(final int textHeight, final UPolygon polygon) {
+		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
+			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(0, textHeight);
+			polygon.addPoint(getArrowDeltaX(), textHeight);
+		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
+			polygon.addPoint(getArrowDeltaX(), textHeight);
+			polygon.addPoint(0, textHeight);
+			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+		} else {
+			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(0, textHeight);
+			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+		}
+	}
+
+	private void createPolygonNormal(final int textHeight, final int x2, final UPolygon polygon) {
+		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(x2, textHeight);
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+			polygon.addPoint(x2, textHeight);
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+		} else {
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+			polygon.addPoint(x2, textHeight);
+			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+		}
+	}
+
 	protected int getDirection(Graphics2D g2d) {
-		return direction;
+		return getDirection();
 	}
 
 	protected int getDirection() {
-		return direction;
+		if (getArrowConfiguration().isLeftToRightNormal()) {
+			return 1;
+		}
+		if (getArrowConfiguration().isRightToLeftReverse()) {
+			return -1;
+		}
+		throw new IllegalStateException();
 	}
 
 	@Override

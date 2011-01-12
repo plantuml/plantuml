@@ -28,31 +28,37 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5289 $
+ * Revision $Revision: 5939 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
 public class UStroke {
 
-	private final int dash;
+	private final double dashVisible;
+	private final double dashSpace;
 	private final double thickness;
 
-	public UStroke(int dash, double thickness) {
-		this.dash = dash;
+	public UStroke(double dashVisible, double dashSpace, double thickness) {
+		this.dashVisible = dashVisible;
+		this.dashSpace = dashSpace;
 		this.thickness = thickness;
 	}
 
 	public UStroke(double thickness) {
-		this(0, thickness);
+		this(0, 0, thickness);
 	}
 
 	public UStroke() {
 		this(1.0);
 	}
 
-	public int getDash() {
-		return dash;
+	public double getDashVisible() {
+		return dashVisible;
+	}
+
+	public double getDashSpace() {
+		return dashSpace;
 	}
 
 	public double getThickness() {
@@ -60,17 +66,17 @@ public class UStroke {
 	}
 
 	public String getDasharraySvg() {
-		if (dash == 0) {
+		if (dashVisible == 0) {
 			return null;
 		}
-		return "" + dash + "," + dash;
+		return "" + dashVisible + "," + dashSpace;
 	}
 
 	public String getDasharrayEps() {
-		if (dash == 0) {
+		if (dashVisible == 0) {
 			return null;
 		}
-		return "" + dash + " " + (2*dash);
+		return "" + dashVisible + " " + dashSpace;
 	}
 
 }

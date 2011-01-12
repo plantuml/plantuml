@@ -77,7 +77,7 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private void goDash(UGraphic ug) {
-		ug.getParam().setStroke(new UStroke(8, 1.0));
+		ug.getParam().setStroke(new UStroke(8, 8, 1.0));
 	}
 
 	public void drawPathAfter(UGraphic ug, Positionable start, Positionable end, Path path) {

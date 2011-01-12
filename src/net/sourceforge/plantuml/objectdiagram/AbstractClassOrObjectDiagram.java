@@ -46,9 +46,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
-	// private Link last = null;
-	// private IEntity lastNode = null;
-
 	final public boolean insertBetween(IEntity entity1, IEntity entity2, IEntity node) {
 		final Link link = foundLink(entity1, entity2);
 		if (link == null) {
@@ -65,18 +62,14 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	}
 
 	private Link foundLink(IEntity entity1, IEntity entity2) {
-		Link result = null;
 		final List<Link> links = getLinks();
 		for (int i = links.size() - 1; i >= 0; i--) {
 			final Link l = links.get(i);
 			if (l.isBetween(entity1, entity2)) {
-				if (result != null) {
-					return null;
-				}
-				result = l;
+				return l;
 			}
 		}
-		return result;
+		return null;
 	}
 
 	public int getNbOfHozizontalLollipop(IEntity entity) {
@@ -92,35 +85,6 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 		return result;
 	}
-
-	// final public void insertBetweenNew(IEntity entity1, IEntity entity2,
-	// IEntity node) {
-	// Link link = foundLink(entity1, entity2);
-	// if (link == null) {
-	// link = last;
-	// }
-	// final Link l1 = new Link(entity1, node, link.getType(), link.getLabel(),
-	// link.getLength(),
-	// link.getQualifier1(), null, link.getLabeldistance(),
-	// link.getLabelangle());
-	// final Link l2 = new Link(node, entity2, link.getType(), link.getLabel(),
-	// link.getLength(), null, link
-	// .getQualifier2(), link.getLabeldistance(), link.getLabelangle());
-	// addLink(l1);
-	// addLink(l2);
-	// if (last == null) {
-	// removeLink(link);
-	// } else {
-	// final Link lnode = new Link(lastNode, node, link.getType(),
-	// link.getLabel(), 1);
-	// lnode.setInvis(true);
-	// // lnode.setWeight(100);
-	// addLink(lnode);
-	// }
-	// last = link;
-	// lastNode = node;
-	// // return true;
-	// }
 
 	private final List<Association> assocations = new ArrayList<Association>();
 

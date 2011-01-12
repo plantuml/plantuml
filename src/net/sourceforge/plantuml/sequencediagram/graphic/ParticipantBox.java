@@ -28,10 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5249 $
+ * Revision $Revision: 5942 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -50,13 +53,15 @@ public class ParticipantBox implements Pushable {
 	private final Component head;
 	private final Component line;
 	private final Component tail;
+	private final Component delayLine;
 	private int cpt = CPT++;
 
-	public ParticipantBox(Component head, Component line, Component tail, double startingX) {
+	public ParticipantBox(Component head, Component line, Component tail, Component delayLine, double startingX) {
 		this.startingX = startingX;
 		this.head = head;
 		this.line = line;
 		this.tail = tail;
+		this.delayLine = delayLine;
 	}
 
 	@Override
@@ -107,11 +112,12 @@ public class ParticipantBox implements Pushable {
 		}
 
 		if (positionTail > 0) {
-			// final double y2 = positionTail - topStartingY + line.getPreferredHeight(stringBounder) / 2 - 1;
+			// final double y2 = positionTail - topStartingY +
+			// line.getPreferredHeight(stringBounder) / 2 - 1;
 			positionTail += line.getPreferredHeight(stringBounder) / 2 - 1;
-//			if (y2 != y22) {
-//				throw new IllegalStateException();
-//			}
+			// if (y2 != y22) {
+			// throw new IllegalStateException();
+			// }
 			ug.translate(startingX + outMargin, positionTail);
 			tail.drawU(ug, new Dimension2DDouble(tail.getPreferredWidth(stringBounder), tail
 					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
@@ -130,14 +136,31 @@ public class ParticipantBox implements Pushable {
 	public void drawLineU(UGraphic ug, double startingY, double endingY, boolean showTail) {
 		final double atX = ug.getTranslateX();
 		final double atY = ug.getTranslateY();
-		final StringBounder stringBounder = ug.getStringBounder();
 
-		ug.translate(startingX, startingY);
-		line.drawU(ug,
-				new Dimension2DDouble(head.getPreferredWidth(stringBounder) + outMargin * 2, endingY - startingY),
-				new SimpleContext2D(false));
+		ug.translate(startingX, 0);
+		if (delays.size() > 0) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			for (GraphicalDelayText delay : delays) {
+				drawLine(ug, startingY, delay.getStartingY(), line);
+				drawLine(ug, delay.getStartingY(), delay.getEndingY(stringBounder), delayLine);
+				startingY = delay.getEndingY(stringBounder);
+			}
+			drawLine(ug, delays.get(delays.size() - 1).getEndingY(stringBounder), endingY, line);
+		} else {
+			drawLine(ug, startingY, endingY, line);
+		}
 
 		ug.setTranslate(atX, atY);
+	}
+
+	private void drawLine(UGraphic ug, double startingY, double endingY, Component comp) {
+		final double atY = ug.getTranslateY();
+		ug.translate(0, startingY);
+		final StringBounder stringBounder = ug.getStringBounder();
+		comp.drawU(ug,
+				new Dimension2DDouble(head.getPreferredWidth(stringBounder) + outMargin * 2, endingY - startingY),
+				new SimpleContext2D(false));
+		ug.setTranslate(ug.getTranslateX(), atY);
 	}
 
 	public double magicMargin(StringBounder stringBounder) {
@@ -146,6 +169,13 @@ public class ParticipantBox implements Pushable {
 
 	public double getStartingX() {
 		return startingX;
+	}
+
+	private final List<GraphicalDelayText> delays = new ArrayList<GraphicalDelayText>();
+
+	public void addDelay(GraphicalDelayText delay) {
+		this.delays.add(delay);
+
 	}
 
 }

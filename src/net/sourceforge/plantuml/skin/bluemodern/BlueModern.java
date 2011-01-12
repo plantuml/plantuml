@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5926 $
+ * Revision $Revision: 5944 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -68,11 +68,10 @@ public class BlueModern implements Skin {
 		if (type.isArrow()) {
 			if (type.getArrowConfiguration().isSelfArrow()) {
 				return new ComponentBlueModernSelfArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, type
-						.getArrowConfiguration().isDotted(), true);
+						.getArrowConfiguration());
 			}
 			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, type
-					.getArrowConfiguration().isLeftToRightNormal() ? 1 : -1, type.getArrowConfiguration().isDotted(),
-					type.getArrowConfiguration().isASync()==false);
+					.getArrowConfiguration());
 		}
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentBlueModernParticipant(blue1, blue2, Color.WHITE, participantFont, stringsToDisplay);
