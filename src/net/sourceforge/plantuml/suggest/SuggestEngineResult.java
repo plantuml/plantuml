@@ -27,41 +27,46 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 5957 $
+ *
+ * Revision $Revision: 4975 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.suggest;
 
-import java.util.List;
-import java.util.regex.Matcher;
+public class SuggestEngineResult {
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+	private final SuggestEngineStatus status;
+	private final String suggestedLine;
+	private final int numLine;
 
-public class CommandMultilinesHeader extends CommandMultilines<UmlDiagram> {
+	public static final SuggestEngineResult CANNOT_CORRECT = new SuggestEngineResult(SuggestEngineStatus.CANNOT_CORRECT);
+	public static final SuggestEngineResult SYNTAX_OK = new SuggestEngineResult(SuggestEngineStatus.SYNTAX_OK);
 
-	public CommandMultilinesHeader(final UmlDiagram diagram) {
-		super(diagram, "(?i)^(?:(left|right|center)?\\s*)header$", "(?i)^end ?header$");
+	private SuggestEngineResult(SuggestEngineStatus status) {
+		if (status == SuggestEngineStatus.ONE_SUGGESTION) {
+			throw new IllegalArgumentException();
+		}
+		this.status = status;
+		this.suggestedLine = null;
+		this.numLine = -1;
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
-		StringUtils.trim(lines, false);
-		final Matcher m = getStartingPattern().matcher(lines.get(0).trim());
-		if (m.find() == false) {
-			throw new IllegalStateException();
-		}
-		final String align = m.group(1);
-		if (align != null) {
-			getSystem().setHeaderAlignement(HorizontalAlignement.valueOf(align.toUpperCase()));
-		}
-		final List<String> strings = lines.subList(1, lines.size() - 1);
-		if (strings.size() > 0) {
-			getSystem().setHeader(strings);
-			return CommandExecutionResult.ok();
-		}
-		return CommandExecutionResult.error("Empty header");
+	public SuggestEngineResult(String suggestedLine, int numLine) {
+		this.status = SuggestEngineStatus.ONE_SUGGESTION;
+		this.suggestedLine = suggestedLine;
+		this.numLine = numLine;
+	}
+
+	public final SuggestEngineStatus getStatus() {
+		return status;
+	}
+
+	public final String getSuggestedLine() {
+		return suggestedLine;
+	}
+
+	public final int getNumLine() {
+		return numLine;
 	}
 
 }

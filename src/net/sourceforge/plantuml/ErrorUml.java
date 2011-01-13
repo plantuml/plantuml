@@ -33,11 +33,15 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.suggest.SuggestEngineResult;
+import net.sourceforge.plantuml.suggest.SuggestEngineStatus;
+
 class ErrorUml {
 
 	private final String error;
 	private final int position;
 	private final ErrorUmlType type;
+	private SuggestEngineResult suggest;
 
 	ErrorUml(ErrorUmlType type, String error, int position) {
 		if (error == null || type == null || StringUtils.isEmpty(error)) {
@@ -51,8 +55,7 @@ class ErrorUml {
 	@Override
 	public boolean equals(Object obj) {
 		final ErrorUml this2 = (ErrorUml) obj;
-		return this.type == this2.type && this.position == this2.position
-				&& this.error.equals(this2.error);
+		return this.type == this2.type && this.position == this2.position && this.error.equals(this2.error);
 	}
 
 	@Override
@@ -75,6 +78,18 @@ class ErrorUml {
 
 	public int getPosition() {
 		return position;
+	}
+
+	public final SuggestEngineResult getSuggest() {
+		return suggest;
+	}
+
+	public final boolean hasSuggest() {
+		return suggest != null && suggest.getStatus() == SuggestEngineStatus.ONE_SUGGESTION;
+	}
+
+	public void setSuggest(SuggestEngineResult suggest) {
+		this.suggest = suggest;
 	}
 
 }

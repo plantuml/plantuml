@@ -84,7 +84,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {
-		StringUtils.trim(lines);
+		StringUtils.trim(lines, false);
 		final Map<String, RegexPartialMatch> line0 = getStartingPattern().matcher(lines.get(0).trim());
 		final IEntity entity1 = CommandLinkActivity.getEntity(getSystem(), line0, true);
 		if (line0.get("STEREOTYPE").get(0) != null) {

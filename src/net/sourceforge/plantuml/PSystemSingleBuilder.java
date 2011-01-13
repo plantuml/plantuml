@@ -44,6 +44,9 @@ import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ProtectedCommand;
+import net.sourceforge.plantuml.suggest.SuggestEngine;
+import net.sourceforge.plantuml.suggest.SuggestEngineResult;
+import net.sourceforge.plantuml.suggest.SuggestEngineStatus;
 
 final public class PSystemSingleBuilder {
 
@@ -66,9 +69,9 @@ final public class PSystemSingleBuilder {
 		return sys;
 	}
 
-	public PSystemSingleBuilder(List<String> strings, PSystemFactory systemFactory) throws IOException {
-		source = new UmlSource(strings);
-		it = strings.iterator();
+	public PSystemSingleBuilder(UmlSource s, PSystemFactory systemFactory) throws IOException {
+		this.source = s;
+		it = s.iterator();
 		if (BlockUmlBuilder.isArobaseStartuml(next()) == false) {
 			throw new UnsupportedOperationException();
 		}
@@ -130,7 +133,15 @@ final public class PSystemSingleBuilder {
 			}
 			final CommandControl commandControl = systemFactory.isValid(Arrays.asList(s));
 			if (commandControl == CommandControl.NOT_OK) {
-				sys = new PSystemError(source, new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", nb - 1));
+				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", nb - 1);
+				if (OptionFlags.SUGGEST) {
+					final SuggestEngine engine = new SuggestEngine(source, systemFactory);
+					final SuggestEngineResult result = engine.tryToSuggest();
+					if (result.getStatus() == SuggestEngineStatus.ONE_SUGGESTION) {
+						err.setSuggest(result);
+					}
+				}
+				sys = new PSystemError(source, err);
 				return;
 			} else if (commandControl == CommandControl.OK_PARTIAL) {
 				final boolean ok = manageMultiline(systemFactory, s);
@@ -142,8 +153,8 @@ final public class PSystemSingleBuilder {
 				final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
 				final CommandExecutionResult result = cmd.execute(Arrays.asList(s));
 				if (result.isOk() == false) {
-					sys = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-							nb - 1));
+					sys = new PSystemError(source,
+							new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), nb - 1));
 					return;
 				}
 				testDeprecated(Arrays.asList(s), cmd);

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5746 $
+ * Revision $Revision: 5974 $
  *
  */
 package net.sourceforge.plantuml;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml;
 public class OptionFlags {
 	
 	static public final boolean PBBACK = false;
+	static public final boolean SUGGEST = false;
 
 	void reset() {
 		keepTmpFiles = false;

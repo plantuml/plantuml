@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5810 $
+ * Revision $Revision: 5969 $
  *
  */
 package net.sourceforge.plantuml;
@@ -103,8 +103,8 @@ public class Run {
 					ps.println("ERROR");
 					final PSystemError sys = (PSystemError) system;
 					ps.println(sys.getHigherErrorPosition());
-					for (String er : sys.getErrs()) {
-						ps.println(er);
+					for (ErrorUml er : sys.getErrorsUml()) {
+						ps.println(er.getError());
 					}
 				} else {
 					ps.println("OTHER");

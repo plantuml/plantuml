@@ -55,14 +55,15 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines<Objec
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {
-		StringUtils.trim(lines);
+		StringUtils.trim(lines, true);
 		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
 		final Entity entity = executeArg0(line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
 		for (String s : lines.subList(1, lines.size() - 1)) {
-			if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
+			assert s.length() > 0;
+			if (VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
 				getSystem().setVisibilityModifierPresent(true);
 			}
 			entity.addField(s);

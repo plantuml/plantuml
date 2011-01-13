@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5898 $
+ * Revision $Revision: 5971 $
  */
 package net.sourceforge.plantuml;
 
@@ -43,64 +43,46 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 
 public class PSystemError extends AbstractPSystem {
 
-	private final List<ErrorUml> errorsUml = new ArrayList<ErrorUml>();
 	private final List<String> htmlStrings = new ArrayList<String>();
 	private final List<String> plainStrings = new ArrayList<String>();
 	private final int higherErrorPosition;
-	private final Collection<String> errs;
+	private final List<ErrorUml> printedErrors;
 
-	public PSystemError(UmlSource source, List<ErrorUml> errorUml) {
-		this.errorsUml.addAll(errorUml);
+	public PSystemError(UmlSource source, List<ErrorUml> all) {
 		this.setSource(source);
 
-		final int higherErrorPositionExecution = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR);
-		final int higherErrorPositionSyntax = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR);
-		
+		final int higherErrorPositionExecution = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR, all);
+		final int higherErrorPositionSyntax = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR, all);
+
 		if (higherErrorPositionExecution == Integer.MIN_VALUE && higherErrorPositionSyntax == Integer.MIN_VALUE) {
 			throw new IllegalStateException();
 		}
 
 		if (higherErrorPositionExecution >= higherErrorPositionSyntax) {
 			higherErrorPosition = higherErrorPositionExecution;
-			errs = getErrorsAt(higherErrorPositionExecution, ErrorUmlType.EXECUTION_ERROR);
+			printedErrors = getErrorsAt(higherErrorPositionExecution, ErrorUmlType.EXECUTION_ERROR, all);
 		} else {
 			assert higherErrorPositionSyntax > higherErrorPositionExecution;
 			higherErrorPosition = higherErrorPositionSyntax;
-			errs = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR);
+			printedErrors = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR, all);
 		}
-		appendSource(higherErrorPosition, errs);
-			
-
-
-//		final Collection<ErrorUml> executions = getErrors(ErrorUmlType.EXECUTION_ERROR);
-//		if (executions.size() > 0) {
-//			higherErrorPosition = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR);
-//			errs = getErrorsAt(higherErrorPosition, ErrorUmlType.EXECUTION_ERROR);
-//			appendSource(higherErrorPosition, errs);
-//		} else {
-//			higherErrorPosition = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR);
-//			errs = getErrorsAt(higherErrorPosition, ErrorUmlType.SYNTAX_ERROR);
-//			if (errs.size() != 1) {
-//				throw new UnsupportedOperationException(errs.toString());
-//			}
-//			appendSource(higherErrorPosition, errs);
-//		}
+		appendSource(higherErrorPosition);
 
 	}
 
-	public PSystemError(UmlSource source, ErrorUml... errorUml) {
-		this(source, Arrays.asList(errorUml));
+	public PSystemError(UmlSource source, ErrorUml singleError) {
+		this(source, Collections.singletonList(singleError));
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException,
+			InterruptedException {
 		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
-			throw new IllegalArgumentException("File is a directory "+suggestedFile);
+			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
 		OutputStream os = null;
 		try {
@@ -122,7 +104,7 @@ public class PSystemError extends AbstractPSystem {
 		return new GraphicStrings(htmlStrings);
 	}
 
-	private void appendSource(int position, Collection<String> errs) {
+	private void appendSource(int position) {
 		final int limit = 4;
 		int start;
 		final int skip = position - limit + 1;
@@ -150,15 +132,30 @@ public class PSystemError extends AbstractPSystem {
 			underscore.append("^");
 		}
 		plainStrings.add(underscore.toString());
-		for (String er : errs) {
-			htmlStrings.add(" <font color=red>" + er);
-			plainStrings.add(" " + er);
+		for (ErrorUml er : printedErrors) {
+			htmlStrings.add(" <color:red>" + er.getError());
+			plainStrings.add(" " + er.getError());
+		}
+		boolean suggested = false;
+		for (ErrorUml er : printedErrors) {
+			if (er.hasSuggest()) {
+				suggested = true;
+			}
+		}
+		if (suggested) {
+			htmlStrings.add(" <color:white><i>Did you mean:");
+			for (ErrorUml er : printedErrors) {
+				if (er.hasSuggest()) {
+					htmlStrings.add("<color:white>"
+							+ StringUtils.hideComparatorCharacters(er.getSuggest().getSuggestedLine()));
+				}
+			}
 		}
 	}
 
-	private Collection<ErrorUml> getErrors(ErrorUmlType type) {
+	private Collection<ErrorUml> getErrors(ErrorUmlType type, List<ErrorUml> all) {
 		final Collection<ErrorUml> result = new LinkedHashSet<ErrorUml>();
-		for (ErrorUml error : errorsUml) {
+		for (ErrorUml error : all) {
 			if (error.getType() == type) {
 				result.add(error);
 			}
@@ -166,24 +163,24 @@ public class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
-	private int getHigherErrorPosition(ErrorUmlType type) {
+	private int getHigherErrorPosition(ErrorUmlType type, List<ErrorUml> all) {
 		int max = Integer.MIN_VALUE;
-		for (ErrorUml error : getErrors(type)) {
+		for (ErrorUml error : getErrors(type, all)) {
 			if (error.getPosition() > max) {
 				max = error.getPosition();
 			}
 		}
-//		if (max == Integer.MIN_VALUE) {
-//			throw new IllegalStateException();
-//		}
+		// if (max == Integer.MIN_VALUE) {
+		// throw new IllegalStateException();
+		// }
 		return max;
 	}
 
-	private Collection<String> getErrorsAt(int position, ErrorUmlType type) {
-		final Collection<String> result = new TreeSet<String>();
-		for (ErrorUml error : getErrors(type)) {
+	private List<ErrorUml> getErrorsAt(int position, ErrorUmlType type, List<ErrorUml> all) {
+		final List<ErrorUml> result = new ArrayList<ErrorUml>();
+		for (ErrorUml error : getErrors(type, all)) {
 			if (error.getPosition() == position && StringUtils.isNotEmpty(error.getError())) {
-				result.add(error.getError());
+				result.add(error);
 			}
 		}
 		return result;
@@ -191,10 +188,6 @@ public class PSystemError extends AbstractPSystem {
 
 	public String getDescription() {
 		return "(Error)";
-	}
-
-	public final List<ErrorUml> getErrorsUml() {
-		return Collections.unmodifiableList(errorsUml);
 	}
 
 	public void print(PrintStream ps) {
@@ -207,7 +200,7 @@ public class PSystemError extends AbstractPSystem {
 		return higherErrorPosition;
 	}
 
-	public final Collection<String> getErrs() {
-		return Collections.unmodifiableCollection(errs);
+	public final Collection<ErrorUml> getErrorsUml() {
+		return Collections.unmodifiableCollection(printedErrors);
 	}
 }

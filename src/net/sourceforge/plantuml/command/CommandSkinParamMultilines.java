@@ -86,12 +86,10 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 
 		lines = new ArrayList<String>(lines.subList(1, lines.size() - 1));
-		StringUtils.trim(lines);
+		StringUtils.trim(lines, true);
 
 		for (String s : lines) {
-			if (s.length() == 0) {
-				continue;
-			}
+			assert s.length() > 0;
 			if (s.equals("}")) {
 				context.pop();
 				continue;

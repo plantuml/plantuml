@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5749 $
+ * Revision $Revision: 5957 $
  *
  */
 package net.sourceforge.plantuml;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -307,10 +308,17 @@ public class StringUtils {
 		return Collections.unmodifiableList(result);
 	}
 
-	public static void trim(List<String> data) {
+	public static void trim(List<String> data, boolean removeEmptyLines) {
 		for (int i = 0; i < data.size(); i++) {
 			final String s = data.get(i);
 			data.set(i, s.trim());
+		}
+		if (removeEmptyLines) {
+			for (final Iterator<String> it = data.iterator(); it.hasNext();) {
+				if (it.next().length() == 0) {
+					it.remove();
+				}
+			}
 		}
 	}
 

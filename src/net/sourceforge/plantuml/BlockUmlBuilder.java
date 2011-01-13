@@ -60,7 +60,7 @@ final public class BlockUmlBuilder {
 		}
 	}
 
-	static boolean isArobaseEnduml(String s) {
+	public static boolean isArobaseEnduml(String s) {
 		s = s.trim();
 		return s.equals("@enduml") || s.startsWith("@enduml ");
 	}
@@ -71,7 +71,7 @@ final public class BlockUmlBuilder {
 		return s.startsWith("'");
 	}
 
-	static boolean isArobaseStartuml(String s) {
+	public static boolean isArobaseStartuml(String s) {
 		s = s.trim();
 		return s.equals("@startuml") || s.startsWith("@startuml ");
 	}

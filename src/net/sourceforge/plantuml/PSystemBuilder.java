@@ -82,7 +82,7 @@ public class PSystemBuilder {
 
 		final List<PSystemError> errors = new ArrayList<PSystemError>();
 		for (PSystemFactory systemFactory : factories) {
-			final PSystem sys = new PSystemSingleBuilder(strings, systemFactory).getPSystem();
+			final PSystem sys = new PSystemSingleBuilder(new UmlSource(strings), systemFactory).getPSystem();
 			if (isOk(sys)) {
 				return sys;
 			}
