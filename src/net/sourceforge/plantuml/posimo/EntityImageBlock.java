@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.dot.PlayField;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -77,8 +78,8 @@ public class EntityImageBlock implements IEntityImageBlock {
 		this.links = links;
 
 		if (StringUtils.isNotEmpty(entity.getDisplay())) {
-			this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()),
-					param.getFont(titleParam, null), Color.BLACK, HorizontalAlignement.CENTER);
+			this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
+					param.getFont(titleParam, null), Color.BLACK), HorizontalAlignement.CENTER);
 		} else {
 			this.name = null;
 		}

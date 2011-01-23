@@ -28,10 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5249 $
+ * Revision $Revision: 6016 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.Collection;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -64,6 +66,10 @@ class ParticipantBoxSimple implements Pushable {
 	
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return 0;
+	}
+
+	public Collection<GraphicalDelayText> getDelays() {
+		return null;
 	}
 
 

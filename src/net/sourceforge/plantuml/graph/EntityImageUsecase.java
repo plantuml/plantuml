@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4125 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -44,6 +44,7 @@ import java.awt.geom.Rectangle2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
@@ -56,8 +57,8 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	public EntityImageUsecase(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), getFont14(), Color.BLACK,
-				HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
+				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	@Override

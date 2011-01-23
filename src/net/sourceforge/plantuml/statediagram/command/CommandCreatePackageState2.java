@@ -61,7 +61,7 @@ public class CommandCreatePackageState2 extends SingleLineCommand<StateDiagram> 
 			p.setStereotype(stereotype);
 		}
 		if (arg.get(3) != null && HtmlColor.isValid(arg.get(3))) {
-			p.setBackColor(new HtmlColor(arg.get(3)));
+			p.setBackColor(HtmlColor.getColorIfValid(arg.get(3)));
 		}
 		return CommandExecutionResult.ok();
 	}

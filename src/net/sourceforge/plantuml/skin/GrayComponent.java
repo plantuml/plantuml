@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4167 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -70,7 +71,8 @@ class GrayComponent extends AbstractComponent {
 			strings.add(n.substring(i, Math.min(i + split, n.length())));
 		}
 
-		final TextBlock textBlock = TextBlockUtils.create(strings, NORMAL, Color.BLACK, HorizontalAlignement.LEFT);
+		final TextBlock textBlock = TextBlockUtils.create(strings, new FontConfiguration(NORMAL, Color.BLACK),
+				HorizontalAlignement.LEFT);
 		textBlock.drawU(ug, 0, 0);
 	}
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5889 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -71,8 +72,8 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = TextBlockUtils.create(Arrays.asList("[" + strings.get(1) + "]"), smallFont,
-					fontColor2, HorizontalAlignement.LEFT);
+			this.commentTextBlock = TextBlockUtils.create(Arrays.asList("[" + strings.get(1) + "]"),
+					new FontConfiguration(smallFont, fontColor2), HorizontalAlignement.LEFT);
 		}
 	}
 
@@ -106,7 +107,6 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 		ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
 	}
 
-
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -128,7 +128,7 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 		ug.getParam().setColor(borderColor);
 		ug.draw(0, 0, polygon);
 		ug.draw(0, 0, new ULine(dimensionToUse.getWidth(), 0));
-		
+
 		final double heightWithoutPadding = dimensionToUse.getHeight() - getPaddingY();
 
 		ug.draw(dimensionToUse.getWidth(), 0, new ULine(0, heightWithoutPadding));
@@ -138,11 +138,11 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
 
 		if (commentTextBlock != null) {
-			//final Dimension2D size = commentTextBlock.calculateDimension(stringBounder);
+			// final Dimension2D size = commentTextBlock.calculateDimension(stringBounder);
 			ug.getParam().setColor(generalBackgroundColor);
 			final int x1 = getMarginX1() + textWidth;
 			final int y2 = getMarginY() + 1;
-			//ug.draw(x1, y2, new URectangle(size.getWidth() + 2 * commentMargin, size.getHeight()));
+			// ug.draw(x1, y2, new URectangle(size.getWidth() + 2 * commentMargin, size.getHeight()));
 
 			commentTextBlock.drawU(ug, x1 + commentMargin, y2);
 		}

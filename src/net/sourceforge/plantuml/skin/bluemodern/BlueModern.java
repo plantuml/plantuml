@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5944 $
+ * Revision $Revision: 6008 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -82,14 +82,14 @@ public class BlueModern implements Skin {
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			return new ComponentBlueModernLine(lineColor);
 		}
+		if (type == ComponentType.CONTINUE_LINE) {
+			return new ComponentBlueModernLine(lineColor);
+		}
 		if (type == ComponentType.ACTOR_HEAD) {
 			return new ComponentBlueModernActor(blue2, blue1, blue1, participantFont, stringsToDisplay, true);
 		}
 		if (type == ComponentType.ACTOR_TAIL) {
 			return new ComponentBlueModernActor(blue2, blue1, blue1, participantFont, stringsToDisplay, false);
-		}
-		if (type == ComponentType.ACTOR_LINE) {
-			return new ComponentBlueModernLine(lineColor);
 		}
 		if (type == ComponentType.NOTE) {
 			return new ComponentBlueModernNote(Color.WHITE, Color.BLACK, Color.BLACK, normalFont, stringsToDisplay);

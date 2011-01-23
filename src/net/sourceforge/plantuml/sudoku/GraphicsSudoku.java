@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -44,6 +44,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -90,8 +91,8 @@ public class GraphicsSudoku {
 			for (int y = 0; y < 9; y++) {
 				final int num = sudoku.getGiven(x, y);
 				if (num > 0) {
-					final TextBlock text = TextBlockUtils.create(Arrays.asList("" + num), numberFont, Color.BLACK,
-							HorizontalAlignement.CENTER);
+					final TextBlock text = TextBlockUtils.create(Arrays.asList("" + num), new FontConfiguration(
+							numberFont, Color.BLACK), HorizontalAlignement.CENTER);
 					text.drawTOBEREMOVED(g2d, numberxOffset + x * cellWidth, numberyOffset + y * cellHeight);
 				}
 			}
@@ -113,7 +114,8 @@ public class GraphicsSudoku {
 		texts.add("http://plantuml.sourceforge.net");
 		texts.add("Seed " + Long.toString(sudoku.getSeed(), 36));
 		texts.add("Difficulty " + sudoku.getRatting());
-		final TextBlock textBlock = TextBlockUtils.create(texts, font, Color.BLACK, HorizontalAlignement.LEFT);
+		final TextBlock textBlock = TextBlockUtils.create(texts, new FontConfiguration(font, Color.BLACK),
+				HorizontalAlignement.LEFT);
 		textBlock.drawTOBEREMOVED(g2d, 0, 0);
 
 		g2d.dispose();

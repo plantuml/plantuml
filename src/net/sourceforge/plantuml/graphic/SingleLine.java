@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5741 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -48,14 +48,12 @@ class SingleLine implements Line {
 	private final List<Tile> blocs = new ArrayList<Tile>();
 	private final HorizontalAlignement horizontalAlignement;
 
-	public SingleLine(String text, Font font, Color paint, HorizontalAlignement horizontalAlignement) {
+	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignement horizontalAlignement) {
 		if (text.length() == 0) {
 			text = " ";
 		}
 		this.horizontalAlignement = horizontalAlignement;
 		final Splitter lineSplitter = new Splitter(text);
-
-		FontConfiguration fontConfiguration = new FontConfiguration(font, paint);
 
 		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(false)) {
 			if (cmd instanceof Text) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5889 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -60,19 +61,16 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final Color groupBackground;
 	private final Color background;
 
-	public ComponentRoseGroupingHeader(Color fontColor, Color background,
-			Color groupBackground, Font bigFont, Font smallFont,
-			List<? extends CharSequence> strings) {
-		super(strings.get(0), fontColor, bigFont, HorizontalAlignement.LEFT,
-				15, 30, 1);
+	public ComponentRoseGroupingHeader(Color fontColor, Color background, Color groupBackground, Font bigFont,
+			Font smallFont, List<? extends CharSequence> strings) {
+		super(strings.get(0), fontColor, bigFont, HorizontalAlignement.LEFT, 15, 30, 1);
 		this.groupBackground = groupBackground;
 		this.background = background;
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = TextBlockUtils.create(Arrays.asList("["
-					+ strings.get(1) + "]"), smallFont, fontColor,
-					HorizontalAlignement.LEFT);
+			this.commentTextBlock = TextBlockUtils.create(Arrays.asList("[" + strings.get(1) + "]"),
+					new FontConfiguration(smallFont, fontColor), HorizontalAlignement.LEFT);
 		}
 	}
 
@@ -87,8 +85,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		if (commentTextBlock == null) {
 			sup = commentMargin * 2;
 		} else {
-			final Dimension2D size = commentTextBlock
-					.calculateDimension(stringBounder);
+			final Dimension2D size = commentTextBlock.calculateDimension(stringBounder);
 			sup = getMarginX1() + commentMargin + size.getWidth();
 
 		}
@@ -101,15 +98,13 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawBackgroundInternalU(UGraphic ug,
-			Dimension2D dimensionToUse) {
+	protected void drawBackgroundInternalU(UGraphic ug, Dimension2D dimensionToUse) {
 		if (this.background == null) {
 			return;
 		}
 		ug.getParam().setColor(null);
 		ug.getParam().setBackcolor(background);
-		ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(), dimensionToUse
-				.getHeight()));
+		ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
 	}
 
 	@Override
@@ -134,10 +129,10 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		ug.draw(0, 0, polygon);
 
 		final double heightWithoutPadding = dimensionToUse.getHeight() - getPaddingY();
-		
+
 		ug.draw(0, 0, new ULine(dimensionToUse.getWidth(), 0));
 		ug.draw(dimensionToUse.getWidth(), 0, new ULine(0, heightWithoutPadding));
-		ug.draw(0, textHeight, new ULine(0, heightWithoutPadding-textHeight));
+		ug.draw(0, textHeight, new ULine(0, heightWithoutPadding - textHeight));
 		ug.getParam().setStroke(new UStroke());
 
 		getTextBlock().drawU(ug, getMarginX1(), getMarginY());

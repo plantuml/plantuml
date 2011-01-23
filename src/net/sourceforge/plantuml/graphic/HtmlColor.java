@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5204 $
+ * Revision $Revision: 5983 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -77,6 +77,7 @@ public class HtmlColor {
 		register("DarkCyan", "#008B8B");
 		register("DarkGoldenRod", "#B8860B");
 		register("DarkGray", "#A9A9A9");
+		register("DarkGrey", "#A9A9A9");
 		register("DarkGreen", "#006400");
 		register("DarkKhaki", "#BDB76B");
 		register("DarkMagenta", "#8B008B");
@@ -88,11 +89,13 @@ public class HtmlColor {
 		register("DarkSeaGreen", "#8FBC8F");
 		register("DarkSlateBlue", "#483D8B");
 		register("DarkSlateGray", "#2F4F4F");
+		register("DarkSlateGrey", "#2F4F4F");
 		register("DarkTurquoise", "#00CED1");
 		register("DarkViolet", "#9400D3");
 		register("DeepPink", "#FF1493");
 		register("DeepSkyBlue", "#00BFFF");
 		register("DimGray", "#696969");
+		register("DimGrey", "#696969");
 		register("DodgerBlue", "#1E90FF");
 		register("FireBrick", "#B22222");
 		register("FloralWhite", "#FFFAF0");
@@ -103,6 +106,7 @@ public class HtmlColor {
 		register("Gold", "#FFD700");
 		register("GoldenRod", "#DAA520");
 		register("Gray", "#808080");
+		register("Grey", "#808080");
 		register("Green", "#008000");
 		register("GreenYellow", "#ADFF2F");
 		register("HoneyDew", "#F0FFF0");
@@ -119,6 +123,7 @@ public class HtmlColor {
 		register("LightCoral", "#F08080");
 		register("LightCyan", "#E0FFFF");
 		register("LightGoldenRodYellow", "#FAFAD2");
+		register("LightGray", "#D3D3D3");
 		register("LightGrey", "#D3D3D3");
 		register("LightGreen", "#90EE90");
 		register("LightPink", "#FFB6C1");
@@ -126,6 +131,7 @@ public class HtmlColor {
 		register("LightSeaGreen", "#20B2AA");
 		register("LightSkyBlue", "#87CEFA");
 		register("LightSlateGray", "#778899");
+		register("LightSlateGrey", "#778899");
 		register("LightSteelBlue", "#B0C4DE");
 		register("LightYellow", "#FFFFE0");
 		register("Lime", "#00FF00");
@@ -178,6 +184,7 @@ public class HtmlColor {
 		register("SkyBlue", "#87CEEB");
 		register("SlateBlue", "#6A5ACD");
 		register("SlateGray", "#708090");
+		register("SlateGrey", "#708090");
 		register("Snow", "#FFFAFA");
 		register("SpringGreen", "#00FF7F");
 		register("SteelBlue", "#4682B4");
@@ -201,7 +208,7 @@ public class HtmlColor {
 
 	private final Color color;
 
-	public HtmlColor(String s) {
+	private HtmlColor(String s) {
 		if (s.matches("#[0-9A-Fa-f]{6}")) {
 			color = new Color(Integer.parseInt(s.substring(1), 16));
 		} else {
@@ -215,9 +222,9 @@ public class HtmlColor {
 		assert isValid(s);
 	}
 
-	private HtmlColor(Color c) {
-		this.color = c;
-	}
+//	private HtmlColor(Color c) {
+//		this.color = c;
+//	}
 
 	static public boolean isValid(String s) {
 		if (s.matches("#[0-9A-Fa-f]{6}")) {

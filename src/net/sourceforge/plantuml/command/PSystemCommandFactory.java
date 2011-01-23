@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3828 $
+ * Revision $Revision: 6002 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -42,4 +42,5 @@ public interface PSystemCommandFactory extends PSystemFactory {
 	CommandControl isValid(List<String> lines);
 
 	Command createCommand(List<String> lines);
+
 }

@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5636 $
+ * Revision $Revision: 6026 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -167,18 +168,22 @@ class LifeLine {
 		return delta;
 	}
 
-	Collection<Segment> getSegments() {
-		final Collection<Segment> result = new ArrayList<Segment>();
+	Collection<SegmentColored> getSegments() {
+		final Collection<SegmentColored> result = new ArrayList<SegmentColored>();
 		for (int i = 0; i < events.size(); i++) {
-			final Segment seg = getSegment(i);
+			final SegmentColored seg = getSegment(i);
 			if (seg != null) {
-				result.add(seg);
+				result.addAll(cutSegmentIfNeed(seg, participant.getDelays()));
 			}
 		}
 		return result;
 	}
 
-	private Segment getSegment(int i) {
+	static Collection<SegmentColored> cutSegmentIfNeed(SegmentColored seg, Collection<GraphicalDelayText> delays) {
+		return Collections.singleton(seg);
+	}
+
+	private SegmentColored getSegment(int i) {
 		if (events.get(i).type != LifeSegmentVariation.LARGER) {
 			return null;
 		}
@@ -190,10 +195,10 @@ class LifeLine {
 				level--;
 			}
 			if (level == 0) {
-				return new Segment(events.get(i).y, events.get(j).y, events.get(i).backcolor);
+				return new SegmentColored(events.get(i).y, events.get(j).y, events.get(i).backcolor);
 			}
 		}
-		return new Segment(events.get(i).y, events.get(events.size() - 1).y, events.get(i).backcolor);
+		return new SegmentColored(events.get(i).y, events.get(events.size() - 1).y, events.get(i).backcolor);
 	}
 
 	public void drawU(UGraphic ug, Skin skin, ISkinParam skinParam) {
@@ -204,10 +209,10 @@ class LifeLine {
 
 		ug.translate(getStartingX(stringBounder), 0);
 
-		for (Segment seg : getSegments()) {
+		for (SegmentColored seg : getSegments()) {
 			final ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, seg.getSpecificBackColor());
 			final Component comp = skin.createComponent(ComponentType.ALIVE_LINE, skinParam2, null);
-			final int currentLevel = getLevel(seg.getPos1());
+			final int currentLevel = getLevel(seg.getSegment().getPos1());
 			seg.drawU(ug, comp, currentLevel);
 		}
 

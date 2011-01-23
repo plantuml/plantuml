@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5741 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -76,7 +77,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else {
-			textBlock = TextBlockUtils.create(strings, font, fontColor, horizontalAlignement);
+			textBlock = TextBlockUtils.create(strings, new FontConfiguration(font, fontColor), horizontalAlignement);
 		}
 	}
 

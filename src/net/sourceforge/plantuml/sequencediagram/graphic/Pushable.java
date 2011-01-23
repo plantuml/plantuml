@@ -28,10 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5249 $
+ * Revision $Revision: 6016 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
+
+import java.util.Collection;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -42,5 +44,8 @@ interface Pushable {
 	double getCenterX(StringBounder stringBounder);
 
 	void pushToLeft(double deltaX);
+	
+	public Collection<GraphicalDelayText> getDelays();
+
 
 }

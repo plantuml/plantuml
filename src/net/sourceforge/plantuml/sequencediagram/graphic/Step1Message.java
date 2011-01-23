@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5928 $
+ * Revision $Revision: 6026 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -90,7 +90,8 @@ class Step1Message extends Step1Abstract {
 		final double length;
 		if (isSelfMessage()) {
 			length = graphic.getArrowOnlyWidth(getStringBounder())
-					+ getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), arrowYStartLevel).getLength();
+					+ getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), arrowYStartLevel)
+							.getSegment().getLength();
 		} else {
 			length = graphic.getArrowOnlyWidth(getStringBounder())
 					+ getLivingParticipantBox(NotePosition.LEFT).getLifeLine().getRightShift(arrowYStartLevel)

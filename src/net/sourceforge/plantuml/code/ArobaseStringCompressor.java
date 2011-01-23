@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3827 $
+ * Revision $Revision: 5980 $
  *
  */
 package net.sourceforge.plantuml.code;
@@ -44,13 +44,31 @@ public class ArobaseStringCompressor implements StringCompressor {
 	public String compress(String s) throws IOException {
 		final Matcher m = p.matcher(s);
 		if (m.find()) {
-			return m.group(2);
+			return clean(m.group(2));
 		}
 		return "";
 	}
 
-	public String decompress(String stringAnnoted) throws IOException {
-		return stringAnnoted;
+	public String decompress(String s) throws IOException {
+		return clean(s);
 	}
+
+	private String clean(String s) {
+		s = s.trim();
+		s = clean1(s);
+		s = s.replaceAll("@enduml[^\\n\\r]*", "");
+		s = s.replaceAll("@startuml[^\\n\\r]*", "");
+		s = s.trim();
+		return s;
+	}
+
+	private String clean1(String s) {
+		final Matcher m = p.matcher(s);
+		if (m.matches()) {
+			return m.group(2);
+		}
+		return s;
+	}
+
 
 }

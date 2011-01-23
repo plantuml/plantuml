@@ -35,9 +35,11 @@ package net.sourceforge.plantuml.activitydiagram2;
 
 import net.sourceforge.plantuml.activitydiagram2.command.CommandElse2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandEndif2;
+import net.sourceforge.plantuml.activitydiagram2.command.CommandGoto2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandIf2;
-import net.sourceforge.plantuml.activitydiagram2.command.CommandNewActivity;
-import net.sourceforge.plantuml.activitydiagram2.command.CommandStart;
+import net.sourceforge.plantuml.activitydiagram2.command.CommandLabel2;
+import net.sourceforge.plantuml.activitydiagram2.command.CommandNewActivity2;
+import net.sourceforge.plantuml.activitydiagram2.command.CommandStart2;
 import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 
 public class ActivityDiagramFactory2 extends AbstractUmlSystemCommandFactory {
@@ -53,11 +55,13 @@ public class ActivityDiagramFactory2 extends AbstractUmlSystemCommandFactory {
 		system = new ActivityDiagram2();
 
 		addCommonCommands(system);
-		addCommand(new CommandStart(system));
-		addCommand(new CommandNewActivity(system));
+		addCommand(new CommandStart2(system));
+		addCommand(new CommandNewActivity2(system));
 		addCommand(new CommandIf2(system));
 		addCommand(new CommandEndif2(system));
 		addCommand(new CommandElse2(system));
+		addCommand(new CommandLabel2(system));
+		addCommand(new CommandGoto2(system));
 
 //		addCommand(new CommandLinkActivity(system));
 //		addCommand(new CommandPartition(system));

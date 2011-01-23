@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5845 $
+ * Revision $Revision: 5983 $
  *
  */
 package net.sourceforge.plantuml;
@@ -72,7 +72,7 @@ public class SkinParam implements ISkinParam {
 	public HtmlColor getBackgroundColor() {
 		final HtmlColor result = getHtmlColor(ColorParam.background, null);
 		if (result == null) {
-			return new HtmlColor("white");
+			return HtmlColor.getColorIfValid("white");
 		}
 		return result;
 	}
@@ -101,14 +101,14 @@ public class SkinParam implements ISkinParam {
 			checkStereotype(stereotype);
 			final String value2 = getValue(param.name() + "color" + stereotype);
 			if (value2 != null && HtmlColor.isValid(value2)) {
-				return new HtmlColor(value2);
+				return HtmlColor.getColorIfValid(value2);
 			}
 		}
 		final String value = getValue(param.name() + "color");
 		if (value == null || HtmlColor.isValid(value) == false) {
 			return null;
 		}
-		return new HtmlColor(value);
+		return HtmlColor.getColorIfValid(value);
 	}
 
 	private void checkStereotype(String stereotype) {
@@ -172,7 +172,7 @@ public class SkinParam implements ISkinParam {
 		if (value == null || HtmlColor.isValid(value) == false) {
 			value = param.getDefaultColor();
 		}
-		return new HtmlColor(value);
+		return HtmlColor.getColorIfValid(value);
 	}
 
 	public int getFontStyle(FontParam param, String stereotype) {

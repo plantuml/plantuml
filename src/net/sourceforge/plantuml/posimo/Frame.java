@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -116,7 +117,8 @@ public class Frame implements Component {
 	private TextBlock createTextBloc() {
 		final Font font = skinParam.getFont(FontParam.PACKAGE, null);
 		final Color textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null).getColor();
-		final TextBlock bloc = TextBlockUtils.create(name, font, textColor, HorizontalAlignement.LEFT);
+		final TextBlock bloc = TextBlockUtils.create(name, new FontConfiguration(font, textColor),
+				HorizontalAlignement.LEFT);
 		return bloc;
 	}
 

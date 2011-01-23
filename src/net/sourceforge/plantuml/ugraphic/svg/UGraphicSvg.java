@@ -130,5 +130,9 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		DriverTextAsPathSvg.drawPathIterator(getGraphicObject(), xpos + getTranslateX(), ypos + getTranslateY(), t
 				.getOutline(null).getPathIterator(null));
 	}
+	
+	public void setAntiAliasing(boolean trueForOn) {
+	}
+
 
 }

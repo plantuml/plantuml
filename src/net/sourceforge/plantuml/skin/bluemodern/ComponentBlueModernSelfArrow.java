@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5945 $
+ * Revision $Revision: 5977 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -107,12 +107,12 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
 			polygon.addPoint(0, textHeight + delta);
 			polygon.addPoint(getArrowDeltaX(), textHeight + delta);
-		} else if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
+		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
+			polygon.addPoint(getArrowDeltaX(), textHeight + delta);
 			polygon.addPoint(0, textHeight + delta);
 			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + delta);
 		} else {
-			polygon.addPoint(getArrowDeltaX(), textHeight + delta);
+			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
 			polygon.addPoint(0, textHeight + delta);
 			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + delta);
 		}

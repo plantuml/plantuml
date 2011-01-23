@@ -28,15 +28,24 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4826 $
+ * Revision $Revision: 6007 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizUtils {
+
+	private static int DOT_VERSION_LIMIT = 226;
 
 	private static boolean isWindows() {
 		return File.separatorChar == '\\';
@@ -55,7 +64,7 @@ public class GraphvizUtils {
 
 	public static String getenvGraphvizDot() {
 		final String env = System.getProperty("GRAPHVIZ_DOT");
-		if (env != null) {
+		if (StringUtils.isNotEmpty(env)) {
 			return env;
 		}
 		return System.getenv("GRAPHVIZ_DOT");
@@ -79,4 +88,78 @@ public class GraphvizUtils {
 		}
 		return dotVersion;
 	}
+
+	static int retrieveVersion(String s) {
+		if (s == null) {
+			return -1;
+		}
+		final Pattern p = Pattern.compile("\\s([12].\\d\\d)\\D");
+		final Matcher m = p.matcher(s);
+		if (m.find() == false) {
+			return -1;
+		}
+		return Integer.parseInt(m.group(1).replaceAll("\\.", ""));
+	}
+
+	public static int getDotVersion() throws IOException, InterruptedException {
+		return retrieveVersion(dotVersion());
+	}
+
+	static public List<String> getTestDotStrings(boolean withRichText) {
+		String red = "";
+		String bold = "";
+		if (withRichText) {
+			red = "<b><color:red>";
+			bold = "<b>";
+		}
+		final List<String> result = new ArrayList<String>();
+		final String ent = GraphvizUtils.getenvGraphvizDot();
+		if (ent == null) {
+			result.add("The environment variable GRAPHVIZ_DOT has not been set");
+		} else {
+			result.add("The environment variable GRAPHVIZ_DOT has been set to " + ent);
+		}
+		final File dotExe = GraphvizUtils.getDotExe();
+		result.add("Dot executable is " + dotExe);
+
+		boolean ok = true;
+		if (dotExe == null) {
+			result.add(red + "Error: No dot executable found");
+			ok = false;
+		} else if (dotExe.exists() == false) {
+			result.add(red + "Error: file does not exist");
+			ok = false;
+		} else if (dotExe.isFile() == false) {
+			result.add(red + "Error: not a valid file");
+			ok = false;
+		} else if (dotExe.canRead() == false) {
+			result.add(red + "Error: cannot be read");
+			ok = false;
+		}
+
+		if (ok) {
+			try {
+				final String version = GraphvizUtils.dotVersion();
+				result.add("Dot version: " + version);
+				final int v = GraphvizUtils.getDotVersion();
+				if (v == -1) {
+					result.add("Warning : cannot determine dot version");
+				} else {
+					if (v < DOT_VERSION_LIMIT) {
+						result.add(bold + "Warning : Your dot installation seems old");
+						result.add(bold + "Some diagrams may have issues");
+					} else {
+						result.add(bold + "Installation seems OK");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			result.add("Error: only sequence diagrams will be generated");
+		}
+
+		return Collections.unmodifiableList(result);
+	}
+
 }

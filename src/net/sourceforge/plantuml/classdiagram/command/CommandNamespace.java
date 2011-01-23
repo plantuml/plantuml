@@ -56,7 +56,7 @@ public class CommandNamespace extends SingleLineCommand<ClassDiagram> {
 		p.setBold(true);
 		final String color = arg.get(1);
 		if (color != null) {
-			p.setBackColor(new HtmlColor(color));
+			p.setBackColor(HtmlColor.getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}

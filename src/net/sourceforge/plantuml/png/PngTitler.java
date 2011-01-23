@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5793 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -41,6 +41,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
@@ -91,7 +92,7 @@ public class PngTitler {
 			return null;
 		}
 		final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
-		return TextBlockUtils.create(text, normalFont, textColor, horizontalAlignement);
+		return TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor), horizontalAlignement);
 	}
 
 	static private BufferedImage addTitle(BufferedImage im, Color background, Color textColor, List<String> text,
@@ -100,7 +101,8 @@ public class PngTitler {
 
 		final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
 		final Graphics2D oldg2d = im.createGraphics();
-		final TextBlock textBloc = TextBlockUtils.create(text, normalFont, textColor, horizontalAlignement);
+		final TextBlock textBloc = TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor),
+				horizontalAlignement);
 		final Dimension2D dimText = textBloc.calculateDimension(StringBounderUtils.asStringBounder(oldg2d));
 		oldg2d.dispose();
 

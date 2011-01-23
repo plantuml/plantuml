@@ -28,13 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4111 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -42,38 +40,39 @@ import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 
 public class TextBlockUtils {
 
-	public static TextBlock create(List<? extends CharSequence> texts, Font font, Color paint,
+	public static TextBlock create(List<? extends CharSequence> texts, FontConfiguration fontConfiguration,
 			HorizontalAlignement horizontalAlignement) {
 		if (texts.size() > 0 && texts.get(0) instanceof Stereotype) {
-			return createStereotype(texts, font, paint, horizontalAlignement);
+			return createStereotype(texts, fontConfiguration, horizontalAlignement);
 		}
 		if (texts.size() > 0 && texts.get(0) instanceof MessageNumber) {
-			return createMessageNumber(texts, font, paint, horizontalAlignement);
+			return createMessageNumber(texts, fontConfiguration, horizontalAlignement);
 		}
-		return new TextBlockSimple(texts, font, paint, horizontalAlignement);
+		return new TextBlockSimple(texts, fontConfiguration, horizontalAlignement);
 	}
 
-	private static TextBlock createMessageNumber(List<? extends CharSequence> texts, Font font, Color paint,
-			HorizontalAlignement horizontalAlignement) {
+	private static TextBlock createMessageNumber(List<? extends CharSequence> texts,
+			FontConfiguration fontConfiguration, HorizontalAlignement horizontalAlignement) {
 		final MessageNumber number = (MessageNumber) texts.get(0);
-		return new TextBlockWithNumber(number.getNumber(), texts.subList(1, texts.size()), font, paint,
+		return new TextBlockWithNumber(number.getNumber(), texts.subList(1, texts.size()), fontConfiguration,
 				horizontalAlignement);
 
 	}
 
-	private static TextBlock createStereotype(List<? extends CharSequence> texts, Font font, Color paint,
+	private static TextBlock createStereotype(List<? extends CharSequence> texts, FontConfiguration fontConfiguration,
 			HorizontalAlignement horizontalAlignement) {
 		final Stereotype stereotype = (Stereotype) texts.get(0);
 		if (stereotype.isSpotted()) {
-			final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype
-					.getRadius(), stereotype.getCircledFont(), stereotype.getColor(), null, paint);
+			final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(),
+					stereotype.getRadius(), stereotype.getCircledFont(), stereotype.getColor(), null,
+					fontConfiguration.getColor());
 			if (stereotype.getLabel() == null) {
-				return new TextBlockSpotted(circledCharacter, texts.subList(1, texts.size()), font, paint,
+				return new TextBlockSpotted(circledCharacter, texts.subList(1, texts.size()), fontConfiguration,
 						horizontalAlignement);
 			}
-			return new TextBlockSpotted(circledCharacter, texts, font, paint, horizontalAlignement);
+			return new TextBlockSpotted(circledCharacter, texts, fontConfiguration, horizontalAlignement);
 		}
-		return new TextBlockSimple(texts, font, paint, horizontalAlignement);
+		return new TextBlockSimple(texts, fontConfiguration, horizontalAlignement);
 	}
 
 	// static private Font deriveForCircleCharacter(Font font) {

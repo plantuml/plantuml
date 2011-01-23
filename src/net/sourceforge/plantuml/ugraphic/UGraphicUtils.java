@@ -77,6 +77,10 @@ public abstract class UGraphicUtils {
 			public void translate(double dx, double dy) {
 				g.translate(dx, dy);
 			}
+
+			public void setAntiAliasing(boolean trueForOn) {
+				g.setAntiAliasing(trueForOn);
+			}
 		};
 	}
 

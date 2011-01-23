@@ -39,10 +39,10 @@ import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 
-public class CommandNewActivity extends SingleLineCommand<ActivityDiagram2> {
+public class CommandNewActivity2 extends SingleLineCommand<ActivityDiagram2> {
 
-	public CommandNewActivity(ActivityDiagram2 diagram) {
-		super(diagram, "(?i)^\"([^\"]+)\"$");
+	public CommandNewActivity2(ActivityDiagram2 diagram) {
+		super(diagram, "(?i)^[\"<](.+)[\">]$");
 	}
 
 	@Override
@@ -50,6 +50,11 @@ public class CommandNewActivity extends SingleLineCommand<ActivityDiagram2> {
 		if (getSystem().entities().size() == 0) {
 			return CommandExecutionResult.error("Missing start keyword");
 		}
+
+		if (getSystem().isReachable() == false) {
+			return CommandExecutionResult.error("Unreachable statement");
+		}
+
 		getSystem().newActivity(arg.get(0));
 		return CommandExecutionResult.ok();
 	}

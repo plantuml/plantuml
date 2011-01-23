@@ -79,4 +79,7 @@ public class UGraphicTxt extends AbstractCommonUGraphic {
 		return new TranslatedCharArea(charArea, (int) getTranslateX(), (int) getTranslateY());
 	}
 
+	public void setAntiAliasing(boolean trueForOn) {
+	}
+
 }

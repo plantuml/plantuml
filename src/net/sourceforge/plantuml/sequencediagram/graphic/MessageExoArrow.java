@@ -70,12 +70,12 @@ public class MessageExoArrow extends Arrow {
 			// - getPreferredWidth(stringBounder));
 			return 0;
 		}
-		return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getPos2();
+		return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
 	}
 
 	private double getRightEndInternal(StringBounder stringBounder, double maxX) {
 		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {
-			return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getPos1();
+			return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos1();
 		}
 		return Math.max(maxX, getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder));
 	}
@@ -159,5 +159,5 @@ public class MessageExoArrow extends Arrow {
 	public double getActualWidth(StringBounder stringBounder) {
 		return getActualWidth(stringBounder, getMaxX());
 	}
-	
+
 }

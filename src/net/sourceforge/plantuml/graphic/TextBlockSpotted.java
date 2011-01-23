@@ -28,13 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4169 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.List;
@@ -46,9 +44,9 @@ class TextBlockSpotted extends TextBlockSimple {
 
 	private final CircledCharacter circledCharacter;
 
-	public TextBlockSpotted(CircledCharacter circledCharacter, List<? extends CharSequence> texts, Font font,
-			Color paint, HorizontalAlignement horizontalAlignement) {
-		super(texts, font, paint, horizontalAlignement);
+	public TextBlockSpotted(CircledCharacter circledCharacter, List<? extends CharSequence> texts,
+			FontConfiguration fontConfiguration, HorizontalAlignement horizontalAlignement) {
+		super(texts, fontConfiguration, horizontalAlignement);
 		this.circledCharacter = circledCharacter;
 	}
 
@@ -58,8 +56,8 @@ class TextBlockSpotted extends TextBlockSimple {
 		final double heightCircledCharacter = circledCharacter.getPreferredHeight(stringBounder);
 
 		final Dimension2D dim = super.calculateDimension(stringBounder);
-		return new Dimension2DDouble(dim.getWidth() + widthCircledCharacter, Math.max(heightCircledCharacter, dim
-				.getHeight()));
+		return new Dimension2DDouble(dim.getWidth() + widthCircledCharacter, Math.max(heightCircledCharacter,
+				dim.getHeight()));
 	}
 
 	private double getCircledCharacterWithAndMargin(StringBounder stringBounder) {
@@ -68,36 +66,36 @@ class TextBlockSpotted extends TextBlockSimple {
 
 	@Override
 	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
-//		final AffineTransform at = g2d.getTransform();
-//		final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
-//
-//		final double deltaY = calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight()
-//				- circledCharacter.getPreferredHeight(stringBounder);
-//
-//		// g2d.translate(x, y + deltaY / 2.0);
-//		circledCharacter.draw(g2d, (int) x, (int) (y + deltaY / 2.0));
-//		// circledCharacter.draw(g2d);
-//
-//		g2d.setTransform(at);
-//		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
-//		g2d.translate(widthCircledCharacter, 0);
-//
-//		super.drawTOBEREMOVED(g2d, x, y);
-//
-//		g2d.setTransform(at);
+		// final AffineTransform at = g2d.getTransform();
+		// final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
+		//
+		// final double deltaY = calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight()
+		// - circledCharacter.getPreferredHeight(stringBounder);
+		//
+		// // g2d.translate(x, y + deltaY / 2.0);
+		// circledCharacter.draw(g2d, (int) x, (int) (y + deltaY / 2.0));
+		// // circledCharacter.draw(g2d);
+		//
+		// g2d.setTransform(at);
+		// final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
+		// g2d.translate(widthCircledCharacter, 0);
+		//
+		// super.drawTOBEREMOVED(g2d, x, y);
+		//
+		// g2d.setTransform(at);
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public void drawU(UGraphic ug, double x, double y) {
 		final double atX = ug.getTranslateX();
 		final double atY = ug.getTranslateY();
 		final StringBounder stringBounder = ug.getStringBounder();
 
-//		final double deltaY = calculateDimension(stringBounder).getHeight()
-//				- circledCharacter.getPreferredHeight(stringBounder);
+		// final double deltaY = calculateDimension(stringBounder).getHeight()
+		// - circledCharacter.getPreferredHeight(stringBounder);
 
-		//circledCharacter.drawU(ug, (int) x, (int) (y + deltaY / 2.0));
+		// circledCharacter.drawU(ug, (int) x, (int) (y + deltaY / 2.0));
 		circledCharacter.drawU(ug, x, y);
 
 		ug.setTranslate(atX, atY);

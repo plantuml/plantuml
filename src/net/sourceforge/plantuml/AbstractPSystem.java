@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5520 $
+ * Revision $Revision: 6002 $
  *
  */
 package net.sourceforge.plantuml;
@@ -77,5 +77,5 @@ public abstract class AbstractPSystem implements PSystem {
 	public int getNbImages() {
 		return 1;
 	}
-
+	
 }

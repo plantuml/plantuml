@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -61,14 +62,14 @@ public class LabelImage {
 		// this.entity = entity;
 		this.param = param;
 		this.rose = rose;
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(link.getLabel()), param.getFont(FontParam.CLASS, null),
-				Color.BLACK, HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(link.getLabel()),
+				new FontConfiguration(param.getFont(FontParam.CLASS, null), Color.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	public Dimension2D getDimension(StringBounder stringBounder) {
 		final Dimension2D dim = name.calculateDimension(stringBounder);
 		return dim;
-		//return Dimension2DDouble.delta(dim, 2 * margin);
+		// return Dimension2DDouble.delta(dim, 2 * margin);
 	}
 
 	public void drawU(UGraphic ug, double x, double y) {

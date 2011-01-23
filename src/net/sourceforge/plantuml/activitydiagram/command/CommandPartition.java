@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5048 $
+ * Revision $Revision: 5983 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -57,7 +57,7 @@ public class CommandPartition extends SingleLineCommand<ActivityDiagram> {
 		p.setBold(true);
 		final String color = arg.get(1);
 		if (color != null) {
-			p.setBackColor(new HtmlColor(color));
+			p.setBackColor(HtmlColor.getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}

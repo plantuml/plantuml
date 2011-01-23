@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4129 $
+ * Revision $Revision: 5988 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -44,9 +44,11 @@ public interface UGraphic {
 	public UParam getParam();
 
 	public void draw(double x, double y, UShape shape);
+
 	public void centerChar(double x, double y, char c, Font font);
 
 	public void translate(double dx, double dy);
+
 	public void setTranslate(double dx, double dy);
 
 	public double getTranslateX();
@@ -54,5 +56,7 @@ public interface UGraphic {
 	public double getTranslateY();
 
 	public void setClip(UClip clip);
+
+	public void setAntiAliasing(boolean trueForOn);
 
 }

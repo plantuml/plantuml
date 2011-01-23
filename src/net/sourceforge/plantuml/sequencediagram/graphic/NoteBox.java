@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5870 $
+ * Revision $Revision: 6026 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -91,12 +91,12 @@ class NoteBox extends GraphicalElement implements InGroupable {
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-		final Segment segment = getSegment(stringBounder);
+		final SegmentColored segment = getSegment(stringBounder);
 		final int xStart;
 		if (position == NotePosition.LEFT) {
-			xStart = (int) (segment.getPos1() - getPreferredWidth(stringBounder));
+			xStart = (int) (segment.getSegment().getPos1() - getPreferredWidth(stringBounder));
 		} else if (position == NotePosition.RIGHT) {
-			xStart = (int) (segment.getPos2());
+			xStart = (int) (segment.getSegment().getPos2());
 		} else if (position == NotePosition.OVER) {
 			xStart = (int) (p1.getParticipantBox().getCenterX(stringBounder) - getPreferredWidth(stringBounder) / 2);
 		} else if (position == NotePosition.OVER_SEVERAL) {
@@ -106,15 +106,16 @@ class NoteBox extends GraphicalElement implements InGroupable {
 		} else {
 			throw new IllegalStateException();
 		}
-//		if (InGroupableList.NEW_METHOD) {
-//			System.err.println("GET STARTING X OF " + this + " " + (xStart + delta));
-//		}
+		// if (InGroupableList.NEW_METHOD) {
+		// System.err.println("GET STARTING X OF " + this + " " + (xStart +
+		// delta));
+		// }
 		return xStart + delta;
 	}
 
-	private Segment getSegment(StringBounder stringBounder) {
-		final Segment segment = p1.getLiveThicknessAt(stringBounder, getStartingY());
-		final Segment segment2 = p1.getLiveThicknessAt(stringBounder, getStartingY()
+	private SegmentColored getSegment(StringBounder stringBounder) {
+		final SegmentColored segment = p1.getLiveThicknessAt(stringBounder, getStartingY());
+		final SegmentColored segment2 = p1.getLiveThicknessAt(stringBounder, getStartingY()
 				+ comp.getPreferredHeight(stringBounder));
 		return segment.merge(segment2);
 	}
@@ -135,5 +136,4 @@ class NoteBox extends GraphicalElement implements InGroupable {
 		return toString();
 	}
 
-	
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4959 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -41,6 +41,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
@@ -56,14 +57,14 @@ class EntityImageActivity extends AbstractEntityImage {
 
 	public EntityImageActivity(Entity entity) {
 		super(entity);
-		this.text = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), getFont14(), Color.BLACK,
-				HorizontalAlignement.CENTER);
+		this.text = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
+				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	@Override
 	public Dimension2D getDimension(StringBounder stringBounder) {
 		final Dimension2D dim = text.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(dim, 2*xMargin, 2*yMargin);
+		return Dimension2DDouble.delta(dim, 2 * xMargin, 2 * yMargin);
 	}
 
 	@Override

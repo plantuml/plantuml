@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5798 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
@@ -60,8 +61,8 @@ class EntityImageClass extends AbstractEntityImage {
 
 	public EntityImageClass(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), getFont14(), Color.BLACK,
-				HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
+				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
 		this.methods = new MethodsOrFieldsArea(entity.methods2(), getFont14());
 		this.fields = new MethodsOrFieldsArea(entity.fields2(), getFont14());
 

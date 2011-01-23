@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4626 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.geom.CollectionUtils;
 import net.sourceforge.plantuml.geom.Point2DInt;
 import net.sourceforge.plantuml.geom.PolylineBreakeable;
 import net.sourceforge.plantuml.geom.XMoveable;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -264,10 +265,11 @@ public class Elastane {
 			final String label = l.getLabel();
 			if (label != null) {
 				final Point2DInt center = polyline.getFirst().getCenter();
-				final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(label), g2d.getFont(), Color.BLACK,
-						HorizontalAlignement.LEFT);
+				final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(label),
+						new FontConfiguration(g2d.getFont(), Color.BLACK), HorizontalAlignement.LEFT);
 				final Dimension2D dim = textBlock.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-				textBlock.drawTOBEREMOVED(g2d, center.getXint() - dim.getWidth() / 2, center.getYint() - dim.getHeight() / 2);
+				textBlock.drawTOBEREMOVED(g2d, center.getXint() - dim.getWidth() / 2,
+						center.getYint() - dim.getHeight() / 2);
 			}
 
 			g2d.setColor(red);

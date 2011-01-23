@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5735 $
+ * Revision $Revision: 6000 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -40,6 +40,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
@@ -54,9 +55,9 @@ import net.sourceforge.plantuml.ugraphic.UText;
 
 public class DriverTextG2d implements UDriver<Graphics2D> {
 
-//	static {
-//		printFont();
-//	}
+	// static {
+	// printFont();
+	// }
 
 	private static void printFont() {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -70,7 +71,18 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 	public void draw(UShape ushape, double x, double y, UParam param, Graphics2D g2d) {
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+
 		final Font font = fontConfiguration.getFont();
+		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
+			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
+			final Color extended = fontConfiguration.getExtendedColor();
+			if (extended != null) {
+				g2d.setColor(extended);
+				g2d.setBackground(extended);
+				g2d.fill(new Rectangle2D.Double(x, y - dim.getHeight() + 1.5, dim.getWidth(), dim.getHeight()));
+			}
+		}
+
 		g2d.setFont(font);
 		g2d.setColor(fontConfiguration.getColor());
 		g2d.drawString(shape.getText(), (float) x, (float) y);

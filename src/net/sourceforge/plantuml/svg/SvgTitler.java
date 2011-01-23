@@ -42,6 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -72,7 +73,8 @@ public final class SvgTitler {
 			textBloc = null;
 		} else {
 			final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
-			textBloc = TextBlockUtils.create(text, normalFont, textColor, HorizontalAlignement.LEFT);
+			textBloc = TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor),
+					HorizontalAlignement.LEFT);
 		}
 	}
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5942 $
+ * Revision $Revision: 6016 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -64,16 +64,14 @@ import net.sourceforge.plantuml.skin.Skin;
 
 class DrawableSetInitializer {
 
+	private ComponentType defaultLineType;
 	private final DrawableSet drawableSet;
 	private final boolean showTail;
 
 	private double freeX = 0;
 	private double freeY = 0;
 
-	// private final double groupingMargin = 10;
 	private final double autonewpage;
-
-	// private int maxGrouping = 0;
 
 	private ConstraintSet constraintSet;
 
@@ -86,10 +84,21 @@ class DrawableSetInitializer {
 
 	private double lastFreeY = 0;
 
+	private boolean hasDelay() {
+		for (Event ev : drawableSet.getAllEvents()) {
+			if (ev instanceof Delay) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public DrawableSet createDrawableSet(StringBounder stringBounder) {
 		if (freeY != 0) {
 			throw new IllegalStateException();
 		}
+
+		this.defaultLineType = hasDelay() ? ComponentType.CONTINUE_LINE : ComponentType.PARTICIPANT_LINE;
 
 		for (Participant p : drawableSet.getAllParticipants()) {
 			prepareParticipant(stringBounder, p);
@@ -271,11 +280,11 @@ class DrawableSetInitializer {
 		if (m.getType() != GroupingType.START) {
 			throw new IllegalStateException();
 		}
-		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), m.getBackColorElement(), m
-				.getBackColorGeneral());
+		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), m.getBackColorElement(),
+				m.getBackColorGeneral());
 		// this.maxGrouping++;
-		final List<String> strings = m.getTitle().equals("group") ? Arrays.asList(m.getComment()) : Arrays.asList(m
-				.getTitle(), m.getComment());
+		final List<String> strings = m.getTitle().equals("group") ? Arrays.asList(m.getComment()) : Arrays.asList(
+				m.getTitle(), m.getComment());
 		final Component header = drawableSet.getSkin().createComponent(ComponentType.GROUPING_HEADER, skinParam,
 				strings);
 		final InGroupableList inGroupableList = new InGroupableList(m, freeY);
@@ -387,7 +396,7 @@ class DrawableSetInitializer {
 					p.getDisplay());
 			final Component tail = drawableSet.getSkin().createComponent(ComponentType.PARTICIPANT_TAIL, skinParam,
 					p.getDisplay());
-			final Component line = drawableSet.getSkin().createComponent(ComponentType.PARTICIPANT_LINE,
+			final Component line = drawableSet.getSkin().createComponent(this.defaultLineType,
 					drawableSet.getSkinParam(), p.getDisplay());
 			final Component delayLine = drawableSet.getSkin().createComponent(ComponentType.DELAY_LINE,
 					drawableSet.getSkinParam(), p.getDisplay());
@@ -398,7 +407,7 @@ class DrawableSetInitializer {
 					p.getDisplay());
 			final Component tail = drawableSet.getSkin().createComponent(ComponentType.ACTOR_TAIL, skinParam,
 					p.getDisplay());
-			final Component line = drawableSet.getSkin().createComponent(ComponentType.ACTOR_LINE,
+			final Component line = drawableSet.getSkin().createComponent(this.defaultLineType,
 					drawableSet.getSkinParam(), p.getDisplay());
 			final Component delayLine = drawableSet.getSkin().createComponent(ComponentType.DELAY_LINE,
 					drawableSet.getSkinParam(), p.getDisplay());

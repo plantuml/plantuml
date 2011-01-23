@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5924 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -41,7 +41,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -73,7 +73,8 @@ class PrintSkin extends AbstractPSystem {
 	private float ypos = 0;
 	private float maxYpos = 0;
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException,
+			InterruptedException {
 		final List<File> result = Arrays.asList(suggestedFile);
 		final BufferedImage im = createImage();
 
@@ -92,10 +93,10 @@ class PrintSkin extends AbstractPSystem {
 
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
-		
+
 		ug = new UGraphicG2d(g2d, null, 1.0);
 
-		for (ComponentType type : ComponentType.all() ) {
+		for (ComponentType type : ComponentType.all()) {
 			printComponent(type);
 			ypos += 10;
 			maxYpos = Math.max(maxYpos, ypos);
@@ -128,22 +129,22 @@ class PrintSkin extends AbstractPSystem {
 		}
 		ug.getParam().setColor(Color.LIGHT_GRAY);
 		ug.getParam().setBackcolor(Color.LIGHT_GRAY);
-		ug.draw(xpos-1, ypos-1, new URectangle(width+2, height+2));
-		//g2d.drawRect((int) xpos - 1, (int) ypos - 1, (int) width + 2, (int) height + 2);
+		ug.draw(xpos - 1, ypos - 1, new URectangle(width + 2, height + 2));
+		// g2d.drawRect((int) xpos - 1, (int) ypos - 1, (int) width + 2, (int) height + 2);
 
-		//final AffineTransform at = g2d.getTransform();
-		//g2d.translate(xpos, ypos);
+		// final AffineTransform at = g2d.getTransform();
+		// g2d.translate(xpos, ypos);
 		ug.translate(xpos, ypos);
 		ug.getParam().reset();
 		comp.drawU(ug, new Dimension2DDouble(width, height), new SimpleContext2D(false));
 		ug.translate(-xpos, -ypos);
-		//g2d.setTransform(at);
+		// g2d.setTransform(at);
 
 		ypos += height;
 	}
 
 	private void println(String s) {
-		final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(s), FONT1, Color.BLACK,
+		final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(FONT1, Color.BLACK),
 				HorizontalAlignement.LEFT);
 		textBlock.drawU(ug, xpos, ypos);
 		ypos += textBlock.calculateDimension(ug.getStringBounder()).getHeight();

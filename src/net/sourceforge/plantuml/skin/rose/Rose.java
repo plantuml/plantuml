@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5943 $
+ * Revision $Revision: 6008 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -53,72 +53,72 @@ public class Rose implements Skin {
 	private final Map<ColorParam, HtmlColor> defaultsColor = new EnumMap<ColorParam, HtmlColor>(ColorParam.class);
 
 	public Rose() {
-		defaultsColor.put(ColorParam.background, new HtmlColor("white"));
+		defaultsColor.put(ColorParam.background, HtmlColor.getColorIfValid("white"));
 
-		defaultsColor.put(ColorParam.sequenceArrow, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.usecaseArrow, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.classArrow, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.objectArrow, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.activityArrow, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.componentArrow, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.stateArrow, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.sequenceArrow, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.usecaseArrow, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.classArrow, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.objectArrow, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.activityArrow, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.componentArrow, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.stateArrow, HtmlColor.getColorIfValid("#A80036"));
 
-		defaultsColor.put(ColorParam.sequenceLifeLineBackground, new HtmlColor("white"));
-		defaultsColor.put(ColorParam.sequenceLifeLineBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.sequenceGroupBackground, new HtmlColor("#EEEEEE"));
-		defaultsColor.put(ColorParam.sequenceDividerBackground, new HtmlColor("#EEEEEE"));
-		defaultsColor.put(ColorParam.sequenceEngloberLine, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.sequenceEngloberBackground, new HtmlColor("#DDDDDD"));
+		defaultsColor.put(ColorParam.sequenceLifeLineBackground, HtmlColor.getColorIfValid("white"));
+		defaultsColor.put(ColorParam.sequenceLifeLineBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.sequenceGroupBackground, HtmlColor.getColorIfValid("#EEEEEE"));
+		defaultsColor.put(ColorParam.sequenceDividerBackground, HtmlColor.getColorIfValid("#EEEEEE"));
+		defaultsColor.put(ColorParam.sequenceEngloberLine, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.sequenceEngloberBackground, HtmlColor.getColorIfValid("#DDDDDD"));
 
-		defaultsColor.put(ColorParam.noteBackground, new HtmlColor("#FBFB77"));
-		defaultsColor.put(ColorParam.noteBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.noteBackground, HtmlColor.getColorIfValid("#FBFB77"));
+		defaultsColor.put(ColorParam.noteBorder, HtmlColor.getColorIfValid("#A80036"));
 
-		defaultsColor.put(ColorParam.activityBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.activityBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.activityStart, new HtmlColor("black"));
-		defaultsColor.put(ColorParam.activityEnd, new HtmlColor("black"));
-		defaultsColor.put(ColorParam.activityBar, new HtmlColor("black"));
+		defaultsColor.put(ColorParam.activityBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.activityBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.activityStart, HtmlColor.getColorIfValid("black"));
+		defaultsColor.put(ColorParam.activityEnd, HtmlColor.getColorIfValid("black"));
+		defaultsColor.put(ColorParam.activityBar, HtmlColor.getColorIfValid("black"));
 
-		defaultsColor.put(ColorParam.stateBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.stateBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.stateStart, new HtmlColor("black"));
-		defaultsColor.put(ColorParam.stateEnd, new HtmlColor("black"));
+		defaultsColor.put(ColorParam.stateBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.stateBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.stateStart, HtmlColor.getColorIfValid("black"));
+		defaultsColor.put(ColorParam.stateEnd, HtmlColor.getColorIfValid("black"));
 
-		defaultsColor.put(ColorParam.usecaseBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.usecaseBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.componentBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.componentBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.componentInterfaceBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.componentInterfaceBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.usecaseActorBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.usecaseActorBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.usecaseBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.usecaseBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.componentBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.componentBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.componentInterfaceBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.componentInterfaceBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.usecaseActorBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.usecaseActorBorder, HtmlColor.getColorIfValid("#A80036"));
 
-		defaultsColor.put(ColorParam.sequenceActorBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.sequenceActorBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.sequenceParticipantBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.sequenceParticipantBorder, new HtmlColor("#A80036"));
-		defaultsColor.put(ColorParam.classBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.classBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.sequenceActorBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.sequenceActorBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.sequenceParticipantBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.sequenceParticipantBorder, HtmlColor.getColorIfValid("#A80036"));
+		defaultsColor.put(ColorParam.classBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.classBorder, HtmlColor.getColorIfValid("#A80036"));
 
-		defaultsColor.put(ColorParam.objectBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.objectBorder, new HtmlColor("#A80036"));
+		defaultsColor.put(ColorParam.objectBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.objectBorder, HtmlColor.getColorIfValid("#A80036"));
 
-		defaultsColor.put(ColorParam.stereotypeCBackground, new HtmlColor("#ADD1B2"));
-		defaultsColor.put(ColorParam.stereotypeABackground, new HtmlColor("#A9DCDF"));
-		defaultsColor.put(ColorParam.stereotypeIBackground, new HtmlColor("#B4A7E5"));
-		defaultsColor.put(ColorParam.stereotypeEBackground, new HtmlColor("#EB937F"));
+		defaultsColor.put(ColorParam.stereotypeCBackground, HtmlColor.getColorIfValid("#ADD1B2"));
+		defaultsColor.put(ColorParam.stereotypeABackground, HtmlColor.getColorIfValid("#A9DCDF"));
+		defaultsColor.put(ColorParam.stereotypeIBackground, HtmlColor.getColorIfValid("#B4A7E5"));
+		defaultsColor.put(ColorParam.stereotypeEBackground, HtmlColor.getColorIfValid("#EB937F"));
 
-		defaultsColor.put(ColorParam.packageBackground, new HtmlColor("#FEFECE"));
-		defaultsColor.put(ColorParam.packageBorder, new HtmlColor("black"));
+		defaultsColor.put(ColorParam.packageBackground, HtmlColor.getColorIfValid("#FEFECE"));
+		defaultsColor.put(ColorParam.packageBorder, HtmlColor.getColorIfValid("black"));
 
-		defaultsColor.put(ColorParam.iconPrivate, new HtmlColor("#C82930"));
-		defaultsColor.put(ColorParam.iconPrivateBackground, new HtmlColor("#F24D5C"));
-		defaultsColor.put(ColorParam.iconProtected, new HtmlColor("#B38D22"));
-		defaultsColor.put(ColorParam.iconProtectedBackground, new HtmlColor("#FFFF44"));
-		defaultsColor.put(ColorParam.iconPackage, new HtmlColor("#1963A0"));
-		defaultsColor.put(ColorParam.iconPackageBackground, new HtmlColor("#4177AF"));
-		defaultsColor.put(ColorParam.iconPublic, new HtmlColor("#038048"));
-		defaultsColor.put(ColorParam.iconPublicBackground, new HtmlColor("#84BE84"));
+		defaultsColor.put(ColorParam.iconPrivate, HtmlColor.getColorIfValid("#C82930"));
+		defaultsColor.put(ColorParam.iconPrivateBackground, HtmlColor.getColorIfValid("#F24D5C"));
+		defaultsColor.put(ColorParam.iconProtected, HtmlColor.getColorIfValid("#B38D22"));
+		defaultsColor.put(ColorParam.iconProtectedBackground, HtmlColor.getColorIfValid("#FFFF44"));
+		defaultsColor.put(ColorParam.iconPackage, HtmlColor.getColorIfValid("#1963A0"));
+		defaultsColor.put(ColorParam.iconPackageBackground, HtmlColor.getColorIfValid("#4177AF"));
+		defaultsColor.put(ColorParam.iconPublic, HtmlColor.getColorIfValid("#038048"));
+		defaultsColor.put(ColorParam.iconPublicBackground, HtmlColor.getColorIfValid("#84BE84"));
 	}
 
 	public Color getFontColor(ISkinParam skin, FontParam fontParam) {
@@ -178,7 +178,11 @@ public class Rose implements Skin {
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
-			return new ComponentRoseLine(borderColor);
+			return new ComponentRoseLine(borderColor, false);
+		}
+		if (type == ComponentType.CONTINUE_LINE) {
+			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
+			return new ComponentRoseLine(borderColor, true);
 		}
 		if (type == ComponentType.ACTOR_HEAD) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceActorBorder).getColor();
@@ -189,10 +193,6 @@ public class Rose implements Skin {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceActorBorder).getColor();
 			return new ComponentRoseActor(sequenceActorBackground, borderColor, getFontColor(param,
 					FontParam.SEQUENCE_ACTOR), fontActor, stringsToDisplay, false);
-		}
-		if (type == ComponentType.ACTOR_LINE) {
-			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
-			return new ComponentRoseLine(borderColor);
 		}
 		if (type == ComponentType.NOTE) {
 			final Color noteBackgroundColor = getHtmlColor(param, ColorParam.noteBackground).getColor();
@@ -221,8 +221,8 @@ public class Rose implements Skin {
 			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor);
 		}
 		if (type == ComponentType.DELAY_LINE) {
-			// final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
-			final Color borderColor = getFontColor(param, FontParam.SEQUENCE_DELAY);
+			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
+			// final Color borderColor = getFontColor(param, FontParam.SEQUENCE_DELAY);
 			return new ComponentRoseDelayLine(borderColor);
 		}
 		if (type == ComponentType.DELAY_TEXT) {

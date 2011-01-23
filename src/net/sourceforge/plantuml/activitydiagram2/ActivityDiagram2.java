@@ -36,7 +36,11 @@ package net.sourceforge.plantuml.activitydiagram2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -51,9 +55,12 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public class ActivityDiagram2 extends CucaDiagram {
 
-	private Collection<IEntity> last2 = new ArrayList<IEntity>();
+	private Collection<IEntity> waitings = new ArrayList<IEntity>();
 	private ConditionalContext2 currentContext;
 	private int futureLength = 2;
+
+	private final Collection<String> pendingLabels = new HashSet<String>();
+	private final Map<String, IEntity> labels = new HashMap<String, IEntity>();
 
 	final protected List<String> getDotStrings() {
 		return Arrays.asList("nodesep=.20;", "ranksep=0.4;", "edge [fontsize=11,labelfontsize=11];",
@@ -69,16 +76,26 @@ public class ActivityDiagram2 extends CucaDiagram {
 		return UmlDiagramType.ACTIVITY;
 	}
 
+	public boolean isReachable() {
+		return waitings.size() > 0;
+	}
+
 	public void newActivity(String display) {
-		if (last2.size() == 0) {
+		if (waitings.size() == 0) {
 			throw new IllegalStateException();
 		}
 		final Entity act = createEntity(getAutoCode(), display, EntityType.ACTIVITY);
-		for (IEntity last : this.last2) {
+		for (IEntity last : this.waitings) {
 			this.addLink(new Link(last, act, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
 		}
-		this.last2.clear();
-		this.last2.add(act);
+
+		for (String p : pendingLabels) {
+			labels.put(p, act);
+		}
+		pendingLabels.clear();
+
+		this.waitings.clear();
+		this.waitings.add(act);
 		this.futureLength = 2;
 
 	}
@@ -88,36 +105,61 @@ public class ActivityDiagram2 extends CucaDiagram {
 	}
 
 	public void start() {
-		if (last2.size() != 0) {
+		if (waitings.size() != 0) {
 			throw new IllegalStateException();
 		}
-		this.last2.add(createEntity("start", "start", EntityType.CIRCLE_START));
+		this.waitings.add(createEntity("start", "start", EntityType.CIRCLE_START));
 	}
 
 	public void startIf(String test) {
 		final IEntity br = createEntity(getAutoCode(), "", EntityType.BRANCH);
 		currentContext = new ConditionalContext2(currentContext, br, Direction.DOWN);
-		for (IEntity last : this.last2) {
+		for (IEntity last : this.waitings) {
 			this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
 		}
-		this.last2.clear();
-		this.last2.add(br);
-		this.futureLength = 1;
+		this.waitings.clear();
+		this.waitings.add(br);
+		this.futureLength = 2;
 	}
 
 	public Collection<IEntity> getLastEntityConsulted2() {
-		return this.last2;
+		return this.waitings;
 	}
 
 	public void endif() {
-		this.last2.add(currentContext.getPending());
+		this.waitings.add(currentContext.getPending());
 		currentContext = currentContext.getParent();
 	}
 
 	public void else2() {
-		this.currentContext.setPending(this.last2.iterator().next());
-		this.last2.clear();
-		this.last2.add(currentContext.getBranch());
+		this.currentContext.setPending(this.waitings.iterator().next());
+		this.waitings.clear();
+		this.waitings.add(currentContext.getBranch());
 	}
 
+	public void label(String label) {
+		pendingLabels.add(label);
+		for (final Iterator<PendingLink> it = pendingLinks.iterator(); it.hasNext();) {
+			final PendingLink pending = it.next();
+			if (pending.getLabel().equals(label)) {
+				waitings.add(pending.getEntityFrom());
+				it.remove();
+			}
+		}
+	}
+
+	private final Collection<PendingLink> pendingLinks = new ArrayList<PendingLink>();
+
+	public void callGoto(String label) {
+		final IEntity dest = labels.get(label);
+		for (IEntity last : this.waitings) {
+			if (dest == null) {
+				this.pendingLinks.add(new PendingLink(last, label));
+
+			} else {
+				this.addLink(new Link(last, dest, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
+			}
+		}
+		this.waitings.clear();
+	}
 }

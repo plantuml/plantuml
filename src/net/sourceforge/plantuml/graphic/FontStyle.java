@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5507 $
+ * Revision $Revision: 6000 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -40,7 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum FontStyle {
-	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE;
+	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
 
 	public Font mutateFont(Font font) {
 		if (this == ITALIC) {
@@ -65,6 +65,9 @@ public enum FontStyle {
 		if (this == WAVE) {
 			return "\\<[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 		}
+		if (this == BACKCOLOR) {
+			return "\\<[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
+		}
 		if (this == STRIKE) {
 			return "\\<(?:s|S|strike|STRIKE|del|DEL)(?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 		}
@@ -78,7 +81,7 @@ public enum FontStyle {
 		}
 		final String color = m.group(1);
 		if (color!= null && HtmlColor.isValid(color)) {
-			return new HtmlColor(color).getColor();
+			return HtmlColor.getColorIfValid(color).getColor();
 		}
 		return null;
 	}
@@ -95,6 +98,9 @@ public enum FontStyle {
 		}
 		if (this == WAVE) {
 			return "\\</[wW]\\>";
+		}
+		if (this == BACKCOLOR) {
+			return "\\</[bB][aA][cC][kK]\\>";
 		}
 		if (this == STRIKE) {
 			return "\\</(?:s|S|strike|STRIKE|del|DEL)\\>";

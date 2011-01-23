@@ -127,4 +127,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		pw.close();
 	}
 
+	public void setAntiAliasing(boolean trueForOn) {
+	}
+
 }

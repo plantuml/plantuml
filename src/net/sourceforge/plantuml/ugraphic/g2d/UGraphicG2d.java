@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5793 $
+ * Revision $Revision: 5988 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -120,6 +121,15 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 
 	protected final double getDpiFactor() {
 		return dpiFactor;
+	}
+
+	public void setAntiAliasing(boolean trueForOn) {
+		if (trueForOn) {
+			getGraphicObject().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		} else {
+			getGraphicObject().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+		}
+
 	}
 
 }

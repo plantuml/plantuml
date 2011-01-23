@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand;
 public class CommandEndif extends SingleLineCommand<ActivityDiagram> {
 
 	public CommandEndif(ActivityDiagram diagram) {
-		super(diagram, "(?i)^endif$");
+		super(diagram, "(?i)^end ?if$");
 	}
 
 	@Override

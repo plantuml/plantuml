@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5971 $
+ * Revision $Revision: 5999 $
  */
 package net.sourceforge.plantuml;
 
@@ -132,9 +132,13 @@ public class PSystemError extends AbstractPSystem {
 			underscore.append("^");
 		}
 		plainStrings.add(underscore.toString());
+		final Collection<String> textErrors = new LinkedHashSet<String>();
 		for (ErrorUml er : printedErrors) {
-			htmlStrings.add(" <color:red>" + er.getError());
-			plainStrings.add(" " + er.getError());
+			textErrors.add(er.getError());
+		}
+		for (String er : textErrors) {
+			htmlStrings.add(" <color:red>" + er);
+			plainStrings.add(" " + er);
 		}
 		boolean suggested = false;
 		for (ErrorUml er : printedErrors) {

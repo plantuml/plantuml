@@ -47,7 +47,7 @@ class ColorChange implements FontChange {
 		if (matcherColor.find() == false) {
 			throw new IllegalArgumentException();
 		}
-		this.color = new HtmlColor(matcherColor.group(1));
+		this.color = HtmlColor.getColorIfValid(matcherColor.group(1));
 	}
 
 	HtmlColor getColor() {

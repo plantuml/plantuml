@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5908 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -40,6 +40,7 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -272,8 +273,8 @@ public class Link implements Imaged {
 
 	private double getQualifierMargin(StringBounder stringBounder, Font fontQualif, String qualif) {
 		if (qualif != null) {
-			final TextBlock b = TextBlockUtils.create(Arrays.asList(qualif), fontQualif, Color.BLACK,
-					HorizontalAlignement.LEFT);
+			final TextBlock b = TextBlockUtils.create(Arrays.asList(qualif), new FontConfiguration(fontQualif,
+					Color.BLACK), HorizontalAlignement.LEFT);
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5972 $
+ * Revision $Revision: 6035 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -63,9 +63,11 @@ import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -92,6 +94,11 @@ final public class DotMaker implements GraphvizMaker {
 
 	private final boolean isVisibilityModifierPresent;
 
+	// http://www.graphviz.org/bugs/b2114.html
+	private static final boolean TURN_AROUND_B2114 = false;
+
+	private final Set<String> hasAlreadyOneIncommingArrowLenghtOne;
+
 	public static void goJunit() {
 		isJunit = true;
 	}
@@ -105,6 +112,7 @@ final public class DotMaker implements GraphvizMaker {
 		} else {
 			this.isVisibilityModifierPresent = false;
 		}
+		this.hasAlreadyOneIncommingArrowLenghtOne = TURN_AROUND_B2114 ? new HashSet<String>() : null;
 	}
 
 	public String createDotString() throws IOException {
@@ -130,10 +138,10 @@ final public class DotMaker implements GraphvizMaker {
 		final boolean huge = data.getEntities().size() > 800;
 
 		sb.append("digraph unix {");
-		//if (isJunit == false) {
-			for (String s : dotStrings) {
-				sb.append(s);
-			}
+		// if (isJunit == false) {
+		for (String s : dotStrings) {
+			sb.append(s);
+		}
 		// }
 		sb.append("bgcolor=\"" + data.getSkinParam().getBackgroundColor().getAsHtml() + "\";");
 		if (huge) {
@@ -142,6 +150,7 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append("ratio=auto;");
 			// sb.append("concentrate=true;");
 		}
+		// sb.append("ordering=out;");
 		sb.append("compound=true;");
 		sb.append("remincross=true;");
 		sb.append("searchsize=500;");
@@ -500,11 +509,15 @@ final public class DotMaker implements GraphvizMaker {
 
 		final DrawFile noteLink = link.getImageFile();
 
+		boolean hasLabel = false;
+
 		if (link.getLabel() != null) {
 			decoration.append("label=<" + manageHtmlIB(link.getLabel(), getArrowFontParam(), null) + ">,");
+			hasLabel = true;
 		} else if (noteLink != null) {
 			decoration
 					.append("label=<" + getHtmlForLinkNote(noteLink.getPngOrEps(fileFormat == FileFormat.EPS)) + ">,");
+			hasLabel = true;
 		}
 
 		if (link.getQualifier1() != null) {
@@ -513,16 +526,26 @@ final public class DotMaker implements GraphvizMaker {
 		if (link.getQualifier2() != null) {
 			decoration.append("headlabel=<" + manageHtmlIB(link.getQualifier2(), getArrowFontParam(), null) + ">,");
 		}
-		decoration.append(link.getType().getSpecificDecoration());
+		final int len = link.getLength();
+		String uid1 = link.getEntity1().getUid();
+		String uid2 = link.getEntity2().getUid();
+		LinkType typeToDraw = link.getType();
+		if (TURN_AROUND_B2114 && len == 1 && hasAlreadyOneIncommingArrowLenghtOne.contains(uid2) && hasLabel) {
+			typeToDraw = typeToDraw.getInv();
+		}
+		if (TURN_AROUND_B2114 && len == 1) {
+			hasAlreadyOneIncommingArrowLenghtOne.add(uid2);
+		}
+		decoration.append(typeToDraw.getSpecificDecoration());
 		if (link.isInvis()) {
 			decoration.append(",style=invis");
 		}
 
-		final int len = link.getLength();
+		// if (len == 1) {
+		// decoration.append(",constraint=false");
+		// }
 		final String lenString = len >= 3 ? ",minlen=" + (len - 1) : "";
 
-		String uid1 = link.getEntity1().getUid();
-		String uid2 = link.getEntity2().getUid();
 		if (link.getEntity1().getType() == EntityType.GROUP) {
 			uid1 = getHiddenNodeUid(link.getEntity1().getParent(), link);
 			decoration.append(",ltail=" + link.getEntity1().getParent().getUid() + "v");
@@ -594,7 +617,7 @@ final public class DotMaker implements GraphvizMaker {
 			if (noteLink == null) {
 				continue;
 			}
-			final Link phantom = new Link(link.getEntity1(), link.getEntity2(), link.getType(), "", link.getLength());
+			final Link phantom = new Link(link.getEntity1(), link.getEntity2(), link.getType(), null, link.getLength());
 			phantom.setInvis(true);
 			result.add(phantom);
 		}
@@ -657,10 +680,6 @@ final public class DotMaker implements GraphvizMaker {
 	}
 
 	private void eventuallySameRank(StringBuilder sb, Group entityPackage, Link link) {
-		// if (workAroundDotBug()) {
-		// throw new UnsupportedOperationException("workAroundDotBug");
-		// // return;
-		// }
 		final int len = link.getLength();
 		if (len == 1 && link.getEntity1().getParent() == entityPackage
 				&& link.getEntity2().getParent() == entityPackage) {
@@ -1258,7 +1277,8 @@ final public class DotMaker implements GraphvizMaker {
 		}
 		final Font font = data.getSkinParam().getFont(FontParam.CLASS_ATTRIBUTE, null);
 		final Color color = getFontHtmlColor(FontParam.CLASS_ATTRIBUTE, null).getColor();
-		final TextBlock text = TextBlockUtils.create(texts, font, color, HorizontalAlignement.LEFT);
+		final TextBlock text = TextBlockUtils.create(texts, new FontConfiguration(font, color),
+				HorizontalAlignement.LEFT);
 		final File feps = FileUtils.createTempFile("member", ".eps");
 		UGraphicEps.copyEpsToFile(new UDrawable() {
 			public void drawU(UGraphic ug) {
@@ -1542,8 +1562,8 @@ final public class DotMaker implements GraphvizMaker {
 	}
 
 	private String manageSpace(int size) {
-		final DotExpression dotExpression = new DotExpression(" ", size, new HtmlColor("white"), null, Font.PLAIN,
-				fileFormat);
+		final DotExpression dotExpression = new DotExpression(" ", size, HtmlColor.getColorIfValid("white"), null,
+				Font.PLAIN, fileFormat);
 		final String result = dotExpression.getDotHtml();
 		return result;
 	}

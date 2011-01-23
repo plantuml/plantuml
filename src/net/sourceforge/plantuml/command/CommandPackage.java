@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5536 $
+ * Revision $Revision: 5983 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -67,7 +67,7 @@ public class CommandPackage extends SingleLineCommand<AbstractEntityDiagram> {
 		p.setBold(true);
 		final String color = arg.get(2);
 		if (color != null) {
-			p.setBackColor(new HtmlColor(color));
+			p.setBackColor(HtmlColor.getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}

@@ -33,10 +33,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram2;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -47,7 +43,7 @@ public class ConditionalContext2 {
 	private final IEntity branch;
 	private final Direction direction;
 	private final ConditionalContext2 parent;
-
+	
 	public ConditionalContext2(ConditionalContext2 parent, IEntity branch, Direction direction) {
 		if (branch.getType() != EntityType.BRANCH) {
 			throw new IllegalArgumentException();

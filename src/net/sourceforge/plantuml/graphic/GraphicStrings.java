@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -138,7 +138,8 @@ public class GraphicStrings {
 	}
 
 	public Dimension2D drawU(final UGraphic ug) {
-		final TextBlock textBlock = TextBlockUtils.create(strings, font, green, HorizontalAlignement.LEFT);
+		final TextBlock textBlock = TextBlockUtils.create(strings, new FontConfiguration(font, green),
+				HorizontalAlignement.LEFT);
 		Dimension2D size = textBlock.calculateDimension(ug.getStringBounder());
 		textBlock.drawU(ug, 0, 0);
 

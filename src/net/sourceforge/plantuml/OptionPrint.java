@@ -28,17 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5211 $
+ * Revision $Revision: 6007 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
@@ -47,51 +44,10 @@ import net.sourceforge.plantuml.version.Version;
 public class OptionPrint {
 
 	static public void printTestDot() throws InterruptedException {
-		for (String s : getTestDotStrings()) {
+		for (String s : GraphvizUtils.getTestDotStrings(false)) {
 			System.err.println(s);
 		}
 		exit();
-	}
-
-	static public List<String> getTestDotStrings() {
-		final List<String> result = new ArrayList<String>();
-		final String ent = GraphvizUtils.getenvGraphvizDot();
-		if (ent == null) {
-			result.add("The environment variable GRAPHVIZ_DOT has not been set");
-		} else {
-			result.add("The environment variable GRAPHVIZ_DOT has been set to " + ent);
-		}
-		final File dotExe = GraphvizUtils.getDotExe();
-		result.add("Dot executable is " + dotExe);
-
-		boolean ok = true;
-		if (dotExe == null) {
-			result.add("Error: No dot executable found");
-			ok = false;
-		} else if (dotExe.exists() == false) {
-			result.add("Error: file does not exist");
-			ok = false;
-		} else if (dotExe.isFile() == false) {
-			result.add("Error: not a valid file");
-			ok = false;
-		} else if (dotExe.canRead() == false) {
-			result.add("Error: cannot be read");
-			ok = false;
-		}
-
-		if (ok) {
-			try {
-				final String version = GraphvizUtils.dotVersion();
-				result.add("Dot version: " + version);
-				result.add("Installation seems OK");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			result.add("Error: only sequence diagrams will be generated");
-		}
-
-		return Collections.unmodifiableList(result);
 	}
 
 	static public void printHelp() throws InterruptedException {

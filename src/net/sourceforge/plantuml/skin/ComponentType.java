@@ -46,14 +46,16 @@ public class ComponentType {
 	private static final List<ComponentType> nonArrows = new ArrayList<ComponentType>();
 
 	static public final ComponentType ACTOR_HEAD = new ComponentType("ACTOR_HEAD");
-	static public final ComponentType ACTOR_LINE = new ComponentType("ACTOR_LINE");
 	static public final ComponentType ACTOR_TAIL = new ComponentType("ACTOR_TAIL");
 
 	//
 	static public final ComponentType ALIVE_LINE = new ComponentType("ALIVE_LINE");
-	static public final ComponentType DELAY_LINE = new ComponentType("DELAY_LINE");
 	static public final ComponentType DELAY_TEXT = new ComponentType("DELAY_TEXT");
 	static public final ComponentType DESTROY = new ComponentType("DESTROY");
+
+	static public final ComponentType DELAY_LINE = new ComponentType("DELAY_LINE");
+	static public final ComponentType PARTICIPANT_LINE = new ComponentType("PARTICIPANT_LINE");
+	static public final ComponentType CONTINUE_LINE = new ComponentType("CONTINUE_LINE");
 
 	//
 	static public final ComponentType GROUPING_BODY = new ComponentType("GROUPING_BODY");
@@ -68,7 +70,6 @@ public class ComponentType {
 
 	//
 	static public final ComponentType PARTICIPANT_HEAD = new ComponentType("PARTICIPANT_HEAD");
-	static public final ComponentType PARTICIPANT_LINE = new ComponentType("PARTICIPANT_LINE");
 	static public final ComponentType PARTICIPANT_TAIL = new ComponentType("PARTICIPANT_TAIL");
 
 	//

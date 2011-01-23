@@ -52,7 +52,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram2> {
 		return new RegexConcat(new RegexLeaf("^"),
 					new RegexLeaf("if"),
 					new RegexLeaf("\\s*"),
-					new RegexLeaf("TEST", "\"([^\"]+)\""),
+					new RegexLeaf("TEST", "[\"(](.+)[\")]"),
 					new RegexLeaf("\\s*"),
 					new RegexLeaf("(then)?"),
 					new RegexLeaf("$"));

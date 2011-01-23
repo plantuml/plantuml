@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5870 $
+ * Revision $Revision: 6026 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -71,12 +71,12 @@ class MessageArrow extends Arrow {
 
 	private double getLeftStartInternal(StringBounder stringBounder) {
 		return getParticipantAt(stringBounder, NotePosition.LEFT).getLiveThicknessAt(stringBounder,
-				getArrowYStartLevel(stringBounder)).getPos2();
+				getArrowYStartLevel(stringBounder)).getSegment().getPos2();
 	}
 
 	private double getRightEndInternal(StringBounder stringBounder) {
 		return getParticipantAt(stringBounder, NotePosition.RIGHT).getLiveThicknessAt(stringBounder,
-				getArrowYStartLevel(stringBounder)).getPos1();
+				getArrowYStartLevel(stringBounder)).getSegment().getPos1();
 	}
 
 	@Override

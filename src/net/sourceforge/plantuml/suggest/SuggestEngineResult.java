@@ -33,11 +33,11 @@
  */
 package net.sourceforge.plantuml.suggest;
 
+
 public class SuggestEngineResult {
 
 	private final SuggestEngineStatus status;
 	private final String suggestedLine;
-	private final int numLine;
 
 	public static final SuggestEngineResult CANNOT_CORRECT = new SuggestEngineResult(SuggestEngineStatus.CANNOT_CORRECT);
 	public static final SuggestEngineResult SYNTAX_OK = new SuggestEngineResult(SuggestEngineStatus.SYNTAX_OK);
@@ -48,13 +48,40 @@ public class SuggestEngineResult {
 		}
 		this.status = status;
 		this.suggestedLine = null;
-		this.numLine = -1;
 	}
 
-	public SuggestEngineResult(String suggestedLine, int numLine) {
+	@Override
+	public String toString() {
+		return status + " " + suggestedLine;
+	}
+
+	@Override
+	public int hashCode() {
+		return status.hashCode() + (suggestedLine == null ? 0 : suggestedLine.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final SuggestEngineResult this2 = (SuggestEngineResult) obj;
+		return status.equals(this2.status) && sameString(suggestedLine, this2.suggestedLine);
+	}
+
+	private static boolean sameString(String a, String b) {
+		if (a == null && b == null) {
+			return true;
+		}
+		if (a != null || b != null) {
+			return false;
+		}
+		return a.equals(b);
+	}
+
+	public SuggestEngineResult(String suggestedLine) {
+		if (suggestedLine.trim().length() == 0) {
+			throw new IllegalArgumentException();
+		}
 		this.status = SuggestEngineStatus.ONE_SUGGESTION;
 		this.suggestedLine = suggestedLine;
-		this.numLine = numLine;
 	}
 
 	public final SuggestEngineStatus getStatus() {
@@ -63,10 +90,6 @@ public class SuggestEngineResult {
 
 	public final String getSuggestedLine() {
 		return suggestedLine;
-	}
-
-	public final int getNumLine() {
-		return numLine;
 	}
 
 }

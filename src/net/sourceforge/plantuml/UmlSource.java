@@ -80,4 +80,19 @@ final public class UmlSource {
 		return source.size();
 	}
 
+	public boolean isEmpty() {
+		for (String s : source) {
+			if (BlockUmlBuilder.isArobaseStartuml(s)) {
+				continue;
+			}
+			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+				continue;
+			}
+			if (s.trim().length() != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

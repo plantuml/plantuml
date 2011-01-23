@@ -60,12 +60,12 @@ class ErrorUml {
 
 	@Override
 	public int hashCode() {
-		return error.hashCode() + type.hashCode() + position;
+		return error.hashCode() + type.hashCode() + position + (suggest == null ? 0 : suggest.hashCode());
 	}
 
 	@Override
 	public String toString() {
-		return type.toString() + " " + position + " " + error;
+		return type.toString() + " " + position + " " + error + " " + suggest;
 	}
 
 	public final String getError() {

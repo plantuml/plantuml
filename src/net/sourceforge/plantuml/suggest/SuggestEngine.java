@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.suggest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,13 +50,13 @@ import net.sourceforge.plantuml.command.ProtectedCommand;
 
 final public class SuggestEngine {
 
-	// private final UmlSource source;
 	private final PSystemCommandFactory systemFactory;
 	private final Iterator<String> it;
-	private int nb = 0;
+	// private int nb = 0;
+	private String current = "";
+	private String previous = "";
 
 	public SuggestEngine(UmlSource source, PSystemCommandFactory systemFactory) {
-		// this.source = source;
 		this.systemFactory = systemFactory;
 		this.it = source.iterator();
 		if (BlockUmlBuilder.isArobaseStartuml(next()) == false) {
@@ -68,8 +69,10 @@ final public class SuggestEngine {
 	}
 
 	private String next() {
-		nb++;
-		return it.next();
+		// nb++;
+		this.previous = this.current;
+		this.current = it.next();
+		return current;
 	}
 
 	public SuggestEngineResult tryToSuggest() throws IOException {
@@ -129,31 +132,46 @@ final public class SuggestEngine {
 
 	}
 
-	SuggestEngineResult checkAndCorrect(String incorrectLine) {
-		CommandControl commandControl = systemFactory.isValid(Arrays.asList(incorrectLine));
+	SuggestEngineResult checkAndCorrect(final String incorrectLine) {
+		final CommandControl commandControl = systemFactory.isValid(Arrays.asList(incorrectLine));
 		if (commandControl != CommandControl.NOT_OK) {
 			return SuggestEngineResult.SYNTAX_OK;
 		}
 
-		// Remove one
-		for (int i = 0; i < incorrectLine.length(); i++) {
-			final String newS = incorrectLine.substring(0, i) + incorrectLine.substring(i + 1);
-			commandControl = systemFactory.isValid(Arrays.asList(newS));
-			if (commandControl != CommandControl.NOT_OK) {
-				return new SuggestEngineResult(newS, nb);
-			}
+		if (incorrectLine.trim().startsWith("{")
+				&& systemFactory.isValid(Arrays.asList(previous + " {")) != CommandControl.NOT_OK) {
+			return new SuggestEngineResult(previous + " {");
 		}
 
-		// Inverse
-		for (int i = 0; i < incorrectLine.length() - 1; i++) {
-			final String newS = incorrectLine.substring(0, i) + incorrectLine.charAt(i + 1) + incorrectLine.charAt(i)
-					+ incorrectLine.substring(i + 2);
-			commandControl = systemFactory.isValid(Arrays.asList(newS));
-			if (commandControl != CommandControl.NOT_OK) {
-				return new SuggestEngineResult(newS, nb);
+		final Collection<Iterator<String>> all = new ArrayList<Iterator<String>>();
+		all.add(new VariatorRemoveOneChar(incorrectLine));
+		all.add(new VariatorSwapLetter(incorrectLine));
+		// all.add(new VariatorAddOneCharBetweenWords(incorrectLine, ':'));
+		all.add(new VariatorAddOneCharBetweenWords(incorrectLine, '-'));
+		all.add(new VariatorAddOneCharBetweenWords(incorrectLine, ' '));
+		// all.add(new VariatorAddTwoChar(incorrectLine, '\"'));
+
+		for (Iterator<String> it : all) {
+			final SuggestEngineResult result = tryThis(it);
+			if (result != null) {
+				return result;
 			}
 		}
-
 		return SuggestEngineResult.CANNOT_CORRECT;
+	}
+
+	private SuggestEngineResult tryThis(Iterator<String> it) {
+		while (it.hasNext()) {
+			final String newS = it.next();
+			if (newS.trim().length() == 0) {
+				continue;
+			}
+			final CommandControl commandControl = systemFactory.isValid(Arrays.asList(newS));
+			if (commandControl != CommandControl.NOT_OK) {
+				return new SuggestEngineResult(newS);
+			}
+		}
+		return null;
+
 	}
 }

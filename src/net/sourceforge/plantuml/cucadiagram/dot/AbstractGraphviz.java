@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5794 $
+ * Revision $Revision: 6005 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -148,7 +148,15 @@ abstract class AbstractGraphviz implements Graphviz {
 				msg.add("File cannot be read");
 			}
 		}
-		msg.add("Cannot find Graphviz: try 'java -jar plantuml.jar -testdot'");
+		msg.add("Cannot find Graphviz. You should try");
+		msg.add(" ");
+		msg.add("@startuml");
+		msg.add("testdot");
+		msg.add("@enduml");
+		msg.add(" ");
+		msg.add(" or ");
+		msg.add(" ");
+		msg.add("java -jar plantuml.jar -testdot");
 		final GraphicStrings errorResult = new GraphicStrings(msg);
 		errorResult.writeImage(os, format);
 	}

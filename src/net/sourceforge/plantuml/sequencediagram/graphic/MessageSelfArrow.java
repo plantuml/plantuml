@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5870 $
+ * Revision $Revision: 6026 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -73,7 +73,7 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-		return p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getPos2();
+		return p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
 	}
 
 	@Override

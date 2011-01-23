@@ -28,13 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4125 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
@@ -47,10 +45,10 @@ class TextBlockWithNumber extends TextBlockSimple {
 
 	private final TextBlock numText;
 
-	public TextBlockWithNumber(String number, List<? extends CharSequence> texts, Font font, Color paint,
+	public TextBlockWithNumber(String number, List<? extends CharSequence> texts, FontConfiguration fontConfiguration,
 			HorizontalAlignement horizontalAlignement) {
-		super(texts, font, paint, horizontalAlignement);
-		this.numText = TextBlockUtils.create(Arrays.asList(number), font, paint, HorizontalAlignement.LEFT);
+		super(texts, fontConfiguration, horizontalAlignement);
+		this.numText = TextBlockUtils.create(Arrays.asList(number), fontConfiguration, HorizontalAlignement.LEFT);
 	}
 
 	@Override
@@ -77,7 +75,7 @@ class TextBlockWithNumber extends TextBlockSimple {
 		numText.drawTOBEREMOVED(g2d, x, y + deltaY / 2.0);
 		super.drawTOBEREMOVED(g2d, x + getNumberWithAndMargin(stringBounder), y);
 	}
-	
+
 	@Override
 	public void drawU(UGraphic ug, double x, double y) {
 		final StringBounder stringBounder = ug.getStringBounder();

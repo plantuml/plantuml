@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5941 $
+ * Revision $Revision: 6008 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -64,7 +64,10 @@ public class TextSkin implements Skin {
 		if (type.isArrow() && type.getArrowConfiguration().isSelfArrow()) {
 			return new ComponentTextSelfArrow(type, stringsToDisplay, fileFormat);
 		}
-		if (type == ComponentType.PARTICIPANT_LINE || type == ComponentType.ACTOR_LINE) {
+		if (type == ComponentType.PARTICIPANT_LINE) {
+			return new ComponentTextLine(fileFormat);
+		}
+		if (type == ComponentType.CONTINUE_LINE) {
 			return new ComponentTextLine(fileFormat);
 		}
 		if (type == ComponentType.DELAY_LINE) {

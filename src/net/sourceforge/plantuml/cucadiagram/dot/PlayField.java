@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -144,7 +145,8 @@ public final class PlayField {
 			// entityImageBlock.getDimension(stringBounder);
 			// final Block b = new Block(uid++, d.getWidth() + 2 *
 			// marginDecorator, d.getHeight() + 2 * marginDecorator);
-			final MargedBlock b = new MargedBlock(stringBounder, entityImageBlock, getMargin(stringBounder, ent, links), parentCluster);
+			final MargedBlock b = new MargedBlock(stringBounder, entityImageBlock,
+					getMargin(stringBounder, ent, links), parentCluster);
 
 			blocks.put(ent, b);
 			// images.put(ent, entityImageBlock);
@@ -258,16 +260,16 @@ public final class PlayField {
 
 			final String qual1 = link.getQualifier1();
 			if (qual1 != null) {
-				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual1), fontQualif,
-						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor(), HorizontalAlignement.LEFT);
+				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual1), new FontConfiguration(fontQualif,
+						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor()), HorizontalAlignement.LEFT);
 				final Point2D pos = p.getDotPath().getStartPoint();
 				b.drawU(ug, pos.getX(), pos.getY());
 			}
 
 			final String qual2 = link.getQualifier2();
 			if (qual2 != null) {
-				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual2), fontQualif,
-						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor(), HorizontalAlignement.LEFT);
+				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual2), new FontConfiguration(fontQualif,
+						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor()), HorizontalAlignement.LEFT);
 				final Point2D pos = p.getDotPath().getEndPoint();
 				b.drawU(ug, pos.getX(), pos.getY());
 			}

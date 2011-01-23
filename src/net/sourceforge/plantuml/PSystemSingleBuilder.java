@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -76,7 +77,9 @@ final public class PSystemSingleBuilder {
 			throw new UnsupportedOperationException();
 		}
 
-		if (systemFactory instanceof PSystemCommandFactory) {
+		if (s.isEmpty()) {
+			sys = buildEmptyError();
+		} else if (systemFactory instanceof PSystemCommandFactory) {
 			executeUmlCommand((PSystemCommandFactory) systemFactory);
 		} else if (systemFactory instanceof PSystemBasicFactory) {
 			executeUmlBasic((PSystemBasicFactory) systemFactory);
@@ -89,7 +92,8 @@ final public class PSystemSingleBuilder {
 			final String s = next();
 			if (BlockUmlBuilder.isArobaseEnduml(s)) {
 				if (source.getSize() == 2) {
-					sys = buildEmptyError(source);
+					assert false;
+					sys = buildEmptyError();
 				} else {
 					sys = (AbstractPSystem) systemFactory.getSystem();
 				}
@@ -109,9 +113,16 @@ final public class PSystemSingleBuilder {
 		sys.setSource(source);
 	}
 
-	private PSystemError buildEmptyError(UmlSource source) {
+	private PSystemError buildEmptyError() {
 		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.SYNTAX_ERROR,
 				"Empty description", 1));
+		result.setSource(source);
+		return result;
+	}
+
+	private PSystemError buildEmptyError(String err) {
+		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, err, 1));
+		result.setSource(source);
 		return result;
 	}
 
@@ -120,8 +131,13 @@ final public class PSystemSingleBuilder {
 		while (hasNext()) {
 			final String s = next();
 			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+				final String err = ((AbstractUmlSystemCommandFactory) systemFactory).checkFinalError();
+				if (err != null) {
+					sys = buildEmptyError(err);
+				}
 				if (source.getSize() == 2) {
-					sys = buildEmptyError(source);
+					assert false;
+					sys = buildEmptyError();
 				} else {
 					sys = (AbstractPSystem) systemFactory.getSystem();
 				}

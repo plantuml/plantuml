@@ -28,13 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4125 $
+ * Revision $Revision: 6009 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
@@ -48,21 +46,21 @@ class TextBlockSimple implements TextBlock {
 
 	private final List<Line> lines = new ArrayList<Line>();
 
-	protected TextBlockSimple(List<? extends CharSequence> texts, Font font, Color paint,
+	protected TextBlockSimple(List<? extends CharSequence> texts, FontConfiguration fontConfiguration,
 			HorizontalAlignement horizontalAlignement) {
 		for (CharSequence s : texts) {
 			if (s instanceof Stereotype) {
-				lines.add(createLineForStereotype(font, paint, (Stereotype) s, horizontalAlignement));
+				lines.add(createLineForStereotype(fontConfiguration, (Stereotype) s, horizontalAlignement));
 			} else {
-				lines.add(new SingleLine(s.toString(), font, paint, horizontalAlignement));
+				lines.add(new SingleLine(s.toString(), fontConfiguration, horizontalAlignement));
 			}
 		}
 	}
 
-	private SingleLine createLineForStereotype(Font font, Color paint, Stereotype s,
+	private SingleLine createLineForStereotype(FontConfiguration fontConfiguration, Stereotype s,
 			HorizontalAlignement horizontalAlignement) {
 		assert s.getLabel() != null;
-		return new SingleLine(s.getLabel(), font.deriveFont(Font.ITALIC), paint, horizontalAlignement);
+		return new SingleLine(s.getLabel(), fontConfiguration.add(FontStyle.ITALIC), horizontalAlignement);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -95,7 +93,7 @@ class TextBlockSimple implements TextBlock {
 			y += line.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight();
 		}
 	}
-	
+
 	public void drawU(UGraphic ug, double x, double y) {
 		final Dimension2D dimText = getTextDimension(ug.getStringBounder());
 
@@ -103,8 +101,7 @@ class TextBlockSimple implements TextBlock {
 			final HorizontalAlignement lineHorizontalAlignement = line.getHorizontalAlignement();
 			double deltaX = 0;
 			if (lineHorizontalAlignement == HorizontalAlignement.CENTER) {
-				final double diff = dimText.getWidth()
-						- line.calculateDimension(ug.getStringBounder()).getWidth();
+				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
 				deltaX = diff / 2.0;
 			}
 			line.drawU(ug, x + deltaX, y);

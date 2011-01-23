@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5742 $
+ * Revision $Revision: 5983 $
  *
  */
 package net.sourceforge.plantuml.statediagram.command;
@@ -63,7 +63,7 @@ public class CommandCreatePackageState extends SingleLineCommand<StateDiagram> {
 			p.setStereotype(stereotype);
 		}
 		if (arg.get(3) != null && HtmlColor.isValid(arg.get(3))) {
-			p.setBackColor(new HtmlColor(arg.get(3)));
+			p.setBackColor(HtmlColor.getColorIfValid(arg.get(3)));
 		}
 		return CommandExecutionResult.ok();
 	}

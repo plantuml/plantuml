@@ -33,32 +33,24 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 class Segment {
 
 	final private double pos1;
 	final private double pos2;
-	final private HtmlColor backcolor;
 
-	Segment(double pos1, double pos2, HtmlColor backcolor) {
+	Segment(double pos1, double pos2) {
 		this.pos1 = pos1;
 		this.pos2 = pos2;
-		this.backcolor = backcolor;
 		if (pos2 < pos1) {
-			throw new IllegalArgumentException("pos1=" + pos1 + " pos2=" + pos2);
+			throw new IllegalArgumentException();
 		}
-	}
-	
-	public HtmlColor getSpecificBackColor() {
-		return backcolor;
 	}
 
 	@Override
@@ -72,8 +64,12 @@ class Segment {
 		return new Double(pos1).hashCode() + new Double(pos2).hashCode();
 	}
 
-	public boolean contains(double y) {
+	final public boolean contains(double y) {
 		return y >= pos1 && y <= pos2;
+	}
+
+	final public boolean contains(Segment other) {
+		return contains(other.pos1) && contains(other.pos2);
 	}
 
 	@Override
@@ -81,31 +77,40 @@ class Segment {
 		return "" + pos1 + " - " + pos2;
 	}
 
-	public void drawU(UGraphic ug, Component comp, int level) {
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
-
-		final StringBounder stringBounder = ug.getStringBounder();
-		ug.translate((level - 1) * comp.getPreferredWidth(stringBounder) / 2, pos1);
-		final Dimension2D dim = new Dimension2DDouble(comp.getPreferredWidth(stringBounder), pos2 - pos1);
-		comp.drawU(ug, dim, new SimpleContext2D(false));
-		ug.setTranslate(atX, atY);
-	}
-
-	public double getLength() {
+	final public double getLength() {
 		return pos2 - pos1;
 	}
 
-	public double getPos1() {
+	final public double getPos1() {
 		return pos1;
 	}
 
-	public double getPos2() {
+	final public double getPos2() {
 		return pos2;
 	}
 
 	public Segment merge(Segment this2) {
-		return new Segment(Math.min(this.pos1, this2.pos1), Math.max(this.pos2, this2.pos2), backcolor);
+		return new Segment(Math.min(this.pos1, this2.pos1), Math.max(this.pos2, this2.pos2));
+	}
+
+	public Collection<Segment> cutSegmentIfNeed(Collection<Segment> delays) {
+		final List<Segment> result = new ArrayList<Segment>(delays);
+		Collections.sort(result, new SortPos1());
+		result.add(this);
+		return Collections.unmodifiableCollection(result);
+	}
+
+	private Collection<Segment> cutSegmentIfNeed(Segment other) {
+		if (this.contains(other) == false) {
+			throw new IllegalArgumentException();
+		}
+		return Arrays.asList(new Segment(this.pos1, other.pos1), new Segment(this.pos2, other.pos2));
+	}
+
+	static class SortPos1 implements Comparator<Segment> {
+		public int compare(Segment segA, Segment segB) {
+			return (int) Math.signum(segB.pos1 - segA.pos1);
+		}
 	}
 
 }

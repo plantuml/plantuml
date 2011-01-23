@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5942 $
+ * Revision $Revision: 6016 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -106,8 +108,10 @@ public class ParticipantBox implements Pushable {
 			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)
 					- line.getPreferredHeight(stringBounder) / 2;
 			ug.translate(startingX + outMargin, y1);
-			head.drawU(ug, new Dimension2DDouble(head.getPreferredWidth(stringBounder), head
-					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
+			head.drawU(
+					ug,
+					new Dimension2DDouble(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder)),
+					new SimpleContext2D(false));
 			ug.setTranslate(atX, atY);
 		}
 
@@ -119,8 +123,10 @@ public class ParticipantBox implements Pushable {
 			// throw new IllegalStateException();
 			// }
 			ug.translate(startingX + outMargin, positionTail);
-			tail.drawU(ug, new Dimension2DDouble(tail.getPreferredWidth(stringBounder), tail
-					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
+			tail.drawU(
+					ug,
+					new Dimension2DDouble(tail.getPreferredWidth(stringBounder), tail.getPreferredHeight(stringBounder)),
+					new SimpleContext2D(false));
 			ug.setTranslate(atX, atY);
 		}
 	}
@@ -128,8 +134,9 @@ public class ParticipantBox implements Pushable {
 	public void drawParticipantHead(UGraphic ug) {
 		ug.translate(outMargin, 0);
 		final StringBounder stringBounder = ug.getStringBounder();
-		head.drawU(ug, new Dimension2DDouble(head.getPreferredWidth(stringBounder), head
-				.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
+		head.drawU(ug,
+				new Dimension2DDouble(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder)),
+				new SimpleContext2D(false));
 		ug.translate(-outMargin, 0);
 	}
 
@@ -175,7 +182,10 @@ public class ParticipantBox implements Pushable {
 
 	public void addDelay(GraphicalDelayText delay) {
 		this.delays.add(delay);
+	}
 
+	public Collection<GraphicalDelayText> getDelays() {
+		return Collections.unmodifiableCollection(delays);
 	}
 
 }

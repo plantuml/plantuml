@@ -49,7 +49,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 
@@ -69,7 +69,8 @@ public class PSystemVersion extends AbstractPSystem {
 		}
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
+	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException,
+			InterruptedException {
 		OutputStream os = null;
 		try {
 			os = new FileOutputStream(suggestedFile);
@@ -91,7 +92,7 @@ public class PSystemVersion extends AbstractPSystem {
 		strings.add("<b>PlantUML version " + Version.version() + "</b> (" + new Date(Version.compileTime()) + ")");
 		strings.add(" ");
 
-		strings.addAll(OptionPrint.getTestDotStrings());
+		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		strings.add(" ");
 		final Properties p = System.getProperties();
 		strings.add(p.getProperty("java.runtime.name"));
@@ -119,7 +120,7 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static PSystemVersion createTestDot() throws IOException {
 		final List<String> strings = new ArrayList<String>();
-		strings.addAll(OptionPrint.getTestDotStrings());
+		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		return new PSystemVersion(false, strings);
 	}
 

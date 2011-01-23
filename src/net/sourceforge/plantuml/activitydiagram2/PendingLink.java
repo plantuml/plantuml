@@ -28,30 +28,29 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5721 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram2.command;
+package net.sourceforge.plantuml.activitydiagram2;
 
-import java.util.List;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+public class PendingLink {
 
-public class CommandStart extends SingleLineCommand<ActivityDiagram2> {
+	private final IEntity entityFrom;
+	private final String label;
 
-	public CommandStart(ActivityDiagram2 diagram) {
-		super(diagram, "(?i)^start$");
+	public PendingLink(IEntity entityFrom, String label) {
+		this.entityFrom = entityFrom;
+		this.label = label;
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		if (getSystem().entities().size() > 0) {
-			return CommandExecutionResult.error("Cannot start this here");
-		}
-		getSystem().start();
-		return CommandExecutionResult.ok();
+	public final IEntity getEntityFrom() {
+		return entityFrom;
+	}
+
+	public final String getLabel() {
+		return label;
 	}
 
 }
