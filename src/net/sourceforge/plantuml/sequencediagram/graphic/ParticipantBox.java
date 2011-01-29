@@ -28,14 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6016 $
+ * Revision $Revision: 6049 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -108,10 +109,8 @@ public class ParticipantBox implements Pushable {
 			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)
 					- line.getPreferredHeight(stringBounder) / 2;
 			ug.translate(startingX + outMargin, y1);
-			head.drawU(
-					ug,
-					new Dimension2DDouble(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder)),
-					new SimpleContext2D(false));
+			head.drawU(ug, new Dimension2DDouble(head.getPreferredWidth(stringBounder), head
+					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
 			ug.setTranslate(atX, atY);
 		}
 
@@ -123,10 +122,8 @@ public class ParticipantBox implements Pushable {
 			// throw new IllegalStateException();
 			// }
 			ug.translate(startingX + outMargin, positionTail);
-			tail.drawU(
-					ug,
-					new Dimension2DDouble(tail.getPreferredWidth(stringBounder), tail.getPreferredHeight(stringBounder)),
-					new SimpleContext2D(false));
+			tail.drawU(ug, new Dimension2DDouble(tail.getPreferredWidth(stringBounder), tail
+					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
 			ug.setTranslate(atX, atY);
 		}
 	}
@@ -134,9 +131,8 @@ public class ParticipantBox implements Pushable {
 	public void drawParticipantHead(UGraphic ug) {
 		ug.translate(outMargin, 0);
 		final StringBounder stringBounder = ug.getStringBounder();
-		head.drawU(ug,
-				new Dimension2DDouble(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder)),
-				new SimpleContext2D(false));
+		head.drawU(ug, new Dimension2DDouble(head.getPreferredWidth(stringBounder), head
+				.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
 		ug.translate(-outMargin, 0);
 	}
 
@@ -184,8 +180,35 @@ public class ParticipantBox implements Pushable {
 		this.delays.add(delay);
 	}
 
-	public Collection<GraphicalDelayText> getDelays() {
-		return Collections.unmodifiableCollection(delays);
+	public Collection<Segment> getDelays(final StringBounder stringBounder) {
+		return new AbstractCollection<Segment>() {
+
+			@Override
+			public Iterator<Segment> iterator() {
+				return new Iterator<Segment>() {
+
+					private final Iterator<GraphicalDelayText> it = delays.iterator();
+
+					public boolean hasNext() {
+						return it.hasNext();
+					}
+
+					public Segment next() {
+						final GraphicalDelayText d = it.next();
+						return new Segment(d.getStartingY(), d.getEndingY(stringBounder));
+					}
+
+					public void remove() {
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
+
+			@Override
+			public int size() {
+				return delays.size();
+			}
+		};
 	}
 
 }

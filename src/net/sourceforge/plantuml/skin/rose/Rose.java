@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6008 $
+ * Revision $Revision: 6046 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -216,9 +216,21 @@ public class Rose implements Skin {
 			return new ComponentRoseGroupingElse(getFontColor(param, FontParam.SEQUENCE_GROUPING), fontGrouping,
 					stringsToDisplay.get(0));
 		}
-		if (type == ComponentType.ALIVE_LINE) {
+		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
-			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor);
+			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor, true, true);
+		}
+		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN) {
+			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
+			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor, true, false);
+		}
+		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
+			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
+			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor, false, true);
+		}
+		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN) {
+			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();
+			return new ComponentRoseActiveLine(borderColor, lifeLineBackgroundColor, false, false);
 		}
 		if (type == ComponentType.DELAY_LINE) {
 			final Color borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder).getColor();

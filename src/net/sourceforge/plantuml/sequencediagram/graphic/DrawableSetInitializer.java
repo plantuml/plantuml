@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6016 $
+ * Revision $Revision: 6046 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -416,7 +416,7 @@ class DrawableSetInitializer {
 			throw new IllegalArgumentException();
 		}
 
-		final Component comp = drawableSet.getSkin().createComponent(ComponentType.ALIVE_LINE,
+		final Component comp = drawableSet.getSkin().createComponent(ComponentType.ALIVE_BOX_CLOSE_CLOSE,
 				drawableSet.getSkinParam(), null);
 
 		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder));

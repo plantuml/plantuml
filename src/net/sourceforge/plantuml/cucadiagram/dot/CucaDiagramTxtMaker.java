@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -174,6 +175,10 @@ public final class CucaDiagramTxtMaker {
 			}
 		}
 		return result + 2;
+	}
+
+	public void createFiles(OutputStream os, int index) {
+		ug.getCharArea().print(new PrintStream(os));
 	}
 
 }

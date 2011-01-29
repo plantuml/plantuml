@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5190 $
+ * Revision $Revision: 6085 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -91,6 +91,10 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public void endGroup() {
+		final Group cur = getCurrentGroup();
+		if (cur != null && cur.getType() == GroupType.CONCURRENT_STATE) {
+			super.endGroup();
+		}
 		super.endGroup();
 	}
 

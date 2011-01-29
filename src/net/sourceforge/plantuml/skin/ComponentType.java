@@ -49,7 +49,11 @@ public class ComponentType {
 	static public final ComponentType ACTOR_TAIL = new ComponentType("ACTOR_TAIL");
 
 	//
-	static public final ComponentType ALIVE_LINE = new ComponentType("ALIVE_LINE");
+	static public final ComponentType ALIVE_BOX_CLOSE_CLOSE = new ComponentType("ALIVE_BOX_CLOSE_CLOSE");
+	static public final ComponentType ALIVE_BOX_CLOSE_OPEN = new ComponentType("ALIVE_BOX_CLOSE_OPEN");
+	static public final ComponentType ALIVE_BOX_OPEN_CLOSE = new ComponentType("ALIVE_BOX_OPEN_CLOSE");
+	static public final ComponentType ALIVE_BOX_OPEN_OPEN = new ComponentType("ALIVE_BOX_OPEN_OPEN");
+	
 	static public final ComponentType DELAY_TEXT = new ComponentType("DELAY_TEXT");
 	static public final ComponentType DESTROY = new ComponentType("DESTROY");
 

@@ -75,10 +75,8 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 		svg.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		final UClip clip = clipContainer.getClip();
-
 		if (clip != null) {
-			Rectangle2D.Double r = new Rectangle2D.Double(x, y, width, height);
-			r = clip.getClippedRectangle(r);
+			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));
 			x = r.x;
 			y = r.y;
 			width = r.width;

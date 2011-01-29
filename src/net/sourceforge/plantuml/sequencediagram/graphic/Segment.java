@@ -93,23 +93,32 @@ class Segment {
 		return new Segment(Math.min(this.pos1, this2.pos1), Math.max(this.pos2, this2.pos2));
 	}
 
-	public Collection<Segment> cutSegmentIfNeed(Collection<Segment> delays) {
-		final List<Segment> result = new ArrayList<Segment>(delays);
-		Collections.sort(result, new SortPos1());
-		result.add(this);
-		return Collections.unmodifiableCollection(result);
-	}
-
-	private Collection<Segment> cutSegmentIfNeed(Segment other) {
-		if (this.contains(other) == false) {
-			throw new IllegalArgumentException();
+	public Collection<Segment> cutSegmentIfNeed(Collection<Segment> allDelays) {
+		final List<Segment> sortedDelay = new ArrayList<Segment>(allDelays);
+		Collections.sort(sortedDelay, new SortPos1());
+		final List<Segment> result2 = new ArrayList<Segment>();
+		double pendingStart = pos1;
+		for (Segment d : sortedDelay) {
+			if (d.pos1 <= pendingStart) {
+				continue;
+			}
+			if (d.pos1 > this.pos2) {
+				result2.add(new Segment(pendingStart, this.pos2));
+				return Collections.unmodifiableCollection(result2);
+			}
+			if (this.contains(d) == false) {
+				throw new IllegalStateException();
+			}
+			result2.add(new Segment(pendingStart, d.pos1));
+			pendingStart = d.pos2;
 		}
-		return Arrays.asList(new Segment(this.pos1, other.pos1), new Segment(this.pos2, other.pos2));
+		result2.add(new Segment(pendingStart, this.pos2));
+		return Collections.unmodifiableCollection(result2);
 	}
 
 	static class SortPos1 implements Comparator<Segment> {
 		public int compare(Segment segA, Segment segB) {
-			return (int) Math.signum(segB.pos1 - segA.pos1);
+			return (int) Math.signum(segA.pos1 - segB.pos1);
 		}
 	}
 

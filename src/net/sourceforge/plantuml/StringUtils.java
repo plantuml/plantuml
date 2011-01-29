@@ -28,18 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5957 $
+ * Revision $Revision: 6060 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.preproc.ReadLineReader;
+import net.sourceforge.plantuml.preproc.UncommentReadLine;
 
 public class StringUtils {
 
@@ -320,6 +325,25 @@ public class StringUtils {
 				}
 			}
 		}
+	}
+
+	public static String uncommentSource(String source) {
+		final StringReader sr = new StringReader(source);
+		final UncommentReadLine un = new UncommentReadLine(new ReadLineReader(sr));
+		final StringBuilder sb = new StringBuilder();
+		String s = null;
+		try {
+			while ((s = un.readLine()) != null) {
+				sb.append(s);
+				sb.append('\n');
+			}
+		} catch (IOException e) {
+			Log.error("Error " + e);
+			throw new IllegalStateException(e.toString());
+		}
+
+		sr.close();
+		return sb.toString();
 	}
 
 }

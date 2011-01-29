@@ -28,12 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6026 $
+ * Revision $Revision: 6049 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.util.AbstractCollection;
+import java.util.Collection;
+import java.util.Iterator;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -88,12 +91,58 @@ class SegmentColored {
 		ug.setTranslate(atX, atY);
 	}
 
+	public Collection<SegmentColored> cutSegmentIfNeed(Collection<Segment> allDelays) {
+		return new Coll2(segment.cutSegmentIfNeed(allDelays));
+	}
+
 	public SegmentColored merge(SegmentColored this2) {
 		return new SegmentColored(this.segment.merge(this2.segment), backcolor);
 	}
 
 	public final Segment getSegment() {
 		return segment;
+	}
+
+
+	class Iterator2 implements Iterator<SegmentColored> {
+
+		private final Iterator<Segment> it;
+
+		public Iterator2(Iterator<Segment> it) {
+			this.it = it;
+		}
+
+		public boolean hasNext() {
+			return it.hasNext();
+		}
+
+		public SegmentColored next() {
+			return new SegmentColored(it.next(), backcolor);
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	class Coll2 extends AbstractCollection<SegmentColored> {
+
+		private final Collection<Segment> col;
+
+		public Coll2(Collection<Segment> col) {
+			this.col = col;
+		}
+
+		@Override
+		public Iterator<SegmentColored> iterator() {
+			return new Iterator2(col.iterator());
+		}
+
+		@Override
+		public int size() {
+			return col.size();
+		}
+
 	}
 
 }

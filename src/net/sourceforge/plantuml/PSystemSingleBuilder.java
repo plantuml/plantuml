@@ -207,7 +207,8 @@ final public class PSystemSingleBuilder {
 			lines.add(s);
 			final CommandControl commandControl = systemFactory.isValid(lines);
 			if (commandControl == CommandControl.NOT_OK) {
-				throw new IllegalStateException();
+				// throw new IllegalStateException();
+				return false;
 			}
 			if (commandControl == CommandControl.OK) {
 				final Command cmd = systemFactory.createCommand(lines);

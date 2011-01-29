@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6016 $
+ * Revision $Revision: 6049 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -45,7 +45,7 @@ interface Pushable {
 
 	void pushToLeft(double deltaX);
 	
-	public Collection<GraphicalDelayText> getDelays();
+	public Collection<Segment> getDelays(StringBounder stringBounder);
 
 
 }

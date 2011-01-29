@@ -31,8 +31,11 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
+import java.awt.geom.Rectangle2D;
+
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UGradient;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -50,10 +53,20 @@ public class DriverRectangleEps implements UDriver<EpsGraphics> {
 	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
 		final URectangle rect = (URectangle) ushape;
 
+		double width = rect.getWidth();
+		double height = rect.getHeight();
+		
+		final UClip clip = clipContainer.getClip();
+		if (clip != null) {
+			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));
+			x = r.x;
+			y = r.y;
+			width = r.width;
+			height = r.height;
+		}
+
 		final double rx = rect.getRx();
 		final double ry = rect.getRy();
-		final double width = rect.getWidth();
-		final double height = rect.getHeight();
 
 		final UGradient gr = param.getGradient();
 		if (gr == null) {

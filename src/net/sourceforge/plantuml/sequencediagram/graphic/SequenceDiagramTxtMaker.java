@@ -115,7 +115,12 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 	}
 
 	public void createOne(OutputStream os, int index) throws IOException {
-		throw new UnsupportedOperationException();
+		final PrintStream ps = new PrintStream(os);
+		if (fileFormat == FileFormat.UTXT) {
+			ug.getCharArea().print(ps);
+		} else {
+			ug.getCharArea().print(ps);
+		}
 	}
 
 	public int getNbPages() {

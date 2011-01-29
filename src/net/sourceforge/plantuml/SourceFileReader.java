@@ -43,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
@@ -148,5 +149,10 @@ public class SourceFileReader {
 	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
 	}
+	
+	public final Set<File> getIncludedFiles() {
+		return builder.getIncludedFiles();
+	}
+
 
 }

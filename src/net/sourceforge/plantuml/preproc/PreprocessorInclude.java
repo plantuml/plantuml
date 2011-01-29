@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5207 $
+ * Revision $Revision: 6070 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,9 +51,12 @@ class PreprocessorInclude implements ReadLine {
 	private int numLine = 0;
 
 	private PreprocessorInclude included = null;
+	
+	private final Set<File> filesUsed;
 
-	public PreprocessorInclude(ReadLine reader) {
+	public PreprocessorInclude(ReadLine reader, Set<File> filesUsed) {
 		this.reader2 = reader;
+		this.filesUsed = filesUsed;
 	}
 
 	public String readLine() throws IOException {
@@ -84,7 +88,8 @@ class PreprocessorInclude implements ReadLine {
 		final String fileName = m.group(1);
 		final File f = FileSystem.getInstance().getFile(fileName);
 		if (f.exists()) {
-			included = new PreprocessorInclude(new ReadLineReader(new FileReader(f)));
+			filesUsed.add(f);
+			included = new PreprocessorInclude(new ReadLineReader(new FileReader(f)), filesUsed);
 		}
 		return this.readLine();
 	}

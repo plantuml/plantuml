@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +56,10 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public class ActivityDiagram2 extends CucaDiagram {
 
-	private Collection<IEntity> waitings = new ArrayList<IEntity>();
+	private Collection<IEntity> waitings = new LinkedHashSet<IEntity>();
 	private ConditionalContext2 currentContext;
 	private int futureLength = 2;
+	private String futureLabel = null;
 
 	private final Collection<String> pendingLabels = new HashSet<String>();
 	private final Map<String, IEntity> labels = new HashMap<String, IEntity>();
@@ -85,8 +87,25 @@ public class ActivityDiagram2 extends CucaDiagram {
 			throw new IllegalStateException();
 		}
 		final Entity act = createEntity(getAutoCode(), display, EntityType.ACTIVITY);
+		afterAdd(act);
+
+	}
+
+	public void bar(String bar) {
+		if (waitings.size() == 0) {
+			// throw new IllegalStateException(bar);
+		}
+		label(bar);
+		final Entity act = createEntity(getAutoCode(), bar, EntityType.SYNCHRO_BAR);
+		afterAdd(act);
+	}
+
+	private void afterAdd(final Entity act) {
 		for (IEntity last : this.waitings) {
-			this.addLink(new Link(last, act, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
+			System.err.println("last=" + last);
+			System.err.println("act=" + act);
+			this.addLink(new Link(last, act, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), futureLabel, futureLength));
+			futureLabel = null;
 		}
 
 		for (String p : pendingLabels) {
@@ -97,7 +116,6 @@ public class ActivityDiagram2 extends CucaDiagram {
 		this.waitings.clear();
 		this.waitings.add(act);
 		this.futureLength = 2;
-
 	}
 
 	private String getAutoCode() {
@@ -111,37 +129,56 @@ public class ActivityDiagram2 extends CucaDiagram {
 		this.waitings.add(createEntity("start", "start", EntityType.CIRCLE_START));
 	}
 
-	public void startIf(String test) {
+	public void startIf(String test, String when) {
 		final IEntity br = createEntity(getAutoCode(), "", EntityType.BRANCH);
-		currentContext = new ConditionalContext2(currentContext, br, Direction.DOWN);
+		currentContext = new ConditionalContext2(currentContext, br, Direction.DOWN, when);
 		for (IEntity last : this.waitings) {
-			this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
+			if (test == null) {
+				// this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), test, futureLength));
+				throw new IllegalArgumentException();
+			} else {
+				this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), this.futureLabel,
+						futureLength, null, test, getLabeldistance(), getLabelangle()));
+			}
+			test = null;
 		}
 		this.waitings.clear();
 		this.waitings.add(br);
 		this.futureLength = 2;
+		this.futureLabel = when;
 	}
 
-	public Collection<IEntity> getLastEntityConsulted2() {
-		return this.waitings;
-	}
+	// public Collection<IEntity> getWaitings() {
+	// return this.waitings;
+	// }
 
 	public void endif() {
-		this.waitings.add(currentContext.getPending());
+		final boolean hasElse = currentContext.isHasElse();
+		System.err.println("CALL endif hasElse " + hasElse);
+		this.waitings.addAll(currentContext.getPendings());
 		currentContext = currentContext.getParent();
+		if (currentContext == null) {
+			System.err.println("after endif " + currentContext);
+		} else {
+			System.err.println("after endif " + currentContext.getPendings());
+		}
 	}
 
-	public void else2() {
-		this.currentContext.setPending(this.waitings.iterator().next());
+	public void else2(String when) {
+		this.currentContext.executeElse(this.waitings);
 		this.waitings.clear();
 		this.waitings.add(currentContext.getBranch());
+		this.futureLabel = when;
 	}
 
 	public void label(String label) {
 		pendingLabels.add(label);
 		for (final Iterator<PendingLink> it = pendingLinks.iterator(); it.hasNext();) {
 			final PendingLink pending = it.next();
-			if (pending.getLabel().equals(label)) {
+			if (pending.getGotoLabel().equals(label)) {
+				if (pending.getLinkLabel() != null) {
+					this.futureLabel = pending.getLinkLabel();
+				}
 				waitings.add(pending.getEntityFrom());
 				it.remove();
 			}
@@ -150,16 +187,24 @@ public class ActivityDiagram2 extends CucaDiagram {
 
 	private final Collection<PendingLink> pendingLinks = new ArrayList<PendingLink>();
 
-	public void callGoto(String label) {
-		final IEntity dest = labels.get(label);
+	public void callGoto(String gotoLabel) {
+		System.err.println("CALL goto " + gotoLabel);
+		final IEntity dest = labels.get(gotoLabel);
 		for (IEntity last : this.waitings) {
 			if (dest == null) {
-				this.pendingLinks.add(new PendingLink(last, label));
-
+				this.pendingLinks.add(new PendingLink(last, gotoLabel, this.futureLabel));
 			} else {
-				this.addLink(new Link(last, dest, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), null, futureLength));
+				this.addLink(new Link(last, dest, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), this.futureLabel,
+						this.futureLength));
 			}
 		}
+		System.err.println("Avant fin goto, waitings=" + waitings);
 		this.waitings.clear();
+		// currentContext.clearPendingsButFirst();
+	}
+
+	public void end() {
+		// TODO Auto-generated method stub
+
 	}
 }

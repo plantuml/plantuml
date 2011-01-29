@@ -28,51 +28,50 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6053 $
+ * Revision $Revision: 3837 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.Dimension2D;
+import java.util.List;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
 
-public class ComponentBlueModernActiveLine extends AbstractComponent {
+public class ComponentBlueModernDelayText extends AbstractTextualComponent {
 
-	private final int shadowview = 3;
-	private final Color foregroundColor;
-
-	public ComponentBlueModernActiveLine(Color foregroundColor, boolean closeUp, boolean closeDown) {
-		this.foregroundColor = foregroundColor;
+	public ComponentBlueModernDelayText(Color fontColor, Font font, List<? extends CharSequence> stringsToDisplay) {
+		super(stringsToDisplay, fontColor, font, HorizontalAlignement.CENTER, 4, 4, 4);
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+		final TextBlock textBlock = getTextBlock();
 		final StringBounder stringBounder = ug.getStringBounder();
-		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;
-		final ShadowShape shadowShape = new ShadowShape(getPreferredWidth(stringBounder), dimensionToUse.getHeight()
-				- shadowview, 3);
-		ug.translate(shadowview, shadowview);
-		shadowShape.drawU(ug);
-		ug.translate(-shadowview, -shadowview);
+		final double textWidth = getTextWidth(stringBounder);
+		final double textHeight = getTextHeight(stringBounder);
 
-		ug.getParam().setColor(foregroundColor);
-		ug.getParam().setBackcolor(foregroundColor);
-		ug.draw(x, 0, new URectangle(getPreferredWidth(stringBounder), dimensionToUse.getHeight() - shadowview));
+		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;
+		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;
+
+		ug.getParam().setColor(getFontColor());
+		textBlock.drawU(ug, xpos, ypos + getMarginY());
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return 0;
+		return getTextHeight(stringBounder) + 20;
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return 10;
+		return getTextWidth(stringBounder) + 30;
 	}
 
 }

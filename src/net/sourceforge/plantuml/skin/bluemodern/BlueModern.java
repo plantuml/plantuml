@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6008 $
+ * Revision $Revision: 6052 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -94,8 +94,24 @@ public class BlueModern implements Skin {
 		if (type == ComponentType.NOTE) {
 			return new ComponentBlueModernNote(Color.WHITE, Color.BLACK, Color.BLACK, normalFont, stringsToDisplay);
 		}
-		if (type == ComponentType.ALIVE_LINE) {
-			return new ComponentBlueModernActiveLine(blue1);
+		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
+			return new ComponentBlueModernActiveLine(blue1, true, true);
+		}
+		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN) {
+			return new ComponentBlueModernActiveLine(blue1, true, false);
+		}
+		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
+			return new ComponentBlueModernActiveLine(blue1, false, true);
+		}
+		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN) {
+			return new ComponentBlueModernActiveLine(blue1, false, false);
+		}
+		if (type == ComponentType.DELAY_LINE) {
+			return new ComponentBlueModernDelayLine(lineColor);
+		}
+		if (type == ComponentType.DELAY_TEXT) {
+			return new ComponentBlueModernDelayText(Color.BLACK, param.getFont(FontParam.SEQUENCE_DELAY, null),
+					stringsToDisplay);
 		}
 		if (type == ComponentType.DESTROY) {
 			return new ComponentRoseDestroy(red);

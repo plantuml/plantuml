@@ -42,15 +42,15 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
 
-public class CommandElse2 extends SingleLineCommand2<ActivityDiagram2> {
+public class CommandEnd2 extends SingleLineCommand2<ActivityDiagram2> {
 
-	public CommandElse2(ActivityDiagram2 diagram) {
+	public CommandEnd2(ActivityDiagram2 diagram) {
 		super(diagram, getRegexConcat());
 	}
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"),
-					new RegexLeaf("WHEN", "(?:else\\s*(?:when\\s+(.*))?)?"),
+					new RegexLeaf("end"),
 					new RegexLeaf("$"));
 	}
 
@@ -60,7 +60,7 @@ public class CommandElse2 extends SingleLineCommand2<ActivityDiagram2> {
 //		if (getSystem().getLastEntityConsulted() == null) {
 //			return CommandExecutionResult.error("No if for this endif");
 //		}
-		getSystem().else2(arg.get("WHEN").get(0));
+		getSystem().end();
 
 		return CommandExecutionResult.ok();
 	}

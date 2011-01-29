@@ -33,11 +33,14 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.Preprocessor;
@@ -47,11 +50,12 @@ import net.sourceforge.plantuml.preproc.UncommentReadLine;
 final public class BlockUmlBuilder {
 
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
+	private final Set<File> usedFiles = new HashSet<File>();
 
 	public BlockUmlBuilder(List<String> config, Defines defines, Reader reader) throws IOException {
 		Preprocessor includer = null;
 		try {
-			includer = new Preprocessor(new UncommentReadLine(new ReadLineReader(reader)), defines);
+			includer = new Preprocessor(new UncommentReadLine(new ReadLineReader(reader)), defines, usedFiles);
 			init(includer, config);
 		} finally {
 			if (includer != null) {
@@ -96,6 +100,10 @@ final public class BlockUmlBuilder {
 
 	public List<BlockUml> getBlockUmls() {
 		return Collections.unmodifiableList(blocks);
+	}
+
+	public final Set<File> getIncludedFiles() {
+		return Collections.unmodifiableSet(usedFiles);
 	}
 
 	/*

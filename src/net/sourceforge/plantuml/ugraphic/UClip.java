@@ -31,6 +31,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 public class UClip {
@@ -74,21 +75,71 @@ public class UClip {
 
 	public boolean isInside(double xp, double yp) {
 		if (xp < x) {
+			assert getClippedX(xp) != xp;
 			return false;
 		}
 		if (xp > x + width) {
+			assert getClippedX(xp) != xp;
 			return false;
 		}
 		if (yp < y) {
+			assert getClippedY(yp) != yp;
 			return false;
 		}
 		if (yp > y + height) {
+			assert getClippedY(yp) != yp;
 			return false;
 		}
+		assert getClippedX(xp) == xp;
+		assert getClippedY(yp) == yp;
 		return true;
 	}
 
 	public Rectangle2D.Double getClippedRectangle(Rectangle2D.Double r) {
 		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));
+	}
+
+	public Line2D.Double getClippedLine(Line2D.Double line) {
+		if (isInside(line.x1, line.y1) && isInside(line.x2, line.y2)) {
+			return line;
+		}
+		if (isInside(line.x1, line.y1) == false && isInside(line.x2, line.y2) == false) {
+			return null;
+		}
+		if (line.x1 != line.x2 && line.y1 != line.y2) {
+			return null;
+		}
+		assert line.x1 == line.x2 || line.y1 == line.y2;
+		if (line.y1 == line.y2) {
+			final double newx1 = getClippedX(line.x1);
+			final double newx2 = getClippedX(line.x2);
+			return new Line2D.Double(newx1, line.y1, newx2, line.y2);
+		}
+		if (line.x1 == line.x2) {
+			final double newy1 = getClippedY(line.y1);
+			final double newy2 = getClippedY(line.y2);
+			return new Line2D.Double(line.x1, newy1, line.x2, newy2);
+		}
+		throw new IllegalStateException();
+	}
+
+	private double getClippedX(double xp) {
+		if (xp < x) {
+			return x;
+		}
+		if (xp > x + width) {
+			return x + width;
+		}
+		return xp;
+	}
+
+	private double getClippedY(double yp) {
+		if (yp < y) {
+			return y;
+		}
+		if (yp > y + height) {
+			return y + height;
+		}
+		return yp;
 	}
 }

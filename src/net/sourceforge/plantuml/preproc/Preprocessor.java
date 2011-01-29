@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5200 $
+ * Revision $Revision: 6070 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,9 +48,9 @@ public class Preprocessor implements ReadLine {
 	private final PreprocessorInclude rawSource;
 	private final IfManager source;
 
-	public Preprocessor(ReadLine reader, Defines defines) {
+	public Preprocessor(ReadLine reader, Defines defines, Set<File> filesUsed) {
 		this.defines = defines;
-		this.rawSource = new PreprocessorInclude(reader);
+		this.rawSource = new PreprocessorInclude(reader, filesUsed);
 		this.source = new IfManager(rawSource, defines);
 	}
 

@@ -38,19 +38,25 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 public class PendingLink {
 
 	private final IEntity entityFrom;
-	private final String label;
+	private final String gotoLabel;
+	private final String linkLabel;
 
-	public PendingLink(IEntity entityFrom, String label) {
+	public PendingLink(IEntity entityFrom, String gotoLabel, String linkLabel) {
 		this.entityFrom = entityFrom;
-		this.label = label;
+		this.gotoLabel = gotoLabel;
+		this.linkLabel = linkLabel;
 	}
 
 	public final IEntity getEntityFrom() {
 		return entityFrom;
 	}
 
-	public final String getLabel() {
-		return label;
+	public final String getGotoLabel() {
+		return gotoLabel;
+	}
+
+	public final String getLinkLabel() {
+		return linkLabel;
 	}
 
 }

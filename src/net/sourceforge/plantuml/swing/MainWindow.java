@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5885 $
+ * Revision $Revision: 6075 $
  *
  */
 package net.sourceforge.plantuml.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -83,6 +84,7 @@ public class MainWindow extends JFrame {
 	private final JList jList1 = new JList();
 	private final JScrollPane scrollPane;
 	private final JButton changeDirButton = new JButton("Change Directory");
+	// private final JButton refreshButton = new JButton("Refresh");
 	private final JTextField extensions = new JTextField();
 
 	final private List<SimpleLine> currentDirectoryListing = new ArrayList<SimpleLine>();
@@ -128,6 +130,11 @@ public class MainWindow extends JFrame {
 		prefs.put(KEY_PATTERN, ext);
 		changeDir(dirWatcher.getDir());
 	}
+	
+	private void refreshReloadDir() {
+		changeDir(dirWatcher.getDir());
+	}
+
 
 	private String getRegexpPattern(String ext) {
 		final Pattern p = Pattern.compile("\\w+");
@@ -166,6 +173,10 @@ public class MainWindow extends JFrame {
 		south.add(labelFileExtensions, BorderLayout.WEST);
 		south.add(extensions, BorderLayout.CENTER);
 
+//		final JPanel southSouth = new JPanel(new GridLayout(1, 2));
+//		southSouth.add(changeDirButton);
+//		southSouth.add(refreshButton);
+//		south.add(southSouth, BorderLayout.SOUTH);
 		south.add(changeDirButton, BorderLayout.SOUTH);
 
 		getContentPane().add(south, BorderLayout.SOUTH);
@@ -190,6 +201,11 @@ public class MainWindow extends JFrame {
 				displayDialogChangeDir();
 			}
 		});
+//		refreshButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				refreshReloadDir();
+//			}
+//		});
 
 		extensions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

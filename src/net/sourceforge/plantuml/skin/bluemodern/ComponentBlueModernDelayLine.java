@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6053 $
+ * Revision $Revision: 4169 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -39,40 +39,37 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class ComponentBlueModernActiveLine extends AbstractComponent {
+public class ComponentBlueModernDelayLine extends AbstractComponent {
 
-	private final int shadowview = 3;
-	private final Color foregroundColor;
+	private final Color color;
 
-	public ComponentBlueModernActiveLine(Color foregroundColor, boolean closeUp, boolean closeDown) {
-		this.foregroundColor = foregroundColor;
+	public ComponentBlueModernDelayLine(Color color) {
+		this.color = color;
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;
-		final ShadowShape shadowShape = new ShadowShape(getPreferredWidth(stringBounder), dimensionToUse.getHeight()
-				- shadowview, 3);
-		ug.translate(shadowview, shadowview);
-		shadowShape.drawU(ug);
-		ug.translate(-shadowview, -shadowview);
-
-		ug.getParam().setColor(foregroundColor);
-		ug.getParam().setBackcolor(foregroundColor);
-		ug.draw(x, 0, new URectangle(getPreferredWidth(stringBounder), dimensionToUse.getHeight() - shadowview));
+		ug.getParam().setColor(color);
+		ug.getParam().setBackcolor(color);
+		stroke(ug, 1, 4);
+		final int x = (int) (dimensionToUse.getWidth() / 2);
+		ug.setAntiAliasing(false);
+		ug.draw(x + 1, 0, new ULine(0, dimensionToUse.getHeight()));
+		ug.setAntiAliasing(true);
+		ug.getParam().setStroke(new UStroke());
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return 0;
+		return 20;
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return 10;
+		return 2;
 	}
 
 }

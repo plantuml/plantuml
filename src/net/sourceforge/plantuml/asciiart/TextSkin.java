@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6008 $
+ * Revision $Revision: 6046 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -73,7 +73,16 @@ public class TextSkin implements Skin {
 		if (type == ComponentType.DELAY_LINE) {
 			return new ComponentTextLine(fileFormat);
 		}
-		if (type == ComponentType.ALIVE_LINE) {
+		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
+			return new ComponentTextActiveLine(fileFormat);
+		}
+		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN) {
+			return new ComponentTextActiveLine(fileFormat);
+		}
+		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
+			return new ComponentTextActiveLine(fileFormat);
+		}
+		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN) {
 			return new ComponentTextActiveLine(fileFormat);
 		}
 		if (type == ComponentType.NOTE) {

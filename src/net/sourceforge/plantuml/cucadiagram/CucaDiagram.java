@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5877 $
+ * Revision $Revision: 6062 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -332,9 +332,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 	}
 
-	private void createFilesTxt(OutputStream os, int index, FileFormat fileFormat) {
-		throw new UnsupportedOperationException();
-		// TODO Auto-generated method stub
+	private void createFilesTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		final CucaDiagramTxtMaker maker = new CucaDiagramTxtMaker(this, fileFormat);
+		maker.createFiles(os, index);
 	}
 
 	public final Rankdir getRankdir() {

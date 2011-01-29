@@ -54,7 +54,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram2> {
 					new RegexLeaf("\\s*"),
 					new RegexLeaf("TEST", "[\"(](.+)[\")]"),
 					new RegexLeaf("\\s*"),
-					new RegexLeaf("(then)?"),
+					new RegexLeaf("WHEN", "(?:then\\s*(?:when\\s+(.*))?)?"),
 					new RegexLeaf("$"));
 	}
 
@@ -62,7 +62,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram2> {
 	@Override
 	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
 //
-		getSystem().startIf(arg.get("TEST").get(0));
+		getSystem().startIf(arg.get("TEST").get(0), arg.get("WHEN").get(0));
 //
 //		int lenght = 2;
 //

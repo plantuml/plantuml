@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5794 $
+ * Revision $Revision: 6070 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -38,8 +38,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
 
@@ -49,7 +51,7 @@ public class DirWatcher {
 	final private Option option;
 	final private String pattern;
 
-	final private Map<File, Long> modifieds = new HashMap<File, Long>();
+	final private Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
 
 	public DirWatcher(File dir, Option option, String pattern) {
 		this.dir = dir;
@@ -72,16 +74,17 @@ public class DirWatcher {
 			if (fileToProcess(f.getName()) == false) {
 				continue;
 			}
-			final long modified = f.lastModified();
-			final Long previousModified = modifieds.get(f);
+			final FileWatcher watcher = modifieds.get(f);
 
-			if (previousModified == null || previousModified.longValue() != modified) {
+			if (watcher == null || watcher.hasChanged()) {
 				final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
 						option.getConfig(), option.getCharset(), option.getFileFormatOption());
+				final Set<File> files = new HashSet<File>(sourceFileReader.getIncludedFiles());
+				files.add(f);
 				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
 					result.add(g);
 				}
-				modifieds.put(f, modified);
+				modifieds.put(f, new FileWatcher(files));
 			}
 		}
 	}

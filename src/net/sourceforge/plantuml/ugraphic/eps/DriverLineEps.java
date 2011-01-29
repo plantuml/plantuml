@@ -31,6 +31,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
+import java.awt.geom.Line2D;
+
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;
@@ -50,20 +52,23 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
 		final ULine shape = (ULine) ushape;
 
+		double x2 = x + shape.getDX();
+		double y2 = y + shape.getDY();
+		
 		final UClip clip = clipContainer.getClip();
-
 		if (clip != null) {
-			if (clip.isInside(x, y) == false) {
+			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));
+			if (line == null) {
 				return;
 			}
-			if (clip.isInside(x + shape.getDX(), y + shape.getDY()) == false) {
-				return;
-			}
+			x = line.x1;
+			y = line.y1;
+			x2 = line.x2;
+			y2 = line.y2;
 		}
 
-		//final String color = param.getColor() == null ? "none" : HtmlColor.getAsHtml(param.getColor());
 		eps.setStrokeColor(param.getColor());
 		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDasharrayEps());
-		eps.epsLine(x, y, x + shape.getDX(), y + shape.getDY());
+		eps.epsLine(x, y, x2, y2);
 	}
 }
