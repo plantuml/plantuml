@@ -58,20 +58,33 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 	}
 
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), new RegexOr("FIRST", true, new RegexLeaf("STAR", "(\\(\\*\\))"),
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), new RegexLeaf("BAR",
-						"(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), new RegexLeaf("QUOTED",
-						"\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")), new RegexLeaf("\\s*"), new RegexLeaf(
-				"STEREOTYPE", "(\\<\\<.*\\>\\>)?"), new RegexLeaf("\\s*"), new RegexLeaf("BACKCOLOR", "(#\\w+)?"),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"),
-				new RegexLeaf("\\s*"), new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), new RegexLeaf("\\s*"),
-				new RegexOr("FIRST2", new RegexLeaf("STAR2", "(\\(\\*\\))"), new RegexLeaf("OPENBRACKET2", "(\\{)"),
-						new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), new RegexLeaf("BAR2",
-								"(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), new RegexLeaf("QUOTED2",
-								"\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")), new RegexLeaf("\\s*"), new RegexLeaf(
-						"STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), new RegexLeaf("\\s*"), new RegexLeaf("BACKCOLOR2",
-						"(#\\w+)?"), new RegexLeaf("$"));
+		return new RegexConcat(
+				new RegexLeaf("^"), // 
+				new RegexOr("FIRST", true, // 
+						new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
+						new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), // 
+						new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
+						new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), // 
+				new RegexLeaf("\\s*"), // 
+				new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), // 
+				new RegexLeaf("\\s*"), //
+				new RegexOr("FIRST2", // 
+						new RegexLeaf("STAR2", "(\\(\\*(top)?\\))"), // 
+						new RegexLeaf("OPENBRACKET2", "(\\{)"), // 
+						new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), // 
+						new RegexLeaf("BAR2", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), // 
+						new RegexLeaf("QUOTED2", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
+				new RegexLeaf("\\s*"), // 
+				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("BACKCOLOR2", "(#\\w+)?"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
@@ -124,6 +137,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		if (arg.get("STAR" + suf).get(0) != null) {
 			if (start) {
+				if (arg.get("STAR" + suf).get(1) != null) {
+					system.getStart().setTop(true);
+				}
 				return system.getStart();
 			}
 			return system.getEnd();

@@ -89,7 +89,12 @@ abstract class Step1Abstract {
 			return;
 		}
 		assert n.getType() == LifeEventType.ACTIVATE;
-		line.addSegmentVariation(LifeSegmentVariation.LARGER, pos, n.getSpecificBackColor());
+
+		int delta = 0;
+		if (message.isCreate()) {
+			delta += 10;
+		}
+		line.addSegmentVariation(LifeSegmentVariation.LARGER, pos + delta, n.getSpecificBackColor());
 	}
 
 	protected final void afterMessage(StringBounder stringBounder, LifeEvent n, final double pos) {
@@ -150,7 +155,8 @@ abstract class Step1Abstract {
 		freeY += v;
 	}
 
-	protected final NoteBox createNoteBox(StringBounder stringBounder, Arrow arrow, Component noteComp, NotePosition notePosition) {
+	protected final NoteBox createNoteBox(StringBounder stringBounder, Arrow arrow, Component noteComp,
+			NotePosition notePosition) {
 		final LivingParticipantBox p = arrow.getParticipantAt(stringBounder, notePosition);
 		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, notePosition);
 

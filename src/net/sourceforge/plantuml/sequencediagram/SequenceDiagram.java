@@ -38,7 +38,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final List<Event> events = new ArrayList<Event>();
 
-	private final List<ParticipantEnglober> participantEnglobers = new ArrayList<ParticipantEnglober>();
+	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
 
 	private Skin skin = new ProtectedSkin(new Rose());
 
@@ -77,6 +77,7 @@ public class SequenceDiagram extends UmlDiagram {
 		if (result == null) {
 			result = new Participant(ParticipantType.PARTICIPANT, code, display);
 			participants.put(code, result);
+			participantEnglobers2.put(result, participantEnglober);
 		}
 		return result;
 	}
@@ -96,6 +97,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		final Participant result = new Participant(type, code, display);
 		participants.put(code, result);
+		participantEnglobers2.put(result, participantEnglober);
 		return result;
 	}
 
@@ -266,65 +268,98 @@ public class SequenceDiagram extends UmlDiagram {
 		return UmlDiagramType.SEQUENCE;
 	}
 
-	private Participant boxStart;
-	private List<String> boxStartComment;
-	private HtmlColor boxColor;
-	private boolean boxPending = false;
+//	private Participant boxStart;
+//	private List<String> boxStartComment;
+//	private HtmlColor boxColor;
+//	private boolean boxPending = false;
+	
+	private ParticipantEnglober participantEnglober;
 
 	public void boxStart(List<String> comment, HtmlColor color) {
-		if (boxPending) {
+		if (participantEnglober != null) {
 			throw new IllegalStateException();
 		}
-		this.boxStart = getLastParticipant();
-		this.boxStartComment = comment;
-		this.boxColor = color;
-		this.boxPending = true;
+		this.participantEnglober = new ParticipantEnglober(comment, color);
 	}
 
 	public void endBox() {
-		if (boxPending == false) {
+		if (participantEnglober == null) {
 			throw new IllegalStateException();
 		}
-		final Participant last = getLastParticipant();
-		this.participantEnglobers.add(new ParticipantEnglober(next(boxStart), last, boxStartComment, boxColor));
-		this.boxStart = null;
-		this.boxStartComment = null;
-		this.boxColor = null;
-		this.boxPending = false;
+		this.participantEnglober = null;
 	}
 
 	public boolean isBoxPending() {
-		return boxPending;
+		return participantEnglober != null;
 	}
 
-	private Participant next(Participant p) {
-		if (p == null) {
-			return participants.values().iterator().next();
-		}
-		for (final Iterator<Participant> it = participants.values().iterator(); it.hasNext();) {
-			final Participant current = it.next();
-			if (current == p && it.hasNext()) {
-				return it.next();
-			}
-		}
-		throw new IllegalArgumentException("p=" + p.getCode());
-	}
-
-	private Participant getLastParticipant() {
-		Participant result = null;
-		for (Participant p : participants.values()) {
-			result = p;
-		}
-		return result;
-	}
-
-	public final List<ParticipantEnglober> getParticipantEnglobers() {
-		return Collections.unmodifiableList(participantEnglobers);
-	}
+//	private Participant next(Participant p) {
+//		if (p == null) {
+//			return participants.values().iterator().next();
+//		}
+//		for (final Iterator<Participant> it = participants.values().iterator(); it.hasNext();) {
+//			final Participant current = it.next();
+//			if (current == p && it.hasNext()) {
+//				return it.next();
+//			}
+//		}
+//		throw new IllegalArgumentException("p=" + p.getCode());
+//	}
+//
+//	private Participant getLastParticipant() {
+//		Participant result = null;
+//		for (Participant p : participants.values()) {
+//			result = p;
+//		}
+//		return result;
+//	}
+//
+//	public final List<ParticipantEnglober> getParticipantEnglobers() {
+//		return Collections.unmodifiableList(participantEnglobers);
+//	}
 
 	@Override
 	public int getNbImages() {
 		return getSequenceDiagramPngMaker(new FileFormatOption(FileFormat.PNG)).getNbPages();
+	}
+
+	public void removeHiddenParticipants() {
+		for (Participant p : new ArrayList<Participant>(participants.values())) {
+			if (isAlone(p)) {
+				remove(p);
+			}
+		}
+	}
+
+	private void remove(Participant p) {
+		final boolean ok = participants.values().remove(p);
+		if (ok==false) {
+			throw new IllegalArgumentException();
+		}
+		participantEnglobers2.remove(p);
+	}
+
+	private boolean isAlone(Participant p) {
+		for (Event ev : events) {
+			if (ev.dealWith(p)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void putParticipantInLast(String code) {
+		final Participant p = participants.get(code);
+		if (p == null) {
+			throw new IllegalArgumentException(code);
+		}
+		participants.remove(code);
+		participants.put(code, p);
+		participantEnglobers2.put(p, participantEnglober);
+	}
+
+	public ParticipantEnglober getEnglober(Participant p) {
+		return participantEnglobers2.get(p);
 	}
 
 }

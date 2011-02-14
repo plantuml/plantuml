@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5933 $
+ * Revision $Revision: 6097 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -105,6 +105,15 @@ public class SequenceDiagramFactory extends AbstractUmlSystemCommandFactory {
 
 	public SequenceDiagram getSystem() {
 		return system;
+	}
+	
+	
+	@Override
+	public String checkFinalError() {
+		if (system.isHideUnlinkedData()) {
+			system.removeHiddenParticipants();
+		}
+		return super.checkFinalError();
 	}
 
 }

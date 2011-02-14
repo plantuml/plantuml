@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3835 $
+ * Revision $Revision: 6097 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -46,5 +46,10 @@ public class Newpage implements Event {
 	public final List<String> getTitle() {
 		return title;
 	}
+	
+	public boolean dealWith(Participant someone) {
+		return false;
+	}
+
 
 }

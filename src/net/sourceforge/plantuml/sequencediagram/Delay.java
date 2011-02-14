@@ -47,4 +47,8 @@ public class Delay implements Event {
 		return text;
 	}
 
+	public boolean dealWith(Participant someone) {
+		return false;
+	}
+
 }

@@ -61,7 +61,7 @@ public class CommandLinkUsecase2 extends SingleLineCommand2<UsecaseDiagram> {
 				getGroup("ENT1"),
 				new RegexLeaf("\\s*"),
 				new RegexOr(
-						new RegexLeaf("LEFT_TO_RIGHT", "(([-=.]+)(left|right|up|down|le?|ri?|up?|do?)?([-=.]*)([\\]>]|\\|[>\\]])?)"),
+						new RegexLeaf("LEFT_TO_RIGHT", "(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)([\\]>]|\\|[>\\]])?)"),
 						new RegexLeaf("RIGHT_TO_LEFT", "(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
 				new RegexLeaf("\\s*"),
 				getGroup("ENT2"),

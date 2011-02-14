@@ -55,7 +55,8 @@ public class CommandParticipant2 extends SingleLineCommand<SequenceDiagram> {
 	protected CommandExecutionResult executeArg(List<String> arg) {
 		final String code = arg.get(1);
 		if (getSystem().participants().containsKey(code)) {
-			return CommandExecutionResult.error("Duplicate participant : " + code);
+			getSystem().putParticipantInLast(code);
+			return CommandExecutionResult.ok();
 		}
 
 		final List<String> strings = StringUtils.getWithNewlines(arg.get(2));

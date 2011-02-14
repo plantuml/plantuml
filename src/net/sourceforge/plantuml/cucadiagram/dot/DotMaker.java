@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6035 $
+ * Revision $Revision: 6121 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -99,6 +99,8 @@ final public class DotMaker implements GraphvizMaker {
 
 	private final Set<String> hasAlreadyOneIncommingArrowLenghtOne;
 
+	final private Set<String> rankMin = new HashSet<String>();
+
 	public static void goJunit() {
 		isJunit = true;
 	}
@@ -123,6 +125,7 @@ final public class DotMaker implements GraphvizMaker {
 		printGroups(sb, null);
 		printEntities(sb, getUnpackagedEntities());
 		printLinks(sb, data.getLinks());
+		printRanking(sb);
 		sb.append("}");
 
 		// System.err.println(sb);
@@ -131,6 +134,20 @@ final public class DotMaker implements GraphvizMaker {
 		}
 		return sb.toString();
 	}
+
+	private void printRanking(StringBuilder sb) {
+		if (rankMin.size() == 0) {
+			return;
+		}
+		sb.append("{ rank = min;");
+		for (String id : rankMin) {
+			sb.append(id);
+			sb.append(";");
+		}
+		sb.append("}");
+
+	}
+
 
 	private void initPrintWriter(StringBuilder sb) {
 
@@ -891,6 +908,11 @@ final public class DotMaker implements GraphvizMaker {
 		} else {
 			throw new IllegalStateException(type.toString() + " " + data.getUmlDiagramType());
 		}
+		
+		if (entity.isTop()) {
+			rankMin.add(entity.getUid());
+		}
+
 	}
 
 	private ColorParam getEndColorParam() {

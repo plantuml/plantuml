@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5728 $
+ * Revision $Revision: 6109 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -55,7 +55,8 @@ public class CommandParticipant extends SingleLineCommand<SequenceDiagram> {
 	protected CommandExecutionResult executeArg(List<String> arg) {
 		final String code = arg.get(2);
 		if (getSystem().participants().containsKey(code)) {
-			return CommandExecutionResult.error("Duplicate participant : "+code);
+			getSystem().putParticipantInLast(code);
+			return CommandExecutionResult.ok();
 		}
 
 		List<String> strings = null;

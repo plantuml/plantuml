@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5694 $
+ * Revision $Revision: 6121 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -60,10 +60,19 @@ public class Entity implements IEntity {
 
 	private DrawFile imageFile;
 	private String url;
+	
+	private boolean top;
+
+	public final boolean isTop() {
+		return top;
+	}
+
+	public final void setTop(boolean top) {
+		this.top = top;
+	}
 
 	public Entity(String code, String display, EntityType type, Group entityPackage) {
 		this("cl" + UniqueSequence.getValue(), code, display, type, entityPackage);
-
 	}
 
 	public Entity(String uid, String code, String display, EntityType type, Group entityPackage) {

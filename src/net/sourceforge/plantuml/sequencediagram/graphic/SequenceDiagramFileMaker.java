@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6113 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -103,11 +103,11 @@ public class SequenceDiagramFileMaker implements FileMaker {
 				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage());
 
 		for (Participant p : sequenceDiagram.participants().values()) {
-			initializer.addParticipant(p);
+			initializer.addParticipant(p, sequenceDiagram.getEnglober(p));
 		}
-		for (ParticipantEnglober englober : sequenceDiagram.getParticipantEnglobers()) {
-			initializer.addParticipantEnglober(englober);
-		}
+//		for (ParticipantEnglober englober : sequenceDiagram.getParticipantEnglobers()) {
+//			initializer.addParticipantEnglober(englober);
+//		}
 
 		for (Event ev : sequenceDiagram.events()) {
 			initializer.addEvent(ev);

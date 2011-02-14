@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5200 $
+ * Revision $Revision: 6107 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -39,9 +39,9 @@ import java.util.regex.Pattern;
 
 class IfManager implements ReadLine {
 
-	protected static final Pattern ifdefPattern = Pattern.compile("^!if(n)?def\\s+([A-Za-z_][A-Za-z_0-9]*)$");
-	protected static final Pattern elsePattern = Pattern.compile("^!else$");
-	protected static final Pattern endifPattern = Pattern.compile("^!endif$");
+	protected static final Pattern ifdefPattern = Pattern.compile("^\\s*!if(n)?def\\s+([A-Za-z_][A-Za-z_0-9]*)$");
+	protected static final Pattern elsePattern = Pattern.compile("^\\s*!else$");
+	protected static final Pattern endifPattern = Pattern.compile("^\\s*!endif$");
 
 	private final Defines defines;
 	private final ReadLine source;

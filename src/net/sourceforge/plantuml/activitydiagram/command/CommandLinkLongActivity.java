@@ -65,7 +65,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"),
 				new RegexOr("FIRST", true,
-						new RegexLeaf("STAR", "(\\(\\*\\))"),
+						new RegexLeaf("STAR", "(\\(\\*(top)?\\))"),
 						new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"),
 						new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"),
 						new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
@@ -74,7 +74,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("\\s*"),
 				new RegexLeaf("BACKCOLOR", "(#\\w+)?"),
 				new RegexLeaf("\\s*"),
-				new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"),
+				new RegexLeaf("ARROW", "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=]))?[=-]*\\>)"),
 				new RegexLeaf("\\s*"),
 				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"),
 				new RegexLeaf("\\s*"),

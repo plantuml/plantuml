@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6005 $
+ * Revision $Revision: 6104 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -90,10 +90,11 @@ abstract class AbstractGraphviz implements Graphviz {
 			return;
 		}
 		final String cmd = getCommandLine();
+		ProcessRunner p = null;
 		try {
 			Log.info("Starting Graphviz process " + cmd);
 			Log.info("DotString size: " + dotString.length());
-			final ProcessRunner p = new ProcessRunner(cmd);
+			p = new ProcessRunner(cmd);
 			p.run(dotString.getBytes(), os);
 			Log.info("Ending process ok");
 		} catch (Throwable e) {
@@ -105,8 +106,20 @@ abstract class AbstractGraphviz implements Graphviz {
 			Log.error("");
 		} finally {
 			Log.info("Ending Graphviz process");
-
 		}
+		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getError().length() > 0) {
+			Log.error("GraphViz error stream : " + p.getError());
+			if (OptionFlags.getInstance().isCheckDotError()) {
+				throw new IllegalStateException("Dot error " + p.getError());
+			}
+		}
+		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getOut().length() > 0) {
+			Log.error("GraphViz out stream : " + p.getOut());
+			if (OptionFlags.getInstance().isCheckDotError()) {
+				throw new IllegalStateException("Dot out " + p.getOut());
+			}
+		}
+
 	}
 
 	private boolean illegalDotExe() {

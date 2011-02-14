@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5977 $
+ * Revision $Revision: 6096 $
  *
  */
 package net.sourceforge.plantuml;
@@ -67,6 +67,7 @@ public class OptionFlags {
 	private String dotExecutable = null;
 	private boolean gui = false;
 	private boolean quiet = false;
+	private boolean checkDotError = false;
 
 	private OptionFlags() {
 		reset();
@@ -162,6 +163,14 @@ public class OptionFlags {
 
 	public final void setQuiet(boolean quiet) {
 		this.quiet = quiet;
+	}
+
+	public final boolean isCheckDotError() {
+		return checkDotError;
+	}
+
+	public final void setCheckDotError(boolean checkDotError) {
+		this.checkDotError = checkDotError;
 	}
 
 }

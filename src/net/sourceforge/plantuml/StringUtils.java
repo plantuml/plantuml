@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6060 $
+ * Revision $Revision: 6110 $
  *
  */
 package net.sourceforge.plantuml;
@@ -329,7 +329,8 @@ public class StringUtils {
 
 	public static String uncommentSource(String source) {
 		final StringReader sr = new StringReader(source);
-		final UncommentReadLine un = new UncommentReadLine(new ReadLineReader(sr));
+		final UncommentReadLine un = new UncommentReadLine(new ReadLineReader(
+				sr));
 		final StringBuilder sb = new StringBuilder();
 		String s = null;
 		try {
@@ -346,4 +347,18 @@ public class StringUtils {
 		return sb.toString();
 	}
 
+	public static boolean isDiagramCacheable(String uml) {
+		uml = uml.toLowerCase();
+		if (uml.startsWith("@startuml\nversion\n")) {
+			return false;
+		}
+		if (uml.startsWith("@startuml\ntestdot\n")) {
+			return false;
+		}
+		if (uml.startsWith("@startuml\nsudoku\n")) {
+			return false;
+		}
+		return true;
+		
+	}
 }

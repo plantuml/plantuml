@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6070 $
+ * Revision $Revision: 6107 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.FileSystem;
 
 class PreprocessorInclude implements ReadLine {
 
-	private static final Pattern includePattern = Pattern.compile("^!include\\s+\"?([^\"]+)\"?$");
+	private static final Pattern includePattern = Pattern.compile("^\\s*!include\\s+\"?([^\"]+)\"?$");
 
 	private final ReadLine reader2;
 	private int numLine = 0;

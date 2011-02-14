@@ -73,7 +73,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage());
 
 		for (Participant p : sequenceDiagram.participants().values()) {
-			initializer.addParticipant(p);
+			initializer.addParticipant(p, null);
 		}
 		for (Event ev : sequenceDiagram.events()) {
 			initializer.addEvent(ev);

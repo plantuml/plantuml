@@ -57,4 +57,8 @@ public class MessageExo extends AbstractMessage {
 		return type;
 	}
 
+	public boolean dealWith(Participant someone) {
+		return participant == someone;
+	}
+
 }

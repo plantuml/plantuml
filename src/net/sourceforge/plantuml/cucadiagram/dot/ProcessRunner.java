@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5650 $
+ * Revision $Revision: 6107 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,11 +50,15 @@ public class ProcessRunner {
 	public ProcessRunner(String cmd) {
 		this.cmd = cmd;
 	}
-	
+
 	static private int cpt = 0;
 
 	public void run(byte in[], OutputStream redirection) throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(cmd);
+		run(in, redirection, null);
+	}
+
+	public void run(byte in[], OutputStream redirection, File dir) throws IOException, InterruptedException {
+		final Process process = Runtime.getRuntime().exec(cmd, null, dir);
 		final ThreadStream errorStream = new ThreadStream(process.getErrorStream(), null);
 		final ThreadStream outStream = new ThreadStream(process.getInputStream(), redirection);
 		errorStream.start();
@@ -68,7 +73,7 @@ public class ProcessRunner {
 		outStream.join(10000L);
 		this.out = outStream.sb.toString();
 		this.error = errorStream.sb.toString();
-		Log.info("RUN nb = "+(++cpt));
+		Log.info("RUN nb = " + (++cpt));
 	}
 
 	static class ThreadStream extends Thread {

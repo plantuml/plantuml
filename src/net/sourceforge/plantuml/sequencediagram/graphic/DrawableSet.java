@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5829 $
+ * Revision $Revision: 6113 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
+import net.sourceforge.plantuml.sequencediagram.ParticipantEngloberContexted;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -63,7 +64,8 @@ class DrawableSet {
 
 	private final Map<Participant, LivingParticipantBox> participants = new LinkedHashMap<Participant, LivingParticipantBox>();
 	private final Map<Event, GraphicalElement> events = new HashMap<Event, GraphicalElement>();
-	private final List<ParticipantEnglober> participantEnglobers = new ArrayList<ParticipantEnglober>();
+	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new LinkedHashMap<Participant, ParticipantEnglober>();
+
 	private final List<Event> eventsList = new ArrayList<Event>();
 	private final Skin skin;
 	private final ISkinParam skinParam;
@@ -129,19 +131,41 @@ class DrawableSet {
 	public double getHeadAndEngloberHeight(Participant p, StringBounder stringBounder) {
 		final LivingParticipantBox box = participants.get(p);
 		final double height = box.getParticipantBox().getHeadHeight(stringBounder);
-		final ParticipantEnglober englober = getParticipantEnglober(p);
+		final ParticipantEngloberContexted englober = getParticipantEnglober(p);
 		if (englober == null) {
 			return height;
 		}
-		final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober.getTitle());
+		final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober
+				.getParticipantEnglober().getTitle());
 		final double heightEnglober = comp.getPreferredHeight(stringBounder);
 		return height + heightEnglober;
 	}
 
+	public List<ParticipantEngloberContexted> getExistingParticipantEnglober2() {
+		final List<ParticipantEngloberContexted> result = new ArrayList<ParticipantEngloberContexted>();
+		ParticipantEngloberContexted pending = null;
+		for (Map.Entry<Participant, ParticipantEnglober> ent : participantEnglobers2.entrySet()) {
+			final ParticipantEnglober englober = ent.getValue();
+			if (englober == null) {
+				pending = null;
+				continue;
+			}
+			assert englober != null;
+			if (pending != null && englober == pending.getParticipantEnglober()) {
+				pending.add(ent.getKey());
+				continue;
+			}
+			pending = new ParticipantEngloberContexted(englober, ent.getKey());
+			result.add(pending);
+		}
+		return Collections.unmodifiableList(result);
+	}
+
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
-		for (ParticipantEnglober englober : participantEnglobers) {
-			final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober.getTitle());
+		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober2()) {
+			final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober
+					.getParticipantEnglober().getTitle());
 			final double height = comp.getPreferredHeight(stringBounder);
 			if (height > result) {
 				result = height;
@@ -154,7 +178,7 @@ class DrawableSet {
 	static private final int MARGIN_FOR_ENGLOBERS1 = 2;
 
 	public double getTailHeight(StringBounder stringBounder, boolean showTail) {
-		final double marginForEnglobers = this.participantEnglobers.size() > 0 ? MARGIN_FOR_ENGLOBERS : 0;
+		final double marginForEnglobers = getExistingParticipantEnglober2().size() > 0 ? MARGIN_FOR_ENGLOBERS : 0;
 
 		if (showTail == false) {
 			return 1 + marginForEnglobers;
@@ -167,7 +191,15 @@ class DrawableSet {
 		return r + marginForEnglobers;
 	}
 
-	public void addParticipant(Participant p, LivingParticipantBox box) {
+	public void addParticipant(Participant p, ParticipantEnglober participantEnglober) {
+		participants.put(p, null);
+		participantEnglobers2.put(p, participantEnglober);
+	}
+
+	public void setLivingParticipantBox(Participant p, LivingParticipantBox box) {
+		if (participants.containsKey(p) == false) {
+			throw new IllegalArgumentException();
+		}
 		participants.put(p, box);
 	}
 
@@ -283,16 +315,17 @@ class DrawableSet {
 	}
 
 	private void drawEnglobers(UGraphic ug, double height, Context2D context) {
-		for (ParticipantEnglober englober : participantEnglobers) {
+		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober2()) {
 			double x1 = getX1(englober);
 			final double x2 = getX2(ug.getStringBounder(), englober);
 
-			final Component comp = getEngloberComponent(englober);
+			final Component comp = getEngloberComponent(englober.getParticipantEnglober());
 
 			final double width = x2 - x1;
-			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(), englober);
+			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(),
+					englober.getParticipantEnglober());
 			if (preferedWidth > width) {
-				if (englober.getFirst() == englober.getLast()) {
+				if (englober.getFirst2() == englober.getLast2()) {
 					x1 -= (preferedWidth - width) / 2;
 				}
 				final Dimension2DDouble dim = new Dimension2DDouble(preferedWidth, height);
@@ -313,19 +346,19 @@ class DrawableSet {
 	}
 
 	private Component getEngloberComponent(ParticipantEnglober englober) {
-		final ISkinParam s = englober.getBoxColor() == null ? skinParam : new SkinParamBackcolored(skinParam, englober
-				.getBoxColor());
+		final ISkinParam s = englober.getBoxColor() == null ? skinParam : new SkinParamBackcolored(skinParam,
+				englober.getBoxColor());
 		return skin.createComponent(ComponentType.ENGLOBER, s, englober.getTitle());
 	}
 
-	private double getX1(ParticipantEnglober englober) {
-		final Participant first = englober.getFirst();
+	private double getX1(ParticipantEngloberContexted englober) {
+		final Participant first = englober.getFirst2();
 		final ParticipantBox firstBox = participants.get(first).getParticipantBox();
 		return firstBox.getStartingX() + 1;
 	}
 
-	private double getX2(StringBounder stringBounder, ParticipantEnglober englober) {
-		final Participant last = englober.getLast();
+	private double getX2(StringBounder stringBounder, ParticipantEngloberContexted englober) {
+		final Participant last = englober.getLast2();
 		final ParticipantBox lastBox = participants.get(last).getParticipantBox();
 		return lastBox.getMaxX(stringBounder) - 1;
 	}
@@ -337,32 +370,32 @@ class DrawableSet {
 		line.drawU(ug, getSkin(), skinParam);
 	}
 
-	public void addParticipantEnglober(ParticipantEnglober englober) {
-		participantEnglobers.add(englober);
-	}
+	// public void addParticipantEnglober(ParticipantEnglober englober) {
+	// participantEnglobers.add(englober);
+	// }
 
-	private boolean contains(ParticipantEnglober englober, Participant toTest) {
-		if (toTest == englober.getFirst() || toTest == englober.getLast()) {
-			return true;
-		}
-		boolean inside = false;
-		for (Participant p : participants.keySet()) {
-			if (p == englober.getFirst()) {
-				inside = true;
-			}
-			if (p == toTest) {
-				return inside;
-			}
-			if (p == englober.getLast()) {
-				inside = false;
-			}
-		}
-		throw new IllegalArgumentException();
-	}
+	// private boolean contains(ParticipantEngloberContexted englober, Participant toTest) {
+	// if (toTest == englober.getFirst2() || toTest == englober.getLast2()) {
+	// return true;
+	// }
+	// boolean inside = false;
+	// for (Participant p : participants.keySet()) {
+	// if (p == englober.getFirst2()) {
+	// inside = true;
+	// }
+	// if (p == toTest) {
+	// return inside;
+	// }
+	// if (p == englober.getLast2()) {
+	// inside = false;
+	// }
+	// }
+	// throw new IllegalArgumentException();
+	// }
 
-	private ParticipantEnglober getParticipantEnglober(Participant p) {
-		for (ParticipantEnglober pe : participantEnglobers) {
-			if (contains(pe, p)) {
+	private ParticipantEngloberContexted getParticipantEnglober(Participant p) {
+		for (ParticipantEngloberContexted pe : getExistingParticipantEnglober2()) {
+			if (pe.contains(p)) {
 				return pe;
 			}
 		}
@@ -373,8 +406,8 @@ class DrawableSet {
 		this.topStartingY = topStartingY;
 	}
 
-	public final List<ParticipantEnglober> getParticipantEnglobers() {
-		return Collections.unmodifiableList(participantEnglobers);
-	}
+	// public final List<ParticipantEnglober> getParticipantEnglobers() {
+	// return Collections.unmodifiableList(participantEnglobers);
+	// }
 
 }

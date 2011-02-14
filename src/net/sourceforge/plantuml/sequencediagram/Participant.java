@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4836 $
+ * Revision $Revision: 6099 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -68,6 +68,11 @@ public class Participant implements SpecificBackcolorable {
 
 	public String getCode() {
 		return code;
+	}
+	
+	@Override
+	public String toString() {
+		return getCode();
 	}
 
 	public List<CharSequence> getDisplay() {

@@ -58,13 +58,20 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 	}
 
 	static RegexConcat getRegex() {
-		return new RegexConcat(new RegexLeaf("^"), getRegexGroup("G1"), new RegexLeaf("\\s*"), new RegexOr(
-				new RegexLeaf("AR_TO_RIGHT",
-						"(([-=.]+)(left|right|up|down|le?|ri?|up?|do?)?([-=.]*?\\.*)([\\]>]|\\|[>\\]])?)"),
-				new RegexLeaf("AR_TO_LEFT",
-						"(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
-				new RegexLeaf("\\s*"), getRegexGroup("G2"), new RegexLeaf("\\s*"), new RegexLeaf("END",
-						"(?::\\s*([^\"]+))?$"));
+		return new RegexConcat(new RegexLeaf("^"), //
+				getRegexGroup("G1"),//
+				new RegexLeaf("\\s*"),//
+				new RegexOr(
+				//
+						new RegexLeaf("AR_TO_RIGHT",
+								"(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)([\\]>]|\\|[>\\]])?)"),
+								// "(([-=.]+)(left|right|up|down|le?|ri?|up?|do?)?([-=.]*?\\.*)([\\]>]|\\|[>\\]])?)"),
+						new RegexLeaf("AR_TO_LEFT",
+								"(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
+				new RegexLeaf("\\s*"),//
+				getRegexGroup("G2"),//
+				new RegexLeaf("\\s*"),//
+				new RegexLeaf("END", "(?::\\s*([^\"]+))?$"));
 	}
 
 	private static RegexLeaf getRegexGroup(String name) {
@@ -86,8 +93,7 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 
 		final IEntity cl1 = getSystem().getOrCreateClass(g1);
 		final IEntity cl2 = getSystem().getOrCreateClass(g2);
-		
-		
+
 		if (arg.get("G1").get(1) != null) {
 			cl1.setStereotype(new Stereotype(arg.get("G1").get(1)));
 		}
@@ -105,22 +111,21 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 			linkType = getLinkTypeNormal(queue, arg.get("AR_TO_LEFT").get(1)).getInv();
 		}
 		final Direction dir = getDirection(arg);
-		
+
 		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
 			queue = "-";
 		}
 
 		Link link = new Link(cl1, cl2, linkType, arg.get("END").get(0), queue.length());
-		
+
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
 
-		
 		getSystem().addLink(link);
 		return CommandExecutionResult.ok();
 	}
-	
+
 	private Direction getDirection(Map<String, RegexPartialMatch> arg) {
 		if (arg.get("AR_TO_RIGHT").get(2) != null) {
 			return StringUtils.getQueueDirection(arg.get("AR_TO_RIGHT").get(2));
@@ -130,8 +135,6 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 		}
 		return null;
 	}
-
-
 
 	private CommandExecutionResult executePackageLink(Map<String, RegexPartialMatch> arg) {
 		final String g1 = arg.get("G1").get(0);

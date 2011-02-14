@@ -118,6 +118,14 @@ public abstract class EntityUtils {
 				return ent.getImageFile(searched);
 			}
 
+			public boolean isTop() {
+				return ent.isTop();
+			}
+
+			public void setTop(boolean top) {
+				ent.setTop(top);
+			}
+
 		};
 	}
 

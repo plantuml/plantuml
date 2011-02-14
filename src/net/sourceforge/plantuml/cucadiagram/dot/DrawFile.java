@@ -80,9 +80,10 @@ public class DrawFile {
 
 	private DrawFile(File fPng, String svg, File fEps) {
 		this(new Unlazy<File>(fPng), new Unlazy<String>(svg), new Unlazy<File>(fEps));
-		if (svg.contains("\\")) {
-			throw new IllegalArgumentException();
-		}
+//		if (svg.contains("\\")) {
+//			System.err.println("svg="+svg);
+//			throw new IllegalArgumentException();
+//		}
 	}
 
 	public File getPngOrEps(boolean isEps) throws IOException {

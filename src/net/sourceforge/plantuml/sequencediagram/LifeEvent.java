@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4243 $
+ * Revision $Revision: 6097 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -54,10 +54,13 @@ public class LifeEvent implements Event {
 	public LifeEventType getType() {
 		return type;
 	}
-	
+
 	public HtmlColor getSpecificBackColor() {
 		return backcolor;
 	}
 
+	public boolean dealWith(Participant someone) {
+		return this.p == someone;
+	}
 
 }

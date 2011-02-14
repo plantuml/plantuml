@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5811 $
+ * Revision $Revision: 6097 $
  *
  */
 package net.sourceforge.plantuml;
@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 
 	private boolean rotation;
+	private boolean hideUnlinkedData;
 
 	private int minwidth = Integer.MAX_VALUE;
 
@@ -140,6 +141,14 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 
 	public final int getDpi(FileFormatOption fileFormatOption) {
 		return getSkinParam().getDpi();
+	}
+
+	public final boolean isHideUnlinkedData() {
+		return hideUnlinkedData;
+	}
+
+	public final void setHideUnlinkedData(boolean hideUnlinkedData) {
+		this.hideUnlinkedData = hideUnlinkedData;
 	}
 
 }

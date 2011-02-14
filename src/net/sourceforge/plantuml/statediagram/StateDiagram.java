@@ -28,10 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6085 $
+ * Revision $Revision: 6095 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
+
+import java.util.Arrays;
+import java.util.List;
 
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UniqueSequence;
@@ -102,5 +105,14 @@ public class StateDiagram extends AbstractEntityDiagram {
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.STATE;
 	}
+	
+//	@Override
+//	final protected List<String> getDotStrings() {
+//		return Arrays.asList("nodesep=1.95;", "ranksep=1.8;", "edge [fontsize=11,labelfontsize=11];",
+//		"node [fontsize=11,height=.35,width=.55];");
+//	}
+
+	
+	
 
 }

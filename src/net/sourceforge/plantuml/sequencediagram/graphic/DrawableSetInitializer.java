@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6046 $
+ * Revision $Revision: 6113 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
+import net.sourceforge.plantuml.sequencediagram.ParticipantEngloberContexted;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -164,10 +165,11 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
-		for (ParticipantEnglober pe : drawableSet.getParticipantEnglobers()) {
-			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, pe);
-			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst()).getParticipantBox();
-			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast()).getParticipantBox();
+		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober2()) {
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
+					pe.getParticipantEnglober());
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
 			if (first == last) {
 				final Constraint constraint1 = constraintSet.getConstraintBefore(first);
 				final Constraint constraint2 = constraintSet.getConstraintAfter(last);
@@ -420,21 +422,21 @@ class DrawableSetInitializer {
 				drawableSet.getSkinParam(), null);
 
 		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder));
-		drawableSet.addParticipant(p, new LivingParticipantBox(box, lifeLine));
+		drawableSet.setLivingParticipantBox(p, new LivingParticipantBox(box, lifeLine));
 
 		this.freeX = box.getMaxX(stringBounder);
 	}
 
-	public void addParticipant(Participant p) {
-		drawableSet.addParticipant(p, null);
+	public void addParticipant(Participant p, ParticipantEnglober participantEnglober) {
+		drawableSet.addParticipant(p, participantEnglober);
 	}
 
 	public void addEvent(Event event) {
 		drawableSet.addEvent(event, null);
 	}
 
-	public void addParticipantEnglober(ParticipantEnglober englober) {
-		drawableSet.addParticipantEnglober(englober);
-	}
+	// public void addParticipantEnglober(ParticipantEnglober englober) {
+	// drawableSet.addParticipantEnglober(englober);
+	// }
 
 }

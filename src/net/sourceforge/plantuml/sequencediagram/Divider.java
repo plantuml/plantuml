@@ -46,5 +46,10 @@ public class Divider implements Event {
 	public final List<String> getText() {
 		return text;
 	}
+	
+	public boolean dealWith(Participant someone) {
+		return false;
+	}
+
 
 }

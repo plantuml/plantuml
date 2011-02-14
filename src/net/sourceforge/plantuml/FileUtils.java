@@ -33,8 +33,14 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -79,7 +85,7 @@ public class FileUtils {
 			Log.error("Cannot delete: " + f);
 		}
 	}
-	
+
 	static public File createTempFile(String prefix, String suffix) throws IOException {
 		if (suffix.startsWith(".") == false) {
 			throw new IllegalArgumentException();
@@ -92,6 +98,18 @@ public class FileUtils {
 		return f;
 	}
 
-
+	static public void copyToFile(File src, File dest) throws IOException {
+		if (dest.isDirectory()) {
+			dest = new File(dest, src.getName());
+		}
+		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
+		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest));
+		int lu;
+		while ((lu = fis.read()) != -1) {
+			fos.write(lu);
+		}
+		fos.close();
+		fis.close();
+	}
 
 }

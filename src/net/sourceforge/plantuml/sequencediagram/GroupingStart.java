@@ -72,5 +72,10 @@ public class GroupingStart extends Grouping {
 	public HtmlColor getBackColorGeneral() {
 		return backColorGeneral;
 	}
+	
+	public boolean dealWith(Participant someone) {
+		return false;
+	}
+
 
 }

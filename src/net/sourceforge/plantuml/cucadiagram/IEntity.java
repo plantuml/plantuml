@@ -63,5 +63,10 @@ public interface IEntity extends Imaged, SpecificBackcolorable {
 	public String getCode();
 
 	public DrawFile getImageFile(File searched) throws IOException;
+	
+	public boolean isTop();
+
+	public void setTop(boolean top);
+
 
 }
