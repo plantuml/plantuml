@@ -28,13 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5877 $
+ * Revision $Revision: 6130 $
  *
  */
 package net.sourceforge.plantuml;
 
 public enum FileFormat {
-	PNG, SVG, EPS, EPS_VIA_SVG, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO;
+	PNG, SVG, EPS, EPS_VIA_SVG, ATXT, UTXT, DOT, XMI_STANDARD, XMI_STAR, XMI_ARGO;
 
 	public String getFileSuffix() {
 		if (this == EPS_VIA_SVG) {

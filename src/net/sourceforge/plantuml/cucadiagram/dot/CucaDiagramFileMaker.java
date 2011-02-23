@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6130 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -190,6 +190,8 @@ public final class CucaDiagramFileMaker {
 			return createEpsViaSvg(os, dotStrings, fileFormatOption);
 		} else if (fileFormat == FileFormat.EPS) {
 			return createEps(os, dotStrings, fileFormatOption);
+		} else if (fileFormat == FileFormat.DOT) {
+			return createDot(os, dotStrings, fileFormatOption);
 		} else {
 			throw new UnsupportedOperationException();
 		}
@@ -214,9 +216,7 @@ public final class CucaDiagramFileMaker {
 
 		try {
 			deltaY = 0;
-			populateImages(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-			populateImagesLink(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-			final GraphvizMaker dotMaker = createDotMaker(dotStrings, fileFormatOption);
+			final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
 			final String dotString = dotMaker.createDotString();
 
 			if (OptionFlags.getInstance().isKeepTmpFiles()) {
@@ -411,9 +411,7 @@ public final class CucaDiagramFileMaker {
 
 		final StringBuilder cmap = new StringBuilder();
 		try {
-			populateImages(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-			populateImagesLink(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-			final GraphvizMaker dotMaker = createDotMaker(dotStrings, fileFormatOption);
+			final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
 			final String dotString = dotMaker.createDotString();
 
 			if (OptionFlags.getInstance().isKeepTmpFiles()) {
@@ -466,6 +464,14 @@ public final class CucaDiagramFileMaker {
 		if (cmap.length() > 0) {
 			return cmap.toString();
 		}
+		return null;
+	}
+
+	private String createDot(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+		final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
+		final String dotString = dotMaker.createDotString();
+		os.write(dotString.getBytes());
 		return null;
 	}
 
@@ -625,52 +631,6 @@ public final class CucaDiagramFileMaker {
 		}
 	}
 
-	private GraphvizMaker createDotMaker(List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
-
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		if (diagram.getUmlDiagramType() == UmlDiagramType.STATE
-				|| diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			new CucaDiagramSimplifier(diagram, dotStrings, fileFormat);
-		}
-		final DotData dotData = new DotData(null, diagram.getLinks(), diagram.entities(), diagram.getUmlDiagramType(),
-				diagram.getSkinParam(), diagram.getRankdir(), diagram, diagram);
-
-		dotData.setDpi(diagram.getDpi(fileFormatOption));
-
-		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS || diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			dotData.setStaticImagesMap(staticFilesMap);
-
-			if (diagram.isVisibilityModifierPresent()) {
-				dotData.setVisibilityModifierPresent(true);
-			}
-		}
-
-		return new DotMaker(dotData, dotStrings, fileFormat);
-	}
-
-	private void populateImages(double dpiFactor, int dpi) throws IOException {
-		for (Entity entity : diagram.entities().values()) {
-			final DrawFile f = createImage(entity, dpiFactor, dpi);
-			if (f != null) {
-				entity.setImageFile(f);
-			}
-		}
-	}
-
-	private void populateImagesLink(double dpiFactor, int dpi) throws IOException {
-		for (Link link : diagram.getLinks()) {
-			final String note = link.getNote();
-			if (note == null) {
-				continue;
-			}
-			final DrawFile f = createImageForNote(note, null, dpiFactor, dpi);
-			if (f != null) {
-				link.setImageFile(f);
-			}
-		}
-	}
-
 	DrawFile createImage(Entity entity, double dpiFactor, int dpi) throws IOException {
 		if (entity.getType() == EntityType.NOTE) {
 			return createImageForNote(entity.getDisplay(), entity.getSpecificBackColor(), dpiFactor, dpi);
@@ -688,7 +648,8 @@ public final class CucaDiagramFileMaker {
 		return null;
 	}
 
-	private DrawFile createImageForNote(String display, HtmlColor backColor, double dpiFactor, int dpi) throws IOException {
+	private DrawFile createImageForNoteOld2(String display, HtmlColor backColor, double dpiFactor, int dpi)
+			throws IOException {
 		final File fPng = FileUtils.createTempFile("plantumlB", ".png");
 
 		final Rose skin = new Rose();
@@ -722,6 +683,58 @@ public final class CucaDiagramFileMaker {
 		return DrawFile.createFromFile(fPng, getSvg(ug), fEps);
 	}
 
+	private DrawFile createImageForNote(String display, HtmlColor backColor, final double dpiFactor, final int dpi)
+			throws IOException {
+
+		final Rose skin = new Rose();
+
+		final ISkinParam skinParam = new SkinParamBackcolored(getSkinParam(), backColor);
+		final Component comp = skin
+				.createComponent(ComponentType.NOTE, skinParam, StringUtils.getWithNewlines(display));
+
+		final int width = (int) (comp.getPreferredWidth(stringBounder) * dpiFactor);
+		final int height = (int) (comp.getPreferredHeight(stringBounder) * dpiFactor);
+
+		final Color background = diagram.getSkinParam().getBackgroundColor().getColor();
+
+		final Lazy<File> lpng = new Lazy<File>() {
+
+			public File getNow() throws IOException {
+				final File fPng = FileUtils.createTempFile("plantumlB", ".png");
+				final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, background);
+				final BufferedImage im = builder.getBufferedImage();
+				final Graphics2D g2d = builder.getGraphics2D();
+
+				comp.drawU(new UGraphicG2d(g2d, null, dpiFactor), new Dimension(width, height), new SimpleContext2D(
+						false));
+				PngIO.write(im, fPng, dpi);
+				g2d.dispose();
+				return fPng;
+			}
+		};
+
+		final Lazy<String> lsvg = new Lazy<String>() {
+			public String getNow() throws IOException {
+				final UGraphicSvg ug = new UGraphicSvg(true);
+				comp.drawU(ug, new Dimension(width, height), new SimpleContext2D(false));
+				return getSvg(ug);
+			}
+		};
+
+		final Lazy<File> leps = new Lazy<File>() {
+			public File getNow() throws IOException {
+				final File fEps = FileUtils.createTempFile("plantumlB", ".eps");
+				final PrintWriter pw = new PrintWriter(fEps);
+				final UGraphicEps uEps = new UGraphicEps(EpsStrategy.getDefault());
+				comp.drawU(uEps, new Dimension(width, height), new SimpleContext2D(false));
+				pw.print(uEps.getEPSCode());
+				pw.close();
+				return fEps;
+			}
+		};
+		return DrawFile.create(lpng, lsvg, leps, null);
+	}
+
 	static public String getSvg(UGraphicSvg ug) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ug.createXml(baos);
@@ -739,9 +752,10 @@ public final class CucaDiagramFileMaker {
 
 	private DrawFile createImageForCircleInterface(Entity entity, final double dpiFactor) throws IOException {
 		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
-		final Color interfaceBackground = rose.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBackground, stereo)
+		final Color interfaceBackground = rose.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBackground,
+				stereo).getColor();
+		final Color interfaceBorder = rose.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBorder, stereo)
 				.getColor();
-		final Color interfaceBorder = rose.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBorder, stereo).getColor();
 		final Color background = rose.getHtmlColor(getSkinParam(), ColorParam.background, stereo).getColor();
 		final CircleInterface circleInterface = new CircleInterface(interfaceBackground, interfaceBorder);
 
@@ -785,7 +799,8 @@ public final class CucaDiagramFileMaker {
 
 	private DrawFile createImageForActor(Entity entity, final double dpiFactor) throws IOException {
 		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
-		final Color actorBackground = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBackground, stereo).getColor();
+		final Color actorBackground = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBackground, stereo)
+				.getColor();
 		final Color actorBorder = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBorder, stereo).getColor();
 		final Color background = rose.getHtmlColor(getSkinParam(), ColorParam.background, stereo).getColor();
 		final StickMan stickMan = new StickMan(actorBackground, actorBorder);
@@ -853,9 +868,7 @@ public final class CucaDiagramFileMaker {
 
 		try {
 			deltaY = 0;
-			populateImages(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-			populateImagesLink(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-			final GraphvizMaker dotMaker = createDotMaker(dotStrings, fileFormatOption);
+			final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
 			final String dotString = dotMaker.createDotString();
 
 			if (OptionFlags.getInstance().isKeepTmpFiles()) {
@@ -923,6 +936,60 @@ public final class CucaDiagramFileMaker {
 			// cleanTemporaryFiles(diagram.getLinks());
 		}
 		return null;
+	}
+
+	private GraphvizMaker populateImagesAndCreateGraphvizMaker(List<String> dotStrings,
+			FileFormatOption fileFormatOption) throws IOException, InterruptedException {
+		populateImages(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
+		populateImagesLink(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
+		final GraphvizMaker dotMaker = createDotMaker(dotStrings, fileFormatOption);
+		return dotMaker;
+	}
+
+	private GraphvizMaker createDotMaker(List<String> dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+
+		final FileFormat fileFormat = fileFormatOption.getFileFormat();
+		if (diagram.getUmlDiagramType() == UmlDiagramType.STATE
+				|| diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			new CucaDiagramSimplifier(diagram, dotStrings, fileFormat);
+		}
+		final DotData dotData = new DotData(null, diagram.getLinks(), diagram.entities(), diagram.getUmlDiagramType(),
+				diagram.getSkinParam(), diagram.getRankdir(), diagram, diagram);
+
+		dotData.setDpi(diagram.getDpi(fileFormatOption));
+
+		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS || diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
+			dotData.setStaticImagesMap(staticFilesMap);
+
+			if (diagram.isVisibilityModifierPresent()) {
+				dotData.setVisibilityModifierPresent(true);
+			}
+		}
+
+		return new DotMaker(dotData, dotStrings, fileFormat);
+	}
+
+	private void populateImages(double dpiFactor, int dpi) throws IOException {
+		for (Entity entity : diagram.entities().values()) {
+			final DrawFile f = createImage(entity, dpiFactor, dpi);
+			if (f != null) {
+				entity.setImageFile(f);
+			}
+		}
+	}
+
+	private void populateImagesLink(double dpiFactor, int dpi) throws IOException {
+		for (Link link : diagram.getLinks()) {
+			final String note = link.getNote();
+			if (note == null) {
+				continue;
+			}
+			final DrawFile f = createImageForNote(note, null, dpiFactor, dpi);
+			if (f != null) {
+				link.setImageFile(f);
+			}
+		}
 	}
 
 }

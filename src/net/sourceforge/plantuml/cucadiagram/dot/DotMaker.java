@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6121 $
+ * Revision $Revision: 6141 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -838,7 +838,7 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append(entity.getUid() + " [margin=0,pad=0," + label + ",shape=none,image=\"" + absolutePath + "\"];");
 		} else if (type == EntityType.ACTIVITY) {
 			String shape = "octagon";
-			if (entity.getImageFile() != null) {
+			if (data.getSkinParam().useOctagonForActivity()==false || entity.getImageFile() != null) {
 				shape = "rect";
 			}
 			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.ACTIVITY, stereo) + ",fillcolor="

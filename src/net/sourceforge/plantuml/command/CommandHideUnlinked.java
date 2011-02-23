@@ -27,44 +27,26 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4236 $
+ * 
+ * Revision $Revision: 4762 $
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.command;
 
-import java.awt.Font;
+import java.util.List;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.UmlDiagram;
 
-public interface ISkinParam {
+public class CommandHideUnlinked extends SingleLineCommand<UmlDiagram> {
 
-	public HtmlColor getBackgroundColor();
+	public CommandHideUnlinked(UmlDiagram diagram) {
+		super(diagram, "(?i)^(hide|show)\\s+unlinked$");
+	}
 
-	public String getValue(String key);
-
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype);
-
-	public int getFontSize(FontParam param, String stereotype);
-
-	public String getFontFamily(FontParam param, String stereotype);
-
-	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
-
-	public int getFontStyle(FontParam param, String stereotype);
-
-	public Font getFont(FontParam fontParam, String stereotype);
-
-	public int getCircledCharacterRadius();
-
-	public boolean isClassCollapse();
-	
-	public int classAttributeIconSize();
-	
-	public boolean isMonochrome();
-	
-	public int getDpi();
-	
-	public boolean useOctagonForActivity();
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
+		getSystem().setHideUnlinkedData(arg.get(0).equalsIgnoreCase("hide"));
+		return CommandExecutionResult.ok();
+	}
 
 }

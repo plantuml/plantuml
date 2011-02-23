@@ -142,7 +142,7 @@ public class InGroupableList implements InGroupable {
 	public double getMinX(StringBounder stringBounder) {
 		final InGroupable min = getMin(stringBounder);
 		if (min == null) {
-			return 0;
+			return MARGIN10 + MARGIN5;
 		}
 		double m = min.getMinX(stringBounder);
 		if (min instanceof MessageExoArrow
@@ -169,7 +169,7 @@ public class InGroupableList implements InGroupable {
 	private final double getMaxXInternal(StringBounder stringBounder) {
 		final InGroupable max = getMax(stringBounder);
 		if (max == null) {
-			return minWidth;
+			return MARGIN10 + MARGIN5 + minWidth;
 		}
 		double m = max.getMaxX(stringBounder);
 		if (max instanceof MessageExoArrow

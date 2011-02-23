@@ -27,44 +27,32 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4236 $
+ * 
+ * Revision $Revision: 6109 $
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.awt.Font;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+public class CommandParticipantA3 extends CommandParticipant {
 
-public interface ISkinParam {
+	public CommandParticipantA3(SequenceDiagram sequenceDiagram) {
+		super(sequenceDiagram, getRegexConcat());
+	}
 
-	public HtmlColor getBackgroundColor();
-
-	public String getValue(String key);
-
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype);
-
-	public int getFontSize(FontParam param, String stereotype);
-
-	public String getFontFamily(FontParam param, String stereotype);
-
-	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
-
-	public int getFontStyle(FontParam param, String stereotype);
-
-	public Font getFont(FontParam fontParam, String stereotype);
-
-	public int getCircledCharacterRadius();
-
-	public boolean isClassCollapse();
-	
-	public int classAttributeIconSize();
-	
-	public boolean isMonochrome();
-	
-	public int getDpi();
-	
-	public boolean useOctagonForActivity();
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("TYPE", "(participant|actor)"), //
+				new RegexLeaf("\\s+"), //
+				new RegexLeaf("FULL", "([\\p{L}0-9_.]+)\\s+as\\s+"), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.*\\>\\>))?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("COLOR", "(#\\w+)?"), // 
+				new RegexLeaf("$"));
+	}
 
 }

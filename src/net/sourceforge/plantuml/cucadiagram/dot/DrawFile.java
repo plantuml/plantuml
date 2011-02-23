@@ -56,11 +56,16 @@ public class DrawFile {
 	private int heightPng = -1;
 
 	public static DrawFile create(Lazy<File> png, Lazy<String> svg, Lazy<File> eps, Object signature) {
-		DrawFile result = cache.get(signature);
+		DrawFile result = null;
+		if (signature != null) {
+			result = cache.get(signature);
+		}
 		if (result == null) {
 			result = new DrawFile(png, svg, eps);
-			cache.put(signature, result);
-			Log.info("DrawFile cache size = " + cache.size());
+			if (signature != null) {
+				cache.put(signature, result);
+				Log.info("DrawFile cache size = " + cache.size());
+			}
 			FileUtils.deleteOnExit(result);
 		}
 		return result;
@@ -80,10 +85,10 @@ public class DrawFile {
 
 	private DrawFile(File fPng, String svg, File fEps) {
 		this(new Unlazy<File>(fPng), new Unlazy<String>(svg), new Unlazy<File>(fEps));
-//		if (svg.contains("\\")) {
-//			System.err.println("svg="+svg);
-//			throw new IllegalArgumentException();
-//		}
+		// if (svg.contains("\\")) {
+		// System.err.println("svg="+svg);
+		// throw new IllegalArgumentException();
+		// }
 	}
 
 	public File getPngOrEps(boolean isEps) throws IOException {

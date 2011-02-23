@@ -117,6 +117,14 @@ public class ActivityDiagram2 extends CucaDiagram {
 		this.waitings.add(act);
 		this.futureLength = 2;
 	}
+	
+	public IEntity getLastEntityConsulted() {
+		if (waitings.size()==1) {
+			return waitings.iterator().next();
+		}
+		return null;
+	}
+
 
 	private String getAutoCode() {
 		return "ac" + UniqueSequence.getValue();
@@ -207,4 +215,5 @@ public class ActivityDiagram2 extends CucaDiagram {
 		// TODO Auto-generated method stub
 
 	}
+
 }

@@ -27,44 +27,51 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4236 $
+ * 
+ * Revision $Revision: 4836 $
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.sequencediagram;
 
-import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+public class ParticipantEngloberContexted {
 
-public interface ISkinParam {
+	final private ParticipantEnglober participantEnglober;
+	final private List<Participant> participants = new ArrayList<Participant>();
 
-	public HtmlColor getBackgroundColor();
+	public ParticipantEngloberContexted(ParticipantEnglober participantEnglober, Participant first) {
+		this.participantEnglober = participantEnglober;
+		this.participants.add(first);
+	}
 
-	public String getValue(String key);
-
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype);
-
-	public int getFontSize(FontParam param, String stereotype);
-
-	public String getFontFamily(FontParam param, String stereotype);
-
-	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
-
-	public int getFontStyle(FontParam param, String stereotype);
-
-	public Font getFont(FontParam fontParam, String stereotype);
-
-	public int getCircledCharacterRadius();
-
-	public boolean isClassCollapse();
+	public final ParticipantEnglober getParticipantEnglober() {
+		return participantEnglober;
+	}
 	
-	public int classAttributeIconSize();
+	public boolean contains(Participant p) {
+		return participants.contains(p);
+	}
+
+	public void add(Participant p) {
+		if (participants.contains(p)) {
+			throw new IllegalArgumentException();
+		}
+		participants.add(p);
+	}
+
+	public final Participant getFirst2() {
+		return participants.get(0);
+	}
+
+	public final Participant getLast2() {
+		return participants.get(participants.size() - 1);
+	}
 	
-	public boolean isMonochrome();
-	
-	public int getDpi();
-	
-	public boolean useOctagonForActivity();
+	@Override
+	public String toString() {
+		return super.toString()+" "+participants;
+	}
 
 }

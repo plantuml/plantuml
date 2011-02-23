@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5983 $
+ * Revision $Revision: 6141 $
  *
  */
 package net.sourceforge.plantuml;
@@ -261,6 +261,15 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		return 96;
+	}
+
+	public boolean useOctagonForActivity() {
+		// activityShape roundedbox
+		final String value = getValue("activityshape");
+		if ("roundedbox".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
 	}
 
 }

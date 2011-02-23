@@ -111,4 +111,8 @@ public class SkinParamBackcolored implements ISkinParam {
 	public int getDpi() {
 		return skinParam.getDpi();
 	}
+
+	public boolean useOctagonForActivity() {
+		return skinParam.useOctagonForActivity();
+	}
 }

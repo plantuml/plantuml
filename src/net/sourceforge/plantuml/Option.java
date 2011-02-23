@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5877 $
+ * Revision $Revision: 6130 $
  *
  */
 package net.sourceforge.plantuml;
@@ -90,6 +90,9 @@ public class Option {
 				setFileFormat(FileFormat.XMI_STAR);
 			} else if (s.equalsIgnoreCase("-teps") || s.equalsIgnoreCase("-eps")) {
 				setFileFormat(FileFormat.EPS);
+			} else if (s.equalsIgnoreCase("-tdot") || s.equalsIgnoreCase("-dot")) {
+				setFileFormat(FileFormat.DOT);
+				OptionFlags.getInstance().setKeepTmpFiles(true);
 			} else if (s.equalsIgnoreCase("-ttxt") || s.equalsIgnoreCase("-txt")) {
 				setFileFormat(FileFormat.ATXT);
 			} else if (s.equalsIgnoreCase("-tutxt") || s.equalsIgnoreCase("-utxt")) {
