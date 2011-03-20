@@ -28,19 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 6137 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.postit;
 
-public class Version {
+import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 
-	public static int version() {
-		return 6210;
+public class PostIdDiagramFactory extends AbstractUmlSystemCommandFactory {
+
+	private PostItDiagram system;
+
+	@Override
+	protected void initCommands() {
+		system = new PostItDiagram();
+
+		addCommonCommands(system);
+		addCommand(new CommandCreatePostIt(system));
+		addCommand(new CommandWidth(system));
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	public PostItDiagram getSystem() {
+		return system;
 	}
 
 }

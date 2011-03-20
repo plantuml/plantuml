@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3827 $
+ * Revision $Revision: 6170 $
  *
  */
 package net.sourceforge.plantuml.code;
@@ -55,7 +55,9 @@ public class AsciiEncoder implements URLEncoder {
 	}
 
 	public byte[] decode(String s) {
-		assert s.length() % 4 == 0 : "Cannot decode " + s;
+		if (s.length() % 4 != 0) {
+			throw new IllegalArgumentException("Cannot decode " + s);
+		}
 		final byte data[] = new byte[(s.length() * 3 + 3) / 4];
 		int pos = 0;
 		for (int i = 0; i < s.length(); i += 4) {

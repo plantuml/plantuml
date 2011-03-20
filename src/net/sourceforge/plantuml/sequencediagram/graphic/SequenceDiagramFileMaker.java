@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6113 $
+ * Revision $Revision: 6208 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -406,6 +406,10 @@ public class SequenceDiagramFileMaker implements FileMaker {
 			return;
 		}
 		text.drawU(ug, area.getHeaderX(diagram.getHeaderAlignement()), area.getHeaderY());
+	}
+
+	public static StringBounder getDummystringbounder() {
+		return dummyStringBounder;
 	}
 
 }

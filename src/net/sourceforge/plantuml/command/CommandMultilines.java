@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5749 $
+ * Revision $Revision: 6186 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -56,6 +56,10 @@ public abstract class CommandMultilines<S extends PSystem> implements Command {
 		this.system = system;
 		this.starting = Pattern.compile(patternStart);
 		this.ending = Pattern.compile(patternEnd);
+	}
+	
+	public String[] getDescription() {
+		return new String[] { "START: " + starting.pattern(), "END: " + ending.pattern() };
 	}
 
 	final public CommandControl isValid(List<String> lines) {

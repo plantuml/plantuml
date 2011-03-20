@@ -27,20 +27,29 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 6211 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.usecasediagram.command;
 
-public class Version {
+import java.util.List;
 
-	public static int version() {
-		return 6210;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
+
+public class CommandSetStrategy extends SingleLineCommand<CucaDiagram> {
+
+	public CommandSetStrategy(CucaDiagram diagram) {
+		super(
+				diagram,
+				"(?i)^layout with neato$");
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
+		getSystem().setStrategy(GraphvizLayoutStrategy.NEATO);
+		return CommandExecutionResult.ok();
 	}
 
 }

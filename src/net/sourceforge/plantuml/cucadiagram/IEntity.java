@@ -52,13 +52,13 @@ public interface IEntity extends Imaged, SpecificBackcolorable {
 	
 	public String getUrl();
 	
-	public List<Member> fields2();
+	public List<Member> getFieldsToDisplay();
 	
 	public Stereotype getStereotype();
 
 	public void setStereotype(Stereotype stereotype);
 	
-	public List<Member> methods2();
+	public List<Member> getMethodsToDisplay();
 
 	public String getCode();
 

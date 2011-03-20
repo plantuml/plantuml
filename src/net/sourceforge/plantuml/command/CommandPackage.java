@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5983 $
+ * Revision $Revision: 6209 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
@@ -45,7 +46,8 @@ public class CommandPackage extends SingleLineCommand<AbstractEntityDiagram> {
 
 	public CommandPackage(AbstractEntityDiagram diagram) {
 		super(diagram,
-				"(?i)^package\\s+(\"[^\"]+\"|\\S+)(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(#[0-9a-fA-F]{6}|#?\\w+)?\\s*\\{?$");
+				"(?i)^package\\s+(\"[^\"]+\"|[^#\\s{}]*)(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(#[0-9a-fA-F]{6}|#?\\w+)?\\s*\\{?$");
+		// "(?i)^package\\s+(\"[^\"]+\"|\\S+)(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(#[0-9a-fA-F]{6}|#?\\w+)?\\s*\\{?$");
 	}
 
 	@Override
@@ -53,16 +55,22 @@ public class CommandPackage extends SingleLineCommand<AbstractEntityDiagram> {
 		final String code;
 		final String display;
 		if (arg.get(1) == null) {
-			code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
-			display = code;
+			if (StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0)).length() == 0) {
+				code = "##" + UniqueSequence.getValue();
+				display = null;
+			} else {
+				code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
+				display = code;
+			}
 		} else {
 			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
 			code = arg.get(1);
 		}
 		final Group currentPackage = getSystem().getCurrentGroup();
-//		if (getSystem().entityExist(code)) {
-//			return CommandExecutionResult.error("Package cannot have the same name as an existing class");
-//		}
+		// if (getSystem().entityExist(code)) {
+		// return CommandExecutionResult.error("Package cannot have the same
+		// name as an existing class");
+		// }
 		final Group p = getSystem().getOrCreateGroup(code, display, null, GroupType.PACKAGE, currentPackage);
 		p.setBold(true);
 		final String color = arg.get(2);

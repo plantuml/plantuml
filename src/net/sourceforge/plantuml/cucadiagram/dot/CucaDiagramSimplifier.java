@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5789 $
+ * Revision $Revision: 6169 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -83,11 +83,11 @@ public final class CucaDiagramSimplifier {
 					} else {
 						throw new IllegalStateException();
 					}
-					final Entity proxy = new Entity("#" + g.getCode(), g.getDisplay(), type, g.getParent());
+					final Entity proxy = new Entity("#" + g.getCode(), g.getDisplay(), type, g.getParent(), diagram.getHides());
 					if (type == EntityType.STATE) {
 						manageBackColorForState(diagram, g, proxy);
 					}
-					for (Member field : g.getEntityCluster().fields2()) {
+					for (Member field : g.getEntityCluster().getFieldsToDisplay()) {
 						proxy.addField(field);
 					}
 					computeImageGroup(g, proxy, dotStrings);

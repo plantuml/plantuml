@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 6184 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -44,5 +44,7 @@ public interface Command {
 	boolean isDeprecated(List<String> lines);
 
 	String getHelpMessageForDeprecated(List<String> lines);
+	
+	String[] getDescription();
 
 }

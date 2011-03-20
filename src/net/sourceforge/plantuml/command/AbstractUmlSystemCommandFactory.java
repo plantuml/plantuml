@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6097 $
+ * Revision $Revision: 6191 $
  *
  */
 package net.sourceforge.plantuml.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.UmlDiagram;
@@ -82,6 +84,7 @@ public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandF
 
 	final protected void addCommonCommands(UmlDiagram system) {
 		addCommand(new CommandNope(system));
+		addCommand(new CommandMultilinesComment(system));
 		addCommand(new CommandPragma(system));
 		addCommand(new CommandTitle(system));
 		addCommand(new CommandMultilinesTitle(system));
@@ -105,6 +108,15 @@ public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandF
 
 	protected final void addCommand(Command cmd) {
 		cmds.add(cmd);
+	}
+
+	final public List<String> getDescription() {
+		final List<String> result = new ArrayList<String>();
+		for (Command cmd : cmds) {
+			result.addAll(Arrays.asList(cmd.getDescription()));
+		}
+		return Collections.unmodifiableList(result);
+
 	}
 
 }

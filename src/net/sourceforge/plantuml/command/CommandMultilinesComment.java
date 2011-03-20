@@ -28,19 +28,24 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 5957 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.command;
 
-public class Version {
+import java.util.List;
 
-	public static int version() {
-		return 6210;
+import net.sourceforge.plantuml.UmlDiagram;
+
+public class CommandMultilinesComment extends CommandMultilines<UmlDiagram> {
+
+	public CommandMultilinesComment(final UmlDiagram diagram) {
+		super(diagram, "(?i)^\\s*/'.*$", "(?i)^.*'/\\s*$");
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	public CommandExecutionResult execute(List<String> lines) {
+		System.err.println(lines);
+		return CommandExecutionResult.ok();
 	}
 
 }

@@ -75,4 +75,8 @@ public class ProtectedCommand implements Command {
 		return cmd.isValid(lines);
 	}
 
+	public String[] getDescription() {
+		return cmd.getDescription();
+	}
+
 }

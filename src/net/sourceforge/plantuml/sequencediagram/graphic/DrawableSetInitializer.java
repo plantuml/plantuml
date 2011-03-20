@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6113 $
+ * Revision $Revision: 6198 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -154,9 +154,10 @@ class DrawableSetInitializer {
 			}
 		}
 
-		takeParticipantEngloberTitleWidth(stringBounder);
-
+		//takeParticipantEngloberTitleWidth(stringBounder);
 		constraintSet.takeConstraintIntoAccount(stringBounder);
+		//takeParticipantEngloberTitleWidth2(stringBounder);
+		takeParticipantEngloberTitleWidth3(stringBounder);
 
 		prepareMissingSpace(stringBounder);
 
@@ -164,26 +165,66 @@ class DrawableSetInitializer {
 		return drawableSet;
 	}
 
-	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
-		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober2()) {
+	private void takeParticipantEngloberTitleWidth3(StringBounder stringBounder) {
+		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
 					pe.getParticipantEnglober());
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
+			final double x1 = drawableSet.getX1(pe);
+			final double x2 = drawableSet.getX2(stringBounder, pe);
+			final double missing = preferredWidth - (x2 - x1);
+			System.err.println("x1=" + x1 + " x2=" + x2 + " preferredWidth=" + preferredWidth + " missing=" + missing);
+			if (missing>0) {
+				constraintSet
+						.pushToLeftParticipantBox(missing / 2, first, true);
+				constraintSet
+						.pushToLeftParticipantBox(missing / 2, last, false);
+			}
+		}
+	}
+
+	private void takeParticipantEngloberTitleWidth2(StringBounder stringBounder) {
+		double lastX2;
+		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
+					pe.getParticipantEnglober());
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
+			final double x1 = drawableSet.getX1(pe);
+			final double x2 = drawableSet.getX2(stringBounder, pe);
+			final double missing = preferredWidth - (x2 - x1);
+			System.err.println("x1=" + x1 + " x2=" + x2 + " preferredWidth=" + preferredWidth + " missing=" + missing);
+			if (missing > 0) {
+				constraintSet.getConstraintAfter(last).push(missing);
+				constraintSet.takeConstraintIntoAccount(stringBounder);
+			}
+			lastX2 = x2;
+		}
+	}
+	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
+		ParticipantBox previousLast = null;
+		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
+					pe.getParticipantEnglober());
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
+			final double margin = 5;
 			if (first == last) {
 				final Constraint constraint1 = constraintSet.getConstraintBefore(first);
 				final Constraint constraint2 = constraintSet.getConstraintAfter(last);
 				final double w1 = constraint1.getParticipant1().getPreferredWidth(stringBounder);
 				final double w2 = constraint2.getParticipant2().getPreferredWidth(stringBounder);
-				constraint1.ensureValue(preferredWidth / 2 + w1 / 2 + 5);
-				constraint2.ensureValue(preferredWidth / 2 + w2 / 2 + 5);
+				constraint1.ensureValue(preferredWidth / 2 + w1 / 2 + margin);
+				constraint2.ensureValue(preferredWidth / 2 + w2 / 2 + margin);
 			} else {
 				final Pushable beforeFirst = constraintSet.getPrevious(first);
 				final Pushable afterLast = constraintSet.getNext(last);
 				final Constraint constraint1 = constraintSet.getConstraint(beforeFirst, afterLast);
 				constraint1.ensureValue(preferredWidth + beforeFirst.getPreferredWidth(stringBounder) / 2
-						+ afterLast.getPreferredWidth(stringBounder) / 2 + 10);
+						+ afterLast.getPreferredWidth(stringBounder) / 2 + 2 * margin);
 			}
+			previousLast = last;
 		}
 	}
 

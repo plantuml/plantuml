@@ -28,19 +28,49 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 3835 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.preproc;
 
-public class Version {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
-	public static int version() {
-		return 6210;
+public class StartumlExtractReader implements ReadLine {
+
+	private final ReadLine raw;
+
+	public StartumlExtractReader(File f, int num) throws FileNotFoundException {
+		if (num < 0) {
+			throw new IllegalArgumentException();
+		}
+		raw = getReadLine(f);
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	static public boolean containsStartuml(File f) throws IOException {
+		ReadLine r = null;
+		try {
+			r = getReadLine(f);
+		} finally {
+			if (r != null) {
+				r.close();
+			}
+		}
+		return false;
+	}
+
+	private static ReadLine getReadLine(File f) throws FileNotFoundException {
+		return new UncommentReadLine(new ReadLineReader(new FileReader(f)));
+	}
+
+	public String readLine() throws IOException {
+		return raw.readLine();
+	}
+
+	public void close() throws IOException {
+		raw.close();
 	}
 
 }

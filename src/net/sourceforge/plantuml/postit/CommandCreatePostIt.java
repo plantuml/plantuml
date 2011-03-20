@@ -28,19 +28,40 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 5424 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.postit;
 
-public class Version {
+import java.util.Map;
 
-	public static int version() {
-		return 6210;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+
+public class CommandCreatePostIt extends SingleLineCommand2<PostItDiagram> {
+
+	public CommandCreatePostIt(PostItDiagram diagram) {
+		super(diagram, getRegexConcat());
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("post[- ]?it\\s+"), //
+				new RegexLeaf("ID", "([-\\p{L}0-9_./]+)"), //
+				new RegexLeaf("\\s+"), // 
+				new RegexLeaf("TEXT", ":?(.*)?$"));
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
+		final String id = arg.get("ID").get(0);
+		final String text = arg.get("TEXT").get(0);
+		getSystem().createPostIt(id, StringUtils.getWithNewlines(text));
+		return CommandExecutionResult.ok();
 	}
 
 }

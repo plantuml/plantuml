@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6141 $
+ * Revision $Revision: 6195 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -148,7 +148,6 @@ final public class DotMaker implements GraphvizMaker {
 
 	}
 
-
 	private void initPrintWriter(StringBuilder sb) {
 
 		Log.info("Entities = " + data.getEntities().size());
@@ -195,7 +194,7 @@ final public class DotMaker implements GraphvizMaker {
 		for (Group g : data.getGroupHierarchy().getChildrenGroups(parent)) {
 			if (data.isEmpty(g) && g.getType() == GroupType.PACKAGE) {
 				final IEntity folder = new Entity(g.getUid(), g.getCode(), g.getDisplay(), EntityType.EMPTY_PACKAGE,
-						null);
+						null, null);
 				printEntity(sb, folder);
 			} else {
 				printGroup(sb, g);
@@ -346,9 +345,9 @@ final public class DotMaker implements GraphvizMaker {
 
 		if (g.getDisplay() != null) {
 			final StringBuilder label = new StringBuilder(manageHtmlIB(g.getDisplay(), getFontParamForGroup(), null));
-			if (g.getEntityCluster().fields2().size() > 0) {
+			if (g.getEntityCluster().getFieldsToDisplay().size() > 0) {
 				label.append("<BR ALIGN=\"LEFT\"/>");
-				for (Member att : g.getEntityCluster().fields2()) {
+				for (Member att : g.getEntityCluster().getFieldsToDisplay()) {
 					label.append(manageHtmlIB("  " + att.getDisplayWithVisibilityChar() + "  ",
 							FontParam.STATE_ATTRIBUTE, null));
 					label.append("<BR ALIGN=\"LEFT\"/>");
@@ -512,7 +511,7 @@ final public class DotMaker implements GraphvizMaker {
 	}
 
 	private void printLink(StringBuilder sb, Link link) throws IOException {
-		final StringBuilder decoration = getLinkDecoration();
+		final StringBuilder decoration = getLinkDecoration(link);
 
 		if (link.getWeight() > 1) {
 			decoration.append("weight=" + link.getWeight() + ",");
@@ -611,8 +610,14 @@ final public class DotMaker implements GraphvizMaker {
 		return g.getUid() + "_" + link.getUid();
 	}
 
-	private StringBuilder getLinkDecoration() {
-		final StringBuilder decoration = new StringBuilder("[color=" + getColorString(getArrowColorParam(), null) + ",");
+	private StringBuilder getLinkDecoration(Link link) {
+		final StringBuilder decoration = new StringBuilder("[color=");
+		if (link.getSpecificColor() == null) {
+			decoration.append(getColorString(getArrowColorParam(), null));
+		} else {
+			decoration.append("\"" + link.getSpecificColor().getAsHtml() + "\"");
+		}
+		decoration.append(",");
 
 		decoration.append("fontcolor=" + getFontColorString(getArrowFontParam(), null) + ",");
 		decoration.append("fontsize=\"" + data.getSkinParam().getFontSize(getArrowFontParam(), null) + "\",");
@@ -838,7 +843,7 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append(entity.getUid() + " [margin=0,pad=0," + label + ",shape=none,image=\"" + absolutePath + "\"];");
 		} else if (type == EntityType.ACTIVITY) {
 			String shape = "octagon";
-			if (data.getSkinParam().useOctagonForActivity()==false || entity.getImageFile() != null) {
+			if (data.getSkinParam().useOctagonForActivity() == false || entity.getImageFile() != null) {
 				shape = "rect";
 			}
 			sb.append(entity.getUid() + " [fontcolor=" + getFontColorString(FontParam.ACTIVITY, stereo) + ",fillcolor="
@@ -908,7 +913,7 @@ final public class DotMaker implements GraphvizMaker {
 		} else {
 			throw new IllegalStateException(type.toString() + " " + data.getUmlDiagramType());
 		}
-		
+
 		if (entity.isTop()) {
 			rankMin.add(entity.getUid());
 		}
@@ -1020,9 +1025,9 @@ final public class DotMaker implements GraphvizMaker {
 		sb.append("<TR><TD>" + manageHtmlIB(entity.getDisplay(), FontParam.STATE, stereotype) + "</TD></TR>");
 		sb.append("</TABLE>");
 
-		if (entity.fields2().size() > 0) {
+		if (entity.getFieldsToDisplay().size() > 0) {
 			sb.append("|");
-			for (Member att : entity.fields2()) {
+			for (Member att : entity.getFieldsToDisplay()) {
 				sb.append(manageHtmlIB(att.getDisplayWithVisibilityChar(), FontParam.STATE_ATTRIBUTE, stereotype));
 				sb.append("<BR ALIGN=\"LEFT\"/>");
 			}
@@ -1046,7 +1051,7 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append("</TABLE>");
 		}
 
-		if (entity.fields2().size() == 0 && cFile == null) {
+		if (entity.getFieldsToDisplay().size() == 0 && cFile == null) {
 			sb.append("|");
 		}
 
@@ -1252,9 +1257,9 @@ final public class DotMaker implements GraphvizMaker {
 				// if (fileFormat == FileFormat.EPS) {
 				// sb.append(addFieldsEps(entity.fields2(), true));
 				// } else {
-				final boolean hasStatic = hasStatic(entity.fields2());
+				final boolean hasStatic = hasStatic(entity.getFieldsToDisplay());
 				sb.append("<TR ALIGN=\"LEFT\"><TD " + getWitdh55() + " ALIGN=\"LEFT\">");
-				for (Member att : entity.fields2()) {
+				for (Member att : entity.getFieldsToDisplay()) {
 					sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic, getColorString(
 							ColorParam.classBackground, stereo), true));
 					sb.append("<BR ALIGN=\"LEFT\"/>");
@@ -1266,9 +1271,9 @@ final public class DotMaker implements GraphvizMaker {
 				// if (fileFormat == FileFormat.EPS) {
 				// sb.append(addFieldsEps(entity.methods2(), true));
 				// } else {
-				final boolean hasStatic = hasStatic(entity.methods2());
+				final boolean hasStatic = hasStatic(entity.getMethodsToDisplay());
 				sb.append("<TR ALIGN=\"LEFT\"><TD ALIGN=\"LEFT\">");
-				for (Member att : entity.methods2()) {
+				for (Member att : entity.getMethodsToDisplay()) {
 					sb.append(manageHtmlIBspecial(att, FontParam.CLASS_ATTRIBUTE, hasStatic, getColorString(
 							ColorParam.classBackground, stereo), true));
 					sb.append("<BR ALIGN=\"LEFT\"/>");
@@ -1365,14 +1370,14 @@ final public class DotMaker implements GraphvizMaker {
 
 			if (showFields) {
 				sb.append("<TR><TD " + getWitdh55() + ">");
-				if (entity.fields2().size() > 0) {
+				if (entity.getFieldsToDisplay().size() > 0) {
 					buildTableVisibility(entity, true, sb, springField);
 				}
 				sb.append("</TD></TR>");
 			}
 			if (showMethods) {
 				sb.append("<TR><TD>");
-				if (entity.methods2().size() > 0) {
+				if (entity.getMethodsToDisplay().size() > 0) {
 					buildTableVisibility(entity, false, sb, springMethod);
 				}
 				sb.append("</TD></TR>");
@@ -1400,9 +1405,9 @@ final public class DotMaker implements GraphvizMaker {
 			throws IOException {
 		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 
-		final boolean hasStatic = hasStatic(entity.methods2());
+		final boolean hasStatic = hasStatic(entity.getMethodsToDisplay());
 		final boolean dpiNormal = data.getDpi() == 96;
-		for (Member att : isField ? entity.fields2() : entity.methods2()) {
+		for (Member att : isField ? entity.getFieldsToDisplay() : entity.getMethodsToDisplay()) {
 			sb.append("<TR>");
 			if (dpiNormal) {
 				sb.append("<TD WIDTH=\"10\">");
@@ -1454,7 +1459,7 @@ final public class DotMaker implements GraphvizMaker {
 
 	private int getLongestMethods(IEntity entity) {
 		int result = 0;
-		for (Member att : entity.methods2()) {
+		for (Member att : entity.getMethodsToDisplay()) {
 			final int size = att.getDisplayWithVisibilityChar().length();
 			if (size > result) {
 				result = size;
@@ -1466,7 +1471,7 @@ final public class DotMaker implements GraphvizMaker {
 
 	private int getLongestField(IEntity entity) {
 		int result = 0;
-		for (Member att : entity.fields2()) {
+		for (Member att : entity.getFieldsToDisplay()) {
 			final int size = att.getDisplayWithVisibilityChar().length();
 			if (size > result) {
 				result = size;
@@ -1501,7 +1506,7 @@ final public class DotMaker implements GraphvizMaker {
 		sb.append("</TD></TR>");
 		sb.append("<TR><TD " + getWitdh55() + ">");
 
-		if (entity.fields2().size() == 0) {
+		if (entity.getFieldsToDisplay().size() == 0) {
 			sb.append(manageHtmlIB(" ", FontParam.OBJECT_ATTRIBUTE, stereo));
 		} else {
 			buildTableVisibility(entity, true, sb, springField);
@@ -1532,10 +1537,10 @@ final public class DotMaker implements GraphvizMaker {
 		sb.append("</TD></TR>");
 		sb.append("<TR ALIGN=\"LEFT\"><TD " + getWitdh55() + " ALIGN=\"LEFT\">");
 
-		if (entity.fields2().size() == 0) {
+		if (entity.getFieldsToDisplay().size() == 0) {
 			sb.append(manageHtmlIB(" ", FontParam.OBJECT_ATTRIBUTE, stereo));
 		} else {
-			for (Member att : entity.fields2()) {
+			for (Member att : entity.getFieldsToDisplay()) {
 				sb.append(manageHtmlIB(att.getDisplayWithVisibilityChar(), FontParam.OBJECT_ATTRIBUTE, stereo));
 				sb.append("<BR ALIGN=\"LEFT\"/>");
 			}

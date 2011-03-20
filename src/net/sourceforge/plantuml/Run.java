@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5969 $
+ * Revision $Revision: 6188 $
  *
  */
 package net.sourceforge.plantuml;
@@ -39,15 +39,34 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.UIManager;
 
+import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
+import net.sourceforge.plantuml.activitydiagram2.ActivityDiagramFactory2;
+import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
+import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
+import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
+import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
+import net.sourceforge.plantuml.eggs.PSystemEggFactory;
+import net.sourceforge.plantuml.eggs.PSystemLostFactory;
+import net.sourceforge.plantuml.eggs.PSystemPathFactory;
+import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
+import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
+import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.printskin.PrintSkinFactory;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
+import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
+import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.swing.MainWindow;
+import net.sourceforge.plantuml.usecasediagram.UsecaseDiagramFactory;
+import net.sourceforge.plantuml.version.PSystemVersionFactory;
 
 public class Run {
 
@@ -56,7 +75,9 @@ public class Run {
 		if (OptionFlags.getInstance().isVerbose()) {
 			Log.info("GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
 		}
-		if (OptionFlags.getInstance().isGui()) {
+		if (option.isPattern()) {
+			managePattern();
+		} else if (OptionFlags.getInstance().isGui()) {
 			try {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			} catch (Exception e) {
@@ -66,6 +87,24 @@ public class Run {
 			managePipe(option);
 		} else {
 			manageFiles(option);
+		}
+	}
+
+	private static void managePattern() {
+		printPattern(new SequenceDiagramFactory());
+		printPattern(new ClassDiagramFactory());
+		printPattern(new ActivityDiagramFactory());
+		printPattern(new UsecaseDiagramFactory());
+		printPattern(new ComponentDiagramFactory());
+		printPattern(new StateDiagramFactory());
+		printPattern(new ObjectDiagramFactory());
+	}
+
+	private static void printPattern(AbstractUmlSystemCommandFactory factory) {
+		System.out.println();
+		System.out.println(factory.getClass().getSimpleName().replaceAll("Factory", ""));
+		for (String s : factory.getDescription()) {
+			System.out.println(s);
 		}
 	}
 
@@ -127,8 +166,8 @@ public class Run {
 			System.out.println(new MetadataTag(f, "plantuml").getData());
 			System.out.println("------------------------");
 		} else {
-			final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option
-					.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
+			final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f,
+					option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
 			if (option.isComputeurl()) {
 				final List<String> urls = sourceFileReader.getEncodedUrl();
 				for (String s : urls) {

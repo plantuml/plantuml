@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5895 $
+ * Revision $Revision: 6167 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -145,5 +145,6 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.CLASS;
 	}
+
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6130 $
+ * Revision $Revision: 6187 $
  *
  */
 package net.sourceforge.plantuml;
@@ -57,6 +57,7 @@ public class Option {
 	private boolean decodeurl = false;
 	private boolean pipe = false;
 	private boolean syntax = false;
+	private boolean pattern = false;
 
 	private File outputDir = null;
 	private final List<String> result = new ArrayList<String>();
@@ -147,6 +148,8 @@ public class Option {
 				OptionFlags.getInstance().setVerbose(true);
 			} else if (s.equalsIgnoreCase("-pipe") || s.equalsIgnoreCase("-p")) {
 				pipe = true;
+			} else if (s.equalsIgnoreCase("-pattern")) {
+				pattern = true;
 			} else if (s.equalsIgnoreCase("-syntax")) {
 				syntax = true;
 				OptionFlags.getInstance().setQuiet(true);
@@ -268,6 +271,10 @@ public class Option {
 
 	public final boolean isSyntax() {
 		return syntax;
+	}
+
+	public final boolean isPattern() {
+		return pattern;
 	}
 
 	public FileFormatOption getFileFormatOption() {

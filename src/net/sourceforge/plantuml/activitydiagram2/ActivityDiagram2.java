@@ -100,10 +100,10 @@ public class ActivityDiagram2 extends CucaDiagram {
 		afterAdd(act);
 	}
 
-	private void afterAdd(final Entity act) {
+	private void afterAdd(final IEntity act) {
 		for (IEntity last : this.waitings) {
-			System.err.println("last=" + last);
-			System.err.println("act=" + act);
+			// System.err.println("last=" + last);
+			// System.err.println("act=" + act);
 			this.addLink(new Link(last, act, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), futureLabel, futureLength));
 			futureLabel = null;
 		}
@@ -117,14 +117,13 @@ public class ActivityDiagram2 extends CucaDiagram {
 		this.waitings.add(act);
 		this.futureLength = 2;
 	}
-	
+
 	public IEntity getLastEntityConsulted() {
-		if (waitings.size()==1) {
+		if (waitings.size() == 1) {
 			return waitings.iterator().next();
 		}
 		return null;
 	}
-
 
 	private String getAutoCode() {
 		return "ac" + UniqueSequence.getValue();
@@ -142,7 +141,8 @@ public class ActivityDiagram2 extends CucaDiagram {
 		currentContext = new ConditionalContext2(currentContext, br, Direction.DOWN, when);
 		for (IEntity last : this.waitings) {
 			if (test == null) {
-				// this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), test, futureLength));
+				// this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW,
+				// LinkDecor.NONE), test, futureLength));
 				throw new IllegalArgumentException();
 			} else {
 				this.addLink(new Link(last, br, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), this.futureLabel,
@@ -162,14 +162,14 @@ public class ActivityDiagram2 extends CucaDiagram {
 
 	public void endif() {
 		final boolean hasElse = currentContext.isHasElse();
-		System.err.println("CALL endif hasElse " + hasElse);
+//		System.err.println("CALL endif hasElse " + hasElse);
 		this.waitings.addAll(currentContext.getPendings());
 		currentContext = currentContext.getParent();
-		if (currentContext == null) {
-			System.err.println("after endif " + currentContext);
-		} else {
-			System.err.println("after endif " + currentContext.getPendings());
-		}
+		// if (currentContext == null) {
+		// System.err.println("after endif " + currentContext);
+		// } else {
+		// System.err.println("after endif " + currentContext.getPendings());
+		//		}
 	}
 
 	public void else2(String when) {
@@ -196,7 +196,7 @@ public class ActivityDiagram2 extends CucaDiagram {
 	private final Collection<PendingLink> pendingLinks = new ArrayList<PendingLink>();
 
 	public void callGoto(String gotoLabel) {
-		System.err.println("CALL goto " + gotoLabel);
+		// System.err.println("CALL goto " + gotoLabel);
 		final IEntity dest = labels.get(gotoLabel);
 		for (IEntity last : this.waitings) {
 			if (dest == null) {
@@ -206,14 +206,17 @@ public class ActivityDiagram2 extends CucaDiagram {
 						this.futureLength));
 			}
 		}
-		System.err.println("Avant fin goto, waitings=" + waitings);
+		// System.err.println("Avant fin goto, waitings=" + waitings);
 		this.waitings.clear();
 		// currentContext.clearPendingsButFirst();
 	}
 
 	public void end() {
-		// TODO Auto-generated method stub
-
+		if (waitings.size() == 0) {
+			throw new IllegalStateException();
+		}
+		final IEntity act = getOrCreateEntity("end", EntityType.CIRCLE_END);
+		afterAdd(act);
 	}
 
 }

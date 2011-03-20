@@ -28,19 +28,39 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 6104 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.cucadiagram.dot;
 
-public class Version {
+import java.io.File;
 
-	public static int version() {
-		return 6210;
+class OSLinux extends OS {
+
+	@Override
+	File getExecutable(GraphvizLayoutStrategy strategy) {
+		File result = strategy.getSystemForcedExecutable();
+		if (result != null) {
+			return result;
+		}
+		final String fileName = getFileName(strategy);
+		final File usrLocalBin = new File("/usr/local/bin/" + fileName);
+
+		if (usrLocalBin.exists()) {
+			return usrLocalBin;
+		}
+		final File usrBin = new File("/usr/bin/" + fileName);
+		return usrBin;
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	@Override
+	String getFileName(GraphvizLayoutStrategy strategy) {
+		return strategy.name().toLowerCase();
+	}
+
+	@Override
+	public String getCommand(GraphvizLayoutStrategy strategy) {
+		return getExecutable(strategy).getAbsolutePath();
 	}
 
 }

@@ -28,19 +28,46 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 3977 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.cucadiagram.dot;
 
-public class Version {
+import java.io.File;
+import java.util.List;
 
-	public static int version() {
-		return 6210;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.OptionFlags;
+
+public enum GraphvizLayoutStrategy {
+	DOT, NEATO;
+
+	public GraphvizMaker getGraphvizMaker(DotData data,
+			List<String> dotStrings, FileFormat fileFormat) {
+		if (this == DOT) {
+			return new DotMaker(data, dotStrings, fileFormat);
+		}
+		throw new UnsupportedOperationException(this.toString());
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	public File getSystemForcedExecutable() {
+		if (this == DOT) {
+			return getSystemForcedDot();
+		}
+		throw new UnsupportedOperationException(this.toString());
+	}
+
+	private File getSystemForcedDot() {
+		if (OptionFlags.getInstance().getDotExecutable() == null) {
+			final String getenv = GraphvizUtils.getenvGraphvizDot();
+			if (getenv == null) {
+				return null;
+			}
+			return new File(getenv);
+		}
+
+		return new File(OptionFlags.getInstance().getDotExecutable());
+
 	}
 
 }

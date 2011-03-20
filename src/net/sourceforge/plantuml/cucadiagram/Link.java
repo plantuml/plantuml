@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6152 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -66,12 +67,19 @@ public class Link implements Imaged {
 	private final String labeldistance;
 	private final String labelangle;
 
+	private HtmlColor specificColor;
+
 	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length) {
-		this(cl1, cl2, type, label, length, null, null, null, null);
+		this(cl1, cl2, type, label, length, null, null, null, null, null);
 	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length, String qualifier1,
 			String qualifier2, String labeldistance, String labelangle) {
+		this(cl1, cl2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle, null);
+	}
+
+	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length, String qualifier1,
+			String qualifier2, String labeldistance, String labelangle, HtmlColor specificColor) {
 		if (length < 1) {
 			throw new IllegalArgumentException();
 		}
@@ -87,10 +95,27 @@ public class Link implements Imaged {
 		this.qualifier2 = qualifier2;
 		this.labeldistance = labeldistance;
 		this.labelangle = labelangle;
+		this.specificColor = specificColor;
 	}
 
 	public Link getInv() {
-		return new Link(cl2, cl1, type.getInv(), label, length, qualifier2, qualifier1, labeldistance, labelangle);
+		return new Link(cl2, cl1, type.getInv(), label, length, qualifier2, qualifier1, labeldistance, labelangle,
+				specificColor);
+	}
+
+	public Link getDashed() {
+		return new Link(cl1, cl2, type.getDashed(), label, length, qualifier1, qualifier2, labeldistance, labelangle,
+				specificColor);
+	}
+
+	public Link getDotted() {
+		return new Link(cl1, cl2, type.getDotted(), label, length, qualifier1, qualifier2, labeldistance, labelangle,
+				specificColor);
+	}
+
+	public Link getBold() {
+		return new Link(cl1, cl2, type.getBold(), label, length, qualifier1, qualifier2, labeldistance, labelangle,
+				specificColor);
 	}
 
 	public String getLabeldistance() {
@@ -279,6 +304,14 @@ public class Link implements Imaged {
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
 		return 0;
+	}
+
+	public HtmlColor getSpecificColor() {
+		return specificColor;
+	}
+
+	public void setSpecificColor(String s) {
+		this.specificColor = HtmlColor.getColorIfValid(s);
 	}
 
 }

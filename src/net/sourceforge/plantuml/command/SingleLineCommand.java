@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5041 $
+ * Revision $Revision: 6186 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -66,6 +66,10 @@ public abstract class SingleLineCommand<S extends PSystem> implements Command {
 
 		this.system = system;
 		this.pattern = Pattern.compile(pattern);
+	}
+	
+	public String[] getDescription() {
+		return new String[]{pattern.pattern()};
 	}
 
 	final protected S getSystem() {

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram2.command.CommandIf2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandLabel2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandMultilinesNoteActivity2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandNewActivity2;
+import net.sourceforge.plantuml.activitydiagram2.command.CommandNewMultilinesActivity2;
 import net.sourceforge.plantuml.activitydiagram2.command.CommandStart2;
 import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 
@@ -83,6 +84,7 @@ public class ActivityDiagramFactory2 extends AbstractUmlSystemCommandFactory {
 //		addCommand(new CommandElse(system));
 //		addCommand(new CommandEndif(system));
 		// addCommand(new CommandInnerConcurrent(system));
+		addCommand(new CommandNewMultilinesActivity2(system));
 	}
 
 }

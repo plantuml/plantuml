@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6197 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -46,6 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;
@@ -214,7 +216,8 @@ public final class GroupPngMaker {
 		// dotData.putAllStaticImages(staticImages);
 		// dotData.putAllImagesLink(imagesLink);
 
-		return new DotMaker(dotData, dotStrings, fileFormat);
+		// return new DotMaker(dotData, dotStrings, fileFormat);
+		return diagram.getStrategy().getGraphvizMaker(dotData, dotStrings, fileFormat);
 	}
 
 	private List<Link> getPureInnerLinks() {

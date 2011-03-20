@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6130 $
+ * Revision $Revision: 6197 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -56,6 +56,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -966,8 +968,9 @@ public final class CucaDiagramFileMaker {
 				dotData.setVisibilityModifierPresent(true);
 			}
 		}
-
-		return new DotMaker(dotData, dotStrings, fileFormat);
+		
+		return diagram.getStrategy().getGraphvizMaker(dotData, dotStrings, fileFormat);
+		// return new DotMaker(dotData, dotStrings, fileFormat);
 	}
 
 	private void populateImages(double dpiFactor, int dpi) throws IOException {

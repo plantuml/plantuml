@@ -63,6 +63,10 @@ public abstract class SingleLineCommand2<S extends PSystem> implements Command {
 	final protected S getSystem() {
 		return system;
 	}
+	
+	public String[] getDescription() {
+		return new String[] { pattern.getPattern() };
+	}
 
 	final public CommandControl isValid(List<String> lines) {
 		if (lines.size() != 1) {

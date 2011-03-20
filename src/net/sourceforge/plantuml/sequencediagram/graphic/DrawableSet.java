@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6113 $
+ * Revision $Revision: 6198 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -141,7 +141,7 @@ class DrawableSet {
 		return height + heightEnglober;
 	}
 
-	public List<ParticipantEngloberContexted> getExistingParticipantEnglober2() {
+	public List<ParticipantEngloberContexted> getExistingParticipantEnglober() {
 		final List<ParticipantEngloberContexted> result = new ArrayList<ParticipantEngloberContexted>();
 		ParticipantEngloberContexted pending = null;
 		for (Map.Entry<Participant, ParticipantEnglober> ent : participantEnglobers2.entrySet()) {
@@ -163,7 +163,7 @@ class DrawableSet {
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
-		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober2()) {
+		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober()) {
 			final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober
 					.getParticipantEnglober().getTitle());
 			final double height = comp.getPreferredHeight(stringBounder);
@@ -178,7 +178,7 @@ class DrawableSet {
 	static private final int MARGIN_FOR_ENGLOBERS1 = 2;
 
 	public double getTailHeight(StringBounder stringBounder, boolean showTail) {
-		final double marginForEnglobers = getExistingParticipantEnglober2().size() > 0 ? MARGIN_FOR_ENGLOBERS : 0;
+		final double marginForEnglobers = getExistingParticipantEnglober().size() > 0 ? MARGIN_FOR_ENGLOBERS : 0;
 
 		if (showTail == false) {
 			return 1 + marginForEnglobers;
@@ -315,7 +315,7 @@ class DrawableSet {
 	}
 
 	private void drawEnglobers(UGraphic ug, double height, Context2D context) {
-		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober2()) {
+		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober()) {
 			double x1 = getX1(englober);
 			final double x2 = getX2(ug.getStringBounder(), englober);
 
@@ -325,9 +325,9 @@ class DrawableSet {
 			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(),
 					englober.getParticipantEnglober());
 			if (preferedWidth > width) {
-				if (englober.getFirst2() == englober.getLast2()) {
+				//if (englober.getFirst2() == englober.getLast2()) {
 					x1 -= (preferedWidth - width) / 2;
-				}
+				//}
 				final Dimension2DDouble dim = new Dimension2DDouble(preferedWidth, height);
 				ug.translate(x1, 1);
 				comp.drawU(ug, dim, context);
@@ -351,13 +351,13 @@ class DrawableSet {
 		return skin.createComponent(ComponentType.ENGLOBER, s, englober.getTitle());
 	}
 
-	private double getX1(ParticipantEngloberContexted englober) {
+	public double getX1(ParticipantEngloberContexted englober) {
 		final Participant first = englober.getFirst2();
 		final ParticipantBox firstBox = participants.get(first).getParticipantBox();
 		return firstBox.getStartingX() + 1;
 	}
 
-	private double getX2(StringBounder stringBounder, ParticipantEngloberContexted englober) {
+	public double getX2(StringBounder stringBounder, ParticipantEngloberContexted englober) {
 		final Participant last = englober.getLast2();
 		final ParticipantBox lastBox = participants.get(last).getParticipantBox();
 		return lastBox.getMaxX(stringBounder) - 1;
@@ -394,7 +394,7 @@ class DrawableSet {
 	// }
 
 	private ParticipantEngloberContexted getParticipantEnglober(Participant p) {
-		for (ParticipantEngloberContexted pe : getExistingParticipantEnglober2()) {
+		for (ParticipantEngloberContexted pe : getExistingParticipantEnglober()) {
 			if (pe.contains(p)) {
 				return pe;
 			}

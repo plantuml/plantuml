@@ -56,6 +56,10 @@ public abstract class CommandMultilinesBracket<S extends PSystem> implements Com
 	protected boolean isCommandForbidden() {
 		return false;
 	}
+	
+	public String[] getDescription() {
+		return new String[] { "BRACKET: " + starting.pattern() };
+	}
 
 	protected void actionIfCommandValid() {
 	}

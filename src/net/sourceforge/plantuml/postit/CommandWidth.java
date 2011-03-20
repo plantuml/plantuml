@@ -28,19 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 4762 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.postit;
 
-public class Version {
+import java.util.List;
 
-	public static int version() {
-		return 6210;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand;
+
+public class CommandWidth extends SingleLineCommand<PostItDiagram> {
+
+	public CommandWidth(PostItDiagram system) {
+		super(system, "(?i)^width\\s+(\\d+)$");
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
+
+		final int width = Integer.parseInt(arg.get(0));
+		getSystem().setWidth(width);
+		return CommandExecutionResult.ok();
 	}
 
 }

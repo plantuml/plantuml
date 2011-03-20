@@ -28,19 +28,34 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 4167 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.postit;
 
-public class Version {
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-	public static int version() {
-		return 6210;
-	}
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-	public static long compileTime() {
-		return 1300656476468L;
+public class AreaLayoutFixedWidth implements AreaLayout {
+
+	public Map<PostIt, Point2D> getPositions(Collection<PostIt> all, StringBounder stringBounder) {
+		double x = 0;
+		double y = 0;
+		final Map<PostIt, Point2D> result = new LinkedHashMap<PostIt, Point2D>();
+
+		for (PostIt p : all) {
+			result.put(p, new Point2D.Double(x, y));
+			final Dimension2D dim = p.getDimension(stringBounder);
+			x += dim.getWidth() + 10;
+		}
+
+		return Collections.unmodifiableMap(result);
 	}
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6062 $
+ * Revision $Revision: 6199 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -58,6 +59,8 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMakerBeta;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramPngMaker3;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower {
@@ -105,7 +108,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (display == null) {
 			display = code;
 		}
-		final Entity entity = new Entity(code, display, type, group);
+		final Entity entity = new Entity(code, display, type, group, getHides());
 		entities.put(code, entity);
 		nbLinks.put(entity, 0);
 		return entity;
@@ -166,9 +169,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	protected final Group getOrCreateGroupInternal(String code, String display, String namespace, GroupType type,
 			Group parent) {
-//		if (entityExist(code)) {
-//			throw new IllegalArgumentException("code=" + code);
-//		}
+		// if (entityExist(code)) {
+		// throw new IllegalArgumentException("code=" + code);
+		// }
 		Group g = groups.get(code);
 		if (g == null) {
 			g = new Group(code, display, namespace, type, parent);
@@ -176,7 +179,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 			Entity entityGroup = entities.get(code);
 			if (entityGroup == null) {
-				entityGroup = new Entity("$$" + code, code, EntityType.GROUP, g);
+				entityGroup = new Entity("$$" + code, code, EntityType.GROUP, g, getHides());
 			} else {
 				entityGroup.muteToCluster(g);
 			}
@@ -272,7 +275,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final public List<File> createFiles(File suggestedFile, FileFormatOption fileFormatOption) throws IOException,
 			InterruptedException {
-		
+
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
@@ -480,7 +483,16 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 	}
 
+	public void hideOrShow(Set<VisibilityModifier> visibilities, boolean show) {
+		if (show) {
+			hides.removeAll(visibilities);
+		} else {
+			hides.addAll(visibilities);
+		}
+	}
+
 	private final List<HideOrShow> hideOrShows = new ArrayList<HideOrShow>();
+	private final Set<VisibilityModifier> hides = new HashSet<VisibilityModifier>();
 
 	static class HideOrShow {
 		private final EntityGender gender;
@@ -498,5 +510,19 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	public int getNbImages() {
 		return this.horizontalPages * this.verticalPages;
 	}
+
+	public final Set<VisibilityModifier> getHides() {
+		return Collections.unmodifiableSet(hides);
+	}
 	
+	private GraphvizLayoutStrategy strategy = GraphvizLayoutStrategy.DOT;
+	
+	public void setStrategy(GraphvizLayoutStrategy strategy) {
+		this.strategy = strategy;
+	}
+
+	public GraphvizLayoutStrategy getStrategy() {
+		return strategy;
+	}
+
 }

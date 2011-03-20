@@ -28,19 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 4167 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.postit;
 
-public class Version {
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-	public static int version() {
-		return 6210;
-	}
+public interface Elastic {
 
-	public static long compileTime() {
-		return 1300656476468L;
-	}
+	double widthWhenHeightIs(double height, StringBounder stringBounder);
+
+	double heightWhenWidthIs(double width, StringBounder stringBounder);
 
 }

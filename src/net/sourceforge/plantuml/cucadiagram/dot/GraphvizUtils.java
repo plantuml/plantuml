@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6007 $
+ * Revision $Revision: 6200 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -51,11 +51,16 @@ public class GraphvizUtils {
 		return File.separatorChar == '\\';
 	}
 
+	@Deprecated
 	public static Graphviz create(String dotString, String... type) {
 		if (isWindows()) {
 			return new GraphvizWindows(dotString, type);
 		}
 		return new GraphvizLinux(dotString, type);
+	}
+
+	public static Graphviz create2(GraphvizLayoutStrategy strategy, String dotString, String... type) {
+		return new AbstractGraphviz2(getOS(), strategy, dotString, type);
 	}
 
 	static public File getDotExe() {
@@ -160,6 +165,13 @@ public class GraphvizUtils {
 		}
 
 		return Collections.unmodifiableList(result);
+	}
+	
+	public static OS getOS() {
+		if (isWindows()) {
+			return new OSWindows();
+		}
+		return new OSLinux();
 	}
 
 }

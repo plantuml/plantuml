@@ -73,8 +73,24 @@ public class LinkType {
 		return style == LinkStyle.DASHED;
 	}
 
+	public boolean isDotted() {
+		return style == LinkStyle.DOTTED;
+	}
+
+	public boolean isBold() {
+		return style == LinkStyle.BOLD;
+	}
+
 	public LinkType getDashed() {
 		return new LinkType(decor1, LinkStyle.DASHED, decor2);
+	}
+
+	public LinkType getDotted() {
+		return new LinkType(decor1, LinkStyle.DOTTED, decor2);
+	}
+
+	public LinkType getBold() {
+		return new LinkType(decor1, LinkStyle.BOLD, decor2);
 	}
 
 	public LinkType getInterfaceProvider() {
@@ -113,6 +129,12 @@ public class LinkType {
 
 		if (style == LinkStyle.DASHED) {
 			sb.append(",style=dashed");
+		}
+		if (style == LinkStyle.DOTTED) {
+			sb.append(",style=dotted,");
+		}
+		if (style == LinkStyle.BOLD) {
+			sb.append(",style=bold,");
 		}
 
 		return sb.toString();

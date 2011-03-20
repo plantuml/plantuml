@@ -28,19 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6211 $
+ * Revision $Revision: 4167 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.postit;
 
-public class Version {
+import java.awt.geom.Point2D;
+import java.util.Collection;
+import java.util.Map;
 
-	public static int version() {
-		return 6210;
-	}
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-	public static long compileTime() {
-		return 1300656476468L;
-	}
+public interface AreaLayout {
+	
+	Map<PostIt, Point2D> getPositions(Collection<PostIt> all, StringBounder stringBounder);
 
 }

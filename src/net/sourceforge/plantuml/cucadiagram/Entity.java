@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6121 $
+ * Revision $Revision: 6169 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -38,10 +38,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class Entity implements IEntity {
 
@@ -53,14 +55,15 @@ public class Entity implements IEntity {
 
 	private Stereotype stereotype;
 
-	private final List<Member> fields2 = new ArrayList<Member>();
-	private final List<Member> methods2 = new ArrayList<Member>();
+	private final List<Member> fields = new ArrayList<Member>();
+	private final List<Member> methods = new ArrayList<Member>();
+	private final Set<VisibilityModifier> hides;
 
 	private Group container;
 
 	private DrawFile imageFile;
 	private String url;
-	
+
 	private boolean top;
 
 	public final boolean isTop() {
@@ -71,17 +74,19 @@ public class Entity implements IEntity {
 		this.top = top;
 	}
 
-	public Entity(String code, String display, EntityType type, Group entityPackage) {
-		this("cl" + UniqueSequence.getValue(), code, display, type, entityPackage);
+	public Entity(String code, String display, EntityType type, Group entityPackage, Set<VisibilityModifier> hides) {
+		this("cl" + UniqueSequence.getValue(), code, display, type, entityPackage, hides);
 	}
 
-	public Entity(String uid, String code, String display, EntityType type, Group entityPackage) {
+	public Entity(String uid, String code, String display, EntityType type, Group entityPackage,
+			Set<VisibilityModifier> hides) {
 		if (code == null || code.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		if (display == null /* || display.length() == 0 */) {
 			throw new IllegalArgumentException();
 		}
+		this.hides = hides;
 		this.uid = uid;
 		this.type = type;
 		this.code = code;
@@ -105,30 +110,48 @@ public class Entity implements IEntity {
 
 	public void addFieldOrMethod(String s) {
 		if (isMethod(s)) {
-			methods2.add(new Member(s, true));
+			methods.add(new Member(s, true));
 		} else {
 			addField(s);
 		}
 	}
 
 	public void addField(String s) {
-		fields2.add(new Member(s, false));
+		fields.add(new Member(s, false));
 	}
 
 	public void addField(Member s) {
-		fields2.add(s);
+		fields.add(s);
 	}
 
 	private boolean isMethod(String s) {
 		return s.contains("(") || s.contains(")");
 	}
 
-	public List<Member> methods2() {
-		return Collections.unmodifiableList(methods2);
+	public List<Member> getMethodsToDisplay() {
+		if (hides==null || hides.size() == 0) {
+			return Collections.unmodifiableList(methods);
+		}
+		final List<Member> result = new ArrayList<Member>();
+		for (Member m : methods) {
+			if (hides.contains(m.getVisibilityModifier()) == false) {
+				result.add(m);
+			}
+		}
+		return Collections.unmodifiableList(result);
 	}
 
-	public List<Member> fields2() {
-		return Collections.unmodifiableList(fields2);
+	public List<Member> getFieldsToDisplay() {
+		if (hides==null || hides.size() == 0) {
+			return Collections.unmodifiableList(fields);
+		}
+		final List<Member> result = new ArrayList<Member>();
+		for (Member m : fields) {
+			if (hides.contains(m.getVisibilityModifier()) == false) {
+				result.add(m);
+			}
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public EntityType getType() {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5251 $
+ * Revision $Revision: 6198 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -133,7 +133,7 @@ class ConstraintSet {
 		}
 	}
 
-	private void pushToLeftParticipantBox(double deltaX, Pushable firstToChange) {
+	public void pushToLeftParticipantBox(double deltaX, Pushable firstToChange, boolean including) {
 		if (deltaX <= 0) {
 			throw new IllegalArgumentException();
 		}
@@ -145,6 +145,9 @@ class ConstraintSet {
 		for (Pushable box : participantList) {
 			if (box.equals(firstToChange)) {
 				founded = true;
+				if (including==false) {
+					continue;
+				}
 			}
 			if (founded) {
 				box.pushToLeft(deltaX);
@@ -153,7 +156,7 @@ class ConstraintSet {
 	}
 
 	public void pushToLeft(double delta) {
-		pushToLeftParticipantBox(delta, firstBorder);
+		pushToLeftParticipantBox(delta, firstBorder, true);
 	}
 
 	private void ensureSpaceAfter(StringBounder stringBounder, Pushable p1, Pushable p2, double space) {
@@ -167,7 +170,7 @@ class ConstraintSet {
 		assert p1.getCenterX(stringBounder) < p2.getCenterX(stringBounder);
 		final double existingSpace = p2.getCenterX(stringBounder) - p1.getCenterX(stringBounder);
 		if (existingSpace < space) {
-			pushToLeftParticipantBox(space - existingSpace, p2);
+			pushToLeftParticipantBox(space - existingSpace, p2, true);
 		}
 
 	}

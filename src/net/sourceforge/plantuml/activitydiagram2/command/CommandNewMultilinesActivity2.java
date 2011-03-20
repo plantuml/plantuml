@@ -27,20 +27,38 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 6211 $
+ *
+ * Revision $Revision: 5751 $
  *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml.activitydiagram2.command;
 
-public class Version {
+import java.util.List;
 
-	public static int version() {
-		return 6210;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines;
+
+public class CommandNewMultilinesActivity2 extends CommandMultilines<ActivityDiagram2> {
+
+	public CommandNewMultilinesActivity2(final ActivityDiagram2 system) {
+		super(system, "(?i)^[\"<].*$", "(?i)^.*[\">]$");
 	}
 
-	public static long compileTime() {
-		return 1300656476468L;
+	public final CommandExecutionResult execute(List<String> lines) {
+		if (getSystem().entities().size() == 0) {
+			return CommandExecutionResult.error("Missing start keyword");
+		}
+
+		if (getSystem().isReachable() == false) {
+			return CommandExecutionResult.error("Unreachable statement");
+		}
+		String s = StringUtils.getMergedLines(lines);
+		s = s.substring(1, s.length() - 2);
+
+		getSystem().newActivity(s);
+		return CommandExecutionResult.ok();
 	}
 
 }

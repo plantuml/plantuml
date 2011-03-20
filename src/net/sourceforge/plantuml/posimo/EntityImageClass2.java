@@ -82,8 +82,8 @@ public class EntityImageClass2 extends AbstractEntityImage2 {
 							getFont(FontParam.CLASS_STEREOTYPE), getFontColor(FontParam.CLASS_STEREOTYPE)),
 							HorizontalAlignement.CENTER);
 		}
-		this.methods = new MethodsOrFieldsArea2(entity.methods2(), FontParam.CLASS_ATTRIBUTE, skinParam);
-		this.fields = new MethodsOrFieldsArea2(entity.fields2(), FontParam.CLASS_ATTRIBUTE, skinParam);
+		this.methods = new MethodsOrFieldsArea2(entity.getMethodsToDisplay(), FontParam.CLASS_ATTRIBUTE, skinParam);
+		this.fields = new MethodsOrFieldsArea2(entity.getFieldsToDisplay(), FontParam.CLASS_ATTRIBUTE, skinParam);
 
 		circledCharacter = getCircledCharacter(entity);
 	}
