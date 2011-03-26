@@ -35,6 +35,8 @@ package net.sourceforge.plantuml;
 
 import java.awt.Font;
 
+import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamBackcolored implements ISkinParam {
@@ -114,5 +116,13 @@ public class SkinParamBackcolored implements ISkinParam {
 
 	public boolean useOctagonForActivity() {
 		return skinParam.useOctagonForActivity();
+	}
+
+	public DotSplines getDotSplines() {
+		return skinParam.getDotSplines();
+	}
+
+	public GraphvizLayoutStrategy getStrategy() {
+		return skinParam.getStrategy();
 	}
 }

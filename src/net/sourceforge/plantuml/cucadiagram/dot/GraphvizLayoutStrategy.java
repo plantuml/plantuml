@@ -40,21 +40,21 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.OptionFlags;
 
 public enum GraphvizLayoutStrategy {
-	DOT, NEATO;
+	DOT, NEATO, FDP, TWOPI, CIRCO;
 
 	public GraphvizMaker getGraphvizMaker(DotData data,
 			List<String> dotStrings, FileFormat fileFormat) {
-		if (this == DOT) {
+//		if (this == DOT) {
 			return new DotMaker(data, dotStrings, fileFormat);
-		}
-		throw new UnsupportedOperationException(this.toString());
+//		}
+//		throw new UnsupportedOperationException(this.toString());
 	}
 
 	public File getSystemForcedExecutable() {
-		if (this == DOT) {
+//		if (this == DOT) {
 			return getSystemForcedDot();
-		}
-		throw new UnsupportedOperationException(this.toString());
+//		}
+//		throw new UnsupportedOperationException(this.toString());
 	}
 
 	private File getSystemForcedDot() {

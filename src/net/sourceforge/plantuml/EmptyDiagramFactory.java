@@ -27,24 +27,32 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 5957 $
+ *
+ * Revision $Revision: 5890 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml;
 
-import java.util.List;
+import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommandComment;
+import net.sourceforge.plantuml.command.CommandMultilinesComment;
+import net.sourceforge.plantuml.command.CommandNope;
 
-import net.sourceforge.plantuml.UmlDiagram;
+public class EmptyDiagramFactory extends AbstractUmlSystemCommandFactory {
 
-public class CommandMultilinesComment extends CommandMultilines<UmlDiagram> {
+	private PSystemError system;
 
-	public CommandMultilinesComment(final UmlDiagram diagram) {
-		super(diagram, "(?i)^\\s*/'.*$", "(?i)^.*'/\\s*$");
+	public PSystemError getSystem() {
+		return system;
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
-		return CommandExecutionResult.ok();
+	@Override
+	protected void initCommands() {
+		// system = new PSystemError();
+
+		addCommand(new CommandNope(null));
+		addCommand(new CommandComment(null));
+		addCommand(new CommandMultilinesComment(null));
 	}
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5977 $
+ * Revision $Revision: 6242 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -62,7 +62,7 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 
 		ug.getParam().setBackcolor(getForegroundColor());
 		ug.getParam().setColor(getForegroundColor());
-		final int x2 = (int) arrowWidth;
+		final double x2 = arrowWidth - 3;
 
 		if (getArrowConfiguration().isDotted()) {
 			stroke(ug, 5, 2);

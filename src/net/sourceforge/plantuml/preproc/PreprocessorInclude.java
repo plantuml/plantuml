@@ -28,13 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6107 $
+ * Revision $Revision: 6219 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Set;
@@ -51,7 +50,7 @@ class PreprocessorInclude implements ReadLine {
 	private int numLine = 0;
 
 	private PreprocessorInclude included = null;
-	
+
 	private final Set<File> filesUsed;
 
 	public PreprocessorInclude(ReadLine reader, Set<File> filesUsed) {
@@ -84,14 +83,33 @@ class PreprocessorInclude implements ReadLine {
 
 	}
 
-	private String manageInclude(Matcher m) throws IOException, FileNotFoundException {
-		final String fileName = m.group(1);
+	private String manageInclude(Matcher m) throws IOException {
+		String fileName = m.group(1);
+		final int idx = fileName.lastIndexOf('!');
+		String suf = null;
+		if (idx != -1) {
+			suf = fileName.substring(idx + 1);
+			fileName = fileName.substring(0, idx);
+		}
 		final File f = FileSystem.getInstance().getFile(fileName);
 		if (f.exists()) {
 			filesUsed.add(f);
-			included = new PreprocessorInclude(new ReadLineReader(new FileReader(f)), filesUsed);
+			included = new PreprocessorInclude(getReaderInclude(f, suf), filesUsed);
+		} else {
+			return "Cannot include " + f.getAbsolutePath();
 		}
 		return this.readLine();
+	}
+
+	private ReadLine getReaderInclude(final File f, String suf) throws IOException {
+		if (StartumlExtractReader.containsStartuml(f)) {
+			int bloc = 0;
+			if (suf != null && suf.matches("\\d+")) {
+				bloc = Integer.parseInt(suf);
+			}
+			return new StartumlExtractReader(f, bloc);
+		}
+		return new ReadLineReader(new FileReader(f));
 	}
 
 	public int getLineNumber() {

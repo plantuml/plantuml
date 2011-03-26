@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5957 $
+ * Revision $Revision: 4762 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -37,13 +37,14 @@ import java.util.List;
 
 import net.sourceforge.plantuml.UmlDiagram;
 
-public class CommandMultilinesComment extends CommandMultilines<UmlDiagram> {
+public class CommandComment extends SingleLineCommand<UmlDiagram> {
 
-	public CommandMultilinesComment(final UmlDiagram diagram) {
-		super(diagram, "(?i)^\\s*/'.*$", "(?i)^.*'/\\s*$");
+	public CommandComment(UmlDiagram diagram) {
+		super(diagram, "(?i)^\\s*('.*||/'.*'/\\s*)$");
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
 		return CommandExecutionResult.ok();
 	}
 

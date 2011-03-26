@@ -28,13 +28,10 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6095 $
+ * Revision $Revision: 6221 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
-
-import java.util.Arrays;
-import java.util.List;
 
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UniqueSequence;
@@ -104,6 +101,16 @@ public class StateDiagram extends AbstractEntityDiagram {
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.STATE;
+	}
+	
+	private boolean hideEmptyDescription = false;
+
+	public final void setHideEmptyDescription(boolean hideEmptyDescription) {
+		this.hideEmptyDescription = hideEmptyDescription;
+	}
+
+	public final boolean isHideEmptyDescription() {
+		return hideEmptyDescription;
 	}
 	
 //	@Override

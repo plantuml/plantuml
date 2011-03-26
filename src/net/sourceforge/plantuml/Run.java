@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6188 $
+ * Revision $Revision: 6234 $
  *
  */
 package net.sourceforge.plantuml;
@@ -39,34 +39,23 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.UIManager;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagramFactory2;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
-import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
-import net.sourceforge.plantuml.eggs.PSystemEggFactory;
-import net.sourceforge.plantuml.eggs.PSystemLostFactory;
-import net.sourceforge.plantuml.eggs.PSystemPathFactory;
-import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
-import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.printskin.PrintSkinFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
-import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.usecasediagram.UsecaseDiagramFactory;
-import net.sourceforge.plantuml.version.PSystemVersionFactory;
 
 public class Run {
 

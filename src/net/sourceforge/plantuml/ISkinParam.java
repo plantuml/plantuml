@@ -35,6 +35,8 @@ package net.sourceforge.plantuml;
 
 import java.awt.Font;
 
+import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public interface ISkinParam {
@@ -66,5 +68,9 @@ public interface ISkinParam {
 	public int getDpi();
 	
 	public boolean useOctagonForActivity();
+	
+	public DotSplines getDotSplines();
+	
+	public GraphvizLayoutStrategy getStrategy();
 
 }

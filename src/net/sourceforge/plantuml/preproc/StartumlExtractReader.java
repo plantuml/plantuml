@@ -38,21 +38,44 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import net.sourceforge.plantuml.BlockUmlBuilder;
+
 public class StartumlExtractReader implements ReadLine {
 
 	private final ReadLine raw;
+	private boolean finished = false;
 
-	public StartumlExtractReader(File f, int num) throws FileNotFoundException {
+	public StartumlExtractReader(File f, int num) throws IOException {
 		if (num < 0) {
 			throw new IllegalArgumentException();
 		}
 		raw = getReadLine(f);
+		String s = null;
+		while ((s = raw.readLine()) != null) {
+			if (BlockUmlBuilder.isArobaseStartuml(s)) {
+				if (num == 0) {
+					return;
+				}
+				num--;
+			}
+		}
+		finished = true;
+	}
+
+	private static ReadLine getReadLine(File f) throws FileNotFoundException {
+		return new UncommentReadLine(new ReadLineReader(new FileReader(f)));
 	}
 
 	static public boolean containsStartuml(File f) throws IOException {
 		ReadLine r = null;
 		try {
 			r = getReadLine(f);
+			String s = null;
+			while ((s = r.readLine()) != null) {
+				if (BlockUmlBuilder.isArobaseStartuml(s)) {
+					return true;
+				}
+			}
 		} finally {
 			if (r != null) {
 				r.close();
@@ -61,12 +84,16 @@ public class StartumlExtractReader implements ReadLine {
 		return false;
 	}
 
-	private static ReadLine getReadLine(File f) throws FileNotFoundException {
-		return new UncommentReadLine(new ReadLineReader(new FileReader(f)));
-	}
-
 	public String readLine() throws IOException {
-		return raw.readLine();
+		if (finished) {
+			return null;
+		}
+		final String result = raw.readLine();
+		if (result != null && BlockUmlBuilder.isArobaseEnduml(result)) {
+			finished = true;
+			return null;
+		}
+		return result;
 	}
 
 	public void close() throws IOException {

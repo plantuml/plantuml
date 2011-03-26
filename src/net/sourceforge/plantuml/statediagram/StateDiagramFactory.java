@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5493 $
+ * Revision $Revision: 6221 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.statediagram.command.CommandCreatePackageState2;
 import net.sourceforge.plantuml.statediagram.command.CommandCreateState;
 import net.sourceforge.plantuml.statediagram.command.CommandCreateState2;
 import net.sourceforge.plantuml.statediagram.command.CommandEndState;
+import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
 import net.sourceforge.plantuml.statediagram.command.CommandLinkState2;
 import net.sourceforge.plantuml.usecasediagram.command.CommandRankDirUsecase;
 
@@ -69,6 +70,7 @@ public class StateDiagramFactory extends AbstractUmlSystemCommandFactory {
 		addCommand(new CommandAddField(system));
 		addCommand(new CommandConcurrentState(system));
 		addCommand(new CommandMultilinesClassNote(system));
+		addCommand(new CommandHideEmptyDescription(system));
 
 		addCommand(new CommandNoteEntity(system));
 		addCommonCommands(system);

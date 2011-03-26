@@ -28,22 +28,26 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5957 $
+ * Revision $Revision: 4762 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.statediagram.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
 
-public class CommandMultilinesComment extends CommandMultilines<UmlDiagram> {
+public class CommandHideEmptyDescription extends SingleLineCommand<StateDiagram> {
 
-	public CommandMultilinesComment(final UmlDiagram diagram) {
-		super(diagram, "(?i)^\\s*/'.*$", "(?i)^.*'/\\s*$");
+	public CommandHideEmptyDescription(StateDiagram diagram) {
+		super(diagram, "(?i)^(hide|show)\\s+empty\\s+description$");
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
+		getSystem().setHideEmptyDescription(arg.get(0).equalsIgnoreCase("hide"));
 		return CommandExecutionResult.ok();
 	}
 

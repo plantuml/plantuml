@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -86,6 +87,9 @@ final public class UmlSource {
 				continue;
 			}
 			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+				continue;
+			}
+			if (s.matches("\\s*'.*")) {
 				continue;
 			}
 			if (s.trim().length() != 0) {

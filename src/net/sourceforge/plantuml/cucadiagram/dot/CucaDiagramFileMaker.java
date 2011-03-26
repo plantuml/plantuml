@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6197 $
+ * Revision $Revision: 6241 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -57,8 +57,6 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
@@ -82,6 +80,7 @@ import net.sourceforge.plantuml.cucadiagram.Imaged;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.eps.EpsStrategy;
+import net.sourceforge.plantuml.eps.EpsTitler;
 import net.sourceforge.plantuml.eps.SvgToEpsConverter;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
@@ -102,6 +101,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.StickMan;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.svg.SvgTitler;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -586,6 +586,38 @@ public final class CucaDiagramFileMaker {
 		return svgTitler.addTitleSvg(svg, width, height);
 	}
 
+	private String addTitleEps(String eps) throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
+
+		final EpsTitler epsTitler = new EpsTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
+				HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
+		this.deltaY += epsTitler.getHeight();
+		return epsTitler.addTitleEps(eps);
+	}
+
+	private String addFooterEps(String eps) throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.FOOTER, null);
+		final EpsTitler epsTitler = new EpsTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
+				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
+		return epsTitler.addTitleEps(eps);
+	}
+
+	private String addHeaderEps(String eps) throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
+		final EpsTitler epsTitler = new EpsTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
+				.getHeaderAlignement(), VerticalPosition.TOP, 3);
+		this.deltaY += epsTitler.getHeight();
+		return epsTitler.addTitleEps(eps);
+	}
+
+
+
 	private String addHeaderSvg(String svg, double width, double height) throws IOException {
 		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
 		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
@@ -891,6 +923,18 @@ public final class CucaDiagramFileMaker {
 			if (isUnderline) {
 				eps = new UnderlineTrickEps(eps).getString();
 			}
+			
+			if (diagram.getTitle() != null) {
+				eps = addTitleEps(eps);
+			}
+			if (diagram.getFooter() != null) {
+				eps = addFooterEps(eps);
+			}
+			if (diagram.getHeader() != null) {
+				eps = addHeaderEps(eps);
+			}
+
+			os.write(eps.getBytes("UTF-8"));
 
 			// final Dimension2D dim = getDimensionSvg(svg);
 			//
@@ -931,7 +975,6 @@ public final class CucaDiagramFileMaker {
 			// mImage.appendTail(sb);
 			// svg = sb.toString();
 
-			os.write(eps.getBytes("UTF-8"));
 
 		} finally {
 			// cleanTemporaryFiles(diagram.entities().values());
@@ -963,13 +1006,16 @@ public final class CucaDiagramFileMaker {
 
 		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS || diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
 			dotData.setStaticImagesMap(staticFilesMap);
-
 			if (diagram.isVisibilityModifierPresent()) {
 				dotData.setVisibilityModifierPresent(true);
 			}
 		}
-		
-		return diagram.getStrategy().getGraphvizMaker(dotData, dotStrings, fileFormat);
+
+		if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
+			dotData.setHideEmptyDescription(((StateDiagram) diagram).isHideEmptyDescription());
+		}
+
+		return diagram.getSkinParam().getStrategy().getGraphvizMaker(dotData, dotStrings, fileFormat);
 		// return new DotMaker(dotData, dotStrings, fileFormat);
 	}
 

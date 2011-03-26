@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6141 $
+ * Revision $Revision: 6228 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,6 +44,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParam implements ISkinParam {
@@ -264,12 +266,44 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean useOctagonForActivity() {
-		// activityShape roundedbox
 		final String value = getValue("activityshape");
 		if ("roundedbox".equalsIgnoreCase(value)) {
 			return false;
 		}
-		return true;
+		if ("octagon".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
 	}
+
+	public DotSplines getDotSplines() {
+		final String value = getValue("linetype");
+		if ("polyline".equalsIgnoreCase(value)) {
+			return DotSplines.POLYLINE;
+		}
+		if ("ortho".equalsIgnoreCase(value)) {
+			return DotSplines.ORTHO;
+		}
+		return DotSplines.SPLINES;
+	}
+	
+	
+	public GraphvizLayoutStrategy getStrategy() {
+		final String value = getValue("layout");
+		if ("neato".equalsIgnoreCase(value)) {
+			return GraphvizLayoutStrategy.NEATO;
+		}
+		if ("circo".equalsIgnoreCase(value)) {
+			return GraphvizLayoutStrategy.CIRCO;
+		}
+		if ("fdp".equalsIgnoreCase(value)) {
+			return GraphvizLayoutStrategy.FDP;
+		}
+		if ("twopi".equalsIgnoreCase(value)) {
+			return GraphvizLayoutStrategy.TWOPI;
+		}
+		return GraphvizLayoutStrategy.DOT;
+	}
+
 
 }

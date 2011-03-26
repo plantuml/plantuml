@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6195 $
+ * Revision $Revision: 6230 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -168,6 +168,24 @@ final public class DotMaker implements GraphvizMaker {
 		}
 		// sb.append("ordering=out;");
 		sb.append("compound=true;");
+		final DotSplines dotSplines = data.getSkinParam().getDotSplines();
+		final GraphvizLayoutStrategy strategy = data.getSkinParam().getStrategy();
+		if (dotSplines == DotSplines.ORTHO) {
+			sb.append("splines=ortho;");
+		} else if (dotSplines == DotSplines.POLYLINE) {
+			sb.append("splines=polyline;");
+		} else if (strategy != GraphvizLayoutStrategy.DOT) {
+			sb.append("splines=true;");
+		}
+		
+// if (strategy == GraphvizLayoutStrategy.NEATO) {
+//			sb.append("overlap=false;");
+//		}
+		if (strategy != GraphvizLayoutStrategy.DOT) {
+			sb.append("layout=" + strategy.name().toLowerCase() + ";");
+			sb.append("overlap=false;");
+		}
+		
 		sb.append("remincross=true;");
 		sb.append("searchsize=500;");
 		if (data.getRankdir() == Rankdir.LEFT_TO_RIGHT) {
@@ -1051,7 +1069,7 @@ final public class DotMaker implements GraphvizMaker {
 			sb.append("</TABLE>");
 		}
 
-		if (entity.getFieldsToDisplay().size() == 0 && cFile == null) {
+		if (data.isHideEmptyDescription() == false && entity.getFieldsToDisplay().size() == 0 && cFile == null) {
 			sb.append("|");
 		}
 

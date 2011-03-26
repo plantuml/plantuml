@@ -93,6 +93,10 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	public StringBounder getStringBounder() {
 		return stringBounder;
 	}
+	
+	public void drawEps(String eps, double x, double y) {
+		this.getGraphicObject().drawEps(eps, x, y);
+	}
 
 	public void setClip(UClip clip) {
 		this.clip = clip;

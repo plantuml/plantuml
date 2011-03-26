@@ -37,8 +37,8 @@ public class PostScriptCommandRaw implements PostScriptCommand {
 
 	final private String cmd;
 
-	public PostScriptCommandRaw(String cmd) {
-		if (cmd.indexOf('\n') != -1) {
+	public PostScriptCommandRaw(String cmd, boolean checkConsistence) {
+		if (checkConsistence && cmd.indexOf('\n') != -1) {
 			throw new IllegalArgumentException(cmd);
 		}
 		this.cmd = cmd;

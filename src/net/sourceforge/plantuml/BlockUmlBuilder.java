@@ -69,12 +69,6 @@ final public class BlockUmlBuilder {
 		return s.equals("@enduml") || s.startsWith("@enduml ");
 	}
 
-	private boolean isIgnoredLine(final String s) {
-		// return s.length() == 0 || s.startsWith("#") || s.startsWith("'");
-		// return s.length() == 0 || s.startsWith("'");
-		return s.startsWith("'");
-	}
-
 	public static boolean isArobaseStartuml(String s) {
 		s = s.trim();
 		return s.equals("@startuml") || s.startsWith("@startuml ");
@@ -87,7 +81,7 @@ final public class BlockUmlBuilder {
 			if (isArobaseStartuml(s)) {
 				current = new ArrayList<String>();
 			}
-			if (current != null && isIgnoredLine(s.trim()) == false) {
+			if (current != null) {
 				current.add(s);
 			}
 			if (isArobaseEnduml(s) && current != null) {

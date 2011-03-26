@@ -27,29 +27,13 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
+ * 
+ * Revision $Revision: 6222 $
  *
  */
-package net.sourceforge.plantuml.usecasediagram.command;
+package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.util.List;
-
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
-
-public class CommandSetStrategy extends SingleLineCommand<CucaDiagram> {
-
-	public CommandSetStrategy(CucaDiagram diagram) {
-		super(
-				diagram,
-				"(?i)^layout with neato$");
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		getSystem().setStrategy(GraphvizLayoutStrategy.NEATO);
-		return CommandExecutionResult.ok();
-	}
+public enum DotSplines {
+	POLYLINE, ORTHO, SPLINES
 
 }

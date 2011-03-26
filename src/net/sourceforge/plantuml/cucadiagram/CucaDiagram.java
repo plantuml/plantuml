@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6199 $
+ * Revision $Revision: 6229 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMakerBeta;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramPngMaker3;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 
@@ -514,15 +513,4 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	public final Set<VisibilityModifier> getHides() {
 		return Collections.unmodifiableSet(hides);
 	}
-	
-	private GraphvizLayoutStrategy strategy = GraphvizLayoutStrategy.DOT;
-	
-	public void setStrategy(GraphvizLayoutStrategy strategy) {
-		this.strategy = strategy;
-	}
-
-	public GraphvizLayoutStrategy getStrategy() {
-		return strategy;
-	}
-
 }

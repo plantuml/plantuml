@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5813 $
+ * Revision $Revision: 6222 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -262,5 +262,17 @@ final public class DotData implements PortionShower {
 	public final void setDpi(int dpi) {
 		this.dpi = dpi;
 	}
+	
+	private boolean hideEmptyDescription = false;
+
+	public final void setHideEmptyDescription(boolean hideEmptyDescription) {
+		this.hideEmptyDescription = hideEmptyDescription;
+	}
+
+	public final boolean isHideEmptyDescription() {
+		return hideEmptyDescription;
+	}
+	
+
 
 }

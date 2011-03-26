@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6197 $
+ * Revision $Revision: 6228 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -217,7 +217,7 @@ public final class GroupPngMaker {
 		// dotData.putAllImagesLink(imagesLink);
 
 		// return new DotMaker(dotData, dotStrings, fileFormat);
-		return diagram.getStrategy().getGraphvizMaker(dotData, dotStrings, fileFormat);
+		return diagram.getSkinParam().getStrategy().getGraphvizMaker(dotData, dotStrings, fileFormat);
 	}
 
 	private List<Link> getPureInnerLinks() {
