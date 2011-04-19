@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5937 $
+ * Revision $Revision: 6404 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -46,15 +46,17 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
-	public ComponentRoseGroupingElse(Color fontColor, Font smallFont, CharSequence comment) {
+	private final Color groupBorder;
+
+	public ComponentRoseGroupingElse(Color fontColor, Color groupBorder, Font smallFont, CharSequence comment) {
 		super(comment == null ? null : "[" + comment + "]", fontColor, smallFont, HorizontalAlignement.LEFT, 5, 5, 1);
+		this.groupBorder = groupBorder;
 	}
-	
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
 		stroke(ug, 2, 2);
-		ug.getParam().setColor(getFontColor());
+		ug.getParam().setColor(groupBorder);
 		ug.draw(0, 1, new ULine(dimensionToUse.getWidth(), 0));
 		ug.getParam().setStroke(new UStroke());
 		getTextBlock().drawU(ug, getMarginX1(), getMarginY());

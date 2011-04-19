@@ -70,7 +70,7 @@ final public class CommandLinkLollipop extends SingleLineCommand<AbstractClassOr
 	private final Pattern patternAssociationPoint = Pattern
 			.compile("\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)");
 
-	public CommandLinkLollipop(AbstractClassOrObjectDiagram diagram) {
+	private CommandLinkLollipop(AbstractClassOrObjectDiagram diagram) {
 		super(
 				diagram,
 				"(?i)^(?:@([\\d.])\\s+)?((?:(interface|enum|abstract\\s+class|abstract|class)\\s+)?(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)|\\(\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*,\\s*\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*\\s*\\))\\s*(?:\"([^\"]+)\")?\\s*"

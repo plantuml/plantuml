@@ -43,9 +43,9 @@ public class URectangle implements UShape {
 	}
 
 	public URectangle(double width, double height, double rx, double ry) {
-//		if (height == 0) {
-//			throw new IllegalArgumentException();
-//		}
+		// if (height == 0) {
+		// throw new IllegalArgumentException();
+		// }
 		if (width == 0) {
 			throw new IllegalArgumentException();
 		}

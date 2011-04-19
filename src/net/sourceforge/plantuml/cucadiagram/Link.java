@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6152 $
+ * Revision $Revision: 6356 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -68,6 +68,7 @@ public class Link implements Imaged {
 	private final String labelangle;
 
 	private HtmlColor specificColor;
+	private boolean constraint = true;
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length) {
 		this(cl1, cl2, type, label, length, null, null, null, null, null);
@@ -96,6 +97,12 @@ public class Link implements Imaged {
 		this.labeldistance = labeldistance;
 		this.labelangle = labelangle;
 		this.specificColor = specificColor;
+		if (qualifier1 != null) {
+			cl1.setNearDecoration(true);
+		}
+		if (qualifier2 != null) {
+			cl2.setNearDecoration(true);
+		}
 	}
 
 	public Link getInv() {
@@ -312,6 +319,14 @@ public class Link implements Imaged {
 
 	public void setSpecificColor(String s) {
 		this.specificColor = HtmlColor.getColorIfValid(s);
+	}
+
+	public final boolean isConstraint() {
+		return constraint;
+	}
+
+	public final void setConstraint(boolean constraint) {
+		this.constraint = constraint;
 	}
 
 }

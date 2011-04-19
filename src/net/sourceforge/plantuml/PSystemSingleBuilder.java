@@ -73,7 +73,7 @@ final public class PSystemSingleBuilder {
 	public PSystemSingleBuilder(UmlSource s, PSystemFactory systemFactory) throws IOException {
 		this.source = s;
 		it = s.iterator();
-		if (BlockUmlBuilder.isArobaseStartuml(next()) == false) {
+		if (StartUtils.isArobaseStartDiagram(next()) == false) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -90,7 +90,7 @@ final public class PSystemSingleBuilder {
 		systemFactory.reset();
 		while (hasNext()) {
 			final String s = next();
-			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+			if (StartUtils.isArobaseEndDiagram(s)) {
 				if (source.getSize() == 2) {
 					assert false;
 					sys = buildEmptyError();
@@ -130,7 +130,7 @@ final public class PSystemSingleBuilder {
 		systemFactory.reset();
 		while (hasNext()) {
 			final String s = next();
-			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+			if (StartUtils.isArobaseEndDiagram(s)) {
 				final String err = ((AbstractUmlSystemCommandFactory) systemFactory).checkFinalError();
 				if (err != null) {
 					sys = buildEmptyError(err);
@@ -201,7 +201,7 @@ final public class PSystemSingleBuilder {
 		lines.add(init);
 		while (hasNext()) {
 			final String s = next();
-			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+			if (StartUtils.isArobaseEndDiagram(s)) {
 				return false;
 			}
 			lines.add(s);

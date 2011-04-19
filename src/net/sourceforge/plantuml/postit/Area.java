@@ -77,7 +77,7 @@ public class Area implements Elastic {
 	}
 
 	public double heightWhenWidthIs(double width, StringBounder stringBounder) {
-		final AreaLayoutFixedWidth layout = new AreaLayoutFixedWidth();
+		final AreaLayoutFixedWidth layout = new AreaLayoutFixedWidth(width);
 		final Map<PostIt, Point2D> pos = layout.getPositions(postIts, stringBounder);
 		double max = 10;
 		for (Map.Entry<PostIt, Point2D> ent : pos.entrySet()) {
@@ -96,8 +96,8 @@ public class Area implements Elastic {
 		postIts.add(postIt);
 	}
 
-	public void drawU(UGraphic ug) {
-		final AreaLayout layout = new AreaLayoutFixedWidth();
+	public void drawU(UGraphic ug, double width) {
+		final AreaLayout layout = new AreaLayoutFixedWidth(width);
 		final Map<PostIt, Point2D> pos = layout.getPositions(postIts, ug.getStringBounder());
 		final double tx = ug.getTranslateX();
 		final double ty = ug.getTranslateY();

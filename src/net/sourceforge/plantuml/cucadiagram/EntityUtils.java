@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
@@ -75,7 +76,7 @@ public abstract class EntityUtils {
 				return ent.getUid();
 			}
 
-			public String getUrl() {
+			public Url getUrl() {
 				return ent.getUrl();
 			}
 
@@ -124,6 +125,14 @@ public abstract class EntityUtils {
 
 			public void setTop(boolean top) {
 				ent.setTop(top);
+			}
+
+			public boolean hasNearDecoration() {
+				return ent.hasNearDecoration();
+			}
+
+			public void setNearDecoration(boolean nearDecoration) {
+				ent.setNearDecoration(nearDecoration);
 			}
 
 		};

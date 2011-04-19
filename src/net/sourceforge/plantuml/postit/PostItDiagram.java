@@ -36,11 +36,8 @@ package net.sourceforge.plantuml.postit;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +65,8 @@ public class PostItDiagram extends UmlDiagram {
 		throw new UnsupportedOperationException();
 	}
 
-	public void createFile(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
+	@Override
+	final protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) throws IOException {
 		final UGraphic ug = createImage(fileFormatOption);
 		drawU(ug);
 		if (ug instanceof UGraphicG2d) {
@@ -83,19 +81,19 @@ public class PostItDiagram extends UmlDiagram {
 		}
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormatOption) throws IOException,
-			InterruptedException {
-		OutputStream os = null;
-		try {
-			os = new FileOutputStream(suggestedFile);
-			createFile(os, 0, fileFormatOption);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		return Arrays.asList(suggestedFile);
-	}
+//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormatOption) throws IOException,
+//			InterruptedException {
+//		OutputStream os = null;
+//		try {
+//			os = new FileOutputStream(suggestedFile);
+//			createFile(os, 0, fileFormatOption);
+//		} finally {
+//			if (os != null) {
+//				os.close();
+//			}
+//		}
+//		return Arrays.asList(suggestedFile);
+//	}
 
 	public String getDescription() {
 		return "Board of post-it";
@@ -120,7 +118,7 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	void drawU(UGraphic ug) {
-		getDefaultArea().drawU(ug);
+		getDefaultArea().drawU(ug, width);
 	}
 
 	private UGraphic createImage(FileFormatOption fileFormatOption) {

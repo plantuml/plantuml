@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5751 $
+ * Revision $Revision: 6486 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -37,6 +37,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
@@ -44,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.sequencediagram.Note;
 
 public abstract class AbstractCommandMultilinesNoteEntity extends CommandMultilines<AbstractEntityDiagram> {
 
@@ -58,11 +60,20 @@ public abstract class AbstractCommandMultilinesNoteEntity extends CommandMultili
 
 		final IEntity cl1 = getSystem().getOrCreateClass(line0.get(1));
 
-		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
+		List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
+		Url url = null;
+		if (strings.size() > 0) {
+			url = Note.extractUrl(strings.get(0));
+		}
+		if (url != null) {
+			strings = strings.subList(1, strings.size());
+		}
+
 		final String s = StringUtils.getMergedLines(strings);
 
 		final Entity note = getSystem().createEntity("GMN" + UniqueSequence.getValue(), s, EntityType.NOTE);
 		note.setSpecificBackcolor(line0.get(2));
+		note.setUrl(url);
 
 		final Position position = Position.valueOf(pos.toUpperCase()).withRankdir(getSystem().getRankdir());
 		final Link link;

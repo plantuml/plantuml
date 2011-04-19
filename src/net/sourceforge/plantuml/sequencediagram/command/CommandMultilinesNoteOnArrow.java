@@ -28,13 +28,16 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5751 $
+ * Revision $Revision: 6485 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
@@ -54,8 +57,26 @@ public class CommandMultilinesNoteOnArrow extends CommandMultilines<SequenceDiag
 		final NotePosition position = NotePosition.valueOf(line0.get(0).toUpperCase());
 		final AbstractMessage m = getSystem().getLastMessage();
 		if (m != null) {
-			final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
-			m.setNote(strings, position, line0.get(1));
+			final List<CharSequence> strings = new ArrayList<CharSequence>();
+			final Iterator<String> it = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1)).iterator();
+			while (it.hasNext()) {
+				CharSequence s = it.next();
+				if (s.equals("{{")) {
+					final List<String> other = new ArrayList<String>();
+					other.add("@startuml");
+					while (it.hasNext()) {
+						String s2 = it.next();
+						if (s2.equals("}}")) {
+							break;
+						}
+						other.add(s2);
+					}
+					other.add("@enduml");
+					s = new EmbededDiagram(other);
+				}
+				strings.add(s);
+			}
+			m.setNote(strings, position, line0.get(1), null);
 		}
 
 		return CommandExecutionResult.ok();

@@ -106,7 +106,7 @@ public class SourceFileReader {
 			final File suggested = new File(outputDirectory, newName);
 			suggested.getParentFile().mkdirs();
 
-			for (File f : blockUml.getSystem().createFiles(suggested, fileFormatOption)) {
+			for (File f : blockUml.getSystem().exportDiagrams(suggested, fileFormatOption)) {
 				final String desc = "[" + file.getName() + "] " + blockUml.getSystem().getDescription();
 				final GeneratedImage generatedImage = new GeneratedImage(f, desc);
 				result.add(generatedImage);

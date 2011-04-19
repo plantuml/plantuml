@@ -55,18 +55,18 @@ public class CommandCreateEntityClassMultilines2 extends CommandMultilines2<Clas
 	public CommandCreateEntityClassMultilines2(ClassDiagram diagram) {
 		super(diagram, getRegexConcat(), "(?i)^\\s*\\}\\s*$");
 	}
-	
+
 	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-				new RegexLeaf("TYPE", "(interface|enum|abstract\\s+class|abstract|class)\\s+"),
-				new RegexOr(
-					new RegexLeaf("NAME1", "(?:\"([^\"]+)\"\\s+as\\s+)?(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)"),
-					new RegexLeaf("NAME2", "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s+as\\s+\"([^\"]+)\""),
-					new RegexLeaf("NAME3", "\"([^\"]+)\"")),
-				new RegexLeaf("STEREO", "(?:\\s*([\\<\\[]{2}.*[\\>\\]]{2}))?"),
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("TYPE", "(interface|enum|abstract\\s+class|abstract|class)\\s+"), //
+				new RegexOr( //
+						new RegexLeaf("NAME1", "(?:\"([^\"]+)\"\\s+as\\s+)?(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)"), //
+						new RegexLeaf("NAME2", "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s+as\\s+\"([^\"]+)\""), //
+						new RegexLeaf("NAME3", "\"([^\"]+)\"")), //
+				new RegexLeaf("STEREO", "(?:\\s*([\\<\\[]{2}.*[\\>\\]]{2}))?"), //
+				new RegexLeaf("EXTENDS", "(\\s+(extends|implements)\\s+(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*))?"), //
 				new RegexLeaf("\\s*\\{\\s*$"));
 	}
-
 
 	public CommandExecutionResult execute(List<String> lines) {
 		StringUtils.trim(lines, true);
@@ -82,11 +82,14 @@ public class CommandCreateEntityClassMultilines2 extends CommandMultilines2<Clas
 			}
 			entity.addFieldOrMethod(s);
 		}
+
+		CommandCreateEntityClass2.manageExtends(getSystem(), line0, entity);
+
 		return CommandExecutionResult.ok();
 	}
 
 	private Entity executeArg0(Map<String, RegexPartialMatch> arg) {
-		
+
 		final EntityType type = EntityType.getEntityType(arg.get("TYPE").get(0).toUpperCase());
 		final String code;
 		final String display;

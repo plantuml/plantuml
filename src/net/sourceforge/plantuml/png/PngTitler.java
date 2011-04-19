@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6471 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -148,5 +148,28 @@ public class PngTitler {
 		g2d.dispose();
 		return newIm;
 
+	}
+
+	public double getOffsetX(double imWidth, StringBounder stringBounder) {
+		final TextBlock textBloc = getTextBlock();
+		if (textBloc == null) {
+			return 0;
+		}
+		final Dimension2D dimText = textBloc.calculateDimension(stringBounder);
+
+		if (imWidth >= dimText.getWidth()) {
+			return 0;
+		}
+		return (dimText.getWidth() - imWidth) / 2;
+	}
+
+	public double getOffsetY(StringBounder stringBounder) {
+		final TextBlock textBloc = getTextBlock();
+		if (textBloc == null) {
+			return 0;
+		}
+		final Dimension2D dimText = textBloc.calculateDimension(stringBounder);
+		final double height = dimText.getHeight();
+		return height;
 	}
 }

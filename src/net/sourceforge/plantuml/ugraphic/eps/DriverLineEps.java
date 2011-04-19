@@ -54,7 +54,7 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 
 		double x2 = x + shape.getDX();
 		double y2 = y + shape.getDY();
-		
+
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
 			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));
@@ -68,7 +68,8 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 		}
 
 		eps.setStrokeColor(param.getColor());
-		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDasharrayEps());
+		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
+				.getDashSpace());
 		eps.epsLine(x, y, x2, y2);
 	}
 }

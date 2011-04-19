@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5942 $
+ * Revision $Revision: 6475 $
  *
  */
 package net.sourceforge.plantuml;
@@ -55,11 +55,12 @@ public enum FontParam {
 	PACKAGE(14, Font.PLAIN, "black", null),
 	SEQUENCE_ACTOR(13, Font.PLAIN, "black", null),
 	SEQUENCE_ARROW(13, Font.PLAIN, "black", null),
-	SEQUENCE_ENGLOBER(13, Font.BOLD, "black", null),
+	SEQUENCE_BOX(13, Font.BOLD, "black", null),
 	SEQUENCE_DIVIDER(13, Font.BOLD, "black", null),
+	SEQUENCE_REFERENCE(13, Font.PLAIN, "black", null),
 	SEQUENCE_DELAY(11, Font.PLAIN, "black", null),
-	SEQUENCE_GROUPING(11, Font.BOLD, "black", null),
-	SEQUENCE_GROUPING_HEADER(13, Font.BOLD, "black", null),
+	SEQUENCE_GROUP(11, Font.BOLD, "black", null),
+	SEQUENCE_GROUP_HEADER(13, Font.BOLD, "black", null),
 	SEQUENCE_PARTICIPANT(13, Font.PLAIN, "black", null),
 	SEQUENCE_TITLE(13, Font.BOLD, "black", null),
 	STATE(14, Font.PLAIN, "black", null),

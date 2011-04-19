@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6169 $
+ * Revision $Revision: 6482 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -62,7 +63,7 @@ public class Entity implements IEntity {
 	private Group container;
 
 	private DrawFile imageFile;
-	private String url;
+	private Url url2;
 
 	private boolean top;
 
@@ -129,7 +130,7 @@ public class Entity implements IEntity {
 	}
 
 	public List<Member> getMethodsToDisplay() {
-		if (hides==null || hides.size() == 0) {
+		if (hides == null || hides.size() == 0) {
 			return Collections.unmodifiableList(methods);
 		}
 		final List<Member> result = new ArrayList<Member>();
@@ -142,7 +143,7 @@ public class Entity implements IEntity {
 	}
 
 	public List<Member> getFieldsToDisplay() {
-		if (hides==null || hides.size() == 0) {
+		if (hides == null || hides.size() == 0) {
 			return Collections.unmodifiableList(fields);
 		}
 		final List<Member> result = new ArrayList<Member>();
@@ -237,13 +238,12 @@ public class Entity implements IEntity {
 		this.specificBackcolor = HtmlColor.getColorIfValid(s);
 	}
 
-	public final String getUrl() {
-		return url;
-		// return "http://www.google.com";
+	public final Url getUrl() {
+		return url2;
 	}
 
-	public final void setUrl(String url) {
-		this.url = url;
+	public final void setUrl(Url url) {
+		this.url2 = url;
 	}
 
 	@Override
@@ -280,4 +280,15 @@ public class Entity implements IEntity {
 		}
 		return null;
 	}
+
+	private boolean nearDecoration = false;
+
+	public final boolean hasNearDecoration() {
+		return nearDecoration;
+	}
+
+	public final void setNearDecoration(boolean nearDecoration) {
+		this.nearDecoration = nearDecoration;
+	}
+
 }

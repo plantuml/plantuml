@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.CommandMultilines;
 public class CommandNewMultilinesActivity2 extends CommandMultilines<ActivityDiagram2> {
 
 	public CommandNewMultilinesActivity2(final ActivityDiagram2 system) {
-		super(system, "(?i)^[\"<].*$", "(?i)^.*[\">]$");
+		super(system, "(?i)^\\s*[-*]\\s*\"\\s*.*$", "(?i)^.*\\s*\"\\s*$");
 	}
 
 	public final CommandExecutionResult execute(List<String> lines) {
@@ -55,6 +55,12 @@ public class CommandNewMultilinesActivity2 extends CommandMultilines<ActivityDia
 			return CommandExecutionResult.error("Unreachable statement");
 		}
 		String s = StringUtils.getMergedLines(lines);
+		s = s.trim();
+		assert s.startsWith("-") || s.startsWith("*") ;
+		s = s.substring(1);
+		s = s.trim();
+		assert s.startsWith("\"");
+		assert s.endsWith("\"");
 		s = s.substring(1, s.length() - 2);
 
 		getSystem().newActivity(s);

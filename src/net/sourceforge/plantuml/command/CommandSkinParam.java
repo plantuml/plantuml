@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5769 $
+ * Revision $Revision: 6448 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -40,12 +40,13 @@ import net.sourceforge.plantuml.UmlDiagram;
 public class CommandSkinParam extends SingleLineCommand<UmlDiagram> {
 
 	public CommandSkinParam(UmlDiagram diagram) {
-		super(diagram, "(?i)^skinparam\\s+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)\\s+([^{}]*)$");
+		super(diagram, "(?i)^(skinparam|skinparamlocked)\\s+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)\\s+([^{}]*)$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
-		getSystem().setParam(arg.get(0), arg.get(1));
+		boolean locked = arg.get(0).endsWith("locked");
+		getSystem().setParam(arg.get(1), arg.get(2));
 		return CommandExecutionResult.ok();
 	}
 

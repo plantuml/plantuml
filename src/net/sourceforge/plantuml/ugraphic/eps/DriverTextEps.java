@@ -88,9 +88,9 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 				eps.setStrokeColor(extended);
 			}
 			final Dimension2D dim = DriverTextG2d.calculateDimension(stringBounder, font, shape.getText());
-			eps.setStrokeWidth("1.1", null);
+			eps.setStrokeWidth("1.1", 0, 0);
 			eps.epsLine(x, y + 1.5, x + dim.getWidth(), y + 1.5);
-			eps.setStrokeWidth("1", null);
+			eps.setStrokeWidth("1", 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			final Dimension2D dim = DriverTextG2d.calculateDimension(stringBounder, font, shape.getText());
@@ -99,12 +99,12 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			if (extended != null) {
 				eps.setStrokeColor(extended);
 			}
-			eps.setStrokeWidth("1.1", null);
+			eps.setStrokeWidth("1.1", 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
 				eps.epsLine(i, ypos - 0, i + 3, ypos + 1);
 				eps.epsLine(i + 3, ypos + 1, i + 6, ypos - 0);
 			}
-			eps.setStrokeWidth("1", null);
+			eps.setStrokeWidth("1", 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			final Color extended = fontConfiguration.getExtendedColor();
@@ -114,9 +114,9 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			final Dimension2D dim = DriverTextG2d.calculateDimension(stringBounder, font, shape.getText());
 			final FontMetrics fm = g2dummy.getFontMetrics(font);
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
-			eps.setStrokeWidth("1.3", null);
+			eps.setStrokeWidth("1.3", 0, 0);
 			eps.epsLine(x, ypos, x + dim.getWidth(), ypos);
-			eps.setStrokeWidth("1", null);
+			eps.setStrokeWidth("1", 0, 0);
 		}
 
 	}

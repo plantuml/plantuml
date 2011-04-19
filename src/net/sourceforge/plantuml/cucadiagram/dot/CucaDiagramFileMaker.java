@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6241 $
+ * Revision $Revision: 6474 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -47,6 +47,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -79,6 +80,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Imaged;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.eps.EpsTitler;
 import net.sourceforge.plantuml.eps.SvgToEpsConverter;
@@ -89,11 +91,11 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.VerticalPosition;
+import net.sourceforge.plantuml.png.PngFlashcoder;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.png.PngRotation;
 import net.sourceforge.plantuml.png.PngScaler;
 import net.sourceforge.plantuml.png.PngSizer;
-import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.png.PngTitler;
 import net.sourceforge.plantuml.skin.CircleInterface;
 import net.sourceforge.plantuml.skin.Component;
@@ -110,6 +112,7 @@ import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 public final class CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
+	private final List<BufferedImage> flashcodes;
 	private final StaticFilesMap staticFilesMap;
 	private final Rose rose = new Rose();
 
@@ -120,50 +123,15 @@ public final class CucaDiagramFileMaker {
 		stringBounder = StringBounderUtils.asStringBounder(builder.getGraphics2D());
 	}
 
-	public CucaDiagramFileMaker(CucaDiagram diagram) throws IOException {
+	public CucaDiagramFileMaker(CucaDiagram diagram, List<BufferedImage> flashcodes) throws IOException {
 		HtmlColor.setForceMonochrome(diagram.getSkinParam().isMonochrome());
 		this.diagram = diagram;
+		this.flashcodes = flashcodes;
 		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS || diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
 			this.staticFilesMap = new StaticFilesMap(diagram.getSkinParam(), diagram.getDpiFactor(null));
 		} else {
 			this.staticFilesMap = null;
 		}
-	}
-
-	static String changeName(String name) {
-		return name.replaceAll("(?i)\\.png$", ".cmapx");
-	}
-
-	public List<File> createFile(File suggested, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
-
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		OutputStream os = null;
-		try {
-			os = new FileOutputStream(suggested);
-			final String cmap = createFile(os, dotStrings, fileFormatOption);
-			if (diagram.hasUrl() && fileFormat == FileFormat.PNG) {
-				final File cmapFile = new File(changeName(suggested.getAbsolutePath()));
-				final PrintWriter pw = new PrintWriter(cmapFile);
-				pw.print(cmap);
-				pw.close();
-			}
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-
-		if (fileFormat == FileFormat.PNG) {
-			final List<File> result = new PngSplitter(suggested, diagram.getHorizontalPages(), diagram
-					.getVerticalPages(), diagram.getMetadata(), diagram.getDpi(fileFormatOption)).getFiles();
-			for (File f : result) {
-				Log.info("Creating file: " + f);
-			}
-			return result;
-		}
-		Log.info("Creating file: " + suggested);
-		return Arrays.asList(suggested);
 	}
 
 	static private void traceDotString(String dotString) throws IOException {
@@ -216,28 +184,19 @@ public final class CucaDiagramFileMaker {
 	private String createSvg(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
+		final StringBuilder cmap = new StringBuilder();
 		try {
 			deltaY = 0;
-			final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
-			final String dotString = dotMaker.createDotString();
-
-			if (OptionFlags.getInstance().isKeepTmpFiles()) {
-				traceDotString(dotString);
-			}
-
-			// final boolean isUnderline = dotMaker.isUnderline();
-			final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
-
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			graphviz.createPng(baos);
-			baos.close();
-			dotMaker.clean();
-
-			String svg = new String(baos.toByteArray(), "UTF-8").replace('\\', '/');
+			String svg = getSvgData(dotStrings, fileFormatOption, cmap);
 
 			final Dimension2D dim = getDimensionSvg(svg);
 			if (dim != null) {
-				svg = removeSvgXmlHeader(svg);
+
+				double supH = getTitleSvgHeight();
+				supH += getHeaderSvgHeight();
+				supH += getFooterSvgHeight();
+
+				svg = removeSvgXmlHeader(svg, dim.getWidth(), dim.getHeight() + supH);
 
 				svg = addTitleSvg(svg, dim.getWidth(), dim.getHeight());
 				svg = addHeaderSvg(svg, dim.getWidth(), dim.getHeight());
@@ -304,14 +263,73 @@ public final class CucaDiagramFileMaker {
 			// cleanTemporaryFiles(diagram.entities().values());
 			// cleanTemporaryFiles(diagram.getLinks());
 		}
+		if (cmap.length() > 0) {
+			return translateXY(cmap.toString(), 0, (int) Math.round(deltaY));
+		}
 		return null;
 	}
 
-	private static String removeSvgXmlHeader(String svg) {
-		svg = svg
-				.replaceFirst(
-						"(?i)<svg[^>]*>",
-						"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"width:100%;height:100%;position:absolute;top:0;left:0;\">");
+	static String translateXY(String cmap, int deltaX, int deltaY) {
+		if (deltaY == 0) {
+			return cmap;
+		}
+		final Pattern p = Pattern.compile("coords=\"(\\d+),(\\d+),(\\d+),(\\d+)\"");
+		final Matcher m = p.matcher(cmap);
+
+		final StringBuffer sb = new StringBuffer();
+		while (m.find()) {
+			final int x1 = Integer.parseInt(m.group(1)) + deltaX;
+			final int y1 = Integer.parseInt(m.group(2)) + deltaY;
+			final int x2 = Integer.parseInt(m.group(3)) + deltaX;
+			final int y2 = Integer.parseInt(m.group(4)) + deltaY;
+			m.appendReplacement(sb, "coords=\"" + x1 + "," + y1 + "," + x2 + "," + y2 + "\"");
+		}
+		m.appendTail(sb);
+		return sb.toString();
+	}
+
+	private String getSvgData(List<String> dotStrings, FileFormatOption fileFormatOption, StringBuilder cmap)
+			throws IOException, InterruptedException, UnsupportedEncodingException {
+		final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
+		final String dotString = dotMaker.createDotString();
+
+		if (OptionFlags.getInstance().isKeepTmpFiles()) {
+			traceDotString(dotString);
+		}
+		// if (diagram.hasUrl()) {
+		// final Graphviz graphviz = GraphvizUtils.create(dotString, "cmapx",
+		// "svg");
+		//
+		// final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		// graphviz.createPng(baos);
+		// baos.close();
+		// dotMaker.clean();
+		//
+		// final String cmapAndSvg = new String(baos.toByteArray(),
+		// "UTF-8").replace('\\', '/');
+		// final int x = cmapAndSvg.indexOf("<?xml ");
+		// if (x == -1) {
+		// throw new IllegalStateException();
+		// }
+		// cmap.append(cmapAndSvg.substring(0, x));
+		// return cmapAndSvg.substring(x);
+		//
+		// }
+
+		final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
+
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		graphviz.createPng(baos);
+		baos.close();
+		dotMaker.clean();
+
+		return new String(baos.toByteArray(), "UTF-8").replace('\\', '/');
+	}
+
+	private static String removeSvgXmlHeader(String svg, double width, double height) {
+		final String newString = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"width:"
+				+ Math.round(width) + ";height:" + Math.round(height) + ";\">";
+		svg = svg.replaceFirst("(?i)<svg[^>]*>", newString);
 		return svg;
 	}
 
@@ -412,6 +430,8 @@ public final class CucaDiagramFileMaker {
 			throws IOException, InterruptedException {
 
 		final StringBuilder cmap = new StringBuilder();
+		double supX = 0;
+		double supY = 0;
 		try {
 			final GraphvizMaker dotMaker = populateImagesAndCreateGraphvizMaker(dotStrings, fileFormatOption);
 			final String dotString = dotMaker.createDotString();
@@ -448,6 +468,12 @@ public final class CucaDiagramFileMaker {
 			}
 
 			final Color background = diagram.getSkinParam().getBackgroundColor().getColor();
+
+			supY = getTitlePngHeight(stringBounder);
+			supY += getHeaderPngHeight(stringBounder);
+
+			supX = getOffsetX(stringBounder, im.getWidth());
+
 			im = addTitle(im, background);
 			im = addFooter(im, background);
 			im = addHeader(im, background);
@@ -457,6 +483,9 @@ public final class CucaDiagramFileMaker {
 				im = PngRotation.process(im);
 			}
 			im = PngSizer.process(im, diagram.getMinwidth());
+
+			im = addFlashcode(im, background);
+
 			PngIO.write(im, os, diagram.getMetadata(), diagram.getDpi(fileFormatOption));
 		} finally {
 			cleanTemporaryFiles(diagram.entities().values());
@@ -464,9 +493,16 @@ public final class CucaDiagramFileMaker {
 		}
 
 		if (cmap.length() > 0) {
-			return cmap.toString();
+			return translateXY(cmap.toString(), (int) Math.round(supX), (int) Math.round(supY));
 		}
 		return null;
+	}
+
+	private BufferedImage addFlashcode(BufferedImage im, Color background) {
+		if (flashcodes == null) {
+			return im;
+		}
+		return new PngFlashcoder(flashcodes).processImage(im, background);
 	}
 
 	private String createDot(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
@@ -575,6 +611,24 @@ public final class CucaDiagramFileMaker {
 		return pngTitler.processImage(im, background, 3);
 	}
 
+	private double getTitlePngHeight(StringBounder stringBounder) throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
+		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
+				HorizontalAlignement.CENTER, VerticalPosition.TOP);
+		return pngTitler.getOffsetY(stringBounder);
+	}
+
+	private double getOffsetX(StringBounder stringBounder, double imWidth) throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
+		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
+				HorizontalAlignement.CENTER, VerticalPosition.TOP);
+		return pngTitler.getOffsetX(imWidth, stringBounder);
+	}
+
 	private String addTitleSvg(String svg, double width, double height) throws IOException {
 		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
 		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
@@ -584,6 +638,16 @@ public final class CucaDiagramFileMaker {
 				HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
 		this.deltaY += svgTitler.getHeight();
 		return svgTitler.addTitleSvg(svg, width, height);
+	}
+
+	private double getTitleSvgHeight() throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
+
+		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
+				HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
+		return svgTitler.getHeight();
 	}
 
 	private String addTitleEps(String eps) throws IOException {
@@ -616,8 +680,6 @@ public final class CucaDiagramFileMaker {
 		return epsTitler.addTitleEps(eps);
 	}
 
-
-
 	private String addHeaderSvg(String svg, double width, double height) throws IOException {
 		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
 		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
@@ -628,6 +690,15 @@ public final class CucaDiagramFileMaker {
 		return svgTitler.addTitleSvg(svg, width, height);
 	}
 
+	private double getHeaderSvgHeight() throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
+		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
+				.getHeaderAlignement(), VerticalPosition.TOP, 3);
+		return svgTitler.getHeight();
+	}
+
 	private String addFooterSvg(String svg, double width, double height) throws IOException {
 		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
 		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
@@ -635,6 +706,15 @@ public final class CucaDiagramFileMaker {
 		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
 				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
 		return svgTitler.addTitleSvg(svg, width, height + deltaY);
+	}
+
+	private double getFooterSvgHeight() throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.FOOTER, null);
+		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
+				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
+		return svgTitler.getHeight();
 	}
 
 	private BufferedImage addFooter(BufferedImage im, final Color background) {
@@ -653,6 +733,15 @@ public final class CucaDiagramFileMaker {
 		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
 				.getHeaderAlignement(), VerticalPosition.TOP);
 		return pngTitler.processImage(im, background, 3);
+	}
+
+	private double getHeaderPngHeight(StringBounder stringBounder) throws IOException {
+		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
+		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
+		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
+		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
+				.getHeaderAlignement(), VerticalPosition.TOP);
+		return pngTitler.getOffsetY(stringBounder);
 	}
 
 	private void cleanTemporaryFiles(final Collection<? extends Imaged> imageFiles) throws IOException {
@@ -842,8 +931,6 @@ public final class CucaDiagramFileMaker {
 		final Lazy<File> lpng = new Lazy<File>() {
 			public File getNow() throws IOException {
 				final EmptyImageBuilder builder = new EmptyImageBuilder(stickMan.getPreferredWidth(null) * dpiFactor,
-				// stickMan.getPreferredHeight(null) * dpiFactor, dpiFactor > 1
-						// ? Color.BLUE : background);
 						stickMan.getPreferredHeight(null) * dpiFactor, background);
 
 				final BufferedImage im = builder.getBufferedImage();
@@ -920,10 +1007,11 @@ public final class CucaDiagramFileMaker {
 
 			final boolean isUnderline = dotMaker.isUnderline();
 			String eps = new String(baos.toByteArray(), "UTF-8");
+			eps = cleanStrangeCharacter(eps);
 			if (isUnderline) {
 				eps = new UnderlineTrickEps(eps).getString();
 			}
-			
+
 			if (diagram.getTitle() != null) {
 				eps = addTitleEps(eps);
 			}
@@ -974,7 +1062,6 @@ public final class CucaDiagramFileMaker {
 			// }
 			// mImage.appendTail(sb);
 			// svg = sb.toString();
-
 
 		} finally {
 			// cleanTemporaryFiles(diagram.entities().values());
@@ -1039,6 +1126,28 @@ public final class CucaDiagramFileMaker {
 				link.setImageFile(f);
 			}
 		}
+	}
+
+	static String cleanStrangeCharacter(String eps) {
+		final StringBuilder sb = new StringBuilder();
+		final StringTokenizer st = new StringTokenizer(eps, "\r\n");
+		while (st.hasMoreTokens()) {
+			String s = st.nextToken();
+			if (s.equals(EpsGraphics.END_OF_FILE)) {
+				sb.append(s);
+				sb.append("\n");
+				s = st.nextToken();
+				if (s.equalsIgnoreCase("grestore") == false) {
+					s = st.nextToken();
+					if (s.equalsIgnoreCase("grestore") == false) {
+						throw new IllegalStateException();
+					}
+				}
+			}
+			sb.append(s);
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 
 }

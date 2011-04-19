@@ -28,14 +28,34 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6097 $
+ * Revision $Revision: 6382 $
  *
  */
 package net.sourceforge.plantuml;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 
+import net.sourceforge.plantuml.code.Compression;
+import net.sourceforge.plantuml.code.CompressionZlib;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 
@@ -150,5 +170,135 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 	public final void setHideUnlinkedData(boolean hideUnlinkedData) {
 		this.hideUnlinkedData = hideUnlinkedData;
 	}
+
+	final public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		List<BufferedImage> flashcodes = null;
+		try {
+			if ("split".equalsIgnoreCase(getSkinParam().getValue("flashcode"))
+					&& fileFormatOption.getFileFormat() == FileFormat.PNG) {
+				final String s = getSource().getPlainString();
+				flashcodes = exportSplitCompress(s);
+			} else if ("compress".equalsIgnoreCase(getSkinParam().getValue("flashcode"))
+					&& fileFormatOption.getFileFormat() == FileFormat.PNG) {
+				final String s = getSource().getPlainString();
+				flashcodes = exportFlashcodeCompress(s);
+			} else if (getSkinParam().getValue("flashcode") != null
+					&& fileFormatOption.getFileFormat() == FileFormat.PNG) {
+				final String s = getSource().getPlainString();
+				flashcodes = exportFlashcodeSimple(s);
+			}
+		} catch (WriterException e) {
+			Log.error("Cannot generate flashcode");
+			e.printStackTrace();
+			flashcodes = null;
+		}
+		exportDiagramInternal(os, cmap, index, fileFormatOption, flashcodes);
+	}
+
+	protected abstract void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index,
+			FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) throws IOException;
+
+	final protected void exportCmap(File suggestedFile, final StringBuilder cmap) throws FileNotFoundException {
+		final File cmapFile = new File(changeName(suggestedFile.getAbsolutePath()));
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(cmapFile);
+			pw.print(cmap.toString());
+			pw.close();
+		} finally {
+			if (pw != null) {
+				pw.close();
+			}
+		}
+	}
+
+	static String changeName(String name) {
+		return name.replaceAll("(?i)\\.\\w{3}$", ".cmapx");
+	}
+
+
+	
+	
+	private List<BufferedImage> exportFlashcodeSimple(String s) throws IOException, WriterException {
+		final QRCodeWriter writer = new QRCodeWriter();
+		final int multiple = 1;
+		final Hashtable hints = new Hashtable();
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+		final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple);
+		final BufferedImage im = MatrixToImageWriter.toBufferedImage(bit);
+		return Arrays.asList(im);
+	}
+
+	private List<BufferedImage> exportFlashcodeCompress(String s) throws IOException, WriterException {
+		final QRCodeWriter writer = new QRCodeWriter();
+		final int multiple = 1;
+		final Hashtable hints = new Hashtable();
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+
+		final Compression comp = new CompressionZlib();
+		final byte data[] = comp.compress(s.getBytes("UTF-8"));
+
+		// Encoder.DEFAULT_BYTE_MODE_ENCODING
+		final BitMatrix bit = writer.encode(new String(data, "ISO-8859-1"), BarcodeFormat.QR_CODE, multiple);
+		final BufferedImage im = MatrixToImageWriter.toBufferedImage(bit);
+		return Arrays.asList(im);
+	}
+
+	private List<BufferedImage> exportSplitCompress(String s) throws IOException, WriterException {
+		final QRCodeWriter writer = new QRCodeWriter();
+		final int multiple = 1;
+		final Hashtable hints = new Hashtable();
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+
+		final Compression comp = new CompressionZlib();
+		final byte data[] = comp.compress(s.getBytes("UTF-8"));
+
+		final List<BufferedImage> result = new ArrayList<BufferedImage>();
+
+		final List<byte[]> blocs = new ArrayList<byte[]>();
+		for (int i = 0; i < 4; i++) {
+			blocs.add(getSplited(data, i, 4));
+		}
+
+		blocs.add(xor(blocs));
+
+		for (byte d[] : blocs) {
+			// Encoder.DEFAULT_BYTE_MODE_ENCODING
+			final BitMatrix bit = writer.encode(new String(d, "ISO-8859-1"), BarcodeFormat.QR_CODE, multiple);
+			result.add(MatrixToImageWriter.toBufferedImage(bit));
+		}
+
+		return Collections.unmodifiableList(result);
+	}
+
+	static byte[] xor(List<byte[]> blocs) {
+		final byte result[] = new byte[blocs.get(0).length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = xor(blocs, i);
+		}
+		return result;
+	}
+
+	static byte xor(List<byte[]> blocs, int nb) {
+		byte result = 0;
+		for (byte[] bloc : blocs) {
+			result = (byte) (result ^ bloc[nb]);
+		}
+		return result;
+	}
+
+	static byte[] getSplited(byte[] data, int n, int total) {
+		final int size = (data.length + total - 1) / total;
+		assert size * total >= data.length;
+		final byte result[] = new byte[size + 1];
+		result[0] = (byte) (1 << n);
+		for (int i = 0; (i < size) && (n * total + i < data.length); i++) {
+			result[i + 1] = data[n * total + i];
+		}
+		return result;
+	}
+	
+	
 
 }

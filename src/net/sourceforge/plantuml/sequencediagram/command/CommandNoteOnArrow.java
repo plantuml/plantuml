@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 6485 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -55,7 +55,7 @@ public class CommandNoteOnArrow extends SingleLineCommand<SequenceDiagram> {
 		if (m != null) {
 			final NotePosition position = NotePosition.valueOf(arg.get(0).toUpperCase());
 			final List<String> strings = StringUtils.getWithNewlines(arg.get(2));
-			m.setNote(strings, position, arg.get(1));
+			m.setNote(strings, position, arg.get(1), null);
 		}
 
 		return CommandExecutionResult.ok();

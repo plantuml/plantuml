@@ -81,6 +81,10 @@ public abstract class UGraphicUtils {
 			public void setAntiAliasing(boolean trueForOn) {
 				g.setAntiAliasing(trueForOn);
 			}
+
+			public void setUrl(String url, String tooltip) {
+				g.setUrl(url, tooltip);
+			}
 		};
 	}
 

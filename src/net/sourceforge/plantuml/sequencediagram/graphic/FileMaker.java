@@ -28,23 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5520 $
+ * Revision $Revision: 6383 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 public interface FileMaker {
 
-	List<File> createMany(final File suggestedFile) throws IOException;
+	// List<File> createManyRRMV(final File suggestedFile) throws IOException;
 
 	void createOne(OutputStream os, int index) throws IOException;
 	
 	public int getNbPages();
+
+	void appendCmap(StringBuilder cmap);
 
 
 }

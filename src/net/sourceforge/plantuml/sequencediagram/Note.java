@@ -28,14 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6097 $
+ * Revision $Revision: 6486 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.SpecificBackcolorable;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class Note implements Event, SpecificBackcolorable {
@@ -47,18 +50,40 @@ public class Note implements Event, SpecificBackcolorable {
 
 	private final NotePosition position;
 
+	private final Url url;
+
 	public Note(Participant p, NotePosition position, List<String> strings) {
-		this.p = p;
-		this.p2 = null;
-		this.position = position;
-		this.strings = strings;
+		this(p, null, position, strings);
 	}
 
 	public Note(Participant p, Participant p2, List<String> strings) {
+		this(p, p2, NotePosition.OVER_SEVERAL, strings);
+	}
+
+	private Note(Participant p, Participant p2, NotePosition position, List<String> strings) {
 		this.p = p;
 		this.p2 = p2;
-		this.position = NotePosition.OVER_SEVERAL;
-		this.strings = strings;
+		this.position = position;
+		if (strings != null && strings.size() > 0) {
+			this.url = extractUrl(strings.get(0));
+		} else {
+			this.url = null;
+		}
+
+		if (this.url == null) {
+			this.strings = strings;
+		} else {
+			this.strings = strings.subList(1, strings.size());
+		}
+	}
+
+	public static Url extractUrl(String s) {
+		final Pattern p = Pattern.compile("(?i)^\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]$");
+		final Matcher m = p.matcher(s.trim());
+		if (m.matches() == false) {
+			return null;
+		}
+		return new Url(m.group(1), m.group(2));
 	}
 
 	public Participant getParticipant() {
@@ -90,4 +115,9 @@ public class Note implements Event, SpecificBackcolorable {
 	public boolean dealWith(Participant someone) {
 		return p == someone || p2 == someone;
 	}
+
+	public Url getUrl() {
+		return url;
+	}
+
 }

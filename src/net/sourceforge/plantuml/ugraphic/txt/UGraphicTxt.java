@@ -33,10 +33,10 @@ package net.sourceforge.plantuml.ugraphic.txt;
 
 import java.awt.Font;
 
-import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
-import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
+import net.sourceforge.plantuml.asciiart.UmlCharArea;
+import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -80,6 +80,9 @@ public class UGraphicTxt extends AbstractCommonUGraphic {
 	}
 
 	public void setAntiAliasing(boolean trueForOn) {
+	}
+
+	public void setUrl(String url, String tooltip) {
 	}
 
 }

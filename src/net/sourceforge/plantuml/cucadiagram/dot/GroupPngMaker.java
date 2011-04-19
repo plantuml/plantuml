@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6228 $
+ * Revision $Revision: 6453 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -46,8 +46,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;

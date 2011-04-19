@@ -70,7 +70,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				new RegexLeaf("\\s*"), //
 				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), // 
 				new RegexLeaf("\\s*"), // 
-				new RegexLeaf("ARROW", "([=-]+(?:left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"), //
+				new RegexLeaf("ARROW", "([=-]+(?:\\*|left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"), //
 				new RegexLeaf("\\s*"), //
 				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), // 
 				new RegexLeaf("\\s*"), //
@@ -114,9 +114,15 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final String linkLabel = arg2.get("BRACKET").get(0);
 
 		final String arrow = StringUtils.manageArrowForCuca(arg2.get("ARROW").get(0));
-		final int lenght = arrow.length() - 1;
+		int lenght = arrow.length() - 1;
+		if (arg2.get("ARROW").get(0).contains("*")) {
+			lenght = 2;
+		}
 
 		Link link = new Link(entity1, entity2, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkLabel, lenght);
+		if (arg2.get("ARROW").get(0).contains("*")) {
+			link.setConstraint(false);
+		}
 		final Direction direction = StringUtils.getArrowDirection(arg2.get("ARROW").get(0));
 		if (direction == Direction.LEFT || direction == Direction.UP) {
 			link = link.getInv();

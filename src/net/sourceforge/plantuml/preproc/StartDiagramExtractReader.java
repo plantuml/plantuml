@@ -38,21 +38,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import net.sourceforge.plantuml.BlockUmlBuilder;
+import net.sourceforge.plantuml.StartUtils;
 
-public class StartumlExtractReader implements ReadLine {
+public class StartDiagramExtractReader implements ReadLine {
 
 	private final ReadLine raw;
 	private boolean finished = false;
 
-	public StartumlExtractReader(File f, int num) throws IOException {
+	public StartDiagramExtractReader(File f, int num) throws IOException {
 		if (num < 0) {
 			throw new IllegalArgumentException();
 		}
 		raw = getReadLine(f);
 		String s = null;
 		while ((s = raw.readLine()) != null) {
-			if (BlockUmlBuilder.isArobaseStartuml(s)) {
+			if (StartUtils.isArobaseStartDiagram(s)) {
 				if (num == 0) {
 					return;
 				}
@@ -66,13 +66,13 @@ public class StartumlExtractReader implements ReadLine {
 		return new UncommentReadLine(new ReadLineReader(new FileReader(f)));
 	}
 
-	static public boolean containsStartuml(File f) throws IOException {
+	static public boolean containsStartDiagram(File f) throws IOException {
 		ReadLine r = null;
 		try {
 			r = getReadLine(f);
 			String s = null;
 			while ((s = r.readLine()) != null) {
-				if (BlockUmlBuilder.isArobaseStartuml(s)) {
+				if (StartUtils.isArobaseStartDiagram(s)) {
 					return true;
 				}
 			}
@@ -89,7 +89,7 @@ public class StartumlExtractReader implements ReadLine {
 			return null;
 		}
 		final String result = raw.readLine();
-		if (result != null && BlockUmlBuilder.isArobaseEnduml(result)) {
+		if (result != null && StartUtils.isArobaseEndDiagram(result)) {
 			finished = true;
 			return null;
 		}

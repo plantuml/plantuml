@@ -92,7 +92,7 @@ public class SourceStringReader {
 				final PSystem system = b.getSystem();
 				final int nbInSystem = system.getNbImages();
 				if (numImage < nbInSystem) {
-					system.createFile(os, numImage, fileFormatOption);
+					system.exportDiagram(os, null, numImage, fileFormatOption);
 					return system.getDescription();
 				}
 				numImage -= nbInSystem;

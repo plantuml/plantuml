@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6007 $
+ * Revision $Revision: 6448 $
  *
  */
 package net.sourceforge.plantuml;
@@ -56,7 +56,7 @@ public class OptionPrint {
 
 		System.err.println("Usage: java -jar plantuml.jar [options] -gui");
 		System.err.println("\t(to execute the GUI)");
-		System.err.println("    or java -jar plantuml.jar [options] [files/dirs]");
+		System.err.println("    or java -jar plantuml.jar [options] [file/dir] [file/dir] [file/dir]");
 		System.err.println("\t(to process files or directories)");
 		System.err.println();
 		System.err.println("You can use the following wildcards in files/dirs:");
@@ -67,7 +67,14 @@ public class OptionPrint {
 		System.err.println("where options include:");
 		System.err.println("    -gui\t\tTo run the graphical user interface");
 		System.err.println("    -tsvg\t\tTo generate images using SVG format");
+		System.err.println("    -teps\t\tTo generate images using EPS format");
+		System.err.println("    -txmi\t\tTo generate XMI file for classes diagrams");
+		System.err.println("    -tdot\t\tTo generate DOT intermediate file");
+		System.err.println("    -ttxt\t\tTo generate images with ASCII art");
+		System.err.println("    -tutxt\t\tTo generate images with ASCII art using Unicode characters");
 		System.err.println("    -o[utput] \"dir\"\tTo generate images in the specified directory");
+		System.err.println("    -DVAR1=value\tTo set a preprocessing variable as if '!define VAR1 value' were used");
+		System.err.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
 		System.err.println("    -config \"file\"\tTo read the provided config file before each diagram");
 		System.err.println("    -charset xxx\tTo use a specific charset (default is " + charset + ")");
 		System.err.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
@@ -84,6 +91,9 @@ public class OptionPrint {
 		System.err.println("    -p[ipe]\t\tTo use stdin for PlantUML source and stdout for PNG/SVG generation");
 		System.err.println("    -computeurl\t\tTo compute the encoded URL of a PlantUML source file");
 		System.err.println("    -decodeurl\t\tTo retrieve the PlantUML source from an encoded URL");
+		System.err.println("    -syntax\t\tTo report any syntax error from standard input without generating images");
+		System.err.println("    -language\t\tTo print the list of PlantUML keywords");
+		System.err.println("    -pattern\t\tTo print the list of Regular Expression used by PlantUML");
 		System.err.println();
 		System.err.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();

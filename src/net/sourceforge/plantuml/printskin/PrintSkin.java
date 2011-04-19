@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6453 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -37,7 +37,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -73,17 +72,17 @@ class PrintSkin extends AbstractPSystem {
 	private float ypos = 0;
 	private float maxYpos = 0;
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException,
-			InterruptedException {
-		final List<File> result = Arrays.asList(suggestedFile);
-		final BufferedImage im = createImage();
+//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException,
+//			InterruptedException {
+//		final List<File> result = Arrays.asList(suggestedFile);
+//		final BufferedImage im = createImage();
+//
+//		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), suggestedFile, 96);
+//		return result;
+//
+//	}
 
-		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), suggestedFile, 96);
-		return result;
-
-	}
-
-	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
+	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
 		final BufferedImage im = createImage();
 		PngIO.write(im.getSubimage(0, 0, im.getWidth(), (int) maxYpos), os, 96);
 	}

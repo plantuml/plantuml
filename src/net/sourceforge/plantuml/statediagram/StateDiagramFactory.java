@@ -28,12 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6221 $
+ * Revision $Revision: 6396 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
 
 import net.sourceforge.plantuml.classdiagram.command.CommandMultilinesClassNote;
+import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 import net.sourceforge.plantuml.command.CommandNoteEntity;
 import net.sourceforge.plantuml.statediagram.command.CommandAddField;
@@ -73,6 +74,7 @@ public class StateDiagramFactory extends AbstractUmlSystemCommandFactory {
 		addCommand(new CommandHideEmptyDescription(system));
 
 		addCommand(new CommandNoteEntity(system));
+		addCommand(new CommandUrl(system));
 		addCommonCommands(system);
 	}
 }

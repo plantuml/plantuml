@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.oregon;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.PSystemBasicFactory;
 
 public class PSystemOregonFactory implements PSystemBasicFactory {
@@ -73,4 +74,9 @@ public class PSystemOregonFactory implements PSystemBasicFactory {
 		inputs.add(line);
 		return true;
 	}
+	
+	public DiagramType getDiagramType() {
+		return DiagramType.UML;
+	}
+
 }

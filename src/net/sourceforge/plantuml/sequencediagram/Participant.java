@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6099 $
+ * Revision $Revision: 6482 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.SpecificBackcolorable;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
@@ -69,7 +70,7 @@ public class Participant implements SpecificBackcolorable {
 	public String getCode() {
 		return code;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getCode();
@@ -100,26 +101,36 @@ public class Participant implements SpecificBackcolorable {
 	public final int getInitialLife() {
 		return initialLife;
 	}
-	
+
 	private HtmlColor liveBackcolor;
 
 	public final void incInitialLife(HtmlColor backcolor) {
 		initialLife++;
 		this.liveBackcolor = backcolor;
 	}
-	
+
 	public HtmlColor getLiveSpecificBackColor() {
 		return liveBackcolor;
 	}
-	
+
 	private HtmlColor specificBackcolor;
-	
+
 	public HtmlColor getSpecificBackColor() {
 		return specificBackcolor;
 	}
 
 	public void setSpecificBackcolor(String s) {
 		this.specificBackcolor = HtmlColor.getColorIfValid(s);
+	}
+
+	private Url url;
+
+	public final Url getUrl() {
+		return url;
+	}
+
+	public final void setUrl(Url url) {
+		this.url = url;
 	}
 
 }

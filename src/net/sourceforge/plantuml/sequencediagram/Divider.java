@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Url;
+
 public class Divider implements Event {
 
 	private final List<String> text;
@@ -46,10 +48,12 @@ public class Divider implements Event {
 	public final List<String> getText() {
 		return text;
 	}
-	
+
 	public boolean dealWith(Participant someone) {
 		return false;
 	}
 
-
+	public Url getUrl() {
+		return null;
+	}
 }

@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.version;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.PSystemBasicFactory;
 
@@ -71,5 +72,10 @@ public class PSystemVersionFactory implements PSystemBasicFactory {
 	public PSystemVersion getSystem() {
 		return system;
 	}
+	
+	public DiagramType getDiagramType() {
+		return DiagramType.UML;
+	}
+
 
 }

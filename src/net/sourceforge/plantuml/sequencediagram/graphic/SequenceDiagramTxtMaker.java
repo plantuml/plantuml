@@ -34,12 +34,9 @@
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.awt.geom.Dimension2D;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Collections;
-import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.asciiart.TextSkin;
@@ -105,14 +102,14 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		drawableSet.drawU(ug, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
 	}
 
-	public List<File> createMany(File suggestedFile) throws IOException {
-		if (fileFormat == FileFormat.UTXT) {
-			ug.getCharArea().print(new PrintStream(suggestedFile, "UTF-8"));
-		} else {
-			ug.getCharArea().print(new PrintStream(suggestedFile));
-		}
-		return Collections.singletonList(suggestedFile);
-	}
+//	public List<File> createManyRRMV(File suggestedFile) throws IOException {
+//		if (fileFormat == FileFormat.UTXT) {
+//			ug.getCharArea().print(new PrintStream(suggestedFile, "UTF-8"));
+//		} else {
+//			ug.getCharArea().print(new PrintStream(suggestedFile));
+//		}
+//		return Collections.singletonList(suggestedFile);
+//	}
 
 	public void createOne(OutputStream os, int index) throws IOException {
 		final PrintStream ps = new PrintStream(os);
@@ -125,6 +122,9 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	public int getNbPages() {
 		return 1;
+	}
+
+	public void appendCmap(StringBuilder cmap) {
 	}
 
 }

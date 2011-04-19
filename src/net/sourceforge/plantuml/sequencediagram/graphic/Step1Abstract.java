@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.InGroupableList;
@@ -156,9 +157,9 @@ abstract class Step1Abstract {
 	}
 
 	protected final NoteBox createNoteBox(StringBounder stringBounder, Arrow arrow, Component noteComp,
-			NotePosition notePosition) {
+			NotePosition notePosition, Url url) {
 		final LivingParticipantBox p = arrow.getParticipantAt(stringBounder, notePosition);
-		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, notePosition);
+		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, notePosition, url);
 
 		if (arrow instanceof MessageSelfArrow && notePosition == NotePosition.RIGHT) {
 			noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));

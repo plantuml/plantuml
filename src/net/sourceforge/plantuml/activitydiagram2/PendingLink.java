@@ -59,4 +59,9 @@ public class PendingLink {
 		return linkLabel;
 	}
 
+	@Override
+	public String toString() {
+		return entityFrom + " -> " + gotoLabel + " " + linkLabel;
+	}
+
 }

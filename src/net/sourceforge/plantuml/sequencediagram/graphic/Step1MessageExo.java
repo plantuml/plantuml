@@ -46,9 +46,7 @@ import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
-import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowDirection;
-import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ComponentType;
 
 class Step1MessageExo extends Step1Abstract {
@@ -134,7 +132,8 @@ class Step1MessageExo extends Step1Abstract {
 		if (getMessage().getNote() == null) {
 			return messageArrow;
 		}
-		final NoteBox toto = createNoteBox(getStringBounder(), messageArrow, getNote(), getMessage().getNotePosition());
+		final NoteBox toto = createNoteBox(getStringBounder(), messageArrow, getNote(), getMessage().getNotePosition(),
+				getMessage().getUrlNote());
 		return new ArrowAndNoteBox(getStringBounder(), messageArrow, toto);
 	}
 

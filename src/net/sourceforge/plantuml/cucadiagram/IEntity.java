@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.util.List;
 
 import net.sourceforge.plantuml.SpecificBackcolorable;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 
 public interface IEntity extends Imaged, SpecificBackcolorable {
@@ -50,7 +51,7 @@ public interface IEntity extends Imaged, SpecificBackcolorable {
 
 	public String getUid();
 	
-	public String getUrl();
+	public Url getUrl();
 	
 	public List<Member> getFieldsToDisplay();
 	
@@ -67,6 +68,9 @@ public interface IEntity extends Imaged, SpecificBackcolorable {
 	public boolean isTop();
 
 	public void setTop(boolean top);
-
+	
+	public boolean hasNearDecoration();
+	
+	public void setNearDecoration(boolean nearDecoration);
 
 }

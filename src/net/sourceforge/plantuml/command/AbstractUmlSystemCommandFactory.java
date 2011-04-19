@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6214 $
+ * Revision $Revision: 6423 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -38,11 +38,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.UmlDiagram;
 
 public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandFactory {
 
+	private final DiagramType type;
+
 	protected AbstractUmlSystemCommandFactory() {
+		this(DiagramType.UML);
+	}
+
+	protected AbstractUmlSystemCommandFactory(DiagramType type) {
+		this.type = type;
 		reset();
 	}
 
@@ -118,6 +126,10 @@ public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandF
 		}
 		return Collections.unmodifiableList(result);
 
+	}
+
+	final public DiagramType getDiagramType() {
+		return type;
 	}
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6026 $
+ * Revision $Revision: 6485 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -90,8 +90,8 @@ class Step1Message extends Step1Abstract {
 		final double length;
 		if (isSelfMessage()) {
 			length = graphic.getArrowOnlyWidth(getStringBounder())
-					+ getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), arrowYStartLevel)
-							.getSegment().getLength();
+					+ getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), arrowYStartLevel).getSegment()
+							.getLength();
 		} else {
 			length = graphic.getArrowOnlyWidth(getStringBounder())
 					+ getLivingParticipantBox(NotePosition.LEFT).getLifeLine().getRightShift(arrowYStartLevel)
@@ -165,11 +165,11 @@ class Step1Message extends Step1Abstract {
 						getLabelOfMessage(getMessage())), getLivingParticipantBox1());
 		if (getMessage().getNote() != null && isSelfMessage()) {
 			final NoteBox noteBox = createNoteBox(getStringBounder(), messageSelfArrow, getNote(), getMessage()
-					.getNotePosition());
+					.getNotePosition(), getMessage().getUrlNote());
 			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBox);
 		} else if (getMessage().getNote() != null) {
 			final NoteBox noteBox = createNoteBox(getStringBounder(), messageArrow, getNote(), getMessage()
-					.getNotePosition());
+					.getNotePosition(), getMessage().getUrlNote());
 			return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBox);
 		} else if (isSelfMessage()) {
 			return messageSelfArrow;
@@ -179,18 +179,17 @@ class Step1Message extends Step1Abstract {
 	}
 
 	private Arrow createArrowCreate() {
-		getLivingParticipantBox2().create(getFreeY());
+		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2());
 		if (getMessage().getNote() != null) {
-			final ArrowAndParticipant arrowAndParticipant = new ArrowAndParticipant(getStringBounder(), messageArrow,
-					getParticipantBox2());
-			final NoteBox noteBox = createNoteBox(getStringBounder(), arrowAndParticipant, getNote(), getMessage()
-					.getNotePosition());
+			final NoteBox noteBox = createNoteBox(getStringBounder(), result, getNote(),
+					getMessage().getNotePosition(), getMessage().getUrlNote());
 			if (getMessage().getNotePosition() == NotePosition.RIGHT) {
 				noteBox.pushToRight(getParticipantBox2().getPreferredWidth(getStringBounder()) / 2);
 			}
-			return new ArrowAndNoteBox(getStringBounder(), arrowAndParticipant, noteBox);
+			result = new ArrowAndNoteBox(getStringBounder(), result, noteBox);
 		}
-		return new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2());
+		getLivingParticipantBox2().create(getFreeY() + result.getPreferredHeight(getStringBounder()) / 2);
+		return result;
 	}
 
 	private ComponentType getSelfArrowType(Message m) {

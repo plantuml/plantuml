@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6026 $
+ * Revision $Revision: 6330 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -125,6 +125,10 @@ class MessageArrow extends Arrow {
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug.translate(getStartingX(stringBounder), getStartingY());
+//		ug.getParam().setColor(Color.GREEN);
+//		ug.getParam().setBackcolor(Color.LIGHT_GRAY);
+//		ug.draw(0, 0, new URectangle(getActualDimension(stringBounder).getWidth(), getActualDimension(stringBounder)
+//				.getHeight()));
 		getArrowComponent().drawU(ug, getActualDimension(stringBounder), context);
 	}
 
@@ -166,5 +170,5 @@ class MessageArrow extends Arrow {
 	public String toString(StringBounder stringBounder) {
 		return getMinX(stringBounder) + "-" + getMaxX(stringBounder);
 	}
-	
+
 }

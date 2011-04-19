@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.eggs;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.PSystemBasicFactory;
 
@@ -66,5 +67,10 @@ public class PSystemRIPFactory implements PSystemBasicFactory {
 	public PSystemRIP getSystem() {
 		return system;
 	}
+	
+	public DiagramType getDiagramType() {
+		return DiagramType.UML;
+	}
+
 
 }

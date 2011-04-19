@@ -45,15 +45,15 @@ public class BlockUml {
 	private final List<String> data;
 	private PSystem system;
 
-	private static final Pattern pattern1 = Pattern.compile("^@startuml\\s+\"?(.*?)\"?$");
+	private static final Pattern patternFilename = Pattern.compile("^@start[-\\w.]+\\s+\"?(.*?)\"?$");
 
 	BlockUml(String... strings) {
 		this(Arrays.asList(strings));
 	}
 
-	BlockUml(List<String> strings) {
+	public BlockUml(List<String> strings) {
 		final String s0 = strings.get(0).trim();
-		if (s0.startsWith("@startuml") == false) {
+		if (s0.startsWith("@start") == false) {
 			throw new IllegalArgumentException();
 		}
 		this.data = new ArrayList<String>(strings);
@@ -63,16 +63,23 @@ public class BlockUml {
 		if (OptionFlags.getInstance().isWord()) {
 			return null;
 		}
-		final Matcher m = pattern1.matcher(data.get(0).trim());
+		final Matcher m = patternFilename.matcher(data.get(0).trim());
 		final boolean ok = m.find();
 		if (ok == false) {
 			return null;
 		}
-		return m.group(1);
+		final String result = m.group(1);
+		for (int i = 0; i < result.length(); i++) {
+			final char c = result.charAt(i);
+			if ("<>|".indexOf(c) != -1) {
+				return null;
+			}
+		}
+		return result;
 	}
 
 	public PSystem getSystem() throws IOException, InterruptedException {
-		if (system==null) {
+		if (system == null) {
 			createSystem();
 		}
 		return system;
@@ -80,7 +87,7 @@ public class BlockUml {
 
 	private void createSystem() throws IOException, InterruptedException {
 		system = new PSystemBuilder().createPSystem(data);
-		
+
 	}
 
 }

@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5463 $
+ * Revision $Revision: 6396 $
  *
  */
 package net.sourceforge.plantuml.componentdiagram;
 
+import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 import net.sourceforge.plantuml.command.CommandCreateNote;
 import net.sourceforge.plantuml.command.CommandEndPackage;
@@ -71,6 +72,7 @@ public class ComponentDiagramFactory extends AbstractUmlSystemCommandFactory {
 		addCommand(new CommandNoteEntity(system));
 
 		addCommand(new CommandCreateNote(system));
+		addCommand(new CommandUrl(system));
 		addCommand(new CommandCreateComponent(system));
 		addCommand(new CommandCreateCircleInterface(system));
 		addCommand(new CommandCreateActorInComponent(system));

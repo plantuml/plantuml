@@ -44,15 +44,27 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class AreaLayoutFixedWidth implements AreaLayout {
 
+	private final double width;
+
+	public AreaLayoutFixedWidth(double width) {
+		this.width = width;
+	}
+
 	public Map<PostIt, Point2D> getPositions(Collection<PostIt> all, StringBounder stringBounder) {
 		double x = 0;
 		double y = 0;
+		double maxY = 0;
 		final Map<PostIt, Point2D> result = new LinkedHashMap<PostIt, Point2D>();
 
 		for (PostIt p : all) {
-			result.put(p, new Point2D.Double(x, y));
 			final Dimension2D dim = p.getDimension(stringBounder);
-			x += dim.getWidth() + 10;
+			if (x + dim.getWidth() > width) {
+				x = 0;
+				y = maxY;
+			}
+			result.put(p, new Point2D.Double(x, y));
+			x += dim.getWidth();
+			maxY = Math.max(maxY, y + dim.getHeight());
 		}
 
 		return Collections.unmodifiableMap(result);

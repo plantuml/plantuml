@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5361 $
+ * Revision $Revision: 6461 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -53,8 +53,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.USegment;
+import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -68,14 +68,27 @@ public class SvgGraphics {
 	// http://en.wikipedia.org/wiki/Scalable_Vector_Graphics
 
 	final private Document document;
-	final private Element svg;
+	final private Element root;
 	final private Element defs;
-	final private Element g;
+	final private Element gRoot;
 
 	private String fill = "black";
 	private String stroke = "black";
 	private String strokeWidth = "1";
 	private String strokeDasharray = null;
+	private final String backcolor;
+
+	private int maxX = 10;
+	private int maxY = 10;
+
+	final protected void ensureVisible(double x, double y) {
+		if (x > maxX) {
+			maxX = (int) (x + 1);
+		}
+		if (y > maxY) {
+			maxY = (int) (y + 1);
+		}
+	}
 
 	public SvgGraphics() {
 		this(null);
@@ -83,14 +96,15 @@ public class SvgGraphics {
 
 	public SvgGraphics(String backcolor) {
 		try {
-			document = getDocument();
+			this.document = getDocument();
+			this.backcolor = backcolor;
 
-			svg = getRootNode("100%", "100%", "absolute", "0", "0", backcolor);
+			this.root = getRootNode();
 
 			// Create a node named defs, which will be the parent
 			// for a pair of linear gradient definitions.
 			defs = simpleElement("defs");
-			g = simpleElement("g");
+			gRoot = simpleElement("g");
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			throw new IllegalStateException(e);
@@ -102,7 +116,7 @@ public class SvgGraphics {
 	// element node that has no attributes.
 	private Element simpleElement(String type) {
 		final Element theElement = (Element) document.createElement(type);
-		svg.appendChild(theElement);
+		root.appendChild(theElement);
 		return theElement;
 	}
 
@@ -117,7 +131,7 @@ public class SvgGraphics {
 
 	// This method returns a reference to a root node that
 	// has already been appended to the document.
-	private Element getRootNode(String width, String height, String position, String top, String left, String backcolor) {
+	private Element getRootNode() {
 		// Create the root node named svg and append it to
 		// the document.
 		final Element svg = (Element) document.createElement("svg");
@@ -130,16 +144,9 @@ public class SvgGraphics {
 		// particularly with regard to the style.
 		svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 		svg.setAttribute("version", "1.1");
-		String style = "width:" + width + ";height:" + height + ";position:" + position + ";top:" + top + ";left:"
-				+ left + ";";
-		if (backcolor != null) {
-			style += "background:" + backcolor + ";";
-		}
-		svg.setAttribute("style", style);
 
 		return svg;
 	}
-
 
 	public void svgEllipse(double x, double y, double xRadius, double yRadius) {
 		final Element elt = (Element) document.createElement("ellipse");
@@ -150,6 +157,7 @@ public class SvgGraphics {
 		elt.setAttribute("fill", fill);
 		elt.setAttribute("style", getStyle());
 		getG().appendChild(elt);
+		ensureVisible(x + xRadius, y + yRadius);
 	}
 
 	private Map<List<String>, String> gradients = new HashMap<List<String>, String>();
@@ -194,7 +202,41 @@ public class SvgGraphics {
 		this.strokeDasharray = strokeDasharray;
 	}
 
+	private boolean xlinkXmlns = false;
+
+	public void closeLink() {
+		gRoot.appendChild(pendingLink);
+		pendingLink = null;
+	}
+
+	private Element pendingLink;
+
+	public void openLink(String url, String title) {
+		if (url == null) {
+			throw new IllegalArgumentException();
+		}
+		if (xlinkXmlns == false) {
+			root.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+			xlinkXmlns = true;
+		}
+		pendingLink = (Element) document.createElement("a");
+		pendingLink.setAttribute("xlink:href", url);
+		if (title == null) {
+			pendingLink.setAttribute("xlink:title", url);
+		} else {
+			pendingLink.setAttribute("xlink:title", title);
+		}
+	}
+
+	public final Element getG() {
+		if (pendingLink == null) {
+			return gRoot;
+		}
+		return pendingLink;
+	}
+
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry) {
+
 		final Element elt = (Element) document.createElement("rect");
 		elt.setAttribute("x", "" + x);
 		elt.setAttribute("y", "" + y);
@@ -206,7 +248,10 @@ public class SvgGraphics {
 			elt.setAttribute("rx", "" + rx);
 			elt.setAttribute("ry", "" + ry);
 		}
+
 		getG().appendChild(elt);
+
+		ensureVisible(x + width, y + height);
 	}
 
 	public void svgLine(double x1, double y1, double x2, double y2) {
@@ -217,6 +262,8 @@ public class SvgGraphics {
 		elt.setAttribute("y2", "" + y2);
 		elt.setAttribute("style", getStyle());
 		getG().appendChild(elt);
+		ensureVisible(x1, y1);
+		ensureVisible(x2, y2);
 	}
 
 	private String getStyle() {
@@ -240,6 +287,11 @@ public class SvgGraphics {
 		elt.setAttribute("fill", fill);
 		elt.setAttribute("style", getStyle());
 		getG().appendChild(elt);
+
+		for (int i = 0; i < points.length; i += 2) {
+			ensureVisible(points[i], points[i + 1]);
+		}
+
 	}
 
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
@@ -263,14 +315,12 @@ public class SvgGraphics {
 		}
 		elt.setTextContent(text);
 		getG().appendChild(elt);
+		ensureVisible(x, y);
+		ensureVisible(x + textLength, y);
 	}
 
 	public final Element getDefs() {
 		return defs;
-	}
-
-	public final Element getG() {
-		return g;
 	}
 
 	private Transformer getTransformer() throws TransformerException {
@@ -283,11 +333,11 @@ public class SvgGraphics {
 		// // Sets the standalone property in the first line of
 		// // the output file.
 		transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
-		//		
+		//
 		// Properties proprietes = new Properties();
 		// proprietes.put("standalone", "yes");
 		// transformer.setOutputProperties(proprietes);
-		//		
+		//
 		// transformer.setParameter(OutputKeys.STANDALONE, "yes");
 
 		return transformer;
@@ -299,6 +349,12 @@ public class SvgGraphics {
 		// Document object
 		final DOMSource source = new DOMSource(document);
 
+		String style = "width:" + maxX + ";height:" + maxY + ";";
+		if (backcolor != null) {
+			style += "background:" + backcolor + ";";
+		}
+		root.setAttribute("style", style);
+
 		// Get a StreamResult object that points to the
 		// screen. Then transform the DOM sending XML to
 		// the screen.
@@ -309,7 +365,7 @@ public class SvgGraphics {
 	public String getGElement() throws TransformerException, IOException {
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		final StreamResult sr = new StreamResult(os);
-		getTransformer().transform(new DOMSource(g), sr);
+		getTransformer().transform(new DOMSource(gRoot), sr);
 		os.close();
 		final String s = new String(os.toByteArray(), "UTF-8");
 		return s.replaceFirst("^\\<\\?xml.*?\\?\\>", "");
@@ -338,6 +394,7 @@ public class SvgGraphics {
 		elt.setAttribute("d", sb.toString());
 		elt.setAttribute("style", getStyle());
 		getG().appendChild(elt);
+		ensureVisible(x, y);
 	}
 
 	private StringBuilder currentPath = null;
@@ -349,10 +406,12 @@ public class SvgGraphics {
 
 	public void moveto(double x, double y) {
 		currentPath.append("M" + format(x) + "," + format(y) + " ");
+		ensureVisible(x, y);
 	}
 
 	public void lineto(double x, double y) {
 		currentPath.append("L" + format(x) + "," + format(y) + " ");
+		ensureVisible(x, y);
 	}
 
 	public void closepath() {
@@ -361,14 +420,20 @@ public class SvgGraphics {
 	}
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3) + "," + format(y3) + " ");
+		currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3)
+				+ "," + format(y3) + " ");
+		ensureVisible(x1, y1);
+		ensureVisible(x2, y2);
+		ensureVisible(x3, y3);
 
 	}
 
 	public void quadto(double x1, double y1, double x2, double y2) {
 		currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
+		ensureVisible(x1, y1);
+		ensureVisible(x2, y2);
 	}
-	
+
 	private static String format(double x) {
 		return EpsGraphics.format(x);
 	}
@@ -376,7 +441,7 @@ public class SvgGraphics {
 	public void fill(int windingRule) {
 		final Element elt = (Element) document.createElement("path");
 		elt.setAttribute("d", currentPath.toString());
-		//elt elt.setAttribute("style", getStyle());
+		// elt elt.setAttribute("style", getStyle());
 		getG().appendChild(elt);
 		currentPath = null;
 

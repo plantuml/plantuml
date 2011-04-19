@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6208 $
+ * Revision $Revision: 6466 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -39,8 +39,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -54,7 +52,6 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -69,7 +66,6 @@ import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
-import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -94,9 +90,17 @@ public class SequenceDiagramFileMaker implements FileMaker {
 	private final Dimension2D fullDimension;
 	private final List<Page> pages;
 	private final FileFormatOption fileFormatOption;
+	private final List<BufferedImage> flashcodes;
+	
+	private int offsetX;
+	private int offsetY;
 
-	public SequenceDiagramFileMaker(SequenceDiagram sequenceDiagram, Skin skin, FileFormatOption fileFormatOption) {
+
+
+	public SequenceDiagramFileMaker(SequenceDiagram sequenceDiagram, Skin skin, FileFormatOption fileFormatOption,
+			List<BufferedImage> flashcodes) {
 		HtmlColor.setForceMonochrome(sequenceDiagram.getSkinParam().isMonochrome());
+		this.flashcodes = flashcodes;
 		this.diagram = sequenceDiagram;
 		this.fileFormatOption = fileFormatOption;
 		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, sequenceDiagram.getSkinParam(),
@@ -105,9 +109,6 @@ public class SequenceDiagramFileMaker implements FileMaker {
 		for (Participant p : sequenceDiagram.participants().values()) {
 			initializer.addParticipant(p, sequenceDiagram.getEnglober(p));
 		}
-//		for (ParticipantEnglober englober : sequenceDiagram.getParticipantEnglobers()) {
-//			initializer.addParticipantEnglober(englober);
-//		}
 
 		for (Event ev : sequenceDiagram.events()) {
 			initializer.addEvent(ev);
@@ -156,62 +157,6 @@ public class SequenceDiagramFileMaker implements FileMaker {
 				newpageHeight, title);
 	}
 
-	public List<File> createMany(final File suggestedFile) throws IOException {
-		final List<File> result = new ArrayList<File>();
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		if (fileFormat == FileFormat.ATXT) {
-			throw new UnsupportedOperationException();
-		}
-		for (int i = 0; i < pages.size(); i++) {
-			final UGraphic createImage = createImage((int) fullDimension.getWidth(), pages.get(i), i);
-			final File f = computeFilename(suggestedFile, i, fileFormat);
-			Log.info("Creating file: " + f);
-			if (createImage instanceof UGraphicG2d) {
-				final BufferedImage im = ((UGraphicG2d) createImage).getBufferedImage();
-				Log.info("Image size " + im.getWidth() + " x " + im.getHeight());
-				PngIO.write(im, f, diagram.getMetadata(), diagram.getDpi(fileFormatOption));
-			} else if (createImage instanceof UGraphicSvg && fileFormat == FileFormat.SVG) {
-				final UGraphicSvg svg = (UGraphicSvg) createImage;
-				final FileOutputStream fos = new FileOutputStream(f);
-				try {
-					svg.createXml(fos);
-				} finally {
-					fos.close();
-				}
-				// } else if (createImage instanceof UGraphicSvg && fileFormat
-				// == FileFormat.EPS_VIA_SVG) {
-				// final File svgFile =
-				// CucaDiagramFileMaker.createTempFile("seq", ".svg");
-				// final UGraphicSvg svg = (UGraphicSvg) createImage;
-				// final FileOutputStream fos = new FileOutputStream(svgFile);
-				// try {
-				// svg.createXml(fos);
-				// } finally {
-				// fos.close();
-				// }
-				// try {
-				// InkscapeUtils.create().createEps(svgFile, f);
-				// } catch (InterruptedException e) {
-				// e.printStackTrace();
-				// Log.error("Error "+e);
-				// throw new IOException(e.toString());
-				// }
-			} else if (createImage instanceof UGraphicEps) {
-				final UGraphicEps eps = (UGraphicEps) createImage;
-				final FileWriter fw = new FileWriter(f);
-				try {
-					fw.write(eps.getEPSCode());
-				} finally {
-					fw.close();
-				}
-			} else {
-				throw new IllegalStateException();
-			}
-			Log.info("File size : " + f.length());
-			result.add(f);
-		}
-		return result;
-	}
 
 	public void createOne(OutputStream os, int index) throws IOException {
 		final UGraphic createImage = createImage((int) fullDimension.getWidth(), pages.get(index), index);
@@ -262,7 +207,7 @@ public class SequenceDiagramFileMaker implements FileMaker {
 		}
 		return area.getHeight() * getScale(area.getWidth(), area.getHeight()) * dpiFactor;
 	}
-
+	
 	private UGraphic createImage(final int diagramWidth, final Page page, final int indice) {
 		double delta = 0;
 		if (indice > 0) {
@@ -284,6 +229,9 @@ public class SequenceDiagramFileMaker implements FileMaker {
 		}
 		addFooter2(area);
 		addHeader2(area);
+		
+		offsetX = (int) Math.round(area.getSequenceAreaX());
+		offsetY = (int) Math.round(area.getSequenceAreaY());
 
 		final Color backColor = diagram.getSkinParam().getBackgroundColor().getColor();
 		final UGraphic ug;
@@ -295,9 +243,17 @@ public class SequenceDiagramFileMaker implements FileMaker {
 			if (imageHeight == 0) {
 				imageHeight = 1;
 			}
-			final EmptyImageBuilder builder = new EmptyImageBuilder(imageWidth, imageHeight, backColor);
+			double flashCodeHeight = 0;
+			if (flashcodes != null) {
+				flashCodeHeight = flashcodes.get(0).getHeight();
+			}
+			final EmptyImageBuilder builder = new EmptyImageBuilder(imageWidth, imageHeight + flashCodeHeight,
+					backColor);
 
 			final Graphics2D graphics2D = builder.getGraphics2D();
+			if (flashcodes != null) {
+				graphics2D.drawImage(flashcodes.get(0), null, 0, (int) imageHeight);
+			}
 			if (diagram.isRotation()) {
 				final AffineTransform at = new AffineTransform(0, 1, 1, 0, 0, 0);
 				at.concatenate(new AffineTransform(-1, 0, 0, 1, imageHeight, 0));
@@ -410,6 +366,10 @@ public class SequenceDiagramFileMaker implements FileMaker {
 
 	public static StringBounder getDummystringbounder() {
 		return dummyStringBounder;
+	}
+
+	public void appendCmap(StringBuilder cmap) {
+		drawableSet.appendCmap(cmap, offsetX, offsetY, dummyStringBounder);
 	}
 
 }

@@ -64,27 +64,17 @@ final public class BlockUmlBuilder {
 		}
 	}
 
-	public static boolean isArobaseEnduml(String s) {
-		s = s.trim();
-		return s.equals("@enduml") || s.startsWith("@enduml ");
-	}
-
-	public static boolean isArobaseStartuml(String s) {
-		s = s.trim();
-		return s.equals("@startuml") || s.startsWith("@startuml ");
-	}
-
 	private void init(Preprocessor includer, List<String> config) throws IOException {
 		String s = null;
 		List<String> current = null;
 		while ((s = includer.readLine()) != null) {
-			if (isArobaseStartuml(s)) {
+			if (StartUtils.isArobaseStartDiagram(s)) {
 				current = new ArrayList<String>();
 			}
 			if (current != null) {
 				current.add(s);
 			}
-			if (isArobaseEnduml(s) && current != null) {
+			if (StartUtils.isArobaseEndDiagram(s) && current != null) {
 				current.addAll(1, config);
 				blocks.add(new BlockUml(current));
 				current = null;

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3824 $
+ * Revision $Revision: 6341 $
  *
  */
 package net.sourceforge.plantuml;
@@ -38,5 +38,7 @@ public interface PSystemFactory {
 	PSystem getSystem();
 
 	void reset();
+	
+	DiagramType getDiagramType();
 
 }

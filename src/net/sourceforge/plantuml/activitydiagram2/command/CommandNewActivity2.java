@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand;
 public class CommandNewActivity2 extends SingleLineCommand<ActivityDiagram2> {
 
 	public CommandNewActivity2(ActivityDiagram2 diagram) {
-		super(diagram, "(?i)^[\"<](.+)[\">]$");
+		super(diagram, "(?i)^\\s*[-*]\\s*([^\"\\s].*)$");
 	}
 
 	@Override

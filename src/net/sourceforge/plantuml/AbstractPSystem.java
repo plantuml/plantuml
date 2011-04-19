@@ -28,12 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6002 $
+ * Revision $Revision: 6302 $
  *
  */
 package net.sourceforge.plantuml;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.version.Version;
@@ -77,5 +83,23 @@ public abstract class AbstractPSystem implements PSystem {
 	public int getNbImages() {
 		return 1;
 	}
+	
+	public List<File> exportDiagrams(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
+		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
+			throw new IllegalArgumentException("File is a directory " + suggestedFile);
+		}
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream(suggestedFile);
+			this.exportDiagram(os, null, 0, fileFormat);
+		} finally {
+			if (os != null) {
+				os.close();
+			}
+		}
+		return Arrays.asList(suggestedFile);
+	}
+	
+
 	
 }

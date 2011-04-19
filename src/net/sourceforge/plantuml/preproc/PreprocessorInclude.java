@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6219 $
+ * Revision $Revision: 6338 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -102,12 +102,12 @@ class PreprocessorInclude implements ReadLine {
 	}
 
 	private ReadLine getReaderInclude(final File f, String suf) throws IOException {
-		if (StartumlExtractReader.containsStartuml(f)) {
+		if (StartDiagramExtractReader.containsStartDiagram(f)) {
 			int bloc = 0;
 			if (suf != null && suf.matches("\\d+")) {
 				bloc = Integer.parseInt(suf);
 			}
-			return new StartumlExtractReader(f, bloc);
+			return new StartDiagramExtractReader(f, bloc);
 		}
 		return new ReadLineReader(new FileReader(f));
 	}

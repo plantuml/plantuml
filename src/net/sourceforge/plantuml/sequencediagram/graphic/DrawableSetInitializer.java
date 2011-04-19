@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6214 $
+ * Revision $Revision: 6485 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEngloberContexted;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
+import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Skin;
@@ -149,14 +150,16 @@ class DrawableSetInitializer {
 				prepareDivider(stringBounder, (Divider) ev);
 			} else if (ev instanceof Delay) {
 				prepareDelay(stringBounder, (Delay) ev, col);
+			} else if (ev instanceof Reference) {
+				prepareReference(stringBounder, (Reference) ev);
 			} else {
 				throw new IllegalStateException();
 			}
 		}
 
-		//takeParticipantEngloberTitleWidth(stringBounder);
+		// takeParticipantEngloberTitleWidth(stringBounder);
 		constraintSet.takeConstraintIntoAccount(stringBounder);
-		//takeParticipantEngloberTitleWidth2(stringBounder);
+		// takeParticipantEngloberTitleWidth2(stringBounder);
 		takeParticipantEngloberTitleWidth3(stringBounder);
 
 		prepareMissingSpace(stringBounder);
@@ -167,18 +170,16 @@ class DrawableSetInitializer {
 
 	private void takeParticipantEngloberTitleWidth3(StringBounder stringBounder) {
 		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
-			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
-					pe.getParticipantEnglober());
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, pe
+					.getParticipantEnglober());
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
 			final double x1 = drawableSet.getX1(pe);
 			final double x2 = drawableSet.getX2(stringBounder, pe);
 			final double missing = preferredWidth - (x2 - x1);
-			if (missing>0) {
-				constraintSet
-						.pushToLeftParticipantBox(missing / 2, first, true);
-				constraintSet
-						.pushToLeftParticipantBox(missing / 2, last, false);
+			if (missing > 0) {
+				constraintSet.pushToLeftParticipantBox(missing / 2, first, true);
+				constraintSet.pushToLeftParticipantBox(missing / 2, last, false);
 			}
 		}
 	}
@@ -186,8 +187,8 @@ class DrawableSetInitializer {
 	private void takeParticipantEngloberTitleWidth2(StringBounder stringBounder) {
 		double lastX2;
 		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
-			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
-					pe.getParticipantEnglober());
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, pe
+					.getParticipantEnglober());
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
 			final double x1 = drawableSet.getX1(pe);
@@ -201,11 +202,12 @@ class DrawableSetInitializer {
 			lastX2 = x2;
 		}
 	}
+
 	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
 		ParticipantBox previousLast = null;
 		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
-			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
-					pe.getParticipantEnglober());
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, pe
+					.getParticipantEnglober());
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
 			final double margin = 5;
@@ -322,11 +324,11 @@ class DrawableSetInitializer {
 		if (m.getType() != GroupingType.START) {
 			throw new IllegalStateException();
 		}
-		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), m.getBackColorElement(),
-				m.getBackColorGeneral());
+		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), m.getBackColorElement(), m
+				.getBackColorGeneral());
 		// this.maxGrouping++;
-		final List<String> strings = m.getTitle().equals("group") ? Arrays.asList(m.getComment()) : Arrays.asList(
-				m.getTitle(), m.getComment());
+		final List<String> strings = m.getTitle().equals("group") ? Arrays.asList(m.getComment()) : Arrays.asList(m
+				.getTitle(), m.getComment());
 		final Component header = drawableSet.getSkin().createComponent(ComponentType.GROUPING_HEADER, skinParam,
 				strings);
 		final InGroupableList inGroupableList = new InGroupableList(m, freeY);
@@ -396,7 +398,7 @@ class DrawableSetInitializer {
 		}
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), n.getSpecificBackColor());
 		final NoteBox noteBox = new NoteBox(freeY, drawableSet.getSkin().createComponent(ComponentType.NOTE, skinParam,
-				n.getStrings()), p1, p2, n.getPosition());
+				n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 
 		for (InGroupableList groupingStructure : inGroupableLists) {
 			groupingStructure.addInGroupable(noteBox);
@@ -415,6 +417,23 @@ class DrawableSetInitializer {
 	private void prepareMessage(StringBounder stringBounder, Message m) {
 		final Step1Message step1Message = new Step1Message(stringBounder, m, drawableSet, freeY);
 		freeY = step1Message.prepareMessage(constraintSet, inGroupableLists);
+	}
+
+	private void prepareReference(StringBounder stringBounder, Reference reference) {
+		final LivingParticipantBox p1 = drawableSet.getLivingParticipantBox(reference.getParticipant());
+		final LivingParticipantBox p2 = drawableSet.getLivingParticipantBox(reference.getParticipant2());
+		final GraphicalReference graphicalReference = new GraphicalReference(freeY, drawableSet.getSkin()
+				.createComponent(ComponentType.REFERENCE, drawableSet.getSkinParam(), reference.getStrings()), p1, p2,
+				reference.getUrl());
+
+		final double width = graphicalReference.getPreferredWidth(stringBounder)
+				- p1.getParticipantBox().getPreferredWidth(stringBounder) / 2
+				- p2.getParticipantBox().getPreferredWidth(stringBounder) / 2;
+
+		constraintSet.getConstraint(p1.getParticipantBox(), p2.getParticipantBox()).ensureValue(width);
+
+		freeY += graphicalReference.getPreferredHeight(stringBounder);
+		drawableSet.addEvent(reference, graphicalReference);
 	}
 
 	private void prepareMessageExo(StringBounder stringBounder, MessageExo m) {

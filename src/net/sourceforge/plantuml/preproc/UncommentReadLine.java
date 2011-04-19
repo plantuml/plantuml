@@ -45,7 +45,7 @@ public class UncommentReadLine implements ReadLine {
 
 	public UncommentReadLine(ReadLine source) {
 		this.raw = source;
-		this.start = Pattern.compile("(?i)(\\W*)@startuml");
+		this.start = Pattern.compile("(?i)((?:\\W|\\<[^<>]*\\>)*)@start");
 	}
 
 	public String readLine() throws IOException {

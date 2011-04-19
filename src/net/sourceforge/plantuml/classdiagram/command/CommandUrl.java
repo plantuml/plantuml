@@ -35,23 +35,32 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 
-public class CommandUrl extends SingleLineCommand<ClassDiagram> {
+public class CommandUrl extends SingleLineCommand<AbstractEntityDiagram> {
 
-	public CommandUrl(ClassDiagram classDiagram) {
-		super(classDiagram, "(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s+(?:is)?\\s*\\[\\[(.*)\\]\\]$");
+	public CommandUrl(AbstractEntityDiagram diagram) {
+		super(diagram,
+				"(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s+(?:is)?\\s*\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
 		final String code = arg.get(0);
-		final String url = arg.get(1);
+		String url = arg.get(1);
+		final String title = arg.get(2);
 		final Entity entity = (Entity) getSystem().getOrCreateClass(code);
-		entity.setUrl(url);
+		if (url.startsWith("http:") == false && url.startsWith("https:") == false) {
+			final String top = getSystem().getSkinParam().getValue("topurl");
+			if (top != null) {
+				url = top + url;
+			}
+		}
+		entity.setUrl(new Url(url, title));
 		return CommandExecutionResult.ok();
 	}
 

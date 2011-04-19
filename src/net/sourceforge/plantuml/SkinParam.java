@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6228 $
+ * Revision $Revision: 6448 $
  *
  */
 package net.sourceforge.plantuml;
@@ -240,7 +240,7 @@ public class SkinParam implements ISkinParam {
 	public static Collection<String> getPossibleValues() {
 		final Set<String> result = new TreeSet<String>();
 		result.add("Monochrome");
-		result.add("BackgroundColor");
+		// result.add("BackgroundColor");
 		result.add("CircledCharacterRadius");
 		result.add("ClassAttributeIconSize");
 		result.add("DefaultFontName");
@@ -254,7 +254,15 @@ public class SkinParam implements ISkinParam {
 			result.add(h + "FontSize");
 			result.add(h + "FontColor");
 		}
+		for (ColorParam p : EnumSet.allOf(ColorParam.class)) {
+			final String h = capitalize(p.name());
+			result.add(h + "Color");
+		}
 		return Collections.unmodifiableSet(result);
+	}
+
+	private static String capitalize(String name) {
+		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 
 	public int getDpi() {
@@ -286,8 +294,7 @@ public class SkinParam implements ISkinParam {
 		}
 		return DotSplines.SPLINES;
 	}
-	
-	
+
 	public GraphvizLayoutStrategy getStrategy() {
 		final String value = getValue("layout");
 		if ("neato".equalsIgnoreCase(value)) {
@@ -304,6 +311,5 @@ public class SkinParam implements ISkinParam {
 		}
 		return GraphvizLayoutStrategy.DOT;
 	}
-
 
 }

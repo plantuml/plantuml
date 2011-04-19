@@ -43,6 +43,8 @@ import net.sourceforge.plantuml.activitydiagram2.ActivityDiagramFactory2;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
+import net.sourceforge.plantuml.directdot.PSystemDotFactory;
+import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemLostFactory;
 import net.sourceforge.plantuml.eggs.PSystemPathFactory;
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.postit.PostIdDiagramFactory;
 import net.sourceforge.plantuml.printskin.PrintSkinFactory;
+import net.sourceforge.plantuml.project.PSystemProjectFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -75,16 +78,26 @@ public class PSystemBuilder {
 		factories.add(new PostIdDiagramFactory());
 		factories.add(new PrintSkinFactory());
 		factories.add(new PSystemVersionFactory());
+		factories.add(new PSystemDotFactory(DiagramType.DOT));
+		factories.add(new PSystemDotFactory(DiagramType.UML));
+		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
+		factories.add(new PSystemDitaaFactory(DiagramType.UML));
 		factories.add(new PSystemSudokuFactory());
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemRIPFactory());
 		factories.add(new PSystemLostFactory());
 		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
+		factories.add(new PSystemProjectFactory());
 
+		final UmlSource umlSource = new UmlSource(strings);
+		final DiagramType diagramType = umlSource.getDiagramType();
 		final List<PSystemError> errors = new ArrayList<PSystemError>();
 		for (PSystemFactory systemFactory : factories) {
-			final PSystem sys = new PSystemSingleBuilder(new UmlSource(strings), systemFactory).getPSystem();
+			if (diagramType != systemFactory.getDiagramType()) {
+				continue;
+			}
+			final PSystem sys = new PSystemSingleBuilder(umlSource, systemFactory).getPSystem();
 			if (isOk(sys)) {
 				return sys;
 			}

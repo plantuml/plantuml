@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5980 $
+ * Revision $Revision: 6362 $
  *
  */
 package net.sourceforge.plantuml.code;
@@ -50,7 +50,16 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	public String decompress(String s) throws IOException {
-		return clean(s);
+		String result = clean(s);
+		if (result.startsWith("@start")) {
+			return result;
+		}
+		result = "@startuml\n" + result;
+		if (result.endsWith("\n") == false) {
+			result += "\n";
+		}
+		result += "@enduml";
+		return result;
 	}
 
 	private String clean(String s) {
@@ -69,6 +78,5 @@ public class ArobaseStringCompressor implements StringCompressor {
 		}
 		return s;
 	}
-
 
 }

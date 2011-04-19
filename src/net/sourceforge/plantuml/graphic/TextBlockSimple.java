@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6353 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -51,6 +52,8 @@ class TextBlockSimple implements TextBlock {
 		for (CharSequence s : texts) {
 			if (s instanceof Stereotype) {
 				lines.add(createLineForStereotype(fontConfiguration, (Stereotype) s, horizontalAlignement));
+			} else if (s instanceof EmbededDiagram) {
+				lines.add(new EmbededSystemLine((EmbededDiagram) s));
 			} else {
 				lines.add(new SingleLine(s.toString(), fontConfiguration, horizontalAlignement));
 			}

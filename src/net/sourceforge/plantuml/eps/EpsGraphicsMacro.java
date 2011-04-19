@@ -163,4 +163,44 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		macroInProgress = null;
 	}
 
+	@Override
+	protected void epsHLine(double x, double ymin, double ymax) {
+		append(format(x) + " " + format(ymin) + " moveto", true);
+		int nb = (int) ((ymax - ymin) / (getDashVisible() + getDashSpace()));
+		final double lastY = ymin + nb * (getDashVisible() + getDashSpace());
+		double v = ymax - lastY;
+		if (v > getDashVisible()) {
+			v = getDashVisible();
+			nb++;
+			v = 0;
+		}
+		append(nb + "{", true);
+		append("0 " + format(getDashVisible()) + " rlineto", true);
+		append("0 " + format(getDashSpace()) + " rmoveto", true);
+		append("} repeat", true);
+		if (v > 0) {
+			append("0 " + format(v) + " rlineto", true);
+		}
+	}
+
+	@Override
+	protected void epsVLine(double y, double xmin, double xmax) {
+		append(format(xmin) + " " + format(y) + " moveto", true);
+		int nb = (int) ((xmax - xmin) / (getDashVisible() + getDashSpace()));
+		final double lastX = xmin + nb * (getDashVisible() + getDashSpace());
+		double v = xmax - lastX;
+		if (v > getDashVisible()) {
+			v = getDashVisible();
+			nb++;
+			v = 0;
+		}
+		append(nb + "{", true);
+		append(format(getDashVisible()) + " 0 rlineto", true);
+		append(format(getDashSpace()) + " 0 rmoveto", true);
+		append("} repeat", true);
+		if (v > 0) {
+			append(format(v) + " 0 rlineto", true);
+		}
+	}
+
 }

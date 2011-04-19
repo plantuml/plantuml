@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5870 $
+ * Revision $Revision: 6323 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -67,7 +67,7 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	final public double getArrowOnlyWidth(StringBounder stringBounder) {
 		return arrow.getPreferredWidth(stringBounder);
 	}
-	
+
 	@Override
 	public void setMaxX(double m) {
 		super.setMaxX(m);
@@ -76,8 +76,18 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+		final double atX = ug.getTranslateX();
+		final double atY = ug.getTranslateY();
 		arrow.drawU(ug, maxX, context);
-		noteBox.drawU(ug, maxX, context);
+//		if (arrow instanceof ArrowAndParticipant) {
+//			final double diff = ((ArrowAndParticipant) arrow).getDiff(ug);
+//			ug.setTranslate(atX, atY + diff);
+//			// noteBox.drawU(ug, maxX, context);
+//		} else {
+			ug.setTranslate(atX, atY);
+			noteBox.drawU(ug, maxX, context);
+		// }
+		ug.setTranslate(atX, atY);
 	}
 
 	@Override
@@ -88,10 +98,10 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		double w = arrow.getPreferredWidth(stringBounder);
-			w = Math.max(w, arrow.getActualWidth(stringBounder));
+		w = Math.max(w, arrow.getActualWidth(stringBounder));
 		return w + noteBox.getPreferredWidth(stringBounder);
 	}
-	
+
 	@Override
 	public double getActualWidth(StringBounder stringBounder) {
 		return getPreferredWidth(stringBounder);
@@ -133,5 +143,5 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
 		return arrow.getParticipantAt(stringBounder, position);
 	}
-	
+
 }

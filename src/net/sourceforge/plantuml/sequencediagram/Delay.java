@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Url;
+
 public class Delay implements Event {
 
 	private final List<String> text;
@@ -49,6 +51,10 @@ public class Delay implements Event {
 
 	public boolean dealWith(Participant someone) {
 		return false;
+	}
+
+	public Url getUrl() {
+		return null;
 	}
 
 }

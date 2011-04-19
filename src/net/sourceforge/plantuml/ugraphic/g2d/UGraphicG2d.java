@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5988 $
+ * Revision $Revision: 6398 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -130,6 +130,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 			getGraphicObject().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		}
 
+	}
+
+	public void setUrl(String url, String tooltip) {
 	}
 
 }

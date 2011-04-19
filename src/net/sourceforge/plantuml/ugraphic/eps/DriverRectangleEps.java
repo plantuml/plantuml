@@ -55,7 +55,7 @@ public class DriverRectangleEps implements UDriver<EpsGraphics> {
 
 		double width = rect.getWidth();
 		double height = rect.getHeight();
-		
+
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
 			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));
@@ -72,7 +72,8 @@ public class DriverRectangleEps implements UDriver<EpsGraphics> {
 		if (gr == null) {
 			eps.setStrokeColor(param.getColor());
 			eps.setFillColor(param.getBackcolor());
-			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDasharrayEps());
+			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
+					.getStroke().getDashSpace());
 			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2);
 		} else {
 			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, gr);

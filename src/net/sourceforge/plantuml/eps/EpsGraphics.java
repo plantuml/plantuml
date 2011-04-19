@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.ugraphic.UGradient;
 
 public class EpsGraphics {
 
+	public static final String END_OF_FILE = "%plantuml done";
+
 	// http://www.linuxfocus.org/Francais/May1998/article43.html
 	// http://www.tailrecursive.org/postscript/text.html
 	private final StringBuilder body = new StringBuilder();
@@ -53,7 +55,7 @@ public class EpsGraphics {
 	private Color fillcolor = Color.BLACK;
 
 	private String strokeWidth = "1";
-	private String strokeDasharray = null;
+	// private String strokeDasharray = null;
 
 	private final PostScriptCommandMacro setcolorgradient = new PostScriptCommandMacro("setcolorgradient");
 	private final PostScriptCommandMacro simplerect = new PostScriptCommandMacro("simplerect");
@@ -135,6 +137,7 @@ public class EpsGraphics {
 		// writer.write("grestore\n");
 
 		append("showpage", true);
+		append(END_OF_FILE, true);
 		append("%%EOF", true);
 		closeDone = true;
 	}
@@ -166,28 +169,60 @@ public class EpsGraphics {
 		this.fillcolor = c;
 	}
 
-	public final void setStrokeWidth(String strokeWidth, String strokeDasharray) {
+	public final void setStrokeWidth(String strokeWidth, double dashVisible, double dashSpace) {
 		checkCloseDone();
 		this.strokeWidth = strokeWidth;
-		this.strokeDasharray = strokeDasharray;
+		this.dashVisible = dashVisible;
+		this.dashSpace = dashSpace;
 	}
+
+	private double dashVisible = 0;
+	private double dashSpace = 0;
 
 	public void epsLine(double x1, double y1, double x2, double y2) {
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
-		if (strokeDasharray != null) {
-			append("[" + strokeDasharray + "] 0 setdash", true);
-		}
 		checkCloseDone();
 		append(strokeWidth + " setlinewidth", true);
 		appendColor(color);
 		append("newpath", true);
-		append(format(x1) + " " + format(y1) + " moveto", true);
-		append(format(x2 - x1) + " " + format(y2 - y1) + " rlineto", true);
+		if (dashVisible == 0 || dashSpace == 0) {
+			append(format(x1) + " " + format(y1) + " moveto", true);
+			append(format(x2 - x1) + " " + format(y2 - y1) + " rlineto", true);
+		} else if (x1 == x2) {
+			epsHLine(x1, Math.min(y1, y2), Math.max(y1, y2));
+		} else if (y1 == y2) {
+			epsVLine(y1, Math.min(x1, x2), Math.max(x1, x2));
+		}
 		append("closepath stroke", true);
 		ensureVisible(Math.max(x1, x2), Math.max(y1, y2));
-		if (strokeDasharray != null) {
-			append("[] 0 setdash", true);
+	}
+
+	protected void epsHLine(double x, double ymin, double ymax) {
+		append(format(x) + " " + format(ymin) + " moveto", true);
+		for (double y = ymin; y < ymax; y += dashVisible + dashSpace) {
+			final double v;
+			if (y + dashVisible > ymax) {
+				v = y - ymax;
+			} else {
+				v = dashSpace;
+			}
+			append("0 " + format(v) + " rlineto", true);
+			append("0 " + format(dashSpace) + " rmoveto", true);
+		}
+	}
+
+	protected void epsVLine(double y, double xmin, double xmax) {
+		append(format(xmin) + " " + format(y) + " moveto", true);
+		for (double x = xmin; x < xmax; x += dashVisible + dashSpace) {
+			final double v;
+			if (x + dashVisible > xmax) {
+				v = x - xmax;
+			} else {
+				v = dashSpace;
+			}
+			append(format(v) + " 0 rlineto", true);
+			append(format(dashSpace) + " 0 rmoveto", true);
 		}
 	}
 
@@ -238,14 +273,14 @@ public class EpsGraphics {
 		ensureVisible(x + width, y + height);
 		if (fillcolor != null) {
 			appendColor(fillcolor);
-			epsRectangleInternal(x, y, width, height, rx, ry);
+			epsRectangleInternal(x, y, width, height, rx, ry, true);
 			append("closepath eofill", true);
 		}
 
 		if (color != null) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
-			epsRectangleInternal(x, y, width, height, rx, ry);
+			epsRectangleInternal(x, y, width, height, rx, ry, false);
 			append("closepath stroke", true);
 		}
 	}
@@ -306,9 +341,10 @@ public class EpsGraphics {
 		}
 	}
 
-	private void epsRectangleInternal(double x, double y, double width, double height, double rx, double ry) {
+	private void epsRectangleInternal(double x, double y, double width, double height, double rx, double ry,
+			boolean fill) {
 		if (rx == 0 && ry == 0) {
-			simpleRectangle(x, y, width, height);
+			simpleRectangle(x, y, width, height, fill);
 		} else {
 			roundRectangle(x, y, width, height, rx, ry);
 		}
@@ -320,9 +356,16 @@ public class EpsGraphics {
 		roundrectUsed = true;
 	}
 
-	private void simpleRectangle(double x, double y, double width, double height) {
-		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
-		simplerectUsed = true;
+	private void simpleRectangle(double x, double y, double width, double height, boolean fill) {
+		if ((dashSpace == 0 && dashVisible == 0) || fill) {
+			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
+			simplerectUsed = true;
+		} else {
+			epsVLine(y, x, x + width);
+			epsVLine(y + height, x, x + width);
+			epsHLine(x, y, y + height);
+			epsHLine(x + width, y, y + height);
+		}
 	}
 
 	public void epsEllipse(double x, double y, double xRadius, double yRadius) {
@@ -408,7 +451,6 @@ public class EpsGraphics {
 
 	public void newpath() {
 		append("0 setlinewidth", true);
-		append("[] 0 setdash", true);
 		appendColor(color);
 		append("newpath", true);
 	}
@@ -477,6 +519,14 @@ public class EpsGraphics {
 		append(eps, false);
 		ensureVisible(x + (x2 - x1), y + (y2 - y1));
 		append("grestore", true);
+	}
+
+	protected final double getDashVisible() {
+		return dashVisible;
+	}
+
+	protected final double getDashSpace() {
+		return dashSpace;
 	}
 
 }

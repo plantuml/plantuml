@@ -40,7 +40,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.BlockUmlBuilder;
+import net.sourceforge.plantuml.StartUtils;
 import net.sourceforge.plantuml.UmlSource;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandControl;
@@ -59,7 +59,7 @@ final public class SuggestEngine {
 	public SuggestEngine(UmlSource source, PSystemCommandFactory systemFactory) {
 		this.systemFactory = systemFactory;
 		this.it = source.iterator();
-		if (BlockUmlBuilder.isArobaseStartuml(next()) == false) {
+		if (StartUtils.isArobaseStartDiagram(next()) == false) {
 			throw new UnsupportedOperationException();
 		}
 	}
@@ -83,7 +83,7 @@ final public class SuggestEngine {
 		systemFactory.reset();
 		while (hasNext()) {
 			final String s = next();
-			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+			if (StartUtils.isArobaseEndDiagram(s)) {
 				return SuggestEngineResult.SYNTAX_OK;
 			}
 			final SuggestEngineResult check = checkAndCorrect(s);
@@ -114,7 +114,7 @@ final public class SuggestEngine {
 		lines.add(init);
 		while (hasNext()) {
 			final String s = next();
-			if (BlockUmlBuilder.isArobaseEnduml(s)) {
+			if (StartUtils.isArobaseEndDiagram(s)) {
 				return false;
 			}
 			lines.add(s);

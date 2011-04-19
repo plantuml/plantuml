@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6187 $
+ * Revision $Revision: 6448 $
  *
  */
 package net.sourceforge.plantuml;
@@ -172,6 +172,8 @@ public class Option {
 				OptionPrint.printVersion();
 			} else if (s.startsWith("-D")) {
 				manageDefine(s.substring(2));
+			} else if (s.startsWith("-S")) {
+				manageSkinParam(s.substring(2));
 			} else if (s.equalsIgnoreCase("-testdot")) {
 				OptionPrint.printTestDot();
 			} else if (s.equalsIgnoreCase("-about") || s.equalsIgnoreCase("-author") || s.equalsIgnoreCase("-authors")) {
@@ -209,6 +211,21 @@ public class Option {
 		if (m.find()) {
 			define(m.group(1), m.group(2));
 		}
+	}
+
+	private void manageSkinParam(String s) {
+		final Pattern p = Pattern.compile("^(\\w+)(?:=(.*))?$");
+		final Matcher m = p.matcher(s);
+		if (m.find()) {
+			skinParam(m.group(1), m.group(2));
+		}
+	}
+
+	private void skinParam(String var, String value) {
+		if (var != null && value != null) {
+			config.add("skinparamlocked " + var + " " + value);
+		}
+
 	}
 
 	public final File getOutputDir() {

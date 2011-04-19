@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6049 $
+ * Revision $Revision: 6463 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -72,6 +72,10 @@ public class ParticipantBox implements Pushable {
 		return "PB" + cpt;
 	}
 
+	public double getMinX() {
+		return startingX + outMargin;
+	}
+
 	public double getMaxX(StringBounder stringBounder) {
 		return startingX + head.getPreferredWidth(stringBounder) + 2 * outMargin;
 	}
@@ -82,6 +86,10 @@ public class ParticipantBox implements Pushable {
 
 	public double getHeadHeight(StringBounder stringBounder) {
 		return head.getPreferredHeight(stringBounder) + line.getPreferredHeight(stringBounder) / 2.0;
+	}
+
+	public double getHeadHeightOnly(StringBounder stringBounder) {
+		return head.getPreferredHeight(stringBounder);
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
@@ -108,7 +116,7 @@ public class ParticipantBox implements Pushable {
 		if (showHead) {
 			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)
 					- line.getPreferredHeight(stringBounder) / 2;
-			ug.translate(startingX + outMargin, y1);
+			ug.translate(getMinX(), y1);
 			head.drawU(ug, new Dimension2DDouble(head.getPreferredWidth(stringBounder), head
 					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
 			ug.setTranslate(atX, atY);
@@ -121,7 +129,7 @@ public class ParticipantBox implements Pushable {
 			// if (y2 != y22) {
 			// throw new IllegalStateException();
 			// }
-			ug.translate(startingX + outMargin, positionTail);
+			ug.translate(getMinX(), positionTail);
 			tail.drawU(ug, new Dimension2DDouble(tail.getPreferredWidth(stringBounder), tail
 					.getPreferredHeight(stringBounder)), new SimpleContext2D(false));
 			ug.setTranslate(atX, atY);

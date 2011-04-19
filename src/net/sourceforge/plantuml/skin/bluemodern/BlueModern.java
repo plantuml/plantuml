@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6052 $
+ * Revision $Revision: 6448 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -67,11 +67,11 @@ public class BlueModern implements Skin {
 
 		if (type.isArrow()) {
 			if (type.getArrowConfiguration().isSelfArrow()) {
-				return new ComponentBlueModernSelfArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, type
-						.getArrowConfiguration());
+				return new ComponentBlueModernSelfArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay,
+						type.getArrowConfiguration());
 			}
-			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay, type
-					.getArrowConfiguration());
+			return new ComponentBlueModernArrow(Color.BLACK, Color.BLACK, normalFont, stringsToDisplay,
+					type.getArrowConfiguration());
 		}
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentBlueModernParticipant(blue1, blue2, Color.WHITE, participantFont, stringsToDisplay);
@@ -127,7 +127,7 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernGroupingTail(borderGroupColor);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
-			return new ComponentRoseGroupingElse(Color.BLACK, smallFont, stringsToDisplay.get(0));
+			return new ComponentRoseGroupingElse(Color.BLACK, Color.BLACK, smallFont, stringsToDisplay.get(0));
 		}
 		if (type == ComponentType.TITLE) {
 			return new ComponentRoseTitle(Color.BLACK, bigFont, stringsToDisplay);
@@ -144,7 +144,7 @@ public class BlueModern implements Skin {
 		}
 		if (type == ComponentType.ENGLOBER) {
 			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, Color.BLACK, param.getFont(
-					FontParam.SEQUENCE_ENGLOBER, null));
+					FontParam.SEQUENCE_BOX, null));
 		}
 
 		return null;

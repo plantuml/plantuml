@@ -78,7 +78,7 @@ public class ConditionalContext2 {
 	}
 
 	public void clearPendingsButFirst() {
-		System.err.println("ConditionalContext2::clearPendingsButFirst");
+		//System.err.println("ConditionalContext2::clearPendingsButFirst");
 		this.pendings.clear();
 		pendings.add(branch);
 	}
@@ -90,7 +90,7 @@ public class ConditionalContext2 {
 			throw new IllegalStateException();
 		}
 		this.hasElse = true;
-		System.err.println("pend=" + pendings);
+		//System.err.println("pend=" + pendings);
 		if (pendings.size() == 0) {
 			throw new IllegalStateException();
 		}

@@ -134,4 +134,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	public void setAntiAliasing(boolean trueForOn) {
 	}
 
+	public void setUrl(String url, String tooltip) {
+	}
+
 }

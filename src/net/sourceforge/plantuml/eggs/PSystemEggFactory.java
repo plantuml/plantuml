@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 6341 $
  *
  */
 package net.sourceforge.plantuml.eggs;
@@ -37,6 +37,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.PSystemBasicFactory;
 
 public class PSystemEggFactory implements PSystemBasicFactory {
@@ -75,5 +76,10 @@ public class PSystemEggFactory implements PSystemBasicFactory {
 	public PSystemEgg getSystem() {
 		return system;
 	}
+	
+	public DiagramType getDiagramType() {
+		return DiagramType.UML;
+	}
+
 
 }

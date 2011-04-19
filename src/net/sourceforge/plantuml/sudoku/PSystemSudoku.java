@@ -28,17 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5794 $
+ * Revision $Revision: 6453 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -47,20 +43,20 @@ public class PSystemSudoku extends AbstractPSystem {
 
 	final private ISudoku sudoku;
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
-		OutputStream os = null;
-		try {
-			os = new FileOutputStream(suggestedFile);
-			new GraphicsSudoku(sudoku).writeImage(os);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		return Arrays.asList(suggestedFile);
-	}
+//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
+//		OutputStream os = null;
+//		try {
+//			os = new FileOutputStream(suggestedFile);
+//			new GraphicsSudoku(sudoku).writeImage(os);
+//		} finally {
+//			if (os != null) {
+//				os.close();
+//			}
+//		}
+//		return Arrays.asList(suggestedFile);
+//	}
 
-	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
+	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
 		new GraphicsSudoku(sudoku).writeImage(os);
 	}
 

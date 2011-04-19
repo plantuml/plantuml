@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5988 $
+ * Revision $Revision: 6398 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -58,5 +58,7 @@ public interface UGraphic {
 	public void setClip(UClip clip);
 
 	public void setAntiAliasing(boolean trueForOn);
+
+	public void setUrl(String url, String tooltip);
 
 }

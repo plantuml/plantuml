@@ -31,7 +31,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
@@ -45,6 +47,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -153,7 +156,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return Collections.unmodifiableList(events);
 	}
 
-	private FileMaker getSequenceDiagramPngMaker(FileFormatOption fileFormatOption) {
+	private FileMaker getSequenceDiagramPngMaker(FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) {
 
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 
@@ -161,15 +164,47 @@ public class SequenceDiagram extends UmlDiagram {
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 		}
 
-		return new SequenceDiagramFileMaker(this, skin, fileFormatOption);
+		return new SequenceDiagramFileMaker(this, skin, fileFormatOption, flashcodes);
 	}
 
-	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException {
-		return getSequenceDiagramPngMaker(fileFormat).createMany(suggestedFile);
+	// public List<File> exportDiagrams(File suggestedFile, FileFormatOption
+	// fileFormat) throws IOException {
+	// return
+	// getSequenceDiagramPngMaker(fileFormat).createManyRRMV(suggestedFile);
+	// }
+
+	public List<File> exportDiagrams(File suggestedFile, FileFormatOption fileFormat) throws IOException {
+
+		final List<File> result = new ArrayList<File>();
+		final int nbImages = getNbImages();
+		for (int i = 0; i < nbImages; i++) {
+
+			final File f = SequenceDiagramFileMaker.computeFilename(suggestedFile, i, fileFormat.getFileFormat());
+			Log.info("Creating file: " + f);
+			final FileOutputStream fos = new FileOutputStream(f);
+			final StringBuilder cmap = new StringBuilder();
+			try {
+				exportDiagram(fos, cmap, i, fileFormat);
+			} finally {
+				fos.close();
+			}
+			if (this.hasUrl() && cmap.length() > 0) {
+				exportCmap(suggestedFile, cmap);
+			}
+			Log.info("File size : " + f.length());
+			result.add(f);
+		}
+		return result;
 	}
 
-	public void createFile(OutputStream os, int index, FileFormatOption fileFormat) throws IOException {
-		getSequenceDiagramPngMaker(fileFormat).createOne(os, index);
+	@Override
+	protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat,
+			List<BufferedImage> flashcodes) throws IOException {
+		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(fileFormat, flashcodes);
+		sequenceDiagramPngMaker.createOne(os, index);
+		if (this.hasUrl() && fileFormat.getFileFormat() == FileFormat.PNG) {
+			sequenceDiagramPngMaker.appendCmap(cmap);
+		}
 	}
 
 	private LifeEvent pendingCreate = null;
@@ -268,11 +303,11 @@ public class SequenceDiagram extends UmlDiagram {
 		return UmlDiagramType.SEQUENCE;
 	}
 
-//	private Participant boxStart;
-//	private List<String> boxStartComment;
-//	private HtmlColor boxColor;
-//	private boolean boxPending = false;
-	
+	// private Participant boxStart;
+	// private List<String> boxStartComment;
+	// private HtmlColor boxColor;
+	// private boolean boxPending = false;
+
 	private ParticipantEnglober participantEnglober;
 
 	public void boxStart(List<String> comment, HtmlColor color) {
@@ -293,34 +328,35 @@ public class SequenceDiagram extends UmlDiagram {
 		return participantEnglober != null;
 	}
 
-//	private Participant next(Participant p) {
-//		if (p == null) {
-//			return participants.values().iterator().next();
-//		}
-//		for (final Iterator<Participant> it = participants.values().iterator(); it.hasNext();) {
-//			final Participant current = it.next();
-//			if (current == p && it.hasNext()) {
-//				return it.next();
-//			}
-//		}
-//		throw new IllegalArgumentException("p=" + p.getCode());
-//	}
-//
-//	private Participant getLastParticipant() {
-//		Participant result = null;
-//		for (Participant p : participants.values()) {
-//			result = p;
-//		}
-//		return result;
-//	}
-//
-//	public final List<ParticipantEnglober> getParticipantEnglobers() {
-//		return Collections.unmodifiableList(participantEnglobers);
-//	}
+	// private Participant next(Participant p) {
+	// if (p == null) {
+	// return participants.values().iterator().next();
+	// }
+	// for (final Iterator<Participant> it = participants.values().iterator();
+	// it.hasNext();) {
+	// final Participant current = it.next();
+	// if (current == p && it.hasNext()) {
+	// return it.next();
+	// }
+	// }
+	// throw new IllegalArgumentException("p=" + p.getCode());
+	// }
+	//
+	// private Participant getLastParticipant() {
+	// Participant result = null;
+	// for (Participant p : participants.values()) {
+	// result = p;
+	// }
+	// return result;
+	// }
+	//
+	// public final List<ParticipantEnglober> getParticipantEnglobers() {
+	// return Collections.unmodifiableList(participantEnglobers);
+	// }
 
 	@Override
 	public int getNbImages() {
-		return getSequenceDiagramPngMaker(new FileFormatOption(FileFormat.PNG)).getNbPages();
+		return getSequenceDiagramPngMaker(new FileFormatOption(FileFormat.PNG), null).getNbPages();
 	}
 
 	public void removeHiddenParticipants() {
@@ -333,7 +369,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private void remove(Participant p) {
 		final boolean ok = participants.values().remove(p);
-		if (ok==false) {
+		if (ok == false) {
 			throw new IllegalArgumentException();
 		}
 		participantEnglobers2.remove(p);
@@ -360,6 +396,34 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public ParticipantEnglober getEnglober(Participant p) {
 		return participantEnglobers2.get(p);
+	}
+
+	private boolean autoactivate;
+
+	public final void setAutoactivate(boolean autoactivate) {
+		this.autoactivate = autoactivate;
+	}
+
+	public final boolean isAutoactivate() {
+		return autoactivate;
+	}
+
+	public boolean hasUrl() {
+		for (Participant p : participants.values()) {
+			if (p.getUrl() != null) {
+				return true;
+			}
+		}
+		for (Event ev : events) {
+			if (ev.getUrl() != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addReference(Reference ref) {
+		events.add(ref);
 	}
 
 }

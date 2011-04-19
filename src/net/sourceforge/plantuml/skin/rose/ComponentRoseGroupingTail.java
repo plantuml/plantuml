@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5528 $
+ * Revision $Revision: 6404 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -45,16 +45,18 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 public class ComponentRoseGroupingTail extends AbstractComponent {
 
 	private final Color foregroundColor;
+	private final Color groupBorder;
 
-	public ComponentRoseGroupingTail(Color foregroundColor) {
+	public ComponentRoseGroupingTail(Color foregroundColor, Color groupBorder) {
 		this.foregroundColor = foregroundColor;
+		this.groupBorder = groupBorder;
 	}
 	
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
 		ug.getParam().setStroke(new UStroke(2));
-		ug.getParam().setColor(foregroundColor);
+		ug.getParam().setColor(groupBorder);
 		ug.draw(0, dimensionToUse.getHeight(), new ULine(dimensionToUse.getWidth(), 0));
 		ug.getParam().setStroke(new UStroke());
 	}
