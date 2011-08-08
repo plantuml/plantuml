@@ -34,9 +34,12 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 final public class UmlSource {
 
@@ -87,6 +90,18 @@ final public class UmlSource {
 			}
 		}
 		return true;
+	}
+
+	public List<String> getTitle() {
+		final Pattern p = Pattern.compile("(?i)^\\s*title\\s+(.+)$");
+		for (String s : source) {
+			final Matcher m = p.matcher(s);
+			final boolean ok = m.matches();
+			if (ok) {
+				return Arrays.asList(m.group(1));
+			}
+		}
+		return Collections.emptyList();
 	}
 
 }

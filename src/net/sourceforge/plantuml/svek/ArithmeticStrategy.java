@@ -27,36 +27,16 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4826 $
  *
+ * Revision $Revision: 4236 $
+ * 
  */
-package net.sourceforge.plantuml.eps;
+package net.sourceforge.plantuml.svek;
 
-import java.io.File;
+public interface ArithmeticStrategy {
 
-class InkscapeWindows extends AbstractInkscape {
+	void eat(double v);
 
-	@Override
-	protected File specificExe() {
-		final File f1 = new File("C:\\Program Files\\Inkscape\\inkscape.exe");
-		if (f1.exists()) {
-			return f1;
-		}
-
-		final File f2 = new File("C:\\Program Files (x86)\\Inkscape\\inkscape.exe");
-		if (f2.exists()) {
-			return f2;
-		}
-
-		return null;
-	}
-
-	@Override
-	protected void appendFilePath(final StringBuilder sb, File file) {
-		sb.append('\"');
-		sb.append(file.getAbsolutePath());
-		sb.append('\"');
-	}
+	double getResult();
 
 }

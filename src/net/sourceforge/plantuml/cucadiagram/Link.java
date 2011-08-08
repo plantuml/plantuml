@@ -28,17 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6356 $
+ * Revision $Revision: 6939 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
+import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class Link implements Imaged {
 
@@ -60,7 +62,10 @@ public class Link implements Imaged {
 	final private String uid = "LNK" + UniqueSequence.getValue();
 
 	private DrawFile imageFile;
-	private String note;
+
+	private List<? extends CharSequence> note;
+	private Position notePosition;
+
 	private boolean invis = false;
 	private double weight = 1.0;
 
@@ -69,6 +74,11 @@ public class Link implements Imaged {
 
 	private HtmlColor specificColor;
 	private boolean constraint = true;
+	private boolean inverted = false;
+
+	public final boolean isInverted() {
+		return inverted;
+	}
 
 	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length) {
 		this(cl1, cl2, type, label, length, null, null, null, null, null);
@@ -106,8 +116,14 @@ public class Link implements Imaged {
 	}
 
 	public Link getInv() {
-		return new Link(cl2, cl1, type.getInv(), label, length, qualifier2, qualifier1, labeldistance, labelangle,
-				specificColor);
+		// if (getLength() == 1) {
+		// final int x = cl1.getXposition();
+		// cl2.setXposition(x-1);
+		// }
+		final Link result = new Link(cl2, cl1, type.getInv(), label, length, qualifier2, qualifier1, labeldistance,
+				labelangle, specificColor);
+		result.inverted = true;
+		return result;
 	}
 
 	public Link getDashed() {
@@ -222,12 +238,22 @@ public class Link implements Imaged {
 		this.weight = weight;
 	}
 
-	public final String getNote() {
+	public final List<? extends CharSequence> getNote() {
 		return note;
 	}
 
-	public final void setNote(String note) {
+	public final Position getNotePosition() {
+		return notePosition;
+	}
+
+	public final void addNote(List<? extends CharSequence> note, Position position) {
 		this.note = note;
+		this.notePosition = position;
+	}
+
+	public final void addNote(String n, Position position) {
+		this.note = StringUtils.getWithNewlines(n);
+		this.notePosition = position;
 	}
 
 	public DrawFile getImageFile() {
@@ -291,22 +317,22 @@ public class Link implements Imaged {
 		return false;
 	}
 
-	public double getMarginDecors1(StringBounder stringBounder, Font fontQualif) {
+	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif) {
 		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier1);
 		final LinkDecor decor = type.getDecor1();
 		return decor.getSize() + q;
 	}
 
-	public double getMarginDecors2(StringBounder stringBounder, Font fontQualif) {
+	public double getMarginDecors2(StringBounder stringBounder, UFont fontQualif) {
 		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier2);
 		final LinkDecor decor = type.getDecor2();
 		return decor.getSize() + q;
 	}
 
-	private double getQualifierMargin(StringBounder stringBounder, Font fontQualif, String qualif) {
+	private double getQualifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif) {
 		if (qualif != null) {
 			final TextBlock b = TextBlockUtils.create(Arrays.asList(qualif), new FontConfiguration(fontQualif,
-					Color.BLACK), HorizontalAlignement.LEFT);
+					HtmlColor.BLACK), HorizontalAlignement.LEFT);
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
@@ -328,5 +354,4 @@ public class Link implements Imaged {
 	public final void setConstraint(boolean constraint) {
 		this.constraint = constraint;
 	}
-
 }

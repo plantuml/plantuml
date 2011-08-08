@@ -33,15 +33,15 @@
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -49,12 +49,12 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentBlueModernDivider extends AbstractTextualComponent {
 
-	private final Color background1;
-	private final Color background2;
-	private final Color borderColor;
+	private final HtmlColor background1;
+	private final HtmlColor background2;
+	private final HtmlColor borderColor;
 
-	public ComponentBlueModernDivider(Color fontColor, Font font, Color background1, Color background2,
-			Color borderColor, List<? extends CharSequence> stringsToDisplay) {
+	public ComponentBlueModernDivider(HtmlColor fontColor, UFont font, HtmlColor background1, HtmlColor background2,
+			HtmlColor borderColor, List<? extends CharSequence> stringsToDisplay) {
 		super(stringsToDisplay, fontColor, font, HorizontalAlignement.CENTER, 4, 4, 4);
 		this.background1 = background1;
 		this.background2 = background2;
@@ -72,14 +72,13 @@ public class ComponentBlueModernDivider extends AbstractTextualComponent {
 		final double xpos = (dimensionToUse.getWidth() - textWidth - deltaX) / 2;
 		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;
 
-		ug.getParam().setColor(Color.BLACK);
-		ug.getParam().setBackcolor(Color.BLACK);
-		
+		ug.getParam().setColor(HtmlColor.BLACK);
+		ug.getParam().setBackcolor(HtmlColor.BLACK);
+
 		ug.getParam().setStroke(new UStroke(2));
 
 		ug.draw(0, dimensionToUse.getHeight() / 2 - 1, new ULine(dimensionToUse.getWidth(), 0));
 		ug.draw(0, dimensionToUse.getHeight() / 2 + 2, new ULine(dimensionToUse.getWidth(), 0));
-
 
 		final FillRoundShape shape = new FillRoundShape(textWidth + deltaX, textHeight, background1, background2, 5);
 		ug.translate(xpos, ypos);

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4762 $
+ * Revision $Revision: 6939 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -37,6 +37,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
@@ -52,7 +53,7 @@ public class CommandNoteOnActivityLink extends SingleLineCommand<ActivityDiagram
 		if (link == null) {
 			return CommandExecutionResult.error("No link defined");
 		}
-		link.setNote(arg.get(0));
+		link.addNote(arg.get(0), Position.BOTTOM);
 		return CommandExecutionResult.ok();
 
 	}

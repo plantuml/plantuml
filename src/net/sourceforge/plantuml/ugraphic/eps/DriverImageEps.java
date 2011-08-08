@@ -32,6 +32,7 @@
 package net.sourceforge.plantuml.ugraphic.eps;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -39,7 +40,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DriverImageEps implements UDriver<EpsGraphics> {
 
-	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final UImage shape = (UImage) ushape;
 		eps.drawImage(shape.getImage(), x, y);
 	}

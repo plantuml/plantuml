@@ -59,6 +59,7 @@ public class ActivityDiagramFactory2 extends AbstractUmlSystemCommandFactory {
 		system = new ActivityDiagram2();
 
 		addCommonCommands(system);
+		addCommand(new CommandEnd2(system));
 		addCommand(new CommandStart2(system));
 		addCommand(new CommandNewActivity2(system));
 		addCommand(new CommandIf2(system));
@@ -67,7 +68,6 @@ public class ActivityDiagramFactory2 extends AbstractUmlSystemCommandFactory {
 		addCommand(new CommandLabel2(system));
 		addCommand(new CommandGoto2(system));
 		addCommand(new CommandBar2(system));
-		addCommand(new CommandEnd2(system));
 
 //		addCommand(new CommandLinkActivity(system));
 //		addCommand(new CommandPartition(system));

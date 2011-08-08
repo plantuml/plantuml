@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5939 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -38,6 +38,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -46,12 +47,12 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class DriverLineG2d implements UDriver<Graphics2D> {
 
-	public void draw(UShape ushape, double x, double y, UParam param, Graphics2D g2d) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final ULine shape = (ULine) ushape;
 
 		final Shape line = new Line2D.Double(x, y, x + shape.getDX(), y + shape.getDY());
 		manageStroke(param, g2d);
-		g2d.setColor(param.getColor());
+		g2d.setColor(mapper.getMappedColor(param.getColor()));
 		g2d.draw(line);
 	}
 

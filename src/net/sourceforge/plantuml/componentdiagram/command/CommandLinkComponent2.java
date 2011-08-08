@@ -64,10 +64,9 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 				new RegexOr(
 				//
 						new RegexLeaf("AR_TO_RIGHT",
-								"(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)([\\]>]|\\|[>\\]])?)"),
-								// "(([-=.]+)(left|right|up|down|le?|ri?|up?|do?)?([-=.]*?\\.*)([\\]>]|\\|[>\\]])?)"),
+								"(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)([\\]>^]|\\|[>\\]])?)"),
 						new RegexLeaf("AR_TO_LEFT",
-								"(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
+								"(([\\[<^]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
 				new RegexLeaf("\\s*"),//
 				getRegexGroup("G2"),//
 				new RegexLeaf("\\s*"),//
@@ -177,6 +176,9 @@ public class CommandLinkComponent2 extends SingleLineCommand2<ComponentDiagram> 
 			return new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 		}
 		if (k.equals("<|") || k.equals("|>")) {
+			return new LinkType(LinkDecor.EXTENDS, LinkDecor.NONE);
+		}
+		if (k.equals("^")) {
 			return new LinkType(LinkDecor.EXTENDS, LinkDecor.NONE);
 		}
 		return null;

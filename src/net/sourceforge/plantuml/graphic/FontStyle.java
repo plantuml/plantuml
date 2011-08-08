@@ -28,26 +28,27 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6000 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.ugraphic.UFont;
+
 public enum FontStyle {
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
 
-	public Font mutateFont(Font font) {
+	public UFont mutateFont(UFont font) {
 		if (this == ITALIC) {
-			return font.deriveFont(font.getStyle() | Font.ITALIC);
+			return font.deriveStyle(font.getStyle() | Font.ITALIC);
 		}
 		if (this == BOLD) {
-			return font.deriveFont(font.getStyle() | Font.BOLD);
+			return font.deriveStyle(font.getStyle() | Font.BOLD);
 		}
 		return font;
 	}
@@ -74,14 +75,14 @@ public enum FontStyle {
 		return null;
 	}
 
-	Color getExtendedColor(String s) {
+	HtmlColor getExtendedColor(String s) {
 		final Matcher m = Pattern.compile(getActivationPattern()).matcher(s);
 		if (m.find() == false || m.groupCount() != 1) {
 			return null;
 		}
 		final String color = m.group(1);
 		if (color!= null && HtmlColor.isValid(color)) {
-			return HtmlColor.getColorIfValid(color).getColor();
+			return HtmlColor.getColorIfValid(color);
 		}
 		return null;
 	}

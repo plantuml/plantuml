@@ -39,6 +39,6 @@ public interface SpecificBackcolorable {
 
 	public HtmlColor getSpecificBackColor();
 
-	public void setSpecificBackcolor(String specificBackcolor);
+	public void setSpecificBackcolor(HtmlColor specificBackcolor);
 
 }

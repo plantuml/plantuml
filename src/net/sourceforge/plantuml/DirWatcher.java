@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6070 $
+ * Revision $Revision: 6616 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -60,14 +60,12 @@ public class DirWatcher {
 	}
 
 	public List<GeneratedImage> buildCreatedFiles() throws IOException, InterruptedException {
+		boolean error = false;
 		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
-		process(dir, result);
-		Collections.sort(result);
-		return Collections.unmodifiableList(result);
-	}
-
-	private void process(File dirToProcess, final List<GeneratedImage> result) throws IOException, InterruptedException {
-		for (File f : dirToProcess.listFiles()) {
+		for (File f : dir.listFiles()) {
+			if (error) {
+				continue;
+			}
 			if (f.isFile() == false) {
 				continue;
 			}
@@ -83,10 +81,36 @@ public class DirWatcher {
 				files.add(f);
 				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
 					result.add(g);
+					if (OptionFlags.getInstance().isFailOnError() && g.isError()) {
+						error = true;
+					}
 				}
 				modifieds.put(f, new FileWatcher(files));
 			}
 		}
+		Collections.sort(result);
+		return Collections.unmodifiableList(result);
+	}
+
+	public File getErrorFile() throws IOException, InterruptedException {
+		for (File f : dir.listFiles()) {
+			if (f.isFile() == false) {
+				continue;
+			}
+			if (fileToProcess(f.getName()) == false) {
+				continue;
+			}
+			final FileWatcher watcher = modifieds.get(f);
+
+			if (watcher == null || watcher.hasChanged()) {
+				final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
+						option.getConfig(), option.getCharset(), option.getFileFormatOption());
+				if (sourceFileReader.hasError()) {
+					return f;
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean fileToProcess(String name) {

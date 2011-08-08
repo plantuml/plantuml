@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.graph2.CubicCurveFactory;
 import net.sourceforge.plantuml.graph2.MyCurve;
 import net.sourceforge.plantuml.graph2.RectanglesCollection;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class Graph4 {
 
@@ -197,7 +198,7 @@ public class Graph4 {
 			final Frame frame = frames.get(nodePoint);
 			final AbstractEntityImage image = getImage(nodePoint.getNode());
 			g2d.translate(frame.getX(), frame.getY());
-			image.draw(g2d);
+			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-frame.getX(), -frame.getY());
 		}
 

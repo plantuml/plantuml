@@ -52,6 +52,7 @@ final public class SuggestEngine {
 
 	private final PSystemCommandFactory systemFactory;
 	private final Iterator<String> it;
+	private final String startLine;
 	// private int nb = 0;
 	private String current = "";
 	private String previous = "";
@@ -59,7 +60,8 @@ final public class SuggestEngine {
 	public SuggestEngine(UmlSource source, PSystemCommandFactory systemFactory) {
 		this.systemFactory = systemFactory;
 		this.it = source.iterator();
-		if (StartUtils.isArobaseStartDiagram(next()) == false) {
+		startLine = next();
+		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
 			throw new UnsupportedOperationException();
 		}
 	}
@@ -80,7 +82,7 @@ final public class SuggestEngine {
 	}
 
 	private SuggestEngineResult executeUmlCommand() throws IOException {
-		systemFactory.reset();
+		systemFactory.init(startLine);
 		while (hasNext()) {
 			final String s = next();
 			if (StartUtils.isArobaseEndDiagram(s)) {

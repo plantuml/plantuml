@@ -61,28 +61,28 @@ public class BitmapRenderer {
 	Stroke normalStroke;
 	Stroke dashStroke; 
 	
-	public static void main(String[] args) throws Exception {
-		
-		
-		long startTime = System.currentTimeMillis();
-		
-		ConversionOptions options = new ConversionOptions();
-		
-		TextGrid grid = new TextGrid();
-		
-		String filename = "dak_orgstruktur_vs_be.ditaa.OutOfMemoryError.edit.txt";
-		
-		grid.loadFrom("tests/text/"+filename);
-		
-		Diagram diagram = new Diagram(grid, options);
-		new BitmapRenderer().renderToPNG(diagram, "tests/images/"+filename+".png", options.renderingOptions);
-		long endTime = System.currentTimeMillis();
-		long totalTime  = (endTime - startTime) / 1000;
-		System.out.println("Done in "+totalTime+"sec");
-		
-		File workDir = new File("tests/images");
-		//Process p = Runtime.getRuntime().exec("display "+filename+".png", null, workDir);
-	}
+//	public static void main(String[] args) throws Exception {
+//		
+//		
+//		long startTime = System.currentTimeMillis();
+//		
+//		ConversionOptions options = new ConversionOptions();
+//		
+//		TextGrid grid = new TextGrid();
+//		
+//		String filename = "dak_orgstruktur_vs_be.ditaa.OutOfMemoryError.edit.txt";
+//		
+//		grid.loadFrom("tests/text/"+filename);
+//		
+//		Diagram diagram = new Diagram(grid, options);
+//		new BitmapRenderer().renderToPNG(diagram, "tests/images/"+filename+".png", options.renderingOptions);
+//		long endTime = System.currentTimeMillis();
+//		long totalTime  = (endTime - startTime) / 1000;
+//		System.out.println("Done in "+totalTime+"sec");
+//		
+//		File workDir = new File("tests/images");
+//		//Process p = Runtime.getRuntime().exec("display "+filename+".png", null, workDir);
+//	}
 
 	private boolean renderToPNG(Diagram diagram, String filename, RenderingOptions options){	
 		RenderedImage image = renderToImage(diagram, options);

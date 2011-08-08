@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PSystem;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -73,7 +74,7 @@ class EmbededSystemLine implements Line {
 		return new Dimension2DDouble(42, 42);
 	}
 
-	public void draw(Graphics2D g2d, double x, double y) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		throw new UnsupportedOperationException();
 	}
 

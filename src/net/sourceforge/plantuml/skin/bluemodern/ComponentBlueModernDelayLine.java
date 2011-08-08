@@ -33,9 +33,9 @@
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,9 +44,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentBlueModernDelayLine extends AbstractComponent {
 
-	private final Color color;
+	private final HtmlColor color;
 
-	public ComponentBlueModernDelayLine(Color color) {
+	public ComponentBlueModernDelayLine(HtmlColor color) {
 		this.color = color;
 	}
 

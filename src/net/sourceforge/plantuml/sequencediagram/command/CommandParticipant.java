@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -78,7 +79,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 					getSystem().getSkinParam().getCircledCharacterRadius(), getSystem().getSkinParam().getFont(
 							FontParam.CIRCLED_CHARACTER, null)));
 		}
-		participant.setSpecificBackcolor(arg2.get("COLOR").get(0));
+		participant.setSpecificBackcolor(HtmlColor.getColorIfValid(arg2.get("COLOR").get(0)));
 
 		return CommandExecutionResult.ok();
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6341 $
+ * Revision $Revision: 6750 $
  *
  */
 package net.sourceforge.plantuml.eggs;
@@ -44,11 +44,7 @@ public class PSystemEggFactory implements PSystemBasicFactory {
 
 	private PSystemEgg system;
 
-	public PSystemEggFactory() {
-		reset();
-	}
-
-	public void reset() {
+	public void init(String startLine) {
 	}
 
 	final static private List<byte[]> all = Arrays

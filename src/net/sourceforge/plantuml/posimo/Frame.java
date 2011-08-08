@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
@@ -43,12 +41,14 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Frame implements Component {
 
-	private final List<String> name;
+	private final List<? extends CharSequence> name;
 	private final ISkinParam skinParam;
 	private final Rose rose = new Rose();
 
@@ -64,7 +64,7 @@ public class Frame implements Component {
 	// private final Color lineColor;
 	// private final Font font;
 
-	public Frame(List<String> name, ISkinParam skinParam) {
+	public Frame(List<? extends CharSequence> name, ISkinParam skinParam) {
 		this.name = name;
 		this.skinParam = skinParam;
 		// this.textColor = textColor;
@@ -73,7 +73,7 @@ public class Frame implements Component {
 	}
 
 	public void drawU(UGraphic ug, Dimension2D dimensionToUse, Context2D context) {
-		final Color lineColor = rose.getHtmlColor(skinParam, ColorParam.packageBorder).getColor();
+		final HtmlColor lineColor = rose.getHtmlColor(skinParam, ColorParam.packageBorder);
 		ug.getParam().setColor(lineColor);
 		ug.getParam().setBackcolor(null);
 		ug.getParam().setStroke(new UStroke(1.4));
@@ -115,8 +115,8 @@ public class Frame implements Component {
 	}
 
 	private TextBlock createTextBloc() {
-		final Font font = skinParam.getFont(FontParam.PACKAGE, null);
-		final Color textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null).getColor();
+		final UFont font = skinParam.getFont(FontParam.PACKAGE, null);
+		final HtmlColor textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null);
 		final TextBlock bloc = TextBlockUtils.create(name, new FontConfiguration(font, textColor),
 				HorizontalAlignement.LEFT);
 		return bloc;

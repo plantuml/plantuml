@@ -28,19 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6242 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -50,7 +50,7 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 
 	private final double arrowWidth = 45;
 
-	public ComponentBlueModernSelfArrow(Color foregroundColor, Color colorFont, Font font,
+	public ComponentBlueModernSelfArrow(HtmlColor foregroundColor, HtmlColor colorFont, UFont font,
 			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
 		super(foregroundColor, colorFont, font, stringsToDisplay, arrowConfiguration);
 	}

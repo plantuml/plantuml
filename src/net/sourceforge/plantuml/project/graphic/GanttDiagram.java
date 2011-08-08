@@ -33,10 +33,10 @@
  */
 package net.sourceforge.plantuml.project.graphic;
 
-import java.awt.Color;
 import java.util.Map;
 import java.util.SortedMap;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.project.Instant;
 import net.sourceforge.plantuml.project.Item;
@@ -89,22 +89,22 @@ public class GanttDiagram {
 			} else {
 				rect = new URectangle(x2 - x1, 3);
 			}
-			ug.getParam().setColor(Color.GREEN);
-			ug.getParam().setBackcolor(Color.GRAY);
+			ug.getParam().setColor(HtmlColor.GREEN);
+			ug.getParam().setBackcolor(HtmlColor.GRAY);
 			ug.draw(x0start + x1, yitem, rect);
 
 		}
 
 		drawGrid(ug, x + x0start, y + timeScaleHeight, pos);
 
-		ug.getParam().setColor(Color.BLACK);
+		ug.getParam().setColor(HtmlColor.BLACK);
 		ug.getParam().setBackcolor(null);
 		timeScale.draw(ug, x + x0start, y);
 		itemHeader.draw(ug, x, y + timeScaleHeight);
 
 	}
 
-	private final Color lightGray = new Color(200, 200, 200);
+	private final HtmlColor lightGray = HtmlColor.getColorIfValid("#C8C8C8");
 
 	private void drawGrid(UGraphic ug, double x, double y, SortedMap<Instant, Double> pos) {
 		final ULine line = new ULine(0, itemHeader.getHeight(ug.getStringBounder()));
@@ -114,7 +114,7 @@ public class GanttDiagram {
 			if (last == null || last.next(null).equals(ent.getKey())) {
 				ug.getParam().setColor(lightGray);
 			} else {
-				ug.getParam().setColor(Color.BLACK);
+				ug.getParam().setColor(HtmlColor.BLACK);
 			}
 			ug.draw(x + xcur, y, line);
 			last = ent.getKey();

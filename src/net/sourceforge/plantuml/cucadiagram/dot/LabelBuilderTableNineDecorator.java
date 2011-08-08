@@ -45,6 +45,9 @@ class LabelBuilderTableNineDecorator extends LabelBuilderObjectOrClass implement
 	LabelBuilderTableNineDecorator(FileFormat fileFormat, DotData data, IEntity entity, LabelBuilder builder) {
 		super(fileFormat, data, entity);
 		this.builder = builder;
+		if (builder instanceof LabelBuilderClassOld) {
+			((LabelBuilderClassOld)builder).patch();
+		}
 		
 	}
 

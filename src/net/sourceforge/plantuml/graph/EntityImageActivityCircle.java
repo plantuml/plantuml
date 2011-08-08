@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3831 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageActivityCircle extends AbstractEntityImage {
 
@@ -58,7 +59,7 @@ class EntityImageActivityCircle extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		g2d.setColor(Color.BLACK);
 		final int delta = diameterExternal - diameterInternal + 1;
 		g2d.drawOval(0, 0, diameterExternal, diameterExternal);

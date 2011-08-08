@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6475 $
+ * Revision $Revision: 6549 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -84,6 +84,8 @@ public enum ColorParam {
 	sequenceActorBorder,
 	sequenceGroupBorder,
 	sequenceGroupBackground(true),
+	sequenceReferenceBorder,
+	sequenceReferenceHeaderBackground(true),
 	sequenceReferenceBackground(true),
 	sequenceDividerBackground(true),
 	sequenceLifeLineBackground(true),

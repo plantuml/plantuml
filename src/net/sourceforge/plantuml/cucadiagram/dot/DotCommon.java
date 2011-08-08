@@ -43,6 +43,7 @@ import javax.imageio.ImageIO;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.Group;
@@ -51,16 +52,15 @@ import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 abstract class DotCommon {
 
 	private final DotData data;
 	private final FileFormat fileFormat;
 	private boolean underline;
-	
+
 	private final Rose rose = new Rose();
-
-
 
 	DotCommon(FileFormat fileFormat, DotData data) {
 		this.fileFormat = fileFormat;
@@ -72,6 +72,10 @@ abstract class DotCommon {
 			return null;
 		}
 		return entity.getStereotype();
+	}
+
+	protected final ColorMapper getColorMapper() {
+		return data.getColorMapper();
 	}
 
 	protected final boolean isThereLabel(final Stereotype stereotype) {
@@ -87,11 +91,12 @@ abstract class DotCommon {
 		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
 		if (isThereLabel(stereotype)) {
 			sb.append("<BR ALIGN=\"LEFT\"/>");
-			sb.append(manageHtmlIB(stereotype.getLabel(), classes ? FontParam.CLASS_STEREOTYPE
-					: FontParam.OBJECT_STEREOTYPE, stereo));
-			sb.append("<BR/>");
+			for (String st : stereotype.getLabels()) {
+				sb.append(manageHtmlIB(st, classes ? FontParam.CLASS_STEREOTYPE : FontParam.OBJECT_STEREOTYPE, stereo));
+				sb.append("<BR/>");
+			}
 		}
-		String display = entity.getDisplay();
+		String display = StringUtils.getMergedLines(entity.getDisplay2());
 		final boolean italic = entity.getType() == EntityType.ABSTRACT_CLASS
 				|| entity.getType() == EntityType.INTERFACE;
 		if (italic) {
@@ -102,11 +107,11 @@ abstract class DotCommon {
 
 	protected final String manageHtmlIB(String s, FontParam param, String stereotype) {
 		s = unicode(s);
-		final int fontSize = data.getSkinParam().getFontSize(param, stereotype);
-		final int style = data.getSkinParam().getFontStyle(param, stereotype);
-		final String fontFamily = data.getSkinParam().getFontFamily(param, stereotype);
-		final DotExpression dotExpression = new DotExpression(s, fontSize, getFontHtmlColor(param, stereotype),
-				fontFamily, style, fileFormat);
+		final int fontSize = data.getSkinParam().getFont(param, stereotype).getSize();
+		final int style = data.getSkinParam().getFont(param, stereotype).getStyle();
+		final String fontFamily = data.getSkinParam().getFont(param, stereotype).getFamily(null);
+		final DotExpression dotExpression = new DotExpression(getColorMapper(), s, fontSize, getFontHtmlColor(param,
+				stereotype), fontFamily, style, fileFormat);
 		final String result = dotExpression.getDotHtml();
 		if (dotExpression.isUnderline()) {
 			underline = true;
@@ -121,7 +126,8 @@ abstract class DotCommon {
 	static String unicode(String s) {
 		final StringBuilder result = new StringBuilder();
 		for (char c : s.toCharArray()) {
-			if (c > 127 || c == '&') {
+			if (c > 127 || c == '&' || c == '|') {
+				// if (c > 127 || c == '&') {
 				final int i = c;
 				result.append("&#" + i + ";");
 			} else {
@@ -157,7 +163,7 @@ abstract class DotCommon {
 		// "\" HEIGHT=\"" + h + "\">";
 		return "<TD FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">";
 	}
-	
+
 	public final boolean isUnderline() {
 		return underline;
 	}
@@ -216,7 +222,7 @@ abstract class DotCommon {
 	}
 
 	protected final int getLonguestHeader(IEntity entity) {
-		int result = entity.getDisplay().length();
+		int result = StringUtils.getMergedLines(entity.getDisplay2()).length();
 		final Stereotype stereotype = getStereotype(entity);
 		if (isThereLabel(stereotype)) {
 			final int size = stereotype.getLabel().length();
@@ -228,7 +234,11 @@ abstract class DotCommon {
 	}
 
 	protected final String getColorString(ColorParam colorParam, String stereotype) {
-		return "\"" + rose.getHtmlColor(getData().getSkinParam(), colorParam, stereotype).getAsHtml() + "\"";
+		return "\"" + getAsHtml(rose.getHtmlColor(getData().getSkinParam(), colorParam, stereotype)) + "\"";
+	}
+
+	protected final String getAsHtml(HtmlColor htmlColor) {
+		return StringUtils.getAsHtml(getColorMapper().getMappedColor(htmlColor));
 	}
 
 	protected final int getLongestFieldOrAttribute(IEntity entity) {
@@ -258,7 +268,7 @@ abstract class DotCommon {
 		}
 		return prefix + manageHtmlIB(att.getDisplay(withVisibilityChar), param, null);
 	}
-	
+
 	final protected String getBackColorAroundEntity(IEntity entity) {
 		String backColor = getSpecificBackColor(entity);
 		if (backColor == null) {
@@ -275,9 +285,9 @@ abstract class DotCommon {
 		if (parent.getBackColor() == null) {
 			return null;
 		}
-		return "\"" + parent.getBackColor().getAsHtml() + "\"";
+		return "\"" + getAsHtml(parent.getBackColor()) + "\"";
 	}
-	
+
 	final protected void appendImageAsTD(StringBuilder sb, String circleAbsolutePath) throws IOException {
 		if (circleAbsolutePath.endsWith(".png")) {
 			if (getData().getDpi() == 96) {
@@ -293,9 +303,5 @@ abstract class DotCommon {
 			sb.append("<TD><IMG SRC=\"" + circleAbsolutePath + "\"/></TD>");
 		}
 	}
-
-
-
-
 
 }

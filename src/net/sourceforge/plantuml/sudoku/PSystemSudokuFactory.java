@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6341 $
+ * Revision $Revision: 6750 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -43,11 +43,7 @@ public class PSystemSudokuFactory implements PSystemBasicFactory {
 
 	private PSystemSudoku system;
 
-	public PSystemSudokuFactory() {
-		reset();
-	}
-
-	public void reset() {
+	public void init(String startLine) {
 	}
 
 	public PSystemSudoku getSystem() {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6222 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 final public class DotData implements PortionShower {
 
@@ -68,11 +69,13 @@ final public class DotData implements PortionShower {
 
 	private StaticFilesMap staticFilesMap;
 	private boolean visibilityModifierPresent;
+	private final ColorMapper colorMapper;
 
 	public DotData(Group topParent, List<Link> links, Map<String, ? extends IEntity> entities,
 			UmlDiagramType umlDiagramType, ISkinParam skinParam, Rankdir rankdir, GroupHierarchy groupHierarchy,
-			PortionShower portionShower) {
+			PortionShower portionShower, ColorMapper colorMapper) {
 		this.topParent = topParent;
+		this.colorMapper = colorMapper;
 		this.links = links;
 		this.entities = entities;
 		this.umlDiagramType = umlDiagramType;
@@ -83,12 +86,13 @@ final public class DotData implements PortionShower {
 	}
 
 	public DotData(Group topParent, List<Link> links, Map<String, ? extends IEntity> entities,
-			UmlDiagramType umlDiagramType, ISkinParam skinParam, Rankdir rankdir, GroupHierarchy groupHierarchy) {
+			UmlDiagramType umlDiagramType, ISkinParam skinParam, Rankdir rankdir, GroupHierarchy groupHierarchy,
+			ColorMapper colorMapper) {
 		this(topParent, links, entities, umlDiagramType, skinParam, rankdir, groupHierarchy, new PortionShower() {
 			public boolean showPortion(EntityPortion portion, IEntity entity) {
 				return true;
 			}
-		});
+		}, colorMapper);
 	}
 
 	public boolean hasUrl() {
@@ -106,17 +110,15 @@ final public class DotData implements PortionShower {
 		checkObjectOrClassDiagram();
 		return staticFilesMap.getStaticFiles(stereo).getVisibilityImages(visibilityModifier);
 	}
-	
+
 	public boolean isThereVisibilityImages() {
 		return visibilityModifierPresent;
 	}
-	
+
 	public void setVisibilityModifierPresent(boolean b) {
 		checkObjectOrClassDiagram();
 		this.visibilityModifierPresent = b;
 	}
-
-
 
 	public void setStaticImagesMap(StaticFilesMap staticFilesMap) {
 		checkObjectOrClassDiagram();
@@ -251,7 +253,7 @@ final public class DotData implements PortionShower {
 	public final int getDpi() {
 		return dpi;
 	}
-	
+
 	public double getDpiFactor() {
 		if (dpi == 96) {
 			return 1.0;
@@ -262,7 +264,7 @@ final public class DotData implements PortionShower {
 	public final void setDpi(int dpi) {
 		this.dpi = dpi;
 	}
-	
+
 	private boolean hideEmptyDescription = false;
 
 	public final void setHideEmptyDescription(boolean hideEmptyDescription) {
@@ -272,7 +274,9 @@ final public class DotData implements PortionShower {
 	public final boolean isHideEmptyDescription() {
 		return hideEmptyDescription;
 	}
-	
 
+	public final ColorMapper getColorMapper() {
+		return colorMapper;
+	}
 
 }

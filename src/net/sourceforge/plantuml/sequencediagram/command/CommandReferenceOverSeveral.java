@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -55,10 +57,8 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 	private static RegexConcat getConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("ref\\s+over\\s+"), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.]+|\"[^\"]+\")"), //
-				new RegexLeaf("\\s*,\\s*"), //
-				new RegexLeaf("P2", "([\\p{L}0-9_.]+|\"[^\"]+\")"), //
+				new RegexLeaf("REF", "ref(#\\w+)?\\s+over\\s+"), //
+				new RegexLeaf("PARTS", "(([\\p{L}0-9_.]+|\"[^\"]+\")(\\s*,\\s*([\\p{L}0-9_.]+|\"[^\"]+\"))*)"), //
 				new RegexLeaf("\\s*:\\s*"), //
 				new RegexLeaf("URL", "(?:\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\])?"), //
 				new RegexLeaf("TEXT", "(.*)"), //
@@ -67,15 +67,20 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 	@Override
 	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-		final String s1 = arg.get("P1").get(0);
-		final String s2 = arg.get("P2").get(0);
+		final HtmlColor backColorElement = HtmlColor.getColorIfValid(arg.get("REF").get(0));
+		// final HtmlColor backColorGeneral = HtmlColor.getColorIfValid(arg.get("REF").get(1));
+		final HtmlColor backColorGeneral = null;
+		
+		final List<String> participants = StringUtils.splitComma(arg.get("PARTS").get(0));
 		final String url = arg.get("URL").get(0);
 		final String title = arg.get("URL").get(1);
-		final String text = arg.get("TEXT").get(0);
-		final Participant p1 = getSystem().getOrCreateParticipant(
-				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s1));
-		final Participant p2 = getSystem().getOrCreateParticipant(
-				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s2));
+		final String text = arg.get("TEXT").get(0).trim();
+
+		final List<Participant> p = new ArrayList<Participant>();
+		for (String s : participants) {
+			p.add(getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
+		}
+
 		final List<String> strings = StringUtils.getWithNewlines(text);
 
 		Url u = null;
@@ -83,7 +88,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 			u = new Url(url, title);
 		}
 
-		final Reference ref = new Reference(p1, p2, u, strings);
+		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement);
 		getSystem().addReference(ref);
 		return CommandExecutionResult.ok();
 	}

@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3961 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.Graphics2D;
 
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -42,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DriverImageG2d implements UDriver<Graphics2D> {
 
-	public void draw(UShape ushape, double x, double y, UParam param, Graphics2D g2d) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final UImage shape = (UImage) ushape;
 		g2d.drawImage(shape.getImage(), (int) x, (int) y, null);
 	}

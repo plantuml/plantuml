@@ -33,11 +33,12 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public interface ISkinParam {
 
@@ -47,15 +48,11 @@ public interface ISkinParam {
 
 	public HtmlColor getHtmlColor(ColorParam param, String stereotype);
 
-	public int getFontSize(FontParam param, String stereotype);
-
-	public String getFontFamily(FontParam param, String stereotype);
-
 	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
 
-	public int getFontStyle(FontParam param, String stereotype);
-
-	public Font getFont(FontParam fontParam, String stereotype);
+	public UFont getFont(FontParam fontParam, String stereotype);
+	
+	public HorizontalAlignement getHorizontalAlignement(AlignParam param);
 
 	public int getCircledCharacterRadius();
 
@@ -63,7 +60,7 @@ public interface ISkinParam {
 	
 	public int classAttributeIconSize();
 	
-	public boolean isMonochrome();
+	public ColorMapper getColorMapper();
 	
 	public int getDpi();
 	

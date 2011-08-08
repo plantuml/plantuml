@@ -28,15 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4826 $
+ * Revision $Revision: 3836 $
  *
  */
-package net.sourceforge.plantuml.eps;
+package net.sourceforge.plantuml.svek;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.geom.Dimension2D;
 
-public interface Inkscape {
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.UDrawable;
 
-	public void createEps(File svg, File eps) throws IOException, InterruptedException;
+public interface UDrawable2 extends UDrawable {
+
+	Dimension2D getDimension(StringBounder stringBounder);
+
 }

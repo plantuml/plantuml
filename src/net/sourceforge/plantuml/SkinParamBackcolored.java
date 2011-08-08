@@ -33,11 +33,12 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class SkinParamBackcolored implements ISkinParam {
 
@@ -67,24 +68,12 @@ public class SkinParamBackcolored implements ISkinParam {
 		return skinParam.getCircledCharacterRadius();
 	}
 
-	public Font getFont(FontParam fontParam, String stereotype) {
+	public UFont getFont(FontParam fontParam, String stereotype) {
 		return skinParam.getFont(fontParam, stereotype);
-	}
-
-	public String getFontFamily(FontParam param, String stereotype) {
-		return skinParam.getFontFamily(param, stereotype);
 	}
 
 	public HtmlColor getFontHtmlColor(FontParam param, String stereotype) {
 		return skinParam.getFontHtmlColor(param, stereotype);
-	}
-
-	public int getFontSize(FontParam param, String stereotype) {
-		return skinParam.getFontSize(param, stereotype);
-	}
-
-	public int getFontStyle(FontParam param, String stereotype) {
-		return skinParam.getFontStyle(param, stereotype);
 	}
 
 	public HtmlColor getHtmlColor(ColorParam param, String stereotype) {
@@ -106,10 +95,6 @@ public class SkinParamBackcolored implements ISkinParam {
 		return skinParam.classAttributeIconSize();
 	}
 
-	public boolean isMonochrome() {
-		return skinParam.isMonochrome();
-	}
-
 	public int getDpi() {
 		return skinParam.getDpi();
 	}
@@ -125,4 +110,13 @@ public class SkinParamBackcolored implements ISkinParam {
 	public GraphvizLayoutStrategy getStrategy() {
 		return skinParam.getStrategy();
 	}
+
+	public HorizontalAlignement getHorizontalAlignement(AlignParam param) {
+		return skinParam.getHorizontalAlignement(param);
+	}
+
+	public ColorMapper getColorMapper() {
+		return skinParam.getColorMapper();
+	}
+
 }

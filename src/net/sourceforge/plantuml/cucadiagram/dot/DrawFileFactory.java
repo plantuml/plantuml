@@ -43,12 +43,13 @@ import javax.imageio.ImageIO;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.skin.UDrawable;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class DrawFileFactory {
 
-	public static DrawFile create(final UDrawable drawable, final double width, final double height,
+	public static DrawFile create(final ColorMapper colorMapper, final UDrawable drawable, final double width, final double height,
 			final double dpiFactor, final Color backgground, Object signature) {
 
 		final Lazy<File> lpng = new Lazy<File>() {
@@ -57,7 +58,7 @@ public class DrawFileFactory {
 				final EmptyImageBuilder builder = new EmptyImageBuilder(width * dpiFactor, height * dpiFactor,
 						backgground);
 				final BufferedImage im = builder.getBufferedImage();
-				drawable.drawU(new UGraphicG2d(builder.getGraphics2D(), im, dpiFactor));
+				drawable.drawU(new UGraphicG2d(colorMapper, builder.getGraphics2D(), im, dpiFactor));
 				ImageIO.write(im, "png", png);
 				return png;
 			}
@@ -66,14 +67,14 @@ public class DrawFileFactory {
 		final Lazy<File> leps = new Lazy<File>() {
 			public File getNow() throws IOException {
 				final File eps = FileUtils.createTempFile("visi", ".eps");
-				UGraphicEps.copyEpsToFile(drawable, eps);
+				UGraphicEps.copyEpsToFile(colorMapper, drawable, eps);
 				return eps;
 			}
 		};
 
 		final Lazy<String> lsvg = new Lazy<String>() {
 			public String getNow() throws IOException {
-				return UGraphicG2d.getSvgString(drawable);
+				return UGraphicG2d.getSvgString(colorMapper, drawable);
 			}
 		};
 

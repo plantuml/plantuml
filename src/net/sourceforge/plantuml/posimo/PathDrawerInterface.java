@@ -128,13 +128,13 @@ public class PathDrawerInterface implements PathDrawer {
 			final Map<Point2D, Double> all = dotPath.somePoints();
 			final Point2D p = getFarest(outPoint, inPoint, all.keySet());
 
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background).getColor());
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
+			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 
 			decor.drawDecor(ug, p, all.get(p));
 		}
 
-		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 		if (linkType.isDashed()) {
 			goDash(ug);
 		}
@@ -165,18 +165,18 @@ public class PathDrawerInterface implements PathDrawer {
 		} else if (decor == LinkDecor.EXTENDS) {
 			middle1 = drawExtends(ug, position.getX(), position.getY(), theta);
 		} else if (decor == LinkDecor.AGREGATION) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background).getColor());
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
+			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 			middle1 = drawDiamond(ug, position.getX(), position.getY(), theta);
 		} else if (decor == LinkDecor.COMPOSITION) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder));
 			ug.getParam().setColor(null);
 			middle1 = drawDiamond(ug, position.getX(), position.getY(), theta);
 		} else if (decor == LinkDecor.NONE) {
 			middle1 = position;
 		} else if (decor == LinkDecor.ARROW) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder));
+			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 			middle1 = drawArrow(ug, position.getX(), position.getY(), theta);
 		}
 		return middle1;
@@ -209,8 +209,8 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private Point2D drawSquare(UGraphic ug, double centerX, double centerY) {
-		ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBackground).getColor());
-		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+		ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBackground));
+		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 		final double width = 10;
 		final double height = 10;
 		ug.draw(centerX - width / 2, centerY - height / 2, new URectangle(width, height));
@@ -218,8 +218,8 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	Point2D drawExtends(UGraphic ug, double x, double y, double theta) {
-		ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background).getColor());
-		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+		ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
+		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 
 		final double width = 18;
 		final double height = 26;

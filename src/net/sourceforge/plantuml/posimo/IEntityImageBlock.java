@@ -44,5 +44,4 @@ public interface IEntityImageBlock {
 
 	void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition, double marginWidth,
 			double marginHeight);
-
 }

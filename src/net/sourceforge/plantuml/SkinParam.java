@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6448 $
+ * Revision $Revision: 6866 $
  *
  */
 package net.sourceforge.plantuml;
@@ -46,7 +46,12 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class SkinParam implements ISkinParam {
 
@@ -74,7 +79,7 @@ public class SkinParam implements ISkinParam {
 	public HtmlColor getBackgroundColor() {
 		final HtmlColor result = getHtmlColor(ColorParam.background, null);
 		if (result == null) {
-			return HtmlColor.getColorIfValid("white");
+			return HtmlColor.WHITE;
 		}
 		return result;
 	}
@@ -119,7 +124,7 @@ public class SkinParam implements ISkinParam {
 		}
 	}
 
-	public int getFontSize(FontParam param, String stereotype) {
+	private int getFontSize(FontParam param, String stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 			final String value2 = getValue(param.name() + "fontsize" + stereotype);
@@ -132,12 +137,12 @@ public class SkinParam implements ISkinParam {
 			value = getValue("defaultfontsize");
 		}
 		if (value == null || value.matches("\\d+") == false) {
-			return param.getDefaultSize();
+			return param.getDefaultSize(this);
 		}
 		return Integer.parseInt(value);
 	}
 
-	public String getFontFamily(FontParam param, String stereotype) {
+	private String getFontFamily(FontParam param, String stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 			final String value2 = getValue(param.name() + "fontname" + stereotype);
@@ -177,7 +182,7 @@ public class SkinParam implements ISkinParam {
 		return HtmlColor.getColorIfValid(value);
 	}
 
-	public int getFontStyle(FontParam param, String stereotype) {
+	private int getFontStyle(FontParam param, String stereotype) {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -190,7 +195,7 @@ public class SkinParam implements ISkinParam {
 			value = getValue("defaultfontstyle");
 		}
 		if (value == null) {
-			return param.getDefaultFontStyle();
+			return param.getDefaultFontStyle(this);
 		}
 		int result = Font.PLAIN;
 		if (value.toLowerCase().contains("bold")) {
@@ -202,12 +207,12 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public Font getFont(FontParam fontParam, String stereotype) {
+	public UFont getFont(FontParam fontParam, String stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 		}
-		return new Font(getFontFamily(fontParam, stereotype), getFontStyle(fontParam, stereotype), getFontSize(
-				fontParam, stereotype));
+		return new UFont(getFontFamily(fontParam, stereotype), getFontStyle(fontParam, stereotype),
+				getFontSize(fontParam, stereotype));
 	}
 
 	public int getCircledCharacterRadius() {
@@ -233,7 +238,7 @@ public class SkinParam implements ISkinParam {
 		return 10;
 	}
 
-	public boolean isMonochrome() {
+	private boolean isMonochrome() {
 		return "true".equals(getValue("monochrome"));
 	}
 
@@ -310,6 +315,22 @@ public class SkinParam implements ISkinParam {
 			return GraphvizLayoutStrategy.TWOPI;
 		}
 		return GraphvizLayoutStrategy.DOT;
+	}
+
+	public HorizontalAlignement getHorizontalAlignement(AlignParam param) {
+		final String value = getValue(param.name());
+		final HorizontalAlignement result = HorizontalAlignement.fromString(value);
+		if (result == null) {
+			return param.getDefaultValue();
+		}
+		return result;
+	}
+
+	public ColorMapper getColorMapper() {
+		if (isMonochrome()) {
+			return new ColorMapperMonochrome();
+		}
+		return new ColorMapperIdentity();
 	}
 
 }

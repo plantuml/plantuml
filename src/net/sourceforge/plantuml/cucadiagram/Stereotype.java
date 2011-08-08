@@ -28,18 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5982 $
+ * Revision $Revision: 6934 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class Stereotype implements CharSequence {
 
@@ -50,9 +52,9 @@ public class Stereotype implements CharSequence {
 	private final HtmlColor htmlColor;
 	private final char character;
 	private final double radius;
-	private final Font circledFont;
+	private final UFont circledFont;
 
-	public Stereotype(String label, double radius, Font circledFont) {
+	public Stereotype(String label, double radius, UFont circledFont) {
 		if (label == null) {
 			throw new IllegalArgumentException();
 		}
@@ -86,11 +88,8 @@ public class Stereotype implements CharSequence {
 		this.circledFont = null;
 	}
 
-	public Color getColor() {
-		if (htmlColor == null) {
-			return null;
-		}
-		return htmlColor.getColor();
+	public HtmlColor getHtmlColor() {
+		return htmlColor;
 	}
 
 	public char getCharacter() {
@@ -133,8 +132,21 @@ public class Stereotype implements CharSequence {
 		return radius;
 	}
 
-	public final Font getCircledFont() {
+	public final UFont getCircledFont() {
 		return circledFont;
+	}
+
+	public List<String> getLabels() {
+		if (label==null) {
+			return null;
+		}
+		final List<String> result = new ArrayList<String>();
+		final Pattern p = Pattern.compile("\\<\\<.*?\\>\\>");
+		final Matcher m = p.matcher(label);
+		while (m.find()) {
+			result.add(m.group());
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 }

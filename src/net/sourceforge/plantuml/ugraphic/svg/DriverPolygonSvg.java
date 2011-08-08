@@ -33,9 +33,10 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -50,7 +51,7 @@ public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, SvgGraphics svg) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UPolygon shape = (UPolygon) ushape;
 
 		final double points[] = new double[shape.getPoints().size() * 2];
@@ -71,8 +72,8 @@ public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 			}
 		}
 
-		final String color = param.getColor() == null ? "none" : HtmlColor.getAsHtml(param.getColor());
-		final String backcolor = param.getBackcolor() == null ? "none" : HtmlColor.getAsHtml(param.getBackcolor());
+		final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getColor()));
+		final String backcolor = param.getBackcolor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getBackcolor()));
 
 		svg.setFillColor(backcolor);
 		svg.setStrokeColor(color);

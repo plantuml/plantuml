@@ -28,23 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6403 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -58,12 +58,12 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	private final TextBlock commentTextBlock;
 
-	private final Color groupBackground;
-	private final Color groupBorder;
-	private final Color background;
+	private final HtmlColor groupBackground;
+	private final HtmlColor groupBorder;
+	private final HtmlColor background;
 
-	public ComponentRoseGroupingHeader(Color fontColor, Color background, Color groupBackground, Color groupBorder, Font bigFont,
-			Font smallFont, List<? extends CharSequence> strings) {
+	public ComponentRoseGroupingHeader(HtmlColor fontColor, HtmlColor background, HtmlColor groupBackground, HtmlColor groupBorder, UFont bigFont,
+			UFont smallFont, List<? extends CharSequence> strings) {
 		super(strings.get(0), fontColor, bigFont, HorizontalAlignement.LEFT, 15, 30, 1);
 		this.groupBackground = groupBackground;
 		this.groupBorder = groupBorder;
@@ -127,7 +127,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 		ug.getParam().setStroke(new UStroke(2));
 		ug.getParam().setColor(groupBorder);
-		ug.getParam().setBackcolor(this.groupBackground);
+		ug.getParam().setBackcolor(groupBackground);
 		ug.draw(0, 0, polygon);
 
 		final double heightWithoutPadding = dimensionToUse.getHeight() - getPaddingY();

@@ -35,6 +35,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -49,7 +50,7 @@ public class DriverPolygonEps implements UDriver<EpsGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final UPolygon shape = (UPolygon) ushape;
 
 		final double points[] = new double[shape.getPoints().size() * 2];
@@ -70,8 +71,8 @@ public class DriverPolygonEps implements UDriver<EpsGraphics> {
 			}
 		}
 
-		eps.setFillColor(param.getBackcolor());
-		eps.setStrokeColor(param.getColor());
+		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
+		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
 
 		eps.epsPolygon(points);
 	}

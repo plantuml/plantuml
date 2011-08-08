@@ -28,18 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5944 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public abstract class AbstractComponentBlueModernArrow extends AbstractTextualComponent {
 
@@ -49,16 +49,16 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 	private final int arrowDeltaX2 = 10;
 	private final int arrowDeltaY2 = 5;
 	private final ArrowConfiguration arrowConfiguration;
-	private final Color foregroundColor;
+	private final HtmlColor foregroundColor;
 
-	public AbstractComponentBlueModernArrow(Color foregroundColor, Color fontColor, Font font,
+	public AbstractComponentBlueModernArrow(HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
 			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
 		super(stringsToDisplay, fontColor, font, HorizontalAlignement.LEFT, 17, 17, 2);
 		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}
 
-	protected final Color getForegroundColor() {
+	protected final HtmlColor getForegroundColor() {
 		return foregroundColor;
 	}
 

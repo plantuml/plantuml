@@ -28,13 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.graph;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
@@ -45,19 +43,22 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class MethodsOrFieldsArea {
 
-	private final Font font;
+	private final UFont font;
 	private final List<String> strings = new ArrayList<String>();
 
-	public MethodsOrFieldsArea(List<Member> attributes, Font font) {
+	public MethodsOrFieldsArea(List<Member> attributes, UFont font) {
 		this.font = font;
 		for (Member att : attributes) {
 			this.strings.add(att.getDisplayWithoutVisibilityChar());
@@ -81,14 +82,14 @@ public class MethodsOrFieldsArea {
 	}
 
 	private TextBlock createTextBlock(String s) {
-		return TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(font, Color.BLACK),
+		return TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(font, HtmlColor.BLACK),
 				HorizontalAlignement.LEFT);
 	}
 
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		for (String s : strings) {
 			final TextBlock bloc = createTextBlock(s);
-			bloc.drawTOBEREMOVED(g2d, x, y);
+			bloc.drawTOBEREMOVED(colorMapper, g2d, x, y);
 			y += bloc.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight();
 		}
 	}

@@ -27,6 +27,7 @@ import java.util.Iterator;
 
 import org.stathissideris.ascii2image.core.ConversionOptions;
 import org.stathissideris.ascii2image.core.Pair;
+import org.stathissideris.ascii2image.core.ProcessingOptions;
 import org.stathissideris.ascii2image.text.AbstractionGrid;
 import org.stathissideris.ascii2image.text.CellSet;
 import org.stathissideris.ascii2image.text.TextGrid;
@@ -105,7 +106,7 @@ public class Diagram {
 	 * @param cellWidth
 	 * @param cellHeight
 	 */
-	public Diagram(TextGrid grid, ConversionOptions options) {
+	public Diagram(TextGrid grid, ConversionOptions options, ProcessingOptions processingOptions) {
 		
 		this.cellWidth = options.renderingOptions.getCellWidth();
 		this.cellHeight = options.renderingOptions.getCellHeight();
@@ -311,7 +312,7 @@ public class Diagram {
 		boolean removedAnyObsolete = removeObsoleteShapes(workGrid, closed);
 		
 		boolean allCornersRound = false;
-		if(options.processingOptions.areAllCornersRound()) allCornersRound = true;
+		if(processingOptions.areAllCornersRound()) allCornersRound = true;
 		
 		//make shapes from the boundary sets
 		//make closed shapes
@@ -329,7 +330,7 @@ public class Diagram {
 			}
 		}
 
-		if(options.processingOptions.performSeparationOfCommonEdges())
+		if(processingOptions.performSeparationOfCommonEdges())
 			separateCommonEdges(closedShapes);
 
 		//make open shapes
@@ -412,7 +413,7 @@ public class Diagram {
 			//TODO: the code below could be a lot more concise
 			if(pair.tag.equals("d")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("d");
+					processingOptions.getFromCustomShapes("d");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_DOCUMENT);
 				else {
@@ -421,7 +422,7 @@ public class Diagram {
 				}
 			} else if(pair.tag.equals("s")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("s");
+					processingOptions.getFromCustomShapes("s");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_STORAGE);
 				else {
@@ -430,7 +431,7 @@ public class Diagram {
 				}
 			} else if(pair.tag.equals("io")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("io");
+					processingOptions.getFromCustomShapes("io");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_IO);
 				else {
@@ -439,7 +440,7 @@ public class Diagram {
 				}
 			} else if(pair.tag.equals("c")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("c");
+					processingOptions.getFromCustomShapes("c");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_DECISION);
 				else {
@@ -448,7 +449,7 @@ public class Diagram {
 				}
 			} else if(pair.tag.equals("mo")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("mo");
+					processingOptions.getFromCustomShapes("mo");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_MANUAL_OPERATION);
 				else {
@@ -457,7 +458,7 @@ public class Diagram {
 				}
 			} else if(pair.tag.equals("tr")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("tr");
+					processingOptions.getFromCustomShapes("tr");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_TRAPEZOID);
 				else {
@@ -466,7 +467,7 @@ public class Diagram {
 				}
 			} else if(pair.tag.equals("o")){
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes("o");
+					processingOptions.getFromCustomShapes("o");
 				if(def == null)
 					containingShape.setType(DiagramShape.TYPE_ELLIPSE);
 				else {
@@ -475,7 +476,7 @@ public class Diagram {
 				}
 			} else {
 				CustomShapeDefinition def =
-					options.processingOptions.getFromCustomShapes(pair.tag);
+					processingOptions.getFromCustomShapes(pair.tag);
 				containingShape.setType(DiagramShape.TYPE_CUSTOM);
 				containingShape.setDefinition(def);						
 			}

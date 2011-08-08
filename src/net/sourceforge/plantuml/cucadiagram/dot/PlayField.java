@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -59,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -77,6 +76,7 @@ import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.posimo.PathDrawerInterface;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 
@@ -93,7 +93,7 @@ public final class PlayField {
 	private final Map<IEntity, Frame> frames = new HashMap<IEntity, Frame>();
 
 	final private double marginLabel = 6;
-	final private Font fontQualif;
+	final private UFont fontQualif;
 
 	public PlayField(ISkinParam skinParam) {
 		this.skinParam = skinParam;
@@ -117,7 +117,7 @@ public final class PlayField {
 				// final IEntityImageBlock title = createClusterTitle();
 				// final Frame frame = new Frame(StringUtils.getWithNewlines(ent.getDisplay()), Color.BLACK, skinParam
 				// .getFont(FontParam.CLASS), rose.getHtmlColor(skinParam, ColorParam.classBorder).getColor());
-				final Frame frame = new Frame(StringUtils.getWithNewlines(ent.getDisplay()), skinParam);
+				final Frame frame = new Frame(ent.getDisplay2(), skinParam);
 				frames.put(ent, frame);
 				// final Dimension2D dimTitle =
 				// title.getDimension(stringBounder);
@@ -228,13 +228,13 @@ public final class PlayField {
 			final LinkType type = ent.getValue().getType();
 			final PathDrawerInterface pathDrawer = PathDrawerInterface.create(skinParam, type);
 			final Path p = ent.getKey();
-			ug.getParam().setColor(rose.getHtmlColor(skinParam, ColorParam.classBorder).getColor());
+			ug.getParam().setColor(rose.getHtmlColor(skinParam, ColorParam.classBorder));
 			// pathDrawer.drawPathBefore(ug, PositionableUtils.addMargin(p
 			// .getStart(), -marginDecorator, -marginDecorator),
 			// PositionableUtils.addMargin(p.getEnd(), -marginDecorator,
 			// -marginDecorator), p);
 			if (p.getLabel() != null) {
-				ug.getParam().setColor(Color.BLACK);
+				ug.getParam().setColor(HtmlColor.BLACK);
 				drawLabel(ug, p);
 			}
 		}
@@ -250,7 +250,7 @@ public final class PlayField {
 			final LinkType type = link.getType();
 			final PathDrawerInterface pathDrawer = PathDrawerInterface.create(skinParam, type);
 			final Path p = ent.getKey();
-			ug.getParam().setColor(rose.getHtmlColor(skinParam, ColorParam.classBorder).getColor());
+			ug.getParam().setColor(rose.getHtmlColor(skinParam, ColorParam.classBorder));
 			// pathDrawer.drawPathAfter(ug, PositionableUtils.addMargin(p
 			// .getStart(), -marginDecorator, -marginDecorator),
 			// PositionableUtils.addMargin(p.getEnd(), -marginDecorator,
@@ -261,7 +261,7 @@ public final class PlayField {
 			final String qual1 = link.getQualifier1();
 			if (qual1 != null) {
 				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual1), new FontConfiguration(fontQualif,
-						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor()), HorizontalAlignement.LEFT);
+						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null)), HorizontalAlignement.LEFT);
 				final Point2D pos = p.getDotPath().getStartPoint();
 				b.drawU(ug, pos.getX(), pos.getY());
 			}
@@ -269,7 +269,7 @@ public final class PlayField {
 			final String qual2 = link.getQualifier2();
 			if (qual2 != null) {
 				final TextBlock b = TextBlockUtils.create(Arrays.asList(qual2), new FontConfiguration(fontQualif,
-						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null).getColor()), HorizontalAlignement.LEFT);
+						skinParam.getFontHtmlColor(FontParam.CLASS_ARROW, null)), HorizontalAlignement.LEFT);
 				final Point2D pos = p.getDotPath().getEndPoint();
 				b.drawU(ug, pos.getX(), pos.getY());
 			}
@@ -297,7 +297,7 @@ public final class PlayField {
 		final Label label = p.getLabel();
 		final Point2D pos = label.getPosition();
 		if (OptionFlags.getInstance().isDebugDot()) {
-			ug.getParam().setColor(Color.GREEN);
+			ug.getParam().setColor(HtmlColor.GREEN);
 			ug.getParam().setBackcolor(null);
 			final Dimension2D dim = label.getSize();
 			ug.draw(pos.getX(), pos.getY(), new URectangle(dim.getWidth(), dim.getHeight()));

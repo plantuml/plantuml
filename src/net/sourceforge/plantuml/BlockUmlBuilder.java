@@ -52,10 +52,10 @@ final public class BlockUmlBuilder {
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
 	private final Set<File> usedFiles = new HashSet<File>();
 
-	public BlockUmlBuilder(List<String> config, Defines defines, Reader reader) throws IOException {
+	public BlockUmlBuilder(List<String> config, Defines defines, Reader reader, File newCurrentDir) throws IOException {
 		Preprocessor includer = null;
 		try {
-			includer = new Preprocessor(new UncommentReadLine(new ReadLineReader(reader)), defines, usedFiles);
+			includer = new Preprocessor(new UncommentReadLine(new ReadLineReader(reader)), defines, usedFiles, newCurrentDir);
 			init(includer, config);
 		} finally {
 			if (includer != null) {

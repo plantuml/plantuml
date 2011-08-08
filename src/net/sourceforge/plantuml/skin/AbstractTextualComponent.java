@@ -28,23 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
 
@@ -56,16 +56,16 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	private final TextBlock textBlock;
 
-	private final Font font;
-	private final Color fontColor;
+	private final UFont font;
+	private final HtmlColor fontColor;
 
-	public AbstractTextualComponent(CharSequence label, Color fontColor, Font font,
+	public AbstractTextualComponent(CharSequence label, HtmlColor fontColor, UFont font,
 			HorizontalAlignement horizontalAlignement, int marginX1, int marginX2, int marginY) {
 		this(Arrays.asList(label == null ? "" : label), fontColor, font, horizontalAlignement, marginX1, marginX2,
 				marginY);
 	}
 
-	public AbstractTextualComponent(List<? extends CharSequence> strings, Color fontColor, Font font,
+	public AbstractTextualComponent(List<? extends CharSequence> strings, HtmlColor fontColor, UFont font,
 			HorizontalAlignement horizontalAlignement, int marginX1, int marginX2, int marginY) {
 		this.font = font;
 		this.fontColor = fontColor;
@@ -127,11 +127,11 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		return marginY;
 	}
 
-	final protected Font getFont() {
+	final protected UFont getFont() {
 		return font;
 	}
 
-	protected Color getFontColor() {
+	protected HtmlColor getFontColor() {
 		return fontColor;
 	}
 

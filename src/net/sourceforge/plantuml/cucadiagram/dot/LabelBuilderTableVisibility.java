@@ -71,9 +71,8 @@ class LabelBuilderTableVisibility extends DotCommon implements LabelBuilder {
 					.getVisibilityModifier(s.charAt(0), isField);
 			if (visibilityModifier != null) {
 				final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
-				final String modifierFile = StringUtils
-						.getPlateformDependentAbsolutePath(getData().getVisibilityImages(visibilityModifier, stereo)
-								.getPngOrEps(getFileFormat() == FileFormat.EPS));
+				final String modifierFile = StringUtils.getPlateformDependentAbsolutePath(getData()
+						.getVisibilityImages(visibilityModifier, stereo).getPngOrEps(getFileFormat()));
 				if (dpiNormal) {
 					sb.append("<IMG SRC=\"" + modifierFile + "\"/>");
 				} else {

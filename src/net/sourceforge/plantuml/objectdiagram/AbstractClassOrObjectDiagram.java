@@ -168,7 +168,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			addLink(pointToEntity2);
 
 			int length = 1;
-			if (existingLink.getLength() == 1) {
+			if (existingLink.getLength() == 1 && entity1 != entity2) {
+				length = 2;
+			}
+			if (existingLink.getLength() == 2 && entity1 == entity2) {
 				length = 2;
 			}
 

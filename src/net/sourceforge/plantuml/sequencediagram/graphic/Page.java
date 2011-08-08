@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4822 $
+ * Revision $Revision: 6922 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -42,7 +42,7 @@ public final class Page {
 	private final double newpage2;
 	private final double tailHeight;
 	private final double signatureHeight;
-	private final List<String> title;
+	private final List<? extends CharSequence> title;
 
 	@Override
 	public String toString() {
@@ -50,7 +50,7 @@ public final class Page {
 	}
 
 	public Page(double headerHeight, double newpage1, double newpage2, double tailHeight,
-			double signatureHeight, List<String> title) {
+			double signatureHeight, List<? extends CharSequence> title) {
 		if (headerHeight < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -114,7 +114,7 @@ public final class Page {
 		return headerHeight;
 	}
 
-	public final List<String> getTitle() {
+	public final List<? extends CharSequence> getTitle() {
 		return title;
 	}
 

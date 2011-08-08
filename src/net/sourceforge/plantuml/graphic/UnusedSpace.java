@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -41,6 +40,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class UnusedSpace {
 
@@ -69,7 +70,7 @@ public class UnusedSpace {
 
 	final private static Map<Object, UnusedSpace> cache = new HashMap<Object, UnusedSpace>();
 
-	public static UnusedSpace getUnusedSpace(Font font, char c) {
+	public static UnusedSpace getUnusedSpace(UFont font, char c) {
 		final Object key = Arrays.asList(font, c);
 		UnusedSpace result = cache.get(key);
 		if (result == null) {
@@ -79,10 +80,10 @@ public class UnusedSpace {
 		return result;
 	}
 
-	private UnusedSpace(Font font, char c) {
+	private UnusedSpace(UFont font, char c) {
 		final BufferedImage im = new BufferedImage(2 * HALF_SIZE, 2 * HALF_SIZE, BufferedImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
-		g2d.setFont(font);
+		g2d.setFont(font.getFont());
 		g2d.drawString("" + c, HALF_SIZE, HALF_SIZE);
 
 		int minI = Integer.MAX_VALUE;

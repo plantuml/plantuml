@@ -28,33 +28,36 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3831 $
+ * Revision $Revision: 6591 $
  *
  */
 package net.sourceforge.plantuml.graph;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 abstract class AbstractEntityImage {
 
 	private final Entity entity;
 
-	final private Color red = new Color(Integer.parseInt("A80036", 16));
-	final private Color yellow = new Color(Integer.parseInt("FEFECE", 16));
-	private final Color yellowNote = new Color(Integer.parseInt("FBFB77", 16));
+	final private HtmlColor red = HtmlColor.getColorIfValid("#A80036");
+	
+	final private HtmlColor yellow = HtmlColor.getColorIfValid("#FEFECE");
+	private final HtmlColor yellowNote = HtmlColor.getColorIfValid("#FBFB77");
 
-	final private Font font14 = new Font("SansSerif", Font.PLAIN, 14);
-	final private Font font17 = new Font("Courier", Font.BOLD, 17);
-	final private Color green = new Color(Integer.parseInt("ADD1B2", 16));
-	final private Color violet = new Color(Integer.parseInt("B4A7E5", 16));
-	final private Color blue = new Color(Integer.parseInt("A9DCDF", 16));
-	final private Color rose = new Color(Integer.parseInt("EB937F", 16));
+	final private UFont font14 = new UFont("SansSerif", Font.PLAIN, 14);
+	final private UFont font17 = new UFont("Courier", Font.BOLD, 17);
+	final private HtmlColor green = HtmlColor.getColorIfValid("#ADD1B2");
+	final private HtmlColor violet = HtmlColor.getColorIfValid("#B4A7E5");
+	final private HtmlColor blue = HtmlColor.getColorIfValid("#A9DCDF");
+	final private HtmlColor rose = HtmlColor.getColorIfValid("#EB937F");
 
 	public AbstractEntityImage(Entity entity) {
 		if (entity == null) {
@@ -65,45 +68,45 @@ abstract class AbstractEntityImage {
 
 	public abstract Dimension2D getDimension(StringBounder stringBounder);
 
-	public abstract void draw(Graphics2D g2d);
+	public abstract void draw(ColorMapper colorMapper, Graphics2D g2d);
 
 	protected final Entity getEntity() {
 		return entity;
 	}
 
-	protected final Color getRed() {
+	protected final HtmlColor getRed() {
 		return red;
 	}
 
-	protected final Color getYellow() {
+	protected final HtmlColor getYellow() {
 		return yellow;
 	}
 
-	protected final Font getFont17() {
+	protected final UFont getFont17() {
 		return font17;
 	}
 
-	protected final Font getFont14() {
+	protected final UFont getFont14() {
 		return font14;
 	}
 
-	protected final Color getGreen() {
+	protected final HtmlColor getGreen() {
 		return green;
 	}
 
-	protected final Color getViolet() {
+	protected final HtmlColor getViolet() {
 		return violet;
 	}
 
-	protected final Color getBlue() {
+	protected final HtmlColor getBlue() {
 		return blue;
 	}
 
-	protected final Color getRose() {
+	protected final HtmlColor getRose() {
 		return rose;
 	}
 
-	protected final Color getYellowNote() {
+	protected final HtmlColor getYellowNote() {
 		return yellowNote;
 	}
 }

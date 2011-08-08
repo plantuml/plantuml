@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6448 $
+ * Revision $Revision: 6702 $
  *
  */
 package net.sourceforge.plantuml;
@@ -57,9 +57,15 @@ public class Option {
 	private boolean decodeurl = false;
 	private boolean pipe = false;
 	private boolean syntax = false;
+	private boolean checkOnly = false;
 	private boolean pattern = false;
+	private boolean duration = false;
+	private int nbThreads = 0;
+	private int ftpPort = -1;
 
 	private File outputDir = null;
+	private File outputFile = null;
+	
 	private final List<String> result = new ArrayList<String>();
 
 	public Option() {
@@ -91,6 +97,8 @@ public class Option {
 				setFileFormat(FileFormat.XMI_STAR);
 			} else if (s.equalsIgnoreCase("-teps") || s.equalsIgnoreCase("-eps")) {
 				setFileFormat(FileFormat.EPS);
+			} else if (s.equalsIgnoreCase("-teps:text") || s.equalsIgnoreCase("-eps:text")) {
+				setFileFormat(FileFormat.EPS_TEXT);
 			} else if (s.equalsIgnoreCase("-tdot") || s.equalsIgnoreCase("-dot")) {
 				setFileFormat(FileFormat.DOT);
 				OptionFlags.getInstance().setKeepTmpFiles(true);
@@ -98,12 +106,20 @@ public class Option {
 				setFileFormat(FileFormat.ATXT);
 			} else if (s.equalsIgnoreCase("-tutxt") || s.equalsIgnoreCase("-utxt")) {
 				setFileFormat(FileFormat.UTXT);
+			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
+				setFileFormat(FileFormat.PDF);
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {
 				i++;
 				if (i == arg.length) {
 					continue;
 				}
 				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
+			} else if (s.equalsIgnoreCase("-ofile")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				outputFile = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
 			} else if (s.equalsIgnoreCase("-graphvizdot") || s.equalsIgnoreCase("-graphviz_dot")) {
 				i++;
 				if (i == arg.length) {
@@ -128,6 +144,20 @@ public class Option {
 					continue;
 				}
 				excludes.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
+			} else if (s.equalsIgnoreCase("-nbthread") || s.equalsIgnoreCase("-nbthreads")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				final String nb = arg[i];
+				if ("auto".equalsIgnoreCase(nb)) {
+					this.nbThreads = defaultNbThreads();
+				} else if (nb.matches("\\d+")) {
+					this.nbThreads = Integer.parseInt(nb);
+				}
+			} else if (s.equalsIgnoreCase("-checkonly")) {
+				this.checkOnly = true;
+				OptionFlags.getInstance().setFailOnError(true);
 			} else if (s.equalsIgnoreCase("-config")) {
 				i++;
 				if (i == arg.length) {
@@ -153,10 +183,19 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-syntax")) {
 				syntax = true;
 				OptionFlags.getInstance().setQuiet(true);
+			} else if (s.equalsIgnoreCase("-duration")) {
+				duration = true;
 			} else if (s.equalsIgnoreCase("-keepfiles") || s.equalsIgnoreCase("-keepfile")) {
 				OptionFlags.getInstance().setKeepTmpFiles(true);
 			} else if (s.equalsIgnoreCase("-metadata")) {
 				OptionFlags.getInstance().setMetadata(true);
+			} else if (s.equalsIgnoreCase("-logdata")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				OptionFlags.getInstance().setLogData(
+						new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i])));
 			} else if (s.equalsIgnoreCase("-word")) {
 				OptionFlags.getInstance().setWord(true);
 				OptionFlags.getInstance().setQuiet(true);
@@ -184,10 +223,27 @@ public class Option {
 				OptionPrint.printLanguage();
 			} else if (s.equalsIgnoreCase("-gui")) {
 				OptionFlags.getInstance().setGui(true);
+			} else if (s.equalsIgnoreCase("-nosuggestengine")) {
+				OptionFlags.getInstance().setUseSuggestEngine(false);
+			} else if (s.equalsIgnoreCase("-failonerror")) {
+				OptionFlags.getInstance().setFailOnError(true);
+			} else if (s.equalsIgnoreCase("-printfonts")) {
+				OptionFlags.getInstance().setPrintFonts(true);
+			} else if (s.toLowerCase().startsWith("-ftp")) {
+				final int x = s.indexOf(':');
+				if (x == -1) {
+					this.ftpPort = 4242;
+				} else {
+					this.ftpPort = Integer.parseInt(s.substring(x + 1));
+				}
 			} else {
 				result.add(s);
 			}
 		}
+	}
+
+	public int getFtpPort() {
+		return ftpPort;
 	}
 
 	public void initConfig(String filename) throws IOException {
@@ -296,6 +352,34 @@ public class Option {
 
 	public FileFormatOption getFileFormatOption() {
 		return new FileFormatOption(getFileFormat());
+	}
+
+	public final boolean isDuration() {
+		return duration;
+	}
+
+	public final int getNbThreads() {
+		return nbThreads;
+	}
+
+	public final void setNbThreads(int nb) {
+		this.nbThreads = nb;
+	}
+
+	public static int defaultNbThreads() {
+		return Runtime.getRuntime().availableProcessors();
+	}
+
+	public final boolean isCheckOnly() {
+		return checkOnly;
+	}
+
+	public final void setCheckOnly(boolean checkOnly) {
+		this.checkOnly = checkOnly;
+	}
+
+	public final File getOutputFile() {
+		return outputFile;
 	}
 
 }

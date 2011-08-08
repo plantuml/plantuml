@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6486 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -108,8 +108,8 @@ public class Note implements Event, SpecificBackcolorable {
 		return specificBackcolor;
 	}
 
-	public void setSpecificBackcolor(String s) {
-		this.specificBackcolor = HtmlColor.getColorIfValid(s);
+	public void setSpecificBackcolor(HtmlColor color) {
+		this.specificBackcolor = color;
 	}
 
 	public boolean dealWith(Participant someone) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5616 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 final public class CommandNoteEntity extends SingleLineCommand<AbstractEntityDiagram> {
 
@@ -58,7 +59,7 @@ final public class CommandNoteEntity extends SingleLineCommand<AbstractEntityDia
 		final String pos = arg.get(0);
 		final IEntity cl1 = getSystem().getOrCreateClass(arg.get(1));
 		final Entity note = getSystem().createEntity("GN" + UniqueSequence.getValue(), arg.get(3), EntityType.NOTE);
-		note.setSpecificBackcolor(arg.get(2));
+		note.setSpecificBackcolor(HtmlColor.getColorIfValid(arg.get(2)));
 
 		final Link link;
 		final Position position = Position.valueOf(pos.toUpperCase()).withRankdir(getSystem().getRankdir());

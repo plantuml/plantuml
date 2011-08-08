@@ -69,4 +69,10 @@ public class StaticFilesMap {
 		return null;
 	}
 
+	public void clean() {
+		for (StaticFiles staticFiles : map.values()) {
+			staticFiles.clean();
+		}
+	}
+
 }

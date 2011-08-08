@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6234 $
+ * Revision $Revision: 6750 $
  *
  */
 package net.sourceforge.plantuml;
 
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,6 +41,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.UIManager;
 
@@ -49,21 +55,34 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
 import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
+import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
-import net.sourceforge.plantuml.swing.MainWindow;
+import net.sourceforge.plantuml.swing.MainWindow2;
 import net.sourceforge.plantuml.usecasediagram.UsecaseDiagramFactory;
 
 public class Run {
 
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
+		final long start = System.currentTimeMillis();
 		final Option option = new Option(argsArray);
 		if (OptionFlags.getInstance().isVerbose()) {
 			Log.info("GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
 		}
+		if (OptionFlags.getInstance().isPrintFonts()) {
+			printFonts();
+			return;
+		}
+
+		if (option.getFtpPort() != -1) {
+			goFtp(option);
+			return;
+		}
+
+		boolean error = false;
 		if (option.isPattern()) {
 			managePattern();
 		} else if (OptionFlags.getInstance().isGui()) {
@@ -71,12 +90,42 @@ public class Run {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			} catch (Exception e) {
 			}
-			new MainWindow(option);
+			new MainWindow2(option);
 		} else if (option.isPipe() || option.isSyntax()) {
 			managePipe(option);
 		} else {
-			manageFiles(option);
+			error = manageAllFiles(option);
 		}
+
+		if (option.isDuration()) {
+			final long duration = System.currentTimeMillis() - start;
+			Log.error("Duration = " + (duration / 1000L) + " seconds");
+		}
+
+		if (error) {
+			Log.error("Some diagram description contains errors");
+			System.exit(1);
+		}
+	}
+
+	private static void goFtp(Option option) throws IOException {
+		final int ftpPort = option.getFtpPort();
+		System.err.println("ftpPort=" + ftpPort);
+		final FtpServer ftpServer = new FtpServer(ftpPort);
+		ftpServer.go();
+	}
+
+	static void printFonts() {
+		final Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+		for (Font f : fonts) {
+			System.out.println("f=" + f + "/" + f.getPSName() + "/" + f.getName() + "/" + f.getFontName() + "/"
+					+ f.getFamily());
+		}
+		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+		for (String n : name) {
+			System.out.println("n=" + n);
+		}
+
 	}
 
 	private static void managePattern() {
@@ -90,6 +139,7 @@ public class Run {
 	}
 
 	private static void printPattern(AbstractUmlSystemCommandFactory factory) {
+		factory.init(null);
 		System.out.println();
 		System.out.println(factory.getClass().getSimpleName().replaceAll("Factory", ""));
 		for (String s : factory.getDescription()) {
@@ -146,30 +196,7 @@ public class Run {
 		}
 	}
 
-	private static void manageFile(File f, Option option) throws IOException, InterruptedException {
-		if (OptionFlags.getInstance().isMetadata()) {
-			System.out.println("------------------------");
-			System.out.println(f);
-			// new Metadata().readAndDisplayMetadata(f);
-			System.out.println();
-			System.out.println(new MetadataTag(f, "plantuml").getData());
-			System.out.println("------------------------");
-		} else {
-			final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f,
-					option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
-			if (option.isComputeurl()) {
-				final List<String> urls = sourceFileReader.getEncodedUrl();
-				for (String s : urls) {
-					System.out.println(s);
-				}
-			} else {
-				sourceFileReader.getGeneratedImages();
-
-			}
-		}
-	}
-
-	private static void manageFiles(Option option) throws IOException, InterruptedException {
+	private static boolean manageAllFiles(Option option) throws IOException, InterruptedException {
 
 		File lockFile = null;
 		try {
@@ -179,7 +206,7 @@ public class Run {
 				javaIsRunningFile.delete();
 				lockFile = new File(dir, "javaumllock.tmp");
 			}
-			processArgs(option);
+			return processArgs(option);
 		} finally {
 			if (lockFile != null) {
 				lockFile.delete();
@@ -188,7 +215,11 @@ public class Run {
 
 	}
 
-	private static void processArgs(Option option) throws IOException, InterruptedException {
+	private static boolean processArgs(Option option) throws IOException, InterruptedException {
+		if (option.isDecodeurl() == false && option.getNbThreads() > 0 && option.isCheckOnly() == false
+				&& OptionFlags.getInstance().isMetadata() == false) {
+			return multithread(option);
+		}
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
@@ -198,10 +229,90 @@ public class Run {
 			} else {
 				final FileGroup group = new FileGroup(s, option.getExcludes(), option);
 				for (File f : group.getFiles()) {
-					manageFile(f, option);
+					try {
+						final boolean error = manageFileInternal(f, option);
+						if (error) {
+							return true;
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
+		return false;
+	}
+
+	private static boolean multithread(final Option option) throws InterruptedException {
+		Log.info("Using several threads: " + option.getNbThreads());
+		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
+		final AtomicBoolean errors = new AtomicBoolean(false);
+		for (String s : option.getResult()) {
+			final FileGroup group = new FileGroup(s, option.getExcludes(), option);
+			for (final File f : group.getFiles()) {
+				final Future<?> future = executor.submit(new Runnable() {
+					public void run() {
+						if (errors.get()) {
+							return;
+						}
+						try {
+							final boolean error = manageFileInternal(f, option);
+							if (error) {
+								errors.set(true);
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		}
+		executor.shutdown();
+		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+		return errors.get();
+	}
+
+	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
+		if (OptionFlags.getInstance().isMetadata()) {
+			System.out.println("------------------------");
+			System.out.println(f);
+			// new Metadata().readAndDisplayMetadata(f);
+			System.out.println();
+			System.out.println(new MetadataTag(f, "plantuml").getData());
+			System.out.println("------------------------");
+			return false;
+		}
+		final ISourceFileReader sourceFileReader;
+		if (option.getOutputFile() == null) {
+			sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option.getOutputDir(), option
+					.getConfig(), option.getCharset(), option.getFileFormatOption());
+		} else {
+			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(), f, option.getOutputFile(), option
+					.getConfig(), option.getCharset(), option.getFileFormatOption());
+		}
+		if (option.isComputeurl()) {
+			final List<String> urls = sourceFileReader.getEncodedUrl();
+			for (String s : urls) {
+				System.out.println(s);
+			}
+			return false;
+		} else if (option.isCheckOnly()) {
+			return sourceFileReader.hasError();
+		}
+		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+		if (OptionFlags.getInstance().isFailOnError()) {
+			for (GeneratedImage i : result) {
+				if (i.isError()) {
+					Log.error("Error in file: " + f.getCanonicalPath());
+				}
+				if (i.isError() && OptionFlags.getInstance().isFailOnError()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

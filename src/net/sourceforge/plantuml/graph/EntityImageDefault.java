@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -42,10 +42,12 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageDefault extends AbstractEntityImage {
 
@@ -53,8 +55,8 @@ class EntityImageDefault extends AbstractEntityImage {
 
 	public EntityImageDefault(Entity entity) {
 		super(entity);
-		this.textBlock = TextBlockUtils.create(Arrays.asList(entity.getDisplay()), new FontConfiguration(getFont14(),
-				Color.BLACK), HorizontalAlignement.CENTER);
+		this.textBlock = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(getFont14(),
+				HtmlColor.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	@Override
@@ -64,12 +66,12 @@ class EntityImageDefault extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Dimension2D dim = textBlock.calculateDimension(StringBounderUtils.asStringBounder(g2d));
 		final int width = (int) dim.getWidth();
 		final int height = (int) dim.getHeight();
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(0, 0, width, height);
-		textBlock.drawTOBEREMOVED(g2d, 0, 0);
+		textBlock.drawTOBEREMOVED(colorMapper, g2d, 0, 0);
 	}
 }

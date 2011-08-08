@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6453 $
+ * Revision $Revision: 6591 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
@@ -57,13 +58,15 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.skin.SkinUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 class PrintSkin extends AbstractPSystem {
 
-	private static final Font FONT1 = new Font("SansSerif", Font.PLAIN, 10);
+	private static final UFont FONT1 = new UFont("SansSerif", Font.PLAIN, 10);
 
 	final private Skin skin;
 	final private List<String> toPrint;
@@ -93,7 +96,7 @@ class PrintSkin extends AbstractPSystem {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 
-		ug = new UGraphicG2d(g2d, null, 1.0);
+		ug = new UGraphicG2d(new ColorMapperIdentity(), g2d, null, 1.0);
 
 		for (ComponentType type : ComponentType.all()) {
 			printComponent(type);
@@ -126,8 +129,8 @@ class PrintSkin extends AbstractPSystem {
 		if (width == 0) {
 			width = 42;
 		}
-		ug.getParam().setColor(Color.LIGHT_GRAY);
-		ug.getParam().setBackcolor(Color.LIGHT_GRAY);
+		ug.getParam().setColor(HtmlColor.LIGHT_GRAY);
+		ug.getParam().setBackcolor(HtmlColor.LIGHT_GRAY);
 		ug.draw(xpos - 1, ypos - 1, new URectangle(width + 2, height + 2));
 		// g2d.drawRect((int) xpos - 1, (int) ypos - 1, (int) width + 2, (int) height + 2);
 
@@ -143,7 +146,7 @@ class PrintSkin extends AbstractPSystem {
 	}
 
 	private void println(String s) {
-		final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(FONT1, Color.BLACK),
+		final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(FONT1, HtmlColor.BLACK),
 				HorizontalAlignement.LEFT);
 		textBlock.drawU(ug, xpos, ypos);
 		ypos += textBlock.calculateDimension(ug.getStringBounder()).getHeight();

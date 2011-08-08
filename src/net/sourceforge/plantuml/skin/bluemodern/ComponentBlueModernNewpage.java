@@ -28,14 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4167 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,9 +44,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentBlueModernNewpage extends AbstractComponent {
 
-	private final Color foregroundColor;
+	private final HtmlColor foregroundColor;
 
-	public ComponentBlueModernNewpage(Color foregroundColor) {
+	public ComponentBlueModernNewpage(HtmlColor foregroundColor) {
 		this.foregroundColor = foregroundColor;
 	}
 

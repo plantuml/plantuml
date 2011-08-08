@@ -31,8 +31,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.svg.SvgGraphics;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -40,13 +41,13 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 
-	public void draw(UShape ushape, double x, double y, UParam param, SvgGraphics svg) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UEllipse rect = (UEllipse) ushape;
 		final double width = rect.getWidth();
 		final double height = rect.getHeight();
 
-		final String color = param.getColor() == null ? "none" : HtmlColor.getAsHtml(param.getColor());
-		final String backcolor = param.getBackcolor() == null ? "none" : HtmlColor.getAsHtml(param.getBackcolor());
+		final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getColor()));
+		final String backcolor = param.getBackcolor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getBackcolor()));
 
 		svg.setFillColor(backcolor);
 		svg.setStrokeColor(color);

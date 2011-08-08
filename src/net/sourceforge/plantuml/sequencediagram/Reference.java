@@ -33,37 +33,32 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class Reference implements Event {
 
-	private final Participant p;
-	private final Participant p2;
+	private final List<Participant> participants;
 	private final Url url;
+	private final HtmlColor backColorGeneral;
+	private final HtmlColor backColorElement;
 
 	private final List<String> strings;
 
-	// public Reference(Participant p, List<String> strings) {
-	// this.p = p;
-	// this.p2 = null;
-	// this.strings = strings;
-	// }
-	//
-	public Reference(Participant p, Participant p2, Url url, List<String> strings) {
-		this.p = p;
-		this.p2 = p2;
+	public Reference(List<Participant> participants, Url url, List<String> strings, HtmlColor backColorGeneral, HtmlColor backColorElement) {
+		this.participants = participants;
 		this.url = url;
 		this.strings = strings;
+		this.backColorGeneral = backColorGeneral;
+		this.backColorElement = backColorElement;
 	}
 
-	public Participant getParticipant() {
-		return p;
-	}
-
-	public Participant getParticipant2() {
-		return p2;
+	public List<Participant> getParticipant() {
+		return Collections.unmodifiableList(participants);
 	}
 
 	public List<String> getStrings() {
@@ -71,7 +66,7 @@ public class Reference implements Event {
 	}
 
 	public boolean dealWith(Participant someone) {
-		return p == someone || p2 == someone;
+		return participants.contains(someone);
 	}
 
 	public final Url getUrl() {
@@ -80,6 +75,22 @@ public class Reference implements Event {
 
 	@Override
 	public String toString() {
-		return p.getCode() + "-" + p2.getCode();
+		final StringBuilder sb = new StringBuilder();
+		for (final Iterator<Participant> it = participants.iterator(); it.hasNext();) {
+			sb.append(it.next().getCode());
+			if (it.hasNext()) {
+				sb.append("-");
+			}
+
+		}
+		return sb.toString();
+	}
+
+	public final HtmlColor getBackColorGeneral() {
+		return backColorGeneral;
+	}
+
+	public final HtmlColor getBackColorElement() {
+		return backColorElement;
 	}
 }

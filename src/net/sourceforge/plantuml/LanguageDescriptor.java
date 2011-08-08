@@ -104,6 +104,7 @@ public class LanguageDescriptor {
 		keyword.add("header");
 		keyword.add("center");
 		keyword.add("rotate");
+		keyword.add("ref");
 
 		
 		preproc.add("!include");

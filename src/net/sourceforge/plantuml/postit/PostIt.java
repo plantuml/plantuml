@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.postit;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +45,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseNote;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PostIt {
@@ -102,12 +101,12 @@ public class PostIt {
 	}
 
 	private Component getComponent() {
-		final Color noteBackgroundColor = HtmlColor.getColorIfValid("#FBFB77").getColor();
-		final Color borderColor = HtmlColor.getColorIfValid("#A80036").getColor();
+		final HtmlColor noteBackgroundColor = HtmlColor.getColorIfValid("#FBFB77");
+		final HtmlColor borderColor = HtmlColor.getColorIfValid("#A80036");
 
 		final SkinParam param = new SkinParam();
-		final Font fontNote = param.getFont(FontParam.NOTE, null);
-		final ComponentRoseNote note = new ComponentRoseNote(noteBackgroundColor, borderColor, Color.BLACK, fontNote,
+		final UFont fontNote = param.getFont(FontParam.NOTE, null);
+		final ComponentRoseNote note = new ComponentRoseNote(noteBackgroundColor, borderColor, HtmlColor.BLACK, fontNote,
 				text);
 		return note;
 	}

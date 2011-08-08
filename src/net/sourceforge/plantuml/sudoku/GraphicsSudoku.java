@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6591 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -46,15 +46,18 @@ import java.util.List;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class GraphicsSudoku {
 
 	private final ISudoku sudoku;
-	private final Font numberFont = new Font("SansSerif", Font.BOLD, 20);
-	private final Font font = new Font("SansSerif", Font.PLAIN, 11);
+	private final UFont numberFont = new UFont("SansSerif", Font.BOLD, 20);
+	private final UFont font = new UFont("SansSerif", Font.PLAIN, 11);
 
 	public GraphicsSudoku(ISudoku sudoku) {
 		this.sudoku = sudoku;
@@ -92,8 +95,9 @@ public class GraphicsSudoku {
 				final int num = sudoku.getGiven(x, y);
 				if (num > 0) {
 					final TextBlock text = TextBlockUtils.create(Arrays.asList("" + num), new FontConfiguration(
-							numberFont, Color.BLACK), HorizontalAlignement.CENTER);
-					text.drawTOBEREMOVED(g2d, numberxOffset + x * cellWidth, numberyOffset + y * cellHeight);
+							numberFont, HtmlColor.BLACK), HorizontalAlignement.CENTER);
+					text.drawTOBEREMOVED(new ColorMapperIdentity(), g2d, numberxOffset + x * cellWidth, numberyOffset
+							+ y * cellHeight);
 				}
 			}
 		}
@@ -114,9 +118,9 @@ public class GraphicsSudoku {
 		texts.add("http://plantuml.sourceforge.net");
 		texts.add("Seed " + Long.toString(sudoku.getSeed(), 36));
 		texts.add("Difficulty " + sudoku.getRatting());
-		final TextBlock textBlock = TextBlockUtils.create(texts, new FontConfiguration(font, Color.BLACK),
+		final TextBlock textBlock = TextBlockUtils.create(texts, new FontConfiguration(font, HtmlColor.BLACK),
 				HorizontalAlignement.LEFT);
-		textBlock.drawTOBEREMOVED(g2d, 0, 0);
+		textBlock.drawTOBEREMOVED(new ColorMapperIdentity(), g2d, 0, 0);
 
 		g2d.dispose();
 		return im;

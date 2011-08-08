@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -66,7 +67,8 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) throws IOException {
+	final protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index,
+			FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) throws IOException {
 		final UGraphic ug = createImage(fileFormatOption);
 		drawU(ug);
 		if (ug instanceof UGraphicG2d) {
@@ -80,20 +82,6 @@ public class PostItDiagram extends UmlDiagram {
 			os.write(eps.getEPSCode().getBytes());
 		}
 	}
-
-//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormatOption) throws IOException,
-//			InterruptedException {
-//		OutputStream os = null;
-//		try {
-//			os = new FileOutputStream(suggestedFile);
-//			createFile(os, 0, fileFormatOption);
-//		} finally {
-//			if (os != null) {
-//				os.close();
-//			}
-//		}
-//		return Arrays.asList(suggestedFile);
-//	}
 
 	public String getDescription() {
 		return "Board of post-it";
@@ -122,7 +110,8 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	private UGraphic createImage(FileFormatOption fileFormatOption) {
-		final Color backColor = this.getSkinParam().getBackgroundColor().getColor();
+		final Color backColor = getSkinParam().getColorMapper()
+				.getMappedColor(this.getSkinParam().getBackgroundColor());
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final double height = getDefaultArea().heightWhenWidthIs(width,
@@ -131,7 +120,7 @@ public class PostItDiagram extends UmlDiagram {
 
 			final Graphics2D graphics2D = builder.getGraphics2D();
 			final double dpiFactor = this.getDpiFactor(fileFormatOption);
-			return new UGraphicG2d(graphics2D, builder.getBufferedImage(), dpiFactor);
+			return new UGraphicG2d(new ColorMapperIdentity(), graphics2D, builder.getBufferedImage(), dpiFactor);
 		}
 		throw new UnsupportedOperationException();
 	}

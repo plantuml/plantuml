@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6423 $
+ * Revision $Revision: 6750 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandFactory {
 
 	private final DiagramType type;
+	private List<Command> cmds;
 
 	protected AbstractUmlSystemCommandFactory() {
 		this(DiagramType.UML);
@@ -51,14 +52,12 @@ public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandF
 
 	protected AbstractUmlSystemCommandFactory(DiagramType type) {
 		this.type = type;
-		reset();
 	}
 
 	public String checkFinalError() {
 		return null;
 	}
 
-	private List<Command> cmds = new ArrayList<Command>();
 
 	final public CommandControl isValid(List<String> lines) {
 		for (Command cmd : cmds) {
@@ -83,7 +82,7 @@ public abstract class AbstractUmlSystemCommandFactory implements PSystemCommandF
 		throw new IllegalArgumentException();
 	}
 
-	final public void reset() {
+	final public void init(String startLine) {
 		cmds = new ArrayList<Command>();
 		initCommands();
 	}

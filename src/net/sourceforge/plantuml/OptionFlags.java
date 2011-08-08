@@ -28,26 +28,45 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6096 $
+ * Revision $Revision: 6922 $
  *
  */
 package net.sourceforge.plantuml;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+
 public class OptionFlags {
-	
+
 	static public final boolean PBBACK = false;
-	static public final boolean SUGGEST = true;
+	static public final boolean GRAPHVIZCACHE = false;
+	static public final boolean SVEK = false;
 
 	void reset() {
+		reset(false);
+	}
+
+	private void reset(boolean exit) {
 		keepTmpFiles = false;
 		verbose = false;
 		metadata = false;
 		word = false;
+		systemExit = exit;
 		debugDot = false;
 		forceGd = false;
 		forceCairo = false;
-		quiet = false;
 		dotExecutable = null;
+		gui = false;
+		quiet = false;
+		checkDotError = false;
+		printFonts = false;
+		useSuggestEngine = true;
+		failOnError = false;
 	}
 
 	public boolean useJavaInsteadOfDot() {
@@ -56,32 +75,36 @@ public class OptionFlags {
 
 	private static final OptionFlags singleton = new OptionFlags();
 
-	private boolean keepTmpFiles = false;
-	private boolean verbose = false;
-	private boolean metadata = false;
-	private boolean word = false;
-	private boolean systemExit = true;
-	private boolean debugDot = false;
-	private boolean forceGd = false;
-	private boolean forceCairo = false;
-	private String dotExecutable = null;
-	private boolean gui = false;
-	private boolean quiet = false;
-	private boolean checkDotError = false;
+	private boolean keepTmpFiles;
+	private boolean verbose;
+	private boolean metadata;
+	private boolean word;
+	private boolean systemExit;
+	private boolean debugDot;
+	private boolean forceGd;
+	private boolean forceCairo;
+	private String dotExecutable;
+	private boolean gui;
+	private boolean quiet;
+	private boolean checkDotError;
+	private boolean printFonts;
+	private boolean useSuggestEngine;
+	private boolean failOnError;
+	private File logData;
 
 	private OptionFlags() {
-		reset();
+		reset(true);
 	}
 
 	public static OptionFlags getInstance() {
 		return singleton;
 	}
 
-	public final boolean isKeepTmpFiles() {
+	public synchronized final boolean isKeepTmpFiles() {
 		return keepTmpFiles;
 	}
 
-	public final void setKeepTmpFiles(boolean keepTmpFiles) {
+	public synchronized final void setKeepTmpFiles(boolean keepTmpFiles) {
 		this.keepTmpFiles = keepTmpFiles;
 	}
 
@@ -171,6 +194,91 @@ public class OptionFlags {
 
 	public final void setCheckDotError(boolean checkDotError) {
 		this.checkDotError = checkDotError;
+	}
+
+	private final AtomicBoolean logDataInitized = new AtomicBoolean(false);
+
+	public void logData(File file, PSystem system) {
+		if (system instanceof PSystemError == false) {
+			return;
+		}
+		synchronized (logDataInitized) {
+			if (logData == null && logDataInitized.get() == false) {
+				final String s = GraphvizUtils.getenvLogData();
+				if (s != null) {
+					setLogData(new File(s));
+				}
+				logDataInitized.set(true);
+			}
+
+			if (logData == null) {
+				return;
+			}
+			final PSystemError systemError = (PSystemError) system;
+			PrintStream ps = null;
+			try {
+				ps = new PrintStream(new FileOutputStream(logData, true));
+				ps.println("Start of " + file.getName());
+				ps.println(systemError.getDescription());
+				for (CharSequence t : systemError.getTitle()) {
+					ps.println(t);
+				}
+				systemError.print(ps);
+				for (String s : systemError.getSuggest()) {
+					ps.println(s);
+				}
+				ps.println("End of " + file.getName());
+				ps.println();
+			} catch (FileNotFoundException e) {
+				Log.error("Cannot open " + logData);
+				e.printStackTrace();
+			} finally {
+				if (ps != null) {
+					ps.close();
+				}
+			}
+		}
+	}
+
+	public final void setLogData(File logData) {
+		this.logData = logData;
+		logData.delete();
+		PrintStream ps = null;
+		try {
+			ps = new PrintStream(new FileOutputStream(logData));
+			ps.println();
+		} catch (FileNotFoundException e) {
+			Log.error("Cannot open " + logData);
+			e.printStackTrace();
+		} finally {
+			if (ps != null) {
+				ps.close();
+			}
+		}
+	}
+
+	public final boolean isPrintFonts() {
+		return printFonts;
+	}
+
+	public final void setPrintFonts(boolean printFonts) {
+		this.printFonts = printFonts;
+	}
+
+	public final boolean isUseSuggestEngine() {
+		return useSuggestEngine;
+	}
+
+	public final void setUseSuggestEngine(boolean useSuggestEngine) {
+		this.useSuggestEngine = useSuggestEngine;
+	}
+
+	public final boolean isFailOnError() {
+		return failOnError;
+	}
+
+	public final void setFailOnError(boolean failOnError) {
+		this.failOnError = failOnError;
 	}
 
 }

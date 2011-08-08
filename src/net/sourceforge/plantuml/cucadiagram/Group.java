@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5743 $
+ * Revision $Revision: 6709 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
@@ -163,7 +164,15 @@ public class Group {
 	}
 
 	public String getUid() {
-		return "cluster" + cpt;
+		return StringUtils.getUid(getUid1(), getUid2());
+	}
+
+	public String getUid1() {
+		return "cluster";
+	}
+
+	public int getUid2() {
+		return cpt;
 	}
 
 	public final HtmlColor getBackColor() {
@@ -259,7 +268,7 @@ public class Group {
 	public final void setRankdir(Rankdir rankdir) {
 		this.rankdir = rankdir;
 	}
-	
+
 	private String stereotype;
 
 	public final void setStereotype(String stereotype) {

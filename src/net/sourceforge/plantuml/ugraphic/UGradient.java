@@ -33,39 +33,42 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.Color;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
+
 public class UGradient {
 
-	private final Color color1;
-	private final Color color2;
+	private final HtmlColor color1;
+	private final HtmlColor color2;
 
-	public UGradient(Color color1, Color color2) {
+	public UGradient(HtmlColor color1, HtmlColor color2) {
 		if (color1 == null || color2 == null) {
 			throw new IllegalArgumentException();
 		}
 		this.color1 = color1;
 		this.color2 = color2;
-
 	}
 
-	public final Color getColor1() {
+	public final HtmlColor getColor1() {
 		return color1;
 	}
 
-	public final Color getColor2() {
+	public final HtmlColor getColor2() {
 		return color2;
 	}
 
-	public final Color getColor(double coeff) {
+	public final Color getColor(ColorMapper mapper, double coeff) {
 		if (coeff > 1 || coeff < 0) {
 			throw new IllegalArgumentException("c=" + coeff);
 		}
-		final int vred = color2.getRed() - color1.getRed();
-		final int vgreen = color2.getGreen() - color1.getGreen();
-		final int vblue = color2.getBlue() - color1.getBlue();
+		final Color c1 = mapper.getMappedColor(color1);
+		final Color c2 = mapper.getMappedColor(color2);
+		final int vred = c2.getRed() - c1.getRed();
+		final int vgreen = c2.getGreen() - c1.getGreen();
+		final int vblue = c2.getBlue() - c1.getBlue();
 
-		final int red = color1.getRed() + (int) (coeff * vred);
-		final int green = color1.getGreen() + (int) (coeff * vgreen);
-		final int blue = color1.getBlue() + (int) (coeff * vblue);
+		final int red = c1.getRed() + (int) (coeff * vred);
+		final int green = c1.getGreen() + (int) (coeff * vgreen);
+		final int blue = c1.getBlue() + (int) (coeff * vblue);
 
 		return new Color(red, green, blue);
 

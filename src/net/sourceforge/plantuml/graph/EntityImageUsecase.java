@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -46,10 +46,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageUsecase extends AbstractEntityImage {
 
@@ -57,8 +59,8 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	public EntityImageUsecase(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	@Override
@@ -75,7 +77,7 @@ class EntityImageUsecase extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
 
 		// Shape ellipse = new Ellipse2D.Double(0, 0, dimTotal.getWidth(),
@@ -87,10 +89,10 @@ class EntityImageUsecase extends AbstractEntityImage {
 		ellipse.append(new QuadCurve2D.Double(w / 2, 0, w, 0, w, h / 2), true);
 		ellipse.append(new QuadCurve2D.Double(w, h / 2, w, h, w / 2, h), true);
 		ellipse.append(new QuadCurve2D.Double(w / 2, h, 0, h, 0, h / 2), true);
-		g2d.setColor(getYellow());
+		g2d.setColor(colorMapper.getMappedColor(getYellow()));
 		g2d.fill(ellipse);
 
-		g2d.setColor(getRed());
+		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.draw(ellipse);
 
 		final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
@@ -100,6 +102,6 @@ class EntityImageUsecase extends AbstractEntityImage {
 		// g2d.draw(rect);
 
 		g2d.setColor(Color.BLACK);
-		name.drawTOBEREMOVED(g2d, posx, posy);
+		name.drawTOBEREMOVED(colorMapper, g2d, posx, posy);
 	}
 }

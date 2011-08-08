@@ -48,6 +48,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
+import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DotPath implements UShape {
@@ -96,6 +99,30 @@ public class DotPath implements UShape {
 			result.manage(c.ctrlx2, c.ctrly2);
 		}
 		return result;
+	}
+
+	public double getMinDist(Point2D ref) {
+		double result = Double.MAX_VALUE;
+		for (CubicCurve2D.Double c : beziers) {
+			final double d1 = ref.distance(c.x1, c.y1);
+			if (d1 < result) {
+				result = d1;
+			}
+			final double d2 = ref.distance(c.x2, c.y2);
+			if (d2 < result) {
+				result = d2;
+			}
+			final double d3 = ref.distance(c.ctrlx1, c.ctrly1);
+			if (d3 < result) {
+				result = d3;
+			}
+			final double d4 = ref.distance(c.ctrlx2, c.ctrly2);
+			if (d4 < result) {
+				result = d4;
+			}
+		}
+		return result;
+
 	}
 
 	public DotPath() {
@@ -163,7 +190,6 @@ public class DotPath implements UShape {
 		copy.addAll(other.beziers);
 		return new DotPath(copy);
 	}
-
 
 	private DotPath(List<CubicCurve2D.Double> beziers) {
 		this.beziers.addAll(beziers);
@@ -237,6 +263,45 @@ public class DotPath implements UShape {
 			p.append(bez, true);
 		}
 		g2d.draw(p);
+	}
+
+	public void drawOk(EpsGraphics eps, double x, double y) {
+		boolean first = true;
+		for (CubicCurve2D.Double bez : beziers) {
+			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
+					+ bez.ctrly2, x + bez.x2, y + bez.y2);
+			eps.epsLine(bez.x1, bez.y1, bez.x2, bez.y2);
+		}
+	}
+
+	public void draw(EpsGraphics eps, double x, double y) {
+		eps.newpathDot(true);
+		boolean first = true;
+		for (CubicCurve2D.Double bez : beziers) {
+			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
+					+ bez.ctrly2, x + bez.x2, y + bez.y2);
+			if (first) {
+				eps.movetoNoMacro(bez.x1, bez.y1);
+				first = false;
+			}
+			eps.curvetoNoMacro(bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2);
+		}
+		eps.closepathDot(true);
+	}
+
+	public UPath toUPath() {
+		final UPath result = new UPath();
+		boolean start = true;
+		for (CubicCurve2D.Double bez : beziers) {
+			if (start) {
+				result.add(new double[] { bez.x1, bez.y1 }, USegmentType.SEG_MOVETO);
+				start = false;
+			}
+			result.add(new double[] { bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2 },
+					USegmentType.SEG_CUBICTO);
+
+		}
+		return result;
 	}
 
 	public Point2D getFrontierIntersection(Shape shape, Rectangle2D... notIn) {
@@ -326,9 +391,10 @@ public class DotPath implements UShape {
 			} else if (bez.y1 == bez.y2) {
 				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
 						(int) (bez.x2 / pixelXPerChar));
-			} else {
-				throw new UnsupportedOperationException("bez=" + toString(bez));
-			}
+			} /*
+				 * else { throw new UnsupportedOperationException("bez=" +
+				 * toString(bez)); }
+				 */
 		}
 	}
 

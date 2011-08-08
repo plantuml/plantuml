@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5392 $
+ * Revision $Revision: 6743 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -41,6 +41,13 @@ import java.util.List;
 public class UPolygon implements UShape {
 
 	private final List<Point2D.Double> all = new ArrayList<Point2D.Double>();
+
+	public UPolygon() {
+	}
+
+	public UPolygon(List<Point2D.Double> points) {
+		all.addAll(points);
+	}
 
 	public void addPoint(double x, double y) {
 		all.add(new Point2D.Double(x, y));

@@ -63,7 +63,7 @@ public class CommandCreateActor2 extends SingleLineCommand<UsecaseDiagram> {
 		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1));
 		final String stereotype = arg.get(2);
 		final Entity entity = (Entity) getSystem().getOrCreateClass(code);
-		entity.setDisplay(display);
+		entity.setDisplay2(display);
 
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),

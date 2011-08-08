@@ -31,17 +31,19 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFontContext;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -56,7 +58,7 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, SvgGraphics svg) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null && clip.isInside(x, y) == false) {
@@ -65,7 +67,7 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		final Font font = fontConfiguration.getFont();
+		final UFont font = fontConfiguration.getFont();
 		String fontWeight = null;
 		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold()) {
 			fontWeight = "bold";
@@ -81,7 +83,7 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 			textDecoration = "line-through";
 		}
 
-		svg.setFillColor(HtmlColor.getAsHtml(fontConfiguration.getColor()));
+		svg.setFillColor(StringUtils.getAsHtml(mapper.getMappedColor(fontConfiguration.getColor())));
 		String text = shape.getText();
 		if (text.startsWith(" ")) {
 			final double space = stringBounder.calculateDimension(font, " ").getWidth();
@@ -92,6 +94,6 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 		}
 		text = text.trim();
 		final Dimension2D dim = stringBounder.calculateDimension(font, text);
-		svg.text(text, x, y, font.getFamily(), font.getSize(), fontWeight, fontStyle, textDecoration, dim.getWidth());
+		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration, dim.getWidth());
 	}
 }

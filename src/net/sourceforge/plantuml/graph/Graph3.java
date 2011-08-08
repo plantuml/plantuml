@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.geom.kinetic.Path;
 import net.sourceforge.plantuml.geom.kinetic.Point2DCharge;
 import net.sourceforge.plantuml.geom.kinetic.World;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class Graph3 {
 
@@ -436,7 +437,7 @@ public class Graph3 {
 			final double width = image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth();
 			final double height = image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight();
 			g2d.translate(frame.getX() - width / 2, frame.getY() - height / 2);
-			image.draw(g2d);
+			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-frame.getX() + width / 2, -frame.getY() + height / 2);
 		}
 
@@ -466,7 +467,7 @@ public class Graph3 {
 			final int width = (int) (image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth());
 			final int height = (int) (image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight());
 			g2d.translate(p.getXint() - width / 2, p.getYint() - height / 2);
-			image.draw(g2d);
+			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-p.getXint() + width / 2, -p.getYint() + height / 2);
 			// g2d.fillOval(p.getXint() - 2, p.getYint() - 2, 5, 5);
 			// g2d.drawRect(p.getXint() - 4, p.getYint() - 4, 8, 8);

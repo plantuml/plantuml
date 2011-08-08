@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.svg;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
@@ -44,55 +43,50 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalPosition;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
 public final class SvgTitler {
 
-	private final Color textColor;
-	private final List<String> text;
-	// private final int fontSize;
-	// private final String fontFamily;
+	private final List<? extends CharSequence> text;
 	private final HorizontalAlignement horizontalAlignement;
 	private final VerticalPosition verticalPosition;
 	private final int margin;
 	private final TextBlock textBloc;
+	private final ColorMapper colorMapper;
 
-	public SvgTitler(Color textColor, List<String> text, int fontSize, String fontFamily,
+	public SvgTitler(ColorMapper colorMapper, HtmlColor textColor, List<? extends CharSequence> text, int fontSize, String fontFamily,
 			HorizontalAlignement horizontalAlignement, VerticalPosition verticalPosition, int margin) {
-		this.textColor = textColor;
 		this.text = text;
-		// this.fontSize = fontSize;
-		// this.fontFamily = fontFamily;
+		this.colorMapper = colorMapper;
 		this.horizontalAlignement = horizontalAlignement;
 		this.verticalPosition = verticalPosition;
 		this.margin = margin;
 		if (text == null || text.size() == 0) {
 			textBloc = null;
 		} else {
-			final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
+			final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
 			textBloc = TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor),
 					HorizontalAlignement.LEFT);
 		}
 	}
 
-	public double getHeight() {
-		if (textBloc == null) {
-			return 0;
-		}
-		return textBloc.calculateDimension(new UGraphicSvg(false).getStringBounder()).getHeight() + margin;
-	}
-
-	public String addTitleSvg(String svg, double width, double height) throws IOException {
+	public SvgData addTitle(SvgData svgData) throws IOException {
 		if (text == null || text.size() == 0) {
-			return svg;
+			return svgData;
 		}
 
-		final UGraphicSvg uGraphicSvg = new UGraphicSvg(false);
+		final UGraphicSvg uGraphicSvg = new UGraphicSvg(colorMapper, false);
 		final Dimension2D dimText = textBloc.calculateDimension(uGraphicSvg.getStringBounder());
 		final double xpos;
+
+		final double width = svgData.getWidth();
+		final double height = svgData.getHeight();
 
 		if (horizontalAlignement == HorizontalAlignement.LEFT) {
 			xpos = 2;
@@ -105,8 +99,12 @@ public final class SvgTitler {
 			assert false;
 		}
 
-		final double yText;
+		double suppWidth = 0;
+		if (dimText.getWidth() > width) {
+			suppWidth = dimText.getWidth() - width;
+		}
 
+		final double yText;
 		if (verticalPosition == VerticalPosition.TOP) {
 			yText = 0;
 		} else {
@@ -117,9 +115,11 @@ public final class SvgTitler {
 		String svgTitle = CucaDiagramFileMaker.getSvg(uGraphicSvg);
 		svgTitle = svgTitle.replaceFirst("(?i)<g>", "<g transform=\"translate(0 0)\">");
 
+		String newSvg = svgData.getSvg();
+
 		if (verticalPosition == VerticalPosition.TOP) {
 			final Pattern p = Pattern.compile("(?i)translate\\((\\d+)\\s+(\\d+)");
-			final Matcher m = p.matcher(svg);
+			final Matcher m = p.matcher(newSvg);
 
 			final StringBuffer sb = new StringBuffer();
 			while (m.find()) {
@@ -128,16 +128,15 @@ public final class SvgTitler {
 				m.appendReplacement(sb, "translate(" + tx + " " + ty);
 			}
 			m.appendTail(sb);
-			svg = sb.toString();
+			newSvg = sb.toString();
 		}
 
-		final int x = svg.indexOf("<g ");
+		final int x = newSvg.indexOf("<g ");
 		if (x == -1) {
 			throw new IllegalStateException();
 		}
-		svg = svg.substring(0, x) + svgTitle + svg.substring(x);
+		newSvg = newSvg.substring(0, x) + svgTitle + newSvg.substring(x);
 
-		return svg;
+		return svgData.mutateFromSvgTitler(newSvg, dimText.getHeight() + margin, suppWidth);
 	}
-
 }

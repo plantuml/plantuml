@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.activitydiagram2.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
@@ -42,7 +44,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand;
 public class CommandNewActivity2 extends SingleLineCommand<ActivityDiagram2> {
 
 	public CommandNewActivity2(ActivityDiagram2 diagram) {
-		super(diagram, "(?i)^\\s*[-*]\\s*([^\"\\s].*)$");
+		super(diagram, "(?i)^\\s*([-*<>^])\\s*([^\"\\s].*|\\s*\"[^\"\\s].*\")$");
 	}
 
 	@Override
@@ -55,8 +57,8 @@ public class CommandNewActivity2 extends SingleLineCommand<ActivityDiagram2> {
 			return CommandExecutionResult.error("Unreachable statement");
 		}
 
-		getSystem().newActivity(arg.get(0));
+		getSystem().newActivity(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1).trim()),
+				Direction.fromChar(arg.get(0).charAt(0)));
 		return CommandExecutionResult.ok();
 	}
-
 }

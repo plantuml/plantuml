@@ -28,14 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6000 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
@@ -46,9 +45,12 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -68,14 +70,14 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		}
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, Graphics2D g2d) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
-		final Font font = fontConfiguration.getFont();
+		final UFont font = fontConfiguration.getFont();
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
-			final Color extended = fontConfiguration.getExtendedColor();
+			final Color extended = mapper.getMappedColor(fontConfiguration.getExtendedColor());
 			if (extended != null) {
 				g2d.setColor(extended);
 				g2d.setBackground(extended);
@@ -83,14 +85,14 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			}
 		}
 
-		g2d.setFont(font);
-		g2d.setColor(fontConfiguration.getColor());
+		g2d.setFont(font.getFont());
+		g2d.setColor(mapper.getMappedColor(fontConfiguration.getColor()));
 		g2d.drawString(shape.getText(), (float) x, (float) y);
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-			final Color extended = fontConfiguration.getExtendedColor();
+			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
-				g2d.setColor(extended);
+				g2d.setColor(mapper.getMappedColor(extended));
 			}
 			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
 			final int ypos = (int) (y + 2.5);
@@ -101,9 +103,9 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
-			final Color extended = fontConfiguration.getExtendedColor();
+			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
-				g2d.setColor(extended);
+				g2d.setColor(mapper.getMappedColor(extended));
 			}
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
 				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
@@ -112,11 +114,11 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
-			final FontMetrics fm = g2d.getFontMetrics(font);
+			final FontMetrics fm = g2d.getFontMetrics(font.getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
-			final Color extended = fontConfiguration.getExtendedColor();
+			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
-				g2d.setColor(extended);
+				g2d.setColor(mapper.getMappedColor(extended));
 			}
 			g2d.setStroke(new BasicStroke((float) 1.5));
 			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);
@@ -124,7 +126,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		}
 	}
 
-	static public Dimension2D calculateDimension(StringBounder stringBounder, Font font, String text) {
+	static public Dimension2D calculateDimension(StringBounder stringBounder, UFont font, String text) {
 		final Dimension2D rect = stringBounder.calculateDimension(font, text);
 		double h = rect.getHeight();
 		if (h < 10) {

@@ -33,15 +33,15 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class TextStringBounder implements StringBounder {
 
-	public Dimension2D calculateDimension(Font font, String text) {
+	public Dimension2D calculateDimension(UFont font, String text) {
 		return new Dimension2DDouble(text.length(), 1);
 	}
 

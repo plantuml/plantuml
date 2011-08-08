@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6353 $
+ * Revision $Revision: 6936 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -36,11 +36,13 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class TextBlockSimple implements TextBlock {
@@ -51,7 +53,7 @@ class TextBlockSimple implements TextBlock {
 			HorizontalAlignement horizontalAlignement) {
 		for (CharSequence s : texts) {
 			if (s instanceof Stereotype) {
-				lines.add(createLineForStereotype(fontConfiguration, (Stereotype) s, horizontalAlignement));
+				lines.addAll(createLinesForStereotype(fontConfiguration, (Stereotype) s, horizontalAlignement));
 			} else if (s instanceof EmbededDiagram) {
 				lines.add(new EmbededSystemLine((EmbededDiagram) s));
 			} else {
@@ -60,10 +62,14 @@ class TextBlockSimple implements TextBlock {
 		}
 	}
 
-	private SingleLine createLineForStereotype(FontConfiguration fontConfiguration, Stereotype s,
+	private List<SingleLine> createLinesForStereotype(FontConfiguration fontConfiguration, Stereotype s,
 			HorizontalAlignement horizontalAlignement) {
 		assert s.getLabel() != null;
-		return new SingleLine(s.getLabel(), fontConfiguration.add(FontStyle.ITALIC), horizontalAlignement);
+		final List<SingleLine> result = new ArrayList<SingleLine>();
+		for (String st : s.getLabels()) {
+			result.add(new SingleLine(st, fontConfiguration.add(FontStyle.ITALIC), horizontalAlignement));
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -81,7 +87,7 @@ class TextBlockSimple implements TextBlock {
 		return new Dimension2DDouble(width, height);
 	}
 
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		final Dimension2D dimText = getTextDimension(StringBounderUtils.asStringBounder(g2d));
 
 		for (Line line : lines) {
@@ -92,7 +98,7 @@ class TextBlockSimple implements TextBlock {
 						- line.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getWidth();
 				deltaX = diff / 2.0;
 			}
-			line.draw(g2d, x + deltaX, y);
+			line.draw(colorMapper, g2d, x + deltaX, y);
 			y += line.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight();
 		}
 	}

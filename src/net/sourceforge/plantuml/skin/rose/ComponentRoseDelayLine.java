@@ -33,9 +33,9 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,9 +44,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentRoseDelayLine extends AbstractComponent {
 
-	private final Color color;
+	private final HtmlColor color;
 
-	public ComponentRoseDelayLine(Color color) {
+	public ComponentRoseDelayLine(HtmlColor color) {
 		this.color = color;
 	}
 

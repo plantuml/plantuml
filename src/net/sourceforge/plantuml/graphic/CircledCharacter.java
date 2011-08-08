@@ -28,13 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5804 $
+ * Revision $Revision: 6780 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
@@ -54,7 +52,9 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.cucadiagram.dot.Lazy;
 import net.sourceforge.plantuml.skin.UDrawable;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
@@ -64,13 +64,14 @@ import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 public class CircledCharacter implements UDrawable, TextBlock {
 
 	private final String c;
-	private final Font font;
-	private final Color innerCircle;
-	private final Color circle;
-	private final Color fontColor;
+	private final UFont font;
+	private final HtmlColor innerCircle;
+	private final HtmlColor circle;
+	private final HtmlColor fontColor;
 	private final double radius;
 
-	public CircledCharacter(char c, double radius, Font font, Color innerCircle, Color circle, Color fontColor) {
+	public CircledCharacter(char c, double radius, UFont font, HtmlColor innerCircle, HtmlColor circle,
+			HtmlColor fontColor) {
 		this.c = "" + c;
 		this.radius = radius;
 		this.font = font;
@@ -79,8 +80,8 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		this.fontColor = fontColor;
 	}
 
-	public void draw(Graphics2D g2d, int x, int y, double dpiFactor) {
-		drawU(new UGraphicG2d(g2d, null, 1.0), x, y);
+	public void draw(ColorMapper colorMapper, Graphics2D g2d, int x, int y, double dpiFactor) {
+		drawU(new UGraphicG2d(colorMapper, g2d, null, 1.0), x, y);
 	}
 
 	public void drawU(UGraphic ug, double x, double y) {
@@ -88,12 +89,11 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		if (circle != null) {
 			ug.getParam().setColor(circle);
 		}
-
 		ug.getParam().setBackcolor(innerCircle);
-
 		ug.draw(x, y, new UEllipse(radius * 2, radius * 2));
 		ug.getParam().setColor(fontColor);
 		ug.centerChar(x + radius, y + radius, c.charAt(0), font);
+		ug.getParam().setBackcolor(null);
 
 	}
 
@@ -110,7 +110,7 @@ public class CircledCharacter implements UDrawable, TextBlock {
 	}
 
 	private PathIterator getPathIteratorCharacter(FontRenderContext frc) {
-		final TextLayout textLayout = new TextLayout(c, font, frc);
+		final TextLayout textLayout = new TextLayout(c, font.getFont(), frc);
 		final Shape s = textLayout.getOutline(null);
 		return s.getPathIterator(null);
 	}
@@ -134,22 +134,24 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		return new Dimension2DDouble(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
 	}
 
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		throw new UnsupportedOperationException();
 	}
 
-	public DrawFile generateCircleCharacter(final Color background, final double dpiFactor) throws IOException {
+	public DrawFile generateCircleCharacter(final ColorMapper colorMapper, final HtmlColor background,
+			final double dpiFactor) throws IOException {
 
 		final Lazy<File> lpng = new Lazy<File>() {
 
 			public File getNow() throws IOException {
 				final File png = FileUtils.createTempFile("circle", ".png");
-				final EmptyImageBuilder builder = new EmptyImageBuilder((int)(60 * dpiFactor), (int)(60 * dpiFactor), background, dpiFactor);
+				final EmptyImageBuilder builder = new EmptyImageBuilder((int) (60 * dpiFactor), (int) (60 * dpiFactor),
+						colorMapper.getMappedColor(background), dpiFactor);
 				BufferedImage im = builder.getBufferedImage();
 				final Graphics2D g2d = builder.getGraphics2D();
 				final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
 
-				draw(g2d, 0, 0, dpiFactor);
+				draw(colorMapper, g2d, 0, 0, dpiFactor);
 				im = im.getSubimage(0, 0, (int) (getPreferredWidth(stringBounder) * dpiFactor) + 5,
 						(int) (getPreferredHeight(stringBounder) * dpiFactor) + 1);
 
@@ -161,14 +163,14 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		final Lazy<File> leps = new Lazy<File>() {
 			public File getNow() throws IOException {
 				final File epsFile = FileUtils.createTempFile("circle", ".eps");
-				UGraphicEps.copyEpsToFile(CircledCharacter.this, epsFile);
+				UGraphicEps.copyEpsToFile(colorMapper, CircledCharacter.this, epsFile);
 				return epsFile;
 			}
 		};
 
 		final Lazy<String> lsvg = new Lazy<String>() {
 			public String getNow() throws IOException {
-				return UGraphicG2d.getSvgString(CircledCharacter.this);
+				return UGraphicG2d.getSvgString(colorMapper, CircledCharacter.this);
 			}
 
 		};

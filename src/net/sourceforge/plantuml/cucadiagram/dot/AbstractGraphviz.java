@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6104 $
+ * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
@@ -80,7 +81,7 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	abstract protected File specificDotExe();
 
-	final public void createPng(OutputStream os) throws IOException, InterruptedException {
+	final public void createFile(OutputStream os) throws IOException, InterruptedException {
 		if (dotString == null) {
 			throw new IllegalArgumentException();
 		}
@@ -97,6 +98,8 @@ abstract class AbstractGraphviz implements Graphviz {
 			p = new ProcessRunner(cmd);
 			p.run(dotString.getBytes(), os);
 			Log.info("Ending process ok");
+		} catch (InterruptedException e) {
+			Log.error("Interrupted");
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Log.error("Error: " + e);
@@ -128,6 +131,11 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	final public String dotVersion() throws IOException, InterruptedException {
 		final String cmd = getCommandLineVersion();
+		return executeCmd(cmd);
+	}
+
+	public String testFile(String dotfilename, String outfile) throws IOException, InterruptedException {
+		final String cmd = getCommandLine() + "-o" + outfile + " " + dotfilename;
 		return executeCmd(cmd);
 	}
 
@@ -186,6 +194,14 @@ abstract class AbstractGraphviz implements Graphviz {
 		for (String t : type) {
 			sb.append(" -T" + t + " ");
 		}
+	}
+
+	public final String getDotString() {
+		return dotString;
+	}
+
+	public final List<String> getType() {
+		return Arrays.asList(type);
 	}
 
 }

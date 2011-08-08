@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -38,6 +38,7 @@ import java.util.List;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class CommandCreateNote extends SingleLineCommand<AbstractEntityDiagram> {
 
@@ -51,7 +52,7 @@ public class CommandCreateNote extends SingleLineCommand<AbstractEntityDiagram> 
 		final String code = arg.get(1);
 		final Entity entity = getSystem().createEntity(code, display, EntityType.NOTE);
 		assert entity != null;
-		entity.setSpecificBackcolor(arg.get(2));
+		entity.setSpecificBackcolor(HtmlColor.getColorIfValid(arg.get(2)));
 		return CommandExecutionResult.ok();
 	}
 

@@ -31,8 +31,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.txt;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
@@ -40,7 +38,9 @@ import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UClip;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 
@@ -48,6 +48,10 @@ public class UGraphicTxt extends AbstractCommonUGraphic {
 
 	private final UmlCharArea charArea = new UmlCharAreaImpl();
 	private int lastPrint = 0;
+
+	public UGraphicTxt() {
+		super(new ColorMapperIdentity());
+	}
 
 	public StringBounder getStringBounder() {
 		return new TextStringBounder();
@@ -71,7 +75,7 @@ public class UGraphicTxt extends AbstractCommonUGraphic {
 		// throw new UnsupportedOperationException();
 	}
 
-	public void centerChar(double x, double y, char c, Font font) {
+	public void centerChar(double x, double y, char c, UFont font) {
 		throw new UnsupportedOperationException();
 	}
 

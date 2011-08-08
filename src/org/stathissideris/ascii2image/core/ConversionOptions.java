@@ -27,13 +27,13 @@ package org.stathissideris.ascii2image.core;
  */
 public class ConversionOptions {
 	
-	public ProcessingOptions processingOptions =
-		new ProcessingOptions();
+//	public ProcessingOptions processingOptions =
+//		new ProcessingOptions();
 	public RenderingOptions renderingOptions =
 		new RenderingOptions();
 		
 	public void setDebug(boolean value){
-		processingOptions.setPrintDebugOutput(value);
+		// processingOptions.setPrintDebugOutput(value);
 		renderingOptions.setRenderDebugLines(value);
 	}
 	

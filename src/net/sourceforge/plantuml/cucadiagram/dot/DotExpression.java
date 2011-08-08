@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5705 $
+ * Revision $Revision: 6932 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontChange;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -52,12 +52,14 @@ import net.sourceforge.plantuml.graphic.HtmlCommand;
 import net.sourceforge.plantuml.graphic.Img;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.Text;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
-final class DotExpression {
+public final class DotExpression {
 
 	private final StringBuilder sb = new StringBuilder();
 
-	private final Font normalFont;
+	private final UFont normalFont;
 
 	private FontConfiguration fontConfiguration;
 
@@ -67,15 +69,19 @@ final class DotExpression {
 
 	private final FileFormat fileFormat;
 
+	private final ColorMapper colorMapper;
+
 	private boolean hasImg;
 
-	DotExpression(String html, int defaultFontSize, HtmlColor color, String fontFamily, int style, FileFormat fileFormat) {
+	public DotExpression(ColorMapper colorMapper, String html, int defaultFontSize, HtmlColor color, String fontFamily,
+			int style, FileFormat fileFormat) {
 		if (html.contains("\n")) {
 			throw new IllegalArgumentException(html);
 		}
+		this.colorMapper = colorMapper;
 		this.fontFamily = fontFamily;
-		this.normalFont = new Font("SansSerif", Font.PLAIN, defaultFontSize);
-		this.fontConfiguration = new FontConfiguration(normalFont, color.getColor());
+		this.normalFont = new UFont("SansSerif", Font.PLAIN, defaultFontSize);
+		this.fontConfiguration = new FontConfiguration(normalFont, color);
 		this.fileFormat = fileFormat;
 
 		if ((style & Font.ITALIC) != 0) {
@@ -190,8 +196,8 @@ final class DotExpression {
 		sb.append("\" ");
 		appendFontWithFamily(sb);
 
-		final Color col = fontConfiguration.getColor();
-		sb.append(" COLOR=\"").append(HtmlColor.getAsHtml(col)).append("\"");
+		final HtmlColor col = fontConfiguration.getColor();
+		sb.append(" COLOR=\"").append(StringUtils.getAsHtml(colorMapper.getMappedColor(col))).append("\"");
 		sb.append(">");
 		return sb.toString();
 	}

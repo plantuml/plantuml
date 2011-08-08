@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.oregon;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -41,6 +40,8 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemOregon extends AbstractPSystem {
 	
@@ -58,26 +59,13 @@ public class PSystemOregon extends AbstractPSystem {
 		}
 	}
 
-//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
-//		OutputStream os = null;
-//		try {
-//			os = new FileOutputStream(suggestedFile);
-//			getGraphicStrings().writeImage(os, fileFormat);
-//		} finally {
-//			if (os != null) {
-//				os.close();
-//			}
-//		}
-//		return Arrays.asList(suggestedFile);
-//	}
-
 	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
 		getGraphicStrings().writeImage(os, fileFormat);
 	}
 
 	private GraphicStrings getGraphicStrings() throws IOException {
-		final Font font = new Font("Monospaced", Font.PLAIN, 14);
-		return new GraphicStrings(screen.getLines(), font, Color.GREEN, Color.BLACK, true);
+		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
+		return new GraphicStrings(screen.getLines(), font, HtmlColor.GREEN, HtmlColor.BLACK, true);
 	}
 
 	public String getDescription() {

@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.activitydiagram2.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram2.ActivityDiagram2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -43,7 +44,7 @@ import net.sourceforge.plantuml.command.CommandMultilines;
 public class CommandNewMultilinesActivity2 extends CommandMultilines<ActivityDiagram2> {
 
 	public CommandNewMultilinesActivity2(final ActivityDiagram2 system) {
-		super(system, "(?i)^\\s*[-*]\\s*\"\\s*.*$", "(?i)^.*\\s*\"\\s*$");
+		super(system, "(?i)^\\s*[-*<>^]\\s*\"\\s*.*$", "(?i)^.*\\s*\"\\s*$");
 	}
 
 	public final CommandExecutionResult execute(List<String> lines) {
@@ -56,14 +57,15 @@ public class CommandNewMultilinesActivity2 extends CommandMultilines<ActivityDia
 		}
 		String s = StringUtils.getMergedLines(lines);
 		s = s.trim();
-		assert s.startsWith("-") || s.startsWith("*") ;
+		assert s.startsWith("-") || s.startsWith("*") || s.startsWith("<") || s.startsWith(">") || s.startsWith("^");
+		final Direction direction = Direction.fromChar(s.charAt(0));
 		s = s.substring(1);
 		s = s.trim();
 		assert s.startsWith("\"");
 		assert s.endsWith("\"");
-		s = s.substring(1, s.length() - 2);
+		s = s.substring(1, s.length() - 1);
 
-		getSystem().newActivity(s);
+		getSystem().newActivity(s, direction);
 		return CommandExecutionResult.ok();
 	}
 

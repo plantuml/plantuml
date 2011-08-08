@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.Color;
 
-public class ColorChangerMonochrome implements ColorChanger {
+public class ColorChangerMonochrome {
 
 	public Color getChangedColor(Color color) {
 		if (color==null) {

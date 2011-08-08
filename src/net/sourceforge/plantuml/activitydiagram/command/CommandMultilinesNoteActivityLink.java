@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5751 $
+ * Revision $Revision: 6939 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
 public class CommandMultilinesNoteActivityLink extends CommandMultilines<ActivityDiagram> {
@@ -50,13 +51,13 @@ public class CommandMultilinesNoteActivityLink extends CommandMultilines<Activit
 	public final CommandExecutionResult execute(List<String> lines) {
 
 		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
-		final String s = StringUtils.getMergedLines(strings);
+		// final String s = StringUtils.getMergedLines(strings);
 
 		final Link link = getSystem().getLastActivityLink();
 		if (link == null) {
 			return CommandExecutionResult.error("Nothing to note");
 		}
-		link.setNote(s);
+		link.addNote(strings, Position.BOTTOM);
 		return CommandExecutionResult.ok();
 	}
 

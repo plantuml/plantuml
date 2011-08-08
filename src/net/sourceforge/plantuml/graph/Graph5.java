@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graph2.InflationTransform2;
 import net.sourceforge.plantuml.graph2.Plan;
 import net.sourceforge.plantuml.graph2.Polyline2;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class Graph5 {
 
@@ -138,7 +139,7 @@ public class Graph5 {
 			final double x = pos.getX() - image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth() / 2;
 			final double y = pos.getY() - image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight() / 2;
 			g2d.translate(x, y);
-			image.draw(g2d);
+			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-x, -y);
 		}
 

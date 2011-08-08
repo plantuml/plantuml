@@ -28,27 +28,25 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6398 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class UParam {
 
-	private Color color = null;
-	private Color backcolor = null;
+	private HtmlColor color = null;
+	private HtmlColor backcolor = null;
 	private UStroke stroke = new UStroke(1);
 	private UGradient gradient = null;
-	private ColorChanger colorChanger = new ColorChangerIdentity();
 
 	public void reset() {
 		color = null;
 		backcolor = null;
 		gradient = null;
 		stroke = new UStroke(1);
-		colorChanger = new ColorChangerIdentity();
 	}
 
 	public final UGradient getGradient() {
@@ -59,20 +57,20 @@ public class UParam {
 		this.gradient = gradient;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(HtmlColor color) {
 		this.color = color;
 	}
 
-	public Color getColor() {
-		return colorChanger.getChangedColor(color);
+	public HtmlColor getColor() {
+		return color;
 	}
 
-	public void setBackcolor(Color color) {
+	public void setBackcolor(HtmlColor color) {
 		this.backcolor = color;
 	}
 
-	public Color getBackcolor() {
-		return colorChanger.getChangedColor(backcolor);
+	public HtmlColor getBackcolor() {
+		return backcolor;
 	}
 
 	public void setStroke(UStroke stroke) {
@@ -81,13 +79,6 @@ public class UParam {
 
 	public UStroke getStroke() {
 		return stroke;
-	}
-
-	private void setColorChanger(ColorChanger colorChanger) {
-		if (colorChanger == null) {
-			throw new IllegalArgumentException();
-		}
-		this.colorChanger = colorChanger;
 	}
 
 }

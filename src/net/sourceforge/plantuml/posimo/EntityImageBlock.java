@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,10 +49,12 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.dot.PlayField;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -77,9 +78,9 @@ public class EntityImageBlock implements IEntityImageBlock {
 		this.rose = rose;
 		this.links = links;
 
-		if (StringUtils.isNotEmpty(entity.getDisplay())) {
-			this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-					param.getFont(titleParam, null), Color.BLACK), HorizontalAlignement.CENTER);
+		if (StringUtils.isNotEmpty(entity.getDisplay2())) {
+			this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+					param.getFont(titleParam, null), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 		} else {
 			this.name = null;
 		}
@@ -140,7 +141,7 @@ public class EntityImageBlock implements IEntityImageBlock {
 
 		// this.frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), Color.BLACK, param
 		// .getFont(FontParam.CLASS), rose.getHtmlColor(param, ColorParam.classBorder).getColor());
-		this.frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), param);
+		this.frame = new Frame(entity.getDisplay2(), param);
 
 	}
 
@@ -154,17 +155,17 @@ public class EntityImageBlock implements IEntityImageBlock {
 
 		// if (entity.getParent() == null) {
 		if (entity.getType() != EntityType.GROUP) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBackground).getColor());
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder).getColor());
+			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBackground));
+			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
 			ug.draw(xTheoricalPosition - marginWidth, yTheoricalPosition - marginHeight, rect);
 			// name.drawU(ug, xTheoricalPosition + margin, yTheoricalPosition + margin);
 			name.drawU(ug, xTheoricalPosition + 0, yTheoricalPosition + 0);
 		} else {
 			// final Frame frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), Color.BLACK, param
 			// .getFont(FontParam.CLASS), rose.getHtmlColor(param, ColorParam.classBorder).getColor());
-			final Frame frame = new Frame(StringUtils.getWithNewlines(entity.getDisplay()), param);
+			final Frame frame = new Frame(entity.getDisplay2(), param);
 
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background).getColor());
+			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
 			ug.getParam().setColor(null);
 			ug.draw(xTheoricalPosition - marginWidth, yTheoricalPosition - marginWidth, rect);
 
@@ -183,4 +184,9 @@ public class EntityImageBlock implements IEntityImageBlock {
 					yTheoricalPosition + 0 + frame.getPreferredHeight(ug.getStringBounder())));
 		}
 	}
+	
+	public ShapeType getShapeType() {
+		return ShapeType.RECTANGLE;
+	}
+
 }

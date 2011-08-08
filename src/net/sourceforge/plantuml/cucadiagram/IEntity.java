@@ -40,37 +40,44 @@ import java.util.List;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
+import net.sourceforge.plantuml.svek.IEntityImage;
 
-public interface IEntity extends Imaged, SpecificBackcolorable {
+public interface IEntity extends Imaged, SpecificBackcolorable, Comparable<IEntity> {
 
 	public Group getParent();
-	
-	public String getDisplay();
-	
+
+	public List<? extends CharSequence> getDisplay2();
+
 	public EntityType getType();
 
 	public String getUid();
-	
+
 	public Url getUrl();
-	
+
 	public List<Member> getFieldsToDisplay();
-	
+
 	public Stereotype getStereotype();
 
 	public void setStereotype(Stereotype stereotype);
-	
+
 	public List<Member> getMethodsToDisplay();
 
 	public String getCode();
 
 	public DrawFile getImageFile(File searched) throws IOException;
-	
+
 	public boolean isTop();
 
 	public void setTop(boolean top);
-	
+
 	public boolean hasNearDecoration();
-	
+
 	public void setNearDecoration(boolean nearDecoration);
+
+	public int getXposition();
+
+	public void setXposition(int pos);
+
+	public IEntityImage getSvekImage();
 
 }

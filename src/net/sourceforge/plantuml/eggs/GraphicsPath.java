@@ -40,19 +40,23 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.png.PngIO;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UMotif;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class GraphicsPath {
 
 	private final String path;
+	private final ColorMapper colorMapper;
 
 	// private final Font numberFont = new Font("SansSerif", Font.BOLD, 20);
 	// private final Font font = new Font("SansSerif", Font.PLAIN, 11);
 
-	public GraphicsPath(String path) {
+	public GraphicsPath(ColorMapper colorMapper, String path) {
 		this.path = path;
+		this.colorMapper = colorMapper;
 	}
 
 	public void writeImage(OutputStream os) throws IOException {
@@ -66,8 +70,8 @@ public class GraphicsPath {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 		
-		final UGraphicG2d ug = new UGraphicG2d(g2d, im, 1.0);
-		ug.getParam().setColor(Color.BLACK);
+		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, im, 1.0);
+		ug.getParam().setColor(HtmlColor.BLACK);
 		final UMotif motif = new UMotif(path);
 		motif.drawHorizontal(ug, 20, 20, 1);
 

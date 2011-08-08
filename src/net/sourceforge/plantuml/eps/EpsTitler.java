@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.eps;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
@@ -42,35 +41,36 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalPosition;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 
 public final class EpsTitler {
 
-	private final Color textColor;
-	private final List<String> text;
-	// private final int fontSize;
-	// private final String fontFamily;
+	private final List<? extends CharSequence> text;
 	private final HorizontalAlignement horizontalAlignement;
 	private final VerticalPosition verticalPosition;
 	private final int margin;
 	private final TextBlock textBloc;
+	private final EpsStrategy epsStrategy;
+	private final ColorMapper colorMapper;
 
-	public EpsTitler(Color textColor, List<String> text, int fontSize, String fontFamily,
+	public EpsTitler(ColorMapper colorMapper, EpsStrategy epsStrategy, HtmlColor textColor, List<? extends CharSequence> text, int fontSize, String fontFamily,
 			HorizontalAlignement horizontalAlignement, VerticalPosition verticalPosition, int margin) {
-		this.textColor = textColor;
 		this.text = text;
-		// this.fontSize = fontSize;
-		// this.fontFamily = fontFamily;
+		this.colorMapper = colorMapper;
+		this.epsStrategy = epsStrategy;
 		this.horizontalAlignement = horizontalAlignement;
 		this.verticalPosition = verticalPosition;
 		this.margin = margin;
 		if (text == null || text.size() == 0) {
 			textBloc = null;
 		} else {
-			final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
+			final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
 			textBloc = TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor),
 					HorizontalAlignement.LEFT);
 		}
@@ -80,8 +80,7 @@ public final class EpsTitler {
 		if (textBloc == null) {
 			return 0;
 		}
-		return textBloc.calculateDimension(new UGraphicEps(EpsStrategy.getDefault()).getStringBounder()).getHeight()
-				+ margin;
+		return textBloc.calculateDimension(new UGraphicEps(colorMapper, epsStrategy).getStringBounder()).getHeight() + margin;
 	}
 
 	public String addTitleEps(String eps) throws IOException {
@@ -104,7 +103,7 @@ public final class EpsTitler {
 		final double width = x2 - x1;
 		final double height = y2 - y1;
 
-		final UGraphicEps uGraphicEps = new UGraphicEps(EpsStrategy.getDefault());
+		final UGraphicEps uGraphicEps = new UGraphicEps(colorMapper, epsStrategy);
 		final Dimension2D dimText = textBloc.calculateDimension(uGraphicEps.getStringBounder());
 		final double xpos;
 

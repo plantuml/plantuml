@@ -28,13 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5343 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Color;
-
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,14 +43,14 @@ public class CircleInterface implements UDrawable {
 
 	private final float thickness;
 	private final double headDiam;
-	private final Color backgroundColor;
-	private final Color foregroundColor;
+	private final HtmlColor backgroundColor;
+	private final HtmlColor foregroundColor;
 
-	public CircleInterface(Color backgroundColor, Color foregroundColor) {
+	public CircleInterface(HtmlColor backgroundColor, HtmlColor foregroundColor) {
 		this(backgroundColor, foregroundColor, 16, 2);
 	}
 
-	public CircleInterface(Color backgroundColor, Color foregroundColor, double headDiam, float thickness) {
+	public CircleInterface(HtmlColor backgroundColor, HtmlColor foregroundColor, double headDiam, float thickness) {
 		this.backgroundColor = backgroundColor;
 		this.foregroundColor = foregroundColor;
 		this.headDiam = headDiam;

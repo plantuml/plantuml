@@ -35,6 +35,7 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UGradient;
@@ -50,7 +51,7 @@ public class DriverRectangleEps implements UDriver<EpsGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final URectangle rect = (URectangle) ushape;
 
 		double width = rect.getWidth();
@@ -70,13 +71,13 @@ public class DriverRectangleEps implements UDriver<EpsGraphics> {
 
 		final UGradient gr = param.getGradient();
 		if (gr == null) {
-			eps.setStrokeColor(param.getColor());
-			eps.setFillColor(param.getBackcolor());
+			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
+			eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
 			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
 					.getStroke().getDashSpace());
 			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2);
 		} else {
-			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, gr);
+			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, gr, mapper);
 		}
 
 	}

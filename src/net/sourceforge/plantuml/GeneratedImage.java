@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3824 $
+ * Revision $Revision: 6615 $
  *
  */
 package net.sourceforge.plantuml;
@@ -39,11 +39,10 @@ public class GeneratedImage implements Comparable<GeneratedImage> {
 
 	private final File pngFile;
 	private final String description;
+	private final PSystem system;
 
-	public GeneratedImage(File pngFile, String description) {
-		if (pngFile == null) {
-			throw new IllegalArgumentException();
-		}
+	public GeneratedImage(File pngFile, String description, PSystem system) {
+		this.system = system;
 		this.pngFile = pngFile;
 		this.description = description;
 	}
@@ -54,6 +53,10 @@ public class GeneratedImage implements Comparable<GeneratedImage> {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public boolean isError() {
+		return system instanceof PSystemError;
 	}
 
 	@Override

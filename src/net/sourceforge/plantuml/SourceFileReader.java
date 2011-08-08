@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.preproc.Defines;
 
-public class SourceFileReader {
+public class SourceFileReader implements ISourceFileReader {
 
 	private final File file;
 	private final File outputDirectory;
@@ -62,10 +62,12 @@ public class SourceFileReader {
 	}
 
 	public SourceFileReader(final File file, File outputDirectory) throws IOException {
-		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, new FileFormatOption(FileFormat.PNG));
+		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, new FileFormatOption(
+				FileFormat.PNG));
 	}
 
-	public SourceFileReader(final File file, File outputDirectory, FileFormatOption fileFormatOption) throws IOException {
+	public SourceFileReader(final File file, File outputDirectory, FileFormatOption fileFormatOption)
+			throws IOException {
 		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, fileFormatOption);
 	}
 
@@ -86,8 +88,17 @@ public class SourceFileReader {
 			outputDirectory.mkdirs();
 		}
 		this.outputDirectory = outputDirectory;
-		
-		builder = new BlockUmlBuilder(config, defines, getReader(charset));
+
+		builder = new BlockUmlBuilder(config, defines, getReader(charset), file.getAbsoluteFile().getParentFile());
+	}
+
+	public boolean hasError() throws IOException, InterruptedException {
+		for (final BlockUml b : builder.getBlockUmls()) {
+			if (b.getSystem() instanceof PSystemError) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public List<GeneratedImage> getGeneratedImages() throws IOException, InterruptedException {
@@ -100,15 +111,18 @@ public class SourceFileReader {
 			String newName = blockUml.getFilename();
 
 			if (newName == null) {
-				newName = changeName(file.getName(), cpt++, fileFormatOption.getFileFormat());
+				newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
 			}
 
 			final File suggested = new File(outputDirectory, newName);
 			suggested.getParentFile().mkdirs();
 
-			for (File f : blockUml.getSystem().exportDiagrams(suggested, fileFormatOption)) {
-				final String desc = "[" + file.getName() + "] " + blockUml.getSystem().getDescription();
-				final GeneratedImage generatedImage = new GeneratedImage(f, desc);
+			final PSystem system = blockUml.getSystem();
+			OptionFlags.getInstance().logData(file, system);
+
+			for (File f : system.exportDiagrams(suggested, fileFormatOption)) {
+				final String desc = "[" + file.getName() + "] " + system.getDescription();
+				final GeneratedImage generatedImage = new GeneratedImage(f, desc, system);
 				result.add(generatedImage);
 			}
 
@@ -130,13 +144,6 @@ public class SourceFileReader {
 		return Collections.unmodifiableList(result);
 	}
 
-	static String changeName(String name, int cpt, FileFormat fileFormat) {
-		if (cpt == 0) {
-			return name.replaceAll("\\.\\w+$", fileFormat.getFileSuffix());
-		}
-		return name.replaceAll("\\.\\w+$", "_" + String.format("%03d", cpt) + fileFormat.getFileSuffix());
-	}
-
 	private Reader getReader(String charset) throws FileNotFoundException, UnsupportedEncodingException {
 		if (charset == null) {
 			Log.info("Using default charset");
@@ -149,10 +156,9 @@ public class SourceFileReader {
 	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
 	}
-	
+
 	public final Set<File> getIncludedFiles() {
 		return builder.getIncludedFiles();
 	}
-
 
 }

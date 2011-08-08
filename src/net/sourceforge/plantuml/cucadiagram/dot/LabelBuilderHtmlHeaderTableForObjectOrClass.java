@@ -33,11 +33,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
@@ -70,8 +66,14 @@ class LabelBuilderHtmlHeaderTableForObjectOrClass extends DotCommon implements L
 
 		if (borderMode == BorderMode.NO_BORDER) {
 			sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
-		} else if (borderMode == BorderMode.NO_BORDER_CELLSPACING) {
+		} else if (borderMode == BorderMode.NO_BORDER_CELLSPACING_OLD) {
 			sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"1\">");
+		} else if (borderMode == BorderMode.NO_BORDER_CELLSPACING_NEW) {
+			final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
+			sb.append("<TABLE BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"1\" ");
+			sb.append("COLOR=" + getColorString(ColorParam.classBorder, stereo) + " BGCOLOR="
+					+ getColorString(ColorParam.classBackground, stereo));
+			sb.append(">");
 		} else if (borderMode == BorderMode.BORDER_1_WITHOUT_COLOR) {
 			sb.append("<TABLE BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" ");
 			sb.append(">");

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 6529 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -58,7 +58,12 @@ public class CommandAutonumber extends SingleLineCommand<SequenceDiagram> {
 		}
 
 		final String df = arg.get(2) == null ? "<b>0</b>" : arg.get(2);
-		final DecimalFormat decimalFormat = new DecimalFormat(df);
+		final DecimalFormat decimalFormat;
+		try {
+			decimalFormat = new DecimalFormat(df);
+		} catch (IllegalArgumentException e) {
+			return CommandExecutionResult.error("Error in pattern : " + df);
+		}
 
 		getSystem().goAutonumber(start, inc, decimalFormat);
 		return CommandExecutionResult.ok();

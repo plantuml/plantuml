@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -38,6 +38,7 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class TextBlockSpotted extends TextBlockSimple {
@@ -65,7 +66,7 @@ class TextBlockSpotted extends TextBlockSimple {
 	}
 
 	@Override
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		// final AffineTransform at = g2d.getTransform();
 		// final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
 		//

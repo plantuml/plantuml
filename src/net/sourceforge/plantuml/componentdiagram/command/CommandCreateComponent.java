@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5728 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.componentdiagram.command;
@@ -75,7 +75,7 @@ public class CommandCreateComponent extends SingleLineCommand<ComponentDiagram> 
 		final String stereotype = arg.get(2);
 		// final Entity entity = getSystem().createEntity(code, display, type);
 		final Entity entity = (Entity) getSystem().getOrCreateEntity(code, type);
-		entity.setDisplay(display);
+		entity.setDisplay2(display);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
 					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));

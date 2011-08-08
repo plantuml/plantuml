@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6398 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -49,8 +48,10 @@ import net.sourceforge.plantuml.graphic.UnusedSpace;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.skin.UDrawable;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -64,8 +65,8 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 
 	private final double dpiFactor;
 
-	public UGraphicG2d(Graphics2D g2d, BufferedImage bufferedImage, double dpiFactor) {
-		super(g2d);
+	public UGraphicG2d(ColorMapper colorMapper, Graphics2D g2d, BufferedImage bufferedImage, double dpiFactor) {
+		super(colorMapper, g2d);
 		this.dpiFactor = dpiFactor;
 		if (dpiFactor != 1.0) {
 			final AffineTransform at = g2d.getTransform();
@@ -100,21 +101,21 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 		}
 	}
 
-	public void centerChar(double x, double y, char c, Font font) {
+	public void centerChar(double x, double y, char c, UFont font) {
 		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
 
-		getGraphicObject().setColor(getParam().getColor());
+		getGraphicObject().setColor(getColorMapper().getMappedColor(getParam().getColor()));
 		final double xpos = x - unusedSpace.getCenterX();
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		getGraphicObject().setFont(font);
+		getGraphicObject().setFont(font.getFont());
 		getGraphicObject().drawString("" + c, (float) (xpos + getTranslateX()), (float) (ypos + getTranslateY()));
 		// getGraphicObject().drawString("" + c, Math.round(xpos +
 		// getTranslateX()), Math.round(ypos + getTranslateY()));
 	}
 
-	static public String getSvgString(UDrawable udrawable) throws IOException {
-		final UGraphicSvg ug = new UGraphicSvg(false);
+	static public String getSvgString(ColorMapper colorMapper, UDrawable udrawable) throws IOException {
+		final UGraphicSvg ug = new UGraphicSvg(colorMapper, false);
 		udrawable.drawU(ug);
 		return CucaDiagramFileMaker.getSvg(ug);
 	}

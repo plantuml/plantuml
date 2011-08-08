@@ -43,10 +43,13 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.project.graphic.GanttDiagram;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
@@ -55,6 +58,7 @@ public class PSystemProject extends AbstractPSystem {
 
 	private final Project project = new Project();
 	private final Color background = Color.WHITE;
+	private final ColorMapper colorMapper = new ColorMapperIdentity();
 
 	public int getNbImages() {
 		return 1;
@@ -72,11 +76,15 @@ public class PSystemProject extends AbstractPSystem {
 			final BufferedImage im = createImage(diagram);
 			PngIO.write(im, os, getMetadata(), 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(HtmlColor.getAsHtml(background), false);
+			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false);
 			diagram.draw(svg, 0, 0);
 			svg.createXml(os);
 		} else if (fileFormat == FileFormat.EPS) {
-			final UGraphicEps eps = new UGraphicEps(EpsStrategy.getDefault());
+			final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
+			diagram.draw(eps, 0, 0);
+			os.write(eps.getEPSCode().getBytes());
+		} else if (fileFormat == FileFormat.EPS_TEXT) {
+			final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.WITH_MACRO_AND_TEXT);
 			diagram.draw(eps, 0, 0);
 			os.write(eps.getEPSCode().getBytes());
 		} else {
@@ -87,7 +95,7 @@ public class PSystemProject extends AbstractPSystem {
 	private BufferedImage createImage(GanttDiagram diagram) {
 		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, background);
 		Graphics2D g2d = builder.getGraphics2D();
-		UGraphicG2d ug = new UGraphicG2d(g2d, null, 1.0);
+		UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, null, 1.0);
 
 		final double height = diagram.getHeight(ug.getStringBounder());
 		final double width = diagram.getWidth(ug.getStringBounder());
@@ -98,7 +106,7 @@ public class PSystemProject extends AbstractPSystem {
 		final BufferedImage im = builder.getBufferedImage();
 		g2d = builder.getGraphics2D();
 
-		ug = new UGraphicG2d(g2d, im, 1.0);
+		ug = new UGraphicG2d(colorMapper, g2d, im, 1.0);
 		diagram.draw(ug, 0, 0);
 		g2d.dispose();
 		return im;

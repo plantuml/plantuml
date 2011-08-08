@@ -27,17 +27,33 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4912 $
+ *
+ * Revision $Revision: 5618 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.classdiagram.command;
 
-import java.awt.Color;
+import java.util.List;
 
-public class ColorChangerIdentity implements ColorChanger {
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.cucadiagram.EntityType;
 
-	public Color getChangedColor(Color color) {
-		return color;
+public class CommandDiamondAssociation extends SingleLineCommand<ClassDiagram> {
+
+	public CommandDiamondAssociation(ClassDiagram diagram) {
+		super(diagram, "(?i)^\\<\\>\\s*([\\p{L}0-9_.]+)$");
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(List<String> arg) {
+		final String code = arg.get(0);
+		if (getSystem().entityExist(code)) {
+			return CommandExecutionResult.error("Already existing : "+code);
+		}
+		getSystem().createEntity(code, null, EntityType.ASSOCIATION);
+
+		return CommandExecutionResult.ok();
 	}
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6484 $
+ * Revision $Revision: 6493 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -453,5 +453,33 @@ class DrawableSet {
 		cmap.append(Math.round(y2));
 		cmap.append("\"/>\n");
 	}
+	
+	Participant getFirst(Collection<Participant> someParticipants) {
+		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
+		int min = -1;
+		for (Participant p : someParticipants) {
+			final int n = list.indexOf(p);
+			assert n != -1;
+			if (min == -1 || min > n) {
+				min = n;
+			}
+		}
+		return list.get(min);
+	}
+
+	Participant getLast(Collection<Participant> someParticipants) {
+		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
+		int max = -1;
+		for (Participant p : someParticipants) {
+			final int n = list.indexOf(p);
+			assert n != -1;
+			if (max == -1 || max < n) {
+				max = n;
+			}
+		}
+		return list.get(max);
+	}
+
+
 
 }

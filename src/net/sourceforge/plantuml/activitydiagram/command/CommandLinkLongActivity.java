@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
 
@@ -91,7 +92,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			entity1.setStereotype(new Stereotype(line0.get("STEREOTYPE").get(0)));
 		}
 		if (line0.get("BACKCOLOR").get(0)!=null) {
-			entity1.setSpecificBackcolor(line0.get("BACKCOLOR").get(0));
+			entity1.setSpecificBackcolor(HtmlColor.getColorIfValid(line0.get("BACKCOLOR").get(0)));
 		}
 		final StringBuilder sb = new StringBuilder();
 
@@ -122,7 +123,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			entity2.setStereotype(new Stereotype(lineLast.get(2)));
 		}
 		if (lineLast.get(3)!=null) {
-			entity2.setSpecificBackcolor(lineLast.get(3));
+			entity2.setSpecificBackcolor(HtmlColor.getColorIfValid(lineLast.get(3)));
 		}
 
 		if (entity1 == null || entity2 == null) {

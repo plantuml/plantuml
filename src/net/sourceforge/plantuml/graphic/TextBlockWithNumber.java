@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class TextBlockWithNumber extends TextBlockSimple {
@@ -66,14 +67,14 @@ class TextBlockWithNumber extends TextBlockSimple {
 	}
 
 	@Override
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
 		final double heightNum = numText.calculateDimension(stringBounder).getHeight();
 
 		final double deltaY = calculateDimension(stringBounder).getHeight() - heightNum;
 
-		numText.drawTOBEREMOVED(g2d, x, y + deltaY / 2.0);
-		super.drawTOBEREMOVED(g2d, x + getNumberWithAndMargin(stringBounder), y);
+		numText.drawTOBEREMOVED(colorMapper, g2d, x, y + deltaY / 2.0);
+		super.drawTOBEREMOVED(colorMapper, g2d, x + getNumberWithAndMargin(stringBounder), y);
 	}
 
 	@Override

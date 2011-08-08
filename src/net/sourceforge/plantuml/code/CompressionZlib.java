@@ -96,7 +96,7 @@ public class CompressionZlib implements Compression {
 			final byte[] result = copyArray(tmp, resultLength);
 			return result;
 		} catch (DataFormatException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			throw new IOException(e.toString());
 		}
 	}

@@ -35,6 +35,7 @@ import java.awt.geom.Line2D;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -49,7 +50,7 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final ULine shape = (ULine) ushape;
 
 		double x2 = x + shape.getDX();
@@ -67,7 +68,7 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 			y2 = line.y2;
 		}
 
-		eps.setStrokeColor(param.getColor());
+		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
 		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
 				.getDashSpace());
 		eps.epsLine(x, y, x2, y2);

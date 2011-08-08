@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6453 $
+ * Revision $Revision: 6622 $
  */
 package net.sourceforge.plantuml;
 
@@ -76,24 +76,8 @@ public class PSystemError extends AbstractPSystem {
 		this(source, Collections.singletonList(singleError));
 	}
 
-//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException,
-//			InterruptedException {
-//		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
-//			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-//		}
-//		OutputStream os = null;
-//		try {
-//			os = new FileOutputStream(suggestedFile);
-//			getPngError().writeImage(os, getMetadata(), fileFormat);
-//		} finally {
-//			if (os != null) {
-//				os.close();
-//			}
-//		}
-//		return Arrays.asList(suggestedFile);
-//	}
-
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
+	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat)
+			throws IOException {
 		getPngError().writeImage(os, getMetadata(), fileFormat);
 	}
 
@@ -137,21 +121,36 @@ public class PSystemError extends AbstractPSystem {
 			htmlStrings.add(" <color:red>" + er);
 			plainStrings.add(" " + er);
 		}
+		boolean first = true;
+		for (String s : getSuggest()) {
+			if (first) {
+				htmlStrings.add(" <color:white><i>" + s);
+			} else {
+				htmlStrings.add("<color:white>" + StringUtils.hideComparatorCharacters(s));
+			}
+			first = false;
+		}
+	}
+
+	public List<String> getSuggest() {
 		boolean suggested = false;
 		for (ErrorUml er : printedErrors) {
 			if (er.hasSuggest()) {
 				suggested = true;
 			}
 		}
-		if (suggested) {
-			htmlStrings.add(" <color:white><i>Did you mean:");
-			for (ErrorUml er : printedErrors) {
-				if (er.hasSuggest()) {
-					htmlStrings.add("<color:white>"
-							+ StringUtils.hideComparatorCharacters(er.getSuggest().getSuggestedLine()));
-				}
+		if (suggested == false) {
+			return Collections.emptyList();
+		}
+		final List<String> result = new ArrayList<String>();
+		result.add("Did you mean:");
+		for (ErrorUml er : printedErrors) {
+			if (er.hasSuggest()) {
+				result.add(er.getSuggest().getSuggestedLine());
 			}
 		}
+		return Collections.unmodifiableList(result);
+
 	}
 
 	private Collection<ErrorUml> getErrors(ErrorUmlType type, List<ErrorUml> all) {
@@ -192,8 +191,10 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	public void print(PrintStream ps) {
-		for (String s : plainStrings) {
-			ps.println(StringUtils.showComparatorCharacters(s));
+		synchronized (ps) {
+			for (String s : plainStrings) {
+				ps.println(StringUtils.showComparatorCharacters(s));
+			}
 		}
 	}
 

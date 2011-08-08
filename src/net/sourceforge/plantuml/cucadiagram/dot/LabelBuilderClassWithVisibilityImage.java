@@ -58,8 +58,7 @@ class LabelBuilderClassWithVisibilityImage extends LabelBuilderObjectOrClass imp
 		}
 		final String circleAbsolutePath;
 		if (getData().showPortion(EntityPortion.CIRCLED_CHARACTER, getEntity())) {
-			circleAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(cFile
-					.getPngOrEps(getFileFormat() == FileFormat.EPS));
+			circleAbsolutePath = StringUtils.getPlateformDependentAbsolutePath(cFile.getPngOrEps(getFileFormat()));
 		} else {
 			circleAbsolutePath = null;
 		}
@@ -69,15 +68,16 @@ class LabelBuilderClassWithVisibilityImage extends LabelBuilderObjectOrClass imp
 
 		// sb.append("<");
 		if (showFields == false && showMethods == false) {
-			sb.append(getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(getEntity(), circleAbsolutePath, 1, true, BorderMode.NO_BORDER_CELLSPACING));
+			sb.append(getHtmlHeaderTableForObjectOrClassOrInterfaceOrEnum(getEntity(), circleAbsolutePath, 1, true,
+					BorderMode.NO_BORDER_CELLSPACING_OLD));
 		} else {
 			final String stereo = getEntity().getStereotype() == null ? null : getEntity().getStereotype().getLabel();
 			final int longuestHeader = getLonguestHeader(getEntity());
 			final int spring = computeSpring(longuestHeader, getLongestFieldOrAttribute(getEntity()), 30);
-			final int springField = computeSpring(getLongestField(getEntity()),
-					Math.max(longuestHeader, getLongestMethods(getEntity())), 30);
-			final int springMethod = computeSpring(getLongestMethods(getEntity()),
-					Math.max(longuestHeader, getLongestField(getEntity())), 30);
+			final int springField = computeSpring(getLongestField(getEntity()), Math.max(longuestHeader,
+					getLongestMethods(getEntity())), 30);
+			final int springMethod = computeSpring(getLongestMethods(getEntity()), Math.max(longuestHeader,
+					getLongestField(getEntity())), 30);
 
 			sb.append("<TABLE BGCOLOR=" + getColorString(ColorParam.classBackground, stereo) + " COLOR="
 					+ getColorString(ColorParam.classBorder, stereo)

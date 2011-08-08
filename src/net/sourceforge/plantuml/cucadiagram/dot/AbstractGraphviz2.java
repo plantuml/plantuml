@@ -62,10 +62,11 @@ class AbstractGraphviz2 implements Graphviz {
 		this.strategy = strategy;
 		this.dotString = dotString;
 		this.type = type;
+		throw new UnsupportedOperationException("not used yet");
 	}
 
 
-	final public void createPng(OutputStream os) throws IOException, InterruptedException {
+	final public void createFile(OutputStream os) throws IOException, InterruptedException {
 		if (dotString == null) {
 			throw new IllegalArgumentException();
 		}
@@ -179,6 +180,11 @@ class AbstractGraphviz2 implements Graphviz {
 		for (String t : type) {
 			sb.append(" -T" + t + " ");
 		}
+	}
+
+
+	public String testFile(String filename, String outfile) throws IOException, InterruptedException {
+		throw new UnsupportedOperationException();
 	}
 
 }

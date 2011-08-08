@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6461 $
+ * Revision $Revision: 6910 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -51,6 +51,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -313,6 +314,9 @@ public class SvgGraphics {
 		if (textDecoration != null) {
 			elt.setAttribute("text-decoration", textDecoration);
 		}
+		if (fontFamily != null) {
+			elt.setAttribute("font-family", fontFamily);
+		}
 		elt.setTextContent(text);
 		getG().appendChild(elt);
 		ensureVisible(x, y);
@@ -326,9 +330,18 @@ public class SvgGraphics {
 	private Transformer getTransformer() throws TransformerException {
 		// Get a TransformerFactory object.
 		final TransformerFactory xformFactory = TransformerFactory.newInstance();
+		// try {
+		// final Class<?> factoryClass = Class
+		// .forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+		// xformFactory = (TransformerFactory) factoryClass.newInstance();
+		// } catch (Exception e) {
+		// xformFactory = TransformerFactory.newInstance();
+		// }
+		Log.info("TransformerFactory=" + xformFactory.getClass());
 
 		// Get an XSL Transformer object.
 		final Transformer transformer = xformFactory.newTransformer();
+		Log.info("Transformer=" + transformer.getClass());
 
 		// // Sets the standalone property in the first line of
 		// // the output file.
@@ -349,11 +362,14 @@ public class SvgGraphics {
 		// Document object
 		final DOMSource source = new DOMSource(document);
 
-		String style = "width:" + maxX + ";height:" + maxY + ";";
+		String style = "width:" + maxX + "px;height:" + maxY + "px;";
 		if (backcolor != null) {
 			style += "background:" + backcolor + ";";
 		}
 		root.setAttribute("style", style);
+		root.setAttribute("width", "" + maxX + "pt");
+		root.setAttribute("height", "" + maxY + "pt");
+		root.setAttribute("viewBox", "0 0 " + maxX + " " + maxY);
 
 		// Get a StreamResult object that points to the
 		// screen. Then transform the DOM sending XML to
@@ -383,6 +399,9 @@ public class SvgGraphics {
 			} else if (type == USegmentType.SEG_QUADTO) {
 				sb.append("Q" + (coord[0] + x) + "," + (coord[1] + y) + " " + (coord[2] + x) + "," + (coord[3] + y)
 						+ " ");
+			} else if (type == USegmentType.SEG_CUBICTO) {
+				sb.append("C" + (coord[0] + x) + "," + (coord[1] + y) + " " + (coord[2] + x) + "," + (coord[3] + y)
+						+ " " + (coord[4] + x) + "," + (coord[5] + y) + " ");
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
 			} else {
@@ -393,6 +412,7 @@ public class SvgGraphics {
 		final Element elt = (Element) document.createElement("path");
 		elt.setAttribute("d", sb.toString());
 		elt.setAttribute("style", getStyle());
+		elt.setAttribute("fill", fill);
 		getG().appendChild(elt);
 		ensureVisible(x, y);
 	}

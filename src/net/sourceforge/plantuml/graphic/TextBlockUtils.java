@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6570 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -64,7 +64,7 @@ public class TextBlockUtils {
 		final Stereotype stereotype = (Stereotype) texts.get(0);
 		if (stereotype.isSpotted()) {
 			final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(),
-					stereotype.getRadius(), stereotype.getCircledFont(), stereotype.getColor(), null,
+					stereotype.getRadius(), stereotype.getCircledFont(), stereotype.getHtmlColor(), null,
 					fontConfiguration.getColor());
 			if (stereotype.getLabel() == null) {
 				return new TextBlockSpotted(circledCharacter, texts.subList(1, texts.size()), fontConfiguration,

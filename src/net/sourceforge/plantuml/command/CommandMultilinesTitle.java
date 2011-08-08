@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5752 $
+ * Revision $Revision: 6922 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -47,7 +47,7 @@ public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 	public CommandExecutionResult execute(List<String> lines) {
 		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		if (strings.size() > 0) {
-			getSystem().setTitle(strings);
+			getSystem().setTitle(StringUtils.manageEmbededDiagrams(strings));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No title defined");

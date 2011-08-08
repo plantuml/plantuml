@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6054 $
+ * Revision $Revision: 6698 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -71,6 +71,7 @@ class LifeLine {
 	private final double nominalPreferredWidth;
 
 	private final List<Variation> events = new ArrayList<Variation>();
+	private final Stairs stairs = new Stairs();
 	private int maxLevel = 0;
 
 	public LifeLine(Pushable participant, double nominalPreferredWidth) {
@@ -89,6 +90,11 @@ class LifeLine {
 			}
 		}
 		events.add(new Variation(type, y, backcolor));
+		final int currentLevel = type.apply(stairs.getLastValue());
+		stairs.addStep(y, currentLevel);
+		assert getLevel(y) == stairs.getValue(y);
+		assert currentLevel == stairs.getValue(y);
+		assert getLevel(y) == currentLevel;
 		maxLevel = Math.max(getLevel(y), maxLevel);
 	}
 
@@ -112,22 +118,23 @@ class LifeLine {
 	}
 
 	int getLevel(double y) {
-		int level = 0;
-		for (Variation ev : events) {
-			if (ev.y > y) {
-				return level;
-			}
-			if (ev.type == LifeSegmentVariation.LARGER) {
-				level++;
-			} else {
-				level--;
-				if (level < 0) {
-					level = 0;
-				}
-			}
-		}
-		assert level >= 0;
-		return level;
+//		int level = 0;
+//		for (Variation ev : events) {
+//			if (ev.y > y) {
+//				return level;
+//			}
+//			if (ev.type == LifeSegmentVariation.LARGER) {
+//				level++;
+//			} else {
+//				level--;
+//				if (level < 0) {
+//					level = 0;
+//				}
+//			}
+//		}
+//		assert level >= 0;
+//		return level;
+		return stairs.getValue(y);
 	}
 
 	public int getMaxLevel() {

@@ -37,6 +37,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class TextBlockEmpty implements TextBlock {
@@ -45,7 +46,7 @@ public class TextBlockEmpty implements TextBlock {
 		return new Dimension2DDouble(0, 0);
 	}
 
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 	}
 
 	public void drawU(UGraphic ug, double x, double y) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5877 $
+ * Revision $Revision: 6625 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -38,8 +38,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.plantuml.DirWatcher;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Option;
@@ -71,6 +75,8 @@ public class PlantUmlTask extends Task {
 	private final Option option = new Option();
 	private List<FileSet> filesets = new ArrayList<FileSet>();
 	private List<FileList> filelists = new ArrayList<FileList>();
+	private AtomicInteger nbFiles = new AtomicInteger(0);
+	private ExecutorService executorService;
 
 	/**
 	 * Add a set of files to touch
@@ -94,14 +100,22 @@ public class PlantUmlTask extends Task {
 
 		try {
 			if (dir != null) {
-				processingSingleDirectory(new File(dir));
+				final File error = processingSingleDirectory(new File(dir));
+				checkError(error);
 			}
 			for (FileSet fileSet : filesets) {
-				manageFileSet(fileSet);
+				final File error = manageFileSet(fileSet);
+				checkError(error);
 			}
 			for (FileList fileList : filelists) {
-				manageFileList(fileList);
+				final File error = manageFileList(fileList);
+				checkError(error);
 			}
+			if (executorService != null) {
+				executorService.shutdown();
+				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+			}
+			this.log("Nb images generated: " + nbFiles.get());
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new BuildException(e.toString());
@@ -112,18 +126,29 @@ public class PlantUmlTask extends Task {
 
 	}
 
-	private void manageFileList(FileList fl) throws IOException, InterruptedException {
+	private void checkError(final File error) throws IOException {
+		if (error != null && OptionFlags.getInstance().isFailOnError()) {
+			this.log("Error in file " + error.getCanonicalPath());
+			throw new BuildException("Error in file " + error.getCanonicalPath());
+		}
+	}
+
+	private File manageFileList(FileList fl) throws IOException, InterruptedException {
 		final File fromDir = fl.getDir(getProject());
 
 		final String[] srcFiles = fl.getFiles(getProject());
 
 		for (String src : srcFiles) {
 			final File f = new File(fromDir, src);
-			processingSingleFile(f);
+			final boolean error = processingSingleFile(f);
+			if (error) {
+				return f;
+			}
 		}
+		return null;
 	}
 
-	private void manageFileSet(FileSet fs) throws IOException, InterruptedException {
+	private File manageFileSet(FileSet fs) throws IOException, InterruptedException {
 		final DirectoryScanner ds = fs.getDirectoryScanner(getProject());
 		final File fromDir = fs.getDir(getProject());
 
@@ -132,37 +157,95 @@ public class PlantUmlTask extends Task {
 
 		for (String src : srcFiles) {
 			final File f = new File(fromDir, src);
-			processingSingleFile(f);
+			final boolean error = processingSingleFile(f);
+			if (error) {
+				return f;
+			}
 		}
 
 		for (String src : srcDirs) {
 			final File dir = new File(fromDir, src);
-			processingSingleDirectory(dir);
+			final File errorFile = processingSingleDirectory(dir);
+			if (errorFile != null) {
+				return errorFile;
+			}
 		}
+		return null;
 
 	}
 
-	private void processingSingleFile(final File f) throws IOException, InterruptedException {
-		this.log("Processing " + f.getAbsolutePath());
+	private boolean processingSingleFile(final File f) throws IOException, InterruptedException {
+		if (OptionFlags.getInstance().isVerbose()) {
+			this.log("Processing " + f.getAbsolutePath());
+		}
 		final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(), option
 				.getConfig(), option.getCharset(), option.getFileFormatOption());
-		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
-		for (GeneratedImage g : result) {
-			this.log(g + " " + g.getDescription());
+
+		if (option.isCheckOnly()) {
+			return sourceFileReader.hasError();
 		}
+		if (executorService == null) {
+			return doFile(f, sourceFileReader);
+		}
+
+		executorService.submit(new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return doFile(f, sourceFileReader);
+			}
+		});
+
+		return false;
 	}
 
-	private void processingSingleDirectory(File f) throws IOException, InterruptedException {
-		if (f.exists() == false) {
-			final String s = "The file " + f.getAbsolutePath() + " does not exists.";
+	private boolean doFile(final File f, final SourceFileReader sourceFileReader) throws IOException,
+			InterruptedException {
+		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
+		boolean error = false;
+		for (GeneratedImage g : result) {
+			if (OptionFlags.getInstance().isVerbose()) {
+				myLog(g + " " + g.getDescription());
+			}
+			nbFiles.addAndGet(1);
+			if (g.isError()) {
+				error = true;
+			}
+		}
+		if (error) {
+			myLog("Error: " + f.getCanonicalPath());
+		}
+		if (error && OptionFlags.getInstance().isFailOnError()) {
+			return true;
+		}
+		return false;
+	}
+
+	private synchronized void myLog(String s) {
+		this.log(s);
+	}
+
+	private File processingSingleDirectory(File dir) throws IOException, InterruptedException {
+		if (dir.exists() == false) {
+			final String s = "The file " + dir.getAbsolutePath() + " does not exists.";
 			this.log(s);
 			throw new BuildException(s);
 		}
-		final DirWatcher dirWatcher = new DirWatcher(f, option, Option.getPattern());
-		final Collection<GeneratedImage> result = dirWatcher.buildCreatedFiles();
-		for (GeneratedImage g : result) {
-			this.log(g + " " + g.getDescription());
+		for (File f : dir.listFiles()) {
+			if (f.isFile() == false) {
+				continue;
+			}
+			if (fileToProcess(f.getName()) == false) {
+				continue;
+			}
+			final boolean error = processingSingleFile(f);
+			if (error) {
+				return f;
+			}
 		}
+		return null;
+	}
+
+	private boolean fileToProcess(String name) {
+		return name.matches(Option.getPattern());
 	}
 
 	public void setDir(String s) {
@@ -210,6 +293,12 @@ public class PlantUmlTask extends Task {
 		if ("eps".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.EPS);
 		}
+		if ("pdf".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.PDF);
+		}
+		if ("eps:text".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.EPS_TEXT);
+		}
 		if ("svg".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.SVG);
 		}
@@ -235,6 +324,37 @@ public class PlantUmlTask extends Task {
 		if ("true".equalsIgnoreCase(s)) {
 			OptionFlags.getInstance().setForceCairo(true);
 		}
+	}
+
+	public void setNbThread(String s) {
+		if (s != null && s.matches("\\d+")) {
+			option.setNbThreads(Integer.parseInt(s));
+			final int nbThreads = option.getNbThreads();
+			this.executorService = Executors.newFixedThreadPool(nbThreads);
+		}
+		if ("auto".equalsIgnoreCase(s)) {
+			option.setNbThreads(Option.defaultNbThreads());
+			final int nbThreads = option.getNbThreads();
+			this.executorService = Executors.newFixedThreadPool(nbThreads);
+		}
+	}
+
+	public void setNbThreads(String s) {
+		setNbThread(s);
+	}
+
+	public void setSuggestEngine(String s) {
+		OptionFlags.getInstance().setUseSuggestEngine("true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s));
+	}
+
+	public void setFailOnError(String s) {
+		OptionFlags.getInstance().setFailOnError("true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s));
+	}
+
+	public void setCheckOnly(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		option.setCheckOnly(true);
+		OptionFlags.getInstance().setFailOnError(flag);
 	}
 
 }

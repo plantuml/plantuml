@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
@@ -42,10 +41,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.CircleInterface;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageCircleInterface extends AbstractEntityImage {
 
@@ -54,8 +55,8 @@ class EntityImageCircleInterface extends AbstractEntityImage {
 
 	public EntityImageCircleInterface(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 		this.circleInterface = new CircleInterface(getYellow(), getRed());
 	}
 
@@ -68,7 +69,7 @@ class EntityImageCircleInterface extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		throw new UnsupportedOperationException();
 		// final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
 		// final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));

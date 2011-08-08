@@ -43,11 +43,7 @@ public class PSystemRIPFactory implements PSystemBasicFactory {
 
 	private PSystemRIP system;
 
-	public PSystemRIPFactory() {
-		reset();
-	}
-
-	public void reset() {
+	public void init(String startLine) {
 	}
 
 	public boolean executeLine(String line) {

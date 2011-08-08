@@ -32,10 +32,13 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +54,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.directdot.DotText;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker;
@@ -167,13 +171,11 @@ public class SequenceDiagram extends UmlDiagram {
 		return new SequenceDiagramFileMaker(this, skin, fileFormatOption, flashcodes);
 	}
 
-	// public List<File> exportDiagrams(File suggestedFile, FileFormatOption
-	// fileFormat) throws IOException {
-	// return
-	// getSequenceDiagramPngMaker(fileFormat).createManyRRMV(suggestedFile);
-	// }
-
 	public List<File> exportDiagrams(File suggestedFile, FileFormatOption fileFormat) throws IOException {
+
+		if (fileFormat.getFileFormat() == FileFormat.DOT) {
+			return exportDot(suggestedFile);
+		}
 
 		final List<File> result = new ArrayList<File>();
 		final int nbImages = getNbImages();
@@ -181,7 +183,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 			final File f = SequenceDiagramFileMaker.computeFilename(suggestedFile, i, fileFormat.getFileFormat());
 			Log.info("Creating file: " + f);
-			final FileOutputStream fos = new FileOutputStream(f);
+			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
 			final StringBuilder cmap = new StringBuilder();
 			try {
 				exportDiagram(fos, cmap, i, fileFormat);
@@ -197,12 +199,24 @@ public class SequenceDiagram extends UmlDiagram {
 		return result;
 	}
 
+	private List<File> exportDot(File suggestedFile) throws IOException {
+		final PrintWriter pw = new PrintWriter(suggestedFile);
+		final List<String> printed = Arrays
+				.asList("Error: Sequence diagrams do not use Dot/Graphviz : they cannot be generated as DOT files.");
+		final DotText dotText = new DotText(printed, HtmlColor.getColorIfValid("#33FF02"), HtmlColor.BLACK);
+		final StringBuilder sb = new StringBuilder();
+		dotText.generateDot(sb);
+		pw.println(sb);
+		pw.close();
+		return Arrays.asList(suggestedFile);
+	}
+
 	@Override
 	protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat,
 			List<BufferedImage> flashcodes) throws IOException {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(fileFormat, flashcodes);
 		sequenceDiagramPngMaker.createOne(os, index);
-		if (this.hasUrl() && fileFormat.getFileFormat() == FileFormat.PNG) {
+		if (cmap != null && this.hasUrl() && fileFormat.getFileFormat() == FileFormat.PNG) {
 			sequenceDiagramPngMaker.appendCmap(cmap);
 		}
 	}

@@ -33,25 +33,25 @@
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentBlueModernEnglober extends AbstractTextualComponent {
 
-	private final Color borderColor;
-	private final Color backColor;
+	private final HtmlColor borderColor;
+	private final HtmlColor backColor;
 
-	public ComponentBlueModernEnglober(Color borderColor, Color backColor, List<? extends CharSequence> strings,
-			Color fontColor, Font font) {
+	public ComponentBlueModernEnglober(HtmlColor borderColor, HtmlColor backColor, List<? extends CharSequence> strings,
+			HtmlColor fontColor, UFont font) {
 		super(strings, fontColor, font, HorizontalAlignement.CENTER, 4, 4, 1);
 		this.borderColor = borderColor;
 		this.backColor = backColor;

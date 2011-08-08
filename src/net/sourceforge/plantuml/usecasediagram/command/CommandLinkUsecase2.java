@@ -61,8 +61,8 @@ public class CommandLinkUsecase2 extends SingleLineCommand2<UsecaseDiagram> {
 				getGroup("ENT1"),
 				new RegexLeaf("\\s*"),
 				new RegexOr(
-						new RegexLeaf("LEFT_TO_RIGHT", "(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)([\\]>]|\\|[>\\]])?)"),
-						new RegexLeaf("RIGHT_TO_LEFT", "(([\\[<]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
+						new RegexLeaf("LEFT_TO_RIGHT", "(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)([\\]>^]|\\|[>\\]])?)"),
+						new RegexLeaf("RIGHT_TO_LEFT", "(([\\[<^]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))")),
 				new RegexLeaf("\\s*"),
 				getGroup("ENT2"),
 				new RegexLeaf("\\s*"),
@@ -206,6 +206,9 @@ public class CommandLinkUsecase2 extends SingleLineCommand2<UsecaseDiagram> {
 			return new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 		}
 		if (k.equals("<|") || k.equals("|>")) {
+			return new LinkType(LinkDecor.EXTENDS, LinkDecor.NONE);
+		}
+		if (k.equals("^")) {
 			return new LinkType(LinkDecor.EXTENDS, LinkDecor.NONE);
 		}
 		return null;

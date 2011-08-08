@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3831 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageActivityBranch extends AbstractEntityImage {
 
@@ -55,16 +56,16 @@ class EntityImageActivityBranch extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Polygon p = new Polygon();
 		p.addPoint(size, 0);
 		p.addPoint(size * 2, size);
 		p.addPoint(size, size * 2);
 		p.addPoint(0, size);
 
-		g2d.setColor(getYellow());
+		g2d.setColor(colorMapper.getMappedColor(getYellow()));
 		g2d.fill(p);
-		g2d.setColor(getRed());
+		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.draw(p);
 	}
 }

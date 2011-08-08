@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5533 $
+ * Revision $Revision: 6551 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -53,14 +53,14 @@ public class CommandGrouping extends SingleLineCommand<SequenceDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
 		final String type = arg.get(0).toLowerCase();
-		final HtmlColor colorElement = HtmlColor.getColorIfValid(arg.get(1));
-		final HtmlColor colorGeneral = HtmlColor.getColorIfValid(arg.get(2));
+		final HtmlColor backColorElement = HtmlColor.getColorIfValid(arg.get(1));
+		final HtmlColor backColorGeneral = HtmlColor.getColorIfValid(arg.get(2));
 		String comment = arg.get(3);
 		if ("group".equals(type) && StringUtils.isEmpty(comment)) {
 			comment = "group";
 		}
 		final boolean result = getSystem().grouping(type, comment,
-				GroupingType.getType(type), colorGeneral, colorElement);
+				GroupingType.getType(type), backColorGeneral, backColorElement);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot create group");
 		}

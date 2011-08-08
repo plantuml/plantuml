@@ -28,21 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6474 $
+ * Revision $Revision: 6939 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -59,7 +56,6 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -76,14 +72,13 @@ import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.Group;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.Imaged;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.eps.EpsTitler;
-import net.sourceforge.plantuml.eps.SvgToEpsConverter;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
@@ -104,12 +99,14 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.StickMan;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.svg.SvgData;
 import net.sourceforge.plantuml.svg.SvgTitler;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
-public final class CucaDiagramFileMaker {
+public final class CucaDiagramFileMaker implements ICucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 	private final List<BufferedImage> flashcodes;
@@ -124,7 +121,7 @@ public final class CucaDiagramFileMaker {
 	}
 
 	public CucaDiagramFileMaker(CucaDiagram diagram, List<BufferedImage> flashcodes) throws IOException {
-		HtmlColor.setForceMonochrome(diagram.getSkinParam().isMonochrome());
+		// HtmlColor.setForceMonochrome(diagram.getSkinParam().isMonochrome());
 		this.diagram = diagram;
 		this.flashcodes = flashcodes;
 		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS || diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
@@ -156,8 +153,8 @@ public final class CucaDiagramFileMaker {
 			return createPng(os, dotStrings, fileFormatOption);
 		} else if (fileFormat == FileFormat.SVG) {
 			return createSvg(os, dotStrings, fileFormatOption);
-		} else if (fileFormat == FileFormat.EPS_VIA_SVG) {
-			return createEpsViaSvg(os, dotStrings, fileFormatOption);
+		} else if (fileFormat == FileFormat.EPS_TEXT) {
+			return createEps(os, dotStrings, fileFormatOption);
 		} else if (fileFormat == FileFormat.EPS) {
 			return createEps(os, dotStrings, fileFormatOption);
 		} else if (fileFormat == FileFormat.DOT) {
@@ -168,17 +165,6 @@ public final class CucaDiagramFileMaker {
 
 	}
 
-	private String createEpsViaSvg(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
-		final File svgTmp = FileUtils.createTempFile("svgtmp", ".svg");
-		final FileOutputStream svgOs = new FileOutputStream(svgTmp);
-		final String status = createSvg(svgOs, dotStrings, fileFormatOption);
-		svgOs.close();
-		final SvgToEpsConverter converter = new SvgToEpsConverter(svgTmp);
-		converter.createEps(os);
-		return status;
-	}
-
 	private double deltaY;
 
 	private String createSvg(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
@@ -187,27 +173,41 @@ public final class CucaDiagramFileMaker {
 		final StringBuilder cmap = new StringBuilder();
 		try {
 			deltaY = 0;
-			String svg = getSvgData(dotStrings, fileFormatOption, cmap);
+			String svg4 = getSvgData(dotStrings, fileFormatOption, cmap);
 
-			final Dimension2D dim = getDimensionSvg(svg);
-			if (dim != null) {
+			SvgData svgData = SvgData.fromGraphViz(svg4);
 
-				double supH = getTitleSvgHeight();
-				supH += getHeaderSvgHeight();
-				supH += getFooterSvgHeight();
+			if (svgData != null) {
 
-				svg = removeSvgXmlHeader(svg, dim.getWidth(), dim.getHeight() + supH);
+				final SvgTitler title = getTitleSvgTitler();
+				final SvgTitler header = getHeaderSvgTitler();
+				final SvgTitler footer = getFooterSvgTitler();
 
-				svg = addTitleSvg(svg, dim.getWidth(), dim.getHeight());
-				svg = addHeaderSvg(svg, dim.getWidth(), dim.getHeight());
-				svg = addFooterSvg(svg, dim.getWidth(), dim.getHeight());
+				svgData = title.addTitle(svgData);
+				svgData = header.addTitle(svgData);
+				svgData = footer.addTitle(svgData);
+
+				// double supH = getTitleSvgHeight(svg);
+				// supH += getHeaderSvgHeight(svg);
+				// supH += getFooterSvgHeight(svg);
+				//
+				// svg = removeSvgXmlHeader1(svg);
+				//
+				// svg = addTitleSvg(svg, dim.getWidth(), dim.getHeight());
+				// svg = addHeaderSvg(svg, dim.getWidth(), dim.getHeight());
+				// svg = addFooterSvg(svg, dim.getWidth(), dim.getHeight());
+				//
+				// svg = modifySvgXmlHeader(svg, dim.getWidth(), dim.getHeight()
+				// + supH, -50, 0);
 
 				// Image management
 				final Pattern pImage = Pattern.compile("(?i)<image\\W[^>]*>");
+
+				svg4 = svgData.getSvg();
 				boolean changed;
 				do {
 					changed = false;
-					final Matcher mImage = pImage.matcher(svg);
+					final Matcher mImage = pImage.matcher(svg4);
 					final StringBuffer sb = new StringBuffer();
 					while (mImage.find()) {
 						final String image = mImage.group(0);
@@ -232,11 +232,11 @@ public final class CucaDiagramFileMaker {
 						}
 					}
 					mImage.appendTail(sb);
-					svg = sb.toString();
+					svg4 = sb.toString();
 				} while (changed);
 			}
 
-			os.write(svg.getBytes("UTF-8"));
+			os.write(svg4.getBytes("UTF-8"));
 
 			// final ByteArrayInputStream bais = new
 			// ByteArrayInputStream(baos.toByteArray());
@@ -260,8 +260,7 @@ public final class CucaDiagramFileMaker {
 			//
 			// PngIO.write(im, os, diagram.getMetadata());
 		} finally {
-			// cleanTemporaryFiles(diagram.entities().values());
-			// cleanTemporaryFiles(diagram.getLinks());
+			clean();
 		}
 		if (cmap.length() > 0) {
 			return translateXY(cmap.toString(), 0, (int) Math.round(deltaY));
@@ -319,51 +318,11 @@ public final class CucaDiagramFileMaker {
 		final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		graphviz.createPng(baos);
+		graphviz.createFile(baos);
 		baos.close();
 		dotMaker.clean();
 
 		return new String(baos.toByteArray(), "UTF-8").replace('\\', '/');
-	}
-
-	private static String removeSvgXmlHeader(String svg, double width, double height) {
-		final String newString = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"width:"
-				+ Math.round(width) + ";height:" + Math.round(height) + ";\">";
-		svg = svg.replaceFirst("(?i)<svg[^>]*>", newString);
-		return svg;
-	}
-
-	private Dimension2D getDimensionSvg(String svg) {
-		final Pattern p = Pattern.compile("(?i)<polygon\\s+[^>]*points=\"([^\"]+)\"");
-		final Matcher m = p.matcher(svg);
-		if (m.find() == false) {
-			return null;
-		}
-		final String points = m.group(1);
-		final StringTokenizer st = new StringTokenizer(points, " ");
-		double minX = Double.MAX_VALUE;
-		double minY = Double.MAX_VALUE;
-		double maxX = -Double.MAX_VALUE;
-		double maxY = -Double.MAX_VALUE;
-		while (st.hasMoreTokens()) {
-			final String token = st.nextToken();
-			final StringTokenizer st2 = new StringTokenizer(token, ",");
-			final double x = Double.parseDouble(st2.nextToken().trim());
-			final double y = Double.parseDouble(st2.nextToken().trim());
-			if (x < minX) {
-				minX = x;
-			}
-			if (y < minY) {
-				minY = y;
-			}
-			if (x > maxX) {
-				maxX = x;
-			}
-			if (y > maxY) {
-				maxY = y;
-			}
-		}
-		return new Dimension2DDouble(maxX - minX, maxY - minY);
 	}
 
 	private DrawFile searchImageFile(File searched, Collection<? extends IEntity> entities) throws IOException {
@@ -409,7 +368,11 @@ public final class CucaDiagramFileMaker {
 		final double v1 = heightSvg / heightPng;
 		final double v2 = widthSvg / widthPng;
 		final double min = Math.min(v1, v2);
-		return "scale(" + min + " " + min + ")";
+		return "scale(" + format(min) + " " + format(min) + ")";
+	}
+
+	private static String format(double x) {
+		return EpsGraphics.format(x);
 	}
 
 	private static String getValue(String s, String param) {
@@ -467,7 +430,7 @@ public final class CucaDiagramFileMaker {
 				new UnderlineTrick(im, new Color(Integer.parseInt("FEFECF", 16)), Color.BLACK).process();
 			}
 
-			final Color background = diagram.getSkinParam().getBackgroundColor().getColor();
+			final HtmlColor background = diagram.getSkinParam().getBackgroundColor();
 
 			supY = getTitlePngHeight(stringBounder);
 			supY += getHeaderPngHeight(stringBounder);
@@ -484,12 +447,11 @@ public final class CucaDiagramFileMaker {
 			}
 			im = PngSizer.process(im, diagram.getMinwidth());
 
-			im = addFlashcode(im, background);
+			im = addFlashcode(im, diagram.getColorMapper().getMappedColor(background));
 
 			PngIO.write(im, os, diagram.getMetadata(), diagram.getDpi(fileFormatOption));
 		} finally {
-			cleanTemporaryFiles(diagram.entities().values());
-			cleanTemporaryFiles(diagram.getLinks());
+			clean();
 		}
 
 		if (cmap.length() > 0) {
@@ -525,7 +487,7 @@ public final class CucaDiagramFileMaker {
 		final Graphviz graphviz = GraphvizUtils.create(dotString, "cmapx", getPngType());
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		graphviz.createPng(baos);
+		graphviz.createFile(baos);
 		baos.close();
 
 		final byte[] allData = baos.toByteArray();
@@ -569,15 +531,12 @@ public final class CucaDiagramFileMaker {
 		final Graphviz graphviz = GraphvizUtils.create(dotString, getPngType());
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		graphviz.createPng(baos);
+		graphviz.createFile(baos);
 		baos.close();
 
 		final byte[] imageData = baos.toByteArray();
+		// final byte[] imageData = new byte[0];
 		Log.info("Reading " + imageData.length + " bytes from dot");
-		// File f = new File("dummy.png");
-		// FileOutputStream fos = new FileOutputStream(f);
-		// fos.write(imageData);
-		// fos.close();
 		return imageData;
 	}
 
@@ -602,161 +561,131 @@ public final class CucaDiagramFileMaker {
 		errorResult.writeImage(os, fileFormat);
 	}
 
-	private BufferedImage addTitle(BufferedImage im, final Color background) {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
-		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
-				HorizontalAlignement.CENTER, VerticalPosition.TOP);
+	private BufferedImage addTitle(BufferedImage im, final HtmlColor background) {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null);
+		final UFont font = getSkinParam().getFont(FontParam.TITLE, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final PngTitler pngTitler = new PngTitler(diagram.getColorMapper(), titleColor, diagram.getTitle(), fontSize,
+				fontFamily, HorizontalAlignement.CENTER, VerticalPosition.TOP);
 		return pngTitler.processImage(im, background, 3);
 	}
 
 	private double getTitlePngHeight(StringBounder stringBounder) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
-		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
-				HorizontalAlignement.CENTER, VerticalPosition.TOP);
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null);
+		final UFont font = getSkinParam().getFont(FontParam.TITLE, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final PngTitler pngTitler = new PngTitler(diagram.getColorMapper(), titleColor, diagram.getTitle(), fontSize,
+				fontFamily, HorizontalAlignement.CENTER, VerticalPosition.TOP);
 		return pngTitler.getOffsetY(stringBounder);
 	}
 
 	private double getOffsetX(StringBounder stringBounder, double imWidth) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
-		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
-				HorizontalAlignement.CENTER, VerticalPosition.TOP);
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null);
+		final UFont font = getSkinParam().getFont(FontParam.TITLE, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final PngTitler pngTitler = new PngTitler(diagram.getColorMapper(), titleColor, diagram.getTitle(), fontSize,
+				fontFamily, HorizontalAlignement.CENTER, VerticalPosition.TOP);
 		return pngTitler.getOffsetX(imWidth, stringBounder);
 	}
 
-	private String addTitleSvg(String svg, double width, double height) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
+	private SvgTitler getTitleSvgTitler() throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null);
+		final UFont font = getSkinParam().getFont(FontParam.TITLE, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
 
-		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
+		return new SvgTitler(diagram.getColorMapper(), titleColor, diagram.getTitle(), fontSize, fontFamily,
 				HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
-		this.deltaY += svgTitler.getHeight();
-		return svgTitler.addTitleSvg(svg, width, height);
 	}
 
-	private double getTitleSvgHeight() throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
-
-		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
-				HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
-		return svgTitler.getHeight();
+	private SvgTitler getHeaderSvgTitler() throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null);
+		final UFont font = getSkinParam().getFont(FontParam.HEADER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		return new SvgTitler(diagram.getColorMapper(), titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
+				.getHeaderAlignement(), VerticalPosition.TOP, 3);
 	}
 
-	private String addTitleEps(String eps) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.TITLE, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.TITLE, null);
+	private SvgTitler getFooterSvgTitler() throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null);
+		final UFont font = getSkinParam().getFont(FontParam.FOOTER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		return new SvgTitler(diagram.getColorMapper(), titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
+				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
+	}
 
-		final EpsTitler epsTitler = new EpsTitler(titleColor, diagram.getTitle(), fontSize, fontFamily,
-				HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
+	private String addTitleEps(EpsStrategy epsStrategy, String eps) throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.TITLE, null);
+		final UFont font = getSkinParam().getFont(FontParam.TITLE, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+
+		final EpsTitler epsTitler = new EpsTitler(diagram.getColorMapper(), epsStrategy, titleColor,
+				diagram.getTitle(), fontSize, fontFamily, HorizontalAlignement.CENTER, VerticalPosition.TOP, 3);
 		this.deltaY += epsTitler.getHeight();
 		return epsTitler.addTitleEps(eps);
 	}
 
-	private String addFooterEps(String eps) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.FOOTER, null);
-		final EpsTitler epsTitler = new EpsTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
-				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
+	private String addFooterEps(EpsStrategy epsStrategy, String eps) throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null);
+		final UFont font = getSkinParam().getFont(FontParam.FOOTER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final EpsTitler epsTitler = new EpsTitler(diagram.getColorMapper(), epsStrategy, titleColor, diagram
+				.getFooter(), fontSize, fontFamily, diagram.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
 		return epsTitler.addTitleEps(eps);
 	}
 
-	private String addHeaderEps(String eps) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
-		final EpsTitler epsTitler = new EpsTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
-				.getHeaderAlignement(), VerticalPosition.TOP, 3);
+	private String addHeaderEps(EpsStrategy epsStrategy, String eps) throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null);
+		final UFont font = getSkinParam().getFont(FontParam.HEADER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final EpsTitler epsTitler = new EpsTitler(diagram.getColorMapper(), epsStrategy, titleColor, diagram
+				.getHeader(), fontSize, fontFamily, diagram.getHeaderAlignement(), VerticalPosition.TOP, 3);
 		this.deltaY += epsTitler.getHeight();
 		return epsTitler.addTitleEps(eps);
 	}
 
-	private String addHeaderSvg(String svg, double width, double height) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
-		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
-				.getHeaderAlignement(), VerticalPosition.TOP, 3);
-		this.deltaY += svgTitler.getHeight();
-		return svgTitler.addTitleSvg(svg, width, height);
-	}
-
-	private double getHeaderSvgHeight() throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
-		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
-				.getHeaderAlignement(), VerticalPosition.TOP, 3);
-		return svgTitler.getHeight();
-	}
-
-	private String addFooterSvg(String svg, double width, double height) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.FOOTER, null);
-		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
-				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
-		return svgTitler.addTitleSvg(svg, width, height + deltaY);
-	}
-
-	private double getFooterSvgHeight() throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.FOOTER, null);
-		final SvgTitler svgTitler = new SvgTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
-				.getFooterAlignement(), VerticalPosition.BOTTOM, 3);
-		return svgTitler.getHeight();
-	}
-
-	private BufferedImage addFooter(BufferedImage im, final Color background) {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.FOOTER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.FOOTER, null);
-		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getFooter(), fontSize, fontFamily, diagram
-				.getFooterAlignement(), VerticalPosition.BOTTOM);
+	private BufferedImage addFooter(BufferedImage im, final HtmlColor background) {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null);
+		final UFont font = getSkinParam().getFont(FontParam.FOOTER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final PngTitler pngTitler = new PngTitler(diagram.getColorMapper(), titleColor, diagram.getFooter(), fontSize,
+				fontFamily, diagram.getFooterAlignement(), VerticalPosition.BOTTOM);
 		return pngTitler.processImage(im, background, 3);
 	}
 
-	private BufferedImage addHeader(BufferedImage im, final Color background) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
-		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
-				.getHeaderAlignement(), VerticalPosition.TOP);
+	private BufferedImage addHeader(BufferedImage im, final HtmlColor background) throws IOException {
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null);
+		final UFont font = getSkinParam().getFont(FontParam.HEADER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final PngTitler pngTitler = new PngTitler(diagram.getColorMapper(), titleColor, diagram.getHeader(), fontSize,
+				fontFamily, diagram.getHeaderAlignement(), VerticalPosition.TOP);
 		return pngTitler.processImage(im, background, 3);
 	}
 
 	private double getHeaderPngHeight(StringBounder stringBounder) throws IOException {
-		final Color titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null).getColor();
-		final String fontFamily = getSkinParam().getFontFamily(FontParam.HEADER, null);
-		final int fontSize = getSkinParam().getFontSize(FontParam.HEADER, null);
-		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getHeader(), fontSize, fontFamily, diagram
-				.getHeaderAlignement(), VerticalPosition.TOP);
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null);
+		final UFont font = getSkinParam().getFont(FontParam.HEADER, null);
+		final String fontFamily = font.getFamily(null);
+		final int fontSize = font.getSize();
+		final PngTitler pngTitler = new PngTitler(diagram.getColorMapper(), titleColor, diagram.getHeader(), fontSize,
+				fontFamily, diagram.getHeaderAlignement(), VerticalPosition.TOP);
 		return pngTitler.getOffsetY(stringBounder);
 	}
 
-	private void cleanTemporaryFiles(final Collection<? extends Imaged> imageFiles) throws IOException {
-		if (OptionFlags.getInstance().isKeepTmpFiles() == false) {
-			for (Imaged entity : imageFiles) {
-				if (entity.getImageFile() != null) {
-					entity.getImageFile().delete();
-				}
-			}
-		}
-	}
-
-	DrawFile createImage(Entity entity, double dpiFactor, int dpi) throws IOException {
+	DrawFile createImage(Entity entity, FileFormatOption option) throws IOException {
+		final double dpiFactor = diagram.getDpiFactor(option);
 		if (entity.getType() == EntityType.NOTE) {
-			return createImageForNote(entity.getDisplay(), entity.getSpecificBackColor(), dpiFactor, dpi);
+			return createImageForNote(entity.getDisplay2(), entity.getSpecificBackColor(), option, entity.getParent());
 		}
 		if (entity.getType() == EntityType.ACTOR) {
 			return createImageForActor(entity, dpiFactor);
@@ -771,54 +700,24 @@ public final class CucaDiagramFileMaker {
 		return null;
 	}
 
-	private DrawFile createImageForNoteOld2(String display, HtmlColor backColor, double dpiFactor, int dpi)
-			throws IOException {
-		final File fPng = FileUtils.createTempFile("plantumlB", ".png");
+	private DrawFile createImageForNote(List<? extends CharSequence> display2, HtmlColor noteBackColor, final FileFormatOption option,
+			Group parent) throws IOException {
 
 		final Rose skin = new Rose();
 
-		final ISkinParam skinParam = new SkinParamBackcolored(getSkinParam(), backColor);
+		final ISkinParam skinParam = new SkinParamBackcolored(getSkinParam(), noteBackColor);
 		final Component comp = skin
-				.createComponent(ComponentType.NOTE, skinParam, StringUtils.getWithNewlines(display));
+				.createComponent(ComponentType.NOTE, skinParam, display2);
 
+		final double dpiFactor = diagram.getDpiFactor(option);
 		final int width = (int) (comp.getPreferredWidth(stringBounder) * dpiFactor);
 		final int height = (int) (comp.getPreferredHeight(stringBounder) * dpiFactor);
-
-		final Color background = diagram.getSkinParam().getBackgroundColor().getColor();
-		final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, background);
-		final BufferedImage im = builder.getBufferedImage();
-		final Graphics2D g2d = builder.getGraphics2D();
-
-		comp.drawU(new UGraphicG2d(g2d, null, dpiFactor), new Dimension(width, height), new SimpleContext2D(false));
-		PngIO.write(im, fPng, dpi);
-		g2d.dispose();
-
-		final UGraphicSvg ug = new UGraphicSvg(true);
-		comp.drawU(ug, new Dimension(width, height), new SimpleContext2D(false));
-
-		final File fEps = FileUtils.createTempFile("plantumlB", ".eps");
-		final PrintWriter pw = new PrintWriter(fEps);
-		final UGraphicEps uEps = new UGraphicEps(EpsStrategy.getDefault());
-		comp.drawU(uEps, new Dimension(width, height), new SimpleContext2D(false));
-		pw.print(uEps.getEPSCode());
-		pw.close();
-
-		return DrawFile.createFromFile(fPng, getSvg(ug), fEps);
-	}
-
-	private DrawFile createImageForNote(String display, HtmlColor backColor, final double dpiFactor, final int dpi)
-			throws IOException {
-
-		final Rose skin = new Rose();
-
-		final ISkinParam skinParam = new SkinParamBackcolored(getSkinParam(), backColor);
-		final Component comp = skin
-				.createComponent(ComponentType.NOTE, skinParam, StringUtils.getWithNewlines(display));
-
-		final int width = (int) (comp.getPreferredWidth(stringBounder) * dpiFactor);
-		final int height = (int) (comp.getPreferredHeight(stringBounder) * dpiFactor);
-
-		final Color background = diagram.getSkinParam().getBackgroundColor().getColor();
+		final int dpi = diagram.getDpi(option);
+		HtmlColor backgroundColor = diagram.getSkinParam().getBackgroundColor();
+		if (parent != null && parent.getBackColor() != null) {
+			backgroundColor = parent.getBackColor();
+		}
+		final Color background = diagram.getColorMapper().getMappedColor(backgroundColor);
 
 		final Lazy<File> lpng = new Lazy<File>() {
 
@@ -828,8 +727,8 @@ public final class CucaDiagramFileMaker {
 				final BufferedImage im = builder.getBufferedImage();
 				final Graphics2D g2d = builder.getGraphics2D();
 
-				comp.drawU(new UGraphicG2d(g2d, null, dpiFactor), new Dimension(width, height), new SimpleContext2D(
-						false));
+				comp.drawU(new UGraphicG2d(diagram.getColorMapper(), g2d, null, dpiFactor),
+						new Dimension(width, height), new SimpleContext2D(false));
 				PngIO.write(im, fPng, dpi);
 				g2d.dispose();
 				return fPng;
@@ -838,7 +737,7 @@ public final class CucaDiagramFileMaker {
 
 		final Lazy<String> lsvg = new Lazy<String>() {
 			public String getNow() throws IOException {
-				final UGraphicSvg ug = new UGraphicSvg(true);
+				final UGraphicSvg ug = new UGraphicSvg(getSkinParam().getColorMapper(), true);
 				comp.drawU(ug, new Dimension(width, height), new SimpleContext2D(false));
 				return getSvg(ug);
 			}
@@ -848,7 +747,8 @@ public final class CucaDiagramFileMaker {
 			public File getNow() throws IOException {
 				final File fEps = FileUtils.createTempFile("plantumlB", ".eps");
 				final PrintWriter pw = new PrintWriter(fEps);
-				final UGraphicEps uEps = new UGraphicEps(EpsStrategy.getDefault());
+				final UGraphicEps uEps = new UGraphicEps(getSkinParam().getColorMapper(), getEpsStrategy(option
+						.getFileFormat()));
 				comp.drawU(uEps, new Dimension(width, height), new SimpleContext2D(false));
 				pw.print(uEps.getEPSCode());
 				pw.close();
@@ -875,23 +775,24 @@ public final class CucaDiagramFileMaker {
 
 	private DrawFile createImageForCircleInterface(Entity entity, final double dpiFactor) throws IOException {
 		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
-		final Color interfaceBackground = rose.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBackground,
-				stereo).getColor();
-		final Color interfaceBorder = rose.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBorder, stereo)
-				.getColor();
-		final Color background = rose.getHtmlColor(getSkinParam(), ColorParam.background, stereo).getColor();
+		final HtmlColor interfaceBackground = rose.getHtmlColor(getSkinParam(),
+				ColorParam.componentInterfaceBackground, stereo);
+		final HtmlColor interfaceBorder = rose
+				.getHtmlColor(getSkinParam(), ColorParam.componentInterfaceBorder, stereo);
+		final HtmlColor background = rose.getHtmlColor(getSkinParam(), ColorParam.background, stereo);
 		final CircleInterface circleInterface = new CircleInterface(interfaceBackground, interfaceBorder);
 
 		final Lazy<File> lpng = new Lazy<File>() {
 
 			public File getNow() throws IOException {
 				final EmptyImageBuilder builder = new EmptyImageBuilder(circleInterface.getPreferredWidth(null)
-						* dpiFactor, circleInterface.getPreferredHeight(null) * dpiFactor, background);
+						* dpiFactor, circleInterface.getPreferredHeight(null) * dpiFactor, diagram.getColorMapper()
+						.getMappedColor(background));
 
 				final BufferedImage im = builder.getBufferedImage();
 				final Graphics2D g2d = builder.getGraphics2D();
 
-				circleInterface.drawU(new UGraphicG2d(g2d, null, 1.0));
+				circleInterface.drawU(new UGraphicG2d(diagram.getColorMapper(), g2d, null, 1.0));
 
 				final File png = FileUtils.createTempFile("circleinterface", ".png");
 				ImageIO.write(im, "png", png);
@@ -902,14 +803,14 @@ public final class CucaDiagramFileMaker {
 		final Lazy<File> leps = new Lazy<File>() {
 			public File getNow() throws IOException {
 				final File epsFile = FileUtils.createTempFile("circleinterface", ".eps");
-				UGraphicEps.copyEpsToFile(circleInterface, epsFile);
+				UGraphicEps.copyEpsToFile(getSkinParam().getColorMapper(), circleInterface, epsFile);
 				return epsFile;
 			}
 		};
 
 		final Lazy<String> lsvg = new Lazy<String>() {
 			public String getNow() throws IOException {
-				return UGraphicG2d.getSvgString(circleInterface);
+				return UGraphicG2d.getSvgString(getSkinParam().getColorMapper(), circleInterface);
 			}
 
 		};
@@ -922,21 +823,21 @@ public final class CucaDiagramFileMaker {
 
 	private DrawFile createImageForActor(Entity entity, final double dpiFactor) throws IOException {
 		final String stereo = entity.getStereotype() == null ? null : entity.getStereotype().getLabel();
-		final Color actorBackground = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBackground, stereo)
-				.getColor();
-		final Color actorBorder = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBorder, stereo).getColor();
-		final Color background = rose.getHtmlColor(getSkinParam(), ColorParam.background, stereo).getColor();
+		final HtmlColor actorBackground = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBackground, stereo);
+		final HtmlColor actorBorder = rose.getHtmlColor(getSkinParam(), ColorParam.usecaseActorBorder, stereo);
+		final HtmlColor background = rose.getHtmlColor(getSkinParam(), ColorParam.background, stereo);
 		final StickMan stickMan = new StickMan(actorBackground, actorBorder);
 
 		final Lazy<File> lpng = new Lazy<File>() {
 			public File getNow() throws IOException {
 				final EmptyImageBuilder builder = new EmptyImageBuilder(stickMan.getPreferredWidth(null) * dpiFactor,
-						stickMan.getPreferredHeight(null) * dpiFactor, background);
+						stickMan.getPreferredHeight(null) * dpiFactor, diagram.getColorMapper().getMappedColor(
+								background));
 
 				final BufferedImage im = builder.getBufferedImage();
 				final Graphics2D g2d = builder.getGraphics2D();
 
-				stickMan.drawU(new UGraphicG2d(g2d, null, dpiFactor));
+				stickMan.drawU(new UGraphicG2d(diagram.getColorMapper(), g2d, null, dpiFactor));
 
 				final File png = FileUtils.createTempFile("actor", ".png");
 				ImageIO.write(im, "png", png);
@@ -946,14 +847,14 @@ public final class CucaDiagramFileMaker {
 		final Lazy<File> leps = new Lazy<File>() {
 			public File getNow() throws IOException {
 				final File epsFile = FileUtils.createTempFile("actor", ".eps");
-				UGraphicEps.copyEpsToFile(stickMan, epsFile);
+				UGraphicEps.copyEpsToFile(getSkinParam().getColorMapper(), stickMan, epsFile);
 				return epsFile;
 			}
 		};
 
 		final Lazy<String> lsvg = new Lazy<String>() {
 			public String getNow() throws IOException {
-				return UGraphicG2d.getSvgString(stickMan);
+				return UGraphicG2d.getSvgString(getSkinParam().getColorMapper(), stickMan);
 			}
 
 		};
@@ -966,22 +867,29 @@ public final class CucaDiagramFileMaker {
 	private DrawFile createImageForCircleCharacter(Entity entity, double dpiFactor) throws IOException {
 		final Stereotype stereotype = entity.getStereotype();
 
-		if (stereotype == null || stereotype.getColor() == null) {
+		if (stereotype == null || stereotype.getHtmlColor() == null) {
 			return null;
 		}
 
 		final String stereo = stereotype.getLabel();
 
-		final Color classBorder = rose.getHtmlColor(getSkinParam(), ColorParam.classBorder, stereo).getColor();
-		final Color classBackground = rose.getHtmlColor(getSkinParam(), ColorParam.classBackground, stereo).getColor();
-		final Font font = diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, stereo);
+		final HtmlColor classBorder = rose.getHtmlColor(getSkinParam(), ColorParam.classBorder, stereo);
+		final HtmlColor classBackground = rose.getHtmlColor(getSkinParam(), ColorParam.classBackground, stereo);
+		final UFont font = diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, stereo);
 		final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(), getSkinParam()
-				.getCircledCharacterRadius(), font, stereotype.getColor(), classBorder, Color.BLACK);
-		return circledCharacter.generateCircleCharacter(classBackground, dpiFactor);
+				.getCircledCharacterRadius(), font, stereotype.getHtmlColor(), classBorder, HtmlColor.BLACK);
+		return circledCharacter.generateCircleCharacter(diagram.getColorMapper(), classBackground, dpiFactor);
 	}
 
 	private ISkinParam getSkinParam() {
 		return diagram.getSkinParam();
+	}
+
+	private EpsStrategy getEpsStrategy(FileFormat format) {
+		if (format == FileFormat.EPS_TEXT) {
+			return EpsStrategy.WITH_MACRO_AND_TEXT;
+		}
+		return EpsStrategy.getDefault2();
 	}
 
 	private String createEps(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
@@ -1000,7 +908,7 @@ public final class CucaDiagramFileMaker {
 			final Graphviz graphviz = GraphvizUtils.create(dotString, "eps");
 
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			graphviz.createPng(baos);
+			graphviz.createFile(baos);
 			baos.close();
 
 			dotMaker.clean();
@@ -1013,13 +921,13 @@ public final class CucaDiagramFileMaker {
 			}
 
 			if (diagram.getTitle() != null) {
-				eps = addTitleEps(eps);
+				eps = addTitleEps(getEpsStrategy(fileFormatOption.getFileFormat()), eps);
 			}
 			if (diagram.getFooter() != null) {
-				eps = addFooterEps(eps);
+				eps = addFooterEps(getEpsStrategy(fileFormatOption.getFileFormat()), eps);
 			}
 			if (diagram.getHeader() != null) {
-				eps = addHeaderEps(eps);
+				eps = addHeaderEps(getEpsStrategy(fileFormatOption.getFileFormat()), eps);
 			}
 
 			os.write(eps.getBytes("UTF-8"));
@@ -1064,16 +972,24 @@ public final class CucaDiagramFileMaker {
 			// svg = sb.toString();
 
 		} finally {
-			// cleanTemporaryFiles(diagram.entities().values());
-			// cleanTemporaryFiles(diagram.getLinks());
+			clean();
 		}
 		return null;
 	}
 
+	private void clean() throws IOException {
+		if (OptionFlags.getInstance().isKeepTmpFiles() == false) {
+			diagram.clean();
+			if (staticFilesMap != null) {
+				staticFilesMap.clean();
+			}
+		}
+	}
+
 	private GraphvizMaker populateImagesAndCreateGraphvizMaker(List<String> dotStrings,
 			FileFormatOption fileFormatOption) throws IOException, InterruptedException {
-		populateImages(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
-		populateImagesLink(diagram.getDpiFactor(fileFormatOption), diagram.getDpi(fileFormatOption));
+		populateImages(fileFormatOption);
+		populateImagesLink(fileFormatOption);
 		final GraphvizMaker dotMaker = createDotMaker(dotStrings, fileFormatOption);
 		return dotMaker;
 	}
@@ -1087,7 +1003,7 @@ public final class CucaDiagramFileMaker {
 			new CucaDiagramSimplifier(diagram, dotStrings, fileFormat);
 		}
 		final DotData dotData = new DotData(null, diagram.getLinks(), diagram.entities(), diagram.getUmlDiagramType(),
-				diagram.getSkinParam(), diagram.getRankdir(), diagram, diagram);
+				diagram.getSkinParam(), diagram.getRankdir(), diagram, diagram, diagram.getColorMapper());
 
 		dotData.setDpi(diagram.getDpi(fileFormatOption));
 
@@ -1106,22 +1022,22 @@ public final class CucaDiagramFileMaker {
 		// return new DotMaker(dotData, dotStrings, fileFormat);
 	}
 
-	private void populateImages(double dpiFactor, int dpi) throws IOException {
+	private void populateImages(FileFormatOption option) throws IOException {
 		for (Entity entity : diagram.entities().values()) {
-			final DrawFile f = createImage(entity, dpiFactor, dpi);
+			final DrawFile f = createImage(entity, option);
 			if (f != null) {
 				entity.setImageFile(f);
 			}
 		}
 	}
 
-	private void populateImagesLink(double dpiFactor, int dpi) throws IOException {
+	private void populateImagesLink(FileFormatOption option) throws IOException {
 		for (Link link : diagram.getLinks()) {
-			final String note = link.getNote();
+			final List<? extends CharSequence> note = link.getNote();
 			if (note == null) {
 				continue;
 			}
-			final DrawFile f = createImageForNote(note, null, dpiFactor, dpi);
+			final DrawFile f = createImageForNote(note, null, option, null);
 			if (f != null) {
 				link.setImageFile(f);
 			}
@@ -1137,7 +1053,7 @@ public final class CucaDiagramFileMaker {
 				sb.append(s);
 				sb.append("\n");
 				s = st.nextToken();
-				if (s.equalsIgnoreCase("grestore") == false) {
+				if (s.equalsIgnoreCase("grestore") == false && st.hasMoreTokens()) {
 					s = st.nextToken();
 					if (s.equalsIgnoreCase("grestore") == false) {
 						throw new IllegalStateException();

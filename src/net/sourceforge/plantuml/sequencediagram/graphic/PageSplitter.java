@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4935 $
+ * Revision $Revision: 6922 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -49,10 +49,10 @@ class PageSplitter {
 	private final double tailHeight;
 	private final double signatureHeight;
 	private final double newpageHeight;
-	private final List<String> diagramTitle;
+	private final List<? extends CharSequence> diagramTitle;
 
 	PageSplitter(double fullHeight, double headerHeight, Map<Newpage, Double> newpages, double tailHeight,
-			double signatureHeight, double newpageHeight, List<String> diagramTitle) {
+			double signatureHeight, double newpageHeight, List<? extends CharSequence> diagramTitle) {
 		this.fullHeight = fullHeight;
 		this.diagramTitle = diagramTitle;
 		this.titles = new ArrayList<List<String>>();

@@ -32,6 +32,7 @@
 package net.sourceforge.plantuml.ugraphic.eps;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -39,13 +40,13 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DriverEllipseEps implements UDriver<EpsGraphics> {
 
-	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final UEllipse rect = (UEllipse) ushape;
 		final double width = rect.getWidth();
 		final double height = rect.getHeight();
 
-		eps.setFillColor(param.getBackcolor());
-		eps.setStrokeColor(param.getColor());
+		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
+		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
 		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
 				.getDashSpace());
 

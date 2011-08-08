@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6485 $
+ * Revision $Revision: 6665 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -116,6 +116,7 @@ class Step1Message extends Step1Abstract {
 			afterMessage(getStringBounder(), lifeEvent, arrowYEndLevel + marginActivateAndDeactive - delta1);
 		}
 
+		assert graphic instanceof InGroupable;
 		if (groupingStructures != null && graphic instanceof InGroupable) {
 			for (InGroupableList groupingStructure : groupingStructures) {
 				groupingStructure.addInGroupable((InGroupable) graphic);

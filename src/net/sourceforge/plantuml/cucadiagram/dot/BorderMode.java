@@ -37,7 +37,8 @@ package net.sourceforge.plantuml.cucadiagram.dot;
 enum BorderMode  {
 
 	NO_BORDER,
-	NO_BORDER_CELLSPACING,
+	NO_BORDER_CELLSPACING_OLD,
+	NO_BORDER_CELLSPACING_NEW,
 	BORDER_1_WITH_COLOR,
 	BORDER_1_WITHOUT_COLOR;
 

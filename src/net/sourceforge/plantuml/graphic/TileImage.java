@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3932 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -38,6 +38,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 
@@ -55,7 +56,7 @@ class TileImage implements Tile {
 		return new Dimension2DDouble(image.getWidth(), image.getHeight() + 2 * vspace);
 	}
 
-	public void draw(Graphics2D g2d, double x, double y) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		g2d.drawImage(image, (int) x, (int) y + vspace, null);
 	}
 

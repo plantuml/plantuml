@@ -31,7 +31,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.PathIterator;
@@ -39,8 +38,10 @@ import java.awt.geom.PathIterator;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -55,7 +56,7 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, SvgGraphics svg) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null && clip.isInside(x, y) == false) {
@@ -64,9 +65,9 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		final Font font = fontConfiguration.getFont();
+		final UFont font = fontConfiguration.getFont();
 		
-		final TextLayout t = new TextLayout(shape.getText(), font, fontRenderContext);
+		final TextLayout t = new TextLayout(shape.getText(), font.getFont(), fontRenderContext);
 		drawPathIterator(svg, x, y, t.getOutline(null).getPathIterator(null));
 
 	}

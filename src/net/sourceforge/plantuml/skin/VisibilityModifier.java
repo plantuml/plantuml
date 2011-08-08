@@ -33,14 +33,15 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -63,7 +64,7 @@ public enum VisibilityModifier {
 		this.backgroundParam = background;
 	}
 
-	public UDrawable getUDrawable(final int size, final Color foregroundColor, final Color backgoundColor) {
+	public UDrawable getUDrawable(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
 				drawInternal(ug, size, foregroundColor, backgoundColor);
@@ -71,14 +72,14 @@ public enum VisibilityModifier {
 		};
 	}
 
-	public TextBlock getUBlock(final int size, final Color foregroundColor, final Color backgoundColor) {
+	public TextBlock getUBlock(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
 		return new TextBlock() {
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return new Dimension2DDouble(size + 1, size + 1);
 			}
 
-			public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+			public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -92,7 +93,7 @@ public enum VisibilityModifier {
 		};
 	}
 
-	private void drawInternal(UGraphic ug, int size, final Color foregroundColor, final Color backgoundColor) {
+	private void drawInternal(UGraphic ug, int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
 		ug.getParam().setBackcolor(backgoundColor);
 		ug.getParam().setColor(foregroundColor);
 		size = ensureEven(size);

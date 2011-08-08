@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 6578 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -38,6 +38,11 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private final UParam param = new UParam();
 	private double dx;
 	private double dy;
+	private final ColorMapper colorMapper;
+
+	public AbstractCommonUGraphic(ColorMapper colorMapper) {
+		this.colorMapper = colorMapper;
+	}
 
 	final public UParam getParam() {
 		return param;
@@ -59,6 +64,10 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	final public double getTranslateY() {
 		return dy;
+	}
+
+	final public ColorMapper getColorMapper() {
+		return colorMapper;
 	}
 
 }

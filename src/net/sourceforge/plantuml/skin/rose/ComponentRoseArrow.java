@@ -28,20 +28,21 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5937 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -49,9 +50,13 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
-	public ComponentRoseArrow(Color foregroundColor, Color fontColor, Font font,
-			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
+	private final HorizontalAlignement messagePosition;
+
+	public ComponentRoseArrow(HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
+			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration,
+			HorizontalAlignement messagePosition) {
 		super(foregroundColor, fontColor, font, stringsToDisplay, arrowConfiguration);
+		this.messagePosition = messagePosition;
 	}
 
 	@Override
@@ -101,7 +106,17 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 				ug.getParam().setBackcolor(null);
 			}
 		}
-		getTextBlock().drawU(ug, getMarginX1(), 0);
+		final double textPos;
+		if (messagePosition == HorizontalAlignement.CENTER) {
+			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
+			textPos = (dimensionToUse.getWidth() - textWidth) / 2;
+		} else if (messagePosition == HorizontalAlignement.RIGHT) {
+			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
+			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2();
+		} else {
+			textPos = getMarginX1();
+		}
+		getTextBlock().drawU(ug, textPos, 0);
 	}
 
 	private UPolygon getPolygonNormal(final int textHeight, final int x2) {

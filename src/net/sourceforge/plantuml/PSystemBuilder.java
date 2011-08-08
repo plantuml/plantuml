@@ -64,6 +64,31 @@ public class PSystemBuilder {
 
 	final public PSystem createPSystem(final List<String> strings) throws IOException, InterruptedException {
 
+		final List<PSystemFactory> factories = getAllFactories();
+
+		final UmlSource umlSource = new UmlSource(strings);
+		final DiagramType diagramType = umlSource.getDiagramType();
+		final List<PSystemError> errors = new ArrayList<PSystemError>();
+		for (PSystemFactory systemFactory : factories) {
+			if (diagramType != systemFactory.getDiagramType()) {
+				continue;
+			}
+			final PSystem sys = new PSystemSingleBuilder(umlSource, systemFactory).getPSystem();
+			if (isOk(sys)) {
+				return sys;
+			}
+			errors.add((PSystemError) sys);
+		}
+
+		final PSystemError err = merge(errors);
+		if (OptionFlags.getInstance().isQuiet() == false) {
+			err.print(System.err);
+		}
+		return err;
+
+	}
+
+	private List<PSystemFactory> getAllFactories() {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
@@ -89,27 +114,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemProjectFactory());
-
-		final UmlSource umlSource = new UmlSource(strings);
-		final DiagramType diagramType = umlSource.getDiagramType();
-		final List<PSystemError> errors = new ArrayList<PSystemError>();
-		for (PSystemFactory systemFactory : factories) {
-			if (diagramType != systemFactory.getDiagramType()) {
-				continue;
-			}
-			final PSystem sys = new PSystemSingleBuilder(umlSource, systemFactory).getPSystem();
-			if (isOk(sys)) {
-				return sys;
-			}
-			errors.add((PSystemError) sys);
-		}
-
-		final PSystemError err = merge(errors);
-		if (OptionFlags.getInstance().isQuiet() == false) {
-			err.print(System.err);
-		}
-		return err;
-
+		return factories;
 	}
 
 	private PSystemError merge(Collection<PSystemError> ps) {

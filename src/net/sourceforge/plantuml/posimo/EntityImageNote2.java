@@ -52,26 +52,24 @@ public class EntityImageNote2 extends AbstractEntityImage2 {
 
 	private final Component comp;
 
-	public EntityImageNote2(IEntity entity, ISkinParam skinParam,
-			Collection<Link> links) {
+	public EntityImageNote2(IEntity entity, ISkinParam skinParam, Collection<Link> links) {
 		super(entity, skinParam);
 
 		final Rose skin = new Rose();
 
-		comp = skin.createComponent(ComponentType.NOTE, skinParam, StringUtils
-				.getWithNewlines(entity.getDisplay()));
+		comp = skin.createComponent(ComponentType.NOTE, skinParam, entity.getDisplay2());
 
 	}
 
 	@Override
 	public Dimension2D getDimension(StringBounder stringBounder) {
-		final double height =  comp.getPreferredHeight(stringBounder);
-		final double width =  comp.getPreferredWidth(stringBounder);
+		final double height = comp.getPreferredHeight(stringBounder);
+		final double width = comp.getPreferredWidth(stringBounder);
 		return new Dimension2DDouble(width, height);
 	}
 
-	public void drawU(UGraphic ug, double xTheoricalPosition,
-			double yTheoricalPosition, double marginWidth, double marginHeight) {
+	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition, double marginWidth,
+			double marginHeight) {
 		final double dx = ug.getTranslateX();
 		final double dy = ug.getTranslateY();
 		ug.translate(xTheoricalPosition, yTheoricalPosition);

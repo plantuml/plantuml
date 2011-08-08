@@ -28,25 +28,25 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3824 $
+ * Revision $Revision: 6528 $
  *
  */
 package net.sourceforge.plantuml;
 
 public abstract class Log {
 
-	private static long start = System.currentTimeMillis();
+	private static final long start = System.currentTimeMillis();
 
-	public static void debug(String s) {
+	public synchronized static void debug(String s) {
 	}
 
-	public static void info(String s) {
+	public synchronized static void info(String s) {
 		if (OptionFlags.getInstance().isVerbose()) {
 			System.out.println(format(s));
 		}
 	}
 
-	public static void error(String s) {
+	public synchronized static void error(String s) {
 		System.err.println(s);
 	}
 

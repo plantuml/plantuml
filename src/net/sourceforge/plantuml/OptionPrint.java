@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6448 $
+ * Revision $Revision: 6626 $
  *
  */
 package net.sourceforge.plantuml;
@@ -88,12 +88,18 @@ public class OptionPrint {
 		System.err.println("    -h[elp]\t\tTo display this help message");
 		System.err.println("    -testdot\t\tTo test the installation of graphviz");
 		System.err.println("    -graphvizdot \"exe\"\tTo specify dot executable");
-		System.err.println("    -p[ipe]\t\tTo use stdin for PlantUML source and stdout for PNG/SVG generation");
+		System.err.println("    -p[ipe]\t\tTo use stdin for PlantUML source and stdout for PNG/SVG/EPS generation");
 		System.err.println("    -computeurl\t\tTo compute the encoded URL of a PlantUML source file");
 		System.err.println("    -decodeurl\t\tTo retrieve the PlantUML source from an encoded URL");
 		System.err.println("    -syntax\t\tTo report any syntax error from standard input without generating images");
 		System.err.println("    -language\t\tTo print the list of PlantUML keywords");
+		System.err.println("    -nosuggestengine\tTo disable the suggest engine when errors in diagrams");
+		System.err.println("    -checkonly\t\tTo check the syntax of files without generating images");
+		System.err.println("    -failonerror\tTo stop processing if syntax error in diagram occurs");
 		System.err.println("    -pattern\t\tTo print the list of Regular Expression used by PlantUML");
+		System.err.println("    -duration\t\tTo print the duration of complete diagrams processing");
+		System.err.println("    -nbthread N\tTo use (N) threads for processing");
+		System.err.println("    -nbthread auto\tTo use " + Option.defaultNbThreads() + " threads for processing");
 		System.err.println();
 		System.err.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();

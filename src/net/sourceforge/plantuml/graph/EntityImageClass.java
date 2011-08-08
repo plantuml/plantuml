@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6168 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -44,10 +44,13 @@ import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 class EntityImageClass extends AbstractEntityImage {
 
@@ -61,8 +64,8 @@ class EntityImageClass extends AbstractEntityImage {
 
 	public EntityImageClass(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 		this.methods = new MethodsOrFieldsArea(entity.getMethodsToDisplay(), getFont14());
 		this.fields = new MethodsOrFieldsArea(entity.getFieldsToDisplay(), getFont14());
 
@@ -78,16 +81,16 @@ class EntityImageClass extends AbstractEntityImage {
 		// }
 		final double radius = 10;
 		if (entity.getType() == EntityType.ABSTRACT_CLASS) {
-			return new CircledCharacter('A', radius, getFont17(), getBlue(), getRed(), Color.BLACK);
+			return new CircledCharacter('A', radius, getFont17(), getBlue(), getRed(), HtmlColor.BLACK);
 		}
 		if (entity.getType() == EntityType.CLASS) {
-			return new CircledCharacter('C', radius, getFont17(), getGreen(), getRed(), Color.BLACK);
+			return new CircledCharacter('C', radius, getFont17(), getGreen(), getRed(), HtmlColor.BLACK);
 		}
 		if (entity.getType() == EntityType.INTERFACE) {
-			return new CircledCharacter('I', radius, getFont17(), getViolet(), getRed(), Color.BLACK);
+			return new CircledCharacter('I', radius, getFont17(), getViolet(), getRed(), HtmlColor.BLACK);
 		}
 		if (entity.getType() == EntityType.ENUM) {
-			return new CircledCharacter('E', radius, getFont17(), getRose(), getRed(), Color.BLACK);
+			return new CircledCharacter('E', radius, getFont17(), getRose(), getRed(), HtmlColor.BLACK);
 		}
 		assert false;
 		return null;
@@ -121,17 +124,17 @@ class EntityImageClass extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
 		final Dimension2D dimName = getNameDimension(StringBounderUtils.asStringBounder(g2d));
 		final Dimension2D dimFields = fields.calculateDimension(StringBounderUtils.asStringBounder(g2d));
 
 		final int width = (int) dimTotal.getWidth();
 		final int height = (int) dimTotal.getHeight();
-		g2d.setColor(getYellow());
+		g2d.setColor(colorMapper.getMappedColor(getYellow()));
 		g2d.fillRect(0, 0, width, height);
 
-		g2d.setColor(getRed());
+		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.drawRect(0, 0, width - 1, height - 1);
 
 		final double line1 = dimName.getHeight() + 2 * yMargin;
@@ -142,12 +145,12 @@ class EntityImageClass extends AbstractEntityImage {
 
 		final double circledWidth = getCircledWidth(StringBounderUtils.asStringBounder(g2d));
 		g2d.setColor(Color.BLACK);
-		name.drawTOBEREMOVED(g2d, xMargin + circledWidth, yMargin);
-		fields.drawTOBEREMOVED(g2d, xMargin, line1 + yMargin);
-		methods.drawTOBEREMOVED(g2d, xMargin, line2 + yMargin);
+		name.drawTOBEREMOVED(colorMapper, g2d, xMargin + circledWidth, yMargin);
+		fields.drawTOBEREMOVED(colorMapper, g2d, xMargin, line1 + yMargin);
+		methods.drawTOBEREMOVED(colorMapper, g2d, xMargin, line2 + yMargin);
 
 		if (circledCharacter != null) {
-			circledCharacter.draw(g2d, xMargin, yMargin, 1.0);
+			circledCharacter.draw(new ColorMapperIdentity(), g2d, xMargin, yMargin, 1.0);
 		}
 
 	}

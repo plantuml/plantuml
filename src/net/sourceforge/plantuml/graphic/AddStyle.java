@@ -28,19 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5506 $
+ * Revision $Revision: 6570 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
 
 class AddStyle implements FontChange {
 
 	private final FontStyle style;
-	private final Color extendedColor;
+	private final HtmlColor extendedColor;
 
-	AddStyle(FontStyle style, Color extendedColor) {
+	AddStyle(FontStyle style, HtmlColor extendedColor) {
 		this.style = style;
 		this.extendedColor = extendedColor;
 	}

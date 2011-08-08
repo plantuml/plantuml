@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6486 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Note;
 
 public abstract class AbstractCommandMultilinesNoteEntity extends CommandMultilines<AbstractEntityDiagram> {
@@ -72,7 +73,7 @@ public abstract class AbstractCommandMultilinesNoteEntity extends CommandMultili
 		final String s = StringUtils.getMergedLines(strings);
 
 		final Entity note = getSystem().createEntity("GMN" + UniqueSequence.getValue(), s, EntityType.NOTE);
-		note.setSpecificBackcolor(line0.get(2));
+		note.setSpecificBackcolor(HtmlColor.getColorIfValid(line0.get(2)));
 		note.setUrl(url);
 
 		final Position position = Position.valueOf(pos.toUpperCase()).withRankdir(getSystem().getRankdir());

@@ -28,39 +28,39 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4110 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class StringBounderUtils {
 
 	public static StringBounder asStringBounder(final Graphics2D g2d) {
 		
 		return new StringBounder() {
-			public Dimension2D calculateDimension(Font font, String text) {
-				final FontMetrics fm = g2d.getFontMetrics(font);
+			public Dimension2D calculateDimension(UFont font, String text) {
+				final FontMetrics fm = g2d.getFontMetrics(font.getFont());
 				final Rectangle2D rect = fm.getStringBounds(text, g2d);
 				return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
 			}
 
-			public double getFontDescent(Font font) {
-				final FontMetrics fm = g2d.getFontMetrics(font);
-				return fm.getDescent();
-			}
-
-			public double getFontAscent(Font font) {
-				final FontMetrics fm = g2d.getFontMetrics(font);
-				return fm.getAscent();
-			}
+//			public double getFontDescent(Font font) {
+//				final FontMetrics fm = g2d.getFontMetrics(font);
+//				return fm.getDescent();
+//			}
+//
+//			public double getFontAscent(Font font) {
+//				final FontMetrics fm = g2d.getFontMetrics(font);
+//				return fm.getAscent();
+//			}
 
 //			public UnusedSpace getUnusedSpace(Font font, char c) {
 //				//return new UnusedSpace(7, 6, 0, 2);

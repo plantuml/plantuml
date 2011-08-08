@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -45,10 +45,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageComponent extends AbstractEntityImage {
 
@@ -57,8 +59,8 @@ class EntityImageComponent extends AbstractEntityImage {
 
 	public EntityImageComponent(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	@Override
@@ -67,28 +69,28 @@ class EntityImageComponent extends AbstractEntityImage {
 		return Dimension2DDouble.delta(nameDim, 20, 14);
 	}
 
-	private void drawRect(Graphics2D g2d, double x, double y, double width, double height) {
+	private void drawRect(ColorMapper colorMapper, Graphics2D g2d, double x, double y, double width, double height) {
 		g2d.setStroke(new BasicStroke(thickness));
 		final Shape head = new Rectangle2D.Double(x, y, width, height);
-		g2d.setColor(getYellow());
+		g2d.setColor(colorMapper.getMappedColor(getYellow()));
 		g2d.fill(head);
-		g2d.setColor(getRed());
+		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.draw(head);
 
 		g2d.setStroke(new BasicStroke());
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
 		final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
 
-		drawRect(g2d, 6, 0, dimTotal.getWidth(), dimTotal.getHeight());
-		drawRect(g2d, 0, 7, 12, 6);
-		drawRect(g2d, 0, dimTotal.getHeight() - 7 - 6, 12, 6);
+		drawRect(colorMapper, g2d, 6, 0, dimTotal.getWidth(), dimTotal.getHeight());
+		drawRect(colorMapper, g2d, 0, 7, 12, 6);
+		drawRect(colorMapper, g2d, 0, dimTotal.getHeight() - 7 - 6, 12, 6);
 
 		g2d.setColor(Color.BLACK);
-		name.drawTOBEREMOVED(g2d, 6 + (dimTotal.getWidth() - nameDim.getWidth()) / 2,
+		name.drawTOBEREMOVED(colorMapper, g2d, 6 + (dimTotal.getWidth() - nameDim.getWidth()) / 2,
 				(dimTotal.getHeight() - nameDim.getHeight()) / 2);
 	}
 }

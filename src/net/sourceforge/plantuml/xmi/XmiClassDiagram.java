@@ -189,7 +189,7 @@ public class XmiClassDiagram {
 		final Element cla = document.createElement("UML:Class");
 
 		cla.setAttribute("xmi.id", entity.getUid());
-		cla.setAttribute("name", entity.getDisplay());
+		cla.setAttribute("name", entity.getDisplay2().get(0).toString());
 		cla.setAttribute("namespace", "model1");
 
 		final Element feature = document.createElement("UML:Classifier.feature");

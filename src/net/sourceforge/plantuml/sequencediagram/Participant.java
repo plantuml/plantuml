@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6482 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -119,8 +119,8 @@ public class Participant implements SpecificBackcolorable {
 		return specificBackcolor;
 	}
 
-	public void setSpecificBackcolor(String s) {
-		this.specificBackcolor = HtmlColor.getColorIfValid(s);
+	public void setSpecificBackcolor(HtmlColor color) {
+		this.specificBackcolor = color;
 	}
 
 	private Url url;

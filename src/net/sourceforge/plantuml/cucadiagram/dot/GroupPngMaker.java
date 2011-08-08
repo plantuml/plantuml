@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6453 $
+ * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -105,7 +105,7 @@ public final class GroupPngMaker {
 			final Graphviz graphviz = GraphvizUtils.create(dotString, "png");
 
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			graphviz.createPng(baos);
+			graphviz.createFile(baos);
 			baos.close();
 
 			final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
@@ -139,7 +139,7 @@ public final class GroupPngMaker {
 			final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
 
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			graphviz.createPng(baos);
+			graphviz.createFile(baos);
 			baos.close();
 
 			String svg = new String(baos.toByteArray(), "UTF-8");
@@ -207,9 +207,9 @@ public final class GroupPngMaker {
 		ISkinParam skinParam = diagram.getSkinParam();
 		if (OptionFlags.PBBACK && group.getBackColor() != null) {
 			skinParam = new SkinParamBackcolored(skinParam, null, group.getBackColor());
-		} 
+		}
 		final DotData dotData = new DotData(group, links, group.entities(), diagram.getUmlDiagramType(), skinParam,
-				group.getRankdir(), new InnerGroupHierarchy());
+				group.getRankdir(), new InnerGroupHierarchy(), diagram.getColorMapper());
 		// dotData.putAllImages(images);
 		// dotData.putAllStaticImages(staticImages);
 		// dotData.putAllImagesLink(imagesLink);

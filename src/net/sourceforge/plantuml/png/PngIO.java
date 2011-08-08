@@ -28,12 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6710 $
  *
  */
 package net.sourceforge.plantuml.png;
 
 import java.awt.image.RenderedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class PngIO {
 	public static void write(RenderedImage image, File file, String metadata, int dpi) throws IOException {
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream(file);
+			os = new BufferedOutputStream(new FileOutputStream(file));
 			write(image, os, metadata, dpi);
 		} finally {
 			if (os != null) {

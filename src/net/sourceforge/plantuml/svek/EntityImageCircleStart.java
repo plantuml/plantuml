@@ -28,14 +28,44 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4912 $
+ * Revision $Revision: 5183 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.svek;
 
-import java.awt.Color;
+import java.awt.geom.Dimension2D;
 
-public interface ColorChanger {
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UShape;
 
-	Color getChangedColor(Color color);
+public class EntityImageCircleStart extends AbstractEntityImage {
+
+	private static final int SIZE = 20;
+
+	public EntityImageCircleStart(IEntity entity, ISkinParam skinParam) {
+		super(entity, skinParam);
+	}
+
+	@Override
+	public Dimension2D getDimension(StringBounder stringBounder) {
+		return new Dimension2DDouble(SIZE, SIZE);
+	}
+
+	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
+		final UShape circle = new UEllipse(SIZE, SIZE);
+		ug.getParam().setColor(null);
+		ug.getParam().setBackcolor(getColor(ColorParam.activityStart, getStereo()));
+		ug.draw(xTheoricalPosition, yTheoricalPosition, circle);
+	}
+
+	public ShapeType getShapeType() {
+		return ShapeType.CIRCLE;
+	}
+
 }

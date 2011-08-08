@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -43,11 +43,13 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.StickMan;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageActor extends AbstractEntityImage {
 
@@ -56,8 +58,8 @@ class EntityImageActor extends AbstractEntityImage {
 
 	public EntityImageActor(Entity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 		this.stickman = new StickMan(getYellow(), getRed());
 	}
 
@@ -70,7 +72,7 @@ class EntityImageActor extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
 		final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
 
@@ -87,6 +89,6 @@ class EntityImageActor extends AbstractEntityImage {
 		g2d.translate(-manX, 0);
 
 		g2d.setColor(Color.BLACK);
-		name.drawTOBEREMOVED(g2d, (dimTotal.getWidth() - nameDim.getWidth()) / 2, manHeight);
+		name.drawTOBEREMOVED(colorMapper, g2d, (dimTotal.getWidth() - nameDim.getWidth()) / 2, manHeight);
 	}
 }

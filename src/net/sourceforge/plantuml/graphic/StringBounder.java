@@ -28,16 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4987 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public interface StringBounder {
 
-	public Dimension2D calculateDimension(Font font, String text);
+	public Dimension2D calculateDimension(UFont font, String text);
 	
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -43,10 +43,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Entity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageActivity extends AbstractEntityImage {
 
@@ -57,8 +59,8 @@ class EntityImageActivity extends AbstractEntityImage {
 
 	public EntityImageActivity(Entity entity) {
 		super(entity);
-		this.text = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-				getFont14(), Color.BLACK), HorizontalAlignement.CENTER);
+		this.text = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
+				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	@Override
@@ -68,7 +70,7 @@ class EntityImageActivity extends AbstractEntityImage {
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
 		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
 
 		final int width = (int) dimTotal.getWidth();
@@ -87,15 +89,15 @@ class EntityImageActivity extends AbstractEntityImage {
 		p.addPoint(xMargin * 2, height);
 		p.addPoint(0, height - 2 * yMargin);
 
-		g2d.setColor(getYellow());
+		g2d.setColor(colorMapper.getMappedColor(getYellow()));
 		g2d.fill(p);
 		// g2d.fillRect(0, 0, width, height);
 
-		g2d.setColor(getRed());
+		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.draw(p);
 		// g2d.drawRect(0, 0, width - 1, height - 1);
 		g2d.setColor(Color.BLACK);
-		text.drawTOBEREMOVED(g2d, xMargin, yMargin);
+		text.drawTOBEREMOVED(colorMapper, g2d, xMargin, yMargin);
 
 	}
 }

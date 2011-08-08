@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5983 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ugraphic.ColorChangerMonochrome;
 
 public class HtmlColor {
@@ -207,6 +208,15 @@ public class HtmlColor {
 	}
 
 	private final Color color;
+	private final boolean monochrome;
+
+	public static final HtmlColor BLACK = HtmlColor.getColorIfValid("black");
+	public static final HtmlColor WHITE = HtmlColor.getColorIfValid("white");
+	public static final HtmlColor RED = HtmlColor.getColorIfValid("#FF0000");
+	public static final HtmlColor GREEN = HtmlColor.getColorIfValid("#00FF00");
+	public static final HtmlColor BLUE = HtmlColor.getColorIfValid("#0000FF");
+	public static final HtmlColor GRAY = HtmlColor.getColorIfValid("#808080");
+	public static final HtmlColor LIGHT_GRAY = HtmlColor.getColorIfValid("#C0C0C0");
 
 	private HtmlColor(String s) {
 		if (s.matches("#[0-9A-Fa-f]{6}")) {
@@ -219,12 +229,14 @@ public class HtmlColor {
 			}
 			color = new Color(Integer.parseInt(value.substring(1), 16));
 		}
+		monochrome = false;
 		assert isValid(s);
 	}
 
-//	private HtmlColor(Color c) {
-//		this.color = c;
-//	}
+	private HtmlColor(Color c, boolean monochrome) {
+		this.color = c;
+		this.monochrome = monochrome;
+	}
 
 	static public boolean isValid(String s) {
 		if (s.matches("#[0-9A-Fa-f]{6}")) {
@@ -245,16 +257,6 @@ public class HtmlColor {
 		return new HtmlColor(s);
 	}
 
-	public static String getAsHtml(Color color) {
-		if (color == null) {
-			throw new IllegalArgumentException();
-		}
-		final int v = 0xFFFFFF & color.getRGB();
-		String s = "000000" + Integer.toHexString(v).toUpperCase();
-		s = s.substring(s.length() - 6);
-		return "#" + s;
-	}
-
 	static private String removeFirstDieseAndToLowercase(String s) {
 		s = s.toLowerCase();
 		if (s.startsWith("#")) {
@@ -263,32 +265,17 @@ public class HtmlColor {
 		return s;
 	}
 
-	public String getAsHtml() {
-		return getAsHtml(getColor());
-	}
-
-	public Color getColor() {
-		if (forceMonochrome) {
-			return new ColorChangerMonochrome().getChangedColor(color);
-		}
+	public Color getColor999() {
 		return color;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + " " + getAsHtml();
+	public HtmlColor asMonochrome() {
+		if (monochrome) {
+			throw new IllegalStateException();
+		}
+		return new HtmlColor(new ColorChangerMonochrome().getChangedColor(color), true);
 	}
 
-	private static boolean forceMonochrome = false;
-
-	public static final boolean isForceMonochrome() {
-		return forceMonochrome;
-	}
-
-	public static final void setForceMonochrome(boolean forceMonochrome) {
-		HtmlColor.forceMonochrome = forceMonochrome;
-	}
-	
 	public static Collection<String> names() {
 		return Collections.unmodifiableSet(names);
 	}

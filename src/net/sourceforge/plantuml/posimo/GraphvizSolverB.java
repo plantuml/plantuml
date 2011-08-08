@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.posimo;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -101,7 +102,7 @@ public class GraphvizSolverB {
 
 		final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		graphviz.createPng(baos);
+		graphviz.createFile(baos);
 		baos.close();
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, "UTF-8");
@@ -170,15 +171,11 @@ public class GraphvizSolverB {
 				p.setLabelPosition(x, y);
 				minMax.manage(x, y);
 			}
-
 		}
-
-		System.err.println("minMax=" + minMax);
-
 		return new Dimension2DDouble(width, height);
 	}
 
-	private List<Point2D.Double> extractPointsList(final String svg, final int starting) {
+	static private List<Point2D.Double> extractPointsList(final String svg, final int starting) {
 		final String pointsString = "points=\"";
 		final int p2 = svg.indexOf(pointsString, starting);
 		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
@@ -187,7 +184,7 @@ public class GraphvizSolverB {
 		return pointsList;
 	}
 
-	private double getMaxX(List<Point2D.Double> points) {
+	static private double getMaxX(List<Point2D.Double> points) {
 		double result = points.get(0).x;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).x > result) {
@@ -197,7 +194,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	private double getMinX(List<Point2D.Double> points) {
+	static private double getMinX(List<Point2D.Double> points) {
 		double result = points.get(0).x;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).x < result) {
@@ -207,7 +204,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	private double getMaxY(List<Point2D.Double> points) {
+	static private double getMaxY(List<Point2D.Double> points) {
 		double result = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).y > result) {
@@ -217,7 +214,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	private double getMinY(List<Point2D.Double> points) {
+	static private double getMinY(List<Point2D.Double> points) {
 		double result = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).y < result) {
@@ -227,7 +224,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	private List<Point2D.Double> getPoints(String points) {
+	static private List<Point2D.Double> getPoints(String points) {
 		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
 		final StringTokenizer st = new StringTokenizer(points, " ");
 		while (st.hasMoreTokens()) {
@@ -242,8 +239,8 @@ public class GraphvizSolverB {
 
 	private void exportPng(final String dotString, File f) throws IOException, InterruptedException {
 		final Graphviz graphviz = GraphvizUtils.create(dotString, "png");
-		final OutputStream os = new FileOutputStream(f);
-		graphviz.createPng(os);
+		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+		graphviz.createFile(os);
 		os.close();
 	}
 

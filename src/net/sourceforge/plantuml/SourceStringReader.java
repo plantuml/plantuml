@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class SourceStringReader {
 
 	public SourceStringReader(Defines defines, String source, List<String> config) {
 		try {
-			final BlockUmlBuilder builder = new BlockUmlBuilder(config, defines, new StringReader(source));
+			final BlockUmlBuilder builder = new BlockUmlBuilder(config, defines, new StringReader(source), null);
 			this.blocks = builder.getBlockUmls();
 		} catch (IOException e) {
 			throw new IllegalStateException();
@@ -67,7 +68,7 @@ public class SourceStringReader {
 	}
 
 	public String generateImage(File f) throws IOException {
-		final FileOutputStream os = new FileOutputStream(f);
+		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
 		final String result = generateImage(os, 0);
 		os.close();
 		return result;
@@ -100,7 +101,7 @@ public class SourceStringReader {
 		} catch (InterruptedException e) {
 			return null;
 		}
-		Log.error("numImage is too big = ");
+		Log.error("numImage is too big = " + numImage);
 		return null;
 
 	}

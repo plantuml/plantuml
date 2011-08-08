@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
@@ -97,7 +98,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			entity1.setStereotype(new Stereotype(arg2.get("STEREOTYPE").get(0)));
 		}
 		if (arg2.get("BACKCOLOR").get(0) != null) {
-			entity1.setSpecificBackcolor(arg2.get("BACKCOLOR").get(0));
+			entity1.setSpecificBackcolor(HtmlColor.getColorIfValid(arg2.get("BACKCOLOR").get(0)));
 		}
 
 		final IEntity entity2 = getEntity(getSystem(), arg2, false);
@@ -105,7 +106,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			return CommandExecutionResult.error("No such activity");
 		}
 		if (arg2.get("BACKCOLOR2").get(0) != null) {
-			entity2.setSpecificBackcolor(arg2.get("BACKCOLOR2").get(0));
+			entity2.setSpecificBackcolor(HtmlColor.getColorIfValid(arg2.get("BACKCOLOR2").get(0)));
 		}
 		if (arg2.get("STEREOTYPE2").get(0) != null) {
 			entity2.setStereotype(new Stereotype(arg2.get("STEREOTYPE2").get(0)));

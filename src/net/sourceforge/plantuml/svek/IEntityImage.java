@@ -27,33 +27,26 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4826 $
  *
+ * Revision $Revision: 4236 $
+ * 
  */
-package net.sourceforge.plantuml.eps;
+package net.sourceforge.plantuml.svek;
 
-import java.io.File;
+import java.awt.geom.Dimension2D;
 
-class InkscapeLinux extends AbstractInkscape {
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-	@Override
-	protected File specificExe() {
-		final File usrLocalBin = new File("/usr/local/bin/inkscape");
-		if (usrLocalBin.exists()) {
-			return usrLocalBin;
-		}
+public interface IEntityImage {
 
-		final File usrBin = new File("/usr/bin/inkscape");
-		if (usrBin.exists()) {
-			return usrBin;
-		}
-		return null;
-	}
+	Dimension2D getDimension(StringBounder stringBounder);
 
-	@Override
-	protected void appendFilePath(final StringBuilder sb, File file) {
-		sb.append(file.getAbsolutePath());
-	}
+	void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition);
+
+	ShapeType getShapeType();
+	
+	HtmlColor getBackcolor();
 
 }

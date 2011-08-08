@@ -28,32 +28,29 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4826 $
+ * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.eps;
+package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.io.File;
+import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UShape;
 
-public class InkscapeUtils {
+public class DriverDotPathEps implements UDriver<EpsGraphics> {
 
-	private static boolean isWindows() {
-		return File.separatorChar == '\\';
-	}
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
+		final DotPath shape = (DotPath) ushape;
+		//DriverLineG2d.manageStroke(param, g2d);
 
-	public static Inkscape create() {
-		if (isWindows()) {
-			return new InkscapeWindows();
+		if (param.getColor() != null) {
+			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
+			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
+					.getDashSpace());
+			shape.draw(eps, x, y);
 		}
-		return new InkscapeLinux();
 	}
-
-	public static String getenvInkscape() {
-		final String env = System.getProperty("INKSCAPE");
-		if (env != null) {
-			return env;
-		}
-		return System.getenv("INKSCAPE");
-	}
-
 }

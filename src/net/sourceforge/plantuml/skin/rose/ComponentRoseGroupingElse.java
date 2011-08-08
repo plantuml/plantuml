@@ -28,27 +28,27 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6404 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
-	private final Color groupBorder;
+	private final HtmlColor groupBorder;
 
-	public ComponentRoseGroupingElse(Color fontColor, Color groupBorder, Font smallFont, CharSequence comment) {
+	public ComponentRoseGroupingElse(HtmlColor fontColor, HtmlColor groupBorder, UFont smallFont, CharSequence comment) {
 		super(comment == null ? null : "[" + comment + "]", fontColor, smallFont, HorizontalAlignement.LEFT, 5, 5, 1);
 		this.groupBorder = groupBorder;
 	}

@@ -83,18 +83,19 @@ public class ActivityDiagram2 extends CucaDiagram {
 		return waitings.size() > 0;
 	}
 
-	public void newActivity(String display) {
+	public void newActivity(String display, Direction direction) {
 		if (waitings.size() == 0) {
 			throw new IllegalStateException();
 		}
 		final Entity act = createEntity(getAutoCode(), display, EntityType.ACTIVITY);
-		afterAdd(act);
+		afterAdd(act, direction);
 
 	}
 
 	private final Map<String, IEntity> bars = new HashMap<String, IEntity>();
 
 	public void bar(String bar) {
+		final Direction direction = Direction.DOWN;
 		if (bars.containsKey(bar)) {
 			final IEntity existingBar = bars.get(bar);
 			for (Iterator<IEntity> it = waitings.iterator(); it.hasNext();) {
@@ -103,7 +104,7 @@ public class ActivityDiagram2 extends CucaDiagram {
 					it.remove();
 				}
 			}
-			afterAdd(existingBar);
+			afterAdd(existingBar, direction);
 			return;
 		}
 
@@ -113,14 +114,26 @@ public class ActivityDiagram2 extends CucaDiagram {
 		label(bar);
 		final Entity act = createEntity(getAutoCode(), bar, EntityType.SYNCHRO_BAR);
 		bars.put(bar, act);
-		afterAdd(act);
+		afterAdd(act, direction);
 	}
 
-	private void afterAdd(final IEntity dest) {
+	private void afterAdd(final IEntity dest, Direction direction) {
 		for (IEntity last : this.waitings) {
 			// System.err.println("last=" + last);
 			// System.err.println("act=" + act);
-			this.addLink(new Link(last, dest, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), futureLabel, 2));
+			final Link link;
+			if (direction == Direction.DOWN) {
+				link = new Link(last, dest, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), futureLabel, 2);
+			} else if (direction == Direction.RIGHT) {
+				link = new Link(last, dest, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), futureLabel, 1);
+			} else if (direction == Direction.LEFT) {
+				link = new Link(dest, last, new LinkType(LinkDecor.NONE, LinkDecor.ARROW), futureLabel, 1);
+			} else if (direction == Direction.UP) {
+				link = new Link(dest, last, new LinkType(LinkDecor.NONE, LinkDecor.ARROW), futureLabel, 2);
+			} else {
+				throw new UnsupportedOperationException();
+			}
+			this.addLink(link);
 			futureLabel = null;
 		}
 
@@ -239,12 +252,12 @@ public class ActivityDiagram2 extends CucaDiagram {
 		// currentContext.clearPendingsButFirst();
 	}
 
-	public void end() {
+	public void end(Direction direction) {
 		if (waitings.size() == 0) {
 			throw new IllegalStateException();
 		}
 		final IEntity act = getOrCreateEntity("end", EntityType.CIRCLE_END);
-		afterAdd(act);
+		afterAdd(act, direction);
 	}
 
 }

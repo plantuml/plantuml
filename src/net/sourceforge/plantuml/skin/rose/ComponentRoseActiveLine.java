@@ -28,14 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6046 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,12 +44,12 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
 
-	private final Color foregroundColor;
-	private final Color lifeLineBackground;
+	private final HtmlColor foregroundColor;
+	private final HtmlColor lifeLineBackground;
 	private final boolean closeUp;
 	private final boolean closeDown;
 
-	public ComponentRoseActiveLine(Color foregroundColor, Color lifeLineBackground, boolean closeUp, boolean closeDown) {
+	public ComponentRoseActiveLine(HtmlColor foregroundColor, HtmlColor lifeLineBackground, boolean closeUp, boolean closeDown) {
 		this.foregroundColor = foregroundColor;
 		this.lifeLineBackground = lifeLineBackground;
 		this.closeUp = closeUp;

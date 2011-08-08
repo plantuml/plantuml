@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 6710 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -37,6 +37,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -169,7 +170,7 @@ public final class CucaDiagramPngMaker2 {
 	public List<File> createPng(File pngFile) throws IOException {
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream(pngFile);
+			os = new BufferedOutputStream(new FileOutputStream(pngFile));
 			createPng(os);
 		} finally {
 			if (os != null) {

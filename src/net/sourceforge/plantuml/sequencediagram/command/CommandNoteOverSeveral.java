@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5884 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -38,6 +38,7 @@ import java.util.List;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -54,7 +55,7 @@ public class CommandNoteOverSeveral extends SingleLineCommand<SequenceDiagram> {
 		final Participant p2 = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1)));
 		final List<String> strings = StringUtils.getWithNewlines(arg.get(3));
 		final Note note = new Note(p1, p2, strings);
-		note.setSpecificBackcolor(arg.get(2));
+		note.setSpecificBackcolor(HtmlColor.getColorIfValid(arg.get(2)));
 		getSystem().addNote(note);
 		return CommandExecutionResult.ok();
 	}

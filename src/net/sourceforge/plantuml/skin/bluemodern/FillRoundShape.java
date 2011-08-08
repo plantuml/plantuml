@@ -28,16 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3914 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGradient;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -47,10 +48,10 @@ public class FillRoundShape {
 	final private double width;
 	final private double height;
 	final private double corner;
-	final private Color c1;
-	final private Color c2;
+	final private HtmlColor c1;
+	final private HtmlColor c2;
 
-	public FillRoundShape(double width, double height, Color c1, Color c2, double corner) {
+	public FillRoundShape(double width, double height, HtmlColor c1, HtmlColor c2, double corner) {
 		this.width = width;
 		this.height = height;
 		this.c1 = c1;
@@ -59,8 +60,9 @@ public class FillRoundShape {
 
 	}
 
-	public void draw(Graphics2D g2d) {
-		final GradientPaint paint = new GradientPaint(0, 0, c1, (float) width, (float) height, c2);
+	public void draw(ColorMapper mapper, Graphics2D g2d) {
+		final GradientPaint paint = new GradientPaint(0, 0, mapper.getMappedColor(c1), (float) width, (float) height,
+				mapper.getMappedColor(c2));
 		final RoundRectangle2D r = new RoundRectangle2D.Double(0, 0, width, height, corner * 2, corner * 2);
 		g2d.setPaint(paint);
 		g2d.fill(r);

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 
 import org.stathissideris.ascii2image.core.ConversionOptions;
+import org.stathissideris.ascii2image.core.ProcessingOptions;
 import org.stathissideris.ascii2image.graphics.BitmapRenderer;
 import org.stathissideris.ascii2image.graphics.Diagram;
 import org.stathissideris.ascii2image.text.TextGrid;
@@ -49,9 +50,11 @@ import org.stathissideris.ascii2image.text.TextGrid;
 public class PSystemDitaa extends AbstractPSystem {
 
 	private final TextGrid grid = new TextGrid();
-	
-	public PSystemDitaa(String data) throws UnsupportedEncodingException {
+	private final ProcessingOptions processingOptions = new ProcessingOptions();
+
+	public PSystemDitaa(String data, boolean performSeparationOfCommonEdges) throws UnsupportedEncodingException {
 		grid.initialiseWithText(data, null);
+		processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
 	}
 
 	public String getDescription() {
@@ -62,7 +65,7 @@ public class PSystemDitaa extends AbstractPSystem {
 			throws IOException {
 
 		final ConversionOptions options = new ConversionOptions();
-		final Diagram diagram = new Diagram(grid, options);
+		final Diagram diagram = new Diagram(grid, options, processingOptions);
 		final BufferedImage image = (BufferedImage) new BitmapRenderer().renderToImage(diagram,
 				options.renderingOptions);
 		ImageIO.write(image, "png", os);

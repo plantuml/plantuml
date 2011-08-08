@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6591 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -59,9 +59,12 @@ import net.sourceforge.plantuml.geom.PolylineBreakeable;
 import net.sourceforge.plantuml.geom.XMoveable;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class Elastane {
 
@@ -266,9 +269,9 @@ public class Elastane {
 			if (label != null) {
 				final Point2DInt center = polyline.getFirst().getCenter();
 				final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(label),
-						new FontConfiguration(g2d.getFont(), Color.BLACK), HorizontalAlignement.LEFT);
+						new FontConfiguration(UFont.getCurrentFont(g2d), HtmlColor.BLACK), HorizontalAlignement.LEFT);
 				final Dimension2D dim = textBlock.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-				textBlock.drawTOBEREMOVED(g2d, center.getXint() - dim.getWidth() / 2,
+				textBlock.drawTOBEREMOVED(new ColorMapperIdentity(), g2d, center.getXint() - dim.getWidth() / 2,
 						center.getYint() - dim.getHeight() / 2);
 			}
 
@@ -283,7 +286,7 @@ public class Elastane {
 			assert image != null;
 			final Box box = ent.getValue();
 			g2d.translate(box.getX(), box.getY());
-			image.draw(g2d);
+			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-box.getX(), -box.getY());
 		}
 		g2d.setTransform(at);

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5757 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -41,6 +41,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 
@@ -70,10 +71,10 @@ class TileText implements Tile {
 		return fontConfiguration.getFont().getSize2D();
 	}
 
-	public void draw(Graphics2D g2d, double x, double y) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		// TO be removed
-		g2d.setFont(fontConfiguration.getFont());
-		g2d.setPaint(fontConfiguration.getColor());
+		g2d.setFont(fontConfiguration.getFont().getFont());
+		g2d.setPaint(colorMapper.getMappedColor(fontConfiguration.getColor()));
 		g2d.drawString(text, (float) x, (float) y);
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
@@ -85,7 +86,7 @@ class TileText implements Tile {
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d));
-			final FontMetrics fm = g2d.getFontMetrics(fontConfiguration.getFont());
+			final FontMetrics fm = g2d.getFontMetrics(fontConfiguration.getFont().getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			g2d.setStroke(new BasicStroke((float) 1.5));
 			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);

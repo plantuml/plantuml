@@ -51,4 +51,17 @@ public enum Direction {
 		}
 		throw new IllegalStateException();
 	}
+
+	public static Direction fromChar(char c) {
+		if (c == '<') {
+			return Direction.LEFT;
+		}
+		if (c == '>') {
+			return Direction.RIGHT;
+		}
+		if (c == '^') {
+			return Direction.UP;
+		}
+		return Direction.DOWN;
+	}
 }

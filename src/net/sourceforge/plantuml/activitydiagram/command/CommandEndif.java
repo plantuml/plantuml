@@ -50,6 +50,9 @@ public class CommandEndif extends SingleLineCommand<ActivityDiagram> {
 		if (getSystem().getLastEntityConsulted() == null) {
 			return CommandExecutionResult.error("No if for this endif");
 		}
+		if (getSystem().getCurrentContext() == null) {
+			return CommandExecutionResult.error("No if for this endif");
+		}
 		getSystem().endif();
 
 		return CommandExecutionResult.ok();

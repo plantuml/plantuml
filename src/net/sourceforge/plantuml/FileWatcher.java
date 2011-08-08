@@ -43,9 +43,17 @@ public class FileWatcher {
 	private final Map<File, Long> modified2 = new HashMap<File, Long>();
 
 	public FileWatcher(Set<File> files) {
+		if (files.size() == 0) {
+			throw new IllegalArgumentException();
+		}
 		for (File f : files) {
 			modified2.put(f, f.lastModified());
 		}
+	}
+
+	@Override
+	public String toString() {
+		return modified2.toString();
 	}
 
 	public boolean hasChanged() {

@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.eps;
 
 public enum EpsStrategy {
 
-	VERY_SIMPLE, WITH_MACRO;
+	VERY_SIMPLE, WITH_MACRO, WITH_MACRO_AND_TEXT;
 
 	public EpsGraphics creatEpsGraphics() {
 		if (this == VERY_SIMPLE) {
@@ -44,10 +44,13 @@ public enum EpsStrategy {
 		if (this == WITH_MACRO) {
 			return new EpsGraphicsMacro();
 		}
+		if (this == WITH_MACRO_AND_TEXT) {
+			return new EpsGraphicsMacroAndText();
+		}
 		throw new IllegalArgumentException();
 	}
 
-	public static EpsStrategy getDefault() {
+	public static EpsStrategy getDefault2() {
 		return WITH_MACRO;
 	}
 

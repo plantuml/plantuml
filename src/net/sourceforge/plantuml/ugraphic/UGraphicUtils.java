@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public abstract class UGraphicUtils {
@@ -42,7 +40,7 @@ public abstract class UGraphicUtils {
 	public static UGraphic translate(final UGraphic g, final double tx, final double ty) {
 		return new UGraphic() {
 
-			public void centerChar(double x, double y, char c, Font font) {
+			public void centerChar(double x, double y, char c, UFont font) {
 				g.centerChar(tx + x, ty + y, c, font);
 			}
 
@@ -84,6 +82,10 @@ public abstract class UGraphicUtils {
 
 			public void setUrl(String url, String tooltip) {
 				g.setUrl(url, tooltip);
+			}
+
+			public ColorMapper getColorMapper() {
+				return g.getColorMapper();
 			}
 		};
 	}

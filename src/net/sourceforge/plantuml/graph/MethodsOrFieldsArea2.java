@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.graph;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
@@ -47,22 +45,25 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyVisibility;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Left;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroup;
 
 public class MethodsOrFieldsArea2 {
 
-	private final Font font;
+	private final UFont font;
 	private final List<Member> members = new ArrayList<Member>();
 	private final ISkinParam skinParam;
-	private final Color color;
+	private final HtmlColor color;
 	private final Rose rose = new Rose();
 
 	public MethodsOrFieldsArea2(List<Member> attributes, FontParam fontParam, ISkinParam skinParam) {
@@ -138,7 +139,7 @@ public class MethodsOrFieldsArea2 {
 				public void drawU(UGraphic ug, double x, double y) {
 				}
 
-				public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+				public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 					throw new UnsupportedOperationException();
 				}
 
@@ -147,9 +148,9 @@ public class MethodsOrFieldsArea2 {
 				}
 			};
 		}
-		final Color back = modifier.getBackground() == null ? null : rose.getHtmlColor(skinParam,
-				modifier.getBackground()).getColor();
-		final Color fore = rose.getHtmlColor(skinParam, modifier.getForeground()).getColor();
+		final HtmlColor back = modifier.getBackground() == null ? null : rose.getHtmlColor(skinParam,
+				modifier.getBackground());
+		final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
 		final TextBlock uBlock = modifier.getUBlock(skinParam.getCircledCharacterRadius(), fore, back);
 		return uBlock;

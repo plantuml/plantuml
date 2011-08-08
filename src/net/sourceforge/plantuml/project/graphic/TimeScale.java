@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.project.graphic;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
@@ -43,6 +42,7 @@ import java.util.TreeMap;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -50,15 +50,16 @@ import net.sourceforge.plantuml.project.Day;
 import net.sourceforge.plantuml.project.Instant;
 import net.sourceforge.plantuml.project.Month;
 import net.sourceforge.plantuml.project.Project;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 
 class TimeScale {
 
-	private final Font font = new Font("Serif", Font.PLAIN, 9);
+	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
 	private final Project project;
-	private final FontConfiguration fontConfig = new FontConfiguration(font, Color.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColor.BLACK);
 
 	public TimeScale(Project project) {
 		this.project = project;
@@ -71,7 +72,7 @@ class TimeScale {
 		final double caseHeight = getCaseHeight(stringBounder);
 		final int nb = getNbCase();
 
-		ug.getParam().setColor(Color.BLACK);
+		ug.getParam().setColor(HtmlColor.BLACK);
 		ug.draw(x, y, new URectangle(nb * caseWidth, monthHeight));
 		final Instant end = project.getEnd();
 

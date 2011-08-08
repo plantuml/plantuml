@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6482 $
+ * Revision $Revision: 6923 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -36,20 +36,24 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.svek.IEntityImage;
 
 public class Entity implements IEntity {
 
 	private final String code;
-	private String display;
+	private List<? extends CharSequence> display2;
 
 	private final String uid;
 	private EntityType type;
@@ -76,10 +80,15 @@ public class Entity implements IEntity {
 	}
 
 	public Entity(String code, String display, EntityType type, Group entityPackage, Set<VisibilityModifier> hides) {
-		this("cl" + UniqueSequence.getValue(), code, display, type, entityPackage, hides);
+		this("cl", UniqueSequence.getValue(), code, display, type, entityPackage, hides);
 	}
 
-	public Entity(String uid, String code, String display, EntityType type, Group entityPackage,
+	public Entity(String uid1, int uid2, String code, String display, EntityType type, Group entityPackage,
+			Set<VisibilityModifier> hides) {
+		this(uid1, uid2, code, StringUtils.getWithNewlines(display), type, entityPackage, hides);
+	}
+
+	public Entity(String uid1, int uid2, String code, List<? extends CharSequence> display, EntityType type, Group entityPackage,
 			Set<VisibilityModifier> hides) {
 		if (code == null || code.length() == 0) {
 			throw new IllegalArgumentException();
@@ -88,10 +97,10 @@ public class Entity implements IEntity {
 			throw new IllegalArgumentException();
 		}
 		this.hides = hides;
-		this.uid = uid;
+		this.uid = StringUtils.getUid(uid1, uid2);
 		this.type = type;
 		this.code = code;
-		this.display = display;
+		this.display2 = display;
 		this.container = entityPackage;
 		if (entityPackage != null && type != EntityType.GROUP) {
 			entityPackage.addEntity(this);
@@ -175,12 +184,16 @@ public class Entity implements IEntity {
 		return code;
 	}
 
-	public String getDisplay() {
-		return display;
+	public List<? extends CharSequence> getDisplay2() {
+		return display2;
 	}
 
-	public void setDisplay(String display) {
-		this.display = display;
+	public void setDisplay2(String display) {
+		this.display2 = StringUtils.getWithNewlines(display);
+	}
+
+	public void setDisplay2(List<? extends CharSequence> display) {
+		this.display2 = display;
 	}
 
 	public String getUid() {
@@ -202,9 +215,9 @@ public class Entity implements IEntity {
 	@Override
 	public String toString() {
 		if (type == EntityType.GROUP) {
-			return display + "(" + getType() + ")" + this.container;
+			return display2 + "(" + getType() + ")" + this.container;
 		}
-		return display + "(" + getType() + ")";
+		return display2 + "(" + getType() + ") " + xposition + " " + getUid();
 	}
 
 	public void muteToCluster(Group newGroup) {
@@ -234,8 +247,8 @@ public class Entity implements IEntity {
 		return specificBackcolor;
 	}
 
-	public void setSpecificBackcolor(String s) {
-		this.specificBackcolor = HtmlColor.getColorIfValid(s);
+	public void setSpecificBackcolor(HtmlColor color) {
+		this.specificBackcolor = color;
 	}
 
 	public final Url getUrl() {
@@ -260,13 +273,17 @@ public class Entity implements IEntity {
 		return uid.equals(other.getUid());
 	}
 
-	private final List<DrawFile> subImages = new ArrayList<DrawFile>();
+	private final Set<DrawFile> subImages = new HashSet<DrawFile>();
 
 	public void addSubImage(DrawFile subImage) {
 		if (subImage == null) {
 			throw new IllegalArgumentException();
 		}
 		subImages.add(subImage);
+	}
+
+	public void addSubImage(Entity other) {
+		subImages.addAll(other.subImages);
 	}
 
 	public DrawFile getImageFile(File searched) throws IOException {
@@ -281,6 +298,12 @@ public class Entity implements IEntity {
 		return null;
 	}
 
+	public void cleanSubImage() {
+		for (DrawFile f : subImages) {
+			f.deleteDrawFile();
+		}
+	}
+
 	private boolean nearDecoration = false;
 
 	public final boolean hasNearDecoration() {
@@ -289,6 +312,30 @@ public class Entity implements IEntity {
 
 	public final void setNearDecoration(boolean nearDecoration) {
 		this.nearDecoration = nearDecoration;
+	}
+
+	public int compareTo(IEntity other) {
+		return getUid().compareTo(other.getUid());
+	}
+
+	private int xposition;
+
+	public int getXposition() {
+		return xposition;
+	}
+
+	public void setXposition(int pos) {
+		xposition = pos;
+	}
+
+	private IEntityImage svekImage;
+
+	public final IEntityImage getSvekImage() {
+		return svekImage;
+	}
+
+	public final void setSvekImage(IEntityImage svekImage) {
+		this.svekImage = svekImage;
 	}
 
 }

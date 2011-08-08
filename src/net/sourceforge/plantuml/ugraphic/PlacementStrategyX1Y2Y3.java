@@ -54,22 +54,25 @@ public class PlacementStrategyX1Y2Y3 extends AbstractPlacementStrategy {
 		double maxWidthButFirst = getMaxWidth(butFirst());
 		double sumHeightButFirst = getSumHeight(butFirst());
 
-		final double space = (width - first.getWidth() - maxWidthButFirst) / 5;
+		final double space = (width - first.getWidth() - maxWidthButFirst) / 3;
 
 		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
-		double x = space * 2;
+		// double x = space * 2;
 
 		final Iterator<Map.Entry<TextBlock, Dimension2D>> it = getDimensions().entrySet().iterator();
 		final Map.Entry<TextBlock, Dimension2D> ent = it.next();
 		double y = (height - ent.getValue().getHeight()) / 2;
-		result.put(ent.getKey(), new Point2D.Double(x, y));
+		result.put(ent.getKey(), new Point2D.Double(space, y));
 
-		x += ent.getValue().getWidth() + space;
+		// x += ent.getValue().getWidth() + space;
 
 		y = (height - sumHeightButFirst) / 2;
 		while (it.hasNext()) {
 			final Map.Entry<TextBlock, Dimension2D> ent2 = it.next();
-			result.put(ent2.getKey(), new Point2D.Double(x, y));
+			final TextBlock textBlock = ent2.getKey();
+			final Dimension2D dim = getDimensions().get(textBlock);
+			final double x = 2 * space + first.getWidth() + (maxWidthButFirst - dim.getWidth()) / 2;
+			result.put(textBlock, new Point2D.Double(x, y));
 			y += ent2.getValue().getHeight();
 		}
 		return result;

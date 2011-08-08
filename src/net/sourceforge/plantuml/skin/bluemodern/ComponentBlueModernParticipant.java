@@ -28,28 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4738 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class ComponentBlueModernParticipant extends AbstractTextualComponent {
 
 	private final int shadowview = 3;
-	private final Color blue1;
-	private final Color blue2;
+	private final HtmlColor blue1;
+	private final HtmlColor blue2;
 
-	public ComponentBlueModernParticipant(Color blue1, Color blue2, Color fontColor, Font font,
+	public ComponentBlueModernParticipant(HtmlColor blue1, HtmlColor blue2, HtmlColor fontColor, UFont font,
 			List<? extends CharSequence> stringsToDisplay) {
 		super(stringsToDisplay, fontColor, font, HorizontalAlignement.CENTER, 7, 7, 7);
 		this.blue1 = blue1;

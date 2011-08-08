@@ -31,8 +31,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
@@ -41,13 +39,18 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.PathIterator;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.eps.EpsGraphicsMacroAndText;
+import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -59,15 +62,17 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private final ClipContainer clipContainer;
 	private final FontRenderContext fontRenderContext;
 	private final Graphics2D g2dummy;
+	private final EpsStrategy strategy;
 
-	public DriverTextEps(Graphics2D g2dummy, ClipContainer clipContainer) {
+	public DriverTextEps(Graphics2D g2dummy, ClipContainer clipContainer, EpsStrategy strategy) {
 		this.stringBounder = StringBounderUtils.asStringBounder(g2dummy);
 		this.clipContainer = clipContainer;
 		this.fontRenderContext = g2dummy.getFontRenderContext();
 		this.g2dummy = g2dummy;
+		this.strategy = strategy;
 	}
 
-	public void draw(UShape ushape, double x, double y, UParam param, EpsGraphics eps) {
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null && clip.isInside(x, y) == false) {
@@ -75,17 +80,23 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		}
 
 		final UText shape = (UText) ushape;
-		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		final Font font = fontConfiguration.getFont();
 
-		final TextLayout t = new TextLayout(shape.getText(), font, fontRenderContext);
-		eps.setStrokeColor(fontConfiguration.getColor());
+		if (strategy == EpsStrategy.WITH_MACRO_AND_TEXT) {
+			drawAsText(shape, x, y, param, eps, mapper);
+			return;
+		}
+
+		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+		final UFont font = fontConfiguration.getFont();
+
+		final TextLayout t = new TextLayout(shape.getText(), font.getFont(), fontRenderContext);
+		eps.setStrokeColor(mapper.getMappedColor(fontConfiguration.getColor()));
 		drawPathIterator(eps, x, y, t.getOutline(null).getPathIterator(null));
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-			final Color extended = fontConfiguration.getExtendedColor();
+			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
-				eps.setStrokeColor(extended);
+				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}
 			final Dimension2D dim = DriverTextG2d.calculateDimension(stringBounder, font, shape.getText());
 			eps.setStrokeWidth("1.1", 0, 0);
@@ -95,9 +106,9 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			final Dimension2D dim = DriverTextG2d.calculateDimension(stringBounder, font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
-			final Color extended = fontConfiguration.getExtendedColor();
+			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
-				eps.setStrokeColor(extended);
+				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}
 			eps.setStrokeWidth("1.1", 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
@@ -107,17 +118,28 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			eps.setStrokeWidth("1", 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final Color extended = fontConfiguration.getExtendedColor();
+			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
-				eps.setStrokeColor(extended);
+				eps.setStrokeColor(mapper.getMappedColor(extended));
 			}
 			final Dimension2D dim = DriverTextG2d.calculateDimension(stringBounder, font, shape.getText());
-			final FontMetrics fm = g2dummy.getFontMetrics(font);
+			final FontMetrics fm = g2dummy.getFontMetrics(font.getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			eps.setStrokeWidth("1.3", 0, 0);
 			eps.epsLine(x, ypos, x + dim.getWidth(), ypos);
 			eps.setStrokeWidth("1", 0, 0);
 		}
+
+	}
+
+	private void drawAsText(UText shape, double x, double y, UParam param, EpsGraphics eps, ColorMapper mapper) {
+		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+		final FontMetrics fm = g2dummy.getFontMetrics(fontConfiguration.getFont().getFont());
+		// final double ypos = y - fm.getDescent() + 0.5;
+		final double ypos = y - 1;
+
+		eps.setStrokeColor(mapper.getMappedColor(fontConfiguration.getColor()));
+		((EpsGraphicsMacroAndText) eps).drawText(shape.getText(), fontConfiguration, x, ypos);
 
 	}
 

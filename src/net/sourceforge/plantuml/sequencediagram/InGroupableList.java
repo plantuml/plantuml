@@ -69,6 +69,8 @@ public class InGroupableList implements InGroupable {
 
 	public void addInGroupable(InGroupable in) {
 		this.inGroupables.add(in);
+		cacheMin = null;
+		cacheMax = null;
 	}
 
 	public boolean isEmpty() {
@@ -89,7 +91,7 @@ public class InGroupableList implements InGroupable {
 		return sb.toString();
 	}
 
-	private InGroupable getMin(StringBounder stringBounder) {
+	private InGroupable getMinSlow(StringBounder stringBounder) {
 		InGroupable result = null;
 		for (InGroupable in : inGroupables) {
 			if (result == null || in.getMinX(stringBounder) < result.getMinX(stringBounder)) {
@@ -99,7 +101,7 @@ public class InGroupableList implements InGroupable {
 		return result;
 	}
 
-	private InGroupable getMax(StringBounder stringBounder) {
+	private InGroupable getMaxSlow(StringBounder stringBounder) {
 		InGroupable result = null;
 		for (InGroupable in : inGroupables) {
 			if (result == null || in.getMaxX(stringBounder) > result.getMaxX(stringBounder)) {
@@ -107,6 +109,26 @@ public class InGroupableList implements InGroupable {
 			}
 		}
 		return result;
+	}
+
+
+	private InGroupable cacheMin = null;
+	private InGroupable cacheMax = null;
+
+	private InGroupable getMin(StringBounder stringBounder) {
+		if (cacheMin == null) {
+			cacheMin = getMinSlow(stringBounder);
+		}
+		assert cacheMin == getMinSlow(stringBounder);
+		return cacheMin;
+	}
+
+	private InGroupable getMax(StringBounder stringBounder) {
+		if (cacheMax == null) {
+			cacheMax = getMaxSlow(stringBounder);
+		}
+		assert cacheMax == getMaxSlow(stringBounder);
+		return cacheMax;
 	}
 
 	public void setMinWidth(double minWidth) {

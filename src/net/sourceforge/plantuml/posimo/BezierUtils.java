@@ -33,10 +33,15 @@
  */
 package net.sourceforge.plantuml.posimo;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.CubicCurve2D;
+import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public class BezierUtils {
 
@@ -146,7 +151,7 @@ public class BezierUtils {
 		final boolean contains1 = shape.contains(copy.x1, copy.y1);
 		final boolean contains2 = shape.contains(copy.x2, copy.y2);
 		if (contains1 ^ contains2 == false) {
-			//return new Point2D.Double(orig.x2, orig.y2);
+			// return new Point2D.Double(orig.x2, orig.y2);
 			throw new IllegalArgumentException();
 		}
 		while (true) {
@@ -170,6 +175,20 @@ public class BezierUtils {
 				throw new IllegalStateException();
 			}
 		}
+	}
+
+	static public Rectangle2D toRectangle(Positionable p) {
+		final Point2D point = p.getPosition();
+		final Dimension2D dim = p.getSize();
+		return new Rectangle2D.Double(point.getX(), point.getY(), dim.getWidth(), dim.getHeight());
+	}
+
+	static public boolean intersect(Positionable p1, Positionable p2) {
+		return toRectangle(p1).intersects(toRectangle(p2));
+	}
+
+	static public Point2D.Double getCenter(Positionable p) {
+		return new Point2D.Double(toRectangle(p).getCenterX(), toRectangle(p).getCenterY());
 	}
 
 }

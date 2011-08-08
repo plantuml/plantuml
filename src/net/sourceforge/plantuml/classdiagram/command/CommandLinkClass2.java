@@ -74,9 +74,9 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 				new RegexLeaf("\\s*"),
 				new RegexOr(
 						new RegexLeaf("LEFT_TO_RIGHT",
-								"(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)(o +|[\\]>*+]|\\|[>\\]])?)"),
+								"(([-=.]+)(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?([-=.]*)(o +|[\\]>*+^]|\\|[>\\]])?)"),
 						new RegexLeaf("RIGHT_TO_LEFT",
-								"(( +o|[\\[<*+]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))"),
+								"(( +o|[\\[<*+^]|[<\\[]\\|)?([-=.]*)(left|right|up|down|le?|ri?|up?|do?)?([-=.]+))"),
 						new RegexLeaf("NAV_AGREG_OR_COMPO_INV",
 								"(\\<([-=.]*)(left|right|up|down|le?|ri?|up?|do?[-=.]+)?([-=.]+)(o +|\\*))"),
 						new RegexLeaf("NAV_AGREG_OR_COMPO",
@@ -426,6 +426,9 @@ final public class CommandLinkClass2 extends SingleLineCommand2<AbstractClassOrO
 			return new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 		}
 		if (k.equals("<|") || k.equals("|>")) {
+			return new LinkType(LinkDecor.EXTENDS, LinkDecor.NONE);
+		}
+		if (k.equals("^")) {
 			return new LinkType(LinkDecor.EXTENDS, LinkDecor.NONE);
 		}
 		// return null;

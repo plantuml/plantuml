@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6009 $
+ * Revision $Revision: 6591 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
@@ -41,15 +40,17 @@ import java.util.List;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 
 class GrayComponent extends AbstractComponent {
 
-	private static final Font NORMAL = new Font("SansSerif", Font.PLAIN, 7);
+	private static final UFont NORMAL = new UFont("SansSerif", Font.PLAIN, 7);
 
 	private final ComponentType type;
 
@@ -60,8 +61,8 @@ class GrayComponent extends AbstractComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.getParam().setBackcolor(Color.LIGHT_GRAY);
-		ug.getParam().setColor(Color.BLACK);
+		ug.getParam().setBackcolor(HtmlColor.LIGHT_GRAY);
+		ug.getParam().setColor(HtmlColor.BLACK);
 		ug.draw(0, 0, new URectangle(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder)));
 
 		final String n = type.name();
@@ -71,7 +72,7 @@ class GrayComponent extends AbstractComponent {
 			strings.add(n.substring(i, Math.min(i + split, n.length())));
 		}
 
-		final TextBlock textBlock = TextBlockUtils.create(strings, new FontConfiguration(NORMAL, Color.BLACK),
+		final TextBlock textBlock = TextBlockUtils.create(strings, new FontConfiguration(NORMAL, HtmlColor.BLACK),
 				HorizontalAlignement.LEFT);
 		textBlock.drawU(ug, 0, 0);
 	}

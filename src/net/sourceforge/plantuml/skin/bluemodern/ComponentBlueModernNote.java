@@ -28,19 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4169 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -49,10 +49,10 @@ final public class ComponentBlueModernNote extends AbstractTextualComponent {
 
 	private final int shadowview = 4;
 	private final int cornersize = 10;
-	private final Color back;
-	private final Color foregroundColor;
+	private final HtmlColor back;
+	private final HtmlColor foregroundColor;
 
-	public ComponentBlueModernNote(Color back, Color foregroundColor, Color fontColor, Font font,
+	public ComponentBlueModernNote(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
 			List<? extends CharSequence> strings) {
 		super(strings, fontColor, font, HorizontalAlignement.LEFT, 6, 15, 5);
 		this.back = back;

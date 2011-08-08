@@ -28,12 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3836 $
+ * Revision $Revision: 6696 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 enum LifeSegmentVariation {
-	LARGER, SMALLER
+	LARGER, SMALLER;
+
+	public int apply(int v) {
+		if (this == LARGER) {
+			return v + 1;
+		}
+		assert this == SMALLER;
+		if (v == 0) {
+			return 0;
+		}
+		return v - 1;
+	}
 
 }

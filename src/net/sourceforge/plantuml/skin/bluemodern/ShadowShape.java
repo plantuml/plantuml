@@ -28,17 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class ShadowShape extends FillRoundShape {
 
 	public ShadowShape(double width, double height, double corner) {
-		super(width, height, Color.LIGHT_GRAY, Color.GRAY, corner);
+		super(width, height, HtmlColor.LIGHT_GRAY, HtmlColor.GRAY, corner);
 
 	}
 

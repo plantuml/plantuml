@@ -28,12 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 6576 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
 public interface UDriver<O> {
-	public void draw(UShape shape, double x, double y, UParam param, O object);
+	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, O object);
 
 }

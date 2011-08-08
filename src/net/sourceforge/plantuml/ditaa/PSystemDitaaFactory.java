@@ -40,15 +40,21 @@ public class PSystemDitaaFactory implements PSystemBasicFactory {
 
 	private StringBuilder data;
 	private boolean first;
+	// -E,--no-separation
+	private boolean performSeparationOfCommonEdges;
+
 	private final DiagramType diagramType;
 
 	public PSystemDitaaFactory(DiagramType diagramType) {
 		this.diagramType = diagramType;
-		reset();
 	}
 
-	public void reset() {
+	public void init(String startLine) {
 		data = null;
+		performSeparationOfCommonEdges = true;
+		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation"))) {
+			performSeparationOfCommonEdges = false;
+		}
 		if (diagramType == DiagramType.UML) {
 			first = true;
 		} else if (diagramType == DiagramType.DITAA) {
@@ -60,8 +66,11 @@ public class PSystemDitaaFactory implements PSystemBasicFactory {
 	}
 
 	public boolean executeLine(String line) {
-		if (first && line.equals("ditaa")) {
+		if (first && (line.equals("ditaa") || line.startsWith("ditaa("))) {
 			data = new StringBuilder();
+			if (line.contains("-E") || line.contains("--no-separation")) {
+				performSeparationOfCommonEdges = false;
+			}
 			return true;
 		}
 		first = false;
@@ -75,7 +84,7 @@ public class PSystemDitaaFactory implements PSystemBasicFactory {
 
 	public PSystemDitaa getSystem() {
 		try {
-			return new PSystemDitaa(data.toString());
+			return new PSystemDitaa(data.toString(), performSeparationOfCommonEdges);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			return null;

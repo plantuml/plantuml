@@ -28,21 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3823 $
+ * Revision $Revision: 6644 $
  * 
  */
 package net.sourceforge.plantuml;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class UniqueSequence {
 
-	private static int cpt = 1;
+	private static final AtomicInteger cpt = new AtomicInteger(1);
 
 	public static void reset() {
-		cpt = 1;
+		cpt.set(0);
 	}
 
 	public static int getValue() {
-		return cpt++;
+		return cpt.addAndGet(1);
 	}
 
 }

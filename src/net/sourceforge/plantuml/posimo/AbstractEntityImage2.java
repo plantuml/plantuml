@@ -33,16 +33,16 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 abstract class AbstractEntityImage2 implements IEntityImageBlock {
 
@@ -65,16 +65,16 @@ abstract class AbstractEntityImage2 implements IEntityImageBlock {
 		return entity;
 	}
 
-	protected Font getFont(FontParam fontParam) {
+	protected UFont getFont(FontParam fontParam) {
 		return skinParam.getFont(fontParam, null);
 	}
 
-	protected Color getFontColor(FontParam fontParam) {
-		return skinParam.getFontHtmlColor(fontParam, null).getColor();
+	protected HtmlColor getFontColor(FontParam fontParam) {
+		return skinParam.getFontHtmlColor(fontParam, null);
 	}
 
-	protected final Color getColor(ColorParam colorParam) {
-		return rose.getHtmlColor(skinParam, colorParam).getColor();
+	protected final HtmlColor getColor(ColorParam colorParam) {
+		return rose.getHtmlColor(skinParam, colorParam);
 	}
 
 	protected final ISkinParam getSkinParam() {

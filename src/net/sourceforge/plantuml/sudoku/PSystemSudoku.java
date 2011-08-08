@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6453 $
+ * Revision $Revision: 6710 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -42,19 +42,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 public class PSystemSudoku extends AbstractPSystem {
 
 	final private ISudoku sudoku;
-
-//	public List<File> createFiles(File suggestedFile, FileFormatOption fileFormat) throws IOException, InterruptedException {
-//		OutputStream os = null;
-//		try {
-//			os = new FileOutputStream(suggestedFile);
-//			new GraphicsSudoku(sudoku).writeImage(os);
-//		} finally {
-//			if (os != null) {
-//				os.close();
-//			}
-//		}
-//		return Arrays.asList(suggestedFile);
-//	}
 
 	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
 		new GraphicsSudoku(sudoku).writeImage(os);

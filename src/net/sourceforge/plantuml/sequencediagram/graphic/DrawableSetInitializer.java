@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6485 $
+ * Revision $Revision: 6665 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
@@ -48,6 +49,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
@@ -420,17 +422,41 @@ class DrawableSetInitializer {
 	}
 
 	private void prepareReference(StringBounder stringBounder, Reference reference) {
-		final LivingParticipantBox p1 = drawableSet.getLivingParticipantBox(reference.getParticipant());
-		final LivingParticipantBox p2 = drawableSet.getLivingParticipantBox(reference.getParticipant2());
-		final GraphicalReference graphicalReference = new GraphicalReference(freeY, drawableSet.getSkin()
-				.createComponent(ComponentType.REFERENCE, drawableSet.getSkinParam(), reference.getStrings()), p1, p2,
-				reference.getUrl());
+		final LivingParticipantBox p1 = drawableSet.getLivingParticipantBox(drawableSet.getFirst(reference
+				.getParticipant()));
+		final LivingParticipantBox p2 = drawableSet.getLivingParticipantBox(drawableSet.getLast(reference
+				.getParticipant()));
+		final ISkinParam skinParam = new SkinParamBackcoloredReference(drawableSet.getSkinParam(), reference
+				.getBackColorElement(), reference.getBackColorGeneral());
 
+		final List<String> strings = new ArrayList<String>();
+		strings.add("ref");
+		strings.addAll(reference.getStrings());
+		final Component comp = drawableSet.getSkin().createComponent(ComponentType.REFERENCE, skinParam, strings);
+		final GraphicalReference graphicalReference = new GraphicalReference(freeY, comp, p1, p2, reference.getUrl());
+
+		final ParticipantBox pbox1 = p1.getParticipantBox();
+		final ParticipantBox pbox2 = p2.getParticipantBox();
 		final double width = graphicalReference.getPreferredWidth(stringBounder)
-				- p1.getParticipantBox().getPreferredWidth(stringBounder) / 2
-				- p2.getParticipantBox().getPreferredWidth(stringBounder) / 2;
+				- pbox1.getPreferredWidth(stringBounder) / 2 - pbox2.getPreferredWidth(stringBounder) / 2;
 
-		constraintSet.getConstraint(p1.getParticipantBox(), p2.getParticipantBox()).ensureValue(width);
+		final Constraint constraint;
+		if (p1 == p2) {
+			constraint = constraintSet.getConstraintAfter(pbox1);
+		} else {
+			constraint = constraintSet.getConstraint(pbox1, pbox2);
+		}
+		constraint.ensureValue(width);
+
+		if (inGroupableLists != null) {
+			for (InGroupableList groupingStructure : inGroupableLists) {
+				groupingStructure.addInGroupable(graphicalReference);
+				groupingStructure.addInGroupable(p1);
+				if (p1 != p2) {
+					groupingStructure.addInGroupable(p2);
+				}
+			}
+		}
 
 		freeY += graphicalReference.getPreferredHeight(stringBounder);
 		drawableSet.addEvent(reference, graphicalReference);

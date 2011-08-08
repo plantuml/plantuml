@@ -51,6 +51,9 @@ public class CommandElse extends SingleLineCommand<ActivityDiagram> {
 		if (getSystem().getLastEntityConsulted() == null) {
 			return CommandExecutionResult.error("No if for this else");
 		}
+		if (getSystem().getCurrentContext() == null) {
+			return CommandExecutionResult.error("No if for this else");
+		}
 		final IEntity branch = getSystem().getCurrentContext().getBranch();
 
 		getSystem().setLastEntityConsulted(branch);

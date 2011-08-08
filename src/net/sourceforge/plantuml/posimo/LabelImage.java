@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FontParam;
@@ -42,6 +41,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -63,7 +63,7 @@ public class LabelImage {
 		this.param = param;
 		this.rose = rose;
 		this.name = TextBlockUtils.create(StringUtils.getWithNewlines(link.getLabel()),
-				new FontConfiguration(param.getFont(FontParam.CLASS, null), Color.BLACK), HorizontalAlignement.CENTER);
+				new FontConfiguration(param.getFont(FontParam.CLASS, null), HtmlColor.BLACK), HorizontalAlignement.CENTER);
 	}
 
 	public Dimension2D getDimension(StringBounder stringBounder) {

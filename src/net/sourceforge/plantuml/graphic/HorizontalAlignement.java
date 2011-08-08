@@ -28,13 +28,26 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3834 $
+ * Revision $Revision: 6557 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
 public enum HorizontalAlignement {
 
-	LEFT, CENTER, RIGHT
+	LEFT, CENTER, RIGHT;
+	
+	public static HorizontalAlignement fromString(String s) {
+		if (LEFT.name().equalsIgnoreCase(s)) {
+			return LEFT;
+		}
+		if (CENTER.name().equalsIgnoreCase(s)) {
+			return CENTER;
+		}
+		if (RIGHT.name().equalsIgnoreCase(s)) {
+			return RIGHT;
+		}
+		return null;
+	}
 
 }

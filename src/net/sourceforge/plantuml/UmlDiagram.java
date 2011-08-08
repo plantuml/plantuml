@@ -28,14 +28,16 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6382 $
+ * Revision $Revision: 6922 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -48,6 +50,7 @@ import java.util.List;
 import net.sourceforge.plantuml.code.Compression;
 import net.sourceforge.plantuml.code.CompressionZlib;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.pdf.PdfConverter;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -64,7 +67,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	private List<String> title;
+	private List<? extends CharSequence> title;
 	private List<String> header;
 	private List<String> footer;
 	private HorizontalAlignement headerAlignement = HorizontalAlignement.RIGHT;
@@ -74,11 +77,11 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 
 	private final SkinParam skinParam = new SkinParam();
 
-	final public void setTitle(List<String> strings) {
+	final public void setTitle(List<? extends CharSequence> strings) {
 		this.title = strings;
 	}
 
-	final public List<String> getTitle() {
+	final public List<? extends CharSequence> getTitle() {
 		return title;
 	}
 
@@ -193,7 +196,22 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 			e.printStackTrace();
 			flashcodes = null;
 		}
+		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
+			exportDiagramInternalPdf(os, cmap, index, flashcodes);
+			return;
+		}
 		exportDiagramInternal(os, cmap, index, fileFormatOption, flashcodes);
+	}
+
+	private void exportDiagramInternalPdf(OutputStream os, StringBuilder cmap, int index, List<BufferedImage> flashcodes)
+			throws IOException {
+		final File svg = FileUtils.createTempFile("pdf", ".svf");
+		final File pdfFile = FileUtils.createTempFile("pdf", ".pdf");
+		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg));
+		exportDiagram(fos, cmap, index, new FileFormatOption(FileFormat.SVG));
+		fos.close();
+		PdfConverter.convert(svg, pdfFile);
+		FileUtils.copyToStream(pdfFile, os);
 	}
 
 	protected abstract void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index,
@@ -217,9 +235,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 		return name.replaceAll("(?i)\\.\\w{3}$", ".cmapx");
 	}
 
-
-	
-	
 	private List<BufferedImage> exportFlashcodeSimple(String s) throws IOException, WriterException {
 		final QRCodeWriter writer = new QRCodeWriter();
 		final int multiple = 1;
@@ -298,7 +313,5 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 		}
 		return result;
 	}
-	
-	
 
 }

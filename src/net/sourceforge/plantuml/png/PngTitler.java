@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6471 $
+ * Revision $Revision: 6922 $
  *
  */
 package net.sourceforge.plantuml.png;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -43,25 +42,30 @@ import java.util.List;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalPosition;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class PngTitler {
 
-	private final Color textColor;
-	private final List<String> text;
+	private final HtmlColor textColor;
+	private final List<? extends CharSequence> text;
 	private final int fontSize;
 	private final String fontFamily;
 	private final HorizontalAlignement horizontalAlignement;
 	private final VerticalPosition verticalPosition;
+	private final ColorMapper colorMapper;
 
-	public PngTitler(Color textColor, List<String> text, int fontSize, String fontFamily,
+	public PngTitler(ColorMapper colorMapper, HtmlColor textColor, List<? extends CharSequence> text, int fontSize, String fontFamily,
 			HorizontalAlignement horizontalAlignement, VerticalPosition verticalPosition) {
 		this.textColor = textColor;
+		this.colorMapper = colorMapper;
 		this.text = text;
 		this.fontSize = fontSize;
 		this.fontFamily = fontFamily;
@@ -70,9 +74,9 @@ public class PngTitler {
 
 	}
 
-	public BufferedImage processImage(BufferedImage im, Color background, int margin) {
+	public BufferedImage processImage(BufferedImage im, HtmlColor background, int margin) {
 		if (text != null && text.size() > 0) {
-			im = addTitle(im, background, textColor, text, fontSize, fontFamily, horizontalAlignement,
+			im = addTitle(colorMapper, im, background, textColor, text, fontSize, fontFamily, horizontalAlignement,
 					verticalPosition, margin);
 		}
 		return im;
@@ -91,15 +95,15 @@ public class PngTitler {
 		if (text == null || text.size() == 0) {
 			return null;
 		}
-		final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
+		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
 		return TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor), horizontalAlignement);
 	}
 
-	static private BufferedImage addTitle(BufferedImage im, Color background, Color textColor, List<String> text,
+	static private BufferedImage addTitle(ColorMapper colorMapper, BufferedImage im, HtmlColor background, HtmlColor textColor, List<? extends CharSequence> text,
 			int fontSize, String fontFamily, HorizontalAlignement horizontalAlignement,
 			VerticalPosition verticalPosition, int margin) {
 
-		final Font normalFont = new Font(fontFamily, Font.PLAIN, fontSize);
+		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
 		final Graphics2D oldg2d = im.createGraphics();
 		final TextBlock textBloc = TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor),
 				horizontalAlignement);
@@ -113,7 +117,7 @@ public class PngTitler {
 		final Graphics2D g2d = newIm.createGraphics();
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-		g2d.setColor(background);
+		g2d.setColor(colorMapper.getMappedColor(background));
 		g2d.fillRect(0, 0, newIm.getWidth(), newIm.getHeight());
 		final double xText;
 		if (horizontalAlignement == HorizontalAlignement.LEFT) {
@@ -139,7 +143,7 @@ public class PngTitler {
 		}
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		textBloc.drawU(new UGraphicG2d(g2d, null, 1.0), xText, yText);
+		textBloc.drawU(new UGraphicG2d(colorMapper, g2d, null, 1.0), xText, yText);
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		final double delta2 = (width - im.getWidth()) / 2;

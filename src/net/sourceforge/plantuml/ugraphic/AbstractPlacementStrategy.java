@@ -106,4 +106,8 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 		return result;
 	}
 
+	protected final StringBounder getStringBounder() {
+		return stringBounder;
+	}
+
 }

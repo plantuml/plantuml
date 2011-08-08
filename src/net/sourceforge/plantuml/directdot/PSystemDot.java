@@ -56,7 +56,7 @@ public class PSystemDot extends AbstractPSystem {
 			throws IOException {
 		final Graphviz graphviz = GraphvizUtils.create(data, fileFormatOption.getFileFormat().name().toLowerCase());
 		try {
-			graphviz.createPng(os);
+			graphviz.createFile(os);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

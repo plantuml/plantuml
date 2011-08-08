@@ -33,27 +33,28 @@
  */
 package net.sourceforge.plantuml.project.graphic;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.project.Item;
 import net.sourceforge.plantuml.project.Project;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 
 class ItemHeader {
 
-	private final Font font = new Font("Serif", Font.PLAIN, 9);
+	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
 	private final Project project;
-	private final FontConfiguration fontConfig = new FontConfiguration(font, Color.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColor.BLACK);
 
 	public ItemHeader(Project project) {
 		this.project = project;
@@ -63,7 +64,7 @@ class ItemHeader {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		ug.getParam().setColor(Color.BLACK);
+		ug.getParam().setColor(HtmlColor.BLACK);
 		ug.draw(x, y, new URectangle(getWidth(stringBounder), getHeight(stringBounder)));
 
 		for (Item it : project.getValidItems()) {

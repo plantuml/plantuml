@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5884 $
+ * Revision $Revision: 6575 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -38,6 +38,7 @@ import java.util.List;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -57,7 +58,7 @@ public class CommandMultilinesNoteOverSeveral extends CommandMultilines<Sequence
 		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		if (strings.size() > 0) {
 			final Note note = new Note(p1, p2, strings);
-			note.setSpecificBackcolor(line0.get(2));
+			note.setSpecificBackcolor(HtmlColor.getColorIfValid(line0.get(2)));
 			getSystem().addNote(note);
 		}
 		return CommandExecutionResult.ok();

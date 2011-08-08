@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6338 $
+ * Revision $Revision: 6502 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -51,11 +51,24 @@ class PreprocessorInclude implements ReadLine {
 
 	private PreprocessorInclude included = null;
 
+	private final File oldCurrentDir;
 	private final Set<File> filesUsed;
 
-	public PreprocessorInclude(ReadLine reader, Set<File> filesUsed) {
+	public PreprocessorInclude(ReadLine reader, Set<File> filesUsed, File newCurrentDir) {
 		this.reader2 = reader;
 		this.filesUsed = filesUsed;
+		if (newCurrentDir == null) {
+			oldCurrentDir = null;
+		} else {
+			oldCurrentDir = FileSystem.getInstance().getCurrentDir();
+			FileSystem.getInstance().setCurrentDir(newCurrentDir);
+		}
+	}
+
+	private void restoreCurrentDir() {
+		if (oldCurrentDir != null) {
+			FileSystem.getInstance().setCurrentDir(oldCurrentDir);
+		}
 	}
 
 	public String readLine() throws IOException {
@@ -94,7 +107,7 @@ class PreprocessorInclude implements ReadLine {
 		final File f = FileSystem.getInstance().getFile(fileName);
 		if (f.exists()) {
 			filesUsed.add(f);
-			included = new PreprocessorInclude(getReaderInclude(f, suf), filesUsed);
+			included = new PreprocessorInclude(getReaderInclude(f, suf), filesUsed, f.getParentFile());
 		} else {
 			return "Cannot include " + f.getAbsolutePath();
 		}
@@ -117,6 +130,7 @@ class PreprocessorInclude implements ReadLine {
 	}
 
 	public void close() throws IOException {
+		restoreCurrentDir();
 		reader2.close();
 	}
 

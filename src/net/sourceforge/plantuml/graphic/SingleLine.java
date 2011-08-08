@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6353 $
+ * Revision $Revision: 6577 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class SingleLine implements Line {
@@ -104,13 +105,13 @@ class SingleLine implements Line {
 		return result;
 	}
 
-	public void draw(Graphics2D g2d, double x, double y) {
+	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		final double deltaY = maxDeltaY(g2d);
 		for (Tile b : blocs) {
 			if (b instanceof TileImage) {
-				b.draw(g2d, x, y);
+				b.draw(colorMapper, g2d, x, y);
 			} else {
-				b.draw(g2d, x, y + deltaY);
+				b.draw(colorMapper, g2d, x, y + deltaY);
 			}
 			x += b.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getWidth();
 		}

@@ -65,7 +65,7 @@ public class CommandCreateUsecase2 extends SingleLineCommand<UsecaseDiagram> {
 
 		final String stereotype = arg.get(2);
 		final Entity entity = (Entity) getSystem().getOrCreateEntity(code, type);
-		entity.setDisplay(display);
+		entity.setDisplay2(display);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
 					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));

@@ -28,21 +28,21 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4738 $
+ * Revision $Revision: 6590 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.StickMan;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class ComponentBlueModernActor extends AbstractTextualComponent {
@@ -50,7 +50,7 @@ public class ComponentBlueModernActor extends AbstractTextualComponent {
 	private final StickMan stickman;
 	private final boolean head;
 
-	public ComponentBlueModernActor(Color backgroundColor, Color foregroundColor, Color fontColor, Font font,
+	public ComponentBlueModernActor(HtmlColor backgroundColor, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
 			List<? extends CharSequence> stringsToDisplay, boolean head) {
 		super(stringsToDisplay, fontColor, font, HorizontalAlignement.LEFT, 3, 3, 0);
 		this.head = head;
