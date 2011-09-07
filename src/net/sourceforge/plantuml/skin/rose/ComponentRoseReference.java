@@ -75,7 +75,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeaderWidth = (int) (getHeaderWidth(stringBounder));
 		final int textHeaderHeight = (int) (getHeaderHeight(stringBounder));

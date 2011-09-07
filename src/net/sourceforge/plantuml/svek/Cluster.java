@@ -234,7 +234,7 @@ public class Cluster {
 	}
 
 	public void printCluster(StringBuilder sb, Collection<Line> lines) {
-		System.err.println("Cluster::printCluster " + this);
+		// System.err.println("Cluster::printCluster " + this);
 
 		final Set<String> rankSame = new HashSet<String>();
 		for (Line l : lines) {

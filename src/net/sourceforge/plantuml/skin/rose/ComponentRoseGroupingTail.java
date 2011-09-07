@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 7170 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -54,7 +54,7 @@ public class ComponentRoseGroupingTail extends AbstractComponent {
 	
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
 		ug.getParam().setStroke(new UStroke(2));
 		ug.getParam().setColor(groupBorder);
 		ug.draw(0, dimensionToUse.getHeight(), new ULine(dimensionToUse.getWidth(), 0));

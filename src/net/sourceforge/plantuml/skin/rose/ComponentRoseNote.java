@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 7171 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -80,7 +80,8 @@ final public class ComponentRoseNote extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);
 
@@ -93,6 +94,9 @@ final public class ComponentRoseNote extends AbstractTextualComponent {
 		polygon.addPoint(x2, cornersize);
 		polygon.addPoint(x2 - cornersize, 0);
 		polygon.addPoint(0, 0);
+		if (withShadow) {
+			polygon.setDeltaShadow(4);
+		}
 
 		ug.getParam().setColor(foregroundColor);
 		ug.getParam().setBackcolor(back);

@@ -65,6 +65,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 		// final double heightTotal = dimTotal.getHeight();
 
 		final UPolygon diams = new UPolygon();
+		diams.setDeltaShadow(5);
 		diams.addPoint(SIZE, 0);
 		diams.addPoint(SIZE * 2, SIZE);
 		diams.addPoint(SIZE, SIZE * 2);
@@ -81,4 +82,9 @@ public class EntityImageBranch extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.DIAMOND;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 }

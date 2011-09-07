@@ -90,5 +90,10 @@ public final class InnerStateAutonom implements IEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.ROUND_RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

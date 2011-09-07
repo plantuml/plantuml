@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6937 $
+ * Revision $Revision: 7144 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -191,6 +191,10 @@ public class GraphicStrings implements IEntityImage {
 
 	public HtmlColor getBackcolor() {
 		return background;
+	}
+
+	public int getShield() {
+		return 0;
 	}
 
 }

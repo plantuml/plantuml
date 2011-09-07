@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6866 $
+ * Revision $Revision: 7130 $
  *
  */
 package net.sourceforge.plantuml;
@@ -88,14 +88,14 @@ public enum FontParam {
 	}
 
 	public final int getDefaultSize(ISkinParam skinParam) {
-		if (OptionFlags.SVEK && this==CLASS_ATTRIBUTE) {
+		if (skinParam.isSvek() && this==CLASS_ATTRIBUTE) {
 			return 11;
 		}
 		return defaultSize;
 	}
 
 	public final int getDefaultFontStyle(ISkinParam skinParam) {
-		if (OptionFlags.SVEK && this==PACKAGE) {
+		if (skinParam.isSvek() && this==PACKAGE) {
 			return Font.BOLD;
 		}
 		return fontStyle;

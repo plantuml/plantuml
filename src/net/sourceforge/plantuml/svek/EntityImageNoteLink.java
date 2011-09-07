@@ -65,7 +65,7 @@ public class EntityImageNoteLink implements IEntityImage {
 		final double dx = ug.getTranslateX();
 		final double dy = ug.getTranslateY();
 		ug.translate(xTheoricalPosition, yTheoricalPosition);
-		comp.drawU(ug, getDimension(ug.getStringBounder()), new SimpleContext2D(false));
+		comp.drawU(ug, getDimension(ug.getStringBounder()), new SimpleContext2D(false, true));
 		ug.setTranslate(dx, dy);
 
 	}
@@ -77,5 +77,10 @@ public class EntityImageNoteLink implements IEntityImage {
 	public HtmlColor getBackcolor() {
 		return null;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

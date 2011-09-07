@@ -48,5 +48,7 @@ public interface IEntityImage {
 	ShapeType getShapeType();
 	
 	HtmlColor getBackcolor();
+	
+	int getShield();
 
 }

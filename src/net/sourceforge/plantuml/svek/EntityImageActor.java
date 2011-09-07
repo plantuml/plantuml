@@ -119,4 +119,9 @@ public class EntityImageActor extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 }

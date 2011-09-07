@@ -51,6 +51,7 @@ public class Shape implements Positionable {
 
 	private double minX;
 	private double minY;
+	private final int shield;
 
 	private Cluster cluster;
 
@@ -64,13 +65,17 @@ public class Shape implements Positionable {
 		this.cluster = cluster;
 	}
 
-	public Shape(ShapeType type, double width, double height, ColorSequence colorSequence, boolean top) {
+	public Shape(ShapeType type, double width, double height, ColorSequence colorSequence, boolean top, int shield) {
 		this.top = top;
 		this.type = type;
 		this.width = width;
 		this.height = height;
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
+		this.shield = shield;
+		if (shield > 0 && type != ShapeType.RECTANGLE) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public final ShapeType getType() {
@@ -86,6 +91,10 @@ public class Shape implements Positionable {
 	}
 
 	public void appendShape(StringBuilder sb) {
+		if (type == ShapeType.RECTANGLE && shield > 0) {
+			appendHtml(sb);
+			return;
+		}
 		// if (type == ShapeType.CIRCLE_IN_RECT) {
 		// sb.append("subgraph clusterlol" + uid + " {");
 		// DotStringFactory.println(sb);
@@ -110,8 +119,58 @@ public class Shape implements Positionable {
 
 	}
 
+	private void appendHtml(StringBuilder sb) {
+		sb.append(uid);
+		sb.append(" [");
+		sb.append("shape=plaintext,");
+		sb.append("label=<");
+		appendLabelHtml(sb);
+		sb.append(">");
+		sb.append("];");
+		SvekUtils.println(sb);
+
+	}
+
+	private void appendLabelHtml(StringBuilder sb) {
+		// System.err.println("shield=" + shield);
+		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
+		sb.append("<TR>");
+		appendTd(sb);
+		appendTd(sb, shield, shield);
+		appendTd(sb);
+		sb.append("</TR>");
+		sb.append("<TR>");
+		appendTd(sb, shield, shield);
+		sb.append("<TD BGCOLOR=\"" + StringUtils.getAsHtml(color) + "\"");
+		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + getHeight() + "\"");
+		sb.append(" PORT=\"h\">");
+		sb.append("</TD>");
+		appendTd(sb, shield, shield);
+		sb.append("</TR>");
+		sb.append("<TR>");
+		appendTd(sb);
+		appendTd(sb, shield, shield);
+		appendTd(sb);
+		sb.append("</TR>");
+		sb.append("</TABLE>");
+	}
+
+	private void appendTd(StringBuilder sb, int w, int h) {
+		sb.append("<TD");
+		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\"");
+		sb.append(">");
+		sb.append("</TD>");
+	}
+
+	private void appendTd(StringBuilder sb) {
+		sb.append("<TD>");
+		sb.append("</TD>");
+	}
+
 	private void appendShapeInternal(StringBuilder sb) {
-		if (type == ShapeType.RECTANGLE) {
+		if (type == ShapeType.RECTANGLE && shield > 0) {
+			throw new UnsupportedOperationException();
+		} else if (type == ShapeType.RECTANGLE) {
 			sb.append("shape=rect");
 		} else if (type == ShapeType.DIAMOND) {
 			sb.append("shape=diamond");
@@ -140,6 +199,9 @@ public class Shape implements Positionable {
 	}
 
 	public final void setMinX(double minX) {
+		if (minX < 0) {
+			minX = 0;
+		}
 		this.minX = minX;
 	}
 
@@ -148,6 +210,9 @@ public class Shape implements Positionable {
 	}
 
 	public final void setMinY(double minY) {
+		if (minY < 0) {
+			minY = 0;
+		}
 		this.minY = minY;
 	}
 
@@ -171,6 +236,46 @@ public class Shape implements Positionable {
 
 	public Dimension2D getSize() {
 		return new Dimension2DDouble(width, height);
+	}
+
+	// public boolean contains(Point2D pt) {
+	// return pt.getX() >= minX && pt.getX() <= minX + width && pt.getY() >=
+	// minY && pt.getY() <= minY + height;
+	// }
+	//
+	// public boolean intersect(Point2D pt, Dimension2D dim) {
+	// if (contains(pt)) {
+	// return true;
+	// }
+	// if (contains(new Point2D.Double(pt.getX() + dim.getWidth(), pt.getY())))
+	// {
+	// return true;
+	// }
+	// if (contains(new Point2D.Double(pt.getX() + dim.getWidth(), pt.getY() +
+	// dim.getHeight()))) {
+	// return true;
+	// }
+	// if (contains(new Point2D.Double(pt.getX(), pt.getY() + dim.getHeight())))
+	// {
+	// return true;
+	// }
+	// return false;
+	// }
+	//	
+	// public boolean intersect(Positionable p) {
+	// return intersect(p.getPosition(), p.getSize());
+	// }
+
+	public boolean isShielded() {
+		return shield > 0;
+	}
+
+	public String getCoords(double deltaX, double deltaY) {
+		final int x1 = (int) (getMinX() + deltaX);
+		final int y1 = (int) (getMinY() + deltaY);
+		final int x2 = (int) (getMinX() + getWidth() + deltaX);
+		final int y2 = (int) (getMinY() + getHeight() + deltaY);
+		return "" + x1 + "," + y1 + "," + x2 + "," + y2;
 	}
 
 }

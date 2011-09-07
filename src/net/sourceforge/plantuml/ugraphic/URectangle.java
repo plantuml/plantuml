@@ -31,7 +31,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-public class URectangle implements UShape {
+public class URectangle extends AbstractShadowable {
 
 	private final double width;
 	private final double height;

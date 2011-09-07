@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 7143 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPixel;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -77,6 +78,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 		registerDriver(URectangle.class, new DriverRectangleG2d());
 		registerDriver(UText.class, new DriverTextG2d());
 		registerDriver(ULine.class, new DriverLineG2d());
+		registerDriver(UPixel.class, new DriverPixelG2d());
 		registerDriver(UPolygon.class, new DriverPolygonG2d());
 		registerDriver(UEllipse.class, new DriverEllipseG2d());
 		registerDriver(UImage.class, new DriverImageG2d());

@@ -59,7 +59,8 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	}
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
-		final UShape circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		circle.setDeltaShadow(3);
 		ug.getParam().setStroke(new UStroke());
 		ug.getParam().setBackcolor(null);
 		ug.getParam().setColor(getColor(ColorParam.activityEnd, getStereo()));
@@ -77,5 +78,10 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.CIRCLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

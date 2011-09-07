@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 7111 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -49,6 +49,7 @@ public class Note implements Event, SpecificBackcolorable {
 	private final List<String> strings;
 
 	private final NotePosition position;
+	private NoteStyle style = NoteStyle.NORMAL;
 
 	private final Url url;
 
@@ -118,6 +119,14 @@ public class Note implements Event, SpecificBackcolorable {
 
 	public Url getUrl() {
 		return url;
+	}
+
+	public final NoteStyle getStyle() {
+		return style;
+	}
+
+	public final void setStyle(NoteStyle style) {
+		this.style = style;
 	}
 
 }

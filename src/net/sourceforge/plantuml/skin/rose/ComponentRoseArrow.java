@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 7170 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -60,7 +60,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	}
 
 	@Override
-	public void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	public void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);
 		ug.getParam().setColor(getForegroundColor());

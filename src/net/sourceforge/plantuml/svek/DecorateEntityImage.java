@@ -50,6 +50,9 @@ public class DecorateEntityImage implements IEntityImage {
 	private final HorizontalAlignement horizontal2;
 	private final TextBlock text2;
 
+	private double deltaX;
+	private double deltaY;
+
 	public DecorateEntityImage(IEntityImage original, TextBlock text, HorizontalAlignement horizontal) {
 		this(original, text, horizontal, null, null);
 	}
@@ -81,6 +84,8 @@ public class DecorateEntityImage implements IEntityImage {
 			text1.drawU(ug, xText1, yText1);
 		}
 		original.drawU(ug, xImage, yImage);
+		deltaX = xImage;
+		deltaY = yImage;
 		if (text2 != null) {
 			final double xText2 = getTextX(dimText2, dimTotal, horizontal2);
 			text2.drawU(ug, xText2, yText2);
@@ -119,6 +124,24 @@ public class DecorateEntityImage implements IEntityImage {
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
+	}
+
+	public int getShield() {
+		return 0;
+	}
+
+	public final double getDeltaX() {
+		if (original instanceof DecorateEntityImage) {
+			return deltaX + ((DecorateEntityImage) original).deltaX;
+		}
+		return deltaX;
+	}
+
+	public final double getDeltaY() {
+		if (original instanceof DecorateEntityImage) {
+			return deltaY + ((DecorateEntityImage) original).deltaY;
+		}
+		return deltaY;
 	}
 
 }

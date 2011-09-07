@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -64,7 +63,7 @@ public final class SvekResult implements IEntityImage {
 		for (Cluster cluster : dotStringFactory.getAllSubCluster()) {
 			cluster.drawU(ug, x, y, clusterBorder, dotData);
 		}
-
+		
 		for (Shape shape : dotStringFactory.getShapes()) {
 			final double minX = shape.getMinX();
 			final double minY = shape.getMinY();
@@ -106,5 +105,10 @@ public final class SvekResult implements IEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

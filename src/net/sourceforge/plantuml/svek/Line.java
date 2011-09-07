@@ -33,12 +33,14 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -47,11 +49,15 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable3;
 import net.sourceforge.plantuml.posimo.BezierUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.posimo.Positionable;
+import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.svek.SvekUtils.PointListIterator;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -67,24 +73,21 @@ public class Line {
 	private final String startUid;
 	private final String endUid;
 
-	private final TextBlock labelText;
 	private final TextBlock startTailText;
 	private final TextBlock endHeadText;
-	private final IEntityImage note;
+	private final TextBlock noteLabelText;
 
 	private final int lineColor;
-	private final int labelColor;
+	private final int noteLabelColor;
 	private final int startTailColor;
 	private final int endHeadColor;
-	private final int noteColor;
 
-	private Point2D.Double labelXY;
-	private Point2D.Double startTailLabelXY;
-	private Point2D.Double endHeadLabelXY;
-	private Point2D.Double noteXY;
+	private Positionable startTailLabelXY;
+	private Positionable endHeadLabelXY;
+	private Positionable noteLabelXY;
 
-	private List<Point2D.Double> endHead;
-	private List<Point2D.Double> startTail;
+	private UDrawable3 endHead;
+	private UDrawable3 startTail;
 
 	private final StringBounder stringBounder;
 
@@ -101,16 +104,41 @@ public class Line {
 		this.lhead = lhead;
 
 		this.lineColor = colorSequence.getValue();
-		this.labelColor = colorSequence.getValue();
+		this.noteLabelColor = colorSequence.getValue();
 		this.startTailColor = colorSequence.getValue();
 		this.endHeadColor = colorSequence.getValue();
-		this.noteColor = colorSequence.getValue();
 
+		final TextBlock labelOnly;
 		if (link.getLabel() == null) {
-			labelText = null;
+			labelOnly = null;
 		} else {
-			labelText = TextBlockUtils.create(StringUtils.getWithNewlines(link.getLabel()), labelFont,
+			labelOnly = TextBlockUtils.create(StringUtils.getWithNewlines(link.getLabel()), labelFont,
 					HorizontalAlignement.CENTER);
+		}
+
+		final TextBlock noteOnly;
+		if (link.getNote() == null) {
+			noteOnly = null;
+		} else {
+			noteOnly = TextBlockUtils.fromIEntityImage(new EntityImageNoteLink(link.getNote(), skinParam));
+		}
+
+		if (labelOnly != null && noteOnly != null) {
+			if (link.getNotePosition() == Position.LEFT) {
+				noteLabelText = TextBlockUtils.mergeLR(noteOnly, labelOnly);
+			} else if (link.getNotePosition() == Position.RIGHT) {
+				noteLabelText = TextBlockUtils.mergeLR(labelOnly, noteOnly);
+			} else if (link.getNotePosition() == Position.TOP) {
+				noteLabelText = TextBlockUtils.mergeTB(noteOnly, labelOnly);
+			} else {
+				noteLabelText = TextBlockUtils.mergeTB(labelOnly, noteOnly);
+			}
+		} else if (labelOnly != null) {
+			noteLabelText = labelOnly;
+		} else if (noteOnly != null) {
+			noteLabelText = noteOnly;
+		} else {
+			noteLabelText = null;
 		}
 
 		if (link.getQualifier1() == null) {
@@ -127,12 +155,6 @@ public class Line {
 					HorizontalAlignement.CENTER);
 		}
 
-		if (link.getNote() == null) {
-			note = null;
-		} else {
-			note = new EntityImageNoteLink(link.getNote(), skinParam);
-		}
-
 	}
 
 	public void appendLine(StringBuilder sb) {
@@ -140,7 +162,7 @@ public class Line {
 		sb.append("->");
 		sb.append(endUid);
 		sb.append("[");
-		String decoration = link.getType().getSpecificDecoration();
+		String decoration = link.getType().getSpecificDecorationSvek();
 		if (decoration.endsWith(",") == false) {
 			decoration += ",";
 		}
@@ -151,15 +173,10 @@ public class Line {
 			sb.append(",");
 		}
 		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
-		if (labelText != null) {
+		if (noteLabelText != null) {
 			sb.append(",");
 			sb.append("label=<");
-			appendTable(sb, labelText.calculateDimension(stringBounder), labelColor);
-			sb.append(">");
-		} else if (note != null) {
-			sb.append(",");
-			sb.append("label=<");
-			appendTable(sb, note.getDimension(stringBounder), noteColor);
+			appendTable(sb, noteLabelText.calculateDimension(stringBounder), noteLabelColor);
 			sb.append(">");
 		}
 
@@ -196,7 +213,7 @@ public class Line {
 
 	public String rankSame() {
 		if (link.getLength() == 1) {
-			return "{rank=same; " + startUid + "; " + endUid + "}";
+			return "{rank=same; " + getStartUid() + "; " + getEndUid() + "}";
 		}
 		return null;
 	}
@@ -223,10 +240,16 @@ public class Line {
 	}
 
 	public final String getStartUid() {
+		if (startUid.endsWith(":h")) {
+			return startUid.substring(0, startUid.length() - 2);
+		}
 		return startUid;
 	}
 
 	public final String getEndUid() {
+		if (endUid.endsWith(":h")) {
+			return endUid.substring(0, endUid.length() - 2);
+		}
 		return endUid;
 	}
 
@@ -249,28 +272,51 @@ public class Line {
 
 		final PointListIterator pointListIterator = new PointListIterator(svg.substring(end), fullHeight);
 
-		if (link.getType().getDecor2() != LinkDecor.NONE) {
-			this.endHead = pointListIterator.next();
+		if (link.getType().getDecor2() == LinkDecor.PLUS) {
+			final List<Point2D.Double> points = pointListIterator.next();
+			final Point2D p0 = points.get(0);
+			final Point2D p1 = points.get(1);
+			final Point2D p2 = points.get(2);
+			final Point2D pc = new Point2D.Double((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
+			this.endHead = new Plus(p1, pc);
+		} else if (link.getType().getDecor2() != LinkDecor.NONE) {
+			final UShape sh = new UPolygon(pointListIterator.next());
+			this.endHead = new UDrawable3() {
+				public void drawU(UGraphic ug, double x, double y) {
+					ug.draw(x, y, sh);
+				}
+			};
 		}
 
-		if (link.getType().getDecor1() != LinkDecor.NONE) {
-			this.startTail = pointListIterator.next();
+		if (link.getType().getDecor1() == LinkDecor.PLUS) {
+			final List<Point2D.Double> points = pointListIterator.next();
+			final Point2D p0 = points.get(0);
+			final Point2D p1 = points.get(1);
+			final Point2D p2 = points.get(2);
+			final Point2D pc = new Point2D.Double((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
+			this.startTail = new Plus(p1, pc);
+		} else if (link.getType().getDecor1() != LinkDecor.NONE) {
+			final UShape sh = new UPolygon(pointListIterator.next());
+			this.startTail = new UDrawable3() {
+				public void drawU(UGraphic ug, double x, double y) {
+					ug.draw(x, y, sh);
+				}
+			};
 		}
 
-		if (this.labelText != null) {
-			this.labelXY = getXY(svg, this.labelColor, fullHeight);
+		if (this.noteLabelText != null) {
+			this.noteLabelXY = TextBlockUtils.asPositionable(noteLabelText, stringBounder, getXY(svg,
+					this.noteLabelColor, fullHeight));
 		}
 
 		if (this.startTailText != null) {
-			this.startTailLabelXY = getXY(svg, this.startTailColor, fullHeight);
+			this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, getXY(svg,
+					this.startTailColor, fullHeight));
 		}
 
 		if (this.endHeadText != null) {
-			this.endHeadLabelXY = getXY(svg, this.endHeadColor, fullHeight);
-		}
-
-		if (this.note != null) {
-			this.noteXY = getXY(svg, this.noteColor, fullHeight);
+			this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, getXY(svg,
+					this.endHeadColor, fullHeight));
 		}
 
 	}
@@ -298,37 +344,34 @@ public class Line {
 		ug.getParam().setStroke(new UStroke());
 
 		if (this.startTail != null) {
-			final UShape shape = new UPolygon(this.startTail);
 			ug.getParam().setColor(color);
 			if (this.link.getType().getDecor1().isFill()) {
 				ug.getParam().setBackcolor(color);
 			} else {
 				ug.getParam().setBackcolor(null);
 			}
-			ug.draw(x, y, shape);
+			this.startTail.drawU(ug, x, y);
 		}
 		if (this.endHead != null) {
-			final UShape shape = new UPolygon(this.endHead);
 			ug.getParam().setColor(color);
 			if (this.link.getType().getDecor2().isFill()) {
 				ug.getParam().setBackcolor(color);
 			} else {
 				ug.getParam().setBackcolor(null);
 			}
-			ug.draw(x, y, shape);
+			this.endHead.drawU(ug, x, y);
 		}
-		if (this.labelText != null) {
-			this.labelText.drawU(ug, x + this.labelXY.x, y + this.labelXY.y);
+		if (this.noteLabelText != null) {
+			this.noteLabelText.drawU(ug, x + this.noteLabelXY.getPosition().getX(), y
+					+ this.noteLabelXY.getPosition().getY());
 		}
 		if (this.startTailText != null) {
-			this.startTailText.drawU(ug, x + this.startTailLabelXY.x, y + this.startTailLabelXY.y);
+			this.startTailText.drawU(ug, x + this.startTailLabelXY.getPosition().getX(), y
+					+ this.startTailLabelXY.getPosition().getY());
 		}
 		if (this.endHeadText != null) {
-			this.endHeadText.drawU(ug, x + this.endHeadLabelXY.x, y + this.endHeadLabelXY.y);
-		}
-
-		if (this.note != null) {
-			this.note.drawU(ug, x + this.noteXY.x, y + this.noteXY.y);
+			this.endHeadText.drawU(ug, x + this.endHeadLabelXY.getPosition().getX(), y
+					+ this.endHeadLabelXY.getPosition().getY());
 		}
 	}
 
@@ -352,8 +395,8 @@ public class Line {
 		} else {
 			return 0;
 		}
-		if (labelText != null) {
-			strategy.eat(labelText.calculateDimension(stringBounder).getWidth());
+		if (noteLabelText != null) {
+			strategy.eat(noteLabelText.calculateDimension(stringBounder).getWidth());
 		}
 		if (startTailText != null) {
 			strategy.eat(startTailText.calculateDimension(stringBounder).getWidth());
@@ -378,8 +421,8 @@ public class Line {
 		} else {
 			strategy = new ArithmeticStrategySum();
 		}
-		if (labelText != null) {
-			strategy.eat(labelText.calculateDimension(stringBounder).getHeight());
+		if (noteLabelText != null) {
+			strategy.eat(noteLabelText.calculateDimension(stringBounder).getHeight());
 		}
 		if (startTailText != null) {
 			strategy.eat(startTailText.calculateDimension(stringBounder).getHeight());
@@ -390,54 +433,65 @@ public class Line {
 		return strategy.getResult() + getDecorDzeta();
 	}
 
-	private Positionable getStartTailPositionnable() {
-		if (startTailText == null) {
-			return null;
-		}
-		return new Positionable() {
-			public Point2D getPosition() {
-				return startTailLabelXY;
-			}
-
-			public Dimension2D getSize() {
-				return startTailText.calculateDimension(stringBounder);
-			}
-		};
-	}
-
-	private Positionable getEndHeadPositionnable() {
-		if (endHeadText == null) {
-			return null;
-		}
-		return new Positionable() {
-			public Point2D getPosition() {
-				return endHeadLabelXY;
-			}
-
-			public Dimension2D getSize() {
-				return endHeadText.calculateDimension(stringBounder);
-			}
-		};
-	}
+	// private Positionable getStartTailPositionnable() {
+	// if (startTailText == null) {
+	// return null;
+	// }
+	// return new Positionable() {
+	// public Point2D getPosition() {
+	// return startTailLabelXY.;
+	// }
+	//
+	// public Dimension2D getSize() {
+	// return startTailText.calculateDimension(stringBounder);
+	// }
+	// };
+	// }
+	//
+	// private Positionable getEndHeadPositionnable() {
+	// if (endHeadText == null) {
+	// return null;
+	// }
+	// return new Positionable() {
+	// public Point2D getPosition() {
+	// return endHeadLabelXY;
+	// }
+	//
+	// public Dimension2D getSize() {
+	// return endHeadText.calculateDimension(stringBounder);
+	// }
+	// };
+	// }
 
 	public void manageCollision(List<Shape> allShapes) {
-//		final Positionable start = getStartTailPositionnable();
-//		if (start != null) {
-//			for (Shape sh : allShapes) {
-//				if (cut(start, sh)) {
-//					avoid(startTailLabelXY, start, sh);
-//				}
-//			}
-//		}
-//
-//		final Positionable end = getEndHeadPositionnable();
-//		if (end != null) {
-//			for (Shape sh : allShapes) {
-//				if (cut(end, sh)) {
-//					avoid(endHeadLabelXY, end, sh);
-//				}
-//			}
-//		}
+
+		for (Shape sh : allShapes) {
+			final Positionable cl = PositionableUtils.addMargin(sh, 8, 8);
+			if (startTailText != null && PositionableUtils.intersect(cl, startTailLabelXY)) {
+				startTailLabelXY = PositionableUtils.moveAwayFrom(cl, startTailLabelXY);
+			}
+			if (endHeadText != null && PositionableUtils.intersect(cl, endHeadLabelXY)) {
+				endHeadLabelXY = PositionableUtils.moveAwayFrom(cl, endHeadLabelXY);
+			}
+		}
+
+		// final Positionable start = getStartTailPositionnable();
+		// if (start != null) {
+		// for (Shape sh : allShapes) {
+		// if (cut(start, sh)) {
+		// avoid(startTailLabelXY, start, sh);
+		// }
+		// }
+		// }
+		//
+		// final Positionable end = getEndHeadPositionnable();
+		// if (end != null) {
+		// for (Shape sh : allShapes) {
+		// if (cut(end, sh)) {
+		// avoid(endHeadLabelXY, end, sh);
+		// }
+		// }
+		// }
 
 	}
 
@@ -459,6 +513,60 @@ public class Line {
 		final Dimension2D dim = pos.getSize();
 		System.err.println("dist=" + dist);
 		return dist < (dim.getWidth() / 2 + 2) || dist < (dim.getHeight() / 2 + 2);
+	}
+
+	static class Plus implements UDrawable3 {
+
+		private final AffineTransform at;
+		private final AffineTransform at2;
+		private int radius;
+		private final Point2D center;
+		private final Point2D p1;
+		private final Point2D p2;
+		private Point2D p3;
+		private Point2D p4;
+
+		public Plus(Point2D p1, Point2D p2) {
+			this.center = new Point2D.Double((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+			at = AffineTransform.getTranslateInstance(-center.getX(), -center.getY());
+			at2 = AffineTransform.getTranslateInstance(center.getX(), center.getY());
+			radius = (int) (p1.distance(p2) / 2);
+			if (radius % 2 == 0) {
+				radius--;
+			}
+			this.p1 = putOnCircle(p1);
+			this.p2 = putOnCircle(p2);
+
+			this.p3 = at.transform(this.p1, null);
+			this.p3 = new Point2D.Double(p3.getY(), -p3.getX());
+			this.p3 = at2.transform(p3, null);
+
+			this.p4 = at.transform(this.p2, null);
+			this.p4 = new Point2D.Double(p4.getY(), -p4.getX());
+			this.p4 = at2.transform(p4, null);
+		}
+
+		private Point2D putOnCircle(Point2D p) {
+			p = at.transform(p, null);
+			final double coef = p.distance(new Point2D.Double()) / radius;
+			p = new Point2D.Double(p.getX() / coef, p.getY() / coef);
+			return at2.transform(p, null);
+		}
+
+		public void drawU(UGraphic ug, double x, double y) {
+			final UShape circle = new UEllipse(radius * 2, radius * 2);
+			ug.draw(x + center.getX() - radius, y + center.getY() - radius, circle);
+			drawLine(ug, x, y, p1, p2);
+			drawLine(ug, x, y, p3, p4);
+		}
+
+		static private void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
+			final double dx = p2.getX() - p1.getX();
+			final double dy = p2.getY() - p1.getY();
+			ug.draw(x + p1.getX(), y + p1.getY(), new ULine(dx, dy));
+
+		}
+
 	}
 
 }

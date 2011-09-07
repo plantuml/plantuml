@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class EntityImageCircleStart extends AbstractEntityImage {
 
@@ -58,7 +57,8 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	}
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
-		final UShape circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		circle.setDeltaShadow(3);
 		ug.getParam().setColor(null);
 		ug.getParam().setBackcolor(getColor(ColorParam.activityStart, getStereo()));
 		ug.draw(xTheoricalPosition, yTheoricalPosition, circle);
@@ -66,6 +66,10 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	public ShapeType getShapeType() {
 		return ShapeType.CIRCLE;
+	}
+
+	public int getShield() {
+		return 0;
 	}
 
 }

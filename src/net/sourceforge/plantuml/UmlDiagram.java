@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6922 $
+ * Revision $Revision: 7173 $
  *
  */
 package net.sourceforge.plantuml;
@@ -75,7 +75,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements PSystem {
 	private final Pragma pragma = new Pragma();
 	private Scale scale;
 
-	private final SkinParam skinParam = new SkinParam();
+	private final SkinParam skinParam = new SkinParam(getUmlDiagramType());
 
 	final public void setTitle(List<? extends CharSequence> strings) {
 		this.title = strings;

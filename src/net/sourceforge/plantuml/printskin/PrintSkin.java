@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6591 $
+ * Revision $Revision: 7173 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignement;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -113,7 +114,7 @@ class PrintSkin extends AbstractPSystem {
 
 	private void printComponent(ComponentType type) {
 		println(type.name());
-		final Component comp = skin.createComponent(type, new SkinParam(), toPrint);
+		final Component comp = skin.createComponent(type, new SkinParam(null), toPrint);
 		if (comp == null) {
 			println("null");
 			return;

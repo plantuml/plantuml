@@ -67,5 +67,10 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.CIRCLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

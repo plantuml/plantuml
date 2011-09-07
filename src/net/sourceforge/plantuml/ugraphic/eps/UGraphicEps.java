@@ -95,13 +95,13 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	public StringBounder getStringBounder() {
 		return stringBounder;
 	}
-	
+
 	public void drawEps(String eps, double x, double y) {
 		this.getGraphicObject().drawEps(eps, x, y);
 	}
 
 	public void setClip(UClip clip) {
-		this.clip = clip;
+		this.clip = clip == null ? null : clip.translate(getTranslateX(), getTranslateY());
 	}
 
 	public UClip getClip() {
@@ -121,7 +121,8 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 
 	}
 
-	static public String getEpsString(ColorMapper colorMapper, EpsStrategy epsStrategy, UDrawable udrawable) throws IOException {
+	static public String getEpsString(ColorMapper colorMapper, EpsStrategy epsStrategy, UDrawable udrawable)
+			throws IOException {
 		final UGraphicEps ug = new UGraphicEps(colorMapper, epsStrategy);
 		udrawable.drawU(ug);
 		return ug.getEPSCode();

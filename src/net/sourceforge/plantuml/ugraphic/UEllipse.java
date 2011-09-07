@@ -28,12 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4901 $
+ * Revision $Revision: 7143 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
-public class UEllipse implements UShape {
+public class UEllipse extends AbstractShadowable {
 
 	private final double width;
 	private final double height;

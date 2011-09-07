@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -71,9 +71,8 @@ public class EntityImageState extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.desc = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
-				getFont(FontParam.STATE, stereotype), getFontColor(FontParam.STATE, stereotype)),
-				HorizontalAlignement.CENTER);
+		this.desc = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(getFont(FontParam.STATE,
+				stereotype), getFontColor(FontParam.STATE, stereotype)), HorizontalAlignement.CENTER);
 
 		final List<String> list = new ArrayList<String>();
 		for (Member att : entity.getFieldsToDisplay()) {
@@ -100,7 +99,8 @@ public class EntityImageState extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final URectangle rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
+		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
+		rect.setDeltaShadow(4);
 
 		ug.getParam().setStroke(new UStroke(1.5));
 		ug.getParam().setColor(getColor(ColorParam.stateBorder, getStereo()));
@@ -130,4 +130,9 @@ public class EntityImageState extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.ROUND_RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 }

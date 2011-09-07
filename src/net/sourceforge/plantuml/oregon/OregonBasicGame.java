@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.oregon;
 
+import java.util.Date;
 import java.util.Random;
 
 public class OregonBasicGame implements BasicGame {
@@ -50,11 +51,10 @@ public class OregonBasicGame implements BasicGame {
 
 	private double ma;
 
-
 	private final String da[] = new String[] { "March 29", "April 12", "April 26", "May 10", "May 24", "June 7",
 			"June 21", "July 5", "July 19", "August 2", "August 16", "August 31", "September 13", "September 27",
 			"October 11", "October 25", "November 8", "November 22", "December 6", "December 20" };
-	
+
 	private final int ep[] = new int[] { 6, 11, 13, 15, 17, 22, 32, 35, 37, 42, 44, 54, 64, 69, 95 };
 
 	public Screen getScreen() {
@@ -439,31 +439,37 @@ public class OregonBasicGame implements BasicGame {
 	}
 
 	private void southPass2750(int j) throws NoInputException {
-		if (kp == 1) {
-
-		}
-		kp = 1;
-		if (rnd() < .8) {
-
-		}
-		print("You made it safely through the South Pass....no snow!");
-		km = 1;
-		if (rnd()<.7) {
-			print("Blizzard in the mountain pass. Going is slow; supplies are lost.");
-			kb = 1;
-			m = m - 30 - 40 * rnd();
-			f = f - 12;
-			b = b - 200;
-			r = r - 5;
-			if (c>=18+2*rnd()) {
+		if (kp == 0) {
+			kp = 1;
+			if (rnd() < .8) {
+				blizzard2840(j);
 				return;
 			}
-			dealWithIllness2880(j);
+			print("You made it safely through the South Pass....no snow!");
+		}
+		if (m < 1700) {
+			return;
+		}
+		if (km == 0) {
+			km = 1;
+			if (rnd() < .7) {
+				blizzard2840(j);
+			}
 		}
 
 	}
 
-
+	private void blizzard2840(int j) throws NoInputException {
+		print("Blizzard in the mountain pass. Going is slow; supplies are lost.");
+		kb = 1;
+		m = m - 30 - 40 * rnd();
+		f = f - 12;
+		b = b - 200;
+		r = r - 5;
+		if (c < 18 + 2 * rnd()) {
+			dealWithIllness2880(j);
+		}
+	}
 
 	private void dealWithIllness2880(int j) throws NoInputException {
 		if (100 * rnd() < 10 + 35 * (e - 1)) {
@@ -656,6 +662,9 @@ public class OregonBasicGame implements BasicGame {
 		print();
 		print("| <u>Cash</u> | <u>Food</u> | <u>Ammo</u> | <u>Clothes</u> | <u>Medicine/parts/...</u> |");
 		print("+------+------+------+---------+--------------------+");
+		if (t < 0) {
+			t = 0;
+		}
 		if (f < 0) {
 			f = 0;
 		}
@@ -855,62 +864,74 @@ public class OregonBasicGame implements BasicGame {
 	private int dr;
 	private double m;
 
-	private int getTime() {
-		return (int) ((System.currentTimeMillis() / 1000L) % 83);
+	enum ShootingWord {
+		POW, BANG, BLAM, WHOP, WHAM, ZING, ZACK, ZANG, WOOSH, BAM, ZAP, BOOM, WOW, CLANG, BOING, ZOW, PANG, ZOSH, KAZ, KOOG, ZOOP, PONG, PING, BAZ, ZONG, PAM, POOM, DOING;
+
+		public static ShootingWord safeValueOf(String s) {
+			try {
+				return valueOf(s.toUpperCase());
+			} catch (IllegalArgumentException e) {
+				return null;
+			}
+		}
+
+		public int decode(ShootingWord key) {
+			return (ordinal() + key.ordinal()) % NB_WORDS;
+		}
+
+		public ShootingWord encode(int v) {
+			v = v - this.ordinal();
+			if (v < 0) {
+				v += NB_WORDS;
+			}
+			return ShootingWord.values()[v];
+		}
 	}
 
-	private String getRandomShootingWord() {
-		int rn = (int) (rnd() * 4);
-		switch (rn) {
-		case 0:
-			return "pow";
-		case 1:
-			return "bang";
-		case 2:
-			return "blam";
-		}
-		return "whop";
+	private static int NB_WORDS = ShootingWord.values().length;
+
+	private int getTime() {
+		return (int) ((System.currentTimeMillis() / 1000L) % NB_WORDS);
 	}
 
 	private int shoot3870() throws NoInputException {
-		final String word1 = getRandomShootingWord() + getTime();
-		print("Type: " + word1);
+		final int time1 = getTime();
+		final ShootingWord word1Printed = ShootingWord.values()[time1];
+		if (skb.hasMore() == false) {
+			print("Type: " + word1Printed);
+		}
 		final String typed1 = skb.input(screen);
-		final int time = getDeltaTime(typed1);
-		final String word2 = getRandomShootingWord() + time;
-		print("Type: " + word2);
+		ShootingWord wordType1 = ShootingWord.safeValueOf(typed1);
+		final int delta;
+		if (wordType1 == null) {
+			delta = NB_WORDS - 1;
+			wordType1 = ShootingWord.values()[NB_WORDS - 1];
+		} else {
+			delta = protect(getTime() - wordType1.ordinal());
+		}
+		// print("delta="+delta);
+		final ShootingWord word2 = wordType1.encode(delta);
+		if (skb.hasMore() == false) {
+			print("Type: " + word2);
+		}
 		final String typed2 = skb.input(screen);
-		int duration = extractInt(typed2) - dr - 1;
-		// 3870 'Subroutine to shoot gun
-		// 3880 RN = 1 + INT(4 * RND(1)) : 'Pick a random shooting word
-		// 3890 S1 = 60 * VAL(MID$(TIME$, 4, 2)) + VAL(RIGHT$(TIME$, 2)) :
-		// 'Start timer
-		// 3900 PRINT "Type " S$(RN); : INPUT X$
-		// 3910 IF S$(RN)< >X$ AND S$(RN + 4)< >X$ THEN PRINT "Nope. Try again.
-		// "; : GOTO 3900
-		// 3920 S2 = 60 * VAL(MID$(TIME$, 4, 2)) + VAL(RIGHT$(TIME$, 2)) : 'End
-		// timer
-		// 3930 BR = S2 - S1 - DR - 1 : RETURN
+		final ShootingWord wordType2 = ShootingWord.safeValueOf(typed2);
+		final int duration = wordType2 == null ? NB_WORDS : wordType1.decode(wordType2) - dr;
+		// print("duration=" + duration);
 		if (duration < 0) {
 			return 0;
 		}
 		return duration;
 	}
 
-	private int extractInt(String typed) {
-		final String s = typed.replaceAll("\\D", "");
-		if (s.length() == 0) {
-			return 0;
+	private int protect(int v) {
+		while (v >= NB_WORDS) {
+			v -= NB_WORDS;
 		}
-		return Integer.parseInt(s);
+		while (v < 0) {
+			v += NB_WORDS;
+		}
+		return v;
 	}
 
-	private int getDeltaTime(String typed) {
-		final int was = extractInt(typed);
-		int diff = getTime() - was;
-		if (diff < 0) {
-			diff += 83;
-		}
-		return diff;
-	}
 }

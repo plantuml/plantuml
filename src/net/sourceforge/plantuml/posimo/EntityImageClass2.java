@@ -206,12 +206,12 @@ public class EntityImageClass2 extends AbstractEntityImage2 {
 		x = xTheoricalPosition;
 		ug.getParam().setColor(getColor(ColorParam.classBorder));
 		ug.draw(x, y, new ULine(widthTotal, 0));
-		fields.draw(ug, x + xMarginFieldsOrMethod, y);
+		fields.drawU(ug, x + xMarginFieldsOrMethod, y);
 
 		y += getMethodOrFieldHeight(fields.calculateDimension(stringBounder));
 		ug.getParam().setColor(getColor(ColorParam.classBorder));
 		ug.draw(x, y, new ULine(widthTotal, 0));
 
-		methods.draw(ug, x + xMarginFieldsOrMethod, y);
+		methods.drawU(ug, x + xMarginFieldsOrMethod, y);
 	}
 }

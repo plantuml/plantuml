@@ -61,8 +61,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.desc = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
-				getFont(FontParam.USECASE, stereotype), getFontColor(FontParam.USECASE, stereotype)), HorizontalAlignement.CENTER);
+		this.desc = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(getFont(FontParam.USECASE,
+				stereotype), getFontColor(FontParam.USECASE, stereotype)), HorizontalAlignement.CENTER);
 
 		if (stereotype == null || stereotype.getLabel() == null) {
 			this.stereo = null;
@@ -97,6 +97,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final UEllipse ellipse = new UEllipse(widthTotal, heightTotal);
+		ellipse.setDeltaShadow(3);
 
 		ug.getParam().setStroke(new UStroke(1.5));
 		ug.getParam().setColor(getColor(ColorParam.usecaseBorder, getStereo()));
@@ -118,4 +119,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.OVAL;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 }

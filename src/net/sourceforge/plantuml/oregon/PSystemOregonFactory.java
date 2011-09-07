@@ -38,6 +38,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.PSystemBasicFactory;
+import net.sourceforge.plantuml.StringUtils;
 
 public class PSystemOregonFactory implements PSystemBasicFactory {
 
@@ -67,7 +68,9 @@ public class PSystemOregonFactory implements PSystemBasicFactory {
 		if (inputs == null) {
 			return false;
 		}
-		inputs.add(line);
+		if (StringUtils.isNotEmpty(line)) {
+			inputs.add(line);
+		}
 		return true;
 	}
 	

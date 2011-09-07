@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 7143 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
-public class DriverPolygonG2d implements UDriver<Graphics2D> {
+public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final UPolygon shape = (UPolygon) ushape;
@@ -54,6 +54,10 @@ public class DriverPolygonG2d implements UDriver<Graphics2D> {
 
 		for (Point2D pt : shape.getPoints()) {
 			polygon.addPoint((int) (pt.getX() + x), (int) (pt.getY() + y));
+		}
+
+		if (shape.getDeltaShadow() != 0) {
+			drawShadow(g2d, polygon, x, y, shape.getDeltaShadow());
 		}
 
 		if (param.getBackcolor() != null) {

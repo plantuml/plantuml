@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 7113 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -40,23 +40,29 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandNoteOverSeveral extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandNoteOverSeveral(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^note\\s+over\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s*\\,\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?\\s*:\\s*(.*)$");
+		super(
+				sequenceDiagram,
+				"(?i)^(note|hnote|rnote)\\s+over\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s*\\,\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?\\s*:\\s*(.*)$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Participant p1 = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0)));
-		final Participant p2 = getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1)));
-		final List<String> strings = StringUtils.getWithNewlines(arg.get(3));
+		final Participant p1 = getSystem().getOrCreateParticipant(
+				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1)));
+		final Participant p2 = getSystem().getOrCreateParticipant(
+				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(2)));
+		final List<String> strings = StringUtils.getWithNewlines(arg.get(4));
 		final Note note = new Note(p1, p2, strings);
-		note.setSpecificBackcolor(HtmlColor.getColorIfValid(arg.get(2)));
+		note.setSpecificBackcolor(HtmlColor.getColorIfValid(arg.get(3)));
 		getSystem().addNote(note);
+		note.setStyle(NoteStyle.getNoteStyle(arg.get(0)));
 		return CommandExecutionResult.ok();
 	}
 

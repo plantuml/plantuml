@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6591 $
+ * Revision $Revision: 7170 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -59,7 +59,7 @@ class GrayComponent extends AbstractComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug.getParam().setBackcolor(HtmlColor.LIGHT_GRAY);
 		ug.getParam().setColor(HtmlColor.BLACK);

@@ -28,15 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6570 $
+ * Revision $Revision: 7157 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.posimo.Positionable;
+import net.sourceforge.plantuml.posimo.PositionableImpl;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class TextBlockUtils {
 
@@ -63,9 +71,9 @@ public class TextBlockUtils {
 			HorizontalAlignement horizontalAlignement) {
 		final Stereotype stereotype = (Stereotype) texts.get(0);
 		if (stereotype.isSpotted()) {
-			final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(),
-					stereotype.getRadius(), stereotype.getCircledFont(), stereotype.getHtmlColor(), null,
-					fontConfiguration.getColor());
+			final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype
+					.getRadius(), stereotype.getCircledFont(), stereotype.getHtmlColor(), null, fontConfiguration
+					.getColor());
 			if (stereotype.getLabel() == null) {
 				return new TextBlockSpotted(circledCharacter, texts.subList(1, texts.size()), fontConfiguration,
 						horizontalAlignement);
@@ -75,9 +83,41 @@ public class TextBlockUtils {
 		return new TextBlockSimple(texts, fontConfiguration, horizontalAlignement);
 	}
 
+	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
+		return new TextBlockMarged(textBlock, marginX, marginX, marginY, marginY);
+	}
+
 	// static private Font deriveForCircleCharacter(Font font) {
 	// final float size = font.getSize2D();
 	// return font.deriveFont(size - 1).deriveFont(Font.BOLD);
 	// }
+
+	public static Positionable asPositionable(TextBlock textBlock, StringBounder stringBounder, Point2D pt) {
+		return new PositionableImpl(pt, textBlock.calculateDimension(stringBounder));
+	}
+
+	public static TextBlock fromIEntityImage(final IEntityImage image) {
+		return new TextBlock() {
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return image.getDimension(stringBounder);
+			}
+
+			public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
+				throw new UnsupportedOperationException();
+			}
+
+			public void drawU(UGraphic ug, double x, double y) {
+				image.drawU(ug, x, y);
+			}
+		};
+	}
+
+	public static TextBlock mergeLR(TextBlock b1, TextBlock b2) {
+		return new TextBlockHorizontal(b1, b2);
+	}
+
+	public static TextBlock mergeTB(TextBlock b1, TextBlock b2) {
+		return new TextBlockVertical(b1, b2);
+	}
 
 }

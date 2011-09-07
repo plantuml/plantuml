@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6665 $
+ * Revision $Revision: 7112 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
-import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEngloberContexted;
@@ -399,7 +399,8 @@ class DrawableSetInitializer {
 			}
 		}
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), n.getSpecificBackColor());
-		final NoteBox noteBox = new NoteBox(freeY, drawableSet.getSkin().createComponent(ComponentType.NOTE, skinParam,
+		final ComponentType type = getNoteComponentType(n.getStyle());
+		final NoteBox noteBox = new NoteBox(freeY, drawableSet.getSkin().createComponent(type, skinParam,
 				n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 
 		for (InGroupableList groupingStructure : inGroupableLists) {
@@ -408,6 +409,16 @@ class DrawableSetInitializer {
 
 		drawableSet.addEvent(n, noteBox);
 		freeY += noteBox.getPreferredHeight(stringBounder);
+	}
+
+	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
+		if (noteStyle == NoteStyle.HEXAGONAL) {
+			return ComponentType.NOTE_HEXAGONAL;
+		}
+		if (noteStyle == NoteStyle.BOX) {
+			return ComponentType.NOTE_BOX;
+		}
+		return ComponentType.NOTE;
 	}
 
 	private void prepareLiveEvent(StringBounder stringBounder, LifeEvent lifeEvent) {

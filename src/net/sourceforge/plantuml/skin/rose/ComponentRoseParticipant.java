@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 7170 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -58,7 +58,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug.getParam().setColor(foregroundColor);
 		ug.getParam().setBackcolor(back);

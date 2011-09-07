@@ -79,5 +79,10 @@ public final class InnerStateConcurrent implements IEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

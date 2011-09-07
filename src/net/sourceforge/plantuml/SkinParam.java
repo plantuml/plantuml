@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6866 $
+ * Revision $Revision: 7180 $
  *
  */
 package net.sourceforge.plantuml;
@@ -63,6 +63,12 @@ public class SkinParam implements ISkinParam {
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
 	private static final Pattern stereoPattern = Pattern.compile(stereoPatternString);
+
+	private final UmlDiagramType type;
+
+	public SkinParam(UmlDiagramType type) {
+		this.type = type;
+	}
 
 	static String cleanForKey(String key) {
 		key = key.toLowerCase().trim();
@@ -211,8 +217,8 @@ public class SkinParam implements ISkinParam {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 		}
-		return new UFont(getFontFamily(fontParam, stereotype), getFontStyle(fontParam, stereotype),
-				getFontSize(fontParam, stereotype));
+		return new UFont(getFontFamily(fontParam, stereotype), getFontStyle(fontParam, stereotype), getFontSize(
+				fontParam, stereotype));
 	}
 
 	public int getCircledCharacterRadius() {
@@ -331,6 +337,18 @@ public class SkinParam implements ISkinParam {
 			return new ColorMapperMonochrome();
 		}
 		return new ColorMapperIdentity();
+	}
+
+	public boolean isSvek() {
+		boolean defaultValue = false;
+		if (OptionFlags.SVEK && type == UmlDiagramType.CLASS) {
+			defaultValue = true;
+		}
+		final String value = getValue("svek");
+		if (value == null) {
+			return defaultValue;
+		}
+		return "true".equalsIgnoreCase(value);
 	}
 
 }

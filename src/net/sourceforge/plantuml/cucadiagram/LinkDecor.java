@@ -63,6 +63,24 @@ public enum LinkDecor {
 		}
 	}
 
+	public String getArrowDotSvek() {
+		if (this == LinkDecor.NONE) {
+			return "none";
+		} else if (this == LinkDecor.EXTENDS) {
+			return "empty";
+		} else if (this == LinkDecor.COMPOSITION) {
+			return "diamond";
+		} else if (this == LinkDecor.AGREGATION) {
+			return "ediamond";
+		} else if (this == LinkDecor.ARROW) {
+			return "open";
+		} else if (this == LinkDecor.PLUS) {
+			return "empty";
+		} else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	public int getSize() {
 		return size;
 	}

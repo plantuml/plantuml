@@ -47,6 +47,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.Group;
@@ -126,13 +128,13 @@ public class DotStringFactory {
 			nodesep = getMinNodeSep();
 		}
 		final String nodesepInches = SvekUtils.pixelToInches(nodesep);
-		System.err.println("nodesep=" + nodesepInches);
+		// System.err.println("nodesep=" + nodesepInches);
 		double ranksep = getVerticalDzeta();
 		if (ranksep < getMinRankSep()) {
 			ranksep = getMinRankSep();
 		}
 		final String ranksepInches = SvekUtils.pixelToInches(ranksep);
-		System.err.println("ranksep=" + ranksepInches);
+		// System.err.println("ranksep=" + ranksepInches);
 		sb.append("digraph unix {");
 		SvekUtils.println(sb);
 
@@ -182,7 +184,7 @@ public class DotStringFactory {
 
 	String getSVG(String... dotStrings) throws IOException, InterruptedException {
 		final String dotString = createDotString(dotStrings);
-		System.err.println("dotString=" + dotString);
+		// System.err.println("dotString=" + dotString);
 
 		final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -191,7 +193,10 @@ public class DotStringFactory {
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, "UTF-8");
 
-		SvekUtils.traceSvgString(s);
+		if (OptionFlags.getInstance().isKeepTmpFiles()) {
+			Log.info("Creating temporary file svek.svg");
+			SvekUtils.traceSvgString(s);
+		}
 
 		return s;
 	}
@@ -281,11 +286,10 @@ public class DotStringFactory {
 		for (Line line : lines) {
 			line.solveLine(svg, fullHeight);
 		}
-		
+
 		for (Line line : lines) {
 			line.manageCollision(allShapes);
 		}
-
 
 		return new Dimension2DDouble(fullWidth, fullHeight);
 	}

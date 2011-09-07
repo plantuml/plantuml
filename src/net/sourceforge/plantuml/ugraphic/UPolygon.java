@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6743 $
+ * Revision $Revision: 7143 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -38,7 +38,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UPolygon implements UShape {
+public class UPolygon extends AbstractShadowable {
 
 	private final List<Point2D.Double> all = new ArrayList<Point2D.Double>();
 

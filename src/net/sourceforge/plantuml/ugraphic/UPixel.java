@@ -28,50 +28,10 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 4681 $
  *
  */
-package net.sourceforge.plantuml.swing;
+package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.GeneratedImage;
-
-class SimpleLine implements Comparable<SimpleLine> {
-
-	private final GeneratedImage generatedImage;
-
-	public SimpleLine(GeneratedImage generatedImage) {
-		this.generatedImage = generatedImage;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder(generatedImage.getPngFile().getName());
-		sb.append(" ");
-		sb.append(generatedImage.getDescription());
-		return sb.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		return generatedImage.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		final SimpleLine this2 = (SimpleLine) obj;
-		return this2.generatedImage.equals(this.generatedImage);
-	}
-
-	public boolean exists() {
-		return generatedImage.getPngFile().exists();
-	}
-
-	public int compareTo(SimpleLine this2) {
-		return this.generatedImage.compareTo(this2.generatedImage);
-	}
-
-	public GeneratedImage getGeneratedImage() {
-		return generatedImage;
-	}
-
+public class UPixel implements UShape {
 }

@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -49,7 +48,9 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifier2;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.cucadiagram.dot.ICucaDiagramFileMaker;
@@ -61,7 +62,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.VerticalPosition;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -88,35 +88,38 @@ public final class CucaDiagramFileMakerSvek implements ICucaDiagramFileMaker {
 
 	public String createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
-
 		try {
-			createFileInternal(os, dotStrings, fileFormatOption);
+			return createFileInternal(os, dotStrings, fileFormatOption);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		return "svek";
+		return null;
 
 	}
 
-	private void createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	private String createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 		if (diagram.getUmlDiagramType() == UmlDiagramType.STATE
 				|| diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
 			new CucaDiagramSimplifier2(diagram, dotStrings);
 		}
 
+		double deltaX = 0;
+		double deltaY = 0;
+
 		final DotData dotData = new DotData(null, diagram.getLinks(), diagram.entities(), diagram.getUmlDiagramType(),
 				diagram.getSkinParam(), diagram.getRankdir(), diagram, diagram, diagram.getColorMapper());
-		final CucaDiagramFileMakerSvek2 skek2 = new CucaDiagramFileMakerSvek2(dotData);
+		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData);
 
-		IEntityImage result = skek2.createFile(((CucaDiagram) diagram).getDotStringSkek());
+		IEntityImage result = svek2.createFile(((CucaDiagram) diagram).getDotStringSkek());
 		result = addTitle(result);
 		result = addHeaderAndFooter(result);
 
-		final Dimension2D dim = Dimension2DDouble.delta(result.getDimension(stringBounder), 10);
+		// final Dimension2D dim =
+		// Dimension2DDouble.delta(result.getDimension(stringBounder), 10);
+		final Dimension2D dim = result.getDimension(stringBounder);
 
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
@@ -128,7 +131,45 @@ public final class CucaDiagramFileMakerSvek implements ICucaDiagramFileMaker {
 		} else {
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}
+		
+		if (result instanceof DecorateEntityImage) {
+			deltaX += ((DecorateEntityImage) result).getDeltaX();
+			deltaY += ((DecorateEntityImage) result).getDeltaY();
+		}
 
+
+		if (diagram.hasUrl()) {
+			return cmapString(svek2, deltaX, deltaY);
+		}
+		return null;
+
+	}
+
+	private String cmapString(CucaDiagramFileMakerSvek2 svek2, double deltaX, double deltaY) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("<map id=\"unix\" name=\"unix\">\n");
+		for (IEntity ent : diagram.entities().values()) {
+			final Url url = ent.getUrl();
+			if (url == null) {
+				continue;
+			}
+			sb.append("<area shape=\"rect\" id=\"");
+			sb.append(ent.getUid());
+			sb.append("\" href=\"");
+			sb.append(url.getUrl());
+			sb.append("\" title=\"");
+			sb.append(url.getTooltip());
+			sb.append("\" alt=\"\" coords=\"");
+
+			final Shape sh = svek2.getShape(ent);
+			sb.append(sh.getCoords(deltaX, deltaY));
+
+			sb.append("\"/>");
+
+			sb.append("\n");
+		}
+		sb.append("</map>\n");
+		return sb.toString();
 	}
 
 	private IEntityImage addHeaderAndFooter(IEntityImage original) {

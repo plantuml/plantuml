@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6602 $
+ * Revision $Revision: 7112 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -208,6 +208,20 @@ public class Rose implements Skin {
 			final HtmlColor borderColor = getHtmlColor(param, ColorParam.noteBorder);
 			final UFont fontNote = param.getFont(FontParam.NOTE, null);
 			return new ComponentRoseNote(noteBackgroundColor, borderColor, getFontColor(param, FontParam.NOTE),
+					fontNote, stringsToDisplay);
+		}
+		if (type == ComponentType.NOTE_HEXAGONAL) {
+			final HtmlColor noteBackgroundColor = getHtmlColor(param, ColorParam.noteBackground);
+			final HtmlColor borderColor = getHtmlColor(param, ColorParam.noteBorder);
+			final UFont fontNote = param.getFont(FontParam.NOTE, null);
+			return new ComponentRoseNoteHexagonal(noteBackgroundColor, borderColor, getFontColor(param, FontParam.NOTE),
+					fontNote, stringsToDisplay);
+		}
+		if (type == ComponentType.NOTE_BOX) {
+			final HtmlColor noteBackgroundColor = getHtmlColor(param, ColorParam.noteBackground);
+			final HtmlColor borderColor = getHtmlColor(param, ColorParam.noteBorder);
+			final UFont fontNote = param.getFont(FontParam.NOTE, null);
+			return new ComponentRoseNoteBox(noteBackgroundColor, borderColor, getFontColor(param, FontParam.NOTE),
 					fontNote, stringsToDisplay);
 		}
 		if (type == ComponentType.GROUPING_HEADER) {

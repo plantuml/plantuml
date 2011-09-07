@@ -72,7 +72,8 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	}
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
-		final UShape circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		circle.setDeltaShadow(4);
 		ug.getParam().setStroke(new UStroke(1.5));
 		ug.getParam().setColor(getColor(ColorParam.classBorder, getStereo()));
 		ug.getParam().setBackcolor(getColor(ColorParam.classBackground, getStereo()));
@@ -91,5 +92,10 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.CIRCLE_IN_RECT;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

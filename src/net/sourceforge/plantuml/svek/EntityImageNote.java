@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -93,7 +92,7 @@ public class EntityImageNote extends AbstractEntityImage {
 		final double dx = ug.getTranslateX();
 		final double dy = ug.getTranslateY();
 		ug.translate(xTheoricalPosition, yTheoricalPosition);
-		comp.drawU(ug, getDimension(ug.getStringBounder()), new SimpleContext2D(false));
+		comp.drawU(ug, getDimension(ug.getStringBounder()), new SimpleContext2D(false, true));
 		ug.setTranslate(dx, dy);
 
 	}
@@ -101,5 +100,10 @@ public class EntityImageNote extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

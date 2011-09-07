@@ -69,5 +69,7 @@ public interface ISkinParam {
 	public DotSplines getDotSplines();
 	
 	public GraphvizLayoutStrategy getStrategy();
+	
+	public boolean isSvek();
 
 }

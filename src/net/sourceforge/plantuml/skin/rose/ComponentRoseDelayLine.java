@@ -51,7 +51,7 @@ public class ComponentRoseDelayLine extends AbstractComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
 		ug.getParam().setColor(color);
 		// stroke(ug, 0.4, 2.5);
 		stroke(ug, 1, 4);

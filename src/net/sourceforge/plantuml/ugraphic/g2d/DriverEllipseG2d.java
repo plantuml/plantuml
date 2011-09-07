@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 7143 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -45,13 +45,18 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
-public class DriverEllipseG2d implements UDriver<Graphics2D> {
+public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final UEllipse shape = (UEllipse) ushape;
 		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));
 		if (shape.getStart() == 0 && shape.getExtend() == 0) {
 			final Shape ellipse = new Ellipse2D.Double(x, y, shape.getWidth(), shape.getHeight());
+
+			// Shadow
+			if (shape.getDeltaShadow() != 0) {
+				drawShadow(g2d, ellipse, x, y, shape.getDeltaShadow());
+			}
 
 			if (param.getBackcolor() != null) {
 				g2d.setColor(mapper.getMappedColor(param.getBackcolor()));

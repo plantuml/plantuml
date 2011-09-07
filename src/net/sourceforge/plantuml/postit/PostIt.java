@@ -104,7 +104,7 @@ public class PostIt {
 		final HtmlColor noteBackgroundColor = HtmlColor.getColorIfValid("#FBFB77");
 		final HtmlColor borderColor = HtmlColor.getColorIfValid("#A80036");
 
-		final SkinParam param = new SkinParam();
+		final SkinParam param = new SkinParam(null);
 		final UFont fontNote = param.getFont(FontParam.NOTE, null);
 		final ComponentRoseNote note = new ComponentRoseNote(noteBackgroundColor, borderColor, HtmlColor.BLACK, fontNote,
 				text);

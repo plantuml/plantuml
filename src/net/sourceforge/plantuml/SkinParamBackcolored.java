@@ -119,4 +119,8 @@ public class SkinParamBackcolored implements ISkinParam {
 		return skinParam.getColorMapper();
 	}
 
+	public boolean isSvek() {
+		return skinParam.isSvek();
+	}
+
 }

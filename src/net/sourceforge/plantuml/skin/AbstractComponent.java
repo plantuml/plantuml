@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5939 $
+ * Revision $Revision: 7170 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -60,7 +60,7 @@ public abstract class AbstractComponent implements Component {
 		stroke(ug, dashVisible, dashSpace, 1);
 	}
 
-	abstract protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse);
+	abstract protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow);
 
 	protected void drawBackgroundInternalU(UGraphic ug, Dimension2D dimensionToUse) {
 	}
@@ -72,7 +72,7 @@ public abstract class AbstractComponent implements Component {
 		if (context.isBackground()) {
 			drawBackgroundInternalU(ug, dimensionToUse);
 		} else {
-			drawInternalU(ug, dimensionToUse);
+			drawInternalU(ug, dimensionToUse, context.withShadow());
 		}
 		ug.setTranslate(dx, dy);
 	}

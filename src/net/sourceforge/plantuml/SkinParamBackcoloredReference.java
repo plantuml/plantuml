@@ -106,13 +106,17 @@ public class SkinParamBackcoloredReference implements ISkinParam {
 	public GraphvizLayoutStrategy getStrategy() {
 		return skinParam.getStrategy();
 	}
-	
+
 	public HorizontalAlignement getHorizontalAlignement(AlignParam param) {
 		return skinParam.getHorizontalAlignement(param);
 	}
-	
+
 	public ColorMapper getColorMapper() {
 		return skinParam.getColorMapper();
 	}
-	
+
+	public boolean isSvek() {
+		return skinParam.isSvek();
+	}
+
 }

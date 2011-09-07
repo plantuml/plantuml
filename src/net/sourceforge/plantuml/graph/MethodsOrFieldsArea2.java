@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroup;
 
-public class MethodsOrFieldsArea2 {
+public class MethodsOrFieldsArea2 implements TextBlock {
 
 	private final UFont font;
 	private final List<Member> members = new ArrayList<Member>();
@@ -94,7 +94,7 @@ public class MethodsOrFieldsArea2 {
 			x = Math.max(dim.getWidth(), x);
 		}
 		if (hasSmallIcon()) {
-			x += skinParam.getCircledCharacterRadius();
+			x += skinParam.getCircledCharacterRadius() + 3;
 		}
 		return new Dimension2DDouble(x, y);
 	}
@@ -103,16 +103,16 @@ public class MethodsOrFieldsArea2 {
 		return TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(font, color), HorizontalAlignement.LEFT);
 	}
 
-	public void drawTOBEREMOVED(Graphics2D g2d, double x, double y) {
+	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void draw(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug, double x, double y) {
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		final UGroup group;
 		if (hasSmallIcon()) {
-			group = new UGroup(new PlacementStrategyVisibility(ug.getStringBounder(),
-					skinParam.getCircledCharacterRadius()));
+			group = new UGroup(new PlacementStrategyVisibility(ug.getStringBounder(), skinParam
+					.getCircledCharacterRadius() + 3));
 			for (Member att : members) {
 				final String s = att.getDisplayWithoutVisibilityChar();
 				final TextBlock bloc = createTextBlock(s);
@@ -148,8 +148,8 @@ public class MethodsOrFieldsArea2 {
 				}
 			};
 		}
-		final HtmlColor back = modifier.getBackground() == null ? null : rose.getHtmlColor(skinParam,
-				modifier.getBackground());
+		final HtmlColor back = modifier.getBackground() == null ? null : rose.getHtmlColor(skinParam, modifier
+				.getBackground());
 		final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
 		final TextBlock uBlock = modifier.getUBlock(skinParam.getCircledCharacterRadius(), fore, back);

@@ -68,6 +68,36 @@ public class PositionableUtils {
 		return true;
 	}
 
+	static public boolean intersect(Positionable big, Positionable small) {
+		final Rectangle2D bigR = convert(big);
+		final Rectangle2D smallR = convert(small);
+		return bigR.intersects(smallR);
+		// final Point2D pt = small.getPosition();
+		// final Dimension2D dim = small.getSize();
+		//
+		// if (contains(big, pt)) {
+		// return true;
+		// }
+		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
+		// pt.getY()))) {
+		// return true;
+		// }
+		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
+		// pt.getY() + dim.getHeight()))) {
+		// return true;
+		// }
+		// if (contains(big, new Point2D.Double(pt.getX(), pt.getY() +
+		// dim.getHeight()))) {
+		// return true;
+		// }
+		// return false;
+	}
+
+	//
+	// public boolean intersect(Positionable p) {
+	// return intersect(p.getPosition(), p.getSize());
+	// }
+
 	static public Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
 		return new Positionable() {
 
@@ -84,6 +114,59 @@ public class PositionableUtils {
 
 	static Rectangle2D move(Rectangle2D rect, double dx, double dy) {
 		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
+	}
+
+	static public Point2D getCenter(Positionable p) {
+		final Point2D pt = p.getPosition();
+		final Dimension2D dim = p.getSize();
+		return new Point2D.Double(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);
+	}
+
+	static public Positionable move(Positionable p, double deltaX, double deltaY) {
+		final Point2D pt = p.getPosition();
+		final Dimension2D dim = p.getSize();
+		return new PositionableImpl(pt.getX() + deltaX, pt.getY() + deltaY, dim);
+
+	}
+
+	public static Positionable moveAwayFrom(Positionable fixe, Positionable toMove) {
+		final Point2D centerFixe = getCenter(fixe);
+		final Point2D centerToMove = getCenter(toMove);
+		// final Point2D pt = toMove.getPosition();
+		// return new PositionableImpl(pt.getX() + 20, pt.getY(),
+		// toMove.getSize());
+
+		final double deltaX = (centerToMove.getX() - centerFixe.getX());
+		final double deltaY = (centerToMove.getY() - centerFixe.getY());
+
+		double min = 0.0;
+		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false) {
+			throw new IllegalArgumentException();
+		}
+		double max = 0.1;
+		while (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max)) {
+			max = max * 2;
+		}
+		for (int i = 0; i < 5; i++) {
+			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);
+			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;
+			final double candidat = (min + max) / 2.0;
+			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat)) {
+				min = candidat;
+			} else {
+				max = candidat;
+			}
+			// System.err.println("min=" + min + " max=" + max);
+		}
+		final double candidat = (min + max) / 2.0;
+		return move(toMove, deltaX * candidat, deltaY * candidat);
+
+	}
+
+	private static boolean doesIntersectWithThisCoef(Positionable fixe, Positionable toMove, double deltaX,
+			double deltaY, double c) {
+		final Positionable result = move(toMove, deltaX * c, deltaY * c);
+		return intersect(fixe, result);
 	}
 
 }

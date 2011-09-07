@@ -69,6 +69,8 @@ public class ComponentType {
 	//
 	static public final ComponentType NEWPAGE = new ComponentType("NEWPAGE");
 	static public final ComponentType NOTE = new ComponentType("NOTE");
+	static public final ComponentType NOTE_HEXAGONAL = new ComponentType("NOTE_HEXAGONAL");
+	static public final ComponentType NOTE_BOX = new ComponentType("NOTE_BOX");
 	static public final ComponentType DIVIDER = new ComponentType("DIVIDER");
 	static public final ComponentType REFERENCE = new ComponentType("REFERENCE");
 	static public final ComponentType ENGLOBER = new ComponentType("ENGLOBER");

@@ -62,21 +62,6 @@ class SimpleLine2 implements Comparable<SimpleLine2> {
 		return generatedImage == null && future.isDone();
 	}
 
-	public List<SimpleLine2> getFutureTerminated() throws InterruptedException, ExecutionException {
-		if (future == null) {
-			throw new IllegalStateException();
-		}
-		final List<GeneratedImage> list = future.get();
-		if (list == null) {
-			return null;
-		}
-		final List<SimpleLine2> result = new ArrayList<SimpleLine2>();
-		for (GeneratedImage im : list) {
-			result.add(new SimpleLine2(file, im, null));
-		}
-		return Collections.unmodifiableList(result);
-	}
-
 	@Override
 	public String toString() {
 		if (generatedImage == null) {

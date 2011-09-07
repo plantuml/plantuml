@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6892 $
+ * Revision $Revision: 7135 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -57,7 +57,6 @@ import java.util.TreeMap;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
@@ -232,7 +231,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final public Map<String, Entity> entities() {
-		if (OptionFlags.SVEK) {
+		if (getSkinParam().isSvek()) {
 			return Collections.unmodifiableMap(entities);
 		}
 		return Collections.unmodifiableMap(new TreeMap<String, Entity>(entities));
@@ -413,7 +412,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return;
 		}
 		final ICucaDiagramFileMaker maker;
-		if (OptionFlags.SVEK) {
+		if (getSkinParam().isSvek()) {
 			maker = new CucaDiagramFileMakerSvek(this, flashcodes);
 		} else {
 			maker = new CucaDiagramFileMaker(this, flashcodes);

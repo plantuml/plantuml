@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3836 $
+ * Revision $Revision: 7169 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
 public interface Context2D {
 	boolean isBackground();
+	boolean withShadow();
 }

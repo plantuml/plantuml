@@ -40,9 +40,9 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class EntityImageSynchroBar extends AbstractEntityImage {
 
@@ -57,7 +57,8 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
 		final Dimension2D dim = getDimension(ug.getStringBounder());
-		final UShape rect = new URectangle(dim.getWidth(), dim.getHeight());
+		final Shadowable rect = new URectangle(dim.getWidth(), dim.getHeight());
+		rect.setDeltaShadow(4);
 		ug.getParam().setColor(null);
 		ug.getParam().setBackcolor(getColor(ColorParam.activityBar, getStereo()));
 		ug.draw(xTheoricalPosition, yTheoricalPosition, rect);
@@ -66,5 +67,10 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }

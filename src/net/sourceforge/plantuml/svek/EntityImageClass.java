@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.MathUtils;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyX1Y2Y3;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroup;
@@ -67,12 +67,15 @@ public class EntityImageClass extends AbstractEntityImage {
 
 	final private TextBlock name;
 	final private TextBlock stereo;
-	final private MethodsOrFieldsArea2 methods;
-	final private MethodsOrFieldsArea2 fields;
+	final private TextBlock methods;
+	final private TextBlock fields;
 	final private CircledCharacter circledCharacter;
+	final private int shield;
 
 	public EntityImageClass(IEntity entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
+
+		this.shield = entity.hasNearDecoration() ? 16 : 0;
 
 		final boolean italic = entity.getType() == EntityType.ABSTRACT_CLASS
 				|| entity.getType() == EntityType.INTERFACE;
@@ -83,30 +86,31 @@ public class EntityImageClass extends AbstractEntityImage {
 		if (italic) {
 			fontConfigurationName = fontConfigurationName.italic();
 		}
-		this.name = TextBlockUtils.create(entity.getDisplay2(), fontConfigurationName,
-				HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), fontConfigurationName, HorizontalAlignement.CENTER);
 
 		if (stereotype == null || stereotype.getLabel() == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			this.stereo = null;
 		} else {
-			this.stereo = TextBlockUtils.create(StringUtils.getWithNewlines(stereotype.getLabel()),
-					new FontConfiguration(getFont(FontParam.CLASS_STEREOTYPE, stereotype), getFontColor(
-							FontParam.CLASS_STEREOTYPE, stereotype)), HorizontalAlignement.CENTER);
+			this.stereo = TextBlockUtils.create(stereotype.getLabels(), new FontConfiguration(getFont(
+					FontParam.CLASS_STEREOTYPE, stereotype), getFontColor(FontParam.CLASS_STEREOTYPE, stereotype)),
+					HorizontalAlignement.CENTER);
 		}
 
 		// see LabelBuilderHtmlHeaderTableForObjectOrClass for colors
 
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, getEntity());
 		if (showMethods) {
-			this.methods = new MethodsOrFieldsArea2(entity.getMethodsToDisplay(), FontParam.CLASS_ATTRIBUTE, skinParam);
+			this.methods = TextBlockUtils.withMargin(new MethodsOrFieldsArea2(entity.getMethodsToDisplay(),
+					FontParam.CLASS_ATTRIBUTE, skinParam), 6, 4);
 		} else {
 			this.methods = null;
 		}
 
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, getEntity());
 		if (showFields) {
-			this.fields = new MethodsOrFieldsArea2(entity.getFieldsToDisplay(), FontParam.CLASS_ATTRIBUTE, skinParam);
+			this.fields = TextBlockUtils.withMargin(new MethodsOrFieldsArea2(entity.getFieldsToDisplay(),
+					FontParam.CLASS_ATTRIBUTE, skinParam), 6, 4);
 		} else {
 			this.fields = null;
 		}
@@ -150,7 +154,6 @@ public class EntityImageClass extends AbstractEntityImage {
 		return null;
 	}
 
-	private int xMarginFieldsOrMethod = 5;
 	private int marginEmptyFieldsOrMethod = 13;
 
 	@Override
@@ -160,8 +163,8 @@ public class EntityImageClass extends AbstractEntityImage {
 				.calculateDimension(stringBounder);
 		final Dimension2D dimFields = fields == null ? new Dimension2DDouble(0, 0) : fields
 				.calculateDimension(stringBounder);
-		final double width = MathUtils.max(dimMethods.getWidth() + 2 * xMarginFieldsOrMethod, dimFields.getWidth() + 2
-				* xMarginFieldsOrMethod, dimTitle.getWidth() + 2 * xMarginCircle);
+		final double width = MathUtils.max(dimMethods.getWidth(), dimFields.getWidth(), dimTitle.getWidth() + 2
+				* xMarginCircle);
 		final double height = getMethodOrFieldHeight(dimMethods, EntityPortion.METHOD)
 				+ getMethodOrFieldHeight(dimFields, EntityPortion.FIELD) + dimTitle.getHeight();
 		return new Dimension2DDouble(width, height);
@@ -214,7 +217,9 @@ public class EntityImageClass extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final URectangle rect = new URectangle(widthTotal, heightTotal);
+		// final URectangle rect = new URectangle(widthTotal, heightTotal);
+		final Shadowable rect = new URectangle(widthTotal, heightTotal);
+		rect.setDeltaShadow(4);
 
 		ug.getParam().setColor(getColor(ColorParam.classBorder, getStereo()));
 		ug.getParam().setBackcolor(getColor(ColorParam.classBackground, getStereo()));
@@ -246,7 +251,7 @@ public class EntityImageClass extends AbstractEntityImage {
 			ug.getParam().setStroke(new UStroke(1.5));
 			ug.draw(x, y, new ULine(widthTotal, 0));
 			ug.getParam().setStroke(new UStroke());
-			fields.draw(ug, x + xMarginFieldsOrMethod, y);
+			fields.drawU(ug, x, y);
 			y += getMethodOrFieldHeight(fields.calculateDimension(stringBounder), EntityPortion.FIELD);
 		}
 
@@ -255,12 +260,16 @@ public class EntityImageClass extends AbstractEntityImage {
 			ug.getParam().setStroke(new UStroke(1.5));
 			ug.draw(x, y, new ULine(widthTotal, 0));
 			ug.getParam().setStroke(new UStroke());
-			methods.draw(ug, x + xMarginFieldsOrMethod, y);
+			methods.drawU(ug, x, y);
 		}
 	}
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
+	}
+
+	public int getShield() {
+		return shield;
 	}
 
 }

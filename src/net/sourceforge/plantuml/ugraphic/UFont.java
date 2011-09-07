@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.Locale;
 
 public class UFont {
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6923 $
+ * Revision $Revision: 7064 $
  *
  */
 package net.sourceforge.plantuml;
@@ -230,7 +230,7 @@ public class StringUtils {
 	public static char hiddenBiggerThan() {
 		return '\u0006';
 	}
-
+	
 	public static String hideComparatorCharacters(String s) {
 		s = s.replace('<', hiddenLesserThan());
 		s = s.replace('>', hiddenBiggerThan());

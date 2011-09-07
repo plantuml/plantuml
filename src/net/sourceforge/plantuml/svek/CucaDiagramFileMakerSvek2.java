@@ -141,6 +141,9 @@ public final class CucaDiagramFileMakerSvek2 {
 		if (ent.getType() == EntityType.EMPTY_PACKAGE) {
 			return new EntityImageEmptyPackage(ent, dotData.getSkinParam());
 		}
+		if (ent.getType() == EntityType.ASSOCIATION) {
+			return new EntityImageAssociation(ent, dotData.getSkinParam());
+		}
 		throw new UnsupportedOperationException(ent.getType().toString());
 	}
 
@@ -159,7 +162,15 @@ public final class CucaDiagramFileMakerSvek2 {
 				return "za" + ent.getParent().getUid2();
 			}
 		}
-		return result.getUid();
+		String uid = result.getUid();
+		if (result.isShielded()) {
+			uid = uid + ":h";
+		}
+		return uid;
+	}
+
+	public Shape getShape(IEntity ent) {
+		return shapeMap.get(ent);
 	}
 
 	public IEntityImage createFile(String... dotStrings) throws IOException, InterruptedException {
@@ -263,7 +274,8 @@ public final class CucaDiagramFileMakerSvek2 {
 			image = ent.getSvekImage();
 		}
 		final Dimension2D dim = image.getDimension(stringBounder);
-		final Shape shape = new Shape(image.getShapeType(), dim.getWidth(), dim.getHeight(), colorSequence, ent.isTop());
+		final Shape shape = new Shape(image.getShapeType(), dim.getWidth(), dim.getHeight(), colorSequence,
+				ent.isTop(), image.getShield());
 		dotStringFactory.addShape(shape);
 		shape.setImage(image);
 		shapeMap.put(ent, shape);

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 7060 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -51,21 +51,6 @@ public class StringBounderUtils {
 				final Rectangle2D rect = fm.getStringBounds(text, g2d);
 				return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
 			}
-
-//			public double getFontDescent(Font font) {
-//				final FontMetrics fm = g2d.getFontMetrics(font);
-//				return fm.getDescent();
-//			}
-//
-//			public double getFontAscent(Font font) {
-//				final FontMetrics fm = g2d.getFontMetrics(font);
-//				return fm.getAscent();
-//			}
-
-//			public UnusedSpace getUnusedSpace(Font font, char c) {
-//				//return new UnusedSpace(7, 6, 0, 2);
-//				return new UnusedSpace(font, c);
-//			}
 		};
 	}
 }

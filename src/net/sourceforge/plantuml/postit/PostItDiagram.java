@@ -63,7 +63,7 @@ public class PostItDiagram extends UmlDiagram {
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override

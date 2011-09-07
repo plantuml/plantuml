@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroup;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -65,9 +66,8 @@ public class EntityImageObject extends AbstractEntityImage {
 	public EntityImageObject(IEntity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
-		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
-				getFont(FontParam.OBJECT, stereotype), getFontColor(FontParam.OBJECT, stereotype)),
-				HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(getFont(FontParam.OBJECT,
+				stereotype), getFontColor(FontParam.OBJECT, stereotype)), HorizontalAlignement.CENTER);
 		if (stereotype == null || stereotype.getLabel() == null) {
 			this.stereo = null;
 		} else {
@@ -125,7 +125,8 @@ public class EntityImageObject extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final URectangle rect = new URectangle(widthTotal, heightTotal);
+		final Shadowable rect = new URectangle(widthTotal, heightTotal);
+		rect.setDeltaShadow(4);
 
 		ug.getParam().setColor(getColor(ColorParam.objectBorder, getStereo()));
 		ug.getParam().setBackcolor(getColor(ColorParam.objectBackground, getStereo()));
@@ -150,12 +151,17 @@ public class EntityImageObject extends AbstractEntityImage {
 		ug.getParam().setStroke(new UStroke(1.5));
 		ug.draw(x, y, new ULine(widthTotal, 0));
 		ug.getParam().setStroke(new UStroke());
-		fields.draw(ug, x + xMarginFieldsOrMethod, y);
+		fields.drawU(ug, x + xMarginFieldsOrMethod, y);
 
 	}
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
+	
+	public int getShield() {
+		return 0;
+	}
+
 
 }
