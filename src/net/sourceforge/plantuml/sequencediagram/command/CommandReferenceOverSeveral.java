@@ -58,7 +58,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	private static RegexConcat getConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("REF", "ref(#\\w+)?\\s+over\\s+"), //
-				new RegexLeaf("PARTS", "(([\\p{L}0-9_.]+|\"[^\"]+\")(\\s*,\\s*([\\p{L}0-9_.]+|\"[^\"]+\"))*)"), //
+				new RegexLeaf("PARTS", "(([\\p{L}0-9_.@]+|\"[^\"]+\")(\\s*,\\s*([\\p{L}0-9_.@]+|\"[^\"]+\"))*)"), //
 				new RegexLeaf("\\s*:\\s*"), //
 				new RegexLeaf("URL", "(?:\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\])?"), //
 				new RegexLeaf("TEXT", "(.*)"), //

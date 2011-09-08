@@ -70,6 +70,11 @@ public class DriverPolygonEps implements UDriver<EpsGraphics> {
 				}
 			}
 		}
+		
+		if (shape.getDeltaShadow() != 0) {
+			eps.epsPolygonShadow(shape.getDeltaShadow(), points);
+		}
+
 
 		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
 		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));

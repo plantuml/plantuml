@@ -71,6 +71,11 @@ public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 				}
 			}
 		}
+		
+		if (shape.getDeltaShadow() != 0) {
+			svg.svgPolygonShadow(shape.getDeltaShadow(), points);
+		}
+
 
 		final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getColor()));
 		final String backcolor = param.getBackcolor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getBackcolor()));

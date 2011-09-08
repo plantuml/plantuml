@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.posimo;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
-public interface Positionable {
+public interface Positionable extends Moveable {
 
 	public Dimension2D getSize();
 

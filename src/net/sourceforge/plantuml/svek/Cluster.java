@@ -49,17 +49,23 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.cucadiagram.EntityType;
 import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class Cluster {
+public class Cluster implements Moveable {
 
 	private final Cluster parent;
 	private final Group group;
@@ -68,6 +74,28 @@ public class Cluster {
 	private final boolean special;
 	private final int color;
 	private final int colorTitle;
+
+	private int titleWidth;
+	private int titleHeight;
+	private TextBlock title;
+
+	private double xTitle;
+	private double yTitle;
+
+	private double minX;
+	private double minY;
+	private double maxX;
+	private double maxY;
+
+	public void moveSvek(double deltaX, double deltaY) {
+		this.xTitle += deltaX;
+		this.minX += deltaX;
+		this.maxX += deltaX;
+		this.yTitle += deltaY;
+		this.minY += deltaY;
+		this.maxY += deltaY;
+
+	}
 
 	public Cluster(ColorSequence colorSequence) {
 		this(null, null, false, colorSequence);
@@ -140,10 +168,6 @@ public class Cluster {
 		return Collections.unmodifiableList(children);
 	}
 
-	private int titleWidth;
-	private int titleHeight;
-	private TextBlock title;
-
 	public Cluster createChild(Group g, int titleWidth, int titleHeight, TextBlock title, boolean special,
 			ColorSequence colorSequence) {
 		final Cluster child = new Cluster(this, g, special, colorSequence);
@@ -166,9 +190,6 @@ public class Cluster {
 		return titleHeight;
 	}
 
-	private double xTitle;
-	private double yTitle;
-
 	public void setTitlePosition(double x, double y) {
 		this.xTitle = x;
 		this.yTitle = y;
@@ -180,19 +201,81 @@ public class Cluster {
 			drawUState(ug, x, y, borderColor, dotData);
 			return;
 		}
-		final UShape rect = new URectangle(maxX - minX, maxY - minY);
+		if (title != null) {
+			drawWithTitle(ug, x, y, borderColor, dotData);
+			return;
+		}
+		final URectangle rect = new URectangle(maxX - minX, maxY - minY);
+		if (dotData.getSkinParam().shadowing()) {
+			rect.setDeltaShadow(3.0);
+		}
 		HtmlColor stateBack = getBackColor();
 		if (stateBack == null) {
 			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.packageBackground, group.getStereotype());
+		}
+		if (stateBack == null) {
+			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.background, group.getStereotype());
 		}
 		ug.getParam().setBackcolor(stateBack);
 		ug.getParam().setColor(borderColor);
 		ug.getParam().setStroke(new UStroke(2));
 		ug.draw(x + minX, y + minY, rect);
 		ug.getParam().setStroke(new UStroke());
-		if (title != null) {
-			title.drawU(ug, x + xTitle, y + yTitle);
+	}
+
+	private UPolygon getSpecificFrontier(StringBounder stringBounder) {
+		final double width = maxX - minX;
+		final double height = maxY - minY;
+		final Dimension2D dimTitle = title.calculateDimension(stringBounder);
+		final double wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;
+		final double htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;
+		final UPolygon shape = new UPolygon();
+		shape.addPoint(0, 0);
+		shape.addPoint(wtitle, 0);
+		shape.addPoint(wtitle + marginTitleX3, htitle);
+		shape.addPoint(width, htitle);
+		shape.addPoint(width, height);
+		shape.addPoint(0, height);
+		shape.addPoint(0, 0);
+		return shape;
+	}
+
+	// private UPolygon specificFrontier;
+	//
+	// public final UPolygon getSpecificFrontier() {
+	// return specificFrontier;
+	// }
+	//
+	private void drawWithTitle(UGraphic ug, double x, double y, HtmlColor borderColor, DotData dotData) {
+
+		// y += marginTitleY0;
+
+		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+		final double wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;
+		final double htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;
+		final UPolygon shape = getSpecificFrontier(ug.getStringBounder());
+		if (dotData.getSkinParam().shadowing()) {
+			shape.setDeltaShadow(3.0);
 		}
+
+		HtmlColor stateBack = getBackColor();
+		if (stateBack == null) {
+			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.packageBackground, group.getStereotype());
+		}
+		if (stateBack == null) {
+			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.background, group.getStereotype());
+		}
+		if (stateBack == null) {
+			stateBack = HtmlColor.WHITE;
+		}
+		ug.getParam().setBackcolor(stateBack);
+		ug.getParam().setColor(borderColor);
+		ug.getParam().setStroke(new UStroke(2));
+		ug.draw(x + minX, y + minY, shape);
+		// specificFrontier = shape.translate(x + minX, y + minY);
+		ug.draw(x + minX, y + minY + htitle, new ULine(wtitle + marginTitleX3, 0));
+		ug.getParam().setStroke(new UStroke());
+		title.drawU(ug, x + minX + marginTitleX1, y + minY + marginTitleY1);
 	}
 
 	private HtmlColor getColor(DotData dotData, ColorParam colorParam, String stereo) {
@@ -215,11 +298,6 @@ public class Cluster {
 		title.drawU(ug, x + xTitle, y + yTitle);
 
 	}
-
-	private double minX;
-	private double minY;
-	private double maxX;
-	private double maxY;
 
 	public void setPosition(double minX, double minY, double maxX, double maxY) {
 		this.minX = minX;
@@ -291,16 +369,29 @@ public class Cluster {
 		return "za" + getUid2();
 	}
 
+	private int marginTitleX1 = 3;
+	private int marginTitleX2 = 3;
+	private int marginTitleX3 = 7;
+	private int marginTitleY0 = 10;
+	private int marginTitleY1 = 3;
+	private int marginTitleY2 = 3;
+
+	private final boolean protection0 = true;
+	private final boolean protection1 = true;
+
 	private void printInternal(StringBuilder sb, Collection<Line> lines) {
 		if (isSpecial()) {
 			subgraphCluster(sb, "a");
+		}
+		if (protection0) {
+			subgraphCluster(sb, "p0");
 		}
 		sb.append("subgraph " + getClusterId() + " {");
 		sb.append("style=solid;");
 		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\";");
 
-		final int titleWidth = getTitleWidth();
-		final int titleHeight = getTitleHeight();
+		final int titleWidth = getTitleWidth() + marginTitleX1 + marginTitleX2 + marginTitleX3;
+		final int titleHeight = getTitleHeight() + marginTitleY0 + marginTitleY1 + marginTitleY2;
 		if (titleHeight > 0 && titleWidth > 0) {
 			sb.append("label=<");
 			Line.appendTable(sb, titleWidth, titleHeight, colorTitle);
@@ -318,7 +409,13 @@ public class Cluster {
 			// sb.append("}");
 			subgraphCluster(sb, "i");
 		}
+		if (protection1) {
+			subgraphCluster(sb, "p1");
+		}
 		printCluster(sb, lines);
+		if (protection1) {
+			sb.append("}");
+		}
 		if (isSpecial()) {
 			sb.append("}");
 			// subgraphCluster(sb, "zb");
@@ -331,6 +428,9 @@ public class Cluster {
 			// sb.append("}");
 		}
 		sb.append("}");
+		if (protection0) {
+			sb.append("}");
+		}
 		if (this.isSpecial()) {
 			// a
 			sb.append("}");
@@ -359,7 +459,24 @@ public class Cluster {
 	}
 
 	private final HtmlColor getBackColor() {
-		return group.getBackColor();
+		if (group == null) {
+			return null;
+		}
+		final HtmlColor result = group.getBackColor();
+		if (result != null) {
+			return result;
+		}
+		if (parent == null) {
+			return null;
+		}
+		return parent.getBackColor();
+	}
+
+	public boolean isClusterOf(IEntity ent) {
+		if (ent.getType() != EntityType.GROUP) {
+			return false;
+		}
+		return group.getEntityCluster() == ent;
 	}
 
 }

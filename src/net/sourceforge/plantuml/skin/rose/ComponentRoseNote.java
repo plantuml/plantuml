@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7171 $
+ * Revision $Revision: 7203 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -50,12 +50,16 @@ final public class ComponentRoseNote extends AbstractTextualComponent {
 	private final int cornersize = 10;
 	private final HtmlColor back;
 	private final HtmlColor foregroundColor;
+	private final double paddingX;
+	private final double paddingY;
 
 	public ComponentRoseNote(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			List<? extends CharSequence> strings) {
+			List<? extends CharSequence> strings, double paddingX, double paddingY) {
 		super(strings, fontColor, font, HorizontalAlignement.LEFT, 6, 15, 5);
 		this.back = back;
 		this.foregroundColor = foregroundColor;
+		this.paddingX = paddingX;
+		this.paddingY = paddingY;
 	}
 
 	@Override
@@ -71,12 +75,12 @@ final public class ComponentRoseNote extends AbstractTextualComponent {
 
 	@Override
 	public double getPaddingX() {
-		return 5;
+		return paddingX;
 	}
 
 	@Override
 	public double getPaddingY() {
-		return 5;
+		return paddingY;
 	}
 
 	@Override

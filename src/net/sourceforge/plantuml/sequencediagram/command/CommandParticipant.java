@@ -48,13 +48,11 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-
 public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandParticipant(SequenceDiagram sequenceDiagram, RegexConcat pattern) {
 		super(sequenceDiagram, pattern);
 	}
-
 
 	@Override
 	final protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg2) {
@@ -65,7 +63,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		}
 
 		List<String> strings = null;
-		if (arg2.get("FULL").get(0) != null) {
+		if (arg2.get("FULL") != null && arg2.get("FULL").get(0) != null) {
 			strings = StringUtils.getWithNewlines(arg2.get("FULL").get(0));
 		}
 

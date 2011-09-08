@@ -45,7 +45,7 @@ public class CommandUrl extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandUrl(SequenceDiagram diagram) {
 		super(diagram,
-				"(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s+(?:is)?\\s*\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]$");
+				"(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.@]+|\"[^\"]+\")\\s+(?:is)?\\s*\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]$");
 	}
 
 	@Override

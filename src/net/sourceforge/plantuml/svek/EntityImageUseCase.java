@@ -97,7 +97,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final UEllipse ellipse = new UEllipse(widthTotal, heightTotal);
-		ellipse.setDeltaShadow(3);
+		if (getSkinParam().shadowing()) {
+			ellipse.setDeltaShadow(3);
+		}
 
 		ug.getParam().setStroke(new UStroke(1.5));
 		ug.getParam().setColor(getColor(ColorParam.usecaseBorder, getStereo()));
@@ -119,7 +121,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.OVAL;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}

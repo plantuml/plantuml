@@ -41,7 +41,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 	public CommandExoArrowLeft(SequenceDiagram sequenceDiagram) {
 		super(
 				sequenceDiagram,
-				"(?i)^(\\[?[=-]+(?:>>?|//?|\\\\\\\\?)|\\[?(?:<<?|//?|\\\\\\\\?)[=-]+)\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$",
+				"(?i)^(\\[?[=-]+(?:>>?|//?|\\\\\\\\?)|\\[?(?:<<?|//?|\\\\\\\\?)[=-]+)\\s*([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$",
 				0, 1);
 	}
 

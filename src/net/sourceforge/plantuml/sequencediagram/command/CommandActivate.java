@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5884 $
+ * Revision $Revision: 7225 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandActivate extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandActivate(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^(activate|deactivate|destroy|create)\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?$");
+		super(sequenceDiagram, "(?i)^(activate|deactivate|destroy|create)\\s+([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(#\\w+)?$");
 	}
 
 	@Override

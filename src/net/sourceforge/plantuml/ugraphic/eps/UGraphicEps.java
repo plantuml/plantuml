@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -77,6 +78,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		registerDriver(UPolygon.class, new DriverPolygonEps(this));
 		registerDriver(UEllipse.class, new DriverEllipseEps());
 		registerDriver(UImage.class, new DriverImageEps());
+		registerDriver(UPath.class, new DriverPathEps());
 		registerDriver(DotPath.class, new DriverDotPathEps());
 	}
 

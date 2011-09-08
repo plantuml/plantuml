@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7178 $
+ * Revision $Revision: 7233 $
  *
  */
 package net.sourceforge.plantuml.version;
@@ -36,11 +36,11 @@ package net.sourceforge.plantuml.version;
 public class Version {
 
 	public static int version() {
-		return 7177;
+		return 7232;
 	}
 
 	public static long compileTime() {
-		return 1314897125765L;
+		return 1315477780453L;
 	}
 
 }

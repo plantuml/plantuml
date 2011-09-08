@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.Group;
@@ -56,8 +55,9 @@ import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.posimo.Moveable;
 
-public class DotStringFactory {
+public class DotStringFactory implements Moveable {
 
 	private final List<Shape> allShapes = new ArrayList<Shape>();
 	private final List<Cluster> allCluster = new ArrayList<Cluster>();
@@ -66,7 +66,9 @@ public class DotStringFactory {
 
 	private final ColorSequence colorSequence;
 	private final Cluster root;
-	private final List<Line> lines = new ArrayList<Line>();
+	private final List<Line> lines0 = new ArrayList<Line>();
+	private final List<Line> lines1 = new ArrayList<Line>();
+	private final List<Line> allLines = new ArrayList<Line>();
 	private Cluster current;
 	private final UmlDiagramType type;
 
@@ -100,7 +102,7 @@ public class DotStringFactory {
 
 	private double getHorizontalDzeta() {
 		double max = 0;
-		for (Line l : lines) {
+		for (Line l : allLines) {
 			final double c = l.getHorizontalDzeta(stringBounder);
 			if (c > max) {
 				max = c;
@@ -111,7 +113,7 @@ public class DotStringFactory {
 
 	private double getVerticalDzeta() {
 		double max = 0;
-		for (Line l : lines) {
+		for (Line l : allLines) {
 			final double c = l.getVerticalDzeta(stringBounder);
 			if (c > max) {
 				max = c;
@@ -155,11 +157,14 @@ public class DotStringFactory {
 		sb.append("compound=true;");
 		SvekUtils.println(sb);
 
+		for (Line line : lines0) {
+			line.appendLine(sb);
+		}
 		root.fillRankMin(rankMin);
-		root.printCluster(sb, lines);
+		root.printCluster(sb, allLines);
 		printMinRanking(sb);
 
-		for (Line line : lines) {
+		for (Line line : lines1) {
 			line.appendLine(sb);
 		}
 		SvekUtils.println(sb);
@@ -193,10 +198,10 @@ public class DotStringFactory {
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, "UTF-8");
 
-		if (OptionFlags.getInstance().isKeepTmpFiles()) {
-			Log.info("Creating temporary file svek.svg");
-			SvekUtils.traceSvgString(s);
-		}
+		// if (OptionFlags.getInstance().isKeepTmpFiles()) {
+		Log.info("Creating temporary file svek.svg");
+		SvekUtils.traceSvgString(s);
+		// }
 
 		return s;
 	}
@@ -283,11 +288,11 @@ public class DotStringFactory {
 
 		}
 
-		for (Line line : lines) {
+		for (Line line : allLines) {
 			line.solveLine(svg, fullHeight);
 		}
 
-		for (Line line : lines) {
+		for (Line line : allLines) {
 			line.manageCollision(allShapes);
 		}
 
@@ -295,7 +300,20 @@ public class DotStringFactory {
 	}
 
 	public void addLine(Line line) {
-		lines.add(line);
+		allLines.add(line);
+		if (first(line)) {
+			lines0.add(line);
+		} else {
+			lines1.add(line);
+		}
+	}
+
+	private static boolean first(Line line) {
+		final int length = line.getLength();
+		if (length==1) {
+			return true;
+		}
+		return false;
 	}
 
 	public final List<Shape> getShapes() {
@@ -303,7 +321,7 @@ public class DotStringFactory {
 	}
 
 	public List<Line> getLines() {
-		return Collections.unmodifiableList(lines);
+		return Collections.unmodifiableList(allLines);
 	}
 
 	public void openCluster(Group g, int titleWidth, int titleHeight, TextBlock title, boolean isSpecialGroup) {
@@ -320,6 +338,19 @@ public class DotStringFactory {
 
 	public final List<Cluster> getAllSubCluster() {
 		return Collections.unmodifiableList(allCluster);
+	}
+
+	public void moveSvek(double deltaX, double deltaY) {
+		for (Shape sh : allShapes) {
+			sh.moveSvek(deltaX, deltaY);
+		}
+		for (Line line : allLines) {
+			line.moveSvek(deltaX, deltaY);
+		}
+		for (Cluster cl : allCluster) {
+			cl.moveSvek(deltaX, deltaY);
+		}
+
 	}
 
 }

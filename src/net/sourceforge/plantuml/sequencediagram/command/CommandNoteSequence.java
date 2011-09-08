@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7113 $
+ * Revision $Revision: 7225 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -49,7 +49,7 @@ public class CommandNoteSequence extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandNoteSequence(SequenceDiagram sequenceDiagram) {
 		super(sequenceDiagram,
-				"(?i)^(note|hnote|rnote)\\s+(right|left|over)\\s+(?:of\\s+)?([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?\\s*:\\s*(.*)$");
+				"(?i)^(note|hnote|rnote)\\s+(right|left|over)\\s+(?:of\\s+)?([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(#\\w+)?\\s*:\\s*(.*)$");
 	}
 
 	@Override

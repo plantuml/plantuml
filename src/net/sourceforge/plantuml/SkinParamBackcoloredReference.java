@@ -119,4 +119,8 @@ public class SkinParamBackcoloredReference implements ISkinParam {
 		return skinParam.isSvek();
 	}
 
+	public boolean shadowing() {
+		return skinParam.shadowing();
+	}
+
 }

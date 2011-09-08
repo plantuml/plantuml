@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7113 $
+ * Revision $Revision: 7225 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandMultilinesNote extends CommandMultilines<SequenceDiagram> {
 
 	public CommandMultilinesNote(final SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^(note|hnote|rnote)\\s+(right|left|over)\\s+(?:of\\s+)?([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?$", "(?i)^end ?(note|hnote|rnote)$");
+		super(sequenceDiagram, "(?i)^(note|hnote|rnote)\\s+(right|left|over)\\s+(?:of\\s+)?([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(#\\w+)?$", "(?i)^end ?(note|hnote|rnote)$");
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {

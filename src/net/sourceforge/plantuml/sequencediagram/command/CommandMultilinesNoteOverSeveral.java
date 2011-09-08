@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7113 $
+ * Revision $Revision: 7225 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandMultilinesNoteOverSeveral extends CommandMultilines<SequenceDiagram> {
 
 	public CommandMultilinesNoteOverSeveral(final SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^(note|hnote|rnote)\\s+over\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s*\\,\\s*([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(#\\w+)?$", "(?i)^end ?(note|hnote|rnote)$");
+		super(sequenceDiagram, "(?i)^(note|hnote|rnote)\\s+over\\s+([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*\\,\\s*([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(#\\w+)?$", "(?i)^end ?(note|hnote|rnote)$");
 	}
 
 	public CommandExecutionResult execute(List<String> lines) {

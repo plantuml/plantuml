@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7143 $
+ * Revision $Revision: 7226 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -57,10 +57,23 @@ public class UPolygon extends AbstractShadowable {
 		return all;
 	}
 
+	public UPolygon translate(double dx, double dy) {
+		final UPolygon result = new UPolygon();
+		for (Point2D.Double pt : all) {
+			result.addPoint(pt.x + dx, pt.y + dy);
+		}
+		return result;
+	}
+
 	public void rotate(double theta) {
 		final AffineTransform rotate = AffineTransform.getRotateInstance(theta);
 		for (Point2D.Double pt : all) {
 			rotate.transform(pt, pt);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + all;
 	}
 }

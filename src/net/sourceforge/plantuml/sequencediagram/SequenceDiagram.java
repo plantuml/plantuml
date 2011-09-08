@@ -100,7 +100,8 @@ public class SequenceDiagram extends UmlDiagram {
 			throw new IllegalArgumentException();
 		}
 		if (display == null) {
-			display = Arrays.asList(code);
+			// display = Arrays.asList(code);
+			display = StringUtils.getWithNewlines(code);
 		}
 		final Participant result = new Participant(type, code, display);
 		participants.put(code, result);

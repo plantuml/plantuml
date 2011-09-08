@@ -71,5 +71,7 @@ public interface ISkinParam {
 	public GraphvizLayoutStrategy getStrategy();
 	
 	public boolean isSvek();
+	
+	public boolean shadowing();
 
 }

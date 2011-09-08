@@ -27,35 +27,32 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
+ * 
+ * Revision $Revision: 6109 $
  *
  */
-package net.sourceforge.plantuml.ugraphic.eps;
+package net.sourceforge.plantuml.sequencediagram.command;
 
-import net.sourceforge.plantuml.eps.EpsGraphics;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class DriverEllipseEps implements UDriver<EpsGraphics> {
+public class CommandParticipantA4 extends CommandParticipant {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final UEllipse shape = (UEllipse) ushape;
-		final double width = shape.getWidth();
-		final double height = shape.getHeight();
+	public CommandParticipantA4(SequenceDiagram sequenceDiagram) {
+		super(sequenceDiagram, getRegexConcat());
+	}
 
-		// Shadow
-		if (shape.getDeltaShadow() != 0) {
-			eps.epsEllipseShadow(x + width / 2, y + height / 2, width / 2, height / 2, shape.getDeltaShadow());
-		}
-
-		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
-		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
-				.getDashSpace());
-
-		eps.epsEllipse(x + width / 2, y + height / 2, width / 2, height / 2);
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("TYPE", "(participant|actor)"), //
+				new RegexLeaf("\\s+"), //
+				new RegexLeaf("CODE", "\"([^\"]+)\""), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.*\\>\\>))?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("COLOR", "(#\\w+)?"), // 
+				new RegexLeaf("$"));
 	}
 
 }

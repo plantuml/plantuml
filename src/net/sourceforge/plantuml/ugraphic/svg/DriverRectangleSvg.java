@@ -59,6 +59,12 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 		final double ry = rect.getRy();
 		double width = rect.getWidth();
 		double height = rect.getHeight();
+		
+		// Shadow
+		if (rect.getDeltaShadow() != 0) {
+			svg.svgRectangleShadow(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
+		}
+
 
 		final UGradient gr = param.getGradient();
 		if (gr == null) {

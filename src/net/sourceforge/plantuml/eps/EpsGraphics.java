@@ -41,7 +41,11 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.ShadowManager;
 import net.sourceforge.plantuml.ugraphic.UGradient;
+import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.USegment;
+import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 public class EpsGraphics {
 
@@ -247,6 +251,57 @@ public class EpsGraphics {
 			append(format(v) + " 0 rlineto", true);
 			append(format(dashSpace) + " 0 rmoveto", true);
 		}
+	}
+
+	public void epsPath(double x, double y, UPath path) {
+		checkCloseDone();
+		if (fillcolor != null) {
+			appendColor(fillcolor);
+			append("newpath", true);
+			for (USegment seg : path) {
+				final USegmentType type = seg.getSegmentType();
+				final double coord[] = seg.getCoord();
+				if (type == USegmentType.SEG_MOVETO) {
+					movetoNoMacro(coord[0] + x, coord[1] + y);
+				} else if (type == USegmentType.SEG_LINETO) {
+					linetoNoMacro(coord[0] + x, coord[1] + y);
+				} else if (type == USegmentType.SEG_QUADTO) {
+					throw new UnsupportedOperationException();
+				} else if (type == USegmentType.SEG_CUBICTO) {
+					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+				} else if (type == USegmentType.SEG_CLOSE) {
+					// Nothing
+				} else {
+					System.err.println("unknown " + seg);
+				}
+			}
+			append("closepath eofill", true);
+		}
+		
+		if (color != null) {
+			append(strokeWidth + " setlinewidth", true);
+			appendColor(color);
+			append("newpath", true);
+			for (USegment seg : path) {
+				final USegmentType type = seg.getSegmentType();
+				final double coord[] = seg.getCoord();
+				if (type == USegmentType.SEG_MOVETO) {
+					movetoNoMacro(coord[0] + x, coord[1] + y);
+				} else if (type == USegmentType.SEG_LINETO) {
+					linetoNoMacro(coord[0] + x, coord[1] + y);
+				} else if (type == USegmentType.SEG_QUADTO) {
+					throw new UnsupportedOperationException();
+				} else if (type == USegmentType.SEG_CUBICTO) {
+					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+				} else if (type == USegmentType.SEG_CLOSE) {
+					// Nothing
+				} else {
+					System.err.println("unknown " + seg);
+				}
+			}
+			append("closepath stroke", true);
+		}
+
 	}
 
 	public void epsPolygon(double... points) {
@@ -455,11 +510,11 @@ public class EpsGraphics {
 		body.append(s + "\n");
 	}
 
-	// final public void linetoNoMacro(double x1, double y1) {
-	// append(format(x1) + " " + format(y1) + " lineto", true);
-	// ensureVisible(x1, y1);
-	// }
-	//
+	final public void linetoNoMacro(double x1, double y1) {
+		append(format(x1) + " " + format(y1) + " lineto", true);
+		ensureVisible(x1, y1);
+	}
+
 	final public void movetoNoMacro(double x1, double y1) {
 		append(format(x1) + " " + format(y1) + " moveto", true);
 		ensureVisible(x1, y1);
@@ -620,6 +675,38 @@ public class EpsGraphics {
 
 	public void openLink(String url) {
 		this.urlArea = new UrlArea(url);
+	}
+
+	// Shadow
+	final private ShadowManager shadowManager = new ShadowManager(50, 200);
+
+	public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
+			double deltaShadow) {
+		setStrokeColor(null);
+		for (double i = 0; i <= deltaShadow; i += 0.5) {
+			setFillColor(shadowManager.getColor(i, deltaShadow));
+			final double diff = i;
+			epsRectangle(x + deltaShadow + diff, y + deltaShadow + diff, width - 2 * diff, height - 2 * diff, rx + 1,
+					ry + 1);
+		}
+	}
+
+	public void epsPolygonShadow(double deltaShadow, double... points) {
+		setStrokeColor(null);
+		for (double i = 0; i <= deltaShadow; i += 0.5) {
+			setFillColor(shadowManager.getColor(i, deltaShadow));
+			final double diff = i;
+			epsPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, diff, points));
+		}
+	}
+
+	public void epsEllipseShadow(double x, double y, double xRadius, double yRadius, double deltaShadow) {
+		setStrokeColor(null);
+		for (double i = 0; i <= deltaShadow; i += 0.5) {
+			setFillColor(shadowManager.getColor(i, deltaShadow));
+			final double diff = i;
+			epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - diff, yRadius - diff);
+		}
 	}
 
 }

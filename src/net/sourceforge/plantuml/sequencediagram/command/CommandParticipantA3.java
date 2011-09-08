@@ -47,8 +47,8 @@ public class CommandParticipantA3 extends CommandParticipant {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("TYPE", "(participant|actor)"), //
 				new RegexLeaf("\\s+"), //
-				new RegexLeaf("FULL", "([\\p{L}0-9_.]+)\\s+as\\s+"), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("FULL", "([\\p{L}0-9_.@]+)\\s+as\\s+"), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
 				new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.*\\>\\>))?"), //
 				new RegexLeaf("\\s*"), //
 				new RegexLeaf("COLOR", "(#\\w+)?"), // 

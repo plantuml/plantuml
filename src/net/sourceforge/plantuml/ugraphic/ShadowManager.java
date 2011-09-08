@@ -27,35 +27,51 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
+ * 
+ * Revision $Revision: 6590 $
  *
  */
-package net.sourceforge.plantuml.ugraphic.eps;
+package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.eps.EpsGraphics;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
+import java.awt.Color;
 
-public class DriverEllipseEps implements UDriver<EpsGraphics> {
+public class ShadowManager {
+	
+	// http://www.w3schools.com/svg/svg_feoffset.asp
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final UEllipse shape = (UEllipse) ushape;
-		final double width = shape.getWidth();
-		final double height = shape.getHeight();
+	private final int c1;
+	private final int c2;
 
-		// Shadow
-		if (shape.getDeltaShadow() != 0) {
-			eps.epsEllipseShadow(x + width / 2, y + height / 2, width / 2, height / 2, shape.getDeltaShadow());
+	public ShadowManager(int c1, int c2) {
+		this.c1 = c1;
+		this.c2 = c2;
+	}
+
+	public double[] getShadowDeltaPoints(double deltaShadow, double diff, double[] points) {
+		double cx = 0;
+		double cy = 0;
+		for (int i = 0; i < points.length; i += 2) {
+			cx += points[i];
+			cy += points[i + 1];
 		}
+		final int nbPoints = points.length / 2;
 
-		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
-		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
-				.getDashSpace());
+		cx = cx / nbPoints;
+		cy = cy / nbPoints;
 
-		eps.epsEllipse(x + width / 2, y + height / 2, width / 2, height / 2);
+		final double[] result = new double[points.length];
+		for (int i = 0; i < result.length; i += 2) {
+			final double diffx = points[i] > cx ? -diff : diff;
+			final double diffy = points[i + 1] > cy ? -diff : diff;
+			result[i] = points[i] + diffx + deltaShadow;
+			result[i + 1] = points[i + 1] + diffy + deltaShadow;
+		}
+		return result;
+	}
+
+	public Color getColor(double delta, double total) {
+		final int c = (int) (c2 + 1.0 * delta / total * (c1 - c2));
+		return new Color(c, c, c);
 	}
 
 }

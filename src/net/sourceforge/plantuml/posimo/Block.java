@@ -95,5 +95,10 @@ public class Block implements Clusterable {
 	public final void setY(double y) {
 		this.y = y;
 	}
+	
+	public void moveSvek(double deltaX, double deltaY) {
+		throw new UnsupportedOperationException();
+	}
+
 
 }

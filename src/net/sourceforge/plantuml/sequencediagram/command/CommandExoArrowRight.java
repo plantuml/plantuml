@@ -40,7 +40,7 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 
 	public CommandExoArrowRight(SequenceDiagram sequenceDiagram) {
 		super(sequenceDiagram,
-				"(?i)^([\\p{L}0-9_.]+|\"[^\"]+\")\\s*([=-]+(?:>>?|//?|\\\\\\\\?)\\]?|(?:<<?|//?|\\\\\\\\?)[=-]+\\]?)\\s*(?::\\s*(.*))?$", 1, 0);
+				"(?i)^([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*([=-]+(?:>>?|//?|\\\\\\\\?)\\]?|(?:<<?|//?|\\\\\\\\?)[=-]+\\]?)\\s*(?::\\s*(.*))?$", 1, 0);
 	}
 
 	@Override

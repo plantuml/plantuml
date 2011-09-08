@@ -51,8 +51,7 @@ public class MargedBlock {
 		this.imageBlock = imageBlock;
 		this.marginDecorator = marginDecorator;
 		this.imageDimension = imageBlock.getDimension(stringBounder);
-		this.block = new Block(uid++, imageDimension.getWidth() + 2
-				* marginDecorator, imageDimension.getHeight() + 2
+		this.block = new Block(uid++, imageDimension.getWidth() + 2 * marginDecorator, imageDimension.getHeight() + 2
 				* marginDecorator, parent);
 	}
 
@@ -63,7 +62,7 @@ public class MargedBlock {
 	public double getMarginDecorator() {
 		return marginDecorator;
 	}
-	
+
 	public IEntityImageBlock getImageBlock() {
 		return imageBlock;
 	}
@@ -77,9 +76,11 @@ public class MargedBlock {
 
 			public Point2D getPosition() {
 				Point2D pos = block.getPosition();
-				return new Point2D.Double(pos.getX() + marginDecorator, pos
-						.getY()
-						+ marginDecorator);
+				return new Point2D.Double(pos.getX() + marginDecorator, pos.getY() + marginDecorator);
+			}
+
+			public void moveSvek(double deltaX, double deltaY) {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}

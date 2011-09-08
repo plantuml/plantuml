@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6939 $
+ * Revision $Revision: 7221 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -120,25 +121,25 @@ public class Link implements Imaged {
 		// final int x = cl1.getXposition();
 		// cl2.setXposition(x-1);
 		// }
-		final Link result = new Link(cl2, cl1, type.getInv(), label, length, qualifier2, qualifier1, labeldistance,
-				labelangle, specificColor);
+		final Link result = new Link(cl2, cl1, getType().getInv(), label, length, qualifier2, qualifier1,
+				labeldistance, labelangle, specificColor);
 		result.inverted = true;
 		return result;
 	}
 
 	public Link getDashed() {
-		return new Link(cl1, cl2, type.getDashed(), label, length, qualifier1, qualifier2, labeldistance, labelangle,
-				specificColor);
+		return new Link(cl1, cl2, getType().getDashed(), label, length, qualifier1, qualifier2, labeldistance,
+				labelangle, specificColor);
 	}
 
 	public Link getDotted() {
-		return new Link(cl1, cl2, type.getDotted(), label, length, qualifier1, qualifier2, labeldistance, labelangle,
-				specificColor);
+		return new Link(cl1, cl2, getType().getDotted(), label, length, qualifier1, qualifier2, labeldistance,
+				labelangle, specificColor);
 	}
 
 	public Link getBold() {
-		return new Link(cl1, cl2, type.getBold(), label, length, qualifier1, qualifier2, labeldistance, labelangle,
-				specificColor);
+		return new Link(cl1, cl2, getType().getBold(), label, length, qualifier1, qualifier2, labeldistance,
+				labelangle, specificColor);
 	}
 
 	public String getLabeldistance() {
@@ -180,7 +181,7 @@ public class Link implements Imaged {
 		if (this.cl1 == ent1 && this.cl2 == ent2) {
 			return this;
 		}
-		return new Link(ent1, ent2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle);
+		return new Link(ent1, ent2, getType(), label, length, qualifier1, qualifier2, labeldistance, labelangle);
 	}
 
 	public boolean isBetween(IEntity cl1, IEntity cl2) {
@@ -207,6 +208,9 @@ public class Link implements Imaged {
 	}
 
 	public LinkType getType() {
+		if (opale) {
+			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+		}
 		return type;
 	}
 
@@ -319,13 +323,13 @@ public class Link implements Imaged {
 
 	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif) {
 		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier1);
-		final LinkDecor decor = type.getDecor1();
+		final LinkDecor decor = getType().getDecor1();
 		return decor.getSize() + q;
 	}
 
 	public double getMarginDecors2(StringBounder stringBounder, UFont fontQualif) {
 		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier2);
-		final LinkDecor decor = type.getDecor2();
+		final LinkDecor decor = getType().getDecor2();
 		return decor.getSize() + q;
 	}
 
@@ -354,4 +358,24 @@ public class Link implements Imaged {
 	public final void setConstraint(boolean constraint) {
 		this.constraint = constraint;
 	}
+
+	private boolean opale;
+
+	public void setOpale(boolean opale) {
+		this.opale = opale;
+	}
+
+	static public boolean onlyOneLink(IEntity ent, Collection<Link> links) {
+		int nb = 0;
+		for (Link link : links) {
+			if (link.contains(ent)) {
+				nb++;
+			}
+			if (nb > 1) {
+				return false;
+			}
+		}
+		return nb == 1;
+	}
+
 }

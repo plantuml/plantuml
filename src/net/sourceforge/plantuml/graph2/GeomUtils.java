@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 7205 $
  *
  */
 package net.sourceforge.plantuml.graph2;
@@ -140,7 +140,16 @@ public class GeomUtils {
 		final int x = (int) pt.getX() - 1;
 		final int y = (int) pt.getY() - 1;
 		g2d.fillOval(x, y, 3, 3);
-
+	}
+	
+	public static double getOrthoDistance(Line2D.Double seg, Point2D pt) {
+		if (isHorizontal(seg)) {
+			return Math.abs(seg.getP1().getY() - pt.getY());
+		}
+		if (isVertical(seg)) {
+			return Math.abs(seg.getP1().getX() - pt.getX());
+		}
+		throw new IllegalArgumentException();
 	}
 
 }

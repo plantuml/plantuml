@@ -123,4 +123,8 @@ public class SkinParamBackcolored implements ISkinParam {
 		return skinParam.isSvek();
 	}
 
+	public boolean shadowing() {
+		return skinParam.shadowing();
+	}
+
 }

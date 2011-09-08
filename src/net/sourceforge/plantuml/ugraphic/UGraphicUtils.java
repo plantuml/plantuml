@@ -34,8 +34,19 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable3;
 
 public abstract class UGraphicUtils {
+
+	public static UDrawable3 translate(final UDrawable3 d, final double dx, final double dy) {
+		return new UDrawable3() {
+			@Override
+			public void drawU(UGraphic ug, double x, double y) {
+				d.drawU(ug, x + dx, y + dy);
+			}
+		};
+
+	}
 
 	public static UGraphic translate(final UGraphic g, final double tx, final double ty) {
 		return new UGraphic() {

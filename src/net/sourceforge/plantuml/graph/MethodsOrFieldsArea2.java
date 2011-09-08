@@ -75,6 +75,9 @@ public class MethodsOrFieldsArea2 implements TextBlock {
 	}
 
 	private boolean hasSmallIcon() {
+		if (skinParam.classAttributeIconSize() == 0) {
+			return false;
+		}
 		for (Member m : members) {
 			if (m.getVisibilityModifier() != null) {
 				return true;
@@ -87,7 +90,7 @@ public class MethodsOrFieldsArea2 implements TextBlock {
 		double x = 0;
 		double y = 0;
 		for (Member m : members) {
-			final String s = m.getDisplayWithoutVisibilityChar();
+			final String s = getDisplay(m);
 			final TextBlock bloc = createTextBlock(s);
 			final Dimension2D dim = bloc.calculateDimension(stringBounder);
 			y += dim.getHeight();
@@ -114,7 +117,7 @@ public class MethodsOrFieldsArea2 implements TextBlock {
 			group = new UGroup(new PlacementStrategyVisibility(ug.getStringBounder(), skinParam
 					.getCircledCharacterRadius() + 3));
 			for (Member att : members) {
-				final String s = att.getDisplayWithoutVisibilityChar();
+				final String s = getDisplay(att);
 				final TextBlock bloc = createTextBlock(s);
 				final VisibilityModifier modifier = att.getVisibilityModifier();
 				group.add(getUBlock(modifier));
@@ -123,13 +126,18 @@ public class MethodsOrFieldsArea2 implements TextBlock {
 		} else {
 			group = new UGroup(new PlacementStrategyY1Y2Left(ug.getStringBounder()));
 			for (Member att : members) {
-				final String s = att.getDisplayWithoutVisibilityChar();
+				final String s = getDisplay(att);
 				final TextBlock bloc = createTextBlock(s);
 				group.add(bloc);
 			}
 		}
 		group.drawU(ug, x, y, dim.getWidth(), dim.getHeight());
 
+	}
+
+	private String getDisplay(Member att) {
+		final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;
+		return att.getDisplay(withVisibilityChar);
 	}
 
 	private TextBlock getUBlock(final VisibilityModifier modifier) {
@@ -152,7 +160,7 @@ public class MethodsOrFieldsArea2 implements TextBlock {
 				.getBackground());
 		final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
-		final TextBlock uBlock = modifier.getUBlock(skinParam.getCircledCharacterRadius(), fore, back);
+		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back);
 		return uBlock;
 	}
 

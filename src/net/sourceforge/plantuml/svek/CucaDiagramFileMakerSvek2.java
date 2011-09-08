@@ -88,65 +88,6 @@ public final class CucaDiagramFileMakerSvek2 {
 		return getData().getSkinParam().getFont(fontParam, null);
 	}
 
-	private IEntityImage createEntityImageBlock(DotData dotData, IEntity ent) {
-		if (ent.getType() == EntityType.CLASS || ent.getType() == EntityType.ABSTRACT_CLASS
-				|| ent.getType() == EntityType.INTERFACE || ent.getType() == EntityType.ENUM) {
-			return new EntityImageClass(ent, dotData.getSkinParam(), dotData);
-		}
-		if (ent.getType() == EntityType.NOTE) {
-			return new EntityImageNote(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.ACTIVITY) {
-			return new EntityImageActivity(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.STATE) {
-			return new EntityImageState(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.CIRCLE_START) {
-			return new EntityImageCircleStart(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.CIRCLE_END) {
-			return new EntityImageCircleEnd(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.USECASE) {
-			return new EntityImageUseCase(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.BRANCH) {
-			return new EntityImageBranch(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.LOLLIPOP) {
-			return new EntityImageLollipopInterface(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.ACTOR) {
-			return new EntityImageActor(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.COMPONENT) {
-			return new EntityImageComponent(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.OBJECT) {
-			return new EntityImageObject(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.SYNCHRO_BAR) {
-			return new EntityImageSynchroBar(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.CIRCLE_INTERFACE) {
-			return new EntityImageCircleInterface(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.POINT_FOR_ASSOCIATION) {
-			return new EntityImageAssociationPoint(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.GROUP) {
-			return new EntityImageGroup(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.EMPTY_PACKAGE) {
-			return new EntityImageEmptyPackage(ent, dotData.getSkinParam());
-		}
-		if (ent.getType() == EntityType.ASSOCIATION) {
-			return new EntityImageAssociation(ent, dotData.getSkinParam());
-		}
-		throw new UnsupportedOperationException(ent.getType().toString());
-	}
-
 	private DotStringFactory dotStringFactory;
 	private Map<IEntity, Shape> shapeMap;
 
@@ -181,7 +122,7 @@ public final class CucaDiagramFileMakerSvek2 {
 		printGroups(null);
 		printEntities(getUnpackagedEntities());
 
-		final Map<Link, Line> lineMap = new HashMap<Link, Line>();
+		// final Map<Link, Line> lineMap = new HashMap<Link, Line>();
 
 		for (Link link : dotData.getLinks()) {
 			final String shapeUid1 = getShapeUid(link.getEntity1());
@@ -200,8 +141,18 @@ public final class CucaDiagramFileMakerSvek2 {
 
 			final Line line = new Line(shapeUid1, shapeUid2, link, colorSequence, ltail, lhead, dotData.getSkinParam(),
 					stringBounder, labelFont);
+			// lineMap.put(link, line);
 			dotStringFactory.addLine(line);
-			lineMap.put(link, line);
+
+			if (link.getEntity1().getType() == EntityType.NOTE && onlyOneLink(link.getEntity1())) {
+				final Shape shape = shapeMap.get(link.getEntity1());
+				((EntityImageNote) shape.getImage()).setOpaleLine(line, shape);
+				line.setOpale(true);
+			} else if (link.getEntity2().getType() == EntityType.NOTE && onlyOneLink(link.getEntity2())) {
+				final Shape shape = shapeMap.get(link.getEntity2());
+				((EntityImageNote) shape.getImage()).setOpaleLine(line, shape);
+				line.setOpale(true);
+			}
 		}
 
 		if (dotStringFactory.illegalDotExe()) {
@@ -215,8 +166,14 @@ public final class CucaDiagramFileMakerSvek2 {
 		} else {
 			border = getColor(ColorParam.packageBorder, null);
 		}
-		return new SvekResult(dim, dotData, dotStringFactory, border);
+		final SvekResult result = new SvekResult(dim, dotData, dotStringFactory, border);
+		result.moveSvek(6, 0);
+		return result;
 
+	}
+
+	private boolean onlyOneLink(IEntity ent) {
+		return Link.onlyOneLink(ent, dotData.getLinks());
 	}
 
 	protected final HtmlColor getColor(ColorParam colorParam, String stereo) {
@@ -266,18 +223,11 @@ public final class CucaDiagramFileMakerSvek2 {
 	}
 
 	private void printEntity(IEntity ent) {
-
-		final IEntityImage image;
-		if (ent.getSvekImage() == null) {
-			image = createEntityImageBlock(dotData, ent);
-		} else {
-			image = ent.getSvekImage();
-		}
+		final IEntityImage image = Shape.printEntity(ent, dotData);
 		final Dimension2D dim = image.getDimension(stringBounder);
-		final Shape shape = new Shape(image.getShapeType(), dim.getWidth(), dim.getHeight(), colorSequence,
-				ent.isTop(), image.getShield());
+		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(), colorSequence, ent
+				.isTop(), image.getShield());
 		dotStringFactory.addShape(shape);
-		shape.setImage(image);
 		shapeMap.put(ent, shape);
 	}
 

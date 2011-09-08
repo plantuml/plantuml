@@ -164,15 +164,15 @@ public class LinkType {
 			sb.append(",arrowsize=1.5");
 		}
 
-		if (style == LinkStyle.DASHED) {
-			sb.append(",style=dashed");
-		}
-		if (style == LinkStyle.DOTTED) {
-			sb.append(",style=dotted,");
-		}
-		if (style == LinkStyle.BOLD) {
-			sb.append(",style=bold,");
-		}
+//		if (style == LinkStyle.DASHED) {
+//			sb.append(",style=dashed");
+//		}
+//		if (style == LinkStyle.DOTTED) {
+//			sb.append(",style=dotted,");
+//		}
+//		if (style == LinkStyle.BOLD) {
+//			sb.append(",style=bold,");
+//		}
 
 		return sb.toString();
 	}

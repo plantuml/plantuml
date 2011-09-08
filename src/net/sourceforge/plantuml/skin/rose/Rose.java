@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7112 $
+ * Revision $Revision: 7203 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -51,6 +51,14 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class Rose implements Skin {
 
 	private final Map<ColorParam, HtmlColor> defaultsColor = new EnumMap<ColorParam, HtmlColor>(ColorParam.class);
+	
+	private double paddingX = 5;
+	private double paddingY = 5;
+	
+	public void setPaddingNote(double paddingX, double paddingY) {
+		this.paddingX = paddingX;
+		this.paddingY = paddingY;
+	}
 
 	public Rose() {
 		defaultsColor.put(ColorParam.background, HtmlColor.getColorIfValid("white"));
@@ -208,7 +216,7 @@ public class Rose implements Skin {
 			final HtmlColor borderColor = getHtmlColor(param, ColorParam.noteBorder);
 			final UFont fontNote = param.getFont(FontParam.NOTE, null);
 			return new ComponentRoseNote(noteBackgroundColor, borderColor, getFontColor(param, FontParam.NOTE),
-					fontNote, stringsToDisplay);
+					fontNote, stringsToDisplay, paddingX, paddingY);
 		}
 		if (type == ComponentType.NOTE_HEXAGONAL) {
 			final HtmlColor noteBackgroundColor = getHtmlColor(param, ColorParam.noteBackground);

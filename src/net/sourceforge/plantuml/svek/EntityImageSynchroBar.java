@@ -58,7 +58,9 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
 		final Dimension2D dim = getDimension(ug.getStringBounder());
 		final Shadowable rect = new URectangle(dim.getWidth(), dim.getHeight());
-		rect.setDeltaShadow(4);
+		if (getSkinParam().shadowing()) {
+			rect.setDeltaShadow(4);
+		}
 		ug.getParam().setColor(null);
 		ug.getParam().setBackcolor(getColor(ColorParam.activityBar, getStereo()));
 		ug.draw(xTheoricalPosition, yTheoricalPosition, rect);
@@ -67,10 +69,9 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}
-
 
 }

@@ -219,7 +219,9 @@ public class EntityImageClass extends AbstractEntityImage {
 		final double heightTotal = dimTotal.getHeight();
 		// final URectangle rect = new URectangle(widthTotal, heightTotal);
 		final Shadowable rect = new URectangle(widthTotal, heightTotal);
-		rect.setDeltaShadow(4);
+		if (getSkinParam().shadowing()) {
+			rect.setDeltaShadow(4);
+		}
 
 		ug.getParam().setColor(getColor(ColorParam.classBorder, getStereo()));
 		ug.getParam().setBackcolor(getColor(ColorParam.classBackground, getStereo()));

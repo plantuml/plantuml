@@ -42,13 +42,18 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final UEllipse rect = (UEllipse) ushape;
-		final double width = rect.getWidth();
-		final double height = rect.getHeight();
+		final UEllipse shape = (UEllipse) ushape;
+		final double width = shape.getWidth();
+		final double height = shape.getHeight();
 
 		final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getColor()));
 		final String backcolor = param.getBackcolor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getBackcolor()));
 
+		// Shadow
+		if (shape.getDeltaShadow() != 0) {
+			svg.svgEllipseShadow(x + width / 2, y + height / 2, width / 2, height / 2, shape.getDeltaShadow());
+		}
+		
 		svg.setFillColor(backcolor);
 		svg.setStrokeColor(color);
 		svg.setStrokeWidth(""+param.getStroke().getThickness(), param.getStroke().getDasharraySvg());

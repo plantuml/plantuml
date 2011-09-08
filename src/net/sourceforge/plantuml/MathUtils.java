@@ -43,4 +43,17 @@ public class MathUtils {
 		return Math.max(Math.max(a, b), c);
 	}
 
+	public static double limitation(double v, double min, double max) {
+		if (min >= max) {
+			throw new IllegalArgumentException();
+		}
+		if (v < min) {
+			return min;
+		}
+		if (v > max) {
+			return max;
+		}
+		return v;
+	}
+
 }

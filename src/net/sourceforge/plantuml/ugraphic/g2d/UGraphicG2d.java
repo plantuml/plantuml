@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7143 $
+ * Revision $Revision: 7211 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPixel;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -83,6 +84,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> {
 		registerDriver(UEllipse.class, new DriverEllipseG2d());
 		registerDriver(UImage.class, new DriverImageG2d());
 		registerDriver(DotPath.class, new DriverDotPathG2d());
+		registerDriver(UPath.class, new DriverPathG2d());
 	}
 
 	public StringBounder getStringBounder() {

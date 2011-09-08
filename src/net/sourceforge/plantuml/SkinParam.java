@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 7180 $
+ * Revision $Revision: 7230 $
  *
  */
 package net.sourceforge.plantuml;
@@ -349,6 +349,14 @@ public class SkinParam implements ISkinParam {
 			return defaultValue;
 		}
 		return "true".equalsIgnoreCase(value);
+	}
+
+	public boolean shadowing() {
+		final String value = getValue("shadowing");
+		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
 	}
 
 }

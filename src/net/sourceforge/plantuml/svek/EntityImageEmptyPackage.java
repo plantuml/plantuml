@@ -77,7 +77,9 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable form = new URectangle(widthTotal, heightTotal);
-		form.setDeltaShadow(4);
+		if (getSkinParam().shadowing()) {
+			form.setDeltaShadow(4);
+		}
 
 		final UShape small = new URectangle(15, 5);
 
@@ -97,7 +99,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}

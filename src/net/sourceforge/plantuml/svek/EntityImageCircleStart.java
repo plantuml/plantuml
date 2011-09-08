@@ -58,7 +58,9 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		circle.setDeltaShadow(3);
+		if (getSkinParam().shadowing()) {
+			circle.setDeltaShadow(3);
+		}
 		ug.getParam().setColor(null);
 		ug.getParam().setBackcolor(getColor(ColorParam.activityStart, getStereo()));
 		ug.draw(xTheoricalPosition, yTheoricalPosition, circle);

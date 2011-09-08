@@ -38,6 +38,9 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.posimo.Positionable;
 
 public class Shape implements Positionable {
@@ -65,7 +68,8 @@ public class Shape implements Positionable {
 		this.cluster = cluster;
 	}
 
-	public Shape(ShapeType type, double width, double height, ColorSequence colorSequence, boolean top, int shield) {
+	public Shape(IEntityImage image, ShapeType type, double width, double height, ColorSequence colorSequence, boolean top, int shield) {
+		this.image = image;
 		this.top = top;
 		this.type = type;
 		this.width = width;
@@ -199,9 +203,9 @@ public class Shape implements Positionable {
 	}
 
 	public final void setMinX(double minX) {
-		if (minX < 0) {
-			minX = 0;
-		}
+		// if (minX < 0) {
+		// minX = 0;
+		// }
 		this.minX = minX;
 	}
 
@@ -216,11 +220,7 @@ public class Shape implements Positionable {
 		this.minY = minY;
 	}
 
-	private IEntityImage image;
-
-	public void setImage(IEntityImage image) {
-		this.image = image;
-	}
+	private final IEntityImage image;
 
 	public IEntityImage getImage() {
 		return image;
@@ -278,4 +278,79 @@ public class Shape implements Positionable {
 		return "" + x1 + "," + y1 + "," + x2 + "," + y2;
 	}
 
+	public void moveSvek(double deltaX, double deltaY) {
+		this.minX += deltaX;
+		this.minY += deltaY;
+	}
+	
+	
+	public static IEntityImage printEntity(IEntity ent, DotData dotData) {
+
+		final IEntityImage image;
+		if (ent.getSvekImage() == null) {
+			image = createEntityImageBlock(dotData, ent);
+		} else {
+			image = ent.getSvekImage();
+		}
+		return image;
+	}
+	
+	private static IEntityImage createEntityImageBlock(DotData dotData, IEntity ent) {
+		if (ent.getType() == EntityType.CLASS || ent.getType() == EntityType.ABSTRACT_CLASS
+				|| ent.getType() == EntityType.INTERFACE || ent.getType() == EntityType.ENUM) {
+			return new EntityImageClass(ent, dotData.getSkinParam(), dotData);
+		}
+		if (ent.getType() == EntityType.NOTE) {
+			return new EntityImageNote(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.ACTIVITY) {
+			return new EntityImageActivity(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.STATE) {
+			return new EntityImageState(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.CIRCLE_START) {
+			return new EntityImageCircleStart(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.CIRCLE_END) {
+			return new EntityImageCircleEnd(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.USECASE) {
+			return new EntityImageUseCase(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.BRANCH) {
+			return new EntityImageBranch(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.LOLLIPOP) {
+			return new EntityImageLollipopInterface(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.ACTOR) {
+			return new EntityImageActor(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.COMPONENT) {
+			return new EntityImageComponent(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.OBJECT) {
+			return new EntityImageObject(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.SYNCHRO_BAR) {
+			return new EntityImageSynchroBar(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.CIRCLE_INTERFACE) {
+			return new EntityImageCircleInterface(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.POINT_FOR_ASSOCIATION) {
+			return new EntityImageAssociationPoint(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.GROUP) {
+			return new EntityImageGroup(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.EMPTY_PACKAGE) {
+			return new EntityImageEmptyPackage(ent, dotData.getSkinParam());
+		}
+		if (ent.getType() == EntityType.ASSOCIATION) {
+			return new EntityImageAssociation(ent, dotData.getSkinParam());
+		}
+		throw new UnsupportedOperationException(ent.getType().toString());
+	}
 }

@@ -109,6 +109,10 @@ public class PositionableUtils {
 			public Dimension2D getSize() {
 				return Dimension2DDouble.delta(pos.getSize(), 2 * widthMargin, 2 * heightMargin);
 			}
+
+			public void moveSvek(double deltaX, double deltaY) {
+				pos.moveSvek(deltaX, deltaY);
+			}
 		};
 	}
 

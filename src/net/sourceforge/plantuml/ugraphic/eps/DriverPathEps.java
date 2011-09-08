@@ -31,59 +31,24 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.eps.EpsGraphics;
-import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UGradient;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
-public class DriverRectangleEps implements UDriver<EpsGraphics> {
-
-	private final ClipContainer clipContainer;
-
-	public DriverRectangleEps(ClipContainer clipContainer) {
-		this.clipContainer = clipContainer;
-	}
+public class DriverPathEps implements UDriver<EpsGraphics> {
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final URectangle rect = (URectangle) ushape;
+		final UPath shape = (UPath) ushape;
 
-		double width = rect.getWidth();
-		double height = rect.getHeight();
+		eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
+		eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
+		eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
+				.getStroke().getDashSpace());
 
-		final UClip clip = clipContainer.getClip();
-		if (clip != null) {
-			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));
-			x = r.x;
-			y = r.y;
-			width = r.width;
-			height = r.height;
-		}
-		
-		final double rx = rect.getRx();
-		final double ry = rect.getRy();
-
-		// Shadow
-		if (rect.getDeltaShadow() != 0) {
-			eps.epsRectangleShadow(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
-		}
-
-		final UGradient gr = param.getGradient();
-		if (gr == null) {
-			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
-			eps.setFillColor(mapper.getMappedColor(param.getBackcolor()));
-			eps.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
-					.getStroke().getDashSpace());
-			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2);
-		} else {
-			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, gr, mapper);
-		}
+		eps.epsPath(x, y, shape);
 
 	}
 }

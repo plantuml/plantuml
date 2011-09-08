@@ -41,6 +41,8 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.Position;
+import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -52,17 +54,19 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable3;
 import net.sourceforge.plantuml.posimo.BezierUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.svek.SvekUtils.PointListIterator;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class Line {
+public class Line implements Moveable {
 
 	private final String ltail;
 	private final String lhead;
@@ -319,6 +323,13 @@ public class Line {
 					this.endHeadColor, fullHeight));
 		}
 
+		if (isOpalisable() == false) {
+			setOpale(false);
+		}
+	}
+
+	private boolean isOpalisable() {
+		return dotPath.getBeziers().size() <= 1;
 	}
 
 	private Point2D.Double getXY(String svg, int color, int height) {
@@ -330,13 +341,77 @@ public class Line {
 
 	}
 
+//	public void patchLineForCluster(List<Cluster> clusters) {
+//		if (clusters != null) {
+//			return;
+//		}
+//		if (link.getEntity1().getType() == EntityType.GROUP) {
+//			final IEntity ent = link.getEntity1();
+//			for (Cluster cl : clusters) {
+//				if (cl.isClusterOf(ent) == false) {
+//					continue;
+//				}
+//				final UPolygon frontier = cl.getSpecificFrontier();
+//				if (frontier == null) {
+//					continue;
+//				}
+//				final double frontierY = frontier.getPoints().get(0).getY();
+//				final double frontierX = frontier.getPoints().get(2).getX();
+//				final Point2D pt = dotPath.getStartPoint();
+//				if (pt.getY() < frontierY) {
+//					System.err.println("frontier = " + frontier);
+//					System.err.println("p1 = " + pt);
+//					final double deltaY = frontierY - pt.getY();
+//					dotPath.forceStartPoint(pt.getX(), frontierY);
+//					if (endHead != null) {
+//						endHead = UGraphicUtils.translate(endHead, 0, deltaY);
+//					}
+//				}
+//			}
+//		}
+//
+//		if (link.getEntity2().getType() == EntityType.GROUP) {
+//			final IEntity ent = link.getEntity2();
+//			for (Cluster cl : clusters) {
+//				if (cl.isClusterOf(ent) == false) {
+//					continue;
+//				}
+//				final UPolygon frontier = cl.getSpecificFrontier();
+//				if (frontier == null) {
+//					continue;
+//				}
+//				final double frontierY = frontier.getPoints().get(0).getY();
+//				final double frontierX = frontier.getPoints().get(2).getX();
+//				final Point2D pt = dotPath.getEndPoint();
+//				if (pt.getY() < frontierY) {
+//					System.err.println("frontier = " + frontier);
+//					System.err.println("p2 = " + pt);
+//					dotPath.forceEndPoint(pt.getX(), frontierY);
+//					final double deltaY = frontierY - pt.getY();
+//					if (startTail != null) {
+//						startTail = UGraphicUtils.translate(startTail, 0, deltaY);
+//					}
+//
+//				}
+//			}
+//		}
+//
+//	}
+
 	public void drawU(UGraphic ug, double x, double y, HtmlColor color) {
+		if (opale) {
+			return;
+		}
+		x += dx;
+		y += dy;
+
 		if (link.isInvis()) {
 			return;
 		}
 		if (this.link.getSpecificColor() != null) {
 			color = this.link.getSpecificColor();
 		}
+
 		ug.getParam().setColor(color);
 		ug.getParam().setBackcolor(null);
 		ug.getParam().setStroke(link.getType().getStroke());
@@ -433,35 +508,6 @@ public class Line {
 		return strategy.getResult() + getDecorDzeta();
 	}
 
-	// private Positionable getStartTailPositionnable() {
-	// if (startTailText == null) {
-	// return null;
-	// }
-	// return new Positionable() {
-	// public Point2D getPosition() {
-	// return startTailLabelXY.;
-	// }
-	//
-	// public Dimension2D getSize() {
-	// return startTailText.calculateDimension(stringBounder);
-	// }
-	// };
-	// }
-	//
-	// private Positionable getEndHeadPositionnable() {
-	// if (endHeadText == null) {
-	// return null;
-	// }
-	// return new Positionable() {
-	// public Point2D getPosition() {
-	// return endHeadLabelXY;
-	// }
-	//
-	// public Dimension2D getSize() {
-	// return endHeadText.calculateDimension(stringBounder);
-	// }
-	// };
-	// }
 
 	public void manageCollision(List<Shape> allShapes) {
 
@@ -568,5 +614,49 @@ public class Line {
 		}
 
 	}
+
+	private double dx;
+	private double dy;
+
+	public void moveSvek(double deltaX, double deltaY) {
+		this.dx += deltaX;
+		this.dy += deltaY;
+	}
+
+	public final DotPath getDotPath() {
+		final DotPath result = new DotPath(dotPath);
+		result.moveSvek(dx, dy);
+		return result;
+	}
+
+	public int getLength() {
+		return link.getLength();
+	}
+
+	private boolean opale;
+
+	public void setOpale(boolean opale) {
+		this.link.setOpale(opale);
+		this.opale = opale;
+
+	}
+
+	public boolean isOpale() {
+		return opale;
+	}
+
+	// public void moveSvek(double deltaX, double deltaY) {
+	// if (startTailLabelXY != null) {
+	// startTailLabelXY.moveSvek(deltaX, deltaY);
+	// }
+	// if (endHeadLabelXY != null) {
+	// endHeadLabelXY.moveSvek(deltaX, deltaY);
+	// }
+	// if (noteLabelXY != null) {
+	// noteLabelXY.moveSvek(deltaX, deltaY);
+	// }
+	// dotPath.moveSvek(deltaX, deltaY);
+	//
+	// }
 
 }

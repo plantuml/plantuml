@@ -36,19 +36,21 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public final class SvekResult implements IEntityImage {
+public final class SvekResult implements IEntityImage, Moveable {
 
 	private final Rose rose = new Rose();
 
 	private final HtmlColor clusterBorder;
-	private final Dimension2D dim;
+	private Dimension2D dim;
 	private final DotData dotData;
 	private final DotStringFactory dotStringFactory;
 
@@ -63,7 +65,7 @@ public final class SvekResult implements IEntityImage {
 		for (Cluster cluster : dotStringFactory.getAllSubCluster()) {
 			cluster.drawU(ug, x, y, clusterBorder, dotData);
 		}
-		
+
 		for (Shape shape : dotStringFactory.getShapes()) {
 			final double minX = shape.getMinX();
 			final double minY = shape.getMinY();
@@ -71,6 +73,7 @@ public final class SvekResult implements IEntityImage {
 		}
 
 		for (Line line : dotStringFactory.getLines()) {
+			// line.patchLineForCluster(dotStringFactory.getAllSubCluster());
 			final HtmlColor color = rose.getHtmlColor(dotData.getSkinParam(), getArrowColorParam(), null);
 			line.drawU(ug, x, y, color);
 		}
@@ -105,10 +108,14 @@ public final class SvekResult implements IEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}
 
+	public void moveSvek(double deltaX, double deltaY) {
+		dotStringFactory.moveSvek(deltaX, deltaY);
+		dim = Dimension2DDouble.delta(dim, deltaX > 0 ? deltaX : 0, deltaY > 0 ? deltaY : 0);
+	}
 
 }

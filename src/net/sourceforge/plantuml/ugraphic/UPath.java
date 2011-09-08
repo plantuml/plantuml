@@ -45,6 +45,18 @@ public class UPath implements UShape, Iterable<USegment> {
 		segments.add(new USegment(coord, pathType));
 	}
 
+	public void moveTo(double x, double y) {
+		add(new double[] { x, y }, USegmentType.SEG_MOVETO);
+	}
+
+	public void lineTo(double x, double y) {
+		add(new double[] { x, y }, USegmentType.SEG_LINETO);
+	}
+
+	public void cubicTo(double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2, double y2) {
+		add(new double[] { ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2 }, USegmentType.SEG_CUBICTO);
+	}
+
 	@Override
 	public String toString() {
 		return segments.toString();

@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6910 $
+ * Revision $Revision: 7216 $
  *
  */
 package net.sourceforge.plantuml.svg;
 
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -52,7 +53,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.ugraphic.ShadowManager;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
@@ -393,15 +396,15 @@ public class SvgGraphics {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
 			if (type == USegmentType.SEG_MOVETO) {
-				sb.append("M" + (coord[0] + x) + "," + (coord[1] + y) + " ");
+				sb.append("M" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
 			} else if (type == USegmentType.SEG_LINETO) {
-				sb.append("L" + (coord[0] + x) + "," + (coord[1] + y) + " ");
+				sb.append("L" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
 			} else if (type == USegmentType.SEG_QUADTO) {
-				sb.append("Q" + (coord[0] + x) + "," + (coord[1] + y) + " " + (coord[2] + x) + "," + (coord[3] + y)
+				sb.append("Q" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + "," + format(coord[3] + y)
 						+ " ");
 			} else if (type == USegmentType.SEG_CUBICTO) {
-				sb.append("C" + (coord[0] + x) + "," + (coord[1] + y) + " " + (coord[2] + x) + "," + (coord[3] + y)
-						+ " " + (coord[4] + x) + "," + (coord[5] + y) + " ");
+				sb.append("C" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + "," + format(coord[3] + y)
+						+ " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
 			} else {
@@ -466,5 +469,39 @@ public class SvgGraphics {
 		currentPath = null;
 
 	}
+
+	// Shadow
+	final private ShadowManager shadowManager = new ShadowManager(80, 200);
+
+	public void svgRectangleShadow(double x, double y, double width, double height, double rx, double ry,
+			double deltaShadow) {
+
+		setStrokeColor(null);
+		for (double i = 0; i <= deltaShadow; i += 0.5) {
+			setFillColor(StringUtils.getAsHtml(shadowManager.getColor(i, deltaShadow)));
+			final double diff = i;
+			svgRectangle(x + deltaShadow + diff, y + deltaShadow + diff, width - 2 * diff, height - 2 * diff, rx + 1,
+					ry + 1);
+		}
+	}
+
+	public void svgPolygonShadow(double deltaShadow, double... points) {
+		setStrokeColor(null);
+		for (double i = 0; i <= deltaShadow; i += 0.5) {
+			setFillColor(StringUtils.getAsHtml(shadowManager.getColor(i, deltaShadow)));
+			final double diff = i;
+			svgPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, diff, points));
+		}
+	}
+	
+	public void svgEllipseShadow(double x, double y, double xRadius, double yRadius, double deltaShadow) {
+		setStrokeColor(null);
+		for (double i = 0; i <= deltaShadow; i += 0.5) {
+			setFillColor(StringUtils.getAsHtml(shadowManager.getColor(i, deltaShadow)));
+			final double diff = i;
+			svgEllipse(x + deltaShadow, y + deltaShadow, xRadius - diff, yRadius - diff);
+		}
+	}
+
 
 }

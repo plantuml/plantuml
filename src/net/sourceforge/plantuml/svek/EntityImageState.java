@@ -100,7 +100,9 @@ public class EntityImageState extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
-		rect.setDeltaShadow(4);
+		if (getSkinParam().shadowing()) {
+			rect.setDeltaShadow(4);
+		}
 
 		ug.getParam().setStroke(new UStroke(1.5));
 		ug.getParam().setColor(getColor(ColorParam.stateBorder, getStereo()));
@@ -130,7 +132,7 @@ public class EntityImageState extends AbstractEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.ROUND_RECTANGLE;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}

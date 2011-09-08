@@ -59,4 +59,8 @@ public class PositionableImpl implements Positionable {
 		return dim;
 	}
 
+	public void moveSvek(double deltaX, double deltaY) {
+		this.pos.setLocation(pos.getX() + deltaX, pos.getY() + deltaY);
+	}
+
 }
