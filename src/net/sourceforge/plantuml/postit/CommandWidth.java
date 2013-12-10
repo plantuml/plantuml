@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -40,15 +40,15 @@ import net.sourceforge.plantuml.command.SingleLineCommand;
 
 public class CommandWidth extends SingleLineCommand<PostItDiagram> {
 
-	public CommandWidth(PostItDiagram system) {
-		super(system, "(?i)^width\\s+(\\d+)$");
+	public CommandWidth() {
+		super("(?i)^width\\s+(\\d+)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(PostItDiagram system, List<String> arg) {
 
 		final int width = Integer.parseInt(arg.get(0));
-		getSystem().setWidth(width);
+		system.setWidth(width);
 		return CommandExecutionResult.ok();
 	}
 

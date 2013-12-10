@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,19 +37,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.PSystem;
+import net.sourceforge.plantuml.core.Diagram;
 
-public abstract class CommandMultilinesBracket<S extends PSystem> implements Command {
-
-	private final S system;
+public abstract class CommandMultilinesBracket<S extends Diagram> implements Command<S> {
 
 	private final Pattern starting;
 
-	public CommandMultilinesBracket(final S system, String patternStart) {
+	public CommandMultilinesBracket(String patternStart) {
 		if (patternStart.startsWith("(?i)^") == false || patternStart.endsWith("$") == false) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
 		}
-		this.system = system;
 		this.starting = Pattern.compile(patternStart);
 	}
 
@@ -64,20 +61,8 @@ public abstract class CommandMultilinesBracket<S extends PSystem> implements Com
 	protected void actionIfCommandValid() {
 	}
 
-	protected S getSystem() {
-		return system;
-	}
-
 	protected final Pattern getStartingPattern() {
 		return starting;
-	}
-
-	public boolean isDeprecated(List<String> line) {
-		return false;
-	}
-
-	public String getHelpMessageForDeprecated(List<String> lines) {
-		return null;
 	}
 
 	final public CommandControl isValid(List<String> lines) {

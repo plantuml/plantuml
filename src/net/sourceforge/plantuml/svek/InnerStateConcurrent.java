@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,7 +36,9 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -53,25 +55,21 @@ public final class InnerStateConcurrent implements IEntityImage {
 	public final static double THICKNESS_BORDER = 1.5;
 	private static final int DASH = 8;
 
-	public void drawU(UGraphic ug, double x, double y) {
-
-		final Dimension2D dim = getDimension(ug.getStringBounder());
+	public void drawU(UGraphic ug) {
+		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		final UShape rect = new URectangle(dim.getWidth(), dim.getHeight());
-		ug.getParam().setBackcolor(null);
-		ug.getParam().setColor(HtmlColor.BLACK);
-		ug.getParam().setStroke(new UStroke(DASH, 10, THICKNESS_BORDER));
-		ug.draw(x, y, rect);
-		ug.getParam().setStroke(new UStroke());
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug.apply(new UStroke(DASH, 10, THICKNESS_BORDER)).draw(rect);
 
-		im.drawU(ug, x, y);
+		im.drawU(ug);
 	}
 
 	public HtmlColor getBackcolor() {
 		return null;
 	}
 
-	public Dimension2D getDimension(StringBounder stringBounder) {
-		final Dimension2D img = im.getDimension(stringBounder);
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		final Dimension2D img = im.calculateDimension(stringBounder);
 
 		return img;
 	}
@@ -79,10 +77,13 @@ public final class InnerStateConcurrent implements IEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}
 
+	public boolean isHidden() {
+		return im.isHidden();
+	}
 
 }

@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 /**
@@ -300,8 +301,8 @@ public class ConfigParameters {
   }
 
 private Color decodeInternal(String value) {
-	if (HtmlColor.isValid(value)) {
-		  return new ColorMapperIdentity().getMappedColor(HtmlColor.getColorIfValid(value));
+	if (HtmlColorUtils.getColorIfValid(value)!=null) {
+		  return new ColorMapperIdentity().getMappedColor(HtmlColorUtils.getColorIfValid(value));
 	}
 	return Color.decode(value);
 }

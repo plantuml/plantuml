@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import net.sourceforge.plantuml.Log;
 
 public class MagicTable {
 
@@ -191,18 +193,18 @@ public class MagicTable {
 				long dur = (System.currentTimeMillis() - start) / 1000L;
 				dur = dur * nb / 100;
 				dur = dur / 3600;
-				System.err.println("Estimated duration = " + dur + " h");
+				Log.println("Estimated duration = " + dur + " h");
 			}
 			final MagicTable mt = new MagicTable();
 			final int v = MagicTable.size(rnd, mt);
 			if (v > max) {
-				System.err.println(v);
-				System.err.println(mt.getAllUsed());
+				Log.println("v="+v);
+				Log.println("mt="+mt.getAllUsed());
 				max = v;
 			}
 		}
 		final long duration = System.currentTimeMillis() - start;
-		System.err.println("Duration = " + duration / 1000L / 60);
+		Log.println("Duration = " + duration / 1000L / 60);
 
 	}
 
@@ -215,14 +217,14 @@ public class MagicTable {
 				final MagicTable mt = new MagicTable();
 				final int v = MagicTable.size(rnd, mt);
 				if (v > max) {
-					System.err.println(v);
-					System.err.println(mt.getAllUsed());
+					Log.println("v="+v);
+					Log.println("mt="+mt.getAllUsed());
 					max = v;
 				}
 			}
 		}
 		final long duration = System.currentTimeMillis() - start;
-		System.err.println("Duration = " + duration / 1000L / 60);
+		Log.println("Duration = " + duration / 1000L / 60);
 
 	}
 

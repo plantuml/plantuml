@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6702 $
+ * Revision $Revision: 12022 $
  *
  */
 package net.sourceforge.plantuml;
@@ -65,7 +65,7 @@ public class Option {
 
 	private File outputDir = null;
 	private File outputFile = null;
-	
+
 	private final List<String> result = new ArrayList<String>();
 
 	public Option() {
@@ -89,6 +89,8 @@ public class Option {
 			String s = arg[i];
 			if (s.equalsIgnoreCase("-tsvg") || s.equalsIgnoreCase("-svg")) {
 				setFileFormat(FileFormat.SVG);
+			} else if (s.equalsIgnoreCase("-thtml") || s.equalsIgnoreCase("-html")) {
+				setFileFormat(FileFormat.HTML);
 			} else if (s.equalsIgnoreCase("-txmi") || s.equalsIgnoreCase("-xmi")) {
 				setFileFormat(FileFormat.XMI_STANDARD);
 			} else if (s.equalsIgnoreCase("-txmi:argo") || s.equalsIgnoreCase("-xmi:argo")) {
@@ -99,15 +101,18 @@ public class Option {
 				setFileFormat(FileFormat.EPS);
 			} else if (s.equalsIgnoreCase("-teps:text") || s.equalsIgnoreCase("-eps:text")) {
 				setFileFormat(FileFormat.EPS_TEXT);
-			} else if (s.equalsIgnoreCase("-tdot") || s.equalsIgnoreCase("-dot")) {
-				setFileFormat(FileFormat.DOT);
-				OptionFlags.getInstance().setKeepTmpFiles(true);
 			} else if (s.equalsIgnoreCase("-ttxt") || s.equalsIgnoreCase("-txt")) {
 				setFileFormat(FileFormat.ATXT);
 			} else if (s.equalsIgnoreCase("-tutxt") || s.equalsIgnoreCase("-utxt")) {
 				setFileFormat(FileFormat.UTXT);
+			} else if (s.equalsIgnoreCase("-png") || s.equalsIgnoreCase("-tpng")) {
+				setFileFormat(FileFormat.PNG);
+			} else if (s.equalsIgnoreCase("-vdx") || s.equalsIgnoreCase("-tvdx")) {
+				setFileFormat(FileFormat.VDX);
 			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
 				setFileFormat(FileFormat.PDF);
+			} else if (s.equalsIgnoreCase("-overwrite")) {
+				OptionFlags.getInstance().setOverwrite(true);
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {
 				i++;
 				if (i == arg.length) {
@@ -166,14 +171,9 @@ public class Option {
 				initConfig(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
 			} else if (s.equalsIgnoreCase("-computeurl") || s.equalsIgnoreCase("-encodeurl")) {
 				this.computeurl = true;
-			} else if (s.startsWith("-c")) {
-				s = s.substring(2);
-				config.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
 			} else if (s.startsWith("-x")) {
 				s = s.substring(2);
 				excludes.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
-			} else if (s.equalsIgnoreCase("-debugdot")) {
-				OptionFlags.getInstance().setDebugDot(true);
 			} else if (s.equalsIgnoreCase("-verbose") || s.equalsIgnoreCase("-v")) {
 				OptionFlags.getInstance().setVerbose(true);
 			} else if (s.equalsIgnoreCase("-pipe") || s.equalsIgnoreCase("-p")) {
@@ -199,16 +199,16 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-word")) {
 				OptionFlags.getInstance().setWord(true);
 				OptionFlags.getInstance().setQuiet(true);
-			} else if (s.equalsIgnoreCase("-forcegd")) {
-				OptionFlags.getInstance().setForceGd(true);
-			} else if (s.equalsIgnoreCase("-forcecairo")) {
-				OptionFlags.getInstance().setForceCairo(true);
 			} else if (s.equalsIgnoreCase("-quiet")) {
 				OptionFlags.getInstance().setQuiet(true);
 			} else if (s.equalsIgnoreCase("-decodeurl")) {
 				this.decodeurl = true;
 			} else if (s.equalsIgnoreCase("-version")) {
 				OptionPrint.printVersion();
+			} else if (s.matches("(?i)^-li[sc][ea]n[sc]e\\s*$")) {
+				OptionPrint.printLicense();
+			} else if (s.equalsIgnoreCase("-checkversion")) {
+				OptionPrint.checkVersion();
 			} else if (s.startsWith("-D")) {
 				manageDefine(s.substring(2));
 			} else if (s.startsWith("-S")) {
@@ -223,6 +223,8 @@ public class Option {
 				OptionPrint.printLanguage();
 			} else if (s.equalsIgnoreCase("-gui")) {
 				OptionFlags.getInstance().setGui(true);
+			} else if (s.equalsIgnoreCase("-encodesprite")) {
+				OptionFlags.getInstance().setEncodesprite(true);
 			} else if (s.equalsIgnoreCase("-nosuggestengine")) {
 				OptionFlags.getInstance().setUseSuggestEngine(false);
 			} else if (s.equalsIgnoreCase("-failonerror")) {
@@ -236,6 +238,9 @@ public class Option {
 				} else {
 					this.ftpPort = Integer.parseInt(s.substring(x + 1));
 				}
+			} else if (s.startsWith("-c")) {
+				s = s.substring(2);
+				config.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
 			} else {
 				result.add(s);
 			}
@@ -289,7 +294,7 @@ public class Option {
 	}
 
 	public final static String getPattern() {
-		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt)$";
+		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu)$";
 	}
 
 	public void setOutputDir(File f) {

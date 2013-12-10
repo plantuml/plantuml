@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -50,30 +50,29 @@ public class UMotif {
 			points.add(new Point2D.Double(data[i], data[i + 1]));
 		}
 	}
-	
+
 	public UMotif(String s) {
 		final Point2D last = new Point2D.Double();
 		for (int i = 0; i < s.length(); i++) {
 			final Point2D read = convertPoint(s.charAt(i));
-			last.setLocation(last.getX() + read.getX(), last.getY()
-					+ read.getY());
+			last.setLocation(last.getX() + read.getX(), last.getY() + read.getY());
 			points.add(new Point2D.Double(last.getX(), last.getY()));
 		}
 	}
 
 	double getLength() {
-		return points.get(0).distance(points.get(points.size()-1));
+		return points.get(0).distance(points.get(points.size() - 1));
 	}
 
 	List<Point2D> getPoints() {
 		return Collections.unmodifiableList(points);
 	}
-	
+
 	public DotPath getRectangle(double width, double height) {
 		final double len = getLength();
-		final int nb1 = (int)(width / len);
+		final int nb1 = (int) (width / len);
 		DotPath h1 = drawHorizontal(0, 0, nb1);
-		final int nb2 = (int)(height / len);
+		final int nb2 = (int) (height / len);
 		final DotPath v1 = drawVertical(h1.getEndPoint().getX(), h1.getEndPoint().getY(), nb2);
 		h1 = h1.addAfter(v1);
 		return h1;
@@ -108,12 +107,12 @@ public class UMotif {
 
 	public void drawHorizontal(UGraphic ug, double x, double y, int nb) {
 		final DotPath path = drawHorizontal(x, y, nb);
-		ug.draw(0, 0, path);
+		ug.draw(path);
 	}
 
 	public void drawVertical(UGraphic ug, double x, double y, int nb) {
 		final DotPath path = drawVertical(x, y, nb);
-		ug.draw(0, 0, path);
+		ug.draw(path);
 	}
 
 	DotPath drawHorizontal(double x, double y, int nb) {
@@ -144,8 +143,7 @@ public class UMotif {
 			final double y1 = lasty + y;
 			final double x2 = p.getX() + x;
 			final double y2 = p.getY() + y;
-			path = path.addAfter(new CubicCurve2D.Double(x1, y1, x1, y1, x2,
-					y2, x2, y2));
+			path = path.addAfter(new CubicCurve2D.Double(x1, y1, x1, y1, x2, y2, x2, y2));
 			lastx = p.getX();
 			lasty = p.getY();
 		}
@@ -160,8 +158,7 @@ public class UMotif {
 			final double y1 = lasty + y;
 			final double x2 = p.getY() + x;
 			final double y2 = p.getX() + y;
-			path = path.addAfter(new CubicCurve2D.Double(x1, y1, x1, y1, x2,
-					y2, x2, y2));
+			path = path.addAfter(new CubicCurve2D.Double(x1, y1, x1, y1, x2, y2, x2, y2));
 			lastx = p.getY();
 			lasty = p.getX();
 		}

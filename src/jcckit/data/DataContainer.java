@@ -18,8 +18,8 @@
  */
 package jcckit.data;
 
-import java.text.*;
-import java.util.*;
+import java.text.MessageFormat;
+import java.util.Vector;
 
 /**
  * Abstract superclass of all data containers. A data container holds an

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,18 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6046 $
+ * Revision $Revision: 12001 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseGroupingSpace;
 
 public class TextSkin implements Skin {
 
@@ -49,7 +51,8 @@ public class TextSkin implements Skin {
 		this.fileFormat = fileFormat;
 	}
 
-	public Component createComponent(ComponentType type, ISkinParam param, List<? extends CharSequence> stringsToDisplay) {
+	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
 		if (type == ComponentType.PARTICIPANT_HEAD || type == ComponentType.PARTICIPANT_TAIL) {
 			return new ComponentTextParticipant(type, stringsToDisplay, fileFormat);
 		}
@@ -57,12 +60,11 @@ public class TextSkin implements Skin {
 			return new ComponentTextActor(type, stringsToDisplay, fileFormat);
 		}
 		if (type.isArrow()
-				&& (type.getArrowConfiguration().isLeftToRightNormal() || type.getArrowConfiguration()
-						.isRightToLeftReverse())) {
-			return new ComponentTextArrow(type, stringsToDisplay, fileFormat);
+				&& ((config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) || (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE))) {
+			return new ComponentTextArrow(type, config, stringsToDisplay, fileFormat);
 		}
-		if (type.isArrow() && type.getArrowConfiguration().isSelfArrow()) {
-			return new ComponentTextSelfArrow(type, stringsToDisplay, fileFormat);
+		if (type.isArrow() && config.isSelfArrow()) {
+			return new ComponentTextSelfArrow(type, config, stringsToDisplay, fileFormat);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			return new ComponentTextLine(fileFormat);
@@ -94,14 +96,14 @@ public class TextSkin implements Skin {
 		if (type == ComponentType.GROUPING_HEADER) {
 			return new ComponentTextGroupingHeader(type, stringsToDisplay, fileFormat);
 		}
-		if (type == ComponentType.GROUPING_BODY) {
-			return new ComponentTextGroupingBody(type, stringsToDisplay, fileFormat);
-		}
-		if (type == ComponentType.GROUPING_TAIL) {
-			return new ComponentTextGroupingTail(type, stringsToDisplay, fileFormat);
+		if (type == ComponentType.GROUPING_SPACE) {
+			return new ComponentRoseGroupingSpace(1);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
 			return new ComponentTextGroupingElse(type, stringsToDisplay, fileFormat);
+		}
+		if (type == ComponentType.NEWPAGE) {
+			return new ComponentTextNewpage(fileFormat);
 		}
 		throw new UnsupportedOperationException(type.toString());
 	}

@@ -1,6 +1,8 @@
 package com.ctreber.acearth.util;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * <p>Calculates the position of the point on Earth which is directly

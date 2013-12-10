@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,12 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3836 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class SequenceDiagramArea {
 
@@ -115,27 +115,27 @@ public class SequenceDiagramArea {
 		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin;
 	}
 
-	public double getFooterX(HorizontalAlignement align) {
-		if (align == HorizontalAlignement.LEFT) {
+	public double getFooterX(HorizontalAlignment align) {
+		if (align == HorizontalAlignment.LEFT) {
 			return 0;
 		}
-		if (align == HorizontalAlignement.RIGHT) {
+		if (align == HorizontalAlignment.RIGHT) {
 			return getWidth() - footerWidth;
 		}
-		if (align == HorizontalAlignement.CENTER) {
+		if (align == HorizontalAlignment.CENTER) {
 			return (getWidth() - footerWidth) / 2;
 		}
 		throw new IllegalStateException();
 	}
 
-	public double getHeaderX(HorizontalAlignement align) {
-		if (align == HorizontalAlignement.LEFT) {
+	public double getHeaderX(HorizontalAlignment align) {
+		if (align == HorizontalAlignment.LEFT) {
 			return 0;
 		}
-		if (align == HorizontalAlignement.RIGHT) {
+		if (align == HorizontalAlignment.RIGHT) {
 			return getWidth() - headerWidth;
 		}
-		if (align == HorizontalAlignement.CENTER) {
+		if (align == HorizontalAlignment.CENTER) {
 			return (getWidth() - headerWidth) / 2;
 		}
 		throw new IllegalStateException();

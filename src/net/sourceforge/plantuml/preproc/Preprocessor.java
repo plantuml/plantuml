@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6502 $
+ * Revision $Revision: 9911 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -41,16 +41,16 @@ import java.util.regex.Pattern;
 
 public class Preprocessor implements ReadLine {
 
-	private static final Pattern definePattern = Pattern.compile("^\\s*!define\\s+([A-Za-z_][A-Za-z_0-9]*)(?:\\s+(.*))?$");
+	private static final Pattern definePattern = Pattern.compile("^\\s*!define\\s+([A-Za-z_][A-Za-z_0-9]*(?:\\([A-Za-z_][A-Za-z_0-9]*\\))?)(?:\\s+(.*))?$");
 	private static final Pattern undefPattern = Pattern.compile("^\\s*!undef\\s+([A-Za-z_][A-Za-z_0-9]*)$");
 
 	private final Defines defines;
 	private final PreprocessorInclude rawSource;
 	private final IfManager source;
 
-	public Preprocessor(ReadLine reader, Defines defines, Set<File> filesUsed, File newCurrentDir) {
+	public Preprocessor(ReadLine reader, String charset, Defines defines, Set<File> filesUsed, File newCurrentDir) {
 		this.defines = defines;
-		this.rawSource = new PreprocessorInclude(reader, filesUsed, newCurrentDir);
+		this.rawSource = new PreprocessorInclude(reader, charset, filesUsed, newCurrentDir);
 		this.source = new IfManager(rawSource, defines);
 	}
 

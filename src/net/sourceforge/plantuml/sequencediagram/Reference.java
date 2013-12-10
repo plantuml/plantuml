@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class Reference implements Event {
@@ -47,9 +48,10 @@ public class Reference implements Event {
 	private final HtmlColor backColorGeneral;
 	private final HtmlColor backColorElement;
 
-	private final List<String> strings;
+	private final Display strings;
 
-	public Reference(List<Participant> participants, Url url, List<String> strings, HtmlColor backColorGeneral, HtmlColor backColorElement) {
+	public Reference(List<Participant> participants, Url url, Display strings, HtmlColor backColorGeneral,
+			HtmlColor backColorElement) {
 		this.participants = participants;
 		this.url = url;
 		this.strings = strings;
@@ -61,7 +63,7 @@ public class Reference implements Event {
 		return Collections.unmodifiableList(participants);
 	}
 
-	public List<String> getStrings() {
+	public Display getStrings() {
 		return strings;
 	}
 
@@ -71,6 +73,10 @@ public class Reference implements Event {
 
 	public final Url getUrl() {
 		return url;
+	}
+
+	public boolean hasUrl() {
+		return url != null;
 	}
 
 	@Override

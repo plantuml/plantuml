@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,10 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7143 $
+ * Revision $Revision: 11437 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
+
+import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.Dimension2DDouble;
 
 public class UEllipse extends AbstractShadowable {
 
@@ -58,7 +62,7 @@ public class UEllipse extends AbstractShadowable {
 	public double getHeight() {
 		return height;
 	}
-
+	
 	public final double getStart() {
 		return start;
 	}
@@ -66,4 +70,27 @@ public class UEllipse extends AbstractShadowable {
 	public final double getExtend() {
 		return extend;
 	}
+
+	public Dimension2D getDimension() {
+		return new Dimension2DDouble(width, height);
+	}
+
+	public UEllipse bigger(double more) {
+		final UEllipse result = new UEllipse(width + more, height + more);
+		result.setDeltaShadow(getDeltaShadow());
+		return result;
+	}
+
+	public double getStartingX(double y) {
+		y = y / height * 2;
+		final double x = 1 - Math.sqrt(1 - (y - 1) * (y - 1));
+		return x * width / 2;
+	}
+
+	public double getEndingX(double y) {
+		y = y / height * 2;
+		final double x = 1 + Math.sqrt(1 - (y - 1) * (y - 1));
+		return x * width / 2;
+	}
+
 }

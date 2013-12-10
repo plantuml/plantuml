@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,35 +33,36 @@ package net.sourceforge.plantuml.directdot;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 
 public class PSystemDot extends AbstractPSystem {
 
 	private final String data;
 
-	public PSystemDot(String data) throws UnsupportedEncodingException {
+	public PSystemDot(String data) {
 		this.data = data;
 	}
 
-	public String getDescription() {
-		return "(Dot)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(Dot)", getClass());
 	}
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		final Graphviz graphviz = GraphvizUtils.create(data, fileFormatOption.getFileFormat().name().toLowerCase());
-		try {
-			graphviz.createFile(os);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new IOException(e.toString());
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		final Graphviz graphviz = GraphvizUtils.create(data, fileFormat.getFileFormat().name().toLowerCase());
+		final ProcessState state = graphviz.createFile3(os);
+		if (state != ProcessState.TERMINATED_OK) {
+			throw new IllegalStateException("Timeout1 " + state);
 		}
 
+		return new ImageDataSimple();
 	}
 }

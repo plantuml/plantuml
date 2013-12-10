@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,43 +28,62 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	private final HtmlColor groupBorder;
+	private final HtmlColor backgroundColor;
+	private final UStroke stroke;
 
-	public ComponentRoseGroupingElse(HtmlColor fontColor, HtmlColor groupBorder, UFont smallFont, CharSequence comment) {
-		super(comment == null ? null : "[" + comment + "]", fontColor, smallFont, HorizontalAlignement.LEFT, 5, 5, 1);
+	public ComponentRoseGroupingElse(HtmlColor fontColor, HtmlColor groupBorder, UFont smallFont, CharSequence comment,
+			SpriteContainer spriteContainer, HtmlColor backgroundColor, UStroke stroke) {
+		super(comment == null ? null : "[" + comment + "]", fontColor, smallFont, HorizontalAlignment.LEFT, 5, 5, 1,
+				spriteContainer, 0);
 		this.groupBorder = groupBorder;
+		this.backgroundColor = backgroundColor;
+		this.stroke = stroke;
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
-		stroke(ug, 2, 2);
-		ug.getParam().setColor(groupBorder);
-		ug.draw(0, 1, new ULine(dimensionToUse.getWidth(), 0));
-		ug.getParam().setStroke(new UStroke());
-		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
+	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
+		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backgroundColor)).draw(rect);
+	}
+
+	@Override
+	protected void drawInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		ug = stroke(ug, 2, 2).apply(new UChangeColor(groupBorder));
+		ug.apply(new UTranslate(0, 1)).draw(new ULine(dimensionToUse.getWidth(), 0));
+		ug = ug.apply(new UStroke());
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return 15;
+		return getTextHeight(stringBounder);
 	}
 
 	@Override

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5721 $
+ * Revision $Revision: 12053 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram;
@@ -39,13 +39,15 @@ import java.util.List;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Entity;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class ActivityDiagram extends CucaDiagram {
 
@@ -53,27 +55,32 @@ public class ActivityDiagram extends CucaDiagram {
 	private IEntity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
+	public ILeaf getOrCreateLeaf(Code code, LeafType type) {
+		return getOrCreateLeafDefault(code, type);
+	}
+
 	private String getAutoBranch() {
 		return "#" + UniqueSequence.getValue();
 	}
 
-	public IEntity getOrCreate(String code, String display, EntityType type) {
+	public IEntity getOrCreate(Code code, Display display, LeafType type) {
 		final IEntity result;
-		if (entityExist(code)) {
-			result = super.getOrCreateEntity(code, type);
-			if (result.getType() != type) {
-				throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
-				// return null;
+		if (leafExist(code)) {
+			result = getOrCreateLeafDefault(code, type);
+			if (result.getEntityType() != type) {
+				// throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
+				return null;
 			}
 		} else {
-			result = createEntity(code, display, type);
+			result = createLeaf(code, display, type);
 		}
 		updateLasts(result);
 		return result;
 	}
 
-	public void startIf(String optionalCode) {
-		final IEntity br = createEntity(optionalCode == null ? getAutoBranch() : optionalCode, "", EntityType.BRANCH);
+	public void startIf(Code optionalCode) {
+		final IEntity br = createLeaf(optionalCode == null ? Code.of(getAutoBranch()) : optionalCode,
+				Display.asList(""), LeafType.BRANCH);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
 
@@ -81,44 +88,33 @@ public class ActivityDiagram extends CucaDiagram {
 		currentContext = currentContext.getParent();
 	}
 
-	public IEntity getStart() {
-		return getOrCreate("start", "start", EntityType.CIRCLE_START);
+	public ILeaf getStart() {
+		return (ILeaf) getOrCreate(Code.of("start"), Display.getWithNewlines("start"), LeafType.CIRCLE_START);
 	}
 
-	public IEntity getEnd() {
-		return getOrCreate("end", "end", EntityType.CIRCLE_END);
-	}
-
-	final public Link getLastActivityLink() {
-		final List<Link> links = getLinks();
-		for (int i = links.size() - 1; i >= 0; i--) {
-			final Link link = links.get(i);
-			if (link.getEntity1().getType() != EntityType.NOTE && link.getEntity2().getType() != EntityType.NOTE) {
-				return link;
-			}
-		}
-		return null;
+	public ILeaf getEnd() {
+		return (ILeaf) getOrCreate(Code.of("end"), Display.getWithNewlines("end"), LeafType.CIRCLE_END);
 	}
 
 	private void updateLasts(final IEntity result) {
-		if (result.getType() == EntityType.NOTE) {
+		if (result.getEntityType() == LeafType.NOTE) {
 			return;
 		}
 		this.lastEntityConsulted = result;
-		if (result.getType() == EntityType.BRANCH) {
+		if (result.getEntityType() == LeafType.BRANCH) {
 			lastEntityBrancheConsulted = result;
 		}
 	}
 
 	@Override
-	public Entity createEntity(String code, String display, EntityType type) {
-		final Entity result = super.createEntity(code, display, type);
+	public ILeaf createLeaf(Code code, Display display, LeafType type) {
+		final ILeaf result = super.createLeaf(code, display, type);
 		updateLasts(result);
 		return result;
 	}
 
-	public Entity createNote(String code, String display) {
-		return super.createEntity(code, display, EntityType.NOTE);
+	public IEntity createNote(Code code, Display display) {
+		return super.createLeaf(code, display, LeafType.NOTE);
 	}
 
 	final protected List<String> getDotStrings() {
@@ -126,8 +122,8 @@ public class ActivityDiagram extends CucaDiagram {
 				"node [fontsize=11];");
 	}
 
-	public String getDescription() {
-		return "(" + entities().size() + " activities)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(" + getLeafs().size() + " activities)", getClass());
 	}
 
 	public IEntity getLastEntityConsulted() {
@@ -153,29 +149,31 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public IEntity createInnerActivity() {
-		// System.err.println("createInnerActivity A");
-		final String code = "##" + UniqueSequence.getValue();
-		final Group g = getOrCreateGroup(code, code, null, GroupType.INNER_ACTIVITY, getCurrentGroup());
+		// Log.println("createInnerActivity A");
+		final Code code = Code.of("##" + UniqueSequence.getValue());
+		final IEntity g = getOrCreateGroup(code, Display.getWithNewlines(code), null, GroupType.INNER_ACTIVITY,
+				getCurrentGroup());
 		// g.setRankdir(Rankdir.LEFT_TO_RIGHT);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
-		// System.err.println("createInnerActivity B "+getCurrentGroup());
-		return g.getEntityCluster();
+		// Log.println("createInnerActivity B "+getCurrentGroup());
+		return g;
 	}
 
 	public void concurrentActivity(String name) {
-		// System.err.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
-		if (getCurrentGroup().getType() == GroupType.CONCURRENT_ACTIVITY) {
+		// Log.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
+		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_ACTIVITY) {
 			// getCurrentGroup().setRankdir(Rankdir.LEFT_TO_RIGHT);
 			endGroup();
-			System.err.println("endgroup");
+			// Log.println("endgroup");
 		}
-		// System.err.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
-		final String code = "##" + UniqueSequence.getValue();
-		if (getCurrentGroup().getType() != GroupType.INNER_ACTIVITY) {
-			throw new IllegalStateException("type=" + getCurrentGroup().getType());
+		// Log.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
+		final Code code = Code.of("##" + UniqueSequence.getValue());
+		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY) {
+			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
 		}
-		final Group g = getOrCreateGroup(code, "code", null, GroupType.CONCURRENT_ACTIVITY, getCurrentGroup());
+		getOrCreateGroup(code, Display.getWithNewlines("code"), null, GroupType.CONCURRENT_ACTIVITY,
+				getCurrentGroup());
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
 	}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,7 +34,6 @@
 package net.sourceforge.plantuml.command.regex;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,9 +49,6 @@ public abstract class RegexComposed implements IRegex {
 
 	public RegexComposed(IRegex... partial) {
 		this.partials = Arrays.asList(partial);
-		if (partials.size() < 2) {
-			throw new IllegalArgumentException();
-		}
 	}
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
@@ -75,14 +71,14 @@ public abstract class RegexComposed implements IRegex {
 		return 0;
 	}
 
-	public Map<String, RegexPartialMatch> matcher(String s) {
+	public RegexResult matcher(String s) {
 		final Matcher matcher = getFull().matcher(s);
 		if (matcher.find() == false) {
 			throw new IllegalArgumentException(getClass()+" "+s);
 		}
 
 		final Iterator<String> it = new MatcherIterator(matcher);
-		return Collections.unmodifiableMap(createPartialMatch(it));
+		return new RegexResult(createPartialMatch(it));
 	}
 
 	final public boolean match(String s) {

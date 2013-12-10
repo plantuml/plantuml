@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 10778 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -36,21 +36,22 @@ package net.sourceforge.plantuml.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
 
 public class CommandEndPackage extends SingleLineCommand<AbstractEntityDiagram> {
 
-	public CommandEndPackage(AbstractEntityDiagram diagram) {
-		super(diagram, "(?i)^(end ?package|\\})$");
+	public CommandEndPackage() {
+		super("(?i)^(end ?package|\\})$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Group currentPackage = getSystem().getCurrentGroup();
-		if (currentPackage == null) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, List<String> arg) {
+		final IGroup currentPackage = diagram.getCurrentGroup();
+		if (EntityUtils.groupRoot(currentPackage)) {
 			return CommandExecutionResult.error("No package defined");
 		}
-		getSystem().endGroup();
+		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}
 

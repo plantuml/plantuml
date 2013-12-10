@@ -18,8 +18,8 @@
  */
 package jcckit.plot;
 
-import jcckit.graphic.GraphicalElement;
 import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicalElement;
 
 /**
  * A curve is defined by a sequence of points in device-independent

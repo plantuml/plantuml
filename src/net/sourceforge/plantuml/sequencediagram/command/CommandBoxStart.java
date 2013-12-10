@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,26 +35,27 @@ package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandBoxStart extends SingleLineCommand<SequenceDiagram> {
 
-	public CommandBoxStart(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^box(?:\\s+\"([^\"]+)\")?(?:\\s+(#\\w+))?$");
+	public CommandBoxStart() {
+		super("(?i)^box(?:\\s+\"([^\"]+)\")?(?:\\s+(#\\w+))?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		if (getSystem().isBoxPending()) {
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
+		if (sequenceDiagram.isBoxPending()) {
 			return CommandExecutionResult.error("Box cannot be nested");
 		}
-		final HtmlColor color = HtmlColor.getColorIfValid(arg.get(1));
+		final HtmlColor color = HtmlColorUtils.getColorIfValid(arg.get(1));
 		final String title = arg.get(0) == null ? "" : arg.get(0);
-		getSystem().boxStart(StringUtils.getWithNewlines(title), color);
+		sequenceDiagram.boxStart(Display.getWithNewlines(title), color);
 		return CommandExecutionResult.ok();
 	}
 

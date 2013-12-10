@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,25 +36,30 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class MessageExoArrow extends Arrow {
 
 	private final LivingParticipantBox p;
 	private final MessageExoType type;
+	private final boolean shortArrow;
 
-	public MessageExoArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p, MessageExoType type) {
-		super(startingY, skin, arrow);
-
+	public MessageExoArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p, MessageExoType type,
+			Url url, boolean shortArrow) {
+		super(startingY, skin, arrow, url);
 		this.p = p;
 		this.type = type;
+		this.shortArrow = shortArrow;
 	}
 
 	double getActualWidth(StringBounder stringBounder, double maxX) {
@@ -65,10 +70,12 @@ public class MessageExoArrow extends Arrow {
 
 	private double getLeftStartInternal(StringBounder stringBounder) {
 		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {
-			// return Math.max(0, p.getLiveThicknessAt(stringBounder,
-			// getArrowYStartLevel(stringBounder)).getPos1()
-			// - getPreferredWidth(stringBounder));
-			return 0;
+			if (shortArrow) {
+				return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2()
+						- getPreferredWidth(stringBounder);
+			} else {
+				return 0;
+			}
 		}
 		return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
 	}
@@ -76,6 +83,9 @@ public class MessageExoArrow extends Arrow {
 	private double getRightEndInternal(StringBounder stringBounder, double maxX) {
 		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {
 			return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos1();
+		}
+		if (shortArrow) {
+			return getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder);
 		}
 		return Math.max(maxX, getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder));
 	}
@@ -103,8 +113,10 @@ public class MessageExoArrow extends Arrow {
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.translate(getStartingX(stringBounder), getStartingY());
-		getArrowComponent().drawU(ug, getActualDimension(stringBounder, maxX), context);
+		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));
+		startUrl(ug);
+		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, maxX)), context);
+		endUrl(ug);
 	}
 
 	private Dimension2D getActualDimension(StringBounder stringBounder, double maxX) {

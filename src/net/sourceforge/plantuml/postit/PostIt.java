@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,28 +34,31 @@
 package net.sourceforge.plantuml.postit;
 
 import java.awt.geom.Dimension2D;
-import java.util.Collections;
-import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseNote;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class PostIt {
 
 	private final String id;
-	private final List<String> text;
+	private final Display text;
 
 	private Dimension2D minimunDimension;
 
-	public PostIt(String id, List<String> text) {
+	public PostIt(String id, Display text) {
 		this.id = id;
 		this.text = text;
 	}
@@ -64,8 +67,8 @@ public class PostIt {
 		return id;
 	}
 
-	public List<String> getText() {
-		return Collections.unmodifiableList(text);
+	public Display getText() {
+		return text;
 	}
 
 	public Dimension2D getMinimunDimension() {
@@ -96,18 +99,18 @@ public class PostIt {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimensionToUse = getDimension(stringBounder);
 
-		note.drawU(ug, dimensionToUse, new SimpleContext2D(false));
+		note.drawU(ug, new Area(dimensionToUse), new SimpleContext2D(false));
 
 	}
 
 	private Component getComponent() {
-		final HtmlColor noteBackgroundColor = HtmlColor.getColorIfValid("#FBFB77");
-		final HtmlColor borderColor = HtmlColor.getColorIfValid("#A80036");
+		final HtmlColor noteBackgroundColor = HtmlColorUtils.getColorIfValid("#FBFB77");
+		final HtmlColor borderColor = HtmlColorUtils.getColorIfValid("#A80036");
 
 		final SkinParam param = new SkinParam(null);
 		final UFont fontNote = param.getFont(FontParam.NOTE, null);
-		final ComponentRoseNote note = new ComponentRoseNote(noteBackgroundColor, borderColor, HtmlColor.BLACK,
-				fontNote, text, 0, 0);
+		final ComponentRoseNote note = new ComponentRoseNote(noteBackgroundColor, borderColor, HtmlColorUtils.BLACK,
+				fontNote, text, 0, 0, new SpriteContainerEmpty(), 0, new UStroke());
 		return note;
 	}
 }

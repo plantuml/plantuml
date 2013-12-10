@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -49,7 +49,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.geom.InflationTransform;
 import net.sourceforge.plantuml.geom.Kingdom;
 import net.sourceforge.plantuml.geom.LineSegmentInt;
@@ -233,21 +233,21 @@ public class Graph3 {
 			final Pointable pp1 = nodePoints.get(link.getNode1());
 			final Pointable pp2 = nodePoints.get(link.getNode2());
 			if (kingdom.isSimpleSegmentPossible(pp1.getPosition(), pp2.getPosition())) {
-				System.err.println("OK for " + link);
+				Log.println("OK for " + link);
 				kingdom.addDirectLink(pp1.getPosition(), pp2.getPosition());
 				polylines.add(new PolylineImpl(pp1, pp2));
 			} else {
-				System.err.println("Latter for " + link);
+				Log.println("Latter for " + link);
 				latter.add(link);
 			}
 		}
 
-		System.err.println("latters=" + latter.size());
+		Log.println("latters=" + latter.size());
 		for (ALink link : latter) {
-			System.err.println("Alatter=" + link);
+			Log.println("Alatter=" + link);
 		}
 		for (ALink link : latter) {
-			System.err.println("Blatter=" + link);
+			Log.println("Blatter=" + link);
 			final Pointable pp1 = nodePoints.get(link.getNode1());
 			final Pointable pp2 = nodePoints.get(link.getNode2());
 			polylines.add((PolylineImpl) kingdom.getPath(pp1, pp2));
@@ -257,14 +257,14 @@ public class Graph3 {
 	private void manyPasses(Board board) {
 		final Collection<Collection<XMoveable>> xmoveableGroups = getXMoveables(board);
 
-		System.err.println("COST_INIT=" + getCost());
+		Log.println("COST_INIT=" + getCost());
 		for (int i = 0; i < 300; i++) {
 			final boolean changed = onePass(xmoveableGroups);
 			if (changed == false) {
 				break;
 			}
 		}
-		System.err.println("COST_FIN=" + getCost());
+		Log.println("COST_FIN=" + getCost());
 	}
 
 	private Collection<Collection<XMoveable>> getXMoveables(Board board) {
@@ -317,7 +317,7 @@ public class Graph3 {
 			assert getCost() <= initCost;
 
 		}
-		// System.err.println("COSTB=" + getCost());
+		// Log.println("COSTB=" + getCost());
 		return changed;
 	}
 
@@ -411,9 +411,8 @@ public class Graph3 {
 	}
 
 	public Dimension2D getDimension() {
-		final double width = spaceWidth * maxCol;// + boxWidth * (maxCol +
-		// 1);
-		final int height = spaceWidth * maxRow;// + boxHeight * (maxRow + 1);
+		final double width = spaceWidth * maxCol;
+		final int height = spaceWidth * maxRow; // + boxHeight * (maxRow + 1);
 		return new Dimension2DDouble(width + 2 * margin + addedWidth, height + 2 * margin + addedHeight);
 
 	}
@@ -449,20 +448,18 @@ public class Graph3 {
 		g2d.setColor(Color.BLUE);
 		for (Polyline p : polylines) {
 			if (p == null) {
-				System.err.println("Polyline NULL!!");
+				Log.println("Polyline NULL!!");
 				continue;
 			}
 			for (LineSegmentInt seg : p.segments()) {
-				g2d
-						.drawLine(seg.getP1().getXint(), seg.getP1().getYint(), seg.getP2().getXint(), seg.getP2()
-								.getYint());
+				g2d.drawLine(seg.getP1().getXint(), seg.getP1().getYint(), seg.getP2().getXint(), seg.getP2().getYint());
 			}
 		}
 
 		g2d.setColor(Color.GREEN);
 		for (ANodePoint nodePoint : nodePoints.values()) {
 			final Point2DInt p = nodePoint.getPosition();
-			// System.err.println("p=" + p);
+			// Log.println("p=" + p);
 			final AbstractEntityImage image = getImage(nodePoint.getNode());
 			final int width = (int) (image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth());
 			final int height = (int) (image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight());
@@ -475,7 +472,7 @@ public class Graph3 {
 	}
 
 	private AbstractEntityImage getImage(ANode n) {
-		return new EntityImageFactory().createEntityImage((Entity) n.getUserData());
+		return new EntityImageFactory().createEntityImage((IEntity) n.getUserData());
 	}
 
 }

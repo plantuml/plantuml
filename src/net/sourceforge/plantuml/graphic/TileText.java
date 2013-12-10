@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,35 +28,37 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 11873 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.BasicStroke;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TileText implements Tile {
+public class TileText implements TextBlock {
 
 	private final String text;
 	private final FontConfiguration fontConfiguration;
+	private final Url url;
 
-	public TileText(String text, FontConfiguration fontConfiguration) {
+	public TileText(String text, FontConfiguration fontConfiguration, Url url) {
 		this.fontConfiguration = fontConfiguration;
 		this.text = text;
+		this.url = url;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
+		final int spaceBottom = Math.abs(fontConfiguration.getSpace());
 		Log.debug("g2d=" + rect);
 		Log.debug("Size for " + text + " is " + rect);
 		double h = rect.getHeight();
@@ -64,42 +66,23 @@ class TileText implements Tile {
 			h = 10;
 		}
 		final double width = text.indexOf('\t') == -1 ? rect.getWidth() : getWidth(stringBounder);
-		return new Dimension2DDouble(width, h);
+		return new Dimension2DDouble(width, h + spaceBottom);
 	}
 
 	public double getFontSize2D() {
 		return fontConfiguration.getFont().getSize2D();
 	}
 
-	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		// TO be removed
-		g2d.setFont(fontConfiguration.getFont().getFont());
-		g2d.setPaint(colorMapper.getMappedColor(fontConfiguration.getColor()));
-		g2d.drawString(text, (float) x, (float) y);
-
-		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d));
-			final int ypos = (int) (y + 2.5);
-			g2d.setStroke(new BasicStroke((float) 1.3));
-			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);
-			g2d.setStroke(new BasicStroke());
-		}
-		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d));
-			final FontMetrics fm = g2d.getFontMetrics(fontConfiguration.getFont().getFont());
-			final int ypos = (int) (y - fm.getDescent() - 0.5);
-			g2d.setStroke(new BasicStroke((float) 1.5));
-			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);
-			g2d.setStroke(new BasicStroke());
-		}
-	}
-
 	double getTabSize(StringBounder stringBounder) {
 		return stringBounder.calculateDimension(fontConfiguration.getFont(), "        ").getWidth();
 	}
 
-	public void drawU(UGraphic ug, double x, double y) {
-		ug.getParam().setColor(fontConfiguration.getColor());
+	public void drawU(UGraphic ug) {
+		double x = 0;
+		if (url != null) {
+			ug.startUrl(url);
+		}
+		ug = ug.apply(new UChangeColor(fontConfiguration.getColor()));
 
 		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
 
@@ -112,11 +95,21 @@ class TileText implements Tile {
 					x += tabSize - remainder;
 				} else {
 					final UText utext = new UText(s, fontConfiguration);
-					ug.draw(x, y, utext);
 					final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);
+					final int space = fontConfiguration.getSpace();
+					final double ypos;
+					if (space < 0) {
+						ypos = space /*- getFontSize2D() - space*/;
+					} else {
+						ypos = space;
+					}
+					ug.apply(new UTranslate(x, ypos)).draw(utext);
 					x += dim.getWidth();
 				}
 			}
+		}
+		if (url != null) {
+			ug.closeAction();
 		}
 	}
 

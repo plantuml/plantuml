@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,53 +36,60 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public final class RoundedContainer {
 
 	private final Dimension2D dim;
 	private final double titleHeight;
+	private final double attributeHeight;
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
 	private final HtmlColor imgBackcolor;
 
-	public RoundedContainer(Dimension2D dim, double titleHeight, HtmlColor borderColor, HtmlColor backColor,
-			HtmlColor imgBackcolor) {
+	public RoundedContainer(Dimension2D dim, double titleHeight, double attributeHeight, HtmlColor borderColor,
+			HtmlColor backColor, HtmlColor imgBackcolor) {
 		this.dim = dim;
 		this.imgBackcolor = imgBackcolor;
 		this.titleHeight = titleHeight;
 		this.borderColor = borderColor;
 		this.backColor = backColor;
+		this.attributeHeight = attributeHeight;
 	}
 
 	public final static double THICKNESS_BORDER = 1.5;
 
-	public void drawU(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug, boolean shadowing) {
 
-		ug.getParam().setColor(borderColor);
-		ug.getParam().setBackcolor(backColor);
-		ug.getParam().setStroke(new UStroke(THICKNESS_BORDER));
-		ug
-				.draw(x, y, new URectangle(dim.getWidth(), dim.getHeight(), EntityImageState.CORNER,
-						EntityImageState.CORNER));
+		ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor));
+		final URectangle rect = new URectangle(dim.getWidth(), dim.getHeight(), IEntityImage.CORNER,
+				IEntityImage.CORNER);
+		if (shadowing) {
+			rect.setDeltaShadow(3.0);
+		}
+		ug.apply(new UStroke(THICKNESS_BORDER)).draw(rect);
 
-		final double yLine = y + titleHeight;
+		final double yLine = titleHeight + attributeHeight;
 
-		ug.getParam().setBackcolor(imgBackcolor);
-		ug.getParam().setColor(imgBackcolor);
-		ug.getParam().setStroke(new UStroke());
-		ug.draw(x + 2 * THICKNESS_BORDER, yLine + 2 * THICKNESS_BORDER, new URectangle(dim.getWidth() - 4
-				* THICKNESS_BORDER, dim.getHeight() - titleHeight - 4 * THICKNESS_BORDER, EntityImageState.CORNER,
-				EntityImageState.CORNER));
+		ug = ug.apply(new UChangeBackColor(imgBackcolor));
 
-		ug.getParam().setColor(borderColor);
-		ug.getParam().setStroke(new UStroke(THICKNESS_BORDER));
-		ug.draw(x, yLine, new ULine(dim.getWidth(), 0));
-		ug.getParam().setStroke(new UStroke());
+		final URectangle inner = new URectangle(dim.getWidth() - 4 * THICKNESS_BORDER, dim.getHeight() - titleHeight
+				- 4 * THICKNESS_BORDER - attributeHeight, IEntityImage.CORNER, IEntityImage.CORNER);
+		ug.apply(new UChangeColor(imgBackcolor)).apply(new UTranslate(2 * THICKNESS_BORDER, yLine + 2 * THICKNESS_BORDER)).draw(inner);
+
+		if (titleHeight > 0) {
+			ug.apply(new UStroke(THICKNESS_BORDER)).apply(new UTranslate(0, yLine)).draw(new ULine(dim.getWidth(), 0));
+		}
+
+		if (attributeHeight > 0) {
+			ug.apply(new UStroke(THICKNESS_BORDER)).apply(new UTranslate(0, yLine - attributeHeight)).draw(new ULine(dim.getWidth(), 0));
+		}
 
 	}
-
 }

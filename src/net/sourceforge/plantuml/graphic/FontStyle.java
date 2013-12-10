@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 11838 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -74,15 +74,51 @@ public enum FontStyle {
 		}
 		return null;
 	}
+	
+	public boolean canHaveExtendedColor() {
+		if (this == UNDERLINE) {
+			return true;
+		}
+		if (this == WAVE) {
+			return true;
+		}
+		if (this == BACKCOLOR) {
+			return true;
+		}
+		if (this == STRIKE) {
+			return true;
+		}
+		return false;
+	}
 
-	HtmlColor getExtendedColor(String s) {
+
+	public String getCreoleSyntax() {
+		if (this == ITALIC) {
+			return "//";
+		}
+		if (this == BOLD) {
+			return "\\*\\*";
+		}
+		if (this == UNDERLINE) {
+			return "__";
+		}
+		if (this == WAVE) {
+			return "~~";
+		}
+		if (this == STRIKE) {
+			return "--";
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	public HtmlColor getExtendedColor(String s) {
 		final Matcher m = Pattern.compile(getActivationPattern()).matcher(s);
 		if (m.find() == false || m.groupCount() != 1) {
 			return null;
 		}
 		final String color = m.group(1);
-		if (color!= null && HtmlColor.isValid(color)) {
-			return HtmlColor.getColorIfValid(color);
+		if (HtmlColorUtils.getColorIfValid(color) != null) {
+			return HtmlColorUtils.getColorIfValid(color);
 		}
 		return null;
 	}
@@ -120,5 +156,6 @@ public enum FontStyle {
 		}
 		throw new IllegalArgumentException(line);
 	}
+
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,49 +33,31 @@
  */
 package net.sourceforge.plantuml.oregon;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
-import net.sourceforge.plantuml.StringUtils;
+public class PSystemOregonFactory extends PSystemBasicFactory<PSystemOregon> {
 
-public class PSystemOregonFactory implements PSystemBasicFactory {
+	// public PSystemOregon getSystem() {
+	// final Keyboard keyboard;
+	// if (inputs == null) {
+	// keyboard = new KeyboardList("");
+	// } else {
+	// keyboard = new KeyboardList(inputs);
+	// }
+	// system = new PSystemOregon(keyboard);
+	// return system;
+	// }
 
-	private PSystemOregon system;
-	private List<String> inputs;
-
-	public void init(String startLine) {
-		inputs = null;
-	}
-
-	public PSystemOregon getSystem() {
-		final Keyboard keyboard;
-		if (inputs == null) {
-			keyboard = new KeyboardList("");
-		} else {
-			keyboard = new KeyboardList(inputs);
+	@Override
+	public PSystemOregon executeLine(PSystemOregon system, String line) {
+		if (system == null && line.equalsIgnoreCase("run oregon trail")) {
+			return new PSystemOregon();
 		}
-		system = new PSystemOregon(keyboard);
+		if (system == null) {
+			return null;
+		}
+		system.add(line);
 		return system;
-	}
-
-	public boolean executeLine(String line) {
-		if (inputs == null && line.equalsIgnoreCase("run oregon trail")) {
-			inputs = new ArrayList<String>();
-			return true;
-		}
-		if (inputs == null) {
-			return false;
-		}
-		if (StringUtils.isNotEmpty(line)) {
-			inputs.add(line);
-		}
-		return true;
-	}
-	
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
 	}
 
 }

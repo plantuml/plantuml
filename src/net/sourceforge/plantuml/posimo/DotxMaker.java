@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.posimo;
 
 import java.awt.geom.Dimension2D;
 import java.util.Collection;
+
+import net.sourceforge.plantuml.Log;
 
 public class DotxMaker {
 
@@ -108,10 +110,10 @@ public class DotxMaker {
 
 		if (p.getLength() <= 1) {
 			final boolean samePackage = p.getStart().getParent() == p.getEnd().getParent();
-			if (samePackage == false) {
-				System.err.println("!!!!!!!!!!!!!!!!!TURNING ARROUND DOT BUG!!!!!!!!!!!!!!!!!!");
-			} else {
+			if (samePackage) {
 				sb.append("{rank=same; b" + p.getStart().getUid() + "; b" + p.getEnd().getUid() + "}");
+			} else {
+				Log.println("!!!!!!!!!!!!!!!!!TURNING ARROUND DOT BUG!!!!!!!!!!!!!!!!!!");
 			}
 		}
 

@@ -1,7 +1,7 @@
 package com.ctreber.acearth.renderer;
 
-import com.ctreber.acearth.scanbit.ScanBit;
 import com.ctreber.acearth.scanbit.BitGeneratorMap;
+import com.ctreber.acearth.scanbit.ScanBit;
 
 /**
  * <p>Renders a row of ScanBits to pixel types.</p>

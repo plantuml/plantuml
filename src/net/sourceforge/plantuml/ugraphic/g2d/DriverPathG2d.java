@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,10 +33,15 @@
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
 
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.geom.CubicCurve2D;
+import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.golem.MinMaxDouble;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -45,22 +50,37 @@ import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
-public class DriverPathG2d implements UDriver<Graphics2D> {
+public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+	private final double dpiFactor;
+
+	public DriverPathG2d(double dpiFactor) {
+		this.dpiFactor = dpiFactor;
+	}
+
+	public void draw(UShape ushape, final double x, final double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final UPath shape = (UPath) ushape;
 		DriverLineG2d.manageStroke(param, g2d);
 
 		final GeneralPath p = new GeneralPath();
+		boolean hasBezier = false;
+		final MinMaxDouble minMax = new MinMaxDouble();
+		minMax.manage(x, y);
 		for (USegment seg : shape) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
+			// Cast float for Java 1.5
 			if (type == USegmentType.SEG_MOVETO) {
-				p.moveTo(x + coord[0], y + coord[1]);
+				p.moveTo((float) (x + coord[0]), (float) (y + coord[1]));
+				minMax.manage(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_LINETO) {
-				p.lineTo(x + coord[0], y + coord[1]);
+				p.lineTo((float) (x + coord[0]), (float) (y + coord[1]));
+				minMax.manage(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_CUBICTO) {
-				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);
+				p.curveTo((float) (x + coord[0]), (float) (y + coord[1]), (float) (x + coord[2]),
+						(float) (y + coord[3]), (float) (x + coord[4]), (float) (y + coord[5]));
+				minMax.manage(x + coord[4], y + coord[5]);
+				hasBezier = true;
 			} else {
 				throw new UnsupportedOperationException();
 			}
@@ -71,10 +91,61 @@ public class DriverPathG2d implements UDriver<Graphics2D> {
 		}
 		// p.closePath();
 
-		if (param.getBackcolor() != null) {
-			g2d.setColor(mapper.getMappedColor(param.getBackcolor()));
+		// Shadow
+		if (shape.getDeltaShadow() != 0) {
+			if (hasBezier) {
+				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
+			} else {
+				double lastX = 0;
+				double lastY = 0;
+				for (USegment seg : shape) {
+					final USegmentType type = seg.getSegmentType();
+					final double coord[] = seg.getCoord();
+					// Cast float for Java 1.5
+					if (type == USegmentType.SEG_MOVETO) {
+						lastX = x + coord[0];
+						lastY = y + coord[1];
+					} else if (type == USegmentType.SEG_LINETO) {
+						final Shape line = new Line2D.Double(lastX, lastY, x + coord[0], y + coord[1]);
+						drawShadow(g2d, line, shape.getDeltaShadow(), dpiFactor);
+						lastX = x + coord[0];
+						lastY = y + coord[1];
+					} else {
+						throw new UnsupportedOperationException();
+					}
+				}
+			}
+		}
+
+		final HtmlColor back = param.getBackcolor();
+		if (back instanceof HtmlColorGradient) {
+			final HtmlColorGradient gr = (HtmlColorGradient) back;
+			final char policy = gr.getPolicy();
+			final GradientPaint paint;
+			if (policy == '|') {
+				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
+						mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
+						mapper.getMappedColor(gr.getColor2()));
+			} else if (policy == '\\') {
+				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr
+						.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(), mapper.getMappedColor(gr
+						.getColor2()));
+			} else if (policy == '-') {
+				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
+						mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
+						mapper.getMappedColor(gr.getColor2()));
+			} else {
+				// for /
+				paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()),
+						(float) minMax.getMaxX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr.getColor2()));
+			}
+			g2d.setPaint(paint);
+			g2d.fill(p);
+		} else if (back != null) {
+			g2d.setColor(mapper.getMappedColor(back));
 			g2d.fill(p);
 		}
+
 		if (param.getColor() != null) {
 			g2d.setColor(mapper.getMappedColor(param.getColor()));
 			g2d.draw(p);

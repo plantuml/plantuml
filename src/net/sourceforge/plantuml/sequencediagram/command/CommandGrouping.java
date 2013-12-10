@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6551 $
+ * Revision $Revision: 10778 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -39,28 +39,29 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandGrouping extends SingleLineCommand<SequenceDiagram> {
 
-	public CommandGrouping(SequenceDiagram sequenceDiagram) {
+	public CommandGrouping() {
 		super(
-				sequenceDiagram,
-				"(?i)^(opt|alt|loop|par|break|critical|else|end|group)((?<!else)(?<!end)#\\w+)?(?:\\s+(#\\w+))?(?:\\s+(.*?))?$");
+
+				"(?i)^(opt|alt|loop|par|par2|break|critical|else|end|also|group)((?<!else)(?<!also)(?<!end)#\\w+)?(?:\\s+(#\\w+))?(?:\\s+(.*?))?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
 		final String type = arg.get(0).toLowerCase();
-		final HtmlColor backColorElement = HtmlColor.getColorIfValid(arg.get(1));
-		final HtmlColor backColorGeneral = HtmlColor.getColorIfValid(arg.get(2));
+		final HtmlColor backColorElement = HtmlColorUtils.getColorIfValid(arg.get(1));
+		final HtmlColor backColorGeneral = HtmlColorUtils.getColorIfValid(arg.get(2));
 		String comment = arg.get(3);
 		if ("group".equals(type) && StringUtils.isEmpty(comment)) {
 			comment = "group";
 		}
-		final boolean result = getSystem().grouping(type, comment,
-				GroupingType.getType(type), backColorGeneral, backColorElement);
+		final boolean result = sequenceDiagram.grouping(type, comment, GroupingType.getType(type), backColorGeneral,
+				backColorElement);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot create group");
 		}

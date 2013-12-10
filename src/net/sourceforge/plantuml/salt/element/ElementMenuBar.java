@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -40,24 +40,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementMenuBar implements Element {
 
 	private final Collection<ElementMenuEntry> entries = new ArrayList<ElementMenuEntry>();
 	private final Map<ElementMenuEntry, ElementMenuPopup> popups = new HashMap<ElementMenuEntry, ElementMenuPopup>();
 	private final UFont font;
+	private final SpriteContainer spriteContainer;
 
-	public ElementMenuBar(UFont font) {
+	public ElementMenuBar(UFont font, SpriteContainer spriteContainer) {
 		this.font = font;
+		this.spriteContainer = spriteContainer;
 	}
 
 	public void addEntry(String s) {
-		entries.add(new ElementMenuEntry(s, font));
+		entries.add(new ElementMenuEntry(s, font, spriteContainer));
 	}
 
 	public void addSubEntry(String s, String sub) {
@@ -68,7 +73,7 @@ public class ElementMenuBar implements Element {
 	private ElementMenuPopup getPopup(ElementMenuEntry s) {
 		ElementMenuPopup popup = popups.get(s);
 		if (popup == null) {
-			popup = new ElementMenuPopup(font);
+			popup = new ElementMenuPopup(font, spriteContainer);
 			popups.put(s, popup);
 		}
 		return popup;
@@ -99,9 +104,7 @@ public class ElementMenuBar implements Element {
 
 		double x1 = x;
 		if (zIndex == 0) {
-			ug.getParam().setBackcolor(HtmlColor.getColorIfValid("#DDDDDD"));
-			ug.draw(x, y, new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
-			ug.getParam().setBackcolor(null);
+			ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#DDDDDD"))).apply(new UTranslate(x, y)).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 			for (ElementMenuEntry entry : entries) {
 				entry.drawU(ug, x1, y, zIndex, dimToUse);
 				final double w = entry.getPreferredDimension(ug.getStringBounder(), x1, y).getWidth();
@@ -113,7 +116,7 @@ public class ElementMenuBar implements Element {
 
 		if (zIndex == 1) {
 			for (ElementMenuEntry entry : popups.keySet()) {
-				entry.setBackground(HtmlColor.getColorIfValid("#BBBBBB"));
+				entry.setBackground(HtmlColorUtils.getColorIfValid("#BBBBBB"));
 			}
 
 			final double y1 = y + preferred.getHeight();

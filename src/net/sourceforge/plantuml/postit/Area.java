@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -41,6 +41,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Area implements Elastic {
 
@@ -99,12 +100,9 @@ public class Area implements Elastic {
 	public void drawU(UGraphic ug, double width) {
 		final AreaLayout layout = new AreaLayoutFixedWidth(width);
 		final Map<PostIt, Point2D> pos = layout.getPositions(postIts, ug.getStringBounder());
-		final double tx = ug.getTranslateX();
-		final double ty = ug.getTranslateY();
 		for (Map.Entry<PostIt, Point2D> ent : pos.entrySet()) {
-			ug.translate(ent.getValue().getX(), ent.getValue().getY());
-			ent.getKey().drawU(ug);
-			ug.setTranslate(tx, ty);
+			final UGraphic ugTranslated = ug.apply(new UTranslate(ent.getValue().getX(), ent.getValue().getY()));
+			ent.getKey().drawU(ugTranslated);
 		}
 
 	}

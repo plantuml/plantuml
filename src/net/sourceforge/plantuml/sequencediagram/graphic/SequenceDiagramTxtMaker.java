@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -39,8 +39,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.TextSkin;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
@@ -102,29 +104,19 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		drawableSet.drawU(ug, 0, fullDimension.getWidth(), page, diagram.isShowFootbox());
 	}
 
-//	public List<File> createManyRRMV(File suggestedFile) throws IOException {
-//		if (fileFormat == FileFormat.UTXT) {
-//			ug.getCharArea().print(new PrintStream(suggestedFile, "UTF-8"));
-//		} else {
-//			ug.getCharArea().print(new PrintStream(suggestedFile));
-//		}
-//		return Collections.singletonList(suggestedFile);
-//	}
 
-	public void createOne(OutputStream os, int index) throws IOException {
-		final PrintStream ps = new PrintStream(os);
+	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {
+			final PrintStream ps = new PrintStream(os, true, "UTF-8");
 			ug.getCharArea().print(ps);
 		} else {
+			final PrintStream ps = new PrintStream(os);
 			ug.getCharArea().print(ps);
 		}
+		return new ImageDataSimple(1, 1);
 	}
 
 	public int getNbPages() {
 		return 1;
 	}
-
-	public void appendCmap(StringBuilder cmap) {
-	}
-
 }

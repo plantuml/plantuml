@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
@@ -49,20 +48,22 @@ import java.util.Map;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.posimo.Block;
 import net.sourceforge.plantuml.posimo.Cluster;
 import net.sourceforge.plantuml.posimo.GraphvizSolverB;
 import net.sourceforge.plantuml.posimo.Path;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public final class CucaDiagramTxtMaker {
 
-	private final CucaDiagram diagram;
+	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
-	private final UGraphicTxt ug = new UGraphicTxt();
+	private final UGraphicTxt globalUg = new UGraphicTxt();
 
 	private static double getXPixelPerChar() {
 		return 5;
@@ -73,15 +74,15 @@ public final class CucaDiagramTxtMaker {
 	}
 
 	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
-		this.diagram = diagram;
+		// this.diagram = diagram;
 		this.fileFormat = fileFormat;
 
 		final Cluster root = new Cluster(null, 0, 0);
 		int uid = 0;
 
-		final Map<Entity, Block> blocks = new HashMap<Entity, Block>();
+		final Map<IEntity, Block> blocks = new HashMap<IEntity, Block>();
 
-		for (Entity ent : diagram.entities().values()) {
+		for (IEntity ent : diagram.getLeafs().values()) {
 			// printClass(ent);
 			// ug.translate(0, getHeight(ent) + 1);
 			final double width = getWidth(ent) * getXPixelPerChar();
@@ -92,49 +93,45 @@ public final class CucaDiagramTxtMaker {
 		}
 
 		final GraphvizSolverB solver = new GraphvizSolverB();
-		try {
-			final Collection<Path> paths = new ArrayList<Path>();
-			for (Link link : diagram.getLinks()) {
-				final Block b1 = blocks.get(link.getEntity1());
-				final Block b2 = blocks.get(link.getEntity2());
-				paths.add(new Path(b1, b2, null, link.getLength()));
-			}
-			final Dimension2D dim = solver.solve(root, paths);
-			for (Path p : paths) {
-				ug.setTranslate(0, 0);
-				p.getDotPath().draw(ug.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
-			}
-			for (Entity ent : diagram.entities().values()) {
-				final Block b = blocks.get(ent);
-				final Point2D p = b.getPosition();
-				ug.setTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar());
-				printClass(ent);
-			}
 
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		final Collection<Path> paths = new ArrayList<Path>();
+		for (Link link : diagram.getLinks()) {
+			final Block b1 = blocks.get(link.getEntity1());
+			final Block b2 = blocks.get(link.getEntity2());
+			paths.add(new Path(b1, b2, null, link.getLength()));
+		}
+		solver.solve(root, paths);
+		for (Path p : paths) {
+			p.getDotPath().draw(globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
+		}
+		for (IEntity ent : diagram.getLeafs().values()) {
+			final Block b = blocks.get(ent);
+			final Point2D p = b.getPosition();
+			printClass(
+					ent,
+					(UGraphicTxt) globalUg.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY()
+							/ getYPixelPerChar())));
 		}
 
 	}
 
-	private void printClass(final Entity ent) {
+	private void printClass(final IEntity ent, UGraphicTxt ug) {
 		final int w = getWidth(ent);
 		final int h = getHeight(ent);
 		ug.getCharArea().drawBoxSimple(0, 0, w, h);
-		ug.getCharArea().drawStringsLR(ent.getDisplay2(), 1, 1);
+		ug.getCharArea().drawStringsLR(ent.getDisplay().as(), 1, 1);
 		int y = 2;
 		ug.getCharArea().drawHLine('-', y, 1, w - 1);
 		y++;
 		for (Member att : ent.getFieldsToDisplay()) {
-			final List<String> disp = StringUtils.getWithNewlines(att.getDisplayWithVisibilityChar());
+			final List<String> disp = StringUtils.getWithNewlines2(att.getDisplay(true));
 			ug.getCharArea().drawStringsLR(disp, 1, y);
 			y += StringUtils.getHeight(disp);
 		}
 		ug.getCharArea().drawHLine('-', y, 1, w - 1);
 		y++;
 		for (Member att : ent.getMethodsToDisplay()) {
-			final List<String> disp = StringUtils.getWithNewlines(att.getDisplayWithVisibilityChar());
+			final List<String> disp = StringUtils.getWithNewlines2(att.getDisplay(true));
 			ug.getCharArea().drawStringsLR(disp, 1, y);
 			y += StringUtils.getHeight(disp);
 		}
@@ -142,34 +139,34 @@ public final class CucaDiagramTxtMaker {
 
 	public List<File> createFiles(File suggestedFile) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {
-			ug.getCharArea().print(new PrintStream(suggestedFile, "UTF-8"));
+			globalUg.getCharArea().print(new PrintStream(suggestedFile, "UTF-8"));
 		} else {
-			ug.getCharArea().print(new PrintStream(suggestedFile));
+			globalUg.getCharArea().print(new PrintStream(suggestedFile));
 		}
 		return Collections.singletonList(suggestedFile);
 	}
 
-	private int getHeight(Entity entity) {
-		int result = StringUtils.getHeight(entity.getDisplay2());
+	private int getHeight(IEntity entity) {
+		int result = StringUtils.getHeight(entity.getDisplay());
 		for (Member att : entity.getMethodsToDisplay()) {
-			result += StringUtils.getHeight(StringUtils.getWithNewlines(att.getDisplayWithVisibilityChar()));
+			result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
 		}
 		for (Member att : entity.getFieldsToDisplay()) {
-			result += StringUtils.getHeight(StringUtils.getWithNewlines(att.getDisplayWithVisibilityChar()));
+			result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
 		}
 		return result + 4;
 	}
 
-	private int getWidth(Entity entity) {
-		int result = StringUtils.getWidth(entity.getDisplay2());
+	private int getWidth(IEntity entity) {
+		int result = StringUtils.getWidth(entity.getDisplay());
 		for (Member att : entity.getMethodsToDisplay()) {
-			final int w = StringUtils.getWidth(StringUtils.getWithNewlines(att.getDisplayWithVisibilityChar()));
+			final int w = StringUtils.getWidth(Display.getWithNewlines(att.getDisplay(true)));
 			if (w > result) {
 				result = w;
 			}
 		}
 		for (Member att : entity.getFieldsToDisplay()) {
-			final int w = StringUtils.getWidth(StringUtils.getWithNewlines(att.getDisplayWithVisibilityChar()));
+			final int w = StringUtils.getWidth(Display.getWithNewlines(att.getDisplay(true)));
 			if (w > result) {
 				result = w;
 			}
@@ -178,7 +175,7 @@ public final class CucaDiagramTxtMaker {
 	}
 
 	public void createFiles(OutputStream os, int index) {
-		ug.getCharArea().print(new PrintStream(os));
+		globalUg.getCharArea().print(new PrintStream(os));
 	}
 
 }

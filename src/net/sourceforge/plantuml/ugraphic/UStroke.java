@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,16 +28,21 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6470 $
+ * Revision $Revision: 10113 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
-public class UStroke {
+public class UStroke implements UChange {
 
 	private final double dashVisible;
 	private final double dashSpace;
 	private final double thickness;
+
+	@Override
+	public String toString() {
+		return "" + dashVisible + "-" + dashSpace + "-" + thickness;
+	}
 
 	public UStroke(double dashVisible, double dashSpace, double thickness) {
 		this.dashVisible = dashVisible;
@@ -72,11 +77,11 @@ public class UStroke {
 		return "" + dashVisible + "," + dashSpace;
 	}
 
-//	public String getDasharrayEps() {
-//		if (dashVisible == 0) {
-//			return null;
-//		}
-//		return "" + dashVisible + " " + dashSpace;
-//	}
+	// public String getDasharrayEps() {
+	// if (dashVisible == 0) {
+	// return null;
+	// }
+	// return "" + dashVisible + " " + dashSpace;
+	// }
 
 }

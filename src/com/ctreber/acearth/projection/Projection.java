@@ -1,6 +1,9 @@
 package com.ctreber.acearth.projection;
 
-import com.ctreber.acearth.util.*;
+import com.ctreber.acearth.util.Coordinate;
+import com.ctreber.acearth.util.Point2D;
+import com.ctreber.acearth.util.Point3D;
+import com.ctreber.acearth.util.Toolkit;
 
 /**
  * <p>A projection for a globe on a flat surface (must be subclassed).

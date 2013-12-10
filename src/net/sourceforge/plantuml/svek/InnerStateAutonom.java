@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,53 +36,97 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockWidth;
+import net.sourceforge.plantuml.svek.image.EntityImageState;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public final class InnerStateAutonom implements IEntityImage {
 
 	private final IEntityImage im;
 	private final TextBlock title;
+	private final TextBlockWidth attribute;
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
+	private final boolean shadowing;
+	private final Url url;
+	private final boolean withSymbol;
 
-	public InnerStateAutonom(final IEntityImage im, final TextBlock title, HtmlColor borderColor, HtmlColor backColor) {
+	public InnerStateAutonom(final IEntityImage im, final TextBlock title, TextBlockWidth attribute,
+			HtmlColor borderColor, HtmlColor backColor, boolean shadowing, Url url, boolean withSymbol) {
 		this.im = im;
+		this.withSymbol = withSymbol;
 		this.title = title;
 		this.borderColor = borderColor;
 		this.backColor = backColor;
+		this.shadowing = shadowing;
+		this.attribute = attribute;
+		this.url = url;
 	}
 
-	
 	public final static double THICKNESS_BORDER = 1.5;
 
-	public void drawU(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug) {
 		final Dimension2D text = title.calculateDimension(ug.getStringBounder());
-		final Dimension2D total = getDimension(ug.getStringBounder());
+		final Dimension2D attr = attribute.calculateDimension(ug.getStringBounder());
+		final Dimension2D total = calculateDimension(ug.getStringBounder());
+		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
-		final double suppY = EntityImageState.MARGIN + text.getHeight() + EntityImageState.MARGIN_LINE;
-		final RoundedContainer r = new RoundedContainer(total, suppY, borderColor, backColor, im.getBackcolor()); 
-		
-		r.drawU(ug, x, y);
-		title.drawU(ug, x + (total.getWidth() - text.getWidth()) / 2, y + EntityImageState.MARGIN);
+		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;
+		final RoundedContainer r = new RoundedContainer(total, titreHeight, attr.getHeight() + marginForFields,
+				borderColor, backColor, im.getBackcolor());
 
-		im.drawU(ug, x + EntityImageState.MARGIN, y+suppY + EntityImageState.MARGIN_LINE);
+		if (url != null) {
+			ug.startUrl(url);
+		}
+
+		r.drawU(ug, shadowing);
+		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));
+		attribute.asTextBlock(total.getWidth()).drawU(
+				ug.apply(new UTranslate(0 + IEntityImage.MARGIN, IEntityImage.MARGIN + text.getHeight()
+						+ IEntityImage.MARGIN)));
+
+		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());
+		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));
+
+		if (withSymbol) {
+			EntityImageState.drawSymbol(ug.apply(new UChangeColor(borderColor)), total.getWidth(), total.getHeight());
+
+		}
+
+		if (url != null) {
+			ug.closeAction();
+		}
+	}
+
+	private double getSpaceYforURL(StringBounder stringBounder) {
+		final Dimension2D text = title.calculateDimension(stringBounder);
+		final Dimension2D attr = attribute.calculateDimension(stringBounder);
+		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
+		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;
+		final double suppY = titreHeight + marginForFields + attr.getHeight();
+		return suppY + IEntityImage.MARGIN_LINE;
 	}
 
 	public HtmlColor getBackcolor() {
 		return null;
 	}
 
-	public Dimension2D getDimension(StringBounder stringBounder) {
-		final Dimension2D img = im.getDimension(stringBounder);
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		final Dimension2D img = im.calculateDimension(stringBounder);
 		final Dimension2D text = title.calculateDimension(stringBounder);
+		final Dimension2D attr = attribute.calculateDimension(stringBounder);
 
-		final Dimension2D dim = Dimension2DDouble.mergeTB(text, img);
+		final Dimension2D dim = Dimension2DDouble.mergeTB(text, attr, img);
+		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
-		final Dimension2D result = Dimension2DDouble.delta(dim, EntityImageState.MARGIN * 2 + 2
-				* EntityImageState.MARGIN_LINE);
+		final Dimension2D result = Dimension2DDouble.delta(dim, IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE
+				+ marginForFields);
 
 		return result;
 	}
@@ -90,10 +134,13 @@ public final class InnerStateAutonom implements IEntityImage {
 	public ShapeType getShapeType() {
 		return ShapeType.ROUND_RECTANGLE;
 	}
-	
+
 	public int getShield() {
 		return 0;
 	}
 
+	public boolean isHidden() {
+		return im.isHidden();
+	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,35 +36,20 @@ package net.sourceforge.plantuml.eggs;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-public class PSystemPathFactory implements PSystemBasicFactory {
+public class PSystemPathFactory extends PSystemSingleLineFactory {
 
-	private PSystemPath system;
+	final private static Pattern p = Pattern.compile("(?i)^path\\s+([0-9A-Za-z]+)$");
 
-	public void init(String startLine) {
-	}
-
-	final private static Pattern p = Pattern
-			.compile("(?i)^path\\s+([0-9A-Za-z]+)$");
-
-	public boolean executeLine(String line) {
+	@Override
+	protected AbstractPSystem executeLine(String line) {
 		final Matcher m = p.matcher(line);
 		if (m.find() == false) {
-			return false;
+			return null;
 		}
-		system = new PSystemPath(m.group(1));
-		return true;
+		return new PSystemPath(m.group(1));
 	}
-
-	public PSystemPath getSystem() {
-		return system;
-	}
-	
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
-	}
-
 
 }

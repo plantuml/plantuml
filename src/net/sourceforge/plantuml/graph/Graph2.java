@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 
 public class Graph2 {
@@ -84,7 +84,7 @@ public class Graph2 {
 	}
 
 	private AbstractEntityImage images(ANode n) {
-		return new EntityImageFactory().createEntityImage(((Entity) n.getUserData()));
+		return new EntityImageFactory().createEntityImage((IEntity)n.getUserData());
 	}
 
 	public Dimension2D getDimension() {

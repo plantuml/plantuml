@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5178 $
+ * Revision $Revision: 12012 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -49,7 +49,7 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	private char chars[][];
 
 	public BasicCharAreaImpl() {
-		chars = new char[charSize1][charSize2];
+		this.chars = new char[charSize1][charSize2];
 		for (int i = 0; i < charSize1; i++) {
 			for (int j = 0; j < charSize2; j++) {
 				chars[i][j] = ' ';

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,22 +28,25 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 11394 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.geom.Dimension2D;
-import java.util.List;
-
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 final public class ComponentBlueModernNote extends AbstractTextualComponent {
 
@@ -53,8 +56,8 @@ final public class ComponentBlueModernNote extends AbstractTextualComponent {
 	private final HtmlColor foregroundColor;
 
 	public ComponentBlueModernNote(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			List<? extends CharSequence> strings) {
-		super(strings, fontColor, font, HorizontalAlignement.LEFT, 6, 15, 5);
+			Display strings, SpriteContainer spriteContainer) {
+		super(strings, fontColor, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, 0, false);
 		this.back = back;
 		this.foregroundColor = foregroundColor;
 	}
@@ -81,16 +84,14 @@ final public class ComponentBlueModernNote extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double textHeight = getTextHeight(stringBounder);
 
 		final double textWidth = getTextWidth(stringBounder);
 
 		final ShadowShape shadowShape = new ShadowShape(textWidth, textHeight, 3);
-		ug.translate(shadowview, shadowview);
-		shadowShape.drawU(ug);
-		ug.translate(-shadowview, -shadowview);
+		shadowShape.drawU(ug.apply(new UTranslate(shadowview, shadowview)));
 
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(0, 0);
@@ -100,14 +101,14 @@ final public class ComponentBlueModernNote extends AbstractTextualComponent {
 		polygon.addPoint(textWidth - cornersize, 0);
 		polygon.addPoint(0, 0);
 
-		ug.getParam().setBackcolor(back);
-		ug.getParam().setColor(foregroundColor);
-		ug.draw(0, 0, polygon);
+		ug = ug.apply(new UChangeBackColor(back));
+		ug = ug.apply(new UChangeColor(foregroundColor));
+		ug.draw(polygon);
 
-		ug.draw(textWidth - cornersize, 0, new ULine(0, cornersize));
-		ug.draw(textWidth, cornersize, new ULine(-cornersize, 0));
+		ug.apply(new UTranslate(textWidth - cornersize, 0)).draw(new ULine(0, cornersize));
+		ug.apply(new UTranslate(textWidth, cornersize)).draw(new ULine(-cornersize, 0));
 
-		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 
 	}
 

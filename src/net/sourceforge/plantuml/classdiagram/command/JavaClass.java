@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3827 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -38,17 +38,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 class JavaClass {
 
 	private final String name;
 	private final String javaPackage;
 	private final List<String> parents = new ArrayList<String>();
-	private final EntityType type;
-	private final EntityType parentType;
+	private final LeafType type;
+	private final LeafType parentType;
 
-	public JavaClass(String javaPackage, String name, String p, EntityType type, EntityType parentType) {
+	public JavaClass(String javaPackage, String name, String p, LeafType type, LeafType parentType) {
 		this.name = name;
 		this.javaPackage = javaPackage;
 		if (p == null) {
@@ -66,7 +66,7 @@ class JavaClass {
 		return name;
 	}
 
-	public final EntityType getType() {
+	public final LeafType getType() {
 		return type;
 	}
 
@@ -74,7 +74,7 @@ class JavaClass {
 		return Collections.unmodifiableList(parents);
 	}
 
-	public final EntityType getParentType() {
+	public final LeafType getParentType() {
 		return parentType;
 	}
 

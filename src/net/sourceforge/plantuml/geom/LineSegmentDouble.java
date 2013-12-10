@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,13 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 11289 $
  *
  */
 package net.sourceforge.plantuml.geom;
 
 import java.awt.geom.Point2D;
 import java.util.Locale;
+
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LineSegmentDouble extends AbstractLineSegment {
 
@@ -43,7 +47,7 @@ public class LineSegmentDouble extends AbstractLineSegment {
 
 	@Override
 	public String toString() {
-		return String.format(Locale.US, "( %d,%d - %d,%d )", getP1().getX(), getP1().getY(), getP2().getX(), getP2()
+		return String.format(Locale.US, "( %.2f,%.2f - %.2f,%.2f )", getP1().getX(), getP1().getY(), getP2().getX(), getP2()
 				.getY());
 	}
 
@@ -90,6 +94,16 @@ public class LineSegmentDouble extends AbstractLineSegment {
 	@Override
 	public double getY2() {
 		return p2.getY();
+	}
+
+	public void draw(UGraphic ug) {
+		final double x1 = p1.getX();
+		final double y1 = p1.getY();
+		final double x2 = p2.getX();
+		final double y2 = p2.getY();
+		ug = ug.apply(new UTranslate(x1, y1));
+		ug.draw(new ULine(x2 - x1, y2 - y1));
+		
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,14 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4246 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class ProtectedSkin implements Skin {
 
@@ -46,10 +45,10 @@ public class ProtectedSkin implements Skin {
 
 	}
 
-	public Component createComponent(ComponentType type, ISkinParam param, List<? extends CharSequence> stringsToDisplay) {
+	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
 		Component result = null;
 		try {
-			result = skinToProtect.createComponent(type, param, stringsToDisplay);
+			result = skinToProtect.createComponent(type, config, param, stringsToDisplay);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

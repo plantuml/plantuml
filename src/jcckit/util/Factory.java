@@ -18,7 +18,7 @@
  */
 package jcckit.util;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
 
 /**
  *  General purpose factory method based on {@link ConfigParameters}

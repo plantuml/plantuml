@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,21 +34,55 @@
 package net.sourceforge.plantuml.salt.element;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementDroplist extends AbstractElementText implements Element {
 
 	private final int box = 12;
+	private final TextBlock openDrop;
 
-	public ElementDroplist(String text, UFont font) {
-		super(text, font, true);
+	public ElementDroplist(String text, UFont font, SpriteContainer spriteContainer) {
+		super(extract(text), font, true, spriteContainer);
+		final StringTokenizer st = new StringTokenizer(text, "^");
+		final List<String> drop = new ArrayList<String>();
+		while (st.hasMoreTokens()) {
+			drop.add(st.nextToken());
+		}
+		if (drop.size() > 0) {
+			drop.remove(0);
+		}
+		if (drop.size() == 0) {
+			this.openDrop = null;
+		} else {
+			this.openDrop = TextBlockUtils.create(new Display(drop), getConfig(), HorizontalAlignment.LEFT,
+					spriteContainer);
+		}
+	}
+
+	private static String extract(String text) {
+		final int idx = text.indexOf('^');
+		if (idx == -1) {
+			return text;
+		}
+		return text.substring(0, idx);
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
@@ -57,23 +91,27 @@ public class ElementDroplist extends AbstractElementText implements Element {
 	}
 
 	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
-		if (zIndex != 0) {
-			return;
-		}
-		drawText(ug, x + 2, y + 2);
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
-		ug.draw(x, y, new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
-		final double xline = dim.getWidth() - box;
-		ug.draw(x + xline, y, new ULine(0, dim.getHeight() - 1));
+		if (zIndex == 0) {
+			ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#EEEEEE"))).apply(new UTranslate(x, y)).draw(new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
+			drawText(ug, x + 2, y + 2);
+			final double xline = dim.getWidth() - box;
+			ug.apply(new UTranslate(x + xline, y)).draw(new ULine(0, dim.getHeight() - 1));
 
-		final UPolygon poly = new UPolygon();
-		poly.addPoint(0, 0);
-		poly.addPoint(box - 6, 0);
-		final Dimension2D dimText = getPureTextDimension(ug.getStringBounder());
-		poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);
-		ug.getParam().setBackcolor(ug.getParam().getColor());
+			final UPolygon poly = new UPolygon();
+			poly.addPoint(0, 0);
+			poly.addPoint(box - 6, 0);
+			final Dimension2D dimText = getPureTextDimension(ug.getStringBounder());
+			poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);
 
-		ug.draw(x + xline + 3, y + 6, poly);
-		ug.getParam().setBackcolor(null);
+			ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(x + xline + 3, y + 6)).draw(poly);
+		}
+
+		if (openDrop != null) {
+			final Dimension2D dimOpen = Dimension2DDouble.atLeast(openDrop.calculateDimension(ug.getStringBounder()),
+					dim.getWidth() - 1, 0);
+			ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#EEEEEE"))).apply(new UTranslate(x, y + dim.getHeight() - 1)).draw(new URectangle(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));
+			openDrop.drawU(ug.apply(new UTranslate(x, (y + dim.getHeight() - 1))));
+		}
 	}
 }

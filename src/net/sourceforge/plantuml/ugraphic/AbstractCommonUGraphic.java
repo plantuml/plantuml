@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,46 +28,109 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6578 $
+ * Revision $Revision: 11888 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
+
 public abstract class AbstractCommonUGraphic implements UGraphic {
 
-	private final UParam param = new UParam();
-	private double dx;
-	private double dy;
+	private UStroke stroke = new UStroke();
+	private UPattern pattern = UPattern.FULL;
+	private boolean hidden = false;
+	private HtmlColor backColor = null;
+	private HtmlColor color = null;
+
+	private UTranslate translate = new UTranslate();
+
 	private final ColorMapper colorMapper;
+	private UClip clip;
+
+	public UGraphic apply(UChange change) {
+		final AbstractCommonUGraphic copy = copyUGraphic();
+		if (change instanceof UTranslate) {
+			copy.translate = ((UTranslate) change).compose(copy.translate);
+		} else if (change instanceof UClip) {
+			copy.clip = (UClip) change;
+			copy.clip = copy.clip.translate(getTranslateX(), getTranslateY());
+		} else if (change instanceof UStroke) {
+			copy.stroke = (UStroke) change;
+		} else if (change instanceof UPattern) {
+			copy.pattern = (UPattern) change;
+		} else if (change instanceof UHidden) {
+			copy.hidden = change == UHidden.HIDDEN;
+		} else if (change instanceof UChangeBackColor) {
+			copy.backColor = ((UChangeBackColor) change).getBackColor();
+		} else if (change instanceof UChangeColor) {
+			copy.color = ((UChangeColor) change).getColor();
+		}
+		return copy;
+	}
+
+	final public UClip getClip() {
+		return clip;
+	}
 
 	public AbstractCommonUGraphic(ColorMapper colorMapper) {
 		this.colorMapper = colorMapper;
 	}
 
+	protected AbstractCommonUGraphic(AbstractCommonUGraphic other) {
+		this.colorMapper = other.colorMapper;
+		this.translate = other.translate;
+		this.clip = other.clip;
+
+		this.stroke = other.stroke;
+		this.pattern = other.pattern;
+		this.hidden = other.hidden;
+		this.color = other.color;
+		this.backColor = other.backColor;
+	}
+
+	protected abstract AbstractCommonUGraphic copyUGraphic();
+
 	final public UParam getParam() {
-		return param;
+		return new UParam() {
+
+			public boolean isHidden() {
+				return hidden;
+			}
+
+			public UStroke getStroke() {
+				return stroke;
+			}
+
+			public HtmlColor getColor() {
+				return color;
+			}
+
+			public HtmlColor getBackcolor() {
+				return backColor;
+			}
+
+			public UPattern getPattern() {
+				return pattern;
+			}
+		};
 	}
 
-	final public void translate(double dx, double dy) {
-		this.dx += dx;
-		this.dy += dy;
+	final protected double getTranslateX() {
+		return translate.getDx();
 	}
 
-	final public void setTranslate(double dx, double dy) {
-		this.dx = dx;
-		this.dy = dy;
-	}
-
-	final public double getTranslateX() {
-		return dx;
-	}
-
-	final public double getTranslateY() {
-		return dy;
+	final protected double getTranslateY() {
+		return translate.getDy();
 	}
 
 	final public ColorMapper getColorMapper() {
-		return colorMapper;
+		return new ColorMapperTransparentWrapper(colorMapper);
 	}
+	
+	public void flushUg() {
+		
+	}
+
 
 }

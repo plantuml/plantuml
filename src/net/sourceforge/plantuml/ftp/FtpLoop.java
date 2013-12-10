@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -70,7 +70,7 @@ class FtpLoop implements Runnable {
 	public FtpLoop(Socket socket, FtpServer ftpServer) throws IOException {
 		this.incoming = socket;
 		this.ftpServer = ftpServer;
-		this.br = new BufferedReader(new InputStreamReader(incoming.getInputStream()));
+		this.br = new BufferedReader(new InputStreamReader(incoming.getInputStream(), ftpServer.getCharset()));
 		this.pw = new PrintWriter(incoming.getOutputStream(), true);
 	}
 
@@ -157,7 +157,12 @@ class FtpLoop implements Runnable {
 			} else {
 				retrPassif(cmd);
 			}
+		} else if (upper.startsWith("DELE")) {
+			final String file = cmd.substring("DELE ".length());
+			connexion.delete(file);
+			myOut("200 Command okay.");
 		} else if (upper.startsWith("QUIT")) {
+			myOut("221 Goodbye.");
 			return true;
 		} else if (upper.startsWith("SYST")) {
 			myOut("215 UNIX Type: L8.");
@@ -233,7 +238,7 @@ class FtpLoop implements Runnable {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		FileUtils.copyToStream(is, baos);
 		myOut("226 Transfer complete.");
-		final String data = new String(baos.toByteArray());
+		final String data = new String(baos.toByteArray(), ftpServer.getCharset());
 		final FileFormat format = FileFormat.PNG;
 		final String pngFileName = format.changeName(fileName, 0);
 		connexion.removeOutgoing(pngFileName);

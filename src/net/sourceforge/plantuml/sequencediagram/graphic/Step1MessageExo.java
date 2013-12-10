@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,46 +33,43 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
-import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
-import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ComponentType;
 
 class Step1MessageExo extends Step1Abstract {
 
 	private final MessageExoArrow messageArrow;
 
-	Step1MessageExo(StringBounder stringBounder, MessageExo message, DrawableSet drawingSet, double freeY) {
-		super(stringBounder, message, drawingSet, freeY);
+	Step1MessageExo(ParticipantRange range, StringBounder stringBounder, MessageExo message, DrawableSet drawingSet,
+			Frontier freeY) {
+		super(range, stringBounder, message, drawingSet, freeY);
 
-		setType(getArrowType(message));
+		setConfig(getArrowType(message));
 
-		this.messageArrow = new MessageExoArrow(freeY, drawingSet.getSkin(), drawingSet.getSkin().createComponent(
-				getType(), drawingSet.getSkinParam(), getLabelOfMessage(message)), getLivingParticipantBox(), message
-				.getType());
+		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), drawingSet.getSkin()
+				.createComponent(ComponentType.ARROW, getConfig(), drawingSet.getSkinParam(),
+						getLabelOfMessage(message)), getLivingParticipantBox(), message.getType(), message.getUrl(),
+				message.isShortArrow());
 
 		if (message.getNote() != null) {
-			final ISkinParam skinParam = new SkinParamBackcolored(drawingSet.getSkinParam(), message
-					.getSpecificBackColor());
-			setNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, drawingSet.getSkinParam(),
-					message.getNote()));
+			final ISkinParam skinParam = new SkinParamBackcolored(drawingSet.getSkinParam(),
+					message.getSpecificBackColor());
+			setNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam, message.getNote()));
 			// throw new UnsupportedOperationException();
 		}
 
 	}
 
-	double prepareMessage(ConstraintSet constraintSet, Collection<InGroupableList> groupingStructures) {
+	Frontier prepareMessage(ConstraintSet constraintSet, InGroupablesStack inGroupablesStack) {
 		final Arrow graphic = createArrow();
 		final double arrowYStartLevel = graphic.getArrowYStartLevel(getStringBounder());
 		final double arrowYEndLevel = graphic.getArrowYEndLevel(getStringBounder());
@@ -103,12 +100,10 @@ class Step1MessageExo extends Step1Abstract {
 			afterMessage(getStringBounder(), lifeEvent, arrowYEndLevel + marginActivateAndDeactive);
 		}
 
-		if (groupingStructures != null && graphic instanceof InGroupable) {
-			for (InGroupableList groupingStructure : groupingStructures) {
-				groupingStructure.addInGroupable((InGroupable) graphic);
-				groupingStructure.addInGroupable(livingParticipantBox);
-				groupingStructure.addInGroupable(livingParticipantBox);
-			}
+		assert graphic instanceof InGroupable;
+		if (graphic instanceof InGroupable) {
+			inGroupablesStack.addElement((InGroupable) graphic);
+			inGroupablesStack.addElement(livingParticipantBox);
 		}
 
 		return getFreeY();
@@ -118,13 +113,13 @@ class Step1MessageExo extends Step1Abstract {
 		return getDrawingSet().getLivingParticipantBox(((MessageExo) getMessage()).getParticipant());
 	}
 
-	private List<? extends CharSequence> getLabelOfMessage(MessageExo message) {
+	private Display getLabelOfMessage(MessageExo message) {
 		if (message.getMessageNumber() == null) {
 			return message.getLabel();
 		}
-		final List<CharSequence> result = new ArrayList<CharSequence>();
-		result.add(new MessageNumber(message.getMessageNumber()));
-		result.addAll(message.getLabel());
+		Display result = new Display();
+		result = result.add(new MessageNumber(message.getMessageNumber()));
+		result = result.addAll(message.getLabel());
 		return result;
 	}
 
@@ -137,22 +132,26 @@ class Step1MessageExo extends Step1Abstract {
 		return new ArrowAndNoteBox(getStringBounder(), messageArrow, toto);
 	}
 
-	private ComponentType getArrowType(MessageExo m) {
-		ComponentType result = null;
+	private ArrowConfiguration getArrowType(MessageExo m) {
 		final MessageExoType type = m.getType();
 		if (type.getDirection() == 1) {
-			result = ComponentType.getArrow(ArrowDirection.LEFT_TO_RIGHT_NORMAL);
-		} else {
-			result = ComponentType.getArrow(ArrowDirection.RIGHT_TO_LEFT_REVERSE);
+			return m.getArrowConfiguration();
 		}
-		if (m.getArrowConfiguration().isDotted()) {
-			result = result.withDotted();
-		}
-		if (m.getArrowConfiguration().isASync()) {
-			result = result.withAsync();
-		}
-		result = result.withPart(m.getArrowConfiguration().getPart());
-		return result;
+		return m.getArrowConfiguration().reverse();
+		// ArrowConfiguration result = null;
+		// if (type.getDirection() == 1) {
+		// result = ArrowConfiguration.withDirectionNormal();
+		// } else {
+		// result = ArrowConfiguration.withDirectionReverse();
+		// }
+		// if (m.getArrowConfiguration().isDotted()) {
+		// result = result.withDotted();
+		// }
+		// if (m.getArrowConfiguration().isAsync()) {
+		// result = result.withHead(ArrowHead.ASYNC);
+		// }
+		// result = result.withPart(m.getArrowConfiguration().getPart());
+		// return result;
 	}
 
 }

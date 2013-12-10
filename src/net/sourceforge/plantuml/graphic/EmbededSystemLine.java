@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -48,18 +47,17 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PSystem;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 class EmbededSystemLine implements Line {
 
-	final List<String> lines;
+	final private List<? extends CharSequence> lines;
 
 	public EmbededSystemLine(EmbededDiagram sys) {
-		this.lines = sys.getLines();
+		this.lines = sys.getLines().as();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -74,15 +72,11 @@ class EmbededSystemLine implements Line {
 		return new Dimension2DDouble(42, 42);
 	}
 
-	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void drawU(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug) {
 		try {
 			final BufferedImage im = getImage();
 			final UShape image = new UImage(im);
-			ug.draw(x, y, image);
+			ug.draw(image);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -92,9 +86,9 @@ class EmbededSystemLine implements Line {
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
-		final PSystem system = getSystem();
+		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		system.exportDiagram(os, null, 0, new FileFormatOption(FileFormat.PNG));
+		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
 		os.close();
 		final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
 		final BufferedImage im = ImageIO.read(is);
@@ -102,14 +96,13 @@ class EmbededSystemLine implements Line {
 		return im;
 	}
 
-	public HorizontalAlignement getHorizontalAlignement() {
-		return HorizontalAlignement.LEFT;
+	public HorizontalAlignment getHorizontalAlignment() {
+		return HorizontalAlignment.LEFT;
 	}
 
-	private PSystem getSystem() throws IOException, InterruptedException {
+	private Diagram getSystem() throws IOException, InterruptedException {
 		final BlockUml blockUml = new BlockUml(lines);
-		return blockUml.getSystem();
+		return blockUml.getDiagram();
 
 	}
-
 }

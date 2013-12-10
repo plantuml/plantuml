@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,50 +33,63 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
-import net.sourceforge.plantuml.activitydiagram2.ActivityDiagramFactory2;
+import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
+import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
-import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagramFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.creole.PSystemCreoleFactory;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
+import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
+import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemLostFactory;
 import net.sourceforge.plantuml.eggs.PSystemPathFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
+import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
+import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
+import net.sourceforge.plantuml.logo.PSystemLogoFactory;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.postit.PostIdDiagramFactory;
 import net.sourceforge.plantuml.printskin.PrintSkinFactory;
-import net.sourceforge.plantuml.project.PSystemProjectFactory;
+import net.sourceforge.plantuml.project2.PSystemProjectFactory2;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
-import net.sourceforge.plantuml.usecasediagram.UsecaseDiagramFactory;
+import net.sourceforge.plantuml.turing.PSystemTuringFactory;
+import net.sourceforge.plantuml.version.License;
+import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 
 public class PSystemBuilder {
 
-	final public PSystem createPSystem(final List<String> strings) throws IOException, InterruptedException {
+	final public Diagram createPSystem(final List<? extends CharSequence> strings) {
 
 		final List<PSystemFactory> factories = getAllFactories();
 
-		final UmlSource umlSource = new UmlSource(strings);
+		final DiagramType type = DiagramType.getTypeFromArobaseStart(strings.get(0).toString());
+
+		final UmlSource umlSource = new UmlSource(strings, type == DiagramType.UML);
 		final DiagramType diagramType = umlSource.getDiagramType();
 		final List<PSystemError> errors = new ArrayList<PSystemError>();
 		for (PSystemFactory systemFactory : factories) {
 			if (diagramType != systemFactory.getDiagramType()) {
 				continue;
 			}
-			final PSystem sys = new PSystemSingleBuilder(umlSource, systemFactory).getPSystem();
+			final Diagram sys = systemFactory.createSystem(umlSource);
 			if (isOk(sys)) {
 				return sys;
 			}
@@ -84,9 +97,9 @@ public class PSystemBuilder {
 		}
 
 		final PSystemError err = merge(errors);
-		if (OptionFlags.getInstance().isQuiet() == false) {
-			err.print(System.err);
-		}
+//		if (OptionFlags.getInstance().isQuiet() == false) {
+//			err.print(System.err);
+//		}
 		return err;
 
 	}
@@ -96,32 +109,42 @@ public class PSystemBuilder {
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
-		factories.add(new ActivityDiagramFactory2());
-		factories.add(new UsecaseDiagramFactory());
-		factories.add(new ComponentDiagramFactory());
+		factories.add(new DescriptionDiagramFactory());
 		factories.add(new StateDiagramFactory());
-		factories.add(new ActivityDiagramFactory2());
+		factories.add(new ActivityDiagramFactory3());
 		factories.add(new CompositeDiagramFactory());
 		factories.add(new ObjectDiagramFactory());
 		factories.add(new PostIdDiagramFactory());
 		factories.add(new PrintSkinFactory());
+		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
+		factories.add(new PSystemDonorsFactory());
+		factories.add(new PSystemListFontsFactory());
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
-		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
-		factories.add(new PSystemDitaaFactory(DiagramType.UML));
-		factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
-		factories.add(new PSystemJcckitFactory(DiagramType.UML));
-		factories.add(new PSystemSudokuFactory());
+		if (License.getCurrent() == License.GPL) {
+			factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
+			factories.add(new PSystemDitaaFactory(DiagramType.UML));
+			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
+			factories.add(new PSystemJcckitFactory(DiagramType.UML));
+			factories.add(new PSystemLogoFactory());
+			factories.add(new PSystemSudokuFactory());
+			factories.add(new PSystemTuringFactory());
+		}
+		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());
+		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
 		factories.add(new PSystemLostFactory());
 		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
-		factories.add(new PSystemXearthFactory());
-		factories.add(new PSystemProjectFactory());
+		if (License.getCurrent() == License.GPL) {
+			factories.add(new PSystemXearthFactory());
+		}
+		factories.add(new PSystemProjectFactory2());
+		factories.add(new FlowDiagramFactory());
 		return factories;
 	}
 
@@ -140,7 +163,7 @@ public class PSystemBuilder {
 		return new PSystemError(source, errors);
 	}
 
-	private boolean isOk(PSystem ps) {
+	private boolean isOk(Diagram ps) {
 		if (ps == null || ps instanceof PSystemError) {
 			return false;
 		}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph2;
@@ -70,8 +70,8 @@ public class CubicCurveFactory {
 			for (Rectangle2D.Double rect : forbiddenRect) {
 				all.addAll(MagicPointsFactory.get(rect));
 			}
-			System.err.println("s1 " + all.size());
-			final long t1 = System.currentTimeMillis();
+// Log.println("s1 " + all.size());
+//			final long t1 = System.currentTimeMillis();
 			double min = Double.MAX_VALUE;
 			for (Point2D.Double p1 : all) {
 				for (Point2D.Double p2 : all) {
@@ -84,10 +84,10 @@ public class CubicCurveFactory {
 					}
 				}
 			}
-			final long t2 = System.currentTimeMillis() - t1;
-			System.err.println("s2 = " + t2);
-			System.err.println("TPS1 = " + RectanglesCollection.TPS1);
-			System.err.println("TPS2 = " + RectanglesCollection.TPS2);
+//			final long t2 = System.currentTimeMillis() - t1;
+// Log.println("s2 = " + t2);
+// Log.println("TPS1 = " + RectanglesCollection.TPS1);
+// Log.println("TPS2 = " + RectanglesCollection.TPS2);
 		}
 		return result;
 	}

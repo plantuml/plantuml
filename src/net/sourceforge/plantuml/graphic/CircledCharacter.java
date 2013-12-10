@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,40 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6780 $
+ * Revision $Revision: 11873 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
-import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
-import net.sourceforge.plantuml.cucadiagram.dot.Lazy;
-import net.sourceforge.plantuml.skin.UDrawable;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.USegmentType;
-import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
-import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CircledCharacter implements UDrawable, TextBlock {
+public class CircledCharacter implements TextBlock {
 
 	private final String c;
 	private final UFont font;
@@ -80,21 +63,20 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		this.fontColor = fontColor;
 	}
 
-	public void draw(ColorMapper colorMapper, Graphics2D g2d, int x, int y, double dpiFactor) {
-		drawU(new UGraphicG2d(colorMapper, g2d, null, 1.0), x, y);
-	}
+	// public void draw(ColorMapper colorMapper, Graphics2D g2d, int x, int y, double dpiFactor) {
+	// drawU(new UGraphicG2d(colorMapper, g2d, null, 1.0), x, y);
+	// }
 
-	public void drawU(UGraphic ug, double x, double y) {
-
+	public void drawU(UGraphic ug) {
 		if (circle != null) {
-			ug.getParam().setColor(circle);
+			ug = ug.apply(new UChangeColor(circle));
 		}
-		ug.getParam().setBackcolor(innerCircle);
-		ug.draw(x, y, new UEllipse(radius * 2, radius * 2));
-		ug.getParam().setColor(fontColor);
-		ug.centerChar(x + radius, y + radius, c.charAt(0), font);
-		ug.getParam().setBackcolor(null);
-
+		// final HtmlColor back = ug.getParam().getBackcolor();
+		ug = ug.apply(new UChangeBackColor(innerCircle));
+		ug.draw(new UEllipse(radius * 2, radius * 2));
+		ug = ug.apply(new UChangeColor(fontColor));
+		ug = ug.apply(new UTranslate(radius, radius));
+		ug.draw(new UCenteredCharacter(c.charAt(0), font));
 	}
 
 	final public double getPreferredWidth(StringBounder stringBounder) {
@@ -105,80 +87,28 @@ public class CircledCharacter implements UDrawable, TextBlock {
 		return 2 * radius;
 	}
 
-	public void drawU(UGraphic ug) {
-		drawU(ug, 0, 0);
-	}
-
-	private PathIterator getPathIteratorCharacter(FontRenderContext frc) {
-		final TextLayout textLayout = new TextLayout(c, font.getFont(), frc);
-		final Shape s = textLayout.getOutline(null);
-		return s.getPathIterator(null);
-	}
-
-	public UPath getUPath(FontRenderContext frc) {
-		final UPath result = new UPath();
-
-		final PathIterator path = getPathIteratorCharacter(frc);
-
-		final double coord[] = new double[6];
-		while (path.isDone() == false) {
-			final int code = path.currentSegment(coord);
-			result.add(coord, USegmentType.getByCode(code));
-			path.next();
-		}
-
-		return result;
-	}
+	// private PathIterator getPathIteratorCharacter(FontRenderContext frc) {
+	// final TextLayout textLayout = new TextLayout(c, font.getFont(), frc);
+	// final Shape s = textLayout.getOutline(null);
+	// return s.getPathIterator(null);
+	// }
+	//
+	// private UPath getUPath(FontRenderContext frc) {
+	// final UPath result = new UPath();
+	//
+	// final PathIterator path = getPathIteratorCharacter(frc);
+	//
+	// final double coord[] = new double[6];
+	// while (path.isDone() == false) {
+	// final int code = path.currentSegment(coord);
+	// result.add(coord, USegmentType.getByCode(code));
+	// path.next();
+	// }
+	//
+	// return result;
+	// }
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return new Dimension2DDouble(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
 	}
-
-	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		throw new UnsupportedOperationException();
-	}
-
-	public DrawFile generateCircleCharacter(final ColorMapper colorMapper, final HtmlColor background,
-			final double dpiFactor) throws IOException {
-
-		final Lazy<File> lpng = new Lazy<File>() {
-
-			public File getNow() throws IOException {
-				final File png = FileUtils.createTempFile("circle", ".png");
-				final EmptyImageBuilder builder = new EmptyImageBuilder((int) (60 * dpiFactor), (int) (60 * dpiFactor),
-						colorMapper.getMappedColor(background), dpiFactor);
-				BufferedImage im = builder.getBufferedImage();
-				final Graphics2D g2d = builder.getGraphics2D();
-				final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
-
-				draw(colorMapper, g2d, 0, 0, dpiFactor);
-				im = im.getSubimage(0, 0, (int) (getPreferredWidth(stringBounder) * dpiFactor) + 5,
-						(int) (getPreferredHeight(stringBounder) * dpiFactor) + 1);
-
-				ImageIO.write(im, "png", png);
-				return png;
-			}
-		};
-
-		final Lazy<File> leps = new Lazy<File>() {
-			public File getNow() throws IOException {
-				final File epsFile = FileUtils.createTempFile("circle", ".eps");
-				UGraphicEps.copyEpsToFile(colorMapper, CircledCharacter.this, epsFile);
-				return epsFile;
-			}
-		};
-
-		final Lazy<String> lsvg = new Lazy<String>() {
-			public String getNow() throws IOException {
-				return UGraphicG2d.getSvgString(colorMapper, CircledCharacter.this);
-			}
-
-		};
-
-		final Object signature = Arrays.asList("circle", c, font, innerCircle, circle, fontColor, radius, background,
-				dpiFactor);
-
-		return DrawFile.create(lpng, lsvg, leps, signature);
-	}
-
 }

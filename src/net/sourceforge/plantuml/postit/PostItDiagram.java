@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -47,8 +47,13 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
-import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
@@ -67,13 +72,13 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index,
-			FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) throws IOException {
+	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption,
+			List<BufferedImage> flashcodes) throws IOException {
 		final UGraphic ug = createImage(fileFormatOption);
 		drawU(ug);
 		if (ug instanceof UGraphicG2d) {
 			final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-			PngIO.write(im, os, this.getMetadata(), this.getDpi(fileFormatOption));
+			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, this.getDpi(fileFormatOption));
 		} else if (ug instanceof UGraphicSvg) {
 			final UGraphicSvg svg = (UGraphicSvg) ug;
 			svg.createXml(os);
@@ -81,10 +86,11 @@ public class PostItDiagram extends UmlDiagram {
 			final UGraphicEps eps = (UGraphicEps) ug;
 			os.write(eps.getEPSCode().getBytes());
 		}
+		return new ImageDataSimple();
 	}
 
-	public String getDescription() {
-		return "Board of post-it";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("Board of post-it", getClass());
 	}
 
 	public Area getDefaultArea() {
@@ -95,7 +101,7 @@ public class PostItDiagram extends UmlDiagram {
 		throw new UnsupportedOperationException();
 	}
 
-	public PostIt createPostIt(String id, List<String> text) {
+	public PostIt createPostIt(String id, Display text) {
 		if (postIts.containsKey(id)) {
 			throw new IllegalArgumentException();
 		}
@@ -114,13 +120,14 @@ public class PostItDiagram extends UmlDiagram {
 				.getMappedColor(this.getSkinParam().getBackgroundColor());
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
-			final double height = getDefaultArea().heightWhenWidthIs(width,
-					SequenceDiagramFileMaker.getDummystringbounder());
+			final double height = getDefaultArea().heightWhenWidthIs(width, TextBlockUtils.getDummyStringBounder());
 			final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, backColor);
 
 			final Graphics2D graphics2D = builder.getGraphics2D();
 			final double dpiFactor = this.getDpiFactor(fileFormatOption);
-			return new UGraphicG2d(new ColorMapperIdentity(), graphics2D, builder.getBufferedImage(), dpiFactor);
+			final UGraphicG2d result = new UGraphicG2d(new ColorMapperIdentity(), graphics2D, dpiFactor);
+			result.setBufferedImage(builder.getBufferedImage());
+			return result;
 		}
 		throw new UnsupportedOperationException();
 	}

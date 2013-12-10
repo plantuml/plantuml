@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -44,10 +44,12 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class PathDrawerInterface implements PathDrawer {
 
@@ -73,28 +75,30 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private void noDash(UGraphic ug) {
-		ug.getParam().setStroke(new UStroke());
+		// ug.getParam().resetStroke();
+		throw new UnsupportedOperationException();
 	}
 
 	private void goDash(UGraphic ug) {
-		ug.getParam().setStroke(new UStroke(8, 8, 1.0));
+		// ug.getParam().setStroke(new UStroke(8, 8, 1.0));
+		throw new UnsupportedOperationException();
 	}
 
 	public void drawPathAfter(UGraphic ug, Positionable start, Positionable end, Path path) {
 		DotPath dotPath = path.getDotPath();
 		final Racorder racorder = new RacorderOrthogonal();
-		//final Racorder racorder = new RacorderInToCenter();
-		//final Racorder racorder = new RacorderFollowTangeante();
+		// final Racorder racorder = new RacorderInToCenter();
+		// final Racorder racorder = new RacorderFollowTangeante();
 
 		final Point2D endPath = dotPath.getEndPoint();
 		final DotPath in = racorder.getRacordIn(PositionableUtils.convert(end), dotPath.getEndTangeante());
 		// final Point2D inPoint = in.getFrontierIntersection(end);
 		final Point2D inPoint = in.getEndPoint();
 		// final double theta1_ = in.getEndAngle() + Math.PI / 2;
-		// System.err.println("theta1_=" + theta1_ + " " + theta1_ * 180 /
+		// Log.println("theta1_=" + theta1_ + " " + theta1_ * 180 /
 		// Math.PI);
 		final double theta1 = atan2(endPath, inPoint);
-		// System.err.println("theta1=" + theta1 + " " + theta1 * 180 /
+		// Log.println("theta1=" + theta1 + " " + theta1 * 180 /
 		// Math.PI);
 		final Point2D middle1 = drawSymbol(ug, theta1, inPoint, linkType.getDecor1());
 
@@ -103,42 +107,42 @@ public class PathDrawerInterface implements PathDrawer {
 		// final Point2D outPoint = out.getFrontierIntersection(start);
 		final Point2D outPoint = out.getStartPoint();
 		// final double theta2_ = out.getStartAngle() - Math.PI / 2;
-		// System.err.println("theta2_=" + theta2_ + " " + theta2_ * 180 /
+		// Log.println("theta2_=" + theta2_ + " " + theta2_ * 180 /
 		// Math.PI);
 		final double theta2 = atan2(startPath, outPoint);
-		// System.err.println("theta2=" + theta2 + " " + theta2 * 180 /
+		// Log.println("theta2=" + theta2 + " " + theta2 * 180 /
 		// Math.PI);
 		final Point2D middle2 = drawSymbol(ug, theta2, outPoint, linkType.getDecor2());
 
 		if (middle1 != null) {
 			final CubicCurve2D.Double after = getLine(endPath, middle1);
 			dotPath = dotPath.addAfter(after);
-			//dotPath = dotPath.addAfter(in);
+			// dotPath = dotPath.addAfter(in);
 		}
 
 		if (middle2 != null) {
 			final CubicCurve2D.Double before = getLine(middle2, startPath);
 			dotPath = dotPath.addBefore(before);
-			//dotPath = dotPath.addBefore(out);
+			// dotPath = dotPath.addBefore(out);
 		}
 
 		final LinkStyle style = linkType.getStyle();
-		if (style == LinkStyle.INTERFACE_PROVIDER || style == LinkStyle.INTERFACE_USER) {
+		if (style == LinkStyle.__toremove_INTERFACE_PROVIDER || style == LinkStyle.__toremove_INTERFACE_USER) {
 			final Decor decor = new DecorInterfaceProvider(style);
 			final Map<Point2D, Double> all = dotPath.somePoints();
 			final Point2D p = getFarest(outPoint, inPoint, all.keySet());
 
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
+			ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.background)));
+			ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
 
 			decor.drawDecor(ug, p, all.get(p));
 		}
 
-		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
+		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
 		if (linkType.isDashed()) {
 			goDash(ug);
 		}
-		ug.draw(0, 0, dotPath);
+		ug.draw(dotPath);
 		if (linkType.isDashed()) {
 			noDash(ug);
 		}
@@ -148,43 +152,44 @@ public class PathDrawerInterface implements PathDrawer {
 		final double y = -endPath.getX() + inPoint.getX();
 		final double x = endPath.getY() - inPoint.getY();
 		final double angle = Math.atan2(y, x);
-		System.err.println("x=" + x + " y=" + y + " angle=" + angle + " " + angle * 180.0 / Math.PI);
+		// Log.println("x=" + x + " y=" + y + " angle=" + angle + " " + angle * 180.0 / Math.PI);
 		return angle;
 	}
 
 	private Point2D drawSymbol(UGraphic ug, double theta, final Point2D position, LinkDecor decor) {
-		if (1==1) {
-			return null;
-		}
-		Point2D middle1 = null;
-		// final double theta = Math.atan2(
-		// -direction.getX() + position.getX(), direction.getY()
-		// - position.getY());
-		if (decor == LinkDecor.SQUARRE) {
-			middle1 = drawSquare(ug, position.getX(), position.getY());
-		} else if (decor == LinkDecor.EXTENDS) {
-			middle1 = drawExtends(ug, position.getX(), position.getY(), theta);
-		} else if (decor == LinkDecor.AGREGATION) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
-			middle1 = drawDiamond(ug, position.getX(), position.getY(), theta);
-		} else if (decor == LinkDecor.COMPOSITION) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder));
-			ug.getParam().setColor(null);
-			middle1 = drawDiamond(ug, position.getX(), position.getY(), theta);
-		} else if (decor == LinkDecor.NONE) {
-			middle1 = position;
-		} else if (decor == LinkDecor.ARROW) {
-			ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder));
-			ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
-			middle1 = drawArrow(ug, position.getX(), position.getY(), theta);
-		}
-		return middle1;
+		// if (1==1) {
+		// return null;
+		// }
+		// Point2D middle1 = null;
+		// // final double theta = Math.atan2(
+		// // -direction.getX() + position.getX(), direction.getY()
+		// // - position.getY());
+		// if (decor == LinkDecor.SQUARRE) {
+		// middle1 = drawSquare(ug, position.getX(), position.getY());
+		// } else if (decor == LinkDecor.EXTENDS) {
+		// middle1 = drawExtends(ug, position.getX(), position.getY(), theta);
+		// } else if (decor == LinkDecor.AGREGATION) {
+		// ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
+		// ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
+		// middle1 = drawDiamond(ug, position.getX(), position.getY(), theta);
+		// } else if (decor == LinkDecor.COMPOSITION) {
+		// ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder));
+		// ug.getParam().setColor(null);
+		// middle1 = drawDiamond(ug, position.getX(), position.getY(), theta);
+		// } else if (decor == LinkDecor.NONE) {
+		// middle1 = position;
+		// } else if (decor == LinkDecor.ARROW) {
+		// ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBorder));
+		// ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
+		// middle1 = drawArrow(ug, position.getX(), position.getY(), theta);
+		// }
+		// return middle1;
+		throw new UnsupportedOperationException();
 	}
 
 	private CubicCurve2D.Double getLine(final Point2D p1, Point2D p2) {
-		return new CubicCurve2D.Double(p1.getX(), p1.getY(), p1.getX(), p1.getY(), p2.getX(), p2.getY(), p2.getX(), p2
-				.getY());
+		return new CubicCurve2D.Double(p1.getX(), p1.getY(), p1.getX(), p1.getY(), p2.getX(), p2.getY(), p2.getX(),
+				p2.getY());
 	}
 
 	private static Point2D getFarest(Point2D p1, Point2D p2, Collection<Point2D> all) {
@@ -209,30 +214,29 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private Point2D drawSquare(UGraphic ug, double centerX, double centerY) {
-		ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.classBackground));
-		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
+		ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.classBackground)));
+		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
 		final double width = 10;
 		final double height = 10;
-		ug.draw(centerX - width / 2, centerY - height / 2, new URectangle(width, height));
+		ug.apply(new UTranslate(centerX - width / 2, centerY - height / 2)).draw(new URectangle(width, height));
 		return new Point2D.Double(centerX, centerY);
 	}
 
 	Point2D drawExtends(UGraphic ug, double x, double y, double theta) {
-		ug.getParam().setBackcolor(rose.getHtmlColor(param, ColorParam.background));
-		ug.getParam().setColor(rose.getHtmlColor(param, ColorParam.classBorder));
-
-		final double width = 18;
-		final double height = 26;
+		ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.background)));
+		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
 
 		// final double theta = Math.atan2(-pathPoint.getX() + x,
 		// pathPoint.getY() - y);
 
 		final UPolygon triangle = new UPolygon();
 		triangle.addPoint(0, 1);
+		final double width = 18;
+		final double height = 26;
 		triangle.addPoint(-width / 2, height);
 		triangle.addPoint(width / 2, height);
 		triangle.rotate(theta);
-		ug.draw(x, y, triangle);
+		ug.apply(new UTranslate(x, y)).draw(triangle);
 
 		final Point2D middle = BezierUtils.middle(triangle.getPoints().get(1), triangle.getPoints().get(2));
 		middle.setLocation(middle.getX() + x, middle.getY() + y);
@@ -240,19 +244,19 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private Point2D drawDiamond(UGraphic ug, double x, double y, double theta) {
-		final double width = 10;
-		final double height = 14;
 
 		// final double theta = Math.atan2(-pathPoint.getX() + x,
 		// pathPoint.getY() - y);
 
 		final UPolygon triangle = new UPolygon();
 		triangle.addPoint(0, 0);
+		final double width = 10;
+		final double height = 14;
 		triangle.addPoint(-width / 2, height / 2);
 		triangle.addPoint(0, height);
 		triangle.addPoint(width / 2, height / 2);
 		triangle.rotate(theta);
-		ug.draw(x, y, triangle);
+		ug.apply(new UTranslate(x, y)).draw(triangle);
 
 		final Point2D middle = triangle.getPoints().get(2);
 		middle.setLocation(middle.getX() + x, middle.getY() + y);
@@ -261,20 +265,20 @@ public class PathDrawerInterface implements PathDrawer {
 	}
 
 	private Point2D drawArrow(UGraphic ug, double x, double y, double theta) {
-		final double width = 12;
-		final double height = 10;
-		final double height2 = 4;
 
 		// final double theta = Math.atan2(-pathPoint.getX() + x,
 		// pathPoint.getY() - y);
 
 		final UPolygon triangle = new UPolygon();
 		triangle.addPoint(0, 0);
+		final double width = 12;
+		final double height = 10;
 		triangle.addPoint(-width / 2, height);
+		final double height2 = 4;
 		triangle.addPoint(0, height2);
 		triangle.addPoint(width / 2, height);
 		triangle.rotate(theta);
-		ug.draw(x, y, triangle);
+		ug.apply(new UTranslate(x, y)).draw(triangle);
 
 		final Point2D middle = triangle.getPoints().get(2);
 		middle.setLocation(middle.getX() + x, middle.getY() + y);

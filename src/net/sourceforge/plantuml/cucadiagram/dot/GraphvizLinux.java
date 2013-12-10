@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4826 $
+ * Revision $Revision: 10765 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -50,22 +50,6 @@ class GraphvizLinux extends AbstractGraphviz {
 		}
 		final File usrBinDot = new File("/usr/bin/dot");
 		return usrBinDot;
-	}
-
-	@Override
-	String getCommandLine() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(getDotExe().getAbsolutePath());
-		appendImageType(sb);
-		return sb.toString();
-	}
-
-	@Override
-	String getCommandLineVersion() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(getDotExe().getAbsolutePath());
-		sb.append(" -V");
-		return sb.toString();
 	}
 
 }

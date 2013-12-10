@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,76 +28,77 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 10930 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import java.awt.geom.Dimension2D;
-import java.util.List;
+import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArrow {
 
 	private final double arrowWidth = 45;
 
 	public ComponentBlueModernSelfArrow(HtmlColor foregroundColor, HtmlColor colorFont, UFont font,
-			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
-		super(foregroundColor, colorFont, font, stringsToDisplay, arrowConfiguration);
+			Display stringsToDisplay, ArrowConfiguration arrowConfiguration, SpriteContainer spriteContainer) {
+		super(foregroundColor, colorFont, font, stringsToDisplay, arrowConfiguration, spriteContainer);
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);
 
-		ug.getParam().setBackcolor(getForegroundColor());
-		ug.getParam().setColor(getForegroundColor());
+		ug = ug.apply(new UChangeBackColor(getForegroundColor())).apply(new UChangeColor(getForegroundColor()));
 		final double x2 = arrowWidth - 3;
 
 		if (getArrowConfiguration().isDotted()) {
-			stroke(ug, 5, 2);
+			ug = stroke(ug, 5, 2);
 		} else {
-			ug.getParam().setStroke(new UStroke(2));
+			ug = ug.apply(new UStroke(2));
 		}
 
-		ug.draw(0, textHeight, new ULine(x2, 0));
+		ug.apply(new UTranslate(0, textHeight)).draw(new ULine(x2, 0));
 
 		final int textAndArrowHeight = (int) (textHeight + getArrowOnlyHeight(stringBounder));
 
-		ug.draw(x2, textHeight, new ULine(0, textAndArrowHeight - textHeight));
-		ug.draw(x2, textAndArrowHeight, new ULine(2 - x2, 0));
+		ug.apply(new UTranslate(x2, textHeight)).draw(new ULine(0, textAndArrowHeight - textHeight));
+		ug.apply(new UTranslate(x2, textAndArrowHeight)).draw(new ULine(2 - x2, 0));
 
-		ug.getParam().setStroke(new UStroke());
+		ug = ug.apply(new UStroke());
 
 		final int delta = (int) getArrowOnlyHeight(stringBounder);
 
-		if (getArrowConfiguration().isASync()) {
-			ug.getParam().setStroke(new UStroke(1.5));
+		if (getArrowConfiguration().isAsync()) {
 			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
-				ug.draw(getArrowDeltaX2(), textHeight - getArrowDeltaY2() + delta, new ULine(-getArrowDeltaX2(),
-						getArrowDeltaY2()));
+				ug.apply(new UStroke(1.5)).apply(new UTranslate(getArrowDeltaX2(), textHeight - getArrowDeltaY2() + delta)).draw(new ULine(-getArrowDeltaX2(), getArrowDeltaY2()));
 			}
 			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
-				ug.draw(getArrowDeltaX2(), textHeight + getArrowDeltaY2() + delta, new ULine(-getArrowDeltaX2(),
-						-getArrowDeltaY2()));
+				ug.apply(new UStroke(1.5)).apply(new UTranslate(getArrowDeltaX2(), textHeight + getArrowDeltaY2() + delta)).draw(new ULine(-getArrowDeltaX2(), -getArrowDeltaY2()));
 			}
-			ug.getParam().setStroke(new UStroke());
 		} else {
 			final UPolygon polygon = getPolygon(textHeight, delta);
-			ug.draw(0, 0, polygon);
+			ug.draw(polygon);
 		}
 
-		getTextBlock().drawU(ug, getMarginX1(), 0);
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), 0)));
 
 	}
 
@@ -131,6 +132,17 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return Math.max(getTextWidth(stringBounder), arrowWidth);
+	}
+
+	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
+		final int textHeight = (int) getTextHeight(stringBounder);
+		return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
+	}
+
+	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
+		final int textHeight = (int) getTextHeight(stringBounder);
+		final int textAndArrowHeight = (int) (textHeight + getArrowOnlyHeight(stringBounder));
+		return new Point2D.Double(getPaddingX(), textAndArrowHeight + getPaddingY());
 	}
 
 }

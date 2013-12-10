@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5523 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -44,12 +44,16 @@ public enum GroupingType {
 			return GroupingType.START;
 		} else if (s.equalsIgnoreCase("par")) {
 			return GroupingType.START;
+		} else if (s.equalsIgnoreCase("par2")) {
+			return GroupingType.START;
 		} else if (s.equalsIgnoreCase("break")) {
 			return GroupingType.START;
 		} else if (s.equalsIgnoreCase("group")) {
 			return GroupingType.START;
 		} else if (s.equalsIgnoreCase("critical")) {
 			return GroupingType.START;
+		} else if (s.equalsIgnoreCase("also")) {
+			return GroupingType.ELSE;
 		} else if (s.equalsIgnoreCase("else")) {
 			return GroupingType.ELSE;
 		} else if (s.equalsIgnoreCase("end")) {

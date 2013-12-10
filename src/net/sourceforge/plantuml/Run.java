@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,13 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6750 $
+ * Revision $Revision: 12023 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -43,18 +44,19 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.imageio.ImageIO;
 import javax.swing.UIManager;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
-import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
-import net.sourceforge.plantuml.componentdiagram.ComponentDiagramFactory;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
@@ -62,15 +64,28 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.swing.MainWindow2;
-import net.sourceforge.plantuml.usecasediagram.UsecaseDiagramFactory;
+import net.sourceforge.plantuml.ugraphic.SpriteGrayLevel;
+import net.sourceforge.plantuml.ugraphic.SpriteUtils;
+import net.sourceforge.plantuml.version.Version;
 
 public class Run {
 
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
 		final long start = System.currentTimeMillis();
 		final Option option = new Option(argsArray);
+		if (OptionFlags.getInstance().isEncodesprite()) {
+			encodeSprite(option.getResult());
+			return;
+		}
 		if (OptionFlags.getInstance().isVerbose()) {
+			Log.info("PlantUML Version " + Version.versionString());
 			Log.info("GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
+		}
+		if (GraphicsEnvironment.isHeadless()) {
+			Log.info("Forcing -Djava.awt.headless=true");
+			System.setProperty("java.awt.headless", "true");
+			Log.info("java.awt.headless set as true");
+			
 		}
 		if (OptionFlags.getInstance().isPrintFonts()) {
 			printFonts();
@@ -83,6 +98,7 @@ public class Run {
 		}
 
 		boolean error = false;
+		boolean forceQuit = false;
 		if (option.isPattern()) {
 			managePattern();
 		} else if (OptionFlags.getInstance().isGui()) {
@@ -93,8 +109,10 @@ public class Run {
 			new MainWindow2(option);
 		} else if (option.isPipe() || option.isSyntax()) {
 			managePipe(option);
+			forceQuit = true;
 		} else {
 			error = manageAllFiles(option);
+			forceQuit = true;
 		}
 
 		if (option.isDuration()) {
@@ -106,6 +124,53 @@ public class Run {
 			Log.error("Some diagram description contains errors");
 			System.exit(1);
 		}
+
+		if (forceQuit && OptionFlags.getInstance().isSystemExit()) {
+			System.exit(0);
+		}
+	}
+
+	private static void encodeSprite(List<String> result) throws IOException {
+		SpriteGrayLevel level = SpriteGrayLevel.GRAY_16;
+		boolean compressed = false;
+		final File f;
+		if (result.size() > 1 && result.get(0).matches("(4|8|16)z?")) {
+			if (result.get(0).startsWith("8")) {
+				level = SpriteGrayLevel.GRAY_8;
+			}
+			if (result.get(0).startsWith("4")) {
+				level = SpriteGrayLevel.GRAY_4;
+			}
+			compressed = result.get(0).toLowerCase().endsWith("z");
+			f = new File(result.get(1));
+		} else {
+			f = new File(result.get(0));
+		}
+		final BufferedImage im = ImageIO.read(f);
+		final String name = getSpriteName(f);
+		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level) : SpriteUtils.encode(im, name,
+				level);
+		System.out.println(s);
+	}
+
+	private static String getSpriteName(File f) {
+		final String s = getSpriteNameInternal(f);
+		if (s.length() == 0) {
+			return "test";
+		}
+		return s;
+	}
+
+	private static String getSpriteNameInternal(File f) {
+		final StringBuilder sb = new StringBuilder();
+		for (char c : f.getName().toCharArray()) {
+			if (("" + c).matches("[\\p{L}0-9_]")) {
+				sb.append(c);
+			} else {
+				return sb.toString();
+			}
+		}
+		return sb.toString();
 	}
 
 	private static void goFtp(Option option) throws IOException {
@@ -132,17 +197,17 @@ public class Run {
 		printPattern(new SequenceDiagramFactory());
 		printPattern(new ClassDiagramFactory());
 		printPattern(new ActivityDiagramFactory());
-		printPattern(new UsecaseDiagramFactory());
-		printPattern(new ComponentDiagramFactory());
+		printPattern(new DescriptionDiagramFactory());
+		// printPattern(new ComponentDiagramFactory());
 		printPattern(new StateDiagramFactory());
 		printPattern(new ObjectDiagramFactory());
 	}
 
-	private static void printPattern(AbstractUmlSystemCommandFactory factory) {
-		factory.init(null);
+	private static void printPattern(UmlDiagramFactory factory) {
 		System.out.println();
 		System.out.println(factory.getClass().getSimpleName().replaceAll("Factory", ""));
-		for (String s : factory.getDescription()) {
+		final List<String> descriptions = factory.getDescription();
+		for (String s : descriptions) {
 			System.out.println(s);
 		}
 	}
@@ -172,27 +237,23 @@ public class Run {
 		final SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), source, option.getConfig());
 
 		if (option.isSyntax()) {
-			try {
-				final PSystem system = sourceStringReader.getBlocks().get(0).getSystem();
-				if (system instanceof UmlDiagram) {
-					ps.println(((UmlDiagram) system).getUmlDiagramType().name());
-					ps.println(system.getDescription());
-				} else if (system instanceof PSystemError) {
-					ps.println("ERROR");
-					final PSystemError sys = (PSystemError) system;
-					ps.println(sys.getHigherErrorPosition());
-					for (ErrorUml er : sys.getErrorsUml()) {
-						ps.println(er.getError());
-					}
-				} else {
-					ps.println("OTHER");
-					ps.println(system.getDescription());
+			final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
+			if (system instanceof UmlDiagram) {
+				ps.println(((UmlDiagram) system).getUmlDiagramType().name());
+				ps.println(system.getDescription());
+			} else if (system instanceof PSystemError) {
+				ps.println("ERROR");
+				final PSystemError sys = (PSystemError) system;
+				ps.println(sys.getHigherErrorPosition());
+				for (ErrorUml er : sys.getErrorsUml()) {
+					ps.println(er.getError());
 				}
-			} catch (InterruptedException e) {
-				Log.error("InterruptedException " + e);
+			} else {
+				ps.println("OTHER");
+				ps.println(system.getDescription());
 			}
 		} else if (option.isPipe()) {
-			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
+			sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
 		}
 	}
 
@@ -250,7 +311,7 @@ public class Run {
 		for (String s : option.getResult()) {
 			final FileGroup group = new FileGroup(s, option.getExcludes(), option);
 			for (final File f : group.getFiles()) {
-				final Future<?> future = executor.submit(new Runnable() {
+				executor.submit(new Runnable() {
 					public void run() {
 						if (errors.get()) {
 							return;
@@ -286,11 +347,11 @@ public class Run {
 		}
 		final ISourceFileReader sourceFileReader;
 		if (option.getOutputFile() == null) {
-			sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option.getOutputDir(), option
-					.getConfig(), option.getCharset(), option.getFileFormatOption());
+			sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option.getOutputDir(),
+					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		} else {
-			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(), f, option.getOutputFile(), option
-					.getConfig(), option.getCharset(), option.getFileFormatOption());
+			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(), f, option.getOutputFile(),
+					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
 		if (option.isComputeurl()) {
 			final List<String> urls = sourceFileReader.getEncodedUrl();

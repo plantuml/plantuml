@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,25 +37,26 @@ import java.util.List;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class CommandAddData extends SingleLineCommand<ObjectDiagram> {
 
-	public CommandAddData(ObjectDiagram diagram) {
-		super(diagram, "(?i)^([\\p{L}0-9_.]+)\\s*:\\s*(.*)$");
+	public CommandAddData() {
+		super("(?i)^([\\p{L}0-9_.]+)\\s*:\\s*(.*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Entity entity = (Entity) getSystem().getOrCreateClass(arg.get(0));
+	protected CommandExecutionResult executeArg(ObjectDiagram diagram, List<String> arg) {
+		final IEntity entity = diagram.getOrCreateLeaf(Code.of(arg.get(0)), null);
 
 		final String field = arg.get(1);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field.charAt(0))) {
-			getSystem().setVisibilityModifierPresent(true);
+			diagram.setVisibilityModifierPresent(true);
 		}
-		entity.addField(field);
+		entity.addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}
 }

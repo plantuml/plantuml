@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.salt.factory;
 import java.awt.Font;
 import java.util.Arrays;
 
+import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -45,9 +46,11 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class ElementFactoryText implements ElementFactory {
 
 	final private DataSource dataSource;
+	final private SpriteContainer spriteContainer;
 
-	public ElementFactoryText(DataSource dataSource) {
+	public ElementFactoryText(DataSource dataSource, SpriteContainer spriteContainer) {
 		this.dataSource = dataSource;
+		this.spriteContainer = spriteContainer;
 	}
 
 	public Terminated<Element> create() {
@@ -57,8 +60,8 @@ public class ElementFactoryText implements ElementFactory {
 		final Terminated<String> next = dataSource.next();
 		final String text = next.getElement();
 		final UFont font = new UFont("Default", Font.PLAIN, 12);
-		return new Terminated<Element>(new ElementText(Arrays.asList(text), font), next
-				.getTerminator());
+		return new Terminated<Element>(new ElementText(Arrays.asList(text), font, spriteContainer),
+				next.getTerminator());
 	}
 
 	public boolean ready() {

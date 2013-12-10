@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -40,9 +40,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UMotif;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
@@ -51,29 +54,26 @@ public class GraphicsPath {
 	private final String path;
 	private final ColorMapper colorMapper;
 
-	// private final Font numberFont = new Font("SansSerif", Font.BOLD, 20);
-	// private final Font font = new Font("SansSerif", Font.PLAIN, 11);
-
 	public GraphicsPath(ColorMapper colorMapper, String path) {
 		this.path = path;
 		this.colorMapper = colorMapper;
 	}
 
-	public void writeImage(OutputStream os) throws IOException {
+	public ImageData writeImage(OutputStream os) throws IOException {
 		final BufferedImage im = createImage();
 		PngIO.write(im, os, 96);
+		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
 
 	private BufferedImage createImage() {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(50, 50,
-				Color.WHITE);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(50, 50, Color.WHITE);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
-		
-		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, im, 1.0);
-		ug.getParam().setColor(HtmlColor.BLACK);
+
+		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
+		ug.setBufferedImage(im);
 		final UMotif motif = new UMotif(path);
-		motif.drawHorizontal(ug, 20, 20, 1);
+		motif.drawHorizontal(ug.apply(new UChangeColor(HtmlColorUtils.BLACK)), 20, 20, 1);
 
 		g2d.dispose();
 		return im;

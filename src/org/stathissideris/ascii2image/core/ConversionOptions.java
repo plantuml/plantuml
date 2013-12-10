@@ -38,6 +38,10 @@ public class ConversionOptions {
 	}
 	
 	public ConversionOptions(){}
+
+	public void setDropShadows(boolean dropShadows) {
+		renderingOptions.setDropShadows(dropShadows);
+	}
 	
 //	public ConversionOptions(CommandLine cmdLine) throws UnsupportedEncodingException{
 //		

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,16 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 10930 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CircleInterface implements UDrawable {
 
@@ -57,35 +61,12 @@ public class CircleInterface implements UDrawable {
 		this.thickness = thickness;
 	}
 
-//	public void draw(Graphics2D g2d) {
-//
-//		g2d.setStroke(new BasicStroke(thickness));
-//
-//		final Shape head = new Ellipse2D.Double(thickness, thickness, headDiam, headDiam);
-//
-//		g2d.setColor(backgroundColor);
-//		g2d.fill(head);
-//
-//		g2d.setColor(foregroundColor);
-//		g2d.draw(head);
-//
-//		g2d.setStroke(new BasicStroke());
-//		throw new UnsupportedOperationException();
-//	}
-	
 	public void drawU(UGraphic ug) {
-
-		ug.getParam().setStroke(new UStroke(thickness));
-
 		final UEllipse head = new UEllipse(headDiam, headDiam);
-
-		ug.getParam().setBackcolor(backgroundColor);
-		ug.getParam().setColor(foregroundColor);
-		ug.draw(thickness, thickness, head);
-
-		ug.getParam().setStroke(new UStroke());
+		
+		ug.apply(new UStroke(thickness)).apply(new UChangeBackColor(backgroundColor))
+		.apply(new UChangeColor(foregroundColor)).apply(new UTranslate((double) thickness, (double) thickness)).draw(head);
 	}
-
 
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return headDiam + 2 * thickness;

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,38 +28,51 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
+ * Revision $Revision: 11873 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.ugraphic.Sprite;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class SingleLine implements Line {
 
-	private final List<Tile> blocs = new ArrayList<Tile>();
-	private final HorizontalAlignement horizontalAlignement;
+	private final List<TextBlock> blocs = new ArrayList<TextBlock>();
+	private final HorizontalAlignment horizontalAlignment;
 
-	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignement horizontalAlignement) {
+	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			SpriteContainer spriteContainer) {
 		if (text.length() == 0) {
 			text = " ";
 		}
-		this.horizontalAlignement = horizontalAlignement;
+		this.horizontalAlignment = horizontalAlignment;
 		final Splitter lineSplitter = new Splitter(text);
 
 		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(false)) {
 			if (cmd instanceof Text) {
 				final String s = ((Text) cmd).getText();
-				blocs.add(new TileText(s, fontConfiguration));
+				blocs.add(new TileText(s, fontConfiguration, null));
+			} else if (cmd instanceof TextLink) {
+				final String s = ((TextLink) cmd).getText();
+				final Url url = ((TextLink) cmd).getUrl();
+				// blocs.add(new TileText(s, fontConfiguration.add(FontStyle.UNDERLINE), url));
+				blocs.add(new TileText(s, fontConfiguration, url));
 			} else if (cmd instanceof Img) {
 				blocs.add(((Img) cmd).createMonoImage());
+			} else if (cmd instanceof SpriteCommand) {
+				final Sprite sprite = spriteContainer.getSprite(((SpriteCommand) cmd).getSprite());
+				if (sprite != null) {
+					blocs.add(sprite.asTextBlock(fontConfiguration.getColor()));
+				}
 			} else if (cmd instanceof FontChange) {
 				fontConfiguration = ((FontChange) cmd).apply(fontConfiguration);
 			}
@@ -69,7 +82,7 @@ class SingleLine implements Line {
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
-		for (Tile b : blocs) {
+		for (TextBlock b : blocs) {
 			final Dimension2D size2D = b.calculateDimension(stringBounder);
 			width += size2D.getWidth();
 			height = Math.max(height, size2D.getHeight());
@@ -77,24 +90,24 @@ class SingleLine implements Line {
 		return new Dimension2DDouble(width, height);
 	}
 
-	private double maxDeltaY(Graphics2D g2d) {
-		double result = 0;
-		final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d));
-		for (Tile b : blocs) {
-			if (b instanceof TileText == false) {
-				continue;
-			}
-			final Dimension2D dimBloc = b.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-			final double deltaY = dim.getHeight() - dimBloc.getHeight() + ((TileText) b).getFontSize2D();
-			result = Math.max(result, deltaY);
-		}
-		return result;
-	}
+	// private double maxDeltaY(Graphics2D g2d) {
+	// double result = 0;
+	// final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d));
+	// for (TextBlock b : blocs) {
+	// if (b instanceof TileText == false) {
+	// continue;
+	// }
+	// final Dimension2D dimBloc = b.calculateDimension(StringBounderUtils.asStringBounder(g2d));
+	// final double deltaY = dim.getHeight() - dimBloc.getHeight() + ((TileText) b).getFontSize2D();
+	// result = Math.max(result, deltaY);
+	// }
+	// return result;
+	// }
 
 	private double maxDeltaY(UGraphic ug) {
 		double result = 0;
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
-		for (Tile b : blocs) {
+		for (TextBlock b : blocs) {
 			if (b instanceof TileText == false) {
 				continue;
 			}
@@ -105,31 +118,23 @@ class SingleLine implements Line {
 		return result;
 	}
 
-	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		final double deltaY = maxDeltaY(g2d);
-		for (Tile b : blocs) {
-			if (b instanceof TileImage) {
-				b.draw(colorMapper, g2d, x, y);
-			} else {
-				b.draw(colorMapper, g2d, x, y + deltaY);
-			}
-			x += b.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getWidth();
-		}
-	}
-
-	public void drawU(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug) {
 		final double deltaY = maxDeltaY(ug);
-		for (Tile b : blocs) {
-			if (b instanceof TileImage) {
-				b.drawU(ug, x, y);
+		final StringBounder stringBounder = ug.getStringBounder();
+		final Dimension2D dim = calculateDimension(stringBounder);
+		double x = 0;
+		for (TextBlock b : blocs) {
+			if (b instanceof TileText) {
+				b.drawU(ug.apply(new UTranslate(x, deltaY)));
 			} else {
-				b.drawU(ug, x, y + deltaY);
+				final double dy = dim.getHeight() - b.calculateDimension(stringBounder).getHeight();
+				b.drawU(ug.apply(new UTranslate(x, dy)));
 			}
-			x += b.calculateDimension(ug.getStringBounder()).getWidth();
+			x += b.calculateDimension(stringBounder).getWidth();
 		}
 	}
 
-	public HorizontalAlignement getHorizontalAlignement() {
-		return horizontalAlignement;
+	public HorizontalAlignment getHorizontalAlignment() {
+		return horizontalAlignment;
 	}
 }

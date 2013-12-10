@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -56,7 +56,16 @@ public final class CucaDiagramXmiMaker {
 
 	public void createFiles(OutputStream fos) throws IOException {
 		try {
-			final XmiClassDiagram xmi = new XmiClassDiagram((ClassDiagram) diagram, fileFormat);
+			final IXmiClassDiagram xmi;
+			if (fileFormat == FileFormat.XMI_STANDARD) {
+				xmi = new XmiClassDiagramStandard((ClassDiagram) diagram);
+			} else if (fileFormat == FileFormat.XMI_ARGO) {
+				xmi = new XmiClassDiagramArgo((ClassDiagram) diagram);
+			} else if (fileFormat == FileFormat.XMI_STAR) {
+				xmi = new XmiClassDiagramStar((ClassDiagram) diagram);
+			} else {
+				throw new UnsupportedOperationException();
+			}
 			xmi.transformerXml(fos);
 			// fos.close();
 			// return Collections.singletonList(suggestedFile);

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,24 +38,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementMenuPopup implements Element {
 
 	private final Collection<ElementMenuEntry> entries = new ArrayList<ElementMenuEntry>();
 	private final UFont font;
+	private final SpriteContainer spriteContainer;
 
-	public ElementMenuPopup(UFont font) {
+	public ElementMenuPopup(UFont font, SpriteContainer spriteContainer) {
 		this.font = font;
+		this.spriteContainer = spriteContainer;
 	}
 
 	public void addEntry(String s) {
-		entries.add(new ElementMenuEntry(s, font));
+		entries.add(new ElementMenuEntry(s, font, spriteContainer));
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
@@ -73,14 +78,12 @@ public class ElementMenuPopup implements Element {
 		if (zIndex != 1) {
 			return;
 		}
-		ug.getParam().setBackcolor(HtmlColor.getColorIfValid("#DDDDDD"));
-		ug.draw(x, y, new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
-		ug.getParam().setBackcolor(null);
+		ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#DDDDDD"))).apply(new UTranslate(x, y)).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 
 		for (ElementMenuEntry entry : entries) {
 			final double h = entry.getPreferredDimension(ug.getStringBounder(), x, y).getHeight();
 			if (entry.getText().equals("-")) {
-				ug.draw(x, y + h / 2, new ULine(dimToUse.getWidth(), 0));
+				ug.apply(new UTranslate(x, y + h / 2)).draw(new ULine(dimToUse.getWidth(), 0));
 			} else {
 				entry.drawU(ug, x, y, zIndex, dimToUse);
 			}

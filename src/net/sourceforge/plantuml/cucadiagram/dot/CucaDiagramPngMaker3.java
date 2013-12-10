@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6710 $
+ * Revision $Revision: 11914 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -37,9 +37,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graph.ANode;
 import net.sourceforge.plantuml.graph.ANodeImpl;
@@ -61,7 +58,6 @@ import net.sourceforge.plantuml.graph.BoardExplorer;
 import net.sourceforge.plantuml.graph.Graph5;
 import net.sourceforge.plantuml.graph.Heap;
 import net.sourceforge.plantuml.graph.Zoda2;
-import net.sourceforge.plantuml.png.PngSplitter;
 
 public final class CucaDiagramPngMaker3 {
 
@@ -81,10 +77,10 @@ public final class CucaDiagramPngMaker3 {
 			// Log.error("CucaDiagramPngMaker3:: " + s + " " + diffHeight);
 			zoda2.addLink(s, diffHeight, link);
 		}
-		for (Entity ent : diagram.entities().values()) {
-			ANode n = zoda2.getNode(ent.getCode());
+		for (IEntity ent : diagram.getLeafs().values()) {
+			ANode n = zoda2.getNode(ent.getCode().getCode());
 			if (n == null) {
-				n = zoda2.createAloneNode(ent.getCode());
+				n = zoda2.createAloneNode(ent.getCode().getCode());
 			}
 			((ANodeImpl) n).setUserData(ent);
 		}
@@ -146,18 +142,18 @@ public final class CucaDiagramPngMaker3 {
 		return result;
 	}
 
-	public List<File> createPng(File pngFile) throws IOException {
-		OutputStream os = null;
-		try {
-			os = new BufferedOutputStream(new FileOutputStream(pngFile));
-			createPng(os);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-
-		return new PngSplitter(pngFile, diagram.getHorizontalPages(), diagram.getVerticalPages(), diagram.getMetadata(), 96)
-				.getFiles();
-	}
+//	public List<File> createPng(File pngFile) throws IOException {
+//		OutputStream os = null;
+//		try {
+//			os = new BufferedOutputStream(new FileOutputStream(pngFile));
+//			createPng(os);
+//		} finally {
+//			if (os != null) {
+//				os.close();
+//			}
+//		}
+//
+//		return new PngSplitter(pngFile, diagram.getHorizontalPages(), diagram.getVerticalPages(), diagram.getMetadata(), 96)
+//				.getFiles();
+//	}
 }

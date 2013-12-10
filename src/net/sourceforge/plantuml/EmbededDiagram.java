@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,16 +33,14 @@
  */
 package net.sourceforge.plantuml;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class EmbededDiagram implements CharSequence {
 
-	private final List<String> system;
+	private final Display system;
 
-	public EmbededDiagram(List<String> system) {
-		this.system = new ArrayList<String>(system);
+	public EmbededDiagram(Display system) {
+		this.system = system;
 	}
 
 	public int length() {
@@ -57,7 +55,7 @@ public class EmbededDiagram implements CharSequence {
 		return toString().subSequence(start, end);
 	}
 
-	public final List<String> getLines() {
-		return Collections.unmodifiableList(system);
+	public final Display getLines() {
+		return system;
 	}
 }

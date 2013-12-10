@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -45,16 +45,18 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
 
 public class SvekUtils {
 
-	static public String getStrokeString(int color) {
-		return "stroke=\"" + StringUtils.getAsHtml(color).toLowerCase() + "\"";
+	static public void traceSvgString(String svg) throws IOException {
+		traceString(new File("svek.svg"), svg);
 	}
 
-	static public void traceSvgString(String svg) throws IOException {
-		final File f = new File("svek.svg");
+	static public void traceDotString(String dot) throws IOException {
+		traceString(new File("svek.dot"), dot);
+	}
+
+	static private void traceString(final File f, String svg) throws IOException {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(new FileWriter(f));
@@ -100,6 +102,14 @@ public class SvekUtils {
 		final int p2 = svg.indexOf(pointsString, starting);
 		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
 		final String points = svg.substring(p2 + pointsString.length(), p3);
+		final List<Point2D.Double> pointsList = getPoints(points, yDelta);
+		return pointsList;
+	}
+
+	public static List<Point2D.Double> extractD(final String svg, final int starting, double yDelta) {
+		final int p2 = svg.indexOf("d=\"", starting);
+		final int p3 = svg.indexOf("\"", p2 + "d=\"".length());
+		final String points = svg.substring(p2 + "d=\"".length(), p3);
 		final List<Point2D.Double> pointsList = getPoints(points, yDelta);
 		return pointsList;
 	}
@@ -162,7 +172,7 @@ public class SvekUtils {
 
 	static private List<Point2D.Double> getPoints(String points, double yDelta) {
 		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
-		final StringTokenizer st = new StringTokenizer(points, " ");
+		final StringTokenizer st = new StringTokenizer(points, " MC");
 		while (st.hasMoreTokens()) {
 			final String t = st.nextToken();
 			final StringTokenizer st2 = new StringTokenizer(t, ",");

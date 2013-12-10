@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -65,8 +65,8 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 
 	private final static Pattern p1 = Pattern.compile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)\\s+(?:(\\{)|(.*))$|^\\}?$");
 
-	public CommandSkinParamMultilines(UmlDiagram diagram) {
-		super(diagram, "(?i)^skinparam\\s*(?:\\s+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?\\s*\\{$");
+	public CommandSkinParamMultilines() {
+		super("(?i)^skinparam\\s*(?:\\s+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?\\s*\\{$");
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		return p1.matcher(line).matches();
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	public CommandExecutionResult execute(UmlDiagram diagram, List<String> lines) {
 		final Context context = new Context();
 		final Matcher mStart = getStartingPattern().matcher(lines.get(0).trim());
 		if (mStart.find() == false) {
@@ -102,7 +102,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 				context.push(m.group(1));
 			} else if (m.group(3) != null) {
 				final String key = context.getFullParam() + m.group(1);
-				getSystem().setParam(key, m.group(3));
+				diagram.setParam(key, m.group(3));
 			} else {
 				throw new IllegalStateException();
 			}

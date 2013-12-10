@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -108,8 +108,8 @@ public class Box implements XMoveable, Pointable {
 		if (seg.side(this) != 0) {
 			return new Point2DInt[0];
 		}
-		// System.err.println("THIS=" + this);
-		// System.err.println("LineSegment=" + seg);
+		// Log.println("THIS=" + this);
+		// Log.println("LineSegment=" + seg);
 		final Point2DInt corners[] = getCorners();
 		final LineSegmentInt seg1 = new LineSegmentInt(corners[0], corners[1]);
 		final LineSegmentInt seg2 = new LineSegmentInt(corners[1], corners[2]);
@@ -120,10 +120,10 @@ public class Box implements XMoveable, Pointable {
 		Point2DInt i3 = seg.getSegIntersection(seg3);
 		Point2DInt i4 = seg.getSegIntersection(seg4);
 
-		// System.err.println("i1="+i1);
-		// System.err.println("i2="+i2);
-		// System.err.println("i3="+i3);
-		// System.err.println("i4="+i4);
+		// Log.println("i1="+i1);
+		// Log.println("i2="+i2);
+		// Log.println("i3="+i3);
+		// Log.println("i4="+i4);
 
 		if (i2 != null && i2.equals(i1)) {
 			i2 = null;

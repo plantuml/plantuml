@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 11914 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -43,14 +43,25 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker;
 
 public class PngSplitter {
 
 	private final List<File> files = new ArrayList<File>();
 
-	public PngSplitter(File pngFile, int horizontalPages, int verticalPages, String source, int dpi) throws IOException {
+	public static void main(String[] args) throws IOException {
+		final File f = new File(args[0]);
+		final int x = Integer.parseInt(args[1]);
+		final int y = Integer.parseInt(args[2]);
+		final File cp = new File(f.getParent(), f.getName().replaceAll("\\.png$", "_000.png"));
+		FileUtils.copyToFile(f, cp);
+		new PngSplitter(cp, x, y, "", 96, false);
+
+	}
+
+	public PngSplitter(File pngFile, int horizontalPages, int verticalPages, String source, int dpi,
+			boolean isWithMetadata) throws IOException {
 		if (horizontalPages == 1 && verticalPages == 1) {
 			this.files.add(pngFile);
 			return;
@@ -76,12 +87,12 @@ public class PngSplitter {
 		int x = 0;
 		for (int i = 0; i < horizontalPages; i++) {
 			for (int j = 0; j < verticalPages; j++) {
-				final File f = SequenceDiagramFileMaker.computeFilename(pngFile, x++, FileFormat.PNG);
+				final File f = FileFormat.PNG.computeFilename(pngFile, x++);
 				this.files.add(f);
 				final BufferedImage imPiece = im.getSubimage(horizontalSegment.getStart(i),
 						verticalSegment.getStart(j), horizontalSegment.getLen(i), verticalSegment.getLen(j));
 				Thread.yield();
-				PngIO.write(imPiece, f, source, dpi);
+				PngIO.write(imPiece, f, isWithMetadata ? source : null, dpi);
 				Thread.yield();
 			}
 		}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -41,14 +41,14 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandFootboxOld extends SingleLineCommand<SequenceDiagram> {
 
-	public CommandFootboxOld(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^footbox\\s*(on|off)?\\s*$");
+	public CommandFootboxOld() {
+		super("(?i)^footbox\\s*(on|off)?\\s*$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
 		final boolean footbox = arg.get(0).equalsIgnoreCase("on");
-		getSystem().setShowFootbox(footbox);
+		sequenceDiagram.setShowFootbox(footbox);
 		return CommandExecutionResult.ok();
 	}
 }

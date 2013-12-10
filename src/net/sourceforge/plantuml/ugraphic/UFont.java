@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,7 +34,12 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
 public class UFont {
 
@@ -81,7 +86,7 @@ public class UFont {
 	public boolean isItalic() {
 		return font.isItalic();
 	}
-
+	
 	public String getFamily(UFontContext context) {
 		if (context == UFontContext.EPS) {
 			if (family == null) {
@@ -118,5 +123,14 @@ public class UFont {
 	@Deprecated
 	public static UFont getCurrentFont(Graphics2D g2d) {
 		return new UFont(g2d.getFont(), g2d.getFont().getFontName());
+	}
+
+	public LineMetrics getLineMetrics(Graphics2D gg, String text) {
+		final FontRenderContext frc = gg.getFontRenderContext();
+		return font.getLineMetrics(text, frc);
+	}
+	
+	public FontMetrics getFontMetrics() {
+		return TextBlockUtils.getFontMetrics(getFont());
 	}
 }

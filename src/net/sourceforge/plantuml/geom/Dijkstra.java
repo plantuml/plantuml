@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -60,7 +60,7 @@ public class Dijkstra {
 	}
 
 	public void addLink(int n1, int n2, double d) {
-		System.err.println("Adding " + n1 + " " + n2 + " " + d);
+// Log.println("Adding " + n1 + " " + n2 + " " + d);
 		if (n1 == n2) {
 			throw new IllegalArgumentException();
 		}

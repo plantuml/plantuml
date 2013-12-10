@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 10778 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -39,20 +39,20 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 
 public class CommandPage extends SingleLineCommand<AbstractEntityDiagram> {
 
-	public CommandPage(AbstractEntityDiagram classDiagram) {
-		super(classDiagram, "(?i)^page\\s+(\\d+)\\s*x\\s*(\\d+)$");
+	public CommandPage() {
+		super("(?i)^page\\s+(\\d+)\\s*x\\s*(\\d+)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram classDiagram, List<String> arg) {
 
 		final int horizontal = Integer.parseInt(arg.get(0));
 		final int vertical = Integer.parseInt(arg.get(1));
 		if (horizontal <= 0 || vertical <= 0) {
 			return CommandExecutionResult.error("Argument must be positive");
 		}
-		getSystem().setHorizontalPages(horizontal);
-		getSystem().setVerticalPages(vertical);
+		classDiagram.setHorizontalPages(horizontal);
+		classDiagram.setVerticalPages(vertical);
 		return CommandExecutionResult.ok();
 	}
 

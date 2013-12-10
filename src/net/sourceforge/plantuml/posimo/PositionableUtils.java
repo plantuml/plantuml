@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -140,8 +140,8 @@ public class PositionableUtils {
 		// return new PositionableImpl(pt.getX() + 20, pt.getY(),
 		// toMove.getSize());
 
-		final double deltaX = (centerToMove.getX() - centerFixe.getX());
-		final double deltaY = (centerToMove.getY() - centerFixe.getY());
+		final double deltaX = centerToMove.getX() - centerFixe.getX();
+		final double deltaY = centerToMove.getY() - centerFixe.getY();
 
 		double min = 0.0;
 		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false) {
@@ -160,7 +160,7 @@ public class PositionableUtils {
 			} else {
 				max = candidat;
 			}
-			// System.err.println("min=" + min + " max=" + max);
+			// Log.println("min=" + min + " max=" + max);
 		}
 		final double candidat = (min + max) / 2.0;
 		return move(toMove, deltaX * candidat, deltaY * candidat);

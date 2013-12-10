@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,9 +33,6 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Dimension2D;
@@ -45,17 +42,15 @@ import java.awt.geom.Rectangle2D;
 
 public class BezierUtils {
 
-	static double getEndingAngle(final CubicCurve2D.Double left) {
+	static public double getEndingAngle(final CubicCurve2D.Double left) {
 		if (left.getCtrlP2().equals(left.getP2())) {
-			// assert left.getP1().equals(left.getCtrlP1());
 			return getAngle(left.getP1(), left.getP2());
 		}
 		return getAngle(left.getCtrlP2(), left.getP2());
 	}
 
-	static double getStartingAngle(final CubicCurve2D.Double left) {
+	static public double getStartingAngle(final CubicCurve2D.Double left) {
 		if (left.getP1().equals(left.getCtrlP1())) {
-			// assert left.getCtrlP2().equals(left.getP2());
 			return getAngle(left.getP1(), left.getP2());
 		}
 		return getAngle(left.getP1(), left.getCtrlP1());
@@ -65,16 +60,7 @@ public class BezierUtils {
 		if (p1.equals(p2)) {
 			throw new IllegalArgumentException();
 		}
-		double a = -Math.atan2(p2.getY() - p1.getY(), p2.getX() - p1.getX());
-		a = a * 180.0 / Math.PI;
-		a -= 90;
-		if (a >= 360.0) {
-			a -= 360.0;
-		}
-		if (a < 0.0) {
-			a += 360.0;
-		}
-		return a;
+		return Math.atan2(p2.getY() - p1.getY(), p2.getX() - p1.getX());
 	}
 
 	static boolean isCutting(CubicCurve2D.Double bez, Shape shape) {

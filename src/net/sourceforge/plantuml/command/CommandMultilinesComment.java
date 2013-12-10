@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,15 +35,20 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.core.Diagram;
 
-public class CommandMultilinesComment extends CommandMultilines<UmlDiagram> {
+public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 
-	public CommandMultilinesComment(final UmlDiagram diagram) {
-		super(diagram, "(?i)^\\s*/'.*$", "(?i)^.*'/\\s*$");
+	public CommandMultilinesComment() {
+		super("(?i)^\\s*/'.*$");
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	@Override
+	public String getPatternEnd() {
+		return "(?i)^.*'/\\s*$";
+	}
+
+	public CommandExecutionResult execute(final Diagram diagram, List<String> lines) {
 		return CommandExecutionResult.ok();
 	}
 

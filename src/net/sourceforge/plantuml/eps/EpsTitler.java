@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -39,40 +39,44 @@ import java.io.IOException;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalPosition;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 
 public final class EpsTitler {
 
 	private final List<? extends CharSequence> text;
-	private final HorizontalAlignement horizontalAlignement;
+	private final HorizontalAlignment horizontalAlignment;
 	private final VerticalPosition verticalPosition;
 	private final int margin;
 	private final TextBlock textBloc;
 	private final EpsStrategy epsStrategy;
 	private final ColorMapper colorMapper;
 
-	public EpsTitler(ColorMapper colorMapper, EpsStrategy epsStrategy, HtmlColor textColor, List<? extends CharSequence> text, int fontSize, String fontFamily,
-			HorizontalAlignement horizontalAlignement, VerticalPosition verticalPosition, int margin) {
+	public EpsTitler(ColorMapper colorMapper, EpsStrategy epsStrategy, HtmlColor textColor,
+			List<? extends CharSequence> text, int fontSize, String fontFamily,
+			HorizontalAlignment horizontalAlignment, VerticalPosition verticalPosition, int margin) {
 		this.text = text;
 		this.colorMapper = colorMapper;
 		this.epsStrategy = epsStrategy;
-		this.horizontalAlignement = horizontalAlignement;
+		this.horizontalAlignment = horizontalAlignment;
 		this.verticalPosition = verticalPosition;
 		this.margin = margin;
 		if (text == null || text.size() == 0) {
 			textBloc = null;
 		} else {
 			final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-			textBloc = TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor),
-					HorizontalAlignement.LEFT);
+			textBloc = TextBlockUtils.create(new Display(text), new FontConfiguration(normalFont, textColor),
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		}
 	}
 
@@ -80,7 +84,8 @@ public final class EpsTitler {
 		if (textBloc == null) {
 			return 0;
 		}
-		return textBloc.calculateDimension(new UGraphicEps(colorMapper, epsStrategy).getStringBounder()).getHeight() + margin;
+		return textBloc.calculateDimension(new UGraphicEps(colorMapper, epsStrategy).getStringBounder()).getHeight()
+				+ margin;
 	}
 
 	public String addTitleEps(String eps) throws IOException {
@@ -107,11 +112,11 @@ public final class EpsTitler {
 		final Dimension2D dimText = textBloc.calculateDimension(uGraphicEps.getStringBounder());
 		final double xpos;
 
-		if (horizontalAlignement == HorizontalAlignement.LEFT) {
+		if (horizontalAlignment == HorizontalAlignment.LEFT) {
 			xpos = 2;
-		} else if (horizontalAlignement == HorizontalAlignement.RIGHT) {
+		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 			xpos = width - dimText.getWidth() - 2;
-		} else if (horizontalAlignement == HorizontalAlignement.CENTER) {
+		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 			xpos = (width - dimText.getWidth()) / 2;
 		} else {
 			xpos = 0;
@@ -126,7 +131,7 @@ public final class EpsTitler {
 			yText = height + margin;
 		}
 
-		textBloc.drawU(uGraphicEps, xpos, yText);
+		textBloc.drawU(uGraphicEps.apply(new UTranslate(xpos, yText)));
 
 		final double yImage;
 		if (verticalPosition == VerticalPosition.TOP) {

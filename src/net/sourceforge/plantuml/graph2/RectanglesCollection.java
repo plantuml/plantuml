@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3833 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph2;
@@ -107,8 +107,8 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 		return intersectSeveral(other, this);
 	}
 
-	static public long TPS1;
-	static public long TPS2;
+	static private long TPS1;
+	static private long TPS2;
 
 	private static boolean intersectSeveral(RectanglesCollection large, RectanglesCollection compact) {
 		assert large.size() >= compact.size();

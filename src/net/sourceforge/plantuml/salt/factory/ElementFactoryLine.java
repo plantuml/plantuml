@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -51,11 +51,29 @@ public class ElementFactoryLine implements ElementFactory {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();
-		return new Terminated<Element>(new ElementLine(), next.getTerminator());
+		final String text = next.getElement();
+		return new Terminated<Element>(new ElementLine(text.charAt(0)), next.getTerminator());
 	}
 
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
-		return text.equals("--");
+		if (isLine(text, '-')) {
+			return true;
+		}
+		if (isLine(text, '=')) {
+			return true;
+		}
+		if (isLine(text, '~')) {
+			return true;
+		}
+		if (isLine(text, '.')) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isLine(String text, char c) {
+		final String s = "" + c + c;
+		return text.startsWith(s) && text.endsWith(s);
 	}
 }

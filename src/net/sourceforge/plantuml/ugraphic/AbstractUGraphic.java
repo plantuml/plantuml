@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6578 $
+ * Revision $Revision: 11681 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -46,21 +46,45 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		super(colorMapper);
 		this.g2d = g2d;
 	}
+	
+	protected AbstractUGraphic(AbstractUGraphic<O> other) {
+		super(other);
+		this.g2d = other.g2d;
+		// this.drivers.putAll(other.drivers);
+	}
 
 	protected final O getGraphicObject() {
 		return g2d;
+	}
+	
+	protected boolean manageHiddenAutomatically() {
+		return true;
 	}
 
 	final protected void registerDriver(Class<? extends UShape> cl, UDriver<O> driver) {
 		this.drivers.put(cl, driver);
 	}
 
-	public final void draw(double x, double y, UShape shape) {
+	public final void draw(UShape shape) {
+		if (shape instanceof UEmpty) {
+			return;
+		}
 		final UDriver<O> driver = drivers.get(shape.getClass());
 		if (driver == null) {
 			throw new UnsupportedOperationException(shape.getClass().toString() + " " + this.getClass());
 		}
-		driver.draw(shape, x + getTranslateX(), y + getTranslateY(), getColorMapper(), getParam(), g2d);
+		if (getParam().isHidden() && manageHiddenAutomatically()) {
+			return;
+		}
+		beforeDraw();
+		driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+		afterDraw();
 	}
 
+	protected void beforeDraw() {
+	}
+
+	protected void afterDraw() {
+	}
+	
 }

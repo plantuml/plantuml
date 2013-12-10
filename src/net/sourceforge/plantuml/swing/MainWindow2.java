@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -41,7 +41,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -67,17 +66,22 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.border.CompoundBorder;
 
 import net.sourceforge.plantuml.DirWatcher2;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Option;
+import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class MainWindow2 extends JFrame {
 
@@ -106,7 +110,7 @@ public class MainWindow2 extends JFrame {
 	}
 
 	private String getDefaultFileExtensions() {
-		return "txt, tex, java, htm, html, c, h, cpp, apt";
+		return "txt, tex, java, htm, html, c, h, cpp, apt, pu";
 	}
 
 	private void changeExtensions(String ext) {
@@ -155,19 +159,23 @@ public class MainWindow2 extends JFrame {
 
 	private MainWindow2(File dir, Option option) {
 		super(dir.getAbsolutePath());
+		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
 		this.option = option;
 		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));
 
 		Log.info("Showing MainWindow");
 		scrollPane = new JScrollPane(jList1);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		final JPanel south = new JPanel(new BorderLayout());
 		final JLabel labelFileExtensions = new JLabel("File extensions: ");
 		extensions.setText(getExtensions());
 
 		labelFileExtensions.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
-		south.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory
-				.createEtchedBorder()));
+		CompoundBorder border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10),
+				BorderFactory.createEtchedBorder());
+		border = BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		south.setBorder(border);
 		south.add(labelFileExtensions, BorderLayout.WEST);
 		south.add(extensions, BorderLayout.CENTER);
 
@@ -175,16 +183,17 @@ public class MainWindow2 extends JFrame {
 
 		getContentPane().add(south, BorderLayout.SOUTH);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
-		setSize(320, 200);
-		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		final MouseListener mouseListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					final int index = jList1.locationToIndex(e.getPoint());
-					doubleClick((SimpleLine2) jList1.getModel().getElementAt(index), jList1.getModel(), index);
+				try {
+					if (e.getClickCount() == 2) {
+						final int index = jList1.locationToIndex(e.getPoint());
+						doubleClick((SimpleLine2) jList1.getModel().getElementAt(index), jList1.getModel(), index);
+					}
+				} catch (Exception ex) {
+
 				}
 			}
 		};
@@ -220,6 +229,40 @@ public class MainWindow2 extends JFrame {
 				changeExtensions(extensions.getText());
 			}
 		});
+
+		final JMenuBar menuBar = new JMenuBar();
+		final JMenu mFile = new JMenu("File");
+		menuBar.add(mFile);
+		setJMenuBar(menuBar);
+
+		final JMenuItem sprite = new JMenuItem("Open Sprite Window");
+		mFile.add(sprite);
+		sprite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new SpriteWindow();
+			}
+		});
+
+		final JMenuItem about = new JMenuItem("About");
+		mFile.add(about);
+		about.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new AboutWindow();
+			}
+		});
+
+		final JMenuItem exit = new JMenuItem("Exit");
+		mFile.add(exit);
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+
+		setSize(640, 400);
+		this.setLocationRelativeTo(this.getParent());
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		startTimer();
 	}

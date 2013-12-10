@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -39,36 +39,32 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.DiagramType;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-public class PSystemJcckitFactory implements PSystemBasicFactory {
+public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 
 	private StringBuilder data;
-	private boolean first;
 	private int width;
 	private int height;
 
-	private final DiagramType diagramType;
-
 	public PSystemJcckitFactory(DiagramType diagramType) {
-		this.diagramType = diagramType;
+		super(diagramType);
 	}
 
-
-	public void init(String startLine) {
+	public PSystemJcckit init(String startLine) {
 		this.data = null;
 		this.width = 640;
 		this.height = 400;
-		if (diagramType == DiagramType.UML) {
-			first = true;
-		} else if (diagramType == DiagramType.JCCKIT) {
-			first = false;
+		if (getDiagramType() == DiagramType.UML) {
+			return null;
+		} else if (getDiagramType() == DiagramType.JCCKIT) {
 			extractDimension(startLine);
 			data = new StringBuilder();
+			return createSystem();
 		} else {
-			throw new IllegalStateException(diagramType.name());
+			throw new IllegalStateException(getDiagramType().name());
 		}
 
 	}
@@ -82,16 +78,17 @@ public class PSystemJcckitFactory implements PSystemBasicFactory {
 			height = Integer.parseInt(m.group(2));
 		}
 	}
-	
+
 	String getDimension() {
-		return ""+width+"-"+height;
+		return "" + width + "-" + height;
 	}
 
-
-	public PSystemJcckit getSystem() {
+	private PSystemJcckit createSystem() {
 		final Properties p = new Properties();
 		try {
 			p.load(new StringReader(data.toString()));
+			// For Java 1.5
+			// p.load(new ByteArrayInputStream(data.toString().getBytes("ISO-8859-1")));
 		} catch (IOException e) {
 			Log.error("Error " + e);
 			e.printStackTrace();
@@ -100,23 +97,19 @@ public class PSystemJcckitFactory implements PSystemBasicFactory {
 		return new PSystemJcckit(p, width, height);
 	}
 
-	public boolean executeLine(String line) {
-		if (first && line.startsWith("jcckit")) {
+	@Override
+	public PSystemJcckit executeLine(PSystemJcckit system, String line) {
+		if (system == null && line.startsWith("jcckit")) {
 			data = new StringBuilder();
 			extractDimension(line);
-			return true;
+			return createSystem();
 		}
-		first = false;
 		if (data == null) {
-			return false;
+			return null;
 		}
 		data.append(line.trim());
 		data.append("\n");
-		return true;
-	}
-
-	public DiagramType getDiagramType() {
-		return diagramType;
+		return createSystem();
 	}
 
 }

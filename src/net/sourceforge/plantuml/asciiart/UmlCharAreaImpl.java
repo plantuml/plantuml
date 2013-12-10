@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5156 $
+ * Revision $Revision: 12012 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
 
 import java.util.Collection;
+
+import net.sourceforge.plantuml.ugraphic.ClipContainer;
 
 public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 
@@ -70,7 +72,7 @@ public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 		this.drawStringLR(" | ", x, y++);
 		this.drawStringLR("/ \\", x, y++);
 	}
-	
+
 	public void drawStickManUnicode(int x, int y) {
 		this.drawStringLR("\u250c\u2500\u2510", x, y++);
 		this.drawStringLR("\u2551\"\u2502", x, y++);

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -41,6 +41,7 @@ import java.net.Socket;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SourceStringReader;
 
 class AcceptTelnetClient extends Thread {
@@ -58,13 +59,13 @@ class AcceptTelnetClient extends Thread {
 	}
 
 	public String runInternal() throws IOException {
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		while (true) {
-			String s = br.readLine();
+			final String s = br.readLine();
 			if (s == null) {
 				return sb.toString();
 			}
-			System.err.println("S=" + s);
+			Log.println("S=" + s);
 			sb.append(s);
 			sb.append('\n');
 			if (s.equalsIgnoreCase("@enduml")) {
@@ -76,8 +77,8 @@ class AcceptTelnetClient extends Thread {
 	public void run() {
 		try {
 			final String uml = runInternal();
-			System.err.println("UML=" + uml);
-			SourceStringReader s = new SourceStringReader(uml);
+			Log.println("UML=" + uml);
+			final SourceStringReader s = new SourceStringReader(uml);
 			s.generateImage(os, new FileFormatOption(FileFormat.ATXT));
 			os.close();
 			br.close();

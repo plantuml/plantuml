@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5705 $
+ * Revision $Revision: 12105 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -45,13 +45,22 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class Splitter {
 
-	static final String endFontPattern = "\\</font\\>|\\</color\\>|\\</size\\>";
-	static final String fontPattern = "\\<font(\\s+size\\s*=\\s*\"?\\d+\"?|\\s+color\\s*=\\s*\"?(#[0-9a-fA-F]{6}|\\w+)\"?)+\\s*\\>";
-	static final String fontColorPattern2 = "\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)\\s*\\>";
-	static final String fontSizePattern2 = "\\<size[\\s:]+(\\d+)\\s*\\>";
-	static final String imgPattern = "<img\\s+(src\\s*=\\s*['\"]?[^\\s\">]+['\"]?\\s*|vspace\\s*=\\s*['\"]?\\d+['\"]?\\s*|valign\\s*=\\s*['\"]?(top|middle|bottom)['\"]?\\s*)+>";
-	static final String imgPattern2 = "<img[\\s:]+([^>]+)/?>";
+	static final String endFontPattern = "\\</font\\>|\\</color\\>|\\</size\\>|\\</text\\>";
+	static final String endSupSub = "\\</sup\\>|\\</sub\\>";
+	public static final String fontPattern = "\\<font(\\s+size\\s*=\\s*\"?\\d+\"?|\\s+color\\s*=\\s*\"?(#[0-9a-fA-F]{6}|\\w+)\"?)+\\s*\\>";
+	public static final String fontColorPattern2 = "\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)\\s*\\>";
+	public static final String fontSizePattern2 = "\\<size[\\s:]+(\\d+)\\s*\\>";
+	static final String fontSup = "\\<sup\\>";
+	static final String fontSub = "\\<sub\\>";
+	static final String imgPattern = "\\<img\\s+(src\\s*=\\s*['\"]?[^\\s\">]+['\"]?\\s*|vspace\\s*=\\s*['\"]?\\d+['\"]?\\s*|valign\\s*=\\s*['\"]?(top|middle|bottom)['\"]?\\s*)+\\>";
+	public static final String imgPatternNoSrcColon = "\\<img[\\s:]+([^>]+)/?\\>";
+	public static final String fontFamilyPattern = "\\<font[\\s:]+([^>]+)/?\\>";
+	static final String svgAttributePattern = "\\<text[\\s:]+([^>]+)/?\\>";
+	public static final String spritePattern = "\\<\\$[\\p{L}0-9_]+\\>";
+	public static final String spritePattern2 = "\\<\\$([\\p{L}0-9_]+)\\>";
 	static final String htmlTag;
+
+	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";
 
 	private static final Pattern tagOrText;
 
@@ -73,11 +82,25 @@ public class Splitter {
 		sb.append('|');
 		sb.append(fontSizePattern2);
 		sb.append('|');
+		sb.append(fontSup);
+		sb.append('|');
+		sb.append(fontSub);
+		sb.append('|');
 		sb.append(endFontPattern);
+		sb.append('|');
+		sb.append(endSupSub);
 		sb.append('|');
 		sb.append(imgPattern);
 		sb.append('|');
-		sb.append(imgPattern2);
+		sb.append(imgPatternNoSrcColon);
+		sb.append('|');
+		sb.append(fontFamilyPattern);
+		sb.append('|');
+		sb.append(spritePattern);
+		sb.append('|');
+		sb.append(linkPattern);
+		sb.append('|');
+		sb.append(svgAttributePattern);
 
 		htmlTag = sb.toString();
 		tagOrText = Pattern.compile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$", Pattern.CASE_INSENSITIVE);
@@ -116,7 +139,7 @@ public class Splitter {
 		String s = cmd.getText();
 		final Collection<Text> result = new ArrayList<Text>();
 		while (true) {
-			int x = s.indexOf(Text.NEWLINE.getText());
+			final int x = s.indexOf(Text.NEWLINE.getText());
 			if (x == -1) {
 				result.add(new Text(s));
 				return result;

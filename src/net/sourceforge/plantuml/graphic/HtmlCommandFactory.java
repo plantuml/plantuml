@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,13 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5506 $
+ * Revision $Revision: 11337 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
 import java.util.EnumSet;
 import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 
 class HtmlCommandFactory {
 
@@ -68,15 +72,14 @@ class HtmlCommandFactory {
 			return new Text(s);
 		}
 		if (s.matches(Splitter.imgPattern)) {
-			return Img.getInstance(s);
+			return Img.getInstance(s, true);
 		}
-		
-		if (s.matches(Splitter.imgPattern2)) {
-			return Img.getInstance2(s);
+
+		if (s.matches(Splitter.imgPatternNoSrcColon)) {
+			return Img.getInstance(s, false);
 		}
-		
+
 		if (addStyle.matcher(s).matches()) {
-			//return new AddStyle(FontStyle.getStyle(s));
 			return new AddStyle(s);
 		}
 		if (removeStyle.matcher(s).matches()) {
@@ -95,8 +98,39 @@ class HtmlCommandFactory {
 			return new SizeChange(s);
 		}
 
+		if (s.matches(Splitter.fontSup)) {
+			return new ExposantChange(FontPosition.EXPOSANT);
+		}
+
+		if (s.matches(Splitter.fontSub)) {
+			return new ExposantChange(FontPosition.INDICE);
+		}
+
 		if (s.matches(Splitter.endFontPattern)) {
 			return new ResetFont();
+		}
+
+		if (s.matches(Splitter.endSupSub)) {
+			return new ExposantChange(FontPosition.NORMAL);
+		}
+
+		if (s.matches(Splitter.fontFamilyPattern)) {
+			return new FontFamilyChange(s);
+		}
+
+		if (s.matches(Splitter.spritePattern)) {
+			return new SpriteCommand(s);
+		}
+
+		if (s.matches(Splitter.linkPattern)) {
+			final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.STRICT);
+			final Url url = urlBuilder.getUrl(s);
+			url.setMember(true);
+			return new TextLink(url);
+		}
+
+		if (s.matches(Splitter.svgAttributePattern)) {
+			return new SvgAttributesChange(s);
 		}
 
 		return null;

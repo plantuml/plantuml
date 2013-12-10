@@ -1,6 +1,6 @@
 package com.ctreber.acearth.shader;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * <p>Shader for projections which display the whole surface.</p>

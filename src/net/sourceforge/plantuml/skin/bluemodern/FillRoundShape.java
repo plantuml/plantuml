@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 10925 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -38,8 +38,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.UGradient;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 
@@ -69,11 +70,9 @@ public class FillRoundShape {
 	}
 
 	public void drawU(UGraphic ug) {
-		final UGradient gradient = new UGradient(c1, c2);
+		final HtmlColorGradient gradient = new HtmlColorGradient(c1, c2, '\\');
 		final URectangle r = new URectangle(width, height, corner * 2, corner * 2);
-		ug.getParam().setGradient(gradient);
-		ug.draw(0, 0, r);
-		ug.getParam().setGradient(null);
+		ug.apply(new UChangeBackColor(gradient)).draw(r);
 	}
 
 }

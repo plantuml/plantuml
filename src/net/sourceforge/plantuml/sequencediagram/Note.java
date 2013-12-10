@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,17 +28,16 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7111 $
+ * Revision $Revision: 12054 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class Note implements Event, SpecificBackcolorable {
@@ -46,27 +45,28 @@ public class Note implements Event, SpecificBackcolorable {
 	private final Participant p;
 	private final Participant p2;
 
-	private final List<String> strings;
+	private final Display strings;
 
 	private final NotePosition position;
 	private NoteStyle style = NoteStyle.NORMAL;
 
 	private final Url url;
 
-	public Note(Participant p, NotePosition position, List<String> strings) {
+	public Note(Participant p, NotePosition position, Display strings) {
 		this(p, null, position, strings);
 	}
 
-	public Note(Participant p, Participant p2, List<String> strings) {
+	public Note(Participant p, Participant p2, Display strings) {
 		this(p, p2, NotePosition.OVER_SEVERAL, strings);
 	}
 
-	private Note(Participant p, Participant p2, NotePosition position, List<String> strings) {
+	private Note(Participant p, Participant p2, NotePosition position, Display strings) {
 		this.p = p;
 		this.p2 = p2;
 		this.position = position;
 		if (strings != null && strings.size() > 0) {
-			this.url = extractUrl(strings.get(0));
+			final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.STRICT);
+			this.url = urlBuilder.getUrl(strings.get(0).toString());
 		} else {
 			this.url = null;
 		}
@@ -78,15 +78,6 @@ public class Note implements Event, SpecificBackcolorable {
 		}
 	}
 
-	public static Url extractUrl(String s) {
-		final Pattern p = Pattern.compile("(?i)^\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]$");
-		final Matcher m = p.matcher(s.trim());
-		if (m.matches() == false) {
-			return null;
-		}
-		return new Url(m.group(1), m.group(2));
-	}
-
 	public Participant getParticipant() {
 		return p;
 	}
@@ -95,7 +86,7 @@ public class Note implements Event, SpecificBackcolorable {
 		return p2;
 	}
 
-	public List<String> getStrings() {
+	public Display getStrings() {
 		return strings;
 	}
 
@@ -119,6 +110,10 @@ public class Note implements Event, SpecificBackcolorable {
 
 	public Url getUrl() {
 		return url;
+	}
+
+	public boolean hasUrl() {
+		return url != null;
 	}
 
 	public final NoteStyle getStyle() {

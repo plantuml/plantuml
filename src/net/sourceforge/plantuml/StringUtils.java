@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 7064 $
+ * Revision $Revision: 11949 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,8 +44,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 public class StringUtils {
 
@@ -53,15 +58,19 @@ public class StringUtils {
 		return file.getAbsolutePath();
 	}
 
-	public static List<String> getWithNewlines(String s) {
+	public static List<String> getWithNewlines2(Code s) {
+		return getWithNewlines2(s.getCode());
+	}
+
+	public static List<String> getWithNewlines2(String s) {
 		if (s == null) {
-			throw new IllegalArgumentException();
+			return null;
 		}
 		final List<String> result = new ArrayList<String>();
 		final StringBuilder current = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() + 1) {
+			if (c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n') {
@@ -122,9 +131,50 @@ public class StringUtils {
 		return s;
 	}
 
+	public static String unicode(String s) {
+		final StringBuilder result = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			if (c > 127 || c == '&' || c == '|') {
+				final int i = c;
+				result.append("&#" + i + ";");
+			} else {
+				result.append(c);
+			}
+		}
+		return result.toString();
+	}
+
+	public static String unicodeForHtml(String s) {
+		final StringBuilder result = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			if (c > 127 || c == '&' || c == '|' || c == '<' || c == '>') {
+				final int i = c;
+				result.append("&#" + i + ";");
+			} else {
+				result.append(c);
+			}
+		}
+		return result.toString();
+	}
+
+	public static String unicodeForHtml(Display display) {
+		final StringBuilder result = new StringBuilder();
+		for (int i = 0; i < display.size(); i++) {
+			result.append(unicodeForHtml(display.get(i).toString()));
+			if (i < display.size() - 1) {
+				result.append("<br>");
+			}
+		}
+		return result.toString();
+	}
+
 	public static String manageArrowForSequence(String s) {
-		s = s.replace('=', '-');
+		s = s.replace('=', '-').toLowerCase();
 		return s;
+	}
+
+	public static String capitalize(String s) {
+		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
 
 	public static String manageArrowForCuca(String s) {
@@ -201,6 +251,10 @@ public class StringUtils {
 		return Direction.DOWN;
 	}
 
+	// public static Code eventuallyRemoveStartingAndEndingDoubleQuote(Code s) {
+	// return Code.of(eventuallyRemoveStartingAndEndingDoubleQuote(s.getCode()));
+	// }
+
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
 		if (s.startsWith("\"") && s.endsWith("\"")) {
 			return s.substring(1, s.length() - 1);
@@ -219,7 +273,7 @@ public class StringUtils {
 
 	public static boolean isCJK(char c) {
 		final Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
-		System.err.println(block);
+		Log.println("block=" + block);
 		return false;
 	}
 
@@ -230,7 +284,7 @@ public class StringUtils {
 	public static char hiddenBiggerThan() {
 		return '\u0006';
 	}
-	
+
 	public static String hideComparatorCharacters(String s) {
 		s = s.replace('<', hiddenLesserThan());
 		s = s.replace('>', hiddenBiggerThan());
@@ -253,8 +307,31 @@ public class StringUtils {
 		return result;
 	}
 
+	public static int getWidth(Display stringsToDisplay) {
+		int result = 1;
+		for (CharSequence s : stringsToDisplay) {
+			if (result < s.length()) {
+				result = s.length();
+			}
+		}
+		return result;
+	}
+
 	public static int getHeight(List<? extends CharSequence> stringsToDisplay) {
 		return stringsToDisplay.size();
+	}
+
+	public static int getHeight(Display stringsToDisplay) {
+		return stringsToDisplay.size();
+	}
+
+	private static void removeFirstColumn(List<String> data) {
+		for (int i = 0; i < data.size(); i++) {
+			final String s = data.get(i);
+			if (s.length() > 0) {
+				data.set(i, s.substring(1));
+			}
+		}
 	}
 
 	private static boolean firstColumnRemovable(List<String> data) {
@@ -272,15 +349,6 @@ public class StringUtils {
 		return allEmpty == false;
 	}
 
-	private static void removeFirstColumn(List<String> data) {
-		for (int i = 0; i < data.size(); i++) {
-			final String s = data.get(i);
-			if (s.length() > 0) {
-				data.set(i, s.substring(1));
-			}
-		}
-	}
-
 	public static List<String> removeEmptyColumns(List<String> data) {
 		if (firstColumnRemovable(data) == false) {
 			return data;
@@ -289,7 +357,7 @@ public class StringUtils {
 		do {
 			removeFirstColumn(result);
 		} while (firstColumnRemovable(result));
-		return Collections.unmodifiableList(result);
+		return result;
 	}
 
 	public static void trim(List<String> data, boolean removeEmptyLines) {
@@ -330,6 +398,9 @@ public class StringUtils {
 		if (uml.startsWith("@startuml\nversion\n")) {
 			return false;
 		}
+		if (uml.startsWith("@startuml\ncheckversion")) {
+			return false;
+		}
 		if (uml.startsWith("@startuml\ntestdot\n")) {
 			return false;
 		}
@@ -352,27 +423,59 @@ public class StringUtils {
 		}
 		return Collections.unmodifiableList(result);
 	}
-	
+
 	public static String getAsHtml(Color color) {
 		if (color == null) {
 			throw new IllegalArgumentException();
 		}
 		return getAsHtml(color.getRGB());
 	}
-	
+
+	public static String getAsSvg(ColorMapper mapper, HtmlColor color) {
+		if (color == null) {
+			return "none";
+		}
+		if (color instanceof HtmlColorTransparent) {
+			return "#FFFFFF";
+		}
+		return getAsHtml(mapper.getMappedColor(color));
+	}
+
 	public static String getAsHtml(int color) {
 		final int v = 0xFFFFFF & color;
 		String s = "000000" + Integer.toHexString(v).toUpperCase();
 		s = s.substring(s.length() - 6);
 		return "#" + s;
 	}
-	
+
 	public static String getUid(String uid1, int uid2) {
 		return uid1 + String.format("%04d", uid2);
 	}
-	
-	
-	public static List<CharSequence> manageEmbededDiagrams(final List<String> strings) {
+
+	public static Display manageEmbededDiagrams(final Display strings) {
+		Display result = new Display();
+		final Iterator<CharSequence> it = strings.iterator();
+		while (it.hasNext()) {
+			CharSequence s = it.next();
+			if (s.equals("{{")) {
+				Display other = new Display();
+				other = other.add("@startuml");
+				while (it.hasNext()) {
+					final CharSequence s2 = it.next();
+					if (s2.equals("}}")) {
+						break;
+					}
+					other = other.add(s2);
+				}
+				other = other.add("@enduml");
+				s = new EmbededDiagram(other);
+			}
+			result = result.add(s);
+		}
+		return result;
+	}
+
+	public static List<CharSequence> manageEmbededDiagrams2(final List<String> strings) {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		final Iterator<String> it = strings.iterator();
 		while (it.hasNext()) {
@@ -381,20 +484,28 @@ public class StringUtils {
 				final List<String> other = new ArrayList<String>();
 				other.add("@startuml");
 				while (it.hasNext()) {
-					String s2 = it.next();
+					final String s2 = it.next();
 					if (s2.equals("}}")) {
 						break;
 					}
 					other.add(s2);
 				}
 				other.add("@enduml");
-				s = new EmbededDiagram(other);
+				s = new EmbededDiagram(new Display(other));
 			}
 			result.add(s);
 		}
 		return result;
 	}
 
+	public static boolean isMethod(String s) {
+		return s.contains("(") || s.contains(")");
+	}
 
+	public static <O> List<O> merge(List<O> l1, List<O> l2) {
+		final List<O> result = new ArrayList<O>(l1);
+		result.addAll(l2);
+		return Collections.unmodifiableList(result);
+	}
 
 }

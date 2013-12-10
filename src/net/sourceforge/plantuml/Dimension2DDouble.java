@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 7157 $
+ * Revision $Revision: 11564 $
  *
  */
 package net.sourceforge.plantuml;
@@ -79,16 +79,26 @@ public class Dimension2DDouble extends Dimension2D {
 		return new Dimension2DDouble(width, height);
 	}
 
+	public static Dimension2D mergeTB(Dimension2D a, Dimension2D b, Dimension2D c) {
+		final double width = MathUtils.max(a.getWidth(), b.getWidth(), c.getWidth());
+		final double height = a.getHeight() + b.getHeight() + c.getHeight();
+		return new Dimension2DDouble(width, height);
+	}
+
 	public static Dimension2D mergeLR(Dimension2D left, Dimension2D right) {
 		final double height = Math.max(left.getHeight(), right.getHeight());
 		final double width = left.getWidth() + right.getWidth();
 		return new Dimension2DDouble(width, height);
 	}
 
-	public static Dimension2D mergeTB(Dimension2D top1, Dimension2D top2, Dimension2D bottom) {
+	public static Dimension2D mergeLayoutT12B3(Dimension2D top1, Dimension2D top2, Dimension2D bottom) {
 		final double width = MathUtils.max(top1.getWidth(), top2.getWidth(), bottom.getWidth());
 		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
 		return new Dimension2DDouble(width, height);
+	}
+	
+	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2) {
+		return atLeast(dim1, dim2.getWidth(), dim2.getHeight());
 	}
 
 	public static Dimension2D atLeast(Dimension2D dim, double minWidth, double minHeight) {

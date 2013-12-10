@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,163 +33,219 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import java.util.Map;
-
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
-	public CommandLinkActivity(ActivityDiagram diagram) {
-		super(diagram, getRegexConcat());
+	public CommandLinkActivity() {
+		super(getRegexConcat());
 	}
 
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(
-				new RegexLeaf("^"), // 
-				new RegexOr("FIRST", true, // 
-						new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-						new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), // 
-						new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
-						new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")), //
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexOptional(//
+						new RegexOr("FIRST", //
+								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
+								new RegexLeaf("CODE", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
+								new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
+								new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?"))), //
 				new RegexLeaf("\\s*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				new RegexLeaf("\\s*"), //
-				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), // 
-				new RegexLeaf("\\s*"), // 
-				new RegexLeaf("ARROW", "([=-]+(?:\\*|left|right|up|down|le?|ri?|up?|do?)?[=-]*\\>)"), //
+				new RegexLeaf("BACKCOLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
 				new RegexLeaf("\\s*"), //
-				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), // 
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf("ARROW", "([-=.]+(?:\\*|left|right|up|down|le?|ri?|up?|do?)?[-=.]*\\>)"), //
 				new RegexLeaf("\\s*"), //
-				new RegexOr("FIRST2", // 
-						new RegexLeaf("STAR2", "(\\(\\*(top)?\\))"), // 
-						new RegexLeaf("OPENBRACKET2", "(\\{)"), // 
-						new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"), // 
-						new RegexLeaf("BAR2", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), // 
-						new RegexLeaf("QUOTED2", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
-				new RegexLeaf("\\s*"), // 
+				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexOr("FIRST2", //
+						new RegexLeaf("STAR2", "(\\(\\*(top)?\\))"), //
+						new RegexLeaf("OPENBRACKET2", "(\\{)"), //
+						new RegexLeaf("CODE2", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
+						new RegexLeaf("BAR2", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
+						new RegexLeaf("QUOTED2", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9][\\p{L}0-9_.]*))?"), //
+						new RegexLeaf("QUOTED_INVISIBLE2", "(\\w.*?)")), //
+				new RegexLeaf("\\s*"), //
 				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //
 				new RegexLeaf("\\s*"), //
-				new RegexLeaf("BACKCOLOR2", "(#\\w+)?"), //
+				new RegexLeaf("PARTITION2", "(?:in\\s+(\"[^\"]+\"|\\S+))?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("BACKCOLOR2", "(#\\w+[-\\\\|/]?\\w+)?"), //
 				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg2) {
-		final IEntity entity1 = getEntity(getSystem(), arg2, true);
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, RegexResult arg2) {
+		final IEntity entity1 = getEntity(diagram, arg2, true);
 		if (entity1 == null) {
 			return CommandExecutionResult.error("No such activity");
 		}
-		if (arg2.get("STEREOTYPE").get(0) != null) {
-			entity1.setStereotype(new Stereotype(arg2.get("STEREOTYPE").get(0)));
+		if (arg2.get("STEREOTYPE", 0) != null) {
+			entity1.setStereotype(new Stereotype(arg2.get("STEREOTYPE", 0)));
 		}
-		if (arg2.get("BACKCOLOR").get(0) != null) {
-			entity1.setSpecificBackcolor(HtmlColor.getColorIfValid(arg2.get("BACKCOLOR").get(0)));
+		if (arg2.get("BACKCOLOR", 0) != null) {
+			entity1.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg2.get("BACKCOLOR", 0)));
 		}
 
-		final IEntity entity2 = getEntity(getSystem(), arg2, false);
+		final IEntity entity2 = getEntity(diagram, arg2, false);
 		if (entity2 == null) {
 			return CommandExecutionResult.error("No such activity");
 		}
-		if (arg2.get("BACKCOLOR2").get(0) != null) {
-			entity2.setSpecificBackcolor(HtmlColor.getColorIfValid(arg2.get("BACKCOLOR2").get(0)));
+		if (arg2.get("BACKCOLOR2", 0) != null) {
+			entity2.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg2.get("BACKCOLOR2", 0)));
 		}
-		if (arg2.get("STEREOTYPE2").get(0) != null) {
-			entity2.setStereotype(new Stereotype(arg2.get("STEREOTYPE2").get(0)));
+		if (arg2.get("STEREOTYPE2", 0) != null) {
+			entity2.setStereotype(new Stereotype(arg2.get("STEREOTYPE2", 0)));
 		}
 
-		final String linkLabel = arg2.get("BRACKET").get(0);
+		final Display linkLabel = Display.getWithNewlines(arg2.get("BRACKET", 0));
 
-		final String arrow = StringUtils.manageArrowForCuca(arg2.get("ARROW").get(0));
+		final String arrow = StringUtils.manageArrowForCuca(arg2.get("ARROW", 0));
 		int lenght = arrow.length() - 1;
-		if (arg2.get("ARROW").get(0).contains("*")) {
+		if (arg2.get("ARROW", 0).contains("*")) {
 			lenght = 2;
 		}
 
-		Link link = new Link(entity1, entity2, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkLabel, lenght);
-		if (arg2.get("ARROW").get(0).contains("*")) {
+		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
+		if (arg2.get("ARROW", 0).contains(".")) {
+			type = type.getDotted();
+		}
+
+		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
+		if (arg2.get("ARROW", 0).contains("*")) {
 			link.setConstraint(false);
 		}
-		final Direction direction = StringUtils.getArrowDirection(arg2.get("ARROW").get(0));
+		final Direction direction = StringUtils.getArrowDirection(arg2.get("ARROW", 0));
 		if (direction == Direction.LEFT || direction == Direction.UP) {
 			link = link.getInv();
 		}
+		if (arg2.get("URL", 0) != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url urlLink = urlBuilder.getUrl(arg2.get("URL", 0));
+			link.setUrl(urlLink);
+		}
 
-		getSystem().addLink(link);
+		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();
 
 	}
 
-	static IEntity getEntity(ActivityDiagram system, Map<String, RegexPartialMatch> arg, final boolean start) {
+	static IEntity getEntity(ActivityDiagram system, RegexResult arg, final boolean start) {
 		final String suf = start ? "" : "2";
 
-		final RegexPartialMatch openBracket = arg.get("OPENBRACKET" + suf);
-		if (openBracket != null && openBracket.get(0) != null) {
+		final String openBracket2 = arg.get("OPENBRACKET" + suf, 0);
+		if (openBracket2 != null) {
 			return system.createInnerActivity();
 		}
-		if (arg.get("STAR" + suf).get(0) != null) {
+		if (arg.get("STAR" + suf, 0) != null) {
 			if (start) {
-				if (arg.get("STAR" + suf).get(1) != null) {
+				if (arg.get("STAR" + suf, 1) != null) {
 					system.getStart().setTop(true);
 				}
 				return system.getStart();
 			}
 			return system.getEnd();
 		}
-		final String code = arg.get("CODE" + suf).get(0);
-		if (code != null) {
-			return system.getOrCreate(code, code, getTypeIfExisting(system, code));
+		String partition = arg.get("PARTITION" + suf, 0);
+		if (partition != null) {
+			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
-		final String bar = arg.get("BAR" + suf).get(0);
+		final Code code = Code.of(arg.get("CODE" + suf, 0));
+		if (code != null) {
+			if (partition != null) {
+				system.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), null,
+						GroupType.PACKAGE, system.getRootGroup());
+			}
+			final IEntity result = system.getOrCreate(code, Display.getWithNewlines(code),
+					getTypeIfExisting(system, code));
+			if (partition != null) {
+				system.endGroup();
+			}
+			return result;
+		}
+		final String bar = arg.get("BAR" + suf, 0);
 		if (bar != null) {
-			return system.getOrCreate(bar, bar, EntityType.SYNCHRO_BAR);
+			return system.getOrCreate(Code.of(bar), Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
 		}
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
 		if (quoted.get(0) != null) {
-			final String quotedCode = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
-			return system.getOrCreate(quotedCode, quoted.get(0), getTypeIfExisting(system, quotedCode));
+			final Code quotedCode = Code.of(quoted.get(1) == null ? quoted.get(0) : quoted.get(1));
+			if (partition != null) {
+				system.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), null,
+						GroupType.PACKAGE, system.getRootGroup());
+			}
+			final IEntity result = system.getOrCreate(quotedCode, Display.getWithNewlines(quoted.get(0)),
+					getTypeIfExisting(system, quotedCode));
+			if (partition != null) {
+				system.endGroup();
+			}
+			return result;
 		}
-		final String first = arg.get("FIRST" + suf).get(0);
+		final Code quotedInvisible = Code.of(arg.get("QUOTED_INVISIBLE" + suf, 0));
+		if (quotedInvisible != null) {
+			if (partition != null) {
+				system.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), null,
+						GroupType.PACKAGE, system.getRootGroup());
+			}
+			final IEntity result = system.getOrCreate(quotedInvisible, Display.getWithNewlines(quotedInvisible),
+					LeafType.ACTIVITY);
+			if (partition != null) {
+				system.endGroup();
+			}
+			return result;
+		}
+		final String first = arg.get("FIRST" + suf, 0);
 		if (first == null) {
 			return system.getLastEntityConsulted();
 		}
-		throw new UnsupportedOperationException();
+
+		return null;
 	}
 
-	static EntityType getTypeIfExisting(ActivityDiagram system, String code) {
-		if (system.entityExist(code)) {
-			final IEntity ent = system.entities().get(code);
-			if (ent.getType() == EntityType.BRANCH) {
-				return EntityType.BRANCH;
+	static LeafType getTypeIfExisting(ActivityDiagram system, Code code) {
+		if (system.leafExist(code)) {
+			final IEntity ent = system.getLeafs().get(code);
+			if (ent.getEntityType() == LeafType.BRANCH) {
+				return LeafType.BRANCH;
 			}
 		}
-		return EntityType.ACTIVITY;
+		return LeafType.ACTIVITY;
 	}
 
-	static EntityType getTypeFromString(String type, final EntityType circle) {
+	static LeafType getTypeFromString(String type, final LeafType circle) {
 		if (type == null) {
-			return EntityType.ACTIVITY;
+			return LeafType.ACTIVITY;
 		}
 		if (type.equals("*")) {
 			return circle;
 		}
 		if (type.startsWith("=")) {
-			return EntityType.SYNCHRO_BAR;
+			return LeafType.SYNCHRO_BAR;
 		}
 		throw new IllegalArgumentException();
 	}

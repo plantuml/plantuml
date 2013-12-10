@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6192 $
+ * Revision $Revision: 12053 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -38,21 +38,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
 
-	abstract public IEntity getOrCreateClass(String code);
-
 	final protected List<String> getDotStrings() {
-		// return Arrays.asList("nodesep=.5;", "ranksep=0.8;", "edge
-		// [fontsize=11,labelfontsize=11];",
-		// "node [fontsize=11,height=.35,width=.55];");
-
 		final List<String> def = Arrays.asList("nodesep=.35;", "ranksep=0.8;", "edge [fontsize=11,labelfontsize=11];",
 				"node [fontsize=11,height=.35,width=.55];");
-		if (getPragma().isDefine("graphattributes")==false) {
+		if (getPragma().isDefine("graphattributes") == false) {
 			return def;
 		}
 		final String attribute = getPragma().getValue("graphattributes");
@@ -61,8 +56,8 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 		return Collections.unmodifiableList(result);
 	}
 
-	final public String getDescription() {
-		return "(" + entities().size() + " entities)";
+	final public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(" + getLeafs().size() + " entities)", getClass());
 	}
 
 }

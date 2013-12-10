@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,47 +38,54 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<SequenceDiagram> {
 
-	public CommandReferenceMultilinesOverSeveral(final SequenceDiagram sequenceDiagram) {
+	public CommandReferenceMultilinesOverSeveral() {
 		super(
-				sequenceDiagram,
-				"(?i)^ref(#\\w+)?\\s+over\\s+((?:[\\p{L}0-9_.@]+|\"[^\"]+\")(?:\\s*,\\s*(?:[\\p{L}0-9_.@]+|\"[^\"]+\"))*)\\s*(#\\w+)?$",
-				"(?i)^end ?(ref)?$");
+				"(?i)^ref(#\\w+)?\\s+over\\s+((?:[\\p{L}0-9_.@]+|\"[^\"]+\")(?:\\s*,\\s*(?:[\\p{L}0-9_.@]+|\"[^\"]+\"))*)\\s*(#\\w+)?$");
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	@Override
+	public String getPatternEnd() {
+		return "(?i)^end ?(ref)?$";
+	}
+
+	public CommandExecutionResult execute(final SequenceDiagram system, List<String> lines) {
 		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
-		final HtmlColor backColorElement = HtmlColor.getColorIfValid(line0.get(0));
-		// final HtmlColor backColorGeneral = HtmlColor.getColorIfValid(line0.get(1));
-		final HtmlColor backColorGeneral = null;
+		final HtmlColor backColorElement = HtmlColorUtils.getColorIfValid(line0.get(0));
+		// final HtmlColor backColorGeneral = HtmlColorUtils.getColorIfValid(line0.get(1));
 
 		final List<String> participants = StringUtils.splitComma(line0.get(1));
 		final List<Participant> p = new ArrayList<Participant>();
 		for (String s : participants) {
-			p.add(getSystem().getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
+			p.add(system.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 		}
 
-		List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
+		Display strings = new Display(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
 
 		Url u = null;
 		if (strings.size() > 0) {
-			u = Note.extractUrl(strings.get(0));
+			final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			u = urlBuilder.getUrl(strings.get(0).toString());
 		}
 		if (u != null) {
 			strings = strings.subList(1, strings.size());
 		}
 
+		final HtmlColor backColorGeneral = null;
 		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement);
-		getSystem().addReference(ref);
+		system.addReference(ref);
 		return CommandExecutionResult.ok();
 	}
 

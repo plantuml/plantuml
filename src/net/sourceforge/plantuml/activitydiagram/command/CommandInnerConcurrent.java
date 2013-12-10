@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,19 +38,20 @@ import java.util.List;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 
 public class CommandInnerConcurrent extends SingleLineCommand<ActivityDiagram> {
 
-	public CommandInnerConcurrent(ActivityDiagram diagram) {
-		super(diagram, "(?i)^--\\s*(.*)$");
+	public CommandInnerConcurrent() {
+		super("(?i)^--\\s*(.*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		if (getSystem().getCurrentGroup() == null) {
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, List<String> arg) {
+		if (EntityUtils.groupRoot(diagram.getCurrentGroup())) {
 			return CommandExecutionResult.error("No inner activity");
 		}
-		getSystem().concurrentActivity(arg.get(0));
+		diagram.concurrentActivity(arg.get(0));
 
 		return CommandExecutionResult.ok();
 	}

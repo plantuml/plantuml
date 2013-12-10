@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,42 +34,53 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.plantuml.CMapData;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.api.ImageDataComplex;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifier2;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
+import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
-import net.sourceforge.plantuml.cucadiagram.dot.ICucaDiagramFileMaker;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
+import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
 
-public final class CucaDiagramFileMakerSvek implements ICucaDiagramFileMaker {
+public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 	private final List<BufferedImage> flashcodes;
@@ -86,116 +97,155 @@ public final class CucaDiagramFileMakerSvek implements ICucaDiagramFileMaker {
 		this.flashcodes = flashcodes;
 	}
 
-	public String createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 		try {
 			return createFileInternal(os, dotStrings, fileFormatOption);
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			throw new IOException(e);
 		}
-		return null;
+	}
+
+	private CucaDiagramFileMakerSvek2 buildCucaDiagramFileMakerSvek2(DotMode dotMode) {
+		final DotData dotData = new DotData(diagram.getEntityFactory().getRootGroup(), getOrderedLinks(), diagram
+				.getLeafs().values(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram.getRankdir(),
+				diagram, diagram, diagram.getColorMapper(), diagram.getEntityFactory(),
+				diagram.isHideEmptyDescriptionForState(), dotMode);
+		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData, diagram.getEntityFactory(),
+				false, diagram.getSource(), diagram.getPragma());
+		return svek2;
 
 	}
 
-	private String createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.STATE
-				|| diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			new CucaDiagramSimplifier2(diagram, dotStrings);
+		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			new CucaDiagramSimplifierActivity(diagram, dotStrings);
+		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
+			new CucaDiagramSimplifierState(diagram, dotStrings);
 		}
 
-		double deltaX = 0;
-		double deltaY = 0;
-
-		final DotData dotData = new DotData(null, diagram.getLinks(), diagram.entities(), diagram.getUmlDiagramType(),
-				diagram.getSkinParam(), diagram.getRankdir(), diagram, diagram, diagram.getColorMapper());
-		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData);
-
-		IEntityImage result = svek2.createFile(((CucaDiagram) diagram).getDotStringSkek());
+		CucaDiagramFileMakerSvek2 svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NORMAL);
+		TextBlockBackcolored result = svek2.createFile(diagram.getDotStringSkek());
+		if (result instanceof GraphvizCrash) {
+			svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
+			result = svek2.createFile(diagram.getDotStringSkek());
+		}
+		result = addLegend(result);
 		result = addTitle(result);
 		result = addHeaderAndFooter(result);
 
-		// final Dimension2D dim =
-		// Dimension2DDouble.delta(result.getDimension(stringBounder), 10);
-		final Dimension2D dim = result.getDimension(stringBounder);
+		final Dimension2D dim = result.calculateDimension(stringBounder);
 
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
+		Set<Url> allUrlEncountered = null;
+		double scale = 0;
 		if (fileFormat == FileFormat.PNG) {
-			createPng(os, fileFormatOption, result, dim);
+			allUrlEncountered = new HashSet<Url>();
+			scale = createPng(os, fileFormatOption, result, dim, allUrlEncountered, fileFormatOption.isWithMetadata());
 		} else if (fileFormat == FileFormat.SVG) {
 			createSvg(os, fileFormatOption, result, dim);
+		} else if (fileFormat == FileFormat.VDX) {
+			createVdx(os, fileFormatOption, result, dim);
 		} else if (fileFormat == FileFormat.EPS) {
 			createEps(os, fileFormatOption, result, dim);
 		} else {
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}
-		
+
+		double deltaX = 0;
+		double deltaY = 0;
 		if (result instanceof DecorateEntityImage) {
 			deltaX += ((DecorateEntityImage) result).getDeltaX();
 			deltaY += ((DecorateEntityImage) result).getDeltaY();
 		}
 
+		final Dimension2D finalDimension = Dimension2DDouble.delta(dim, deltaX, deltaY);
 
-		if (diagram.hasUrl()) {
-			return cmapString(svek2, deltaX, deltaY);
+		CMapData cmap = null;
+		if (diagram.hasUrl() && fileFormatOption.getFileFormat() == FileFormat.PNG) {
+			cmap = CMapData.cmapString(allUrlEncountered, scale);
 		}
-		return null;
 
+		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
+		if (widthwarning != null && widthwarning.matches("\\d+")) {
+			this.warningOrError = svek2.getBibliotekon().getWarningOrError(Integer.parseInt(widthwarning));
+		} else {
+			this.warningOrError = null;
+		}
+
+		return new ImageDataComplex(finalDimension, cmap, getWarningOrError());
 	}
 
-	private String cmapString(CucaDiagramFileMakerSvek2 svek2, double deltaX, double deltaY) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("<map id=\"unix\" name=\"unix\">\n");
-		for (IEntity ent : diagram.entities().values()) {
-			final Url url = ent.getUrl();
-			if (url == null) {
-				continue;
+	private List<Link> getOrderedLinks() {
+		final List<Link> result = new ArrayList<Link>();
+		for (Link l : diagram.getLinks()) {
+			addLinkNew(result, l);
+		}
+		return result;
+	}
+
+	private void addLinkNew(List<Link> result, Link link) {
+		for (int i = 0; i < result.size(); i++) {
+			final Link other = result.get(i);
+			if (other.sameConnections(link)) {
+				while (i < result.size() && result.get(i).sameConnections(link)) {
+					i++;
+				}
+				if (i == result.size()) {
+					result.add(link);
+				} else {
+					result.add(i, link);
+				}
+				return;
 			}
-			sb.append("<area shape=\"rect\" id=\"");
-			sb.append(ent.getUid());
-			sb.append("\" href=\"");
-			sb.append(url.getUrl());
-			sb.append("\" title=\"");
-			sb.append(url.getTooltip());
-			sb.append("\" alt=\"\" coords=\"");
-
-			final Shape sh = svek2.getShape(ent);
-			sb.append(sh.getCoords(deltaX, deltaY));
-
-			sb.append("\"/>");
-
-			sb.append("\n");
 		}
-		sb.append("</map>\n");
-		return sb.toString();
+		result.add(link);
 	}
 
-	private IEntityImage addHeaderAndFooter(IEntityImage original) {
-		final List<String> footer = diagram.getFooter();
-		final List<String> header = diagram.getHeader();
+	private String warningOrError;
+
+	private String getWarningOrError() {
+		return warningOrError;
+	}
+
+	private TextBlockBackcolored addHeaderAndFooter(TextBlockBackcolored original) {
+		final Display footer = diagram.getFooter();
+		final Display header = diagram.getHeader();
 		if (footer == null && header == null) {
 			return original;
 		}
 		final TextBlock textFooter = footer == null ? null : TextBlockUtils.create(footer, new FontConfiguration(
-				getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null)), diagram.getFooterAlignement());
+				getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null)), diagram.getFooterAlignment(), diagram
+				.getSkinParam());
 		final TextBlock textHeader = header == null ? null : TextBlockUtils.create(header, new FontConfiguration(
-				getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null)), diagram.getHeaderAlignement());
+				getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null)), diagram.getHeaderAlignment(), diagram
+				.getSkinParam());
 
-		return new DecorateEntityImage(original, textHeader, diagram.getHeaderAlignement(), textFooter, diagram
-				.getFooterAlignement());
+		return new DecorateEntityImage(original, textHeader, diagram.getHeaderAlignment(), textFooter,
+				diagram.getFooterAlignment());
 	}
 
-	private IEntityImage addTitle(IEntityImage original) {
-		final List<? extends CharSequence> title = diagram.getTitle();
+	private TextBlockBackcolored addTitle(TextBlockBackcolored original) {
+		final Display title = diagram.getTitle();
 		if (title == null) {
 			return original;
 		}
 		final TextBlock text = TextBlockUtils.create(title, new FontConfiguration(getFont(FontParam.TITLE),
-				getFontColor(FontParam.TITLE, null)), HorizontalAlignement.CENTER);
+				getFontColor(FontParam.TITLE, null)), HorizontalAlignment.CENTER, diagram.getSkinParam());
 
-		return new DecorateEntityImage(original, text, HorizontalAlignement.CENTER);
+		return DecorateEntityImage.addTop(original, text, HorizontalAlignment.CENTER);
+	}
+
+	private TextBlockBackcolored addLegend(TextBlockBackcolored original) {
+		final Display legend = diagram.getLegend();
+		if (legend == null) {
+			return original;
+		}
+		final TextBlock text = EntityImageLegend.create(legend, diagram.getSkinParam());
+
+		return DecorateEntityImage.addBottom(original, text, diagram.getLegendAlignment());
 	}
 
 	private final UFont getFont(FontParam fontParam) {
@@ -208,52 +258,68 @@ public final class CucaDiagramFileMakerSvek implements ICucaDiagramFileMaker {
 		return skinParam.getFontHtmlColor(fontParam, stereo);
 	}
 
-	private void createPng(OutputStream os, FileFormatOption fileFormatOption, final IEntityImage result,
-			final Dimension2D dim) throws IOException {
-		Color backColor = Color.WHITE;
-		if (result.getBackcolor() != null) {
-			backColor = diagram.getSkinParam().getColorMapper().getMappedColor(result.getBackcolor());
-		}
+	private double createPng(OutputStream os, FileFormatOption fileFormatOption, final TextBlockBackcolored result,
+			final Dimension2D dim, Set<Url> allUrlEncountered, boolean isWithMetadata) throws IOException {
+		final double scale = getScale(fileFormatOption, dim);
+		final UGraphicG2d ug = (UGraphicG2d) fileFormatOption.createUGraphic(diagram.getSkinParam().getColorMapper(),
+				scale, dim, result.getBackcolor(), diagram.isRotation());
+		result.drawU(ug);
 
-		final EmptyImageBuilder builder = new EmptyImageBuilder((int) dim.getWidth(), (int) dim.getHeight(), backColor);
-		final Graphics2D graphics2D = builder.getGraphics2D();
+		PngIO.write(ug.getBufferedImage(), os, isWithMetadata ? diagram.getMetadata() : null,
+				diagram.getDpi(fileFormatOption));
+		allUrlEncountered.addAll(ug.getAllUrlsEncountered());
+		return scale;
 
-		final UGraphic ug = new UGraphicG2d(diagram.getSkinParam().getColorMapper(), graphics2D, builder
-				.getBufferedImage(), 1.0);
-		result.drawU(ug, 0, 0);
-
-		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-		PngIO.write(im, os, diagram.getMetadata(), diagram.getDpi(fileFormatOption));
 	}
 
-	private void createSvg(OutputStream os, FileFormatOption fileFormatOption, final IEntityImage result,
+	private double getScale(FileFormatOption fileFormatOption, final Dimension2D dim) {
+		final double scale;
+		final Scale diagScale = diagram.getScale();
+		if (diagScale == null) {
+			scale = diagram.getDpiFactor(fileFormatOption);
+		} else {
+			scale = diagScale.getScale(dim.getWidth(), dim.getHeight());
+		}
+		return scale;
+	}
+
+	private void createSvg(OutputStream os, FileFormatOption fileFormatOption, final TextBlockBackcolored result,
 			final Dimension2D dim) throws IOException {
+		final double scale = getScale(fileFormatOption, dim);
 
 		Color backColor = Color.WHITE;
-		if (result.getBackcolor() != null) {
+		if (result.getBackcolor() instanceof HtmlColorSimple) {
 			backColor = diagram.getSkinParam().getColorMapper().getMappedColor(result.getBackcolor());
 		}
 		final UGraphicSvg ug;
-		if (backColor.equals(Color.WHITE)) {
-			ug = new UGraphicSvg(diagram.getSkinParam().getColorMapper(), false);
+		if (result.getBackcolor() instanceof HtmlColorGradient) {
+			ug = new UGraphicSvg(diagram.getSkinParam().getColorMapper(), (HtmlColorGradient) result.getBackcolor(),
+					false, scale);
+		} else if (backColor == null || backColor.equals(Color.WHITE)) {
+			ug = new UGraphicSvg(diagram.getSkinParam().getColorMapper(), false, scale);
 		} else {
-			ug = new UGraphicSvg(diagram.getSkinParam().getColorMapper(), StringUtils.getAsHtml(backColor), false);
+			ug = new UGraphicSvg(diagram.getSkinParam().getColorMapper(), StringUtils.getAsHtml(backColor), false,
+					scale);
 		}
-
-		result.drawU(ug, 0, 0);
-
+		result.drawU(ug);
 		ug.createXml(os);
-
 	}
 
-	private void createEps(OutputStream os, FileFormatOption fileFormatOption, final IEntityImage result,
+	private void createVdx(OutputStream os, FileFormatOption fileFormatOption, final TextBlockBackcolored result,
+			final Dimension2D dim) throws IOException {
+
+		final UGraphicVdx ug = new UGraphicVdx(diagram.getSkinParam().getColorMapper());
+		result.drawU(ug);
+		ug.createVsd(os);
+	}
+
+	private void createEps(OutputStream os, FileFormatOption fileFormatOption, final TextBlockBackcolored result,
 			final Dimension2D dim) throws IOException {
 
 		final UGraphicEps ug = new UGraphicEps(diagram.getSkinParam().getColorMapper(), EpsStrategy.getDefault2());
 
-		result.drawU(ug, 0, 0);
+		result.drawU(ug);
 		os.write(ug.getEPSCode().getBytes());
-
 	}
 
 }

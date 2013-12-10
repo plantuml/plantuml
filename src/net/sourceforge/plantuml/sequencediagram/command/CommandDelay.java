@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,25 +33,23 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandDelay extends SingleLineCommand<SequenceDiagram> {
 
-	public CommandDelay(SequenceDiagram sequenceDiagram) {
-		super(sequenceDiagram, "(?i)^\\.{3}(?:(.*)\\.{3})?$$");
+	public CommandDelay() {
+		super("(?i)^\\.{3}(?:(.*)\\.{3})?$$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final List<String> strings = arg.get(0) == null ? Collections.<String> emptyList() : StringUtils
-				.getWithNewlines(arg.get(0));
-		getSystem().delay(strings);
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
+		final Display strings = arg.get(0) == null ? Display.emptyList() : Display.getWithNewlines(arg.get(0));
+		sequenceDiagram.delay(strings);
 		return CommandExecutionResult.ok();
 	}
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -42,14 +42,14 @@ import net.sourceforge.plantuml.project.PSystemProject;
 
 public class CommandAffectation extends SingleLineCommand<PSystemProject> {
 
-	public CommandAffectation(PSystemProject diagram) {
-		super(diagram, "(?i)^\\s*([~\\^]?[\\w$/]+)\\s*:=\\s*(.+)$");
+	public CommandAffectation() {
+		super("(?i)^\\s*([~\\^]?[\\w$/]+)\\s*:=\\s*(.+)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Expression exp = getSystem().getProject().getExpression(arg.get(1).trim());
-		final boolean ok = getSystem().getProject().affectation(arg.get(0).trim(), exp);
+	protected CommandExecutionResult executeArg(PSystemProject diagram, List<String> arg) {
+		final Expression exp = diagram.getProject().getExpression(arg.get(1).trim());
+		final boolean ok = diagram.getProject().affectation(arg.get(0).trim(), exp);
 		if (ok) {
 			return CommandExecutionResult.ok();
 		}

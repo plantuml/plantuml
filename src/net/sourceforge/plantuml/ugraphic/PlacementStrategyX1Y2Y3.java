@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -51,8 +51,8 @@ public class PlacementStrategyX1Y2Y3 extends AbstractPlacementStrategy {
 	public Map<TextBlock, Point2D> getPositions(double width, double height) {
 		final Dimension2D first = getDimensions().values().iterator().next();
 
-		double maxWidthButFirst = getMaxWidth(butFirst());
-		double sumHeightButFirst = getSumHeight(butFirst());
+		final double maxWidthButFirst = getMaxWidth(butFirst());
+		final double sumHeightButFirst = getSumHeight(butFirst());
 
 		final double space = (width - first.getWidth() - maxWidthButFirst) / 3;
 

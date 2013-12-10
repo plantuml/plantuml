@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,16 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5872 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 abstract class Arrow extends GraphicalElement implements InGroupable {
 
@@ -45,7 +47,8 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	private final Component arrowComponent;
 	private double paddingArrowHead = 0;
 	private double maxX;
-
+	private final Url url;
+	
 	public void setMaxX(double m) {
 		if (maxX != 0) {
 			throw new IllegalStateException();
@@ -55,19 +58,37 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 
 	final protected double getMaxX() {
 		if (maxX == 0) {
-			throw new IllegalStateException();
+			// throw new IllegalStateException();
 		}
 		return maxX;
 	}
 	
 	public abstract double getActualWidth(StringBounder stringBounder);
 
-	Arrow(double startingY, Skin skin, Component arrowComponent) {
+	Arrow(double startingY, Skin skin, Component arrowComponent, Url url) {
 		super(startingY);
 		this.skin = skin;
 		this.arrowComponent = arrowComponent;
+		this.url = url;
+	}
+	
+	protected Url getUrl() {
+		return url;
 	}
 
+	protected final void startUrl(UGraphic ug) {
+		if (url != null) {
+			ug.startUrl(url);
+		}
+	}
+
+	protected final void endUrl(UGraphic ug) {
+		if (url != null) {
+			ug.closeAction();
+		}
+	}
+
+	
 	public abstract int getDirection(StringBounder stringBounder);
 
 	protected Skin getSkin() {

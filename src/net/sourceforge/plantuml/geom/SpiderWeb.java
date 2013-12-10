@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -88,15 +88,15 @@ public class SpiderWeb {
 				result.add(new Point2DInt((int) Math.round(x1), (int) Math.round(y1)));
 			}
 		}
-		// System.err.println("getHangPoints="+result);
+		// Log.println("getHangPoints="+result);
 		return result;
 	}
 
 	public PolylineBreakeable addPolyline(int row1, int col1, int row2, int col2) {
-		// System.err.println("SpiderWeb : adding " + row1 + "," + col1 + " - "
+		// Log.println("SpiderWeb : adding " + row1 + "," + col1 + " - "
 		// + row2 + "," + col2);
 		final PolylineBreakeable result = computePolyline(row1, col1, row2, col2);
-		// System.err.println("SpiderWeb : adding " + result);
+		// Log.println("SpiderWeb : adding " + result);
 		if (result != null) {
 			lines.add(result);
 		}
@@ -117,10 +117,10 @@ public class SpiderWeb {
 			nbCol = col2;
 		}
 		if (directLinkPossibleForGeometry(row1, col1, row2, col2)) {
-			// System.err.println("Geom OK");
+			// Log.println("Geom OK");
 			final PolylineBreakeable direct = new PolylineBreakeable(getMainPoint(row1, col1), getMainPoint(row2, col2));
 			if (isCompatible(direct)) {
-				// System.err.println("Direct OK");
+				// Log.println("Direct OK");
 				return direct;
 			}
 		}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5019 $
+ * Revision $Revision: 11432 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -48,20 +49,20 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public class CommandImport extends SingleLineCommand<ClassDiagram> {
 
-	public CommandImport(ClassDiagram classDiagram) {
-		super(classDiagram, "(?i)^import\\s+\"?([^\"]+)\"?$");
+	public CommandImport() {
+		super("(?i)^import\\s+\"?([^\"]+)\"?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(ClassDiagram classDiagram, List<String> arg) {
 		final String arg0 = arg.get(0);
 		try {
 			final File f = FileSystem.getInstance().getFile(arg0);
 
 			if (f.isFile()) {
-				includeSimpleFile(f);
+				includeSimpleFile(classDiagram, f);
 			} else if (f.isDirectory()) {
-				includeDirectory(f);
+				includeDirectory(classDiagram, f);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -70,35 +71,32 @@ public class CommandImport extends SingleLineCommand<ClassDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	private void includeDirectory(File dir) throws IOException {
+	private void includeDirectory(ClassDiagram classDiagram, File dir) throws IOException {
 		for (File f : dir.listFiles()) {
-			includeSimpleFile(f);
+			includeSimpleFile(classDiagram, f);
 		}
 
 	}
 
-	private void includeSimpleFile(File f) throws IOException {
+	private void includeSimpleFile(ClassDiagram classDiagram, File f) throws IOException {
 		if (f.getName().toLowerCase().endsWith(".java")) {
-			includeFileJava(f);
+			includeFileJava(classDiagram, f);
 		}
 		// if (f.getName().toLowerCase().endsWith(".sql")) {
 		// includeFileSql(f);
 		// }
 	}
 
-	private void includeFileJava(final File f) throws IOException {
+	private void includeFileJava(ClassDiagram classDiagram, final File f) throws IOException {
 		final JavaFile javaFile = new JavaFile(f);
 		for (JavaClass cl : javaFile.getJavaClasses()) {
-			final String name = cl.getName();
-			final IEntity ent1 = getSystem()
-					.getOrCreateClass(name, cl.getType());
+			final Code name = Code.of(cl.getName());
+			final IEntity ent1 = classDiagram.getOrCreateLeaf(name, cl.getType());
 
 			for (String p : cl.getParents()) {
-				final IEntity ent2 = getSystem().getOrCreateClass(p,
-						cl.getParentType());
-				final Link link = new Link(ent2, ent1, new LinkType(
-						LinkDecor.NONE, LinkDecor.EXTENDS), null, 2);
-				getSystem().addLink(link);
+				final IEntity ent2 = classDiagram.getOrCreateLeaf(Code.of(p), cl.getParentType());
+				final Link link = new Link(ent2, ent1, new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS), null, 2);
+				classDiagram.addLink(link);
 			}
 		}
 	}

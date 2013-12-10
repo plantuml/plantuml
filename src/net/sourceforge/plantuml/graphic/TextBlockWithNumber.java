@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,28 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
+ * Revision $Revision: 11154 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
-import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class TextBlockWithNumber extends TextBlockSimple {
 
 	private final TextBlock numText;
 
-	public TextBlockWithNumber(String number, List<? extends CharSequence> texts, FontConfiguration fontConfiguration,
-			HorizontalAlignement horizontalAlignement) {
-		super(texts, fontConfiguration, horizontalAlignement);
-		this.numText = TextBlockUtils.create(Arrays.asList(number), fontConfiguration, HorizontalAlignement.LEFT);
+	public TextBlockWithNumber(String number, Display texts, FontConfiguration fontConfiguration,
+			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer, double maxMessageSize) {
+		super(texts, fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize);
+		this.numText = TextBlockUtils.create(Display.asList(number), fontConfiguration, HorizontalAlignment.LEFT,
+				spriteContainer);
 	}
 
 	@Override
@@ -67,25 +67,15 @@ class TextBlockWithNumber extends TextBlockSimple {
 	}
 
 	@Override
-	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
-		final double heightNum = numText.calculateDimension(stringBounder).getHeight();
-
-		final double deltaY = calculateDimension(stringBounder).getHeight() - heightNum;
-
-		numText.drawTOBEREMOVED(colorMapper, g2d, x, y + deltaY / 2.0);
-		super.drawTOBEREMOVED(colorMapper, g2d, x + getNumberWithAndMargin(stringBounder), y);
-	}
-
-	@Override
-	public void drawU(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double heightNum = numText.calculateDimension(stringBounder).getHeight();
-
+		
 		final double deltaY = calculateDimension(stringBounder).getHeight() - heightNum;
-
-		numText.drawU(ug, x, y + deltaY / 2.0);
-		super.drawU(ug, x + getNumberWithAndMargin(stringBounder), y);
+		
+		numText.drawU(ug.apply(new UTranslate(0, deltaY / 2.0)));
+		super.drawU(ug.apply(new UTranslate(getNumberWithAndMargin(stringBounder), 0)));
 	}
+
 
 }

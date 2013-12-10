@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5957 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -38,15 +38,21 @@ import java.util.regex.Matcher;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 
-	public CommandMultilinesFooter(final UmlDiagram diagram) {
-		super(diagram, "(?i)^(?:(left|right|center)?\\s*)footer$", "(?i)^end ?footer$");
+	public CommandMultilinesFooter() {
+		super("(?i)^(?:(left|right|center)?\\s*)footer$");
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	@Override
+	public String getPatternEnd() {
+		return "(?i)^end ?footer$";
+	}
+
+	public CommandExecutionResult execute(final UmlDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, false);
 		final Matcher m = getStartingPattern().matcher(lines.get(0).trim());
 		if (m.find() == false) {
@@ -54,11 +60,11 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 		}
 		final String align = m.group(1);
 		if (align != null) {
-			getSystem().setFooterAlignement(HorizontalAlignement.valueOf(align.toUpperCase()));
+			diagram.setFooterAlignment(HorizontalAlignment.valueOf(align.toUpperCase()));
 		}
-		final List<String> strings = lines.subList(1, lines.size() - 1);
+		final Display strings = new Display(lines.subList(1, lines.size() - 1));
 		if (strings.size() > 0) {
-			getSystem().setFooter(strings);
+			diagram.setFooter(strings);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty footer");

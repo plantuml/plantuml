@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,15 +38,16 @@ import java.util.Collection;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageNote2 extends AbstractEntityImage2 {
 
@@ -57,7 +58,7 @@ public class EntityImageNote2 extends AbstractEntityImage2 {
 
 		final Rose skin = new Rose();
 
-		comp = skin.createComponent(ComponentType.NOTE, skinParam, entity.getDisplay2());
+		comp = skin.createComponent(ComponentType.NOTE, null, skinParam, entity.getDisplay());
 
 	}
 
@@ -70,11 +71,8 @@ public class EntityImageNote2 extends AbstractEntityImage2 {
 
 	public void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition, double marginWidth,
 			double marginHeight) {
-		final double dx = ug.getTranslateX();
-		final double dy = ug.getTranslateY();
-		ug.translate(xTheoricalPosition, yTheoricalPosition);
-		comp.drawU(ug, getDimension(ug.getStringBounder()), new SimpleContext2D(false));
-		ug.setTranslate(dx, dy);
+		ug = ug.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition));
+		comp.drawU(ug, new Area(getDimension(ug.getStringBounder())), new SimpleContext2D(false));
 
 	}
 

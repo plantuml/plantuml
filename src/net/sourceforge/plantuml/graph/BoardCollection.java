@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3831 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -45,10 +45,10 @@ public class BoardCollection {
 
 		public Entry(Board b, CostComputer costComputer) {
 			this.board = b;
-			if (costComputer != null) {
-				this.cost = costComputer.getCost(b);
-			} else {
+			if (costComputer == null) {
 				this.cost = 0;
+			} else {
+				this.cost = costComputer.getCost(b);
 			}
 		}
 
@@ -86,7 +86,7 @@ public class BoardCollection {
 			if (ent.explored == false) {
 				ent.explored = true;
 				assert costComputer.getCost(ent.board) == ent.cost;
-				// System.err.println("Peeking " + ent.cost);
+				// Log.println("Peeking " + ent.cost);
 				return ent.board;
 			}
 		}

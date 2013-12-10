@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,19 +33,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
-import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 
@@ -57,28 +54,40 @@ abstract class Step1Abstract {
 
 	private final AbstractMessage message;
 
-	private double freeY;
+	private Frontier freeY2;
 
-	private ComponentType type;
+//	private ComponentType type;
+	private ArrowConfiguration config;
 
 	private Component note;
 
-	Step1Abstract(StringBounder stringBounder, AbstractMessage message, DrawableSet drawingSet, double freeY) {
+	private ParticipantRange range;
+
+	Step1Abstract(ParticipantRange range, StringBounder stringBounder, AbstractMessage message, DrawableSet drawingSet,
+			Frontier freeY2) {
+		if (freeY2 == null) {
+			throw new IllegalArgumentException();
+		}
+		this.range = range;
 		this.stringBounder = stringBounder;
 		this.message = message;
-		this.freeY = freeY;
+		this.freeY2 = freeY2;
 		this.drawingSet = drawingSet;
 	}
 
-	abstract double prepareMessage(ConstraintSet constraintSet, Collection<InGroupableList> groupingStructures);
+	protected final ParticipantRange getParticipantRange() {
+		return range;
+	}
 
-	protected final List<? extends CharSequence> getLabelOfMessage(AbstractMessage message) {
+	abstract Frontier prepareMessage(ConstraintSet constraintSet, InGroupablesStack groupingStructures);
+
+	protected final Display getLabelOfMessage(AbstractMessage message) {
 		if (message.getMessageNumber() == null) {
 			return message.getLabel();
 		}
-		final List<CharSequence> result = new ArrayList<CharSequence>();
-		result.add(new MessageNumber(message.getMessageNumber()));
-		result.addAll(message.getLabel());
+		Display result = new Display();
+		result = result.add(new MessageNumber(message.getMessageNumber()));
+		result = result.addAll(message.getLabel());
 		return result;
 	}
 
@@ -107,11 +116,14 @@ abstract class Step1Abstract {
 		}
 
 		if (n.getType() == LifeEventType.DESTROY) {
-			final Component comp = drawingSet.getSkin().createComponent(ComponentType.DESTROY,
+			final Component comp = drawingSet.getSkin().createComponent(ComponentType.DESTROY, null,
 					drawingSet.getSkinParam(), null);
 			final double delta = comp.getPreferredHeight(stringBounder) / 2;
 			final LifeDestroy destroy = new LifeDestroy(pos - delta, drawingSet.getLivingParticipantBox(p)
 					.getParticipantBox(), comp);
+			if (lifelineAfterDestroy()) {
+				line.setDestroy(pos);
+			}
 			drawingSet.addEvent(n, destroy);
 		} else if (n.getType() != LifeEventType.DEACTIVATE) {
 			throw new IllegalStateException();
@@ -120,13 +132,28 @@ abstract class Step1Abstract {
 		line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos, n.getSpecificBackColor());
 	}
 
-	protected final ComponentType getType() {
-		return type;
+	private boolean lifelineAfterDestroy() {
+		// final String v = drawingSet.getSkinParam().getValue("lifelineafterdestroy");
+		return false;
 	}
 
-	protected final void setType(ComponentType type) {
-		this.type = type;
+//	protected final ComponentType getType() {
+//		return type;
+//	}
+//
+//	protected final void setType(ComponentType type) {
+//		this.type = type;
+//	}
+	
+	protected final ArrowConfiguration getConfig() {
+		return config;
 	}
+
+	protected final void setConfig(ArrowConfiguration config) {
+		this.config = config;
+	}
+
+
 
 	protected final Component getNote() {
 		return note;
@@ -148,12 +175,12 @@ abstract class Step1Abstract {
 		return drawingSet;
 	}
 
-	protected final double getFreeY() {
-		return freeY;
+	protected final Frontier getFreeY() {
+		return freeY2;
 	}
 
 	protected final void incFreeY(double v) {
-		freeY += v;
+		freeY2 = freeY2.add(v, range);
 	}
 
 	protected final NoteBox createNoteBox(StringBounder stringBounder, Arrow arrow, Component noteComp,
@@ -164,6 +191,13 @@ abstract class Step1Abstract {
 		if (arrow instanceof MessageSelfArrow && notePosition == NotePosition.RIGHT) {
 			noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));
 		}
+		// if (arrow instanceof MessageExoArrow) {
+		// final MessageExoType type = ((MessageExoArrow) arrow).getType();
+		// if (type.isRightBorder()) {
+		// final double width = noteBox.getPreferredWidth(stringBounder);
+		// noteBox.pushToRight(-width);
+		// }
+		// }
 
 		return noteBox;
 	}

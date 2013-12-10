@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,24 +34,29 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
-import java.util.List;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseDelayText extends AbstractTextualComponent {
 
-	public ComponentRoseDelayText(HtmlColor fontColor, UFont font, List<? extends CharSequence> stringsToDisplay) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignement.CENTER, 4, 4, 4);
+	public ComponentRoseDelayText(HtmlColor fontColor, UFont font, Display stringsToDisplay,
+			SpriteContainer spriteContainer) {
+		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 0, 0, 4, spriteContainer, 0, false);
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final TextBlock textBlock = getTextBlock();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double textWidth = getTextWidth(stringBounder);
@@ -60,8 +65,7 @@ public class ComponentRoseDelayText extends AbstractTextualComponent {
 		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;
 		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;
 
-		ug.getParam().setColor(getFontColor());
-		textBlock.drawU(ug, xpos, ypos + getMarginY());
+		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getMarginY()))));
 	}
 
 	@Override
@@ -71,7 +75,7 @@ public class ComponentRoseDelayText extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return getTextWidth(stringBounder) + 30;
+		return getPureTextWidth(stringBounder);
 	}
 
 }

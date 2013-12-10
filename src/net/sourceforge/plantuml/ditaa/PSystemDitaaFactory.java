@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -31,68 +31,57 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
-import java.io.UnsupportedEncodingException;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 
-public class PSystemDitaaFactory implements PSystemBasicFactory {
-
-	private StringBuilder data;
-	private boolean first;
-	// -E,--no-separation
-	private boolean performSeparationOfCommonEdges;
-
-	private final DiagramType diagramType;
+	// private StringBuilder data;
+	// // -E,--no-separation
+	// private boolean performSeparationOfCommonEdges;
+	//
+	// // -S,--no-shadows
+	// private boolean dropShadows;
 
 	public PSystemDitaaFactory(DiagramType diagramType) {
-		this.diagramType = diagramType;
+		super(diagramType);
 	}
 
-	public void init(String startLine) {
-		data = null;
-		performSeparationOfCommonEdges = true;
+	public PSystemDitaa init(String startLine) {
+		boolean performSeparationOfCommonEdges = true;
 		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation"))) {
 			performSeparationOfCommonEdges = false;
 		}
-		if (diagramType == DiagramType.UML) {
-			first = true;
-		} else if (diagramType == DiagramType.DITAA) {
-			first = false;
-			data = new StringBuilder();
+		boolean dropShadows = true;
+		if (startLine != null && (startLine.contains("-S") || startLine.contains("--no-shadows"))) {
+			dropShadows = false;
+		}
+		if (getDiagramType() == DiagramType.UML) {
+			return null;
+		} else if (getDiagramType() == DiagramType.DITAA) {
+			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows);
 		} else {
-			throw new IllegalStateException(diagramType.name());
+			throw new IllegalStateException(getDiagramType().name());
 		}
 	}
 
-	public boolean executeLine(String line) {
-		if (first && (line.equals("ditaa") || line.startsWith("ditaa("))) {
-			data = new StringBuilder();
+	@Override
+	public PSystemDitaa executeLine(PSystemDitaa system, String line) {
+		if (system == null && (line.equals("ditaa") || line.startsWith("ditaa("))) {
+			boolean performSeparationOfCommonEdges = true;
 			if (line.contains("-E") || line.contains("--no-separation")) {
 				performSeparationOfCommonEdges = false;
 			}
-			return true;
+			boolean dropShadows = true;
+			if (line.contains("-S") || line.contains("--no-shadows")) {
+				dropShadows = false;
+			}
+			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows);
 		}
-		first = false;
-		if (data == null) {
-			return false;
-		}
-		data.append(line);
-		data.append("\n");
-		return true;
-	}
-
-	public PSystemDitaa getSystem() {
-		try {
-			return new PSystemDitaa(data.toString(), performSeparationOfCommonEdges);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		if (system == null) {
 			return null;
 		}
-	}
-
-	public DiagramType getDiagramType() {
-		return diagramType;
+		return system.add(line);
 	}
 
 }

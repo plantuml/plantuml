@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6049 $
+ * Revision $Revision: 11635 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -41,22 +41,26 @@ import java.util.Iterator;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class SegmentColored {
 
 	final private Segment segment;
 	final private HtmlColor backcolor;
+	final private boolean shadowing;
 
-	SegmentColored(double pos1, double pos2, HtmlColor backcolor) {
-		this(new Segment(pos1, pos2), backcolor);
+	SegmentColored(double pos1, double pos2, HtmlColor backcolor, boolean shadowing) {
+		this(new Segment(pos1, pos2), backcolor, shadowing);
 	}
 
-	private SegmentColored(Segment segment, HtmlColor backcolor) {
+	private SegmentColored(Segment segment, HtmlColor backcolor, boolean shadowing) {
 		this.segment = segment;
 		this.backcolor = backcolor;
+		this.shadowing = shadowing;
 	}
 
 	public HtmlColor getSpecificBackColor() {
@@ -79,16 +83,12 @@ class SegmentColored {
 		return this.segment.toString();
 	}
 
-	public void drawU(UGraphic ug, Component comp, int level) {
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
-
+	public void drawU(UGraphic ug, Component compAliveBox, int level) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.translate((level - 1) * comp.getPreferredWidth(stringBounder) / 2, segment.getPos1());
-		final Dimension2D dim = new Dimension2DDouble(comp.getPreferredWidth(stringBounder), segment.getPos2()
+		ug = ug.apply(new UTranslate((level - 1) * compAliveBox.getPreferredWidth(stringBounder) / 2, segment.getPos1()));
+		final Dimension2D dim = new Dimension2DDouble(compAliveBox.getPreferredWidth(stringBounder), segment.getPos2()
 				- segment.getPos1());
-		comp.drawU(ug, dim, new SimpleContext2D(false));
-		ug.setTranslate(atX, atY);
+		compAliveBox.drawU(ug, new Area(dim), new SimpleContext2D(false));
 	}
 
 	public Collection<SegmentColored> cutSegmentIfNeed(Collection<Segment> allDelays) {
@@ -96,7 +96,7 @@ class SegmentColored {
 	}
 
 	public SegmentColored merge(SegmentColored this2) {
-		return new SegmentColored(this.segment.merge(this2.segment), backcolor);
+		return new SegmentColored(this.segment.merge(this2.segment), backcolor, shadowing);
 	}
 
 	public final Segment getSegment() {
@@ -117,7 +117,7 @@ class SegmentColored {
 		}
 
 		public SegmentColored next() {
-			return new SegmentColored(it.next(), backcolor);
+			return new SegmentColored(it.next(), backcolor, shadowing);
 		}
 
 		public void remove() {

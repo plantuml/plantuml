@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6644 $
+ * Revision $Revision: 9786 $
  * 
  */
 package net.sourceforge.plantuml;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.cucadiagram.Code;
 
 public class UniqueSequence {
 
@@ -45,6 +47,10 @@ public class UniqueSequence {
 
 	public static int getValue() {
 		return cpt.addAndGet(1);
+	}
+
+	public static Code getCode(String prefix) {
+		return Code.of(prefix + getValue());
 	}
 
 }

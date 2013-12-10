@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,21 +34,16 @@
 package net.sourceforge.plantuml.command;
 
 import java.util.List;
-import java.util.Map;
 
-import net.sourceforge.plantuml.PSystem;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.core.Diagram;
 
-public abstract class SingleLineCommand2<S extends PSystem> implements Command {
+public abstract class SingleLineCommand2<S extends Diagram> implements Command<S> {
 
-	private final S system;
 	private final RegexConcat pattern;
 
-	public SingleLineCommand2(S system, RegexConcat pattern) {
-		if (system == null) {
-			throw new IllegalArgumentException();
-		}
+	public SingleLineCommand2(RegexConcat pattern) {
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
@@ -56,14 +51,9 @@ public abstract class SingleLineCommand2<S extends PSystem> implements Command {
 			throw new IllegalArgumentException("Bad pattern " + pattern.getPattern());
 		}
 
-		this.system = system;
 		this.pattern = pattern;
 	}
 
-	final protected S getSystem() {
-		return system;
-	}
-	
 	public String[] getDescription() {
 		return new String[] { pattern.getPattern() };
 	}
@@ -90,7 +80,7 @@ public abstract class SingleLineCommand2<S extends PSystem> implements Command {
 	protected void actionIfCommandValid() {
 	}
 
-	public final CommandExecutionResult execute(List<String> lines) {
+	public final CommandExecutionResult execute(S system, List<String> lines) {
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
@@ -99,32 +89,19 @@ public abstract class SingleLineCommand2<S extends PSystem> implements Command {
 			return CommandExecutionResult.error("Forbidden line " + line);
 		}
 
-		final Map<String, RegexPartialMatch> arg = pattern.matcher(line);
+		final RegexResult arg = pattern.matcher(line);
 		if (arg == null) {
 			return CommandExecutionResult.error("Cannot parse line " + line);
 		}
-		return executeArg(arg);
+		// System.err.println("lines="+lines);
+		// System.err.println("pattern="+pattern.getPattern());
+		return executeArg(system, arg);
 	}
 
 	protected boolean isForbidden(String line) {
 		return false;
 	}
 
-	protected abstract CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg);
-
-	final public boolean isDeprecated(List<String> lines) {
-		if (lines.size() != 1) {
-			return false;
-		}
-		return isDeprecated(lines.get(0));
-	}
-
-	public String getHelpMessageForDeprecated(List<String> lines) {
-		return null;
-	}
-
-	protected boolean isDeprecated(String line) {
-		return false;
-	}
+	protected abstract CommandExecutionResult executeArg(S system, RegexResult arg);
 
 }

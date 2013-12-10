@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,45 +28,36 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7135 $
+ * Revision $Revision: 11914 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramFileMakerBeta;
-import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramPngMaker3;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
-import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
-import net.sourceforge.plantuml.cucadiagram.dot.ICucaDiagramFileMaker;
-import net.sourceforge.plantuml.png.PngSplitter;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.hector.CucaDiagramFileMakerHectorB2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
@@ -76,189 +67,158 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private int horizontalPages = 1;
 	private int verticalPages = 1;
 
-	private final Map<String, Entity> entities = new LinkedHashMap<String, Entity>();
-	// private final Map<String, Entity> entities = new TreeMap<String,
-	// Entity>();
-	private final Map<IEntity, Integer> nbLinks = new HashMap<IEntity, Integer>();
+	private final EntityFactory entityFactory = new EntityFactory();
+	private IGroup currentGroup = entityFactory.getRootGroup();
 
-	private final List<Link> links = new ArrayList<Link>();
-
-	private final Map<String, Group> groups = new LinkedHashMap<String, Group>();
-
-	private Group currentGroup = null;
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 
 	private boolean visibilityModifierPresent;
 
+	public abstract IEntity getOrCreateLeaf(Code code, LeafType type);
+
+	@Override
 	public boolean hasUrl() {
-		for (IEntity entity : entities.values()) {
-			if (entity.getUrl() != null) {
+		for (IEntity entity : getGroups(true)) {
+			if (entity.hasUrl()) {
+				return true;
+			}
+		}
+		for (IEntity entity : getLeafs().values()) {
+			if (entity.hasUrl()) {
+				return true;
+			}
+		}
+		for (Link link : getLinks()) {
+			if (link.hasUrl()) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public IEntity getOrCreateEntity(String code, EntityType defaultType) {
-		IEntity result = entities.get(code);
-		if (result == null) {
-			result = createEntityInternal(code, code, defaultType, getCurrentGroup());
+	// public ILeaf getOrCreateLeaf1(Code code, LeafType type) {
+	// return getOrCreateLeaf1Default(code, type);
+	// }
+
+	final protected ILeaf getOrCreateLeafDefault(Code code, LeafType type) {
+		if (type == null) {
+			throw new IllegalArgumentException();
 		}
+		ILeaf result = getLeafs().get(code);
+		if (result == null) {
+			result = createLeafInternal(code, Display.getWithNewlines(code), type, getCurrentGroup());
+		}
+		this.lastEntity = result;
 		return result;
 	}
 
-	public Entity createEntity(String code, String display, EntityType type) {
-		if (entities.containsKey(code)) {
+	public ILeaf createLeaf(Code code, Display display, LeafType type) {
+		if (getLeafs().containsKey(code)) {
 			throw new IllegalArgumentException("Already known: " + code);
 		}
-		return createEntityInternal(code, display, type, getCurrentGroup());
+		return createLeafInternal(code, display, type, getCurrentGroup());
 	}
 
-	final protected Entity createEntityInternal(String code, String display, EntityType type, Group group) {
+	final protected ILeaf createLeafInternal(Code code, Display display, LeafType type, IGroup group) {
 		if (display == null) {
-			display = code;
+			display = Display.getWithNewlines(code);
 		}
-		final Entity entity = new Entity(code, display, type, group, getHides());
-		entities.put(code, entity);
-		nbLinks.put(entity, 0);
-		return entity;
+		final ILeaf leaf = entityFactory.createLeaf(code, display, type, group, getHides());
+		entityFactory.addLeaf(leaf);
+		this.lastEntity = leaf;
+		return leaf;
 	}
 
-	public boolean entityExist(String code) {
-		return entities.containsKey(code);
+	public boolean leafExist(Code code) {
+		return getLeafs().containsKey(code);
 	}
 
-	public void overideGroup(Group g, Entity proxy) {
-		if (groups.containsValue(g) == false) {
-			throw new IllegalArgumentException();
-		}
-		if (entities.containsKey(proxy.getCode())) {
-			throw new IllegalArgumentException();
-		}
-		if (entities.containsValue(proxy)) {
-			throw new IllegalArgumentException();
-		}
-		for (final ListIterator<Link> it = links.listIterator(); it.hasNext();) {
-			final Link link = it.next();
-			final Link newLink = link.mute(g, proxy);
-			if (newLink == null) {
-				it.remove();
-			} else if (newLink != link) {
-				it.set(newLink);
+	final public Collection<IGroup> getChildrenGroups(IGroup parent) {
+		final Collection<IGroup> result = new ArrayList<IGroup>();
+		for (IGroup gg : getGroups(false)) {
+			if (gg.getParentContainer() == parent) {
+				result.add(gg);
 			}
 		}
-		groups.remove(g.getCode());
-		assert groups.containsValue(g) == false;
-
-		for (final Iterator<Entity> it = entities.values().iterator(); it.hasNext();) {
-			final IEntity ent = it.next();
-			if (ent.getParent() == g) {
-				it.remove();
-			}
-		}
-		entities.put(proxy.getCode(), proxy);
-		// if (proxy.getImageFile() != null) {
-		// proxy.addSubImage(proxy.getImageFile());
-		// }
-	}
-
-	final public Collection<Group> getChildrenGroups(Group parent) {
-		final Collection<Group> result = new ArrayList<Group>();
-		for (Group g : groups.values()) {
-			if (g.getParent() == parent) {
-				result.add(g);
-			}
-		}
-		// assert parent == null || result.size() ==
-		// parent.getChildren().size();
 		return Collections.unmodifiableCollection(result);
 	}
 
-	public final Group getOrCreateGroup(String code, String display, String namespace, GroupType type, Group parent) {
-		final Group g = getOrCreateGroupInternal(code, display, namespace, type, parent);
+	public final IGroup getOrCreateGroup(Code code, Display display, String namespace, GroupType type, IGroup parent) {
+		final IGroup g = getOrCreateGroupInternal(code, display, namespace, type, parent);
 		currentGroup = g;
 		return g;
 	}
 
-	protected final Group getOrCreateGroupInternal(String code, String display, String namespace, GroupType type,
-			Group parent) {
-		// if (entityExist(code)) {
-		// throw new IllegalArgumentException("code=" + code);
-		// }
-		Group g = groups.get(code);
-		if (g == null) {
-			g = new Group(code, display, namespace, type, parent);
-			groups.put(code, g);
-
-			Entity entityGroup = entities.get(code);
-			if (entityGroup == null) {
-				entityGroup = new Entity("$$" + code, code, EntityType.GROUP, g, getHides());
-			} else {
-				entityGroup.muteToCluster(g);
-			}
-			g.setEntityCluster(entityGroup);
-			nbLinks.put(entityGroup, 0);
+	protected final IGroup getOrCreateGroupInternal(Code code, Display display, String namespace, GroupType type,
+			IGroup parent) {
+		IGroup result = entityFactory.getGroups().get(code);
+		if (result != null) {
+			return result;
 		}
-		return g;
+		if (entityFactory.getLeafs().containsKey(code)) {
+			result = entityFactory.muteToGroup(code, namespace, type, parent);
+			result.setDisplay(display);
+		} else {
+			result = entityFactory.createGroup(code, display, namespace, type, parent, getHides());
+		}
+		entityFactory.addGroup(result);
+		return result;
 	}
 
-	public final Group getCurrentGroup() {
+	public final IGroup getCurrentGroup() {
 		return currentGroup;
 	}
 
-	public final Group getGroup(String code) {
-		final Group p = groups.get(code);
+	public final IGroup getGroup(Code code) {
+		final IGroup p = entityFactory.getGroups().get(code);
 		if (p == null) {
-			return null;
+			throw new IllegalArgumentException();
+			// return null;
 		}
 		return p;
 	}
 
 	public void endGroup() {
-		if (currentGroup == null) {
+		if (EntityUtils.groupRoot(currentGroup)) {
 			Log.error("No parent group");
 			return;
 		}
-		currentGroup = currentGroup.getParent();
+		currentGroup = currentGroup.getParentContainer();
 	}
 
-	public final boolean isGroup(String code) {
-		return groups.containsKey(code);
+	public final boolean isGroup(Code code) {
+		return entityFactory.getGroups().containsKey(code);
 	}
 
-	public final Collection<Group> getGroups() {
-		return Collections.unmodifiableCollection(groups.values());
-	}
-
-	final public Map<String, Entity> entities() {
-		if (getSkinParam().isSvek()) {
-			return Collections.unmodifiableMap(entities);
+	public final Collection<IGroup> getGroups(boolean withRootGroup) {
+		if (withRootGroup == false) {
+			return entityFactory.getGroups().values();
 		}
-		return Collections.unmodifiableMap(new TreeMap<String, Entity>(entities));
+		final Collection<IGroup> result = new ArrayList<IGroup>();
+		result.add(getRootGroup());
+		result.addAll(entityFactory.getGroups().values());
+		return Collections.unmodifiableCollection(result);
+	}
+
+	public IGroup getRootGroup() {
+		return entityFactory.getRootGroup();
+
+	}
+
+	final public Map<Code, ILeaf> getLeafs() {
+		return entityFactory.getLeafs();
 	}
 
 	final public void addLink(Link link) {
-		links.add(link);
-		inc(link.getEntity1());
-		inc(link.getEntity2());
+		entityFactory.addLink(link);
 	}
 
 	final protected void removeLink(Link link) {
-		final boolean ok = links.remove(link);
-		if (ok == false) {
-			throw new IllegalStateException();
-		}
-	}
-
-	private void inc(IEntity ent) {
-		if (ent == null) {
-			throw new IllegalArgumentException();
-		}
-		nbLinks.put(ent, nbLinks.get(ent) + 1);
+		entityFactory.removeLink(link);
 	}
 
 	final public List<Link> getLinks() {
-		return Collections.unmodifiableList(links);
+		return entityFactory.getLinks();
 	}
 
 	final public int getHorizontalPages() {
@@ -277,15 +237,15 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.verticalPages = verticalPages;
 	}
 
-	final public List<File> createPng2(File pngFile) throws IOException, InterruptedException {
-		final CucaDiagramPngMaker3 maker = new CucaDiagramPngMaker3(this);
-		return maker.createPng(pngFile);
-	}
-
-	final public void createPng2(OutputStream os) throws IOException {
-		final CucaDiagramPngMaker3 maker = new CucaDiagramPngMaker3(this);
-		maker.createPng(os);
-	}
+//	final public List<File> createPng2(File pngFile) throws IOException, InterruptedException {
+//		final CucaDiagramPngMaker3 maker = new CucaDiagramPngMaker3(this);
+//		return maker.createPng(pngFile);
+//	}
+//
+//	final public void createPng2(OutputStream os) throws IOException {
+//		final CucaDiagramPngMaker3 maker = new CucaDiagramPngMaker3(this);
+//		maker.createPng(os);
+//	}
 
 	abstract protected List<String> getDotStrings();
 
@@ -296,136 +256,64 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 				result.add(s);
 			}
 		}
+		final String aspect = getPragma().getValue("aspect");
+		if (aspect != null) {
+			result.add("aspect=" + aspect + ";");
+		}
 		return result.toArray(new String[result.size()]);
 	}
-
-	// final public List<File> createFiles(File suggestedFile, FileFormatOption
-	// fileFormatOption) throws IOException,
-	// InterruptedException {
-	//
-	// final FileFormat fileFormat = fileFormatOption.getFileFormat();
-	//
-	// if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-	// return createFilesTxt(suggestedFile, fileFormat);
-	// }
-	//
-	// if (fileFormat.name().startsWith("XMI")) {
-	// return createFilesXmi(suggestedFile, fileFormat);
-	// }
-	//
-	// if (OptionFlags.getInstance().useJavaInsteadOfDot()) {
-	// return createPng2(suggestedFile);
-	// }
-	// if (getUmlDiagramType() == UmlDiagramType.COMPOSITE || (BETA &&
-	// getUmlDiagramType() == UmlDiagramType.CLASS)) {
-	// final CucaDiagramFileMakerBeta maker = new
-	// CucaDiagramFileMakerBeta(this);
-	// return maker.createFile(suggestedFile, getDotStrings(), fileFormat);
-	// }
-	// final CucaDiagramFileMaker maker = new CucaDiagramFileMaker(this);
-	// return maker.createFile(suggestedFile, getDotStrings(),
-	// fileFormatOption);
-	// }
 
 	private void createFilesXmi(OutputStream suggestedFile, FileFormat fileFormat) throws IOException {
 		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);
 		maker.createFiles(suggestedFile);
 	}
 
-	private List<File> createFilesTxt(File suggestedFile, FileFormat fileFormat) throws IOException {
-		final CucaDiagramTxtMaker maker = new CucaDiagramTxtMaker(this, fileFormat);
-		return maker.createFiles(suggestedFile);
-	}
-
-	public static boolean BETA;
-
 	@Override
-	public List<File> exportDiagrams(File suggestedFile, FileFormatOption fileFormat) throws IOException,
-			InterruptedException {
-		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
-			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-		}
-
-		final StringBuilder cmap = new StringBuilder();
-		OutputStream os = null;
-		try {
-			os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
-			this.exportDiagram(os, cmap, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		List<File> result = Arrays.asList(suggestedFile);
-
-		if (this.hasUrl() && cmap.length() > 0) {
-			exportCmap(suggestedFile, cmap);
-		}
-
-		if (fileFormat.getFileFormat() == FileFormat.PNG) {
-			result = new PngSplitter(suggestedFile, this.getHorizontalPages(), this.getVerticalPages(), this
-					.getMetadata(), this.getDpi(fileFormat)).getFiles();
-		}
-		return result;
-
-	}
-
-	@Override
-	final protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index,
-			FileFormatOption fileFormatOption, List<BufferedImage> flashcodes) throws IOException {
+	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption,
+			List<BufferedImage> flashcodes) throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
+
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
 			try {
 				createFilesTxt(os, index, fileFormat);
 			} catch (Throwable t) {
 				t.printStackTrace(new PrintStream(os));
 			}
-			return;
+			return new ImageDataSimple();
 		}
 
 		if (fileFormat.name().startsWith("XMI")) {
 			createFilesXmi(os, fileFormat);
-			return;
-		}
-		//
-		// if (OptionFlags.getInstance().useJavaInsteadOfDot()) {
-		// return createPng2(suggestedFile);
-		// }
-		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE || (BETA && getUmlDiagramType() == UmlDiagramType.CLASS)) {
-			final CucaDiagramFileMakerBeta maker = new CucaDiagramFileMakerBeta(this);
-			try {
-				maker.createFile(os, getDotStrings(), fileFormat);
-			} catch (InterruptedException e) {
-				throw new IOException(e.toString());
-			}
-			return;
+			return new ImageDataSimple();
 		}
 
 		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE) {
-			final CucaDiagramFileMakerBeta maker = new CucaDiagramFileMakerBeta(this);
-			try {
-				maker.createFile(os, getDotStrings(), fileFormat);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				throw new IOException(e.toString());
-			}
-			return;
+			throw new UnsupportedOperationException();
 		}
-		final ICucaDiagramFileMaker maker;
-		if (getSkinParam().isSvek()) {
-			maker = new CucaDiagramFileMakerSvek(this, flashcodes);
-		} else {
-			maker = new CucaDiagramFileMaker(this, flashcodes);
+
+		final CucaDiagramFileMaker maker = OptionFlags.USE_HECTOR ? new CucaDiagramFileMakerHectorB2(this)
+				: new CucaDiagramFileMakerSvek(this, flashcodes);
+		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
+
+		if (result == null) {
+			return new ImageDataSimple();
 		}
-		try {
-			final String cmapResult = maker.createFile(os, getDotStrings(), fileFormatOption);
-			if (cmapResult != null && cmap != null) {
-				cmap.append(cmapResult);
-			}
-		} catch (InterruptedException e) {
-			Log.error(e.toString());
-			throw new IOException(e.toString());
+		this.warningOrError = result.getWarningOrError();
+		return result;
+	}
+
+	private String warningOrError;
+
+	@Override
+	public String getWarningOrError() {
+		final String generalWarningOrError = super.getWarningOrError();
+		if (warningOrError == null) {
+			return generalWarningOrError;
 		}
+		if (generalWarningOrError == null) {
+			return warningOrError;
+		}
+		return generalWarningOrError + "\n" + warningOrError;
 	}
 
 	private void createFilesTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
@@ -441,44 +329,33 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.rankdir = rankdir;
 	}
 
-	public boolean isAutarkic(Group g) {
-		if (g.getType() == GroupType.PACKAGE) {
+	public boolean isAutarkic(IGroup g) {
+		if (g.getGroupType() == GroupType.PACKAGE) {
 			return false;
 		}
-		if (g.getType() == GroupType.INNER_ACTIVITY) {
+		if (g.getGroupType() == GroupType.INNER_ACTIVITY) {
 			return true;
 		}
-		if (g.getType() == GroupType.CONCURRENT_ACTIVITY) {
+		if (g.getGroupType() == GroupType.CONCURRENT_ACTIVITY) {
 			return true;
 		}
-		if (g.getType() == GroupType.CONCURRENT_STATE) {
+		if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
 			return true;
 		}
 		if (getChildrenGroups(g).size() > 0) {
 			return false;
 		}
-		for (Link link : links) {
-			final IEntity e1 = link.getEntity1();
-			final IEntity e2 = link.getEntity2();
-			if (e1.getParent() != g && e2.getParent() == g && e2.getType() != EntityType.GROUP) {
+		for (Link link : getLinks()) {
+			if (EntityUtils.isPureInnerLink3(g, link) == false) {
 				return false;
 			}
-			if (e2.getParent() != g && e1.getParent() == g && e1.getType() != EntityType.GROUP) {
+		}
+		for (ILeaf leaf : g.getLeafsDirect()) {
+			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
 				return false;
 			}
-			if (link.isAutolink(g)) {
-				continue;
-			}
-			if (e1.getType() == EntityType.GROUP && e2.getParent() == e1.getParent() && e1.getParent() == g) {
-				return false;
-			}
-			if (e2.getType() == EntityType.GROUP && e2.getParent() == e1.getParent() && e1.getParent() == g) {
-				return false;
-			}
-
 		}
 		return true;
-		// return false;
 	}
 
 	private static boolean isNumber(String s) {
@@ -524,16 +401,16 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return "25";
 	}
 
-	final public boolean isEmpty(Group gToTest) {
-		for (Group g : groups.values()) {
-			if (g == gToTest) {
+	final public boolean isEmpty(IGroup gToTest) {
+		for (IEntity gg : getGroups(false)) {
+			if (gg == gToTest) {
 				continue;
 			}
-			if (g.getParent() == gToTest) {
+			if (gg.getParentContainer() == gToTest) {
 				return false;
 			}
 		}
-		return gToTest.entities().size() == 0;
+		return gToTest.size() == 0;
 	}
 
 	public final boolean isVisibilityModifierPresent() {
@@ -544,23 +421,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.visibilityModifierPresent = visibilityModifierPresent;
 	}
 
-	private boolean isAutonom(Group g) {
-		for (Link link : links) {
-			final CrossingType type = g.getCrossingType(link);
-			if (type == CrossingType.CUT) {
-				return false;
-			}
+	public final boolean showPortion(EntityPortion portion, ILeaf entity) {
+		if (getSkinParam().strictUmlStyle() && portion == EntityPortion.CIRCLED_CHARACTER) {
+			return false;
 		}
-		return true;
-	}
-
-	public final void computeAutonomyOfGroups() {
-		for (Group g : groups.values()) {
-			g.setAutonom(isAutonom(g));
-		}
-	}
-
-	public final boolean showPortion(EntityPortion portion, IEntity entity) {
 		boolean result = true;
 		for (HideOrShow cmd : hideOrShows) {
 			if (cmd.portion == portion && cmd.gender.contains(entity)) {
@@ -582,6 +446,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		} else {
 			hides.addAll(visibilities);
 		}
+	}
+
+	public void hideOrShow(ILeaf leaf, boolean show) {
+		leaf.setRemoved(!show);
 	}
 
 	private final List<HideOrShow> hideOrShows = new ArrayList<HideOrShow>();
@@ -608,44 +476,84 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return Collections.unmodifiableSet(hides);
 	}
 
-	public void clean() throws IOException {
-		for (Imaged entity : entities().values()) {
-			cleanTemporaryFiles(entity);
-		}
-		for (Imaged entity : getLinks()) {
-			cleanTemporaryFiles(entity);
-		}
-		for (Group g : groups.values()) {
-			final IEntity entity = g.getEntityCluster();
-			if (entity != null) {
-				cleanTemporaryFiles(entity);
-			}
-		}
-		for (DrawFile f : ensureDeletes) {
-			f.deleteDrawFile();
-		}
-	}
-
-	private void cleanTemporaryFiles(Imaged entity) {
-		if (entity.getImageFile() != null) {
-			entity.getImageFile().deleteDrawFile();
-		}
-		if (entity instanceof Entity) {
-			((Entity) entity).cleanSubImage();
-		}
-	}
-
-	private final Set<DrawFile> ensureDeletes = new HashSet<DrawFile>();
-
-	public void ensureDelete(DrawFile imageFile) {
-		if (imageFile == null) {
-			throw new IllegalArgumentException();
-		}
-		ensureDeletes.add(imageFile);
-	}
-
 	public ColorMapper getColorMapper() {
 		return getSkinParam().getColorMapper();
+	}
+
+	final public boolean isStandalone(IEntity ent) {
+		for (final Link link : getLinks()) {
+			if (link.getEntity1() == ent || link.getEntity2() == ent) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	final public Link getLastLink() {
+		final List<Link> links = getLinks();
+		for (int i = links.size() - 1; i >= 0; i--) {
+			final Link link = links.get(i);
+			if (link.getEntity1().getEntityType() != LeafType.NOTE
+					&& link.getEntity2().getEntityType() != LeafType.NOTE) {
+				return link;
+			}
+		}
+		return null;
+	}
+
+	private ILeaf lastEntity = null;
+
+	final public ILeaf getLastEntity() {
+		// for (final Iterator<ILeaf> it = getLeafs().values().iterator(); it.hasNext();) {
+		// final ILeaf ent = it.next();
+		// if (it.hasNext() == false) {
+		// return ent;
+		// }
+		// }
+		// return null;
+		return lastEntity;
+	}
+
+	final public EntityFactory getEntityFactory() {
+		return entityFactory;
+	}
+
+	public void applySingleStrategy() {
+		final MagmaList magmaList = new MagmaList();
+
+		for (IGroup g : getGroups(true)) {
+			final List<ILeaf> standalones = new ArrayList<ILeaf>();
+			// final SingleStrategy singleStrategy = g.getSingleStrategy();
+
+			for (ILeaf ent : g.getLeafsDirect()) {
+				if (isStandalone(ent)) {
+					standalones.add(ent);
+				}
+			}
+			if (standalones.size() < 3) {
+				continue;
+			}
+			final Magma magma = new Magma(this, standalones);
+			magma.putInSquare();
+			magmaList.add(magma);
+
+			// for (Link link : singleStrategy.generateLinks(standalones)) {
+			// addLink(link);
+			// }
+		}
+
+		for (IGroup g : getGroups(true)) {
+			final MagmaList magmas = magmaList.getMagmas(g);
+			if (magmas.size() < 3) {
+				continue;
+			}
+			magmas.putInSquare();
+		}
+
+	}
+
+	public boolean isHideEmptyDescriptionForState() {
+		return false;
 	}
 
 }

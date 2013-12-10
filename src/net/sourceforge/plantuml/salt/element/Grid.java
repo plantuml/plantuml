@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -39,6 +39,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.salt.Cell;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Grid {
 
@@ -78,14 +79,14 @@ public class Grid {
 			final int row1 = seg.getRow();
 			final int col1 = seg.getCol();
 			final double width = colsStart[col1 + 1] - colsStart[col1];
-			ug.draw(x + colsStart[col1], y + rowsStart[row1], new ULine(width, 0));
+			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(new ULine(width, 0));
 		}
 		// Vlines
 		for (Segment seg : verticals) {
 			final int row1 = seg.getRow();
 			final int col1 = seg.getCol();
 			final double height = rowsStart[row1 + 1] - rowsStart[row1];
-			ug.draw(x + colsStart[col1], y + rowsStart[row1], new ULine(0, height));
+			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(new ULine(0, height));
 		}
 	}
 

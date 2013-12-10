@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,16 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5810 $
+ * Revision $Revision: 10103 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class EmptyImageBuilder {
 
@@ -50,11 +53,14 @@ public class EmptyImageBuilder {
 
 	public EmptyImageBuilder(int width, int height, Color background) {
 		Log.info("Creating image " + width + "x" + height);
-		im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		im = new BufferedImage(width, height, background == null ? BufferedImage.TYPE_INT_ARGB
+				: BufferedImage.TYPE_INT_RGB);
 		g2d = im.createGraphics();
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor(background);
-		g2d.fillRect(0, 0, width, height);
+		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
+		if (background != null) {
+			g2d.setColor(background);
+			g2d.fillRect(0, 0, width, height);
+		}
 	}
 
 	public EmptyImageBuilder(int width, int height, Color background, double dpiFactor) {
@@ -70,6 +76,12 @@ public class EmptyImageBuilder {
 
 	public Graphics2D getGraphics2D() {
 		return g2d;
+	}
+
+	public UGraphicG2d getUGraphicG2d() {
+		final UGraphicG2d result = new UGraphicG2d(new ColorMapperIdentity(), g2d, 1.0);
+		result.setBufferedImage(im);
+		return result;
 	}
 
 }

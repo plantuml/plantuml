@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -48,7 +48,7 @@ public class InGroupableList implements InGroupable {
 	private static final int MARGIN5 = 5;
 	public static final int MARGIN10 = 10;
 
-	private final GroupingStart groupingStart;
+	private final Grouping grouping;
 	private final Set<InGroupable> inGroupables = new HashSet<InGroupable>();
 
 	private double minWidth;
@@ -63,8 +63,11 @@ public class InGroupableList implements InGroupable {
 		return result;
 	}
 
-	public InGroupableList(GroupingStart groupingStart, double startingY) {
-		this.groupingStart = groupingStart;
+	private final ParticipantBox veryfirst;
+
+	public InGroupableList(ParticipantBox veryfirst, Grouping grouping, double startingY) {
+		this.grouping = grouping;
+		this.veryfirst = veryfirst;
 	}
 
 	public void addInGroupable(InGroupable in) {
@@ -79,11 +82,11 @@ public class InGroupableList implements InGroupable {
 
 	@Override
 	public String toString() {
-		return "GS " + groupingStart + " " + inGroupables.toString();
+		return "GS " + grouping + " " + inGroupables.toString();
 	}
 
 	public String toString(StringBounder stringBounder) {
-		final StringBuilder sb = new StringBuilder("GS " + groupingStart + " ");
+		final StringBuilder sb = new StringBuilder("GS " + grouping + " ");
 		for (InGroupable in : inGroupables) {
 			sb.append(in.toString(stringBounder));
 			sb.append(' ');
@@ -110,7 +113,6 @@ public class InGroupableList implements InGroupable {
 		}
 		return result;
 	}
-
 
 	private InGroupable cacheMin = null;
 	private InGroupable cacheMax = null;
@@ -164,7 +166,8 @@ public class InGroupableList implements InGroupable {
 	public double getMinX(StringBounder stringBounder) {
 		final InGroupable min = getMin(stringBounder);
 		if (min == null) {
-			return MARGIN10 + MARGIN5;
+			return MARGIN10 + MARGIN5 + veryfirst.getStartingX();
+			// return MARGIN10 + MARGIN5;
 		}
 		double m = min.getMinX(stringBounder);
 		if (min instanceof MessageExoArrow

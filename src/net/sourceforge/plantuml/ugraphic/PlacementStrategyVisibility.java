@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -54,9 +54,9 @@ public class PlacementStrategyVisibility extends AbstractPlacementStrategy {
 	public Map<TextBlock, Point2D> getPositions(double width, double height) {
 		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
 		double y = 0;
-		for (Iterator<Map.Entry<TextBlock, Dimension2D>> it = getDimensions().entrySet().iterator(); it.hasNext();) {
-			Map.Entry<TextBlock, Dimension2D> ent1 = it.next();
-			Map.Entry<TextBlock, Dimension2D> ent2 = it.next();
+		for (final Iterator<Map.Entry<TextBlock, Dimension2D>> it = getDimensions().entrySet().iterator(); it.hasNext();) {
+			final Map.Entry<TextBlock, Dimension2D> ent1 = it.next();
+			final Map.Entry<TextBlock, Dimension2D> ent2 = it.next();
 			final double height1 = ent1.getValue().getHeight();
 			final double height2 = ent2.getValue().getHeight();
 			final double maxHeight = Math.max(height1, height2);

@@ -1,7 +1,9 @@
 package com.ctreber.acearth.scandot;
 
 import com.ctreber.acearth.projection.Projection;
-import com.ctreber.acearth.util.*;
+import com.ctreber.acearth.util.Coordinate;
+import com.ctreber.acearth.util.Point2D;
+import com.ctreber.acearth.util.Point3D;
 
 /**
  * <p>Generate latitude and longitude grid as dots.

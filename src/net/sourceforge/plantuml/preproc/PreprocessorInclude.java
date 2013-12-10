@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,25 +28,31 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6502 $
+ * Revision $Revision: 9929 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 
 class PreprocessorInclude implements ReadLine {
 
 	private static final Pattern includePattern = Pattern.compile("^\\s*!include\\s+\"?([^\"]+)\"?$");
 
 	private final ReadLine reader2;
+	private final String charset;
+
 	private int numLine = 0;
 
 	private PreprocessorInclude included = null;
@@ -54,7 +60,8 @@ class PreprocessorInclude implements ReadLine {
 	private final File oldCurrentDir;
 	private final Set<File> filesUsed;
 
-	public PreprocessorInclude(ReadLine reader, Set<File> filesUsed, File newCurrentDir) {
+	public PreprocessorInclude(ReadLine reader, String charset, Set<File> filesUsed, File newCurrentDir) {
+		this.charset = charset;
 		this.reader2 = reader;
 		this.filesUsed = filesUsed;
 		if (newCurrentDir == null) {
@@ -86,10 +93,12 @@ class PreprocessorInclude implements ReadLine {
 		if (s == null) {
 			return null;
 		}
-		final Matcher m = includePattern.matcher(s);
-		assert included == null;
-		if (m.find()) {
-			return manageInclude(m);
+		if (OptionFlags.ALLOW_INCLUDE) {
+			final Matcher m = includePattern.matcher(s);
+			assert included == null;
+			if (m.find()) {
+				return manageInclude(m);
+			}
 		}
 
 		return s;
@@ -107,7 +116,7 @@ class PreprocessorInclude implements ReadLine {
 		final File f = FileSystem.getInstance().getFile(fileName);
 		if (f.exists()) {
 			filesUsed.add(f);
-			included = new PreprocessorInclude(getReaderInclude(f, suf), filesUsed, f.getParentFile());
+			included = new PreprocessorInclude(getReaderInclude(f, suf), charset, filesUsed, f.getParentFile());
 		} else {
 			return "Cannot include " + f.getAbsolutePath();
 		}
@@ -115,14 +124,29 @@ class PreprocessorInclude implements ReadLine {
 	}
 
 	private ReadLine getReaderInclude(final File f, String suf) throws IOException {
-		if (StartDiagramExtractReader.containsStartDiagram(f)) {
+		if (StartDiagramExtractReader.containsStartDiagram(f, charset)) {
 			int bloc = 0;
 			if (suf != null && suf.matches("\\d+")) {
 				bloc = Integer.parseInt(suf);
 			}
-			return new StartDiagramExtractReader(f, bloc);
+			return new StartDiagramExtractReader(f, bloc, charset);
 		}
-		return new ReadLineReader(new FileReader(f));
+//		if (f != null) {
+//			final Throwable t = new Throwable();
+//			t.fillInStackTrace();
+//			final List<String> li = new ArrayList<String>();
+//			li.add("charset=" + charset);
+//			for (StackTraceElement e : t.getStackTrace()) {
+//				li.add(e.toString());
+//			}
+//			return new StackReadLine(li);
+//		}
+		if (charset == null) {
+			Log.info("Using default charset");
+			return new ReadLineReader(new FileReader(f));
+		}
+		Log.info("Using charset " + charset);
+		return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset));
 	}
 
 	public int getLineNumber() {

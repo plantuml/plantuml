@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -42,6 +42,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -57,9 +58,11 @@ import net.sourceforge.plantuml.ugraphic.UText;
 
 public class DriverTextG2d implements UDriver<Graphics2D> {
 
-	// static {
-	// printFont();
-	// }
+	private final EnsureVisible visible;
+
+	public DriverTextG2d(EnsureVisible visible) {
+		this.visible = visible;
+	}
 
 	private static void printFont() {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -75,15 +78,18 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		final UFont font = fontConfiguration.getFont();
+		final Dimension2D dimBack = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
 			final Color extended = mapper.getMappedColor(fontConfiguration.getExtendedColor());
 			if (extended != null) {
 				g2d.setColor(extended);
 				g2d.setBackground(extended);
-				g2d.fill(new Rectangle2D.Double(x, y - dim.getHeight() + 1.5, dim.getWidth(), dim.getHeight()));
+				g2d.fill(new Rectangle2D.Double(x, y - dimBack.getHeight() + 1.5, dimBack.getWidth(), dimBack
+						.getHeight()));
 			}
 		}
+		visible.ensureVisible(x, y - dimBack.getHeight() + 1.5);
+		visible.ensureVisible(x + dimBack.getWidth(), y + 1.5);
 
 		g2d.setFont(font.getFont());
 		g2d.setColor(mapper.getMappedColor(fontConfiguration.getColor()));

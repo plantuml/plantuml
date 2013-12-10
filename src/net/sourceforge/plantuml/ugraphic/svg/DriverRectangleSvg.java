@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,12 +34,13 @@ package net.sourceforge.plantuml.ugraphic.svg;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UGradient;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -59,29 +60,22 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 		final double ry = rect.getRy();
 		double width = rect.getWidth();
 		double height = rect.getHeight();
-		
-		// Shadow
-		if (rect.getDeltaShadow() != 0) {
-			svg.svgRectangleShadow(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
-		}
 
-
-		final UGradient gr = param.getGradient();
-		if (gr == null) {
-			final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param
-					.getColor()));
-			final String backcolor = param.getBackcolor() == null ? "none" : StringUtils.getAsHtml(mapper
-					.getMappedColor(param.getBackcolor()));
-			svg.setFillColor(backcolor);
+		final String color = StringUtils.getAsSvg(mapper, param.getColor());
+		final HtmlColor back = param.getBackcolor();
+		if (back instanceof HtmlColorGradient) {
+			final HtmlColorGradient gr = (HtmlColorGradient) back;
+			final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
+					StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+			svg.setFillColor("url(#" + id + ")");
 			svg.setStrokeColor(color);
 		} else {
-			final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
-					StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())));
-			svg.setFillColor("url(#" + id + ")");
-			svg.setStrokeColor(null);
+			final String backcolor = StringUtils.getAsSvg(mapper, back);
+			svg.setFillColor(backcolor);
+			svg.setStrokeColor(color);
 		}
 
-		svg.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
+		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
@@ -92,6 +86,6 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 			height = r.height;
 		}
 
-		svg.svgRectangle(x, y, width, height, rx / 2, ry / 2);
+		svg.svgRectangle(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
 	}
 }

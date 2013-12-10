@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class DecorInterfaceProvider implements Decor {
 
@@ -49,7 +50,7 @@ public class DecorInterfaceProvider implements Decor {
 	// private final double distanceCircle = 16;
 
 	public DecorInterfaceProvider(LinkStyle style) {
-		if (style != LinkStyle.INTERFACE_PROVIDER && style != LinkStyle.INTERFACE_USER) {
+		if (style != LinkStyle.__toremove_INTERFACE_PROVIDER && style != LinkStyle.__toremove_INTERFACE_USER) {
 			throw new IllegalArgumentException();
 		}
 		this.style = style;
@@ -61,7 +62,7 @@ public class DecorInterfaceProvider implements Decor {
 		final double cornerX2 = start.getX() - radius2 - 0 * Math.sin(direction * Math.PI / 180.0);
 		final double cornerY2 = start.getY() - radius2 - 0 * Math.cos(direction * Math.PI / 180.0);
 
-		if (style == LinkStyle.INTERFACE_USER) {
+		if (style == LinkStyle.__toremove_INTERFACE_USER) {
 			direction += 180;
 		}
 		if (direction >= 360) {
@@ -69,11 +70,9 @@ public class DecorInterfaceProvider implements Decor {
 		}
 
 		final UEllipse arc = new UEllipse(2 * radius2, 2 * radius2, direction + 15, 180 - 30);
-		final UStroke old = ug.getParam().getStroke();
-		ug.getParam().setStroke(new UStroke(1.5));
-		ug.draw(cornerX2, cornerY2, arc);
-		ug.draw(cornerX, cornerY, new UEllipse(2 * radius, 2 * radius));
-		ug.getParam().setStroke(old);
+		ug = ug.apply(new UStroke(1.5));
+		ug.apply(new UTranslate(cornerX2, cornerY2)).draw(arc);
+		ug.apply(new UTranslate(cornerX, cornerY)).draw(new UEllipse(2 * radius, 2 * radius));
 	}
 
 }

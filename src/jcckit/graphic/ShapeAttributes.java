@@ -18,9 +18,9 @@
  */
 package jcckit.graphic;
 
-import jcckit.util.ConfigParameters;
-
 import java.awt.Color;
+
+import jcckit.util.ConfigParameters;
 
 /**
  *  Basic attributes for shapes.

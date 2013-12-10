@@ -1,9 +1,14 @@
 package com.ctreber.acearth.scanbit;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import com.ctreber.acearth.projection.Projection;
-import com.ctreber.acearth.util.*;
+import com.ctreber.acearth.util.EdgeCrossing;
+import com.ctreber.acearth.util.Point2D;
+import com.ctreber.acearth.util.Point3D;
+import com.ctreber.acearth.util.Polygon;
 import com.ctreber.aclib.sort.CTSort;
 import com.ctreber.aclib.sort.QuickSort;
 

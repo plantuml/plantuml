@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -49,6 +49,10 @@ public class ReadLineReader implements ReadLine {
 		String s = br.readLine();
 		if (s != null && s.startsWith("\uFEFF")) {
 			s = s.substring(1);
+		}
+		if (s != null) {
+			s = s.replace('\u2013', '-');
+			s = s.replace('\u00A0', ' ');
 		}
 		return s;
 	}

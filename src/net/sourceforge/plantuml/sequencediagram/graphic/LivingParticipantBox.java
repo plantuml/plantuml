@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6024 $
+ * Revision $Revision: 11324 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -67,15 +67,20 @@ public class LivingParticipantBox implements InGroupable {
 		final double right = lifeLine.getRightShift(y);
 		assert right >= 0 : "right=" + right;
 		final double centerX = participantBox.getCenterX(stringBounder);
-		// System.err.println("Attention, null for segment");
-		return new SegmentColored(centerX - left, centerX + right, null);
+		// Log.println("AZERTY " + y + " centerX=" + centerX + " left=" + left + " right=" + right);
+		// Log.println("Attention, null for segment");
+		return new SegmentColored(centerX - left, centerX + right, null, lifeLine.shadowing());
 	}
 
-	public void drawLineU(UGraphic ug, double startingY, double endingY, boolean showTail) {
+	public void drawLineU(UGraphic ug, double startingY, double endingY, boolean showTail, double myDelta) {
 		if (endingY <= startingY) {
 			return;
 		}
-		participantBox.drawLineU(ug, startingY, endingY, showTail);
+		final double destroy = lifeLine.getDestroy();
+		if (destroy != 0 && destroy > startingY && destroy < endingY) {
+			endingY = destroy;
+		}
+		participantBox.drawLineU(ug, startingY, endingY, showTail, myDelta);
 	}
 
 	public double magicMargin(StringBounder stringBounder) {
@@ -101,5 +106,5 @@ public class LivingParticipantBox implements InGroupable {
 	public String toString(StringBounder stringBounder) {
 		return toString();
 	}
-	
+
 }

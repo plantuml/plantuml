@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,19 +33,17 @@
  */
 package net.sourceforge.plantuml.postit;
 
-import java.util.Map;
-
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class CommandCreatePostIt extends SingleLineCommand2<PostItDiagram> {
 
-	public CommandCreatePostIt(PostItDiagram diagram) {
-		super(diagram, getRegexConcat());
+	public CommandCreatePostIt() {
+		super(getRegexConcat());
 	}
 
 	static RegexConcat getRegexConcat() {
@@ -57,10 +55,10 @@ public class CommandCreatePostIt extends SingleLineCommand2<PostItDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
-		final String id = arg.get("ID").get(0);
-		final String text = arg.get("TEXT").get(0);
-		getSystem().createPostIt(id, StringUtils.getWithNewlines(text));
+	protected CommandExecutionResult executeArg(PostItDiagram diagram, RegexResult arg) {
+		final String id = arg.get("ID", 0);
+		final String text = arg.get("TEXT", 0);
+		diagram.createPostIt(id, Display.getWithNewlines(text));
 		return CommandExecutionResult.ok();
 	}
 

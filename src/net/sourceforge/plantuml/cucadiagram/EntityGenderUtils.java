@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,10 +35,10 @@ package net.sourceforge.plantuml.cucadiagram;
 
 public class EntityGenderUtils {
 
-	static public EntityGender byEntityType(final EntityType type) {
+	static public EntityGender byEntityType(final LeafType type) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getType() == type;
+				return test.getEntityType() == type;
 			}
 		};
 	}
@@ -46,7 +46,7 @@ public class EntityGenderUtils {
 	static public EntityGender byEntityAlone(final IEntity entity) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test == entity;
+				return test.getUid().equals(entity.getUid());
 			}
 		};
 	}
@@ -62,16 +62,16 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender byPackage(final Group group) {
-		if (group == null) {
+	static public EntityGender byPackage(final IGroup group) {
+		if (EntityUtils.groupRoot(group)) {
 			throw new IllegalArgumentException();
 		}
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				if (test.getParent() == null) {
+				if (EntityUtils.groupRoot(test.getParentContainer())) {
 					return false;
 				}
-				if (group == test.getParent()) {
+				if (group == test.getParentContainer()) {
 					return true;
 				}
 				return false;

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,14 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6483 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.List;
-
-import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public class Message extends AbstractMessage {
@@ -43,7 +41,7 @@ public class Message extends AbstractMessage {
 	final private Participant p1;
 	final private Participant p2;
 
-	public Message(Participant p1, Participant p2, List<String> label, ArrowConfiguration arrowConfiguration,
+	public Message(Participant p1, Participant p2, Display label, ArrowConfiguration arrowConfiguration,
 			String messageNumber) {
 		super(label, arrowConfiguration, messageNumber);
 		this.p1 = p1;
@@ -62,8 +60,9 @@ public class Message extends AbstractMessage {
 		return someone == p1 || someone == p2;
 	}
 
-	public Url getUrl() {
-		return null;
+	@Override
+	public boolean compatibleForCreate(Participant p) {
+		return p1 != p && p2 == p;
 	}
 
 }

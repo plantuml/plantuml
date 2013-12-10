@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,31 +36,36 @@ package net.sourceforge.plantuml.classdiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 
 public class CommandUrl extends SingleLineCommand<AbstractEntityDiagram> {
 
-	public CommandUrl(AbstractEntityDiagram diagram) {
-		super(diagram,
-				"(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s+(?:is)?\\s*\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]$");
+	public CommandUrl() {
+		super("(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.]+|\"[^\"]+\")\\s+(?:is)?\\s*(" + UrlBuilder.getRegexp() + ")$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final String code = arg.get(0);
-		String url = arg.get(1);
-		final String title = arg.get(2);
-		final Entity entity = (Entity) getSystem().getOrCreateClass(code);
-		if (url.startsWith("http:") == false && url.startsWith("https:") == false) {
-			final String top = getSystem().getSkinParam().getValue("topurl");
-			if (top != null) {
-				url = top + url;
-			}
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, List<String> arg) {
+		final Code code = Code.of(arg.get(0));
+		final String urlString = arg.get(1);
+		final IEntity entity;
+		if (diagram.leafExist(code)) {
+			entity = diagram.getOrCreateLeaf(code, null);
+		} else if (diagram.isGroup(code)) {
+			entity = diagram.getGroup(code);
+		} else {
+			return CommandExecutionResult.error(code + " does not exist");
 		}
-		entity.setUrl(new Url(url, title));
+		// final IEntity entity = diagram.getOrCreateLeaf(code, null);
+		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+		final Url url = urlBuilder.getUrl(urlString);
+		entity.addUrl(url);
 		return CommandExecutionResult.ok();
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -39,6 +39,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import net.sourceforge.plantuml.Log;
 
 abstract class AbstractFigure {
 
@@ -115,7 +117,7 @@ abstract class AbstractFigure {
 	public Polyline addDirectLink(Point2DInt start, Point2DInt end) {
 		final LineSegmentInt direct = new LineSegmentInt(start, end);
 		addSegment(direct);
-		System.err.println("AbstractFigure::addDirectLink " + direct);
+		Log.println("AbstractFigure::addDirectLink " + direct);
 		return new PolylineImpl(start, end);
 	}
 
@@ -142,8 +144,8 @@ abstract class AbstractFigure {
 	}
 
 	private Polyline findBestPath(Pointable start, Pointable end) {
-		System.err.println("start=" + start.getPosition());
-		System.err.println("end=" + end.getPosition());
+		Log.println("start=" + start.getPosition());
+		Log.println("end=" + end.getPosition());
 		final Set<Point2DInt> points = getAllPoints();
 		if (points.contains(start.getPosition()) == false || points.contains(end.getPosition()) == false) {
 			throw new IllegalArgumentException();
@@ -155,10 +157,10 @@ abstract class AbstractFigure {
 			neighborhoods.addAll(getSingularity(p).getNeighborhoods());
 		}
 		for (int i = 0; i < neighborhoods.size(); i++) {
-			System.err.println("N" + (i + 1) + " " + neighborhoods.get(i));
+			Log.println("N" + (i + 1) + " " + neighborhoods.get(i));
 		}
 		final Dijkstra dijkstra = new Dijkstra(neighborhoods.size() + 2);
-		System.err.println("size=" + dijkstra.getSize());
+		Log.println("size=" + dijkstra.getSize());
 		for (int i = 0; i < neighborhoods.size(); i++) {
 			if (isConnectable(start.getPosition(), neighborhoods.get(i))) {
 				dijkstra.addLink(0, i + 1, distance(start.getPosition(), neighborhoods.get(i).getCenter()));
@@ -187,7 +189,7 @@ abstract class AbstractFigure {
 		}
 		assert path.size() > 2;
 
-		System.err.println("PATH=" + path);
+		Log.println("PATH=" + path);
 		final List<Neighborhood> usedNeighborhoods = new ArrayList<Neighborhood>();
 		for (int i = 1; i < path.size() - 1; i++) {
 			final int idx = path.get(i) - 1;
@@ -201,15 +203,15 @@ abstract class AbstractFigure {
 				.println("findApproximatePath " + start.getPosition() + " " + end.getPosition() + " " + neighborhoods);
 		final PolylineImpl result = new PolylineImpl(start, end);
 		for (Neighborhood n : neighborhoods) {
-			System.err.println("Neighborhood =" + n);
+			Log.println("Neighborhood =" + n);
 			final double d = getProximaDistance(n.getCenter()) / 2;
 			final double a = n.getMiddle();
-			System.err.println("d=" + d);
-			System.err.println("a=" + a * 180 / Math.PI);
+			Log.println("d=" + d);
+			Log.println("a=" + a * 180 / Math.PI);
 			final double deltaX = d * Math.cos(a);
 			final double deltaY = d * Math.sin(a);
 			assert d > 0;
-			System.err.println("Result = " + n.getCenter().translate((int) deltaX, (int) deltaY));
+			Log.println("Result = " + n.getCenter().translate((int) deltaX, (int) deltaY));
 			result.addIntermediate(n.getCenter().translate((int) deltaX, (int) deltaY));
 		}
 		return result;
@@ -277,13 +279,13 @@ abstract class AbstractFigure {
 				continue;
 			}
 			if (seg.doesIntersect(direct)) {
-				System.err.println("seg=" + seg);
-				System.err.println("direct=" + direct);
-				System.err.println("AbstractFigure::hasIntersectionStrict true");
+				Log.println("seg=" + seg);
+				Log.println("direct=" + direct);
+				Log.println("AbstractFigure::hasIntersectionStrict true");
 				return true;
 			}
 		}
-		System.err.println("AbstractFigure::hasIntersectionStrict false");
+		Log.println("AbstractFigure::hasIntersectionStrict false");
 		return false;
 	}
 

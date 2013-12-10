@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,53 +28,61 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 7130 $
+ * Revision $Revision: 11985 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
 
-public enum FontParam {
+interface FontParamConstant {
+	String FAMILY = "SansSerif";
+	String COLOR = "black";
+}
 
-	ACTIVITY(14, Font.PLAIN, "black", null),
-	ACTIVITY_ARROW(13, Font.PLAIN, "black", null),
-	CIRCLED_CHARACTER(17, Font.BOLD, "black", "Courier"),
-	OBJECT_ARROW(10, Font.PLAIN, "black", null),
-	OBJECT_ATTRIBUTE(10, Font.PLAIN, "black", null),
-	OBJECT(12, Font.PLAIN, "black", null),
-	OBJECT_STEREOTYPE(12, Font.ITALIC, "black", null),
-	CLASS_ARROW(10, Font.PLAIN, "black", null),
-	CLASS_ATTRIBUTE(10, Font.PLAIN, "black", null),
-	CLASS(12, Font.PLAIN, "black", null),
-	CLASS_STEREOTYPE(12, Font.ITALIC, "black", null),
-	COMPONENT(14, Font.PLAIN, "black", null),
-	COMPONENT_STEREOTYPE(14, Font.ITALIC, "black", null),
-	COMPONENT_ARROW(13, Font.PLAIN, "black", null),
-	NOTE(13, Font.PLAIN, "black", null),
-	PACKAGE(14, Font.PLAIN, "black", null),
-	SEQUENCE_ACTOR(13, Font.PLAIN, "black", null),
-	SEQUENCE_ARROW(13, Font.PLAIN, "black", null),
-	SEQUENCE_BOX(13, Font.BOLD, "black", null),
-	SEQUENCE_DIVIDER(13, Font.BOLD, "black", null),
-	SEQUENCE_REFERENCE(13, Font.PLAIN, "black", null),
-	SEQUENCE_DELAY(11, Font.PLAIN, "black", null),
-	SEQUENCE_GROUP(11, Font.BOLD, "black", null),
-	SEQUENCE_GROUP_HEADER(13, Font.BOLD, "black", null),
-	SEQUENCE_PARTICIPANT(13, Font.PLAIN, "black", null),
-	SEQUENCE_TITLE(13, Font.BOLD, "black", null),
-	STATE(14, Font.PLAIN, "black", null),
-	STATE_ARROW(13, Font.PLAIN, "black", null),
-	STATE_ATTRIBUTE(12, Font.PLAIN, "black", null),
-	TITLE(18, Font.PLAIN, "black", null),
-	FOOTER(10, Font.PLAIN, "#888888", null),
-	HEADER(10, Font.PLAIN, "#888888", null),
-	USECASE(14, Font.PLAIN, "black", null),
-	USECASE_STEREOTYPE(14, Font.ITALIC, "black", null),
-	USECASE_ACTOR(14, Font.PLAIN, "black", null),
-	USECASE_ACTOR_STEREOTYPE(14, Font.ITALIC, "black", null),
-	USECASE_ARROW(13, Font.PLAIN, "black", null);
-	
+public enum FontParam {
+	ACTIVITY(14, Font.PLAIN), //
+	// ACTIVITY_ARROW(13, Font.PLAIN), //
+	GENERIC_ARROW(13, Font.PLAIN), //
+	ACTIVITY2(12, Font.PLAIN), //
+	ACTIVITY_ARROW2(11, Font.PLAIN), //
+	CIRCLED_CHARACTER(17, Font.BOLD, FontParamConstant.COLOR, "Monospaced"), //
+	// OBJECT_ARROW(10, Font.PLAIN), //
+	OBJECT_ATTRIBUTE(10, Font.PLAIN), //
+	OBJECT(12, Font.PLAIN), //
+	OBJECT_STEREOTYPE(12, Font.ITALIC), //
+	// CLASS_ARROW(10, Font.PLAIN), //
+	CLASS_ATTRIBUTE(10, Font.PLAIN), //
+	CLASS(12, Font.PLAIN), //
+	CLASS_STEREOTYPE(12, Font.ITALIC), //
+	COMPONENT(14, Font.PLAIN), //
+	COMPONENT_STEREOTYPE(14, Font.ITALIC), //
+	// COMPONENT_ARROW(13, Font.PLAIN), //
+	NOTE(13, Font.PLAIN), //
+	PACKAGE(14, Font.PLAIN), //
+	SEQUENCE_ACTOR(13, Font.PLAIN), //
+	SEQUENCE_ARROW(13, Font.PLAIN), //
+	SEQUENCE_BOX(13, Font.BOLD), //
+	SEQUENCE_DIVIDER(13, Font.BOLD), //
+	SEQUENCE_REFERENCE(13, Font.PLAIN), //
+	SEQUENCE_DELAY(11, Font.PLAIN), //
+	SEQUENCE_GROUP(11, Font.BOLD), //
+	SEQUENCE_GROUP_HEADER(13, Font.BOLD), //
+	SEQUENCE_PARTICIPANT(13, Font.PLAIN), //
+	SEQUENCE_TITLE(13, Font.BOLD), //
+	STATE(14, Font.PLAIN), //
+	// STATE_ARROW(13, Font.PLAIN), //
+	STATE_ATTRIBUTE(12, Font.PLAIN), //
+	LEGEND(14, Font.PLAIN), //
+	TITLE(18, Font.PLAIN), //
+	FOOTER(10, Font.PLAIN, "#888888", FontParamConstant.FAMILY), //
+	HEADER(10, Font.PLAIN, "#888888", FontParamConstant.FAMILY), //
+	USECASE(14, Font.PLAIN), //
+	USECASE_STEREOTYPE(14, Font.ITALIC), //
+	USECASE_ACTOR(14, Font.PLAIN), //
+	USECASE_ACTOR_STEREOTYPE(14, Font.ITALIC); //
+	// USECASE_ARROW(13, Font.PLAIN, FontParamConstant.COLOR, FontParamConstant.FAMILY);
+
 	private final int defaultSize;
 	private final int fontStyle;
 	private final String defaultColor;
@@ -87,15 +95,19 @@ public enum FontParam {
 		this.defaultFamily = defaultFamily;
 	}
 
+	private FontParam(int defaultSize, int fontStyle) {
+		this(defaultSize, fontStyle, FontParamConstant.COLOR, FontParamConstant.FAMILY);
+	}
+
 	public final int getDefaultSize(ISkinParam skinParam) {
-		if (skinParam.isSvek() && this==CLASS_ATTRIBUTE) {
+		if (this == CLASS_ATTRIBUTE) {
 			return 11;
 		}
 		return defaultSize;
 	}
 
 	public final int getDefaultFontStyle(ISkinParam skinParam) {
-		if (skinParam.isSvek() && this==PACKAGE) {
+		if (this == PACKAGE) {
 			return Font.BOLD;
 		}
 		return fontStyle;
@@ -108,6 +120,5 @@ public enum FontParam {
 	public String getDefaultFamily() {
 		return defaultFamily;
 	}
-	
-	
+
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,33 +37,31 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.PSystem;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.core.Diagram;
 
-public abstract class CommandMultilines2<S extends PSystem> implements Command {
-
-	private final S system;
+public abstract class CommandMultilines2<S extends Diagram> implements Command<S> {
 
 	private final RegexConcat starting;
-	private final Pattern ending;
 
-	public CommandMultilines2(final S system, RegexConcat patternStart, String patternEnd) {
+	private final MultilinesStrategy strategy;
+
+	public CommandMultilines2(RegexConcat patternStart, MultilinesStrategy strategy) {
 		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
 		}
-		if (patternEnd.startsWith("(?i)^") == false || patternEnd.endsWith("$") == false) {
-			throw new IllegalArgumentException("Bad pattern " + patternEnd);
-		}
-		this.system = system;
+		this.strategy = strategy;
 		this.starting = patternStart;
-		this.ending = Pattern.compile(patternEnd);
 	}
-	
+
+	public abstract String getPatternEnd();
+
 	public String[] getDescription() {
-		return new String[] { "START: "+starting.getPattern(), "END: "+ending.pattern() };
+		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd() };
 	}
 
 	final public CommandControl isValid(List<String> lines) {
+		lines = strategy.filter(lines);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
@@ -75,7 +73,7 @@ public abstract class CommandMultilines2<S extends PSystem> implements Command {
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final Matcher m1 = ending.matcher(lines.get(lines.size() - 1).trim());
+		final Matcher m1 = Pattern.compile(getPatternEnd()).matcher(lines.get(lines.size() - 1).trim());
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}
@@ -84,6 +82,12 @@ public abstract class CommandMultilines2<S extends PSystem> implements Command {
 		return CommandControl.OK;
 	}
 
+	public final CommandExecutionResult execute(S system, List<String> lines) {
+		return executeNow(system, strategy.filter(lines));
+	}
+
+	public abstract CommandExecutionResult executeNow(S system, List<String> lines);
+
 	protected boolean isCommandForbidden() {
 		return false;
 	}
@@ -91,24 +95,8 @@ public abstract class CommandMultilines2<S extends PSystem> implements Command {
 	protected void actionIfCommandValid() {
 	}
 
-	protected S getSystem() {
-		return system;
-	}
-
 	protected final RegexConcat getStartingPattern() {
 		return starting;
-	}
-
-	protected final Pattern getEnding() {
-		return ending;
-	}
-
-	public boolean isDeprecated(List<String> line) {
-		return false;
-	}
-
-	public String getHelpMessageForDeprecated(List<String> lines) {
-		return null;
 	}
 
 }

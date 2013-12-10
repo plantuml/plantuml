@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,126 +33,61 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.svek.IEntityImage;
 
 public abstract class EntityUtils {
 
-	private static IEntity withNoParent(final IEntity ent) {
-		if (ent.getType() == EntityType.GROUP) {
-			throw new IllegalArgumentException();
+	public static boolean groupRoot(IGroup g) {
+		if (g == null) {
+			throw new IllegalStateException();
 		}
-		return new IEntity() {
-			public List<Member> getFieldsToDisplay() {
-				return ent.getFieldsToDisplay();
-			}
-
-			public List<? extends CharSequence> getDisplay2() {
-				return ent.getDisplay2();
-			}
-
-			public Group getParent() {
-				return null;
-			}
-
-			public Stereotype getStereotype() {
-				return ent.getStereotype();
-			}
-
-			public void setStereotype(Stereotype stereotype) {
-				ent.setStereotype(stereotype);
-			}
-
-			public EntityType getType() {
-				return ent.getType();
-			}
-
-			public String getUid() {
-				return ent.getUid();
-			}
-
-			public Url getUrl() {
-				return ent.getUrl();
-			}
-
-			public List<Member> getMethodsToDisplay() {
-				return ent.getMethodsToDisplay();
-			}
-
-			public DrawFile getImageFile() {
-				return ent.getImageFile();
-			}
-
-			public HtmlColor getSpecificBackColor() {
-				return ent.getSpecificBackColor();
-			}
-
-			public void setSpecificBackcolor(HtmlColor specificBackcolor) {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public int hashCode() {
-				return ent.hashCode();
-			}
-
-			@Override
-			public boolean equals(Object obj) {
-				return ent.equals(obj);
-			}
-
-			@Override
-			public String toString() {
-				return "NoParent " + ent.toString();
-			}
-
-			public String getCode() {
-				return ent.getCode();
-			}
-
-			public DrawFile getImageFile(File searched) throws IOException {
-				return ent.getImageFile(searched);
-			}
-
-			public boolean isTop() {
-				return ent.isTop();
-			}
-
-			public void setTop(boolean top) {
-				ent.setTop(top);
-			}
-
-			public boolean hasNearDecoration() {
-				return ent.hasNearDecoration();
-			}
-
-			public void setNearDecoration(boolean nearDecoration) {
-				ent.setNearDecoration(nearDecoration);
-			}
-
-			public int compareTo(IEntity other) {
-				return ent.compareTo(other);
-			}
-
-			public int getXposition() {
-				return ent.getXposition();
-			}
-
-			public void setXposition(int pos) {
-				ent.setXposition(pos);
-			}
-
-			public IEntityImage getSvekImage() {
-				return ent.getSvekImage();
-			}
-
-		};
+		return g instanceof GroupRoot;
 	}
 
+	private static boolean isParent(IGroup groupToBeTested, IGroup parentGroup) {
+		if (groupToBeTested.isGroup() == false) {
+			// Very strange!
+			return false;
+		}
+		if (groupToBeTested.isGroup() == false) {
+			throw new IllegalArgumentException();
+		}
+		while (EntityUtils.groupRoot(groupToBeTested) == false) {
+			if (groupToBeTested == parentGroup) {
+				return true;
+			}
+			groupToBeTested = groupToBeTested.getParentContainer();
+			if (groupToBeTested.isGroup() == false) {
+				throw new IllegalStateException();
+			}
+		}
+		return false;
+	}
+
+	public static boolean isPureInnerLink12(IGroup group, Link link) {
+		if (group.isGroup() == false) {
+			throw new IllegalArgumentException();
+		}
+		final IEntity e1 = link.getEntity1();
+		final IEntity e2 = link.getEntity2();
+		final IGroup group1 = e1.getParentContainer();
+		final IGroup group2 = e2.getParentContainer();
+		if (isParent(group1, group) && isParent(group2, group)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isPureInnerLink3(IGroup group, Link link) {
+		if (group.isGroup() == false) {
+			throw new IllegalArgumentException();
+		}
+		final IEntity e1 = link.getEntity1();
+		final IEntity e2 = link.getEntity2();
+		final IGroup group1 = e1.getParentContainer();
+		final IGroup group2 = e2.getParentContainer();
+		if (isParent(group2, group) == isParent(group1, group)) {
+			return true;
+		}
+		return false;
+	}
 }

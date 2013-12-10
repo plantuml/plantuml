@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,25 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6923 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.graph;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.QuadCurve2D;
-import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -57,10 +55,10 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	final private TextBlock name;
 
-	public EntityImageUsecase(Entity entity) {
+	public EntityImageUsecase(IEntity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(
-				getFont14(), HtmlColor.BLACK), HorizontalAlignement.CENTER);
+		this.name = TextBlockUtils.create(entity.getDisplay(), new FontConfiguration(
+				getFont14(), HtmlColorUtils.BLACK), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -95,13 +93,13 @@ class EntityImageUsecase extends AbstractEntityImage {
 		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.draw(ellipse);
 
-		final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-		final double posx = (w - nameDim.getWidth()) / 2;
-		final double posy = (h - nameDim.getHeight()) / 2;
-		final Shape rect = new Rectangle2D.Double(posx, posy, nameDim.getWidth(), nameDim.getHeight());
+//		final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
+//		final double posx = (w - nameDim.getWidth()) / 2;
+//		final double posy = (h - nameDim.getHeight()) / 2;
+		// final Shape rect = new Rectangle2D.Double(posx, posy, nameDim.getWidth(), nameDim.getHeight());
 		// g2d.draw(rect);
 
 		g2d.setColor(Color.BLACK);
-		name.drawTOBEREMOVED(colorMapper, g2d, posx, posy);
+		// name.drawTOBEREMOVED(colorMapper, g2d, posx, posy);
 	}
 }

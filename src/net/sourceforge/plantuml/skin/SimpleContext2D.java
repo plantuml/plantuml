@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7169 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -36,23 +36,13 @@ package net.sourceforge.plantuml.skin;
 public class SimpleContext2D implements Context2D {
 
 	private final boolean isBackground;
-	private final boolean withShadow;
 
 	public SimpleContext2D(boolean isBackground) {
-		this(isBackground, false);
-	}
-
-	public SimpleContext2D(boolean isBackground, boolean withShadow) {
 		this.isBackground = isBackground;
-		this.withShadow = withShadow;
 	}
 
 	public boolean isBackground() {
 		return isBackground;
-	}
-
-	public boolean withShadow() {
-		return withShadow;
 	}
 
 }

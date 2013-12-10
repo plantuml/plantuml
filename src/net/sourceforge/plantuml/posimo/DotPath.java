@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -47,8 +47,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
 import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.svek.ClusterPosition;
+import net.sourceforge.plantuml.svek.MinFinder;
+import net.sourceforge.plantuml.svek.PointAndAngle;
+import net.sourceforge.plantuml.svek.PointDirected;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -135,12 +140,51 @@ public class DotPath implements UShape, Moveable {
 	public Point2D getStartPoint() {
 		return beziers.get(0).getP1();
 	}
-	
+
+	public PointAndAngle getMiddle() {
+		Point2D result = null;
+		double angle = 0;
+		for (CubicCurve2D.Double bez : beziers) {
+			final CubicCurve2D.Double left = new CubicCurve2D.Double();
+			final CubicCurve2D.Double right = new CubicCurve2D.Double();
+			bez.subdivide(left, right);
+			final Point2D p1 = left.getP1();
+			final Point2D p2 = left.getP2();
+			final Point2D p3 = right.getP1();
+			final Point2D p4 = right.getP2();
+			if (result == null || getCost(p1) < getCost(result)) {
+				result = p1;
+				angle = BezierUtils.getStartingAngle(left);
+			}
+			if (getCost(p2) < getCost(result)) {
+				result = p2;
+				angle = BezierUtils.getEndingAngle(left);
+			}
+			if (getCost(p3) < getCost(result)) {
+				result = p3;
+				angle = BezierUtils.getStartingAngle(right);
+			}
+			if (getCost(p4) < getCost(result)) {
+				result = p4;
+				angle = BezierUtils.getEndingAngle(right);
+			}
+		}
+		return new PointAndAngle(result, angle);
+	}
+
+	private double getCost(Point2D pt) {
+		final Point2D start = getStartPoint();
+		final Point2D end = getEndPoint();
+		return pt.distanceSq(start) + pt.distanceSq(end);
+	}
+
 	public void forceStartPoint(double x, double y) {
 		beziers.get(0).x1 = x;
 		beziers.get(0).y1 = y;
+		beziers.get(0).ctrlx1 = x;
+		beziers.get(0).ctrly1 = y;
 	}
-	
+
 	public Point2D getEndPoint() {
 		return beziers.get(beziers.size() - 1).getP2();
 	}
@@ -148,11 +192,12 @@ public class DotPath implements UShape, Moveable {
 	public void forceEndPoint(double x, double y) {
 		beziers.get(beziers.size() - 1).x2 = x;
 		beziers.get(beziers.size() - 1).y2 = y;
+		beziers.get(beziers.size() - 1).ctrlx2 = x;
+		beziers.get(beziers.size() - 1).ctrly2 = y;
 	}
 
-
-	public MinMax getMinMax() {
-		final MinMax result = new MinMax();
+	public MinFinder getMinMax() {
+		final MinFinder result = new MinFinder();
 		for (CubicCurve2D.Double c : beziers) {
 			result.manage(c.x1, c.y1);
 			result.manage(c.x2, c.y2);
@@ -258,6 +303,16 @@ public class DotPath implements UShape, Moveable {
 		return result;
 	}
 
+	public PointDirected getIntersection(ClusterPosition position) {
+		for (CubicCurve2D.Double bez : beziers) {
+			final PointDirected result = position.getIntersection(bez);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
 	// public void drawOld(Graphics2D g2d, double x, double y) {
 	// for (CubicCurve2D.Double bez : beziers) {
 	// bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y +
@@ -277,8 +332,16 @@ public class DotPath implements UShape, Moveable {
 		g2d.draw(p);
 	}
 
+	public void manageEnsureVisible(double x, double y, EnsureVisible visible) {
+		for (CubicCurve2D.Double bez : beziers) {
+			visible.ensureVisible(x + bez.x1, y + bez.y1);
+			visible.ensureVisible(x + bez.x2, y + bez.y2);
+		}
+
+	}
+
 	public void drawOk(EpsGraphics eps, double x, double y) {
-		boolean first = true;
+		// boolean first = true;
 		for (CubicCurve2D.Double bez : beziers) {
 			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
 					+ bez.ctrly2, x + bez.x2, y + bez.y2);
@@ -287,18 +350,19 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public void draw(EpsGraphics eps, double x, double y) {
-		eps.newpathDot(true);
+		eps.newpathDot();
+		final boolean dashed = false;
 		boolean first = true;
 		for (CubicCurve2D.Double bez : beziers) {
 			bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
 					+ bez.ctrly2, x + bez.x2, y + bez.y2);
 			if (first) {
 				eps.movetoNoMacro(bez.x1, bez.y1);
-				first = false;
+				first = dashed;
 			}
 			eps.curvetoNoMacro(bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2);
 		}
-		eps.closepathDot(true);
+		eps.closepathDot();
 	}
 
 	public UPath toUPath() {
@@ -404,9 +468,8 @@ public class DotPath implements UShape, Moveable {
 				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
 						(int) (bez.x2 / pixelXPerChar));
 			} /*
-				 * else { throw new UnsupportedOperationException("bez=" +
-				 * toString(bez)); }
-				 */
+			 * else { throw new UnsupportedOperationException("bez=" + toString(bez)); }
+			 */
 		}
 	}
 

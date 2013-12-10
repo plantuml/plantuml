@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5048 $
+ * Revision $Revision: 10778 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -38,21 +38,21 @@ import java.util.List;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 
 public class CommandEndPartition extends SingleLineCommand<ActivityDiagram> {
 
-	public CommandEndPartition(ActivityDiagram diagram) {
-		super(diagram, "(?i)^(end ?partition|\\})$");
+	public CommandEndPartition() {
+		super("(?i)^(end ?partition|\\})$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Group currentPackage = getSystem().getCurrentGroup();
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, List<String> arg) {
+		final IEntity currentPackage = diagram.getCurrentGroup();
 		if (currentPackage == null) {
 			return CommandExecutionResult.error("No partition defined");
 		}
-		getSystem().endGroup();
+		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}
 

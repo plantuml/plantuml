@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,89 +28,117 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6927 $
+ * Revision $Revision: 12075 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class StateDiagram extends AbstractEntityDiagram {
 
-	@Override
-	public IEntity getOrCreateClass(String code) {
-		if (code.startsWith("[*]")) {
-			throw new IllegalArgumentException();
+	public boolean checkConcurrentStateOk(Code code) {
+		if (leafExist(code) == false) {
+			return true;
 		}
-		if (isGroup(code)) {
-			return getGroup(code).getEntityCluster();
+		final IEntity existing = this.getLeafs().get(code);
+		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE
+				&& getCurrentGroup() != existing.getParentContainer()) {
+			return false;
 		}
-		final IEntity result = getOrCreateEntity(code, EntityType.STATE);
-		return result;
+		if (existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
+				&& getCurrentGroup() != existing.getParentContainer()) {
+			return false;
+		}
+		return true;
+	}
+
+	public IEntity getOrCreateLeaf(Code code, LeafType type) {
+		if (checkConcurrentStateOk(code) == false) {
+			throw new IllegalStateException("Concurrent State " + code);
+		}
+		if (type == null) {
+			if (code.getCode().startsWith("[*]")) {
+				throw new IllegalArgumentException();
+			}
+			if (isGroup(code)) {
+				return getGroup(code);
+			}
+			return getOrCreateLeafDefault(code, LeafType.STATE);
+		}
+		return getOrCreateLeafDefault(code, type);
 	}
 
 	public IEntity getStart() {
-		final Group g = getCurrentGroup();
-		if (g == null) {
-			return getOrCreateEntity("*start", EntityType.CIRCLE_START);
+		final IGroup g = getCurrentGroup();
+		if (EntityUtils.groupRoot(g)) {
+			return getOrCreateLeaf(Code.of("*start"), LeafType.CIRCLE_START);
 		}
-		return getOrCreateEntity("*start*" + g.getCode(), EntityType.CIRCLE_START);
+		return getOrCreateLeaf(Code.of("*start*" + g.getCode().getCode()), LeafType.CIRCLE_START);
 	}
 
 	public IEntity getEnd() {
-		final Group p = getCurrentGroup();
-		if (p == null) {
-			return getOrCreateEntity("*end", EntityType.CIRCLE_END);
+		final IGroup p = getCurrentGroup();
+		if (EntityUtils.groupRoot(p)) {
+			return getOrCreateLeaf(Code.of("*end"), LeafType.CIRCLE_END);
 		}
-		return getOrCreateEntity("*end*" + p.getCode(), EntityType.CIRCLE_END);
+		return getOrCreateLeaf(Code.of("*end*" + p.getCode().getCode()), LeafType.CIRCLE_END);
 	}
 
 	public IEntity getHistorical() {
-		final Group g = getCurrentGroup();
-		if (g == null) {
-			return getOrCreateEntity("*historical", EntityType.PSEUDO_STATE);
+		final IGroup g = getCurrentGroup();
+		if (EntityUtils.groupRoot(g)) {
+			return getOrCreateLeaf(Code.of("*historical"), LeafType.PSEUDO_STATE);
 		}
-		return getOrCreateEntity("*historical*" + g.getCode(), EntityType.PSEUDO_STATE);
+		return getOrCreateLeaf(Code.of("*historical*" + g.getCode().getCode()), LeafType.PSEUDO_STATE);
 	}
 
-	public IEntity getHistorical(String codeGroup) {
-		final Group g = getOrCreateGroup(codeGroup, null, null, GroupType.STATE, null);
-		final IEntity result = getOrCreateEntity("*historical*" + g.getCode(), EntityType.PSEUDO_STATE);
+	public IEntity getHistorical(Code codeGroup) {
+		final IEntity g = getOrCreateGroup(codeGroup, Display.getWithNewlines(codeGroup), null, GroupType.STATE,
+				getRootGroup());
+		final IEntity result = getOrCreateLeaf(Code.of("*historical*" + g.getCode().getCode()), LeafType.PSEUDO_STATE);
 		endGroup();
 		return result;
 	}
 
 	public boolean concurrentState() {
-		final Group cur = getCurrentGroup();
-		if (cur != null && cur.getType() == GroupType.CONCURRENT_STATE) {
+		final IGroup cur = getCurrentGroup();
+		// printlink("BEFORE");
+		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
 			super.endGroup();
 		}
-		final Group conc1 = getOrCreateGroup("CONC" + UniqueSequence.getValue(), "", null, GroupType.CONCURRENT_STATE,
-				getCurrentGroup());
-		conc1.setDashed(true);
-		if (cur != null && cur.getType() == GroupType.STATE) {
+		final IGroup conc1 = getOrCreateGroup(UniqueSequence.getCode("CONC"), Display.asList(""), null,
+				GroupType.CONCURRENT_STATE, getCurrentGroup());
+		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
-			final Group conc2 = getOrCreateGroup("CONC" + UniqueSequence.getValue(), "", null,
-					GroupType.CONCURRENT_STATE, getCurrentGroup());
-			conc2.setDashed(true);
+			getOrCreateGroup(UniqueSequence.getCode("CONC"), Display.asList(""), null, GroupType.CONCURRENT_STATE,
+					getCurrentGroup());
 		}
+		// printlink("AFTER");
 		return true;
 	}
 
+	// private void printlink(String comment) {
+	// Log.println("COMMENT="+comment);
+	// for (Link l : getLinks()) {
+	// Log.println(l);
+	// }
+	// }
+
 	@Override
 	public void endGroup() {
-		final Group cur = getCurrentGroup();
-		if (cur != null && cur.getType() == GroupType.CONCURRENT_STATE) {
+		final IGroup cur = getCurrentGroup();
+		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
 			super.endGroup();
 		}
 		super.endGroup();
@@ -127,28 +155,56 @@ public class StateDiagram extends AbstractEntityDiagram {
 		this.hideEmptyDescription = hideEmptyDescription;
 	}
 
-	public final boolean isHideEmptyDescription() {
+	public final boolean isHideEmptyDescriptionForState() {
 		return hideEmptyDescription;
 	}
-	
-	final public Link getLastStateLink() {
-		final List<Link> links = getLinks();
-		for (int i = links.size() - 1; i >= 0; i--) {
-			final Link link = links.get(i);
-			if (link.getEntity1().getType() != EntityType.NOTE && link.getEntity2().getType() != EntityType.NOTE) {
-				return link;
-			}
-		}
-		return null;
-	}
 
-
-
-	// @Override
-	// final protected List<String> getDotStrings() {
-	// return Arrays.asList("nodesep=1.95;", "ranksep=1.8;", "edge
-	// [fontsize=11,labelfontsize=11];",
-	// "node [fontsize=11,height=.35,width=.55];");
+	// public Link isEntryPoint(IEntity ent) {
+	// final Stereotype stereotype = ent.getStereotype();
+	// if (stereotype == null) {
+	// return null;
+	// }
+	// final String label = stereotype.getLabel();
+	// if ("<<entrypoint>>".equalsIgnoreCase(label) == false) {
+	// return null;
+	// }
+	// Link inLink = null;
+	// Link outLink = null;
+	// for (Link link : getLinks()) {
+	// if (link.getEntity1() == ent) {
+	// if (outLink != null) {
+	// return null;
+	// }
+	// outLink = link;
+	// }
+	// if (link.getEntity2() == ent) {
+	// if (inLink != null) {
+	// return null;
+	// }
+	// inLink = link;
+	// }
+	// }
+	// if (inLink == null || outLink == null) {
+	// return null;
+	// }
+	// final Link result = Link.mergeForEntryPoint(inLink, outLink);
+	// result.setEntryPoint(ent.getContainer());
+	// return result;
+	// }
+	//
+	// public void manageExitAndEntryPoints() {
+	// for (IEntity ent : getEntities().values()) {
+	// final Link entryPointLink = isEntryPoint(ent);
+	// if (entryPointLink != null) {
+	// addLink(entryPointLink);
+	// for (Link link : new ArrayList<Link>(getLinks())) {
+	// if (link.contains(ent)) {
+	// removeLink(link);
+	// }
+	// }
+	// }
+	// }
+	//
 	// }
 
 }

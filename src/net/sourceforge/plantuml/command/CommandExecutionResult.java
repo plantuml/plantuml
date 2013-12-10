@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,21 +33,33 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 
 public class CommandExecutionResult {
 
 	private final String error;
+	private final AbstractPSystem newDiagram;
 
-	private CommandExecutionResult(String error) {
-			this.error = error;
+	private CommandExecutionResult(String error, AbstractPSystem newDiagram) {
+		this.error = error;
+		this.newDiagram = newDiagram;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + error;
+	}
+
+	public static CommandExecutionResult newDiagram(AbstractPSystem result) {
+		return new CommandExecutionResult(null, result);
 	}
 
 	public static CommandExecutionResult ok() {
-		return new CommandExecutionResult(null);
+		return new CommandExecutionResult(null, null);
 	}
 
 	public static CommandExecutionResult error(String error) {
-		return new CommandExecutionResult(error);
+		return new CommandExecutionResult(error, null);
 	}
 
 	public boolean isOk() {
@@ -59,6 +71,10 @@ public class CommandExecutionResult {
 			throw new IllegalStateException();
 		}
 		return error;
+	}
+
+	public AbstractPSystem getNewDiagram() {
+		return newDiagram;
 	}
 
 }

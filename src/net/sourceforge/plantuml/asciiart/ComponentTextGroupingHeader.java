@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,11 +34,12 @@
 package net.sourceforge.plantuml.asciiart;
 
 import java.awt.geom.Dimension2D;
-import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -48,17 +49,18 @@ import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 public class ComponentTextGroupingHeader implements Component {
 
 	private final ComponentType type;
-	private final List<? extends CharSequence> stringsToDisplay;
+	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
 
-	public ComponentTextGroupingHeader(ComponentType type, List<? extends CharSequence> stringsToDisplay,
+	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay,
 			FileFormat fileFormat) {
 		this.type = type;
 		this.stringsToDisplay = stringsToDisplay;
 		this.fileFormat = fileFormat;
 	}
 
-	public void drawU(UGraphic ug, Dimension2D dimensionToUse, Context2D context) {
+	public void drawU(UGraphic ug, Area area, Context2D context) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight();
@@ -70,19 +72,23 @@ public class ComponentTextGroupingHeader implements Component {
 			charArea.drawHLine('\u2550', 0, 1, width - 1, '\u2502', '\u256a');
 			charArea.drawStringLR(text.toUpperCase() + "  /", 2, 1);
 			charArea.drawHLine('\u2500', 2, 1, text.length() + 4);
-			charArea.drawVLine('\u2551', 0, 1, height + 3);
-			charArea.drawVLine('\u2551', width - 1, 1, height + 3);
+			charArea.drawVLine('\u2551', 0, 1, height - 1);
+			charArea.drawVLine('\u2551', width - 1, 1, height - 1);
 			charArea.drawChar('\u255f', 0, 2);
 			charArea.drawStringTB("\u2564\u2502\u2518", text.length() + 4, 0);
 			charArea.drawChar('\u2554', 0, 0);
 			charArea.drawChar('\u2557', width - 1, 0);
+			charArea.drawHLine('\u2550', height - 1, 1, width - 1, '\u2502', '\u256a');
+			charArea.drawChar('\u255a', 0, height - 1);
+			charArea.drawChar('\u255d', width - 1, height - 1);
 		} else {
 			charArea.drawHLine('_', 0, 0, width - 1);
 			charArea.drawStringLR(text.toUpperCase() + "  /", 2, 1);
 			charArea.drawHLine('_', 2, 1, text.length() + 3);
 			charArea.drawChar('/', text.length() + 3, 2);
-			charArea.drawVLine('!', 0, 1, height + 3);
-			charArea.drawVLine('!', width - 1, 1, height + 3);
+			charArea.drawVLine('!', 0, 1, height);
+			charArea.drawVLine('!', width - 1, 1, height);
+			charArea.drawHLine('~', height - 1, 1, width - 1);
 		}
 
 		if (stringsToDisplay.size() > 1) {
@@ -93,7 +99,7 @@ public class ComponentTextGroupingHeader implements Component {
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return StringUtils.getHeight(stringsToDisplay) + 2;
+		return StringUtils.getHeight(stringsToDisplay) + 1;
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {

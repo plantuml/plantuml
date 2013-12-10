@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,21 +33,22 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 
 public enum AlignParam {
 	
-	SEQUENCE_MESSAGE_ALIGN(HorizontalAlignement.LEFT),
-	SEQUENCE_REFERENCE_ALIGN(HorizontalAlignement.CENTER);
+	SEQUENCE_MESSAGE_ALIGN(HorizontalAlignment.LEFT),
+	SEQUENCE_MESSAGETEXT_ALIGN(HorizontalAlignment.LEFT),
+	SEQUENCE_REFERENCE_ALIGN(HorizontalAlignment.CENTER);
 	
-	private final HorizontalAlignement defaultValue;
+	private final HorizontalAlignment defaultValue;
 	
-	private AlignParam(HorizontalAlignement defaultValue) {
+	private AlignParam(HorizontalAlignment defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
-	public final HorizontalAlignement getDefaultValue() {
+	public final HorizontalAlignment getDefaultValue() {
 		return defaultValue;
 	}
 }

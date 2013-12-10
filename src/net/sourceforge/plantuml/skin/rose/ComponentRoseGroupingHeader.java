@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,28 +28,31 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
-import java.util.List;
 
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
@@ -61,25 +64,34 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final HtmlColor groupBackground;
 	private final HtmlColor groupBorder;
 	private final HtmlColor background;
+	private final double deltaShadow;
+	private final UStroke stroke;
 
-	public ComponentRoseGroupingHeader(HtmlColor fontColor, HtmlColor background, HtmlColor groupBackground, HtmlColor groupBorder, UFont bigFont,
-			UFont smallFont, List<? extends CharSequence> strings) {
-		super(strings.get(0), fontColor, bigFont, HorizontalAlignement.LEFT, 15, 30, 1);
+	public ComponentRoseGroupingHeader(HtmlColor fontColor, HtmlColor background, HtmlColor groupBackground,
+			HtmlColor groupBorder, UFont bigFont, UFont smallFont, Display strings, SpriteContainer spriteContainer,
+			double deltaShadow, UStroke stroke) {
+		super(strings.get(0), fontColor, bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0);
 		this.groupBackground = groupBackground;
 		this.groupBorder = groupBorder;
 		this.background = background;
+		this.stroke = stroke;
+		this.deltaShadow = deltaShadow;
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = TextBlockUtils.create(Arrays.asList("[" + strings.get(1) + "]"),
-					new FontConfiguration(smallFont, fontColor), HorizontalAlignement.LEFT);
+			this.commentTextBlock = TextBlockUtils.create(Display.asList("[" + strings.get(1) + "]"),
+					new FontConfiguration(smallFont, fontColor), HorizontalAlignment.LEFT, spriteContainer);
 		}
+		if (this.background == null) {
+			throw new IllegalArgumentException();
+		}
+
 	}
 
-	@Override
-	public double getPaddingY() {
-		return 6;
-	}
+	// @Override
+	// public double getPaddingY() {
+	// return 6;
+	// }
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
@@ -100,17 +112,21 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawBackgroundInternalU(UGraphic ug, Dimension2D dimensionToUse) {
-		if (this.background == null) {
-			return;
-		}
-		ug.getParam().setColor(null);
-		ug.getParam().setBackcolor(background);
-		ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
+	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		ug = ug.apply(stroke).apply(new UChangeColor(groupBorder));
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
+		rect.setDeltaShadow(deltaShadow);
+		ug.apply(new UChangeBackColor(background)).draw(rect);
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		ug = ug.apply(stroke).apply(new UChangeColor(groupBorder));
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
+		ug.draw(rect);
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textWidth = (int) getTextWidth(stringBounder);
 		final int textHeight = (int) getTextHeight(stringBounder);
@@ -125,31 +141,17 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		polygon.addPoint(0, textHeight);
 		polygon.addPoint(0, 0);
 
-		ug.getParam().setStroke(new UStroke(2));
-		ug.getParam().setColor(groupBorder);
-		ug.getParam().setBackcolor(groupBackground);
-		ug.draw(0, 0, polygon);
+		ug.apply(new UChangeColor(groupBorder)).apply(new UChangeBackColor(groupBackground)).draw(polygon);
 
-		final double heightWithoutPadding = dimensionToUse.getHeight() - getPaddingY();
+		ug = ug.apply(new UStroke());
 
-		ug.draw(0, 0, new ULine(dimensionToUse.getWidth(), 0));
-		ug.draw(dimensionToUse.getWidth(), 0, new ULine(0, heightWithoutPadding));
-		ug.draw(0, textHeight, new ULine(0, heightWithoutPadding - textHeight));
-		ug.getParam().setStroke(new UStroke());
-
-		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 
 		if (commentTextBlock != null) {
-			// final Dimension2D size =
-			// commentTextBlock.calculateDimension(stringBounder);
-			// ug.getParam().setColor(null/*this.background*/);
-			// ug.getParam().setBackcolor(null);
 			final int x1 = getMarginX1() + textWidth;
 			final int y2 = getMarginY() + 1;
-			// ug.draw(x1, y2, new URectangle(size.getWidth() + 2 *
-			// commentMargin, size.getHeight()));
 
-			commentTextBlock.drawU(ug, x1 + commentMargin, y2);
+			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));
 		}
 	}
 

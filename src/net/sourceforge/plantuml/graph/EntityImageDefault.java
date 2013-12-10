@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6923 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -36,13 +36,13 @@ package net.sourceforge.plantuml.graph;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -53,10 +53,10 @@ class EntityImageDefault extends AbstractEntityImage {
 
 	final private TextBlock textBlock;
 
-	public EntityImageDefault(Entity entity) {
+	public EntityImageDefault(IEntity entity) {
 		super(entity);
-		this.textBlock = TextBlockUtils.create(entity.getDisplay2(), new FontConfiguration(getFont14(),
-				HtmlColor.BLACK), HorizontalAlignement.CENTER);
+		this.textBlock = TextBlockUtils.create(entity.getDisplay(), new FontConfiguration(getFont14(),
+				HtmlColorUtils.BLACK), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -72,6 +72,6 @@ class EntityImageDefault extends AbstractEntityImage {
 		final int height = (int) dim.getHeight();
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(0, 0, width, height);
-		textBlock.drawTOBEREMOVED(colorMapper, g2d, 0, 0);
+//		textBlock.drawTOBEREMOVED(colorMapper, g2d, 0, 0);
 	}
 }

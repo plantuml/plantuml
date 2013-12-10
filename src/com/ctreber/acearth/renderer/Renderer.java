@@ -1,7 +1,8 @@
 package com.ctreber.acearth.renderer;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.ctreber.acearth.shader.Shader;

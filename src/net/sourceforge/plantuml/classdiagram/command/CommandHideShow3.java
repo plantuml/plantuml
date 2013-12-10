@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,28 +34,28 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.EnumSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class CommandHideShow3 extends SingleLineCommand2<ClassDiagram> {
+public class CommandHideShow3 extends SingleLineCommand2<UmlDiagram> {
 
 	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
 			EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
 
-	public CommandHideShow3(ClassDiagram classDiagram) {
-		super(classDiagram, getRegexConcat());
+	public CommandHideShow3() {
+		super(getRegexConcat());
 	}
 
 	static RegexConcat getRegexConcat() {
@@ -68,19 +68,28 @@ public class CommandHideShow3 extends SingleLineCommand2<ClassDiagram> {
 				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?)"), //
 				new RegexLeaf("$"));
 	}
-
+	
 	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, RegexResult arg) {
+		if (classDiagram instanceof ClassDiagram) {
+			return executeArgClass((ClassDiagram) classDiagram, arg);
+		}
+		// Just ignored
+		return CommandExecutionResult.ok();
+	}
 
-		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION").get(0));
+
+	private CommandExecutionResult executeArgClass(ClassDiagram classDiagram, RegexResult arg) {
+
+		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
 
 		final Set<VisibilityModifier> visibilities = EnumSet.<VisibilityModifier> noneOf(VisibilityModifier.class);
-		final StringTokenizer st = new StringTokenizer(arg.get("VISIBILITY").get(0).toLowerCase(), " ,");
+		final StringTokenizer st = new StringTokenizer(arg.get("VISIBILITY", 0).toLowerCase(), " ,");
 		while (st.hasMoreTokens()) {
 			addVisibilities(st.nextToken(), portion, visibilities);
 		}
 
-		getSystem().hideOrShow(visibilities, arg.get("COMMAND").get(0).equalsIgnoreCase("show"));
+		classDiagram.hideOrShow(visibilities, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 
 		return CommandExecutionResult.ok();
 	}

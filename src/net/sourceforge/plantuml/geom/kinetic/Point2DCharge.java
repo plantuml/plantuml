@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3831 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.geom.kinetic;
 
 import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.Log;
 
 public class Point2DCharge extends Point2D.Double {
 
@@ -51,7 +53,7 @@ public class Point2DCharge extends Point2D.Double {
 	}
 
 	public void apply(VectorForce value) {
-		System.err.println("Applying " + value);
+		Log.println("Applying " + value);
 		x += value.getX();
 		y += value.getY();
 		if (moveObserver != null) {

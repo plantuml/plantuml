@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -52,10 +52,10 @@ final public class BlockUmlBuilder {
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
 	private final Set<File> usedFiles = new HashSet<File>();
 
-	public BlockUmlBuilder(List<String> config, Defines defines, Reader reader, File newCurrentDir) throws IOException {
+	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir) throws IOException {
 		Preprocessor includer = null;
 		try {
-			includer = new Preprocessor(new UncommentReadLine(new ReadLineReader(reader)), defines, usedFiles, newCurrentDir);
+			includer = new Preprocessor(new UncommentReadLine(new ReadLineReader(reader)), charset, defines, usedFiles, newCurrentDir);
 			init(includer, config);
 		} finally {
 			if (includer != null) {

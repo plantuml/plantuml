@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,8 +38,10 @@ import java.util.List;
 
 import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
@@ -53,8 +55,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 		final Link l1 = new Link(entity1, node, link.getType(), link.getLabel(), link.getLength(),
 				link.getQualifier1(), null, link.getLabeldistance(), link.getLabelangle());
-		final Link l2 = new Link(node, entity2, link.getType(), link.getLabel(), link.getLength(), null, link
-				.getQualifier2(), link.getLabeldistance(), link.getLabelangle());
+		final Link l2 = new Link(node, entity2, link.getType(), link.getLabel(), link.getLength(), null,
+				link.getQualifier2(), link.getLabeldistance(), link.getLabelangle());
 		addLink(l1);
 		addLink(l2);
 		removeLink(link);
@@ -73,12 +75,12 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	}
 
 	public int getNbOfHozizontalLollipop(IEntity entity) {
-		if (entity.getType() == EntityType.LOLLIPOP) {
+		if (entity.getEntityType() == LeafType.LOLLIPOP) {
 			throw new IllegalArgumentException();
 		}
 		int result = 0;
 		for (Link link : getLinks()) {
-			if (link.getLength() == 1 && link.contains(entity) && link.containsType(EntityType.LOLLIPOP)) {
+			if (link.getLength() == 1 && link.contains(entity) && link.containsType(LeafType.LOLLIPOP)) {
 				result++;
 			}
 
@@ -88,10 +90,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private final List<Association> assocations = new ArrayList<Association>();
 
-	public boolean associationClass(int mode, String clName1, String clName2, IEntity associed, LinkType linkType,
-			String label) {
-		final IEntity entity1 = getOrCreateClass(clName1);
-		final IEntity entity2 = getOrCreateClass(clName2);
+	public boolean associationClass(int mode, Code clName1, Code clName2, IEntity associed, LinkType linkType,
+			Display label) {
+		final IEntity entity1 = getOrCreateLeaf(clName1, null);
+		final IEntity entity2 = getOrCreateLeaf(clName2, null);
 		final List<Association> same = new ArrayList<Association>();
 		for (Association existing : assocations) {
 			if (existing.sameCouple(entity1, entity2)) {
@@ -133,11 +135,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.entity1 = entity1;
 			this.entity2 = entity2;
 			this.associed = associed;
-			point = getOrCreateEntity("apoint" + UniqueSequence.getValue(), EntityType.POINT_FOR_ASSOCIATION);
+			point = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION);
 
 		}
 
-		public Association createSecondAssociation(int mode2, IEntity associed2, String label) {
+		public Association createSecondAssociation(int mode2, IEntity associed2, Display label) {
 			final Association result = new Association(mode2, entity1, entity2, associed2);
 			result.existingLink = this.existingLink;
 			result.other = this;
@@ -150,10 +152,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			return result;
 		}
 
-		void createNew(int mode, LinkType linkType, String label) {
+		void createNew(int mode, LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null) {
-				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null, 2);
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null,
+						2);
 			} else {
 				removeLink(existingLink);
 			}
@@ -161,6 +164,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(),
 					existingLink.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
+			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());
 			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null,
 					existingLink.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
@@ -183,25 +187,26 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			addLink(pointToAssocied);
 		}
 
-		void createInSecond(LinkType linkType, String label) {
+		void createInSecond(LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null) {
-				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null, 2);
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null,
+						2);
 			} else {
 				removeLink(existingLink);
 			}
 
 			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(), 2,
 					existingLink.getQualifier1(), null, existingLink.getLabeldistance(), existingLink.getLabelangle());
-			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null, 2, null, existingLink
-					.getQualifier2(), existingLink.getLabeldistance(), existingLink.getLabelangle());
+			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null, 2, null,
+					existingLink.getQualifier2(), existingLink.getLabeldistance(), existingLink.getLabelangle());
 			// entity1ToPoint = new Link(entity1, point, existingLink.getType(),
 			// null, 2);
 			// pointToEntity2 = new Link(point, entity2, existingLink.getType(),
 			// null, 2);
 			addLink(entity1ToPoint);
 			addLink(pointToEntity2);
-			if (other.pointToAssocied.getEntity1().getType() == EntityType.POINT_FOR_ASSOCIATION) {
+			if (other.pointToAssocied.getEntity1().getEntityType() == LeafType.POINT_FOR_ASSOCIATION) {
 				removeLink(other.pointToAssocied);
 				other.pointToAssocied = other.pointToAssocied.getInv();
 				addLink(other.pointToAssocied);

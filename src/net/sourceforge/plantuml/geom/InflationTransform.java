@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -88,9 +88,9 @@ public class InflationTransform {
 
 	Collection<Point2DInt> cutPoints(LineSegmentInt original) {
 
-		// System.err.println("original=" + original);
-		// System.err.println("inflateX=" + inflateX);
-		// System.err.println("inflateY=" + inflateY);
+		// Log.println("original=" + original);
+		// Log.println("inflateX=" + inflateX);
+		// Log.println("inflateY=" + inflateY);
 
 		final SortedSet<Point2DInt> result = new TreeSet<Point2DInt>(new Point2DIntComparatorDistance(original.getP1()));
 

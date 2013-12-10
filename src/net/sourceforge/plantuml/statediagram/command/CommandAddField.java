@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5019 $
+ * Revision $Revision: 11432 $
  *
  */
 package net.sourceforge.plantuml.statediagram.command;
@@ -37,20 +37,21 @@ import java.util.List;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandAddField extends SingleLineCommand<StateDiagram> {
 
-	public CommandAddField(StateDiagram diagram) {
-		super(diagram, "(?i)^([\\p{L}0-9_.]+)\\s*:\\s*(.*)$");
+	public CommandAddField() {
+		super("(?i)^([\\p{L}0-9_.]+)\\s*:\\s*(.*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final Entity entity = (Entity) getSystem().getOrCreateClass(arg.get(0));
+	protected CommandExecutionResult executeArg(StateDiagram diagram, List<String> arg) {
+		final IEntity entity = diagram.getOrCreateLeaf(Code.of(arg.get(0)), null);
 
-		entity.addField(arg.get(1));
+		entity.addFieldOrMethod(arg.get(1));
 		return CommandExecutionResult.ok();
 	}
 

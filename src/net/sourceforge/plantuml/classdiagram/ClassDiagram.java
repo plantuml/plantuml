@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,117 +28,85 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6167 $
+ * Revision $Revision: 11432 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.cucadiagram.Entity;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
+	private String namespaceSeparator = ".";
+
 	@Override
-	public IEntity getOrCreateEntity(String code, EntityType defaultType) {
-		assert defaultType == EntityType.ABSTRACT_CLASS || defaultType == EntityType.CLASS
-				|| defaultType == EntityType.INTERFACE || defaultType == EntityType.ENUM
-				|| defaultType == EntityType.LOLLIPOP || defaultType == EntityType.POINT_FOR_ASSOCIATION;
-		code = getFullyQualifiedCode(code);
-		if (super.entityExist(code)) {
-			return super.getOrCreateEntity(code, defaultType);
+	public ILeaf getOrCreateLeaf(Code code, LeafType type) {
+		if (type == null) {
+			code = code.eventuallyRemoveStartingAndEndingDoubleQuote();
+			if (getNamespaceSeparator() == null) {
+				return getOrCreateLeafDefault(code, LeafType.CLASS);
+			}
+			code = code.getFullyQualifiedCode(getCurrentGroup(), getNamespaceSeparator());
+			if (super.leafExist(code)) {
+				return getOrCreateLeafDefault(code, LeafType.CLASS);
+			}
+			return createEntityWithNamespace(code,
+					Display.getWithNewlines(code.getShortName(getLeafs(), getNamespaceSeparator())), LeafType.CLASS);
 		}
-		return createEntityWithNamespace(code, getShortName(code), defaultType);
+		if (getNamespaceSeparator() == null) {
+			return getOrCreateLeafDefault(code, LeafType.CLASS);
+		}
+		code = code.getFullyQualifiedCode(getCurrentGroup(), getNamespaceSeparator());
+		if (super.leafExist(code)) {
+			return getOrCreateLeafDefault(code, type);
+		}
+		return createEntityWithNamespace(code,
+				Display.getWithNewlines(code.getShortName(getLeafs(), getNamespaceSeparator())), type);
 	}
 
 	@Override
-	public Entity createEntity(String code, String display, EntityType type) {
-		if (type != EntityType.ABSTRACT_CLASS && type != EntityType.CLASS && type != EntityType.INTERFACE
-				&& type != EntityType.ENUM && type != EntityType.LOLLIPOP) {
-			return super.createEntity(code, display, type);
+	public ILeaf createLeaf(Code code, Display display, LeafType type) {
+		if (type != LeafType.ABSTRACT_CLASS && type != LeafType.ANNOTATION && type != LeafType.CLASS && type != LeafType.INTERFACE
+				&& type != LeafType.ENUM && type != LeafType.LOLLIPOP && type != LeafType.NOTE) {
+			return super.createLeaf(code, display, type);
 		}
-		code = getFullyQualifiedCode(code);
-		if (super.entityExist(code)) {
+		if (getNamespaceSeparator() == null) {
+			return super.createLeaf(code, display, type);
+		}
+		code = code.getFullyQualifiedCode(getCurrentGroup(), getNamespaceSeparator());
+		if (super.leafExist(code)) {
 			throw new IllegalArgumentException("Already known: " + code);
 		}
 		return createEntityWithNamespace(code, display, type);
 	}
 
-	private Entity createEntityWithNamespace(String fullyCode, String display, EntityType type) {
-		Group group = getCurrentGroup();
-		final String namespace = getNamespace(fullyCode);
-		if (namespace != null && (group == null || group.getCode().equals(namespace) == false)) {
-			group = getOrCreateGroupInternal(namespace, namespace, namespace, GroupType.PACKAGE, null);
-			group.setBold(true);
+	private ILeaf createEntityWithNamespace(Code fullyCode, Display display, LeafType type) {
+		IGroup group = getCurrentGroup();
+		final String namespace = fullyCode.getNamespace(getLeafs(), getNamespaceSeparator());
+		if (namespace != null && (EntityUtils.groupRoot(group) || group.getCode().getCode().equals(namespace) == false)) {
+			group = getOrCreateGroupInternal(Code.of(namespace), Display.getWithNewlines(namespace), namespace,
+					GroupType.PACKAGE, getRootGroup());
 		}
-		return createEntityInternal(fullyCode, display == null ? getShortName(fullyCode) : display, type, group);
+		return createLeafInternal(
+				fullyCode,
+				display == null ? Display.getWithNewlines(fullyCode.getShortName(getLeafs(),
+				getNamespaceSeparator())) : display, type, group);
 	}
 
 	@Override
-	public final boolean entityExist(String code) {
-		return super.entityExist(getFullyQualifiedCode(code));
-	}
-
-	@Override
-	public IEntity getOrCreateClass(String code) {
-		return getOrCreateEntity(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code), EntityType.CLASS);
-	}
-
-	final public IEntity getOrCreateClass(String code, EntityType type) {
-		if (type != EntityType.ABSTRACT_CLASS && type != EntityType.CLASS && type != EntityType.INTERFACE
-				&& type != EntityType.ENUM && type != EntityType.LOLLIPOP) {
-			throw new IllegalArgumentException();
+	public final boolean leafExist(Code code) {
+		if (getNamespaceSeparator() == null) {
+			return super.leafExist(code);
 		}
-		return getOrCreateEntity(code, type);
-	}
-
-	private String getFullyQualifiedCode(String code) {
-		if (code.startsWith("\\") || code.startsWith("~") || code.startsWith(".")) {
-			return code.substring(1);
-		}
-		if (code.contains(".")) {
-			return code;
-		}
-		final Group g = this.getCurrentGroup();
-		if (g == null) {
-			return code;
-		}
-		final String namespace = g.getNamespace();
-		if (namespace == null) {
-			return code;
-		}
-		return namespace + "." + code;
-	}
-
-	private String getShortName(String code) {
-		// final int x = code.lastIndexOf('.');
-		// if (x == -1) {
-		// return code;
-		// }
-		// return code.substring(x + 1);
-		final String namespace = getNamespace(code);
-		if (namespace == null) {
-			return code;
-		}
-		return code.substring(namespace.length() + 1);
-	}
-
-	private String getNamespace(String code) {
-		assert code.startsWith("\\") == false;
-		assert code.startsWith("~") == false;
-		do {
-			final int x = code.lastIndexOf('.');
-			if (x == -1) {
-				return null;
-			}
-			code = code.substring(0, x);
-		} while (entityExist(code));
-		return code;
+		return super.leafExist(code.getFullyQualifiedCode(getCurrentGroup(), getNamespaceSeparator()));
 	}
 
 	@Override
@@ -146,5 +114,12 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		return UmlDiagramType.CLASS;
 	}
 
+	private String getNamespaceSeparator() {
+		return namespaceSeparator;
+	}
+
+	public void setNamespaceSeparator(String namespaceSeparator) {
+		this.namespaceSeparator = namespaceSeparator;
+	}
 
 }

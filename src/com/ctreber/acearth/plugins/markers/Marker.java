@@ -3,10 +3,6 @@ package com.ctreber.acearth.plugins.markers;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ctreber.acearth.gui.PixelCanvas;

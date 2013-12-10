@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -43,6 +43,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.Defines;
 
@@ -54,15 +58,25 @@ public class SourceStringReader {
 		this(new Defines(), source, Collections.<String> emptyList());
 	}
 
-	public SourceStringReader(Defines defines, String source, List<String> config) {
-		try {
-			final BlockUmlBuilder builder = new BlockUmlBuilder(config, defines, new StringReader(source), null);
-			this.blocks = builder.getBlockUmls();
-		} catch (IOException e) {
-			throw new IllegalStateException();
-		}
+	public SourceStringReader(String source, String charset) {
+		this(new Defines(), source, "UTF-8", Collections.<String> emptyList());
 	}
 
+	public SourceStringReader(Defines defines, String source, List<String> config) {
+		this(defines, source, "UTF-8", config);
+	}
+
+	public SourceStringReader(Defines defines, String source, String charset, List<String> config) {
+		try {
+			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
+					null);
+			this.blocks = builder.getBlockUmls();
+		} catch (IOException e) {
+			Log.error("error " + e);
+			throw new IllegalStateException(e);
+		}
+	}
+	
 	public String generateImage(OutputStream os) throws IOException {
 		return generateImage(os, 0);
 	}
@@ -85,21 +99,67 @@ public class SourceStringReader {
 	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
 		if (blocks.size() == 0) {
 			final GraphicStrings error = new GraphicStrings(Arrays.asList("No @startuml found"));
-			error.writeImage(os, fileFormatOption);
+			error.writeImage(os, fileFormatOption, null);
 			return null;
 		}
-		try {
-			for (BlockUml b : blocks) {
-				final PSystem system = b.getSystem();
-				final int nbInSystem = system.getNbImages();
-				if (numImage < nbInSystem) {
-					system.exportDiagram(os, null, numImage, fileFormatOption);
-					return system.getDescription();
+		for (BlockUml b : blocks) {
+			final Diagram system = b.getDiagram();
+			final int nbInSystem = system.getNbImages();
+			if (numImage < nbInSystem) {
+				//final CMapData cmap = new CMapData();
+				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
+				if (imageData.containsCMapData()) {
+					return system.getDescription().getDescription() + "\n" + imageData.getCMapData("plantuml");
 				}
-				numImage -= nbInSystem;
+				return system.getDescription().getDescription();
 			}
-		} catch (InterruptedException e) {
+			numImage -= nbInSystem;
+		}
+		Log.error("numImage is too big = " + numImage);
+		return null;
+
+	}
+
+
+	public DiagramDescription generateDiagramDescription(OutputStream os) throws IOException {
+		return generateDiagramDescription(os, 0);
+	}
+
+	public DiagramDescription generateDiagramDescription(File f) throws IOException {
+		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+		final DiagramDescription result = generateDiagramDescription(os, 0);
+		os.close();
+		return result;
+	}
+
+	public DiagramDescription generateDiagramDescription(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+		return generateDiagramDescription(os, 0, fileFormatOption);
+	}
+
+	public DiagramDescription generateDiagramDescription(OutputStream os, int numImage) throws IOException {
+		return generateDiagramDescription(os, numImage, new FileFormatOption(FileFormat.PNG));
+	}
+
+	public DiagramDescription generateDiagramDescription(OutputStream os, int numImage, FileFormatOption fileFormatOption)
+			throws IOException {
+		if (blocks.size() == 0) {
+			final GraphicStrings error = new GraphicStrings(Arrays.asList("No @startuml found"));
+			error.writeImage(os, fileFormatOption, null);
 			return null;
+		}
+		for (BlockUml b : blocks) {
+			final Diagram system = b.getDiagram();
+			final int nbInSystem = system.getNbImages();
+			if (numImage < nbInSystem) {
+				// final CMapData cmap = new CMapData();
+				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
+				if (imageData.containsCMapData()) {
+					return ((DiagramDescriptionImpl) system.getDescription()).withCMapData(imageData
+							.getCMapData("plantuml"));
+				}
+				return system.getDescription();
+			}
+			numImage -= nbInSystem;
 		}
 		Log.error("numImage is too big = " + numImage);
 		return null;

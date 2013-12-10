@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,15 +36,17 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementTextField extends AbstractElementText implements Element {
 
-	public ElementTextField(String text, UFont font) {
-		super(text, font, true);
+	public ElementTextField(String text, UFont font, SpriteContainer spriteContainer) {
+		super(text, font, true, spriteContainer);
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
@@ -59,10 +61,10 @@ public class ElementTextField extends AbstractElementText implements Element {
 		drawText(ug, x + 3, y);
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		final Dimension2D textDim = getTextDimensionAt(ug.getStringBounder(), 0);
-		ug.draw(x + 1, y + textDim.getHeight(), new ULine(dim.getWidth() - 3, 0));
+		ug.apply(new UTranslate(x + 1, y + textDim.getHeight())).draw(new ULine(dim.getWidth() - 3, 0));
 		final double y3 = y + textDim.getHeight() - 3;
-		ug.draw(x + 1, y3, new ULine(0, 2));
-		ug.draw(x + 3 + textDim.getWidth() + 1, y3, new ULine(0, 2));
+		ug.apply(new UTranslate(x + 1, y3)).draw(new ULine(0, 2));
+		ug.apply(new UTranslate(x + 3 + textDim.getWidth() + 1, y3)).draw(new ULine(0, 2));
 	}
 
 }

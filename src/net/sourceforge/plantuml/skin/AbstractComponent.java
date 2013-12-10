@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,18 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 10124 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class AbstractComponent implements Component {
 
@@ -48,33 +48,30 @@ public abstract class AbstractComponent implements Component {
 		g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, style, 0));
 	}
 
-	final protected void stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
-		ug.getParam().setStroke(new UStroke(dashVisible, dashSpace, thickness));
+	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
+		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));
 	}
 
 	final protected void stroke(Graphics2D g2d, float dash) {
 		stroke(g2d, dash, 1);
 	}
 
-	final protected void stroke(UGraphic ug, double dashVisible, double dashSpace) {
-		stroke(ug, dashVisible, dashSpace, 1);
+	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace) {
+		return stroke(ug, dashVisible, dashSpace, 1);
 	}
 
-	abstract protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow);
+	abstract protected void drawInternalU(UGraphic ug, Area area);
 
-	protected void drawBackgroundInternalU(UGraphic ug, Dimension2D dimensionToUse) {
+	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
 	}
 
-	public final void drawU(UGraphic ug, Dimension2D dimensionToUse, Context2D context) {
-		final double dx = ug.getTranslateX();
-		final double dy = ug.getTranslateY();
-		ug.translate(getPaddingX(), getPaddingY());
+	public final void drawU(UGraphic ug, Area area, Context2D context) {
+		ug = ug.apply(new UTranslate(getPaddingX(), getPaddingY()));
 		if (context.isBackground()) {
-			drawBackgroundInternalU(ug, dimensionToUse);
+			drawBackgroundInternalU(ug, area);
 		} else {
-			drawInternalU(ug, dimensionToUse, context.withShadow());
+			drawInternalU(ug, area);
 		}
-		ug.setTranslate(dx, dy);
 	}
 
 	public double getPaddingX() {

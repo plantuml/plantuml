@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6750 $
+ * Revision $Revision: 10298 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -36,39 +36,24 @@ package net.sourceforge.plantuml.sudoku;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-public class PSystemSudokuFactory implements PSystemBasicFactory {
-
-	private PSystemSudoku system;
-
-	public void init(String startLine) {
-	}
-
-	public PSystemSudoku getSystem() {
-		return system;
-	}
+public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 
 	final private static Pattern p = Pattern.compile("(?i)^sudoku(?:\\s+([0-9a-zA-Z]+))?\\s*$");
 
-	public boolean executeLine(String line) {
+	@Override
+	protected AbstractPSystem executeLine(String line) {
 		final Matcher m = p.matcher(line);
 		if (m.find() == false) {
-			return false;
+			return null;
 		}
 
 		if (m.group(1) == null) {
-			system = new PSystemSudoku(null);
-		} else {
-			system = new PSystemSudoku(Long.parseLong(m.group(1).toLowerCase(), 36));
+			return new PSystemSudoku(null);
 		}
-		return true;
-
-	}
-	
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
+		return new PSystemSudoku(Long.parseLong(m.group(1).toLowerCase(), 36));
 	}
 
 }

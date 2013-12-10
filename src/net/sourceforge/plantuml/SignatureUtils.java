@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5877 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml;
@@ -53,10 +53,10 @@ public class SignatureUtils {
 			return coder.encode(digest);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-			throw new IllegalStateException();
+			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			throw new IllegalStateException();
+			throw new UnsupportedOperationException(e);
 		}
 	}
 
@@ -87,10 +87,10 @@ public class SignatureUtils {
 			return coder.encode(digest);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-			throw new IllegalStateException();
+			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			throw new IllegalStateException();
+			throw new UnsupportedOperationException(e);
 		}
 	}
 }

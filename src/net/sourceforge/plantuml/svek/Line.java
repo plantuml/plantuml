@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,46 +33,58 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.cucadiagram.LinkHat;
+import net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockArrow;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.UDrawable3;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.posimo.BezierUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.svek.SvekUtils.PointListIterator;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
+import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class Line implements Moveable {
+public class Line implements Moveable, Hideable {
 
 	private final String ltail;
 	private final String lhead;
 	private final Link link;
-
-	private DotPath dotPath;
 
 	private final String startUid;
 	private final String endUid;
@@ -86,20 +98,113 @@ public class Line implements Moveable {
 	private final int startTailColor;
 	private final int endHeadColor;
 
+	private final StringBounder stringBounder;
+	private final Bibliotekon bibliotekon;
+
+	private DotPath dotPath;
+
 	private Positionable startTailLabelXY;
 	private Positionable endHeadLabelXY;
 	private Positionable noteLabelXY;
 
-	private UDrawable3 endHead;
-	private UDrawable3 startTail;
+	private UDrawable extremity2;
+	private UDrawable extremity1;
 
-	private final StringBounder stringBounder;
+	private double dx;
+	private double dy;
+
+	private boolean opale;
+	private Cluster projectionCluster;
+	private final GraphvizVersion graphvizVersion;
+
+	// private GraphvizVersion getGraphvizVersion() {
+	// if (pragma.isDefine("graphviz")==false) {
+	// return GraphvizVersion.COMMON;
+	// }
+	// final String value = pragma.getValue("graphviz");
+	// if ("2.34".equals(value)) {
+	// return GraphvizVersion.V2_34_0;
+	// }
+	// return GraphvizVersion.COMMON;
+	// }
+
+	@Override
+	public String toString() {
+		return super.toString() + " color=" + lineColor;
+	}
+
+	class DirectionalTextBlock implements TextBlock {
+
+		private final TextBlock right;
+		private final TextBlock left;
+		private final TextBlock up;
+		private final TextBlock down;
+
+		DirectionalTextBlock(TextBlock right, TextBlock left, TextBlock up, TextBlock down) {
+			this.right = right;
+			this.left = left;
+			this.up = up;
+			this.down = down;
+		}
+
+		public void drawU(UGraphic ug) {
+			Direction dir = getDirection();
+			if (getLinkArrow() == LinkArrow.BACKWARD) {
+				dir = dir.getInv();
+			}
+			switch (dir) {
+			case RIGHT:
+				right.drawU(ug);
+				break;
+			case LEFT:
+				left.drawU(ug);
+				break;
+			case UP:
+				up.drawU(ug);
+				break;
+			case DOWN:
+				down.drawU(ug);
+				break;
+			default:
+				throw new UnsupportedOperationException();
+			}
+		}
+
+		public Dimension2D calculateDimension(StringBounder stringBounder) {
+			return right.calculateDimension(stringBounder);
+		}
+
+		private Direction getDirection() {
+			if (isAutolink()) {
+				final double startAngle = dotPath.getStartAngle();
+				return Direction.LEFT;
+			}
+			final Point2D start = dotPath.getStartPoint();
+			final Point2D end = dotPath.getEndPoint();
+			final double ang = Math.atan2(end.getX() - start.getX(), end.getY() - start.getY());
+			if (ang > -Math.PI / 4 && ang < Math.PI / 4) {
+				return Direction.DOWN;
+			}
+			if (ang > Math.PI * 3 / 4 || ang < -Math.PI * 3 / 4) {
+				return Direction.UP;
+			}
+			return end.getX() > start.getX() ? Direction.RIGHT : Direction.LEFT;
+		}
+
+	}
+
+	// private boolean projectionStart() {
+	// return startUid.startsWith(Cluster.CENTER_ID);
+	// }
 
 	public Line(String startUid, String endUid, Link link, ColorSequence colorSequence, String ltail, String lhead,
-			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration labelFont) {
+			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration labelFont, Bibliotekon bibliotekon,
+			GraphvizVersion graphvizVersion) {
 		if (startUid == null || endUid == null || link == null) {
 			throw new IllegalArgumentException();
 		}
+		this.graphvizVersion = graphvizVersion;
+		this.bibliotekon = bibliotekon;
 		this.stringBounder = stringBounder;
 		this.link = link;
 		this.startUid = startUid;
@@ -114,28 +219,51 @@ public class Line implements Moveable {
 
 		final TextBlock labelOnly;
 		if (link.getLabel() == null) {
-			labelOnly = null;
+			if (getLinkArrow() == LinkArrow.NONE) {
+				labelOnly = null;
+			} else {
+				final TextBlockArrow right = new TextBlockArrow(Direction.RIGHT, labelFont);
+				final TextBlockArrow left = new TextBlockArrow(Direction.LEFT, labelFont);
+				final TextBlockArrow up = new TextBlockArrow(Direction.UP, labelFont);
+				final TextBlockArrow down = new TextBlockArrow(Direction.DOWN, labelFont);
+				labelOnly = new DirectionalTextBlock(right, left, up, down);
+			}
 		} else {
-			labelOnly = TextBlockUtils.create(StringUtils.getWithNewlines(link.getLabel()), labelFont,
-					HorizontalAlignement.CENTER);
+			final double marginLabel = startUid.equals(endUid) ? 6 : 1;
+			final TextBlock label = TextBlockUtils.withMargin(
+					TextBlockUtils.create(link.getLabel(), labelFont, HorizontalAlignment.CENTER, skinParam),
+					marginLabel, marginLabel);
+			if (getLinkArrow() == LinkArrow.NONE) {
+				labelOnly = label;
+			} else {
+				TextBlock right = new TextBlockArrow(Direction.RIGHT, labelFont);
+				right = TextBlockUtils.mergeLR(label, right, VerticalAlignment.CENTER);
+				TextBlock left = new TextBlockArrow(Direction.LEFT, labelFont);
+				left = TextBlockUtils.mergeLR(left, label, VerticalAlignment.CENTER);
+				TextBlock up = new TextBlockArrow(Direction.UP, labelFont);
+				up = TextBlockUtils.mergeTB(up, label, HorizontalAlignment.CENTER);
+				TextBlock down = new TextBlockArrow(Direction.DOWN, labelFont);
+				down = TextBlockUtils.mergeTB(label, down, HorizontalAlignment.CENTER);
+				labelOnly = new DirectionalTextBlock(right, left, up, down);
+			}
 		}
 
 		final TextBlock noteOnly;
 		if (link.getNote() == null) {
 			noteOnly = null;
 		} else {
-			noteOnly = TextBlockUtils.fromIEntityImage(new EntityImageNoteLink(link.getNote(), skinParam));
+			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColor(), skinParam);
 		}
 
 		if (labelOnly != null && noteOnly != null) {
 			if (link.getNotePosition() == Position.LEFT) {
-				noteLabelText = TextBlockUtils.mergeLR(noteOnly, labelOnly);
+				noteLabelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
 			} else if (link.getNotePosition() == Position.RIGHT) {
-				noteLabelText = TextBlockUtils.mergeLR(labelOnly, noteOnly);
+				noteLabelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
 			} else if (link.getNotePosition() == Position.TOP) {
-				noteLabelText = TextBlockUtils.mergeTB(noteOnly, labelOnly);
+				noteLabelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
 			} else {
-				noteLabelText = TextBlockUtils.mergeTB(labelOnly, noteOnly);
+				noteLabelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
 			}
 		} else if (labelOnly != null) {
 			noteLabelText = labelOnly;
@@ -148,23 +276,38 @@ public class Line implements Moveable {
 		if (link.getQualifier1() == null) {
 			startTailText = null;
 		} else {
-			startTailText = TextBlockUtils.create(StringUtils.getWithNewlines(link.getQualifier1()), labelFont,
-					HorizontalAlignement.CENTER);
+			startTailText = TextBlockUtils.create(Display.getWithNewlines(link.getQualifier1()), labelFont,
+					HorizontalAlignment.CENTER, skinParam);
 		}
 
 		if (link.getQualifier2() == null) {
 			endHeadText = null;
 		} else {
-			endHeadText = TextBlockUtils.create(StringUtils.getWithNewlines(link.getQualifier2()), labelFont,
-					HorizontalAlignement.CENTER);
+			endHeadText = TextBlockUtils.create(Display.getWithNewlines(link.getQualifier2()), labelFont,
+					HorizontalAlignment.CENTER, skinParam);
 		}
 
 	}
 
+	public boolean hasNoteLabelText() {
+		return noteLabelText != null;
+	}
+
+	private LinkArrow getLinkArrow() {
+		return link.getLinkArrow();
+	}
+
 	public void appendLine(StringBuilder sb) {
+		// Log.println("inverted=" + isInverted());
+		// if (isInverted()) {
+		// sb.append(endUid);
+		// sb.append("->");
+		// sb.append(startUid);
+		// } else {
 		sb.append(startUid);
 		sb.append("->");
 		sb.append(endUid);
+		// }
 		sb.append("[");
 		String decoration = link.getType().getSpecificDecorationSvek();
 		if (decoration.endsWith(",") == false) {
@@ -172,8 +315,12 @@ public class Line implements Moveable {
 		}
 		sb.append(decoration);
 
-		if (link.getLength() != 1) {
-			sb.append("minlen=" + (link.getLength() - 1));
+		int length = link.getLength();
+		// if (graphvizVersion == GraphvizVersion.V2_34_0 && length == 1) {
+		// length = 2;
+		// }
+		if (OptionFlags.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED || link.isInvis() || length != 1) {
+			sb.append("minlen=" + (length - 1));
 			sb.append(",");
 		}
 		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
@@ -182,6 +329,7 @@ public class Line implements Moveable {
 			sb.append("label=<");
 			appendTable(sb, noteLabelText.calculateDimension(stringBounder), noteLabelColor);
 			sb.append(">");
+			// sb.append(",labelfloat=true");
 		}
 
 		if (startTailText != null) {
@@ -189,12 +337,14 @@ public class Line implements Moveable {
 			sb.append("taillabel=<");
 			appendTable(sb, startTailText.calculateDimension(stringBounder), startTailColor);
 			sb.append(">");
+			// sb.append(",labelangle=0");
 		}
 		if (endHeadText != null) {
 			sb.append(",");
 			sb.append("headlabel=<");
 			appendTable(sb, endHeadText.calculateDimension(stringBounder), endHeadColor);
 			sb.append(">");
+			// sb.append(",labelangle=0");
 		}
 
 		if (ltail != null) {
@@ -211,12 +361,28 @@ public class Line implements Moveable {
 			sb.append(",");
 			sb.append("style=invis");
 		}
+
+		if (link.isConstraint() == false || link.hasTwoEntryPointsSameContainer()) {
+			sb.append("constraint=false,");
+		}
+
+		// if (link.getLabeldistance() != null) {
+		// sb.append("labeldistance=" + link.getLabeldistance() + ",");
+		// }
+		// if (link.getLabelangle() != null) {
+		// sb.append("labelangle=" + link.getLabelangle() + ",");
+		// }
+		// sb.append("labelangle=1,");
+
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
 
 	public String rankSame() {
-		if (link.getLength() == 1) {
+		// if (graphvizVersion == GraphvizVersion.V2_34_0) {
+		// return null;
+		// }
+		if (OptionFlags.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED == false && link.getLength() == 1) {
 			return "{rank=same; " + getStartUid() + "; " + getEndUid() + "}";
 		}
 		return null;
@@ -257,14 +423,36 @@ public class Line implements Moveable {
 		return endUid;
 	}
 
-	public void solveLine(final String svg, final int fullHeight) {
+	public UDrawable getExtremity(LinkHat hat, LinkDecor decor, PointListIterator pointListIterator) {
+		final ExtremityFactory extremityFactory = decor.getExtremityFactory();
+
+		if (extremityFactory != null) {
+			final List<Point2D.Double> points = pointListIterator.next();
+			final Point2D p0 = points.get(0);
+			final Point2D p1 = points.get(1);
+			final Point2D p2 = points.get(2);
+			return extremityFactory.createUDrawable(p0, p1, p2);
+		} else if (decor != LinkDecor.NONE) {
+			final UShape sh = new UPolygon(pointListIterator.next());
+			return new UDrawable() {
+				public void drawU(UGraphic ug) {
+					ug.draw(sh);
+				}
+			};
+		}
+		return null;
+
+	}
+
+	public void solveLine(final String svg, final int fullHeight, MinFinder corner1) {
 		if (this.link.isInvis()) {
 			return;
 		}
 
-		int idx = svg.indexOf(SvekUtils.getStrokeString(this.lineColor));
+		int idx = getIndexFromColor(svg, this.lineColor);
 		if (idx == -1) {
-			throw new IllegalStateException();
+			return;
+			// throw new IllegalStateException();
 		}
 		idx = svg.indexOf("d=\"", idx);
 		if (idx == -1) {
@@ -276,51 +464,31 @@ public class Line implements Moveable {
 
 		final PointListIterator pointListIterator = new PointListIterator(svg.substring(end), fullHeight);
 
-		if (link.getType().getDecor2() == LinkDecor.PLUS) {
-			final List<Point2D.Double> points = pointListIterator.next();
-			final Point2D p0 = points.get(0);
-			final Point2D p1 = points.get(1);
-			final Point2D p2 = points.get(2);
-			final Point2D pc = new Point2D.Double((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
-			this.endHead = new Plus(p1, pc);
-		} else if (link.getType().getDecor2() != LinkDecor.NONE) {
-			final UShape sh = new UPolygon(pointListIterator.next());
-			this.endHead = new UDrawable3() {
-				public void drawU(UGraphic ug, double x, double y) {
-					ug.draw(x, y, sh);
-				}
-			};
-		}
-
-		if (link.getType().getDecor1() == LinkDecor.PLUS) {
-			final List<Point2D.Double> points = pointListIterator.next();
-			final Point2D p0 = points.get(0);
-			final Point2D p1 = points.get(1);
-			final Point2D p2 = points.get(2);
-			final Point2D pc = new Point2D.Double((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
-			this.startTail = new Plus(p1, pc);
-		} else if (link.getType().getDecor1() != LinkDecor.NONE) {
-			final UShape sh = new UPolygon(pointListIterator.next());
-			this.startTail = new UDrawable3() {
-				public void drawU(UGraphic ug, double x, double y) {
-					ug.draw(x, y, sh);
-				}
-			};
-		}
+		this.extremity2 = getExtremity(link.getType().getHat2(), link.getType().getDecor2(), pointListIterator);
+		this.extremity1 = getExtremity(link.getType().getHat1(), link.getType().getDecor1(), pointListIterator);
 
 		if (this.noteLabelText != null) {
-			this.noteLabelXY = TextBlockUtils.asPositionable(noteLabelText, stringBounder, getXY(svg,
-					this.noteLabelColor, fullHeight));
+			final Point2D pos = getXY(svg, this.noteLabelColor, fullHeight);
+			if (pos != null) {
+				corner1.manage(pos);
+				this.noteLabelXY = TextBlockUtils.asPositionable(noteLabelText, stringBounder, pos);
+			}
 		}
 
 		if (this.startTailText != null) {
-			this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, getXY(svg,
-					this.startTailColor, fullHeight));
+			final Point2D pos = getXY(svg, this.startTailColor, fullHeight);
+			if (pos != null) {
+				corner1.manage(pos);
+				this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, pos);
+			}
 		}
 
 		if (this.endHeadText != null) {
-			this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, getXY(svg,
-					this.endHeadColor, fullHeight));
+			final Point2D pos = getXY(svg, this.endHeadColor, fullHeight);
+			if (pos != null) {
+				corner1.manage(pos);
+				this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, pos);
+			}
 		}
 
 		if (isOpalisable() == false) {
@@ -333,75 +501,51 @@ public class Line implements Moveable {
 	}
 
 	private Point2D.Double getXY(String svg, int color, int height) {
-		final int idx = svg.indexOf(SvekUtils.getStrokeString(color));
+		final int idx = getIndexFromColor(svg, color);
 		if (idx == -1) {
-			throw new IllegalStateException();
+			return null;
 		}
 		return SvekUtils.getMinXY(SvekUtils.extractPointsList(svg, idx, height));
 
 	}
 
-//	public void patchLineForCluster(List<Cluster> clusters) {
-//		if (clusters != null) {
-//			return;
-//		}
-//		if (link.getEntity1().getType() == EntityType.GROUP) {
-//			final IEntity ent = link.getEntity1();
-//			for (Cluster cl : clusters) {
-//				if (cl.isClusterOf(ent) == false) {
-//					continue;
-//				}
-//				final UPolygon frontier = cl.getSpecificFrontier();
-//				if (frontier == null) {
-//					continue;
-//				}
-//				final double frontierY = frontier.getPoints().get(0).getY();
-//				final double frontierX = frontier.getPoints().get(2).getX();
-//				final Point2D pt = dotPath.getStartPoint();
-//				if (pt.getY() < frontierY) {
-//					System.err.println("frontier = " + frontier);
-//					System.err.println("p1 = " + pt);
-//					final double deltaY = frontierY - pt.getY();
-//					dotPath.forceStartPoint(pt.getX(), frontierY);
-//					if (endHead != null) {
-//						endHead = UGraphicUtils.translate(endHead, 0, deltaY);
-//					}
-//				}
-//			}
-//		}
-//
-//		if (link.getEntity2().getType() == EntityType.GROUP) {
-//			final IEntity ent = link.getEntity2();
-//			for (Cluster cl : clusters) {
-//				if (cl.isClusterOf(ent) == false) {
-//					continue;
-//				}
-//				final UPolygon frontier = cl.getSpecificFrontier();
-//				if (frontier == null) {
-//					continue;
-//				}
-//				final double frontierY = frontier.getPoints().get(0).getY();
-//				final double frontierX = frontier.getPoints().get(2).getX();
-//				final Point2D pt = dotPath.getEndPoint();
-//				if (pt.getY() < frontierY) {
-//					System.err.println("frontier = " + frontier);
-//					System.err.println("p2 = " + pt);
-//					dotPath.forceEndPoint(pt.getX(), frontierY);
-//					final double deltaY = frontierY - pt.getY();
-//					if (startTail != null) {
-//						startTail = UGraphicUtils.translate(startTail, 0, deltaY);
-//					}
-//
-//				}
-//			}
-//		}
-//
-//	}
+	private int getIndexFromColor(String svg, int color) {
+		String s = "stroke=\"" + StringUtils.getAsHtml(color).toLowerCase() + "\"";
+		int idx = svg.indexOf(s);
+		if (idx != -1) {
+			return idx;
+		}
+		s = ";stroke:" + StringUtils.getAsHtml(color).toLowerCase() + ";";
+		idx = svg.indexOf(s);
+		if (idx != -1) {
+			return idx;
+		}
+		s = "fill=\"" + StringUtils.getAsHtml(color).toLowerCase() + "\"";
+		idx = svg.indexOf(s);
+		if (idx != -1) {
+			return idx;
+		}
+		Log.info("Cannot find color=" + color + " " + StringUtils.getAsHtml(color).toLowerCase());
+		return -1;
+
+	}
 
 	public void drawU(UGraphic ug, double x, double y, HtmlColor color) {
 		if (opale) {
 			return;
 		}
+
+		final Url url = link.getUrl();
+		if (url != null) {
+			ug.startUrl(url);
+		}
+
+		if (link.isAutoLinkOfAGroup()) {
+			final Cluster cl = bibliotekon.getCluster((IGroup) link.getEntity1());
+			x += cl.getWidth();
+			x -= dotPath.getStartPoint().getX() - cl.getMinX();
+		}
+
 		x += dx;
 		y += dy;
 
@@ -412,41 +556,95 @@ public class Line implements Moveable {
 			color = this.link.getSpecificColor();
 		}
 
-		ug.getParam().setColor(color);
-		ug.getParam().setBackcolor(null);
-		ug.getParam().setStroke(link.getType().getStroke());
-		ug.draw(x, y, dotPath);
-		ug.getParam().setStroke(new UStroke());
+		ug = ug.apply(new UChangeBackColor(null)).apply(new UChangeColor(color));
+		ug = ug.apply(link.getType().getStroke());
+		double moveStartX = 0;
+		double moveStartY = 0;
+		double moveEndX = 0;
+		double moveEndY = 0;
+		if (projectionCluster != null && link.getEntity1() == projectionCluster.getGroup()) {
+			final DotPath copy = new DotPath(dotPath);
+			final Point2D start = copy.getStartPoint();
+			final Point2D proj = projectionCluster.getClusterPosition().getProjectionOnFrontier(start);
+			moveStartX = proj.getX() - start.getX();
+			moveStartY = proj.getY() - start.getY();
+			copy.forceStartPoint(proj.getX(), proj.getY());
+			ug.apply(new UTranslate(x, y)).draw(copy);
+		} else if (projectionCluster != null && link.getEntity2() == projectionCluster.getGroup()) {
+			final DotPath copy = new DotPath(dotPath);
+			final Point2D end = copy.getEndPoint();
+			final Point2D proj = projectionCluster.getClusterPosition().getProjectionOnFrontier(end);
+			moveEndX = proj.getX() - end.getX();
+			moveEndY = proj.getY() - end.getY();
+			copy.forceEndPoint(proj.getX(), proj.getY());
+			ug.apply(new UTranslate(x, y)).draw(copy);
+		} else {
+			if (dotPath == null) {
+				Log.info("DotPath is null for " + this);
+				return;
+			}
+			ug.apply(new UTranslate(x, y)).draw(dotPath);
+		}
 
-		if (this.startTail != null) {
-			ug.getParam().setColor(color);
+		// if (picLine1 != null) {
+		// final ClusterPosition clusterPosition =
+		// picLine1.getClusterPosition();
+		// final PointDirected inters =
+		// dotPath.getIntersection(clusterPosition);
+		// ExtremityStateLine1 extr1 = new
+		// ExtremityStateLine1(inters.getAngle(), inters.getPoint2D());
+		// extr1.drawU(ug, x, y);
+		// } else if (picLine2 != null) {
+		// final ClusterPosition clusterPosition =
+		// picLine2.getClusterPosition();
+		// final PointDirected inters =
+		// dotPath.getIntersection(clusterPosition);
+		// ExtremityStateLine2 extr2 = new
+		// ExtremityStateLine2(inters.getAngle(), inters.getPoint2D());
+		// extr2.drawU(ug, x, y);
+		// }
+
+		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
+
+		if (this.extremity1 != null) {
 			if (this.link.getType().getDecor1().isFill()) {
-				ug.getParam().setBackcolor(color);
+				ug = ug.apply(new UChangeBackColor(color));
 			} else {
-				ug.getParam().setBackcolor(null);
+				ug = ug.apply(new UChangeBackColor(null));
 			}
-			this.startTail.drawU(ug, x, y);
+			this.extremity1.drawU(ug.apply(new UTranslate(x + moveEndX, y + moveEndY)));
 		}
-		if (this.endHead != null) {
-			ug.getParam().setColor(color);
+		if (this.extremity2 != null) {
 			if (this.link.getType().getDecor2().isFill()) {
-				ug.getParam().setBackcolor(color);
+				ug = ug.apply(new UChangeBackColor(color));
 			} else {
-				ug.getParam().setBackcolor(null);
+				ug = ug.apply(new UChangeBackColor(null));
 			}
-			this.endHead.drawU(ug, x, y);
+			this.extremity2.drawU(ug.apply(new UTranslate(x + moveStartX, y + moveStartY)));
 		}
-		if (this.noteLabelText != null) {
-			this.noteLabelText.drawU(ug, x + this.noteLabelXY.getPosition().getX(), y
-					+ this.noteLabelXY.getPosition().getY());
+		if (this.noteLabelText != null && this.noteLabelXY != null) {
+			this.noteLabelText.drawU(ug.apply(new UTranslate(x + this.noteLabelXY.getPosition().getX(), y
+					+ this.noteLabelXY.getPosition().getY())));
 		}
 		if (this.startTailText != null) {
-			this.startTailText.drawU(ug, x + this.startTailLabelXY.getPosition().getX(), y
-					+ this.startTailLabelXY.getPosition().getY());
+			this.startTailText.drawU(ug.apply(new UTranslate(x + this.startTailLabelXY.getPosition().getX(), y
+					+ this.startTailLabelXY.getPosition().getY())));
 		}
 		if (this.endHeadText != null) {
-			this.endHeadText.drawU(ug, x + this.endHeadLabelXY.getPosition().getX(), y
-					+ this.endHeadLabelXY.getPosition().getY());
+			this.endHeadText.drawU(ug.apply(new UTranslate(x + this.endHeadLabelXY.getPosition().getX(), y
+					+ this.endHeadLabelXY.getPosition().getY())));
+		}
+
+		if (link.getType().getMiddleDecor() != LinkMiddleDecor.NONE) {
+			final PointAndAngle middle = dotPath.getMiddle();
+			final double angleRad = middle.getAngle();
+			final double angleDeg = -angleRad * 180.0 / Math.PI;
+			final UDrawable mi = link.getType().getMiddleDecor().getMiddleFactory().createUDrawable(angleDeg - 45);
+			mi.drawU(ug.apply(new UTranslate(x + middle.getX(), y + middle.getY())));
+		}
+
+		if (url != null) {
+			ug.closeAction();
 		}
 	}
 
@@ -455,8 +653,8 @@ public class Line implements Moveable {
 	}
 
 	private double getDecorDzeta() {
-		final int size1 = link.getType().getDecor1().getSize();
-		final int size2 = link.getType().getDecor2().getSize();
+		final int size1 = link.getType().getDecor1().getMargin();
+		final int size2 = link.getType().getDecor2().getMargin();
 		return size1 + size2;
 	}
 
@@ -490,12 +688,10 @@ public class Line implements Moveable {
 		if (startUid.equals(endUid)) {
 			return getDecorDzeta();
 		}
-		final ArithmeticStrategy strategy;
 		if (isHorizontal()) {
 			return 0;
-		} else {
-			strategy = new ArithmeticStrategySum();
 		}
+		final ArithmeticStrategy strategy = new ArithmeticStrategySum();
 		if (noteLabelText != null) {
 			strategy.eat(noteLabelText.calculateDimension(stringBounder).getHeight());
 		}
@@ -508,15 +704,14 @@ public class Line implements Moveable {
 		return strategy.getResult() + getDecorDzeta();
 	}
 
-
-	public void manageCollision(List<Shape> allShapes) {
+	public void manageCollision(Collection<Shape> allShapes) {
 
 		for (Shape sh : allShapes) {
 			final Positionable cl = PositionableUtils.addMargin(sh, 8, 8);
-			if (startTailText != null && PositionableUtils.intersect(cl, startTailLabelXY)) {
+			if (startTailText != null && startTailLabelXY != null && PositionableUtils.intersect(cl, startTailLabelXY)) {
 				startTailLabelXY = PositionableUtils.moveAwayFrom(cl, startTailLabelXY);
 			}
-			if (endHeadText != null && PositionableUtils.intersect(cl, endHeadLabelXY)) {
+			if (endHeadText != null && endHeadLabelXY != null && PositionableUtils.intersect(cl, endHeadLabelXY)) {
 				endHeadLabelXY = PositionableUtils.moveAwayFrom(cl, endHeadLabelXY);
 			}
 		}
@@ -557,66 +752,9 @@ public class Line implements Moveable {
 	private boolean tooClose(Positionable pos) {
 		final double dist = dotPath.getMinDist(BezierUtils.getCenter(pos));
 		final Dimension2D dim = pos.getSize();
-		System.err.println("dist=" + dist);
+		// Log.println("dist=" + dist);
 		return dist < (dim.getWidth() / 2 + 2) || dist < (dim.getHeight() / 2 + 2);
 	}
-
-	static class Plus implements UDrawable3 {
-
-		private final AffineTransform at;
-		private final AffineTransform at2;
-		private int radius;
-		private final Point2D center;
-		private final Point2D p1;
-		private final Point2D p2;
-		private Point2D p3;
-		private Point2D p4;
-
-		public Plus(Point2D p1, Point2D p2) {
-			this.center = new Point2D.Double((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
-			at = AffineTransform.getTranslateInstance(-center.getX(), -center.getY());
-			at2 = AffineTransform.getTranslateInstance(center.getX(), center.getY());
-			radius = (int) (p1.distance(p2) / 2);
-			if (radius % 2 == 0) {
-				radius--;
-			}
-			this.p1 = putOnCircle(p1);
-			this.p2 = putOnCircle(p2);
-
-			this.p3 = at.transform(this.p1, null);
-			this.p3 = new Point2D.Double(p3.getY(), -p3.getX());
-			this.p3 = at2.transform(p3, null);
-
-			this.p4 = at.transform(this.p2, null);
-			this.p4 = new Point2D.Double(p4.getY(), -p4.getX());
-			this.p4 = at2.transform(p4, null);
-		}
-
-		private Point2D putOnCircle(Point2D p) {
-			p = at.transform(p, null);
-			final double coef = p.distance(new Point2D.Double()) / radius;
-			p = new Point2D.Double(p.getX() / coef, p.getY() / coef);
-			return at2.transform(p, null);
-		}
-
-		public void drawU(UGraphic ug, double x, double y) {
-			final UShape circle = new UEllipse(radius * 2, radius * 2);
-			ug.draw(x + center.getX() - radius, y + center.getY() - radius, circle);
-			drawLine(ug, x, y, p1, p2);
-			drawLine(ug, x, y, p3, p4);
-		}
-
-		static private void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
-			final double dx = p2.getX() - p1.getX();
-			final double dy = p2.getY() - p1.getY();
-			ug.draw(x + p1.getX(), y + p1.getY(), new ULine(dx, dy));
-
-		}
-
-	}
-
-	private double dx;
-	private double dy;
 
 	public void moveSvek(double deltaX, double deltaY) {
 		this.dx += deltaX;
@@ -633,8 +771,6 @@ public class Line implements Moveable {
 		return link.getLength();
 	}
 
-	private boolean opale;
-
 	public void setOpale(boolean opale) {
 		this.link.setOpale(opale);
 		this.opale = opale;
@@ -645,18 +781,33 @@ public class Line implements Moveable {
 		return opale;
 	}
 
-	// public void moveSvek(double deltaX, double deltaY) {
-	// if (startTailLabelXY != null) {
-	// startTailLabelXY.moveSvek(deltaX, deltaY);
-	// }
-	// if (endHeadLabelXY != null) {
-	// endHeadLabelXY.moveSvek(deltaX, deltaY);
-	// }
-	// if (noteLabelXY != null) {
-	// noteLabelXY.moveSvek(deltaX, deltaY);
-	// }
-	// dotPath.moveSvek(deltaX, deltaY);
-	//
-	// }
+	public boolean isHorizontalSolitary() {
+		return link.isHorizontalSolitary();
+	}
+
+	public boolean isLinkFromOrToGroup(IEntity group) {
+		return link.getEntity1() == group || link.getEntity2() == group;
+	}
+
+	public boolean hasEntryPoint() {
+		return link.hasEntryPoint();
+	}
+
+	public void setProjectionCluster(Cluster cluster) {
+		this.projectionCluster = cluster;
+
+	}
+
+	public boolean isHidden() {
+		return link.isHidden();
+	}
+
+	public boolean sameConnections(Line other) {
+		return link.sameConnections(other.link);
+	}
+
+	private boolean isAutolink() {
+		return link.getEntity1() == link.getEntity2();
+	}
 
 }

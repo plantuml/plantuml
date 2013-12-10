@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -47,6 +47,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
 
 public class SourceFileReader2 implements ISourceFileReader {
@@ -67,12 +68,12 @@ public class SourceFileReader2 implements ISourceFileReader {
 		}
 		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
 
-		builder = new BlockUmlBuilder(config, defines, getReader(charset), file.getAbsoluteFile().getParentFile());
+		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile().getParentFile());
 	}
 
 	public boolean hasError() throws IOException, InterruptedException {
 		for (final BlockUml b : builder.getBlockUmls()) {
-			if (b.getSystem() instanceof PSystemError) {
+			if (b.getDiagram() instanceof PSystemError) {
 				return true;
 			}
 		}
@@ -87,10 +88,10 @@ public class SourceFileReader2 implements ISourceFileReader {
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final File suggested = outputFile;
 
-			final PSystem system = blockUml.getSystem();
+			final Diagram system = blockUml.getDiagram();
 			OptionFlags.getInstance().logData(file, system);
 
-			for (File f : system.exportDiagrams(suggested, fileFormatOption)) {
+			for (File f : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
 				final GeneratedImage generatedImage = new GeneratedImage(f, desc, system);
 				result.add(generatedImage);
@@ -107,7 +108,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		final List<String> result = new ArrayList<String>();
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final String source = blockUml.getSystem().getSource().getPlainString();
+			final String source = blockUml.getDiagram().getSource().getPlainString();
 			final String encoded = transcoder.encode(source);
 			result.add(encoded);
 		}

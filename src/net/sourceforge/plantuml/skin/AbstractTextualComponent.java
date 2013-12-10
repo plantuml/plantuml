@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,17 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 12104 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
-import java.util.List;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -48,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
 
-	private final List<? extends CharSequence> strings;
+	private final Display strings;
 
 	private final int marginX1;
 	private final int marginX2;
@@ -60,13 +62,15 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final HtmlColor fontColor;
 
 	public AbstractTextualComponent(CharSequence label, HtmlColor fontColor, UFont font,
-			HorizontalAlignement horizontalAlignement, int marginX1, int marginX2, int marginY) {
-		this(Arrays.asList(label == null ? "" : label), fontColor, font, horizontalAlignement, marginX1, marginX2,
-				marginY);
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
+			SpriteContainer spriteContainer, double maxMessageSize) {
+		this(Display.getWithNewlines(label == null ? "" : label.toString()), fontColor, font, horizontalAlignment,
+				marginX1, marginX2, marginY, spriteContainer, maxMessageSize, false);
 	}
 
-	public AbstractTextualComponent(List<? extends CharSequence> strings, HtmlColor fontColor, UFont font,
-			HorizontalAlignement horizontalAlignement, int marginX1, int marginX2, int marginY) {
+	public AbstractTextualComponent(Display strings, HtmlColor fontColor, UFont font,
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
+			SpriteContainer spriteContainer, double maxMessageSize, boolean enhanced) {
 		this.font = font;
 		this.fontColor = fontColor;
 		this.marginX1 = marginX1;
@@ -76,8 +80,12 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
+		} else if (enhanced) {
+			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font,
+					fontColor);
 		} else {
-			textBlock = TextBlockUtils.create(strings, new FontConfiguration(font, fontColor), horizontalAlignement);
+			textBlock = TextBlockUtils.create(strings, new FontConfiguration(font, fontColor), horizontalAlignment,
+					spriteContainer, maxMessageSize);
 		}
 	}
 
@@ -87,7 +95,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	final protected double getPureTextWidth(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D size = getSize(stringBounder, textBlock);
+		final Dimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getWidth();
 	}
 
@@ -95,23 +103,23 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		return getPureTextWidth(stringBounder) + marginX1 + marginX2;
 	}
 
-	// For cache
-	private Dimension2D size;
-
-	private Dimension2D getSize(StringBounder stringBounder, final TextBlock textBlock) {
-		if (size == null) {
-			size = textBlock.calculateDimension(stringBounder);
-		}
-		return size;
-	}
+	// // For cache
+	// private Dimension2D size;
+	//
+	// private Dimension2D getSize(StringBounder stringBounder, final TextBlock textBlock) {
+	// if (size == null) {
+	// size = textBlock.calculateDimension(stringBounder);
+	// }
+	// return size;
+	// }
 
 	final protected double getTextHeight(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D size = getSize(stringBounder, textBlock);
+		final Dimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + 2 * marginY;
 	}
 
-	final protected List<? extends CharSequence> getLabels() {
+	final protected Display getLabels() {
 		return strings;
 	}
 

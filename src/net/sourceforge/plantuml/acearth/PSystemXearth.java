@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -46,6 +46,10 @@ import java.util.TimeZone;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 
 import com.ctreber.acearth.ACearth;
 import com.ctreber.acearth.ConfigurationACearth;
@@ -71,9 +75,8 @@ public class PSystemXearth extends AbstractPSystem {
 		this.config = config;
 		this.markers = markers;
 	}
-
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat)
-			throws IOException {
+	
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final ACearth earth = new ACearth(markers);
 		final ConfigurationACearth conf = earth.getConf();
 		conf.setInt("imageWidth", width);
@@ -98,7 +101,9 @@ public class PSystemXearth extends AbstractPSystem {
 			}
 		}
 		earth.exportPng(os);
+		return new ImageDataSimple(width, height);
 	}
+
 
 	private Date extractGmt(String s) {
 		final SimpleDateFormat timeFormat;
@@ -118,8 +123,9 @@ public class PSystemXearth extends AbstractPSystem {
 
 	}
 
-	public String getDescription() {
-		return "(XEarth)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(XEarth)", getClass());
 	}
+
 
 }

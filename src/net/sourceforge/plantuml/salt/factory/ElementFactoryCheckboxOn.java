@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,6 +37,7 @@ import java.awt.Font;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -46,9 +47,11 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class ElementFactoryCheckboxOn implements ElementFactory {
 
 	final private DataSource dataSource;
+	final private SpriteContainer spriteContainer;
 
-	public ElementFactoryCheckboxOn(DataSource dataSource) {
+	public ElementFactoryCheckboxOn(DataSource dataSource, SpriteContainer spriteContainer) {
 		this.dataSource = dataSource;
+		this.spriteContainer = spriteContainer;
 	}
 
 	public Terminated<Element> create() {
@@ -58,16 +61,14 @@ public class ElementFactoryCheckboxOn implements ElementFactory {
 		final Terminated<String> next = dataSource.next();
 		final String text = next.getElement();
 		final UFont font = new UFont("Default", Font.PLAIN, 12);
-		return new Terminated<Element>(new ElementRadioCheckbox(extracted(text), font, false,
-				true), next.getTerminator());
-	}
-	
-	private List<String> extracted(final String text) {
-		final int x = text.indexOf(']');
-		return Arrays.asList(text.substring(x+1).trim());
+		return new Terminated<Element>(new ElementRadioCheckbox(extracted(text), font, false, true, spriteContainer),
+				next.getTerminator());
 	}
 
-	
+	private List<String> extracted(final String text) {
+		final int x = text.indexOf(']');
+		return Arrays.asList(text.substring(x + 1).trim());
+	}
 
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();

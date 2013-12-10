@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,64 +28,96 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6934 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
-public class Stereotype implements CharSequence {
-
-	private final static Pattern circle = Pattern
+public class Stereotype implements CharSequence, Hideable {
+	private final static Pattern circleChar = Pattern
 			.compile("\\<\\<\\s*\\(?(\\S)\\s*,\\s*(#[0-9a-fA-F]{6}|\\w+)\\s*(?:[),](.*?))?\\>\\>");
+	private final static Pattern circleSprite = Pattern
+			.compile("\\<\\<\\s*\\(?\\$([\\p{L}0-9_]+)\\s*(?:,\\s*(#[0-9a-fA-F]{6}|\\w+))?\\s*(?:[),](.*?))?\\>\\>");
 
 	private final String label;
 	private final HtmlColor htmlColor;
 	private final char character;
+	private final String sprite;
 	private final double radius;
 	private final UFont circledFont;
+	private final boolean automaticPackageStyle;
 
 	public Stereotype(String label, double radius, UFont circledFont) {
+		this(label, radius, circledFont, true);
+	}
+
+	public Stereotype(String label, double radius, UFont circledFont, boolean automaticPackageStyle) {
 		if (label == null) {
 			throw new IllegalArgumentException();
 		}
 		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
 			throw new IllegalArgumentException(label);
 		}
+		this.automaticPackageStyle = automaticPackageStyle;
 		this.radius = radius;
 		this.circledFont = circledFont;
-		final Matcher m = circle.matcher(label);
-		if (m.find()) {
-			if (StringUtils.isNotEmpty(m.group(3))) {
-				this.label = "<<" + m.group(3) + ">>";
+		final Matcher mCircleChar = circleChar.matcher(label);
+		final Matcher mCircleSprite = circleSprite.matcher(label);
+		if (mCircleSprite.find()) {
+			if (StringUtils.isNotEmpty(mCircleSprite.group(3))) {
+				this.label = "<<" + mCircleSprite.group(3) + ">>";
 			} else {
 				this.label = null;
 			}
-			final String colName = m.group(2);
-			this.htmlColor = HtmlColor.getColorIfValid(colName);
-			this.character = m.group(1).charAt(0);
+			final String colName = mCircleSprite.group(2);
+			final HtmlColor col = HtmlColorUtils.getColorIfValid(colName);
+			this.htmlColor = col == null ? HtmlColorUtils.BLACK : col;
+			this.sprite = mCircleSprite.group(1);
+			this.character = '\0';
+		} else if (mCircleChar.find()) {
+			if (StringUtils.isNotEmpty(mCircleChar.group(3))) {
+				this.label = "<<" + mCircleChar.group(3) + ">>";
+			} else {
+				this.label = null;
+			}
+			final String colName = mCircleChar.group(2);
+			this.htmlColor = HtmlColorUtils.getColorIfValid(colName);
+			this.character = mCircleChar.group(1).charAt(0);
+			this.sprite = null;
 		} else {
 			this.label = label;
 			this.character = '\0';
 			this.htmlColor = null;
+			this.sprite = null;
 		}
 	}
 
-	public Stereotype(String stereotype) {
-		this.label = stereotype;
+	public Stereotype(String label) {
+		this(label, true);
+	}
+
+	public Stereotype(String label, boolean automaticPackageStyle) {
+		this.automaticPackageStyle = automaticPackageStyle;
+		this.label = label;
 		this.htmlColor = null;
 		this.character = '\0';
 		this.radius = 0;
 		this.circledFont = null;
+		this.sprite = null;
 	}
 
 	public HtmlColor getHtmlColor() {
@@ -96,8 +128,19 @@ public class Stereotype implements CharSequence {
 		return character;
 	}
 
+	public final String getSprite() {
+		return sprite;
+	}
+
+	public boolean isWithOOSymbol() {
+		return "<<O-O>>".equalsIgnoreCase(label);
+	}
+
 	public String getLabel() {
 		assert label == null || label.length() > 0;
+		if (isWithOOSymbol()) {
+			return null;
+		}
 		return label;
 	}
 
@@ -137,16 +180,33 @@ public class Stereotype implements CharSequence {
 	}
 
 	public List<String> getLabels() {
-		if (label==null) {
+		if (getLabel() == null) {
 			return null;
 		}
 		final List<String> result = new ArrayList<String>();
 		final Pattern p = Pattern.compile("\\<\\<.*?\\>\\>");
-		final Matcher m = p.matcher(label);
+		final Matcher m = p.matcher(getLabel());
 		while (m.find()) {
 			result.add(m.group());
 		}
 		return Collections.unmodifiableList(result);
 	}
+
+	public PackageStyle getPackageStyle() {
+		if (automaticPackageStyle == false) {
+			return null;
+		}
+		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {
+			if (("<<" + p + ">>").equalsIgnoreCase(label)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public boolean isHidden() {
+		return "<<hidden>>".equalsIgnoreCase(label);
+	}
+
 
 }

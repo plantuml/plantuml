@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 11271 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -101,7 +101,7 @@ public abstract class AbstractLineSegment extends Line2D {
 		return isBetween(toTest.getX(), pos1.getX(), pos2.getX()) && isBetween(toTest.getY(), pos1.getY(), pos2.getY());
 	}
 
-	private double getIntersectionVertical(double xOther) {
+	public double getIntersectionVertical(double xOther) {
 		final double coef = getP2().getX() - getP1().getX();
 		if (coef == 0) {
 			return java.lang.Double.NaN;
@@ -109,7 +109,7 @@ public abstract class AbstractLineSegment extends Line2D {
 		return (xOther - getP1().getX()) / coef;
 	}
 
-	private double getIntersectionHorizontal(double yOther) {
+	public double getIntersectionHorizontal(double yOther) {
 		final double coef = getP2().getY() - getP1().getY();
 		if (coef == 0) {
 			return java.lang.Double.NaN;

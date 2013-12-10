@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -44,8 +44,11 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.project.graphic.GanttDiagram;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -64,19 +67,18 @@ public class PSystemProject extends AbstractPSystem {
 		return 1;
 	}
 
-	public String getDescription() {
-		return "(Project)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(Project)", getClass());
 	}
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormatOption)
-			throws IOException {
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormatOption) throws IOException {
 		final GanttDiagram diagram = new GanttDiagram(project);
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final BufferedImage im = createImage(diagram);
-			PngIO.write(im, os, getMetadata(), 96);
+			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false);
+			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false, 1.0);
 			diagram.draw(svg, 0, 0);
 			svg.createXml(os);
 		} else if (fileFormat == FileFormat.EPS) {
@@ -90,12 +92,13 @@ public class PSystemProject extends AbstractPSystem {
 		} else {
 			throw new UnsupportedOperationException();
 		}
+		return new ImageDataSimple();
 	}
 
 	private BufferedImage createImage(GanttDiagram diagram) {
 		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, background);
 		Graphics2D g2d = builder.getGraphics2D();
-		UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, null, 1.0);
+		UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
 
 		final double height = diagram.getHeight(ug.getStringBounder());
 		final double width = diagram.getWidth(ug.getStringBounder());
@@ -106,7 +109,8 @@ public class PSystemProject extends AbstractPSystem {
 		final BufferedImage im = builder.getBufferedImage();
 		g2d = builder.getGraphics2D();
 
-		ug = new UGraphicG2d(colorMapper, g2d, im, 1.0);
+		ug = new UGraphicG2d(colorMapper, g2d, 1.0);
+		ug.setBufferedImage(im);
 		diagram.draw(ug, 0, 0);
 		g2d.dispose();
 		return im;

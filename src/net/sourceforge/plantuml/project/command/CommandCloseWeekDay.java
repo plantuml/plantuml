@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -42,14 +42,14 @@ import net.sourceforge.plantuml.project.WeekDay;
 
 public class CommandCloseWeekDay extends SingleLineCommand<PSystemProject> {
 
-	public CommandCloseWeekDay(PSystemProject diagram) {
-		super(diagram, "(?i)^\\s*close\\s+(\\w{3,}day)\\s*$");
+	public CommandCloseWeekDay() {
+		super("(?i)^\\s*close\\s+(\\w{3,}day)\\s*$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(PSystemProject diagram, List<String> arg) {
 		final WeekDay weekDay = WeekDay.valueOf(arg.get(0).substring(0, 3).toUpperCase());
-		getSystem().getProject().closeWeekDay(weekDay);
+		diagram.getProject().closeWeekDay(weekDay);
 		return CommandExecutionResult.ok();
 	}
 }

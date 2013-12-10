@@ -18,9 +18,9 @@
  */
 package jcckit.data;
 
-import jcckit.util.ConfigParameters;
-
 import java.util.StringTokenizer;
+
+import jcckit.util.ConfigParameters;
 
 /**
  *  A plot is a {@link DataContainer} of {@link DataCurve DataCurves}.

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,7 +38,6 @@ import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementBorder;
-import net.sourceforge.plantuml.salt.element.TableStrategy;
 
 public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 
@@ -53,10 +52,10 @@ public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 		final String header = getDataSource().next().getElement();
 		assert header.startsWith("{");
 
-		TableStrategy strategy = TableStrategy.DRAW_NONE;
-		if (header.length() == 2) {
-			strategy = TableStrategy.fromChar(header.charAt(1));
-		}
+//		TableStrategy strategy = TableStrategy.DRAW_NONE;
+//		if (header.length() == 2) {
+//			strategy = TableStrategy.fromChar(header.charAt(1));
+//		}
 
 		final ElementBorder result = new ElementBorder();
 

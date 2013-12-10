@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,11 +34,13 @@
 package net.sourceforge.plantuml.asciiart;
 
 import java.awt.geom.Dimension2D;
-import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -48,17 +50,20 @@ import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 public class ComponentTextSelfArrow implements Component {
 
 	private final ComponentType type;
-	private final List<? extends CharSequence> stringsToDisplay;
+	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
+	private final ArrowConfiguration config;
 
-	public ComponentTextSelfArrow(ComponentType type, List<? extends CharSequence> stringsToDisplay,
-			FileFormat fileFormat) {
+	public ComponentTextSelfArrow(ComponentType type, ArrowConfiguration config,
+			Display stringsToDisplay, FileFormat fileFormat) {
 		this.type = type;
 		this.stringsToDisplay = stringsToDisplay;
 		this.fileFormat = fileFormat;
+		this.config = config;
 	}
 
-	public void drawU(UGraphic ug, Dimension2D dimensionToUse, Context2D context) {
+	public void drawU(UGraphic ug, Area area, Context2D context) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight() - 1;
@@ -66,7 +71,7 @@ public class ComponentTextSelfArrow implements Component {
 		charArea.fillRect(' ', 0, 0, width, height);
 
 		if (fileFormat == FileFormat.UTXT) {
-			if (type.getArrowConfiguration().isDotted()) {
+			if (config.isDotted()) {
 				charArea.drawStringLR("\u2500 \u2500 \u2510", 0, 0);
 				charArea.drawStringLR("|", 4, 1);
 				charArea.drawStringLR("< \u2500 \u2518", 0, 2);
@@ -75,19 +80,17 @@ public class ComponentTextSelfArrow implements Component {
 				charArea.drawStringLR("\u2502", 4, 1);
 				charArea.drawStringLR("<\u2500\u2500\u2500\u2518", 0, 2);
 			}
+		} else if (config.isDotted()) {
+			charArea.drawStringLR("- - .", 0, 0);
+			charArea.drawStringLR("|", 4, 1);
+			charArea.drawStringLR("< - '", 0, 2);
 		} else {
-			if (type.getArrowConfiguration().isDotted()) {
-				charArea.drawStringLR("- - .", 0, 0);
-				charArea.drawStringLR("|", 4, 1);
-				charArea.drawStringLR("< - '", 0, 2);
-			} else {
-				charArea.drawStringLR("----.", 0, 0);
-				charArea.drawStringLR("|", 4, 1);
-				charArea.drawStringLR("<---'", 0, 2);
-			}
+			charArea.drawStringLR("----.", 0, 0);
+			charArea.drawStringLR("|", 4, 1);
+			charArea.drawStringLR("<---'", 0, 2);
 		}
 
-		charArea.drawStringsLR(stringsToDisplay, 6, 1);
+		charArea.drawStringsLR(stringsToDisplay.as(), 6, 1);
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

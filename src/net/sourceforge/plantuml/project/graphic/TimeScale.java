@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,14 +35,15 @@ package net.sourceforge.plantuml.project.graphic;
 
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -50,16 +51,18 @@ import net.sourceforge.plantuml.project.Day;
 import net.sourceforge.plantuml.project.Instant;
 import net.sourceforge.plantuml.project.Month;
 import net.sourceforge.plantuml.project.Project;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class TimeScale {
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
 	private final Project project;
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColor.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK);
 
 	public TimeScale(Project project) {
 		this.project = project;
@@ -72,8 +75,8 @@ class TimeScale {
 		final double caseHeight = getCaseHeight(stringBounder);
 		final int nb = getNbCase();
 
-		ug.getParam().setColor(HtmlColor.BLACK);
-		ug.draw(x, y, new URectangle(nb * caseWidth, monthHeight));
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug.apply(new UTranslate(x, y)).draw(new URectangle(nb * caseWidth, monthHeight));
 		final Instant end = project.getEnd();
 
 		Month printed = null;
@@ -82,28 +85,28 @@ class TimeScale {
 		for (Instant cur = project.getStart(); cur.compareTo(end) <= 0; cur = cur.next(project.getDayClose())) {
 			final Day d = cur.getDay();
 			if (printed == null || d.getMonth() != printed) {
-				ug.draw(curx, y, new ULine(0, monthHeight));
+				ug.apply(new UTranslate(curx, y)).draw(new ULine(0, monthHeight));
 				printed = d.getMonth();
-				final TextBlock b = TextBlockUtils.create(Arrays.asList(printed.name()), fontConfig,
-						HorizontalAlignement.LEFT);
+				final TextBlock b = TextBlockUtils.create(Display.asList(printed.name()), fontConfig,
+						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 				final Dimension2D dim = b.calculateDimension(stringBounder);
-				b.drawU(ug, curx, y + (monthHeight - dim.getHeight()) / 2);
+				b.drawU(ug.apply(new UTranslate(curx, (y + (monthHeight - dim.getHeight()) / 2))));
 			}
 			curx += caseWidth;
 		}
 
 		curx = x;
 		y += monthHeight;
-		ug.draw(x, y, new URectangle(nb * caseWidth, caseHeight));
+		ug.apply(new UTranslate(x, y)).draw(new URectangle(nb * caseWidth, caseHeight));
 
 		for (Instant cur = project.getStart(); cur.compareTo(end) <= 0; cur = cur.next(project.getDayClose())) {
 			final Day d = cur.getDay();
-			final TextBlock b = TextBlockUtils.create(Arrays.asList("" + d.getNumDay()), fontConfig,
-					HorizontalAlignement.LEFT);
+			final TextBlock b = TextBlockUtils.create(Display.asList("" + d.getNumDay()), fontConfig,
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final Dimension2D dim = b.calculateDimension(stringBounder);
-			b.drawU(ug, curx + (caseWidth - dim.getWidth()) / 2, y + (caseHeight - dim.getHeight()) / 2);
+			b.drawU(ug.apply(new UTranslate((curx + (caseWidth - dim.getWidth()) / 2), (y + (caseHeight - dim.getHeight()) / 2))));
 			curx += caseWidth;
-			ug.draw(curx, y, new ULine(0, caseHeight));
+			ug.apply(new UTranslate(curx, y)).draw(new ULine(0, caseHeight));
 		}
 	}
 

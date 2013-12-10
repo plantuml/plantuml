@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,25 +37,37 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class GraphicalDelayText extends GraphicalElement {
 
 	private final Component compText;
 
-	public GraphicalDelayText(double startingY, Component compText) {
+	private final ParticipantBox p1;
+	private final ParticipantBox p2;
+
+	public GraphicalDelayText(double startingY, Component compText, ParticipantBox first, ParticipantBox last) {
 		super(startingY);
 		this.compText = compText;
+		this.p1 = first;
+		this.p2 = last;
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
-		ug.translate(0, getStartingY());
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dim = new Dimension2DDouble(maxX, compText.getPreferredHeight(stringBounder));
-		compText.drawU(ug, dim, context);
+		final double x1 = p1.getCenterX(stringBounder);
+		final double x2 = p2.getCenterX(stringBounder);
+		final double middle = (x1 + x2) / 2;
+		final double textWidth = compText.getPreferredWidth(stringBounder);
+		ug = ug.apply(new UTranslate(middle - textWidth / 2, getStartingY()));
+		// ug.translate(x1, getStartingY());
+		final Dimension2D dim = new Dimension2DDouble(textWidth, compText.getPreferredHeight(stringBounder));
+		compText.drawU(ug, new Area(dim), context);
 	}
 
 	@Override

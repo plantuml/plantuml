@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 7231 $
+ * Revision $Revision: 11833 $
  *
  */
 package net.sourceforge.plantuml;
@@ -39,13 +39,20 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 
 public class OptionFlags {
 
-	static public final boolean PBBACK = false;
-	static public final boolean GRAPHVIZCACHE = false;
-	static public final boolean SVEK = false;
+	// static public final boolean PBBACK = false;
+	static public boolean GRAPHVIZCACHE = false;
+	static public final boolean TRACE_DOT = false;
+
+	static public final boolean HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED = false;
+	static public boolean ALLOW_INCLUDE = true;
+
+	static public final boolean USE_HECTOR = false;
+	static public final boolean USE_CREOLE = true;
 
 	void reset() {
 		reset(false);
@@ -57,9 +64,6 @@ public class OptionFlags {
 		metadata = false;
 		word = false;
 		systemExit = exit;
-		debugDot = false;
-		forceGd = false;
-		forceCairo = false;
 		dotExecutable = null;
 		gui = false;
 		quiet = false;
@@ -67,6 +71,8 @@ public class OptionFlags {
 		printFonts = false;
 		useSuggestEngine = true;
 		failOnError = false;
+		encodesprite = false;
+		// PIC_LINE = false;
 	}
 
 	public boolean useJavaInsteadOfDot() {
@@ -80,9 +86,6 @@ public class OptionFlags {
 	private boolean metadata;
 	private boolean word;
 	private boolean systemExit;
-	private boolean debugDot;
-	private boolean forceGd;
-	private boolean forceCairo;
 	private String dotExecutable;
 	private boolean gui;
 	private boolean quiet;
@@ -90,6 +93,8 @@ public class OptionFlags {
 	private boolean printFonts;
 	private boolean useSuggestEngine;
 	private boolean failOnError;
+	private boolean encodesprite;
+	private boolean overwrite;
 	private File logData;
 
 	private OptionFlags() {
@@ -140,14 +145,6 @@ public class OptionFlags {
 		this.systemExit = systemExit;
 	}
 
-	public final boolean isDebugDot() {
-		return debugDot;
-	}
-
-	public final void setDebugDot(boolean debugDot) {
-		this.debugDot = debugDot;
-	}
-
 	public final String getDotExecutable() {
 		return dotExecutable;
 	}
@@ -162,22 +159,6 @@ public class OptionFlags {
 
 	public final void setGui(boolean gui) {
 		this.gui = gui;
-	}
-
-	public final boolean isForceGd() {
-		return forceGd;
-	}
-
-	public final void setForceGd(boolean forceGd) {
-		this.forceGd = forceGd;
-	}
-
-	public final boolean isForceCairo() {
-		return forceCairo;
-	}
-
-	public final void setForceCairo(boolean forceCairo) {
-		this.forceCairo = forceCairo;
 	}
 
 	public final boolean isQuiet() {
@@ -198,8 +179,9 @@ public class OptionFlags {
 
 	private final AtomicBoolean logDataInitized = new AtomicBoolean(false);
 
-	public void logData(File file, PSystem system) {
-		if (system instanceof PSystemError == false) {
+	public void logData(File file, Diagram system) {
+		final String warnOrError = system.getWarningOrError();
+		if (warnOrError == null) {
 			return;
 		}
 		synchronized (logDataInitized) {
@@ -214,19 +196,12 @@ public class OptionFlags {
 			if (logData == null) {
 				return;
 			}
-			final PSystemError systemError = (PSystemError) system;
+			// final PSystemError systemError = (PSystemError) system;
 			PrintStream ps = null;
 			try {
 				ps = new PrintStream(new FileOutputStream(logData, true));
 				ps.println("Start of " + file.getName());
-				ps.println(systemError.getDescription());
-				for (CharSequence t : systemError.getTitle()) {
-					ps.println(t);
-				}
-				systemError.print(ps);
-				for (String s : systemError.getSuggest()) {
-					ps.println(s);
-				}
+				ps.println(warnOrError);
 				ps.println("End of " + file.getName());
 				ps.println();
 			} catch (FileNotFoundException e) {
@@ -239,6 +214,17 @@ public class OptionFlags {
 			}
 		}
 	}
+
+	// public static void logErrorFile(final PSystemError systemError, PrintStream ps) {
+	// ps.println(systemError.getDescription());
+	// for (CharSequence t : systemError.getTitle()) {
+	// ps.println(t);
+	// }
+	// systemError.print(ps);
+	// for (String s : systemError.getSuggest()) {
+	// ps.println(s);
+	// }
+	// }
 
 	public final void setLogData(File logData) {
 		this.logData = logData;
@@ -281,4 +267,20 @@ public class OptionFlags {
 		this.failOnError = failOnError;
 	}
 
+	public final boolean isEncodesprite() {
+		return encodesprite;
+	}
+
+	public final void setEncodesprite(boolean encodesprite) {
+		this.encodesprite = encodesprite;
+	}
+
+	public final boolean isOverwrite() {
+		return overwrite;
+	}
+
+	public final void setOverwrite(boolean overwrite) {
+		this.overwrite = overwrite;
+	}
+	
 }

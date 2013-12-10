@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.jcckit;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -48,6 +46,10 @@ import jcckit.util.ConfigParameters;
 import jcckit.util.PropertiesBasedConfigData;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 
 public class PSystemJcckit extends AbstractPSystem {
 
@@ -61,8 +63,7 @@ public class PSystemJcckit extends AbstractPSystem {
 		prop = new PropertiesBasedConfigData(p);
 	}
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat)
-			throws IOException {
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		// Sets up a Graphics2DPlotCanvas
@@ -73,10 +74,12 @@ public class PSystemJcckit extends AbstractPSystem {
 
 		// Writes the off-screen image into a PNG file
 		ImageIO.write(image, "png", os);
+
+		return new ImageDataSimple(width, height);
 	}
 
-	public String getDescription() {
-		return "(JCCKit)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(JCCKit)", getClass());
 	}
 
 }

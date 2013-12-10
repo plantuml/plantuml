@@ -1,6 +1,6 @@
 package com.ctreber.acearth.shader;
 
-import java.awt.*;
+import java.awt.Color;
 
 import com.ctreber.acearth.projection.Projection;
 import com.ctreber.acearth.scanbit.BitGeneratorMap;

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -48,7 +48,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.geom.InflationTransform;
 import net.sourceforge.plantuml.geom.Point2DInt;
 import net.sourceforge.plantuml.geom.Pointable;
@@ -190,8 +191,8 @@ public class Graph4 {
 			alreadyCurve.add(line);
 			line.draw(g2d);
 		}
-		final long TPS5 = System.currentTimeMillis() - start;
-		System.err.println("TPS5 = " + TPS5);
+		final long tps5 = System.currentTimeMillis() - start;
+		Log.println("TPS5 = " + tps5);
 
 		g2d.setColor(Color.GREEN);
 		for (ANodePoint nodePoint : nodePoints.values()) {
@@ -258,7 +259,7 @@ public class Graph4 {
 	}
 
 	private AbstractEntityImage getImage(ANode n) {
-		return new EntityImageFactory().createEntityImage((Entity) n.getUserData());
+		return new EntityImageFactory().createEntityImage((IEntity) n.getUserData());
 	}
 
 }

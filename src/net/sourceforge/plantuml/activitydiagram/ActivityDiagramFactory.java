@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -27,54 +27,62 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 5890 $
+ * 
+ * Revision $Revision: 10006 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram.command.CommandElse;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
-import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
-import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
-import net.sourceforge.plantuml.activitydiagram.command.CommandMultilinesNoteActivity;
-import net.sourceforge.plantuml.activitydiagram.command.CommandMultilinesNoteActivityLink;
-import net.sourceforge.plantuml.activitydiagram.command.CommandNoteActivity;
-import net.sourceforge.plantuml.activitydiagram.command.CommandNoteOnActivityLink;
+import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity2;
+import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity2;
 import net.sourceforge.plantuml.activitydiagram.command.CommandPartition;
-import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandRankDir;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.command.note.FactoryNoteActivityCommand;
+import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
 
-public class ActivityDiagramFactory extends AbstractUmlSystemCommandFactory {
+public class ActivityDiagramFactory extends UmlDiagramFactory {
 
-	private ActivityDiagram system;
-
-	public ActivityDiagram getSystem() {
-		return system;
+	@Override
+	public ActivityDiagram createEmptyDiagram() {
+		return new ActivityDiagram();
 	}
 
 	@Override
-	protected void initCommands() {
-		system = new ActivityDiagram();
+	protected List<Command> createCommands() {
+		final List<Command> cmds = new ArrayList<Command>();
+		addCommonCommands(cmds);
+		cmds.add(new CommandRankDir());
 
-		addCommonCommands(system);
+		cmds.add(new CommandPartition());
+		cmds.add(new CommandEndPartition());
+		cmds.add(new CommandLinkLongActivity2());
 
-		addCommand(new CommandLinkActivity(system));
-		addCommand(new CommandPartition(system));
-		addCommand(new CommandEndPartition(system));
-		addCommand(new CommandLinkLongActivity(system));
+		final FactoryNoteActivityCommand factoryNoteActivityCommand = new FactoryNoteActivityCommand();
+		cmds.add(factoryNoteActivityCommand.createSingleLine());
+		cmds.add(factoryNoteActivityCommand.createMultiLine());
 
-		addCommand(new CommandNoteActivity(system));
-		addCommand(new CommandMultilinesNoteActivity(system));
+		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
+		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
+		cmds.add(factoryNoteOnLinkCommand.createMultiLine());
 
-		addCommand(new CommandNoteOnActivityLink(system));
-		addCommand(new CommandMultilinesNoteActivityLink(system));
-		
-		addCommand(new CommandIf(system));
-		addCommand(new CommandElse(system));
-		addCommand(new CommandEndif(system));
+		cmds.add(new CommandIf());
+		cmds.add(new CommandElse());
+		cmds.add(new CommandEndif());
+
+		cmds.add(new CommandLinkActivity2());
 		// addCommand(new CommandInnerConcurrent(system));
+
+		return cmds;
+
 	}
 
 }

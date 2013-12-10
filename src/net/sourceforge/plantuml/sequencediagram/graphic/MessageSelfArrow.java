@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6026 $
+ * Revision $Revision: 10067 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -36,21 +36,26 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class MessageSelfArrow extends Arrow {
 
 	private final LivingParticipantBox p1;
+	private final double deltaY;
 
-	public MessageSelfArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1) {
-		super(startingY, skin, arrow);
+	public MessageSelfArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, double deltaY, Url url) {
+		super(startingY, skin, arrow, url);
 		this.p1 = p1;
+		this.deltaY = deltaY;
 	}
 
 	@Override
@@ -66,14 +71,19 @@ class MessageSelfArrow extends Arrow {
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.translate(getStartingX(stringBounder), getStartingY());
-		getArrowComponent().drawU(ug,
-				new Dimension2DDouble(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder)), context);
+		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY() + deltaY));
+		final Area area = new Area(new Dimension2DDouble(getPreferredWidth(stringBounder),
+				getPreferredHeight(stringBounder)));
+		area.setDeltaX1(deltaY);
+		startUrl(ug);
+		getArrowComponent().drawU(ug, area, context);
+		endUrl(ug);
 	}
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-		return p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
+		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
+		return pos2;
 	}
 
 	@Override

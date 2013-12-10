@@ -18,6 +18,7 @@
  */
 package jcckit.plot;
 
+import jcckit.graphic.ClippingShape;
 import jcckit.graphic.GraphPoint;
 import jcckit.graphic.GraphicAttributes;
 import jcckit.graphic.GraphicalElement;

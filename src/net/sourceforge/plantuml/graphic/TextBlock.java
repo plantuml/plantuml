@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,19 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7163 $
+ * Revision $Revision: 11863 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+public interface TextBlock extends UDrawable {
 
-public interface TextBlock extends UDrawable3 {
+	public abstract Dimension2D calculateDimension(StringBounder stringBounder);
 
-	Dimension2D calculateDimension(StringBounder stringBounder);
+	// public abstract List<Url> getUrlsTOBEREMOVED(StringBounder stringBounder);
 
-	void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y);
 }

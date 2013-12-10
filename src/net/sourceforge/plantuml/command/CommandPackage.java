@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,54 +28,82 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6209 $
+ * Revision $Revision: 7800 $
  *
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
-public class CommandPackage extends SingleLineCommand<AbstractEntityDiagram> {
+public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
-	public CommandPackage(AbstractEntityDiagram diagram) {
-		super(diagram,
-				"(?i)^package\\s+(\"[^\"]+\"|[^#\\s{}]*)(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(#[0-9a-fA-F]{6}|#?\\w+)?\\s*\\{?$");
-		// "(?i)^package\\s+(\"[^\"]+\"|\\S+)(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(#[0-9a-fA-F]{6}|#?\\w+)?\\s*\\{?$");
+	public CommandPackage() {
+		super(getRegexConcat());
+	}
+	
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^package\\s+"), //
+				new RegexLeaf("NAME", "(\"[^\"]+\"|[^#\\s{}]*)"), //
+				new RegexLeaf("AS", "(?:\\s+as\\s+([\\p{L}0-9_.]+))?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
+				// new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|#?\\w+)?"), //
+				new RegexLeaf("\\s*\\{?$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final String code;
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, RegexResult arg) {
+		final Code code;
 		final String display;
-		if (arg.get(1) == null) {
-			if (StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0)).length() == 0) {
-				code = "##" + UniqueSequence.getValue();
+		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+		if (arg.get("AS", 0) == null) {
+			if (name.length() == 0) {
+				code = Code.of("##" + UniqueSequence.getValue());
 				display = null;
 			} else {
-				code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
-				display = code;
+				code = Code.of(name);
+				display = code.getCode();
 			}
 		} else {
-			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
-			code = arg.get(1);
+			display = name;
+			code = Code.of(arg.get("AS", 0));
 		}
-		final Group currentPackage = getSystem().getCurrentGroup();
-		// if (getSystem().entityExist(code)) {
-		// return CommandExecutionResult.error("Package cannot have the same
-		// name as an existing class");
-		// }
-		final Group p = getSystem().getOrCreateGroup(code, display, null, GroupType.PACKAGE, currentPackage);
-		p.setBold(true);
-		final String color = arg.get(2);
+		final IGroup currentPackage = diagram.getCurrentGroup();
+		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), null, GroupType.PACKAGE, currentPackage);
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype != null) {
+			p.setStereotype(new Stereotype(stereotype));
+		}
+		
+		final String urlString = arg.get("URL", 0);
+		if (urlString != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url url = urlBuilder.getUrl(urlString);
+			p.addUrl(url);
+		}
+
+		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			p.setBackColor(HtmlColor.getColorIfValid(color));
+			p.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}

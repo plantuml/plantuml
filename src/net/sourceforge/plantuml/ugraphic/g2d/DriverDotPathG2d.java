@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.Graphics2D;
 
+import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -43,6 +44,12 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DriverDotPathG2d implements UDriver<Graphics2D> {
 
+	private final EnsureVisible visible;
+
+	public DriverDotPathG2d(EnsureVisible visible) {
+		this.visible = visible;
+	}
+
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final DotPath shape = (DotPath) ushape;
 		DriverLineG2d.manageStroke(param, g2d);
@@ -50,6 +57,7 @@ public class DriverDotPathG2d implements UDriver<Graphics2D> {
 		if (param.getColor() != null) {
 			g2d.setColor(mapper.getMappedColor(param.getColor()));
 			shape.draw(g2d, x, y);
+			shape.manageEnsureVisible(x, y, visible);
 		}
 	}
 }

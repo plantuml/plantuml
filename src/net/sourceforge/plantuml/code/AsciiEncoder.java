@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6170 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.code;
@@ -67,7 +67,11 @@ public class AsciiEncoder implements URLEncoder {
 		return data;
 	}
 
-	private char encode6bit(byte b) {
+	public int decode6bit(char c) {
+		return decode6bit[c];
+	}
+
+	public char encode6bit(byte b) {
 		assert b >= 0 && b < 64;
 		if (b < 10) {
 			return (char) ('0' + b);

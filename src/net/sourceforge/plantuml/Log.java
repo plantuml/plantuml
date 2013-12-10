@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6528 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml;
@@ -67,5 +67,19 @@ public abstract class Log {
 		sb.append(s);
 		return sb.toString();
 
+	}
+
+	public static void println(Object s) {
+		if (header == null) {
+			System.err.println("L = " + s);
+		} else {
+			System.err.println(header + " " + s);
+		}
+	}
+
+	private static String header;
+
+	public static void header(String s) {
+		header = s;
 	}
 }

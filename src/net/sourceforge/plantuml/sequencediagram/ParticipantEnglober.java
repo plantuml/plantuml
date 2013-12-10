@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,21 +33,20 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class ParticipantEnglober {
 
-	final private List<String> title;
+	final private Display title;
 	final private HtmlColor boxColor;
 
-	public ParticipantEnglober(List<String> title, HtmlColor boxColor) {
+	public ParticipantEnglober(Display title, HtmlColor boxColor) {
 		this.title = title;
 		this.boxColor = boxColor;
 	}
 
-	public final List<String> getTitle() {
+	public final Display getTitle() {
 		return title;
 	}
 

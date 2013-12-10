@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -46,9 +46,13 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemRIP extends AbstractPSystem {
@@ -73,17 +77,20 @@ public class PSystemRIP extends AbstractPSystem {
 		is.close();
 	}
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
-		getGraphicStrings().writeImage(os, fileFormat);
+	
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		return getGraphicStrings().exportDiagram(os, fileFormat);
 	}
+
 
 	private GraphicStrings getGraphicStrings() throws IOException {
 		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		return new GraphicStrings(strings, font, HtmlColor.BLACK, HtmlColor.WHITE, image, GraphicPosition.BOTTOM, false);
+		return new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, image,
+				GraphicPosition.BOTTOM, UAntiAliasing.ANTI_ALIASING_ON);
 	}
 
-	public String getDescription() {
-		return "(RIP)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(RIP)", getClass());
 	}
 
 	private static final byte imm[] = new byte[] { (byte) 255, (byte) 216, (byte) 255, (byte) 224, (byte) 0, (byte) 16,
@@ -451,5 +458,6 @@ public class PSystemRIP extends AbstractPSystem {
 			(byte) 0, (byte) 190, (byte) 104, (byte) 162, (byte) 138, (byte) 68, (byte) 159, (byte) 255, (byte) 217
 
 	};
+
 
 }

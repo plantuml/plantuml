@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -45,6 +45,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.core.DiagramDescription;
 
 public class FtpConnexion {
 
@@ -62,11 +63,10 @@ public class FtpConnexion {
 		}
 		incoming.put(fileName, data);
 	}
-	
+
 	public void removeOutgoing(String fileName) {
 		outgoing.remove(fileName);
 	}
-
 
 	public synchronized Collection<String> getFiles() {
 		final List<String> result = new ArrayList<String>(incoming.keySet());
@@ -111,14 +111,27 @@ public class FtpConnexion {
 		final SourceStringReader sourceStringReader = new SourceStringReader(incoming.get(fileName));
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final FileFormat format = FileFormat.PNG;
+		final DiagramDescription desc = sourceStringReader.generateDiagramDescription(baos, new FileFormatOption(format));
 		final String pngFileName = format.changeName(fileName, 0);
-		final String ok = sourceStringReader.generateImage(baos, new FileFormatOption(format));
-		if (ok != null) {
+		final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + ".err";
+		outgoing.remove(pngFileName);
+		outgoing.remove(errorFileName);
+		if (desc != null && desc.getDescription() != null) {
 			synchronized (this) {
 				outgoing.put(pngFileName, baos.toByteArray());
+				if (desc.getDescription().startsWith("(Error)")) {
+					final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();
+					sourceStringReader.generateImage(errBaos, new FileFormatOption(FileFormat.ATXT));
+					errBaos.close();
+					outgoing.put(errorFileName, errBaos.toByteArray());
+				}
 			}
 		}
 	}
 
+	public synchronized void delete(String fileName) {
+		incoming.remove(fileName);
+		outgoing.remove(fileName);
+	}
 
 }

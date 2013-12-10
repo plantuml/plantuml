@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -32,46 +32,49 @@
 package net.sourceforge.plantuml.version;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.DiagramType;
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-public class PSystemVersionFactory implements PSystemBasicFactory {
+public class PSystemVersionFactory extends PSystemSingleLineFactory {
 
-	private PSystemVersion system;
-
-	public void init(String startLine) {
-	}
-
-	public boolean executeLine(String line) {
+	@Override
+	protected AbstractPSystem executeLine(String line) {
 		try {
 			if (line.matches("(?i)^(authors?|about)\\s*$")) {
-				system = PSystemVersion.createShowAuthors();
-				return true;
+				return PSystemVersion.createShowAuthors();
 			}
 			if (line.matches("(?i)^version\\s*$")) {
-				system = PSystemVersion.createShowVersion();
-				return true;
+				return PSystemVersion.createShowVersion();
 			}
 			if (line.matches("(?i)^testdot\\s*$")) {
-				system = PSystemVersion.createTestDot();
-				return true;
+				return PSystemVersion.createTestDot();
+			}
+			if (line.matches("(?i)^checkversion\\s*$")) {
+				return PSystemVersion.createCheckVersions(null, null);
+			}
+			final Pattern p1 = Pattern.compile("(?i)^checkversion\\(proxy=([\\w.]+),port=(\\d+)\\)$");
+			final Matcher m1 = p1.matcher(line);
+			if (m1.matches()) {
+				final String host = m1.group(1);
+				final String port = m1.group(2);
+				return PSystemVersion.createCheckVersions(host, port);
+			}
+			final Pattern p2 = Pattern.compile("(?i)^checkversion\\(proxy=([\\w.]+)\\)$");
+			final Matcher m2 = p2.matcher(line);
+			if (m2.matches()) {
+				final String host = m2.group(1);
+				final String port = "80";
+				return PSystemVersion.createCheckVersions(host, port);
 			}
 		} catch (IOException e) {
 			Log.error("Error " + e);
 
 		}
-		return false;
+		return null;
 	}
-
-	public PSystemVersion getSystem() {
-		return system;
-	}
-	
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
-	}
-
 
 }

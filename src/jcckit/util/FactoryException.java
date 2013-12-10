@@ -18,7 +18,7 @@
  */
 package jcckit.util;
 
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  *  Exception thrown in the case of an error during creation of a new

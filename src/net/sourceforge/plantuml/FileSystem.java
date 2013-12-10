@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,13 +28,16 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6908 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class FileSystem {
 
@@ -64,10 +67,47 @@ public class FileSystem {
 
 	public File getFile(String nameOrPath) throws IOException {
 		final File dir = currentDir.get();
-		if (dir == null) {
+		if (dir == null || isAbsolute(nameOrPath)) {
 			return new File(nameOrPath).getCanonicalFile();
 		}
-		return new File(dir.getAbsoluteFile(), nameOrPath).getCanonicalFile();
+		final File filecurrent = new File(dir.getAbsoluteFile(), nameOrPath);
+		if (filecurrent.exists()) {
+			return filecurrent.getCanonicalFile();
+		}
+		for (File d : getPath("plantuml.include.path")) {
+			final File file = new File(d, nameOrPath);
+			if (file.exists()) {
+				return file.getCanonicalFile();
+			}
+		}
+		for (File d : getPath("java.class.path")) {
+			final File file = new File(d, nameOrPath);
+			if (file.exists()) {
+				return file.getCanonicalFile();
+			}
+		}
+		return filecurrent;
+	}
+
+	private List<File> getPath(String prop) {
+		final List<File> result = new ArrayList<File>();
+		final String paths = System.getProperty(prop);
+		if (paths == null) {
+			return result;
+		}
+		final StringTokenizer st = new StringTokenizer(paths, System.getProperty("path.separator"));
+		while (st.hasMoreTokens()) {
+			final File f = new File(st.nextToken());
+			if (f.exists() && f.isDirectory()) {
+				result.add(f);
+			}
+		}
+		return result;
+	}
+
+	private boolean isAbsolute(String nameOrPath) {
+		final File f = new File(nameOrPath);
+		return f.isAbsolute();
 	}
 
 	public void reset() {

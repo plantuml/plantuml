@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,23 +33,26 @@
  */
 package net.sourceforge.plantuml.postit;
 
-import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PostIdDiagramFactory extends AbstractUmlSystemCommandFactory {
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
 
-	private PostItDiagram system;
+public class PostIdDiagramFactory extends UmlDiagramFactory {
 
 	@Override
-	protected void initCommands() {
-		system = new PostItDiagram();
-
-		addCommonCommands(system);
-		addCommand(new CommandCreatePostIt(system));
-		addCommand(new CommandWidth(system));
+	protected List<Command> createCommands() {
+		final List<Command> cmds = new ArrayList<Command>();
+		addCommonCommands(cmds);
+		cmds.add(new CommandCreatePostIt());
+		cmds.add(new CommandWidth());
+		return cmds;
 	}
 
-	public PostItDiagram getSystem() {
-		return system;
+	@Override
+	public PostItDiagram createEmptyDiagram() {
+		return new PostItDiagram();
 	}
 
 }

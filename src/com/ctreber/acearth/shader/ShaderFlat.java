@@ -1,6 +1,6 @@
 package com.ctreber.acearth.shader;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * <p>Flat shader (does not care for Projection).</p>

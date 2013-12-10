@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6485 $
+ * Revision $Revision: 11416 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -40,11 +40,13 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class NoteBox extends GraphicalElement implements InGroupable {
+final class NoteBox extends GraphicalElement implements InGroupable {
 
 	private final NotePosition position;
 	private final Url url;
@@ -74,7 +76,16 @@ class NoteBox extends GraphicalElement implements InGroupable {
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
-		return comp.getPreferredWidth(stringBounder);
+		final double preferredWidth = comp.getPreferredWidth(stringBounder);
+		if (position == NotePosition.OVER_SEVERAL) {
+			assert p1 != p2;
+			final double diff1 = p2.getParticipantBox().getMaxX(stringBounder) - p1.getParticipantBox().getMinX();
+			if (diff1 > preferredWidth) {
+				return diff1;
+			}
+
+		}
+		return preferredWidth;
 	}
 
 	@Override
@@ -86,15 +97,15 @@ class NoteBox extends GraphicalElement implements InGroupable {
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double xStart = getStartingX(stringBounder);
-		ug.translate(xStart, getStartingY());
-		final Dimension2D dimensionToUse = new Dimension2DDouble(comp.getPreferredWidth(stringBounder), comp
+		ug = ug.apply(new UTranslate(xStart, getStartingY()));
+		final Dimension2D dimensionToUse = new Dimension2DDouble(getPreferredWidth(stringBounder), comp
 				.getPreferredHeight(stringBounder));
 		if (url != null) {
-			ug.setUrl(url.getUrl(), url.getTooltip());
+			ug.startUrl(url);
 		}
-		comp.drawU(ug, dimensionToUse, context);
+		comp.drawU(ug, new Area(dimensionToUse), context);
 		if (url != null) {
-			ug.setUrl(null, null);
+			ug.closeAction();
 		}
 	}
 
@@ -115,10 +126,6 @@ class NoteBox extends GraphicalElement implements InGroupable {
 		} else {
 			throw new IllegalStateException();
 		}
-		// if (InGroupableList.NEW_METHOD) {
-		// System.err.println("GET STARTING X OF " + this + " " + (xStart +
-		// delta));
-		// }
 		return xStart + delta;
 	}
 

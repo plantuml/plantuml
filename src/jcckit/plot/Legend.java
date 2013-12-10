@@ -18,11 +18,13 @@
  */
 package jcckit.plot;
 
+import java.util.Properties;
+
 import jcckit.graphic.BasicGraphicAttributes;
-import jcckit.graphic.GraphicalElement;
-import jcckit.graphic.GraphicalComposite;
-import jcckit.graphic.GraphicAttributes;
 import jcckit.graphic.GraphPoint;
+import jcckit.graphic.GraphicAttributes;
+import jcckit.graphic.GraphicalComposite;
+import jcckit.graphic.GraphicalElement;
 import jcckit.graphic.Polygon;
 import jcckit.graphic.Rectangle;
 import jcckit.graphic.ShapeAttributes;
@@ -33,8 +35,6 @@ import jcckit.util.ConfigParameters;
 import jcckit.util.ConfigParametersBasedConfigData;
 import jcckit.util.Factory;
 import jcckit.util.PropertiesBasedConfigData;
-
-import java.util.Properties;
 
 
 /**

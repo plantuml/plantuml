@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4696 $
+ * Revision $Revision: 10085 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -54,10 +54,8 @@ abstract class GraphicalElement {
 	}
 
 	public final void drawU(UGraphic ug, double maxX, Context2D context) {
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
+		// bugnewway
 		drawInternalU(ug, maxX, context);
-		ug.setTranslate(atX, atY);
 	}
 
 	protected abstract void drawInternalU(UGraphic ug, double maxX, Context2D context);

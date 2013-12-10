@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -48,13 +48,12 @@ public class DriverDotPathSvg implements UDriver<SvgGraphics> {
 		// DriverLineG2d.manageStroke(param, g2d);
 
 		if (param.getColor() != null) {
-			final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param
-					.getColor()));
+			final String color = StringUtils.getAsSvg(mapper, param.getColor());
 			svg.setStrokeColor(color);
 			svg.setFillColor(null);
-			svg.setStrokeWidth("" + param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
-			
-			svg.svgPath(x, y, shape.toUPath());
+			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
+
+			svg.svgPath(x, y, shape.toUPath(), 0);
 		}
 	}
 }

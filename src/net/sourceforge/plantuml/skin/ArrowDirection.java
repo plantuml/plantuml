@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,6 +33,19 @@
  */
 package net.sourceforge.plantuml.skin;
 
+
 public enum ArrowDirection {
-	LEFT_TO_RIGHT_NORMAL, RIGHT_TO_LEFT_REVERSE, SELF
+	LEFT_TO_RIGHT_NORMAL, RIGHT_TO_LEFT_REVERSE, SELF, BOTH_DIRECTION;
+
+	public ArrowDirection reverse() {
+		switch (this) {
+		case LEFT_TO_RIGHT_NORMAL:
+			return RIGHT_TO_LEFT_REVERSE;
+		case RIGHT_TO_LEFT_REVERSE:
+			return LEFT_TO_RIGHT_NORMAL;
+		default:
+			throw new UnsupportedOperationException();
+		}
+	}
+
 }

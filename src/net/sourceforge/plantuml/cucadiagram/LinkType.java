@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,17 +37,24 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class LinkType {
 
+	private final LinkHat hat1;
 	private final LinkDecor decor1;
 	private final LinkStyle style;
 	private final LinkDecor decor2;
+	private final LinkHat hat2;
+	private final LinkMiddleDecor middleDecor;
 
 	public LinkType(LinkDecor decor1, LinkDecor decor2) {
-		this(decor1, LinkStyle.NORMAL, decor2);
+		this(LinkHat.NONE, decor1, decor2, LinkHat.NONE);
 	}
 
-	public boolean contains(LinkDecor decors) {
-		return decor1 == decors || decor2 == decors;
+	public LinkType(LinkHat hat1, LinkDecor decor1, LinkDecor decor2, LinkHat hat2) {
+		this(hat1, decor1, LinkStyle.NORMAL, LinkMiddleDecor.NONE, decor2, hat2);
 	}
+
+	// public boolean contains(LinkDecor decors) {
+	// return decor1 == decors || decor2 == decors;
+	// }
 
 	@Override
 	public String toString() {
@@ -65,10 +72,14 @@ public class LinkType {
 		return this.decor1 == other.decor1 && this.decor2 == other.decor2 && this.style == other.style;
 	}
 
-	private LinkType(LinkDecor decor1, LinkStyle style, LinkDecor decor2) {
+	private LinkType(LinkHat hat1, LinkDecor decor1, LinkStyle style, LinkMiddleDecor middleDecor, LinkDecor decor2,
+			LinkHat hat2) {
 		this.decor1 = decor1;
 		this.style = style;
 		this.decor2 = decor2;
+		this.middleDecor = middleDecor;
+		this.hat1 = hat1;
+		this.hat2 = hat2;
 	}
 
 	public boolean isDashed() {
@@ -83,97 +94,94 @@ public class LinkType {
 		return style == LinkStyle.BOLD;
 	}
 
+	public boolean isInvisible() {
+		return style == LinkStyle.INVISIBLE;
+	}
+
 	public LinkType getDashed() {
-		return new LinkType(decor1, LinkStyle.DASHED, decor2);
+		return new LinkType(hat1, decor1, LinkStyle.DASHED, middleDecor, decor2, hat2);
 	}
 
 	public LinkType getDotted() {
-		return new LinkType(decor1, LinkStyle.DOTTED, decor2);
+		return new LinkType(hat1, decor1, LinkStyle.DOTTED, middleDecor, decor2, hat2);
 	}
 
 	public LinkType getBold() {
-		return new LinkType(decor1, LinkStyle.BOLD, decor2);
+		return new LinkType(hat1, decor1, LinkStyle.BOLD, middleDecor, decor2, hat2);
 	}
 
 	public LinkType getInterfaceProvider() {
-		return new LinkType(decor1, LinkStyle.INTERFACE_PROVIDER, decor2);
+		return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_PROVIDER, middleDecor, decor2, hat2);
 	}
 
 	public LinkType getInterfaceUser() {
-		return new LinkType(decor1, LinkStyle.INTERFACE_USER, decor2);
+		return new LinkType(hat1, decor1, LinkStyle.__toremove_INTERFACE_USER, middleDecor, decor2, hat2);
 	}
 
-	public LinkType getInv() {
-		return new LinkType(decor2, style, decor1);
+	public LinkType getInversed() {
+		return new LinkType(hat2, decor2, style, middleDecor, decor1, hat1);
 	}
 
-	public String getSpecificDecoration() {
-		final StringBuilder sb = new StringBuilder();
+	public LinkType withMiddleCircle() {
+		return new LinkType(hat1, decor1, style, LinkMiddleDecor.CIRCLE, decor2, hat2);
+	}
 
-		if (decor1 == LinkDecor.NONE && decor2 != LinkDecor.NONE) {
-			sb.append("dir=back,");
-		}
-		if (decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE) {
-			sb.append("dir=both,");
-		}
+	public LinkType withMiddleCircleCircled() {
+		return new LinkType(hat1, decor1, style, LinkMiddleDecor.CIRCLE_CIRCLED, decor2, hat2);
+	}
 
-		sb.append("arrowtail=");
-		sb.append(decor2.getArrowDot());
-		sb.append(",arrowhead=");
-		sb.append(decor1.getArrowDot());
+	public LinkType withMiddleCircleCircled1() {
+		return new LinkType(hat1, decor1, style, LinkMiddleDecor.CIRCLE_CIRCLED1, decor2, hat2);
+	}
 
-		if (decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS) {
-			sb.append(",arrowsize=2");
-		}
-		if (decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS) {
-			sb.append(",arrowsize=1.5");
-		}
+	public LinkType withMiddleCircleCircled2() {
+		return new LinkType(hat1, decor1, style, LinkMiddleDecor.CIRCLE_CIRCLED2, decor2, hat2);
+	}
 
-		if (style == LinkStyle.DASHED) {
-			sb.append(",style=dashed");
-		}
-		if (style == LinkStyle.DOTTED) {
-			sb.append(",style=dotted,");
-		}
-		if (style == LinkStyle.BOLD) {
-			sb.append(",style=bold,");
-		}
-
-		return sb.toString();
+	public LinkType getInvisible() {
+		return new LinkType(hat1, decor1, LinkStyle.INVISIBLE, middleDecor, decor2, hat2);
 	}
 
 	public String getSpecificDecorationSvek() {
 		final StringBuilder sb = new StringBuilder();
 
-		if (decor1 == LinkDecor.NONE && decor2 != LinkDecor.NONE) {
-			sb.append("dir=back,");
-		}
-		if (decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE) {
+		final boolean isEmpty1 = decor1 == LinkDecor.NONE && hat1 == LinkHat.NONE;
+		final boolean isEmpty2 = decor2 == LinkDecor.NONE && hat2 == LinkHat.NONE;
+
+		if (isEmpty1 && isEmpty2) {
+			sb.append("arrowtail=none");
+			sb.append(",arrowhead=none");
+		} else if (isEmpty1 == false && isEmpty2 == false) {
 			sb.append("dir=both,");
+			sb.append("arrowtail=empty");
+			sb.append(",arrowhead=empty");
+		} else if (isEmpty1 && isEmpty2 == false) {
+			sb.append("arrowtail=empty");
+			sb.append(",arrowhead=none");
+			sb.append(",dir=back");
+		} else if (isEmpty1 == false && isEmpty2) {
+			sb.append("arrowtail=none");
+			sb.append(",arrowhead=empty");
 		}
 
-		sb.append("arrowtail=");
-		sb.append(decor2.getArrowDotSvek());
-		sb.append(",arrowhead=");
-		sb.append(decor1.getArrowDotSvek());
+		// if (decor1 == LinkDecor.NONE && decor2 != LinkDecor.NONE) {
+		// sb.append("dir=back,");
+		// }
+		// if (decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE) {
+		// sb.append("dir=both,");
+		// }
+		//
+		// sb.append("dir=both,");
+		//
+		// sb.append("arrowtail=");
+		// sb.append(decor2.getArrowDotSvek());
+		// sb.append(",arrowhead=");
+		// sb.append(decor1.getArrowDotSvek());
 
-		if (decor1 == LinkDecor.EXTENDS || decor2 == LinkDecor.EXTENDS) {
-			sb.append(",arrowsize=2");
+		final double arrowsize = Math.max(decor1.getArrowSize(), decor2.getArrowSize());
+		if (arrowsize > 0) {
+			sb.append(",arrowsize=" + arrowsize);
 		}
-		if (decor1 == LinkDecor.PLUS || decor2 == LinkDecor.PLUS) {
-			sb.append(",arrowsize=1.5");
-		}
-
-//		if (style == LinkStyle.DASHED) {
-//			sb.append(",style=dashed");
-//		}
-//		if (style == LinkStyle.DOTTED) {
-//			sb.append(",style=dotted,");
-//		}
-//		if (style == LinkStyle.BOLD) {
-//			sb.append(",style=bold,");
-//		}
-
 		return sb.toString();
 	}
 
@@ -207,11 +215,11 @@ public class LinkType {
 	}
 
 	public LinkType getPart1() {
-		return new LinkType(decor1, style, LinkDecor.NONE);
+		return new LinkType(hat1, decor1, style, middleDecor, LinkDecor.NONE, LinkHat.NONE);
 	}
 
 	public LinkType getPart2() {
-		return new LinkType(LinkDecor.NONE, style, decor2);
+		return new LinkType(LinkHat.NONE, LinkDecor.NONE, style, middleDecor, decor2, hat2);
 	}
 
 	public UStroke getStroke() {
@@ -226,4 +234,17 @@ public class LinkType {
 		}
 		return new UStroke();
 	}
+
+	public LinkMiddleDecor getMiddleDecor() {
+		return middleDecor;
+	}
+
+	public LinkHat getHat1() {
+		return hat1;
+	}
+
+	public LinkHat getHat2() {
+		return hat2;
+	}
+
 }

@@ -18,7 +18,8 @@
  */
 package jcckit.util;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 /**

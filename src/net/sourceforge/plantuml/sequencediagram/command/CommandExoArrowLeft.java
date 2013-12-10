@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,33 +33,51 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
-import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandExoArrowLeft extends CommandExoArrowAny {
 
-	public CommandExoArrowLeft(SequenceDiagram sequenceDiagram) {
-		super(
-				sequenceDiagram,
-				"(?i)^(\\[?[=-]+(?:>>?|//?|\\\\\\\\?)|\\[?(?:<<?|//?|\\\\\\\\?)[=-]+)\\s*([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(?::\\s*(.*))?$",
-				0, 1);
+	public CommandExoArrowLeft() {
+		super(getRegexConcat());
+	}
+
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("SHORT", "([?\\[])?"), //
+				new RegexOr( //
+						new RegexConcat( //
+								new RegexLeaf("ARROW_BOTHDRESSING", "(<<?|//?|\\\\\\\\?)?"), //
+								new RegexLeaf("ARROW_BODYA1", "(-+)"), //
+								new RegexLeaf("ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
+								new RegexLeaf("ARROW_BODYB1", "(-*)"), //
+								new RegexLeaf("ARROW_DRESSING1", "(>>?|//?|\\\\\\\\?)")), //
+						new RegexConcat( //
+								new RegexLeaf("ARROW_DRESSING2", "(<<?|//?|\\\\\\\\?)"), //
+								new RegexLeaf("ARROW_BODYB1", "(-*)"), //
+								new RegexLeaf("ARROW_STYLE2", CommandArrow.getColorOrStylePattern()), //
+								new RegexLeaf("ARROW_BODYA2", "(-+)"))), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("PARTICIPANT", "([\\p{L}0-9_.@]+|\"[^\"]+\")"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("LABEL", "(?::\\s*(.*))?"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	MessageExoType getMessageExoType(String arrow) {
-		if (arrow.contains(">")) {
+	MessageExoType getMessageExoType(RegexResult arg2) {
+		final String dressing1 = arg2.get("ARROW_DRESSING1", 0);
+		final String dressing2 = arg2.get("ARROW_DRESSING2", 0);
+		if (dressing1 != null) {
 			return MessageExoType.FROM_LEFT;
 		}
-		if (arrow.contains("<")) {
+		if (dressing2 != null) {
 			return MessageExoType.TO_LEFT;
 		}
-		if (arrow.startsWith("/") || arrow.startsWith("[/") || arrow.startsWith("\\") || arrow.startsWith("[\\")) {
-			return MessageExoType.TO_LEFT;
-		}
-		if (arrow.endsWith("\\") || arrow.endsWith("/")) {
-			return MessageExoType.FROM_LEFT;
-		}
-		throw new IllegalArgumentException(arrow);
+		throw new IllegalArgumentException();
 	}
 
 }

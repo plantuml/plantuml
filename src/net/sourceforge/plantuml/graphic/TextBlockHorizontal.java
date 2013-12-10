@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,21 +33,22 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockHorizontal implements TextBlock {
+class TextBlockHorizontal implements TextBlock {
 
 	private final TextBlock b1;
 	private final TextBlock b2;
+	private final VerticalAlignment alignment;
 
-	public TextBlockHorizontal(TextBlock b1, TextBlock b2) {
+	public TextBlockHorizontal(TextBlock b1, TextBlock b2, VerticalAlignment alignment) {
 		this.b1 = b1;
 		this.b2 = b2;
+		this.alignment = alignment;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -56,14 +57,18 @@ public class TextBlockHorizontal implements TextBlock {
 		return Dimension2DDouble.mergeLR(dim1, dim2);
 	}
 
-	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void drawU(UGraphic ug, double x, double y) {
-		b1.drawU(ug, x, y);
+	public void drawU(UGraphic ug) {
+		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+		final Dimension2D dimb1 = b1.calculateDimension(ug.getStringBounder());
+		final Dimension2D dimb2 = b2.calculateDimension(ug.getStringBounder());
 		final Dimension2D dim1 = b1.calculateDimension(ug.getStringBounder());
-		b2.drawU(ug, x + dim1.getWidth(), y);
+		if (alignment == VerticalAlignment.CENTER) {
+			b1.drawU(ug.apply(new UTranslate(0, ((dim.getHeight() - dimb1.getHeight()) / 2))));
+			b2.drawU(ug.apply(new UTranslate(dim1.getWidth(), ((dim.getHeight() - dimb2.getHeight()) / 2))));
+		} else {
+			b1.drawU(ug);
+			b2.drawU(ug.apply(new UTranslate(dim1.getWidth(), 0)));
+		}
 	}
 
 }

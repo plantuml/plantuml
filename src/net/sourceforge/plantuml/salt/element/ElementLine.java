@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,24 +36,49 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementLine implements Element {
 
+	private final char separator;
+
+	public ElementLine(char separator) {
+		this.separator = separator;
+	}
+
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		return new Dimension2DDouble(10, 8);
+		return new Dimension2DDouble(10, 6);
 	}
 
 	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
 		if (zIndex != 0) {
 			return;
 		}
-		final HtmlColor old = ug.getParam().getColor();
-		ug.getParam().setColor(HtmlColor.getColorIfValid("#AAAAAA"));
-		ug.draw(x, y, new ULine(dimToUse.getWidth(), 0));
-		ug.getParam().setColor(old);
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.getColorIfValid("#AAAAAA")));
+		double y2 = y + dimToUse.getHeight() / 2;
+		if (separator == '=') {
+			y2 = y2 - 1;
+		}
+		drawLine(ug, x, y2, dimToUse.getWidth(), separator);
 	}
+
+	private static void drawLine(UGraphic ug, double x, double y, double widthToUse, char separator) {
+		if (separator == '=') {
+			ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+			ug.apply(new UStroke()).apply(new UTranslate(x, y + 2)).draw(new ULine(widthToUse, 0));
+		} else if (separator == '.') {
+			ug.apply(new UStroke(1, 2, 1)).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+		} else if (separator == '-') {
+			ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+		} else {
+			ug.apply(new UStroke(1.5)).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+		}
+	}
+
 }

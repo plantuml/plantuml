@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,72 +28,83 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.List;
 
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
 	private final double arrowWidth = 45;
+	private final boolean niceArrow;
 
-	public ComponentRoseSelfArrow(HtmlColor foregroundColor, HtmlColor colorFont, UFont font,
-			List<? extends CharSequence> stringsToDisplay, ArrowConfiguration arrowConfiguration) {
-		super(foregroundColor, colorFont, font, stringsToDisplay, arrowConfiguration);
+	public ComponentRoseSelfArrow(HtmlColor foregroundColor, HtmlColor colorFont, UFont font, Display stringsToDisplay,
+			ArrowConfiguration arrowConfiguration, SpriteContainer spriteContainer, double maxMessageSize,
+			boolean niceArrow) {
+		super(foregroundColor, colorFont, font, stringsToDisplay, arrowConfiguration, spriteContainer,
+				HorizontalAlignment.LEFT, maxMessageSize);
+		this.niceArrow = niceArrow;
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double textHeight = getTextHeight(stringBounder);
 
-		ug.getParam().setColor(getForegroundColor());
+		ug = ug.apply(new UChangeColor(getForegroundColor()));
 		final double x2 = arrowWidth - 3;
 
 		if (getArrowConfiguration().isDotted()) {
-			stroke(ug, 2, 2);
+			ug = stroke(ug, 2, 2);
 		}
 
-		ug.draw(0, textHeight, new ULine(x2, 0));
+		final double dx1 = area.getDeltaX1() < 0 ? area.getDeltaX1() : 0;
+		final double dx2 = area.getDeltaX1() > 0 ? -area.getDeltaX1() : 0;
+
+		ug.apply(new UTranslate(dx1, textHeight)).draw(new ULine(x2 - dx1, 0));
 
 		final double textAndArrowHeight = textHeight + getArrowOnlyHeight(stringBounder);
 
-		ug.draw(x2, textHeight, new ULine(0, textAndArrowHeight - textHeight));
-		ug.draw(0, textAndArrowHeight, new ULine(x2, 0));
+		ug.apply(new UTranslate(x2, textHeight)).draw(new ULine(0, textAndArrowHeight - textHeight));
+		ug.apply(new UTranslate(dx2, textAndArrowHeight)).draw(new ULine(x2 - dx2, 0));
 
 		if (getArrowConfiguration().isDotted()) {
-			ug.getParam().setStroke(new UStroke());
+			ug = ug.apply(new UStroke());
 		}
 
-		if (getArrowConfiguration().isASync()) {
+		if (getArrowConfiguration().isAsync()) {
 			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
-				ug.draw(0, textAndArrowHeight, new ULine(getArrowDeltaX(), -getArrowDeltaY()));
+				ug.apply(new UTranslate(dx2, textAndArrowHeight)).draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));
 			}
 			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
-				ug.draw(0, textAndArrowHeight, new ULine(getArrowDeltaX(), getArrowDeltaY()));
+				ug.apply(new UTranslate(dx2, textAndArrowHeight)).draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));
 			}
 		} else {
-			ug.getParam().setBackcolor(getForegroundColor());
 			final UPolygon polygon = getPolygon(textAndArrowHeight);
-			ug.draw(0, 0, polygon);
-			ug.getParam().setBackcolor(null);
+			ug.apply(new UChangeBackColor(getForegroundColor())).apply(new UTranslate(dx2, 0)).draw(polygon);
 		}
 
-		getTextBlock().drawU(ug, getMarginX1(), 0);
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), 0)));
 	}
 
 	private UPolygon getPolygon(final double textAndArrowHeight) {
@@ -110,6 +121,9 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
 			polygon.addPoint(0, textAndArrowHeight);
 			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
+			if (niceArrow) {
+				polygon.addPoint(getArrowDeltaX() - 4, textAndArrowHeight);
+			}
 		}
 		return polygon;
 	}

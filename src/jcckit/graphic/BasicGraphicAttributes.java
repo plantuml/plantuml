@@ -18,9 +18,9 @@
  */
 package jcckit.graphic;
 
-import jcckit.util.ConfigParameters;
-
 import java.awt.Color;
+
+import jcckit.util.ConfigParameters;
 
 /**
  * The basic attributes of any {@link BasicGraphicalElement}. This is an

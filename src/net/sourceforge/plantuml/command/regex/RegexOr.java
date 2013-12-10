@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -48,10 +48,6 @@ public class RegexOr extends RegexComposed implements IRegex {
 	}
 
 	public RegexOr(String name, IRegex... partial) {
-		this(name, false, partial);
-	}
-
-	public RegexOr(String name, boolean optionnal, IRegex... partial) {
 		super(partial);
 		this.name = name;
 		final StringBuilder sb = new StringBuilder("(");
@@ -64,9 +60,6 @@ public class RegexOr extends RegexComposed implements IRegex {
 		}
 		sb.setLength(sb.length() - 1);
 		sb.append(')');
-		if (optionnal) {
-			sb.append('?');
-		}
 		this.full = Pattern.compile(sb.toString());
 	}
 

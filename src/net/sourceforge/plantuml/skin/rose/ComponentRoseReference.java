@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,20 +34,25 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
-import java.util.List;
 
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseReference extends AbstractTextualComponent {
 
@@ -58,34 +63,40 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final TextBlock textHeader;
 	private final double heightFooter = 5;
 	private final double xMargin = 2;
-	private final HorizontalAlignement position;
+	private final HorizontalAlignment position;
+	private final double deltaShadow;
+	private final UStroke stroke;
 
 	public ComponentRoseReference(HtmlColor fontColor, HtmlColor fontHeaderColor, UFont font, HtmlColor borderColor,
-			HtmlColor backgroundHeader, HtmlColor background, UFont header,
-			List<? extends CharSequence> stringsToDisplay, HorizontalAlignement position) {
-		super(stringsToDisplay.subList(1, stringsToDisplay.size()), fontColor, font, HorizontalAlignement.LEFT, 4, 4, 4);
+			HtmlColor backgroundHeader, HtmlColor background, UFont header, Display stringsToDisplay,
+			HorizontalAlignment position, SpriteContainer spriteContainer, double deltaShadow, UStroke stroke) {
+		super(stringsToDisplay.subList(1, stringsToDisplay.size()), fontColor, font, HorizontalAlignment.LEFT, 4, 4,
+				4, spriteContainer, 0, false);
 		this.position = position;
 		this.backgroundHeader = backgroundHeader;
 		this.background = background;
 		this.borderColor = borderColor;
+		this.deltaShadow = deltaShadow;
+		this.stroke = stroke;
 
 		textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), new FontConfiguration(header,
-				fontHeaderColor), HorizontalAlignement.LEFT);
+				fontHeaderColor), HorizontalAlignment.LEFT, spriteContainer);
 
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeaderWidth = (int) (getHeaderWidth(stringBounder));
 		final int textHeaderHeight = (int) (getHeaderHeight(stringBounder));
 
-		ug.getParam().setStroke(new UStroke(2));
-		final URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2, dimensionToUse.getHeight()
-				- heightFooter);
-		ug.getParam().setColor(borderColor);
-		ug.getParam().setBackcolor(background);
-		ug.draw(xMargin, 0, rect);
+		ug = ug.apply(stroke);
+		final URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2 - deltaShadow,
+				dimensionToUse.getHeight() - heightFooter);
+		rect.setDeltaShadow(deltaShadow);
+		ug = ug.apply(new UChangeBackColor(background)).apply(new UChangeColor(borderColor));
+		ug.apply(new UTranslate(xMargin, 0)).draw(rect);
 
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(0, 0);
@@ -97,24 +108,23 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		polygon.addPoint(0, textHeaderHeight);
 		polygon.addPoint(0, 0);
 
-		ug.getParam().setColor(borderColor);
-		ug.getParam().setBackcolor(backgroundHeader);
-		ug.draw(xMargin, 0, polygon);
+		ug = ug.apply(new UChangeBackColor(backgroundHeader)).apply(new UChangeColor(borderColor));
+		ug.apply(new UTranslate(xMargin, 0)).draw(polygon);
 
-		ug.getParam().setStroke(new UStroke());
+		ug = ug.apply(new UStroke());
 
-		textHeader.drawU(ug, 15, 2);
+		textHeader.drawU(ug.apply(new UTranslate(15, 2)));
 		final double textPos;
-		if (position == HorizontalAlignement.CENTER) {
+		if (position == HorizontalAlignment.CENTER) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
 			textPos = (dimensionToUse.getWidth() - textWidth) / 2;
-		} else if (position == HorizontalAlignement.RIGHT) {
+		} else if (position == HorizontalAlignment.RIGHT) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
 			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2() - xMargin;
 		} else {
 			textPos = getMarginX1() + xMargin;
 		}
-		getTextBlock().drawU(ug, textPos, getMarginY() + textHeaderHeight);
+		getTextBlock().drawU(ug.apply(new UTranslate(textPos, (getMarginY() + textHeaderHeight))));
 	}
 
 	private double getHeaderHeight(StringBounder stringBounder) {
@@ -134,7 +144,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return Math.max(getTextWidth(stringBounder), getHeaderWidth(stringBounder)) + xMargin * 2;
+		return Math.max(getTextWidth(stringBounder), getHeaderWidth(stringBounder)) + xMargin * 2 + deltaShadow;
 	}
 
 }

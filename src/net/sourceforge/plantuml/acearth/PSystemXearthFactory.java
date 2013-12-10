@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -40,23 +40,23 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+
 import com.ctreber.acearth.plugins.markers.Marker;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 
-public class PSystemXearthFactory implements PSystemBasicFactory {
-
-	private PSystemXearth system;
 	private final Map<String, String> config = new LinkedHashMap<String, String>();
 	private final List<Marker> markers = new ArrayList<Marker>();
 	private int width;
 	private int height;
 
-	public void init(String startLine) {
+	public PSystemXearth init(String startLine) {
 		this.width = 512;
 		this.height = 512;
 		this.config.clear();
+		this.markers.clear();
+		return null;
 	}
 
 	private void extractDimension(String startLine) {
@@ -69,43 +69,36 @@ public class PSystemXearthFactory implements PSystemBasicFactory {
 		}
 	}
 
-	public PSystemXearth getSystem() {
-		return system;
-	}
-
-	public boolean executeLine(String line) {
-		if (line.startsWith("xearth")) {
+	@Override
+	public PSystemXearth executeLine(PSystemXearth system, String line) {
+		if (system == null && line.startsWith("xearth")) {
 			extractDimension(line);
 			system = new PSystemXearth(width, height, config, markers);
-			return true;
+			return system;
 		}
 		if (system == null) {
-			return false;
+			return null;
 		}
 		if (line.startsWith("#") || line.startsWith("'")) {
-			return true;
+			return system;
 		}
 		final Pattern p = Pattern.compile("(\\w+)\\s*=\\s*(.*)");
 		final Matcher m = p.matcher(line);
 		if (m.find()) {
 			config.put(m.group(1), m.group(2));
-			return true;
+			return system;
 		}
 		try {
 			final Marker marker = Marker.loadMarkerFile(line);
 			if (marker != null) {
 				markers.add(marker);
-				return true;
+				return system;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
-		return false;
-	}
-
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
+		return null;
 	}
 
 }

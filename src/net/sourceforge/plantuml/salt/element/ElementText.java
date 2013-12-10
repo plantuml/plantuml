@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,14 +36,17 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 import java.util.List;
 
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementText implements Element {
 
@@ -51,9 +54,9 @@ public class ElementText implements Element {
 	private final boolean show;
 	private final String text;
 
-	public ElementText(List<String> text, UFont font) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColor.BLACK);
-		this.block = TextBlockUtils.create(text, config, HorizontalAlignement.LEFT);
+	public ElementText(List<String> text, UFont font, SpriteContainer spriteContainer) {
+		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK);
+		this.block = TextBlockUtils.create(new Display(text), config, HorizontalAlignment.LEFT, spriteContainer);
 		this.show = text.get(0).equals(".") == false;
 		this.text = text.get(0);
 	}
@@ -67,7 +70,7 @@ public class ElementText implements Element {
 			return;
 		}
 		if (show) {
-			block.drawU(ug, x, y);
+			block.drawU(ug.apply(new UTranslate(x, y)));
 		}
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,12 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6922 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.util.List;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public final class Page {
 
@@ -42,7 +42,7 @@ public final class Page {
 	private final double newpage2;
 	private final double tailHeight;
 	private final double signatureHeight;
-	private final List<? extends CharSequence> title;
+	private final Display title;
 
 	@Override
 	public String toString() {
@@ -50,7 +50,7 @@ public final class Page {
 	}
 
 	public Page(double headerHeight, double newpage1, double newpage2, double tailHeight,
-			double signatureHeight, List<? extends CharSequence> title) {
+			double signatureHeight, Display title) {
 		if (headerHeight < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -114,7 +114,7 @@ public final class Page {
 		return headerHeight;
 	}
 
-	public final List<? extends CharSequence> getTitle() {
+	public final Display getTitle() {
 		return title;
 	}
 

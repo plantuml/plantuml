@@ -1,10 +1,8 @@
 package com.ctreber.acearth.plugins.markers;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import com.ctreber.acearth.ACearth;
 import com.ctreber.acearth.plugins.Plugin;
 
 /**

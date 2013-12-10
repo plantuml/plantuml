@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,31 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 11263 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class Participant implements SpecificBackcolorable {
 
 	private final String code;
-	private final List<CharSequence> display;
+	private Display display;
 	private final ParticipantType type;
 
 	private int initialLife = 0;
 
 	private Stereotype stereotype;
 
-	public Participant(ParticipantType type, String code, List<String> display) {
+	public Participant(ParticipantType type, String code, Display display) {
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
@@ -64,7 +61,7 @@ public class Participant implements SpecificBackcolorable {
 		}
 		this.code = code;
 		this.type = type;
-		this.display = new ArrayList<CharSequence>(display);
+		this.display = display;
 	}
 
 	public String getCode() {
@@ -76,18 +73,21 @@ public class Participant implements SpecificBackcolorable {
 		return getCode();
 	}
 
-	public List<CharSequence> getDisplay() {
-		return Collections.unmodifiableList(display);
+	public Display getDisplay(boolean underlined) {
+		if (underlined) {
+			return display.underlined();
+		}
+		return display;
 	}
 
 	public ParticipantType getType() {
 		return type;
 	}
 
-	public final void setStereotype(Stereotype stereotype) {
-		if (type == ParticipantType.ACTOR) {
-			return;
-		}
+	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
+		// if (type == ParticipantType.ACTOR) {
+		// return;
+		// }
 		if (this.stereotype != null) {
 			throw new IllegalStateException();
 		}
@@ -95,7 +95,11 @@ public class Participant implements SpecificBackcolorable {
 			throw new IllegalArgumentException();
 		}
 		this.stereotype = stereotype;
-		display.add(0, stereotype);
+		if (stereotypePositionTop) {
+			display = display.addFirst(stereotype);
+		} else {
+			display = display.add(stereotype);
+		}
 	}
 
 	public final int getInitialLife() {

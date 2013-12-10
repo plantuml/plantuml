@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -87,7 +87,7 @@ public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 				try {
 					final byte b[] = s.getBytes("ISO-8859-1");
 					if (b.length == 1) {
-						final int code = (b[0] & 0xFF);
+						final int code = b[0] & 0xFF;
 						sb.append("\\" + Integer.toOctalString(code));
 					} else {
 						sb.append('?');

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,21 +33,37 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.List;
-
-import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public class MessageExo extends AbstractMessage {
 
 	final private MessageExoType type;
 	final private Participant participant;
+	final private boolean shortArrow;
 
-	public MessageExo(Participant p, MessageExoType type, List<String> label, ArrowConfiguration arrowConfiguration,
-			String messageNumber) {
+	public MessageExo(Participant p, MessageExoType type, Display label, ArrowConfiguration arrowConfiguration,
+			String messageNumber, boolean shortArrow) {
 		super(label, arrowConfiguration, messageNumber);
 		this.participant = p;
 		this.type = type;
+		this.shortArrow = shortArrow;
+	}
+	
+	public boolean isShortArrow() {
+		return shortArrow;
+	}
+
+
+	@Override
+	protected NotePosition overideNotePosition(NotePosition notePosition) {
+		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {
+			return NotePosition.RIGHT;
+		}
+		if (type == MessageExoType.FROM_RIGHT || type == MessageExoType.TO_RIGHT) {
+			return NotePosition.LEFT;
+		}
+		throw new IllegalStateException();
 	}
 
 	public Participant getParticipant() {
@@ -62,8 +78,10 @@ public class MessageExo extends AbstractMessage {
 		return participant == someone;
 	}
 
-	public Url getUrl() {
-		return null;
+	@Override
+	public boolean compatibleForCreate(Participant p) {
+		return p == participant;
 	}
+
 
 }

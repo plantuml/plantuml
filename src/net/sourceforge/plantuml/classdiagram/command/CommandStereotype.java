@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5728 $
+ * Revision $Revision: 11432 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -39,22 +39,23 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
 public class CommandStereotype extends SingleLineCommand<ClassDiagram> {
 
-	public CommandStereotype(ClassDiagram classDiagram) {
-		super(classDiagram, "(?i)^([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)$");
+	public CommandStereotype() {
+		super("(?i)^([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final String code = arg.get(0);
+	protected CommandExecutionResult executeArg(ClassDiagram classDiagram, List<String> arg) {
+		final Code code = Code.of(arg.get(0));
 		final String stereotype = arg.get(1);
-		final Entity entity = (Entity) getSystem().getOrCreateClass(code);
-		entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
-				getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+		final IEntity entity = classDiagram.getOrCreateLeaf(code, null);
+		entity.setStereotype(new Stereotype(stereotype, classDiagram.getSkinParam().getCircledCharacterRadius(),
+				classDiagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
 		return CommandExecutionResult.ok();
 	}
 

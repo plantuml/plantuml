@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,72 +33,82 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
-import net.sourceforge.plantuml.skin.ArrowDirection;
+import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
 
-abstract class CommandExoArrowAny extends SingleLineCommand<SequenceDiagram> {
+abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
-	private final int posArrow;
-	private final int posParticipant;
-
-	public CommandExoArrowAny(SequenceDiagram sequenceDiagram, String pattern, int posArrow, int posParticipant) {
-		super(sequenceDiagram, pattern);
-		this.posArrow = posArrow;
-		this.posParticipant = posParticipant;
+	public CommandExoArrowAny(RegexConcat pattern) {
+		super(pattern);
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(List<String> arg) {
-		final String arrow = StringUtils.manageArrowForSequence(arg.get(posArrow));
-		final Participant p = getSystem().getOrCreateParticipant(
-				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(posParticipant)));
+	final protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, RegexResult arg2) {
+		final String body = arg2.getLazzy("ARROW_BODYA", 0) + arg2.getLazzy("ARROW_BODYB", 0);
+		final String dressing = arg2.getLazzy("ARROW_DRESSING", 0);
+		final Participant p = sequenceDiagram.getOrCreateParticipant(StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg2.get("PARTICIPANT", 0)));
 
-		final boolean sync = arrow.endsWith(">>") || arrow.startsWith("<<") || arrow.contains("//")
-				|| arrow.contains("\\\\");
-		final boolean dotted = arrow.contains("--");
+		final boolean sync = dressing.length() == 2;
+		final boolean dotted = body.contains("--");
 
-		final List<String> labels;
-		if (arg.get(2) == null) {
-			labels = Arrays.asList("");
+		final Display labels;
+		if (arg2.get("LABEL", 0) == null) {
+			labels = Display.asList("");
 		} else {
-			labels = StringUtils.getWithNewlines(arg.get(2));
+			labels = Display.getWithNewlines(arg2.get("LABEL", 0));
 		}
 
-		ArrowConfiguration config = ArrowConfiguration.withDirection(ArrowDirection.LEFT_TO_RIGHT_NORMAL);
+		final boolean bothDirection = arg2.get("ARROW_BOTHDRESSING", 0) != null;
+
+		ArrowConfiguration config = bothDirection ? ArrowConfiguration.withDirectionBoth() : ArrowConfiguration
+				.withDirectionNormal();
 		if (dotted) {
 			config = config.withDotted();
 		}
 		if (sync) {
-			config = config.withAsync();
+			config = config.withHead(ArrowHead.ASYNC);
 		}
-		config = config.withPart(getArrowPart(arrow));
+		config = config.withPart(getArrowPart(dressing));
+		config = CommandArrow.applyStyle(arg2.getLazzy("ARROW_STYLE", 0), config);
 
-		getSystem().addMessage(
-				new MessageExo(p, getMessageExoType(arrow), labels, config, getSystem().getNextMessageNumber()));
+		final String error = sequenceDiagram.addMessage(new MessageExo(p, getMessageExoType(arg2), labels, config,
+				sequenceDiagram.getNextMessageNumber(), isShortArrow(arg2)));
+		if (error != null) {
+			return CommandExecutionResult.error(error);
+		}
 		return CommandExecutionResult.ok();
 	}
 
-	private ArrowPart getArrowPart(String arrow) {
-		if (arrow.contains("/")) {
+	private ArrowPart getArrowPart(String dressing) {
+		if (dressing.contains("/")) {
 			return ArrowPart.BOTTOM_PART;
 		}
-		if (arrow.contains("\\")) {
+		if (dressing.contains("\\")) {
 			return ArrowPart.TOP_PART;
 		}
 		return ArrowPart.FULL;
 	}
 
-	abstract MessageExoType getMessageExoType(String arrow);
+	abstract MessageExoType getMessageExoType(RegexResult arg2);
+
+	private boolean isShortArrow(RegexResult arg2) {
+		final String s = arg2.getLazzy("SHORT", 0);
+		if (s != null && s.contains("?")) {
+			return true;
+		}
+		return false;
+	}
 
 }

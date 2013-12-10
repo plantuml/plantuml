@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6493 $
+ * Revision $Revision: 11858 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -49,11 +49,11 @@ import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Event;
-import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEngloberContexted;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class DrawableSet {
 
@@ -83,6 +84,10 @@ class DrawableSet {
 		}
 		this.skin = skin;
 		this.skinParam = skinParam;
+	}
+
+	public ParticipantBox getVeryfirst() {
+		return participants.values().iterator().next().getParticipantBox();
 	}
 
 	public final Skin getSkin() {
@@ -137,7 +142,7 @@ class DrawableSet {
 		if (englober == null) {
 			return height;
 		}
-		final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober
+		final Component comp = skin.createComponent(ComponentType.ENGLOBER, null, skinParam, englober
 				.getParticipantEnglober().getTitle());
 		final double heightEnglober = comp.getPreferredHeight(stringBounder);
 		return height + heightEnglober;
@@ -166,7 +171,7 @@ class DrawableSet {
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
 		for (ParticipantEngloberContexted englober : getExistingParticipantEnglober()) {
-			final Component comp = skin.createComponent(ComponentType.ENGLOBER, skinParam, englober
+			final Component comp = skin.createComponent(ComponentType.ENGLOBER, null, skinParam, englober
 					.getParticipantEnglober().getTitle());
 			final double height = comp.getPreferredHeight(stringBounder);
 			if (height > result) {
@@ -235,32 +240,30 @@ class DrawableSet {
 
 	void drawU(UGraphic ug, final double delta, double width, Page page, boolean showTail) {
 
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
+		final UGraphic ugOrig = ug;
 
 		final int height = (int) page.getHeight();
 
-		clipAndTranslate(delta, width, page, ug);
-		this.drawPlaygroundU(ug, height, new SimpleContext2D(true));
-		ug.setClip(null);
-		ug.setTranslate(atX, atY);
-		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, new SimpleContext2D(true));
-		// ug.setClip(null);
-		// ug.setTranslate(atX, atY);
+		ug = clipAndTranslate2(delta, width, page, ug);
+		final SimpleContext2D context = new SimpleContext2D(true);
+		this.drawPlaygroundU(ug, height, context);
+		ug = ugOrig;
+
+		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
 
 		this.drawLineU(ug, showTail, page);
 		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);
 
-		clipAndTranslate(delta, width, page, ug);
+		ug = clipAndTranslate2(delta, width, page, ug);
 		this.drawPlaygroundU(ug, height, new SimpleContext2D(false));
-		ug.setClip(null);
 	}
 
-	private void clipAndTranslate(final double delta, double width, Page p, final UGraphic ug) {
-		ug.setClip(new UClip(0, p.getBodyRelativePosition(), width, p.getBodyHeight() + 1));
+	private UGraphic clipAndTranslate2(final double delta, double width, Page p, UGraphic ug) {
+		ug = ug.apply(new UClip(0, p.getBodyRelativePosition(), width, p.getBodyHeight() + 1));
 		if (delta > 0) {
-			ug.translate(0, -delta);
+			ug = ug.apply(new UTranslate(0, -delta));
 		}
+		return ug;
 	}
 
 	private void drawLineU(UGraphic ug, boolean showTail, Page page) {
@@ -278,7 +281,8 @@ class DrawableSet {
 					start += create - page.getNewpage1() + 2 * box.magicMargin(ug.getStringBounder());
 				}
 			}
-			box.drawLineU(ug, start, endMax, showTail);
+			final double myDelta = page.getNewpage1() - page.getHeaderHeight();
+			box.drawLineU(ug, start, endMax, showTail, myDelta);
 		}
 	}
 
@@ -298,11 +302,11 @@ class DrawableSet {
 			}
 			final Url url = p.getUrl();
 			if (url != null) {
-				ug.setUrl(url.getUrl(), url.getTooltip());
+				ug.startUrl(url);
 			}
 			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);
 			if (url != null) {
-				ug.setUrl(null, null);
+				ug.closeAction();
 			}
 		}
 	}
@@ -333,21 +337,17 @@ class DrawableSet {
 			final Component comp = getEngloberComponent(englober.getParticipantEnglober());
 
 			final double width = x2 - x1;
-			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(), englober
-					.getParticipantEnglober());
+			final double preferedWidth = getEngloberPreferedWidth(ug.getStringBounder(),
+					englober.getParticipantEnglober());
 			if (preferedWidth > width) {
 				// if (englober.getFirst2() == englober.getLast2()) {
 				x1 -= (preferedWidth - width) / 2;
 				// }
 				final Dimension2DDouble dim = new Dimension2DDouble(preferedWidth, height);
-				ug.translate(x1, 1);
-				comp.drawU(ug, dim, context);
-				ug.translate(-x1, -1);
+				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
 			} else {
 				final Dimension2DDouble dim = new Dimension2DDouble(width, height);
-				ug.translate(x1, 1);
-				comp.drawU(ug, dim, context);
-				ug.translate(-x1, -1);
+				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
 			}
 		}
 	}
@@ -357,9 +357,9 @@ class DrawableSet {
 	}
 
 	private Component getEngloberComponent(ParticipantEnglober englober) {
-		final ISkinParam s = englober.getBoxColor() == null ? skinParam : new SkinParamBackcolored(skinParam, englober
-				.getBoxColor());
-		return skin.createComponent(ComponentType.ENGLOBER, s, englober.getTitle());
+		final ISkinParam s = englober.getBoxColor() == null ? skinParam : new SkinParamBackcolored(skinParam,
+				englober.getBoxColor());
+		return skin.createComponent(ComponentType.ENGLOBER, null, s, englober.getTitle());
 	}
 
 	public double getX1(ParticipantEngloberContexted englober) {
@@ -394,66 +394,6 @@ class DrawableSet {
 		this.topStartingY = topStartingY;
 	}
 
-	public void appendCmap(StringBuilder cmap, int offsetX, int offsetY, StringBounder stringBounder) {
-		cmap.append("<map id=\"sequence\" name=\"sequence\">\n");
-		for (Map.Entry<Participant, LivingParticipantBox> entry : participants.entrySet()) {
-			final Participant p = entry.getKey();
-			final Url url = p.getUrl();
-			if (url != null) {
-				final ParticipantBox box = entry.getValue().getParticipantBox();
-
-				final double width = box.getPreferredWidth(stringBounder);
-				final double height = box.getHeadHeightOnly(stringBounder);
-
-				final double x1 = offsetX + box.getMinX();
-				final double x2 = x1 + width;
-
-				// final double y1 = sequenceAreaY;
-				// final double y2 = y1 + height;
-				final double y2 = offsetY + topStartingY - box.magicMargin(stringBounder);
-				final double y1 = y2 - height;
-				final String id = p.getCode();
-				appendArea(cmap, id, url, x1, x2, y2, y1);
-			}
-		}
-
-		for (Map.Entry<Event, GraphicalElement> ent : events.entrySet()) {
-			final Event ev = ent.getKey();
-			final Url url = ev.getUrl();
-			if (url == null) {
-				continue;
-			}
-			final GraphicalElement gra = ent.getValue();
-			final double x1 = ((InGroupable) gra).getMinX(stringBounder);
-			final double x2 = ((InGroupable) gra).getMaxX(stringBounder);
-			final double y1 = gra.getStartingY() + offsetY;
-			final double y2 = y1 + gra.getPreferredHeight(stringBounder);
-			appendArea(cmap, ev.toString(), url, x1, x2, y2, y1);
-
-		}
-
-		cmap.append("</map>\n");
-	}
-
-	private void appendArea(StringBuilder cmap, final String id, final Url url, final double x1, final double x2,
-			final double y2, final double y1) {
-		cmap.append("<area shape=\"rect\" id=\"");
-		cmap.append(id);
-		cmap.append("\" href=\"");
-		cmap.append(url.getUrl());
-		cmap.append("\" title=\"");
-		cmap.append(url.getTooltip());
-		cmap.append("\" coords=\"");
-		cmap.append(Math.round(x1));
-		cmap.append(",");
-		cmap.append(Math.round(y1));
-		cmap.append(",");
-		cmap.append(Math.round(x2));
-		cmap.append(",");
-		cmap.append(Math.round(y2));
-		cmap.append("\"/>\n");
-	}
-	
 	Participant getFirst(Collection<Participant> someParticipants) {
 		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
 		int min = -1;
@@ -479,7 +419,5 @@ class DrawableSet {
 		}
 		return list.get(max);
 	}
-
-
 
 }

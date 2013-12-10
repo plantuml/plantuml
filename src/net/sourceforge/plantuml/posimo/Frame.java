@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -39,20 +39,26 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Frame implements Component {
 
@@ -72,16 +78,15 @@ public class Frame implements Component {
 		// this.font = font;
 	}
 
-	public void drawU(UGraphic ug, Dimension2D dimensionToUse, Context2D context) {
+	public void drawU(UGraphic ug, Area area, Context2D context) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final HtmlColor lineColor = rose.getHtmlColor(skinParam, ColorParam.packageBorder);
-		ug.getParam().setColor(lineColor);
-		ug.getParam().setBackcolor(null);
-		ug.getParam().setStroke(new UStroke(1.4));
-		ug.draw(0, 0, new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
-		ug.getParam().setStroke(new UStroke());
+		ug = ug.apply(new UChangeColor(lineColor));
+		ug = ug.apply(new UChangeBackColor(null));
+		ug.apply(new UStroke(1.4)).draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
 
 		final TextBlock textBlock = createTextBloc();
-		textBlock.drawU(ug, 2, 2);
+		textBlock.drawU(ug.apply(new UTranslate(2, 2)));
 
 		final Dimension2D textDim = getTextDim(ug.getStringBounder());
 		final double x = textDim.getWidth() + 6;
@@ -92,10 +97,7 @@ public class Frame implements Component {
 		poly.addPoint(x - 6, y);
 		poly.addPoint(0, y);
 		poly.addPoint(0, 0);
-		ug.getParam().setColor(lineColor);
-		ug.getParam().setStroke(new UStroke(1.4));
-		ug.draw(0, 0, poly);
-		ug.getParam().setStroke(new UStroke());
+		ug.apply(new UStroke(1.4)).draw(poly);
 
 	}
 
@@ -117,8 +119,8 @@ public class Frame implements Component {
 	private TextBlock createTextBloc() {
 		final UFont font = skinParam.getFont(FontParam.PACKAGE, null);
 		final HtmlColor textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null);
-		final TextBlock bloc = TextBlockUtils.create(name, new FontConfiguration(font, textColor),
-				HorizontalAlignement.LEFT);
+		final TextBlock bloc = TextBlockUtils.create(new Display(name), new FontConfiguration(font, textColor),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		return bloc;
 	}
 

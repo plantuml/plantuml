@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,44 +28,43 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7221 $
+ * Revision $Revision: 11477 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Hideable;
+import net.sourceforge.plantuml.Removeable;
+import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
-public class Link implements Imaged {
+public class Link implements Hideable, Removeable {
 
 	final private IEntity cl1;
 	final private IEntity cl2;
-	final private LinkType type;
-	final private String label;
+	private LinkType type;
+	final private Display label;
 
 	private int length;
 	final private String qualifier1;
 	final private String qualifier2;
 	final private String uid = "LNK" + UniqueSequence.getValue();
 
-	private DrawFile imageFile;
-
-	private List<? extends CharSequence> note;
+	private Display note;
 	private Position notePosition;
+	private HtmlColor noteColor;
 
 	private boolean invis = false;
 	private double weight = 1.0;
@@ -76,32 +75,43 @@ public class Link implements Imaged {
 	private HtmlColor specificColor;
 	private boolean constraint = true;
 	private boolean inverted = false;
+	private LinkArrow linkArrow = LinkArrow.NONE;
 
-	public final boolean isInverted() {
-		return inverted;
-	}
+	private boolean opale;
+	private boolean horizontalSolitary;
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length) {
+	private Url url;
+
+	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length) {
 		this(cl1, cl2, type, label, length, null, null, null, null, null);
 	}
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length, String qualifier1,
+	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
 			String qualifier2, String labeldistance, String labelangle) {
 		this(cl1, cl2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle, null);
 	}
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, String label, int length, String qualifier1,
+	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
 			String qualifier2, String labeldistance, String labelangle, HtmlColor specificColor) {
 		if (length < 1) {
 			throw new IllegalArgumentException();
 		}
-		if (cl1 == null || cl2 == null) {
+		if (cl1 == null) {
 			throw new IllegalArgumentException();
 		}
+		if (cl2 == null) {
+			throw new IllegalArgumentException();
+		}
+
 		this.cl1 = cl1;
 		this.cl2 = cl2;
 		this.type = type;
-		this.label = label;
+		if (label == null) {
+			this.label = null;
+		} else {
+			this.url = label.initUrl();
+			this.label = label.removeUrl(url);
+		}
 		this.length = length;
 		this.qualifier1 = qualifier1;
 		this.qualifier2 = qualifier2;
@@ -109,10 +119,10 @@ public class Link implements Imaged {
 		this.labelangle = labelangle;
 		this.specificColor = specificColor;
 		if (qualifier1 != null) {
-			cl1.setNearDecoration(true);
+			((ILeaf) cl1).setNearDecoration(true);
 		}
 		if (qualifier2 != null) {
-			cl2.setNearDecoration(true);
+			((ILeaf) cl2).setNearDecoration(true);
 		}
 	}
 
@@ -121,25 +131,28 @@ public class Link implements Imaged {
 		// final int x = cl1.getXposition();
 		// cl2.setXposition(x-1);
 		// }
-		final Link result = new Link(cl2, cl1, getType().getInv(), label, length, qualifier2, qualifier1,
+		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
 				labeldistance, labelangle, specificColor);
 		result.inverted = true;
 		return result;
 	}
 
-	public Link getDashed() {
-		return new Link(cl1, cl2, getType().getDashed(), label, length, qualifier1, qualifier2, labeldistance,
-				labelangle, specificColor);
+	public void goDashed() {
+		type = type.getDashed();
 	}
 
-	public Link getDotted() {
-		return new Link(cl1, cl2, getType().getDotted(), label, length, qualifier1, qualifier2, labeldistance,
-				labelangle, specificColor);
+	public void goDotted() {
+		type = type.getDotted();
 	}
 
-	public Link getBold() {
-		return new Link(cl1, cl2, getType().getBold(), label, length, qualifier1, qualifier2, labeldistance,
-				labelangle, specificColor);
+	private boolean hidden = false;
+
+	public void goHidden() {
+		this.hidden = true;
+	}
+
+	public void goBold() {
+		type = type.getBold();
 	}
 
 	public String getLabeldistance() {
@@ -157,31 +170,14 @@ public class Link implements Imaged {
 	}
 
 	public final boolean isInvis() {
+		if (type.isInvisible()) {
+			return true;
+		}
 		return invis;
 	}
 
 	public final void setInvis(boolean invis) {
 		this.invis = invis;
-	}
-
-	private static IEntity muteProxy(IEntity ent, Group g, IEntity proxy) {
-		if (ent.getParent() == g) {
-			return proxy;
-		}
-		return ent;
-	}
-
-	public Link mute(Group g, Entity proxy) {
-		if (cl1.getParent() == g && cl1.getType() != EntityType.GROUP && cl2.getParent() == g
-				&& cl2.getType() != EntityType.GROUP) {
-			return null;
-		}
-		final IEntity ent1 = muteProxy(cl1, g, proxy);
-		final IEntity ent2 = muteProxy(cl2, g, proxy);
-		if (this.cl1 == ent1 && this.cl2 == ent2) {
-			return this;
-		}
-		return new Link(ent1, ent2, getType(), label, length, qualifier1, qualifier2, labeldistance, labelangle);
 	}
 
 	public boolean isBetween(IEntity cl1, IEntity cl2) {
@@ -214,7 +210,7 @@ public class Link implements Imaged {
 		return type;
 	}
 
-	public String getLabel() {
+	public Display getLabel() {
 		return label;
 	}
 
@@ -242,73 +238,45 @@ public class Link implements Imaged {
 		this.weight = weight;
 	}
 
-	public final List<? extends CharSequence> getNote() {
+	public final Display getNote() {
 		return note;
+	}
+
+	public final HtmlColor getNoteColor() {
+		return noteColor;
 	}
 
 	public final Position getNotePosition() {
 		return notePosition;
 	}
 
-	public final void addNote(List<? extends CharSequence> note, Position position) {
+	public final void addNote(Display note, Position position, HtmlColor noteColor) {
 		this.note = note;
 		this.notePosition = position;
+		this.noteColor = noteColor;
 	}
 
-	public final void addNote(String n, Position position) {
-		this.note = StringUtils.getWithNewlines(n);
+	public final void addNote(String n, Position position, HtmlColor noteColor) {
+		this.note = Display.getWithNewlines(n);
 		this.notePosition = position;
+		this.noteColor = noteColor;
 	}
 
-	public DrawFile getImageFile() {
-		return imageFile;
-	}
-
-	public void setImageFile(DrawFile imageFile) {
-		this.imageFile = imageFile;
-	}
-
-	public boolean isAutolink(Group g) {
-		if (getEntity1() == g.getEntityCluster() && getEntity2() == g.getEntityCluster()) {
+	public boolean isAutoLinkOfAGroup() {
+		if (getEntity1().isGroup() == false) {
+			return false;
+		}
+		if (getEntity2().isGroup() == false) {
+			return false;
+		}
+		if (getEntity1() == getEntity2()) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isToEdgeLink(Group g) {
-		if (getEntity1().getParent() != g || getEntity2().getParent() != g) {
-			return false;
-		}
-		assert getEntity1().getParent() == g && getEntity2().getParent() == g;
-		if (isAutolink(g)) {
-			return false;
-		}
-
-		if (getEntity2().getType() == EntityType.GROUP) {
-			assert getEntity1().getType() != EntityType.GROUP;
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isFromEdgeLink(Group g) {
-		if (getEntity1().getParent() != g || getEntity2().getParent() != g) {
-			return false;
-		}
-		assert getEntity1().getParent() == g && getEntity2().getParent() == g;
-		if (isAutolink(g)) {
-			return false;
-		}
-
-		if (getEntity1().getType() == EntityType.GROUP) {
-			assert getEntity2().getType() != EntityType.GROUP;
-			return true;
-		}
-		return false;
-	}
-
-	public boolean containsType(EntityType type) {
-		if (getEntity1().getType() == type || getEntity2().getType() == type) {
+	public boolean containsType(LeafType type) {
+		if (getEntity1().getEntityType() == type || getEntity2().getEntityType() == type) {
 			return true;
 		}
 		return false;
@@ -321,22 +289,33 @@ public class Link implements Imaged {
 		return false;
 	}
 
-	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif) {
-		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier1);
+	public IEntity getOther(IEntity entity) {
+		if (getEntity1() == entity) {
+			return getEntity2();
+		}
+		if (getEntity2() == entity) {
+			return getEntity1();
+		}
+		throw new IllegalArgumentException();
+	}
+
+	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif, SpriteContainer spriteContainer) {
+		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier1, spriteContainer);
 		final LinkDecor decor = getType().getDecor1();
-		return decor.getSize() + q;
+		return decor.getMargin() + q;
 	}
 
-	public double getMarginDecors2(StringBounder stringBounder, UFont fontQualif) {
-		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier2);
+	public double getMarginDecors2(StringBounder stringBounder, UFont fontQualif, SpriteContainer spriteContainer) {
+		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier2, spriteContainer);
 		final LinkDecor decor = getType().getDecor2();
-		return decor.getSize() + q;
+		return decor.getMargin() + q;
 	}
 
-	private double getQualifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif) {
+	private double getQualifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif,
+			SpriteContainer spriteContainer) {
 		if (qualif != null) {
-			final TextBlock b = TextBlockUtils.create(Arrays.asList(qualif), new FontConfiguration(fontQualif,
-					HtmlColor.BLACK), HorizontalAlignement.LEFT);
+			final TextBlock b = TextBlockUtils.create(Display.asList(qualif), new FontConfiguration(fontQualif,
+					HtmlColorUtils.BLACK), HorizontalAlignment.LEFT, spriteContainer);
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
@@ -348,7 +327,7 @@ public class Link implements Imaged {
 	}
 
 	public void setSpecificColor(String s) {
-		this.specificColor = HtmlColor.getColorIfValid(s);
+		this.specificColor = HtmlColorUtils.getColorIfValid(s);
 	}
 
 	public final boolean isConstraint() {
@@ -359,23 +338,86 @@ public class Link implements Imaged {
 		this.constraint = constraint;
 	}
 
-	private boolean opale;
-
 	public void setOpale(boolean opale) {
 		this.opale = opale;
 	}
 
-	static public boolean onlyOneLink(IEntity ent, Collection<Link> links) {
-		int nb = 0;
-		for (Link link : links) {
-			if (link.contains(ent)) {
-				nb++;
-			}
-			if (nb > 1) {
-				return false;
-			}
-		}
-		return nb == 1;
+	public final void setHorizontalSolitary(boolean horizontalSolitary) {
+		this.horizontalSolitary = horizontalSolitary;
 	}
+
+	public final boolean isHorizontalSolitary() {
+		return horizontalSolitary;
+	}
+
+	public final LinkArrow getLinkArrow() {
+		if (inverted) {
+			return linkArrow.reverse();
+		}
+		return linkArrow;
+	}
+
+	public final void setLinkArrow(LinkArrow linkArrow) {
+		this.linkArrow = linkArrow;
+	}
+
+	public final boolean isInverted() {
+		return inverted;
+	}
+
+	public boolean hasEntryPoint() {
+		return (getEntity1().isGroup() == false && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
+				|| (getEntity2().isGroup() == false && ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
+	}
+
+	public boolean hasTwoEntryPointsSameContainer() {
+		return getEntity1().isGroup() == false && getEntity2().isGroup() == false
+				&& ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL
+				&& ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL
+				&& getEntity1().getParentContainer() == getEntity2().getParentContainer();
+	}
+
+	public Url getUrl() {
+		return url;
+	}
+
+	public void setUrl(Url url) {
+		this.url = url;
+	}
+
+	public boolean isHidden() {
+		return hidden || cl1.isHidden() || cl2.isHidden();
+	}
+
+	public boolean sameConnections(Link other) {
+		if (this.cl1 == other.cl1 && this.cl2 == other.cl2) {
+			return true;
+		}
+		if (this.cl1 == other.cl2 && this.cl2 == other.cl1) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isRemoved() {
+		return cl1.isRemoved() || cl2.isRemoved();
+	}
+
+	public boolean hasUrl() {
+		if (label != null && label.hasUrl()) {
+			return true;
+		}
+		return getUrl() != null;
+	}
+
+	// private Group containerEntryPoint;
+	//
+	// public void setEntryPoint(Group container) {
+	// containerEntryPoint = container;
+	// }
+	//
+	// public Group getEntryPoint() {
+	// return containerEntryPoint;
+	// }
 
 }

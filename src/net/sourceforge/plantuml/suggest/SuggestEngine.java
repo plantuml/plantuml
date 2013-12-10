@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,31 +33,32 @@
  */
 package net.sourceforge.plantuml.suggest;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StartUtils;
-import net.sourceforge.plantuml.UmlSource;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ProtectedCommand;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 final public class SuggestEngine {
 
-	private final PSystemCommandFactory systemFactory;
+	private final UmlDiagramFactory systemFactory;
+
 	private final Iterator<String> it;
 	private final String startLine;
-	// private int nb = 0;
+
 	private String current = "";
 	private String previous = "";
 
-	public SuggestEngine(UmlSource source, PSystemCommandFactory systemFactory) {
+	public SuggestEngine(UmlSource source, UmlDiagramFactory systemFactory) {
 		this.systemFactory = systemFactory;
 		this.it = source.iterator();
 		startLine = next();
@@ -77,12 +78,12 @@ final public class SuggestEngine {
 		return current;
 	}
 
-	public SuggestEngineResult tryToSuggest() throws IOException {
-		return executeUmlCommand();
+	public SuggestEngineResult tryToSuggest(AbstractPSystem system) {
+		return executeUmlCommand(system);
 	}
 
-	private SuggestEngineResult executeUmlCommand() throws IOException {
-		systemFactory.init(startLine);
+	private SuggestEngineResult executeUmlCommand(AbstractPSystem system) {
+		// systemFactory.init(startLine);
 		while (hasNext()) {
 			final String s = next();
 			if (StartUtils.isArobaseEndDiagram(s)) {
@@ -100,7 +101,7 @@ final public class SuggestEngine {
 				}
 			} else if (commandControl == CommandControl.OK) {
 				final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
-				final CommandExecutionResult result = cmd.execute(Arrays.asList(s));
+				final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
 				if (result.isOk() == false) {
 					return SuggestEngineResult.CANNOT_CORRECT;
 				}
@@ -111,7 +112,7 @@ final public class SuggestEngine {
 		throw new IllegalStateException();
 	}
 
-	private boolean manageMultiline(final String init) throws IOException {
+	private boolean manageMultiline(final String init) {
 		final List<String> lines = new ArrayList<String>();
 		lines.add(init);
 		while (hasNext()) {

@@ -1,6 +1,6 @@
 package com.ctreber.acearth.shader;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * <p>Shader for the orthographic projection.</p>

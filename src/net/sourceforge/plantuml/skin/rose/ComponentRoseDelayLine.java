@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,9 +38,12 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseDelayLine extends AbstractComponent {
 
@@ -51,22 +54,11 @@ public class ComponentRoseDelayLine extends AbstractComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
-		ug.getParam().setColor(color);
-		// stroke(ug, 0.4, 2.5);
-		stroke(ug, 1, 4);
+	protected void drawInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		ug = stroke(ug, 1, 4).apply(new UChangeColor(color));
 		final int x = (int) (dimensionToUse.getWidth() / 2);
-		ug.setAntiAliasing(false);
-		ug.draw(x, 0, new ULine(0, dimensionToUse.getHeight()));
-		ug.setAntiAliasing(true);
-		final double dx = 5;
-		final double dy = 1.5;
-		final double space = 1.5;
-		final double middle = dimensionToUse.getHeight() / 2;
-		ug.getParam().setStroke(new UStroke(1));
-//		ug.draw(x - dx, middle + dy - space, new ULine(2 * dx, -2 * dy));
-//		ug.draw(x - dx, middle + dy + space, new ULine(2 * dx, -2 * dy));
-		ug.getParam().setStroke(new UStroke());
+		ug.apply(UAntiAliasing.ANTI_ALIASING_OFF).apply(new UTranslate(x, 0)).draw(new ULine(0, dimensionToUse.getHeight()));
 	}
 
 	@Override

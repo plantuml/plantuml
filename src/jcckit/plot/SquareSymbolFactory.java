@@ -18,9 +18,9 @@
  */
 package jcckit.plot;
 
+import jcckit.graphic.GraphPoint;
 import jcckit.graphic.GraphicAttributes;
 import jcckit.graphic.GraphicalElement;
-import jcckit.graphic.GraphPoint;
 import jcckit.graphic.Rectangle;
 import jcckit.util.ConfigParameters;
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -31,26 +31,24 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.awt.Graphics2D;
-import java.awt.font.TextLayout;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
-import net.sourceforge.plantuml.graphic.UnusedSpace;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.posimo.DotPath;
-import net.sourceforge.plantuml.skin.UDrawable;
+import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.UClip;
+import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -60,10 +58,21 @@ import net.sourceforge.plantuml.ugraphic.UText;
 
 public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipContainer {
 
-	final static Graphics2D imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB).createGraphics();
-	private UClip clip;
-
 	private final StringBounder stringBounder;
+
+	private final EpsStrategy strategyTOBEREMOVED;
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+		return new UGraphicEps(this);
+	}
+
+	protected UGraphicEps(UGraphicEps other) {
+		super(other);
+		this.stringBounder = other.stringBounder;
+		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;
+		register(strategyTOBEREMOVED);
+	}
 
 	public UGraphicEps(ColorMapper colorMapper, EpsStrategy strategy) {
 		this(colorMapper, strategy, strategy.creatEpsGraphics());
@@ -71,15 +80,21 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 
 	private UGraphicEps(ColorMapper colorMapper, EpsStrategy strategy, EpsGraphics eps) {
 		super(colorMapper, eps);
-		stringBounder = StringBounderUtils.asStringBounder(imDummy);
+		this.strategyTOBEREMOVED = strategy;
+		this.stringBounder = TextBlockUtils.getDummyStringBounder();
+		register(strategy);
+	}
+
+	private void register(EpsStrategy strategy) {
 		registerDriver(URectangle.class, new DriverRectangleEps(this));
-		registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
+		registerDriver(UText.class, new DriverTextEps(this, strategy));
 		registerDriver(ULine.class, new DriverLineEps(this));
 		registerDriver(UPolygon.class, new DriverPolygonEps(this));
 		registerDriver(UEllipse.class, new DriverEllipseEps());
 		registerDriver(UImage.class, new DriverImageEps());
 		registerDriver(UPath.class, new DriverPathEps());
 		registerDriver(DotPath.class, new DriverDotPathEps());
+		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterEps());
 	}
 
 	public void close() {
@@ -102,27 +117,6 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		this.getGraphicObject().drawEps(eps, x, y);
 	}
 
-	public void setClip(UClip clip) {
-		this.clip = clip == null ? null : clip.translate(getTranslateX(), getTranslateY());
-	}
-
-	public UClip getClip() {
-		return clip;
-	}
-
-	public void centerChar(double x, double y, char c, UFont font) {
-		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
-
-		final double xpos = x - unusedSpace.getCenterX() - 0.5;
-		final double ypos = y - unusedSpace.getCenterY() - 0.5;
-
-		final TextLayout t = new TextLayout("" + c, font.getFont(), imDummy.getFontRenderContext());
-		getGraphicObject().setStrokeColor(getColorMapper().getMappedColor(getParam().getColor()));
-		DriverTextEps.drawPathIterator(getGraphicObject(), xpos + getTranslateX(), ypos + getTranslateY(), t
-				.getOutline(null).getPathIterator(null));
-
-	}
-
 	static public String getEpsString(ColorMapper colorMapper, EpsStrategy epsStrategy, UDrawable udrawable)
 			throws IOException {
 		final UGraphicEps ug = new UGraphicEps(colorMapper, epsStrategy);
@@ -137,15 +131,16 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		pw.close();
 	}
 
-	public void setAntiAliasing(boolean trueForOn) {
+	public void startUrl(Url url) {
+		getGraphicObject().openLink(url.getUrl());
 	}
 
-	public void setUrl(String url, String tooltip) {
-		if (url == null) {
-			getGraphicObject().closeLink();
-		} else {
-			getGraphicObject().openLink(url);
-		}
+	public void closeAction() {
+		getGraphicObject().closeLink();
+	}
+
+	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
+		os.write(getEPSCode().getBytes());
 	}
 
 }

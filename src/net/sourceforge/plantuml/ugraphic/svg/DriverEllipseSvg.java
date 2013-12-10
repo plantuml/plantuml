@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -32,6 +32,8 @@
 package net.sourceforge.plantuml.ugraphic.svg;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -46,19 +48,40 @@ public class DriverEllipseSvg implements UDriver<SvgGraphics> {
 		final double width = shape.getWidth();
 		final double height = shape.getHeight();
 
-		final String color = param.getColor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getColor()));
-		final String backcolor = param.getBackcolor() == null ? "none" : StringUtils.getAsHtml(mapper.getMappedColor(param.getBackcolor()));
+		final String color = StringUtils.getAsSvg(mapper, param.getColor());
 
-		// Shadow
-		if (shape.getDeltaShadow() != 0) {
-			svg.svgEllipseShadow(x + width / 2, y + height / 2, width / 2, height / 2, shape.getDeltaShadow());
+		final HtmlColor back = param.getBackcolor();
+		if (back instanceof HtmlColorGradient) {
+			final HtmlColorGradient gr = (HtmlColorGradient) back;
+			final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
+					StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+			svg.setFillColor("url(#" + id + ")");
+			svg.setStrokeColor(color);
+		} else {
+			final String backcolor = StringUtils.getAsSvg(mapper, back);
+			svg.setFillColor(backcolor);
+			svg.setStrokeColor(color);
 		}
-		
-		svg.setFillColor(backcolor);
-		svg.setStrokeColor(color);
-		svg.setStrokeWidth(""+param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-		svg.svgEllipse(x + width / 2, y + height / 2, width / 2, height / 2);
+		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
+
+		double start = shape.getStart();
+		final double extend = shape.getExtend();
+		final double cx = x + width / 2;
+		final double cy = y + height / 2;
+		if (start == 0 && extend == 0) {
+			svg.svgEllipse(cx, cy, width / 2, height / 2, shape.getDeltaShadow());
+		} else {
+			// http://www.itk.ilstu.edu/faculty/javila/SVG/SVG_drawing1/elliptical_curve.htm
+			start = start + 90;
+			final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
+			final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
+			final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
+			final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
+			// svg.svgEllipse(x1, y1, 1, 1, 0);
+			// svg.svgEllipse(x2, y2, 1, 1, 0);
+			svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+		}
 	}
 
 }

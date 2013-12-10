@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -45,13 +45,23 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class DriverLineG2d implements UDriver<Graphics2D> {
+public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
+
+	private final double dpiFactor;
+	
+	public DriverLineG2d(double dpiFactor) {
+		this.dpiFactor = dpiFactor;
+	}
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final ULine shape = (ULine) ushape;
 
 		final Shape line = new Line2D.Double(x, y, x + shape.getDX(), y + shape.getDY());
 		manageStroke(param, g2d);
+		// Shadow
+		if (shape.getDeltaShadow() != 0) {
+			drawShadow(g2d, line, shape.getDeltaShadow(), dpiFactor);
+		}
 		g2d.setColor(mapper.getMappedColor(param.getColor()));
 		g2d.draw(line);
 	}

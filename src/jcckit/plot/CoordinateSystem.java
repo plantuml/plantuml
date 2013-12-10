@@ -18,8 +18,8 @@
  */
 package jcckit.plot;
 
-import jcckit.graphic.GraphicalElement;
 import jcckit.graphic.ClippingShape;
+import jcckit.graphic.GraphicalElement;
 import jcckit.transformation.Transformation;
 
 /**

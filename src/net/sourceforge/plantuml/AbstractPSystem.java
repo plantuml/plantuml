@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,33 +28,34 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6922 $
+ * Revision $Revision: 11351 $
  *
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ProtectedCommand;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
-public abstract class AbstractPSystem implements PSystem {
+public abstract class AbstractPSystem implements Diagram {
 
 	private UmlSource source;
 
 	private String getVersion() {
 		final StringBuilder toAppend = new StringBuilder();
 		toAppend.append("PlantUML version ");
-		toAppend.append(Version.version());
+		toAppend.append(Version.versionString());
 		toAppend.append("(" + new Date(Version.compileTime()) + ")\n");
+		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
 		final Properties p = System.getProperties();
 		toAppend.append(p.getProperty("java.runtime.name"));
 		toAppend.append('\n');
@@ -86,28 +87,31 @@ public abstract class AbstractPSystem implements PSystem {
 		return 1;
 	}
 
-	public List<File> exportDiagrams(File suggestedFile, FileFormatOption fileFormat) throws IOException,
-			InterruptedException {
-		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
-			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-		}
-		OutputStream os = null;
-		try {
-			os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
-			this.exportDiagram(os, null, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		return Arrays.asList(suggestedFile);
-	}
-
-	public List<? extends CharSequence> getTitle() {
+	public Display getTitle() {
 		if (source == null) {
-			return Collections.emptyList();
+			return Display.emptyList();
 		}
 		return source.getTitle();
+	}
+
+	public String getWarningOrError() {
+		return null;
+	}
+
+	public void makeDiagramReady() {
+	}
+
+	public boolean isOk() {
+		return true;
+	}
+
+	public CommandExecutionResult executeCommand(Command cmd, List<String> lines) {
+		cmd = new ProtectedCommand(cmd);
+		return cmd.execute(this, lines);
+	}
+	
+	public boolean hasUrl() {
+		return false;
 	}
 
 }

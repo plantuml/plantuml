@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,30 +28,30 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4762 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class CommandFooter extends SingleLineCommand<UmlDiagram> {
 
-	public CommandFooter(UmlDiagram diagram) {
-		super(diagram, "(?i)^(?:(left|right|center)?\\s*)footer(?:\\s*:\\s*|\\s+)(.*[\\p{L}0-9_.].*)$");
+	public CommandFooter() {
+		super("(?i)^(?:(left|right|center)?\\s*)footer(?:\\s*:\\s*|\\s+)(.*[\\p{L}0-9_.].*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
 		final String align = arg.get(0);
 		if (align != null) {
-			getSystem().setFooterAlignement(HorizontalAlignement.valueOf(align.toUpperCase()));
+			diagram.setFooterAlignment(HorizontalAlignment.valueOf(align.toUpperCase()));
 		}
-		getSystem().setFooter(StringUtils.getWithNewlines(arg.get(1)));
+		diagram.setFooter(Display.getWithNewlines(arg.get(1)));
 		return CommandExecutionResult.ok();
 	}
 

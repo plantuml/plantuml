@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,49 +28,60 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7203 $
+ * Revision $Revision: 11829 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.geom.Dimension2D;
-import java.util.List;
-
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.creole.Stencil;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-final public class ComponentRoseNote extends AbstractTextualComponent {
+final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
 
 	private final int cornersize = 10;
 	private final HtmlColor back;
 	private final HtmlColor foregroundColor;
 	private final double paddingX;
 	private final double paddingY;
+	private final double deltaShadow;
+	private final UStroke stroke;
 
 	public ComponentRoseNote(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			List<? extends CharSequence> strings, double paddingX, double paddingY) {
-		super(strings, fontColor, font, HorizontalAlignement.LEFT, 6, 15, 5);
+			Display strings, double paddingX, double paddingY, SpriteContainer spriteContainer, double deltaShadow,
+			UStroke stroke) {
+		super(strings, fontColor, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, 0, true);
 		this.back = back;
 		this.foregroundColor = foregroundColor;
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
+		this.deltaShadow = deltaShadow;
+		this.stroke = stroke;
 	}
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getTextWidth(stringBounder) + 2 * getPaddingX();
+		final double result = getTextWidth(stringBounder) + 2 * getPaddingX() + deltaShadow;
 		return result;
 	}
 
 	@Override
 	final public double getPreferredHeight(StringBounder stringBounder) {
-		return getTextHeight(stringBounder) + 2 * getPaddingY();
+		return getTextHeight(stringBounder) + 2 * getPaddingY() + deltaShadow;
 	}
 
 	@Override
@@ -84,12 +95,19 @@ final public class ComponentRoseNote extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);
 
-		final int x2 = (int) getTextWidth(stringBounder);
+		int x2 = (int) getTextWidth(stringBounder);
+		final double diffX = area.getDimensionToUse().getWidth() - getPreferredWidth(stringBounder);
+		if (diffX < 0) {
+			throw new IllegalArgumentException();
+		}
+		if (area.getDimensionToUse().getWidth() > getPreferredWidth(stringBounder)) {
+			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());
+		}
 
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(0, 0);
@@ -98,19 +116,28 @@ final public class ComponentRoseNote extends AbstractTextualComponent {
 		polygon.addPoint(x2, cornersize);
 		polygon.addPoint(x2 - cornersize, 0);
 		polygon.addPoint(0, 0);
-		if (withShadow) {
-			polygon.setDeltaShadow(4);
-		}
+		polygon.setDeltaShadow(deltaShadow);
 
-		ug.getParam().setColor(foregroundColor);
-		ug.getParam().setBackcolor(back);
-		ug.draw(0, 0, polygon);
+		ug = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(foregroundColor));
+		ug = ug.apply(stroke);
+		ug.draw(polygon);
 
-		ug.draw(x2 - cornersize, 0, new ULine(0, cornersize));
-		ug.draw(x2, cornersize, new ULine(-cornersize, 0));
+		ug.apply(new UTranslate(x2 - cornersize, 0)).draw(new ULine(0, cornersize));
+		ug.apply(new UTranslate(x2, cornersize)).draw(new ULine(-cornersize, 0));
+		UGraphic ug2 = new UGraphicStencil(ug, this, new UStroke());
+		ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY()));
 
-		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
+		getTextBlock().drawU(ug2);
 
 	}
+	
+	public double getStartingX(StringBounder stringBounder, double y) {
+		return 0;
+	}
+
+	public double getEndingX(StringBounder stringBounder, double y) {
+		return getTextWidth(stringBounder);
+	}
+
 
 }

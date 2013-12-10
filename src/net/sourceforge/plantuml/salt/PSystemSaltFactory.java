@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,55 +33,36 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
-
-public class PSystemSaltFactory implements PSystemBasicFactory {
-
-	private List<String> data2;
-	private boolean first;
-
-	private final DiagramType diagramType;
+public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 
 	public PSystemSaltFactory(DiagramType diagramType) {
-		this.diagramType = diagramType;
+		super(diagramType);
 	}
 
-	public void init(String startLine) {
-		this.data2 = null;
-		if (diagramType == DiagramType.UML) {
-			first = true;
-		} else if (diagramType == DiagramType.SALT) {
-			first = false;
-			data2 = new ArrayList<String>();
+	public PSystemSalt init(String startLine) {
+		if (getDiagramType() == DiagramType.UML) {
+			return null;
+		} else if (getDiagramType() == DiagramType.SALT) {
+			return new PSystemSalt();
 		} else {
-			throw new IllegalStateException(diagramType.name());
+			throw new IllegalStateException(getDiagramType().name());
 		}
 
 	}
 
-	public PSystemSalt getSystem() {
-		return new PSystemSalt(data2);
-	}
-
-	public boolean executeLine(String line) {
-		if (first && line.equals("salt")) {
-			data2 = new ArrayList<String>();
-			return true;
+	@Override
+	public PSystemSalt executeLine(PSystemSalt system, String line) {
+		if (system == null && line.equals("salt")) {
+			return new PSystemSalt();
 		}
-		first = false;
-		if (data2 == null) {
-			return false;
+		if (system == null) {
+			return null;
 		}
-		data2.add(line.trim());
-		return true;
-	}
-
-	public DiagramType getDiagramType() {
-		return diagramType;
+		system.add(line.trim());
+		return system;
 	}
 
 }

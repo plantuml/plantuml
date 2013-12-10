@@ -3,7 +3,9 @@ package com.ctreber.acearth.scanbit;
 import java.util.Comparator;
 
 import com.ctreber.acearth.projection.Projection;
-import com.ctreber.acearth.util.*;
+import com.ctreber.acearth.util.EdgeCrossing;
+import com.ctreber.acearth.util.Point2D;
+import com.ctreber.acearth.util.Point3D;
 
 /**
  * <p>Map scanner for orthographic projection.

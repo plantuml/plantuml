@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,52 +37,77 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines;
-import net.sourceforge.plantuml.cucadiagram.Entity;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class CommandCreateEntityObjectMultilines extends CommandMultilines<ObjectDiagram> {
+public class CommandCreateEntityObjectMultilines extends CommandMultilines2<ObjectDiagram> {
 
-	public CommandCreateEntityObjectMultilines(ObjectDiagram diagram) {
-		super(
-				diagram,
-				"(?i)^(object)\\s+(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)(?:\\s*([\\<\\[]{2}.*[\\>\\]]{2}))?\\s*\\{\\s*$",
-				"(?i)^\\s*\\}\\s*$");
+	public CommandCreateEntityObjectMultilines() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("TYPE", "(object)\\s+"), //
+				new RegexLeaf("NAME", "(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("\\s*"), //
+				// new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.+\\>\\>))?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
+				new RegexLeaf("\\s*\\{\\s*$"));
+	}
+
+	@Override
+	public String getPatternEnd() {
+		return "(?i)^\\s*\\}\\s*$";
+	}
+
+	public CommandExecutionResult executeNow(ObjectDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, true);
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
-		final Entity entity = executeArg0(line0);
+		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
 		for (String s : lines.subList(1, lines.size() - 1)) {
 			assert s.length() > 0;
 			if (VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
-				getSystem().setVisibilityModifierPresent(true);
+				diagram.setVisibilityModifierPresent(true);
 			}
-			entity.addField(s);
+			entity.addFieldOrMethod(s);
 		}
 		return CommandExecutionResult.ok();
 	}
 
-	private Entity executeArg0(List<String> arg) {
-		final String code = arg.get(2);
-		final String display = arg.get(1);
-		final String stereotype = arg.get(3);
-		if (getSystem().entityExist(code)) {
-			return (Entity) getSystem().getOrCreateClass(code);
+	private IEntity executeArg0(ObjectDiagram diagram, RegexResult line0) {
+		final Code code = Code.of(line0.get("NAME", 1));
+		final String display = line0.get("NAME", 0);
+		final String stereotype = line0.get("STEREO", 0);
+		if (diagram.leafExist(code)) {
+			return diagram.getOrCreateLeaf(code, null);
 		}
-		final Entity entity = getSystem().createEntity(code, display, EntityType.OBJECT);
+		final IEntity entity = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.OBJECT);
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, getSystem().getSkinParam().getCircledCharacterRadius(),
-					getSystem().getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
 		}
+		entity.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(line0.get("COLOR", 0)));
 		return entity;
 	}
 

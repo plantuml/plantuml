@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,43 +35,68 @@ package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public interface ISkinParam {
+public interface ISkinParam extends SpriteContainer {
 
 	public HtmlColor getBackgroundColor();
 
 	public String getValue(String key);
 
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype);
+	public HtmlColor getHtmlColor(ColorParam param, String stereotype, boolean clickable);
 
 	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
 
+	public UStroke getThickness(LineParam param);
+
 	public UFont getFont(FontParam fontParam, String stereotype);
-	
-	public HorizontalAlignement getHorizontalAlignement(AlignParam param);
+
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param);
 
 	public int getCircledCharacterRadius();
 
-	public boolean isClassCollapse();
-	
 	public int classAttributeIconSize();
-	
+
 	public ColorMapper getColorMapper();
-	
+
 	public int getDpi();
-	
-	public boolean useOctagonForActivity();
-	
+
 	public DotSplines getDotSplines();
-	
+
 	public GraphvizLayoutStrategy getStrategy();
-	
-	public boolean isSvek();
-	
+
 	public boolean shadowing();
+
+	public PackageStyle getPackageStyle();
+
+	public boolean useUml2ForComponent();
+
+	public boolean stereotypePositionTop();
+
+	public boolean useSwimlanes();
+
+	public double getNodesep();
+
+	public double getRanksep();
+
+	public double getRoundCorner();
+
+	public double maxMessageSize();
+
+	public boolean strictUmlStyle();
+
+	public boolean forceSequenceParticipantUnderlined();
+
+	public ConditionStyle getConditionStyle();
+	
+	public double minClassWidth();
+	
+	public boolean sameClassWidth();
 
 }

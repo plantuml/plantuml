@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -40,12 +40,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ShadowManager;
-import net.sourceforge.plantuml.ugraphic.UGradient;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.version.Version;
 
 public class EpsGraphics {
 
@@ -71,7 +73,11 @@ public class EpsGraphics {
 
 	public EpsGraphics() {
 		header.append("%!PS-Adobe-3.0 EPSF-3.0\n");
-		header.append("%%Creator: PlantUML\n");
+		String v = Version.versionString();
+		if (v.endsWith("beta") == false) {
+			v += "    ";
+		}
+		header.append("%%Creator: PlantUML v" + v + "\n");
 		header.append("%%Title: noTitle\n");
 		header.append("%%CreationDate: " + new Date() + "\n");
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));
@@ -188,7 +194,8 @@ public class EpsGraphics {
 	private double dashVisible = 0;
 	private double dashSpace = 0;
 
-	public void newpathDot(boolean dashed) {
+	public void newpathDot() {
+		final boolean dashed = dashVisible != 0 || dashSpace != 0;
 		checkCloseDone();
 		append(strokeWidth + " setlinewidth", true);
 		appendColor(color);
@@ -199,7 +206,8 @@ public class EpsGraphics {
 		append("newpath", true);
 	}
 
-	public void closepathDot(boolean dashed) {
+	public void closepathDot() {
+		final boolean dashed = dashVisible != 0 || dashSpace != 0;
 		append("stroke", true);
 		if (dashed) {
 			append("[] 0 setdash", true);
@@ -221,7 +229,7 @@ public class EpsGraphics {
 		} else if (y1 == y2) {
 			epsVLine(y1, Math.min(x1, x2), Math.max(x1, x2));
 		}
-		append("closepath stroke", true);
+		append("stroke", true);
 		ensureVisible(Math.max(x1, x2), Math.max(y1, y2));
 	}
 
@@ -272,12 +280,12 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else {
-					System.err.println("unknown " + seg);
+					Log.println("unknown " + seg);
 				}
 			}
 			append("closepath eofill", true);
 		}
-		
+
 		if (color != null) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
@@ -296,10 +304,10 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else {
-					System.err.println("unknown " + seg);
+					Log.println("unknown " + seg);
 				}
 			}
-			append("closepath stroke", true);
+			append("stroke", true);
 		}
 
 	}
@@ -371,8 +379,8 @@ public class EpsGraphics {
 		append("/ANN pdfmark", true);
 	}
 
-	public void epsRectangle(double x, double y, double width, double height, double rx, double ry, UGradient gr,
-			ColorMapper mapper) {
+	public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
+			HtmlColorGradient gr, ColorMapper mapper) {
 		checkCloseDone();
 		ensureVisible(x, y);
 		ensureVisible(x + width, y + height);
@@ -458,13 +466,16 @@ public class EpsGraphics {
 	public void epsEllipse(double x, double y, double xRadius, double yRadius) {
 		checkCloseDone();
 		ensureVisible(x + xRadius, y + yRadius);
+		double scale = 1;
 		if (xRadius != yRadius) {
-			throw new UnsupportedOperationException();
+			scale = yRadius / xRadius;
+			append("gsave", true);
+			append("1 " + format(scale) + " scale", true);
 		}
 		if (fillcolor != null) {
 			appendColor(fillcolor);
 			append("newpath", true);
-			append(format(x) + " " + format(y) + " " + format(xRadius) + " 0 360 arc", true);
+			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " 0 360 arc", true);
 			append("closepath eofill", true);
 		}
 
@@ -472,9 +483,14 @@ public class EpsGraphics {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			append("newpath", true);
-			append(format(x) + " " + format(y) + " " + format(xRadius) + " 0 360 arc", true);
+			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " 0 360 arc", true);
 			append("closepath stroke", true);
 		}
+
+		if (scale != 1) {
+			append("grestore", true);
+		}
+
 	}
 
 	protected void appendColor(Color c) {

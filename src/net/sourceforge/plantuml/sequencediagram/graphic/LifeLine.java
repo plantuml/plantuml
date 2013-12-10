@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6698 $
+ * Revision $Revision: 11635 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class LifeLine {
 
@@ -73,20 +74,24 @@ class LifeLine {
 	private final List<Variation> events = new ArrayList<Variation>();
 	private final Stairs stairs = new Stairs();
 	private int maxLevel = 0;
+	private final boolean shadowing;
 
-	public LifeLine(Pushable participant, double nominalPreferredWidth) {
+	public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing) {
 		this.participant = participant;
 		this.nominalPreferredWidth = nominalPreferredWidth;
+		this.shadowing = shadowing;
 	}
 
 	public void addSegmentVariation(LifeSegmentVariation type, double y, HtmlColor backcolor) {
 		if (events.size() > 0) {
 			final Variation last = events.get(events.size() - 1);
 			if (y < last.y) {
-				throw new IllegalArgumentException();
+				return;
+//				throw new IllegalArgumentException();
 			}
 			if (y == last.y && type != last.type) {
-				throw new IllegalArgumentException();
+				return;
+				// throw new IllegalArgumentException();
 			}
 		}
 		events.add(new Variation(type, y, backcolor));
@@ -188,10 +193,10 @@ class LifeLine {
 				level--;
 			}
 			if (level == 0) {
-				return new SegmentColored(events.get(i).y, events.get(j).y, events.get(i).backcolor);
+				return new SegmentColored(events.get(i).y, events.get(j).y, events.get(i).backcolor, shadowing);
 			}
 		}
-		return new SegmentColored(events.get(i).y, events.get(events.size() - 1).y, events.get(i).backcolor);
+		return new SegmentColored(events.get(i).y, events.get(events.size() - 1).y, events.get(i).backcolor, shadowing);
 	}
 
 	private Collection<SegmentColored> getSegmentsCutted(StringBounder stringBounder, int i) {
@@ -205,11 +210,8 @@ class LifeLine {
 	public void drawU(UGraphic ug, Skin skin, ISkinParam skinParam) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
-
-		ug.translate(getStartingX(stringBounder), 0);
-
+		ug = ug.apply(new UTranslate(getStartingX(stringBounder), 0));
+		
 		for (int i = 0; i < events.size(); i++) {
 			ComponentType type = ComponentType.ALIVE_BOX_CLOSE_OPEN;
 			for (final Iterator<SegmentColored> it = getSegmentsCutted(stringBounder, i).iterator(); it.hasNext();) {
@@ -219,18 +221,16 @@ class LifeLine {
 					type = type == ComponentType.ALIVE_BOX_CLOSE_OPEN ? ComponentType.ALIVE_BOX_CLOSE_CLOSE
 							: ComponentType.ALIVE_BOX_OPEN_CLOSE;
 				}
-				final Component comp = skin.createComponent(type, skinParam2, null);
+				final Component compAliveBox = skin.createComponent(type, null, skinParam2, null);
 				type = ComponentType.ALIVE_BOX_OPEN_OPEN;
 				final int currentLevel = getLevel(seg.getSegment().getPos1());
-				seg.drawU(ug, comp, currentLevel);
+				seg.drawU(ug, compAliveBox, currentLevel);
 			}
 		}
-
-		ug.setTranslate(atX, atY);
-
 	}
 
 	private double create = 0;
+	private double destroy = 0;
 
 	public final void setCreate(double create) {
 		this.create = create;
@@ -238,5 +238,17 @@ class LifeLine {
 
 	public final double getCreate() {
 		return create;
+	}
+
+	public final double getDestroy() {
+		return destroy;
+	}
+
+	public final void setDestroy(double destroy) {
+		this.destroy = destroy;
+	}
+
+	public final boolean shadowing() {
+		return shadowing;
 	}
 }

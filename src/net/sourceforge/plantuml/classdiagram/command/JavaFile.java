@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 3827 $
+ * Revision $Revision: 11254 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -43,12 +43,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 class JavaFile {
 
 	private static final Pattern classDefinition = Pattern
-			.compile("^(?:public\\s+|abstract\\s+|final\\s+)*(class|interface|enum)\\s+(\\w+)(?:.*\\b(extends|implements)\\s+([\\w\\s,]+))?");
+			.compile("^(?:public\\s+|abstract\\s+|final\\s+)*(class|interface|enum|annotation)\\s+(\\w+)(?:.*\\b(extends|implements)\\s+([\\w\\s,]+))?");
 
 	private static final Pattern packageDefinition = Pattern.compile("^package\\s+([\\w+.]+)\\s*;");
 
@@ -79,25 +79,25 @@ class JavaFile {
 				if (matchClassDefinition.find()) {
 					final String n = matchClassDefinition.group(2);
 					final String p = matchClassDefinition.group(4);
-					final EntityType type = EntityType.valueOf(matchClassDefinition.group(1).toUpperCase());
-					final EntityType parentType = getParentType(type, matchClassDefinition.group(3));
+					final LeafType type = LeafType.valueOf(matchClassDefinition.group(1).toUpperCase());
+					final LeafType parentType = getParentType(type, matchClassDefinition.group(3));
 					all.add(new JavaClass(javaPackage, n, p, type, parentType));
 				}
 			}
 		}
 	}
 
-	static EntityType getParentType(EntityType type, String extendsOrImplements) {
+	static LeafType getParentType(LeafType type, String extendsOrImplements) {
 		if (extendsOrImplements == null) {
 			return null;
 		}
-		if (type == EntityType.CLASS) {
+		if (type == LeafType.CLASS) {
 			if (extendsOrImplements.equals("extends")) {
-				return EntityType.CLASS;
+				return LeafType.CLASS;
 			}
-			return EntityType.INTERFACE;
+			return LeafType.INTERFACE;
 		}
-		return EntityType.INTERFACE;
+		return LeafType.INTERFACE;
 	}
 
 	public List<JavaClass> getJavaClasses() {

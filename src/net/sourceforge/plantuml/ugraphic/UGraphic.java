@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,11 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 11888 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface UGraphic {
@@ -41,24 +45,17 @@ public interface UGraphic {
 
 	public UParam getParam();
 
-	public void draw(double x, double y, UShape shape);
+	public void draw(UShape shape);
 
-	public void centerChar(double x, double y, char c, UFont font);
+	public UGraphic apply(UChange change);
 
-	public void translate(double dx, double dy);
-
-	public void setTranslate(double dx, double dy);
-
-	public double getTranslateX();
-
-	public double getTranslateY();
-
-	public void setClip(UClip clip);
-
-	public void setAntiAliasing(boolean trueForOn);
-
-	public void setUrl(String url, String tooltip);
-	
 	public ColorMapper getColorMapper();
 
+	public void startUrl(Url url);
+
+	public void closeAction();
+
+	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException;
+	
+	public void flushUg();
 }

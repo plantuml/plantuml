@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,38 +34,40 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.EnumSet;
-import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.EntityGender;
 import net.sourceforge.plantuml.cucadiagram.EntityGenderUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 
-public class CommandHideShow extends SingleLineCommand2<ClassDiagram> {
+public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
 
 	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
 			EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
 
-	public CommandHideShow(ClassDiagram classDiagram) {
-		super(classDiagram, getRegexConcat());
+	public CommandHideShow() {
+		super(getRegexConcat());
 	}
 
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), // 
+		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("COMMAND", "(hide|show)"), //
 				new RegexLeaf("\\s+"), //
 				new RegexLeaf("GENDER",
-						"(?:(class|interface|enum|abstract|[\\p{L}0-9_.]+|\"[^\"]+\"|\\<\\<.*\\>\\>)\\s+)*?"), //
+						"(?:(class|interface|enum|annotation|abstract|[\\p{L}0-9_.]+|\"[^\"]+\"|\\<\\<.*\\>\\>)\\s+)*?"), //
 				new RegexLeaf("EMPTY", "(?:(empty)\\s+)?"), //
 				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circle\\w*|stereotypes?)"), //
 				new RegexLeaf("$"));
@@ -85,38 +87,48 @@ public class CommandHideShow extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Map<String, RegexPartialMatch> arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, RegexResult arg) {
+		if (classDiagram instanceof ClassDiagram) {
+			return executeArgClass((ClassDiagram) classDiagram, arg);
+		}
+		// Just ignored
+		return CommandExecutionResult.ok();
+	}
 
-		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION").get(0));
+	private CommandExecutionResult executeArgClass(ClassDiagram classDiagram, RegexResult arg) {
+
+		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
 		EntityGender gender = null;
 
-		final String arg1 = arg.get("GENDER").get(0);
+		final String arg1 = arg.get("GENDER", 0);
 
 		if (arg1 == null) {
 			gender = EntityGenderUtils.all();
 		} else if (arg1.equalsIgnoreCase("class")) {
-			gender = EntityGenderUtils.byEntityType(EntityType.CLASS);
+			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);
 		} else if (arg1.equalsIgnoreCase("interface")) {
-			gender = EntityGenderUtils.byEntityType(EntityType.INTERFACE);
+			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);
 		} else if (arg1.equalsIgnoreCase("enum")) {
-			gender = EntityGenderUtils.byEntityType(EntityType.ENUM);
+			gender = EntityGenderUtils.byEntityType(LeafType.ENUM);
 		} else if (arg1.equalsIgnoreCase("abstract")) {
-			gender = EntityGenderUtils.byEntityType(EntityType.ABSTRACT_CLASS);
+			gender = EntityGenderUtils.byEntityType(LeafType.ABSTRACT_CLASS);
+		} else if (arg1.equalsIgnoreCase("annotation")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.ANNOTATION);
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
-			final IEntity entity = getSystem().getOrCreateClass(arg1);
+			final IEntity entity = classDiagram.getOrCreateLeaf(Code.of(arg1), null);
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
 		if (gender != null) {
-			final boolean empty = arg.get("EMPTY").get(0) != null;
+			final boolean empty = arg.get("EMPTY", 0) != null;
 			if (empty == true) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
-			if (getSystem().getCurrentGroup() != null) {
-				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(getSystem().getCurrentGroup()));
+			if (EntityUtils.groupRoot(classDiagram.getCurrentGroup()) == false) {
+				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(classDiagram.getCurrentGroup()));
 			}
-			getSystem().hideOrShow(gender, portion, arg.get("COMMAND").get(0).equalsIgnoreCase("show"));
+			classDiagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		}
 		return CommandExecutionResult.ok();
 	}

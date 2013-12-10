@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,11 +36,15 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementButton extends AbstractElementText implements Element {
 
@@ -48,8 +52,8 @@ public class ElementButton extends AbstractElementText implements Element {
 	private final double marginX = 2;
 	private final double marginY = 2;
 
-	public ElementButton(String text, UFont font) {
-		super(text, font, true);
+	public ElementButton(String text, UFont font, SpriteContainer spriteContainer) {
+		super(text, font, true, spriteContainer);
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
@@ -63,11 +67,9 @@ public class ElementButton extends AbstractElementText implements Element {
 			return;
 		}
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), x, y);
+		ug = ug.apply(new UStroke(stroke));
+		ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#EEEEEE"))).apply(new UTranslate(x + stroke, y + stroke)).draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke, 10, 10));
 		final Dimension2D dimPureText = getPureTextDimension(ug.getStringBounder());
 		drawText(ug, x + (dim.getWidth() - dimPureText.getWidth()) / 2, y + stroke + marginY);
-		ug.getParam().setStroke(new UStroke(stroke));
-		ug.draw(x + stroke, y + stroke, new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke, 10,
-				10));
-		ug.getParam().setStroke(new UStroke());
 	}
 }

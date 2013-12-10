@@ -18,10 +18,10 @@
  */
 package jcckit.graphic;
 
+import java.util.Hashtable;
+
 import jcckit.util.ConfigParameters;
 import jcckit.util.FactoryException;
-
-import java.util.Hashtable;
 
 /**
  *  Font style constants.

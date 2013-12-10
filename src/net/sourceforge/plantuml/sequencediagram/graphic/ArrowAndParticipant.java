@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class ArrowAndParticipant extends Arrow implements InGroupable {
 
@@ -45,18 +46,17 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	private final ParticipantBox participantBox;
 
 	public ArrowAndParticipant(StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox) {
-		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent());
+		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());
 		this.arrow = arrow;
 		this.participantBox = participantBox;
 		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2);
 	}
-	
+
 	@Override
 	public void setMaxX(double m) {
 		super.setMaxX(m);
 		arrow.setMaxX(m);
 	}
-
 
 	@Override
 	final public double getArrowOnlyWidth(StringBounder stringBounder) {
@@ -84,11 +84,17 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
-		arrow.drawInternalU(ug, maxX, context);
-		ug.setTranslate(atX, atY);
+	protected void drawInternalU(final UGraphic ug, double maxX, Context2D context) {
+		final double participantBoxStartingX = participantBox.getStartingX();
+		final double arrowStartingX = arrow.getStartingX(ug.getStringBounder());
+
+		if (arrowStartingX < participantBoxStartingX) {
+			arrow.drawInternalU(ug, maxX, context);
+		} else {
+			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());
+			arrow.drawInternalU(ug.apply(new UTranslate(boxWidth / 2, 0)), maxX, context);
+		}
+
 		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());
 		final double boxHeight = participantBox.getHeadHeight(ug.getStringBounder());
 		// final double diff = getDiff(ug);
@@ -96,10 +102,7 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 		if (arrowHeight > boxHeight) {
 			diff = arrowHeight - boxHeight;
 		}
-		ug.translate(participantBox.getStartingX(), getStartingY() + diff);
-		participantBox.drawParticipantHead(ug);
-		ug.setTranslate(atX, atY);
-
+		participantBox.drawParticipantHead(ug.apply(new UTranslate(participantBoxStartingX, getStartingY() + diff)));
 	}
 
 	private double getDiff(UGraphic ug) {
@@ -124,7 +127,6 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 		return arrow.getActualWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;
 	}
 
-
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
 		return arrow.getStartingX(stringBounder);
@@ -141,5 +143,5 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	public String toString(StringBounder stringBounder) {
 		return arrow.toString(stringBounder);
 	}
-	
+
 }

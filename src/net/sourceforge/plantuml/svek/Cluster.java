@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,38 +47,51 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
-import net.sourceforge.plantuml.cucadiagram.Group;
+import net.sourceforge.plantuml.UniqueSequence;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.EntityPosition;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.Member;
+import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockEmpty;
+import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.svek.image.EntityImageState;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Cluster implements Moveable {
 
 	private final Cluster parent;
-	private final Group group;
+	private final IGroup group;
 	private final List<Shape> shapes = new ArrayList<Shape>();
 	private final List<Cluster> children = new ArrayList<Cluster>();
-	private final boolean special;
 	private final int color;
 	private final int colorTitle;
+	private final ISkinParam skinParam;
 
-	private int titleWidth;
-	private int titleHeight;
-	private TextBlock title;
+	private int titleAndAttributeWidth;
+	private int titleAndAttributeHeight;
+	private TextBlock ztitle;
+	private TextBlock zstereo;
 
 	private double xTitle;
 	private double yTitle;
@@ -97,20 +111,28 @@ public class Cluster implements Moveable {
 
 	}
 
-	public Cluster(ColorSequence colorSequence) {
-		this(null, null, false, colorSequence);
+	private boolean hasEntryOrExitPoint() {
+		for (Shape sh : shapes) {
+			if (sh.getEntityPosition() != EntityPosition.NORMAL) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	private int getUid2() {
-		return group.getUid2();
+	public Cluster(ColorSequence colorSequence, ISkinParam skinParam, IGroup root) {
+		this(null, root, colorSequence, skinParam);
 	}
 
-	private Cluster(Cluster parent, Group group, boolean special, ColorSequence colorSequence) {
+	private Cluster(Cluster parent, IGroup group, ColorSequence colorSequence, ISkinParam skinParam) {
+		if (group == null) {
+			throw new IllegalStateException();
+		}
 		this.parent = parent;
 		this.group = group;
-		this.special = special;
 		this.color = colorSequence.getValue();
 		this.colorTitle = colorSequence.getValue();
+		this.skinParam = skinParam;
 	}
 
 	@Override
@@ -123,6 +145,9 @@ public class Cluster implements Moveable {
 	}
 
 	public void addShape(Shape sh) {
+		if (sh == null) {
+			throw new IllegalArgumentException();
+		}
 		this.shapes.add(sh);
 		sh.setCluster(this);
 	}
@@ -131,17 +156,64 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableList(shapes);
 	}
 
-	private List<Shape> getShapesOrdered(Collection<Line> lines) {
-		final List<Shape> all = new ArrayList<Shape>(shapes);
+	private List<Shape> getShapesOrderedTop(Collection<Line> lines) {
 		final List<Shape> firsts = new ArrayList<Shape>();
+		final Set<String> tops = new HashSet<String>();
+		final Map<String, Shape> shs = new HashMap<String, Shape>();
+
+		for (final Iterator<Shape> it = shapes.iterator(); it.hasNext();) {
+			final Shape sh = it.next();
+			shs.put(sh.getUid(), sh);
+			if (sh.isTop() && sh.getEntityPosition() == EntityPosition.NORMAL) {
+				firsts.add(sh);
+				tops.add(sh.getUid());
+			}
+		}
+
+		for (Line l : lines) {
+			if (tops.contains(l.getStartUid())) {
+				final Shape sh = shs.get(l.getEndUid());
+				if (sh != null && sh.getEntityPosition() == EntityPosition.NORMAL) {
+					firsts.add(0, sh);
+				}
+			}
+
+			if (l.isInverted()) {
+				final Shape sh = shs.get(l.getStartUid());
+				if (sh != null && sh.getEntityPosition() == EntityPosition.NORMAL) {
+					firsts.add(0, sh);
+				}
+			}
+		}
+
+		return firsts;
+	}
+
+	private List<Shape> getShapesEntryExit(EntityPosition position) {
+		final List<Shape> result = new ArrayList<Shape>();
+
+		for (final Iterator<Shape> it = shapes.iterator(); it.hasNext();) {
+			final Shape sh = it.next();
+			if (sh.getEntityPosition() == position) {
+				result.add(sh);
+			}
+		}
+		return result;
+	}
+
+	private List<Shape> getShapesOrderedWithoutTop(Collection<Line> lines) {
+		final List<Shape> all = new ArrayList<Shape>(shapes);
 		final Set<String> tops = new HashSet<String>();
 		final Map<String, Shape> shs = new HashMap<String, Shape>();
 
 		for (final Iterator<Shape> it = all.iterator(); it.hasNext();) {
 			final Shape sh = it.next();
+			if (sh.getEntityPosition() != EntityPosition.NORMAL) {
+				it.remove();
+				continue;
+			}
 			shs.put(sh.getUid(), sh);
 			if (sh.isTop()) {
-				firsts.add(sh);
 				tops.add(sh.getUid());
 				it.remove();
 			}
@@ -150,17 +222,19 @@ public class Cluster implements Moveable {
 		for (Line l : lines) {
 			if (tops.contains(l.getStartUid())) {
 				final Shape sh = shs.get(l.getEndUid());
-				all.remove(sh);
-				firsts.add(0, sh);
+				if (sh != null) {
+					all.remove(sh);
+				}
 			}
+
 			if (l.isInverted()) {
 				final Shape sh = shs.get(l.getStartUid());
-				all.remove(sh);
-				firsts.add(0, sh);
+				if (sh != null) {
+					all.remove(sh);
+				}
 			}
 		}
 
-		all.addAll(0, firsts);
 		return all;
 	}
 
@@ -168,26 +242,39 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableList(children);
 	}
 
-	public Cluster createChild(Group g, int titleWidth, int titleHeight, TextBlock title, boolean special,
-			ColorSequence colorSequence) {
-		final Cluster child = new Cluster(this, g, special, colorSequence);
-		child.titleWidth = titleWidth;
-		child.titleHeight = titleHeight;
-		child.title = title;
+	public Cluster createChild(IGroup g, int titleAndAttributeWidth, int titleAndAttributeHeight, TextBlock title,
+			TextBlock stereo, ColorSequence colorSequence, ISkinParam skinParam) {
+		final Cluster child = new Cluster(this, g, colorSequence, skinParam);
+		child.titleAndAttributeWidth = titleAndAttributeWidth;
+		child.titleAndAttributeHeight = titleAndAttributeHeight;
+		child.ztitle = title;
+		child.zstereo = stereo;
 		this.children.add(child);
 		return child;
 	}
 
-	public final Group getGroup() {
+	public final IGroup getGroup() {
 		return group;
 	}
 
-	public final int getTitleWidth() {
-		return titleWidth;
+	public final int getTitleAndAttributeWidth() {
+		return titleAndAttributeWidth;
 	}
 
-	public final int getTitleHeight() {
-		return titleHeight;
+	public final int getTitleAndAttributeHeight() {
+		return titleAndAttributeHeight;
+	}
+
+	public double getWidth() {
+		return maxX - minX;
+	}
+
+	public double getMinX() {
+		return minX;
+	}
+
+	public ClusterPosition getClusterPosition() {
+		return new ClusterPosition(minX, minY, maxX, maxY);
 	}
 
 	public void setTitlePosition(double x, double y) {
@@ -195,108 +282,144 @@ public class Cluster implements Moveable {
 		this.yTitle = y;
 	}
 
-	public void drawU(UGraphic ug, double x, double y, HtmlColor borderColor, DotData dotData) {
-		final boolean isState = dotData.getUmlDiagramType() == UmlDiagramType.STATE;
-		if (isState) {
-			drawUState(ug, x, y, borderColor, dotData);
-			return;
+	public void drawU(UGraphic ug, HtmlColor borderColor, DotData dotData) {
+		final Url url = group.getUrl99();
+		if (url != null) {
+			ug.startUrl(url);
 		}
-		if (title != null) {
-			drawWithTitle(ug, x, y, borderColor, dotData);
-			return;
+		try {
+			if (hasEntryOrExitPoint()) {
+				manageEntryExitPoint(dotData, ug.getStringBounder());
+			}
+			if (skinParam.useSwimlanes()) {
+				drawSwinLinesState(ug, borderColor, dotData);
+				return;
+			}
+			final boolean isState = dotData.getUmlDiagramType() == UmlDiagramType.STATE;
+			if (isState) {
+				drawUState(ug, borderColor, dotData);
+				return;
+			}
+			PackageStyle style = group.getPackageStyle();
+			if (style == null) {
+				style = dotData.getSkinParam().getPackageStyle();
+			}
+			if (ztitle != null || zstereo != null) {
+				final HtmlColor stateBack = getStateBackColor(getBackColor(), dotData.getSkinParam(),
+						group.getStereotype() == null ? null : group.getStereotype().getLabel());
+				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
+						stateBack, minX, minY, maxX, maxY);
+				decoration.drawU(ug, borderColor, dotData.getSkinParam().shadowing());
+				return;
+			}
+			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
+			if (dotData.getSkinParam().shadowing()) {
+				rect.setDeltaShadow(3.0);
+			}
+			final HtmlColor stateBack = getStateBackColor(getBackColor(), dotData.getSkinParam(),
+					group.getStereotype() == null ? null : group.getStereotype().getLabel());
+			ug = ug.apply(new UChangeBackColor(stateBack)).apply(new UChangeColor(borderColor));
+			ug.apply(new UStroke(2)).apply(new UTranslate(minX, minY)).draw(rect);
+
+		} finally {
+			if (url != null) {
+				ug.closeAction();
+			}
 		}
-		final URectangle rect = new URectangle(maxX - minX, maxY - minY);
-		if (dotData.getSkinParam().shadowing()) {
-			rect.setDeltaShadow(3.0);
-		}
-		HtmlColor stateBack = getBackColor();
-		if (stateBack == null) {
-			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.packageBackground, group.getStereotype());
-		}
-		if (stateBack == null) {
-			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.background, group.getStereotype());
-		}
-		ug.getParam().setBackcolor(stateBack);
-		ug.getParam().setColor(borderColor);
-		ug.getParam().setStroke(new UStroke(2));
-		ug.draw(x + minX, y + minY, rect);
-		ug.getParam().setStroke(new UStroke());
+
 	}
 
-	private UPolygon getSpecificFrontier(StringBounder stringBounder) {
-		final double width = maxX - minX;
-		final double height = maxY - minY;
-		final Dimension2D dimTitle = title.calculateDimension(stringBounder);
-		final double wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;
-		final double htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;
-		final UPolygon shape = new UPolygon();
-		shape.addPoint(0, 0);
-		shape.addPoint(wtitle, 0);
-		shape.addPoint(wtitle + marginTitleX3, htitle);
-		shape.addPoint(width, htitle);
-		shape.addPoint(width, height);
-		shape.addPoint(0, height);
-		shape.addPoint(0, 0);
-		return shape;
+	private void manageEntryExitPoint(DotData dotData, StringBounder stringBounder) {
+		final Collection<ClusterPosition> insides = new ArrayList<ClusterPosition>();
+		final List<Point2D> points = new ArrayList<Point2D>();
+		for (Shape sh : shapes) {
+			if (sh.getEntityPosition() == EntityPosition.NORMAL) {
+				insides.add(sh.getClusterPosition());
+			} else {
+				points.add(sh.getClusterPosition().getPointCenter());
+			}
+		}
+		for (Cluster in : children) {
+			insides.add(in.getClusterPosition());
+		}
+		final FrontierCalculator frontierCalculator = new FrontierCalculator(getClusterPosition(), insides, points);
+		if (titleAndAttributeHeight > 0 && titleAndAttributeWidth > 0) {
+			frontierCalculator.ensureMinWidth(titleAndAttributeWidth + 10);
+		}
+		final ClusterPosition forced = frontierCalculator.getSuggestedPosition();
+		xTitle += ((forced.getMinX() - minX) + (forced.getMaxX() - maxX)) / 2;
+		minX = forced.getMinX();
+		minY = forced.getMinY();
+		maxX = forced.getMaxX();
+		maxY = forced.getMaxY();
+		yTitle = minY + IEntityImage.MARGIN;
+		final double widthTitle = ztitle.calculateDimension(stringBounder).getWidth();
+		xTitle = minX + ((maxX - minX - widthTitle) / 2);
 	}
 
-	// private UPolygon specificFrontier;
-	//
-	// public final UPolygon getSpecificFrontier() {
-	// return specificFrontier;
-	// }
-	//
-	private void drawWithTitle(UGraphic ug, double x, double y, HtmlColor borderColor, DotData dotData) {
+	private void drawSwinLinesState(UGraphic ug, HtmlColor borderColor, DotData dotData) {
+		if (ztitle != null) {
+			ztitle.drawU(ug.apply(new UTranslate(xTitle, 0)));
+		}
+		final ULine line = new ULine(0, maxY - minY);
+		ug = ug.apply(new UChangeColor(borderColor));
+		ug.apply(new UTranslate(minX, 0)).draw(line);
+		ug.apply(new UTranslate(maxX, 0)).draw(line);
 
-		// y += marginTitleY0;
-
-		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-		final double wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;
-		final double htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;
-		final UPolygon shape = getSpecificFrontier(ug.getStringBounder());
-		if (dotData.getSkinParam().shadowing()) {
-			shape.setDeltaShadow(3.0);
-		}
-
-		HtmlColor stateBack = getBackColor();
-		if (stateBack == null) {
-			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.packageBackground, group.getStereotype());
-		}
-		if (stateBack == null) {
-			stateBack = dotData.getSkinParam().getHtmlColor(ColorParam.background, group.getStereotype());
-		}
-		if (stateBack == null) {
-			stateBack = HtmlColor.WHITE;
-		}
-		ug.getParam().setBackcolor(stateBack);
-		ug.getParam().setColor(borderColor);
-		ug.getParam().setStroke(new UStroke(2));
-		ug.draw(x + minX, y + minY, shape);
-		// specificFrontier = shape.translate(x + minX, y + minY);
-		ug.draw(x + minX, y + minY + htitle, new ULine(wtitle + marginTitleX3, 0));
-		ug.getParam().setStroke(new UStroke());
-		title.drawU(ug, x + minX + marginTitleX1, y + minY + marginTitleY1);
 	}
 
 	private HtmlColor getColor(DotData dotData, ColorParam colorParam, String stereo) {
 		return new Rose().getHtmlColor(dotData.getSkinParam(), colorParam, stereo);
 	}
 
-	private void drawUState(UGraphic ug, double x, double y, HtmlColor borderColor, DotData dotData) {
-
+	private void drawUState(UGraphic ug, HtmlColor borderColor, DotData dotData) {
 		final Dimension2D total = new Dimension2DDouble(maxX - minX, maxY - minY);
-		final double suppY = title.calculateDimension(ug.getStringBounder()).getHeight() + EntityImageState.MARGIN
-				+ EntityImageState.MARGIN_LINE;
+		final double suppY;
+		if (ztitle == null) {
+			suppY = 0;
+		} else {
+			suppY = ztitle.calculateDimension(ug.getStringBounder()).getHeight() + IEntityImage.MARGIN
+					+ IEntityImage.MARGIN_LINE;
+		}
+
 		HtmlColor stateBack = getBackColor();
 		if (stateBack == null) {
-			stateBack = getColor(dotData, ColorParam.stateBackground, group.getStereotype());
+			stateBack = getColor(dotData, ColorParam.stateBackground, group.getStereotype() == null ? null : group
+					.getStereotype().getLabel());
 		}
 		final HtmlColor background = getColor(dotData, ColorParam.background, null);
-		final RoundedContainer r = new RoundedContainer(total, suppY, borderColor, stateBack, background);
-		r.drawU(ug, x + minX, y + minY);
+		final TextBlockWidth attribute = getTextBlockAttribute(dotData);
+		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
+		final RoundedContainer r = new RoundedContainer(total, suppY, attributeHeight
+				+ (attributeHeight > 0 ? IEntityImage.MARGIN : 0), borderColor, stateBack, background);
+		r.drawU(ug.apply(new UTranslate(minX, minY)), dotData.getSkinParam().shadowing());
 
-		title.drawU(ug, x + xTitle, y + yTitle);
+		if (ztitle != null) {
+			ztitle.drawU(ug.apply(new UTranslate(xTitle, yTitle)));
+		}
 
+		if (attributeHeight > 0) {
+			attribute.asTextBlock(total.getWidth()).drawU(
+					ug.apply(new UTranslate(minX + IEntityImage.MARGIN, minY + suppY + IEntityImage.MARGIN / 2.0)));
+		}
+
+		final Stereotype stereotype = group.getStereotype();
+		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
+		if (withSymbol) {
+			EntityImageState.drawSymbol(ug.apply(new UChangeColor(borderColor)), maxX, maxY);
+		}
+
+	}
+
+	private TextBlockWidth getTextBlockAttribute(DotData dotData) {
+		final TextBlockWidth attribute;
+		final List<Member> members = group.getFieldsToDisplay();
+		if (members.size() == 0) {
+			attribute = new TextBlockEmpty();
+		} else {
+			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam());
+		}
+		return attribute;
 	}
 
 	public void setPosition(double minX, double minY, double maxX, double maxY) {
@@ -307,15 +430,113 @@ public class Cluster implements Moveable {
 
 	}
 
-	public boolean isSpecial() {
-		return special;
+	private boolean isThereALinkFromOrToGroup(Collection<Line> lines) {
+		for (Line line : lines) {
+			if (line.isLinkFromOrToGroup(group)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public void printCluster(StringBuilder sb, Collection<Line> lines) {
-		// System.err.println("Cluster::printCluster " + this);
+	public void printCluster1(StringBuilder sb, Collection<Line> lines) {
+		for (Shape sh : getShapesOrderedTop(lines)) {
+			sh.appendShape(sb);
+		}
+	}
 
+	private List<IShapePseudo> addProtection(List<Shape> entries, double width) {
+		final List<IShapePseudo> result = new ArrayList<IShapePseudo>();
+		result.add(entries.get(0));
+		for (int i = 1; i < entries.size(); i++) {
+			result.add(new ShapePseudoImpl("psd" + UniqueSequence.getValue(), width, 5));
+			result.add(entries.get(i));
+		}
+		return result;
+	}
+
+	private double getMaxWidthFromLabelForEntryExit(List<Shape> entries, StringBounder stringBounder) {
+		double result = -Double.MAX_VALUE;
+		for (Shape shape : entries) {
+			final double w = getMaxWidthFromLabelForEntryExit(shape, stringBounder);
+			if (w > result) {
+				result = w;
+			}
+		}
+		return result;
+	}
+
+	private double getMaxWidthFromLabelForEntryExit(Shape shape, StringBounder stringBounder) {
+		return shape.getMaxWidthFromLabelForEntryExit(stringBounder);
+	}
+
+	public void printClusterEntryExit(StringBuilder sb, StringBounder stringBounder) {
+		// final List<? extends IShapePseudo> entries = getShapesEntryExit(EntityPosition.ENTRY_POINT);
+		final List<Shape> shapesEntryExitList = getShapesEntryExit(EntityPosition.ENTRY_POINT);
+		final double maxWith = getMaxWidthFromLabelForEntryExit(shapesEntryExitList, stringBounder);
+		final double naturalSpace = 70;
+		final List<? extends IShapePseudo> entries;
+		if (maxWith > naturalSpace) {
+			entries = addProtection(shapesEntryExitList, maxWith - naturalSpace);
+		} else {
+			entries = shapesEntryExitList;
+		}
+		if (entries.size() > 0) {
+			sb.append("{rank=source;");
+			for (IShapePseudo sh : entries) {
+				sb.append(sh.getUid() + ";");
+			}
+			sb.append("}");
+			for (IShapePseudo sh : entries) {
+				sh.appendShape(sb);
+			}
+		}
+		final List<Shape> exits = getShapesEntryExit(EntityPosition.EXIT_POINT);
+		if (exits.size() > 0) {
+			sb.append("{rank=sink;");
+			for (Shape sh : exits) {
+				sb.append(sh.getUid() + ";");
+			}
+			sb.append("}");
+			for (Shape sh : exits) {
+				sh.appendShape(sb);
+			}
+		}
+	}
+
+	public boolean printCluster2(StringBuilder sb, Collection<Line> lines, StringBounder stringBounder, DotMode dotMode) {
+		// Log.println("Cluster::printCluster " + this);
+
+		boolean added = false;
+		for (Shape sh : getShapesOrderedWithoutTop(lines)) {
+			sh.appendShape(sb);
+			added = true;
+		}
+
+		if (dotMode != DotMode.NO_LEFT_RIGHT) {
+			appendRankSame(sb, lines);
+		}
+
+		for (Cluster child : getChildren()) {
+			child.printInternal(sb, lines, stringBounder, dotMode);
+		}
+
+		return added;
+	}
+
+	private void appendRankSame(StringBuilder sb, Collection<Line> lines) {
+		for (String same : getRankSame(lines)) {
+			sb.append(same);
+			SvekUtils.println(sb);
+		}
+	}
+
+	private Set<String> getRankSame(Collection<Line> lines) {
 		final Set<String> rankSame = new HashSet<String>();
 		for (Line l : lines) {
+			if (l.hasEntryPoint()) {
+				continue;
+			}
 			final String startUid = l.getStartUid();
 			final String endUid = l.getEndUid();
 			if (isInCluster(startUid) && isInCluster(endUid)) {
@@ -325,19 +546,7 @@ public class Cluster implements Moveable {
 				}
 			}
 		}
-
-		for (Shape sh : getShapesOrdered(lines)) {
-			sh.appendShape(sb);
-		}
-
-		for (String same : rankSame) {
-			sb.append(same);
-			SvekUtils.println(sb);
-		}
-
-		for (Cluster child : getChildren()) {
-			child.printInternal(sb, lines);
-		}
+		return rankSame;
 	}
 
 	public void fillRankMin(Set<String> rankMin) {
@@ -365,23 +574,72 @@ public class Cluster implements Moveable {
 		return "cluster" + color;
 	}
 
-	public String getSpecialPointId() {
-		return "za" + getUid2();
+	public static String getSpecialPointId(IEntity group) {
+		return CENTER_ID + group.getUid();
 	}
 
-	private int marginTitleX1 = 3;
-	private int marginTitleX2 = 3;
-	private int marginTitleX3 = 7;
-	private int marginTitleY0 = 10;
-	private int marginTitleY1 = 3;
-	private int marginTitleY2 = 3;
+	public final static String CENTER_ID = "za";
 
-	private final boolean protection0 = true;
-	private final boolean protection1 = true;
+	private boolean protection0() {
+		if (skinParam.useSwimlanes()) {
+			return false;
+		}
+		return true;
+	}
 
-	private void printInternal(StringBuilder sb, Collection<Line> lines) {
-		if (isSpecial()) {
+	private boolean protection1() {
+		if (skinParam.useSwimlanes()) {
+			return false;
+		}
+		return true;
+	}
+
+	public String getMinPoint() {
+		if (skinParam.useSwimlanes()) {
+			return "minPoint" + color;
+		}
+		return null;
+	}
+
+	public String getMaxPoint() {
+		if (skinParam.useSwimlanes()) {
+			return "maxPoint" + color;
+		}
+		return null;
+	}
+
+	private String getSourceInPoint() {
+		if (skinParam.useSwimlanes()) {
+			return "sourceIn" + color;
+		}
+		return null;
+	}
+
+	private String getSinkInPoint() {
+		if (skinParam.useSwimlanes()) {
+			return "sinkIn" + color;
+		}
+		return null;
+	}
+
+	private void printInternal(StringBuilder sb, Collection<Line> lines, StringBounder stringBounder, DotMode dotMode) {
+		final boolean thereALinkFromOrToGroup = isThereALinkFromOrToGroup(lines);
+		if (thereALinkFromOrToGroup) {
 			subgraphCluster(sb, "a");
+		}
+		final boolean hasEntryOrExitPoint = hasEntryOrExitPoint();
+		if (hasEntryOrExitPoint) {
+			for (Line line : lines) {
+				if (line.isLinkFromOrToGroup(group)) {
+					line.setProjectionCluster(this);
+				}
+			}
+		}
+		boolean protection0 = protection0();
+		boolean protection1 = protection1();
+		if (hasEntryOrExitPoint) {
+			protection0 = false;
+			protection1 = false;
 		}
 		if (protection0) {
 			subgraphCluster(sb, "p0");
@@ -390,64 +648,83 @@ public class Cluster implements Moveable {
 		sb.append("style=solid;");
 		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\";");
 
-		final int titleWidth = getTitleWidth() + marginTitleX1 + marginTitleX2 + marginTitleX3;
-		final int titleHeight = getTitleHeight() + marginTitleY0 + marginTitleY1 + marginTitleY2;
-		if (titleHeight > 0 && titleWidth > 0) {
-			sb.append("label=<");
-			Line.appendTable(sb, titleWidth, titleHeight, colorTitle);
-			sb.append(">;");
+		final boolean isLabel = getTitleAndAttributeHeight() > 0 && getTitleAndAttributeWidth() > 0;
+		final String label;
+		if (isLabel) {
+			final StringBuilder sblabel = new StringBuilder("<");
+			Line.appendTable(sblabel, getTitleAndAttributeWidth(), getTitleAndAttributeHeight() - 5, colorTitle);
+			sblabel.append(">");
+			label = sblabel.toString();
+		} else {
+			label = "\"\"";
 		}
-		SvekUtils.println(sb);
 
-		if (isSpecial()) {
-			// subgraphCluster(sb, "za");
-			if (OptionFlags.getInstance().isDebugDot()) {
-				sb.append(getSpecialPointId() + ";");
-			} else {
-				sb.append(getSpecialPointId() + " [shape=point,width=.01,label=\"\"];");
-			}
-			// sb.append("}");
+		if (hasEntryOrExitPoint) {
+			printClusterEntryExit(sb, stringBounder);
+			subgraphCluster(sb, "ee", label);
+		} else {
+			sb.append("label=" + label + ";");
+			SvekUtils.println(sb);
+		}
+
+		// if (hasEntryOrExitPoint) {
+		// printClusterEntryExit(sb);
+		// subgraphCluster(sb, "ee");
+		// }
+
+		if (thereALinkFromOrToGroup) {
+			sb.append(getSpecialPointId(group) + " [shape=point,width=.01,label=\"\"];");
 			subgraphCluster(sb, "i");
 		}
 		if (protection1) {
 			subgraphCluster(sb, "p1");
 		}
-		printCluster(sb, lines);
+		if (skinParam.useSwimlanes()) {
+			sb.append("{rank = source; ");
+			sb.append(getSourceInPoint());
+			sb.append(" [shape=point,width=.01,label=\"\"];");
+			sb.append(getMinPoint() + "->" + getSourceInPoint() + "  [weight=999];");
+			sb.append("}");
+			SvekUtils.println(sb);
+			sb.append("{rank = sink; ");
+			sb.append(getSinkInPoint());
+			sb.append(" [shape=point,width=.01,label=\"\"];");
+			sb.append("}");
+			sb.append(getSinkInPoint() + "->" + getMaxPoint() + "  [weight=999];");
+			SvekUtils.println(sb);
+		}
+		SvekUtils.println(sb);
+		printCluster1(sb, lines);
+		final boolean added = printCluster2(sb, lines, stringBounder, dotMode);
+		if (hasEntryOrExitPoint && added == false) {
+			final String empty = "empty" + color;
+			sb.append(empty + " [shape=point,width=.01,label=\"\"];");
+		}
+		sb.append("}");
 		if (protection1) {
 			sb.append("}");
 		}
-		if (isSpecial()) {
+		if (thereALinkFromOrToGroup) {
 			sb.append("}");
-			// subgraphCluster(sb, "zb");
-			// if (OptionFlags.getInstance().isDebugDot()) {
-			// sb.append("zb" + child.getUid2() + ";");
-			// } else {
-			// sb.append("zb" + child.getUid2() + "
-			// [shape=point,width=.01,label=\"\"];");
-			// }
-			// sb.append("}");
+			sb.append("}");
 		}
-		sb.append("}");
+		if (hasEntryOrExitPoint) {
+			sb.append("}");
+		}
 		if (protection0) {
-			sb.append("}");
-		}
-		if (this.isSpecial()) {
-			// a
 			sb.append("}");
 		}
 		SvekUtils.println(sb);
 	}
 
 	private void subgraphCluster(StringBuilder sb, String id) {
+		subgraphCluster(sb, id, "\"\"");
+	}
+
+	private void subgraphCluster(StringBuilder sb, String id, String label) {
 		final String uid = getClusterId() + id;
 		sb.append("subgraph " + uid + " {");
-		if (OptionFlags.getInstance().isDebugDot()) {
-			sb.append("style=dotted;");
-			sb.append("label=\"" + id + "\";");
-		} else {
-			sb.append("style=invis;");
-			sb.append("label=\"\";");
-		}
+		sb.append("label=" + label + ";");
 	}
 
 	public int getColor() {
@@ -459,10 +736,10 @@ public class Cluster implements Moveable {
 	}
 
 	private final HtmlColor getBackColor() {
-		if (group == null) {
+		if (EntityUtils.groupRoot(group)) {
 			return null;
 		}
-		final HtmlColor result = group.getBackColor();
+		final HtmlColor result = group.getSpecificBackColor();
 		if (result != null) {
 			return result;
 		}
@@ -473,10 +750,43 @@ public class Cluster implements Moveable {
 	}
 
 	public boolean isClusterOf(IEntity ent) {
-		if (ent.getType() != EntityType.GROUP) {
+		if (ent.isGroup() == false) {
 			return false;
 		}
-		return group.getEntityCluster() == ent;
+		return group == ent;
 	}
+
+	public static HtmlColor getStateBackColor(HtmlColor stateBack, ISkinParam skinParam, String stereotype) {
+		if (stateBack == null) {
+			stateBack = skinParam.getHtmlColor(ColorParam.packageBackground, stereotype, false);
+		}
+		if (stateBack == null) {
+			stateBack = skinParam.getHtmlColor(ColorParam.background, stereotype, false);
+		}
+		if (stateBack == null /* || stateBack instanceof HtmlColorTransparent */) {
+			stateBack = new HtmlColorTransparent();
+		}
+		return stateBack;
+	}
+
+	// public Point2D projection(double x, double y) {
+	// final double v1 = Math.abs(minX - x);
+	// final double v2 = Math.abs(maxX - x);
+	// final double v3 = Math.abs(minY - y);
+	// final double v4 = Math.abs(maxY - y);
+	// if (v1 <= v2 && v1 <= v3 && v1 <= v4) {
+	// return new Point2D.Double(minX, y);
+	// }
+	// if (v2 <= v1 && v2 <= v3 && v2 <= v4) {
+	// return new Point2D.Double(maxX, y);
+	// }
+	// if (v3 <= v1 && v3 <= v2 && v3 <= v4) {
+	// return new Point2D.Double(x, minY);
+	// }
+	// if (v4 <= v1 && v4 <= v1 && v4 <= v3) {
+	// return new Point2D.Double(x, maxY);
+	// }
+	// throw new IllegalStateException();
+	// }
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPixel;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementImage implements Element {
 
@@ -63,7 +64,7 @@ public class ElementImage implements Element {
 			for (int j = 0; j < h; j++) {
 				final char c = img.get(j).charAt(i);
 				if (c == 'X') {
-					ug.draw(x + i, y + j, new UPixel());
+					ug.apply(new UTranslate(x + i, y + j)).draw(new UPixel());
 				}
 			}
 		}

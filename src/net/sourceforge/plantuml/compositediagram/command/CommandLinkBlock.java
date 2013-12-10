@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,6 +36,8 @@ import java.util.List;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -43,14 +45,14 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 public class CommandLinkBlock extends SingleLineCommand<CompositeDiagram> {
 
-	public CommandLinkBlock(CompositeDiagram diagram) {
-		super(diagram, "(?i)^([\\p{L}0-9_.]+)\\s*(\\[\\]|\\*\\))?([=-]+|\\.+)(\\[\\]|\\(\\*)?\\s*([\\p{L}0-9_.]+)\\s*(?::\\s*(\\S*+))?$");
+	public CommandLinkBlock() {
+		super("(?i)^([\\p{L}0-9_.]+)\\s*(\\[\\]|\\*\\))?([=-]+|\\.+)(\\[\\]|\\(\\*)?\\s*([\\p{L}0-9_.]+)\\s*(?::\\s*(\\S*+))?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final IEntity cl1 = getSystem().getOrCreateClass(arg.get(0));
-		final IEntity cl2 = getSystem().getOrCreateClass(arg.get(4));
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, List<String> arg) {
+		final IEntity cl1 = diagram.getOrCreateLeaf(Code.of(arg.get(0)), null);
+		final IEntity cl2 = diagram.getOrCreateLeaf(Code.of(arg.get(4)), null);
 
 		final String deco1 = arg.get(1);
 		final String deco2 = arg.get(3);
@@ -64,14 +66,14 @@ public class CommandLinkBlock extends SingleLineCommand<CompositeDiagram> {
 
 		final String queue = arg.get(2);
 
-		final Link link = new Link(cl1, cl2, linkType, arg.get(5), queue.length());
-		getSystem().addLink(link);
+		final Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(arg.get(5)), queue.length());
+		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
 
 	private LinkDecor getLinkDecor(String s) {
 		if ("[]".equals(s)) {
-			return LinkDecor.SQUARRE;
+			return LinkDecor.SQUARRE_toberemoved;
 		}
 		return LinkDecor.NONE;
 	}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,34 +35,71 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public abstract class AbstractMessage implements Event {
 
-	final private List<String> label;
-	// final private boolean dotted;
-	// final private boolean full;
+	final private Display label;
 	final private ArrowConfiguration arrowConfiguration;
 	final private List<LifeEvent> lifeEvents = new ArrayList<LifeEvent>();
 
-	private List<? extends CharSequence> notes;
+	private Display notes;
 	private NotePosition notePosition;
 	private HtmlColor noteBackColor;
 	private Url urlNote;
+	private final Url url;
 	private final String messageNumber;
 
-	public AbstractMessage(List<String> label, ArrowConfiguration arrowConfiguration, String messageNumber) {
-		this.label = label;
+	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
+		this.url = label.initUrl();
+		this.label = label.removeUrl(url);
 		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
 	}
 
-	public final void addLifeEvent(LifeEvent lifeEvent) {
+	final public Url getUrl() {
+		if (url == null) {
+			return urlNote;
+		}
+		return url;
+	}
+
+	public boolean hasUrl() {
+		if (notes != null && notes.hasUrl()) {
+			return true;
+		}
+		if (label != null && label.hasUrl()) {
+			return true;
+		}
+		return getUrl() != null;
+	}
+
+	public final boolean addLifeEvent(LifeEvent lifeEvent) {
+		final Set<Participant> noActivationAuthorized = new HashSet<Participant>();
+		for (LifeEvent le : this.lifeEvents) {
+			if (le.getType() == LifeEventType.DEACTIVATE || le.getType() == LifeEventType.DESTROY) {
+				noActivationAuthorized.add(le.getParticipant());
+			}
+		}
+		if (lifeEvent.getType() == LifeEventType.ACTIVATE
+				&& noActivationAuthorized.contains(lifeEvent.getParticipant())) {
+			return false;
+		}
+		// for (LifeEvent le : this.lifeEvents) {
+		// if (le.getParticipant().equals(lifeEvent.getParticipant())) {
+		// return false;
+		// }
+		// }
 		this.lifeEvents.add(lifeEvent);
+		return true;
 	}
 
 	public final boolean isCreate() {
@@ -86,30 +123,34 @@ public abstract class AbstractMessage implements Event {
 		return Collections.unmodifiableList(lifeEvents);
 	}
 
-	public final List<String> getLabel() {
-		return Collections.unmodifiableList(label);
+	public final Display getLabel() {
+		return label;
 	}
 
 	public final ArrowConfiguration getArrowConfiguration() {
 		return arrowConfiguration;
 	}
 
-	public final List<? extends CharSequence> getNote() {
-		return notes == null ? notes : Collections.unmodifiableList(notes);
+	public final Display getNote() {
+		return notes == null ? notes : notes;
 	}
 
 	public final Url getUrlNote() {
 		return urlNote;
 	}
 
-	public final void setNote(List<? extends CharSequence> strings, NotePosition notePosition, String backcolor, Url url) {
+	public final void setNote(Display strings, NotePosition notePosition, String backcolor, Url url) {
 		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {
 			throw new IllegalArgumentException();
 		}
 		this.notes = strings;
 		this.urlNote = url;
-		this.notePosition = notePosition;
-		this.noteBackColor = HtmlColor.getColorIfValid(backcolor);
+		this.notePosition = overideNotePosition(notePosition);
+		this.noteBackColor = HtmlColorUtils.getColorIfValid(backcolor);
+	}
+
+	protected NotePosition overideNotePosition(NotePosition notePosition) {
+		return notePosition;
 	}
 
 	public final HtmlColor getSpecificBackColor() {
@@ -123,5 +164,25 @@ public abstract class AbstractMessage implements Event {
 	public final String getMessageNumber() {
 		return messageNumber;
 	}
+
+	public boolean isActivate() {
+		for (LifeEvent le : this.lifeEvents) {
+			if (le.getType() == LifeEventType.ACTIVATE) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isDeactivate() {
+		for (LifeEvent le : this.lifeEvents) {
+			if (le.getType() == LifeEventType.DEACTIVATE) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public abstract boolean compatibleForCreate(Participant p);
 
 }

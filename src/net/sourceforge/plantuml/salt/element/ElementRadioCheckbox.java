@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -37,18 +37,22 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementRadioCheckbox implements Element {
 
@@ -61,9 +65,10 @@ public class ElementRadioCheckbox implements Element {
 	private final boolean radio;
 	private final boolean checked;
 
-	public ElementRadioCheckbox(List<String> text, UFont font, boolean radio, boolean checked) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColor.BLACK);
-		this.block = TextBlockUtils.create(text, config, HorizontalAlignement.LEFT);
+	public ElementRadioCheckbox(List<String> text, UFont font, boolean radio, boolean checked,
+			SpriteContainer spriteContainer) {
+		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK);
+		this.block = TextBlockUtils.create(new Display(text), config, HorizontalAlignment.LEFT, spriteContainer);
 		this.radio = radio;
 		this.checked = checked;
 	}
@@ -77,41 +82,27 @@ public class ElementRadioCheckbox implements Element {
 		if (zIndex != 0) {
 			return;
 		}
-		block.drawU(ug, x + margin, y);
+		block.drawU(ug.apply(new UTranslate((x + margin), y)));
 
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		final double height = dim.getHeight();
 
-		ug.getParam().setStroke(new UStroke(stroke));
+		ug = ug.apply(new UStroke(stroke));
 		if (radio) {
-			ug.draw(x + 2, y + (height - ELLIPSE) / 2, new UEllipse(ELLIPSE, ELLIPSE));
+			ug.apply(new UTranslate(x + 2, y + (height - ELLIPSE) / 2)).draw(new UEllipse(ELLIPSE, ELLIPSE));
 			if (checked) {
-				ug.getParam().setBackcolor(ug.getParam().getColor());
-				ug
-						.draw(x + 2 + (ELLIPSE - ELLIPSE2) / 2, y + (height - ELLIPSE2) / 2, new UEllipse(ELLIPSE2,
-								ELLIPSE2));
-				ug.getParam().setBackcolor(null);
+				ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(x + 2 + (ELLIPSE - ELLIPSE2) / 2, y + (height - ELLIPSE2) / 2)).draw(new UEllipse(ELLIPSE2, ELLIPSE2));
 			}
 		} else {
-			ug.draw(x + 2, y + (height - RECTANGLE) / 2, new URectangle(RECTANGLE, RECTANGLE));
+			ug.apply(new UTranslate(x + 2, y + (height - RECTANGLE) / 2)).draw(new URectangle(RECTANGLE, RECTANGLE));
 			if (checked) {
-				ug.getParam().setBackcolor(ug.getParam().getColor());
 				final UPolygon poly = new UPolygon();
 				poly.addPoint(0, 0);
 				poly.addPoint(3, 3);
 				poly.addPoint(10, -6);
 				poly.addPoint(3, 1);
-				ug.draw(x + 3, y + 6, poly);
-				ug.getParam().setBackcolor(null);
+				ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(x + 3, y + 6)).draw(poly);
 			}
 		}
-		ug.getParam().setStroke(new UStroke());
-
-		// ug.getParam().setColor(HtmlColor.BLACK);
-		// final Dimension2D dim = getDimension(ug.getStringBounder());
-		// ug.getParam().setStroke(new UStroke(stroke));
-		// ug.draw(x, y, new URectangle(dim.getWidth() - 2 * stroke,
-		// dim.getHeight() - 2 * stroke, 10, 10));
-		// ug.getParam().setStroke(new UStroke());
 	}
 }

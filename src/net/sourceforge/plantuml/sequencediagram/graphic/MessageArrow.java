@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6330 $
+ * Revision $Revision: 11635 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -36,21 +36,26 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class MessageArrow extends Arrow {
 
 	private final LivingParticipantBox p1;
 	private final LivingParticipantBox p2;
+	private final Component compAliveBox;
 
-	public MessageArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, LivingParticipantBox p2) {
-		super(startingY, skin, arrow);
+	public MessageArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, LivingParticipantBox p2,
+			Url url, Component compAliveBox) {
+		super(startingY, skin, arrow, url);
 
 		if (p1 == p2) {
 			throw new IllegalArgumentException();
@@ -60,6 +65,7 @@ class MessageArrow extends Arrow {
 		}
 		this.p1 = p1;
 		this.p2 = p2;
+		this.compAliveBox = compAliveBox;
 	}
 
 	@Override
@@ -70,13 +76,24 @@ class MessageArrow extends Arrow {
 	}
 
 	private double getLeftStartInternal(StringBounder stringBounder) {
-		return getParticipantAt(stringBounder, NotePosition.LEFT).getLiveThicknessAt(stringBounder,
-				getArrowYStartLevel(stringBounder)).getSegment().getPos2();
+		return getParticipantAt(stringBounder, NotePosition.LEFT)
+				.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
 	}
-
-	private double getRightEndInternal(StringBounder stringBounder) {
+	
+	private double getRightEndInternalOld(StringBounder stringBounder) {
 		return getParticipantAt(stringBounder, NotePosition.RIGHT).getLiveThicknessAt(stringBounder,
 				getArrowYStartLevel(stringBounder)).getSegment().getPos1();
+	}
+
+
+	private double getRightEndInternal(StringBounder stringBounder) {
+		final Segment segment = getParticipantAt(stringBounder, NotePosition.RIGHT).getLiveThicknessAt(stringBounder,
+				getArrowYStartLevel(stringBounder)).getSegment();
+		if (segment.getLength() == 0) {
+			return segment.getPos1();
+		}
+		final double rectWidth = compAliveBox.getPreferredWidth(stringBounder);
+		return segment.getPos2() - rectWidth;
 	}
 
 	@Override
@@ -124,12 +141,10 @@ class MessageArrow extends Arrow {
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.translate(getStartingX(stringBounder), getStartingY());
-//		ug.getParam().setColor(Color.GREEN);
-//		ug.getParam().setBackcolor(Color.LIGHT_GRAY);
-//		ug.draw(0, 0, new URectangle(getActualDimension(stringBounder).getWidth(), getActualDimension(stringBounder)
-//				.getHeight()));
-		getArrowComponent().drawU(ug, getActualDimension(stringBounder), context);
+		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));
+		startUrl(ug);
+		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder)), context);
+		endUrl(ug);
 	}
 
 	private Dimension2D getActualDimension(StringBounder stringBounder) {

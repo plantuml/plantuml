@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -41,11 +40,14 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(ColorParam.iconPrivate, null), PROTECTED_FIELD(ColorParam.iconProtected, null), PACKAGE_PRIVATE_FIELD(
@@ -67,8 +69,9 @@ public enum VisibilityModifier {
 	public UDrawable getUDrawable(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				drawInternal(ug, size, foregroundColor, backgoundColor);
+				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
+
 		};
 	}
 
@@ -79,55 +82,51 @@ public enum VisibilityModifier {
 				return new Dimension2DDouble(size + 1, size + 1);
 			}
 
-			public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-				throw new UnsupportedOperationException();
-			}
-
-			public void drawU(UGraphic ug, double x, double y) {
-				final double tx = ug.getTranslateX();
-				final double ty = ug.getTranslateY();
-				ug.translate(x, y);
-				drawInternal(ug, size, foregroundColor, backgoundColor);
-				ug.setTranslate(tx, ty);
+			public void drawU(UGraphic ug) {
+				// final double tx = ug.getTranslateX();
+				// final double ty = ug.getTranslateY();
+				// ug.translate(x, y);F
+				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
+				// ug.setTranslate(tx, ty);
 			}
 		};
 	}
 
-	private void drawInternal(UGraphic ug, int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
-		ug.getParam().setBackcolor(backgoundColor);
-		ug.getParam().setColor(foregroundColor);
+	private void drawInternal(UGraphic ug, int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor,
+			double x, double y) {
+		ug = ug.apply(new UChangeBackColor(backgoundColor)).apply(new UChangeColor(foregroundColor));
 		size = ensureEven(size);
 		switch (this) {
 		case PACKAGE_PRIVATE_FIELD:
-			drawTriangle(ug, false, size);
+			drawTriangle(ug, false, size, x, y);
 			break;
 
 		case PRIVATE_FIELD:
-			drawSquare(ug, false, size);
+			drawSquare(ug, false, size, x, y);
 			break;
 
 		case PROTECTED_FIELD:
-			drawDiamond(ug, false, size);
+			drawDiamond(ug, false, size, x, y);
 			break;
 
 		case PUBLIC_FIELD:
-			drawCircle(ug, false, size);
+			drawCircle(ug, false, size, x, y);
 			break;
 
 		case PACKAGE_PRIVATE_METHOD:
-			drawTriangle(ug, true, size);
+			drawTriangle(ug, true, size, x, y);
 			break;
 
 		case PRIVATE_METHOD:
-			drawSquare(ug, true, size);
+			drawSquare(ug, true, size, x, y);
 			break;
 
 		case PROTECTED_METHOD:
-			drawDiamond(ug, true, size);
+			drawDiamond(ug, true, size, x, y);
 			break;
 
 		case PUBLIC_METHOD:
-			drawCircle(ug, true, size);
+			drawCircle(ug, true, size, x, y);
 			break;
 
 		default:
@@ -135,12 +134,12 @@ public enum VisibilityModifier {
 		}
 	}
 
-	private void drawSquare(UGraphic ug, boolean filled, int size) {
-		ug.draw(2, 2, new URectangle(size - 4, size - 4));
+	private void drawSquare(UGraphic ug, boolean filled, int size, double x, double y) {
+		ug.apply(new UTranslate(x + 2, y + 2)).draw(new URectangle(size - 4, size - 4));
 	}
 
-	private void drawCircle(UGraphic ug, boolean filled, int size) {
-		ug.draw(2, 2, new UEllipse(size - 4, size - 4));
+	private void drawCircle(UGraphic ug, boolean filled, int size, double x, double y) {
+		ug.apply(new UTranslate(x + 2, y + 2)).draw(new UEllipse(size - 4, size - 4));
 	}
 
 	static private int ensureEven(int n) {
@@ -150,23 +149,23 @@ public enum VisibilityModifier {
 		return n;
 	}
 
-	private void drawDiamond(UGraphic ug, boolean filled, int size) {
+	private void drawDiamond(UGraphic ug, boolean filled, int size, double x, double y) {
 		final UPolygon poly = new UPolygon();
 		size -= 2;
 		poly.addPoint(size / 2.0, 0);
 		poly.addPoint(size, size / 2.0);
 		poly.addPoint(size / 2.0, size);
 		poly.addPoint(0, size / 2.0);
-		ug.draw(1, 0, poly);
+		ug.apply(new UTranslate(x + 1, y)).draw(poly);
 	}
 
-	private void drawTriangle(UGraphic ug, boolean filled, int size) {
+	private void drawTriangle(UGraphic ug, boolean filled, int size, double x, double y) {
 		final UPolygon poly = new UPolygon();
 		size -= 2;
 		poly.addPoint(size / 2.0, 1);
 		poly.addPoint(0, size - 1);
 		poly.addPoint(size, size - 1);
-		ug.draw(1, 0, poly);
+		ug.apply(new UTranslate(x + 1, y)).draw(poly);
 	}
 
 	public static boolean isVisibilityCharacter(char c) {

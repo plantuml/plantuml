@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,24 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
+ * Revision $Revision: 12064 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
 
 abstract class AbstractGraphviz implements Graphviz {
 
@@ -81,25 +76,27 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	abstract protected File specificDotExe();
 
-	final public void createFile(OutputStream os) throws IOException, InterruptedException {
+	final public ProcessState createFile3(OutputStream os) {
 		if (dotString == null) {
 			throw new IllegalArgumentException();
 		}
 
 		if (illegalDotExe()) {
-			createPngNoGraphviz(os, new FileFormatOption(FileFormat.valueOf(type[0].toUpperCase())));
-			return;
+			// createPngNoGraphviz(os, new FileFormatOption(FileFormat.valueOf(type[0].toUpperCase())));
+			throw new IllegalStateException();
 		}
-		final String cmd = getCommandLine();
+		final String cmd[] = getCommandLine();
 		ProcessRunner p = null;
+		ProcessState state = null;
 		try {
-			Log.info("Starting Graphviz process " + cmd);
+			Log.info("Starting Graphviz process " + Arrays.asList(cmd));
 			Log.info("DotString size: " + dotString.length());
 			p = new ProcessRunner(cmd);
-			p.run(dotString.getBytes(), os);
+			state = p.run2(dotString.getBytes(), os);
+//			if (state == ProcessState.TERMINATED_OK) {
+//				result = true;
+//			}
 			Log.info("Ending process ok");
-		} catch (InterruptedException e) {
-			Log.error("Interrupted");
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Log.error("Error: " + e);
@@ -122,26 +119,24 @@ abstract class AbstractGraphviz implements Graphviz {
 				throw new IllegalStateException("Dot out " + p.getOut());
 			}
 		}
-
+		return state;
 	}
 
 	private boolean illegalDotExe() {
 		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
 	}
 
-	final public String dotVersion() throws IOException, InterruptedException {
-		final String cmd = getCommandLineVersion();
+	final public String dotVersion() {
+		final String cmd[] = getCommandLineVersion();
 		return executeCmd(cmd);
 	}
 
-	public String testFile(String dotfilename, String outfile) throws IOException, InterruptedException {
-		final String cmd = getCommandLine() + "-o" + outfile + " " + dotfilename;
-		return executeCmd(cmd);
-	}
-
-	private String executeCmd(final String cmd) throws IOException, InterruptedException {
+	private String executeCmd(final String cmd[]) {
 		final ProcessRunner p = new ProcessRunner(cmd);
-		p.run(null, null);
+		final ProcessState state = p.run2(null, null);
+		if (state != ProcessState.TERMINATED_OK) {
+			return "?";
+		}
 		final StringBuilder sb = new StringBuilder();
 		if (StringUtils.isNotEmpty(p.getOut())) {
 			sb.append(p.getOut());
@@ -155,45 +150,21 @@ abstract class AbstractGraphviz implements Graphviz {
 		return sb.toString().replace('\n', ' ').trim();
 	}
 
-	final private void createPngNoGraphviz(OutputStream os, FileFormatOption format) throws IOException {
-		final List<String> msg = new ArrayList<String>();
-		msg.add("Dot Executable: " + dotExe);
-		if (dotExe != null) {
-			if (dotExe.exists() == false) {
-				msg.add("File does not exist");
-			} else if (dotExe.isDirectory()) {
-				msg.add("It should be an executable, not a directory");
-			} else if (dotExe.isFile() == false) {
-				msg.add("Not a valid file");
-			} else if (dotExe.canRead() == false) {
-				msg.add("File cannot be read");
-			}
+	final String[] getCommandLine() {
+		final String[] result = new String[type.length + 1];
+		result[0] = getDotExe().getAbsolutePath();
+		for (int i = 0; i < type.length; i++) {
+			result[i + 1] = "-T" + type[i];
 		}
-		msg.add("Cannot find Graphviz. You should try");
-		msg.add(" ");
-		msg.add("@startuml");
-		msg.add("testdot");
-		msg.add("@enduml");
-		msg.add(" ");
-		msg.add(" or ");
-		msg.add(" ");
-		msg.add("java -jar plantuml.jar -testdot");
-		final GraphicStrings errorResult = new GraphicStrings(msg);
-		errorResult.writeImage(os, format);
+		return result;
 	}
 
-	abstract String getCommandLine();
-
-	abstract String getCommandLineVersion();
+	final String[] getCommandLineVersion() {
+		return new String[] { getDotExe().getAbsolutePath(), "-V" };
+	}
 
 	public final File getDotExe() {
 		return dotExe;
-	}
-
-	protected final void appendImageType(final StringBuilder sb) {
-		for (String t : type) {
-			sb.append(" -T" + t + " ");
-		}
 	}
 
 	public final String getDotString() {

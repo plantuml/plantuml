@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 7230 $
+ * Revision $Revision: 11707 $
  *
  */
 package net.sourceforge.plantuml;
@@ -46,12 +46,17 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
+import net.sourceforge.plantuml.ugraphic.Sprite;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class SkinParam implements ISkinParam {
 
@@ -68,11 +73,21 @@ public class SkinParam implements ISkinParam {
 
 	public SkinParam(UmlDiagramType type) {
 		this.type = type;
+		if (type == null) {
+			setParam("shadowing", "false");
+		}
 	}
 
 	static String cleanForKey(String key) {
 		key = key.toLowerCase().trim();
 		key = key.replaceAll("_|\\.|\\s", "");
+		key = key.replaceAll("partition", "package");
+		key = key.replaceAll("activityarrow", "genericarrow");
+		key = key.replaceAll("objectarrow", "genericarrow");
+		key = key.replaceAll("classarrow", "genericarrow");
+		key = key.replaceAll("componentarrow", "genericarrow");
+		key = key.replaceAll("statearrow", "genericarrow");
+		key = key.replaceAll("usecasearrow", "genericarrow");
 		final Matcher m = stereoPattern.matcher(key);
 		if (m.find()) {
 			final String s = m.group(1);
@@ -83,9 +98,9 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public HtmlColor getBackgroundColor() {
-		final HtmlColor result = getHtmlColor(ColorParam.background, null);
+		final HtmlColor result = getHtmlColor(ColorParam.background, null, false);
 		if (result == null) {
-			return HtmlColor.WHITE;
+			return HtmlColorUtils.WHITE;
 		}
 		return result;
 	}
@@ -109,19 +124,30 @@ public class SkinParam implements ISkinParam {
 		return sb.toString();
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype) {
+	public HtmlColor getHtmlColor(ColorParam param, String stereotype, boolean clickable) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 			final String value2 = getValue(param.name() + "color" + stereotype);
-			if (value2 != null && HtmlColor.isValid(value2)) {
-				return HtmlColor.getColorIfValid(value2);
+			if (value2 != null && HtmlColorUtils.getColorIfValid(value2) != null) {
+				return HtmlColorUtils.getColorIfValid(value2);
 			}
 		}
-		final String value = getValue(param.name() + "color");
-		if (value == null || HtmlColor.isValid(value) == false) {
+		final String value = getValue(getParamName(param, clickable));
+		final boolean acceptTransparent = param == ColorParam.background;
+		if (value == null) {
 			return null;
 		}
-		return HtmlColor.getColorIfValid(value);
+		return HtmlColorUtils.getColorIfValid(value, acceptTransparent);
+	}
+
+	private String getParamName(ColorParam param, boolean clickable) {
+		String n = param.name();
+		if (clickable && n.endsWith("Background")) {
+			n = n.replaceAll("Background", "ClickableBackground");
+		} else if (clickable && n.endsWith("Border")) {
+			n = n.replaceAll("Border", "ClickableBorder");
+		}
+		return n + "color";
 	}
 
 	private void checkStereotype(String stereotype) {
@@ -176,16 +202,16 @@ public class SkinParam implements ISkinParam {
 			checkStereotype(stereotype);
 			value = getValue(param.name() + "fontcolor" + stereotype);
 		}
-		if (value == null || HtmlColor.isValid(value) == false) {
+		if (value == null || HtmlColorUtils.getColorIfValid(value) == null) {
 			value = getValue(param.name() + "fontcolor");
 		}
-		if (value == null || HtmlColor.isValid(value) == false) {
+		if (value == null || HtmlColorUtils.getColorIfValid(value) == null) {
 			value = getValue("defaultfontcolor");
 		}
-		if (value == null || HtmlColor.isValid(value) == false) {
+		if (value == null || HtmlColorUtils.getColorIfValid(value) == null) {
 			value = param.getDefaultColor();
 		}
-		return HtmlColor.getColorIfValid(value);
+		return HtmlColorUtils.getColorIfValid(value);
 	}
 
 	private int getFontStyle(FontParam param, String stereotype) {
@@ -217,8 +243,9 @@ public class SkinParam implements ISkinParam {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 		}
-		return new UFont(getFontFamily(fontParam, stereotype), getFontStyle(fontParam, stereotype), getFontSize(
-				fontParam, stereotype));
+		final String fontFamily = getFontFamily(fontParam, stereotype);
+		final int fontStyle = getFontStyle(fontParam, stereotype);
+		return new UFont(fontFamily, fontStyle, getFontSize(fontParam, stereotype));
 	}
 
 	public int getCircledCharacterRadius() {
@@ -227,13 +254,9 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		// return 11;
-		// System.err.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER));
-		// System.err.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER)/3);
+		// Log.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER));
+		// Log.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER)/3);
 		return getFontSize(FontParam.CIRCLED_CHARACTER, null) / 3 + 6;
-	}
-
-	public boolean isClassCollapse() {
-		return true;
 	}
 
 	public int classAttributeIconSize() {
@@ -284,17 +307,6 @@ public class SkinParam implements ISkinParam {
 		return 96;
 	}
 
-	public boolean useOctagonForActivity() {
-		final String value = getValue("activityshape");
-		if ("roundedbox".equalsIgnoreCase(value)) {
-			return false;
-		}
-		if ("octagon".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
-	}
-
 	public DotSplines getDotSplines() {
 		final String value = getValue("linetype");
 		if ("polyline".equalsIgnoreCase(value)) {
@@ -323,13 +335,34 @@ public class SkinParam implements ISkinParam {
 		return GraphvizLayoutStrategy.DOT;
 	}
 
-	public HorizontalAlignement getHorizontalAlignement(AlignParam param) {
-		final String value = getValue(param.name());
-		final HorizontalAlignement result = HorizontalAlignement.fromString(value);
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {
+		final String value;
+		switch (param) {
+		case SEQUENCE_MESSAGE_ALIGN:
+			value = getArg(getValue(AlignParam.SEQUENCE_MESSAGE_ALIGN.name()), 0);
+			break;
+		case SEQUENCE_MESSAGETEXT_ALIGN:
+			value = getArg(getValue(AlignParam.SEQUENCE_MESSAGE_ALIGN.name()), 1);
+			break;
+		default:
+			value = getValue(param.name());
+		}
+		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
 		if (result == null) {
 			return param.getDefaultValue();
 		}
 		return result;
+	}
+
+	private String getArg(String value, int i) {
+		if (value == null) {
+			return null;
+		}
+		final String[] split = value.split(":");
+		if (i >= split.length) {
+			return split[0];
+		}
+		return split[i];
 	}
 
 	public ColorMapper getColorMapper() {
@@ -339,24 +372,140 @@ public class SkinParam implements ISkinParam {
 		return new ColorMapperIdentity();
 	}
 
-	public boolean isSvek() {
-		boolean defaultValue = false;
-		if (OptionFlags.SVEK && type == UmlDiagramType.CLASS) {
-			defaultValue = true;
-		}
-		final String value = getValue("svek");
-		if (value == null) {
-			return defaultValue;
-		}
-		return "true".equalsIgnoreCase(value);
-	}
-
 	public boolean shadowing() {
+		if (strictUmlStyle()) {
+			return false;
+		}
 		final String value = getValue("shadowing");
 		if ("false".equalsIgnoreCase(value)) {
 			return false;
 		}
 		return true;
+	}
+
+	public PackageStyle getPackageStyle() {
+		final String value = getValue("packageStyle");
+		final PackageStyle p = PackageStyle.fromString(value);
+		if (p == null) {
+			return PackageStyle.FOLDER;
+		}
+		return p;
+	}
+
+	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
+
+	public void addSprite(String name, Sprite sprite) {
+		sprites.put(name, sprite);
+	}
+
+	public Sprite getSprite(String name) {
+		return sprites.get(name);
+	}
+
+	public boolean useUml2ForComponent() {
+		if (strictUmlStyle()) {
+			return true;
+		}
+		final String value = getValue("componentstyle");
+		return "uml2".equalsIgnoreCase(value);
+	}
+
+	public boolean stereotypePositionTop() {
+		final String value = getValue("stereotypePosition");
+		if ("bottom".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean useSwimlanes() {
+		if (type != UmlDiagramType.ACTIVITY) {
+			return false;
+		}
+		if ("true".equalsIgnoreCase(getValue("swimlane"))) {
+			return true;
+		}
+		if ("true".equalsIgnoreCase(getValue("swimlanes"))) {
+			return true;
+		}
+		return false;
+	}
+
+	public double getNodesep() {
+		final String value = getValue("nodesep");
+		if (value != null && value.matches("\\d+")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public double getRanksep() {
+		final String value = getValue("ranksep");
+		if (value != null && value.matches("\\d+")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public double getRoundCorner() {
+		final String value = getValue("roundcorner");
+		if (value != null && value.matches("\\d+")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public UStroke getThickness(LineParam param) {
+		final String value = getValue(param.name() + "thickness");
+		if (value != null && value.matches("[\\d.]+")) {
+			return new UStroke(Double.parseDouble(value));
+		}
+		return null;
+	}
+
+	public double maxMessageSize() {
+		final String value = getValue("maxmessagesize");
+		if (value != null && value.matches("-?\\d+")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public boolean strictUmlStyle() {
+		final String value = getValue("style");
+		if ("strictuml".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean forceSequenceParticipantUnderlined() {
+		final String value = getValue("sequenceParticipant");
+		if ("underline".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public ConditionStyle getConditionStyle() {
+		final String value = getValue("conditionStyle");
+		final ConditionStyle p = ConditionStyle.fromString(value);
+		if (p == null) {
+			return ConditionStyle.INSIDE;
+		}
+		return p;
+	}
+
+	public double minClassWidth() {
+		final String value = getValue("minclasswidth");
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return 0;
+	}
+
+	public boolean sameClassWidth() {
+		return "true".equals(getValue("sameclasswidth"));
 	}
 
 }

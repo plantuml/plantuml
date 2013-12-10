@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6549 $
+ * Revision $Revision: 11149 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -65,11 +65,14 @@ public enum ColorParam {
 	packageBackground,
 	packageBorder,
 
+	partitionBackground,
+	partitionBorder,
+
 	componentBackground,
 	componentBorder,
 	componentInterfaceBackground,
 	componentInterfaceBorder,
-	componentArrow,
+	// componentArrow,
 
 	stateBackground,
 	stateBorder,
@@ -79,6 +82,9 @@ public enum ColorParam {
 
 	noteBackground(true),
 	noteBorder,
+	
+	legendBackground(true),
+	legendBorder,
 	
 	sequenceActorBackground(true),
 	sequenceActorBorder,
@@ -118,6 +124,4 @@ public enum ColorParam {
 	protected boolean isBackground() {
 		return isBackground;
 	}
-	
-	
 }

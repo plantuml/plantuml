@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -31,27 +31,25 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import java.awt.Graphics2D;
-import java.awt.font.TextLayout;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
-import net.sourceforge.plantuml.graphic.UnusedSpace;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.svg.SvgGraphics;
+import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.UClip;
+import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -60,35 +58,73 @@ import net.sourceforge.plantuml.ugraphic.UText;
 
 public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
 
-	final static Graphics2D imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB).createGraphics();
-	private UClip clip;
-
 	private final StringBounder stringBounder;
+	private final boolean textAsPath2;
 
-	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath) {
-		this(colorMapper, new SvgGraphics(backcolor), textAsPath);
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+		return new UGraphicSvg(this);
 	}
 
-	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath) {
-		this(colorMapper, new SvgGraphics(), textAsPath);
+	private UGraphicSvg(UGraphicSvg other) {
+		super(other);
+		this.stringBounder = other.stringBounder;
+		this.textAsPath2 = other.textAsPath2;
+		register();
+	}
+
+	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale) {
+		this(colorMapper, new SvgGraphics(backcolor, scale), textAsPath);
+	}
+
+	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale) {
+		this(colorMapper, new SvgGraphics(scale), textAsPath);
+	}
+
+	public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale) {
+		this(mapper, new SvgGraphics(scale), textAsPath);
+
+		final SvgGraphics svg = getGraphicObject();
+		svg.paintBackcolorGradient(mapper, gr);
+	}
+
+	@Override
+	protected boolean manageHiddenAutomatically() {
+		return false;
+	}
+
+	@Override
+	protected void beforeDraw() {
+		getGraphicObject().setHidden(getParam().isHidden());
+	}
+
+	@Override
+	protected void afterDraw() {
+		getGraphicObject().setHidden(false);
 	}
 
 	private UGraphicSvg(ColorMapper colorMapper, SvgGraphics svg, boolean textAsPath) {
 		super(colorMapper, svg);
-		stringBounder = StringBounderUtils.asStringBounder(imDummy);
+		stringBounder = TextBlockUtils.getDummyStringBounder();
+		this.textAsPath2 = textAsPath;
+		register();
+	}
+
+	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleSvg(this));
-		textAsPath = false;
-		if (textAsPath) {
-			registerDriver(UText.class, new DriverTextAsPathSvg(imDummy.getFontRenderContext(), this));
+		if (textAsPath2) {
+			registerDriver(UText.class, new DriverTextAsPathSvg(TextBlockUtils.getFontRenderContext(), this));
 		} else {
 			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
 		}
 		registerDriver(ULine.class, new DriverLineSvg(this));
 		registerDriver(UPolygon.class, new DriverPolygonSvg(this));
 		registerDriver(UEllipse.class, new DriverEllipseSvg());
-		registerDriver(UImage.class, new DriverImageSvg());
+		registerDriver(UImage.class, new DriverImagePng());
+		registerDriver(UImageSvg.class, new DriverImageSvgSvg());
 		registerDriver(UPath.class, new DriverPathSvg(this));
 		registerDriver(DotPath.class, new DriverDotPathSvg());
+		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg());
 	}
 
 	public SvgGraphics getSvgGraphics() {
@@ -107,41 +143,28 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		}
 	}
 
-	public void setClip(UClip clip) {
-		this.clip = clip == null ? null : clip.translate(getTranslateX(), getTranslateY());
+	public void startUrl(Url url) {
+		getGraphicObject().openLink(url.getUrl(), url.getTooltip());
 	}
 
-	public UClip getClip() {
-		return clip;
+	public void closeAction() {
+		getGraphicObject().closeLink();
 	}
 
-//	public void centerCharOld(double x, double y, char c, Font font) {
-//		final UText uText = new UText("" + c, new FontConfiguration(font, getParam().getColor()));
-//		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
-//		draw(x - unusedSpace.getCenterX() + getTranslateX(), y - unusedSpace.getCenterY() + getTranslateY(), uText);
-//	}
-
-	public void centerChar(double x, double y, char c, UFont font) {
-		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
-
-		final double xpos = x - unusedSpace.getCenterX() - 0.5;
-		final double ypos = y - unusedSpace.getCenterY() - 0.5;
-
-		final TextLayout t = new TextLayout("" + c, font.getFont(), imDummy.getFontRenderContext());
-		getGraphicObject().setStrokeColor(StringUtils.getAsHtml(getColorMapper().getMappedColor(getParam().getColor())));
-		DriverTextAsPathSvg.drawPathIterator(getGraphicObject(), xpos + getTranslateX(), ypos + getTranslateY(), t
-				.getOutline(null).getPathIterator(null));
+	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
+		createXml(os);
 	}
 
-	public void setAntiAliasing(boolean trueForOn) {
-	}
-
-	public void setUrl(String url, String tooltip) {
-		if (url == null) {
-			getGraphicObject().closeLink();
-		} else {
-			getGraphicObject().openLink(url, tooltip);
-		}
-	}
+	// @Override
+	// public String startHiddenGroup() {
+	// getGraphicObject().startHiddenGroup();
+	// return null;
+	// }
+	//
+	// @Override
+	// public String closeHiddenGroup() {
+	// getGraphicObject().closeHiddenGroup();
+	// return null;
+	// }
 
 }

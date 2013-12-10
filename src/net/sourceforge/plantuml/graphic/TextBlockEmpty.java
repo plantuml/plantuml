@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,23 +33,42 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class TextBlockEmpty implements TextBlock {
+public class TextBlockEmpty implements TextBlockWidth, TextBlock {
+
+	private final double width;
+	private final double height;
+
+	public TextBlockEmpty(double width, double height) {
+		this.width = width;
+		this.height = height;
+	}
+
+	public TextBlockEmpty() {
+		this(0, 0);
+	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(0, 0);
+		return new Dimension2DDouble(width, height);
 	}
 
-	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
+	public void drawU(UGraphic ug) {
 	}
 
-	public void drawU(UGraphic ug, double x, double y) {
+	public TextBlock asTextBlock(final double widthToUse) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return TextBlockEmpty.this.calculateDimension(stringBounder);
+			}
+		};
 	}
 
 }

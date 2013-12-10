@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,48 +28,50 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 11394 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
-import java.awt.geom.Dimension2D;
-import java.util.List;
-
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.StickMan;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentBlueModernActor extends AbstractTextualComponent {
 
 	private final StickMan stickman;
 	private final boolean head;
 
-	public ComponentBlueModernActor(HtmlColor backgroundColor, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			List<? extends CharSequence> stringsToDisplay, boolean head) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignement.LEFT, 3, 3, 0);
+	public ComponentBlueModernActor(HtmlColor backgroundColor, HtmlColor foregroundColor, HtmlColor fontColor,
+			UFont font, Display stringsToDisplay, boolean head, SpriteContainer spriteContainer) {
+		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, 0, false);
 		this.head = head;
 		stickman = new StickMan(backgroundColor, foregroundColor);
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
-		ug.getParam().setColor(getFontColor());
+	protected void drawInternalU(UGraphic ug, Area area) {
+		ug = ug.apply(new UChangeColor(getFontColor()));
 		final TextBlock textBlock = getTextBlock();
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double delta = (getPreferredWidth(stringBounder) - stickman.getPreferredWidth(stringBounder)) / 2;
+		final double delta = (getPreferredWidth(stringBounder) - stickman.getPreferredWidth()) / 2;
 
 		if (head) {
-			textBlock.drawU(ug, getTextMiddlePostion(stringBounder), stickman.getPreferredHeight(stringBounder));
-			ug.translate(delta, 0);
+			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), stickman.getPreferredHeight())));
+			ug = ug.apply(new UTranslate(delta, 0));
 		} else {
-			textBlock.drawU(ug, getTextMiddlePostion(stringBounder), 0);
-			ug.translate(delta, getTextHeight(stringBounder));
+			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), 0)));
+			ug = ug.apply(new UTranslate(delta, getTextHeight(stringBounder)));
 		}
 		stickman.drawU(ug);
 
@@ -81,12 +83,12 @@ public class ComponentBlueModernActor extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return stickman.getPreferredHeight(stringBounder) + getTextHeight(stringBounder);
+		return stickman.getPreferredHeight() + getTextHeight(stringBounder);
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return Math.max(stickman.getPreferredWidth(stringBounder), getTextWidth(stringBounder));
+		return Math.max(stickman.getPreferredWidth(), getTextWidth(stringBounder));
 	}
 
 }

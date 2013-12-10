@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -48,6 +48,7 @@ public class FtpServer {
 
 	private final Map<String, FtpConnexion> datas = new TreeMap<String, FtpConnexion>();
 	private final ExecutorService exeImage = Executors.newFixedThreadPool(2);
+	private final String charset = "UTF-8";
 	
 	private final int listenPort;
 
@@ -60,7 +61,7 @@ public class FtpServer {
 
 	public synchronized int getFreePort() {
 		portFree++;
-		System.err.println("port=" + portFree);
+// Log.println("port=" + portFree);
 		return portFree;
 	}
 
@@ -100,7 +101,7 @@ public class FtpServer {
 		System.out.println("Server Started...");
 		System.out.println("Waiting for connections...");
 		System.out.println(" ");
-		new FtpServer(100).go();
+		new FtpServer(24242).go();
 	}
 
 	public void processImage(final FtpConnexion connexion, final String name) {
@@ -113,6 +114,10 @@ public class FtpServer {
 				}
 			}
 		});
+	}
+
+	public final String getCharset() {
+		return charset;
 	}
 
 }

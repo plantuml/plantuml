@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.oregon;
 
-import java.util.Date;
 import java.util.Random;
 
 public class OregonBasicGame implements BasicGame {
@@ -205,10 +204,10 @@ public class OregonBasicGame implements BasicGame {
 
 		case 7:
 			printb("Bandits attacking!");
-			int br = shoot3870();
-			b = b - 20 * br;
+			final int br1 = shoot3870();
+			b = b - 20 * br1;
 			if (b > 0) {
-				if (br <= 1) {
+				if (br1 <= 1) {
 					print("That was the quickest draw outside of Dodge City.");
 					print("You got at least one and drove 'em off.");
 					return;
@@ -264,20 +263,20 @@ public class OregonBasicGame implements BasicGame {
 		case 12:
 			printb("You're sound asleep and you hear a noise... get up to investigate.");
 			printb("It's wild animals! They attack you!");
-			br = shoot3870();
+			final int br2 = shoot3870();
 			if (b <= 39) {
 				print("You're almost out of ammo; can't reach more.");
 				print("The wolves come at you biting and clawing.");
 				kh = 1;
 				die3030(j);
 			}
-			if (br <= 2) {
+			if (br2 <= 2) {
 				print("Nice shooting, pardner... They didn't get much.");
 			} else {
 				print("Kind of slow on the draw. The wolves got at your food and clothes.");
-				b = b - 20 * br;
-				c = c - 2 * br;
-				f = f - 4 * br;
+				b = b - 20 * br2;
+				c = c - 2 * br2;
+				f = f - 4 * br2;
 			}
 			break;
 

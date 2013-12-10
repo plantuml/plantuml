@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -31,6 +31,12 @@
  */
 package net.sourceforge.plantuml.ugraphic.txt;
 
+import java.awt.geom.Dimension2D;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
@@ -38,55 +44,75 @@ import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UClip;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 
-public class UGraphicTxt extends AbstractCommonUGraphic {
+public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
 
-	private final UmlCharArea charArea = new UmlCharAreaImpl();
-	private int lastPrint = 0;
+	private final UmlCharArea charArea;
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+		return new UGraphicTxt(this);
+	}
+
+	private UGraphicTxt(UGraphicTxt other) {
+		super(other);
+		this.charArea = other.charArea;
+	}
 
 	public UGraphicTxt() {
 		super(new ColorMapperIdentity());
+		this.charArea = new UmlCharAreaImpl();
 	}
 
 	public StringBounder getStringBounder() {
 		return new TextStringBounder();
 	}
 
-	public void draw(double x, double y, UShape shape) {
+	public void draw(UShape shape) {
+		final UClip clip = getClip();
 		if (shape instanceof UText) {
 			final UText txt = (UText) shape;
-			charArea.drawStringLR(txt.getText(), 0, lastPrint);
-			lastPrint++;
+			final int y = getDy() / 10 - 1;
 			if (txt.getFontConfiguration().containsStyle(FontStyle.WAVE)) {
-				charArea.drawHLine('^', lastPrint, 0, txt.getText().length());
-				lastPrint++;
+				charArea.drawHLine('^', y, getDx(), txt.getText().length());
+				charArea.drawStringLR(txt.getText(), 0, y + 1);
+			} else {
+				charArea.drawStringLR(txt.getText(), 0, y);
 			}
 			return;
 		}
 		throw new UnsupportedOperationException();
 	}
 
-	public void setClip(UClip clip) {
-		// throw new UnsupportedOperationException();
+	public final UmlCharArea getCharArea() {
+		return new TranslatedCharArea(charArea, getDx(), getDy());
 	}
 
-	public void centerChar(double x, double y, char c, UFont font) {
+	private int getDy() {
+		return (int) getTranslateY();
+	}
+
+	private int getDx() {
+		return (int) getTranslateX();
+	}
+
+	public void startUrl(Url url) {
+	}
+
+	public void closeAction() {
+	}
+
+	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
-	public final UmlCharArea getCharArea() {
-		return new TranslatedCharArea(charArea, (int) getTranslateX(), (int) getTranslateY());
-	}
-
-	public void setAntiAliasing(boolean trueForOn) {
-	}
-
-	public void setUrl(String url, String tooltip) {
+	public Dimension2D getDimension() {
+		return new Dimension2DDouble(0, 0);
 	}
 
 }

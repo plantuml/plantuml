@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,114 +34,167 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import java.util.List;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
-import net.sourceforge.plantuml.command.regex.RegexPartialMatch;
-import net.sourceforge.plantuml.cucadiagram.Entity;
-import net.sourceforge.plantuml.cucadiagram.EntityType;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
 
-	public CommandLinkLongActivity(final ActivityDiagram diagram) {
-		super(
-				diagram,
-				getRegexConcat(),
-				"(?i)^\\s*([^\"]*)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?$");
+	public CommandLinkLongActivity() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
-	
+
+	@Override
+	public String getPatternEnd() {
+		return "(?i)^\\s*([^\"]*)\"(?:\\s+as\\s+([\\p{L}0-9][\\p{L}0-9_.]*))?\\s*(\\<\\<.*\\>\\>)?\\s*(?:in\\s+(\"[^\"]+\"|\\S+))?\\s*(#\\w+)?$";
+	}
+
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"),
-				new RegexOr("FIRST", true,
-						new RegexLeaf("STAR", "(\\(\\*(top)?\\))"),
-						new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"),
-						new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"),
-						new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?")),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("BACKCOLOR", "(#\\w+)?"),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("ARROW", "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=]))?[=-]*\\>)"),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("DESC", "\"([^\"]*?)"),
-				new RegexLeaf("\\s*"),
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexOptional(//
+						new RegexOr("FIRST", //
+								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
+								new RegexLeaf("CODE", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
+								new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
+								new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?"))), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf("ARROW", "([-=.]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[-=.]*\\>)"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("DESC", "\"([^\"]*?)"), //
+				new RegexLeaf("\\s*"), //
 				new RegexLeaf("$"));
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
+	public CommandExecutionResult executeNow(final ActivityDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, false);
-		final Map<String, RegexPartialMatch> line0 = getStartingPattern().matcher(lines.get(0).trim());
-		final IEntity entity1 = CommandLinkActivity.getEntity(getSystem(), line0, true);
-		if (line0.get("STEREOTYPE").get(0) != null) {
-			entity1.setStereotype(new Stereotype(line0.get("STEREOTYPE").get(0)));
+		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+
+		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
+
+		if (line0.get("STEREOTYPE", 0) != null) {
+			entity1.setStereotype(new Stereotype(line0.get("STEREOTYPE", 0)));
 		}
-		if (line0.get("BACKCOLOR").get(0)!=null) {
-			entity1.setSpecificBackcolor(HtmlColor.getColorIfValid(line0.get("BACKCOLOR").get(0)));
+		if (line0.get("BACKCOLOR", 0) != null) {
+			entity1.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(line0.get("BACKCOLOR", 0)));
 		}
 		final StringBuilder sb = new StringBuilder();
 
-		if (StringUtils.isNotEmpty(line0.get("DESC").get(0))) {
-			sb.append(line0.get("DESC").get(0));
-			sb.append("\\n");
+		final String desc0 = line0.get("DESC", 0);
+		Url urlActivity = null;
+		if (StringUtils.isNotEmpty(desc0)) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			urlActivity = urlBuilder.getUrl(desc0);
+			if (urlActivity == null) {
+				sb.append(desc0);
+				sb.append("\\n");
+			}
 		}
 		for (int i = 1; i < lines.size() - 1; i++) {
+			if (i == 1 && urlActivity == null) {
+				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+				urlActivity = urlBuilder.getUrl(lines.get(i));
+				if (urlActivity != null) {
+					continue;
+				}
+			}
 			sb.append(lines.get(i));
 			if (i < lines.size() - 2) {
 				sb.append("\\n");
 			}
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(getEnding(), lines.get(lines.size() - 1));
+		final List<String> lineLast = StringUtils.getSplit(Pattern.compile(getPatternEnd()),
+				lines.get(lines.size() - 1));
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
-			if (sb.toString().endsWith("\\n") == false) {
+			if (sb.length() > 0 && sb.toString().endsWith("\\n") == false) {
 				sb.append("\\n");
 			}
 			sb.append(lineLast.get(0));
 		}
 
 		final String display = sb.toString();
-		final String code = lineLast.get(1) == null ? display : lineLast.get(1);
+		final Code code = Code.of(lineLast.get(1) == null ? display : lineLast.get(1));
 
-		final Entity entity2 = getSystem().createEntity(code, display, EntityType.ACTIVITY);
-		if (lineLast.get(2)!=null) {
+		String partition = null;
+		if (lineLast.get(3) != null) {
+			partition = lineLast.get(3);
+			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
+		}
+		if (partition != null) {
+			diagram.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), null,
+					GroupType.PACKAGE, null);
+		}
+		final IEntity entity2 = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.ACTIVITY);
+		if (partition != null) {
+			diagram.endGroup();
+		}
+		if (urlActivity != null) {
+			entity2.addUrl(urlActivity);
+		}
+
+		if (lineLast.get(2) != null) {
 			entity2.setStereotype(new Stereotype(lineLast.get(2)));
 		}
-		if (lineLast.get(3)!=null) {
-			entity2.setSpecificBackcolor(HtmlColor.getColorIfValid(lineLast.get(3)));
+		if (lineLast.get(4) != null) {
+			entity2.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(lineLast.get(4)));
 		}
 
 		if (entity1 == null || entity2 == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
 
-		final String arrow = StringUtils.manageArrowForCuca(line0.get("ARROW").get(0));
+		final String arrow = StringUtils.manageArrowForCuca(line0.get("ARROW", 0));
 		final int lenght = arrow.length() - 1;
 
-		final String linkLabel = line0.get("BRACKET").get(0);
+		final Display linkLabel = Display.getWithNewlines(line0.get("BRACKET", 0));
 
-		Link link = new Link(entity1, entity2, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkLabel, lenght);
-		final Direction direction = StringUtils.getArrowDirection(line0.get("ARROW").get(0));
+		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
+		if (line0.get("ARROW", 0).contains(".")) {
+			type = type.getDotted();
+		}
+		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
+		final Direction direction = StringUtils.getArrowDirection(line0.get("ARROW", 0));
 		if (direction == Direction.LEFT || direction == Direction.UP) {
 			link = link.getInv();
 		}
 
-		getSystem().addLink(link);
+		if (line0.get("URL", 0) != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url urlLink = urlBuilder.getUrl(line0.get("URL", 0));
+			link.setUrl(urlLink);
+		}
+
+		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();
 	}

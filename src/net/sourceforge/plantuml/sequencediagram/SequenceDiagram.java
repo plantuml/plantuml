@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -32,32 +32,28 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.directdot.DotText;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
-import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker;
+import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.skin.ProtectedSkin;
 import net.sourceforge.plantuml.skin.Skin;
@@ -76,10 +72,10 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Deprecated
 	public Participant getOrCreateParticipant(String code) {
-		return getOrCreateParticipant(code, StringUtils.getWithNewlines(code));
+		return getOrCreateParticipant(code, Display.getWithNewlines(code));
 	}
 
-	public Participant getOrCreateParticipant(String code, List<String> display) {
+	public Participant getOrCreateParticipant(String code, Display display) {
 		Participant result = participants.get(code);
 		if (result == null) {
 			result = new Participant(ParticipantType.PARTICIPANT, code, display);
@@ -95,13 +91,13 @@ public class SequenceDiagram extends UmlDiagram {
 		return lastMessage;
 	}
 
-	public Participant createNewParticipant(ParticipantType type, String code, List<String> display) {
+	public Participant createNewParticipant(ParticipantType type, String code, Display display) {
 		if (participants.containsKey(code)) {
 			throw new IllegalArgumentException();
 		}
 		if (display == null) {
 			// display = Arrays.asList(code);
-			display = StringUtils.getWithNewlines(code);
+			display = Display.getWithNewlines(code);
 		}
 		final Participant result = new Participant(type, code, display);
 		participants.put(code, result);
@@ -113,20 +109,37 @@ public class SequenceDiagram extends UmlDiagram {
 		return Collections.unmodifiableMap(participants);
 	}
 
-	public void addMessage(AbstractMessage m) {
+	public String addMessage(AbstractMessage m) {
 		lastMessage = m;
+		lastDelay = null;
 		events.add(m);
 		if (pendingCreate != null) {
+			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false) {
+				return "After create command, you have to send a message to \"" + pendingCreate.getParticipant() + "\"";
+			}
 			m.addLifeEvent(pendingCreate);
 			pendingCreate = null;
 		}
+		return null;
 	}
 
-	public void addNote(Note n) {
+	public void addNote(Note n, boolean tryMerge) {
+		if (tryMerge && events.size() > 0) {
+			final Event last = events.get(events.size() - 1);
+			if (last instanceof Note) {
+				final Notes notes = new Notes((Note) last, n);
+				events.set(events.size() - 1, notes);
+				return;
+			}
+			if (last instanceof Notes) {
+				((Notes) last).add(n);
+				return;
+			}
+		}
 		events.add(n);
 	}
 
-	public void newpage(List<String> strings) {
+	public void newpage(Display strings) {
 		if (ignoreNewpage) {
 			return;
 		}
@@ -149,12 +162,24 @@ public class SequenceDiagram extends UmlDiagram {
 		this.autonewpage = autonewpage;
 	}
 
-	public void divider(List<String> strings) {
+	public void divider(Display strings) {
 		events.add(new Divider(strings));
 	}
 
-	public void delay(List<String> strings) {
-		events.add(new Delay(strings));
+	public void hspace() {
+		events.add(new HSpace());
+	}
+
+	public void hspace(int pixel) {
+		events.add(new HSpace(pixel));
+	}
+
+	private Delay lastDelay;
+
+	public void delay(Display strings) {
+		final Delay delay = new Delay(strings);
+		events.add(delay);
+		lastDelay = delay;
 	}
 
 	public List<Event> events() {
@@ -169,75 +194,53 @@ public class SequenceDiagram extends UmlDiagram {
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 		}
 
-		return new SequenceDiagramFileMaker(this, skin, fileFormatOption, flashcodes);
-	}
-
-	public List<File> exportDiagrams(File suggestedFile, FileFormatOption fileFormat) throws IOException {
-
-		if (fileFormat.getFileFormat() == FileFormat.DOT) {
-			return exportDot(suggestedFile);
-		}
-
-		final List<File> result = new ArrayList<File>();
-		final int nbImages = getNbImages();
-		for (int i = 0; i < nbImages; i++) {
-
-			final File f = SequenceDiagramFileMaker.computeFilename(suggestedFile, i, fileFormat.getFileFormat());
-			Log.info("Creating file: " + f);
-			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
-			final StringBuilder cmap = new StringBuilder();
-			try {
-				exportDiagram(fos, cmap, i, fileFormat);
-			} finally {
-				fos.close();
-			}
-			if (this.hasUrl() && cmap.length() > 0) {
-				exportCmap(suggestedFile, cmap);
-			}
-			Log.info("File size : " + f.length());
-			result.add(f);
-		}
-		return result;
-	}
-
-	private List<File> exportDot(File suggestedFile) throws IOException {
-		final PrintWriter pw = new PrintWriter(suggestedFile);
-		final List<String> printed = Arrays
-				.asList("Error: Sequence diagrams do not use Dot/Graphviz : they cannot be generated as DOT files.");
-		final DotText dotText = new DotText(printed, HtmlColor.getColorIfValid("#33FF02"), HtmlColor.BLACK);
-		final StringBuilder sb = new StringBuilder();
-		dotText.generateDot(sb);
-		pw.println(sb);
-		pw.close();
-		return Arrays.asList(suggestedFile);
+		return new SequenceDiagramFileMakerPuma(this, skin, fileFormatOption, flashcodes);
 	}
 
 	@Override
-	protected void exportDiagramInternal(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat,
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormat,
 			List<BufferedImage> flashcodes) throws IOException {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(fileFormat, flashcodes);
-		sequenceDiagramPngMaker.createOne(os, index);
-		if (cmap != null && this.hasUrl() && fileFormat.getFileFormat() == FileFormat.PNG) {
-			sequenceDiagramPngMaker.appendCmap(cmap);
+		return sequenceDiagramPngMaker.createOne(os, index, fileFormat.isWithMetadata());
+	}
+
+	// support for CommandReturn
+	private final Stack<Message> activationState = new Stack<Message>();
+
+	public Message getActivatingMessage() {
+		if (activationState.empty()) {
+			return null;
 		}
+		return activationState.peek();
 	}
 
 	private LifeEvent pendingCreate = null;
 
-	public void activate(Participant p, LifeEventType lifeEventType, HtmlColor backcolor) {
+	public String activate(Participant p, LifeEventType lifeEventType, HtmlColor backcolor) {
+		if (lastDelay != null) {
+			return "You cannot Activate/Deactivate just after a ...";
+		}
 		if (lifeEventType == LifeEventType.CREATE) {
 			pendingCreate = new LifeEvent(p, lifeEventType, backcolor);
-			return;
+			return null;
 		}
 		if (lastMessage == null) {
 			if (lifeEventType == LifeEventType.ACTIVATE) {
 				p.incInitialLife(backcolor);
+				return null;
 			}
-			return;
-			// throw new
-			// UnsupportedOperationException("Step1Message::beforeMessage");
+			return "Only activate command can occur before message are send";
 		}
-		lastMessage.addLifeEvent(new LifeEvent(p, lifeEventType, backcolor));
+		if (lifeEventType == LifeEventType.ACTIVATE && lastMessage instanceof Message) {
+			activationState.push((Message) lastMessage);
+		} else if (lifeEventType == LifeEventType.DEACTIVATE && activationState.empty() == false) {
+			activationState.pop();
+		}
+		final boolean ok = lastMessage.addLifeEvent(new LifeEvent(p, lifeEventType, backcolor));
+		if (ok) {
+			return null;
+		}
+		return "Activate/Deactivate already done on " + p.getCode();
 	}
 
 	private final List<GroupingStart> openGroupings = new ArrayList<GroupingStart>();
@@ -264,8 +267,8 @@ public class SequenceDiagram extends UmlDiagram {
 		return true;
 	}
 
-	public String getDescription() {
-		return "(" + participants.size() + " participants)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(" + participants.size() + " participants)", getClass());
 	}
 
 	public boolean changeSkin(String className) {
@@ -303,7 +306,17 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public boolean isShowFootbox() {
-		return showFootbox;
+		if (getSkinParam().strictUmlStyle()) {
+			return false;
+		}
+		final String footbox = getSkinParam().getValue("footbox");
+		if (footbox == null) {
+			return showFootbox;
+		}
+		if (footbox.equalsIgnoreCase("hide")) {
+			return false;
+		}
+		return true;
 	}
 
 	private boolean showFootbox = true;
@@ -318,14 +331,9 @@ public class SequenceDiagram extends UmlDiagram {
 		return UmlDiagramType.SEQUENCE;
 	}
 
-	// private Participant boxStart;
-	// private List<String> boxStartComment;
-	// private HtmlColor boxColor;
-	// private boolean boxPending = false;
-
 	private ParticipantEnglober participantEnglober;
 
-	public void boxStart(List<String> comment, HtmlColor color) {
+	public void boxStart(Display comment, HtmlColor color) {
 		if (participantEnglober != null) {
 			throw new IllegalStateException();
 		}
@@ -343,31 +351,6 @@ public class SequenceDiagram extends UmlDiagram {
 		return participantEnglober != null;
 	}
 
-	// private Participant next(Participant p) {
-	// if (p == null) {
-	// return participants.values().iterator().next();
-	// }
-	// for (final Iterator<Participant> it = participants.values().iterator();
-	// it.hasNext();) {
-	// final Participant current = it.next();
-	// if (current == p && it.hasNext()) {
-	// return it.next();
-	// }
-	// }
-	// throw new IllegalArgumentException("p=" + p.getCode());
-	// }
-	//
-	// private Participant getLastParticipant() {
-	// Participant result = null;
-	// for (Participant p : participants.values()) {
-	// result = p;
-	// }
-	// return result;
-	// }
-	//
-	// public final List<ParticipantEnglober> getParticipantEnglobers() {
-	// return Collections.unmodifiableList(participantEnglobers);
-	// }
 
 	@Override
 	public int getNbImages() {
@@ -430,15 +413,26 @@ public class SequenceDiagram extends UmlDiagram {
 			}
 		}
 		for (Event ev : events) {
-			if (ev.getUrl() != null) {
+			if (ev.hasUrl()) {
 				return true;
 			}
+		}
+		if (getLegend() != null && getLegend().hasUrl()) {
+			return true;
 		}
 		return false;
 	}
 
 	public void addReference(Reference ref) {
 		events.add(ref);
+	}
+
+	@Override
+	public boolean isOk() {
+		if (participants.size() == 0) {
+			return false;
+		}
+		return true;
 	}
 
 }

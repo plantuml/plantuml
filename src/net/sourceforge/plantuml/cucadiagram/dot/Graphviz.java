@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,22 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
+ * Revision $Revision: 12064 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public interface Graphviz {
 
-	void createFile(OutputStream os) throws IOException, InterruptedException;
+	ProcessState createFile3(OutputStream os);
 
 	File getDotExe();
 
-	String dotVersion() throws IOException, InterruptedException;
-	
-	String testFile(String dotfilename, String outfile) throws IOException, InterruptedException;
+	String dotVersion();
 }

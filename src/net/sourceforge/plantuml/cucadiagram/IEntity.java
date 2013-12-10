@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,56 +28,60 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4749 $
+ * Revision $Revision: 8218 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
+import net.sourceforge.plantuml.Hideable;
+import net.sourceforge.plantuml.LineConfigurable;
+import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.dot.DrawFile;
-import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.graphic.USymbol;
 
-public interface IEntity extends Imaged, SpecificBackcolorable, Comparable<IEntity> {
+public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, LineConfigurable {
 
-	public Group getParent();
+	public USymbol getUSymbol();
 
-	public List<? extends CharSequence> getDisplay2();
+	public void setUSymbol(USymbol symbol);
 
-	public EntityType getType();
+	public LeafType getEntityType();
+
+	public Display getDisplay();
+
+	public IGroup getParentContainer();
+
+	public void setDisplay(Display display);
 
 	public String getUid();
 
-	public Url getUrl();
-
-	public List<Member> getFieldsToDisplay();
+	public Url getUrl99();
 
 	public Stereotype getStereotype();
 
 	public void setStereotype(Stereotype stereotype);
 
+	public List<Member> getFieldsToDisplay();
+
 	public List<Member> getMethodsToDisplay();
 
-	public String getCode();
+	public BlockMember getBody(PortionShower portionShower);
 
-	public DrawFile getImageFile(File searched) throws IOException;
+	public Code getCode();
 
-	public boolean isTop();
+	public BlockMember getMouseOver();
 
-	public void setTop(boolean top);
+	public void addFieldOrMethod(String s);
 
-	public boolean hasNearDecoration();
+	public void mouseOver(String s);
 
-	public void setNearDecoration(boolean nearDecoration);
+	public void addUrl(Url url);
 
-	public int getXposition();
+	public boolean isGroup();
 
-	public void setXposition(int pos);
-
-	public IEntityImage getSvekImage();
+	public boolean hasUrl();
 
 }

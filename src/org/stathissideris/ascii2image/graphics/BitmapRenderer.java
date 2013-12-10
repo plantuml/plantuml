@@ -43,10 +43,8 @@ import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
-import org.stathissideris.ascii2image.core.ConversionOptions;
 import org.stathissideris.ascii2image.core.RenderingOptions;
 import org.stathissideris.ascii2image.core.Shape3DOrderingComparator;
-import org.stathissideris.ascii2image.text.TextGrid;
 
 /**
  * 

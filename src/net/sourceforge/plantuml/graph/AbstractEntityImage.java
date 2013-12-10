@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6591 $
+ * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -37,29 +37,30 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 abstract class AbstractEntityImage {
 
-	private final Entity entity;
+	private final IEntity entity;
 
-	final private HtmlColor red = HtmlColor.getColorIfValid("#A80036");
+	final private HtmlColor red = HtmlColorUtils.getColorIfValid("#A80036");
 	
-	final private HtmlColor yellow = HtmlColor.getColorIfValid("#FEFECE");
-	private final HtmlColor yellowNote = HtmlColor.getColorIfValid("#FBFB77");
+	final private HtmlColor yellow = HtmlColorUtils.getColorIfValid("#FEFECE");
+	private final HtmlColor yellowNote = HtmlColorUtils.getColorIfValid("#FBFB77");
 
 	final private UFont font14 = new UFont("SansSerif", Font.PLAIN, 14);
 	final private UFont font17 = new UFont("Courier", Font.BOLD, 17);
-	final private HtmlColor green = HtmlColor.getColorIfValid("#ADD1B2");
-	final private HtmlColor violet = HtmlColor.getColorIfValid("#B4A7E5");
-	final private HtmlColor blue = HtmlColor.getColorIfValid("#A9DCDF");
-	final private HtmlColor rose = HtmlColor.getColorIfValid("#EB937F");
+	final private HtmlColor green = HtmlColorUtils.getColorIfValid("#ADD1B2");
+	final private HtmlColor violet = HtmlColorUtils.getColorIfValid("#B4A7E5");
+	final private HtmlColor blue = HtmlColorUtils.getColorIfValid("#A9DCDF");
+	final private HtmlColor rose = HtmlColorUtils.getColorIfValid("#EB937F");
 
-	public AbstractEntityImage(Entity entity) {
+	public AbstractEntityImage(IEntity entity) {
 		if (entity == null) {
 			throw new IllegalArgumentException("entity null");
 		}
@@ -70,7 +71,7 @@ abstract class AbstractEntityImage {
 
 	public abstract void draw(ColorMapper colorMapper, Graphics2D g2d);
 
-	protected final Entity getEntity() {
+	protected final IEntity getEntity() {
 		return entity;
 	}
 

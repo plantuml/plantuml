@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5755 $
+ * Revision $Revision: 10091 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -39,6 +39,11 @@ public class UText implements UShape {
 
 	private final String text;
 	private final FontConfiguration font;
+
+	@Override
+	public String toString() {
+		return "UText[" + text + "]";
+	}
 
 	public UText(String text, FontConfiguration font) {
 		assert text.indexOf('\t') == -1;

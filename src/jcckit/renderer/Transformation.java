@@ -21,8 +21,8 @@ package jcckit.renderer;
 import java.awt.Graphics2D;
 
 import jcckit.graphic.Anchor;
-import jcckit.graphic.GraphPoint;
 import jcckit.graphic.ClippingRectangle;
+import jcckit.graphic.GraphPoint;
 
 /**
  *  Transformation between device-independent coordinates

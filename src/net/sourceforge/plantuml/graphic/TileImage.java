@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,26 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
+ * Revision $Revision: 11873 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TileImage implements Tile {
+public class TileImage implements TextBlock {
 
 	private final BufferedImage image;
 	private final int vspace;
 
 	public TileImage(BufferedImage image, ImgValign valign, int vspace) {
+		if (image == null) {
+			throw new IllegalArgumentException();
+		}
 		this.image = image;
 		this.vspace = vspace;
 	}
@@ -56,12 +58,8 @@ class TileImage implements Tile {
 		return new Dimension2DDouble(image.getWidth(), image.getHeight() + 2 * vspace);
 	}
 
-	public void draw(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		g2d.drawImage(image, (int) x, (int) y + vspace, null);
-	}
-
-	public void drawU(UGraphic ug, double x, double y) {
-		ug.draw(x, y + vspace, new UImage(image));
+	public void drawU(UGraphic ug) {
+		ug.apply(new UTranslate(0, vspace)).draw(new UImage(image));
 	}
 
 }

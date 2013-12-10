@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.Color;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
+import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 
 public class ColorMapperIdentity implements ColorMapper {
 
@@ -43,6 +45,9 @@ public class ColorMapperIdentity implements ColorMapper {
 		if (color == null) {
 			return null;
 		}
-		return color.getColor999();
+		if (color instanceof HtmlColorTransparent) {
+			throw new UnsupportedOperationException();
+		}
+		return ((HtmlColorSimple) color).getColor999();
 	}
 }

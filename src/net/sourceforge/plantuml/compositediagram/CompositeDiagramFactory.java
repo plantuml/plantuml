@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,28 +33,32 @@
  */
 package net.sourceforge.plantuml.compositediagram;
 
-import net.sourceforge.plantuml.command.AbstractUmlSystemCommandFactory;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.compositediagram.command.CommandCreateBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
 
-public class CompositeDiagramFactory extends AbstractUmlSystemCommandFactory {
+public class CompositeDiagramFactory extends UmlDiagramFactory {
 
-	private CompositeDiagram system;
+	@Override
+	protected List<Command> createCommands() {
+		final List<Command> cmds = new ArrayList<Command>();
+		cmds.add(new CommandCreateBlock());
+		cmds.add(new CommandLinkBlock());
+		cmds.add(new CommandCreatePackageBlock());
+		cmds.add(new CommandEndPackageBlock());
+		addCommonCommands(cmds);
 
-	public CompositeDiagram getSystem() {
-		return system;
+		return cmds;
 	}
 
 	@Override
-	protected void initCommands() {
-		system = new CompositeDiagram();
-
-		addCommand(new CommandCreateBlock(system));
-		addCommand(new CommandLinkBlock(system));
-		addCommand(new CommandCreatePackageBlock(system));
-		addCommand(new CommandEndPackageBlock(system));
-		addCommonCommands(system);
+	public CompositeDiagram createEmptyDiagram() {
+		return new CompositeDiagram();
 	}
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,26 +28,26 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6577 $
+ * Revision $Revision: 11154 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
-import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class TextBlockSpotted extends TextBlockSimple {
 
 	private final CircledCharacter circledCharacter;
 
-	public TextBlockSpotted(CircledCharacter circledCharacter, List<? extends CharSequence> texts,
-			FontConfiguration fontConfiguration, HorizontalAlignement horizontalAlignement) {
-		super(texts, fontConfiguration, horizontalAlignement);
+	public TextBlockSpotted(CircledCharacter circledCharacter, Display texts, FontConfiguration fontConfiguration,
+			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
+		super(texts, fontConfiguration, horizontalAlignment, spriteContainer, 0);
 		this.circledCharacter = circledCharacter;
 	}
 
@@ -66,46 +66,15 @@ class TextBlockSpotted extends TextBlockSimple {
 	}
 
 	@Override
-	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		// final AffineTransform at = g2d.getTransform();
-		// final StringBounder stringBounder = StringBounderUtils.asStringBounder(g2d);
-		//
-		// final double deltaY = calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight()
-		// - circledCharacter.getPreferredHeight(stringBounder);
-		//
-		// // g2d.translate(x, y + deltaY / 2.0);
-		// circledCharacter.draw(g2d, (int) x, (int) (y + deltaY / 2.0));
-		// // circledCharacter.draw(g2d);
-		//
-		// g2d.setTransform(at);
-		// final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
-		// g2d.translate(widthCircledCharacter, 0);
-		//
-		// super.drawTOBEREMOVED(g2d, x, y);
-		//
-		// g2d.setTransform(at);
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void drawU(UGraphic ug, double x, double y) {
-		final double atX = ug.getTranslateX();
-		final double atY = ug.getTranslateY();
+	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		// final double deltaY = calculateDimension(stringBounder).getHeight()
-		// - circledCharacter.getPreferredHeight(stringBounder);
+		circledCharacter.drawU(ug);
 
-		// circledCharacter.drawU(ug, (int) x, (int) (y + deltaY / 2.0));
-		circledCharacter.drawU(ug, x, y);
-
-		ug.setTranslate(atX, atY);
 		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
-		ug.translate(widthCircledCharacter, 0);
 
-		super.drawU(ug, x, y);
-
-		ug.setTranslate(atX, atY);
+		super.drawU(ug.apply(new UTranslate(widthCircledCharacter, 0)));
 	}
+
 
 }

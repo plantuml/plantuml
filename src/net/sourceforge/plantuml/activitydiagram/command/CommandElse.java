@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -42,21 +42,21 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 
 public class CommandElse extends SingleLineCommand<ActivityDiagram> {
 
-	public CommandElse(ActivityDiagram diagram) {
-		super(diagram, "(?i)^else$");
+	public CommandElse() {
+		super("(?i)^else$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		if (getSystem().getLastEntityConsulted() == null) {
+	protected CommandExecutionResult executeArg(ActivityDiagram system, List<String> arg) {
+		if (system.getLastEntityConsulted() == null) {
 			return CommandExecutionResult.error("No if for this else");
 		}
-		if (getSystem().getCurrentContext() == null) {
+		if (system.getCurrentContext() == null) {
 			return CommandExecutionResult.error("No if for this else");
 		}
-		final IEntity branch = getSystem().getCurrentContext().getBranch();
+		final IEntity branch = system.getCurrentContext().getBranch();
 
-		getSystem().setLastEntityConsulted(branch);
+		system.setLastEntityConsulted(branch);
 
 		return CommandExecutionResult.ok();
 	}

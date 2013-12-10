@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,35 +33,68 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
-public class CommandCreateState2 extends SingleLineCommand<StateDiagram> {
+public class CommandCreateState2 extends SingleLineCommand2<StateDiagram> {
 
-	public CommandCreateState2(StateDiagram diagram) {
-		super(diagram, "(?i)^(?:state\\s+)([\\p{L}0-9_.]+)\\s+as\\s+\"([^\"]+)\"\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?$");
+	public CommandCreateState2() {
+		super(getRegexConcat());
+	}
+
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("(?:state\\s+)"), //
+				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("\\s+as\\s+"), //
+				new RegexLeaf("DISPLAY", "\"([^\"]+)\""), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
-		final String code = arg.get(0);
-		final String display = arg.get(1);
-		final Entity ent = (Entity) getSystem().getOrCreateClass(code);
-		ent.setDisplay2(display);
+	protected CommandExecutionResult executeArg(StateDiagram system, RegexResult arg2) {
+		final Code code = Code.of(arg2.get("CODE", 0));
+		final String display = arg2.get("DISPLAY", 0);
+		final IEntity ent = system.getOrCreateLeaf(code, null);
+		if (system.checkConcurrentStateOk(code) == false) {
+			return CommandExecutionResult.error("The state " + code
+					+ " has been created in a concurrent state : it cannot be used here.");
+		}
+		ent.setDisplay(Display.getWithNewlines(display));
 
-		final String stereotype = arg.get(2);
+		final String stereotype = arg2.get("STEREOTYPE", 0);
 		if (stereotype != null) {
 			ent.setStereotype(new Stereotype(stereotype));
 		}
-		if (arg.get(3) != null) {
-			ent.setSpecificBackcolor(HtmlColor.getColorIfValid(arg.get(3)));
+		final String urlString = arg2.get("URL", 0);
+		if (urlString != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url url = urlBuilder.getUrl(urlString);
+			ent.addUrl(url);
+		}
+		final String color = arg2.get("COLOR", 0);
+		if (color != null) {
+			ent.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}
+
 }

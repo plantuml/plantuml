@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6922 $
+ * Revision $Revision: 10779 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -37,17 +37,23 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 
-	public CommandMultilinesTitle(final UmlDiagram diagram) {
-		super(diagram, "(?i)^title$", "(?i)^end ?title$");
+	public CommandMultilinesTitle() {
+		super("(?i)^title$");
 	}
 
-	public CommandExecutionResult execute(List<String> lines) {
-		final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
+	@Override
+	public String getPatternEnd() {
+		return "(?i)^end ?title$";
+	}
+
+	public CommandExecutionResult execute(final UmlDiagram diagram, List<String> lines) {
+		final Display strings = new Display(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
 		if (strings.size() > 0) {
-			getSystem().setTitle(StringUtils.manageEmbededDiagrams(strings));
+			diagram.setTitle(StringUtils.manageEmbededDiagrams(strings));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No title defined");

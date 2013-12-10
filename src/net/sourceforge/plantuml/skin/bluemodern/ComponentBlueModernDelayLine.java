@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -38,9 +38,13 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentBlueModernDelayLine extends AbstractComponent {
 
@@ -51,15 +55,12 @@ public class ComponentBlueModernDelayLine extends AbstractComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
-		ug.getParam().setColor(color);
-		ug.getParam().setBackcolor(color);
-		stroke(ug, 1, 4);
+	protected void drawInternalU(UGraphic ug, Area area) {
+		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		ug = ug.apply(new UChangeColor(color));
+		ug = stroke(ug, 1, 4);
 		final int x = (int) (dimensionToUse.getWidth() / 2);
-		ug.setAntiAliasing(false);
-		ug.draw(x + 1, 0, new ULine(0, dimensionToUse.getHeight()));
-		ug.setAntiAliasing(true);
-		ug.getParam().setStroke(new UStroke());
+		ug.apply(new UChangeBackColor(color)).apply(UAntiAliasing.ANTI_ALIASING_OFF).apply(new UTranslate(x + 1, 0)).draw(new ULine(0, dimensionToUse.getHeight()));
 	}
 
 	@Override

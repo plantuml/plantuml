@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6625 $
+ * Revision $Revision: 11786 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -314,18 +314,6 @@ public class PlantUmlTask extends Task {
 		OptionFlags.getInstance().setDotExecutable(s);
 	}
 
-	public void setForcegd(String s) {
-		if ("true".equalsIgnoreCase(s)) {
-			OptionFlags.getInstance().setForceGd(true);
-		}
-	}
-
-	public void setForcecairo(String s) {
-		if ("true".equalsIgnoreCase(s)) {
-			OptionFlags.getInstance().setForceCairo(true);
-		}
-	}
-
 	public void setNbThread(String s) {
 		if (s != null && s.matches("\\d+")) {
 			option.setNbThreads(Integer.parseInt(s));
@@ -355,6 +343,11 @@ public class PlantUmlTask extends Task {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
 		option.setCheckOnly(true);
 		OptionFlags.getInstance().setFailOnError(flag);
+	}
+
+	public void setOverwrite(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		OptionFlags.getInstance().setOverwrite(flag);
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,12 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4681 $
+ * Revision $Revision: 11235 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
-public class ULine implements UShape {
+
+public class ULine extends AbstractShadowable {
 
 	private final double dx;
 	private final double dy;
@@ -47,13 +48,17 @@ public class ULine implements UShape {
 	public String toString() {
 		return "ULine dx=" + dx + " dy=" + dy;
 	}
-
+	
 	public double getDX() {
 		return dx;
 	}
 
 	public double getDY() {
 		return dy;
+	}
+
+	public double getLength() {
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6710 $
+ * Revision $Revision: 12053 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -38,17 +38,22 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 
 public class PSystemSudoku extends AbstractPSystem {
 
 	final private ISudoku sudoku;
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat) throws IOException {
-		new GraphicsSudoku(sudoku).writeImage(os);
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		return new GraphicsSudoku(sudoku).writeImage(os);
 	}
 
-	public String getDescription() {
-		return "(Sudoku)";
+
+
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(Sudoku)", getClass());
 	}
 
 	public PSystemSudoku(Long seed) {

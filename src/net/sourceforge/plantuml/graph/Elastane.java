@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6591 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -39,7 +39,6 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,7 +49,9 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.cucadiagram.Entity;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.geom.Box;
 import net.sourceforge.plantuml.geom.CollectionUtils;
@@ -58,8 +59,8 @@ import net.sourceforge.plantuml.geom.Point2DInt;
 import net.sourceforge.plantuml.geom.PolylineBreakeable;
 import net.sourceforge.plantuml.geom.XMoveable;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -143,7 +144,7 @@ public class Elastane {
 				final double dist = polyline.getDistance(b);
 				assert dist >= 0;
 				assert dist != Double.MAX_VALUE;
-				// System.err.println("dist=" + dist + " exp=" + (100000 -
+				// Log.println("dist=" + dist + " exp=" + (100000 -
 				// dist));
 				result += 100000 - dist;
 			}
@@ -183,7 +184,7 @@ public class Elastane {
 		}
 		// if (trace) {
 		// final double diff = getCost() - initCost;
-		// System.err.println("moving " + boxes + " " + delta + " diff=" +
+		// Log.println("moving " + boxes + " " + delta + " diff=" +
 		// diff);
 		// }
 		// for (Map.Entry<ALink, Polyline> entry : lines.entrySet()) {
@@ -223,7 +224,7 @@ public class Elastane {
 			assert getCost() <= initCost;
 
 		}
-		// System.err.println("COSTB=" + getCost());
+		// Log.println("COSTB=" + getCost());
 		return changed;
 	}
 
@@ -265,14 +266,15 @@ public class Elastane {
 			final PolylineBreakeable polyline = ent.getValue();
 			final Shape shape = factory.getLink(polyline, b1, b2);
 
-			final String label = l.getLabel();
+			final String label = l.getLabel().get(0).toString();
 			if (label != null) {
-				final Point2DInt center = polyline.getFirst().getCenter();
-				final TextBlock textBlock = TextBlockUtils.create(Arrays.asList(label),
-						new FontConfiguration(UFont.getCurrentFont(g2d), HtmlColor.BLACK), HorizontalAlignement.LEFT);
-				final Dimension2D dim = textBlock.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-				textBlock.drawTOBEREMOVED(new ColorMapperIdentity(), g2d, center.getXint() - dim.getWidth() / 2,
-						center.getYint() - dim.getHeight() / 2);
+				// polyline.getFirst().getCenter();
+				final TextBlock textBlock = TextBlockUtils.create(Display.asList(label),
+						new FontConfiguration(UFont.getCurrentFont(g2d), HtmlColorUtils.BLACK),
+						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+				textBlock.calculateDimension(StringBounderUtils.asStringBounder(g2d));
+				// textBlock.drawTOBEREMOVED(new ColorMapperIdentity(), g2d, center.getXint() - dim.getWidth() / 2,
+				// center.getYint() - dim.getHeight() / 2);
 			}
 
 			g2d.setColor(red);
@@ -310,7 +312,7 @@ public class Elastane {
 		for (Map.Entry<ALink, PolylineBreakeable> entry : lines.entrySet()) {
 			final PolylineBreakeable p = entry.getValue();
 			final List<XMoveable> freedoms = p.getFreedoms();
-			// System.err.println("freedoms=" + freedoms);
+			// Log.println("freedoms=" + freedoms);
 			if (freedoms.size() > 0) {
 				linkMoveables.put(entry.getKey(), freedoms);
 				// xmoveableGroups.addAll(CollectionUtils.selectUpTo(freedoms,
@@ -352,7 +354,7 @@ public class Elastane {
 		if (n == null) {
 			return null;
 		}
-		return new EntityImageFactory().createEntityImage((Entity) n.getUserData());
+		return new EntityImageFactory().createEntityImage((IEntity) n.getUserData());
 	}
 
 	public Dimension2D getDimension() {

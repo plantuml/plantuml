@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,31 +33,17 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-public class PSystemLostFactory implements PSystemBasicFactory {
+public class PSystemLostFactory extends PSystemSingleLineFactory {
 
-	private PSystemLost system;
-
-	public void init(String startLine) {
-	}
-
-	public boolean executeLine(String line) {
+	@Override
+	protected AbstractPSystem executeLine(String line) {
 		if (line.matches("^4\\D+8\\D+15\\D+16\\D+23\\D+42")) {
-			system = new PSystemLost();
-			return true;
+			return new PSystemLost();
 		}
-		return false;
+		return null;
 	}
-
-	public PSystemLost getSystem() {
-		return system;
-	}
-	
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
-	}
-
 
 }

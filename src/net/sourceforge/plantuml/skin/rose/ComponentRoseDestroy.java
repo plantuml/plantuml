@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,19 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 10925 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseDestroy extends AbstractComponent {
 
@@ -53,13 +54,11 @@ public class ComponentRoseDestroy extends AbstractComponent {
 	private final int crossSize = 9;
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
-		ug.getParam().setStroke(new UStroke(2));
+	protected void drawInternalU(UGraphic ug, Area area) {
+		ug = ug.apply(new UStroke(2)).apply(new UChangeColor(foregroundColor));
 
-		ug.getParam().setColor(foregroundColor);
-		ug.draw(0, 0, new ULine(2 * crossSize, 2 * crossSize));
-		ug.draw(0, 2 * crossSize, new ULine(2 * crossSize, -2 * crossSize));
-		ug.getParam().setStroke(new UStroke());
+		ug.draw(new ULine(2 * crossSize, 2 * crossSize));
+		ug.apply(new UTranslate(0, 2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));
 	}
 
 	@Override

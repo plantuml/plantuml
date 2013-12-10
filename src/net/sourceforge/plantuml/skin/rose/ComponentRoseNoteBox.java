@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -33,27 +33,35 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.geom.Dimension2D;
-import java.util.List;
-
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 
 	private final HtmlColor back;
 	private final HtmlColor foregroundColor;
+	private final double deltaShadow;
+	private final UStroke stroke;
 
 	public ComponentRoseNoteBox(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			List<? extends CharSequence> strings) {
-		super(strings, fontColor, font, HorizontalAlignement.LEFT, 4, 4, 4);
+			Display strings, SpriteContainer spriteContainer, double deltaShadow, UStroke stroke) {
+		super(strings, fontColor, font, HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, 0, false);
 		this.back = back;
 		this.foregroundColor = foregroundColor;
+		this.deltaShadow = deltaShadow;
+		this.stroke = stroke;
 	}
 
 	@Override
@@ -78,18 +86,20 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
+	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);
 
 		final int x2 = (int) getTextWidth(stringBounder);
 
+		ug = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(foregroundColor));
+		ug = ug.apply(stroke);
+		final URectangle rect = new URectangle(x2, textHeight);
+		rect.setDeltaShadow(deltaShadow);
+		ug.draw(rect);
+		ug = ug.apply(new UStroke());
 
-		ug.getParam().setColor(foregroundColor);
-		ug.getParam().setBackcolor(back);
-		ug.draw(0, 0, new URectangle(x2, textHeight));
-
-		getTextBlock().drawU(ug, getMarginX1(), getMarginY());
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 
 	}
 }

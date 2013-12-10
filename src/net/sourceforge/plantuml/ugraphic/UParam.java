@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,57 +28,22 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6576 $
+ * Revision $Revision: 11098 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
-public class UParam {
+public interface UParam {
 
-	private HtmlColor color = null;
-	private HtmlColor backcolor = null;
-	private UStroke stroke = new UStroke(1);
-	private UGradient gradient = null;
+	public HtmlColor getColor();
 
-	public void reset() {
-		color = null;
-		backcolor = null;
-		gradient = null;
-		stroke = new UStroke(1);
-	}
+	public HtmlColor getBackcolor();
 
-	public final UGradient getGradient() {
-		return gradient;
-	}
+	public UStroke getStroke();
 
-	public final void setGradient(UGradient gradient) {
-		this.gradient = gradient;
-	}
+	public boolean isHidden();
 
-	public void setColor(HtmlColor color) {
-		this.color = color;
-	}
-
-	public HtmlColor getColor() {
-		return color;
-	}
-
-	public void setBackcolor(HtmlColor color) {
-		this.backcolor = color;
-	}
-
-	public HtmlColor getBackcolor() {
-		return backcolor;
-	}
-
-	public void setStroke(UStroke stroke) {
-		this.stroke = stroke;
-	}
-
-	public UStroke getStroke() {
-		return stroke;
-	}
-
+	public UPattern getPattern();
 }

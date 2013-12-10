@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -34,12 +34,16 @@ package net.sourceforge.plantuml.ditaa;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 
 import org.stathissideris.ascii2image.core.ConversionOptions;
 import org.stathissideris.ascii2image.core.ProcessingOptions;
@@ -49,26 +53,39 @@ import org.stathissideris.ascii2image.text.TextGrid;
 
 public class PSystemDitaa extends AbstractPSystem {
 
-	private final TextGrid grid = new TextGrid();
 	private final ProcessingOptions processingOptions = new ProcessingOptions();
+	private final boolean dropShadows;
+	private final String data;
 
-	public PSystemDitaa(String data, boolean performSeparationOfCommonEdges) throws UnsupportedEncodingException {
-		grid.initialiseWithText(data, null);
-		processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
+	public PSystemDitaa(String data, boolean performSeparationOfCommonEdges, boolean dropShadows) {
+		this.data = data;
+		this.dropShadows = dropShadows;
+		this.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
 	}
 
-	public String getDescription() {
-		return "(Ditaa)";
+	PSystemDitaa add(String line) {
+		return new PSystemDitaa(data + line + "\n", processingOptions.performSeparationOfCommonEdges(), dropShadows);
 	}
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormatOption)
-			throws IOException {
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(Ditaa)", getClass());
+	}
 
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		if (fileFormat.getFileFormat() == FileFormat.ATXT) {
+			os.write(getSource().getPlainString().getBytes());
+			return new ImageDataSimple();
+		}
+		// ditaa can only export png so file format is mostly ignored
 		final ConversionOptions options = new ConversionOptions();
+		options.setDropShadows(dropShadows);
+		final TextGrid grid = new TextGrid();
+		grid.initialiseWithText(data, null);
 		final Diagram diagram = new Diagram(grid, options, processingOptions);
 		final BufferedImage image = (BufferedImage) new BitmapRenderer().renderToImage(diagram,
 				options.renderingOptions);
 		ImageIO.write(image, "png", os);
+		return new ImageDataSimple(image.getWidth(), image.getHeight());
 
 	}
 

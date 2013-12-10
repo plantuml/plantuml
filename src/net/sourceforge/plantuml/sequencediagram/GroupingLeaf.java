@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6483 $
+ * Revision $Revision: 12054 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -52,15 +52,19 @@ public class GroupingLeaf extends Grouping {
 		start.addChildren(this);
 	}
 
-	public Grouping getJustBefore() {
+	public Grouping getJustAfter() {
 		final int idx = start.getChildren().indexOf(this);
 		if (idx == -1) {
 			throw new IllegalStateException();
 		}
-		if (idx == 0) {
-			return start;
+		if (idx + 1 >= start.getChildren().size()) {
+			return null;
 		}
-		return start.getChildren().get(idx - 1);
+		return start.getChildren().get(idx + 1);
+	}
+
+	public GroupingStart getGroupingStart() {
+		return start;
 	}
 
 	@Override
@@ -82,6 +86,16 @@ public class GroupingLeaf extends Grouping {
 
 	public Url getUrl() {
 		return null;
+	}
+	
+	public boolean hasUrl() {
+		return false;
+	}
+
+
+	@Override
+	public boolean isParallel() {
+		return start.isParallel();
 	}
 
 }

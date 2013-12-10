@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6622 $
+ * Revision $Revision: 12053 $
  */
 package net.sourceforge.plantuml;
 
@@ -41,6 +41,10 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 
 public class PSystemError extends AbstractPSystem {
@@ -76,13 +80,9 @@ public class PSystemError extends AbstractPSystem {
 		this(source, Collections.singletonList(singleError));
 	}
 
-	public void exportDiagram(OutputStream os, StringBuilder cmap, int index, FileFormatOption fileFormat)
-			throws IOException {
-		getPngError().writeImage(os, getMetadata(), fileFormat);
-	}
-
-	public GraphicStrings getPngError() throws IOException {
-		return new GraphicStrings(htmlStrings);
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		final GraphicStrings result = new GraphicStrings(htmlStrings);
+		return result.exportDiagram(os, getMetadata(), fileFormat);
 	}
 
 	private void appendSource(int position) {
@@ -186,11 +186,11 @@ public class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
-	public String getDescription() {
-		return "(Error)";
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(Error)", getClass());
 	}
 
-	public void print(PrintStream ps) {
+	private void print(PrintStream ps) {
 		synchronized (ps) {
 			for (String s : plainStrings) {
 				ps.println(StringUtils.showComparatorCharacters(s));
@@ -204,5 +204,22 @@ public class PSystemError extends AbstractPSystem {
 
 	public final Collection<ErrorUml> getErrorsUml() {
 		return Collections.unmodifiableCollection(printedErrors);
+	}
+
+	@Override
+	public String getWarningOrError() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append(getDescription());
+		sb.append('\n');
+		for (CharSequence t : getTitle()) {
+			sb.append(t);
+			sb.append('\n');
+		}
+		sb.append('\n');
+		for (String s : getSuggest()) {
+			sb.append(s);
+			sb.append('\n');
+		}
+		return sb.toString();
 	}
 }

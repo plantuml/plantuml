@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,48 +28,53 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7170 $
+ * Revision $Revision: 11394 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
-import java.util.List;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
+import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.StickMan;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseActor extends AbstractTextualComponent {
 
-	private final StickMan stickman;
+	private final TextBlock stickman;
 	private final boolean head;
 
 	public ComponentRoseActor(HtmlColor yellow, HtmlColor red, HtmlColor fontColor, UFont font,
-			List<? extends CharSequence> stringsToDisplay, boolean head) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignement.LEFT, 3, 3, 0);
+			Display stringsToDisplay, boolean head, SpriteContainer spriteContainer,
+			double deltaShadow, UStroke stroke) {
+		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, 0, false);
 		this.head = head;
-		stickman = new StickMan(yellow, red);
+		this.stickman = new StickMan(yellow, red, deltaShadow, stroke.getThickness());
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, Dimension2D dimensionToUse, boolean withShadow) {
-		ug.getParam().setColor(getFontColor());
+	protected void drawInternalU(UGraphic ug, Area area) {
 		final TextBlock textBlock = getTextBlock();
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double delta = (getPreferredWidth(stringBounder) - stickman.getPreferredWidth(stringBounder)) / 2;
+		final Dimension2D dimStickman = stickman.calculateDimension(stringBounder);
+		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;
 
 		if (head) {
-			textBlock.drawU(ug, getTextMiddlePostion(stringBounder), stickman.getPreferredHeight(stringBounder));
-			ug.translate(delta, 0);
+			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), dimStickman.getHeight())));
+			ug = ug.apply(new UTranslate(delta, 0));
 		} else {
-			textBlock.drawU(ug, getTextMiddlePostion(stringBounder), 0);
-			ug.translate(delta, getTextHeight(stringBounder));
+			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), 0)));
+			ug = ug.apply(new UTranslate(delta, getTextHeight(stringBounder)));
 		}
 		stickman.drawU(ug);
 	}
@@ -80,12 +85,13 @@ public class ComponentRoseActor extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return stickman.getPreferredHeight(stringBounder) + getTextHeight(stringBounder);
+		final Dimension2D dimStickman = stickman.calculateDimension(stringBounder);
+		return dimStickman.getHeight() + getTextHeight(stringBounder);
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return Math.max(stickman.getPreferredWidth(stringBounder), getTextWidth(stringBounder));
+		final Dimension2D dimStickman = stickman.calculateDimension(stringBounder);
+		return Math.max(dimStickman.getWidth(), getTextWidth(stringBounder));
 	}
-
 }

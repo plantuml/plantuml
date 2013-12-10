@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,13 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6837 $
+ * Revision $Revision: 11799 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
 import java.util.EnumSet;
+import java.util.Map;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FontConfiguration {
@@ -45,9 +50,16 @@ public class FontConfiguration {
 	private final HtmlColor motherColor;
 	private final HtmlColor currentColor;
 	private final HtmlColor extendedColor;
+	private final FontPosition fontPosition;
+	private final SvgAttributes svgAttributes;
 
 	public FontConfiguration(UFont font, HtmlColor color) {
-		this(getStyles(font), font, color, font, color, null);
+		this(getStyles(font), font, color, font, color, null, FontPosition.NORMAL, new SvgAttributes());
+	}
+
+	public FontConfiguration(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
+		this(SkinParamUtils.getFont(skinParam, fontParam, stereo), SkinParamUtils.getFontColor(skinParam, fontParam,
+				stereo));
 	}
 
 	private static EnumSet<FontStyle> getStyles(UFont font) {
@@ -71,46 +83,80 @@ public class FontConfiguration {
 	}
 
 	private FontConfiguration(EnumSet<FontStyle> styles, UFont motherFont, HtmlColor motherColor, UFont currentFont,
-			HtmlColor currentColor, HtmlColor extendedColor) {
+			HtmlColor currentColor, HtmlColor extendedColor, FontPosition fontPosition, SvgAttributes svgAttributes) {
 		this.styles = styles;
 		this.currentFont = currentFont;
 		this.motherFont = motherFont;
 		this.currentColor = currentColor;
 		this.motherColor = motherColor;
 		this.extendedColor = extendedColor;
+		this.fontPosition = fontPosition;
+		this.svgAttributes = svgAttributes;
 	}
 
-	FontConfiguration changeColor(HtmlColor htmlColor) {
-		return new FontConfiguration(styles, motherFont, motherColor, currentFont, htmlColor, extendedColor);
+	FontConfiguration changeAttributes(SvgAttributes toBeAdded) {
+		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,
+				fontPosition, svgAttributes.add(toBeAdded));
+	}
+
+	public FontConfiguration changeColor(HtmlColor htmlColor) {
+		return new FontConfiguration(styles, motherFont, motherColor, currentFont, htmlColor, extendedColor,
+				fontPosition, svgAttributes);
 	}
 
 	FontConfiguration changeExtendedColor(HtmlColor newExtendedColor) {
-		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, newExtendedColor);
+		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, newExtendedColor,
+				fontPosition, svgAttributes);
 	}
 
-	FontConfiguration changeSize(float size) {
+	public FontConfiguration changeSize(float size) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont.deriveSize(size), currentColor,
-				extendedColor);
+				extendedColor, fontPosition, svgAttributes);
+	}
+
+	public FontConfiguration bigger(double delta) {
+		return changeSize((float) (currentFont.getSize() + delta));
+	}
+
+	public FontConfiguration changeFontPosition(FontPosition fontPosition) {
+		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,
+				fontPosition, svgAttributes);
+	}
+
+	public FontConfiguration changeFamily(String family) {
+		return new FontConfiguration(styles, motherFont, motherColor, new UFont(family, currentFont.getStyle(),
+				currentFont.getSize()), currentColor, extendedColor, fontPosition, svgAttributes);
 	}
 
 	public FontConfiguration resetFont() {
-		return new FontConfiguration(styles, motherFont, motherColor, motherFont, motherColor, null);
+		return new FontConfiguration(styles, motherFont, motherColor, motherFont, motherColor, null,
+				FontPosition.NORMAL, new SvgAttributes());
 	}
 
 	FontConfiguration add(FontStyle style) {
 		final EnumSet<FontStyle> r = styles.clone();
 		r.add(style);
-		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor);
+		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor,
+				fontPosition, svgAttributes);
 	}
 
 	public FontConfiguration italic() {
 		return add(FontStyle.ITALIC);
 	}
 
+	public FontConfiguration bold() {
+		return add(FontStyle.BOLD);
+	}
+
+	public FontConfiguration underline() {
+		return add(FontStyle.UNDERLINE);
+	}
+
 	FontConfiguration remove(FontStyle style) {
 		final EnumSet<FontStyle> r = styles.clone();
 		r.remove(style);
-		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor);
+		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor,
+				fontPosition, svgAttributes);
 	}
 
 	public UFont getFont() {
@@ -118,7 +164,7 @@ public class FontConfiguration {
 		for (FontStyle style : styles) {
 			result = style.mutateFont(result);
 		}
-		return result;
+		return fontPosition.mute(result);
 	}
 
 	public HtmlColor getColor() {
@@ -131,6 +177,14 @@ public class FontConfiguration {
 
 	public boolean containsStyle(FontStyle style) {
 		return styles.contains(style);
+	}
+
+	public int getSpace() {
+		return fontPosition.getSpace();
+	}
+
+	public Map<String, String> getAttributes() {
+		return svgAttributes.attributes();
 	}
 
 }

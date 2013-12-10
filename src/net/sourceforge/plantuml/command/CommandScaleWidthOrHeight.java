@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -41,18 +41,18 @@ import net.sourceforge.plantuml.UmlDiagram;
 
 public class CommandScaleWidthOrHeight extends SingleLineCommand<UmlDiagram> {
 
-	public CommandScaleWidthOrHeight(UmlDiagram diagram) {
-		super(diagram, "(?i)^scale\\s+([0-9.]+)\\s+(width|height)$");
+	public CommandScaleWidthOrHeight() {
+		super("(?i)^scale\\s+([0-9.]+)\\s+(width|height)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(List<String> arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
 		final double size = Double.parseDouble(arg.get(0));
 		final boolean width = "width".equalsIgnoreCase(arg.get(1));
 		if (width) {
-			getSystem().setScale(new ScaleWidth(size));
+			diagram.setScale(new ScaleWidth(size));
 		} else {
-			getSystem().setScale(new ScaleHeight(size));
+			diagram.setScale(new ScaleHeight(size));
 		}
 		return CommandExecutionResult.ok();
 	}

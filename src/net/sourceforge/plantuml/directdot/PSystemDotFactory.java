@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -31,52 +31,35 @@
  */
 package net.sourceforge.plantuml.directdot;
 
-import java.io.UnsupportedEncodingException;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-import net.sourceforge.plantuml.DiagramType;
-import net.sourceforge.plantuml.PSystemBasicFactory;
-
-public class PSystemDotFactory implements PSystemBasicFactory {
+public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 
 	private StringBuilder data;
-	private boolean first;
-	private final DiagramType diagramType;
 
 	public PSystemDotFactory(DiagramType diagramType) {
-		this.diagramType = diagramType;
+		super(diagramType);
 	}
 
-	public void init(String startLine) {
+	@Override
+	public PSystemDot init(String startLine) {
 		data = null;
-		first = true;
+		return null;
 	}
 
-	public boolean executeLine(String line) {
-		if (first && line.matches("digraph\\s+\\w+\\s+\\{")) {
+	@Override
+	public PSystemDot executeLine(PSystemDot system, String line) {
+		if (system == null && line.matches("(di)?graph\\s+\\w+\\s+\\{")) {
 			data = new StringBuilder(line);
 			data.append("\n");
-			return true;
+			return new PSystemDot(data.toString());
 		}
-		first = false;
-		if (data == null) {
-			return false;
+		if (data == null || system == null) {
+			return null;
 		}
 		data.append(line);
 		data.append("\n");
-		return true;
+		return new PSystemDot(data.toString());
 	}
-
-	public PSystemDot getSystem() {
-		try {
-			return new PSystemDot(data.toString());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public DiagramType getDiagramType() {
-		return diagramType;
-	}
-
 }

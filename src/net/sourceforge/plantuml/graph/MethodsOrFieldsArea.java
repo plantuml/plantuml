@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,30 +28,29 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6590 $
+ * Revision $Revision: 11153 $
  *
  */
 package net.sourceforge.plantuml.graph;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class MethodsOrFieldsArea {
 
@@ -61,7 +60,7 @@ public class MethodsOrFieldsArea {
 	public MethodsOrFieldsArea(List<Member> attributes, UFont font) {
 		this.font = font;
 		for (Member att : attributes) {
-			this.strings.add(att.getDisplayWithoutVisibilityChar());
+			this.strings.add(att.getDisplay(false));
 		}
 	}
 
@@ -82,22 +81,14 @@ public class MethodsOrFieldsArea {
 	}
 
 	private TextBlock createTextBlock(String s) {
-		return TextBlockUtils.create(Arrays.asList(s), new FontConfiguration(font, HtmlColor.BLACK),
-				HorizontalAlignement.LEFT);
-	}
-
-	public void drawTOBEREMOVED(ColorMapper colorMapper, Graphics2D g2d, double x, double y) {
-		for (String s : strings) {
-			final TextBlock bloc = createTextBlock(s);
-			bloc.drawTOBEREMOVED(colorMapper, g2d, x, y);
-			y += bloc.calculateDimension(StringBounderUtils.asStringBounder(g2d)).getHeight();
-		}
+		return TextBlockUtils.create(Display.asList(s), new FontConfiguration(font, HtmlColorUtils.BLACK),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	public void draw(UGraphic ug, double x, double y) {
 		for (String s : strings) {
 			final TextBlock bloc = createTextBlock(s);
-			bloc.drawU(ug, x, y);
+			bloc.drawU(ug.apply(new UTranslate(x, y)));
 			y += bloc.calculateDimension(ug.getStringBounder()).getHeight();
 		}
 	}

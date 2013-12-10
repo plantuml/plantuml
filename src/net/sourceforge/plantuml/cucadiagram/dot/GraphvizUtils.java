@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -28,28 +28,24 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6713 $
+ * Revision $Revision: 12064 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.imageio.ImageIO;
-
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizUtils {
 
-	private static final String TMP_TEST_FILENAME = "testdottmp42";
 	private static int DOT_VERSION_LIMIT = 226;
 
 	private static boolean isWindows() {
@@ -64,9 +60,9 @@ public class GraphvizUtils {
 		} else {
 			result = new GraphvizLinux(dotString, type);
 		}
-		if (OptionFlags.GRAPHVIZCACHE && DotMaker.isJunit()) {
-			return new GraphvizCached(result);
-		}
+		// if (OptionFlags.GRAPHVIZCACHE) {
+		// return new GraphvizCached(result);
+		// }
 		return result;
 	}
 
@@ -82,9 +78,13 @@ public class GraphvizUtils {
 	public static String getenvGraphvizDot() {
 		final String env = System.getProperty("GRAPHVIZ_DOT");
 		if (StringUtils.isNotEmpty(env)) {
-			return env;
+			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);
 		}
-		return System.getenv("GRAPHVIZ_DOT");
+		final String getenv = System.getenv("GRAPHVIZ_DOT");
+		if (StringUtils.isNotEmpty(getenv)) {
+			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getenv);
+		}
+		return null;
 	}
 
 	public static String getenvLogData() {
@@ -169,17 +169,15 @@ public class GraphvizUtils {
 				final int v = GraphvizUtils.getDotVersion();
 				if (v == -1) {
 					result.add("Warning : cannot determine dot version");
+				} else if (v < DOT_VERSION_LIMIT) {
+					result.add(bold + "Warning : Your dot installation seems old");
+					result.add(bold + "Some diagrams may have issues");
 				} else {
-					if (v < DOT_VERSION_LIMIT) {
-						result.add(bold + "Warning : Your dot installation seems old");
-						result.add(bold + "Some diagrams may have issues");
+					final String err = getTestCreateSimpleFile();
+					if (err == null) {
+						result.add(bold + "Installation seems OK. File generation OK");
 					} else {
-						String err = getTestCreateSimpleFile();
-						if (err == null) {
-							result.add(bold + "Installation seems OK. PNG generation OK");
-						} else {
-							result.add(red + err);
-						}
+						result.add(red + err);
 					}
 				}
 			} catch (Exception e) {
@@ -193,33 +191,24 @@ public class GraphvizUtils {
 		return Collections.unmodifiableList(result);
 	}
 
-	static String getTestCreateSimpleFile() throws IOException, InterruptedException {
-		final Graphviz graphviz = GraphvizUtils.create("", "png");
-		final File f = new File(TMP_TEST_FILENAME + ".dot");
-		final File fout = new File(TMP_TEST_FILENAME + ".png");
-		f.delete();
-		fout.delete();
-		try {
-			final PrintWriter pw = new PrintWriter(f);
-			pw.println("digraph foo { test; }");
-			pw.close();
-			graphviz.testFile(f.getName(), fout.getName());
-			f.delete();
-			if (fout.exists() == false) {
-				return "Error: dot cannot generated PNG file. Check you dot installation.";
-			}
-			if (fout.length() == 0) {
-				return "Error: dot generates empty PNG file. Check you dot installation.";
-			}
-			try {
-				ImageIO.read(fout);
-			} catch (IOException e) {
-				return "Error: dot generates unreadable PNG file. Check you dot installation.";
-			}
-			return null;
-		} finally {
-			fout.delete();
+	static String getTestCreateSimpleFile() throws IOException {
+		final Graphviz graphviz2 = GraphvizUtils.create("digraph foo { test; }", "svg");
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		final ProcessState state = graphviz2.createFile3(baos);
+		if (state != ProcessState.TERMINATED_OK) {
+			return "Error: timeout " + state;
 		}
+
+		final byte data[] = baos.toByteArray();
+
+		if (data.length == 0) {
+			return "Error: dot generates empty file. Check you dot installation.";
+		}
+		final String s = new String(data);
+		if (s.indexOf("<svg") == -1) {
+			return "Error: dot generates unreadable SVG file. Check you dot installation.";
+		}
+		return null;
 	}
 
 	public static OS getOS() {

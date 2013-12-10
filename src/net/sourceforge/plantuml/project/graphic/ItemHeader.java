@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009, Arnaud Roques
+ * (C) Copyright 2009-2013, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -15,7 +15,7 @@
  *
  * PlantUML distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -35,26 +35,29 @@ package net.sourceforge.plantuml.project.graphic;
 
 import java.awt.Font;
 import java.awt.geom.Dimension2D;
-import java.util.Arrays;
 
+import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignement;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.project.Item;
 import net.sourceforge.plantuml.project.Project;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class ItemHeader {
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
 	private final Project project;
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColor.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK);
 
 	public ItemHeader(Project project) {
 		this.project = project;
@@ -64,16 +67,16 @@ class ItemHeader {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		ug.getParam().setColor(HtmlColor.BLACK);
-		ug.draw(x, y, new URectangle(getWidth(stringBounder), getHeight(stringBounder)));
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		ug.apply(new UTranslate(x, y)).draw(new URectangle(getWidth(stringBounder), getHeight(stringBounder)));
 
 		for (Item it : project.getValidItems()) {
-			final TextBlock b = TextBlockUtils.create(Arrays.asList("" + it.getCode()), fontConfig,
-					HorizontalAlignement.LEFT);
+			final TextBlock b = TextBlockUtils.create(Display.asList("" + it.getCode()), fontConfig,
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final Dimension2D dim = b.calculateDimension(stringBounder);
-			b.drawU(ug, x, y);
+			b.drawU(ug.apply(new UTranslate(x, y)));
 			y += dim.getHeight();
-			ug.draw(x, y, new ULine(getWidth(stringBounder), 0));
+			ug.apply(new UTranslate(x, y)).draw(new ULine(getWidth(stringBounder), 0));
 		}
 	}
 
