@@ -30,13 +30,12 @@
 	Script Author: Julien Eluard
 	
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>7232-SNAPSHOT</version>
+    <version>7989-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -76,9 +75,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:https://plantuml.svn.sourceforge.net/svnroot/plantuml/trunk</connection>
-        <developerConnection>scm:svn:https://plantuml.svn.sourceforge.net/svnroot/plantuml/trunk</developerConnection>
-        <url>http://plantuml.svn.sourceforge.net/viewvc/plantuml/trunk</url>
+        <connection>scm:svn:svn://svn.code.sf.net/p/plantuml/code/trunk</connection>
+        <developerConnection>scm:svn:https://svn.code.sf.net/p/plantuml/code/trunk</developerConnection>
+        <url>svn://svn.code.sf.net/p/plantuml/code/trunk</url>
     </scm>
 
     <issueManagement>
@@ -101,6 +100,7 @@
                 <directory>${project.basedir}/src</directory>
                 <includes>
                     <include>net/sourceforge/plantuml/version/logo.png</include>
+                    <include>net/sourceforge/plantuml/version/favicon.png</include>
                 </includes>
             </resource>
         </resources>        
