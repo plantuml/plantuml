@@ -62,7 +62,7 @@ public class DateEventUtils {
 			final List<String> asList = Arrays.asList("<u>June 29th, 1975",
 					"\"It was the first time in history that anyone had typed",
 					"a character on a keyboard and seen it show up on their",
-					"own computer’s screen right in front of them.\"", "\t\t\t\t\t\t\t\t\t\t<i>Steve Wozniak");
+					"own computer's screen right in front of them.\"", "\t\t\t\t\t\t\t\t\t\t<i>Steve Wozniak");
 			return TextBlockUtils.mergeTB(textBlock, getComment(asList, color), HorizontalAlignment.LEFT);
 		}
 

@@ -103,6 +103,7 @@ public class QuoteUtils {
 			"Big mistake!");
 	// Creativity : how many? 
 	// How many folksingers does it take to change a lightbulb ?
+	// Do you like movies about gladiators?
 
 	private QuoteUtils() {
 	}
