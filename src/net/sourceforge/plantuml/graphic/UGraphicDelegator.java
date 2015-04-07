@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,6 +45,11 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 public abstract class UGraphicDelegator implements UGraphic {
 
 	final private UGraphic ug;
+	
+	public final boolean isSpecialTxt() {
+		return ug.isSpecialTxt();
+	}
+
 
 	public UGraphicDelegator(UGraphic ug) {
 		this.ug = ug;
@@ -72,10 +77,6 @@ public abstract class UGraphicDelegator implements UGraphic {
 
 	public void closeAction() {
 		ug.closeAction();
-	}
-
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
-		ug.writeImage(os, metadata, dpi);
 	}
 
 	protected UGraphic getUg() {

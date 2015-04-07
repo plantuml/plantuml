@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 
 import net.sourceforge.plantuml.golem.MinMaxDouble;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.arc.ExtendedGeneralPath;
 
 public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
@@ -62,34 +62,36 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		final UPath shape = (UPath) ushape;
 		DriverLineG2d.manageStroke(param, g2d);
 
-		final GeneralPath p = new GeneralPath();
-		boolean hasBezier = false;
+		final ExtendedGeneralPath p = new ExtendedGeneralPath();
 		final MinMaxDouble minMax = new MinMaxDouble();
 		minMax.manage(x, y);
+		boolean hasBezier = false;
 		for (USegment seg : shape) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
-			// Cast float for Java 1.5
 			if (type == USegmentType.SEG_MOVETO) {
-				p.moveTo((float) (x + coord[0]), (float) (y + coord[1]));
+				p.moveTo(x + coord[0], y + coord[1]);
 				minMax.manage(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_LINETO) {
-				p.lineTo((float) (x + coord[0]), (float) (y + coord[1]));
+				p.lineTo(x + coord[0], y + coord[1]);
 				minMax.manage(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_CUBICTO) {
-				p.curveTo((float) (x + coord[0]), (float) (y + coord[1]), (float) (x + coord[2]),
-						(float) (y + coord[3]), (float) (x + coord[4]), (float) (y + coord[5]));
+				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);
 				minMax.manage(x + coord[4], y + coord[5]);
 				hasBezier = true;
+			} else if (type == USegmentType.SEG_ARCTO) {
+				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);
 			} else {
 				throw new UnsupportedOperationException();
 			}
-			// bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x +
-			// bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
-			// + bez.ctrly2, x + bez.x2, y + bez.y2);
-			// p.append(bez, true);
 		}
-		// p.closePath();
+
+		if (shape.isOpenIconic()) {
+			p.closePath();
+			g2d.setColor(mapper.getMappedColor(param.getColor()));
+			g2d.fill(p);
+			return;
+		}
 
 		// Shadow
 		if (shape.getDeltaShadow() != 0) {

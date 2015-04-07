@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -49,6 +49,15 @@ public class MinMaxMutable {
 			return new MinMaxMutable(0, 0, 0, 0);
 		}
 		return new MinMaxMutable(Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);
+	}
+
+	public boolean isInfinity() {
+		return minX == Double.MAX_VALUE;
+	}
+
+	@Override
+	public String toString() {
+		return "X=" + minX + " " + maxX + " Y=" + minY + " " + maxY;
 	}
 
 	private MinMaxMutable(double minX, double minY, double maxX, double maxY) {

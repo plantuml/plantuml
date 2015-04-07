@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,14 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11153 $
+ * Revision $Revision: 15811 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -67,10 +67,11 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final double deltaShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseGroupingHeader(HtmlColor fontColor, HtmlColor background, HtmlColor groupBackground,
-			HtmlColor groupBorder, UFont bigFont, UFont smallFont, Display strings, SpriteContainer spriteContainer,
-			double deltaShadow, UStroke stroke) {
-		super(strings.get(0), fontColor, bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0);
+	public ComponentRoseGroupingHeader(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
+			HtmlColor background, HtmlColor groupBackground, HtmlColor groupBorder, UFont bigFont, UFont smallFont,
+			Display strings, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
+		super(strings.get(0), fontColor, hyperlinkColor, useUnderlineForHyperlink, bigFont, HorizontalAlignment.LEFT,
+				15, 30, 1, spriteContainer, 0, null, null);
 		this.groupBackground = groupBackground;
 		this.groupBorder = groupBorder;
 		this.background = background;
@@ -79,8 +80,9 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = TextBlockUtils.create(Display.asList("[" + strings.get(1) + "]"),
-					new FontConfiguration(smallFont, fontColor), HorizontalAlignment.LEFT, spriteContainer);
+			final Display display = Display.getWithNewlines("[" + strings.get(1) + "]");
+			this.commentTextBlock = TextBlockUtils.create(display, new FontConfiguration(smallFont, fontColor,
+					hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, spriteContainer);
 		}
 		if (this.background == null) {
 			throw new IllegalArgumentException();
@@ -88,10 +90,17 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	}
 
-	// @Override
-	// public double getPaddingY() {
-	// return 6;
-	// }
+	private double getSuppHeightForComment(StringBounder stringBounder) {
+		if (commentTextBlock == null) {
+			return 0;
+		}
+		final double height = commentTextBlock.calculateDimension(stringBounder).getHeight();
+		if (height > 15) {
+			return height - 15;
+		}
+		return 0;
+
+	}
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
@@ -108,7 +117,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	@Override
 	final public double getPreferredHeight(StringBounder stringBounder) {
-		return getTextHeight(stringBounder) + 2 * getPaddingY();
+		return getTextHeight(stringBounder) + 2 * getPaddingY() + getSuppHeightForComment(stringBounder);
 	}
 
 	@Override

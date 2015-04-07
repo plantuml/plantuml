@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11417 $
+ * Revision $Revision: 14860 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -38,10 +38,13 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -93,6 +96,9 @@ class DrawableSetInitializer {
 		if ("nosolid".equalsIgnoreCase(strategy)) {
 			return false;
 		}
+		if ("solid".equalsIgnoreCase(strategy)) {
+			return true;
+		}
 		for (Event ev : drawableSet.getAllEvents()) {
 			if (ev instanceof Delay) {
 				return true;
@@ -106,35 +112,19 @@ class DrawableSetInitializer {
 	}
 
 	private ParticipantRange getParticipantRange(Event ev) {
-		// if (ev instanceof Message) {
-		// final Message m = (Message) ev;
-		// final int r1 = getParticipantRangeIndex(m.getParticipant1());
-		// final int r2 = getParticipantRangeIndex(m.getParticipant2());
-		// final int start = Math.min(r1, r2);
-		// int end = Math.max(r1, r2);
-		// if (start != end) {
-		// end--;
-		// }
-		// return new ParticipantRange(start, end);
-		// } else if (ev instanceof GroupingLeaf) {
-		// return null;
-		// } else if (ev instanceof GroupingStart) {
-		// return null;
-		// }
-
 		return getFullParticipantRange();
 	}
 
-	private int getParticipantRangeIndex(Participant participant) {
-		int r = 0;
-		for (Participant p : drawableSet.getAllParticipants()) {
-			r++;
-			if (p == participant) {
-				return r;
-			}
-		}
-		throw new IllegalArgumentException();
-	}
+	// private int getParticipantRangeIndex(Participant participant) {
+	// int r = 0;
+	// for (Participant p : drawableSet.getAllParticipants()) {
+	// r++;
+	// if (p == participant) {
+	// return r;
+	// }
+	// }
+	// throw new IllegalArgumentException();
+	// }
 
 	public DrawableSet createDrawableSet(StringBounder stringBounder) {
 		if (freeY2 != null) {
@@ -148,12 +138,6 @@ class DrawableSetInitializer {
 			prepareParticipant(stringBounder, p);
 		}
 
-		// this.freeY2 = new
-		// FrontierSimple(drawableSet.getHeadHeight(stringBounder));
-		// this.freeY2 = new
-		// FrontierComplex(drawableSet.getHeadHeight(stringBounder),
-		// drawableSet.getAllParticipants()
-		// .size());
 		this.freeY2 = new FrontierStackImpl(drawableSet.getHeadHeight(stringBounder), drawableSet.getAllParticipants()
 				.size());
 
@@ -192,7 +176,7 @@ class DrawableSetInitializer {
 			} else if (ev instanceof Notes) {
 				prepareNotes(stringBounder, (Notes) ev, range);
 			} else if (ev instanceof LifeEvent) {
-				prepareLiveEvent(stringBounder, (LifeEvent) ev);
+				prepareLiveEvent(stringBounder, (LifeEvent) ev, range);
 			} else if (ev instanceof GroupingLeaf) {
 				prepareGroupingLeaf(stringBounder, (GroupingLeaf) ev, range);
 			} else if (ev instanceof GroupingStart) {
@@ -212,9 +196,7 @@ class DrawableSetInitializer {
 			}
 		}
 
-		// takeParticipantEngloberTitleWidth(stringBounder);
 		constraintSet.takeConstraintIntoAccount(stringBounder);
-		// takeParticipantEngloberTitleWidth2(stringBounder);
 		takeParticipantEngloberTitleWidth3(stringBounder);
 
 		prepareMissingSpace(stringBounder);
@@ -239,66 +221,6 @@ class DrawableSetInitializer {
 			}
 		}
 	}
-
-	// private void takeParticipantEngloberTitleWidth2(StringBounder
-	// stringBounder) {
-	// double lastX2;
-	// for (ParticipantEngloberContexted pe :
-	// drawableSet.getExistingParticipantEnglober()) {
-	// final double preferredWidth =
-	// drawableSet.getEngloberPreferedWidth(stringBounder,
-	// pe.getParticipantEnglober());
-	// final ParticipantBox first =
-	// drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
-	// final ParticipantBox last =
-	// drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
-	// final double x1 = drawableSet.getX1(pe);
-	// final double x2 = drawableSet.getX2(stringBounder, pe);
-	// final double missing = preferredWidth - (x2 - x1);
-	// Log.println("x1=" + x1 + " x2=" + x2 + " preferredWidth=" +
-	// preferredWidth + " missing=" + missing);
-	// if (missing > 0) {
-	// constraintSet.getConstraintAfter(last).push(missing);
-	// constraintSet.takeConstraintIntoAccount(stringBounder);
-	// }
-	// lastX2 = x2;
-	// }
-	// }
-	//
-	// private void takeParticipantEngloberTitleWidth(StringBounder
-	// stringBounder) {
-	// ParticipantBox previousLast = null;
-	// for (ParticipantEngloberContexted pe :
-	// drawableSet.getExistingParticipantEnglober()) {
-	// final double preferredWidth =
-	// drawableSet.getEngloberPreferedWidth(stringBounder,
-	// pe.getParticipantEnglober());
-	// final ParticipantBox first =
-	// drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
-	// final ParticipantBox last =
-	// drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
-	// final double margin = 5;
-	// if (first == last) {
-	// final Constraint constraint1 = constraintSet.getConstraintBefore(first);
-	// final Constraint constraint2 = constraintSet.getConstraintAfter(last);
-	// final double w1 =
-	// constraint1.getParticipant1().getPreferredWidth(stringBounder);
-	// final double w2 =
-	// constraint2.getParticipant2().getPreferredWidth(stringBounder);
-	// constraint1.ensureValue(preferredWidth / 2 + w1 / 2 + margin);
-	// constraint2.ensureValue(preferredWidth / 2 + w2 / 2 + margin);
-	// } else {
-	// final Pushable beforeFirst = constraintSet.getPrevious(first);
-	// final Pushable afterLast = constraintSet.getNext(last);
-	// final Constraint constraint1 = constraintSet.getConstraint(beforeFirst,
-	// afterLast);
-	// constraint1.ensureValue(preferredWidth +
-	// beforeFirst.getPreferredWidth(stringBounder) / 2
-	// + afterLast.getPreferredWidth(stringBounder) / 2 + 2 * margin);
-	// }
-	// previousLast = last;
-	// }
-	// }
 
 	private double getTotalHeight(double y, StringBounder stringBounder) {
 		final double signature = 0;
@@ -418,11 +340,11 @@ class DrawableSetInitializer {
 				m.getBackColorGeneral());
 
 		final Component comp = drawableSet.getSkin().createComponent(ComponentType.GROUPING_SPACE, null, skinParam,
-				Display.asList(m.getComment()));
+				Display.create(m.getComment()));
 		final double preferredHeight = comp.getPreferredHeight(stringBounder);
 		freeY2 = freeY2.add(preferredHeight, range);
 
-		final Display strings = m.getTitle().equals("group") ? Display.asList(m.getComment()) : Display.asList(
+		final Display strings = m.getTitle().equals("group") ? Display.create(m.getComment()) : Display.create(
 				m.getTitle(), m.getComment());
 		final Component header = drawableSet.getSkin().createComponent(ComponentType.GROUPING_HEADER, null, skinParam,
 				strings);
@@ -449,7 +371,7 @@ class DrawableSetInitializer {
 				freeY2 = ((FrontierStack) freeY2).restore();
 			}
 			final Component compElse = drawableSet.getSkin().createComponent(ComponentType.GROUPING_ELSE, null,
-					skinParam, Display.asList(m.getComment()));
+					skinParam, Display.create(m.getComment()));
 			final Lazy lazy = new Lazy() {
 				public double getNow() {
 					final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());
@@ -463,6 +385,8 @@ class DrawableSetInitializer {
 					inGroupableStack.getTopGroupingStructure(), m.isParallel(), lazy);
 			final double preferredHeight = element.getPreferredHeight(stringBounder);
 			freeY2 = freeY2.add(preferredHeight, range);
+			// MODIF42
+			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
 		} else if (m.getType() == GroupingType.END) {
 			if (m.isParallel()) {
 				freeY2 = ((FrontierStack) freeY2).closeBar();
@@ -475,7 +399,7 @@ class DrawableSetInitializer {
 			element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
 					inGroupableStack.getTopGroupingStructure(), m.isParallel());
 			final Component comp = drawableSet.getSkin().createComponent(ComponentType.GROUPING_SPACE, null, skinParam,
-					Display.asList(m.getComment()));
+					Display.create(m.getComment()));
 			final double preferredHeight = comp.getPreferredHeight(stringBounder);
 			freeY2 = freeY2.add(preferredHeight, range);
 			inGroupableStack.pop();
@@ -540,10 +464,54 @@ class DrawableSetInitializer {
 		return ComponentType.NOTE;
 	}
 
-	private void prepareLiveEvent(StringBounder stringBounder, LifeEvent lifeEvent) {
-		if (lifeEvent.getType() != LifeEventType.DESTROY && lifeEvent.getType() != LifeEventType.CREATE) {
-			throw new IllegalStateException();
+	private void prepareLiveEvent(StringBounder stringBounder, LifeEvent lifeEvent, ParticipantRange range) {
+		final double y = freeY2.getFreeY(range);
+		final AbstractMessage message = lifeEvent.getMessage();
+		if (lifeEvent.getType() == LifeEventType.ACTIVATE) {
+			double pos = 0;
+			if (message != null) {
+				int delta1 = 0;
+				if (message.isCreate()) {
+					delta1 += 10;
+				} else if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message.isSelfMessage()) {
+					delta1 += 8;
+				}
+				pos = message.getPosYstartLevel() + delta1;
+			}
+			final LifeLine line1 = drawableSet.getLivingParticipantBox(lifeEvent.getParticipant()).getLifeLine();
+			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificBackColor());
+		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {
+			double delta = 0;
+			if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage()) {
+				delta += 7;
+			}
+			final Participant p = lifeEvent.getParticipant();
+			final LifeLine line = drawableSet.getLivingParticipantBox(p).getLifeLine();
+			double pos2 = y;
+			if (message != null) {
+				pos2 = message.getPosYendLevel() - delta;
+			}
+			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificBackColor());
 		}
+
+		if (lifeEvent.getType() == LifeEventType.DESTROY) {
+			final Component comp = drawableSet.getSkin().createComponent(ComponentType.DESTROY, null,
+					drawableSet.getSkinParam(), null);
+			final double delta = comp.getPreferredHeight(stringBounder) / 2;
+			final LivingParticipantBox livingParticipantBox = drawableSet.getLivingParticipantBox(lifeEvent
+					.getParticipant());
+			final LifeDestroy destroy = new LifeDestroy(lifeEvent.getMessage().getPosYendLevel() - delta,
+					livingParticipantBox.getParticipantBox(), comp);
+			drawableSet.addEvent(lifeEvent, destroy);
+		} else {
+			drawableSet.addEvent(lifeEvent, new GraphicalElementLiveEvent(y));
+		}
+
+	}
+
+	private void prepareMessageExo(StringBounder stringBounder, MessageExo m, ParticipantRange range) {
+		final Step1MessageExo step1Message = new Step1MessageExo(range, stringBounder, m, drawableSet, freeY2);
+		freeY2 = step1Message.prepareMessage(constraintSet, inGroupableStack);
 	}
 
 	private void prepareMessage(StringBounder stringBounder, Message m, ParticipantRange range) {
@@ -559,7 +527,7 @@ class DrawableSetInitializer {
 		final ISkinParam skinParam = new SkinParamBackcoloredReference(drawableSet.getSkinParam(),
 				reference.getBackColorElement(), reference.getBackColorGeneral());
 
-		Display strings = new Display();
+		Display strings = Display.empty();
 		strings = strings.add("ref");
 		strings = strings.addAll(reference.getStrings());
 		final Component comp = drawableSet.getSkin().createComponent(ComponentType.REFERENCE, null, skinParam, strings);
@@ -589,11 +557,6 @@ class DrawableSetInitializer {
 		drawableSet.addEvent(reference, graphicalReference);
 	}
 
-	private void prepareMessageExo(StringBounder stringBounder, MessageExo m, ParticipantRange range) {
-		final Step1MessageExo step1Message = new Step1MessageExo(range, stringBounder, m, drawableSet, freeY2);
-		freeY2 = step1Message.prepareMessage(constraintSet, inGroupableStack);
-	}
-
 	private void prepareParticipant(StringBounder stringBounder, Participant p) {
 		final ComponentType headType;
 		final ComponentType tailType;
@@ -618,8 +581,15 @@ class DrawableSetInitializer {
 		} else {
 			throw new IllegalArgumentException();
 		}
-		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), p.getSpecificBackColor(),
-				p.getUrl() != null);
+		HtmlColor specificBackColor = p.getSpecificBackColor();
+		final boolean clickable = p.getUrl() != null;
+		final HtmlColor stereoBackColor = drawableSet.getSkinParam().getHtmlColor(p.getBackgroundColorParam(),
+				p.getStereotype(), clickable);
+		if (stereoBackColor != null && specificBackColor == null) {
+			specificBackColor = stereoBackColor;
+		}
+
+		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), specificBackColor, clickable);
 		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());
 		final Component head = drawableSet.getSkin().createComponent(headType, null, skinParam, participantDisplay);
 		final Component tail = drawableSet.getSkin().createComponent(tailType, null, skinParam, participantDisplay);

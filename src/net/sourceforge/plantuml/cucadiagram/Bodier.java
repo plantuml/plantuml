@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,9 +40,9 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.StringUtils;
 
 public class Bodier {
 
@@ -108,7 +108,7 @@ public class Bodier {
 				if (s.length() == 0 && methodsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new MemberImpl(s, true, manageModifier);
+				final Member m = new Member(s, true, manageModifier);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					methodsToDisplay.add(m);
 				}
@@ -136,7 +136,7 @@ public class Bodier {
 				if (s.length() == 0 && fieldsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new MemberImpl(s, false, manageModifier);
+				final Member m = new Member(s, false, manageModifier);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					fieldsToDisplay.add(m);
 				}
@@ -150,5 +150,19 @@ public class Bodier {
 		while (result.size() > 0 && result.get(result.size() - 1).getDisplay(false).trim().length() == 0) {
 			result.remove(result.size() - 1);
 		}
+	}
+
+	public boolean hasUrl() {
+		for (Member m : getFieldsToDisplay()) {
+			if (m.hasUrl()) {
+				return true;
+			}
+		}
+		for (Member m : getMethodsToDisplay()) {
+			if (m.hasUrl()) {
+				return true;
+			}
+		}
+		return true;
 	}
 }

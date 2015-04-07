@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,31 +33,38 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public interface ISkinParam extends SpriteContainer {
+public interface ISkinParam extends ISkinSimple {
+
+	public HtmlColor getHyperlinkColor();
+
+	public boolean useUnderlineForHyperlink();
 
 	public HtmlColor getBackgroundColor();
 
-	public String getValue(String key);
+	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable);
 
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype, boolean clickable);
+	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype);
 
-	public HtmlColor getFontHtmlColor(FontParam param, String stereotype);
+	public UStroke getThickness(LineParam param, Stereotype stereotype);
 
-	public UStroke getThickness(LineParam param);
-
-	public UFont getFont(FontParam fontParam, String stereotype);
+	public UFont getFont(FontParam fontParam, Stereotype stereotype, boolean inPackageTitle);
 
 	public HorizontalAlignment getHorizontalAlignment(AlignParam param);
+
+	public HorizontalAlignment getDefaultTextAlignment();
 
 	public int getCircledCharacterRadius();
 
@@ -79,7 +86,7 @@ public interface ISkinParam extends SpriteContainer {
 
 	public boolean stereotypePositionTop();
 
-	public boolean useSwimlanes();
+	public boolean useSwimlanes(UmlDiagramType type);
 
 	public double getNodesep();
 
@@ -94,9 +101,21 @@ public interface ISkinParam extends SpriteContainer {
 	public boolean forceSequenceParticipantUnderlined();
 
 	public ConditionStyle getConditionStyle();
-	
+
 	public double minClassWidth();
-	
+
 	public boolean sameClassWidth();
+
+	public Rankdir getRankdir();
+
+	public boolean useOctagonForActivity(Stereotype stereotype);
+
+	public IHtmlColorSet getIHtmlColorSet();
+
+	public int groupInheritance();
+	
+	public boolean useGuillemet();
+
+	public boolean handwritten();
 
 }

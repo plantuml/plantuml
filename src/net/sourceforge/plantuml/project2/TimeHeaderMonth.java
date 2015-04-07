@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -60,7 +60,7 @@ public class TimeHeaderMonth implements TextBlock {
 	private final double dayWidth;
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 
 	public TimeHeaderMonth(Day start, Day end, TimeLine timeline, double dayWidth) {
 		this.start = start;
@@ -95,7 +95,7 @@ public class TimeHeaderMonth implements TextBlock {
 	private void manage(UGraphic ug, double x, double y, int n, String last, double pendingX) {
 		final double width = n * dayWidth - pendingX;
 		ug.apply(new UTranslate(x + pendingX, y)).draw(new URectangle(width, getHeight()));
-		final TextBlock b = TextBlockUtils.create(Display.asList(last), fontConfig, HorizontalAlignment.LEFT,
+		final TextBlock b = TextBlockUtils.create(Display.create(last), fontConfig, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 		final Dimension2D dimText = b.calculateDimension(ug.getStringBounder());
 		final double diffX = width - dimText.getWidth();

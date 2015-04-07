@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -49,8 +49,8 @@ public class CommandWhileEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("(end ?while|while ?end)"), //
-				new RegexLeaf("OUT", "\\s*(?:\\((.+?)\\))?"), //
+				new RegexLeaf("(end[%s]?while|while[%s]?end)"), //
+				new RegexLeaf("OUT", "[%s]*(?:\\((.+?)\\))?"), //
 				new RegexLeaf(";?$"));
 	}
 

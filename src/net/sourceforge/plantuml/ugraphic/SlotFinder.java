@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,13 +33,14 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class SlotFinder implements UGraphic {
+	
+	public boolean isSpecialTxt() {
+		return false;
+	}
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate) {
@@ -116,10 +117,6 @@ public class SlotFinder implements UGraphic {
 
 	private void drawRectangle(double x, double y, URectangle shape) {
 		yslot.addSlot(y, y + shape.getHeight());
-	}
-
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
-		throw new UnsupportedOperationException();
 	}
 
 	public ColorMapper getColorMapper() {

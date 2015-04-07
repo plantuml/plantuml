@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,8 +38,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiagram> {
 
@@ -63,10 +64,10 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 	}
 
-	private final static Pattern p1 = Pattern.compile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)\\s+(?:(\\{)|(.*))$|^\\}?$");
+	private final static Pattern p1 = MyPattern.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	public CommandSkinParamMultilines() {
-		super("(?i)^skinparam\\s*(?:\\s+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?\\s*\\{$");
+		super("(?i)^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?[%s]*\\{$");
 	}
 
 	@Override

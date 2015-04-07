@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class CommandHideShowSpecificClass extends SingleLineCommand2<ClassDiagram> {
 
@@ -51,7 +52,7 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<ClassDiagra
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("COMMAND", "(hide|show)"), //
-				new RegexLeaf("\\s+"), //
+				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("CODE", "(" + CommandCreateClass.CODE + ")"), //
 				new RegexLeaf("$"));
 	}
@@ -59,14 +60,19 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<ClassDiagra
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram classDiagram, RegexResult arg) {
 
-		final Code code = Code.of(arg.get("CODE", 0));
-		final ILeaf leaf = classDiagram.getEntityFactory().getLeafs().get(code);
-		if (leaf == null) {
-			return CommandExecutionResult.error("Class does not exit : " + code);
+		final String codeString = arg.get("CODE", 0);
+		if (codeString.equals("class")) {
+			classDiagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		} else if (codeString.equals("interface")) {
+			classDiagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		} else {
+			final Code code = Code.of(codeString);
+			final ILeaf leaf = classDiagram.getEntityFactory().getLeafs().get(code);
+			if (leaf == null) {
+				return CommandExecutionResult.error("Class does not exist : " + code.getFullName());
+			}
+			classDiagram.hideOrShow(leaf, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		}
-		classDiagram.hideOrShow(leaf, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-
 		return CommandExecutionResult.ok();
 	}
-
 }

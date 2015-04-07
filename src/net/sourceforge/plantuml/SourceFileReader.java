@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -101,7 +101,7 @@ public class SourceFileReader implements ISourceFileReader {
 				.getParentFile());
 	}
 
-	public boolean hasError() throws IOException, InterruptedException {
+	public boolean hasError() {
 		for (final BlockUml b : builder.getBlockUmls()) {
 			if (b.getDiagram() instanceof PSystemError) {
 				return true;
@@ -142,7 +142,7 @@ public class SourceFileReader implements ISourceFileReader {
 						ps.close();
 					}
 				}
-				final GeneratedImage generatedImage = new GeneratedImage(f, desc, system);
+				final GeneratedImage generatedImage = new GeneratedImage(f, desc, blockUml);
 				result.add(generatedImage);
 			}
 
@@ -153,7 +153,7 @@ public class SourceFileReader implements ISourceFileReader {
 		return Collections.unmodifiableList(result);
 	}
 
-	public List<String> getEncodedUrl() throws IOException, InterruptedException {
+	public List<String> getEncodedUrl() throws IOException {
 		final List<String> result = new ArrayList<String>();
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		for (BlockUml blockUml : builder.getBlockUmls()) {

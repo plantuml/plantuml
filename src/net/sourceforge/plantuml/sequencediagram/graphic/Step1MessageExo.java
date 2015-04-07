@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,7 +38,6 @@ import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
-import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
@@ -58,7 +57,7 @@ class Step1MessageExo extends Step1Abstract {
 		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), drawingSet.getSkin()
 				.createComponent(ComponentType.ARROW, getConfig(), drawingSet.getSkinParam(),
 						getLabelOfMessage(message)), getLivingParticipantBox(), message.getType(), message.getUrl(),
-				message.isShortArrow());
+				message.isShortArrow(), message.getArrowConfiguration());
 
 		if (message.getNote() != null) {
 			final ISkinParam skinParam = new SkinParamBackcolored(drawingSet.getSkinParam(),
@@ -74,9 +73,7 @@ class Step1MessageExo extends Step1Abstract {
 		final double arrowYStartLevel = graphic.getArrowYStartLevel(getStringBounder());
 		final double arrowYEndLevel = graphic.getArrowYEndLevel(getStringBounder());
 
-		for (LifeEvent lifeEvent : getMessage().getLiveEvents()) {
-			beforeMessage(lifeEvent, arrowYStartLevel);
-		}
+		getMessage().setPosYstartLevel(arrowYStartLevel);
 
 		final double length = graphic.getArrowOnlyWidth(getStringBounder());
 		incFreeY(graphic.getPreferredHeight(getStringBounder()));
@@ -96,9 +93,8 @@ class Step1MessageExo extends Step1Abstract {
 					.ensureValue(length);
 		}
 
-		for (LifeEvent lifeEvent : getMessage().getLiveEvents()) {
-			afterMessage(getStringBounder(), lifeEvent, arrowYEndLevel + marginActivateAndDeactive);
-		}
+		final double posYendLevel = arrowYEndLevel + marginActivateAndDeactive;
+		getMessage().setPosYendLevel(posYendLevel);
 
 		assert graphic instanceof InGroupable;
 		if (graphic instanceof InGroupable) {
@@ -117,7 +113,7 @@ class Step1MessageExo extends Step1Abstract {
 		if (message.getMessageNumber() == null) {
 			return message.getLabel();
 		}
-		Display result = new Display();
+		Display result = Display.empty();
 		result = result.add(new MessageNumber(message.getMessageNumber()));
 		result = result.addAll(message.getLabel());
 		return result;
@@ -134,10 +130,16 @@ class Step1MessageExo extends Step1Abstract {
 
 	private ArrowConfiguration getArrowType(MessageExo m) {
 		final MessageExoType type = m.getType();
+		ArrowConfiguration result = null;
+
 		if (type.getDirection() == 1) {
-			return m.getArrowConfiguration();
+			result = m.getArrowConfiguration();
+		} else {
+			result = m.getArrowConfiguration().reverse();
 		}
-		return m.getArrowConfiguration().reverse();
+		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());
+		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());
+		return result;
 		// ArrowConfiguration result = null;
 		// if (type.getDirection() == 1) {
 		// result = ArrowConfiguration.withDirectionNormal();

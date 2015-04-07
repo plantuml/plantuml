@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 11707 $
+ * Revision $Revision: 15850 $
  *
  */
 package net.sourceforge.plantuml;
@@ -44,11 +44,16 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -61,33 +66,47 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 public class SkinParam implements ISkinParam {
 
 	private final Map<String, String> params = new HashMap<String, String>();
+	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 
 	public void setParam(String key, String value) {
 		params.put(cleanForKey(key), value.trim());
 	}
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
-	private static final Pattern stereoPattern = Pattern.compile(stereoPatternString);
+	private static final Pattern stereoPattern = MyPattern.cmpile(stereoPatternString);
 
-	private final UmlDiagramType type;
+	// public SkinParam() {
+	//
+	// }
 
-	public SkinParam(UmlDiagramType type) {
-		this.type = type;
-		if (type == null) {
-			setParam("shadowing", "false");
-		}
+	public static SkinParam noShadowing() {
+		final SkinParam result = new SkinParam();
+		result.setParam("shadowing", "false");
+		return result;
 	}
 
+	// public SkinParam(String type) {
+	// if (type == null) {
+	// setParam("shadowing", "false");
+	// }
+	// }
+
 	static String cleanForKey(String key) {
-		key = key.toLowerCase().trim();
+		key = StringUtils.goLowerCase(key).trim();
 		key = key.replaceAll("_|\\.|\\s", "");
-		key = key.replaceAll("partition", "package");
-		key = key.replaceAll("activityarrow", "genericarrow");
-		key = key.replaceAll("objectarrow", "genericarrow");
-		key = key.replaceAll("classarrow", "genericarrow");
-		key = key.replaceAll("componentarrow", "genericarrow");
-		key = key.replaceAll("statearrow", "genericarrow");
-		key = key.replaceAll("usecasearrow", "genericarrow");
+		key = replaceSmart(key, "partition", "package");
+		key = replaceSmart(key, "sequenceparticipant", "participant");
+		key = replaceSmart(key, "sequenceactor", "actor");
+		if (key.contains("arrow")) {
+			key = key.replaceAll("activityarrow|objectarrow|classarrow|componentarrow|statearrow|usecasearrow",
+					"genericarrow");
+		}
+		// // key = key.replaceAll("activityarrow", "genericarrow");
+		// // key = key.replaceAll("objectarrow", "genericarrow");
+		// // key = key.replaceAll("classarrow", "genericarrow");
+		// // key = key.replaceAll("componentarrow", "genericarrow");
+		// // key = key.replaceAll("statearrow", "genericarrow");
+		// // key = key.replaceAll("usecasearrow", "genericarrow");
 		final Matcher m = stereoPattern.matcher(key);
 		if (m.find()) {
 			final String s = m.group(1);
@@ -95,6 +114,21 @@ public class SkinParam implements ISkinParam {
 			key += "<<" + s + ">>";
 		}
 		return key;
+	}
+
+	private static String replaceSmart(String s, String src, String target) {
+		if (s.contains(src) == false) {
+			return s;
+		}
+		return s.replaceAll(src, target);
+	}
+
+	public HtmlColor getHyperlinkColor() {
+		final HtmlColor result = getHtmlColor(ColorParam.hyperlink, null, false);
+		if (result == null) {
+			return HtmlColorUtils.BLUE;
+		}
+		return result;
 	}
 
 	public HtmlColor getBackgroundColor() {
@@ -117,19 +151,19 @@ public class SkinParam implements ISkinParam {
 			if (c == '_') {
 				upper = true;
 			} else {
-				sb.append(upper ? Character.toUpperCase(c) : Character.toLowerCase(c));
+				sb.append(upper ? StringUtils.goUpperCase(c) : StringUtils.goLowerCase(c));
 				upper = false;
 			}
 		}
 		return sb.toString();
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype, boolean clickable) {
+	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "color" + stereotype);
-			if (value2 != null && HtmlColorUtils.getColorIfValid(value2) != null) {
-				return HtmlColorUtils.getColorIfValid(value2);
+			final String value2 = getValue(param.name() + "color" + stereotype.getLabel(false));
+			if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
+				return getIHtmlColorSet().getColorIfValid(value2);
 			}
 		}
 		final String value = getValue(getParamName(param, clickable));
@@ -137,7 +171,7 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return null;
 		}
-		return HtmlColorUtils.getColorIfValid(value, acceptTransparent);
+		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
 	}
 
 	private String getParamName(ColorParam param, boolean clickable) {
@@ -150,16 +184,16 @@ public class SkinParam implements ISkinParam {
 		return n + "color";
 	}
 
-	private void checkStereotype(String stereotype) {
-		if (stereotype.startsWith("<<") == false || stereotype.endsWith(">>") == false) {
-			throw new IllegalArgumentException();
-		}
+	private void checkStereotype(Stereotype stereotype) {
+		// if (stereotype.startsWith("<<") == false || stereotype.endsWith(">>") == false) {
+		// throw new IllegalArgumentException();
+		// }
 	}
 
-	private int getFontSize(FontParam param, String stereotype) {
+	private int getFontSize(FontParam param, Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "fontsize" + stereotype);
+			final String value2 = getValue(param.name() + "fontsize" + stereotype.getLabel(false));
 			if (value2 != null && value2.matches("\\d+")) {
 				return Integer.parseInt(value2);
 			}
@@ -174,10 +208,10 @@ public class SkinParam implements ISkinParam {
 		return Integer.parseInt(value);
 	}
 
-	private String getFontFamily(FontParam param, String stereotype) {
+	private String getFontFamily(FontParam param, Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "fontname" + stereotype);
+			final String value2 = getValue(param.name() + "fontname" + stereotype.getLabel(false));
 			if (value2 != null) {
 				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value2);
 			}
@@ -196,29 +230,29 @@ public class SkinParam implements ISkinParam {
 		return param.getDefaultFamily();
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param, String stereotype) {
+	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype) {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			value = getValue(param.name() + "fontcolor" + stereotype);
+			value = getValue(param.name() + "fontcolor" + stereotype.getLabel(false));
 		}
-		if (value == null || HtmlColorUtils.getColorIfValid(value) == null) {
+		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
 			value = getValue(param.name() + "fontcolor");
 		}
-		if (value == null || HtmlColorUtils.getColorIfValid(value) == null) {
+		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
 			value = getValue("defaultfontcolor");
 		}
-		if (value == null || HtmlColorUtils.getColorIfValid(value) == null) {
+		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
 			value = param.getDefaultColor();
 		}
-		return HtmlColorUtils.getColorIfValid(value);
+		return getIHtmlColorSet().getColorIfValid(value);
 	}
 
-	private int getFontStyle(FontParam param, String stereotype) {
+	private int getFontStyle(FontParam param, Stereotype stereotype, boolean inPackageTitle) {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			value = getValue(param.name() + "fontstyle" + stereotype);
+			value = getValue(param.name() + "fontstyle" + stereotype.getLabel(false));
 		}
 		if (value == null) {
 			value = getValue(param.name() + "fontstyle");
@@ -227,25 +261,26 @@ public class SkinParam implements ISkinParam {
 			value = getValue("defaultfontstyle");
 		}
 		if (value == null) {
-			return param.getDefaultFontStyle(this);
+			return param.getDefaultFontStyle(this, inPackageTitle);
 		}
 		int result = Font.PLAIN;
-		if (value.toLowerCase().contains("bold")) {
+		if (StringUtils.goLowerCase(value).contains("bold")) {
 			result = result | Font.BOLD;
 		}
-		if (value.toLowerCase().contains("italic")) {
+		if (StringUtils.goLowerCase(value).contains("italic")) {
 			result = result | Font.ITALIC;
 		}
 		return result;
 	}
 
-	public UFont getFont(FontParam fontParam, String stereotype) {
+	public UFont getFont(FontParam fontParam, Stereotype stereotype, boolean inPackageTitle) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 		}
 		final String fontFamily = getFontFamily(fontParam, stereotype);
-		final int fontStyle = getFontStyle(fontParam, stereotype);
-		return new UFont(fontFamily, fontStyle, getFontSize(fontParam, stereotype));
+		final int fontStyle = getFontStyle(fontParam, stereotype, inPackageTitle);
+		final int fontSize = getFontSize(fontParam, stereotype);
+		return new UFont(fontFamily, fontStyle, fontSize);
 	}
 
 	public int getCircledCharacterRadius() {
@@ -292,11 +327,15 @@ public class SkinParam implements ISkinParam {
 			final String h = capitalize(p.name());
 			result.add(h + "Color");
 		}
+		for (LineParam p : EnumSet.allOf(LineParam.class)) {
+			final String h = capitalize(p.name());
+			result.add(h + "Thickness");
+		}
 		return Collections.unmodifiableSet(result);
 	}
 
 	private static String capitalize(String name) {
-		return name.substring(0, 1).toUpperCase() + name.substring(1);
+		return StringUtils.goUpperCase(name.substring(0, 1)) + name.substring(1);
 	}
 
 	public int getDpi() {
@@ -354,6 +393,15 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	public HorizontalAlignment getDefaultTextAlignment() {
+		final String value = getValue("defaulttextalignment");
+		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
+		if (result == null) {
+			return HorizontalAlignment.CENTER;
+		}
+		return result;
+	}
+
 	private String getArg(String value, int i) {
 		if (value == null) {
 			return null;
@@ -373,11 +421,14 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean shadowing() {
-		if (strictUmlStyle()) {
-			return false;
-		}
 		final String value = getValue("shadowing");
 		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		if ("true".equalsIgnoreCase(value)) {
+			return true;
+		}
+		if (strictUmlStyle()) {
 			return false;
 		}
 		return true;
@@ -418,7 +469,7 @@ public class SkinParam implements ISkinParam {
 		return true;
 	}
 
-	public boolean useSwimlanes() {
+	public boolean useSwimlanes(UmlDiagramType type) {
 		if (type != UmlDiagramType.ACTIVITY) {
 			return false;
 		}
@@ -455,7 +506,14 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public UStroke getThickness(LineParam param) {
+	public UStroke getThickness(LineParam param, Stereotype stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue(param.name() + "thickness" + stereotype.getLabel(false));
+			if (value2 != null && value2.matches("[\\d.]+")) {
+				return new UStroke(Double.parseDouble(value2));
+			}
+		}
 		final String value = getValue(param.name() + "thickness");
 		if (value != null && value.matches("[\\d.]+")) {
 			return new UStroke(Double.parseDouble(value));
@@ -506,6 +564,82 @@ public class SkinParam implements ISkinParam {
 
 	public boolean sameClassWidth() {
 		return "true".equals(getValue("sameclasswidth"));
+	}
+
+	public final Rankdir getRankdir() {
+		return rankdir;
+	}
+
+	public final void setRankdir(Rankdir rankdir) {
+		this.rankdir = rankdir;
+	}
+
+	public boolean useOctagonForActivity(Stereotype stereotype) {
+		String value = getValue("activityshape");
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue("activityshape" + stereotype.getLabel(false));
+			if (value2 != null) {
+				value = value2;
+			}
+		}
+		if ("roundedbox".equalsIgnoreCase(value)) {
+			return false;
+		}
+		if ("octagon".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	private final IHtmlColorSet htmlColorSet = new HtmlColorSetSimple();
+
+	public IHtmlColorSet getIHtmlColorSet() {
+		return htmlColorSet;
+	}
+
+	public boolean useUnderlineForHyperlink() {
+		final String value = getValue("hyperlinkunderline");
+		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
+	}
+
+	public double getPadding() {
+		final String value = getValue("padding");
+		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public int groupInheritance() {
+		final String value = getValue("groupinheritance");
+		int result = Integer.MAX_VALUE;
+		if (value != null && value.matches("\\d+")) {
+			result = Integer.parseInt(value);
+		}
+		if (result <= 1) {
+			result = Integer.MAX_VALUE;
+		}
+		return result;
+	}
+
+	public boolean useGuillemet() {
+		final String value = getValue("guillemet");
+		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean handwritten() {
+		final String value = getValue("handwritten");
+		if ("true".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
 	}
 
 }

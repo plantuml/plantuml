@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,9 +33,15 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.skin.StickMan;
 
 class USymbolActor extends USymbolSimpleAbstract {
+
+	public USymbolActor() {
+		super(ColorParam.actorBackground, ColorParam.actorBorder, FontParam.ACTOR, FontParam.ACTOR_STEREOTYPE);
+	}
 
 	@Override
 	protected TextBlock getDrawing(SymbolContext symbolContext) {

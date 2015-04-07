@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,6 +41,9 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -51,17 +54,19 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
+				new RegexLeaf("COLOR", "(?:(" + HtmlColorUtils.COLOR_REGEXP + "):)?"), //
 				new RegexLeaf("while"), //
-				new RegexLeaf("TEST", "\\s*\\((.+?)\\)"), //
+				new RegexLeaf("TEST", "[%s]*\\((.+?)\\)"), //
 				new RegexOptional(new RegexConcat(//
-						new RegexLeaf("\\s*(is|equals?)\\s*"), //
+						new RegexLeaf("[%s]*(is|equals?)[%s]*"), //
 						new RegexLeaf("YES", "\\((.+?)\\)"))), //
 				new RegexLeaf(";?$"));
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		diagram.doWhile(Display.getWithNewlines(arg.get("TEST", 0)), Display.getWithNewlines(arg.get("YES", 0)));
+		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
+		diagram.doWhile(Display.getWithNewlines(arg.get("TEST", 0)), Display.getWithNewlines(arg.get("YES", 0)), color);
 
 		return CommandExecutionResult.ok();
 	}

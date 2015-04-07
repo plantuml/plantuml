@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,7 +33,6 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.StringUtils;
 
 public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 
@@ -56,16 +56,8 @@ public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UPolygon shape = (UPolygon) ushape;
 
-		final double points[] = new double[shape.getPoints().size() * 2];
-		int i = 0;
-
-		for (Point2D pt : shape.getPoints()) {
-			points[i++] = pt.getX() + x;
-			points[i++] = pt.getY() + y;
-		}
-
+		final double points[] = shape.getPointArray(x, y);
 		final UClip clip = clipContainer.getClip();
-
 		if (clip != null) {
 			for (int j = 0; j < points.length; j += 2) {
 				if (clip.isInside(points[j], points[j + 1]) == false) {

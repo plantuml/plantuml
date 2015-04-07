@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -48,21 +48,26 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-abstract class AbstractElementText implements Element {
+abstract class AbstractElementText extends AbstractElement {
 
 	private final TextBlock block;
 	private final FontConfiguration config;
 	private final int charLength;
 
-	public AbstractElementText(String text, UFont font, boolean manageLength, SpriteContainer spriteContainer) {
-		config = new FontConfiguration(font, HtmlColorUtils.BLACK);
+	public AbstractElementText(String text, UFont font, boolean manageLength, ISkinSimple spriteContainer) {
+		config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 		if (manageLength) {
-			this.charLength = text.length();
+			this.charLength = getCharNumber(text);
 			text = text.trim();
 		} else {
 			this.charLength = 0;
 		}
-		this.block = TextBlockUtils.create(Display.asList(text), config, HorizontalAlignment.LEFT, spriteContainer);
+		this.block = TextBlockUtils.create(Display.create(text), config, HorizontalAlignment.LEFT, spriteContainer);
+	}
+
+	private int getCharNumber(String text) {
+		text = text.replaceAll("<&[-\\w]+>", "00");
+		return text.length();
 	}
 
 	protected void drawText(UGraphic ug, double x, double y) {
@@ -87,17 +92,17 @@ abstract class AbstractElementText implements Element {
 	}
 
 	private double getSingleSpace(StringBounder stringBounder) {
-//		double max = 0;
-//		for (int i = 32; i < 127; i++) {
-//			final char c = (char) i;
-//			final double w = TextBlockUtils.create(Arrays.asList("" + c), config, HorizontalAlignment.LEFT)
-//					.calculateDimension(stringBounder).getWidth();
-//			if (w > max) {
-// Log.println("c="+c+" "+max);
-//				max = w;
-//			}
-//		}
-//		return max;
+		// double max = 0;
+		// for (int i = 32; i < 127; i++) {
+		// final char c = (char) i;
+		// final double w = TextBlockUtils.create(Arrays.asList("" + c), config, HorizontalAlignment.LEFT)
+		// .calculateDimension(stringBounder).getWidth();
+		// if (w > max) {
+		// Log.println("c="+c+" "+max);
+		// max = w;
+		// }
+		// }
+		// return max;
 		return 8;
 	}
 

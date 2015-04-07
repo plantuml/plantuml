@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11324 $
+ * Revision $Revision: 13828 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -168,6 +168,32 @@ public class ParticipantBox implements Pushable {
 			}
 		}
 		drawLine(ug, startingY, endingY, line);
+	}
+
+	public void drawLineU22(UGraphic ug, double startingY, final double endingY, boolean showTail, double myDelta) {
+		ug = ug.apply(new UTranslate(startingX, 0));
+		if (delays.size() > 0) {
+			final StringBounder stringBounder = ug.getStringBounder();
+			for (GraphicalDelayText delay : delays) {
+				if (delay.getStartingY() - myDelta >= startingY) {
+					drawLineIfLowerThan(ug, startingY, delay.getStartingY() - myDelta, line, endingY);
+					drawLineIfLowerThan(ug, delay.getStartingY() - myDelta, delay.getEndingY(stringBounder) - myDelta,
+							delayLine, endingY);
+					startingY = delay.getEndingY(stringBounder) - myDelta;
+				}
+			}
+			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta > startingY) {
+				startingY = delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta;
+			}
+		}
+		drawLineIfLowerThan(ug, startingY, endingY, line, endingY);
+	}
+
+	private void drawLineIfLowerThan(UGraphic ug, double startingY, double endingY, Component comp, double limitY) {
+		if (startingY <= limitY && endingY <= limitY) {
+			drawLine(ug, startingY, endingY, comp);
+		}
+
 	}
 
 	private void drawLine(UGraphic ug, double startingY, double endingY, Component comp) {

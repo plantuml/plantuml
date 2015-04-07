@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -53,8 +53,11 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -80,6 +83,23 @@ public class PSystemSalt extends AbstractPSystem {
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final Element salt = SaltUtils.createElement(data);
 
+		final Dimension2D size = salt.getPreferredDimension(TextBlockUtils.getDummyStringBounder(), 0, 0);
+		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null,
+				null, 5, 5, null, false);
+		builder.addUDrawable(new UDrawable() {
+
+			public void drawU(UGraphic ug) {
+				ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+				salt.drawU(ug, 0, new Dimension2DDouble(size.getWidth(), size.getHeight()));
+				salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
+			}
+		});
+		return builder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+	}
+
+	private ImageData exportDiagramOld(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		final Element salt = SaltUtils.createElement(data);
+
 		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
 		Graphics2D g2d = builder.getGraphics2D();
 
@@ -94,8 +114,8 @@ public class PSystemSalt extends AbstractPSystem {
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		UGraphic ug = new UGraphicG2d(new ColorMapperIdentity(), g2d, 1.0);
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-		salt.drawU(ug, 0, 0, 0, new Dimension2DDouble(size.getWidth(), size.getHeight()));
-		salt.drawU(ug, 0, 0, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
+		salt.drawU(ug, 0, new Dimension2DDouble(size.getWidth(), size.getHeight()));
+		salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 		g2d.dispose();
 
 		// Writes the off-screen image into a PNG file

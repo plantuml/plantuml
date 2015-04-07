@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -65,9 +65,10 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	public EntityImagePseudoState(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
-		this.desc = TextBlockUtils.create(Display.asList("H"),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.STATE, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE, stereotype)),
+		this.desc = TextBlockUtils.create(Display.create("H"),
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+						FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE,
+				stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
 				HorizontalAlignment.CENTER, skinParam);
 
 	}

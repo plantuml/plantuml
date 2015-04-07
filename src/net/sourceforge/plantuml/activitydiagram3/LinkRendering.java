@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -59,7 +59,7 @@ public class LinkRendering {
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + color;
+		return super.toString() + " " + display + " " + color;
 	}
 
 	public static HtmlColor getColor(LinkRendering inLinkRendering, HtmlColor defaultColor) {
@@ -74,6 +74,13 @@ public class LinkRendering {
 			return defaultColor;
 		}
 		return col;
+	}
+
+	public static Display getDisplay(LinkRendering linkRendering) {
+		if (linkRendering == null) {
+			return null;
+		}
+		return linkRendering.getDisplay();
 	}
 
 }

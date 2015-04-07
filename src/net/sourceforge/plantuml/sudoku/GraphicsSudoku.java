@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11919 $
+ * Revision $Revision: 14708 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -106,9 +106,11 @@ public class GraphicsSudoku {
 			for (int y = 0; y < 9; y++) {
 				final int num = sudoku.getGiven(x, y);
 				if (num > 0) {
-					final TextBlock text = TextBlockUtils.create(Display.asList("" + num), new FontConfiguration(
-							numberFont, HtmlColorUtils.BLACK), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
-					text.drawU(ug.apply(new UTranslate((numberxOffset + x * cellWidth), (numberyOffset + y * cellHeight))));
+					final TextBlock text = TextBlockUtils.create(Display.create("" + num), new FontConfiguration(
+							numberFont, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER,
+							new SpriteContainerEmpty());
+					text.drawU(ug.apply(new UTranslate((numberxOffset + x * cellWidth),
+							(numberyOffset + y * cellHeight))));
 				}
 			}
 		}
@@ -130,8 +132,8 @@ public class GraphicsSudoku {
 		texts.add("http://plantuml.sourceforge.net");
 		texts.add("Seed " + Long.toString(sudoku.getSeed(), 36));
 		texts.add("Difficulty " + sudoku.getRatting());
-		final TextBlock textBlock = TextBlockUtils.create(new Display(texts), new FontConfiguration(font,
-				HtmlColorUtils.BLACK), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		final TextBlock textBlock = TextBlockUtils.create(Display.create(texts), new FontConfiguration(
+				font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		textBlock.drawU(ug);
 		g3d.dispose();
 		return im;

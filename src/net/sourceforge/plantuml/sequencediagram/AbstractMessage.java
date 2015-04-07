@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,23 +33,22 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
-public abstract class AbstractMessage implements Event {
+public abstract class AbstractMessage implements EventWithDeactivate {
 
 	final private Display label;
 	final private ArrowConfiguration arrowConfiguration;
-	final private List<LifeEvent> lifeEvents = new ArrayList<LifeEvent>();
+
+	final private Set<LifeEventType> lifeEventsType = EnumSet.noneOf(LifeEventType.class);
 
 	private Display notes;
 	private NotePosition notePosition;
@@ -57,6 +56,7 @@ public abstract class AbstractMessage implements Event {
 	private Url urlNote;
 	private final Url url;
 	private final String messageNumber;
+	private boolean parallel = false;
 
 	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
 		this.url = label.initUrl();
@@ -64,6 +64,15 @@ public abstract class AbstractMessage implements Event {
 		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
 	}
+
+	public void goParallel() {
+		this.parallel = true;
+	}
+	
+	public boolean isParallel() {
+		return parallel;
+	}
+
 
 	final public Url getUrl() {
 		if (url == null) {
@@ -82,45 +91,46 @@ public abstract class AbstractMessage implements Event {
 		return getUrl() != null;
 	}
 
+	private boolean firstIsActivate = false;
+	private final Set<Participant> noActivationAuthorized2 = new HashSet<Participant>();
+
 	public final boolean addLifeEvent(LifeEvent lifeEvent) {
-		final Set<Participant> noActivationAuthorized = new HashSet<Participant>();
-		for (LifeEvent le : this.lifeEvents) {
-			if (le.getType() == LifeEventType.DEACTIVATE || le.getType() == LifeEventType.DESTROY) {
-				noActivationAuthorized.add(le.getParticipant());
-			}
+		lifeEvent.setMessage(this);
+		lifeEventsType.add(lifeEvent.getType());
+		if (lifeEventsType.size() == 1 && isActivate()) {
+			firstIsActivate = true;
 		}
+
 		if (lifeEvent.getType() == LifeEventType.ACTIVATE
-				&& noActivationAuthorized.contains(lifeEvent.getParticipant())) {
+				&& noActivationAuthorized2.contains(lifeEvent.getParticipant())) {
 			return false;
 		}
-		// for (LifeEvent le : this.lifeEvents) {
-		// if (le.getParticipant().equals(lifeEvent.getParticipant())) {
-		// return false;
-		// }
-		// }
-		this.lifeEvents.add(lifeEvent);
+
+		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY) {
+			noActivationAuthorized2.add(lifeEvent.getParticipant());
+		}
+
 		return true;
 	}
 
 	public final boolean isCreate() {
-		for (LifeEvent le : lifeEvents) {
-			if (le.getType() == LifeEventType.CREATE) {
-				return true;
-			}
-		}
-		return false;
+		return lifeEventsType.contains(LifeEventType.CREATE);
+	}
+
+	public boolean isActivate() {
+		return lifeEventsType.contains(LifeEventType.ACTIVATE);
+	}
+
+	public boolean isDeactivate() {
+		return lifeEventsType.contains(LifeEventType.DEACTIVATE);
+	}
+
+	private boolean isDeactivateOrDestroy() {
+		return lifeEventsType.contains(LifeEventType.DEACTIVATE) || lifeEventsType.contains(LifeEventType.DESTROY);
 	}
 
 	public final boolean isActivateAndDeactive() {
-		if (lifeEvents.size() < 2) {
-			return false;
-		}
-		return lifeEvents.get(0).getType() == LifeEventType.ACTIVATE
-				&& (lifeEvents.get(1).getType() == LifeEventType.DEACTIVATE || lifeEvents.get(1).getType() == LifeEventType.DESTROY);
-	}
-
-	public final List<LifeEvent> getLiveEvents() {
-		return Collections.unmodifiableList(lifeEvents);
+		return firstIsActivate && isDeactivateOrDestroy();
 	}
 
 	public final Display getLabel() {
@@ -146,7 +156,7 @@ public abstract class AbstractMessage implements Event {
 		this.notes = strings;
 		this.urlNote = url;
 		this.notePosition = overideNotePosition(notePosition);
-		this.noteBackColor = HtmlColorUtils.getColorIfValid(backcolor);
+		this.noteBackColor = HtmlColorSet.getInstance().getColorIfValid(backcolor);
 	}
 
 	protected NotePosition overideNotePosition(NotePosition notePosition) {
@@ -165,24 +175,26 @@ public abstract class AbstractMessage implements Event {
 		return messageNumber;
 	}
 
-	public boolean isActivate() {
-		for (LifeEvent le : this.lifeEvents) {
-			if (le.getType() == LifeEventType.ACTIVATE) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isDeactivate() {
-		for (LifeEvent le : this.lifeEvents) {
-			if (le.getType() == LifeEventType.DEACTIVATE) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public abstract boolean compatibleForCreate(Participant p);
 
+	public abstract boolean isSelfMessage();
+
+	private double posYendLevel;
+	private double posYstartLevel;
+
+	public double getPosYstartLevel() {
+		return posYstartLevel;
+	}
+
+	public void setPosYstartLevel(double posYstartLevel) {
+		this.posYstartLevel = posYstartLevel;
+	}
+
+	public void setPosYendLevel(double posYendLevel) {
+		this.posYendLevel = posYendLevel;
+	}
+
+	public double getPosYendLevel() {
+		return posYendLevel;
+	}
 }

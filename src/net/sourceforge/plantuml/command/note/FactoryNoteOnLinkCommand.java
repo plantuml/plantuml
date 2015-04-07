@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.command.note;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -52,24 +51,25 @@ import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand<CucaDiagram> {
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^note\\s+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?\\s*on\\s+link"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*:\\s*"), //
+		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^note\\s+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)?\\s*on\\s+link"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
+		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
 				new RegexLeaf("$"));
 	}
 
@@ -78,15 +78,14 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end ?note$";
+				return "(?i)^end[%s]?note$";
 			}
 
 			public CommandExecutionResult executeNow(final CucaDiagram system, List<String> lines) {
 				final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 				if (strings.size() > 0) {
-					final List<CharSequence> note = StringUtils.manageEmbededDiagrams2(strings);
 					final RegexResult arg = getStartingPattern().matcher(lines.get(0));
-					return executeInternal(system, note, arg);
+					return executeInternal(system, strings, arg);
 				}
 				return CommandExecutionResult.error("No note defined");
 			}
@@ -105,25 +104,26 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 		};
 	}
 
-	private CommandExecutionResult executeInternal(CucaDiagram system, List<? extends CharSequence> note,
+	private CommandExecutionResult executeInternal(CucaDiagram diagram, List<? extends CharSequence> note,
 			final RegexResult arg) {
-		final Link link = system.getLastLink();
+		final Link link = diagram.getLastLink();
 		if (link == null) {
 			return CommandExecutionResult.error("No link defined");
 		}
 		Position position = Position.BOTTOM;
 		if (arg.get("POSITION", 0) != null) {
-			position = Position.valueOf(arg.get("POSITION", 0).toUpperCase());
+			position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));
 		}
 		Url url = null;
 		if (note.size() > 0) {
-			final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			url = urlBuilder.getUrl(note.get(0).toString());
 		}
 		if (url != null) {
 			note = note.subList(1, note.size());
 		}
-		link.addNote(new Display(note), position, HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0)));
+		link.addNote(Display.create(note), position,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		return CommandExecutionResult.ok();
 	}
 

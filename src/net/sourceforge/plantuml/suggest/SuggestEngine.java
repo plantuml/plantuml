@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,13 +40,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.StartUtils;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.utils.StartUtils;
 
 final public class SuggestEngine {
 
@@ -100,11 +100,11 @@ final public class SuggestEngine {
 					return SuggestEngineResult.CANNOT_CORRECT;
 				}
 			} else if (commandControl == CommandControl.OK) {
-				final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
-				final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
-				if (result.isOk() == false) {
-					return SuggestEngineResult.CANNOT_CORRECT;
-				}
+//				final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
+//				final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
+//				if (result.isOk() == false) {
+//					return SuggestEngineResult.CANNOT_CORRECT;
+//				}
 			} else {
 				assert false;
 			}

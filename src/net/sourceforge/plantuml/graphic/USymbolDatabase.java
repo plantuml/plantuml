@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,9 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,6 +46,11 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolDatabase extends USymbol {
+
+	public USymbolDatabase() {
+		super(ColorParam.databaseBackground, ColorParam.databaseBorder, FontParam.DATABASE,
+				FontParam.DATABASE_STEREOTYPE);
+	}
 
 	private void drawDatabase(UGraphic ug, double width, double height, boolean shadowing) {
 		final UPath shape = new UPath();
@@ -92,6 +99,10 @@ class USymbolDatabase extends USymbol {
 			final UPath closing = getClosingPath(endingX);
 			ug = ug.apply(translate);
 			ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(new UTranslate(0, -15)).draw(closing);
+			if (line.isDouble()) {
+				ug.apply(line.getStroke()).apply(new UChangeBackColor(null)).apply(new UTranslate(0, -15 + 2))
+						.draw(closing);
+			}
 			line.drawTitleInternal(ug, 0, endingX, 0, true);
 		}
 
@@ -147,6 +158,11 @@ class USymbolDatabase extends USymbol {
 
 	public boolean manageHorizontalLine() {
 		return true;
+	}
+
+	@Override
+	public int suppHeightBecauseOfShape() {
+		return 15;
 	}
 
 }

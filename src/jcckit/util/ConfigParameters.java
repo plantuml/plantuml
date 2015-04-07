@@ -21,8 +21,9 @@ package jcckit.util;
 import java.awt.Color;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 /**
@@ -300,9 +301,10 @@ public class ConfigParameters {
     }
   }
 
+static private IHtmlColorSet colors = new HtmlColorSetSimple();
 private Color decodeInternal(String value) {
-	if (HtmlColorUtils.getColorIfValid(value)!=null) {
-		  return new ColorMapperIdentity().getMappedColor(HtmlColorUtils.getColorIfValid(value));
+	if (colors.getColorIfValid(value)!=null) {
+		  return new ColorMapperIdentity().getMappedColor(colors.getColorIfValid(value));
 	}
 	return Color.decode(value);
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,6 +48,8 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -59,17 +59,17 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("SYMBOL", "(package|rectangle|node|artifact|folder|frame|cloud|database|storage|component)"), //
-				new RegexLeaf("\\s+"), //
-				new RegexLeaf("NAME", "(\"[^\"]+\"|[^#\\s{}]*)"), //
-				new RegexLeaf("AS", "(?:\\s+as\\s+([\\p{L}0-9_.]+))?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("SYMBOL", "(package|rectangle|node|artifact|folder|frame|cloud|database|storage|component|card)"), //
+				new RegexLeaf("[%s]+"), //
+				new RegexLeaf("NAME", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
+				new RegexLeaf("AS", "(?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*\\{$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*\\{$"));
 	}
 
 	@Override
@@ -83,14 +83,14 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 				display = null;
 			} else {
 				code = Code.of(name);
-				display = code.getCode();
+				display = code.getFullName();
 			}
 		} else {
 			display = name;
 			code = Code.of(arg.get("AS", 0));
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), null,
+		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display),
 				GroupType.PACKAGE, currentPackage);
 		p.setUSymbol(USymbol.getFromString(arg.get("SYMBOL", 0)));
 		final String stereotype = arg.get("STEREOTYPE", 0);
@@ -99,7 +99,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		}
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			p.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(color));
+			p.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}

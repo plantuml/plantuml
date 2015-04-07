@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -64,19 +64,20 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.name = TextBlockUtils.create(entity.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.COMPONENT, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.COMPONENT, stereotype)),
-				HorizontalAlignment.CENTER, skinParam);
+		this.name = TextBlockUtils.create(
+				entity.getDisplay(),
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+						FontParam.COMPONENT, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+				FontParam.COMPONENT, stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 
-		if (stereotype == null || stereotype.getLabel() == null) {
+		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.stereo = null;
 		} else {
 			this.stereo = TextBlockUtils.create(
-					Display.getWithNewlines(stereotype.getLabel()),
-					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.COMPONENT_STEREOTYPE,
-							stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.COMPONENT_STEREOTYPE,
-							null)), HorizontalAlignment.CENTER, skinParam);
+					Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())),
+					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+							FontParam.COMPONENT_STEREOTYPE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+					FontParam.COMPONENT_STEREOTYPE, null), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 		}
 
 	}

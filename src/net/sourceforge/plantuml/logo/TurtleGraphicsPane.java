@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -118,8 +120,9 @@ class TurtleGraphicsPane {
 		final double angle = -dtor(turtleDirection - 90);
 		poly.rotate(angle);
 		// ug.setAntiAliasing(false);
-		final HtmlColor turtleColor1 = HtmlColorUtils.getColorIfValid("OliveDrab");
-		final HtmlColor turtleColor2 = HtmlColorUtils.getColorIfValid("MediumSpringGreen");
+		final IHtmlColorSet htmlColorSet = new HtmlColorSetSimple();
+		final HtmlColor turtleColor1 = htmlColorSet.getColorIfValid("OliveDrab");
+		final HtmlColor turtleColor2 = htmlColorSet.getColorIfValid("MediumSpringGreen");
 
 		ug.apply(new UChangeColor(turtleColor1)).apply(new UChangeBackColor(turtleColor2)).apply(new UTranslate(x, -y)).draw(poly);
 		// ug.setAntiAliasing(true);
@@ -194,8 +197,8 @@ class TurtleGraphicsPane {
 		}
 		drawTurtle(ug);
 		if (message != null) {
-			final FontConfiguration font = new FontConfiguration(new UFont("", Font.PLAIN, 14), HtmlColorUtils.BLACK);
-			final TextBlock text = TextBlockUtils.create(Display.asList(message), font, HorizontalAlignment.LEFT,
+			final FontConfiguration font = new FontConfiguration(new UFont("", Font.PLAIN, 14), HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+			final TextBlock text = TextBlockUtils.create(Display.create(message), font, HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
 			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
 			final double textHeight = dim.getHeight();

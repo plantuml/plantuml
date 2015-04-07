@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 11873 $
+ * Revision $Revision: 15848 $
  *
  */
 package net.sourceforge.plantuml;
@@ -50,24 +50,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.script.ScriptException;
 
+import net.sourceforge.plantuml.anim.Animation;
+import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
+import net.sourceforge.plantuml.fun.IconLoader;
+import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.svek.EmptySvgException;
+import net.sourceforge.plantuml.svek.GraphvizCrash;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.Sprite;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
@@ -82,13 +96,15 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 	private Display footer;
 	private Display legend = null;
 	private HorizontalAlignment legendAlignment = HorizontalAlignment.CENTER;
+	private VerticalAlignment legendVerticalAlignment = VerticalAlignment.BOTTOM;
 
 	private HorizontalAlignment headerAlignment = HorizontalAlignment.RIGHT;
 	private HorizontalAlignment footerAlignment = HorizontalAlignment.CENTER;
 	private final Pragma pragma = new Pragma();
 	private Scale scale;
+	private Animation animation;
 
-	private final SkinParam skinParam = new SkinParam(getUmlDiagramType());
+	private final SkinParam skinParam = new SkinParam();
 
 	final public void setTitle(Display strings) {
 		this.title = strings;
@@ -119,7 +135,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 	}
 
 	public void setParam(String key, String value) {
-		skinParam.setParam(key.toLowerCase(), value);
+		skinParam.setParam(StringUtils.goLowerCase(key), value);
 	}
 
 	public final Display getHeader() {
@@ -168,6 +184,20 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		return scale;
 	}
 
+	final public void setAnimation(List<String> animationData) {
+		try {
+			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
+			this.animation = Animation.create(animationDecoder.decode());
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	final public Animation getAnimation() {
+		return animation;
+	}
+
 	public final double getDpiFactor(FileFormatOption fileFormatOption) {
 		if (getSkinParam().getDpi() == 96) {
 			return 1.0;
@@ -190,36 +220,12 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		List<BufferedImage> flashcodes = null;
-		try {
-			if ("split".equalsIgnoreCase(getSkinParam().getValue("flashcode"))
-					&& fileFormatOption.getFileFormat() == FileFormat.PNG) {
-				final String s = getSource().getPlainString();
-				flashcodes = getFlashCodeUtils().exportSplitCompress(s);
-			} else if ("compress".equalsIgnoreCase(getSkinParam().getValue("flashcode"))
-					&& fileFormatOption.getFileFormat() == FileFormat.PNG) {
-				final String s = getSource().getPlainString();
-				flashcodes = getFlashCodeUtils().exportFlashcodeCompress(s);
-			} else if (getSkinParam().getValue("flashcode") != null
-					&& fileFormatOption.getFileFormat() == FileFormat.PNG) {
-				final String s = getSource().getPlainString();
-				flashcodes = getFlashCodeUtils().exportFlashcodeSimple(s);
-			}
-		} catch (IOException e) {
-			Log.error("Cannot generate flashcode");
-			e.printStackTrace();
-			flashcodes = null;
-		}
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
-			return exportDiagramInternalPdf(os, index, flashcodes);
+			return exportDiagramInternalPdf(os, index);
 		}
-		if (fileFormatOption.getFileFormat() == FileFormat.MJPEG) {
-			// exportDiagramInternalMjpeg(os);
-			// return;*
-			throw new UnsupportedOperationException();
-		}
+
 		try {
-			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption, flashcodes);
+			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption);
 			this.lastInfo = new Dimension2DDouble(imageData.getWidth(), imageData.getHeight());
 			return imageData;
 		} catch (UnparsableGraphvizException e) {
@@ -236,6 +242,61 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
 			String graphvizVersion, String svg) throws IOException {
 		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
+		final List<String> strings = getFailureText(exception, graphvizVersion);
+
+		final String flash = getFlashData();
+		for (StackTraceElement ste : exception.getStackTrace()) {
+			strings.add("  " + ste.toString());
+		}
+		if (exception.getCause() != null) {
+			final Throwable cause = exception.getCause();
+			strings.add("  ");
+			strings.add("Caused by " + cause.toString());
+			for (StackTraceElement ste : cause.getStackTrace()) {
+				strings.add("  " + ste.toString());
+			}
+
+		}
+
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
+				getMetadata(), null, 0, 0, null, getSkinParam().handwritten());
+
+		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+		final BufferedImage im = utils.exportFlashcode(flash);
+		if (im != null) {
+			GraphvizCrash.addDecodeHint(strings);
+		}
+
+		final GraphicStrings graphicStrings = new GraphicStrings(strings, font, HtmlColorUtils.BLACK,
+				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON, IconLoader.getRandom(),
+				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
+
+		if (im == null) {
+			imageBuilder.addUDrawable(graphicStrings);
+		} else {
+			imageBuilder.addUDrawable(new UDrawable() {
+				public void drawU(UGraphic ug) {
+					graphicStrings.drawU(ug);
+					final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
+					ug = ug.apply(new UTranslate(0, height));
+					ug.draw(new UImage(im));
+				}
+			});
+		}
+		imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+	}
+
+	private String getFlashData() {
+		// for (Map.Entry<Object, Object> ent : System.getProperties().entrySet()) {
+		// System.err.println("p1=" + ent.getKey() + " " + ent.getValue());
+		// }
+		final StringBuilder result = new StringBuilder();
+		final UmlSource source = getSource();
+		result.append(source.getPlainString());
+		return result.toString();
+	}
+
+	private List<String> getFailureText(Throwable exception, String graphvizVersion) {
 		final List<String> strings = new ArrayList<String>();
 		strings.add("An error has occured : " + exception);
 		final String quote = QuoteUtils.getSomeQuote();
@@ -250,6 +311,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 			strings.add("GraphViz version used : " + graphvizVersion);
 		}
 		strings.add(" ");
+		GraphvizCrash.addProperties(strings);
+		strings.add(" ");
 		strings.add("This may be caused by :");
 		strings.add(" - a bug in PlantUML");
 		strings.add(" - a problem in GraphViz");
@@ -258,17 +321,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		strings.add("You can try to turn arround this issue by simplifing your diagram.");
 		strings.add(" ");
 		strings.add(exception.toString());
-		for (StackTraceElement ste : exception.getStackTrace()) {
-			strings.add("  " + ste.toString());
-
-		}
-		final GraphicStrings graphicStrings = new GraphicStrings(strings, font, HtmlColorUtils.BLACK,
-				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON);
-		graphicStrings.writeImage(os, fileFormat, svg);
-	}
-
-	private FlashCodeUtils getFlashCodeUtils() {
-		return FlashCodeFactory.getFlashCodeUtils();
+		return strings;
 	}
 
 	private void exportDiagramInternalMjpeg(OutputStream os) throws IOException {
@@ -293,8 +346,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 
 	private Dimension2D lastInfo;
 
-	private ImageData exportDiagramInternalPdf(OutputStream os, int index, List<BufferedImage> flashcodes)
-			throws IOException {
+	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFile("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFile("pdf", ".pdf");
 		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg));
@@ -305,8 +357,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		return result;
 	}
 
-	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption,
-			List<BufferedImage> flashcodes) throws IOException;
+	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException;
 
 	final protected void exportCmap(File suggestedFile, final ImageData cmapdata) throws FileNotFoundException {
 		final String name = changeName(suggestedFile.getAbsolutePath());
@@ -365,8 +417,13 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		return legendAlignment;
 	}
 
-	public final void setLegend(Display legend, HorizontalAlignment horizontalAlignment) {
+	public final VerticalAlignment getLegendVerticalAlignment() {
+		return legendVerticalAlignment;
+	}
+
+	public final void setLegend(Display legend, HorizontalAlignment horizontalAlignment, VerticalAlignment valignment) {
 		this.legend = legend;
 		this.legendAlignment = horizontalAlignment;
+		this.legendVerticalAlignment = valignment;
 	}
 }

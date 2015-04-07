@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,23 +39,108 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class Display implements Iterable<CharSequence> {
 
 	private final List<CharSequence> display = new ArrayList<CharSequence>();
+	private final HorizontalAlignment naturalHorizontalAlignment;
+
+	public boolean isWhite() {
+		return display.size() == 0 || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
+	}
+
+	public static Display empty() {
+		return new Display((HorizontalAlignment) null);
+	}
+
+	public static Display create(CharSequence... s) {
+		return create(Arrays.asList(s));
+	}
+
+	public static Display create(List<? extends CharSequence> other) {
+		return new Display(other, null);
+	}
+
+	public static Display getWithNewlines(Code s) {
+		return getWithNewlines(s.getFullName());
+	}
+
+	public static Display getWithNewlines(String s) {
+		if (s == null) {
+			return null;
+		}
+		final List<String> result = new ArrayList<String>();
+		final StringBuilder current = new StringBuilder();
+		HorizontalAlignment naturalHorizontalAlignment = null;
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c == '\\' && i < s.length() - 1) {
+				final char c2 = s.charAt(i + 1);
+				i++;
+				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
+					if (c2 == 'r') {
+						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
+					} else if (c2 == 'l') {
+						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
+					}
+					result.add(current.toString());
+					current.setLength(0);
+				} else if (c2 == 't') {
+					current.append('\t');
+				} else if (c2 == '\\') {
+					current.append(c2);
+				} else {
+					current.append(c);
+					current.append(c2);
+				}
+			} else {
+				current.append(c);
+			}
+		}
+		result.add(current.toString());
+		return new Display(result, naturalHorizontalAlignment);
+	}
 
 	private Display(Display other) {
+		this(other.naturalHorizontalAlignment);
 		this.display.addAll(other.display);
 	}
 
-	public Display() {
+	private Display(HorizontalAlignment naturalHorizontalAlignment) {
+		this.naturalHorizontalAlignment = naturalHorizontalAlignment;
 	}
 
-	public Display(List<? extends CharSequence> other) {
-		this.display.addAll(other);
+	private Display(List<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment) {
+		this(naturalHorizontalAlignment);
+		this.display.addAll(manageEmbededDiagrams2(other));
+	}
+
+	private static List<CharSequence> manageEmbededDiagrams2(final List<? extends CharSequence> strings) {
+		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final Iterator<? extends CharSequence> it = strings.iterator();
+		while (it.hasNext()) {
+			CharSequence s = it.next();
+			if (s != null && s.toString().trim().equals("{{")) {
+				final List<CharSequence> other = new ArrayList<CharSequence>();
+				other.add("@startuml");
+				while (it.hasNext()) {
+					final CharSequence s2 = it.next();
+					if (s2 != null && s2.toString().trim().equals("}}")) {
+						break;
+					}
+					other.add(s2);
+				}
+				other.add("@enduml");
+				s = new EmbededDiagram(Display.create(other));
+			}
+			result.add(s);
+		}
+		return result;
 	}
 
 	public Display underlined() {
@@ -63,7 +148,7 @@ public class Display implements Iterable<CharSequence> {
 		for (CharSequence line : display) {
 			result.add("<u>" + line);
 		}
-		return new Display(result);
+		return new Display(result, this.naturalHorizontalAlignment);
 	}
 
 	@Override
@@ -143,53 +228,11 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public Display subList(int i, int size) {
-		return new Display(display.subList(i, size));
-	}
-
-	public static Display asList(CharSequence... s) {
-		return new Display(Arrays.asList(s));
-	}
-
-	public static Display emptyList() {
-		return new Display();
+		return new Display(display.subList(i, size), this.naturalHorizontalAlignment);
 	}
 
 	public List<? extends CharSequence> as() {
 		return Collections.unmodifiableList(display);
-	}
-
-	public static Display getWithNewlines(Code s) {
-		return getWithNewlines(s.getCode());
-	}
-
-	public static Display getWithNewlines(String s) {
-		if (s == null) {
-			return null;
-		}
-		final Display result = new Display();
-		final StringBuilder current = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() - 1) {
-				final char c2 = s.charAt(i + 1);
-				i++;
-				if (c2 == 'n') {
-					result.display.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
-				} else {
-					current.append(c);
-					current.append(c2);
-				}
-			} else {
-				current.append(c);
-			}
-		}
-		result.display.add(current.toString());
-		return result;
 	}
 
 	public Url initUrl() {
@@ -204,7 +247,7 @@ public class Display implements Iterable<CharSequence> {
 		if (url == null) {
 			return this;
 		}
-		final Display result = new Display();
+		final Display result = new Display(this.naturalHorizontalAlignment);
 		result.display.add(UrlBuilder.purgeUrl(this.get(0).toString()));
 		result.display.addAll(this.subList(1, this.size()).display);
 		return result;
@@ -218,6 +261,10 @@ public class Display implements Iterable<CharSequence> {
 			}
 		}
 		return false;
+	}
+
+	public HorizontalAlignment getNaturalHorizontalAlignment() {
+		return naturalHorizontalAlignment;
 	}
 
 }

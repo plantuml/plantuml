@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.skin.bluemodern;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -49,9 +49,10 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentBlueModernDelayText extends AbstractTextualComponent {
 
-	public ComponentBlueModernDelayText(HtmlColor fontColor, UFont font, Display stringsToDisplay,
-			SpriteContainer spriteContainer) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 4, 4, 4, spriteContainer, 0, false);
+	public ComponentBlueModernDelayText(HtmlColor fontColor, HtmlColor hyperlinkColor,
+			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay, ISkinSimple spriteContainer) {
+		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
+				4, 4, 4, spriteContainer, 0, false, null, null);
 	}
 
 	@Override

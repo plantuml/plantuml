@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,8 +40,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -49,14 +49,14 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementMenuBar implements Element {
+public class ElementMenuBar extends AbstractElement {
 
 	private final Collection<ElementMenuEntry> entries = new ArrayList<ElementMenuEntry>();
 	private final Map<ElementMenuEntry, ElementMenuPopup> popups = new HashMap<ElementMenuEntry, ElementMenuPopup>();
 	private final UFont font;
-	private final SpriteContainer spriteContainer;
+	private final ISkinSimple spriteContainer;
 
-	public ElementMenuBar(UFont font, SpriteContainer spriteContainer) {
+	public ElementMenuBar(UFont font, ISkinSimple spriteContainer) {
 		this.font = font;
 		this.spriteContainer = spriteContainer;
 	}
@@ -99,15 +99,16 @@ public class ElementMenuBar implements Element {
 		return new Dimension2DDouble(w, h);
 	}
 
-	public void drawU(UGraphic ug, final double x, final double y, int zIndex, Dimension2D dimToUse) {
-		final Dimension2D preferred = getPreferredDimension(ug.getStringBounder(), x, y);
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+		final Dimension2D preferred = getPreferredDimension(ug.getStringBounder(), 0, 0);
 
-		double x1 = x;
+		double x1 = 0;
 		if (zIndex == 0) {
-			ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#DDDDDD"))).apply(new UTranslate(x, y)).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
+			ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#DDDDDD"))).draw(
+					new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 			for (ElementMenuEntry entry : entries) {
-				entry.drawU(ug, x1, y, zIndex, dimToUse);
-				final double w = entry.getPreferredDimension(ug.getStringBounder(), x1, y).getWidth();
+				entry.drawU(ug.apply(new UTranslate(x1, 0)), zIndex, dimToUse);
+				final double w = entry.getPreferredDimension(ug.getStringBounder(), x1, 0).getWidth();
 				entry.setX(x1);
 				x1 += w + 10;
 			}
@@ -116,16 +117,16 @@ public class ElementMenuBar implements Element {
 
 		if (zIndex == 1) {
 			for (ElementMenuEntry entry : popups.keySet()) {
-				entry.setBackground(HtmlColorUtils.getColorIfValid("#BBBBBB"));
+				entry.setBackground(HtmlColorSet.getInstance().getColorIfValid("#BBBBBB"));
 			}
 
-			final double y1 = y + preferred.getHeight();
+			final double y1 = preferred.getHeight();
 			for (Map.Entry<ElementMenuEntry, ElementMenuPopup> ent : popups.entrySet()) {
 				final ElementMenuPopup p = ent.getValue();
 				final double xpopup = ent.getKey().getX();
-				p.drawU(ug, xpopup, y1, zIndex, p.getPreferredDimension(ug.getStringBounder(), xpopup, y1));
+				p.drawU(ug.apply(new UTranslate(xpopup, y1)), zIndex,
+						p.getPreferredDimension(ug.getStringBounder(), xpopup, y1));
 			}
 		}
 	}
-
 }

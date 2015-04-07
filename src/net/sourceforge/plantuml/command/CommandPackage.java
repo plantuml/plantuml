@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -49,25 +47,26 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	public CommandPackage() {
 		super(getRegexConcat());
 	}
-	
+
 	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^package\\s+"), //
-				new RegexLeaf("NAME", "(\"[^\"]+\"|[^#\\s{}]*)"), //
-				new RegexLeaf("AS", "(?:\\s+as\\s+([\\p{L}0-9_.]+))?"), //
-				new RegexLeaf("\\s*"), //
+		return new RegexConcat(new RegexLeaf("^package[%s]+"), //
+				new RegexLeaf("NAME", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
+				new RegexLeaf("AS", "(?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				// new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|#?\\w+)?"), //
-				new RegexLeaf("\\s*\\{?$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*\\{$"));
 	}
 
 	@Override
@@ -81,19 +80,20 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				display = null;
 			} else {
 				code = Code.of(name);
-				display = code.getCode();
+				display = code.getFullName();
 			}
 		} else {
 			display = name;
 			code = Code.of(arg.get("AS", 0));
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), null, GroupType.PACKAGE, currentPackage);
+		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE,
+				currentPackage);
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype));
 		}
-		
+
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
@@ -103,7 +103,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			p.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(color));
+			p.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
 		}
 		return CommandExecutionResult.ok();
 	}

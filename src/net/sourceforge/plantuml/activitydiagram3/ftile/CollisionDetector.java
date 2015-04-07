@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -196,10 +196,6 @@ public class CollisionDetector implements UGraphic {
 		context.rectangles.add(shape.getMinMax().translate(translate));
 	}
 
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
-		throw new UnsupportedOperationException();
-	}
-
 	public ColorMapper getColorMapper() {
 		throw new UnsupportedOperationException();
 	}
@@ -219,6 +215,10 @@ public class CollisionDetector implements UGraphic {
 
 	public final void setManageSnakes(boolean manageSnakes) {
 		this.context.manageSnakes = manageSnakes;
+	}
+
+	public boolean isSpecialTxt() {
+		return false;
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -53,7 +53,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	public String getPatternEnd() {
-		return "(?i)^end ?note$";
+		return "(?i)^end[%s]?note$";
 	}
 
 	public CommandExecutionResult executeNow(final ActivityDiagram3 diagram, List<String> lines) {
@@ -61,7 +61,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 		final List<String> in = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
 		final NotePosition position = getPosition(line0.get("POSITION", 0));
-		final Display note = new Display(in);
+		final Display note = Display.create(in);
 		return diagram.addNote(note, position);
 	}
 
@@ -69,30 +69,14 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 		if (s == null) {
 			return NotePosition.LEFT;
 		}
-		return NotePosition.valueOf(s.toUpperCase());
+		return NotePosition.valueOf(StringUtils.goUpperCase(s));
 	}
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("note"), //
-				new RegexLeaf("POSITION", "\\s*(left|right)?"), //
+				new RegexLeaf("POSITION", "[%s]*(left|right)?"), //
 				new RegexLeaf("$"));
 	}
-
-	// static RegexConcat getRegexConcat() {
-	// return new RegexConcat(new RegexLeaf("^"), //
-	// new RegexLeaf("^"), //
-	// new RegexLeaf("note"), //
-	// new RegexLeaf("POSITION", "\\s*(left|right)?"), //
-	// new RegexLeaf("\\s*:\\s*"), //
-	// new RegexLeaf("NOTE", "(.*)"), //
-	// new RegexLeaf("$"));
-	// }
-	//
-	// @Override
-	// protected CommandExecutionResult executeArg(RegexResult arg) {
-	// final Display note = Display.getWithNewlines(arg.get("NOTE", 0));
-	// return getSystem().addNote(note);
-	// }
 
 }

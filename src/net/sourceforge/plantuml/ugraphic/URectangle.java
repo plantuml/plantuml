@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,12 +33,21 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
 
-public class URectangle extends AbstractShadowable {
+public class URectangle extends AbstractShadowable implements Scalable {
 
 	private final double width;
 	private final double height;
 	private final double rx;
 	private final double ry;
+
+	public UShape getScaled(double scale) {
+		if (scale == 1) {
+			return this;
+		}
+		final AbstractShadowable result = new URectangle(width * scale, height * scale, rx * scale, ry * scale);
+		result.setDeltaShadow(this.getDeltaShadow());
+		return result;
+	}
 
 	public URectangle(double width, double height) {
 		this(width, height, 0, 0);

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,6 @@ package net.sourceforge.plantuml.svek;
 
 public enum ShapeType {
 
-	RECTANGLE, ROUND_RECTANGLE, CIRCLE, CIRCLE_IN_RECT, OVAL, DIAMOND
+	RECTANGLE, ROUND_RECTANGLE, CIRCLE, CIRCLE_IN_RECT, OVAL, DIAMOND, OCTAGON
 
 }

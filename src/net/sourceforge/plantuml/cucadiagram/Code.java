@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,100 +39,120 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class Code implements Comparable<Code> {
 
-	private final String code;
+	private final String fullName;
+	private final String separator;
 
-	private Code(String code) {
-		if (code == null) {
+	private Code(String fullName, String separator) {
+		if (fullName == null) {
 			throw new IllegalArgumentException();
 		}
-		this.code = code;
+		this.fullName = fullName;
+		this.separator = separator;
+	}
+
+//	public String getNamespaceSeparator() {
+//		return separator;
+//	}
+
+	public Code withSeparator(String separator) {
+		if (separator == null) {
+			throw new IllegalArgumentException();
+		}
+		if (this.separator != null && this.separator.equals(separator) == false) {
+			throw new IllegalStateException();
+		}
+		return new Code(fullName, separator);
 	}
 
 	public static Code of(String code) {
+		return of(code, null);
+	}
+
+	public static Code of(String code, String separator) {
 		if (code == null) {
 			return null;
 		}
-		return new Code(code);
+		return new Code(code, separator);
 	}
 
-	public final String getCode() {
-		return code;
+	public final String getFullName() {
+		return fullName;
 	}
 
 	@Override
 	public String toString() {
-		return code;
+		return fullName + "(" + separator + ")";
 	}
 
 	@Override
 	public int hashCode() {
-		return code.hashCode();
+		return fullName.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		final Code other = (Code) obj;
-		return this.code.equals(other.code);
+		return this.fullName.equals(other.fullName);
 	}
 
 	public Code addSuffix(String suffix) {
-		return new Code(code + suffix);
+		return new Code(fullName + suffix, separator);
 	}
 
 	public int compareTo(Code other) {
-		return this.code.compareTo(other.code);
+		return this.fullName.compareTo(other.fullName);
 	}
 
-	public Code eventuallyRemoveStartingAndEndingDoubleQuote() {
-		return Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code));
+	public Code eventuallyRemoveStartingAndEndingDoubleQuote(String format) {
+		return Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fullName, format), separator);
 	}
 
-	public final String getNamespace(Map<Code, ILeaf> leafs, String namespaceSeparator) {
-		String code = this.getCode();
-		if (namespaceSeparator == null) {
-			throw new IllegalArgumentException();
+	private final String getNamespace(Map<Code, ILeaf> leafs) {
+		String name = this.getFullName();
+		if (separator == null) {
+			throw new IllegalArgumentException(toString());
 		}
 		do {
-			final int x = code.lastIndexOf(namespaceSeparator);
+			final int x = name.lastIndexOf(separator);
 			if (x == -1) {
 				return null;
 			}
-			code = code.substring(0, x);
-		} while (leafs.containsKey(Code.of(code)));
-		return code;
+			name = name.substring(0, x);
+		} while (leafs.containsKey(Code.of(name, separator)));
+		return name;
 	}
 
-	public final Code getShortName(Map<Code, ILeaf> leafs, String namespaceSeparator) {
-		if (namespaceSeparator == null) {
+	public final Code getShortName(Map<Code, ILeaf> leafs) {
+		if (separator == null) {
 			throw new IllegalArgumentException();
 		}
-		final String code = this.getCode();
-		final String namespace = getNamespace(leafs, namespaceSeparator);
+		final String code = this.getFullName();
+		final String namespace = getNamespace(leafs);
 		if (namespace == null) {
-			return Code.of(code);
+			return Code.of(code, separator);
 		}
-		return Code.of(code.substring(namespace.length() + namespaceSeparator.length()));
+		return Code.of(code.substring(namespace.length() + separator.length()), separator);
 	}
 
-	public final Code getFullyQualifiedCode(IGroup g, String namespaceSeparator) {
-		if (namespaceSeparator == null) {
+	public final Code getFullyQualifiedCode(IGroup g) {
+		if (separator == null) {
 			throw new IllegalArgumentException();
 		}
-		final String code = this.getCode();
-		if (code.startsWith(namespaceSeparator)) {
-			return Code.of(code.substring(namespaceSeparator.length()));
+		final String full = this.getFullName();
+		if (full.startsWith(separator)) {
+			return Code.of(full.substring(separator.length()), separator);
 		}
-		if (code.contains(namespaceSeparator)) {
-			return Code.of(code);
+		if (full.contains(separator)) {
+			return Code.of(full, separator);
 		}
 		if (EntityUtils.groupRoot(g)) {
-			return Code.of(code);
+			return Code.of(full, separator);
 		}
-		final String namespace = g.getNamespace();
-		if (namespace == null) {
-			return Code.of(code);
+		final Code namespace2 = g.getNamespace2();
+		if (namespace2 == null) {
+			return Code.of(full, separator);
 		}
-		return Code.of(namespace + namespaceSeparator + code);
+		return Code.of(namespace2.fullName + separator + full, separator);
 	}
 
 }

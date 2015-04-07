@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,8 +35,6 @@ package net.sourceforge.plantuml.command.note;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -57,42 +55,46 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class FactoryNoteActivityCommand implements SingleMultiFactoryCommand<ActivityDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^note\\s+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*"), //
+		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^note\\s+"), //
-				new RegexLeaf("POSITION", "(right|left|top|bottom)\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*:\\s*"), //
+		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left|top|bottom)[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
 
 	public Command<ActivityDiagram> createMultiLine() {
-		return new CommandMultilines2<ActivityDiagram>(getRegexConcatMultiLine(), MultilinesStrategy.KEEP_STARTING_QUOTE) {
+		return new CommandMultilines2<ActivityDiagram>(getRegexConcatMultiLine(),
+				MultilinesStrategy.KEEP_STARTING_QUOTE) {
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end ?note$";
+				return "(?i)^end[%s]?note$";
 			}
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram system, List<String> lines) {
 				// StringUtils.trim(lines, true);
 				final RegexResult arg = getStartingPattern().matcher(lines.get(0).trim());
-				Display strings = new Display(StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1)));
+				Display strings = Display.create(StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1)));
 
 				Url url = null;
 				if (strings.size() > 0) {
-					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
+							ModeUrl.STRICT);
 					url = urlBuilder.getUrl(strings.get(0).toString());
 				}
 				if (url != null) {
@@ -101,7 +103,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 				// final String s = StringUtils.getMergedLines(strings);
 
-				final IEntity note = system.createLeaf(UniqueSequence.getCode("GMN"), strings, LeafType.NOTE);
+				final IEntity note = system.createLeaf(UniqueSequence.getCode("GMN"), strings, LeafType.NOTE, null);
 				if (url != null) {
 					note.addUrl(url);
 				}
@@ -122,19 +124,19 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 		};
 	}
 
-	private CommandExecutionResult executeInternal(ActivityDiagram system, RegexResult arg, IEntity note) {
+	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, IEntity note) {
 
-		note.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0)));
+		note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 
-		IEntity activity = system.getLastEntityConsulted();
+		IEntity activity = diagram.getLastEntityConsulted();
 		if (activity == null) {
-			activity = system.getStart();
+			activity = diagram.getStart();
 		}
 
 		final Link link;
 
-		final Position position = Position.valueOf(arg.get("POSITION", 0).toUpperCase()).withRankdir(
-				system.getRankdir());
+		final Position position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0))).withRankdir(
+				diagram.getSkinParam().getRankdir());
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();
 
@@ -149,7 +151,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 		} else {
 			throw new IllegalArgumentException();
 		}
-		system.addLink(link);
+		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
 

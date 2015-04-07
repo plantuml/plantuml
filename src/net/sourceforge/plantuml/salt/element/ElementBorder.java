@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,11 +37,12 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.MathUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.MathUtils;
 
-public class ElementBorder implements Element {
+public class ElementBorder extends AbstractElement {
 
 	private Element north = new ElementEmpty();
 	private Element south = new ElementEmpty();
@@ -69,23 +70,23 @@ public class ElementBorder implements Element {
 		this.center = center;
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimNorth = north.getPreferredDimension(stringBounder, x, y);
-		final Dimension2D dimSouth = south.getPreferredDimension(stringBounder, x, y);
-		final Dimension2D dimEast = east.getPreferredDimension(stringBounder, x, y);
-		final Dimension2D dimWest = west.getPreferredDimension(stringBounder, x, y);
+		final Dimension2D dimNorth = north.getPreferredDimension(stringBounder, 0, 0);
+		final Dimension2D dimSouth = south.getPreferredDimension(stringBounder, 0, 0);
+		final Dimension2D dimEast = east.getPreferredDimension(stringBounder, 0, 0);
+		final Dimension2D dimWest = west.getPreferredDimension(stringBounder, 0, 0);
 		final Point2D pA = new Point2D.Double(dimWest.getWidth(), dimNorth.getHeight());
 		final Point2D pB = new Point2D.Double(dimToUse.getWidth() - dimEast.getWidth(), dimNorth.getHeight());
 		final Point2D pC = new Point2D.Double(dimWest.getWidth(), dimToUse.getHeight() - dimSouth.getHeight());
-//		final Point2D pD = new Point2D.Double(dimToUse.getWidth() - dimEast.getWidth(), dimToUse.getHeight()
-//				- dimSouth.getHeight());
+		// final Point2D pD = new Point2D.Double(dimToUse.getWidth() - dimEast.getWidth(), dimToUse.getHeight()
+		// - dimSouth.getHeight());
 
-		north.drawU(ug, x, y, zIndex, dimToUse);
-		south.drawU(ug, x, y + pC.getY(), zIndex, dimToUse);
-		west.drawU(ug, x, y + pA.getY(), zIndex, dimToUse);
-		east.drawU(ug, x + pB.getX(), y + pB.getY(), zIndex, dimToUse);
-		center.drawU(ug, x + pA.getX(), y + pA.getY(), zIndex, dimToUse);
+		north.drawU(ug, zIndex, dimToUse);
+		south.drawU(ug.apply(new UTranslate(0, pC.getY())), zIndex, dimToUse);
+		west.drawU(ug.apply(new UTranslate(0, pA.getY())), zIndex, dimToUse);
+		east.drawU(ug.apply(new UTranslate(pB.getX(), pB.getY())), zIndex, dimToUse);
+		center.drawU(ug.apply(new UTranslate(pA.getX(), pA.getY())), zIndex, dimToUse);
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
@@ -94,8 +95,8 @@ public class ElementBorder implements Element {
 		final Dimension2D dimEast = east.getPreferredDimension(stringBounder, x, y);
 		final Dimension2D dimWest = west.getPreferredDimension(stringBounder, x, y);
 		final Dimension2D dimCenter = center.getPreferredDimension(stringBounder, x, y);
-		final double width = MathUtils.max(dimNorth.getWidth(), dimSouth.getWidth(), dimWest.getWidth()
-				+ dimCenter.getWidth() + dimEast.getWidth());
+		final double width = MathUtils.max(dimNorth.getWidth(), dimSouth.getWidth(),
+				dimWest.getWidth() + dimCenter.getWidth() + dimEast.getWidth());
 		final double height = dimNorth.getHeight()
 				+ MathUtils.max(dimWest.getHeight(), dimCenter.getHeight(), dimEast.getHeight()) + dimSouth.getHeight();
 		return new Dimension2DDouble(width, height);

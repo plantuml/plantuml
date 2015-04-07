@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -52,7 +52,7 @@ public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("\\|"), //
-				new RegexLeaf("COLOR", "(?:(#\\w+[-\\\\|/]?\\w+)\\|)?"), //
+				new RegexLeaf("COLOR", "(?:(" + HtmlColorUtils.COLOR_REGEXP + ")\\|)?"), //
 				new RegexLeaf("SWIMLANE", "([^|]+)"), //
 				new RegexLeaf("\\|"), //
 				new RegexLeaf("LABEL", "([^|]+)?"), //
@@ -61,7 +61,7 @@ public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		final HtmlColor color = HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0));
+		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
 		final String name = arg.get("SWIMLANE", 0);
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 		return diagram.swimlane(name, color, label);

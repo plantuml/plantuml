@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.DiagramType;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
@@ -70,7 +71,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	private void extractDimension(String startLine) {
-		final Pattern p = Pattern.compile("\\((\\d+),(\\d+)\\)");
+		final Pattern p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
 		final Matcher m = p.matcher(startLine);
 		final boolean ok = m.find();
 		if (ok) {

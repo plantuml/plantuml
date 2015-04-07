@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,10 +41,7 @@ public interface Connection extends UDrawable, UShape {
 
 	public Ftile getFtile1();
 
-	// public Position getPosition1();
-
 	public Ftile getFtile2();
-
-	// public Position getPosition2();
+	
 
 }

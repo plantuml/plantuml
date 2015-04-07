@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -66,7 +66,7 @@ public class AtomImg implements Atom {
 
 	public static Atom create(String src, final ImgValign valign, final int vspace) {
 		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK);
+		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 		try {
 			final File f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {

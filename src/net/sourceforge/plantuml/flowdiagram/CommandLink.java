@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,7 +48,7 @@ public class CommandLink extends SingleLineCommand2<FlowDiagram> {
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("ORIENTATION", "(?:([nsew])\\s+)?"), //
+				new RegexLeaf("ORIENTATION", "(?:([nsew])[%s]+)?"), //
 				new RegexLeaf("ID_DEST", "(\\w+)"), //
 				new RegexLeaf("$"));
 	}

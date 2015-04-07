@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,7 +42,6 @@ import java.util.Set;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -50,11 +49,22 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 public class InstructionList implements Instruction {
 
 	private final List<Instruction> all = new ArrayList<Instruction>();
-	private boolean killed = false;
 	private final Swimlane defaultSwimlane;
+
+	public boolean isOnlySingleStop() {
+		if (all.size() == 1) {
+			final Instruction last = getLast();
+			return last instanceof InstructionStop;
+		}
+		return false;
+	}
 
 	public InstructionList() {
 		this(null);
+	}
+
+	public boolean isEmpty() {
+		return all.isEmpty();
 	}
 
 	public InstructionList(Swimlane defaultSwimlane) {
@@ -62,9 +72,7 @@ public class InstructionList implements Instruction {
 	}
 
 	public void add(Instruction ins) {
-		if (killed == false) {
-			all.add(ins);
-		}
+		all.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
@@ -82,17 +90,21 @@ public class InstructionList implements Instruction {
 			} else {
 				result = factory.assembly(result, cur);
 			}
-
 		}
-		if (killed) {
-			result = new FtileKilled(result);
+		if (outlinkRendering != null) {
+			result = factory.decorateOut(result, outlinkRendering);
 		}
+		// if (killed) {
+		// result = new FtileKilled(result);
+		// }
 		return result;
 	}
 
 	final public boolean kill() {
-		this.killed = true;
-		return true;
+		if (all.size() == 0) {
+			return false;
+		}
+		return getLast().kill();
 	}
 
 	public LinkRendering getInLinkRendering() {
@@ -113,15 +125,20 @@ public class InstructionList implements Instruction {
 	public Set<Swimlane> getSwimlanes() {
 		return getSwimlanes2(all);
 	}
-	
+
 	public Swimlane getSwimlaneIn() {
+		if (getSwimlanes().size() == 0) {
+			return null;
+		}
 		return all.get(0).getSwimlaneIn();
 	}
 
 	public Swimlane getSwimlaneOut() {
+		if (getSwimlanes().size() == 0) {
+			return null;
+		}
 		return getLast().getSwimlaneOut();
 	}
-
 
 	public static Set<Swimlane> getSwimlanes2(List<? extends Instruction> list) {
 		final Set<Swimlane> result = new HashSet<Swimlane>();
@@ -129,6 +146,12 @@ public class InstructionList implements Instruction {
 			result.addAll(ins.getSwimlanes());
 		}
 		return Collections.unmodifiableSet(result);
+	}
+
+	private LinkRendering outlinkRendering;
+
+	public void setOutRendering(LinkRendering outlinkRendering) {
+		this.outlinkRendering = outlinkRendering;
 	}
 
 }

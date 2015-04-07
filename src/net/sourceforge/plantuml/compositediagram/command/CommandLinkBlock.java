@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -46,13 +46,13 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 public class CommandLinkBlock extends SingleLineCommand<CompositeDiagram> {
 
 	public CommandLinkBlock() {
-		super("(?i)^([\\p{L}0-9_.]+)\\s*(\\[\\]|\\*\\))?([=-]+|\\.+)(\\[\\]|\\(\\*)?\\s*([\\p{L}0-9_.]+)\\s*(?::\\s*(\\S*+))?$");
+		super("(?i)^([\\p{L}0-9_.]+)[%s]*(\\[\\]|\\*\\))?([=-]+|\\.+)(\\[\\]|\\(\\*)?[%s]*([\\p{L}0-9_.]+)[%s]*(?::[%s]*(\\S*+))?$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, List<String> arg) {
-		final IEntity cl1 = diagram.getOrCreateLeaf(Code.of(arg.get(0)), null);
-		final IEntity cl2 = diagram.getOrCreateLeaf(Code.of(arg.get(4)), null);
+		final IEntity cl1 = diagram.getOrCreateLeaf(Code.of(arg.get(0)), null, null);
+		final IEntity cl2 = diagram.getOrCreateLeaf(Code.of(arg.get(4)), null, null);
 
 		final String deco1 = arg.get(1);
 		final String deco2 = arg.get(3);

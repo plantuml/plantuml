@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -59,7 +59,7 @@ public class GanttDiagram2 {
 	}
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 
 	public void draw(UGraphic ug, double x, double y) {
 
@@ -82,7 +82,7 @@ public class GanttDiagram2 {
 		final List<Row> rows = new ArrayList<Row>();
 		for (Task t : tasks) {
 			final String text = t.getCode();
-			final TextBlock label = TextBlockUtils.create(Display.asList(text), fontConfig, HorizontalAlignment.LEFT,
+			final TextBlock label = TextBlockUtils.create(Display.create(text), fontConfig, HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
 			rows.add(new RowSimple((Day) t.getStart(), (Day) t.getEnd(), HtmlColorUtils.BLACK, TextBlockUtils
 					.withMargin(label, 3, 3)));

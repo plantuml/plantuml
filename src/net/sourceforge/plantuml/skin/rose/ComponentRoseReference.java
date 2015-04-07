@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -67,11 +67,11 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final double deltaShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseReference(HtmlColor fontColor, HtmlColor fontHeaderColor, UFont font, HtmlColor borderColor,
+	public ComponentRoseReference(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, HtmlColor fontHeaderColor, UFont font, HtmlColor borderColor,
 			HtmlColor backgroundHeader, HtmlColor background, UFont header, Display stringsToDisplay,
-			HorizontalAlignment position, SpriteContainer spriteContainer, double deltaShadow, UStroke stroke) {
-		super(stringsToDisplay.subList(1, stringsToDisplay.size()), fontColor, font, HorizontalAlignment.LEFT, 4, 4,
-				4, spriteContainer, 0, false);
+			HorizontalAlignment position, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
+		super(stringsToDisplay.subList(1, stringsToDisplay.size()), fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.LEFT, 4, 4,
+				4, spriteContainer, 0, false, null, null);
 		this.position = position;
 		this.backgroundHeader = backgroundHeader;
 		this.background = background;
@@ -79,8 +79,8 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		this.deltaShadow = deltaShadow;
 		this.stroke = stroke;
 
-		textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), new FontConfiguration(header,
-				fontHeaderColor), HorizontalAlignment.LEFT, spriteContainer);
+		textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), new FontConfiguration(header, fontHeaderColor,
+				hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, spriteContainer);
 
 	}
 

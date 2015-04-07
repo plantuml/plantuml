@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -56,19 +56,23 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch) {
 
-		final UFont font = getSkinParam().getFont(FontParam.ACTIVITY_ARROW2, null);
+		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
+		final UFont fontArrow = getSkinParam().getFont(FontParam.ACTIVITY_ARROW, null, false);
+		final UFont fontTest = getSkinParam().getFont(
+				conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND : FontParam.ACTIVITY_ARROW, null, false);
+		final Branch branch0 = thens.get(0);
 
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBackground);
+		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(getSkinParam(),
+				ColorParam.activityBackground) : branch0.getColor();
 		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
 
-		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
 		if (thens.size() > 1) {
-			return FtileIf2.create(swimlane, borderColor, backColor, font, arrowColor, getFactory(), conditionStyle,
-					thens, elseBranch);
+			return FtileIfLong2.create(swimlane, borderColor, backColor, fontArrow, arrowColor, getFactory(),
+					conditionStyle, thens, elseBranch, getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink());
 		}
-		return FtileIf.create(swimlane, borderColor, backColor, font, arrowColor, getFactory(), conditionStyle,
-				thens.get(0), elseBranch);
+		return FtileIf.create(swimlane, borderColor, backColor, fontArrow, fontTest, arrowColor, getFactory(),
+				conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder());
 	}
 
 }

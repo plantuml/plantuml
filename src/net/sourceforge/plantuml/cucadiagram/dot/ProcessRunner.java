@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,50 +40,49 @@ import java.io.OutputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.sourceforge.plantuml.api.MyRunnable;
+import net.sourceforge.plantuml.api.TimeoutExecutor;
+
 public class ProcessRunner {
 	// http://steveliles.github.io/invoking_processes_from_java.html
-
-	private static final long TIMEOUT_MINUTE = 15;
+	public static long TIMEOUT = 15 * 60 * 1000L;
 
 	private final String[] cmd;
 
 	private String error;
 	private String out;
 
-	private volatile ProcessState state = ProcessState.INIT;
+	private volatile ProcessState state = ProcessState.INIT();
 	private final Lock changeState = new ReentrantLock();
 
 	public ProcessRunner(String[] cmd) {
 		this.cmd = cmd;
 	}
 
-	public ProcessState run2(byte in[], OutputStream redirection) {
-		return run2(in, redirection, null);
+	public ProcessState run(byte in[], OutputStream redirection) {
+		return run(in, redirection, null);
 	}
 
-	public ProcessState run2(byte in[], OutputStream redirection, File dir) {
-		if (this.state != ProcessState.INIT) {
+	public ProcessState run(byte in[], OutputStream redirection, File dir) {
+		if (this.state.differs(ProcessState.INIT())) {
 			throw new IllegalStateException();
 		}
-		this.state = ProcessState.RUNNING;
+		this.state = ProcessState.RUNNING();
 		final MainThread mainThread = new MainThread(cmd, dir, redirection, in);
 		try {
-			mainThread.start();
-			mainThread.join(TIMEOUT_MINUTE * 60 * 1000L);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			final boolean done = new TimeoutExecutor(TIMEOUT).executeNow(mainThread);
 		} finally {
 			changeState.lock();
 			try {
-				if (state == ProcessState.RUNNING) {
-					state = ProcessState.TIMEOUT;
-					mainThread.cancel();
+				if (state.equals(ProcessState.RUNNING())) {
+					state = ProcessState.TIMEOUT();
+					// mainThread.cancel();
 				}
 			} finally {
 				changeState.unlock();
 			}
 		}
-		if (state == ProcessState.TERMINATED_OK) {
+		if (state.equals(ProcessState.TERMINATED_OK())) {
 			assert mainThread != null;
 			this.error = mainThread.getError();
 			this.out = mainThread.getOut();
@@ -91,7 +90,7 @@ public class ProcessRunner {
 		return state;
 	}
 
-	class MainThread extends Thread {
+	class MainThread implements MyRunnable {
 
 		private final String[] cmd;
 		private final File dir;
@@ -116,20 +115,17 @@ public class ProcessRunner {
 			return errorStream.getString();
 		}
 
-		@Override
-		public void run() {
+		public void runJob() throws InterruptedException {
 			try {
-				runInternal();
-				if (state == ProcessState.RUNNING) {
+				startThreads();
+				if (state.equals(ProcessState.RUNNING())) {
 					final int result = joinInternal();
 				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			} finally {
 				changeState.lock();
 				try {
-					if (state == ProcessState.RUNNING) {
-						state = ProcessState.TERMINATED_OK;
+					if (state.equals(ProcessState.RUNNING())) {
+						state = ProcessState.TERMINATED_OK();
 					}
 				} finally {
 					changeState.unlock();
@@ -144,28 +140,29 @@ public class ProcessRunner {
 
 		}
 
-		private void cancel() {
+		public void cancelJob() {
 			// The changeState lock is ok
-			assert changeState.tryLock();
-			assert state == ProcessState.TIMEOUT;
+			// assert changeState.tryLock();
+			// assert state == ProcessState.TIMEOUT;
 			if (process != null) {
 				errorStream.cancel();
 				outStream.cancel();
 				process.destroy();
-				interrupt();
+				// interrupt();
 				close(process.getErrorStream());
 				close(process.getOutputStream());
 				close(process.getInputStream());
 			}
 		}
 
-		public void runInternal() {
+		private void startThreads() {
 			try {
 				process = Runtime.getRuntime().exec(cmd, null, dir);
 			} catch (IOException e) {
+				e.printStackTrace();
 				changeState.lock();
 				try {
-					state = ProcessState.IO_EXCEPTION1;
+					state = ProcessState.IO_EXCEPTION1(e);
 				} finally {
 					changeState.unlock();
 				}
@@ -187,7 +184,7 @@ public class ProcessRunner {
 				} catch (IOException e) {
 					changeState.lock();
 					try {
-						state = ProcessState.IO_EXCEPTION2;
+						state = ProcessState.IO_EXCEPTION2(e);
 					} finally {
 						changeState.unlock();
 					}
@@ -217,11 +214,14 @@ public class ProcessRunner {
 		}
 
 		public String getString() {
+			if (sb==null) {
+				return "";
+			}
 			return sb.toString();
 		}
 
 		public void cancel() {
-			assert state == ProcessState.TIMEOUT;
+			assert state.equals(ProcessState.TIMEOUT()) || state.equals(ProcessState.RUNNING()) : state;
 			this.interrupt();
 			sb = null;
 			streamToRead = null;
@@ -234,7 +234,7 @@ public class ProcessRunner {
 			int read = 0;
 			try {
 				while ((read = streamToRead.read()) != -1) {
-					if (state == ProcessState.TIMEOUT) {
+					if (state.equals(ProcessState.TIMEOUT())) {
 						return;
 					}
 					if (redirection == null) {
@@ -244,6 +244,7 @@ public class ProcessRunner {
 					}
 				}
 			} catch (Throwable e) {
+				System.err.println("ProcessRunnerA " + e);
 				e.printStackTrace();
 				sb.append('\n');
 				sb.append(e.toString());

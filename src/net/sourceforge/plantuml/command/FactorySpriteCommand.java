@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -45,24 +44,25 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.Sprite;
 import net.sourceforge.plantuml.ugraphic.SpriteGrayLevel;
+import net.sourceforge.plantuml.StringUtils;
 
 public final class FactorySpriteCommand implements SingleMultiFactoryCommand<UmlDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("sprite\\s+\\$?"), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_]+)\\s*"), //
+				new RegexLeaf("sprite[%s]+\\$?"), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
 				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(\\d+)(z)?\\])?"), //
-				new RegexLeaf("\\s*\\{"), //
+				new RegexLeaf("[%s]*\\{"), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("sprite\\s+\\$?"), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_]+)\\s*"), //
+				new RegexLeaf("sprite[%s]+\\$?"), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
 				new RegexLeaf("DIM", "(?:\\[(\\d+)x(\\d+)/(\\d+)(z)\\])?"), //
-				new RegexLeaf("\\s+"), //
+				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("DATA", "([-_A-Za-z0-9]+)"), //
 				new RegexLeaf("$"));
 	}
@@ -83,7 +83,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end ?sprite|\\}$";
+				return "(?i)^end[%s]?sprite|\\}$";
 			}
 
 			public CommandExecutionResult executeNow(final UmlDiagram system, List<String> lines) {

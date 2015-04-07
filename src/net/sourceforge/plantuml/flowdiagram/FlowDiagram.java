@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -118,8 +118,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption,
-			List<BufferedImage> flashcodes) throws IOException {
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
 		UGraphicUtils.writeImage(os, null, fileFormatOption, new ColorMapperIdentity(), HtmlColorUtils.WHITE, this);
 		return new ImageDataSimple();
 	}
@@ -143,8 +142,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin
 					* SINGLE_SIZE_Y + deltaY / 2))));
 		}
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.getColorIfValid("#A80036")));
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#A80036")));
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
+		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_RED));
 		final UShape arrow = new UEllipse(7, 7);
 		for (Path p : field.getPaths()) {
 			final TileArea start = p.getStart();

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -79,27 +80,32 @@ public class EntityImageState extends AbstractEntityImage {
 	final static private double smallMarginX = 7;
 	final static private double smallMarginY = 4;
 
+	final private LineConfigurable lineConfig;
+
 	public EntityImageState(IEntity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
+		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 
-		this.desc = TextBlockUtils.create(entity.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.STATE, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE, stereotype)),
-				HorizontalAlignment.CENTER, skinParam);
+		this.desc = TextBlockUtils.create(
+				entity.getDisplay(),
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+						FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE,
+				stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 
-		Display list = new Display();
+		Display list = Display.empty();
 		for (Member att : entity.getFieldsToDisplay()) {
 			list = list.addAll(Display.getWithNewlines(att.getDisplay(true)));
 		}
 
 		this.url = entity.getUrl99();
 
-		this.fields = TextBlockUtils.create(list,
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype)),
-				HorizontalAlignment.LEFT, skinParam);
+		this.fields = TextBlockUtils.create(
+				list,
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+						FontParam.STATE_ATTRIBUTE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+				FontParam.STATE_ATTRIBUTE, stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.LEFT, skinParam);
 
 	}
 
@@ -129,8 +135,11 @@ public class EntityImageState extends AbstractEntityImage {
 			rect.setDeltaShadow(4);
 		}
 
-		ug = ug.apply(new UStroke(1.5)).apply(
-				new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBorder, getStereo())));
+		HtmlColor classBorder = lineConfig.getSpecificLineColor();
+		if (classBorder == null) {
+			classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBorder, getStereo());
+		}
+		ug = ug.apply(getStroke()).apply(new UChangeColor(classBorder));
 		HtmlColor backcolor = getEntity().getSpecificBackColor();
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBackground, getStereo());
@@ -161,6 +170,14 @@ public class EntityImageState extends AbstractEntityImage {
 		if (url != null) {
 			ug.closeAction();
 		}
+	}
+
+	private UStroke getStroke() {
+		UStroke stroke = lineConfig.getSpecificLineStroke();
+		if (stroke == null) {
+			stroke = new UStroke(1.5);
+		}
+		return stroke;
 	}
 
 	public static void drawSymbol(UGraphic ug, double xSymbol, double ySymbol) {

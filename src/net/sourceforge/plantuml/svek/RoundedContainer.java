@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -52,18 +52,18 @@ public final class RoundedContainer {
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
 	private final HtmlColor imgBackcolor;
+	private final UStroke stroke;
 
 	public RoundedContainer(Dimension2D dim, double titleHeight, double attributeHeight, HtmlColor borderColor,
-			HtmlColor backColor, HtmlColor imgBackcolor) {
+			HtmlColor backColor, HtmlColor imgBackcolor, UStroke stroke) {
 		this.dim = dim;
 		this.imgBackcolor = imgBackcolor;
 		this.titleHeight = titleHeight;
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 		this.attributeHeight = attributeHeight;
+		this.stroke = stroke;
 	}
-
-	public final static double THICKNESS_BORDER = 1.5;
 
 	public void drawU(UGraphic ug, boolean shadowing) {
 
@@ -73,22 +73,25 @@ public final class RoundedContainer {
 		if (shadowing) {
 			rect.setDeltaShadow(3.0);
 		}
-		ug.apply(new UStroke(THICKNESS_BORDER)).draw(rect);
+		ug.apply(stroke).draw(rect);
 
 		final double yLine = titleHeight + attributeHeight;
 
 		ug = ug.apply(new UChangeBackColor(imgBackcolor));
 
-		final URectangle inner = new URectangle(dim.getWidth() - 4 * THICKNESS_BORDER, dim.getHeight() - titleHeight
-				- 4 * THICKNESS_BORDER - attributeHeight, IEntityImage.CORNER, IEntityImage.CORNER);
-		ug.apply(new UChangeColor(imgBackcolor)).apply(new UTranslate(2 * THICKNESS_BORDER, yLine + 2 * THICKNESS_BORDER)).draw(inner);
+		final double thickness = stroke.getThickness();
+
+		final URectangle inner = new URectangle(dim.getWidth() - 4 * thickness, dim.getHeight() - titleHeight - 4
+				* thickness - attributeHeight, IEntityImage.CORNER, IEntityImage.CORNER);
+		ug.apply(new UChangeColor(imgBackcolor)).apply(new UTranslate(2 * thickness, yLine + 2 * thickness))
+				.draw(inner);
 
 		if (titleHeight > 0) {
-			ug.apply(new UStroke(THICKNESS_BORDER)).apply(new UTranslate(0, yLine)).draw(new ULine(dim.getWidth(), 0));
+			ug.apply(stroke).apply(new UTranslate(0, yLine)).draw(new ULine(dim.getWidth(), 0));
 		}
 
 		if (attributeHeight > 0) {
-			ug.apply(new UStroke(THICKNESS_BORDER)).apply(new UTranslate(0, yLine - attributeHeight)).draw(new ULine(dim.getWidth(), 0));
+			ug.apply(stroke).apply(new UTranslate(0, yLine - attributeHeight)).draw(new ULine(dim.getWidth(), 0));
 		}
 
 	}

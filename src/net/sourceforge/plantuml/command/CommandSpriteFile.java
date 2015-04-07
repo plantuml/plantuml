@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -55,9 +55,9 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("sprite\\s+\\$?"), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_]+)\\s*"), //
-				new RegexLeaf("\\s+"), //
+				new RegexLeaf("sprite[%s]+\\$?"), //
+				new RegexLeaf("NAME", "([\\p{L}0-9_]+)[%s]*"), //
+				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("FILE", "(.*)"), //
 				new RegexLeaf("$"));
 	}

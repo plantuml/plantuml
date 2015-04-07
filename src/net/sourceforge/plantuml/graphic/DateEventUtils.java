@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,15 +34,21 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.Font;
+import java.awt.geom.Dimension2D;
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class DateEventUtils {
 
@@ -64,15 +70,34 @@ public class DateEventUtils {
 					"a character on a keyboard and seen it show up on their",
 					"own computer's screen right in front of them.\"", "\t\t\t\t\t\t\t\t\t\t<i>Steve Wozniak");
 			return TextBlockUtils.mergeTB(textBlock, getComment(asList, color), HorizontalAlignment.LEFT);
+		} else if ("01-07".equals(today) || "01-08".equals(today)) {
+			return addCharlie(textBlock);
+
 		}
 
 		return textBlock;
 	}
 
+	private static TextBlock addCharlie(TextBlock textBlock) {
+		final TextBlock charlie = new TextBlock() {
+			private final BufferedImage charlie = PSystemVersion.getCharlieImage();
+
+			public void drawU(UGraphic ug) {
+				ug.draw(new UImage(charlie));
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(charlie.getWidth(), charlie.getHeight());
+			}
+		};
+		return TextBlockUtils.mergeTB(charlie, textBlock, HorizontalAlignment.LEFT);
+
+	}
+
 	private static TextBlock getComment(final List<String> asList, HtmlColor color) {
 		final UFont font = new UFont("SansSerif", Font.BOLD, 14);
-		TextBlock comment = TextBlockUtils.create(new Display(asList), new FontConfiguration(font, color),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		TextBlock comment = TextBlockUtils.create(Display.create(asList), new FontConfiguration(font, color,
+				HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		comment = TextBlockUtils.withMargin(comment, 4, 4);
 		comment = new TextBlockBordered(comment, color);
 		comment = TextBlockUtils.withMargin(comment, 10, 10);

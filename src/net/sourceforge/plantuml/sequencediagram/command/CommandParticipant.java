@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -47,7 +48,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
@@ -62,58 +62,59 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 
 	static IRegex getRegexType() {
 		return new RegexOr(new RegexLeaf("TYPE", "(participant|actor|create|boundary|control|entity|database)"), //
-				new RegexLeaf("CREATE", "create (participant|actor|boundary|control|entity|database)"));
+				new RegexLeaf("CREATE", "create[%s](participant|actor|boundary|control|entity|database)"));
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(SequenceDiagram system, RegexResult arg2) {
-		final String code = arg2.get("CODE", 0);
-		if (system.participants().containsKey(code)) {
-			system.putParticipantInLast(code);
+	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+		final String code = arg.get("CODE", 0);
+		if (diagram.participants().containsKey(code)) {
+			diagram.putParticipantInLast(code);
 			return CommandExecutionResult.ok();
 		}
 
 		Display strings = null;
-		if (arg2.get("FULL", 0) != null) {
-			strings = Display.getWithNewlines(arg2.get("FULL", 0));
+		if (arg.get("FULL", 0) != null) {
+			strings = Display.getWithNewlines(arg.get("FULL", 0));
 		}
 
-		final String typeString1 = arg2.get("TYPE", 0);
-		final String typeCreate1 = arg2.get("CREATE", 0);
+		final String typeString1 = arg.get("TYPE", 0);
+		final String typeCreate1 = arg.get("CREATE", 0);
 		final ParticipantType type;
 		final boolean create;
 		if (typeCreate1 != null) {
-			type = ParticipantType.valueOf(typeCreate1.toUpperCase());
+			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeCreate1));
 			create = true;
 		} else if (typeString1.equalsIgnoreCase("CREATE")) {
 			type = ParticipantType.PARTICIPANT;
 			create = true;
 		} else {
-			type = ParticipantType.valueOf(typeString1.toUpperCase());
+			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));
 			create = false;
 		}
-		final Participant participant = system.createNewParticipant(type, code, strings);
+		final Participant participant = diagram.createNewParticipant(type, code, strings);
 
-		final String stereotype = arg2.get("STEREO", 0);
+		final String stereotype = arg.get("STEREO", 0);
 
 		if (stereotype != null) {
-			final ISkinParam skinParam = system.getSkinParam();
+			final ISkinParam skinParam = diagram.getSkinParam();
 			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();
-			final UFont font = skinParam.getFont(FontParam.CIRCLED_CHARACTER, null);
-			participant.setStereotype(new Stereotype(stereotype, skinParam.getCircledCharacterRadius(), font),
-					stereotypePositionTop);
+			final UFont font = skinParam.getFont(FontParam.CIRCLED_CHARACTER, null, false);
+			participant.setStereotype(new Stereotype(stereotype, skinParam.getCircledCharacterRadius(), font, diagram
+					.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);
 		}
-		participant.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg2.get("COLOR", 0)));
+		participant
+				.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 
-		final String urlString = arg2.get("URL", 0);
+		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
-			final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);
 			participant.setUrl(url);
 		}
 
 		if (create) {
-			final String error = system.activate(participant, LifeEventType.CREATE, null);
+			final String error = diagram.activate(participant, LifeEventType.CREATE, null);
 			if (error != null) {
 				return CommandExecutionResult.error(error);
 			}

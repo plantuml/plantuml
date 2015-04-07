@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -60,7 +60,7 @@ public class TimeHeaderDay implements TextBlock {
 	private final double dayWidth;
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 
 	public TimeHeaderDay(Day start, Day end, TimeLine timeline, double dayWidth) {
 		this.start = start;
@@ -73,7 +73,7 @@ public class TimeHeaderDay implements TextBlock {
 		int n = 0;
 		for (Day d = start; d.compareTo(end) <= 0; d = (Day) timeline.next(d)) {
 			final String text = "" + d.getNumDay();
-			final TextBlock b = TextBlockUtils.create(Display.asList(text), fontConfig, HorizontalAlignment.LEFT,
+			final TextBlock b = TextBlockUtils.create(Display.create(text), fontConfig, HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
 			final Dimension2D dimText = b.calculateDimension(ug.getStringBounder());
 			final double diffX = dayWidth - dimText.getWidth();

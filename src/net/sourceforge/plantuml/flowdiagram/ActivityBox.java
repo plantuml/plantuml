@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -70,8 +70,8 @@ public class ActivityBox implements TextBlock {
 		this.id = id;
 		this.label = label;
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK);
-		tb = TextBlockUtils.create(Display.asList(label), fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		tb = TextBlockUtils.create(Display.create(label), fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	public Tile getTile() {
@@ -93,8 +93,8 @@ public class ActivityBox implements TextBlock {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.getColorIfValid("#A80036")));
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#FEFECE")));
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
+		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_YELLOW));
 		ug.apply(new UStroke(1.5)).draw(rect);
 		
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11153 $
+ * Revision $Revision: 14708 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -57,8 +57,8 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	public EntityImageUsecase(IEntity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(entity.getDisplay(), new FontConfiguration(
-				getFont14(), HtmlColorUtils.BLACK), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+		this.name = TextBlockUtils.create(entity.getDisplay(), new FontConfiguration(getFont14(), 
+				HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override

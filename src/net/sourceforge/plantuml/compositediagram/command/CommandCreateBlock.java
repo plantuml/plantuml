@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 public class CommandCreateBlock extends SingleLineCommand<CompositeDiagram> {
 
 	public CommandCreateBlock() {
-		super("(?i)^(?:block\\s+)(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)$");
+		super("(?i)^(?:block[%s]+)(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([\\p{L}0-9_.]+)$");
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class CommandCreateBlock extends SingleLineCommand<CompositeDiagram> {
 		String display = arg.get(0);
 		final Code code = Code.of(arg.get(1));
 		if (display == null) {
-			display = code.getCode();
+			display = code.getFullName();
 		}
-		final IEntity ent = diagram.getOrCreateLeaf(code, null);
+		final IEntity ent = diagram.getOrCreateLeaf(code, null, null);
 		ent.setDisplay(Display.getWithNewlines(display));
 		return CommandExecutionResult.ok();
 	}

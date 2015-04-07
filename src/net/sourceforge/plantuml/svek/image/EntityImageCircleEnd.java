@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -53,9 +53,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class EntityImageCircleEnd extends AbstractEntityImage {
 
 	private static final int SIZE = 20;
+	private final ColorParam param;
 
-	public EntityImageCircleEnd(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageCircleEnd(ILeaf entity, ISkinParam skinParam, ColorParam param) {
 		super(entity, skinParam);
+		this.param = param;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -68,12 +70,12 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 			circle.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeBackColor(null))
-				.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.activityEnd, getStereo())))
+				.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), param, getStereo())))
 				.draw(circle);
 
 		final double delta = 4;
 		final UShape circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
-		ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.activityEnd, getStereo())))
+		ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), param, getStereo())))
 		.apply(new UChangeColor(null)).apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CircleInterface2 implements TextBlock {
 
-	private final double margin = 4;
+	private final double margin = 1;
 
 	private final double radius = 8;
 

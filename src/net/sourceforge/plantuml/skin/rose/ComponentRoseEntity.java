@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -54,9 +54,12 @@ public class ComponentRoseEntity extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseEntity(HtmlColor yellow, HtmlColor red, HtmlColor fontColor, UFont font,
-			Display stringsToDisplay, boolean head, SpriteContainer spriteContainer, double deltaShadow, UStroke stroke) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, 0, false);
+	public ComponentRoseEntity(HtmlColor yellow, HtmlColor red, HtmlColor fontColor, HtmlColor hyperlinkColor,
+			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay, boolean head,
+			ISkinSimple spriteContainer, double deltaShadow, UStroke stroke, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
+				3, 3, 0, spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
 		this.stickman = new EntityDomain(yellow, red, deltaShadow, stroke.getThickness());
 	}

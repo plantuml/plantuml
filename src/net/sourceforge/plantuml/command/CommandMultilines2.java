@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,8 +35,8 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.core.Diagram;
 
@@ -73,7 +73,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final Matcher m1 = Pattern.compile(getPatternEnd()).matcher(lines.get(lines.size() - 1).trim());
+		final Matcher m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.get(lines.size() - 1).trim());
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}

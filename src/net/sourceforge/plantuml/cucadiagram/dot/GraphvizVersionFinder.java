@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,31 +34,57 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizVersionFinder {
 
 	final private File dotExe;
+	final private static GraphvizVersion DEFAULT = new GraphvizVersion() {
+		public boolean useShield() {
+			return true;
+		}
+
+		public boolean useProtectionWhenThereALinkFromOrToGroup() {
+			return true;
+		}
+	};
 
 	public GraphvizVersionFinder(File dotExe) {
 		this.dotExe = dotExe;
 	}
 
 	public GraphvizVersion getVersion() {
-		final String s = dotVersion();
-		if (s.contains("2.34.0")) {
-			return GraphvizVersion.V2_34_0;
+		final String dotVersion = dotVersion();
+		final Pattern p = Pattern.compile("\\d\\.\\d\\d");
+		final Matcher m = p.matcher(dotVersion);
+		final boolean find = m.find();
+		if (find == false) {
+			return DEFAULT;
 		}
-		return GraphvizVersion.COMMON;
+		final String vv = m.group(0);
+		final int v = Integer.parseInt(vv.replaceAll("\\.", ""));
+		return new GraphvizVersion() {
+			public boolean useShield() {
+				return v <= 228;
+			}
+
+			public boolean useProtectionWhenThereALinkFromOrToGroup() {
+				// return v < 238;
+				return true;
+			}
+
+		};
 	}
 
 	public String dotVersion() {
 		final String cmd[] = getCommandLine();
 
 		final ProcessRunner p = new ProcessRunner(cmd);
-		final ProcessState state = p.run2(null, null);
-		if (state != ProcessState.TERMINATED_OK) {
+		final ProcessState state = p.run(null, null);
+		if (state.differs(ProcessState.TERMINATED_OK())) {
 			return "?";
 		}
 		final StringBuilder sb = new StringBuilder();

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandUrl extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandUrl() {
-		super("(?i)^url\\s*(?:of|for)?\\s+([\\p{L}0-9_.@]+|\"[^\"]+\")\\s+(?:is)?\\s*(" + UrlBuilder.getRegexp() + ")$");
+		super("(?i)^url[%s]*(?:of|for)?[%s]+([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]+(?:is)?[%s]*(" + UrlBuilder.getRegexp() + ")$");
 	}
 
 	@Override

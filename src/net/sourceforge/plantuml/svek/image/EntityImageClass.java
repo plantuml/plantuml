@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,11 +40,13 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -70,11 +72,11 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageClass(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		this.roundCorner = skinParam.getRoundCorner();
-		this.shield = entity.hasNearDecoration() ? 16 : 0;
+		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
 		this.body = entity.getBody(portionShower).asTextBlock(FontParam.CLASS_ATTRIBUTE, skinParam);
 
 		header = new EntityImageClassHeader2(entity, skinParam, portionShower);
@@ -172,6 +174,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 
 	private UStroke getStroke() {
 		UStroke stroke = lineConfig.getSpecificLineStroke();
+		if (stroke == null) {
+			stroke = getSkinParam().getThickness(LineParam.classBorder, getStereo());
+		}
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}

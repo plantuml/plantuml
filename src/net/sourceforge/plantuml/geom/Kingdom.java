@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 14581 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -62,7 +62,7 @@ public class Kingdom extends AbstractFigure {
 		}
 	}
 
-	Set<ClosedArea> getAllClosedArea() {
+	public Set<ClosedArea> getAllClosedArea() {
 		final Set<ClosedArea> result = new HashSet<ClosedArea>();
 		for (LineSegmentInt seg : getSegments()) {
 			result.add(new ClosedArea().append(seg));
@@ -109,7 +109,7 @@ public class Kingdom extends AbstractFigure {
 	// }
 
 	@Override
-	boolean arePointsConnectable(Point2DInt p1, Point2DInt p2) {
+	public boolean arePointsConnectable(Point2DInt p1, Point2DInt p2) {
 		for (ClosedArea area : getAllClosedArea()) {
 			if (area.arePointsConnectable(p1, p2) == false) {
 				return false;

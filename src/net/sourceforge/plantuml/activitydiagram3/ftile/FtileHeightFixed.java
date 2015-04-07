@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,12 +34,10 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -53,11 +51,21 @@ public class FtileHeightFixed extends AbstractFtile {
 		this.tile = tile;
 		this.fixedHeight = fixedHeight;
 	}
-	
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+		return tile.getInLinkRendering();
+	}
+
+	@Override
+	public LinkRendering getOutLinkRendering() {
+		return tile.getOutLinkRendering();
+	}
+
 	public Set<Swimlane> getSwimlanes() {
 		return tile.getSwimlanes();
 	}
-	
+
 	public Swimlane getSwimlaneIn() {
 		return tile.getSwimlaneIn();
 	}
@@ -65,43 +73,21 @@ public class FtileHeightFixed extends AbstractFtile {
 	public Swimlane getSwimlaneOut() {
 		return tile.getSwimlaneOut();
 	}
-	
 
-
-	public Point2D getPointIn(StringBounder stringBounder) {
-		final Point2D p = tile.getPointIn(stringBounder);
-		return getTranslate(stringBounder).getTranslated(p);
-	}
-
-	public Point2D getPointOut(StringBounder stringBounder) {
-		final Point2D p = tile.getPointOut(stringBounder);
-		return getTranslate(stringBounder).getTranslated(p);
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		return tile.calculateDimension(stringBounder).translate(getTranslate(stringBounder)).fixedHeight(fixedHeight);
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-		final Dimension2D dim = tile.asTextBlock().calculateDimension(stringBounder);
+		final Dimension2D dim = tile.calculateDimension(stringBounder);
 		if (dim.getHeight() > fixedHeight) {
 			throw new IllegalStateException();
 		}
 		return new UTranslate(0, (fixedHeight - dim.getHeight()) / 2);
 	}
 
-	public TextBlock asTextBlock() {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				ug.apply(getTranslate(ug.getStringBounder())).draw(tile);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dim = tile.asTextBlock().calculateDimension(stringBounder);
-				return new Dimension2DDouble(dim.getWidth(), fixedHeight);
-			}
-		};
-	}
-
-	public boolean isKilled() {
-		return tile.isKilled();
+	public void drawU(UGraphic ug) {
+		ug.apply(getTranslate(ug.getStringBounder())).draw(tile);
 	}
 
 }

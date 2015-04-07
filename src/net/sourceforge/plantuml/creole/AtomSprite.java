@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -42,9 +43,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class AtomSprite implements Atom {
 
 	private final TextBlock sprite;
+	private final FontConfiguration fontConfiguration;
 
-	public AtomSprite(TextBlock sprite) {
+	public AtomSprite(TextBlock sprite, FontConfiguration fontConfiguration) {
 		this.sprite = sprite;
+		this.fontConfiguration = fontConfiguration;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -52,7 +55,7 @@ public class AtomSprite implements Atom {
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-		return 0;
+		return -3;
 	}
 
 	public void drawU(UGraphic ug) {

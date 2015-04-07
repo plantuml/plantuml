@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,14 +35,19 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolNode extends USymbol {
+
+	public USymbolNode() {
+		super(ColorParam.nodeBackground, ColorParam.nodeBorder, FontParam.NODE, FontParam.NODE_STEREOTYPE);
+	}
 
 	private void drawNode(UGraphic ug, double width, double height, boolean shadowing) {
 		final UPolygon shape = new UPolygon();
@@ -96,12 +101,15 @@ class USymbolNode extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
 				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
-				title.drawU(ug.apply(new UTranslate(3, 13)));
-
+				ug = ug.apply(new UTranslate(-4, 11));
+				
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
+				stereotype.drawU(ug.apply(new UTranslate(posStereo, 2)));
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-				stereotype.drawU(ug.apply(new UTranslate(posStereo, dimTitle.getHeight() + 13)));
+				final double posTitle = (width - dimTitle.getWidth()) / 2;
+				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
+
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -109,5 +117,16 @@ class USymbolNode extends USymbol {
 			}
 		};
 	}
+	
+	@Override
+	public int suppHeightBecauseOfShape() {
+		return 5;
+	}
+
+	@Override
+	public int suppWidthBecauseOfShape() {
+		return 60;
+	}
+
 
 }

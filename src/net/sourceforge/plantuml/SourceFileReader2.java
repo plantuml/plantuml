@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -58,8 +58,8 @@ public class SourceFileReader2 implements ISourceFileReader {
 	private final BlockUmlBuilder builder;
 	private FileFormatOption fileFormatOption;
 
-	public SourceFileReader2(Defines defines, final File file, File outputFile, List<String> config,
-			String charset, FileFormatOption fileFormatOption) throws IOException {
+	public SourceFileReader2(Defines defines, final File file, File outputFile, List<String> config, String charset,
+			FileFormatOption fileFormatOption) throws IOException {
 		this.file = file;
 		this.fileFormatOption = fileFormatOption;
 		this.outputFile = outputFile;
@@ -68,10 +68,11 @@ public class SourceFileReader2 implements ISourceFileReader {
 		}
 		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
 
-		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile().getParentFile());
+		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
+				.getParentFile());
 	}
 
-	public boolean hasError() throws IOException, InterruptedException {
+	public boolean hasError() {
 		for (final BlockUml b : builder.getBlockUmls()) {
 			if (b.getDiagram() instanceof PSystemError) {
 				return true;
@@ -80,7 +81,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		return false;
 	}
 
-	public List<GeneratedImage> getGeneratedImages() throws IOException, InterruptedException {
+	public List<GeneratedImage> getGeneratedImages() throws IOException {
 		Log.info("Reading file: " + file);
 
 		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
@@ -93,7 +94,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 
 			for (File f : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final GeneratedImage generatedImage = new GeneratedImage(f, desc, system);
+				final GeneratedImage generatedImage = new GeneratedImage(f, desc, blockUml);
 				result.add(generatedImage);
 			}
 
@@ -104,7 +105,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		return Collections.unmodifiableList(result);
 	}
 
-	public List<String> getEncodedUrl() throws IOException, InterruptedException {
+	public List<String> getEncodedUrl() throws IOException {
 		final List<String> result = new ArrayList<String>();
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		for (BlockUml blockUml : builder.getBlockUmls()) {

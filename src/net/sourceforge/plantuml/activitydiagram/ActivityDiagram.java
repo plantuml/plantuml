@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12053 $
+ * Revision $Revision: 14721 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram;
@@ -38,7 +38,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -48,6 +47,8 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class ActivityDiagram extends CucaDiagram {
 
@@ -55,8 +56,8 @@ public class ActivityDiagram extends CucaDiagram {
 	private IEntity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
-	public ILeaf getOrCreateLeaf(Code code, LeafType type) {
-		return getOrCreateLeafDefault(code, type);
+	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
+		return getOrCreateLeafDefault(code, type, symbol);
 	}
 
 	private String getAutoBranch() {
@@ -66,13 +67,13 @@ public class ActivityDiagram extends CucaDiagram {
 	public IEntity getOrCreate(Code code, Display display, LeafType type) {
 		final IEntity result;
 		if (leafExist(code)) {
-			result = getOrCreateLeafDefault(code, type);
+			result = getOrCreateLeafDefault(code, type, null);
 			if (result.getEntityType() != type) {
 				// throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
 				return null;
 			}
 		} else {
-			result = createLeaf(code, display, type);
+			result = createLeaf(code, display, type, null);
 		}
 		updateLasts(result);
 		return result;
@@ -80,7 +81,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public void startIf(Code optionalCode) {
 		final IEntity br = createLeaf(optionalCode == null ? Code.of(getAutoBranch()) : optionalCode,
-				Display.asList(""), LeafType.BRANCH);
+				Display.create(""), LeafType.BRANCH, null);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
 
@@ -92,8 +93,9 @@ public class ActivityDiagram extends CucaDiagram {
 		return (ILeaf) getOrCreate(Code.of("start"), Display.getWithNewlines("start"), LeafType.CIRCLE_START);
 	}
 
-	public ILeaf getEnd() {
-		return (ILeaf) getOrCreate(Code.of("end"), Display.getWithNewlines("end"), LeafType.CIRCLE_END);
+	public ILeaf getEnd(String suppId) {
+		final Code code = suppId == null ? Code.of("end") : Code.of("end$" + suppId);
+		return (ILeaf) getOrCreate(code, Display.getWithNewlines("end"), LeafType.CIRCLE_END);
 	}
 
 	private void updateLasts(final IEntity result) {
@@ -107,14 +109,14 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	@Override
-	public ILeaf createLeaf(Code code, Display display, LeafType type) {
-		final ILeaf result = super.createLeaf(code, display, type);
+	public ILeaf createLeaf(Code code, Display display, LeafType type, USymbol symbol) {
+		final ILeaf result = super.createLeaf(code, display, type, symbol);
 		updateLasts(result);
 		return result;
 	}
 
 	public IEntity createNote(Code code, Display display) {
-		return super.createLeaf(code, display, LeafType.NOTE);
+		return super.createLeaf(code, display, LeafType.NOTE, null);
 	}
 
 	final protected List<String> getDotStrings() {
@@ -123,7 +125,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(" + getLeafs().size() + " activities)", getClass());
+		return new DiagramDescriptionImpl("(" + getLeafssize() + " activities)", getClass());
 	}
 
 	public IEntity getLastEntityConsulted() {
@@ -151,7 +153,7 @@ public class ActivityDiagram extends CucaDiagram {
 	public IEntity createInnerActivity() {
 		// Log.println("createInnerActivity A");
 		final Code code = Code.of("##" + UniqueSequence.getValue());
-		final IEntity g = getOrCreateGroup(code, Display.getWithNewlines(code), null, GroupType.INNER_ACTIVITY,
+		final IEntity g = getOrCreateGroup(code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY,
 				getCurrentGroup());
 		// g.setRankdir(Rankdir.LEFT_TO_RIGHT);
 		lastEntityConsulted = null;
@@ -172,8 +174,7 @@ public class ActivityDiagram extends CucaDiagram {
 		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY) {
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
 		}
-		getOrCreateGroup(code, Display.getWithNewlines("code"), null, GroupType.CONCURRENT_ACTIVITY,
-				getCurrentGroup());
+		getOrCreateGroup(code, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY, getCurrentGroup());
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
 	}

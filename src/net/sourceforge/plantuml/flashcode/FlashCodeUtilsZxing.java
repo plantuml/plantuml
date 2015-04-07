@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,15 +34,9 @@
 package net.sourceforge.plantuml.flashcode;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Hashtable;
-import java.util.List;
 
-import net.sourceforge.plantuml.code.Compression;
-import net.sourceforge.plantuml.code.CompressionZlib;
+import net.sourceforge.plantuml.Log;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -54,95 +48,20 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 
-	public List<BufferedImage> exportFlashcodeSimple(String s) throws IOException {
+	public BufferedImage exportFlashcode(String s) {
 		try {
 			final QRCodeWriter writer = new QRCodeWriter();
 			final Hashtable hints = new Hashtable();
-			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+			hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
 			final int multiple = 1;
-			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple);
-			final BufferedImage im = MatrixToImageWriter.toBufferedImage(bit);
-			return Arrays.asList(im);
+			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
+			return MatrixToImageWriter.toBufferedImage(bit);
 		} catch (WriterException e) {
-			throw new IOException("WriterException");
+			Log.debug("Cannot create flashcode " + e);
+			// e.printStackTrace();
+			return null;
 		}
-	}
-
-	public List<BufferedImage> exportFlashcodeCompress(String s) throws IOException {
-		try {
-			final QRCodeWriter writer = new QRCodeWriter();
-			final Hashtable hints = new Hashtable();
-			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-
-			final Compression comp = new CompressionZlib();
-			final byte data[] = comp.compress(s.getBytes("UTF-8"));
-
-			// Encoder.DEFAULT_BYTE_MODE_ENCODING
-			final int multiple = 1;
-			final BitMatrix bit = writer.encode(new String(data, "ISO-8859-1"), BarcodeFormat.QR_CODE, multiple);
-			final BufferedImage im = MatrixToImageWriter.toBufferedImage(bit);
-			return Arrays.asList(im);
-		} catch (WriterException e) {
-			throw new IOException("WriterException");
-		}
-	}
-
-	public List<BufferedImage> exportSplitCompress(String s) throws IOException {
-		final QRCodeWriter writer = new QRCodeWriter();
-		final Hashtable hints = new Hashtable();
-		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-
-		final Compression comp = new CompressionZlib();
-		final byte data[] = comp.compress(s.getBytes("UTF-8"));
-
-		final List<BufferedImage> result = new ArrayList<BufferedImage>();
-
-		final List<byte[]> blocs = new ArrayList<byte[]>();
-		for (int i = 0; i < 4; i++) {
-			blocs.add(getSplited(data, i, 4));
-		}
-
-		blocs.add(xor(blocs));
-
-		try {
-			final int multiple = 1;
-			for (byte d[] : blocs) {
-				// Encoder.DEFAULT_BYTE_MODE_ENCODING
-				final BitMatrix bit = writer.encode(new String(d, "ISO-8859-1"), BarcodeFormat.QR_CODE, multiple);
-				result.add(MatrixToImageWriter.toBufferedImage(bit));
-			}
-		} catch (WriterException e) {
-			throw new IOException("WriterException");
-		}
-
-		return Collections.unmodifiableList(result);
-	}
-
-	static byte[] xor(List<byte[]> blocs) {
-		final byte result[] = new byte[blocs.get(0).length];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = xor(blocs, i);
-		}
-		return result;
-	}
-
-	static byte xor(List<byte[]> blocs, int nb) {
-		byte result = 0;
-		for (byte[] bloc : blocs) {
-			result = (byte) (result ^ bloc[nb]);
-		}
-		return result;
-	}
-
-	static byte[] getSplited(byte[] data, int n, int total) {
-		final int size = (data.length + total - 1) / total;
-		assert size * total >= data.length;
-		final byte result[] = new byte[size + 1];
-		result[0] = (byte) (1 << n);
-		for (int i = 0; (i < size) && (n * total + i < data.length); i++) {
-			result[i + 1] = data[n * total + i];
-		}
-		return result;
 	}
 
 }

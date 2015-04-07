@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -82,6 +82,11 @@ public class MessageExo extends AbstractMessage {
 	public boolean compatibleForCreate(Participant p) {
 		return p == participant;
 	}
+	
+	public boolean isSelfMessage() {
+		return false;
+	}
+
 
 
 }

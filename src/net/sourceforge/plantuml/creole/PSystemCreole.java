@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,7 +34,6 @@
 package net.sourceforge.plantuml.creole;
 
 import java.awt.Font;
-import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -42,18 +41,16 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class PSystemCreole extends AbstractPSystem {
 
@@ -71,16 +68,23 @@ public class PSystemCreole extends AbstractPSystem {
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final Display display = new Display(lines);
+		final Display display = Display.create(lines);
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
-		final FontConfiguration fontConfiguration = new FontConfiguration(font, HtmlColorUtils.BLACK);
-		final Sheet sheet = new CreoleParser(fontConfiguration, null).createSheet(display);
-		final SheetBlock sheetBlock = new SheetBlock(sheet, null, new UStroke());
-		final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
-		final UGraphic ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1, dim, null, false);
-		// sheetBlock.drawU(ug.apply(new UTranslate(0, 10)));
-		sheetBlock.drawU(ug);
-		ug.writeImage(os, null, 96);
-		return new ImageDataSimple(dim);
+		final FontConfiguration fontConfiguration = new FontConfiguration(font, HtmlColorUtils.BLACK,
+				HtmlColorUtils.BLUE, true);
+		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, false)
+				.createSheet(display);
+		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, 0, 0);
+
+		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 0, 0, null, false);
+		builder.addUDrawable(sheetBlock);
+		return builder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+
+		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
+		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1, dim, null, false);
+		// // sheetBlock.drawU(ug.apply(new UTranslate(0, 10)));
+		// sheetBlock.drawU(ug);
+		// ug.writeImageTOBEMOVED(os, null, 96);
+		// return new ImageDataSimple(dim);
 	}
 }

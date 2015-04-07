@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,13 +37,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.ImgValign;
+import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
 
@@ -53,11 +55,10 @@ public class StripeSimple implements Stripe {
 	private FontConfiguration fontConfiguration;
 
 	final private StripeStyle style;
-
-	final private ISkinParam skinParam;
+	final private ISkinSimple skinParam;
 
 	public StripeSimple(FontConfiguration fontConfiguration, StripeStyle style, CreoleContext context,
-			ISkinParam skinParam) {
+			ISkinSimple skinParam, boolean modeSimpleLine) {
 		this.fontConfiguration = fontConfiguration;
 		this.style = style;
 		this.skinParam = skinParam;
@@ -69,7 +70,9 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.ITALIC));
 		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.ITALIC));
 		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.ITALIC));
-		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.UNDERLINE));
+		if (modeSimpleLine == false) {
+			this.commands.add(CommandCreoleStyle.createCreole(FontStyle.UNDERLINE));
+		}
 		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.UNDERLINE));
 		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.UNDERLINE));
 		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.STRIKE));
@@ -83,16 +86,20 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleSizeChange.create());
 		this.commands.add(CommandCreoleSizeChange.createEol());
 		this.commands.add(CommandCreoleColorChange.create());
+		this.commands.add(CommandCreoleColorChange.createEol());
 		this.commands.add(CommandCreoleColorAndSizeChange.create());
 		this.commands.add(CommandCreoleColorAndSizeChange.createEol());
 		this.commands.add(CommandCreoleExposantChange.create(FontPosition.EXPOSANT));
 		this.commands.add(CommandCreoleExposantChange.create(FontPosition.INDICE));
 		this.commands.add(CommandCreoleImg.create());
+		this.commands.add(CommandCreoleOpenIcon.create());
 		this.commands.add(CommandCreoleSprite.create());
+		this.commands.add(CommandCreoleSpace.create());
 		this.commands.add(CommandCreoleFontFamilyChange.create());
 		this.commands.add(CommandCreoleFontFamilyChange.createEol());
 		this.commands.add(CommandCreoleMonospaced.create());
 		this.commands.add(CommandCreoleUrl.create(skinParam));
+		this.commands.add(CommandCreoleSvgAttributeChange.create());
 
 		final Atom header = style.getHeader(fontConfiguration, context);
 
@@ -102,6 +109,9 @@ public class StripeSimple implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
+		if (atoms.size() == 0) {
+			atoms.add(AtomText.create(" ", fontConfiguration));
+		}
 		return Collections.unmodifiableList(atoms);
 	}
 
@@ -117,6 +127,7 @@ public class StripeSimple implements Stripe {
 		if (line == null) {
 			throw new IllegalArgumentException();
 		}
+		line = CharHidder.hide(line);
 		if (style.getType() == StripeStyleType.HEADING) {
 			atoms.add(AtomText.createHeading(line, fontConfiguration, style.getOrder()));
 		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {
@@ -130,6 +141,10 @@ public class StripeSimple implements Stripe {
 		atoms.add(AtomImg.create(src, ImgValign.TOP, 0));
 	}
 
+	public void addSpace(int size) {
+		atoms.add(AtomSpace.create(size));
+	}
+
 	public void addUrl(Url url) {
 		atoms.add(AtomText.createUrl(url, fontConfiguration));
 	}
@@ -137,7 +152,14 @@ public class StripeSimple implements Stripe {
 	public void addSprite(String src) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null) {
-			atoms.add(new AtomSprite(sprite.asTextBlock(fontConfiguration.getColor())));
+			atoms.add(new AtomSprite(sprite.asTextBlock(fontConfiguration.getColor()), fontConfiguration));
+		}
+	}
+
+	public void addOpenIcon(String src) {
+		final OpenIcon openIcon = OpenIcon.retrieve(src);
+		if (openIcon != null) {
+			atoms.add(new AtomOpenIcon(openIcon, fontConfiguration));
 		}
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -92,6 +93,9 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		final RegexResult arg = pattern.matcher(line);
 		if (arg == null) {
 			return CommandExecutionResult.error("Cannot parse line " + line);
+		}
+		if (system instanceof PSystemError) {
+			return CommandExecutionResult.error("PSystemError cannot be cast");
 		}
 		// System.err.println("lines="+lines);
 		// System.err.println("pattern="+pattern.getPattern());

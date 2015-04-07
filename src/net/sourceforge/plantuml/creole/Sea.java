@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -120,6 +120,10 @@ public class Sea {
 			minMax = position.update(minMax);
 		}
 		return minMax;
+	}
+
+	public final double getWidth() {
+		return currentX;
 	}
 
 }

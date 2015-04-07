@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,6 +38,8 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import net.sourceforge.plantuml.StringUtils;
 
 class OSWindows extends OS {
 
@@ -83,7 +85,7 @@ class OSWindows extends OS {
 
 	@Override
 	String getFileName(GraphvizLayoutStrategy strategy) {
-		return strategy.name().toLowerCase() + ".exe";
+		return StringUtils.goLowerCase(strategy.name()) + ".exe";
 	}
 
 	@Override

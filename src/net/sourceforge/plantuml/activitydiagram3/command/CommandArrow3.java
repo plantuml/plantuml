@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -55,7 +54,7 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexOr(//
 						new RegexLeaf("->"), //
 						new RegexLeaf("COLOR", "-\\[(#\\w+)\\]->")), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("LABEL", "(.*);"), //
 						new RegexLeaf("")), //
@@ -65,7 +64,7 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
 
-		final HtmlColor color = HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0));
+		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
 		diagram.setColorNextArrow(color);
 		final String label = arg.get("LABEL", 0);
 		if (label != null && label.length() > 0) {

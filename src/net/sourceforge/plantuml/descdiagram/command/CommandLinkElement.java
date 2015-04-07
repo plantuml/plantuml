@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,10 +35,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -52,6 +52,8 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
@@ -63,9 +65,10 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		return new RegexConcat(
 				new RegexLeaf("^"), //
 				getGroup("ENT1"), //
-				new RegexLeaf("\\s*"), new RegexLeaf("LABEL1", "(?:\"([^\"]+)\")?"),
-				new RegexLeaf("\\s*"),
-				new RegexLeaf("HEAD2", "(0\\)|<<|[<^*+#0)]|<\\|| +o)?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LABEL1", "(?:[%g]([^%g]+)[%g])?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("HEAD2", "(0\\)|<<|[<^*+#0)]|<\\||[%s]+o)?"), //
 				new RegexLeaf("BODY1", "([-=.~]+)"), //
 				new RegexLeaf("ARROW_STYLE1",
 						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"),
@@ -74,11 +77,13 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				new RegexLeaf("ARROW_STYLE2",
 						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"),
 				new RegexLeaf("BODY2", "([-=.~]*)"), //
-				new RegexLeaf("HEAD1", "(\\(0|>>|[>^*+#0(]|\\|>|o +)?"), //
-				new RegexLeaf("\\s*"), new RegexLeaf("LABEL2", "(?:\"([^\"]+)\")?"), new RegexLeaf("\\s*"), //
+				new RegexLeaf("HEAD1", "(\\(0|>>|[>^*+#0(]|\\|>|o[%s]+)?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LABEL2", "(?:[%g]([^%g]+)[%g])?"), //
+				new RegexLeaf("[%s]*"), //
 				getGroup("ENT2"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("LABEL_LINK", "(?::\\s*(.+))?$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?$"));
 	}
 
 	private LinkType getLinkType(RegexResult arg) {
@@ -162,7 +167,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (s == null) {
 			return "";
 		}
-		return s.trim().toLowerCase();
+		return StringUtils.goLowerCase(s.trim());
 	}
 
 	private Direction getDirection(RegexResult arg) {
@@ -181,7 +186,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	private static RegexLeaf getGroup(String name) {
 		return new RegexLeaf(
 				name,
-				"([\\p{L}0-9_.]+|\\(\\)\\s*[\\p{L}0-9_.]+|\\(\\)\\s*\"[^\"]+\"|:[^:]+:|(?!\\[\\*\\])\\[[^\\[\\]]+\\]|\\((?!\\*\\))[^)]+\\))(?:\\s*(\\<\\<.*\\>\\>))?");
+				"([\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|(?!\\[\\*\\])\\[[^\\[\\]]+\\]|\\((?!\\*\\))[^)]+\\))(?:[%s]*(\\<\\<.*\\>\\>))?");
 	}
 
 	static class Labels {
@@ -204,7 +209,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 
 		private void init() {
-			final Pattern p1 = Pattern.compile("^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
+			final Pattern p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
 			final Matcher m1 = p1.matcher(labelLink);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
@@ -212,7 +217,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				secondLabel = m1.group(3);
 				return;
 			}
-			final Pattern p2 = Pattern.compile("^\"([^\"]+)\"([^\"]+)$");
+			final Pattern p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
 			final Matcher m2 = p2.matcher(labelLink);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
@@ -220,7 +225,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				secondLabel = null;
 				return;
 			}
-			final Pattern p3 = Pattern.compile("^([^\"]+)\"([^\"]+)\"$");
+			final Pattern p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 			final Matcher m3 = p3.matcher(labelLink);
 			if (m3.matches()) {
 				firstLabel = null;
@@ -273,28 +278,31 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			link = link.getInv();
 		}
 		CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
-
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
 
 	private ILeaf getOrCreateLeaf(DescriptionDiagram diagram, final Code code2) {
-		final String code = code2.getCode();
+		final String code = code2.getFullName();
 		if (code.startsWith("()")) {
 			return diagram.getOrCreateLeaf(
 					Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code.substring(2).trim())),
-					LeafType.CIRCLE_INTERFACE);
+					LeafType.DESCRIPTION, USymbol.INTERFACE);
 		}
 		final char codeChar = code.length() > 2 ? code.charAt(0) : 0;
 		if (codeChar == '(') {
-			return diagram.getOrCreateLeaf(code2.eventuallyRemoveStartingAndEndingDoubleQuote(), LeafType.USECASE);
+			return diagram.getOrCreateLeaf(code2.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:"),
+					LeafType.USECASE, USymbol.USECASE);
 		} else if (codeChar == ':') {
-			return diagram.getOrCreateLeaf(code2.eventuallyRemoveStartingAndEndingDoubleQuote(), LeafType.ACTOR);
+			return diagram.getOrCreateLeaf(code2.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:"),
+					LeafType.DESCRIPTION, USymbol.ACTOR);
 		} else if (codeChar == '[') {
-			return diagram.getOrCreateLeaf(code2.eventuallyRemoveStartingAndEndingDoubleQuote(), LeafType.COMPONENT);
+			final USymbol sym = diagram.getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
+			return diagram.getOrCreateLeaf(code2.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:"),
+					LeafType.DESCRIPTION, sym);
 		}
 
-		return diagram.getOrCreateLeaf(code2, null);
+		return diagram.getOrCreateLeaf(code2, null, null);
 	}
 
 	private CommandExecutionResult executePackageLink(DescriptionDiagram diagram, RegexResult arg) {
@@ -314,6 +322,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
+		CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

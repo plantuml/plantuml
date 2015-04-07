@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12064 $
+ * Revision $Revision: 15599 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -43,4 +43,6 @@ public interface Graphviz {
 	File getDotExe();
 
 	String dotVersion();
+	
+	boolean illegalDotExe();
 }

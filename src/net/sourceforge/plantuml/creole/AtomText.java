@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,10 +35,14 @@ package net.sourceforge.plantuml.creole;
 
 import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -47,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.CharHidder;
 
 public class AtomText implements Atom {
 
@@ -66,11 +71,12 @@ public class AtomText implements Atom {
 	private final DelayedDouble marginRight;
 	private final Url url;
 
-	public static AtomText create(String text, FontConfiguration fontConfiguration) {
+	public static Atom create(String text, FontConfiguration fontConfiguration) {
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
 
 	public static Atom createUrl(Url url, FontConfiguration fontConfiguration) {
+		fontConfiguration = fontConfiguration.hyperlink();
 		return new AtomText(url.getLabel(), fontConfiguration, url, ZERO, ZERO);
 	}
 
@@ -111,13 +117,10 @@ public class AtomText implements Atom {
 	private AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft, DelayedDouble marginRight) {
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
-		this.text = text;
+		//this.text = StringUtils.showComparatorCharacters(StringUtils.manageBackslash(text));
+		this.text = StringUtils.showComparatorCharacters(CharHidder.unhide(text));
 		this.fontConfiguration = style;
 		this.url = url;
-	}
-
-	public final String getText() {
-		return text;
 	}
 
 	public FontConfiguration getFontConfiguration() {
@@ -153,11 +156,15 @@ public class AtomText implements Atom {
 		return fontConfiguration.getSpace();
 	}
 
-	double getTabSize(StringBounder stringBounder) {
+	private double getTabSize(StringBounder stringBounder) {
 		return stringBounder.calculateDimension(fontConfiguration.getFont(), "        ").getWidth();
 	}
 
 	public void drawU(UGraphic ug) {
+		if (ug.isSpecialTxt()) {
+			ug.draw(this);
+			return;
+		}
 		if (url != null) {
 			ug.startUrl(url);
 		}
@@ -193,7 +200,11 @@ public class AtomText implements Atom {
 		}
 	}
 
-	double getWidth(StringBounder stringBounder) {
+	private double getWidth(StringBounder stringBounder) {
+		return getWidth(stringBounder, text);
+	}
+
+	private double getWidth(StringBounder stringBounder, String text) {
 		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
 		final double tabSize = getTabSize(stringBounder);
 		double x = 0;
@@ -210,4 +221,29 @@ public class AtomText implements Atom {
 		return x;
 	}
 
+	public List<AtomText> getSplitted(StringBounder stringBounder, double maxWidth) {
+		final List<AtomText> result = new ArrayList<AtomText>();
+		final StringTokenizer st = new StringTokenizer(text, " ", true);
+		final StringBuilder currentLine = new StringBuilder();
+		while (st.hasMoreTokens()) {
+			final String token = st.nextToken();
+			final double w = getWidth(stringBounder, currentLine + token);
+			if (w > maxWidth) {
+				result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
+				currentLine.setLength(0);
+				if (token.startsWith(" ") == false) {
+					currentLine.append(token);
+				}
+			} else {
+				currentLine.append(token);
+			}
+		}
+		result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
+		return Collections.unmodifiableList(result);
+
+	}
+
+	public final String getText() {
+		return text;
+	}
 }

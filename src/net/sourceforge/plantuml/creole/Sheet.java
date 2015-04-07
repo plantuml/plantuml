@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,9 +37,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+
 public class Sheet implements Iterable<Stripe> {
 
 	private final List<Stripe> stripes = new ArrayList<Stripe>();
+	private final HorizontalAlignment horizontalAlignment;
+
+	public Sheet(HorizontalAlignment horizontalAlignment) {
+		this.horizontalAlignment = horizontalAlignment;
+	}
 
 	public void add(Stripe stripe) {
 		stripes.add(stripe);
@@ -55,5 +62,9 @@ public class Sheet implements Iterable<Stripe> {
 			return null;
 		}
 		return stripes.get(size - 1);
+	}
+
+	public final HorizontalAlignment getHorizontalAlignment() {
+		return horizontalAlignment;
 	}
 }

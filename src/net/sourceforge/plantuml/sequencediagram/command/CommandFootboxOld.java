@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandFootboxOld extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandFootboxOld() {
-		super("(?i)^footbox\\s*(on|off)?\\s*$");
+		super("(?i)^footbox[%s]*(on|off)?[%s]*$");
 	}
 
 	@Override

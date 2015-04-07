@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,68 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-public enum ProcessState {
-	INIT, RUNNING, TERMINATED_OK, TIMEOUT, IO_EXCEPTION1, IO_EXCEPTION2;
+import java.io.IOException;
+
+public class ProcessState {
+
+	private final String name;
+	private final IOException cause;
+
+	private ProcessState(String name, IOException cause) {
+		this.name = name;
+		this.cause = cause;
+	}
+
+	@Override
+	public String toString() {
+		if (cause == null) {
+			return name;
+		}
+		return name + " " + cause.toString();
+	}
+
+	private final static ProcessState INIT = new ProcessState("INIT", null);
+	private final static ProcessState RUNNING = new ProcessState("RUNNING", null);
+	private final static ProcessState TERMINATED_OK = new ProcessState("TERMINATED_OK", null);
+	private final static ProcessState TIMEOUT = new ProcessState("TIMEOUT", null);
+
+	// INIT, RUNNING, TERMINATED_OK, TIMEOUT, IO_EXCEPTION1, IO_EXCEPTION2;
+
+	public static ProcessState INIT() {
+		return INIT;
+	}
+
+	public static ProcessState RUNNING() {
+		return RUNNING;
+	}
+
+	public static ProcessState TERMINATED_OK() {
+		return TERMINATED_OK;
+	}
+
+	public static ProcessState TIMEOUT() {
+		return TIMEOUT;
+	}
+
+	public static ProcessState IO_EXCEPTION1(IOException e) {
+		return new ProcessState("IO_EXCEPTION1", e);
+	}
+
+	public static ProcessState IO_EXCEPTION2(IOException e) {
+		return new ProcessState("IO_EXCEPTION2", e);
+	}
+
+	public boolean differs(ProcessState other) {
+		return name.equals(other.name) == false;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		final ProcessState other = (ProcessState) o;
+		return name.equals(other.name);
+	}
+
+	public Throwable getCause() {
+		return cause;
+	}
 }

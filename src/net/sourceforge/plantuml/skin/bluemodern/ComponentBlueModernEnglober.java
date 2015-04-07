@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.skin.bluemodern;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -56,8 +56,10 @@ public class ComponentBlueModernEnglober extends AbstractTextualComponent {
 	private final HtmlColor backColor;
 
 	public ComponentBlueModernEnglober(HtmlColor borderColor, HtmlColor backColor, Display strings,
-			HtmlColor fontColor, UFont font, SpriteContainer spriteContainer) {
-		super(strings, fontColor, font, HorizontalAlignment.CENTER, 4, 4, 1, spriteContainer, 0, false);
+			HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font,
+			ISkinSimple spriteContainer) {
+		super(strings, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER, 4, 4, 1,
+				spriteContainer, 0, false, null, null);
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 	}
@@ -67,8 +69,7 @@ public class ComponentBlueModernEnglober extends AbstractTextualComponent {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ug.apply(new UChangeColor(borderColor));
 		ug = ug.apply(new UChangeBackColor(backColor));
-		ug.apply(new UStroke(2))
-				.draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), 9, 9));
+		ug.apply(new UStroke(2)).draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), 9, 9));
 		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;
 
 		getTextBlock().drawU(ug.apply(new UTranslate(xpos, 0)));

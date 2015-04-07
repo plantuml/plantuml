@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.salt.factory;
 
 import java.awt.Font;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -45,9 +45,9 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class ElementFactoryTextField implements ElementFactory {
 
 	final private DataSource dataSource;
-	final private SpriteContainer spriteContainer;
+	final private ISkinSimple spriteContainer;
 
-	public ElementFactoryTextField(DataSource dataSource, SpriteContainer spriteContainer) {
+	public ElementFactoryTextField(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;
 		this.spriteContainer = spriteContainer;
 	}

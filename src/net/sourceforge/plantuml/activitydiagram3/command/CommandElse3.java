@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -51,7 +51,7 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
 				new RegexLeaf("else"), //
-				new RegexLeaf("WHEN", "(?:\\s*(?:\\(([^()]*)\\))?)?"), //
+				new RegexLeaf("WHEN", "(?:[%s]*(?:\\(([^()]*)\\))?)?"), //
 				new RegexLeaf(";?$"));
 	}
 

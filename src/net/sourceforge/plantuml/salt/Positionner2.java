@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -52,16 +52,28 @@ public class Positionner2 {
 	private Cell last;
 
 	public void add(Terminated<Element> element) {
-		last = new Cell(row, col);
-		positions.put(element.getElement(), last);
-		updateMax();
+		addWithoutMove(element.getElement());
 		final Terminator terminator = element.getTerminator();
 		if (terminator == Terminator.NEWCOL) {
-			col++;
+			moveNextColumn();
 		} else {
-			row++;
-			col = 0;
+			moveNextRow();
 		}
+	}
+
+	private void moveNextColumn() {
+		col++;
+	}
+
+	private void moveNextRow() {
+		row++;
+		col = 0;
+	}
+
+	private void addWithoutMove(Element elmt) {
+		last = new Cell(row, col);
+		positions.put(elmt, last);
+		updateMax();
 	}
 
 	public void mergeLeft(Terminator terminator) {

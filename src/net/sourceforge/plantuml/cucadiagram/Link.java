@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11477 $
+ * Revision $Revision: 15543 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -36,19 +36,22 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Hideable;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
-import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Link implements Hideable, Removeable {
 
@@ -79,6 +82,7 @@ public class Link implements Hideable, Removeable {
 
 	private boolean opale;
 	private boolean horizontalSolitary;
+	private String sametail;
 
 	private Url url;
 
@@ -108,9 +112,11 @@ public class Link implements Hideable, Removeable {
 		this.type = type;
 		if (label == null) {
 			this.label = null;
-		} else {
+		} else if (doWeHaveToRemoveUrlAtStart(label)) {
 			this.url = label.initUrl();
 			this.label = label.removeUrl(url);
+		} else {
+			this.label = label;
 		}
 		this.length = length;
 		this.qualifier1 = qualifier1;
@@ -124,6 +130,20 @@ public class Link implements Hideable, Removeable {
 		if (qualifier2 != null) {
 			((ILeaf) cl2).setNearDecoration(true);
 		}
+//		if (type.getDecor2() == LinkDecor.EXTENDS) {
+//			setSametail(cl1.getUid());
+//		}
+	}
+
+	private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
+		if (label.size() == 0) {
+			return false;
+		}
+		final String s = label.get(0).toString();
+		if (s.matches("^\\[\\[\\S+\\]\\].+$")) {
+			return true;
+		}
+		return false;
 	}
 
 	public Link getInv() {
@@ -149,6 +169,10 @@ public class Link implements Hideable, Removeable {
 
 	public void goHidden() {
 		this.hidden = true;
+	}
+
+	public void goNorank() {
+		setConstraint(false);
 	}
 
 	public void goBold() {
@@ -192,7 +216,7 @@ public class Link implements Hideable, Removeable {
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + cl1 + "-->" + cl2;
+		return super.toString() + " {" + length + "} " + cl1 + "-->" + cl2;
 	}
 
 	public IEntity getEntity1() {
@@ -207,7 +231,39 @@ public class Link implements Hideable, Removeable {
 		if (opale) {
 			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 		}
-		return type;
+		if (getSametail() != null) {
+			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+		}
+		LinkType result = type;
+		if (OptionFlags.USE_INTERFACE_EYE1) {
+			if (isLollipopInterfaceEye(cl1)) {
+				type = type.withLollipopInterfaceEye1();
+			}
+			if (isLollipopInterfaceEye(cl2)) {
+				type = type.withLollipopInterfaceEye2();
+			}
+		}
+		return result;
+	}
+
+	private LinkType getTypeSpecialForPrinting() {
+		if (opale) {
+			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+		}
+		LinkType result = type;
+		if (OptionFlags.USE_INTERFACE_EYE1) {
+			if (isLollipopInterfaceEye(cl1)) {
+				type = type.withLollipopInterfaceEye1();
+			}
+			if (isLollipopInterfaceEye(cl2)) {
+				type = type.withLollipopInterfaceEye2();
+			}
+		}
+		return result;
+	}
+
+	private boolean isLollipopInterfaceEye(IEntity ent) {
+		return ent.getUSymbol() instanceof USymbolInterface;
 	}
 
 	public Display getLabel() {
@@ -299,23 +355,23 @@ public class Link implements Hideable, Removeable {
 		throw new IllegalArgumentException();
 	}
 
-	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif, SpriteContainer spriteContainer) {
+	public double getMarginDecors1(StringBounder stringBounder, UFont fontQualif, ISkinSimple spriteContainer) {
 		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier1, spriteContainer);
 		final LinkDecor decor = getType().getDecor1();
 		return decor.getMargin() + q;
 	}
 
-	public double getMarginDecors2(StringBounder stringBounder, UFont fontQualif, SpriteContainer spriteContainer) {
+	public double getMarginDecors2(StringBounder stringBounder, UFont fontQualif, ISkinSimple spriteContainer) {
 		final double q = getQualifierMargin(stringBounder, fontQualif, qualifier2, spriteContainer);
 		final LinkDecor decor = getType().getDecor2();
 		return decor.getMargin() + q;
 	}
 
 	private double getQualifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif,
-			SpriteContainer spriteContainer) {
+			ISkinSimple spriteContainer) {
 		if (qualif != null) {
-			final TextBlock b = TextBlockUtils.create(Display.asList(qualif), new FontConfiguration(fontQualif,
-					HtmlColorUtils.BLACK), HorizontalAlignment.LEFT, spriteContainer);
+			final TextBlock b = TextBlockUtils.create(Display.create(qualif), new FontConfiguration(fontQualif,
+					HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, spriteContainer);
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
@@ -327,7 +383,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public void setSpecificColor(String s) {
-		this.specificColor = HtmlColorUtils.getColorIfValid(s);
+		this.specificColor = HtmlColorSet.getInstance().getColorIfValid(s);
 	}
 
 	public final boolean isConstraint() {
@@ -399,6 +455,26 @@ public class Link implements Hideable, Removeable {
 		return false;
 	}
 
+	public boolean doesTouch(Link other) {
+		if (this.cl1 == other.cl1) {
+			return true;
+		}
+		if (this.cl1 == other.cl2) {
+			return true;
+		}
+		if (this.cl2 == other.cl1) {
+			return true;
+		}
+		if (this.cl2 == other.cl2) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isAutolink() {
+		return cl1 == cl2;
+	}
+
 	public boolean isRemoved() {
 		return cl1.isRemoved() || cl2.isRemoved();
 	}
@@ -410,14 +486,12 @@ public class Link implements Hideable, Removeable {
 		return getUrl() != null;
 	}
 
-	// private Group containerEntryPoint;
-	//
-	// public void setEntryPoint(Group container) {
-	// containerEntryPoint = container;
-	// }
-	//
-	// public Group getEntryPoint() {
-	// return containerEntryPoint;
-	// }
+	public String getSametail() {
+		return sametail;
+	}
+
+	public void setSametail(String sametail) {
+		this.sametail = sametail;
+	}
 
 }

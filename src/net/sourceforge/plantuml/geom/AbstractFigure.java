@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 14581 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -96,7 +96,7 @@ abstract class AbstractFigure {
 		return Collections.unmodifiableCollection(result);
 	}
 
-	void addSegment(LineSegmentInt seg) {
+	public void addSegment(LineSegmentInt seg) {
 		segments.add(seg);
 	}
 
@@ -233,7 +233,7 @@ abstract class AbstractFigure {
 		return new LineSegmentInt(p1, p2).getLength();
 	}
 
-	boolean isConnectable(Point2DInt p, Neighborhood n) {
+	public boolean isConnectable(Point2DInt p, Neighborhood n) {
 		final LineSegmentInt seg = new LineSegmentInt(n.getCenter(), p);
 		if (hasIntersectionStrict(seg)) {
 			return false;
@@ -242,7 +242,7 @@ abstract class AbstractFigure {
 		return n.isInAngleLarge(angle);
 	}
 
-	boolean isConnectable(Neighborhood n1, Neighborhood n2) {
+	public boolean isConnectable(Neighborhood n1, Neighborhood n2) {
 		final boolean result = isConnectableInternal(n1, n2);
 		assert result == isConnectableInternal(n2, n1);
 		return result;
@@ -289,7 +289,7 @@ abstract class AbstractFigure {
 		return false;
 	}
 
-	Singularity getSingularity(Point2DInt center) {
+	public Singularity getSingularity(Point2DInt center) {
 		final Singularity singularity = new Singularity(center);
 		for (LineSegmentInt seg : getSegments()) {
 			if (seg.containsPoint(center)) {

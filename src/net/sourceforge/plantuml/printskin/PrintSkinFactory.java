@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,10 +39,11 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class PrintSkinFactory extends PSystemSingleLineFactory {
 
-	static final Pattern p = Pattern.compile("(?i)^testskin\\s+([\\w.]+)\\s*(.*)$");
+	static final Pattern p = MyPattern.cmpile("(?i)^testskin[%s]+([\\w.]+)[%s]*(.*)$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {

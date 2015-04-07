@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11681 $
+ * Revision $Revision: 12784 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -46,7 +46,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		super(colorMapper);
 		this.g2d = g2d;
 	}
-	
+
 	protected AbstractUGraphic(AbstractUGraphic<O> other) {
 		super(other);
 		this.g2d = other.g2d;
@@ -56,7 +56,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	protected final O getGraphicObject() {
 		return g2d;
 	}
-	
+
 	protected boolean manageHiddenAutomatically() {
 		return true;
 	}
@@ -77,7 +77,13 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 			return;
 		}
 		beforeDraw();
-		driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+		if (shape instanceof Scalable) {
+			final double scale = getParam().getScale();
+			shape = ((Scalable) shape).getScaled(scale);
+			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+		} else {
+			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+		}
 		afterDraw();
 	}
 
@@ -86,5 +92,5 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 
 	protected void afterDraw() {
 	}
-	
+
 }

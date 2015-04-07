@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 14994 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
-public class Message extends AbstractMessage {
+public final class Message extends AbstractMessage {
 
 	final private Participant p1;
 	final private Participant p2;
@@ -46,6 +46,11 @@ public class Message extends AbstractMessage {
 		super(label, arrowConfiguration, messageNumber);
 		this.p1 = p1;
 		this.p2 = p2;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + p1 + "->" + p2 + " " + getLabel();
 	}
 
 	public Participant getParticipant1() {
@@ -63,6 +68,10 @@ public class Message extends AbstractMessage {
 	@Override
 	public boolean compatibleForCreate(Participant p) {
 		return p1 != p && p2 == p;
+	}
+
+	public boolean isSelfMessage() {
+		return p1 == p2;
 	}
 
 }

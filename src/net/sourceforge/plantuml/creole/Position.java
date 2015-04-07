@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -53,12 +53,12 @@ public class Position {
 		this.x = x;
 		this.y = y;
 		this.dim = dim;
-		if (dim.getHeight() == 0) {
-			throw new IllegalArgumentException();
-		}
-		if (dim.getWidth() == 0) {
-			throw new IllegalArgumentException();
-		}
+//		if (dim.getHeight() == 0) {
+//			throw new IllegalArgumentException();
+//		}
+//		if (dim.getWidth() == 0) {
+//			throw new IllegalArgumentException();
+//		}
 	}
 
 	@Override
@@ -71,10 +71,6 @@ public class Position {
 		return translateY(dy);
 	}
 
-	// public final double getX() {
-	// return x;
-	// }
-	//
 	public final double getMinY() {
 		return y;
 	}
@@ -83,17 +79,16 @@ public class Position {
 		return y + getHeight();
 	}
 
-	//
-	// public final Dimension2D getDim() {
-	// return dim;
-	// }
-	//
 	public UGraphic translate(UGraphic ug) {
 		return ug.apply(new UTranslate(x, y));
 	}
 
 	public Position translateY(double dy) {
 		return new Position(x, y + dy, dim);
+	}
+
+	public Position translateX(double dx) {
+		return new Position(x + dx, y, dim);
 	}
 
 	public MinMax update(MinMax minMax) {

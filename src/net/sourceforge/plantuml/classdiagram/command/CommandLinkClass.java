@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,10 +39,10 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.StringUtils;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -67,44 +68,54 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
 		return new RegexConcat(
-				new RegexLeaf("HEADER", "^(?:@([\\d.]+)\\s+)?"), //
+				new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
 				new RegexOr(//
-						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "\\s+)?"
-								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)?"),
+						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
+								+ getClassIdentifier()),
 						new RegexLeaf("COUPLE1",
-								"\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)")),
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("FIRST_LABEL", "(?:\"([^\"]+)\")?"), //
-				new RegexLeaf("\\s*"), //
+								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
+				new RegexLeaf("[%s]*"), //
 
 				new RegexConcat(
 						//
-						new RegexLeaf("ARROW_HEAD1", "( +o|[\\[<*+^]|[<\\[]\\|)?"), //
+						new RegexLeaf("ARROW_HEAD1", "([%s]+o|[#\\[<*+^]|[<\\[]\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1",
-								"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"),
+								"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,bold|,hidden|,norank)*)\\])?"),
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
+						new RegexLeaf("INSIDE", "(?:(0|\\(0\\)|\\(0|0\\))(?=[-=.~]))?"), //
 						new RegexLeaf("ARROW_STYLE2",
-								"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"),
+								"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,bold|,hidden|,norank)*)\\])?"),
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
-						new RegexLeaf("ARROW_HEAD2", "(o +|[\\]>*+^]|\\|[>\\]])?")), //
+						new RegexLeaf("ARROW_HEAD2", "(o[%s]+|[#\\]>*+^]|\\|[>\\]])?")), //
 
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("SECOND_LABEL", "(?:\"([^\"]+)\")?"),
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"),
+				new RegexLeaf("[%s]*"), //
 				new RegexOr(
-						new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "\\s+)?"
-								+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)?"),
+						new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
+								+ getClassIdentifier()),
 						new RegexLeaf("COUPLE2",
-								"\\(\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*,\\s*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)\\s*\\)")),
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("LABEL_LINK", "(?::\\s*(.+))?"), //
+								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
 				new RegexLeaf("$"));
+	}
+
+	private static String getClassIdentifier() {
+		return "(" + getSeparator() + "?[\\p{L}0-9_]+(?:" + getSeparator()
+				+ "[\\p{L}0-9_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?";
+	}
+
+	private static String getSeparator() {
+		return "(?:\\.|::)";
 	}
 
 	private static String optionalKeywords(UmlDiagramType type) {
 		if (type == UmlDiagramType.CLASS) {
-			return "(interface|enum|annotation|abstract\\s+class|abstract|class)";
+			return "(interface|enum|annotation|abstract[%s]+class|abstract|class)";
 		}
 		if (type == UmlDiagramType.OBJECT) {
 			return "(object)";
@@ -122,38 +133,40 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (ent2 == null) {
 			return executeArgSpecial2(diagram, arg);
 		}
-		ent1 = ent1.eventuallyRemoveStartingAndEndingDoubleQuote();
-		ent2 = ent2.eventuallyRemoveStartingAndEndingDoubleQuote();
+		ent1 = ent1.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
+		ent2 = ent2.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
 		if (diagram.isGroup(ent1) && diagram.isGroup(ent2)) {
 			return executePackageLink(diagram, arg);
 		}
 
 		final IEntity cl1 = diagram.isGroup(ent1) ? diagram.getGroup(Code.of(StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1)))) : diagram.getOrCreateLeaf(ent1,
-				null);
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1), "\""))) : diagram.getOrCreateLeaf(
+				ent1, null, null);
 		final IEntity cl2 = diagram.isGroup(ent2) ? diagram.getGroup(Code.of(StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1)))) : diagram.getOrCreateLeaf(ent2,
-				null);
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1), "\""))) : diagram.getOrCreateLeaf(
+				ent2, null, null);
 
 		if (arg.get("ENT1", 0) != null) {
 			final LeafType type = LeafType.getLeafType(arg.get("ENT1", 0));
 			if (type != LeafType.OBJECT) {
-				((ILeaf) cl1).muteToType(type);
+				((ILeaf) cl1).muteToType(type, null);
 			}
 		}
 		if (arg.get("ENT2", 0) != null) {
 			final LeafType type = LeafType.getLeafType(arg.get("ENT2", 0));
 			if (type != LeafType.OBJECT) {
-				((ILeaf) cl2).muteToType(type);
+				((ILeaf) cl2).muteToType(type, null);
 			}
 		}
 		if (arg.get("ENT1", 2) != null) {
 			cl1.setStereotype(new Stereotype(arg.get("ENT1", 2), diagram.getSkinParam().getCircledCharacterRadius(),
-					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+							.getIHtmlColorSet()));
 		}
 		if (arg.get("ENT2", 2) != null) {
 			cl2.setStereotype(new Stereotype(arg.get("ENT2", 2), diagram.getSkinParam().getCircledCharacterRadius(),
-					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+							.getIHtmlColorSet()));
 		}
 
 		final LinkType linkType = getLinkType(arg);
@@ -173,32 +186,34 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (arg.get("LABEL_LINK", 0) != null) {
 			labelLink = arg.get("LABEL_LINK", 0);
 			if (firstLabel == null && secondLabel == null) {
-				final Pattern p1 = Pattern.compile("^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
+				final Pattern p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
 				final Matcher m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
-					labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m1.group(2).trim()).trim();
+					labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m1.group(2).trim(), "\"")
+							.trim();
 					secondLabel = m1.group(3);
 				} else {
-					final Pattern p2 = Pattern.compile("^\"([^\"]+)\"([^\"]+)$");
+					final Pattern p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
 					final Matcher m2 = p2.matcher(labelLink);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
-						labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m2.group(2).trim()).trim();
+						labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m2.group(2).trim(), "\"")
+								.trim();
 						secondLabel = null;
 					} else {
-						final Pattern p3 = Pattern.compile("^([^\"]+)\"([^\"]+)\"$");
+						final Pattern p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 						final Matcher m3 = p3.matcher(labelLink);
 						if (m3.matches()) {
 							firstLabel = null;
-							labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m3.group(1).trim())
-									.trim();
+							labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m3.group(1).trim(),
+									"\"").trim();
 							secondLabel = m3.group(2);
 						}
 					}
 				}
 			}
-			labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink);
+			labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink, "\"");
 		}
 
 		LinkArrow linkArrow = LinkArrow.NONE;
@@ -259,10 +274,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
-		final IEntity cl1 = diagram.getGroup(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(
-				"ENT1", 1))));
-		final IEntity cl2 = diagram.getGroup(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(
-				"ENT2", 1))));
+		final IEntity cl1 = diagram.getGroup(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
+				arg.get("ENT1", 1), "\"")));
+		final IEntity cl2 = diagram.getGroup(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
+				arg.get("ENT2", 1), "\"")));
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -294,8 +309,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return CommandExecutionResult.error("No class " + clName2);
 		}
 
-		final Code ent2 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1)));
-		final IEntity cl2 = diagram.getOrCreateLeaf(ent2, null);
+		final Code ent2 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1), "\""));
+		final IEntity cl2 = diagram.getOrCreateLeaf(ent2, null, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
@@ -320,8 +335,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return CommandExecutionResult.error("No class " + clName2);
 		}
 
-		final Code ent1 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1)));
-		final IEntity cl1 = diagram.getOrCreateLeaf(ent1, null);
+		final Code ent1 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1), "\""));
+		final IEntity cl1 = diagram.getOrCreateLeaf(ent1, null, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
@@ -359,6 +374,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("*".equals(s)) {
 			return LinkDecor.COMPOSITION;
 		}
+		if ("#".equals(s)) {
+			return LinkDecor.SQUARRE;
+		}
 		return LinkDecor.NONE;
 	}
 
@@ -385,6 +403,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("*".equals(s)) {
 			return LinkDecor.COMPOSITION;
 		}
+		if ("#".equals(s)) {
+			return LinkDecor.SQUARRE;
+		}
 		return LinkDecor.NONE;
 	}
 
@@ -395,6 +416,16 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		LinkType result = new LinkType(decors2, decors1);
 		if (arg.get("ARROW_BODY1", 0).contains(".") || arg.get("ARROW_BODY2", 0).contains(".")) {
 			result = result.getDashed();
+		}
+		final String middle = arg.get("INSIDE", 0);
+		if ("0".equals(middle)) {
+			result = result.withMiddleCircle();
+		} else if ("0)".equals(middle)) {
+			result = result.withMiddleCircleCircled1();
+		} else if ("(0".equals(middle)) {
+			result = result.withMiddleCircleCircled2();
+		} else if ("(0)".equals(middle)) {
+			result = result.withMiddleCircleCircled();
 		}
 		return result;
 	}
@@ -454,6 +485,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				link.goDotted();
 			} else if (s.equalsIgnoreCase("hidden")) {
 				link.goHidden();
+			} else if (s.equalsIgnoreCase("norank")) {
+				link.goNorank();
 			} else {
 				link.setSpecificColor(s);
 			}

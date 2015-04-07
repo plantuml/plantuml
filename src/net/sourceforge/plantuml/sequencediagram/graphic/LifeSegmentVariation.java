@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,12 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 14823 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-enum LifeSegmentVariation {
+public enum LifeSegmentVariation {
 	LARGER, SMALLER;
 
 	public int apply(int v) {

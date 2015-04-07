@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -47,9 +47,11 @@ public class InstructionFork implements Instruction {
 
 	private final List<InstructionList> forks = new ArrayList<InstructionList>();
 	private final Instruction parent;
+	private final LinkRendering inlinkRendering;
 
-	public InstructionFork(Instruction parent) {
+	public InstructionFork(Instruction parent, LinkRendering inlinkRendering) {
 		this.parent = parent;
+		this.inlinkRendering = inlinkRendering;
 		this.forks.add(new InstructionList());
 	}
 
@@ -67,7 +69,7 @@ public class InstructionFork implements Instruction {
 		for (InstructionList list : forks) {
 			all.add(list.createFtile(factory));
 		}
-		return factory.createFork(all);
+		return factory.createFork(getSwimlaneIn(), all);
 	}
 
 	public Instruction getParent() {
@@ -83,7 +85,7 @@ public class InstructionFork implements Instruction {
 	}
 
 	public LinkRendering getInLinkRendering() {
-		return null;
+		return inlinkRendering;
 	}
 
 	public void addNote(Display note, NotePosition position) {
@@ -95,7 +97,8 @@ public class InstructionFork implements Instruction {
 	}
 
 	public Swimlane getSwimlaneIn() {
-		return parent.getSwimlaneOut();
+		// return parent.getSwimlaneOut();
+		return forks.get(0).getSwimlaneIn();
 	}
 
 	public Swimlane getSwimlaneOut() {

@@ -26,6 +26,8 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import net.sourceforge.plantuml.StringUtils;
+
 /**
  *
  * @author monceaux
@@ -552,7 +554,7 @@ public class MJPEGGenerator
         File[] files = photoDir.listFiles(new FilenameFilter(){
             public boolean accept(File dir, String name)
             {
-                if(name.toLowerCase().endsWith("jpg"))
+                if(StringUtils.goLowerCase(name).endsWith("jpg"))
                     return true;
                 return false;
             }

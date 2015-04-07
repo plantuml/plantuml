@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,8 +36,8 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -52,7 +52,7 @@ public class ElementButton extends AbstractElementText implements Element {
 	private final double marginX = 2;
 	private final double marginY = 2;
 
-	public ElementButton(String text, UFont font, SpriteContainer spriteContainer) {
+	public ElementButton(String text, UFont font, ISkinSimple spriteContainer) {
 		super(text, font, true, spriteContainer);
 	}
 
@@ -62,14 +62,15 @@ public class ElementButton extends AbstractElementText implements Element {
 		return Dimension2DDouble.delta(dim, 2 * stroke);
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		if (zIndex != 0) {
 			return;
 		}
-		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), x, y);
+		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(new UStroke(stroke));
-		ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#EEEEEE"))).apply(new UTranslate(x + stroke, y + stroke)).draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke, 10, 10));
+		ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE"))).apply(new UTranslate(stroke, stroke))
+				.draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke, 10, 10));
 		final Dimension2D dimPureText = getPureTextDimension(ug.getStringBounder());
-		drawText(ug, x + (dim.getWidth() - dimPureText.getWidth()) / 2, y + stroke + marginY);
+		drawText(ug, (dim.getWidth() - dimPureText.getWidth()) / 2, stroke + marginY);
 	}
 }

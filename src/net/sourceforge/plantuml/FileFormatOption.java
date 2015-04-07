@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -47,13 +47,15 @@ import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
+import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
+import net.sourceforge.plantuml.StringUtils;
 
 /**
  * A FileFormat with some parameters.
@@ -67,9 +69,10 @@ public class FileFormatOption {
 	private final FileFormat fileFormat;
 	private final AffineTransform affineTransform;
 	private final boolean withMetadata;
+	private final boolean useRedForError;
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true);
+		this(fileFormat, null, true, false);
 	}
 
 	public final boolean isWithMetadata() {
@@ -77,17 +80,18 @@ public class FileFormatOption {
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, false);
+		this(fileFormat, null, false, false);
 	}
 
-	public FileFormatOption(FileFormat fileFormat, AffineTransform at) {
-		this(fileFormat, at, true);
-	}
-
-	public FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata) {
+	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError) {
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
 		this.withMetadata = withMetadata;
+		this.useRedForError = useRedForError;
+	}
+
+	public FileFormatOption withUseRedForError() {
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true);
 	}
 
 	@Override
@@ -114,7 +118,7 @@ public class FileFormatOption {
 	 * @param rotation
 	 * @return
 	 */
-	public UGraphic createUGraphic(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
+	public UGraphic2 createUGraphic(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
 			HtmlColor mybackcolor, boolean rotation) {
 		switch (fileFormat) {
 		case PNG:
@@ -129,16 +133,18 @@ public class FileFormatOption {
 			return new UGraphicHtml5(colorMapper);
 		case VDX:
 			return new UGraphicVdx(colorMapper);
+		case LATEX:
+			return new UGraphicTikz(colorMapper);
 		default:
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}
 	}
 
-	public UGraphic createUGraphic(final Dimension2D dim) {
+	public UGraphic2 createUGraphic(final Dimension2D dim) {
 		return createUGraphic(new ColorMapperIdentity(), 1.0, dim, null, false);
 	}
 
-	private UGraphic createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
 			boolean rotation) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
@@ -156,7 +162,7 @@ public class FileFormatOption {
 
 	}
 
-	private UGraphic createUGraphicPNG(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
+	private UGraphic2 createUGraphicPNG(ColorMapper colorMapper, double dpiFactor, final Dimension2D dim,
 			HtmlColor mybackcolor, boolean rotation) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
@@ -187,6 +193,10 @@ public class FileFormatOption {
 		}
 
 		return ug;
+	}
+
+	public final boolean isUseRedForError() {
+		return useRedForError;
 	}
 
 }

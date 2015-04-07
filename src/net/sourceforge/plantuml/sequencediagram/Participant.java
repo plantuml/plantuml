@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11263 $
+ * Revision $Revision: 12299 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -135,6 +136,14 @@ public class Participant implements SpecificBackcolorable {
 
 	public final void setUrl(Url url) {
 		this.url = url;
+	}
+
+	public final Stereotype getStereotype() {
+		return stereotype;
+	}
+
+	public ColorParam getBackgroundColorParam() {
+		return type.getBackgroundColorParam();
 	}
 
 }

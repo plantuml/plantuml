@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -59,7 +59,8 @@ public class CommandNewpage extends SingleLineCommand2<AbstractPSystem> {
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractPSystem diagram, RegexResult arg) {
-		NewpagedDiagram result = NewpagedDiagram.newpage(diagram, factory.createEmptyDiagram());
+		// NewpagedDiagram result = NewpagedDiagram.newpage(diagram, factory.createEmptyDiagram());
+		NewpagedDiagram result = new NewpagedDiagram(diagram, factory.createEmptyDiagram());
 		return CommandExecutionResult.newDiagram(result);
 	}
 }

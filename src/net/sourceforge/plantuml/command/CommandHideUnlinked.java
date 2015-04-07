@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 public class CommandHideUnlinked extends SingleLineCommand<UmlDiagram> {
 
 	public CommandHideUnlinked() {
-		super("(?i)^(hide|show)\\s+unlinked$");
+		super("(?i)^(hide|show)[%s]+unlinked$");
 	}
 
 	@Override

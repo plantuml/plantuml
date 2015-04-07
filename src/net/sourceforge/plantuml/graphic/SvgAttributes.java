@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,6 +39,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.StringUtils;
 
 public class SvgAttributes {
@@ -53,7 +54,7 @@ public class SvgAttributes {
 	}
 
 	public SvgAttributes(String args) {
-		final Pattern p = Pattern.compile("(\\w+)\\s*=\\s*(\"[^\"]*\"|(?:\\w+))");
+		final Pattern p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
 		final Matcher m = p.matcher(args);
 		while (m.find()) {
 			attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12053 $
+ * Revision $Revision: 15580 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -126,7 +126,7 @@ class PrintSkin extends AbstractPSystem {
 	private void printComponent(ComponentType type) {
 		println(type.name());
 		final Component comp = skin.createComponent(type, ArrowConfiguration.withDirectionNormal(),
-				new SkinParam(null), new Display(toPrint));
+				SkinParam.noShadowing(), Display.create(toPrint));
 		if (comp == null) {
 			println("null");
 			return;
@@ -142,7 +142,9 @@ class PrintSkin extends AbstractPSystem {
 		if (width == 0) {
 			width = 42;
 		}
-		ug.apply(new UChangeBackColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate((double) (xpos - 1), (double) (ypos - 1))).draw(new URectangle(width + 2, height + 2));
+		ug.apply(new UChangeBackColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY))
+				.apply(new UTranslate((double) (xpos - 1), (double) (ypos - 1)))
+				.draw(new URectangle(width + 2, height + 2));
 
 		comp.drawU(ug.apply(new UTranslate(xpos, ypos)), new Area(new Dimension2DDouble(width, height)),
 				new SimpleContext2D(false));
@@ -151,8 +153,8 @@ class PrintSkin extends AbstractPSystem {
 	}
 
 	private void println(String s) {
-		final TextBlock textBlock = TextBlockUtils.create(Display.asList(s), new FontConfiguration(FONT1,
-				HtmlColorUtils.BLACK), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		final TextBlock textBlock = TextBlockUtils.create(Display.create(s), new FontConfiguration(FONT1,
+				HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		textBlock.drawU(ug.apply(new UTranslate(xpos, ypos)));
 		ypos += textBlock.calculateDimension(ug.getStringBounder()).getHeight();
 	}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,8 +39,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StartUtils;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.version.IteratorCounter;
 import net.sourceforge.plantuml.version.IteratorCounterImpl;
 
@@ -72,7 +74,7 @@ final public class UmlSource {
 			final StringBuilder pending = new StringBuilder();
 			for (CharSequence cs : source) {
 				final String s = cs.toString();
-				if (s.endsWith("\\") && s.endsWith("\\\\") == false) {
+				if (StringUtils.endsWithBackslash(s)) {
 					pending.append(s.substring(0, s.length() - 1));
 				} else {
 					pending.append(s);
@@ -87,6 +89,7 @@ final public class UmlSource {
 		}
 		this.source = Collections.unmodifiableList(tmp);
 	}
+
 
 	/**
 	 * Retrieve the type of the diagram.
@@ -171,15 +174,15 @@ final public class UmlSource {
 	 * @return
 	 */
 	public Display getTitle() {
-		final Pattern p = Pattern.compile("(?i)^\\s*title\\s+(.+)$");
+		final Pattern p = MyPattern.cmpile("(?i)^[%s]*title[%s]+(.+)$");
 		for (String s : source) {
 			final Matcher m = p.matcher(s);
 			final boolean ok = m.matches();
 			if (ok) {
-				return Display.asList(m.group(1));
+				return Display.create(m.group(1));
 			}
 		}
-		return Display.emptyList();
+		return Display.empty();
 	}
 
 }

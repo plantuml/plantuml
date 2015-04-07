@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -61,6 +61,10 @@ public class UHorizontalLine implements UShape {
 
 	public static UHorizontalLine infinite(double skipAtStart, double skipAtEnd, TextBlock title, char style) {
 		return new UHorizontalLine(skipAtStart, skipAtEnd, title, false, style);
+	}
+
+	public boolean isDouble() {
+		return style == '=';
 	}
 
 	// static public UHorizontalLine infinite(UStroke stroke) {

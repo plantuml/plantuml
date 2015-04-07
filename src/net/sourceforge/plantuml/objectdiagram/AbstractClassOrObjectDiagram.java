@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.objectdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
@@ -92,8 +92,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	public boolean associationClass(int mode, Code clName1, Code clName2, IEntity associed, LinkType linkType,
 			Display label) {
-		final IEntity entity1 = getOrCreateLeaf(clName1, null);
-		final IEntity entity2 = getOrCreateLeaf(clName2, null);
+		final IEntity entity1 = getOrCreateLeaf(clName1, null, null);
+		final IEntity entity2 = getOrCreateLeaf(clName2, null, null);
 		final List<Association> same = new ArrayList<Association>();
 		for (Association existing : assocations) {
 			if (existing.sameCouple(entity1, entity2)) {
@@ -135,7 +135,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.entity1 = entity1;
 			this.entity2 = entity2;
 			this.associed = associed;
-			point = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION);
+			point = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
 

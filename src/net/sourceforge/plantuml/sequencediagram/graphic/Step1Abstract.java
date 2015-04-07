@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -44,7 +45,6 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 
 abstract class Step1Abstract {
 
@@ -56,7 +56,7 @@ abstract class Step1Abstract {
 
 	private Frontier freeY2;
 
-//	private ComponentType type;
+	// private ComponentType type;
 	private ArrowConfiguration config;
 
 	private Component note;
@@ -85,66 +85,13 @@ abstract class Step1Abstract {
 		if (message.getMessageNumber() == null) {
 			return message.getLabel();
 		}
-		Display result = new Display();
+		Display result = Display.empty();
 		result = result.add(new MessageNumber(message.getMessageNumber()));
 		result = result.addAll(message.getLabel());
 		return result;
 	}
 
-	protected final void beforeMessage(LifeEvent n, final double pos) {
-		final Participant p = n.getParticipant();
-		final LifeLine line = drawingSet.getLivingParticipantBox(p).getLifeLine();
 
-		if (n.getType() != LifeEventType.ACTIVATE) {
-			return;
-		}
-		assert n.getType() == LifeEventType.ACTIVATE;
-
-		int delta = 0;
-		if (message.isCreate()) {
-			delta += 10;
-		}
-		line.addSegmentVariation(LifeSegmentVariation.LARGER, pos + delta, n.getSpecificBackColor());
-	}
-
-	protected final void afterMessage(StringBounder stringBounder, LifeEvent n, final double pos) {
-		final Participant p = n.getParticipant();
-		final LifeLine line = drawingSet.getLivingParticipantBox(p).getLifeLine();
-
-		if (n.getType() == LifeEventType.ACTIVATE || n.getType() == LifeEventType.CREATE) {
-			return;
-		}
-
-		if (n.getType() == LifeEventType.DESTROY) {
-			final Component comp = drawingSet.getSkin().createComponent(ComponentType.DESTROY, null,
-					drawingSet.getSkinParam(), null);
-			final double delta = comp.getPreferredHeight(stringBounder) / 2;
-			final LifeDestroy destroy = new LifeDestroy(pos - delta, drawingSet.getLivingParticipantBox(p)
-					.getParticipantBox(), comp);
-			if (lifelineAfterDestroy()) {
-				line.setDestroy(pos);
-			}
-			drawingSet.addEvent(n, destroy);
-		} else if (n.getType() != LifeEventType.DEACTIVATE) {
-			throw new IllegalStateException();
-		}
-
-		line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos, n.getSpecificBackColor());
-	}
-
-	private boolean lifelineAfterDestroy() {
-		// final String v = drawingSet.getSkinParam().getValue("lifelineafterdestroy");
-		return false;
-	}
-
-//	protected final ComponentType getType() {
-//		return type;
-//	}
-//
-//	protected final void setType(ComponentType type) {
-//		this.type = type;
-//	}
-	
 	protected final ArrowConfiguration getConfig() {
 		return config;
 	}
@@ -152,8 +99,6 @@ abstract class Step1Abstract {
 	protected final void setConfig(ArrowConfiguration config) {
 		this.config = config;
 	}
-
-
 
 	protected final Component getNote() {
 		return note;

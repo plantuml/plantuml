@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,15 +36,16 @@ package net.sourceforge.plantuml.creole;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 
 public class CommandCreoleColorAndSizeChange implements Command {
 
 	private final Pattern pattern;
 
-	public static final String fontPattern = "\\<font(?:\\s+size\\s*=\\s*\"?(\\d+)\"?|\\s+color\\s*=\\s*\"?(#[0-9a-fA-F]{6}|\\w+)\"?)+\\s*\\>";
+	public static final String fontPattern = "\\<font(?:[%s]+size[%s]*=[%s]*[%g]?(\\d+)[%g]?|[%s]+color[%s]*=[%s]*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\>";
 
 	public static Command create() {
 		return new CommandCreoleColorAndSizeChange("^(?i)(" + fontPattern + "(.*?)\\</font\\>)");
@@ -55,7 +56,7 @@ public class CommandCreoleColorAndSizeChange implements Command {
 	}
 
 	private CommandCreoleColorAndSizeChange(String p) {
-		this.pattern = Pattern.compile(p);
+		this.pattern = MyPattern.cmpile(p);
 
 	}
 
@@ -82,7 +83,7 @@ public class CommandCreoleColorAndSizeChange implements Command {
 			fc2 = fc2.changeSize(Integer.parseInt(m.group(2)));
 		}
 		if (m.group(3) != null) {
-			final HtmlColor color = HtmlColorUtils.getColorIfValid(m.group(3));
+			final HtmlColor color = HtmlColorSet.getInstance().getColorIfValid(m.group(3));
 			fc2 = fc2.changeColor(color);
 		}
 

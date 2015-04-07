@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -31,7 +31,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -42,6 +41,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.g2d.DriverShadowedG2d;
+import net.sourceforge.plantuml.StringUtils;
 
 public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraphics> {
 
@@ -55,19 +55,24 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraph
 		final UPath shape = (UPath) ushape;
 
 		final String color = StringUtils.getAsSvg(mapper, param.getColor());
-		final HtmlColor back = param.getBackcolor();
-		if (back instanceof HtmlColorGradient) {
-			final HtmlColorGradient gr = (HtmlColorGradient) back;
-			final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
-					StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
-			svg.setFillColor("url(#" + id + ")");
+		if (shape.isOpenIconic()) {
+			svg.setFillColor(color);
+			svg.setStrokeColor("");
+			svg.setStrokeWidth(0, "");
 		} else {
-			final String backcolor = StringUtils.getAsSvg(mapper, back);
-			svg.setFillColor(backcolor);
+			final HtmlColor back = param.getBackcolor();
+			if (back instanceof HtmlColorGradient) {
+				final HtmlColorGradient gr = (HtmlColorGradient) back;
+				final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
+						StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+				svg.setFillColor("url(#" + id + ")");
+			} else {
+				final String backcolor = StringUtils.getAsSvg(mapper, back);
+				svg.setFillColor(backcolor);
+			}
+			svg.setStrokeColor(color);
+			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 		}
-
-		svg.setStrokeColor(color);
-		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		svg.svgPath(x, y, shape, shape.getDeltaShadow());
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -93,17 +93,13 @@ public class MainWindow2 extends JFrame {
 	private final JScrollPane scrollPane;
 	private final JButton changeDirButton = new JButton("Change Directory");
 	private final JTextField extensions = new JTextField();
+	private final int period = 300;
 
 	final private List<SimpleLine2> currentDirectoryListing2 = new ArrayList<SimpleLine2>();
 	final private Set<ImageWindow2> openWindows2 = new HashSet<ImageWindow2>();
 	final private Option option;
 
 	private DirWatcher2 dirWatcher;
-
-	public MainWindow2(Option option) {
-		this(new File(prefs.get(KEY_DIR, ".")), option);
-
-	}
 
 	private String getExtensions() {
 		return prefs.get(KEY_PATTERN, getDefaultFileExtensions());
@@ -157,8 +153,9 @@ public class MainWindow2 extends JFrame {
 		return Option.getPattern();
 	}
 
-	private MainWindow2(File dir, Option option) {
-		super(dir.getAbsolutePath());
+	public MainWindow2(Option option, File arg) {
+		super(getDirectory(arg).getAbsolutePath());
+		final File dir = getDirectory(arg);
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
 		this.option = option;
 		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));
@@ -267,9 +264,16 @@ public class MainWindow2 extends JFrame {
 		startTimer();
 	}
 
+	private static File getDirectory(File arg) {
+		if (arg != null && arg.exists() && arg.isDirectory()) {
+			return arg;
+		}
+		return new File(prefs.get(KEY_DIR, "."));
+	}
+
 	private void startTimer() {
 		Log.info("Init done");
-		final Timer timer = new Timer(3000, new ActionListener() {
+		final Timer timer = new Timer(period, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tick();
 			}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,9 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.svg.SvgGraphics;
+import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UParam;
@@ -43,8 +45,25 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class DriverImagePng implements UDriver<SvgGraphics> {
 
+	private final ClipContainer clipContainer;
+
+	public DriverImagePng(ClipContainer clipContainer) {
+		this.clipContainer = clipContainer;
+	}
+
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
+
 		final UImage image = (UImage) ushape;
+		final UClip clip = clipContainer.getClip();
+		if (clip != null) {
+			if (clip.isInside(x, y) == false) {
+				return;
+			}
+			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {
+				return;
+			}
+		}
+
 		try {
 			svg.svgImage(image.getImage(), x, y);
 		} catch (IOException e) {

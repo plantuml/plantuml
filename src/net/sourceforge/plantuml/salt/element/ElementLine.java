@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementLine implements Element {
+public class ElementLine extends AbstractElement {
 
 	private final char separator;
 
@@ -56,16 +56,16 @@ public class ElementLine implements Element {
 		return new Dimension2DDouble(10, 6);
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		if (zIndex != 0) {
 			return;
 		}
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.getColorIfValid("#AAAAAA")));
-		double y2 = y + dimToUse.getHeight() / 2;
+		ug = ug.apply(new UChangeColor(HtmlColorSet.getInstance().getColorIfValid("#AAAAAA")));
+		double y2 = dimToUse.getHeight() / 2;
 		if (separator == '=') {
 			y2 = y2 - 1;
 		}
-		drawLine(ug, x, y2, dimToUse.getWidth(), separator);
+		drawLine(ug, 0, y2, dimToUse.getWidth(), separator);
 	}
 
 	private static void drawLine(UGraphic ug, double x, double y, double widthToUse, char separator) {

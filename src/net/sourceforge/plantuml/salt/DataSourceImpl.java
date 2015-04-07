@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,13 +39,15 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
+
 public class DataSourceImpl implements DataSource {
 
 	private int i = 0;
 	private final List<Terminated<String>> data = new ArrayList<Terminated<String>>();
 
 	public DataSourceImpl(List<String> data) {
-		final Pattern p = Pattern.compile("\\{[-+#!*/]?");
+		final Pattern p = MyPattern.cmpile("\\{[-+#!*/]?");
 		for (String s : data) {
 			final StringTokenizer st = new StringTokenizer(s, "|}", true);
 			while (st.hasMoreTokens()) {

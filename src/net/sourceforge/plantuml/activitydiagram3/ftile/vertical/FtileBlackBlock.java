@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,17 +33,14 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -51,46 +48,32 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 
 public class FtileBlackBlock extends AbstractFtile {
 
-	private final double width;
-	private final double height;
+	private double width;
+	private double height;
 	private final HtmlColor colorBar;
 	private final Swimlane swimlane;
 
-	public FtileBlackBlock(boolean shadowing, double width, double height, HtmlColor colorBar, Swimlane swimlane) {
+	public FtileBlackBlock(boolean shadowing, HtmlColor colorBar, Swimlane swimlane) {
 		super(shadowing);
-		this.height = height;
-		this.width = width;
 		this.colorBar = colorBar;
 		this.swimlane = swimlane;
 	}
 
-	public Point2D getPointIn(StringBounder stringBounder) {
-		return new Point2D.Double(width / 2, 0);
+	public void setDimenstion(double width, double height) {
+		this.height = height;
+		this.width = width;
 	}
 
-	public Point2D getPointOut(StringBounder stringBounder) {
-		return new Point2D.Double(width / 2, height);
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		return new FtileGeometry(width, height, width / 2, 0, height);
 	}
 
-	public TextBlock asTextBlock() {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				final URectangle rect = new URectangle(width, height, 5, 5);
-				if (shadowing()) {
-					rect.setDeltaShadow(3);
-				}
-				ug.apply(new UChangeColor(colorBar)).apply(new UChangeBackColor(colorBar)).draw(rect);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
-			}
-		};
-	}
-
-	public boolean isKilled() {
-		return false;
+	public void drawU(UGraphic ug) {
+		final URectangle rect = new URectangle(width, height, 5, 5);
+		if (shadowing()) {
+			rect.setDeltaShadow(3);
+		}
+		ug.apply(new UChangeColor(colorBar)).apply(new UChangeBackColor(colorBar)).draw(rect);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

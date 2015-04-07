@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,31 +33,38 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileMarged extends AbstractFtile {
 
 	private final Ftile tile;
-	private final double marge;
+	private final double margin;
 
-	public FtileMarged(Ftile tile, double marge) {
+	public FtileMarged(Ftile tile, double margin) {
 		super(tile.shadowing());
 		this.tile = tile;
-		this.marge = marge;
+		this.margin = margin;
+	}
+
+	@Override
+	public LinkRendering getInLinkRendering() {
+		return tile.getInLinkRendering();
+	}
+
+	@Override
+	public LinkRendering getOutLinkRendering() {
+		return tile.getOutLinkRendering();
 	}
 
 	public Set<Swimlane> getSwimlanes() {
 		return tile.getSwimlanes();
 	}
-	
+
 	public Swimlane getSwimlaneIn() {
 		return tile.getSwimlaneIn();
 	}
@@ -66,32 +73,14 @@ public class FtileMarged extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-
-	public Point2D getPointIn(StringBounder stringBounder) {
-		final Point2D p = tile.getPointIn(stringBounder);
-		return new UTranslate(marge, 0).getTranslated(p);
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		final FtileGeometry orig = tile.calculateDimension(stringBounder);
+		return new FtileGeometry(orig.getWidth() + 2 * margin, orig.getHeight(), orig.getLeft() + margin,
+				orig.getInY(), orig.getOutY());
 	}
 
-	public Point2D getPointOut(StringBounder stringBounder) {
-		final Point2D p = tile.getPointOut(stringBounder);
-		return new UTranslate(marge, 0).getTranslated(p);
-	}
-
-	public TextBlock asTextBlock() {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				ug.apply(new UTranslate(marge, 0)).draw(tile);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return Dimension2DDouble.delta(tile.asTextBlock().calculateDimension(stringBounder), 2 * marge, 0);
-			}
-		};
-	}
-
-	public boolean isKilled() {
-		return tile.isKilled();
+	public void drawU(UGraphic ug) {
+		ug.apply(new UTranslate(margin, 0)).draw(tile);
 	}
 
 }

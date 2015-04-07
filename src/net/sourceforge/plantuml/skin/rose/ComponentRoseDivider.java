@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -61,9 +61,11 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	private final boolean withShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseDivider(HtmlColor fontColor, UFont font, HtmlColor background, Display stringsToDisplay,
-			SpriteContainer spriteContainer, boolean withShadow, UStroke stroke) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 4, 4, 4, spriteContainer, 0, false);
+	public ComponentRoseDivider(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
+			UFont font, HtmlColor background, Display stringsToDisplay, ISkinSimple spriteContainer,
+			boolean withShadow, UStroke stroke) {
+		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
+				4, 4, 4, spriteContainer, 0, false, null, null);
 		this.background = background;
 		this.empty = stringsToDisplay.get(0).length() == 0;
 		this.withShadow = withShadow;

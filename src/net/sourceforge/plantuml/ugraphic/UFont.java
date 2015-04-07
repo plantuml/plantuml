@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -59,6 +59,14 @@ public class UFont {
 		return font;
 	}
 
+	public UFont scaled(double scale) {
+		if (scale == 1) {
+			return this;
+		}
+		final float current = font.getSize2D();
+		return deriveSize((float) (current * scale));
+	}
+
 	public UFont deriveSize(float size) {
 		return new UFont(font.deriveFont(size), family);
 	}
@@ -86,7 +94,7 @@ public class UFont {
 	public boolean isItalic() {
 		return font.isItalic();
 	}
-	
+
 	public String getFamily(UFontContext context) {
 		if (context == UFontContext.EPS) {
 			if (family == null) {
@@ -95,15 +103,17 @@ public class UFont {
 			return font.getPSName();
 		}
 		if (context == UFontContext.SVG) {
+			if (family.equalsIgnoreCase("sansserif")) {
+				return "sans-serif";
+			}
 			return family;
 		}
-		// return font.getFamily();
 		return family;
 	}
 
 	@Override
 	public String toString() {
-		return font.toString() + " " + font.getPSName();
+		return font.toString()/* + " " + font.getPSName() */;
 	}
 
 	@Override
@@ -122,15 +132,17 @@ public class UFont {
 
 	@Deprecated
 	public static UFont getCurrentFont(Graphics2D g2d) {
-		return new UFont(g2d.getFont(), g2d.getFont().getFontName());
+		// return new UFont(g2d.getFont(), g2d.getFont().getFontName());
+		throw new UnsupportedOperationException();
 	}
 
 	public LineMetrics getLineMetrics(Graphics2D gg, String text) {
 		final FontRenderContext frc = gg.getFontRenderContext();
 		return font.getLineMetrics(text, frc);
 	}
-	
+
 	public FontMetrics getFontMetrics() {
 		return TextBlockUtils.getFontMetrics(getFont());
 	}
+
 }

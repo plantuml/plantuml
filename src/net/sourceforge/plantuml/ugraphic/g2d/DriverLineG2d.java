@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 12782 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
 
 	private final double dpiFactor;
-	
+
 	public DriverLineG2d(double dpiFactor) {
 		this.dpiFactor = dpiFactor;
 	}
@@ -68,7 +68,7 @@ public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics
 
 	static void manageStroke(UParam param, Graphics2D g2d) {
 		final UStroke stroke = param.getStroke();
-		final float thickness = (float) stroke.getThickness();
+		final float thickness = (float) (stroke.getThickness() * param.getScale());
 		if (stroke.getDashVisible() == 0) {
 			g2d.setStroke(new BasicStroke(thickness));
 		} else {

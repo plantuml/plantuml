@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,14 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11153 $
+ * Revision $Revision: 15811 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -67,17 +67,19 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 	private final HtmlColor borderColor;
 
 	public ComponentBlueModernGroupingHeader(HtmlColor headerBackgroundColor, HtmlColor generalBackgroundColor,
-			HtmlColor borderColor, HtmlColor fontColor1, HtmlColor fontColor2, UFont bigFont, UFont smallFont,
-			Display strings, SpriteContainer spriteContainer) {
-		super(strings.get(0), fontColor1, bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0);
+			HtmlColor borderColor, HtmlColor fontColor1, HtmlColor fontColor2, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont bigFont,
+			UFont smallFont, Display strings, ISkinSimple spriteContainer) {
+		super(strings.get(0), fontColor1, hyperlinkColor, useUnderlineForHyperlink, bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
+				spriteContainer, 0, null, null);
 		this.headerBackgroundColor = headerBackgroundColor;
 		this.generalBackgroundColor = generalBackgroundColor;
 		this.borderColor = borderColor;
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = TextBlockUtils.create(Display.asList("[" + strings.get(1) + "]"),
-					new FontConfiguration(smallFont, fontColor2), HorizontalAlignment.LEFT, spriteContainer);
+			this.commentTextBlock = TextBlockUtils.create(Display.create("[" + strings.get(1) + "]"),
+					new FontConfiguration(smallFont, fontColor2, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT,
+					spriteContainer);
 		}
 	}
 
@@ -149,7 +151,8 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 			final int x1 = getMarginX1() + textWidth;
 			final int y2 = getMarginY() + 1;
 
-			commentTextBlock.drawU(ug.apply(new UChangeColor(generalBackgroundColor)).apply(new UTranslate(x1 + commentMargin, y2)));
+			commentTextBlock.drawU(ug.apply(new UChangeColor(generalBackgroundColor)).apply(
+					new UTranslate(x1 + commentMargin, y2)));
 		}
 	}
 

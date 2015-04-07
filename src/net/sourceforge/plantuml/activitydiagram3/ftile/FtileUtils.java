@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -47,6 +47,24 @@ public class FtileUtils {
 
 	public static Ftile withSwimlaneOut(Ftile ftile, Swimlane out) {
 		return new FtileWithSwimlanes(ftile, ftile.getSwimlaneIn(), out);
+	}
+
+	public static Ftile addBottom(Ftile ftile, double marginBottom) {
+		return new FtileMargedVertically(ftile, 0, marginBottom);
+	}
+
+	public static Ftile addVerticalMargin(Ftile ftile, double marginTop, double marginBottom) {
+		if (marginTop == 0 && marginBottom == 0) {
+			return ftile;
+		}
+		return new FtileMargedVertically(ftile, marginTop, marginBottom);
+	}
+
+	private static Ftile neverNull(Ftile ftile) {
+		if (ftile == null) {
+			return new FtileEmpty(false);
+		}
+		return ftile;
 	}
 
 }

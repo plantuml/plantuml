@@ -20,11 +20,27 @@
 	<target name="compile">
 		<delete dir="build" />
 		<mkdir dir="build" />
-		<javac target="1.5" srcdir="src" destdir="build" />
+		<javac target="1.6" srcdir="src" destdir="build" />
 		<copy file="src/net/sourceforge/plantuml/version/logo.png"
 			todir="build/net/sourceforge/plantuml/version" />
 		<copy file="src/net/sourceforge/plantuml/version/favicon.png"
 			todir="build/net/sourceforge/plantuml/version" />
+		<copy todir="build/net/sourceforge/plantuml/version">
+			<fileset dir="src/net/sourceforge/plantuml/version">
+				<include name="*.png" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/openiconic/data">
+			<fileset dir="src/net/sourceforge/plantuml/openiconic/data">
+				<include name="*.txt" />
+				<include name="*.svg" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/fun">
+			<fileset dir="src/net/sourceforge/plantuml/fun">
+				<include name="*.png" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="dist" depends="compile">

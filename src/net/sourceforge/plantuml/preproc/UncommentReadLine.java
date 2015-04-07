@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,15 +37,20 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
+
 public class UncommentReadLine implements ReadLine {
 
 	private final ReadLine raw;
 	private final Pattern start;
+	private final Pattern unpause;
 	private String headerToRemove;
+	private boolean paused;
 
 	public UncommentReadLine(ReadLine source) {
 		this.raw = source;
-		this.start = Pattern.compile("(?i)((?:\\W|\\<[^<>]*\\>)*)@start");
+		this.start = MyPattern.cmpile("(?i)((?:\\W|\\<[^<>]*\\>)*)@start");
+		this.unpause = MyPattern.cmpile("(?i)((?:\\W|\\<[^<>]*\\>)*)@unpause");
 	}
 
 	public String readLine() throws IOException {
@@ -59,6 +64,12 @@ public class UncommentReadLine implements ReadLine {
 		if (m.find()) {
 			headerToRemove = m.group(1);
 		}
+		if (paused) {
+			final Matcher m2 = unpause.matcher(result);
+			if (m2.find()) {
+				headerToRemove = m2.group(1);
+			}
+		}
 		if (headerToRemove != null && headerToRemove.startsWith(result)) {
 			return "";
 		}
@@ -70,6 +81,10 @@ public class UncommentReadLine implements ReadLine {
 
 	public void close() throws IOException {
 		this.raw.close();
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,8 +39,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -52,9 +54,13 @@ public class FtpConnexion {
 	private final String user;
 	private final Map<String, String> incoming = new HashMap<String, String>();
 	private final Map<String, byte[]> outgoing = new HashMap<String, byte[]>();
+	private final Set<String> futureOutgoing = new HashSet<String>();
 
-	public FtpConnexion(String user) {
+	private FileFormat fileFormat;
+
+	public FtpConnexion(String user, FileFormat defaultfileFormat) {
 		this.user = user;
+		this.fileFormat = defaultfileFormat;
 	}
 
 	public synchronized void addIncoming(String fileName, String data) {
@@ -64,8 +70,9 @@ public class FtpConnexion {
 		incoming.put(fileName, data);
 	}
 
-	public void removeOutgoing(String fileName) {
+	public synchronized void futureOutgoing(String fileName) {
 		outgoing.remove(fileName);
+		futureOutgoing.add(fileName);
 	}
 
 	public synchronized Collection<String> getFiles() {
@@ -74,7 +81,20 @@ public class FtpConnexion {
 		return Collections.unmodifiableCollection(result);
 	}
 
-	public synchronized byte[] getData(String fileName) {
+	public synchronized boolean willExist(String fileName) {
+		if (incoming.containsKey(fileName)) {
+			return true;
+		}
+		if (outgoing.containsKey(fileName)) {
+			return true;
+		}
+		if (futureOutgoing.contains(fileName)) {
+			return true;
+		}
+		return false;
+	}
+
+	public synchronized byte[] getData(String fileName) throws InterruptedException {
 		if (fileName.startsWith("/")) {
 			throw new IllegalArgumentException();
 		}
@@ -82,11 +102,16 @@ public class FtpConnexion {
 		if (data != null) {
 			return data.getBytes();
 		}
-		final byte data2[] = outgoing.get(fileName);
-		if (data2 != null) {
-			return data2;
-		}
-		return new byte[0];
+		do {
+			if (willExist(fileName) == false) {
+				return null;
+			}
+			final byte data2[] = outgoing.get(fileName);
+			if (data2 != null) {
+				return data2;
+			}
+			Thread.sleep(200L);
+		} while (true);
 	}
 
 	public synchronized int getSize(String fileName) {
@@ -108,30 +133,54 @@ public class FtpConnexion {
 		if (fileName.startsWith("/")) {
 			throw new IllegalArgumentException();
 		}
-		final SourceStringReader sourceStringReader = new SourceStringReader(incoming.get(fileName));
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final FileFormat format = FileFormat.PNG;
-		final DiagramDescription desc = sourceStringReader.generateDiagramDescription(baos, new FileFormatOption(format));
-		final String pngFileName = format.changeName(fileName, 0);
-		final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + ".err";
-		outgoing.remove(pngFileName);
-		outgoing.remove(errorFileName);
-		if (desc != null && desc.getDescription() != null) {
+		final String pngFileName = getFutureFileName(fileName);
+		boolean done = false;
+		try {
+			final SourceStringReader sourceStringReader = new SourceStringReader(incoming.get(fileName));
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			final FileFormat format = getFileFormat();
+			final DiagramDescription desc = sourceStringReader.generateDiagramDescription(baos, new FileFormatOption(
+					format));
+			final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + ".err";
 			synchronized (this) {
-				outgoing.put(pngFileName, baos.toByteArray());
-				if (desc.getDescription().startsWith("(Error)")) {
-					final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();
-					sourceStringReader.generateImage(errBaos, new FileFormatOption(FileFormat.ATXT));
-					errBaos.close();
-					outgoing.put(errorFileName, errBaos.toByteArray());
+				outgoing.remove(pngFileName);
+				futureOutgoing.remove(pngFileName);
+				outgoing.remove(errorFileName);
+				if (desc != null && desc.getDescription() != null) {
+					outgoing.put(pngFileName, baos.toByteArray());
+					done = true;
+					if (desc.getDescription().startsWith("(Error)")) {
+						final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();
+						sourceStringReader.generateImage(errBaos, new FileFormatOption(FileFormat.ATXT));
+						errBaos.close();
+						outgoing.put(errorFileName, errBaos.toByteArray());
+					}
 				}
 			}
+		} finally {
+			if (done == false) {
+				outgoing.put(pngFileName, new byte[0]);
+			}
 		}
+	}
+
+	public String getFutureFileName(String fileName) {
+		return getFileFormat().changeName(fileName, 0);
+	}
+
+	private FileFormat getFileFormat() {
+		return fileFormat;
 	}
 
 	public synchronized void delete(String fileName) {
 		incoming.remove(fileName);
 		outgoing.remove(fileName);
+		futureOutgoing.add(fileName);
+	}
+
+	public void setFileFormat(FileFormat fileFormat) {
+		this.fileFormat = fileFormat;
+
 	}
 
 }

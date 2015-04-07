@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12104 $
+ * Revision $Revision: 15812 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.skin;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -61,16 +61,19 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final UFont font;
 	private final HtmlColor fontColor;
 
-	public AbstractTextualComponent(CharSequence label, HtmlColor fontColor, UFont font,
-			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
-			SpriteContainer spriteContainer, double maxMessageSize) {
-		this(Display.getWithNewlines(label == null ? "" : label.toString()), fontColor, font, horizontalAlignment,
-				marginX1, marginX2, marginY, spriteContainer, maxMessageSize, false);
+	public AbstractTextualComponent(CharSequence label, HtmlColor fontColor, HtmlColor hyperlinkColor,
+			boolean useUnderlineForHyperlink, UFont font, HorizontalAlignment horizontalAlignment, int marginX1,
+			int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
+		this(Display.getWithNewlines(label == null ? "" : label.toString()), fontColor, hyperlinkColor,
+				useUnderlineForHyperlink, font, horizontalAlignment, marginX1, marginX2, marginY, spriteContainer,
+				maxMessageSize, false, fontForStereotype, htmlColorForStereotype);
 	}
 
-	public AbstractTextualComponent(Display strings, HtmlColor fontColor, UFont font,
-			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
-			SpriteContainer spriteContainer, double maxMessageSize, boolean enhanced) {
+	public AbstractTextualComponent(Display strings, HtmlColor fontColor, HtmlColor hyperlinkColor,
+			boolean useUnderlineForHyperlink, UFont font, HorizontalAlignment horizontalAlignment, int marginX1,
+			int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize, boolean enhanced,
+			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this.font = font;
 		this.fontColor = fontColor;
 		this.marginX1 = marginX1;
@@ -82,10 +85,11 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 			textBlock = new TextBlockEmpty();
 		} else if (enhanced) {
 			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font,
-					fontColor);
+					fontColor, hyperlinkColor, useUnderlineForHyperlink);
 		} else {
-			textBlock = TextBlockUtils.create(strings, new FontConfiguration(font, fontColor), horizontalAlignment,
-					spriteContainer, maxMessageSize);
+			textBlock = TextBlockUtils.create(strings, new FontConfiguration(font, fontColor, hyperlinkColor,
+					useUnderlineForHyperlink), horizontalAlignment, spriteContainer, maxMessageSize, false,
+					fontForStereotype, htmlColorForStereotype);
 		}
 	}
 

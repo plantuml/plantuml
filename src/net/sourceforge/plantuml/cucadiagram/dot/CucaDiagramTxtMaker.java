@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -46,7 +46,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.posimo.GraphvizSolverB;
 import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+import net.sourceforge.plantuml.StringUtils;
 
 public final class CucaDiagramTxtMaker {
 
@@ -82,7 +82,7 @@ public final class CucaDiagramTxtMaker {
 
 		final Map<IEntity, Block> blocks = new HashMap<IEntity, Block>();
 
-		for (IEntity ent : diagram.getLeafs().values()) {
+		for (IEntity ent : diagram.getLeafsvalues()) {
 			// printClass(ent);
 			// ug.translate(0, getHeight(ent) + 1);
 			final double width = getWidth(ent) * getXPixelPerChar();
@@ -104,7 +104,7 @@ public final class CucaDiagramTxtMaker {
 		for (Path p : paths) {
 			p.getDotPath().draw(globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
 		}
-		for (IEntity ent : diagram.getLeafs().values()) {
+		for (IEntity ent : diagram.getLeafsvalues()) {
 			final Block b = blocks.get(ent);
 			final Point2D p = b.getPosition();
 			printClass(

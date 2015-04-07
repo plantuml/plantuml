@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,8 +38,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -48,13 +48,13 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementMenuPopup implements Element {
+public class ElementMenuPopup extends AbstractElement {
 
 	private final Collection<ElementMenuEntry> entries = new ArrayList<ElementMenuEntry>();
 	private final UFont font;
-	private final SpriteContainer spriteContainer;
+	private final ISkinSimple spriteContainer;
 
-	public ElementMenuPopup(UFont font, SpriteContainer spriteContainer) {
+	public ElementMenuPopup(UFont font, ISkinSimple spriteContainer) {
 		this.font = font;
 		this.spriteContainer = spriteContainer;
 	}
@@ -74,20 +74,22 @@ public class ElementMenuPopup implements Element {
 		return new Dimension2DDouble(w, h);
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		if (zIndex != 1) {
 			return;
 		}
-		ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#DDDDDD"))).apply(new UTranslate(x, y)).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
+		ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#DDDDDD"))).draw(
+				new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 
+		double y1 = 0;
 		for (ElementMenuEntry entry : entries) {
-			final double h = entry.getPreferredDimension(ug.getStringBounder(), x, y).getHeight();
+			final double h = entry.getPreferredDimension(ug.getStringBounder(), 0, y1).getHeight();
 			if (entry.getText().equals("-")) {
-				ug.apply(new UTranslate(x, y + h / 2)).draw(new ULine(dimToUse.getWidth(), 0));
+				ug.apply(new UTranslate(0, y1 + h / 2)).draw(new ULine(dimToUse.getWidth(), 0));
 			} else {
-				entry.drawU(ug, x, y, zIndex, dimToUse);
+				entry.drawU(ug.apply(new UTranslate(0, y1)), zIndex, dimToUse);
 			}
-			y += h;
+			y1 += h;
 		}
 	}
 

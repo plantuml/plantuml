@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.objectdiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandCreateEntityObjectMultilines extends CommandMultilines2<ObjectDiagram> {
 
@@ -61,21 +61,20 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("TYPE", "(object)\\s+"), //
-				new RegexLeaf("NAME", "(?:\"([^\"]+)\"\\s+as\\s+)?([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("\\s*"), //
-				// new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.+\\>\\>))?"), //
+				new RegexLeaf("TYPE", "(object)[%s]+"), //
+				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*\\{\\s*$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*\\{[%s]*$"));
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^\\s*\\}\\s*$";
+		return "(?i)^[%s]*\\}[%s]*$";
 	}
 
 	public CommandExecutionResult executeNow(ObjectDiagram diagram, List<String> lines) {
@@ -100,14 +99,15 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 		final String display = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
 		if (diagram.leafExist(code)) {
-			return diagram.getOrCreateLeaf(code, null);
+			return diagram.getOrCreateLeaf(code, null, null);
 		}
-		final IEntity entity = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.OBJECT);
+		final IEntity entity = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.OBJECT, null);
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
-					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
+					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+					.getIHtmlColorSet()));
 		}
-		entity.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(line0.get("COLOR", 0)));
+		entity.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 		return entity;
 	}
 

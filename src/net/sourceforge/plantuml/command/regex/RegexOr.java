@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -60,7 +60,7 @@ public class RegexOr extends RegexComposed implements IRegex {
 		}
 		sb.setLength(sb.length() - 1);
 		sb.append(')');
-		this.full = Pattern.compile(sb.toString());
+		this.full = MyPattern.cmpileNockeck(sb.toString());
 	}
 
 	@Override

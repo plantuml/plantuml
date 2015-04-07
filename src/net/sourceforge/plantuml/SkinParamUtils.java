@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,22 +39,19 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class SkinParamUtils {
-	
+
 	private static final Rose rose = new Rose();
 
 	public static UFont getFont(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
-		final String s = stereo == null ? null : stereo.getLabel();
-		return skinParam.getFont(fontParam, s);
+		return skinParam.getFont(fontParam, stereo, false);
 	}
 
 	public static HtmlColor getFontColor(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
-		final String s = stereo == null ? null : stereo.getLabel();
-		return skinParam.getFontHtmlColor(fontParam, s);
+		return skinParam.getFontHtmlColor(fontParam, stereo);
 	}
 
 	public static HtmlColor getColor(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
-		final String s = stereo == null ? null : stereo.getLabel();
-		return rose.getHtmlColor(skinParam, colorParam, s);
+		return rose.getHtmlColor(skinParam, colorParam, stereo);
 	}
 
 }

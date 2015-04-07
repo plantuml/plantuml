@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -78,14 +78,14 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.USECASE, skinParam,
 				HorizontalAlignment.CENTER, stereotype, true, false);
 
-		if (stereotype == null || stereotype.getLabel() == null) {
+		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.desc = tmp;
 		} else {
 			final TextBlock stereo = TextBlockUtils.create(
-					Display.getWithNewlines(stereotype.getLabel()),
-					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.USECASE_ACTOR_STEREOTYPE,
-							stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-							FontParam.USECASE_ACTOR_STEREOTYPE, null)), HorizontalAlignment.CENTER, skinParam);
+					Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())),
+					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+							FontParam.ACTOR_STEREOTYPE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+					FontParam.ACTOR_STEREOTYPE, null), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}
 		this.url = entity.getUrl99();

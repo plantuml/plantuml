@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,7 +42,7 @@ import java.io.File;
  * 
  */
 public enum FileFormat {
-	PNG, SVG, EPS, EPS_TEXT, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO, PDF, MJPEG, HTML, HTML5, VDX;
+	PNG, SVG, EPS, EPS_TEXT, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO, PDF, MJPEG, ANIMATED_GIF, HTML, HTML5, VDX, LATEX, BASE64;
 
 	/**
 	 * Returns the file format to be used for that format.
@@ -53,10 +53,16 @@ public enum FileFormat {
 		if (name().startsWith("XMI")) {
 			return ".xmi";
 		}
+		if (this == MJPEG) {
+			return ".avi";
+		}
+		if (this == ANIMATED_GIF) {
+			return ".gif";
+		}
 		if (this == EPS_TEXT) {
 			return EPS.getFileSuffix();
 		}
-		return "." + name().toLowerCase();
+		return "." + StringUtils.goLowerCase(name());
 	}
 
 	/**

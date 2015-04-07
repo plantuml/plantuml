@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.creole.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
@@ -44,6 +45,7 @@ import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -52,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 
-public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements ClipContainer {
+public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements ClipContainer, UGraphic2 {
 
 	private final StringBounder stringBounder;
 
@@ -82,6 +84,7 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleVdx());
 		registerDriver(UText.class, new DriverTextVdx(stringBounder));
+		registerDriver(AtomText.class, new DriverNoneVdx());
 		registerDriver(ULine.class, new DriverLineVdx());
 		registerDriver(UPolygon.class, new DriverPolygonVdx());
 		registerDriver(UEllipse.class, new DriverNoneVdx());
@@ -102,12 +105,16 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 	public void closeAction() {
 	}
 
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
+	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		createVsd(os);
 	}
 
 	public void createVsd(OutputStream os) throws IOException {
 		getGraphicObject().createVsd(os);
+	}
+
+	public boolean isSpecialTxt() {
+		return true;
 	}
 
 }

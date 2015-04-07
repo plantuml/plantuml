@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11254 $
+ * Revision $Revision: 14727 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -39,11 +39,11 @@ public enum LeafType {
 
 	EMPTY_PACKAGE,
 
-	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP, ENUM, ACTOR, USECASE, COMPONENT, CIRCLE_INTERFACE, NOTE, OBJECT, ASSOCIATION,
+	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP, NOTE, OBJECT, ASSOCIATION, ENUM,
+	
+	USECASE, 
 
-	BOUNDARY, CONTROL, ENTITY_DOMAIN,
-
-	COMPONENT2,
+	DESCRIPTION,
 
 	ARC_CIRCLE,
 
@@ -56,7 +56,7 @@ public enum LeafType {
 	STILL_UNKNOWN;
 
 	public static LeafType getLeafType(String arg0) {
-		arg0 = arg0.toUpperCase();
+		arg0 = StringUtils.goUpperCase(arg0);
 		if (arg0.startsWith("ABSTRACT")) {
 			return LeafType.ABSTRACT_CLASS;
 		}
@@ -69,7 +69,7 @@ public enum LeafType {
 	}
 
 	public String toHtml() {
-		final String html = toString().replace('_', ' ').toLowerCase();
+		final String html = StringUtils.goLowerCase(toString().replace('_', ' '));
 		return StringUtils.capitalize(html);
 	}
 

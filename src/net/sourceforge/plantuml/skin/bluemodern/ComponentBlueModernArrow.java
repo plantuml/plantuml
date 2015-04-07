@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10930 $
+ * Revision $Revision: 14712 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -37,6 +37,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -56,9 +57,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentBlueModernArrow extends AbstractComponentBlueModernArrow {
 
-	public ComponentBlueModernArrow(HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			Display stringsToDisplay, ArrowConfiguration arrowConfiguration, SpriteContainer spriteContainer) {
-		super(foregroundColor, fontColor, font, stringsToDisplay, arrowConfiguration, spriteContainer);
+	public ComponentBlueModernArrow(HtmlColor foregroundColor, HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font,
+			Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer) {
+		super(foregroundColor, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, stringsToDisplay, arrowConfiguration, spriteContainer);
 	}
 
 	@Override

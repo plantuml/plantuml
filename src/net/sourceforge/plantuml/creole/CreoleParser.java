@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,18 +33,28 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.ISkinParam;
+import java.util.Arrays;
+import java.util.List;
+
+import net.sourceforge.plantuml.EmbededDiagram;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class CreoleParser {
 
 	private final FontConfiguration fontConfiguration;
-	private final ISkinParam skinParam;
+	private final ISkinSimple skinParam;
+	private final HorizontalAlignment horizontalAlignment;
+	private final boolean modeSimpleLine;
 
-	public CreoleParser(FontConfiguration fontConfiguration, ISkinParam skinParam) {
+	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			ISkinSimple skinParam, boolean modeSimpleLine) {
+		this.modeSimpleLine = modeSimpleLine;
 		this.fontConfiguration = fontConfiguration;
 		this.skinParam = skinParam;
+		this.horizontalAlignment = horizontalAlignment;
 	}
 
 	private Stripe createStripe(String line, CreoleContext context, Stripe lastStripe) {
@@ -55,16 +65,28 @@ public class CreoleParser {
 		} else if (line.startsWith("|=") && line.endsWith("|")) {
 			return new StripeTable(fontConfiguration, skinParam, line);
 		}
-		return new CreoleStripeSimpleParser(line, fontConfiguration, skinParam).createStripe(context);
+		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, modeSimpleLine).createStripe(context);
 	}
 
 	public Sheet createSheet(Display display) {
-		final Sheet sheet = new Sheet();
-		final CreoleContext context = new CreoleContext();
-		for (CharSequence cs : display) {
-			final Stripe stripe = createStripe(cs.toString(), context, sheet.getLastStripe());
-			if (stripe != null) {
-				sheet.add(stripe);
+		final Sheet sheet = new Sheet(horizontalAlignment);
+		if (display != null) {
+			final CreoleContext context = new CreoleContext();
+			for (CharSequence cs : display) {
+				final Stripe stripe;
+				if (cs instanceof EmbededDiagram) {
+					final Atom atom = new AtomEmbededSystem((EmbededDiagram) cs);
+					stripe = new Stripe() {
+						public List<Atom> getAtoms() {
+							return Arrays.asList(atom);
+						}
+					};
+				} else {
+					stripe = createStripe(cs.toString(), context, sheet.getLastStripe());
+				}
+				if (stripe != null) {
+					sheet.add(stripe);
+				}
 			}
 		}
 		return sheet;

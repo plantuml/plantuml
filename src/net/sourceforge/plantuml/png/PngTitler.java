@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11154 $
+ * Revision $Revision: 14708 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -49,18 +49,22 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class PngTitler {
 
 	private final HtmlColor textColor;
+	private final HtmlColor hyperlinkColor;
 	private final Display text;
 	private final int fontSize;
 	private final String fontFamily;
 	private final HorizontalAlignment horizontalAlignment;
+	private final boolean useUnderlineForHyperlink;
 
 	public PngTitler(HtmlColor textColor, Display text, int fontSize, String fontFamily,
-			HorizontalAlignment horizontalAlignment) {
+			HorizontalAlignment horizontalAlignment, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
 		this.textColor = textColor;
 		this.text = text;
 		this.fontSize = fontSize;
 		this.fontFamily = fontFamily;
 		this.horizontalAlignment = horizontalAlignment;
+		this.hyperlinkColor = hyperlinkColor;
+		this.useUnderlineForHyperlink = useUnderlineForHyperlink;
 
 	}
 
@@ -77,7 +81,7 @@ public class PngTitler {
 			return null;
 		}
 		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor), horizontalAlignment,
+		return TextBlockUtils.create(text, new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink), horizontalAlignment,
 				new SpriteContainerEmpty());
 	}
 

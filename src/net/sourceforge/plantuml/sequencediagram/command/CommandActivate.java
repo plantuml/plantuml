@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,33 +28,33 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10778 $
+ * Revision $Revision: 14726 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandActivate extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandActivate() {
-		super("(?i)^(activate|deactivate|destroy|create)\\s+([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*(#\\w+)?$");
+		super("(?i)^(activate|deactivate|destroy|create)[%s]+([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*(#\\w+)?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final LifeEventType type = LifeEventType.valueOf(arg.get(0).toUpperCase());
-		final Participant p = sequenceDiagram.getOrCreateParticipant(StringUtils
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, List<String> arg) {
+		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get(0)));
+		final Participant p = diagram.getOrCreateParticipant(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(1)));
-		final String error = sequenceDiagram.activate(p, type, HtmlColorUtils.getColorIfValid(arg.get(2)));
+		final String error = diagram.activate(p, type,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(2)));
 		if (error == null) {
 			return CommandExecutionResult.ok();
 		}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,9 +41,7 @@ public class DriverDotPathVdx implements UDriver<VisioGraphics> {
 
 	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		final DotPath path = (DotPath) shape;
-
 		visio.upath(x, y, path.toUPath());
-
 	}
 
 }

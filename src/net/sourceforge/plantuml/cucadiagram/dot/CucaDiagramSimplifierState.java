@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -59,10 +59,6 @@ public final class CucaDiagramSimplifierState {
 			for (IGroup g : groups) {
 				if (diagram.isAutarkic(g)) {
 					final IEntityImage img = computeImage(g);
-					// final List<Url> urls = new ArrayList<Url>(g.getUrlsTOBEREMOVED());
-					// for (IEntity ent : g.getLeafsDirect()) {
-					// urls.addAll(ent.getUrlsTOBEREMOVED());
-					// }
 					g.overideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
 							: LeafType.STATE);
 

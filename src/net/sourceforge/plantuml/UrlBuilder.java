@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,13 +36,15 @@ package net.sourceforge.plantuml;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
+
 public class UrlBuilder {
 
 	public static enum ModeUrl {
-		STRICT, AT_START, ANYWHERE
+		STRICT, AT_START, ANYWHERE, AT_END
 	}
 
-	private static final String URL_PATTERN = "\\[\\[(\"[^\"]+\"|[^{} \\]\\[]*)(?: *\\{([^{}]+)\\})?(?: *([^\\]\\[]+))?\\]\\]";
+	private static final String URL_PATTERN = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{([^{}]+)\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";
 
 	private final String topurl;
 	private ModeUrl mode;
@@ -55,11 +57,13 @@ public class UrlBuilder {
 	public Url getUrl(String s) {
 		final Pattern p;
 		if (mode == ModeUrl.STRICT) {
-			p = Pattern.compile("(?i)^" + URL_PATTERN + "$");
+			p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
 		} else if (mode == ModeUrl.AT_START) {
-			p = Pattern.compile("(?i)^" + URL_PATTERN + ".*");
+			p = MyPattern.cmpile("(?i)^" + URL_PATTERN + ".*");
+		} else if (mode == ModeUrl.AT_END) {
+			p = MyPattern.cmpile("(?i).*" + URL_PATTERN + "$");
 		} else if (mode == ModeUrl.ANYWHERE) {
-			p = Pattern.compile("(?i).*" + URL_PATTERN + ".*");
+			p = MyPattern.cmpile("(?i).*" + URL_PATTERN + ".*");
 		} else {
 			throw new IllegalStateException();
 		}
@@ -82,7 +86,7 @@ public class UrlBuilder {
 	}
 
 	public static String purgeUrl(final String label) {
-		final Pattern p = Pattern.compile("(?: )*" + URL_PATTERN + "(?: )*");
+		final Pattern p = MyPattern.cmpile("[%s]*" + URL_PATTERN + "[%s]*");
 		final Matcher m = p.matcher(label);
 		if (m.find() == false) {
 			throw new IllegalStateException();

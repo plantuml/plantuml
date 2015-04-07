@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 12650 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -42,7 +42,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 
-class ConstraintSet {
+public class ConstraintSet {
 
 	private final ParticipantBoxSimple firstBorder;
 
@@ -104,11 +104,10 @@ class ConstraintSet {
 	public Pushable getPrevious(Pushable p) {
 		return getOtherParticipant(p, -1);
 	}
-	
+
 	public Pushable getNext(Pushable p) {
 		return getOtherParticipant(p, 1);
 	}
-
 
 	private Pushable getOtherParticipant(Pushable p, int delta) {
 		final int i = participantList.indexOf(p);
@@ -145,7 +144,7 @@ class ConstraintSet {
 		for (Pushable box : participantList) {
 			if (box.equals(firstToChange)) {
 				founded = true;
-				if (including==false) {
+				if (including == false) {
 					continue;
 				}
 			}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12054 $
+ * Revision $Revision: 14859 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
-public class GroupingLeaf extends Grouping {
+final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
 
 	private final GroupingStart start;
 	private final HtmlColor backColorGeneral;
@@ -92,10 +92,25 @@ public class GroupingLeaf extends Grouping {
 		return false;
 	}
 
-
 	@Override
 	public boolean isParallel() {
 		return start.isParallel();
+	}	
+	
+	private double posYendLevel;
+
+	public void setPosYendLevel(double posYendLevel) {
+		this.posYendLevel = posYendLevel;
 	}
+
+	public double getPosYendLevel() {
+		return posYendLevel;
+	}
+
+	public boolean addLifeEvent(LifeEvent lifeEvent) {
+		lifeEvent.setLinkedToGroupingEnd(true);
+		return true;
+	}
+
 
 }

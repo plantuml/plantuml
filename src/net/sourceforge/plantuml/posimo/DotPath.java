@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.svek.ClusterPosition;
 import net.sourceforge.plantuml.svek.MinFinder;
 import net.sourceforge.plantuml.svek.PointAndAngle;
 import net.sourceforge.plantuml.svek.PointDirected;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -196,13 +197,31 @@ public class DotPath implements UShape, Moveable {
 		beziers.get(beziers.size() - 1).ctrly2 = y;
 	}
 
-	public MinFinder getMinMax() {
+	public void moveEndPoint(double dx, double dy) {
+		beziers.get(beziers.size() - 1).x2 += dx;
+		beziers.get(beziers.size() - 1).y2 += dy;
+		beziers.get(beziers.size() - 1).ctrlx2 += dx;
+		beziers.get(beziers.size() - 1).ctrly2 += dy;
+	}
+
+	public MinFinder getMinFinder() {
 		final MinFinder result = new MinFinder();
 		for (CubicCurve2D.Double c : beziers) {
 			result.manage(c.x1, c.y1);
 			result.manage(c.x2, c.y2);
 			result.manage(c.ctrlx1, c.ctrly1);
 			result.manage(c.ctrlx2, c.ctrly2);
+		}
+		return result;
+	}
+
+	public MinMax getMinMax() {
+		 MinMax result = MinMax.getEmpty(false);
+		for (CubicCurve2D.Double c : beziers) {
+			result = result.addPoint(c.x1, c.y1);
+			result = result.addPoint(c.x2, c.y2);
+			result = result.addPoint(c.ctrlx1, c.ctrly1);
+			result = result.addPoint(c.ctrlx2, c.ctrly2);
 		}
 		return result;
 	}

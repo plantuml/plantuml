@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 10778 $
+ * Revision $Revision: 12235 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram.command;
@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 public class CommandEndPartition extends SingleLineCommand<ActivityDiagram> {
 
 	public CommandEndPartition() {
-		super("(?i)^(end ?partition|\\})$");
+		super("(?i)^(end[%s]?partition|\\})$");
 	}
 
 	@Override

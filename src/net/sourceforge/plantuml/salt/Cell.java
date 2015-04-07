@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,15 +36,12 @@ package net.sourceforge.plantuml.salt;
 
 public class Cell {
 
-	// private Collection<Position> positions = new HashSet<Position>();
-
 	private int minRow;
 	private int maxRow;
 	private int minCol;
 	private int maxCol;
 
 	public Cell(int row, int col) {
-		// positions.add(p);
 		minRow = row;
 		maxRow = row;
 		minCol = col;
@@ -54,11 +51,6 @@ public class Cell {
 	public void mergeLeft() {
 		maxCol++;
 	}
-
-
-//	public Collection<Position> getPositions() {
-//		return positions;
-//	}
 
 	public int getMinRow() {
 		return minRow;

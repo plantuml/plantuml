@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -43,12 +43,12 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandDelay extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandDelay() {
-		super("(?i)^\\.{3}(?:(.*)\\.{3})?$$");
+		super("(?i)^(?:\\.{3}|\u2026)(?:(.*)(?:\\.{3}|\u2026))?$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final Display strings = arg.get(0) == null ? Display.emptyList() : Display.getWithNewlines(arg.get(0));
+		final Display strings = arg.get(0) == null ? Display.empty() : Display.getWithNewlines(arg.get(0));
 		sequenceDiagram.delay(strings);
 		return CommandExecutionResult.ok();
 	}

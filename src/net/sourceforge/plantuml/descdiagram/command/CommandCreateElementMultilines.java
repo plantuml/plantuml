@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,13 +34,12 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<DescriptionDiagram> {
 
@@ -65,26 +65,25 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^(.*)\"$";
+		return "(?i)^(.*)[%g]$";
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("TYPE", "(usecase|database)\\s+"), //
+				new RegexLeaf("TYPE", "(usecase|database)[%s]+"), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("\\s*"), //
-				// new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.+\\>\\>))?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("DESC", "as\\s*\"(.*)$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
 	}
 
-	public CommandExecutionResult executeNow(DescriptionDiagram system, List<String> lines) {
+	public CommandExecutionResult executeNow(DescriptionDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, false);
 		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
-		final String symbol = line0.get("TYPE", 0).toUpperCase();
+		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type;
 		final USymbol usymbol;
 
@@ -92,20 +91,20 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 			type = LeafType.USECASE;
 			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("database")) {
-			type = LeafType.COMPONENT2;
+			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.DATABASE;
 		} else {
 			throw new IllegalStateException();
 		}
 
 		final Code code = Code.of(line0.get("CODE", 0));
-		Display display = new Display(lines.subList(1, lines.size() - 1));
+		Display display = Display.create(lines.subList(1, lines.size() - 1));
 		final String descStart = line0.get("DESC", 0);
 		if (StringUtils.isNotEmpty(descStart)) {
 			display = display.addFirst(descStart);
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern.compile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
 				lines.get(lines.size() - 1));
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			display = display.add(lineLast.get(0));
@@ -113,14 +112,15 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final ILeaf result = system.createLeaf(code, display, type);
+		final ILeaf result = diagram.createLeaf(code, display, type, usymbol);
 		result.setUSymbol(usymbol);
 		if (stereotype != null) {
-			result.setStereotype(new Stereotype(stereotype, system.getSkinParam().getCircledCharacterRadius(), system
-					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+			result.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
+					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+					.getIHtmlColorSet()));
 		}
 
-		result.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(line0.get("COLOR", 0)));
+		result.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 
 		return CommandExecutionResult.ok();
 	}

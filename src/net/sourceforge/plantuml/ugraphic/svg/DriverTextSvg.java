@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,7 +33,6 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.ugraphic.UFontContext;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
+import net.sourceforge.plantuml.StringUtils;
 
 public class DriverTextSvg implements UDriver<SvgGraphics> {
 

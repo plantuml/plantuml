@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -51,6 +51,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 class FtpLoop implements Runnable {
 	enum Mode {
@@ -101,7 +102,7 @@ class FtpLoop implements Runnable {
 	}
 
 	private boolean manage(final String cmd) throws UnknownHostException, IOException, InterruptedException {
-		final String upper = cmd.toUpperCase();
+		final String upper = StringUtils.goUpperCase(cmd);
 		if (upper.startsWith("USER")) {
 			myOut("331 Password required");
 			final String user = cmd.substring("USER ".length());
@@ -177,15 +178,11 @@ class FtpLoop implements Runnable {
 
 	private void retr(final String fileName, Socket soc) throws UnknownHostException, IOException, InterruptedException {
 		final OutputStream os = soc.getOutputStream();
-		byte[] data = null;
-		do {
-			data = connexion.getData(fileName);
-			if (data.length == 0) {
-				Thread.sleep(200L);
-			}
-		} while (data.length == 0);
+		final byte[] data = connexion.getData(fileName);
 
-		os.write(data);
+		if (data != null) {
+			os.write(data);
+		}
 		os.flush();
 		os.close();
 		soc.close();
@@ -195,6 +192,10 @@ class FtpLoop implements Runnable {
 	private void retrPassif(final String s) throws UnknownHostException, IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
+		if (connexion.willExist(fileName) == false) {
+			myOut("550 No such file.");
+			return;
+		}
 		myOut("150 Opening");
 		final ServerSocket ss = new ServerSocket(port);
 		final Socket incoming = ss.accept();
@@ -205,6 +206,10 @@ class FtpLoop implements Runnable {
 	private void retrActif(final String s) throws UnknownHostException, IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
+		if (connexion.willExist(fileName) == false) {
+			myOut("550 No such file.");
+			return;
+		}
 		myOut("150 Opening");
 		final Socket soc = new Socket(ipClient, port);
 		retr(fileName, soc);
@@ -237,14 +242,25 @@ class FtpLoop implements Runnable {
 		final InputStream is = socket.getInputStream();
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		FileUtils.copyToStream(is, baos);
-		myOut("226 Transfer complete.");
-		final String data = new String(baos.toByteArray(), ftpServer.getCharset());
-		final FileFormat format = FileFormat.PNG;
-		final String pngFileName = format.changeName(fileName, 0);
-		connexion.removeOutgoing(pngFileName);
-		connexion.addIncoming(fileName, data);
 
-		ftpServer.processImage(connexion, fileName);
+		myOut("226 Transfer complete.");
+
+		if ("png".equalsIgnoreCase(fileName)) {
+			connexion.setFileFormat(FileFormat.PNG);
+		} else if ("svg".equalsIgnoreCase(fileName)) {
+			connexion.setFileFormat(FileFormat.SVG);
+		} else if ("eps".equalsIgnoreCase(fileName)) {
+			connexion.setFileFormat(FileFormat.EPS);
+		}
+
+		if (fileName.length() > 3) {
+			final String data = new String(baos.toByteArray(), ftpServer.getCharset());
+			final String pngFileName = connexion.getFutureFileName(fileName);
+			connexion.futureOutgoing(pngFileName);
+			connexion.addIncoming(fileName, data);
+
+			ftpServer.processImage(connexion, fileName);
+		}
 	}
 
 	private void listActif() throws UnknownHostException, IOException {

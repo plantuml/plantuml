@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,122 +34,117 @@
 package net.sourceforge.plantuml.salt.element;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.salt.Position;
-import net.sourceforge.plantuml.salt.Positionner;
+import net.sourceforge.plantuml.salt.Cell;
+import net.sourceforge.plantuml.salt.Positionner2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementPyramid implements Element {
+public class ElementPyramid extends AbstractElement {
 
-	private final Element elements[][];
-	private final int rows;
-	private final int cols;
+	private int rows;
+	private int cols;
 	private final TableStrategy tableStrategy;
+	private final Map<Element, Cell> positions1;
+	private final Map<Cell, Element> positions2 = new HashMap<Cell, Element>();
 
-	public ElementPyramid(Positionner positionner, TableStrategy tableStrategy) {
+	private double rowsStart[];
+	private double colsStart[];
+
+	public ElementPyramid(Positionner2 positionner, TableStrategy tableStrategy) {
+		positions1 = positionner.getAll();
+		for (Map.Entry<Element, Cell> ent : positions1.entrySet()) {
+			positions2.put(ent.getValue(), ent.getKey());
+		}
+
 		this.rows = positionner.getNbRows();
 		this.cols = positionner.getNbCols();
 		this.tableStrategy = tableStrategy;
-		if (rows == 0) {
-			throw new IllegalArgumentException("rows=0");
-		}
-		if (cols == 0) {
-			throw new IllegalArgumentException("cols=0");
-		}
-		this.elements = new Element[rows][cols];
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				this.getElements()[r][c] = new ElementEmpty();
-			}
+
+		for (Cell c : positions1.values()) {
+			rows = Math.max(rows, c.getMaxRow());
+			cols = Math.max(cols, c.getMaxCol());
 		}
 
-		for (Map.Entry<Element, Position> ent : positionner.getAll().entrySet()) {
-			final int r = ent.getValue().getRow();
-			final int c = ent.getValue().getCol();
-			this.getElements()[r][c] = ent.getKey();
-		}
-	}
-
-	private double getRowHeight(StringBounder stringBounder, int row) {
-		double max = 0;
-		for (int c = 0; c < cols; c++) {
-			final Dimension2D dim = elements[row][c].getPreferredDimension(stringBounder, 0, 0);
-			if (dim.getHeight() > max) {
-				max = dim.getHeight();
-			}
-		}
-		return max;
-	}
-
-	private double getColWidth(StringBounder stringBounder, int col) {
-		double max = 0;
-		for (int r = 0; r < rows; r++) {
-			final Dimension2D dim = elements[r][col].getPreferredDimension(stringBounder, 0, 0);
-			if (dim.getWidth() > max) {
-				max = dim.getWidth();
-			}
-		}
-		return max;
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		double width = 1;
-		for (int c = 0; c < cols; c++) {
-			width += getColWidth(stringBounder, c) + 3;
-		}
-		double height = 1;
-		for (int r = 0; r < rows; r++) {
-			height += getRowHeight(stringBounder, r) + 3;
-		}
-		return new Dimension2DDouble(width, height);
+		init(stringBounder);
+		return new Dimension2DDouble(colsStart[colsStart.length - 1], rowsStart[rowsStart.length - 1]);
 	}
 
-	public void drawU(UGraphic ug, final double x, final double y, int zIndex, Dimension2D dimToUse) {
-		double ytmp = y + 2;
-		final Dimension2D preferred = getPreferredDimension(ug.getStringBounder(), 0, 0);
-		if (tableStrategy == TableStrategy.DRAW_OUTSIDE || tableStrategy == TableStrategy.DRAW_ALL) {
-			ug.apply(new UTranslate(x, y)).draw(new URectangle(preferred.getWidth() - 1, preferred.getHeight() - 1));
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+		init(ug.getStringBounder());
+		final Grid grid = new Grid(rowsStart, colsStart, tableStrategy);
+		for (Map.Entry<Element, Cell> ent : positions1.entrySet()) {
+			final Element elt = ent.getKey();
+			final Cell cell = ent.getValue();
+			final double xcell = colsStart[cell.getMinCol()];
+			final double ycell = rowsStart[cell.getMinRow()];
+			final double width = colsStart[cell.getMaxCol() + 1] - colsStart[cell.getMinCol()] - 1;
+			final double height = rowsStart[cell.getMaxRow() + 1] - rowsStart[cell.getMinRow()] - 1;
+			grid.addCell(cell);
+			elt.drawU(ug.apply(new UTranslate(xcell + 1, ycell + 1)), zIndex, new Dimension2DDouble(width, height));
 		}
-		for (int r = 0; r < rows; r++) {
-			double xtmp = x + 2;
-			final double rowHeight = getRowHeight(ug.getStringBounder(), r);
-			for (int c = 0; c < cols; c++) {
-				final double colWidth = getColWidth(ug.getStringBounder(), c);
-				this.elements[r][c].drawU(ug, xtmp, ytmp, zIndex, new Dimension2DDouble(colWidth, rowHeight));
-				if (tableStrategy == TableStrategy.DRAW_ALL || tableStrategy == TableStrategy.DRAW_VERTICAL) {
-					ug.apply(new UTranslate(xtmp - 2, y)).draw(new ULine(0, preferred.getHeight() - 1));
-				}
-				xtmp += colWidth + 3;
-			}
-			if (tableStrategy == TableStrategy.DRAW_VERTICAL) {
-				ug.apply(new UTranslate(xtmp - 2, y)).draw(new ULine(0, preferred.getHeight() - 1));
-			}
-			if (tableStrategy == TableStrategy.DRAW_ALL || tableStrategy == TableStrategy.DRAW_HORIZONTAL) {
-				ug.apply(new UTranslate(x, ytmp - 2)).draw(new ULine(preferred.getWidth() - 1, 0));
-			}
-			ytmp += rowHeight + 3;
-		}
-		if (tableStrategy == TableStrategy.DRAW_HORIZONTAL) {
-			ug.apply(new UTranslate(x, ytmp - 2)).draw(new ULine(preferred.getWidth() - 1, 0));
+		if (zIndex == 0) {
+			grid.drawU(ug, 0, 0);
 		}
 	}
 
-	protected final Element[][] getElements() {
-		return elements;
+	private void init(StringBounder stringBounder) {
+		if (rowsStart != null) {
+			return;
+		}
+		rowsStart = new double[rows + 1];
+		colsStart = new double[cols + 1];
+		final List<Cell> all = new ArrayList<Cell>(positions1.values());
+		Collections.sort(all, new LeftFirst());
+		for (Cell cell : all) {
+			final Element elt = positions2.get(cell);
+			final Dimension2D dim = elt.getPreferredDimension(stringBounder, 0, 0);
+			ensureColWidth(cell.getMinCol(), cell.getMaxCol() + 1, dim.getWidth() + 2);
+		}
+		Collections.sort(all, new TopFirst());
+		for (Cell cell : all) {
+			final Element elt = positions2.get(cell);
+			final Dimension2D dim = elt.getPreferredDimension(stringBounder, 0, 0);
+			ensureRowHeight(cell.getMinRow(), cell.getMaxRow() + 1, dim.getHeight() + 2);
+		}
 	}
 
-//	public final int getRows() {
-//		return rows;
-//	}
-//
-//	public final int getCols() {
-//		return cols;
-//	}
+	private void ensureColWidth(int first, int last, double width) {
+		final double actual = colsStart[last] - colsStart[first];
+		final double missing = width - actual;
+		if (missing > 0) {
+			for (int i = last; i < colsStart.length; i++) {
+				colsStart[i] += missing;
+			}
+		}
+	}
+
+	private void ensureRowHeight(int first, int last, double height) {
+		final double actual = rowsStart[last] - rowsStart[first];
+		final double missing = height - actual;
+		if (missing > 0) {
+			for (int i = last; i < rowsStart.length; i++) {
+				rowsStart[i] += missing;
+			}
+		}
+	}
+
+	public final int getNbRows() {
+		return rows + 1;
+	}
+
+	public final int getNbCols() {
+		return cols + 1;
+	}
 
 }

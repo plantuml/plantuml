@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12064 $
+ * Revision $Revision: 14590 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -114,7 +114,7 @@ public class GraphvizUtils {
 		return dotVersion;
 	}
 
-	static int retrieveVersion(String s) {
+	public static int retrieveVersion(String s) {
 		if (s == null) {
 			return -1;
 		}
@@ -195,7 +195,7 @@ public class GraphvizUtils {
 		final Graphviz graphviz2 = GraphvizUtils.create("digraph foo { test; }", "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz2.createFile3(baos);
-		if (state != ProcessState.TERMINATED_OK) {
+		if (state.differs(ProcessState.TERMINATED_OK())) {
 			return "Error: timeout " + state;
 		}
 
@@ -211,11 +211,11 @@ public class GraphvizUtils {
 		return null;
 	}
 
-	public static OS getOS() {
-		if (isWindows()) {
-			return new OSWindows();
-		}
-		return new OSLinux();
-	}
+	// public static OS getOS() {
+	// if (isWindows()) {
+	// return new OSWindows();
+	// }
+	// return new OSLinux();
+	// }
 
 }

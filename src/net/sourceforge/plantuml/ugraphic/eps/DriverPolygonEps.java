@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -62,7 +62,6 @@ public class DriverPolygonEps implements UDriver<EpsGraphics> {
 		}
 		
 		final UClip clip = clipContainer.getClip();
-
 		if (clip != null) {
 			for (int j = 0; j < points.length; j += 2) {
 				if (clip.isInside(points[j], points[j + 1]) == false) {

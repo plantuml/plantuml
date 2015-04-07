@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.eps;
 import java.awt.Color;
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
-import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
@@ -79,7 +78,7 @@ public class EpsGraphics {
 		}
 		header.append("%%Creator: PlantUML v" + v + "\n");
 		header.append("%%Title: noTitle\n");
-		header.append("%%CreationDate: " + new Date() + "\n");
+		// header.append("%%CreationDate: " + new Date() + "\n");
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 2 index mul 7 index add", true));
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 3 index mul 7 index add", true));
@@ -463,6 +462,38 @@ public class EpsGraphics {
 		}
 	}
 
+	public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {
+		checkCloseDone();
+		ensureVisible(x + xRadius, y + yRadius);
+		double scale = 1;
+		if (xRadius != yRadius) {
+			scale = yRadius / xRadius;
+			append("gsave", true);
+			append("1 " + format(scale) + " scale", true);
+		}
+		// if (fillcolor != null) {
+		// appendColor(fillcolor);
+		// append("newpath", true);
+		// append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " 0 360 arc", true);
+		// append("closepath eofill", true);
+		// }
+
+		if (color != null) {
+			append(strokeWidth + " setlinewidth", true);
+			appendColor(color);
+			append("newpath", true);
+			final double a1 = -start + 180 + 5;
+			final double a2 = -start - extend + 180 - 5;
+			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " " + format(a1) + " " + format(a2)
+					+ " arc", true);
+			append("stroke", true);
+		}
+
+		if (scale != 1) {
+			append("grestore", true);
+		}
+	}
+
 	public void epsEllipse(double x, double y, double xRadius, double yRadius) {
 		checkCloseDone();
 		ensureVisible(x + xRadius, y + yRadius);
@@ -490,7 +521,6 @@ public class EpsGraphics {
 		if (scale != 1) {
 			append("grestore", true);
 		}
-
 	}
 
 	protected void appendColor(Color c) {

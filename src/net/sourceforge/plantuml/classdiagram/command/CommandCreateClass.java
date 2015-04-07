@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,7 +33,10 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -46,18 +49,14 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
-	public static final String CODE = "[^\\s{}\"<>]+";
+	public static final String CODE = "[^%s{}%g<>]+";
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS
@@ -70,48 +69,51 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("TYPE", //
-						"(interface|enum|annotation|abstract\\s+class|abstract|class)\\s+"), //
+						"(interface|enum|annotation|abstract[%s]+class|abstract|class)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "\"([^\"]+)\""), //
-								new RegexLeaf("\\s+as\\s+"), //
+								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CODE + ")"), //
-								new RegexLeaf("\\s+as\\s+"), // //
-								new RegexLeaf("DISPLAY2", "\"([^\"]+)\"")), //
+								new RegexLeaf("[%s]+as[%s]+"), // //
+								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]")), //
 						new RegexLeaf("CODE3", "(" + CODE + ")"), //
-						new RegexLeaf("CODE4", "\"([^\"]+)\"")), //
-				new RegexLeaf("GENERIC", "(?:\\s*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
-				// new RegexLeaf("STEREO", "(?:\\s*(\\<{2}.*\\>{2}))?"), //
-				new RegexLeaf("\\s*"), //
+						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
+				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("EXTENDS", "(\\s+(extends|implements)\\s+(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*))?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
+				new RegexLeaf("EXTENDS", "([%s]+(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "))?"), //
+				new RegexLeaf("IMPLEMENTS", "([%s]+(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "))?"), //
 				new RegexLeaf("$"));
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, RegexResult arg) {
-		final LeafType type = LeafType.getLeafType(arg.get("TYPE", 0).toUpperCase());
-		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote();
+		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(arg.get("TYPE", 0)));
+		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
 		final String generic = arg.get("GENERIC", 0);
 		final ILeaf entity;
 		if (diagram.leafExist(code)) {
-			entity = diagram.getOrCreateLeaf(code, type);
-			entity.muteToType(type);
+			entity = diagram.getOrCreateLeaf(code, type, null);
+			entity.muteToType(type, null);
 		} else {
-			entity = diagram.createLeaf(code, Display.getWithNewlines(display), type);
+			entity = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
 		}
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+					.getIHtmlColorSet()));
 		}
 		if (generic != null) {
 			entity.setGeneric(generic);
@@ -124,32 +126,37 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			entity.addUrl(url);
 		}
 
-		entity.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0)));
-		manageExtends(diagram, arg, entity);
+		entity.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		entity.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
+		CommandCreateClassMultilines.applyStroke(entity, arg.get("LINECOLOR", 0));
+
+		// manageExtends(diagram, arg, entity);
+		CommandCreateClassMultilines.manageExtends("EXTENDS", diagram, arg, entity);
+		CommandCreateClassMultilines.manageExtends("IMPLEMENTS", diagram, arg, entity);
 
 		return CommandExecutionResult.ok();
 	}
 
-	public static void manageExtends(ClassDiagram system, RegexResult arg, final IEntity entity) {
-		if (arg.get("EXTENDS", 1) != null) {
-			final Mode mode = arg.get("EXTENDS", 1).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;
-			final Code other = Code.of(arg.get("EXTENDS", 2));
-			LeafType type2 = LeafType.CLASS;
-			if (mode == Mode.IMPLEMENTS) {
-				type2 = LeafType.INTERFACE;
-			}
-			if (mode == Mode.EXTENDS && entity.getEntityType() == LeafType.INTERFACE) {
-				type2 = LeafType.INTERFACE;
-			}
-			final IEntity cl2 = system.getOrCreateLeaf(other, type2);
-			LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
-			if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
-				typeLink = typeLink.getDashed();
-			}
-			final Link link = new Link(cl2, entity, typeLink, null, 2, null, null, system.getLabeldistance(),
-					system.getLabelangle());
-			system.addLink(link);
-		}
-	}
+	// public static void manageExtends(ClassDiagram system, RegexResult arg, final IEntity entity) {
+	// if (arg.get("EXTENDS", 1) != null) {
+	// final Mode mode = arg.get("EXTENDS", 1).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;
+	// final Code other = Code.of(arg.get("EXTENDS", 2));
+	// LeafType type2 = LeafType.CLASS;
+	// if (mode == Mode.IMPLEMENTS) {
+	// type2 = LeafType.INTERFACE;
+	// }
+	// if (mode == Mode.EXTENDS && entity.getEntityType() == LeafType.INTERFACE) {
+	// type2 = LeafType.INTERFACE;
+	// }
+	// final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
+	// LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
+	// if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
+	// typeLink = typeLink.getDashed();
+	// }
+	// final Link link = new Link(cl2, entity, typeLink, null, 2, null, null, system.getLabeldistance(),
+	// system.getLabelangle());
+	// system.addLink(link);
+	// }
+	// }
 
 }

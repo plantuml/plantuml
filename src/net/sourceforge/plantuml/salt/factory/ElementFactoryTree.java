@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,8 +38,10 @@ import java.awt.Font;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Terminated;
+import net.sourceforge.plantuml.salt.Terminator;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementTree;
+import net.sourceforge.plantuml.salt.element.TableStrategy;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryTree extends AbstractElementFactoryComplex {
@@ -54,15 +56,25 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 		}
 		final String header = getDataSource().next().getElement();
 		final String textT = getDataSource().next().getElement();
-		assert textT.equals("T");
+		TableStrategy strategy = TableStrategy.DRAW_NONE;
+		if (textT.length() == 2) {
+			strategy = TableStrategy.fromChar(textT.charAt(1));
+		}
 
 		final UFont font = new UFont("Default", Font.PLAIN, 12);
-		final ElementTree result = new ElementTree(font, getDictionary());
+		final ElementTree result = new ElementTree(font, getDictionary(), strategy);
 
+		boolean takeMe = true;
 		while (getDataSource().peek(0).getElement().equals("}") == false) {
 			final Terminated<String> t = getDataSource().next();
+			final Terminator terminator = t.getTerminator();
 			final String s = t.getElement();
-			result.addEntry(s);
+			if (takeMe) {
+				result.addEntry(s);
+			} else {
+				result.addCellToEntry(s);
+			}
+			takeMe = terminator == Terminator.NEWLINE;
 
 		}
 		final Terminated<String> next = getDataSource().next();
@@ -73,7 +85,15 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 		final String text = getDataSource().peek(0).getElement();
 		if (text.equals("{")) {
 			final String text1 = getDataSource().peek(1).getElement();
-			return text1.equals("T");
+			if (text1.equals("T")) {
+				return true;
+			}
+			if (text1.length() == 2 && text1.startsWith("T")) {
+				final char c = text1.charAt(1);
+				return TableStrategy.fromChar(c) != null;
+
+			}
+			return false;
 		}
 		return false;
 	}

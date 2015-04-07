@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class EntityImageEmptyPackage2 extends AbstractEntityImage {
 
@@ -69,13 +71,22 @@ public class EntityImageEmptyPackage2 extends AbstractEntityImage {
 		this.stereotype = entity.getStereotype();
 		this.desc = TextBlockUtils.create(entity.getDisplay(),
 				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.PACKAGE, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.PACKAGE, stereotype)),
+						SkinParamUtils.getFontColor(getSkinParam(), FontParam.PACKAGE, stereotype), getSkinParam()
+								.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
 				HorizontalAlignment.CENTER, skinParam);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dim = desc.calculateDimension(stringBounder);
 		return Dimension2DDouble.delta(dim, MARGIN * 2, MARGIN * 2 + dim.getHeight() * 2);
+	}
+
+	private UStroke getStroke() {
+		UStroke stroke = getSkinParam().getThickness(LineParam.packageBorder, getStereo());
+		if (stroke == null) {
+			stroke = new UStroke(2.0);
+		}
+		return stroke;
 	}
 
 	final public void drawU(UGraphic ug) {
@@ -85,11 +96,10 @@ public class EntityImageEmptyPackage2 extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
-		final HtmlColor stateBack = Cluster.getStateBackColor(specificBackColor, skinParam, stereotype == null ? null
-				: stereotype.getLabel());
+		final HtmlColor stateBack = Cluster.getStateBackColor(specificBackColor, skinParam, stereotype);
 
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
-				TextBlockUtils.empty(0, 0), stateBack, 0, 0, widthTotal, heightTotal);
+				TextBlockUtils.empty(0, 0), stateBack, 0, 0, widthTotal, heightTotal, getStroke());
 
 		decoration.drawU(ug, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
 				getSkinParam().shadowing());

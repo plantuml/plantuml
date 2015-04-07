@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,12 +28,29 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11060 $
+ * Revision $Revision: 12299 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import net.sourceforge.plantuml.ColorParam;
+
 public enum ParticipantType {
-	PARTICIPANT, ACTOR, BOUNDARY, CONTROL, ENTITY, DATABASE
+	PARTICIPANT(ColorParam.participantBackground), //
+	ACTOR(ColorParam.actorBackground), //
+	BOUNDARY(ColorParam.boundaryBackground), //
+	CONTROL(ColorParam.controlBackground), //
+	ENTITY(ColorParam.entityBackground), //
+	DATABASE(ColorParam.databaseBackground);
+
+	private final ColorParam background;
+
+	private ParticipantType(ColorParam background) {
+		this.background = background;
+	}
+
+	public ColorParam getBackgroundColorParam() {
+		return background;
+	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,11 +37,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 
-	final private static Pattern p = Pattern.compile("(?i)^sudoku(?:\\s+([0-9a-zA-Z]+))?\\s*$");
+	final private static Pattern p = MyPattern.cmpile("(?i)^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {
@@ -53,7 +55,7 @@ public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 		if (m.group(1) == null) {
 			return new PSystemSudoku(null);
 		}
-		return new PSystemSudoku(Long.parseLong(m.group(1).toLowerCase(), 36));
+		return new PSystemSudoku(Long.parseLong(StringUtils.goLowerCase(m.group(1)), 36));
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,10 +40,11 @@ import net.sourceforge.plantuml.activitydiagram.command.CommandElse;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
-import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity2;
+import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity2;
 import net.sourceforge.plantuml.activitydiagram.command.CommandPartition;
 import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.command.note.FactoryNoteActivityCommand;
@@ -59,6 +60,7 @@ public class ActivityDiagramFactory extends UmlDiagramFactory {
 	@Override
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
+		cmds.add(new CommandFootboxIgnored());
 		addCommonCommands(cmds);
 		cmds.add(new CommandRankDir());
 
@@ -78,7 +80,7 @@ public class ActivityDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandElse());
 		cmds.add(new CommandEndif());
 
-		cmds.add(new CommandLinkActivity2());
+		cmds.add(new CommandLinkActivity());
 		// addCommand(new CommandInnerConcurrent(system));
 
 		return cmds;

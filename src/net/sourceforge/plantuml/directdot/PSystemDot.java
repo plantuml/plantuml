@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,9 +33,12 @@ package net.sourceforge.plantuml.directdot;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.CounterOutputStream;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
@@ -43,6 +46,11 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
+import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.UGraphicUtils;
 
 public class PSystemDot extends AbstractPSystem {
 
@@ -57,10 +65,21 @@ public class PSystemDot extends AbstractPSystem {
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final Graphviz graphviz = GraphvizUtils.create(data, fileFormat.getFileFormat().name().toLowerCase());
-		final ProcessState state = graphviz.createFile3(os);
-		if (state != ProcessState.TERMINATED_OK) {
+		final Graphviz graphviz = GraphvizUtils
+				.create(data, StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
+		if (graphviz.illegalDotExe()) {
+			final TextBlock result = GraphicStrings.createDefault(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
+			UGraphicUtils.writeImage(os, null, fileFormat, new ColorMapperIdentity(), HtmlColorUtils.WHITE, result);
+			return new ImageDataSimple();
+		}
+		final CounterOutputStream counter = new CounterOutputStream(os);
+		final ProcessState state = graphviz.createFile3(counter);
+		if (state.differs(ProcessState.TERMINATED_OK())) {
 			throw new IllegalStateException("Timeout1 " + state);
+		}
+		if (counter.getLength() == 0) {
+			final TextBlock result = GraphicStrings.createDefault(Arrays.asList("Graphivz has crashed"), false);
+			UGraphicUtils.writeImage(os, null, fileFormat, new ColorMapperIdentity(), HtmlColorUtils.WHITE, result);
 		}
 
 		return new ImageDataSimple();

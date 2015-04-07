@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11788 $
+ * Revision $Revision: 14726 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -47,13 +47,15 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class Img implements HtmlCommand {
 
-	final static private Pattern srcPattern = Pattern.compile("(?i)src\\s*=\\s*[\"']?([^ \">]+)[\"']?");
-	final static private Pattern vspacePattern = Pattern.compile("(?i)vspace\\s*=\\s*[\"']?(\\d+)[\"']?");
-	final static private Pattern valignPattern = Pattern.compile("(?i)valign\\s*=\\s*[\"']?(top|bottom|middle)[\"']?");
-	final static private Pattern noSrcColonPattern = Pattern.compile("(?i)" + Splitter.imgPatternNoSrcColon);
+	final static private Pattern srcPattern = MyPattern.cmpile("(?i)src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
+	final static private Pattern vspacePattern = MyPattern.cmpile("(?i)vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
+	final static private Pattern valignPattern = MyPattern.cmpile("(?i)valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
+	final static private Pattern noSrcColonPattern = MyPattern.cmpile("(?i)" + Splitter.imgPatternNoSrcColon);
 
 	private final TextBlock tileImage;
 
@@ -74,7 +76,7 @@ public class Img implements HtmlCommand {
 		if (m.find() == false) {
 			return ImgValign.TOP;
 		}
-		return ImgValign.valueOf(m.group(1).toUpperCase());
+		return ImgValign.valueOf(StringUtils.goUpperCase(m.group(1)));
 	}
 
 	static HtmlCommand getInstance(String html, boolean withSrc) {

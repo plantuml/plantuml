@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -82,7 +83,6 @@ public class GroupRoot implements IGroup {
 
 	public LeafType getEntityType() {
 		throw new UnsupportedOperationException();
-
 	}
 
 	public String getUid() {
@@ -122,6 +122,10 @@ public class GroupRoot implements IGroup {
 
 	public Code getCode() {
 		return Code.of("__ROOT__");
+	}
+
+	public LongCode getLongCode() {
+		return null;
 	}
 
 	public BlockMember getMouseOver() {
@@ -184,7 +188,7 @@ public class GroupRoot implements IGroup {
 		return null;
 	}
 
-	public String getNamespace() {
+	public Code getNamespace2() {
 		throw new UnsupportedOperationException();
 
 	}
@@ -195,16 +199,6 @@ public class GroupRoot implements IGroup {
 	}
 
 	public void setAutonom(boolean autonom) {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public Rankdir getRankdir() {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public void setRankdir(Rankdir rankdir) {
 		throw new UnsupportedOperationException();
 
 	}
@@ -223,7 +217,8 @@ public class GroupRoot implements IGroup {
 	}
 
 	public USymbol getUSymbol() {
-		throw new UnsupportedOperationException();
+		return null;
+		// throw new UnsupportedOperationException();
 	}
 
 	public void setUSymbol(USymbol symbol) {
@@ -256,6 +251,30 @@ public class GroupRoot implements IGroup {
 
 	public boolean hasUrl() {
 		return false;
+	}
+
+	public int getHectorLayer() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setHectorLayer(int layer) {
+		throw new UnsupportedOperationException();
+	}
+
+	public FontParam getTitleFontParam() {
+		throw new UnsupportedOperationException();
+	}
+
+	public int getRawLayout() {
+		throw new UnsupportedOperationException();
+	}
+
+	public char getConcurrentSeparator() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setConcurrentSeparator(char separator) {
+		throw new UnsupportedOperationException();
 	}
 
 }

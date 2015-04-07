@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -56,6 +57,9 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT) {
+			return new Dimension2DDouble(8, 80);
+		}
 		return new Dimension2DDouble(80, 8);
 	}
 

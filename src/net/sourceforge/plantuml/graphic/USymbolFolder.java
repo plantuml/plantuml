@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,13 +35,15 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class USymbolFolder extends USymbol {
+public class USymbolFolder extends USymbol {
 
 	private final static int marginTitleX1 = 3;
 	private final static int marginTitleX2 = 3;
@@ -49,6 +51,10 @@ class USymbolFolder extends USymbol {
 	private final static int marginTitleY0 = 0;
 	private final static int marginTitleY1 = 3;
 	private final static int marginTitleY2 = 3;
+
+	public USymbolFolder(ColorParam colorParamBack, ColorParam colorParamBorder) {
+		super(colorParamBack, colorParamBorder, FontParam.FOLDER, FontParam.FOLDER_STEREOTYPE);
+	}
 
 	private void drawFolder(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing) {
 

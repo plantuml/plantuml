@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,14 +35,17 @@ package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Hideable;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.StringUtils;
 
 public class Shape implements Positionable, IShapePseudo, Hideable {
 
@@ -177,6 +180,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 			throw new UnsupportedOperationException();
 		} else if (type == ShapeType.RECTANGLE) {
 			sb.append("shape=rect");
+		} else if (type == ShapeType.OCTAGON) {
+			sb.append("shape=octagon");
 		} else if (type == ShapeType.DIAMOND) {
 			sb.append("shape=diamond");
 		} else if (type == ShapeType.CIRCLE) {
@@ -243,6 +248,16 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 
 	public boolean isHidden() {
 		return image.isHidden();
+	}
+
+	private Shadowable octagon;
+
+	public void setOctagon(double minX, double minY, List<Point2D.Double> points) {
+		this.octagon = new UPolygon(points).translate(-minX, -minY);
+	}
+
+	public Shadowable getOctagon() {
+		return octagon;
 	}
 
 }

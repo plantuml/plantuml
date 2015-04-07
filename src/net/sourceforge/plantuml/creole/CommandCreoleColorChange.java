@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,9 +36,10 @@ package net.sourceforge.plantuml.creole;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleColorChange implements Command {
@@ -54,7 +55,7 @@ public class CommandCreoleColorChange implements Command {
 	}
 
 	private CommandCreoleColorChange(String p) {
-		this.pattern = Pattern.compile(p);
+		this.pattern = MyPattern.cmpile(p);
 
 	}
 
@@ -72,7 +73,7 @@ public class CommandCreoleColorChange implements Command {
 			throw new IllegalStateException();
 		}
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
-		final HtmlColor color = HtmlColorUtils.getColorIfValid(m.group(2));
+		final HtmlColor color = HtmlColorSet.getInstance().getColorIfValid(m.group(2));
 		final FontConfiguration fc2 = fc1.changeColor(color);
 		stripe.setActualFontConfiguration(fc2);
 		stripe.analyzeAndAdd(m.group(3));

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,9 +37,11 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -79,20 +81,21 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 	}
 
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		final Snake snake = new Snake(color, true);
+		final Snake snake = new Snake(color, Arrows.asToDown());
+		snake.setLabel(textBlock);
 		final Point2D mp1a = translate1.getTranslated(p1);
 		final Point2D mp2b = translate2.getTranslated(p2);
 		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 		snake.addPoint(mp1a);
 		snake.addPoint(mp1a.getX(), middle);
 		snake.addPoint(mp2b.getX(), middle);
-		// snake.addPoint(mp2b);
+		snake.addPoint(mp2b);
 		ug.draw(snake);
 
-		final Snake small = new Snake(color, Arrows.asToDown());
-		small.addPoint(mp2b.getX(), middle);
-		small.addPoint(mp2b);
-		ug.draw(small);
+		// final Snake small = new Snake(color, Arrows.asToDown());
+		// small.addPoint(mp2b.getX(), middle);
+		// small.addPoint(mp2b);
+		// ug.draw(small);
 
 	}
 

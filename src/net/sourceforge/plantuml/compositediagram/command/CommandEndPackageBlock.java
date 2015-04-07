@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 public class CommandEndPackageBlock extends SingleLineCommand<CompositeDiagram> {
 
 	public CommandEndPackageBlock() {
-		super("(?i)^(end ?block|\\})$");
+		super("(?i)^(end[%s]?block|\\})$");
 	}
 
 	@Override

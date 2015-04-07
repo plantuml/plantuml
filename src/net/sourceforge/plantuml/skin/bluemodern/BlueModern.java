@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11153 $
+ * Revision $Revision: 14712 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
@@ -61,14 +62,16 @@ public class BlueModern implements Skin {
 	private final UFont normalFont = new UFont("SansSerif", Font.PLAIN, 13);
 	private final UFont smallFont = new UFont("SansSerif", Font.BOLD, 11);
 
-	private final HtmlColor blue1 = HtmlColorUtils.getColorIfValid("#527BC6");
-	private final HtmlColor blue2 = HtmlColorUtils.getColorIfValid("#D1DBEF");
-	private final HtmlColor blue3 = HtmlColorUtils.getColorIfValid("#D7E0F2");
+	private final HtmlColor hyperlinkColor = HtmlColorUtils.BLUE;
+	private final boolean useUnderlineForHyperlink = true;
+	private final HtmlColor blue1 = HtmlColorUtils.COL_527BC6;
+	private final HtmlColor blue2 = HtmlColorUtils.COL_D1DBEF;
+	private final HtmlColor blue3 = HtmlColorUtils.COL_D7E0F2;
 
-	private final HtmlColor red = HtmlColorUtils.getColorIfValid("#A80036");
+	private final HtmlColor red = HtmlColorUtils.MY_RED;
 
-	private final HtmlColor lineColor = HtmlColorUtils.getColorIfValid("#989898");
-	private final HtmlColor borderGroupColor = HtmlColorUtils.getColorIfValid("#BBBBBB");
+	private final HtmlColor lineColor = HtmlColorUtils.COL_989898;
+	private final HtmlColor borderGroupColor = HtmlColorUtils.COL_BBBBBB;
 
 	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
@@ -76,19 +79,19 @@ public class BlueModern implements Skin {
 		if (type.isArrow()) {
 			final HtmlColor sequenceArrow = config.getColor() == null ? HtmlColorUtils.BLACK : config.getColor();
 			if (config.isSelfArrow()) {
-				return new ComponentBlueModernSelfArrow(sequenceArrow, HtmlColorUtils.BLACK, normalFont,
-						stringsToDisplay, config, param);
+				return new ComponentBlueModernSelfArrow(sequenceArrow, HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, 
+						normalFont, stringsToDisplay, config, param);
 			}
-			return new ComponentBlueModernArrow(sequenceArrow, HtmlColorUtils.BLACK, normalFont, stringsToDisplay,
-					config, param);
+			return new ComponentBlueModernArrow(sequenceArrow, HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, normalFont,
+					stringsToDisplay, config, param);
 		}
 		if (type == ComponentType.PARTICIPANT_HEAD) {
-			return new ComponentBlueModernParticipant(blue1, blue2, HtmlColorUtils.WHITE, participantFont,
-					stringsToDisplay, param);
+			return new ComponentBlueModernParticipant(blue1, blue2, HtmlColorUtils.WHITE, hyperlinkColor, useUnderlineForHyperlink, 
+					participantFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.PARTICIPANT_TAIL) {
-			return new ComponentBlueModernParticipant(blue1, blue2, HtmlColorUtils.WHITE, participantFont,
-					stringsToDisplay, param);
+			return new ComponentBlueModernParticipant(blue1, blue2, HtmlColorUtils.WHITE, hyperlinkColor, useUnderlineForHyperlink, 
+					participantFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			return new ComponentBlueModernLine(lineColor);
@@ -97,14 +100,16 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernLine(lineColor);
 		}
 		if (type == ComponentType.ACTOR_HEAD) {
-			return new ComponentBlueModernActor(blue2, blue1, blue1, participantFont, stringsToDisplay, true, param);
+			return new ComponentBlueModernActor(blue2, blue1, blue1, hyperlinkColor, useUnderlineForHyperlink, participantFont, stringsToDisplay,
+					true, param);
 		}
 		if (type == ComponentType.ACTOR_TAIL) {
-			return new ComponentBlueModernActor(blue2, blue1, blue1, participantFont, stringsToDisplay, false, param);
+			return new ComponentBlueModernActor(blue2, blue1, blue1, hyperlinkColor,useUnderlineForHyperlink,  participantFont, stringsToDisplay,
+					false, param);
 		}
 		if (type == ComponentType.NOTE) {
 			return new ComponentBlueModernNote(HtmlColorUtils.WHITE, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK,
-					normalFont, stringsToDisplay, param);
+					hyperlinkColor, useUnderlineForHyperlink, normalFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 			return new ComponentBlueModernActiveLine(blue1, true, true);
@@ -122,45 +127,45 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernDelayLine(lineColor);
 		}
 		if (type == ComponentType.DELAY_TEXT) {
-			return new ComponentBlueModernDelayText(HtmlColorUtils.BLACK,
-					param.getFont(FontParam.SEQUENCE_DELAY, null), stringsToDisplay, param);
+			return new ComponentBlueModernDelayText(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, param.getFont(
+					FontParam.SEQUENCE_DELAY, null, false), stringsToDisplay, param);
 		}
 		if (type == ComponentType.DESTROY) {
 			return new ComponentRoseDestroy(red);
 		}
 		if (type == ComponentType.GROUPING_HEADER) {
 			return new ComponentBlueModernGroupingHeader(blue1, blue3, borderGroupColor, HtmlColorUtils.WHITE,
-					HtmlColorUtils.BLACK, normalFont, smallFont, stringsToDisplay, param);
+					HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, normalFont, smallFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
-			return new ComponentRoseGroupingElse(HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, smallFont,
+			return new ComponentRoseGroupingElse(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, HtmlColorUtils.BLACK, smallFont,
 					stringsToDisplay.get(0), param, blue3, Rose.getStroke(param, LineParam.sequenceGroupBorder, 2));
 		}
 		if (type == ComponentType.GROUPING_SPACE) {
 			return new ComponentRoseGroupingSpace(7);
 		}
 		if (type == ComponentType.TITLE) {
-			return new ComponentRoseTitle(HtmlColorUtils.BLACK, bigFont, stringsToDisplay, param);
+			return new ComponentRoseTitle(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, bigFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.REFERENCE) {
-			return new ComponentRoseReference(HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, normalFont, borderGroupColor,
-					blue1, blue3, normalFont, stringsToDisplay, HorizontalAlignment.CENTER, param, 0, Rose.getStroke(
-							param, LineParam.sequenceDividerBorder, 2));
+			return new ComponentRoseReference(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, HtmlColorUtils.WHITE, normalFont,
+					borderGroupColor, blue1, blue3, normalFont, stringsToDisplay, HorizontalAlignment.CENTER, param, 0,
+					Rose.getStroke(param, LineParam.sequenceDividerBorder, 2));
 		}
 		if (type == ComponentType.NEWPAGE) {
 			return new ComponentBlueModernNewpage(blue1);
 		}
 		if (type == ComponentType.DIVIDER) {
-			return new ComponentBlueModernDivider(HtmlColorUtils.BLACK, normalFont, blue2, blue1, HtmlColorUtils.BLACK,
-					stringsToDisplay, param);
+			return new ComponentBlueModernDivider(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, normalFont, blue2, blue1,
+					HtmlColorUtils.BLACK, stringsToDisplay, param);
 		}
 		if (type == ComponentType.SIGNATURE) {
-			return new ComponentRoseTitle(HtmlColorUtils.BLACK, smallFont, Display.asList("This skin was created ",
-					"in April 2009."), param);
+			return new ComponentRoseTitle(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, smallFont, Display.create(
+					"This skin was created ", "in April 2009."), param);
 		}
 		if (type == ComponentType.ENGLOBER) {
-			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, HtmlColorUtils.BLACK, param.getFont(
-					FontParam.SEQUENCE_BOX, null), param);
+			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, HtmlColorUtils.BLACK,
+					hyperlinkColor, useUnderlineForHyperlink, param.getFont(FontParam.SEQUENCE_BOX, null, false), param);
 		}
 
 		return null;

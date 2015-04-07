@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 
 public class TinyJavaLogo {
 	private final LogoScanner scanner = new LogoScanner();
@@ -189,7 +189,7 @@ public class TinyJavaLogo {
 
 			case LogoToken.SETPC:
 				token = scanner.getToken();
-				final HtmlColor newPenColor = HtmlColorUtils.getColorIfValid(token.lexeme);
+				final HtmlColor newPenColor = new HtmlColorSetSimple().getColorIfValid(token.lexeme);
 				if (newPenColor == null) {
 					error("Unrecognized color name");
 					return;

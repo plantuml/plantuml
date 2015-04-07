@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -73,10 +73,10 @@ public class EntityImageLegend implements TextBlock {
 
 		borderColor = rose.getHtmlColor(skinParam, ColorParam.legendBorder);
 		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.LEGEND);
-		final UFont fontNote = skinParam.getFont(FontParam.LEGEND, null);
+		final UFont fontNote = skinParam.getFont(FontParam.LEGEND, null, false);
 
-		this.textBlock = TextBlockUtils.create(note, new FontConfiguration(fontNote, fontColor),
-				HorizontalAlignment.LEFT, skinParam);
+		this.textBlock = TextBlockUtils.create(note, new FontConfiguration(fontNote, fontColor,
+				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	public static TextBlock create(Display legend, ISkinParam skinParam) {

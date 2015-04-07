@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,13 +34,14 @@
 package net.sourceforge.plantuml.font;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
 public class PSystemListFontsFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {
-		final String lineLower = line.toLowerCase();
+		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.equals("listfont") || lineLower.equals("listfonts") || lineLower.startsWith("listfont ")
 				|| lineLower.startsWith("listfonts ")) {
 			final int idx = line.indexOf(' ');

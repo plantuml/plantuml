@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,6 @@ package net.sourceforge.plantuml.graphic;
 
 
 public enum GraphicPosition {
-	BOTTOM, BACKGROUND_CORNER
+	BOTTOM, BACKGROUND_CORNER_BOTTOM_RIGHT, BACKGROUND_CORNER_TOP_RIGHT
 
 }

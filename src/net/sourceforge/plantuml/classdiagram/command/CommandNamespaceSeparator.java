@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.SingleLineCommand;
 public class CommandNamespaceSeparator extends SingleLineCommand<ClassDiagram> {
 
 	public CommandNamespaceSeparator() {
-		super("(?i)^set namespaceseparator (\\S+)$");
+		super("(?i)^set[%s]namespaceseparator[%s](\\S+)$");
 	}
 
 	@Override

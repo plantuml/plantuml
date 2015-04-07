@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -76,18 +76,18 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		}
 		for (Event ev : sequenceDiagram.events()) {
 			initializer.addEvent(ev);
-			if (ev instanceof Message) {
-				// TODO mieux faire
-				final Message m = (Message) ev;
-				for (LifeEvent lifeEvent : m.getLiveEvents()) {
-					if (lifeEvent.getType() == LifeEventType.DESTROY
-					/*
-					 * || lifeEvent.getType() == LifeEventType.CREATE
-					 */) {
-						initializer.addEvent(lifeEvent);
-					}
-				}
-			}
+//			if (ev instanceof Message) {
+//				// TODO mieux faire
+//				final Message m = (Message) ev;
+//				for (LifeEvent lifeEvent : m.getLiveEvents()) {
+//					if (lifeEvent.getType() == LifeEventType.DESTROY
+//					/*
+//					 * || lifeEvent.getType() == LifeEventType.CREATE
+//					 */) {
+//						initializer.addEvent(lifeEvent);
+//					}
+//				}
+//			}
 		}
 		drawableSet = initializer.createDrawableSet(dummyStringBounder);
 		// final List<Newpage> newpages = new ArrayList<Newpage>();

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -56,6 +56,11 @@ public class UClip implements UChange {
 	public UClip translate(double dx, double dy) {
 		return new UClip(x + dx, y + dy, width, height);
 	}
+	
+	public UClip translate(UTranslate translate) {
+		return translate(translate.getDx(), translate.getDy());
+	}
+
 
 	public final double getX() {
 		return x;
@@ -142,4 +147,5 @@ public class UClip implements UChange {
 		}
 		return yp;
 	}
+
 }

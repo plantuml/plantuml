@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -57,7 +57,7 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), null, BoxStyle.PLAIN);
+		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), null, BoxStyle.PLAIN, null);
 		return CommandExecutionResult.ok();
 	}
 

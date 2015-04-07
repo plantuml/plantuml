@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,6 +48,10 @@ public class UGraphicForSnake extends UGraphicDelegator {
 	private final double dx;
 	private final double dy;
 	private final List<PendingSnake> snakes;
+	
+	public UTranslate getTranslation() {
+		return new UTranslate(dx, dy);
+	}
 
 	static class PendingSnake {
 		private final Snake snake;
@@ -72,9 +76,9 @@ public class UGraphicForSnake extends UGraphicDelegator {
 		}
 
 		public PendingSnake merge(PendingSnake newItem) {
-			if (snake.isMergeable() == false || newItem.snake.isMergeable() == false) {
-				return null;
-			}
+//			if (snake.isMergeable() == false || newItem.snake.isMergeable() == false) {
+//				return null;
+//			}
 			final Snake s1 = snake.move(dx, dy);
 			final Snake s2 = newItem.snake.move(newItem.dx, newItem.dy);
 			final Snake merge = s1.merge(s2);

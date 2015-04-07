@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,33 +39,38 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
 public class InstructionGroup implements Instruction {
 
 	private final InstructionList list = new InstructionList();
 	private final Instruction parent;
+	private final HtmlColor backColor;
+	private final HtmlColor titleColor;
 
 	private final Display test;
+	private Display headerNote;
 
-	public InstructionGroup(Instruction parent, Display test) {
+	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor) {
 		this.parent = parent;
 		this.test = test;
+		this.backColor = backColor;
+		this.titleColor = titleColor;
 	}
-	
 
 	public void add(Instruction ins) {
 		list.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.createGroup(list.createFtile(factory), test);
+		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, headerNote);
 	}
 
 	public Instruction getParent() {
 		return parent;
 	}
-	
+
 	final public boolean kill() {
 		return list.kill();
 	}
@@ -75,9 +80,13 @@ public class InstructionGroup implements Instruction {
 	}
 
 	public void addNote(Display note, NotePosition position) {
+		if (list.isEmpty()) {
+			this.headerNote = note;
+			return;
+		}
 		list.addNote(note, position);
 	}
-	
+
 	public Set<Swimlane> getSwimlanes() {
 		return list.getSwimlanes();
 	}
@@ -86,11 +95,8 @@ public class InstructionGroup implements Instruction {
 		return list.getSwimlaneIn();
 	}
 
-
 	public Swimlane getSwimlaneOut() {
 		return list.getSwimlaneOut();
 	}
-
-
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,7 +45,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.Moveable;
+import net.sourceforge.plantuml.StringUtils;
 
 public class DotStringFactory implements Moveable {
 
@@ -154,6 +154,8 @@ public class DotStringFactory implements Moveable {
 			}
 			SvekUtils.println(sb);
 		}
+		// sb.append("newrank=true;");
+		// SvekUtils.println(sb);
 		sb.append("remincross=true;");
 		SvekUtils.println(sb);
 		sb.append("searchsize=500;");
@@ -161,7 +163,7 @@ public class DotStringFactory implements Moveable {
 		sb.append("compound=true;");
 		SvekUtils.println(sb);
 
-		if (dotData.getRankdir() == Rankdir.LEFT_TO_RIGHT) {
+		if (dotData.getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT) {
 			sb.append("rankdir=LR;");
 			SvekUtils.println(sb);
 		}
@@ -173,7 +175,7 @@ public class DotStringFactory implements Moveable {
 			line.appendLine(sb);
 		}
 		root.fillRankMin(rankMin);
-		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotData.getDotMode());
+		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotData.getDotMode(), getGraphvizVersion(), dotData.getUmlDiagramType());
 		printMinRanking(sb);
 
 		for (Line line : bibliotekon.lines1()) {
@@ -189,11 +191,11 @@ public class DotStringFactory implements Moveable {
 		final List<String> minPointCluster = new ArrayList<String>();
 		final List<String> maxPointCluster = new ArrayList<String>();
 		for (Cluster cluster : bibliotekon.allCluster()) {
-			final String minPoint = cluster.getMinPoint();
+			final String minPoint = cluster.getMinPoint(dotData.getUmlDiagramType());
 			if (minPoint != null) {
 				minPointCluster.add(minPoint);
 			}
-			final String maxPoint = cluster.getMaxPoint();
+			final String maxPoint = cluster.getMaxPoint(dotData.getUmlDiagramType());
 			if (maxPoint != null) {
 				maxPointCluster.add(maxPoint);
 			}
@@ -254,8 +256,8 @@ public class DotStringFactory implements Moveable {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz.createFile3(baos);
 		baos.close();
-		if (state != ProcessState.TERMINATED_OK) {
-			throw new IllegalStateException("Timeout4 " + state);
+		if (state.differs(ProcessState.TERMINATED_OK())) {
+			throw new IllegalStateException("Timeout4 " + state, state.getCause());
 		}
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, "UTF-8");
@@ -306,7 +308,7 @@ public class DotStringFactory implements Moveable {
 				final int idx2 = svg.indexOf("d=\"", idx + 1);
 				idx = svg.indexOf("points=\"", idx + 1);
 				final List<Point2D.Double> points;
-				if (idx2 != -1 && idx2 < idx) {
+				if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
 					// GraphViz 2.30
 					points = SvekUtils.extractD(svg, idx2, fullHeight);
 				} else {
@@ -320,6 +322,14 @@ public class DotStringFactory implements Moveable {
 				final double minY = SvekUtils.getMinY(points);
 				corner1.manage(minX, minY);
 				sh.moveSvek(minX, minY);
+			} else if (sh.getType() == ShapeType.OCTAGON) {
+				idx = svg.indexOf("points=\"", idx + 1);
+				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+				final double minX = SvekUtils.getMinX(points);
+				final double minY = SvekUtils.getMinY(points);
+				corner1.manage(minX, minY);
+				sh.moveSvek(minX, minY);
+				sh.setOctagon(minX, minY, points);
 			} else if (sh.getType() == ShapeType.CIRCLE || sh.getType() == ShapeType.CIRCLE_IN_RECT
 					|| sh.getType() == ShapeType.OVAL) {
 				final double cx = SvekUtils.getValue(svg, idx, "cx");
@@ -365,7 +375,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private int getClusterIndex(final String svg, int colorInt) {
-		final String colorString = StringUtils.getAsHtml(colorInt).toLowerCase();
+		final String colorString = StringUtils.goLowerCase(StringUtils.getAsHtml(colorInt));
 		final String keyTitle1 = "=\"" + colorString + "\"";
 		int idx = svg.indexOf(keyTitle1);
 		if (idx == -1) {

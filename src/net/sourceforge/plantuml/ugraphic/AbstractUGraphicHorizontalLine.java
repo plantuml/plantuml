@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -68,10 +68,6 @@ public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 		} else {
 			getUg().apply(translate).draw(shape);
 		}
-	}
-
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
-		throw new UnsupportedOperationException();
 	}
 
 }

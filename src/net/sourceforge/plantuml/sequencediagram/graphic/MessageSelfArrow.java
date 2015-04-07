@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10067 $
+ * Revision $Revision: 12631 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -50,12 +50,15 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class MessageSelfArrow extends Arrow {
 
 	private final LivingParticipantBox p1;
+	private final double deltaX;
 	private final double deltaY;
 
-	public MessageSelfArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, double deltaY, Url url) {
+	public MessageSelfArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p1, double deltaY,
+			Url url, double deltaX) {
 		super(startingY, skin, arrow, url);
 		this.p1 = p1;
 		this.deltaY = deltaY;
+		this.deltaX = deltaX;
 	}
 
 	@Override
@@ -82,8 +85,14 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
-		return pos2;
+		// if (OptionFlags.STRICT_SELFMESSAGE_POSITION) {
+		// final double pos1 = p1.getLiveThicknessAt(stringBounder, getArrowYEndLevel(stringBounder)).getSegment()
+		// .getPos2();
+		// return pos1;
+		// }
+		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()
+				.getPos2();
+		return pos2 + deltaX;
 	}
 
 	@Override

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,11 +39,15 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.command.CommandAddMethod;
+import net.sourceforge.plantuml.classdiagram.command.CommandAllowMixing;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2.Mode;
 import net.sourceforge.plantuml.classdiagram.command.CommandDiamondAssociation;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandImport;
+import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkLollipop;
 import net.sourceforge.plantuml.classdiagram.command.CommandMouseOver;
@@ -51,8 +55,8 @@ import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandEndNamespace;
 import net.sourceforge.plantuml.command.CommandEndPackage;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommandNamespace;
 import net.sourceforge.plantuml.command.CommandPackage;
 import net.sourceforge.plantuml.command.CommandPackageEmpty;
@@ -76,6 +80,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 	@Override
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
+		cmds.add(new CommandFootboxIgnored());
 		addCommonCommands(cmds);
 
 		cmds.add(new CommandRankDir());
@@ -83,6 +88,11 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandAddMethod());
 
 		cmds.add(new CommandCreateClass());
+		cmds.add(new CommandAllowMixing());
+		cmds.add(new CommandLayoutNewLine());
+
+		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));
+		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));
 		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
 		cmds.add(factoryNoteCommand.createSingleLine());
 
@@ -91,7 +101,6 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandPackageEmpty());
 
 		cmds.add(new CommandNamespace());
-		cmds.add(new CommandEndNamespace());
 		cmds.add(new CommandStereotype());
 
 		cmds.add(new CommandLinkClass(UmlDiagramType.CLASS));
@@ -99,7 +108,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandImport());
 		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexLeaf(
-				"ENTITY", "(" + CommandCreateClass.CODE + "|\"[^\"]+\")"));
+				"ENTITY", "(" + CommandCreateClass.CODE + "|[%g][^%g]+[%g])"));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 		cmds.add(new CommandUrl());
 
@@ -138,19 +147,19 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		system.applySingleStrategy();
 
-//		for (IGroup g : system.getGroups(true)) {
-//			final List<ILeaf> standalones = new ArrayList<ILeaf>();
-//			for (ILeaf ent : g.getLeafsDirect()) {
-//				if (system.isStandalone(ent)) {
-//					standalones.add(ent);
-//				}
-//			}
-//			if (standalones.size() < 3) {
-//				continue;
-//			}
-//			final Magma magma = new Magma(system, standalones);
-//			magma.putInSquare();
-//		}
+		// for (IGroup g : system.getGroups(true)) {
+		// final List<ILeaf> standalones = new ArrayList<ILeaf>();
+		// for (ILeaf ent : g.getLeafsDirect()) {
+		// if (system.isStandalone(ent)) {
+		// standalones.add(ent);
+		// }
+		// }
+		// if (standalones.size() < 3) {
+		// continue;
+		// }
+		// final Magma magma = new Magma(system, standalones);
+		// magma.putInSquare();
+		// }
 		return super.checkFinalError(system);
 	}
 

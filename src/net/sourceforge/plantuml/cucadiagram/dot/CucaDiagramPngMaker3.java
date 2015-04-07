@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11914 $
+ * Revision $Revision: 12850 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -77,10 +77,10 @@ public final class CucaDiagramPngMaker3 {
 			// Log.error("CucaDiagramPngMaker3:: " + s + " " + diffHeight);
 			zoda2.addLink(s, diffHeight, link);
 		}
-		for (IEntity ent : diagram.getLeafs().values()) {
-			ANode n = zoda2.getNode(ent.getCode().getCode());
+		for (IEntity ent : diagram.getLeafsvalues()) {
+			ANode n = zoda2.getNode(ent.getCode().getFullName());
 			if (n == null) {
-				n = zoda2.createAloneNode(ent.getCode().getCode());
+				n = zoda2.createAloneNode(ent.getCode().getFullName());
 			}
 			((ANodeImpl) n).setUserData(ent);
 		}

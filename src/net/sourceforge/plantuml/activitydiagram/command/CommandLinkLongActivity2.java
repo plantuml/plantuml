@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,10 +34,8 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -46,6 +44,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
@@ -60,7 +59,9 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram> {
 
@@ -70,7 +71,7 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^\\s*([^\"]*)\"(?:\\s+as\\s+([\\p{L}0-9][\\p{L}0-9_.]*))?\\s*(\\<\\<.*\\>\\>)?\\s*(?:in\\s+(\"[^\"]+\"|\\S+))?\\s*(#\\w+)?$";
+		return "(?i)^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([\\p{L}0-9][\\p{L}0-9_.]*))?[%s]*(\\<\\<.*\\>\\>)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$";
 	}
 
 	static RegexConcat getRegexConcat() {
@@ -79,13 +80,13 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 						new RegexOr("FIRST", //
 								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
 								new RegexLeaf("CODE", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
-								new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?"))), //
-				new RegexLeaf("\\s*"), //
+								new RegexLeaf("BAR", "(?:==+)[%s]*([\\p{L}0-9_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"))), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 
 				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
@@ -96,13 +97,11 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"), //
 				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
 
-				// new RegexLeaf("ARROW", "([-=.]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[-=.]*\\>)"), //
-
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("DESC", "\"([^\"]*?)"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("DESC", "[%g]([^%g]*?)"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("$"));
 	}
 
@@ -116,7 +115,8 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 			entity1.setStereotype(new Stereotype(line0.get("STEREOTYPE", 0)));
 		}
 		if (line0.get("BACKCOLOR", 0) != null) {
-			entity1.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(line0.get("BACKCOLOR", 0)));
+			entity1.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet()
+					.getColorIfValid(line0.get("BACKCOLOR", 0)));
 		}
 		final StringBuilder sb = new StringBuilder();
 
@@ -144,7 +144,7 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 			}
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(Pattern.compile(getPatternEnd()),
+		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
 				lines.get(lines.size() - 1));
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith("\\n") == false) {
@@ -162,10 +162,10 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
 		if (partition != null) {
-			diagram.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), null, GroupType.PACKAGE,
+			diagram.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE,
 					null);
 		}
-		final IEntity entity2 = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.ACTIVITY);
+		final IEntity entity2 = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.ACTIVITY, null);
 		if (partition != null) {
 			diagram.endGroup();
 		}
@@ -177,7 +177,7 @@ public class CommandLinkLongActivity2 extends CommandMultilines2<ActivityDiagram
 			entity2.setStereotype(new Stereotype(lineLast.get(2)));
 		}
 		if (lineLast.get(4) != null) {
-			entity2.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(lineLast.get(4)));
+			entity2.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(lineLast.get(4)));
 		}
 
 		if (entity1 == null || entity2 == null) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,12 +41,13 @@ import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 
-public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements ClipContainer {
+public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements ClipContainer, UGraphic2 {
 
 	private final StringBounder stringBounder;
 
@@ -92,7 +93,7 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		return getGraphicObject().generateHtmlCode();
 	}
 
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
+	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		os.write(generateHtmlCode().getBytes());
 	}
 

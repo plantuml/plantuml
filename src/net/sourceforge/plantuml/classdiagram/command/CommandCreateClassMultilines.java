@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.classdiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -58,11 +57,16 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
+
+	private static final String CODE = "(?:\\.|::)?[\\p{L}0-9_]+(?:(?:\\.|::)[\\p{L}0-9_]+)*";
+	public static final String CODES = CODE + "(?:\\s*,\\s*" + CODE + ")*";
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS
@@ -74,36 +78,35 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^\\s*\\}\\s*$";
+		return "(?i)^[%s]*\\}[%s]*$";
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("TYPE", "(interface|enum|abstract\\s+class|abstract|class)\\s+"), //
+				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "\"([^\"]+)\""), //
-								new RegexLeaf("\\s+as\\s+"), //
+								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CommandCreateClass.CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CommandCreateClass.CODE + ")"), //
-								new RegexLeaf("\\s+as\\s+"), // //
-								new RegexLeaf("DISPLAY2", "\"([^\"]+)\"")), //
+								new RegexLeaf("[%s]+as[%s]+"), // //
+								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]")), //
 						new RegexLeaf("CODE3", "(" + CommandCreateClass.CODE + ")"), //
-						new RegexLeaf("CODE4", "\"([^\"]+)\"")), //
-				new RegexLeaf("GENERIC", "(?:\\s*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
-				new RegexLeaf("\\s*"), //
-				// new RegexLeaf("STEREO", "(?:\\s*(\\<\\<.+\\>\\>))?"), //
+						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
+				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
-				new RegexLeaf("EXTENDS",
-						"(\\s+(extends|implements)\\s+((?:\\.|::)?[\\p{L}0-9_]+(?:(?:\\.|::)[\\p{L}0-9_]+)*))?"), //
-				new RegexLeaf("\\s*\\{\\s*$"));
+				new RegexLeaf("EXTENDS", "([%s]+(extends)[%s]+(" + CODES + "))?"), //
+				new RegexLeaf("IMPLEMENTS", "([%s]+(implements)[%s]+(" + CODES + "))?"), //
+				new RegexLeaf("[%s]*\\{[%s]*$"));
 	}
 
 	public CommandExecutionResult executeNow(ClassDiagram diagram, List<String> lines) {
@@ -134,15 +137,15 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			entity.addUrl(url);
 		}
 
-		manageExtends(diagram, line0, entity);
+		manageExtends("EXTENDS", diagram, line0, entity);
+		manageExtends("IMPLEMENTS", diagram, line0, entity);
 
 		return CommandExecutionResult.ok();
 	}
 
-	private static void manageExtends(ClassDiagram system, RegexResult arg, final IEntity entity) {
-		if (arg.get("EXTENDS", 1) != null) {
-			final Mode mode = arg.get("EXTENDS", 1).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;
-			final Code other = Code.of(arg.get("EXTENDS", 2));
+	public static void manageExtends(String keyword, ClassDiagram system, RegexResult arg, final IEntity entity) {
+		if (arg.get(keyword, 1) != null) {
+			final Mode mode = arg.get(keyword, 1).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;
 			LeafType type2 = LeafType.CLASS;
 			if (mode == Mode.IMPLEMENTS) {
 				type2 = LeafType.INTERFACE;
@@ -150,22 +153,26 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			if (mode == Mode.EXTENDS && entity.getEntityType() == LeafType.INTERFACE) {
 				type2 = LeafType.INTERFACE;
 			}
-			final IEntity cl2 = system.getOrCreateLeaf(other, type2);
-			LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
-			if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
-				typeLink = typeLink.getDashed();
+			final String codes = arg.get(keyword, 2);
+			for (String s : codes.split(",")) {
+				final Code other = Code.of(s.trim());
+				final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
+				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
+				if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
+					typeLink = typeLink.getDashed();
+				}
+				final Link link = new Link(cl2, entity, typeLink, null, 2, null, null, system.getLabeldistance(),
+						system.getLabelangle());
+				system.addLink(link);
 			}
-			final Link link = new Link(cl2, entity, typeLink, null, 2, null, null, system.getLabeldistance(),
-					system.getLabelangle());
-			system.addLink(link);
 		}
 	}
 
 	private IEntity executeArg0(ClassDiagram diagram, RegexResult arg) {
 
-		final LeafType type = LeafType.getLeafType(arg.get("TYPE", 0).toUpperCase());
+		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(arg.get("TYPE", 0)));
 
-		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote();
+		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
@@ -173,14 +180,15 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final ILeaf result;
 		if (diagram.leafExist(code)) {
-			result = diagram.getOrCreateLeaf(code, null);
-			result.muteToType(type);
+			result = diagram.getOrCreateLeaf(code, null, null);
+			result.muteToType(type, null);
 		} else {
-			result = diagram.createLeaf(code, Display.getWithNewlines(display), type);
+			result = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
 		}
 		if (stereotype != null) {
 			result.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+					.getIHtmlColorSet()));
 		}
 
 		final String urlString = arg.get("URL", 0);
@@ -190,8 +198,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			result.addUrl(url);
 		}
 
-		result.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0)));
-		result.setSpecificLineColor(HtmlColorUtils.getColorIfValid(arg.get("LINECOLOR", 1)));
+		result.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		result.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
 		applyStroke(result, arg.get("LINECOLOR", 0));
 
 		if (generic != null) {
@@ -200,7 +208,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		return result;
 	}
 
-	public UStroke getStroke(LinkStyle style) {
+	public static UStroke getStroke(LinkStyle style) {
 		if (style == LinkStyle.DASHED) {
 			return new UStroke(6, 6, 1);
 		}
@@ -213,11 +221,11 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		return new UStroke();
 	}
 
-	private void applyStroke(ILeaf entity, String s) {
+	public static void applyStroke(IEntity entity, String s) {
 		if (s == null) {
 			return;
 		}
-		final LinkStyle style = LinkStyle.valueOf(s.toUpperCase());
+		final LinkStyle style = LinkStyle.valueOf(StringUtils.goUpperCase(s));
 		entity.setSpecificLineStroke(getStroke(style));
 
 	}

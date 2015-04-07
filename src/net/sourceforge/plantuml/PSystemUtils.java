@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -150,7 +150,7 @@ public class PSystemUtils {
 				os.close();
 			}
 		}
-		if (system.hasUrl() && cmap != null && cmap.containsCMapData()) {
+		if (cmap != null && cmap.containsCMapData()) {
 			system.exportCmap(suggestedFile, cmap);
 		}
 		return Arrays.asList(suggestedFile);
@@ -173,7 +173,7 @@ public class PSystemUtils {
 			} finally {
 				fos.close();
 			}
-			if (system.hasUrl() && cmap != null && cmap.containsCMapData()) {
+			if (cmap != null && cmap.containsCMapData()) {
 				system.exportCmap(suggestedFile, cmap);
 			}
 			Log.info("File size : " + f.length());
@@ -207,7 +207,7 @@ public class PSystemUtils {
 		}
 		List<File> result = Arrays.asList(suggestedFile);
 
-		if (system.hasUrl() && cmap != null && cmap.containsCMapData()) {
+		if (cmap != null && cmap.containsCMapData()) {
 			system.exportCmap(suggestedFile, cmap);
 		}
 

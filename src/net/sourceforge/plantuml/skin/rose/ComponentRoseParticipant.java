@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,12 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11394 $
+ * Revision $Revision: 15811 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -57,10 +57,12 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final double roundCorner;
 	private final UStroke stroke;
 
-	public ComponentRoseParticipant(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, UFont font,
-			Display stringsToDisplay, SpriteContainer spriteContainer, double deltaShadow, double roundCorner,
-			UStroke stroke) {
-		super(stringsToDisplay, fontColor, font, HorizontalAlignment.CENTER, 7, 7, 7, spriteContainer, 0, false);
+	public ComponentRoseParticipant(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor,
+			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay,
+			ISkinSimple spriteContainer, double deltaShadow, double roundCorner, UStroke stroke,
+			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
+				7, 7, 7, spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
 		this.back = back;
 		this.roundCorner = roundCorner;
 		this.deltaShadow = deltaShadow;

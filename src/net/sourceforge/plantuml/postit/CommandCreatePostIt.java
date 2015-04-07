@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,9 +48,9 @@ public class CommandCreatePostIt extends SingleLineCommand2<PostItDiagram> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("post[- ]?it\\s+"), //
+				new RegexLeaf("post[-[%s]]?it[%s]+"), //
 				new RegexLeaf("ID", "([-\\p{L}0-9_./]+)"), //
-				new RegexLeaf("\\s+"), // 
+				new RegexLeaf("[%s]+"), // 
 				new RegexLeaf("TEXT", ":?(.*)?$"));
 	}
 

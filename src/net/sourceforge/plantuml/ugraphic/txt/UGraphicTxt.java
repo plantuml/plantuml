@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.UClip;
+import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 
@@ -74,10 +74,10 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	public void draw(UShape shape) {
-		final UClip clip = getClip();
+		// final UClip clip = getClip();
 		if (shape instanceof UText) {
 			final UText txt = (UText) shape;
-			final int y = getDy() / 10 - 1;
+			final int y = ((int) (getTranslateY() + txt.getDescent())) / 10;
 			if (txt.getFontConfiguration().containsStyle(FontStyle.WAVE)) {
 				charArea.drawHLine('^', y, getDx(), txt.getText().length());
 				charArea.drawStringLR(txt.getText(), 0, y + 1);
@@ -85,8 +85,10 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 				charArea.drawStringLR(txt.getText(), 0, y);
 			}
 			return;
+		} else if (shape instanceof UImage) {
+			return;
 		}
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("cl=" + shape.getClass());
 	}
 
 	public final UmlCharArea getCharArea() {
@@ -105,10 +107,6 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	public void closeAction() {
-	}
-
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
-		throw new UnsupportedOperationException();
 	}
 
 	public Dimension2D getDimension() {

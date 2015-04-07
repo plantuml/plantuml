@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,10 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
+ * Revision $Revision: 14532 $
  *
  */
 package net.sourceforge.plantuml;
+
 
 public abstract class Log {
 
@@ -52,14 +53,37 @@ public abstract class Log {
 
 	private static String format(String s) {
 		final long delta = System.currentTimeMillis() - start;
+		// final HealthCheck healthCheck = Performance.getHealthCheck();
+		// final long cpu = healthCheck.jvmCpuTime() / 1000L / 1000L;
+		// final long dot = healthCheck.dotTime().getSum();
+		
+		final long freeMemory = Runtime.getRuntime().freeMemory();
+		final long maxMemory = Runtime.getRuntime().maxMemory();
+		final long totalMemory = Runtime.getRuntime().totalMemory();
+		final long usedMemory = totalMemory - freeMemory;
+		final int threadActiveCount = Thread.activeCount();
+
 		final StringBuilder sb = new StringBuilder();
 		sb.append("(");
 		sb.append(delta / 1000L);
 		sb.append(".");
 		sb.append(String.format("%03d", delta % 1000L));
+//		if (cpu != -1) {
+//			sb.append(" - ");
+//			sb.append(cpu / 1000L);
+//			sb.append(".");
+//			sb.append(String.format("%03d", cpu % 1000L));
+//		}
+//		sb.append(" - ");
+//		sb.append(dot / 1000L);
+//		sb.append(".");
+//		sb.append(String.format("%03d", dot % 1000L));
+//		sb.append("(");
+//		sb.append(healthCheck.dotTime().getNb());
+//		sb.append(")");
 		sb.append(" - ");
-		final long total = (Runtime.getRuntime().totalMemory()) / 1024 / 1024;
-		final long free = (Runtime.getRuntime().freeMemory()) / 1024 / 1024;
+		final long total = totalMemory / 1024 / 1024;
+		final long free = freeMemory / 1024 / 1024;
 		sb.append(total);
 		sb.append(" Mo) ");
 		sb.append(free);
@@ -70,16 +94,16 @@ public abstract class Log {
 	}
 
 	public static void println(Object s) {
-		if (header == null) {
+		if (header2.get() == null) {
 			System.err.println("L = " + s);
 		} else {
-			System.err.println(header + " " + s);
+			System.err.println(header2.get() + " " + s);
 		}
 	}
 
-	private static String header;
+	private static final ThreadLocal<String> header2 = new ThreadLocal<String>();
 
 	public static void header(String s) {
-		header = s;
+		header2.set(s);
 	}
 }

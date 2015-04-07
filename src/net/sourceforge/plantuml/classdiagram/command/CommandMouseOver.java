@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandMouseOver extends CommandMultilines2<ClassDiagram> {
 
@@ -55,16 +55,16 @@ public class CommandMouseOver extends CommandMultilines2<ClassDiagram> {
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^\\s*\\}\\s*$";
+		return "(?i)^[%s]*\\}[%s]*$";
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("mouseover\\s+"), //
+				new RegexLeaf("mouseover[%s]+"), //
 				new RegexOr(//
 						new RegexLeaf("NAME1", "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)"), //
-						new RegexLeaf("NAME3", "\"([^\"]+)\"")), //
-				new RegexLeaf("\\s*\\{\\s*$"));
+						new RegexLeaf("NAME3", "[%g]([^%g]+)[%g]")), //
+				new RegexLeaf("[%s]*\\{[%s]*$"));
 	}
 
 	public CommandExecutionResult executeNow(ClassDiagram system, List<String> lines) {
@@ -77,7 +77,7 @@ public class CommandMouseOver extends CommandMultilines2<ClassDiagram> {
 		if (system.leafExist(code) == false) {
 			return CommandExecutionResult.error("No such entity");
 		}
-		final IEntity entity = system.getLeafs().get(code);
+		final IEntity entity = system.getLeafsget(code);
 		for (String s : lines.subList(1, lines.size() - 1)) {
 			entity.mouseOver(s);
 		}
@@ -87,7 +87,7 @@ public class CommandMouseOver extends CommandMultilines2<ClassDiagram> {
 
 	// private Entity executeArg0(Map<String, RegexPartialMatch> arg) {
 	//
-	// final EntityType type = EntityType.getEntityType(arg.get("TYPE").get(0).toUpperCase());
+	// final EntityType type = EntityType.getEntityType(arg.get("TYPE").get(0).goUpperCase());
 	// final String code;
 	// final String display;
 	// if (arg.get("NAME1").get(1) != null) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,10 +33,10 @@
  */
 package net.sourceforge.plantuml;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
+
+import net.sourceforge.plantuml.StringUtils;
 
 public class Pragma {
 
@@ -61,7 +61,13 @@ public class Pragma {
 		return values.get(name);
 	}
 
-	protected Set<Map.Entry<String, String>> entrySet() {
-		return Collections.unmodifiableSet(values.entrySet());
+	public boolean horizontalLineBetweenDifferentPackageAllowed() {
+		return isDefine("horizontallinebetweendifferentpackageallowed");
 	}
+
+	public boolean useTeozLayout() {
+		final String teoz = getValue("teoz");
+		return "true".equalsIgnoreCase(teoz) || "on".equalsIgnoreCase(teoz);
+	}
+
 }

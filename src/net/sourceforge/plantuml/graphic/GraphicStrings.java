@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,44 +28,29 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11914 $
+ * Revision $Revision: 14711 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.eps.EpsStrategy;
-import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
-import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
-import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
-import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class GraphicStrings implements IEntityImage {
 
@@ -74,6 +59,10 @@ public class GraphicStrings implements IEntityImage {
 	private final UFont font;
 
 	private final HtmlColor green;
+
+	private final HtmlColor hyperlinkColor = HtmlColorUtils.BLUE;
+	
+	private final boolean useUnderlineForHyperlink = true;
 
 	private final List<String> strings;
 
@@ -85,23 +74,22 @@ public class GraphicStrings implements IEntityImage {
 
 	private final ColorMapper colorMapper = new ColorMapperIdentity();
 
-	public GraphicStrings(List<String> strings) {
-		this(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorUtils.getColorIfValid("#33FF02"),
-				HtmlColorUtils.BLACK, null, null, UAntiAliasing.ANTI_ALIASING_ON);
-	}
-
-	public GraphicStrings(List<String> strings, BufferedImage image) {
-		this(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorUtils.getColorIfValid("#33FF02"),
-				HtmlColorUtils.BLACK, image, null, UAntiAliasing.ANTI_ALIASING_ON);
+	public static GraphicStrings createDefault(List<String> strings, boolean useRed) {
+		if (useRed) {
+			return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorUtils.BLACK,
+					HtmlColorUtils.RED_LIGHT, UAntiAliasing.ANTI_ALIASING_ON);
+		}
+		return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorSet.getInstance()
+				.getColorIfValid("#33FF02"), HtmlColorUtils.BLACK, UAntiAliasing.ANTI_ALIASING_ON);
 	}
 
 	public GraphicStrings(List<String> strings, UFont font, HtmlColor green, HtmlColor background,
 			UAntiAliasing antiAliasing) {
-		this(strings, font, green, background, null, null, antiAliasing);
+		this(strings, font, green, background, antiAliasing, null, null);
 	}
 
-	public GraphicStrings(List<String> strings, UFont font, HtmlColor green, HtmlColor background, BufferedImage image,
-			GraphicPosition position, UAntiAliasing antiAliasing) {
+	public GraphicStrings(List<String> strings, UFont font, HtmlColor green, HtmlColor background,
+			UAntiAliasing antiAliasing, BufferedImage image, GraphicPosition position) {
 		this.strings = strings;
 		this.font = font;
 		this.green = green;
@@ -111,118 +99,69 @@ public class GraphicStrings implements IEntityImage {
 		this.antiAliasing = antiAliasing;
 	}
 
-	public void writeImage(OutputStream os, FileFormatOption fileFormatOption, String debugData) throws IOException {
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		if (fileFormat == FileFormat.PNG) {
-			final BufferedImage im = createImage();
-			PngIO.write(im, os, null, 96, debugData);
-		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
-					.getMappedColor(background)), false, 1.0);
-			drawAndGetSize(svg);
-			svg.createXml(os);
-		} else if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-			final UGraphicTxt txt = new UGraphicTxt();
-			drawAndGetSize(txt);
-			txt.getCharArea().print(new PrintStream(os));
-		} else if (fileFormat == FileFormat.EPS) {
-			final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
-			drawAndGetSize(ug);
-			os.write(ug.getEPSCode().getBytes());
-		} else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	public ImageData exportDiagram(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		return exportDiagram(os, null, fileFormatOption);
-	}
-
-	public ImageData exportDiagram(OutputStream os, String metadata, FileFormatOption fileFormatOption)
-			throws IOException {
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		if (fileFormat == FileFormat.PNG) {
-			final BufferedImage im = createImage();
-			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
-		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
-					.getMappedColor(background)), false, 1.0);
-			drawAndGetSize(svg);
-			svg.createXml(os);
-		} else if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-			final UGraphicTxt txt = new UGraphicTxt();
-			drawAndGetSize(txt);
-			txt.getCharArea().print(new PrintStream(os));
-		} else if (fileFormat == FileFormat.EPS) {
-			final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
-			drawAndGetSize(ug);
-			os.write(ug.getEPSCode().getBytes());
-		} else {
-			throw new UnsupportedOperationException();
-		}
-		return new ImageDataSimple();
-	}
-
-	private BufferedImage createImage() {
-		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, colorMapper.getMappedColor(background));
-		Graphics2D g2d = builder.getGraphics2D();
-
-		final Dimension2D size = drawAndGetSize(new UGraphicG2d(colorMapper, g2d, 1.0));
-		g2d.dispose();
-
-		builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(), colorMapper.getMappedColor(background));
-		final BufferedImage im = builder.getBufferedImage();
-		g2d = builder.getGraphics2D();
-		drawAndGetSize(new UGraphicG2d(colorMapper, g2d, 1.0).apply(antiAliasing));
-		g2d.dispose();
-		return im;
-	}
-
 	private double minWidth;
 
 	public void setMinWidth(double minWidth) {
 		this.minWidth = minWidth;
 	}
 
-	private Dimension2D getSizeWithMin(Dimension2D dim) {
-		if (minWidth == 0) {
-			return dim;
-		}
-		if (dim.getWidth() < minWidth) {
-			return new Dimension2DDouble(minWidth, dim.getHeight());
-		}
-		return dim;
-	}
+	private int maxLine = 0;
 
-	private Dimension2D drawAndGetSize(final UGraphic ug) {
-		TextBlock textBlock = TextBlockUtils.create(new Display(strings), new FontConfiguration(font, green),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		textBlock = DateEventUtils.addEvent(textBlock, green);
-
-		Dimension2D size = getSizeWithMin(textBlock.calculateDimension(ug.getStringBounder()));
-		textBlock.drawU(ug);
-
-		if (image != null) {
-			if (position == GraphicPosition.BOTTOM) {
-				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight())).draw(
-						new UImage(image));
-				size = new Dimension2DDouble(size.getWidth(), size.getHeight() + image.getHeight());
-			} else if (position == GraphicPosition.BACKGROUND_CORNER) {
-				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
-						.draw(new UImage(image));
+	private TextBlock getTextBlock() {
+		TextBlock result = null;
+		if (maxLine == 0) {
+			result = TextBlockUtils.create(Display.create(strings), new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink),
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		} else {
+			for (int i = 0; i < strings.size(); i += maxLine) {
+				final int n = Math.min(i + maxLine, strings.size());
+				final TextBlock textBlock1 = TextBlockUtils.create(Display.create(strings.subList(i, n)),
+						new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT,
+						new SpriteContainerEmpty());
+				if (result == null) {
+					result = textBlock1;
+				} else {
+					result = TextBlockUtils.withMargin(result, 0, 10, 0, 0);
+					result = TextBlockUtils.mergeLR(result, textBlock1, VerticalAlignment.TOP);
+				}
 			}
 		}
-		return size;
+		result = DateEventUtils.addEvent(result, green);
+		return result;
 	}
 
 	public void drawU(UGraphic ug) {
-		drawAndGetSize(ug);
+		final Dimension2D size = calculateDimension(ug.getStringBounder());
+		getTextBlock().drawU(ug.apply(new UChangeColor(green)));
+
+		if (image != null) {
+			if (position == GraphicPosition.BOTTOM) {
+				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))
+						.draw(new UImage(image));
+			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
+				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
+						.draw(new UImage(image));
+			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
+				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1)).draw(new UImage(image));
+			}
+		}
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final TextBlock textBlock = TextBlockUtils.create(new Display(strings), new FontConfiguration(font, green),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		return getSizeWithMin(textBlock.calculateDimension(stringBounder));
+		Dimension2D dim = getTextBlock().calculateDimension(stringBounder);
+		if (dim.getWidth() < minWidth) {
+			dim = new Dimension2DDouble(minWidth, dim.getHeight());
+		}
+		if (image != null) {
+			if (position == GraphicPosition.BOTTOM) {
+				dim = new Dimension2DDouble(dim.getWidth(), dim.getHeight() + image.getHeight());
+			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
+				dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
+			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
+				dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
+			}
+		}
+		return dim;
 	}
 
 	public ShapeType getShapeType() {
@@ -239,6 +178,10 @@ public class GraphicStrings implements IEntityImage {
 
 	public boolean isHidden() {
 		return false;
+	}
+
+	public final void setMaxLine(int maxLine) {
+		this.maxLine = maxLine;
 	}
 
 }

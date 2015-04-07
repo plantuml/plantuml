@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.asciiart;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
@@ -48,8 +47,9 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+import net.sourceforge.plantuml.StringUtils;
 
-public class ComponentTextArrow implements Component {
+public class ComponentTextArrow extends AbstractComponentText {
 
 	private final ComponentType type;
 	private final Display stringsToDisplay;
@@ -68,7 +68,7 @@ public class ComponentTextArrow implements Component {
 		if (orig.size() == 0 || orig.get(0) instanceof MessageNumber == false) {
 			return orig;
 		}
-		Display result = new Display();
+		Display result = Display.empty();
 		for (int i = 0; i < orig.size(); i++) {
 			CharSequence element = orig.get(i);
 			if (i == 1) {

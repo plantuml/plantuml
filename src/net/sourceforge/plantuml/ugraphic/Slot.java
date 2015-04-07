@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -73,6 +73,16 @@ public class Slot implements Comparable<Slot> {
 
 	public Slot merge(Slot other) {
 		return new Slot(Math.min(start, other.start), Math.max(end, other.end));
+	}
+
+	public Slot intersect(double otherStart, double otherEnd) {
+		if (otherStart >= end) {
+			return null;
+		}
+		if (otherEnd <= start) {
+			return null;
+		}
+		return new Slot(Math.max(start, otherStart), Math.min(end, otherEnd));
 	}
 
 	public int compareTo(Slot other) {

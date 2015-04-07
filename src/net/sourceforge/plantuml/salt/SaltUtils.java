@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryDroplist;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryImage;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryLine;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryMenu;
-import net.sourceforge.plantuml.salt.factory.ElementFactoryPyramid2;
+import net.sourceforge.plantuml.salt.factory.ElementFactoryPyramid;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryRadioOff;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryRadioOn;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryRetrieveFromDictonnary;
@@ -68,7 +68,7 @@ public class SaltUtils {
 		final Dictionary dictionnary = new Dictionary();
 
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
-		cpx.add(new ElementFactoryPyramid2(source, dictionnary));
+		cpx.add(new ElementFactoryPyramid(source, dictionnary));
 		cpx.add(new ElementFactoryBorder(source, dictionnary));
 
 		for (AbstractElementFactoryComplex f : cpx) {

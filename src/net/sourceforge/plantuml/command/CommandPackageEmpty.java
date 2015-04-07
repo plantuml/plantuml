@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,21 +35,20 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class CommandPackageEmpty extends SingleLineCommand<AbstractEntityDiagram> {
 
 	public CommandPackageEmpty() {
 		super(
-				"(?i)^package\\s+(\"[^\"]+\"|[^#\\s{}]*)(?:\\s+as\\s+([\\p{L}0-9_.]+))?\\s*(#[0-9a-fA-F]{6}|#?\\w+)?\\s*\\{\\s*\\}$");
+				"(?i)^package[%s]+([%g][^%g]+[%g]|[^#%s{}]*)(?:[%s]+as[%s]+([\\p{L}0-9_.]+))?[%s]*(#[0-9a-fA-F]{6}|#?\\w+)?[%s]*\\{[%s]*\\}$");
 	}
 
 	@Override
@@ -62,18 +61,18 @@ public class CommandPackageEmpty extends SingleLineCommand<AbstractEntityDiagram
 				display = null;
 			} else {
 				code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0)));
-				display = code.getCode();
+				display = code.getFullName();
 			}
 		} else {
 			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0));
 			code = Code.of(arg.get(1));
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), null, GroupType.PACKAGE,
+		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE,
 				currentPackage);
 		final String color = arg.get(2);
 		if (color != null) {
-			p.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(color));
+			p.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
 		}
 		diagram.endGroup();
 		return CommandExecutionResult.ok();

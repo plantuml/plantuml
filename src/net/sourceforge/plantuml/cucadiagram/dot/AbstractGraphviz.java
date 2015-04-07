@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12064 $
+ * Revision $Revision: 15599 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -82,7 +82,7 @@ abstract class AbstractGraphviz implements Graphviz {
 		}
 
 		if (illegalDotExe()) {
-			// createPngNoGraphviz(os, new FileFormatOption(FileFormat.valueOf(type[0].toUpperCase())));
+			// createPngNoGraphviz(os, new FileFormatOption(FileFormat.valueOf(type[0].goUpperCase())));
 			throw new IllegalStateException();
 		}
 		final String cmd[] = getCommandLine();
@@ -92,10 +92,10 @@ abstract class AbstractGraphviz implements Graphviz {
 			Log.info("Starting Graphviz process " + Arrays.asList(cmd));
 			Log.info("DotString size: " + dotString.length());
 			p = new ProcessRunner(cmd);
-			state = p.run2(dotString.getBytes(), os);
-//			if (state == ProcessState.TERMINATED_OK) {
-//				result = true;
-//			}
+			state = p.run(dotString.getBytes(), os);
+			// if (state == ProcessState.TERMINATED_OK) {
+			// result = true;
+			// }
 			Log.info("Ending process ok");
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -122,7 +122,7 @@ abstract class AbstractGraphviz implements Graphviz {
 		return state;
 	}
 
-	private boolean illegalDotExe() {
+	public boolean illegalDotExe() {
 		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
 	}
 
@@ -133,8 +133,8 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	private String executeCmd(final String cmd[]) {
 		final ProcessRunner p = new ProcessRunner(cmd);
-		final ProcessState state = p.run2(null, null);
-		if (state != ProcessState.TERMINATED_OK) {
+		final ProcessState state = p.run(null, null);
+		if (state.differs(ProcessState.TERMINATED_OK())) {
 			return "?";
 		}
 		final StringBuilder sb = new StringBuilder();
@@ -151,6 +151,17 @@ abstract class AbstractGraphviz implements Graphviz {
 	}
 
 	final String[] getCommandLine() {
+		if (OptionFlags.ADD_NICE_FOR_DOT) {
+			final String[] result = new String[type.length + 1 + 3];
+			result[0] = "/bin/nice";
+			result[1] = "-n";
+			result[2] = "10";
+			result[3] = getDotExe().getAbsolutePath();
+			for (int i = 0; i < type.length; i++) {
+				result[i + 4] = "-T" + type[i];
+			}
+			return result;
+		}
 		final String[] result = new String[type.length + 1];
 		result[0] = getDotExe().getAbsolutePath();
 		for (int i = 0; i < type.length; i++) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -64,7 +64,7 @@ public class LabelImage {
 		this.param = param;
 		this.rose = rose;
 		this.name = TextBlockUtils.create(link.getLabel(),
-				new FontConfiguration(param.getFont(FontParam.CLASS, null), HtmlColorUtils.BLACK), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+				new FontConfiguration(param.getFont(FontParam.CLASS, null, false), HtmlColorUtils.BLACK, param.getHyperlinkColor(), param.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	public Dimension2D getDimension(StringBounder stringBounder) {

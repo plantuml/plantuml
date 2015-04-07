@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -57,7 +57,7 @@ class ItemHeader {
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
 	private final Project project;
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK);
+	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 
 	public ItemHeader(Project project) {
 		this.project = project;
@@ -71,7 +71,7 @@ class ItemHeader {
 		ug.apply(new UTranslate(x, y)).draw(new URectangle(getWidth(stringBounder), getHeight(stringBounder)));
 
 		for (Item it : project.getValidItems()) {
-			final TextBlock b = TextBlockUtils.create(Display.asList("" + it.getCode()), fontConfig,
+			final TextBlock b = TextBlockUtils.create(Display.create("" + it.getCode()), fontConfig,
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			b.drawU(ug.apply(new UTranslate(x, y)));

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,6 +41,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 
 import com.ctreber.acearth.plugins.markers.Marker;
 
@@ -60,7 +61,7 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 	}
 
 	private void extractDimension(String startLine) {
-		final Pattern p = Pattern.compile("\\((\\d+),(\\d+)\\)");
+		final Pattern p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
 		final Matcher m = p.matcher(startLine);
 		final boolean ok = m.find();
 		if (ok) {
@@ -82,7 +83,7 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 		if (line.startsWith("#") || line.startsWith("'")) {
 			return system;
 		}
-		final Pattern p = Pattern.compile("(\\w+)\\s*=\\s*(.*)");
+		final Pattern p = MyPattern.cmpile("(\\w+)[%s]*=[%s]*(.*)");
 		final Matcher m = p.matcher(line);
 		if (m.find()) {
 			config.put(m.group(1), m.group(2));

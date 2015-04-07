@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,12 +33,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Set;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class FtileKilled extends AbstractFtile {
@@ -49,11 +46,11 @@ public class FtileKilled extends AbstractFtile {
 		super(tileToKill.shadowing());
 		this.tile = tileToKill;
 	}
-	
+
 	public Set<Swimlane> getSwimlanes() {
 		return tile.getSwimlanes();
 	}
-	
+
 	public Swimlane getSwimlaneIn() {
 		return tile.getSwimlaneIn();
 	}
@@ -62,31 +59,13 @@ public class FtileKilled extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-
-
-	public Point2D getPointIn(StringBounder stringBounder) {
-		return tile.getPointIn(stringBounder);
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		final FtileGeometry geo = tile.calculateDimension(stringBounder);
+		return new FtileGeometry(tile.calculateDimension(stringBounder), geo.getLeft(), geo.getInY());
 	}
 
-	public Point2D getPointOut(StringBounder stringBounder) {
-		return null;
-	}
-
-	public TextBlock asTextBlock() {
-		return new TextBlock() {
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return tile.asTextBlock().calculateDimension(stringBounder);
-			}
-
-			public void drawU(UGraphic ug) {
-				ug.draw(tile);
-			}
-		};
-	}
-
-	public boolean isKilled() {
-		return true;
+	public void drawU(UGraphic ug) {
+		ug.draw(tile);
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10779 $
+ * Revision $Revision: 14321 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -37,8 +37,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.StringUtils;
 
 public abstract class SingleLineCommand<S extends Diagram> implements Command<S> {
 
@@ -52,7 +53,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 			throw new IllegalArgumentException("Bad pattern " + pattern);
 		}
 
-		this.pattern = Pattern.compile(pattern);
+		this.pattern = MyPattern.cmpile(pattern);
 	}
 
 	public String[] getDescription() {

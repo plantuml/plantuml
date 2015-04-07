@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -84,8 +84,8 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 		final Stereotype stereotype = leaf.getStereotype();
 
 		this.desc = TextBlockUtils.create(leaf.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.STATE, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE, stereotype)),
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE, stereotype),
+						getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
 				HorizontalAlignment.CENTER, skinParam);
 	}
 

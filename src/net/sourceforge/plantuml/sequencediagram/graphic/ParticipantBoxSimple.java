@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 12649 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -38,7 +38,7 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 
-class ParticipantBoxSimple implements Pushable {
+public class ParticipantBoxSimple implements Pushable {
 
 	private double pos = 0;
 	private final String name;

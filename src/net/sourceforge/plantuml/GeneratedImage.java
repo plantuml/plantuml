@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 10298 $
+ * Revision $Revision: 12869 $
  *
  */
 package net.sourceforge.plantuml;
@@ -41,10 +41,10 @@ public class GeneratedImage implements Comparable<GeneratedImage> {
 
 	private final File pngFile;
 	private final String description;
-	private final Diagram system;
+	private final BlockUml blockUml;
 
-	public GeneratedImage(File pngFile, String description, Diagram system) {
-		this.system = system;
+	public GeneratedImage(File pngFile, String description, BlockUml blockUml) {
+		this.blockUml = blockUml;
 		this.pngFile = pngFile;
 		this.description = description;
 	}
@@ -57,8 +57,12 @@ public class GeneratedImage implements Comparable<GeneratedImage> {
 		return description;
 	}
 
-	public boolean isError() {
-		return system instanceof PSystemError;
+	public int lineErrorRaw() {
+		final Diagram system = blockUml.getDiagram();
+		if (system instanceof PSystemError) {
+			return ((PSystemError) system).getHigherErrorPosition() + blockUml.getStartLine();
+		}
+		return -1;
 	}
 
 	@Override

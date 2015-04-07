@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11337 $
+ * Revision $Revision: 12235 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -39,6 +39,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 
 class HtmlCommandFactory {
 
@@ -61,21 +62,21 @@ class HtmlCommandFactory {
 			sbRemoveStyle.append(style.getDeactivationPattern());
 		}
 
-		addStyle = Pattern.compile(sbAddStyle.toString(), Pattern.CASE_INSENSITIVE);
-		removeStyle = Pattern.compile(sbRemoveStyle.toString(), Pattern.CASE_INSENSITIVE);
+		addStyle = MyPattern.cmpile(sbAddStyle.toString(), Pattern.CASE_INSENSITIVE);
+		removeStyle = MyPattern.cmpile(sbRemoveStyle.toString(), Pattern.CASE_INSENSITIVE);
 	}
 
-	private Pattern htmlTag = Pattern.compile(Splitter.htmlTag, Pattern.CASE_INSENSITIVE);
+	private Pattern htmlTag = MyPattern.cmpile(Splitter.htmlTag, Pattern.CASE_INSENSITIVE);
 
 	HtmlCommand getHtmlCommand(String s) {
 		if (htmlTag.matcher(s).matches() == false) {
 			return new Text(s);
 		}
-		if (s.matches(Splitter.imgPattern)) {
+		if (MyPattern.mtches(s, Splitter.imgPattern)) {
 			return Img.getInstance(s, true);
 		}
 
-		if (s.matches(Splitter.imgPatternNoSrcColon)) {
+		if (MyPattern.mtches(s, Splitter.imgPatternNoSrcColon)) {
 			return Img.getInstance(s, false);
 		}
 
@@ -86,50 +87,50 @@ class HtmlCommandFactory {
 			return new RemoveStyle(FontStyle.getStyle(s));
 		}
 
-		if (s.matches(Splitter.fontPattern)) {
+		if (MyPattern.mtches(s, Splitter.fontPattern)) {
 			return new ColorAndSizeChange(s);
 		}
 
-		if (s.matches(Splitter.fontColorPattern2)) {
+		if (MyPattern.mtches(s, Splitter.fontColorPattern2)) {
 			return new ColorChange(s);
 		}
 
-		if (s.matches(Splitter.fontSizePattern2)) {
+		if (MyPattern.mtches(s, Splitter.fontSizePattern2)) {
 			return new SizeChange(s);
 		}
 
-		if (s.matches(Splitter.fontSup)) {
+		if (MyPattern.mtches(s, Splitter.fontSup)) {
 			return new ExposantChange(FontPosition.EXPOSANT);
 		}
 
-		if (s.matches(Splitter.fontSub)) {
+		if (MyPattern.mtches(s, Splitter.fontSub)) {
 			return new ExposantChange(FontPosition.INDICE);
 		}
 
-		if (s.matches(Splitter.endFontPattern)) {
+		if (MyPattern.mtches(s, Splitter.endFontPattern)) {
 			return new ResetFont();
 		}
 
-		if (s.matches(Splitter.endSupSub)) {
+		if (MyPattern.mtches(s, Splitter.endSupSub)) {
 			return new ExposantChange(FontPosition.NORMAL);
 		}
 
-		if (s.matches(Splitter.fontFamilyPattern)) {
+		if (MyPattern.mtches(s, Splitter.fontFamilyPattern)) {
 			return new FontFamilyChange(s);
 		}
 
-		if (s.matches(Splitter.spritePattern)) {
+		if (MyPattern.mtches(s, Splitter.spritePattern)) {
 			return new SpriteCommand(s);
 		}
 
-		if (s.matches(Splitter.linkPattern)) {
+		if (MyPattern.mtches(s, Splitter.linkPattern)) {
 			final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.STRICT);
 			final Url url = urlBuilder.getUrl(s);
 			url.setMember(true);
 			return new TextLink(url);
 		}
 
-		if (s.matches(Splitter.svgAttributePattern)) {
+		if (MyPattern.mtches(s, Splitter.svgAttributePattern)) {
 			return new SvgAttributesChange(s);
 		}
 

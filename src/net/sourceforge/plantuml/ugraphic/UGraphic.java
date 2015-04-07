@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,13 +28,10 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11888 $
+ * Revision $Revision: 13811 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
-
-import java.io.IOException;
-import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -55,7 +52,7 @@ public interface UGraphic {
 
 	public void closeAction();
 
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException;
-	
 	public void flushUg();
+
+	public boolean isSpecialTxt();
 }

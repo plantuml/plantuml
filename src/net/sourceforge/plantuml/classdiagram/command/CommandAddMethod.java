@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 11432 $
+ * Revision $Revision: 12821 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 public class CommandAddMethod extends SingleLineCommand<ClassDiagram> {
 
 	public CommandAddMethod() {
-		super("(?i)^([\\p{L}0-9_.]+|\"[^\"]+\")\\s*:\\s*(.*)$");
+		super("(?i)^([\\p{L}0-9_.]+|[%g][^%g]+[%g])[%s]+:[%s]+(.*)$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram system, List<String> arg) {
-		final IEntity entity = system.getOrCreateLeaf(Code.of(arg.get(0)), null);
+		final IEntity entity = system.getOrCreateLeaf(Code.of(arg.get(0)), null, null);
 
 		final String field = arg.get(1);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field.charAt(0))) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,10 +33,13 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -52,6 +55,10 @@ public class SkinParamDelegator implements ISkinParam {
 		this.skinParam = skinParam;
 	}
 
+	public HtmlColor getHyperlinkColor() {
+		return skinParam.getHyperlinkColor();
+	}
+
 	public HtmlColor getBackgroundColor() {
 		return skinParam.getBackgroundColor();
 	}
@@ -60,15 +67,15 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getCircledCharacterRadius();
 	}
 
-	public UFont getFont(FontParam fontParam, String stereotype) {
-		return skinParam.getFont(fontParam, stereotype);
+	public UFont getFont(FontParam fontParam, Stereotype stereotype, boolean inPackageTitle) {
+		return skinParam.getFont(fontParam, stereotype, false);
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param, String stereotype) {
+	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype) {
 		return skinParam.getFontHtmlColor(param, stereotype);
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype, boolean clickable) {
+	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		return skinParam.getHtmlColor(param, stereotype, clickable);
 	}
 
@@ -120,8 +127,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.stereotypePositionTop();
 	}
 
-	public boolean useSwimlanes() {
-		return skinParam.useSwimlanes();
+	public boolean useSwimlanes(UmlDiagramType type) {
+		return skinParam.useSwimlanes(type);
 	}
 
 	public double getNodesep() {
@@ -136,8 +143,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getRoundCorner();
 	}
 
-	public UStroke getThickness(LineParam param) {
-		return skinParam.getThickness(param);
+	public UStroke getThickness(LineParam param, Stereotype stereotype) {
+		return skinParam.getThickness(param, stereotype);
 	}
 
 	public double maxMessageSize() {
@@ -163,5 +170,42 @@ public class SkinParamDelegator implements ISkinParam {
 	public boolean sameClassWidth() {
 		return skinParam.sameClassWidth();
 	}
+
+	public Rankdir getRankdir() {
+		return skinParam.getRankdir();
+	}
+	
+	public boolean useOctagonForActivity(Stereotype stereotype) {
+		return skinParam.useOctagonForActivity(stereotype);
+	}
+
+	public IHtmlColorSet getIHtmlColorSet() {
+		return skinParam.getIHtmlColorSet();
+	}
+
+	public boolean useUnderlineForHyperlink() {
+		return skinParam.useUnderlineForHyperlink();
+	}
+
+	public HorizontalAlignment getDefaultTextAlignment() {
+		return skinParam.getDefaultTextAlignment();
+	}
+
+	public double getPadding() {
+		return skinParam.getPadding();
+	}
+
+	public int groupInheritance() {
+		return skinParam.groupInheritance();
+	}
+
+	public boolean useGuillemet() {
+		return skinParam.useGuillemet();
+	}
+
+	public boolean handwritten() {
+		return skinParam.handwritten();
+	}
+
 
 }

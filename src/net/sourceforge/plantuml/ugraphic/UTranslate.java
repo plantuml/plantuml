@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -71,6 +71,10 @@ public class UTranslate implements UChange {
 			return null;
 		}
 		return new Point2D.Double(p.getX() + dx, p.getY() + dy);
+	}
+
+	public UTranslate scaled(double scale) {
+		return new UTranslate(dx * scale, dy * scale);
 	}
 
 	public UTranslate compose(UTranslate other) {

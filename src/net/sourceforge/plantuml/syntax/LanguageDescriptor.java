@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,7 +39,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 
 public class LanguageDescriptor {
 
@@ -71,6 +71,7 @@ public class LanguageDescriptor {
 		type.add("boundary");
 		type.add("control");
 		type.add("entity");
+		type.add("card");
 
 		keyword.add("@startuml");
 		keyword.add("@enduml");
@@ -115,6 +116,7 @@ public class LanguageDescriptor {
 		keyword.add("down");
 		keyword.add("if");
 		keyword.add("else");
+		keyword.add("elseif");
 		keyword.add("endif");
 		keyword.add("partition");
 		keyword.add("footer");
@@ -131,6 +133,7 @@ public class LanguageDescriptor {
 		keyword.add("endwhile");
 		keyword.add("fork");
 		keyword.add("again");
+		keyword.add("kill");
 
 		preproc.add("!include");
 		preproc.add("!define");
@@ -145,7 +148,7 @@ public class LanguageDescriptor {
 		print(ps, "keyword", keyword);
 		print(ps, "preprocessor", preproc);
 		print(ps, "skinparameter", SkinParam.getPossibleValues());
-		print(ps, "color", HtmlColorUtils.names());
+		print(ps, "color", new HtmlColorSetSimple().names());
 		ps.println(";EOF");
 	}
 

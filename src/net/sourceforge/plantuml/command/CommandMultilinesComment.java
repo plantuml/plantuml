@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,12 +40,12 @@ import net.sourceforge.plantuml.core.Diagram;
 public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 
 	public CommandMultilinesComment() {
-		super("(?i)^\\s*/'.*$");
+		super("(?i)^[%s]*/[%q].*$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^.*'/\\s*$";
+		return "(?i)^.*[%q]/[%s]*$";
 	}
 
 	public CommandExecutionResult execute(final Diagram diagram, List<String> lines) {

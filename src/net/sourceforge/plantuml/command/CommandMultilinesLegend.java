@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 
@@ -52,13 +53,14 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("legend"), //
-				new RegexLeaf("ALIGN", "(?:\\s+(left|right|center))?"), //
+				new RegexLeaf("VALIGN", "(?:[%s]+(top|bottom))?"), //
+				new RegexLeaf("ALIGN", "(?:[%s]+(left|right|center))?"), //
 				new RegexLeaf("$"));
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end ?legend$";
+		return "(?i)^end[%s]?legend$";
 	}
 
 	@Override
@@ -66,13 +68,15 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 		StringUtils.trim(lines, false);
 		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
 		final String align = line0.get("ALIGN", 0);
-		final Display strings = new Display(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
+		final String valign = line0.get("VALIGN", 0);
+		final Display strings = Display.create(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
 		if (strings.size() > 0) {
+			final VerticalAlignment valignment = VerticalAlignment.fromString(valign);
 			HorizontalAlignment alignment = HorizontalAlignment.fromString(align);
 			if (alignment == null) {
 				alignment = HorizontalAlignment.CENTER;
 			}
-			diagram.setLegend(StringUtils.manageEmbededDiagrams(strings), alignment);
+			diagram.setLegend(strings, alignment, valignment);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No legend defined");

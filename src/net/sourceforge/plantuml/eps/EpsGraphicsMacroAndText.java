@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,7 +48,7 @@ public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 		final int size = font.getSize();
 		append("/" + getPSName(fontConfiguration) + " findfont " + size + " scalefont setfont", true);
 		append("1 -1 scale", true);
-		append("(" + getTextAsEps(text) + ") show", true);
+		append("(" + getTextAsEps(text) + ") show", false);
 		append("1 -1 scale", true);
 	}
 

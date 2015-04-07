@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12054 $
+ * Revision $Revision: 15048 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -42,5 +42,7 @@ public interface Event {
 	Url getUrl();
 
 	boolean hasUrl();
+
+	boolean isParallel();
 
 }

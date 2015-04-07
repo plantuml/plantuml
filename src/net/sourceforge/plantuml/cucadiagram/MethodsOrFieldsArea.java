@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -57,12 +57,15 @@ import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Left;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
+import net.sourceforge.plantuml.utils.CharHidder;
 
 public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 
 	private final UFont font;
 	private final ISkinParam skinParam;
 	private final HtmlColor color;
+	private final HtmlColor hyperlinkColor;
+	private final boolean useUnderlineForHyperlink;
 	private final Rose rose = new Rose();
 	private final List<Member> members = new ArrayList<Member>();
 	private final HorizontalAlignment align;
@@ -75,8 +78,10 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 			HorizontalAlignment align) {
 		this.align = align;
 		this.skinParam = skinParam;
-		this.font = skinParam.getFont(fontParam, null);
+		this.font = skinParam.getFont(fontParam, null, false);
 		this.color = rose.getFontColor(skinParam, fontParam);
+		this.hyperlinkColor = skinParam.getHyperlinkColor();
+		this.useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
 		this.members.addAll(members);
 	}
 
@@ -111,15 +116,18 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 
 	private TextBlock createTextBlock(Member m) {
 		final boolean withVisibilityChar = skinParam.classAttributeIconSize() == 0;
-		final String s = m.getDisplay(withVisibilityChar);
-		FontConfiguration config = new FontConfiguration(font, color);
+		String s = m.getDisplay(withVisibilityChar);
+		if (withVisibilityChar && s.startsWith("#")) {
+			s = CharHidder.addTileAtBegin(s);
+		}
+		FontConfiguration config = new FontConfiguration(font, color, hyperlinkColor, useUnderlineForHyperlink);
 		if (m.isAbstract()) {
 			config = config.italic();
 		}
 		if (m.isStatic()) {
 			config = config.underline();
 		}
-		final TextBlock bloc = TextBlockUtils.create(Display.getWithNewlines(s), config, align, skinParam);
+		final TextBlock bloc = TextBlockUtils.create(Display.getWithNewlines(s), config, align, skinParam, true);
 		return new TextBlockTracer(m, bloc);
 	}
 

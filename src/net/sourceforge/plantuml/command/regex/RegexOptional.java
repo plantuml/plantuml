@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -44,7 +44,7 @@ public class RegexOptional extends RegexComposed implements IRegex {
 		final StringBuilder sb = new StringBuilder("(?:");
 		sb.append(partial.getPattern());
 		sb.append(")?");
-		this.full = Pattern.compile(sb.toString(), Pattern.CASE_INSENSITIVE);
+		this.full = MyPattern.cmpileNockeck(sb.toString(), Pattern.CASE_INSENSITIVE);
 	}
 
 	@Override

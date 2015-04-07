@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -50,6 +50,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Bibliotekon;
+import net.sourceforge.plantuml.svek.Shape;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -65,14 +67,16 @@ public class EntityImageActivity extends AbstractEntityImage {
 	final private TextBlock desc;
 	final private static int MARGIN = 10;
 	final private Url url;
+	private final Bibliotekon bibliotekon;
 
-	public EntityImageActivity(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageActivity(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
 		super(entity, skinParam);
+		this.bibliotekon = bibliotekon;
 		final Stereotype stereotype = entity.getStereotype();
 
 		this.desc = TextBlockUtils.create(entity.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.ACTIVITY, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.ACTIVITY, stereotype)),
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.ACTIVITY, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.ACTIVITY, stereotype),
+						getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
 				HorizontalAlignment.CENTER, skinParam);
 		this.url = entity.getUrl99();
 	}
@@ -86,6 +90,32 @@ public class EntityImageActivity extends AbstractEntityImage {
 		if (url != null) {
 			ug.startUrl(url);
 		}
+		if (getShapeType() == ShapeType.ROUND_RECTANGLE) {
+			ug = drawNormal(ug);
+		} else if (getShapeType() == ShapeType.OCTAGON) {
+			ug = drawOctagon(ug);
+		} else {
+			throw new UnsupportedOperationException();
+		}
+		if (url != null) {
+			ug.closeAction();
+		}
+	}
+
+	private UGraphic drawOctagon(UGraphic ug) {
+		final Shape shape = bibliotekon.getShape(getEntity());
+		final Shadowable octagon = shape.getOctagon();
+		if (getSkinParam().shadowing()) {
+			octagon.setDeltaShadow(4);
+		}
+		ug = applyColors(ug);
+		ug.apply(new UStroke(1.5)).draw(octagon);
+		desc.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
+		return ug;
+
+	}
+
+	private UGraphic drawNormal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
@@ -96,22 +126,28 @@ public class EntityImageActivity extends AbstractEntityImage {
 			rect.setDeltaShadow(4);
 		}
 
+		ug = applyColors(ug);
+		ug.apply(new UStroke(1.5)).draw(rect);
+
+		desc.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
+		return ug;
+	}
+
+	private UGraphic applyColors(UGraphic ug) {
 		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.activityBorder, getStereo())));
 		HtmlColor backcolor = getEntity().getSpecificBackColor();
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.activityBackground, getStereo());
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
-
-		ug.apply(new UStroke(1.5)).draw(rect);
-
-		desc.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
-		if (url != null) {
-			ug.closeAction();
-		}
+		return ug;
 	}
 
 	public ShapeType getShapeType() {
+		final Stereotype stereotype = getStereo();
+		if (getSkinParam().useOctagonForActivity(stereotype)) {
+			return ShapeType.OCTAGON;
+		}
 		return ShapeType.ROUND_RECTANGLE;
 	}
 

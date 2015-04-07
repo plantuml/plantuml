@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -52,25 +52,25 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		super(factory, skinParam);
 	}
 
-	private static boolean NEW = true;
-
 	@Override
-	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test) {
-		final UFont font = getSkinParam().getFont(FontParam.ACTIVITY_ARROW2, null);
+	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test, Display yes, Display out, HtmlColor color,
+			LinkRendering backRepeatLinkRendering) {
+		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
+		final UFont font = getSkinParam().getFont(
+				conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND : FontParam.ACTIVITY_ARROW, null,
+				false);
 
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBackground);
+		final HtmlColor backColor = color == null ? getRose().getHtmlColor(getSkinParam(),
+				ColorParam.activityBackground) : color;
 		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
 		final HtmlColor endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getColor();
 
-		if (NEW) {
-			final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
-			return FtileRepeat2.create(swimlane, repeat, test, borderColor, backColor, font, arrowColor,
-					endRepeatLinkColor, conditionStyle, this);
-		}
-		return FtileRepeat.create(repeat, test, borderColor, backColor, font, arrowColor, endRepeatLinkColor, this);
+		return FtileRepeat.create(backRepeatLinkRendering, swimlane, repeat, test, yes, out, borderColor, backColor, font, arrowColor,
+				endRepeatLinkColor, conditionStyle, this, getSkinParam().getHyperlinkColor(), getSkinParam()
+						.useUnderlineForHyperlink());
 	}
 
 }

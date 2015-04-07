@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
@@ -117,11 +118,17 @@ public class Frame implements Component {
 	}
 
 	private TextBlock createTextBloc() {
-		final UFont font = skinParam.getFont(FontParam.PACKAGE, null);
+		final UFont font = skinParam.getFont(FontParam.PACKAGE, null, false);
 		final HtmlColor textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null);
-		final TextBlock bloc = TextBlockUtils.create(new Display(name), new FontConfiguration(font, textColor),
+		final TextBlock bloc = TextBlockUtils.create(Display.create(name), new FontConfiguration(font, textColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		return bloc;
+	}
+
+	public final Dimension2D getPreferredDimension(StringBounder stringBounder) {
+		final double w = getPreferredWidth(stringBounder);
+		final double h = getPreferredHeight(stringBounder);
+		return new Dimension2DDouble(w, h);
 	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -53,11 +53,11 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.UniqueSequence;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.svek.MinFinder;
+import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class GraphvizSolverB {
 
@@ -106,7 +106,7 @@ public class GraphvizSolverB {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz.createFile3(baos);
 		baos.close();
-		if (state != ProcessState.TERMINATED_OK) {
+		if (state.differs(ProcessState.TERMINATED_OK())) {
 			throw new IllegalStateException("Timeout2 " + state);
 		}
 		final byte[] result = baos.toByteArray();
@@ -166,7 +166,7 @@ public class GraphvizSolverB {
 			final String points = s.substring(p2 + " d=\"".length(), p3);
 			final DotPath dotPath = new DotPath(points, height);
 			p.setDotPath(dotPath);
-			minMax.manage(dotPath.getMinMax());
+			minMax.manage(dotPath.getMinFinder());
 
 			// Log.println("pointsList=" + pointsList);
 			if (p.getLabel() != null) {
@@ -247,7 +247,7 @@ public class GraphvizSolverB {
 		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
 		final ProcessState state = graphviz.createFile3(os);
 		os.close();
-		if (state != ProcessState.TERMINATED_OK) {
+		if (state.differs(ProcessState.TERMINATED_OK())) {
 			throw new IllegalStateException("Timeout3 " + state);
 		}
 	}

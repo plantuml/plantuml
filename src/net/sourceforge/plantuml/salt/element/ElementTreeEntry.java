@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,46 +34,56 @@
 package net.sourceforge.plantuml.salt.element;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementTreeEntry implements Element {
+public class ElementTreeEntry {
 
-	private final TextBlock block;
-	private final String text;
+	private final Element firstElement;
 	private final int level;
+	private final List<Element> otherElements = new ArrayList<Element>();
 
-	public ElementTreeEntry(int level, String text, UFont font, SpriteContainer spriteContainer) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK);
-		this.block = TextBlockUtils.create(Display.asList(text), config, HorizontalAlignment.LEFT, spriteContainer);
-		this.text = text;
+	public ElementTreeEntry(int level, Element elmt) {
+		this.firstElement = elmt;
 		this.level = level;
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		return Dimension2DDouble.delta(block.calculateDimension(stringBounder), getXDelta(), 0);
+	public void addCell(Element elmt) {
+		this.otherElements.add(elmt);
+	}
+
+	public Dimension2D getPreferredDimensionFirstCell(StringBounder stringBounder) {
+		return Dimension2DDouble.delta(firstElement.getPreferredDimension(stringBounder, 0, 0), getXDelta(), 0);
+	}
+
+	public ListWidth getPreferredDimensionOtherCell(StringBounder stringBounder) {
+		final ListWidth result = new ListWidth();
+		for (Element element : otherElements) {
+			result.add(element.getPreferredDimension(stringBounder, 0, 0).getWidth());
+		}
+		return result;
 	}
 
 	public double getXDelta() {
 		return level * 10;
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
-		block.drawU(ug.apply(new UTranslate((x + getXDelta()), y)));
+	public void drawFirstCell(UGraphic ug, double x, double y) {
+		firstElement.drawU(ug.apply(new UTranslate(x + getXDelta(), y)), 0, null);
 	}
 
-	public String getText() {
-		return text;
+	public void drawSecondCell(UGraphic ug, double x, double y, ListWidth otherWidth, double margin) {
+		final Iterator<Double> it = otherWidth.iterator();
+		for (Element element : otherElements) {
+			element.drawU(ug.apply(new UTranslate(x, y)), 0, null);
+			x += it.next() + margin;
+		}
 	}
+
 }

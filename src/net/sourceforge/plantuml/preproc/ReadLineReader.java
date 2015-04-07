@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -52,11 +52,13 @@ public class ReadLineReader implements ReadLine {
 		}
 		if (s != null) {
 			s = s.replace('\u2013', '-');
-			s = s.replace('\u00A0', ' ');
-			s = s.replace('\u201c', '\"');
-			s = s.replace('\u201d', '\"');
-			s = s.replace('\u00ab', '\"');
-			s = s.replace('\u00bb', '\"');
+			// s = s.replace('\u00A0', ' ');
+			// s = s.replace('\u201c', '\"');
+			// s = s.replace('\u201d', '\"');
+			// s = s.replace('\u00ab', '\"');
+			// s = s.replace('\u00bb', '\"');
+			// s = s.replace('\u2018', '\'');
+			// s = s.replace('\u2019', '\'');
 			// for (int i = 0; i < s.length(); i++) {
 			// char c = s.charAt(i);
 			// System.err.println("X " + Integer.toHexString((int) c) + " " + c);

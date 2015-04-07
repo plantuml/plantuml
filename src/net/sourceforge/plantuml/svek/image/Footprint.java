@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -77,6 +77,10 @@ public class Footprint {
 			this.translate = translate;
 		}
 
+		public boolean isSpecialTxt() {
+			return false;
+		}
+
 		public MyUGraphic() {
 			this(new ArrayList<Point2D.Double>(), new UTranslate());
 		}
@@ -122,10 +126,6 @@ public class Footprint {
 		}
 
 		public void closeAction() {
-		}
-
-		public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
-			throw new UnsupportedOperationException();
 		}
 
 		private void addPoint(double x, double y) {

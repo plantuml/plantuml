@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11858 $
+ * Revision $Revision: 14823 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class DrawableSet {
+public class DrawableSet {
 
 	private final Map<Participant, LivingParticipantBox> participants = new LinkedHashMap<Participant, LivingParticipantBox>();
 	private final Map<Event, GraphicalElement> events = new HashMap<Event, GraphicalElement>();
@@ -246,7 +246,7 @@ class DrawableSet {
 
 		ug = clipAndTranslate2(delta, width, page, ug);
 		final SimpleContext2D context = new SimpleContext2D(true);
-		this.drawPlaygroundU(ug, height, context);
+		this.drawPlaygroundU(ug, context);
 		ug = ugOrig;
 
 		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
@@ -255,7 +255,25 @@ class DrawableSet {
 		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);
 
 		ug = clipAndTranslate2(delta, width, page, ug);
-		this.drawPlaygroundU(ug, height, new SimpleContext2D(false));
+		this.drawPlaygroundU(ug, new SimpleContext2D(false));
+	}
+
+	void drawU22(final UGraphic ug, final double delta, double width, Page page, boolean showTail) {
+		// final UGraphic ugOrig = ug;
+		final double height = page.getHeight();
+
+		final UGraphic ugTranslated = clipAndTranslate2(delta, width, page, ug);
+		final SimpleContext2D context = new SimpleContext2D(true);
+		this.drawPlaygroundU(ugTranslated, context);
+		// ug = ugOrig;
+
+		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
+
+		this.drawLineU22(ug, showTail, page);
+		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);
+
+		// ug = clipAndTranslate2(delta, width, page, ug);
+		this.drawPlaygroundU(ugTranslated, new SimpleContext2D(false));
 	}
 
 	private UGraphic clipAndTranslate2(final double delta, double width, Page p, UGraphic ug) {
@@ -264,6 +282,25 @@ class DrawableSet {
 			ug = ug.apply(new UTranslate(0, -delta));
 		}
 		return ug;
+	}
+
+	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
+		for (LivingParticipantBox box : getAllLivingParticipantBox()) {
+			final double create = box.getCreate();
+			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());
+			final double endMax = startMin + page.getBodyHeight() + 2 * box.magicMargin(ug.getStringBounder());
+			double start = startMin;
+			if (create > 0) {
+				if (create > page.getNewpage2()) {
+					continue;
+				}
+				if (create >= page.getNewpage1() && create < page.getNewpage2()) {
+					start += create - page.getNewpage1() + 2 * box.magicMargin(ug.getStringBounder());
+				}
+			}
+			final double myDelta = page.getNewpage1() - page.getHeaderHeight();
+			box.drawLineU22(ug, start,  endMax, showTail, myDelta);
+		}
 	}
 
 	private void drawLineU(UGraphic ug, boolean showTail, Page page) {
@@ -319,7 +356,7 @@ class DrawableSet {
 		return dimension.getHeight();
 	}
 
-	private void drawPlaygroundU(UGraphic ug, double height, Context2D context) {
+	private void drawPlaygroundU(UGraphic ug, Context2D context) {
 		for (Participant p : getAllParticipants()) {
 			drawLifeLineU(ug, p);
 		}

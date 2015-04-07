@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 11254 $
+ * Revision $Revision: 14726 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -43,14 +43,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 class JavaFile {
 
-	private static final Pattern classDefinition = Pattern
-			.compile("^(?:public\\s+|abstract\\s+|final\\s+)*(class|interface|enum|annotation)\\s+(\\w+)(?:.*\\b(extends|implements)\\s+([\\w\\s,]+))?");
+	private static final Pattern classDefinition = MyPattern
+			.cmpile("^(?:public[%s]+|abstract[%s]+|final[%s]+)*(class|interface|enum|annotation)[%s]+(\\w+)(?:.*\\b(extends|implements)[%s]+([\\w%s,]+))?");
 
-	private static final Pattern packageDefinition = Pattern.compile("^package\\s+([\\w+.]+)\\s*;");
+	private static final Pattern packageDefinition = MyPattern.cmpile("^package[%s]+([\\w+.]+)[%s]*;");
 
 	private final List<JavaClass> all = new ArrayList<JavaClass>();
 
@@ -79,7 +81,7 @@ class JavaFile {
 				if (matchClassDefinition.find()) {
 					final String n = matchClassDefinition.group(2);
 					final String p = matchClassDefinition.group(4);
-					final LeafType type = LeafType.valueOf(matchClassDefinition.group(1).toUpperCase());
+					final LeafType type = LeafType.valueOf(StringUtils.goUpperCase(matchClassDefinition.group(1)));
 					final LeafType parentType = getParentType(type, matchClassDefinition.group(3));
 					all.add(new JavaClass(javaPackage, n, p, type, parentType));
 				}

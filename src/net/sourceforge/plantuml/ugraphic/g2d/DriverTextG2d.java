@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 13834 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -77,7 +77,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
-		final UFont font = fontConfiguration.getFont();
+		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
 		final Dimension2D dimBack = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Color extended = mapper.getMappedColor(fontConfiguration.getExtendedColor());
@@ -102,7 +102,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			}
 			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(g2d), font, shape.getText());
 			final int ypos = (int) (y + 2.5);
-			g2d.setStroke(new BasicStroke((float) 1.3));
+			g2d.setStroke(new BasicStroke((float) 1));
 			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);
 			g2d.setStroke(new BasicStroke());
 		}

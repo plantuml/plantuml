@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10778 $
+ * Revision $Revision: 13992 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -37,7 +37,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -45,14 +44,15 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandActivate2 extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandActivate2() {
-		super("(?i)^([\\p{L}0-9_.@]+)\\s*(\\+\\+|--)\\s*(#\\w+)?$");
+		super("(?i)^([\\p{L}0-9_.@]+)[%s]*(\\+\\+|--)[%s]*(#\\w+)?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, List<String> arg) {
 		final LifeEventType type = arg.get(1).equals("++") ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;
-		final Participant p = sequenceDiagram.getOrCreateParticipant(arg.get(0));
-		final String error = sequenceDiagram.activate(p, type, HtmlColorUtils.getColorIfValid(arg.get(2)));
+		final Participant p = diagram.getOrCreateParticipant(arg.get(0));
+		final String error = diagram.activate(p, type,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(2)));
 		if (error == null) {
 			return CommandExecutionResult.ok();
 		}

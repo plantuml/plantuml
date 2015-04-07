@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,8 +52,8 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("note"), //
-				new RegexLeaf("POSITION", "\\s*(left|right)?"), //
-				new RegexLeaf("\\s*:\\s*"), //
+				new RegexLeaf("POSITION", "[%s]*(left|right)?"), //
+				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
@@ -68,7 +69,7 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 		if (s == null) {
 			return NotePosition.LEFT;
 		}
-		return NotePosition.valueOf(s.toUpperCase());
+		return NotePosition.valueOf(StringUtils.goUpperCase(s));
 	}
 
 }

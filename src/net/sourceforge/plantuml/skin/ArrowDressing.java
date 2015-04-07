@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,7 +37,7 @@ public class ArrowDressing {
 
 	private final ArrowHead head;
 	private final ArrowPart part;
-	private final ArrowDecoration decoration;
+	// private final ArrowDecoration decoration;
 
 	public String name() {
 		return toString();
@@ -45,32 +45,27 @@ public class ArrowDressing {
 
 	@Override
 	public String toString() {
-		return head.name() + "*" + decoration.name();
+		return head.name();
 	}
 
-	private ArrowDressing(ArrowHead head, ArrowPart part, ArrowDecoration decoration) {
-		if (head == null || part == null || decoration == null) {
+	private ArrowDressing(ArrowHead head, ArrowPart part) {
+		if (head == null || part == null) {
 			throw new IllegalArgumentException();
 		}
 		this.head = head;
 		this.part = part;
-		this.decoration = decoration;
 	}
 
 	public static ArrowDressing create() {
-		return new ArrowDressing(ArrowHead.NONE, ArrowPart.FULL, ArrowDecoration.NONE);
+		return new ArrowDressing(ArrowHead.NONE, ArrowPart.FULL);
 	}
 
 	public ArrowDressing withHead(ArrowHead head) {
-		return new ArrowDressing(head, part, decoration);
+		return new ArrowDressing(head, part);
 	}
 
 	public ArrowDressing withPart(ArrowPart part) {
-		return new ArrowDressing(head, part, decoration);
-	}
-
-	public ArrowDressing withDecoration(ArrowDecoration decoration) {
-		return new ArrowDressing(head, part, decoration);
+		return new ArrowDressing(head, part);
 	}
 
 	public ArrowHead getHead() {
@@ -81,8 +76,5 @@ public class ArrowDressing {
 		return part;
 	}
 
-	public ArrowDecoration getDecoration() {
-		return decoration;
-	}
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12053 $
+ * Revision $Revision: 15848 $
  */
 package net.sourceforge.plantuml;
 
@@ -41,16 +41,33 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class PSystemError extends AbstractPSystem {
 
-	private final List<String> htmlStrings = new ArrayList<String>();
-	private final List<String> plainStrings = new ArrayList<String>();
+	private String getSuggestColor(boolean useRed) {
+		if (useRed) {
+			return "black";
+		}
+		return "white";
+	}
+
+	private String getRed(boolean useRed) {
+		if (useRed) {
+			return "#CD0A0A";
+		}
+		return "red";
+	}
+
 	private final int higherErrorPosition;
 	private final List<ErrorUml> printedErrors;
 
@@ -72,7 +89,6 @@ public class PSystemError extends AbstractPSystem {
 			higherErrorPosition = higherErrorPositionSyntax;
 			printedErrors = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR, all);
 		}
-		appendSource(higherErrorPosition);
 
 	}
 
@@ -81,55 +97,118 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final GraphicStrings result = new GraphicStrings(htmlStrings);
-		return result.exportDiagram(os, getMetadata(), fileFormat);
+		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
+			final UGraphicTxt ugt = new UGraphicTxt();
+			final UmlCharArea area = ugt.getCharArea();
+			area.drawStringsLR(getTextStrings(), 0, 0);
+			area.print(new PrintStream(os));
+			return new ImageDataSimple(1, 1);
+
+		}
+		final boolean useRed = fileFormat.isUseRedForError();
+		final GraphicStrings result = GraphicStrings.createDefault(getHtmlStrings(useRed), useRed);
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
+				getMetadata(), null, 0, 0, null, false);
+		imageBuilder.addUDrawable(result);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
 	}
 
-	private void appendSource(int position) {
+	private List<String> getTextStrings() {
+		final List<String> result = new ArrayList<String>();
+
 		final int limit = 4;
 		int start;
-		final int skip = position - limit + 1;
+		final int skip = higherErrorPosition - limit + 1;
 		if (skip <= 0) {
 			start = 0;
 		} else {
 			if (skip == 1) {
-				htmlStrings.add("... (skipping 1 line) ...");
-				plainStrings.add("... (skipping 1 line) ...");
+				result.add("... (skipping 1 line) ...");
 			} else {
-				htmlStrings.add("... (skipping " + skip + " lines) ...");
-				plainStrings.add("... (skipping " + skip + " lines) ...");
+				result.add("... (skipping " + skip + " lines) ...");
 			}
-			start = position - limit + 1;
+			start = higherErrorPosition - limit + 1;
 		}
-		for (int i = start; i < position; i++) {
-			htmlStrings.add(StringUtils.hideComparatorCharacters(getSource().getLine(i)));
-			plainStrings.add(getSource().getLine(i));
+		for (int i = start; i < higherErrorPosition; i++) {
+			result.add(getSource().getLine(i));
 		}
-		final String errorLine = getSource().getLine(position);
-		htmlStrings.add("<w:red>" + StringUtils.hideComparatorCharacters(errorLine) + "</w>");
-		plainStrings.add(StringUtils.hideComparatorCharacters(errorLine));
+		final String errorLine = getSource().getLine(higherErrorPosition);
+		final String err = StringUtils.hideComparatorCharacters(errorLine);
+		if (StringUtils.isNotEmpty(err)) {
+			result.add(err);
+		}
 		final StringBuilder underscore = new StringBuilder();
 		for (int i = 0; i < errorLine.length(); i++) {
 			underscore.append("^");
 		}
-		plainStrings.add(underscore.toString());
+		result.add(underscore.toString());
 		final Collection<String> textErrors = new LinkedHashSet<String>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());
 		}
 		for (String er : textErrors) {
-			htmlStrings.add(" <color:red>" + er);
-			plainStrings.add(" " + er);
+			result.add(" " + er);
 		}
 		boolean first = true;
 		for (String s : getSuggest()) {
 			if (first) {
-				htmlStrings.add(" <color:white><i>" + s);
+				result.add(" " + s);
 			} else {
-				htmlStrings.add("<color:white>" + StringUtils.hideComparatorCharacters(s));
+				result.add(s);
 			}
 			first = false;
 		}
+
+		return result;
+	}
+
+	private List<String> getHtmlStrings(boolean useRed) {
+		final List<String> htmlStrings = new ArrayList<String>();
+
+		final int limit = 4;
+		int start;
+		final int skip = higherErrorPosition - limit + 1;
+		if (skip <= 0) {
+			start = 0;
+		} else {
+			if (skip == 1) {
+				htmlStrings.add("... (skipping 1 line) ...");
+			} else {
+				htmlStrings.add("... (skipping " + skip + " lines) ...");
+			}
+			start = higherErrorPosition - limit + 1;
+		}
+		for (int i = start; i < higherErrorPosition; i++) {
+			htmlStrings.add(StringUtils.hideComparatorCharacters(getSource().getLine(i)));
+		}
+		final String errorLine = getSource().getLine(higherErrorPosition);
+		final String err = StringUtils.hideComparatorCharacters(errorLine);
+		if (StringUtils.isNotEmpty(err)) {
+			htmlStrings.add("<w:" + getRed(useRed) + ">" + err + "</w>");
+		}
+//		final StringBuilder underscore = new StringBuilder();
+//		for (int i = 0; i < errorLine.length(); i++) {
+//			underscore.append("^");
+//		}
+		final Collection<String> textErrors = new LinkedHashSet<String>();
+		for (ErrorUml er : printedErrors) {
+			textErrors.add(er.getError());
+		}
+		for (String er : textErrors) {
+			htmlStrings.add(" <color:" + getRed(useRed) + ">" + er + "</color>");
+		}
+		boolean first = true;
+		for (String s : getSuggest()) {
+			if (first) {
+				htmlStrings.add(" <color:" + getSuggestColor(useRed) + "><i>" + s + "</i></color>");
+			} else {
+				htmlStrings.add("<color:" + getSuggestColor(useRed) + ">" + StringUtils.hideComparatorCharacters(s)
+						+ "</color>");
+			}
+			first = false;
+		}
+
+		return htmlStrings;
 	}
 
 	public List<String> getSuggest() {
@@ -188,14 +267,6 @@ public class PSystemError extends AbstractPSystem {
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("(Error)", getClass());
-	}
-
-	private void print(PrintStream ps) {
-		synchronized (ps) {
-			for (String s : plainStrings) {
-				ps.println(StringUtils.showComparatorCharacters(s));
-			}
-		}
 	}
 
 	public final int getHigherErrorPosition() {

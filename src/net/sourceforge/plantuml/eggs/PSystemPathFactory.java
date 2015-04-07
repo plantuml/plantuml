@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,10 +38,11 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class PSystemPathFactory extends PSystemSingleLineFactory {
 
-	final private static Pattern p = Pattern.compile("(?i)^path\\s+([0-9A-Za-z]+)$");
+	final private static Pattern p = MyPattern.cmpile("(?i)^path[%s]+([0-9A-Za-z]+)$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {

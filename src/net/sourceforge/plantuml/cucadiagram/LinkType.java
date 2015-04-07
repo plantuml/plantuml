@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -164,20 +164,6 @@ public class LinkType {
 			sb.append(",arrowhead=empty");
 		}
 
-		// if (decor1 == LinkDecor.NONE && decor2 != LinkDecor.NONE) {
-		// sb.append("dir=back,");
-		// }
-		// if (decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE) {
-		// sb.append("dir=both,");
-		// }
-		//
-		// sb.append("dir=both,");
-		//
-		// sb.append("arrowtail=");
-		// sb.append(decor2.getArrowDotSvek());
-		// sb.append(",arrowhead=");
-		// sb.append(decor1.getArrowDotSvek());
-
 		final double arrowsize = Math.max(decor1.getArrowSize(), decor2.getArrowSize());
 		if (arrowsize > 0) {
 			sb.append(",arrowsize=" + arrowsize);
@@ -245,6 +231,14 @@ public class LinkType {
 
 	public LinkHat getHat2() {
 		return hat2;
+	}
+
+	public LinkType withLollipopInterfaceEye2() {
+		return new LinkType(hat1, LinkDecor.NONE, style, middleDecor, decor2, hat2);
+	}
+
+	public LinkType withLollipopInterfaceEye1() {
+		return new LinkType(hat1, decor1, style, middleDecor, LinkDecor.NONE, hat2);
 	}
 
 }

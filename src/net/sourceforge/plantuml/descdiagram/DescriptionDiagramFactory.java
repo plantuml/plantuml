@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandEndPackage;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommandPackage;
 import net.sourceforge.plantuml.command.CommandPage;
 import net.sourceforge.plantuml.command.CommandRankDir;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
+import net.sourceforge.plantuml.descdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.descdiagram.command.CommandNewpage;
 import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
 
@@ -66,6 +68,8 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
 
+		cmds.add(new CommandFootboxIgnored());
+		cmds.add(new CommandNamespaceSeparator());
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
 		addCommonCommands(cmds);
@@ -84,12 +88,12 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexOr(
 				"ENTITY", //
 				new RegexLeaf("[\\p{L}0-9_.]+"), //
-				new RegexLeaf("\\(\\)\\s*[\\p{L}0-9_.]+"), //
-				new RegexLeaf("\\(\\)\\s*\"[^\"]+\""), //
+				new RegexLeaf("\\(\\)[%s]*[\\p{L}0-9_.]+"), //
+				new RegexLeaf("\\(\\)[%s]*[%g][^%g]+[%g]"), //
 				new RegexLeaf("\\[[^\\]*]+[^\\]]*\\]"), //
 				new RegexLeaf("\\((?!\\*\\))[^\\)]+\\)"), //
 				new RegexLeaf(":[^:]+:"), //
-				new RegexLeaf("\"[^\"]+\"") //
+				new RegexLeaf("[%g][^%g]+[%g]") //
 				));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 

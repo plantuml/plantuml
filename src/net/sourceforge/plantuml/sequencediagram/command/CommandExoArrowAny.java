@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -44,8 +43,10 @@ import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
+import net.sourceforge.plantuml.StringUtils;
 
 abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
@@ -65,7 +66,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
 		final Display labels;
 		if (arg2.get("LABEL", 0) == null) {
-			labels = Display.asList("");
+			labels = Display.create("");
 		} else {
 			labels = Display.getWithNewlines(arg2.get("LABEL", 0));
 		}
@@ -82,8 +83,38 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		}
 		config = config.withPart(getArrowPart(dressing));
 		config = CommandArrow.applyStyle(arg2.getLazzy("ARROW_STYLE", 0), config);
+		final MessageExoType messageExoType = getMessageExoType(arg2);
 
-		final String error = sequenceDiagram.addMessage(new MessageExo(p, getMessageExoType(arg2), labels, config,
+		if (messageExoType == MessageExoType.TO_RIGHT || messageExoType == MessageExoType.TO_LEFT) {
+			if (containsSymbolExterior(arg2, "o")) {
+				config = config.withDecoration2(ArrowDecoration.CIRCLE);
+			}
+			if (containsSymbol(arg2, "o")) {
+				config = config.withDecoration1(ArrowDecoration.CIRCLE);
+			}
+		} else {
+			if (containsSymbolExterior(arg2, "o")) {
+				config = config.withDecoration1(ArrowDecoration.CIRCLE);
+			}
+			if (containsSymbol(arg2, "o")) {
+				config = config.withDecoration2(ArrowDecoration.CIRCLE);
+			}
+		}
+
+		if (containsSymbolExterior(arg2, "x") || containsSymbol(arg2, "x")) {
+			config = config.withHead2(ArrowHead.CROSSX);
+		}
+//		if (messageExoType.getDirection() == 1) {
+//			if (containsSymbolExterior(arg2, "x") || containsSymbol(arg2, "x")) {
+//				config = config.withHead2(ArrowHead.CROSSX);
+//			}
+//		} else {
+//			if (containsSymbolExterior(arg2, "x") || containsSymbol(arg2, "x")) {
+//				config = config.withHead2(ArrowHead.CROSSX);
+//			}
+//		}
+
+		final String error = sequenceDiagram.addMessage(new MessageExo(p, messageExoType, labels, config,
 				sequenceDiagram.getNextMessageNumber(), isShortArrow(arg2)));
 		if (error != null) {
 			return CommandExecutionResult.error(error);
@@ -104,8 +135,24 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 	abstract MessageExoType getMessageExoType(RegexResult arg2);
 
 	private boolean isShortArrow(RegexResult arg2) {
-		final String s = arg2.getLazzy("SHORT", 0);
+		final String s = arg2.get("SHORT", 0);
 		if (s != null && s.contains("?")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean containsSymbolExterior(RegexResult arg2, String symbol) {
+		final String s = arg2.get("SHORT", 0);
+		if (s != null && s.contains(symbol)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean containsSymbol(RegexResult arg2, String symbol) {
+		final String s = arg2.get("ARROW_SUPPCIRCLE", 0);
+		if (s != null && s.contains(symbol)) {
 			return true;
 		}
 		return false;

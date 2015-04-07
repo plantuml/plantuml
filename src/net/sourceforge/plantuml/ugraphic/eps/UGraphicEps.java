@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -56,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 
-public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipContainer {
+public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipContainer, UGraphic2 {
 
 	private final StringBounder stringBounder;
 
@@ -90,8 +91,8 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		registerDriver(UText.class, new DriverTextEps(this, strategy));
 		registerDriver(ULine.class, new DriverLineEps(this));
 		registerDriver(UPolygon.class, new DriverPolygonEps(this));
-		registerDriver(UEllipse.class, new DriverEllipseEps());
-		registerDriver(UImage.class, new DriverImageEps());
+		registerDriver(UEllipse.class, new DriverEllipseEps(this));
+		registerDriver(UImage.class, new DriverImageEps(this));
 		registerDriver(UPath.class, new DriverPathEps());
 		registerDriver(DotPath.class, new DriverDotPathEps());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterEps());
@@ -124,13 +125,6 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		return ug.getEPSCode();
 	}
 
-	static public void copyEpsToFile(ColorMapper colorMapper, UDrawable udrawable, File f) throws IOException {
-		final PrintWriter pw = new PrintWriter(f);
-		final EpsStrategy epsStrategy = EpsStrategy.getDefault2();
-		pw.print(UGraphicEps.getEpsString(colorMapper, epsStrategy, udrawable));
-		pw.close();
-	}
-
 	public void startUrl(Url url) {
 		getGraphicObject().openLink(url.getUrl());
 	}
@@ -139,7 +133,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		getGraphicObject().closeLink();
 	}
 
-	public void writeImage(OutputStream os, String metadata, int dpi) throws IOException {
+	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		os.write(getEPSCode().getBytes());
 	}
 

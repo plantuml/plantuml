@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PSystemError;
-import net.sourceforge.plantuml.StartUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow3;
 import net.sourceforge.plantuml.core.Diagram;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.suggest.SuggestEngine;
 import net.sourceforge.plantuml.suggest.SuggestEngineResult;
 import net.sourceforge.plantuml.suggest.SuggestEngineStatus;
+import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter;
 
 public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
@@ -147,13 +147,13 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	private boolean manageMultiline(AbstractPSystem system, final String init, IteratorCounter it) {
 		final List<String> lines = new ArrayList<String>();
-		lines.add(init);
+		addOneSingleLineManageEmbedded(lines, init, it);
 		while (it.hasNext()) {
 			final String s = it.next();
 			if (StartUtils.isArobaseEndDiagram(s)) {
 				return false;
 			}
-			lines.add(s);
+			addOneSingleLineManageEmbedded(lines, s, it);
 			final CommandControl commandControl = isValid(lines);
 			if (commandControl == CommandControl.NOT_OK) {
 				// throw new IllegalStateException();
@@ -167,6 +167,19 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		}
 		return false;
 
+	}
+
+	private void addOneSingleLineManageEmbedded(final List<String> lines, final String linetoBeAdded, IteratorCounter it) {
+		lines.add(linetoBeAdded);
+		if (linetoBeAdded.trim().equals("{{")) {
+			while (it.hasNext()) {
+				final String s = it.next();
+				lines.add(s);
+				if (s.trim().equals("}}")) {
+					return;
+				}
+			}
+		}
 	}
 
 	// -----------------------------------
@@ -224,6 +237,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(new CommandScale());
 		cmds.add(new CommandScaleWidthAndHeight());
 		cmds.add(new CommandScaleWidthOrHeight());
+		cmds.add(new CommandAffineTransform());
+		cmds.add(new CommandAffineTransformMultiline());
 		cmds.add(new CommandHideUnlinked());
 		final FactorySpriteCommand factorySpriteCommand = new FactorySpriteCommand();
 		cmds.add(factorySpriteCommand.createMultiLine());

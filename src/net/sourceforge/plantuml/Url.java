@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,6 +34,8 @@
 package net.sourceforge.plantuml;
 
 import java.util.Comparator;
+
+import net.sourceforge.plantuml.cucadiagram.dot.DotMaker2;
 
 public class Url implements EnsureVisible {
 
@@ -81,6 +83,9 @@ public class Url implements EnsureVisible {
 	}
 
 	public String getCoords(double scale) {
+		if (DotMaker2.isJunit() && visible.getCoords(1.0).contains("0,0,0,0")) {
+			throw new IllegalStateException();
+		}
 		return visible.getCoords(scale);
 	}
 

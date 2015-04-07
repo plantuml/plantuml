@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandEndPackage;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommandPackage;
 import net.sourceforge.plantuml.command.CommandPage;
 import net.sourceforge.plantuml.command.CommandRankDir;
@@ -59,6 +60,7 @@ public class ObjectDiagramFactory extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<Command>();
+		cmds.add(new CommandFootboxIgnored());
 
 		addCommonCommands(cmds);
 		cmds.add(new CommandRankDir());
@@ -78,7 +80,7 @@ public class ObjectDiagramFactory extends UmlDiagramFactory {
 		//
 		// addCommand(new CommandImport());
 		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexLeaf(
-				"ENTITY", "([\\p{L}0-9_.]+|\"[^\"]+\")"));
+				"ENTITY", "([\\p{L}0-9_.]+|[%g][^%g]+[%g])"));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 
 		cmds.add(new CommandUrl());

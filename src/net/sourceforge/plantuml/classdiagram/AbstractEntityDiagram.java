@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12053 $
+ * Revision $Revision: 12853 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -57,7 +57,7 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 	}
 
 	final public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(" + getLeafs().size() + " entities)", getClass());
+		return new DiagramDescriptionImpl("(" + getLeafssize() + " entities)", getClass());
 	}
 
 }

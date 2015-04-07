@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,10 +39,10 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -59,7 +59,7 @@ public class ElementDroplist extends AbstractElementText implements Element {
 	private final int box = 12;
 	private final TextBlock openDrop;
 
-	public ElementDroplist(String text, UFont font, SpriteContainer spriteContainer) {
+	public ElementDroplist(String text, UFont font, ISkinSimple spriteContainer) {
 		super(extract(text), font, true, spriteContainer);
 		final StringTokenizer st = new StringTokenizer(text, "^");
 		final List<String> drop = new ArrayList<String>();
@@ -72,7 +72,7 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		if (drop.size() == 0) {
 			this.openDrop = null;
 		} else {
-			this.openDrop = TextBlockUtils.create(new Display(drop), getConfig(), HorizontalAlignment.LEFT,
+			this.openDrop = TextBlockUtils.create(Display.create(drop), getConfig(), HorizontalAlignment.LEFT,
 					spriteContainer);
 		}
 	}
@@ -90,13 +90,14 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		return Dimension2DDouble.delta(dim, 4 + box, 4);
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		if (zIndex == 0) {
-			ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#EEEEEE"))).apply(new UTranslate(x, y)).draw(new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
-			drawText(ug, x + 2, y + 2);
+			ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE"))).draw(
+					new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
+			drawText(ug, 2, 2);
 			final double xline = dim.getWidth() - box;
-			ug.apply(new UTranslate(x + xline, y)).draw(new ULine(0, dim.getHeight() - 1));
+			ug.apply(new UTranslate(xline, 0)).draw(new ULine(0, dim.getHeight() - 1));
 
 			final UPolygon poly = new UPolygon();
 			poly.addPoint(0, 0);
@@ -104,14 +105,16 @@ public class ElementDroplist extends AbstractElementText implements Element {
 			final Dimension2D dimText = getPureTextDimension(ug.getStringBounder());
 			poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);
 
-			ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(x + xline + 3, y + 6)).draw(poly);
+			ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(xline + 3, 6)).draw(poly);
 		}
 
 		if (openDrop != null) {
 			final Dimension2D dimOpen = Dimension2DDouble.atLeast(openDrop.calculateDimension(ug.getStringBounder()),
 					dim.getWidth() - 1, 0);
-			ug.apply(new UChangeBackColor(HtmlColorUtils.getColorIfValid("#EEEEEE"))).apply(new UTranslate(x, y + dim.getHeight() - 1)).draw(new URectangle(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));
-			openDrop.drawU(ug.apply(new UTranslate(x, (y + dim.getHeight() - 1))));
+			ug.apply(new UChangeBackColor(HtmlColorSet.getInstance().getColorIfValid("#EEEEEE")))
+					.apply(new UTranslate(0, dim.getHeight() - 1))
+					.draw(new URectangle(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));
+			openDrop.drawU(ug.apply(new UTranslate(0, dim.getHeight() - 1)));
 		}
 	}
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
-public class ComponentTextGroupingTail implements Component {
+public class ComponentTextGroupingTail extends AbstractComponentText {
 
 	private final ComponentType type;
 	private final List<? extends CharSequence> stringsToDisplay;

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public enum PackageStyle {
 
-	FOLDER, RECT, NODE, FRAME, CLOUD, DATABASE, AGENT, STORAGE, COMPONENT1, COMPONENT2, ARTIFACT;
+	FOLDER, RECT, NODE, FRAME, CLOUD, DATABASE, AGENT, STORAGE, COMPONENT1, COMPONENT2, ARTIFACT, CARD;
 
 	public static PackageStyle fromString(String value) {
 		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {

@@ -106,6 +106,10 @@ public abstract class DiagramComponent {
 					shape.addToPoints(makePointForCell(cell, workGrid, cellWidth, cellHeight, allRound));
 			} else if(nextCells.size() > 1) {
 				return null;
+			} else {
+				throw new RuntimeException("cannot create closed shape from boundary cells, nowhere to go from "
+						+ cell + " coming from " + previous + " in grid:\n" + grid
+						+"\nmaybe you have an edge pointing nowhere?");
 			}
 		}
 		

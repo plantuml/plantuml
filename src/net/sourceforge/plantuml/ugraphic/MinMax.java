@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -76,6 +76,10 @@ public class MinMax {
 
 	public MinMax addPoint(double x, double y) {
 		return new MinMax(Math.min(x, minX), Math.min(y, minY), Math.max(x, maxX), Math.max(y, maxY));
+	}
+
+	public MinMax addMinMax(MinMax other) {
+		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX), Math.max(other.maxY, maxY));
 	}
 
 	public static MinMax fromMax(double maxX, double maxY) {

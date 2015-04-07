@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,11 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.creole.Stencil;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class Diamond {
@@ -71,6 +76,29 @@ public class Diamond {
 		}
 
 		return diams;
+	}
+
+	public static Stencil asStencil(final TextBlock tb) {
+		return new Stencil() {
+
+			private final double getDeltaX(double height, double y) {
+				final double p = y / height * 2;
+				if (p <= 1) {
+					return diamondHalfSize * p;
+				}
+				return diamondHalfSize * (2 - p);
+			}
+
+			public double getStartingX(StringBounder stringBounder, double y) {
+				final Dimension2D dim = tb.calculateDimension(stringBounder);
+				return -getDeltaX(dim.getHeight(), y);
+			}
+
+			public double getEndingX(StringBounder stringBounder, double y) {
+				final Dimension2D dim = tb.calculateDimension(stringBounder);
+				return dim.getWidth() + getDeltaX(dim.getHeight(), y);
+			}
+		};
 	}
 
 	public static UPolygon asPolygonFoo1(boolean shadowing, double width, double height) {

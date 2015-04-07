@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -46,35 +45,37 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.StringUtils;
 
 public final class FactorySequenceNoteCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
-				new RegexLeaf("VMERGE", "(/)?\\s*"), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)\\s+"), //
-				new RegexLeaf("POSITION", "(right|left|over)\\s+"), //
-				new RegexLeaf("PARTICIPANT", "(?:of\\s+)?([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
+				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
+				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
-				new RegexLeaf("VMERGE", "(/)?\\s*"), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)\\s+"), //
-				new RegexLeaf("POSITION", "(right|left|over)\\s+"), //
-				new RegexLeaf("PARTICIPANT", "(?:of\\s+)?([\\p{L}0-9_.@]+|\"[^\"]+\")\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*:\\s*"), //
+				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
+				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
@@ -85,7 +86,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end ?(note|hnote|rnote)$";
+				return "(?i)^end[%s]?(note|hnote|rnote)$";
 			}
 
 			public CommandExecutionResult executeNow(final SequenceDiagram system, List<String> lines) {
@@ -108,18 +109,18 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram system, RegexResult arg, final List<String> strings) {
-		final Participant p = system.getOrCreateParticipant(StringUtils
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, final List<String> strings) {
+		final Participant p = diagram.getOrCreateParticipant(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
 
-		final NotePosition position = NotePosition.valueOf(arg.get("POSITION", 0).toUpperCase());
+		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));
 
 		if (strings.size() > 0) {
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
-			final Note note = new Note(p, position, new Display(strings));
-			note.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(arg.get("COLOR", 0)));
+			final Note note = new Note(p, position, Display.create(strings));
+			note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 			note.setStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
-			system.addNote(note, tryMerge);
+			diagram.addNote(note, tryMerge);
 		}
 		return CommandExecutionResult.ok();
 	}

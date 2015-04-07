@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.golem;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public enum TileGeometry {
 	NORTH, SOUTH, EAST, WEST, CENTER;
 
@@ -53,7 +55,7 @@ public enum TileGeometry {
 	}
 
 	public static TileGeometry fromString(String s) {
-		final char c = Character.toUpperCase(s.charAt(0));
+		final char c = StringUtils.goUpperCase(s.charAt(0));
 		switch (c) {
 		case 'N':
 			return NORTH;

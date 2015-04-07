@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,17 +38,19 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.graphic.USymbol;
 
 public class CompositeDiagram extends AbstractEntityDiagram {
 
-	public IEntity getOrCreateLeaf(Code code, LeafType type) {
+	@Override
+	public IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
 		if (type == null) {
 			if (isGroup(code)) {
 				return getGroup(code);
 			}
-			return getOrCreateLeafDefault(code, LeafType.BLOCK);
+			return getOrCreateLeafDefault(code, LeafType.BLOCK, symbol);
 		}
-		return getOrCreateLeafDefault(code, type);
+		return getOrCreateLeafDefault(code, type, symbol);
 	}
 
 	@Override

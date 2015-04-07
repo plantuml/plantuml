@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,16 +34,13 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -61,7 +58,7 @@ public class FtileAssemblySimple implements Ftile {
 		this.tile1 = tile1;
 		this.tile2 = tile2;
 	}
-	
+
 	public Swimlane getSwimlaneIn() {
 		return tile1.getSwimlaneIn();
 	}
@@ -69,7 +66,6 @@ public class FtileAssemblySimple implements Ftile {
 	public Swimlane getSwimlaneOut() {
 		return tile2.getSwimlaneOut();
 	}
-
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 		if (child == tile1) {
@@ -89,30 +85,10 @@ public class FtileAssemblySimple implements Ftile {
 		throw new UnsupportedOperationException();
 	}
 
-	public TextBlock asTextBlock() {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				final StringBounder stringBounder = ug.getStringBounder();
-				// final TextBlock textBlock1 = tile1.asTextBlock();
-				// final TextBlock textBlock2 = tile2.asTextBlock();
-				// textBlock1.drawUNewWayINLINED(ug.apply(getTranslated1(stringBounder)));
-				// textBlock2.drawUNewWayINLINED(ug.apply(getTranslated2(stringBounder)));
-				ug.apply(getTranslated1(stringBounder)).draw(tile1);
-				ug.apply(getTranslated2(stringBounder)).draw(tile2);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dim1 = tile1.asTextBlock().calculateDimension(stringBounder);
-				final Dimension2D dim2 = tile2.asTextBlock().calculateDimension(stringBounder);
-				return Dimension2DDouble.mergeTB(dim1, dim2);
-			}
-
-		};
-	}
-
-	public boolean isKilled() {
-		return tile1.isKilled() || tile2.isKilled();
+	public void drawU(UGraphic ug) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		ug.apply(getTranslated1(stringBounder)).draw(tile1);
+		ug.apply(getTranslated2(stringBounder)).draw(tile2);
 	}
 
 	public LinkRendering getInLinkRendering() {
@@ -123,37 +99,25 @@ public class FtileAssemblySimple implements Ftile {
 		return null;
 	}
 
-	public Point2D getPointIn(StringBounder stringBounder) {
-		final UTranslate dx1 = getTranslated1(stringBounder);
-		final Point2D pt = tile1.getPointIn(stringBounder);
-		return dx1.getTranslated(pt);
-	}
+	private FtileGeometry calculateDimension;
 
-	public Point2D getPointOut(StringBounder stringBounder) {
-		final UTranslate dx2 = getTranslated2(stringBounder);
-		final Point2D pt = tile2.getPointOut(stringBounder);
-		if (pt == null) {
-			return null;
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		if (calculateDimension == null) {
+			calculateDimension = tile1.calculateDimension(stringBounder).appendBottom(
+					tile2.calculateDimension(stringBounder));
 		}
-		return dx2.getTranslated(pt);
+		return calculateDimension;
 	}
 
 	private UTranslate getTranslated1(StringBounder stringBounder) {
-		final Dimension2D dimTotal = asTextBlock().calculateDimension(stringBounder);
-		final TextBlock textBlock1 = tile1.asTextBlock();
-		final Dimension2D dim1 = textBlock1.calculateDimension(stringBounder);
-		final double dx1 = dimTotal.getWidth() - dim1.getWidth();
-		return new UTranslate(dx1 / 2, 0);
+		final double left = calculateDimension(stringBounder).getLeft();
+		return new UTranslate(left - tile1.calculateDimension(stringBounder).getLeft(), 0);
 	}
 
 	private UTranslate getTranslated2(StringBounder stringBounder) {
-		final Dimension2D dimTotal = asTextBlock().calculateDimension(stringBounder);
-		final TextBlock textBlock1 = tile1.asTextBlock();
-		final TextBlock textBlock2 = tile2.asTextBlock();
-		final Dimension2D dim1 = textBlock1.calculateDimension(stringBounder);
-		final Dimension2D dim2 = textBlock2.calculateDimension(stringBounder);
-		final double dx2 = dimTotal.getWidth() - dim2.getWidth();
-		return new UTranslate(dx2 / 2, dim1.getHeight());
+		final Dimension2D dim1 = tile1.calculateDimension(stringBounder);
+		final double left = calculateDimension(stringBounder).getLeft();
+		return new UTranslate(left - tile2.calculateDimension(stringBounder).getLeft(), dim1.getHeight());
 	}
 
 	public Collection<Connection> getInnerConnections() {

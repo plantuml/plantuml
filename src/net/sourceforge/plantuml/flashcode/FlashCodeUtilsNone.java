@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -34,20 +34,10 @@
 package net.sourceforge.plantuml.flashcode;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.List;
 
 public class FlashCodeUtilsNone implements FlashCodeUtils {
 
-	public List<BufferedImage> exportFlashcodeSimple(String s) throws IOException {
-		return null;
-	}
-
-	public List<BufferedImage> exportFlashcodeCompress(String s) throws IOException {
-		return null;
-	}
-
-	public List<BufferedImage> exportSplitCompress(String s) throws IOException {
+	public BufferedImage exportFlashcode(String s) {
 		return null;
 	}
 

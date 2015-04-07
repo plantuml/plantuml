@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,16 +33,16 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class FtileDecorate implements Ftile {
@@ -58,10 +58,6 @@ public abstract class FtileDecorate implements Ftile {
 		return "" + getClass() + " " + ftile;
 	}
 
-	public boolean isKilled() {
-		return ftile.isKilled();
-	}
-
 	public LinkRendering getOutLinkRendering() {
 		return ftile.getOutLinkRendering();
 	}
@@ -69,17 +65,13 @@ public abstract class FtileDecorate implements Ftile {
 	public LinkRendering getInLinkRendering() {
 		return ftile.getInLinkRendering();
 	}
-
-	public TextBlock asTextBlock() {
-		return ftile.asTextBlock();
+	
+	public void drawU(UGraphic ug) {
+		ftile.drawU(ug);
 	}
 
-	public Point2D getPointIn(StringBounder stringBounder) {
-		return ftile.getPointIn(stringBounder);
-	}
-
-	public Point2D getPointOut(StringBounder stringBounder) {
-		return ftile.getPointOut(stringBounder);
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		return ftile.calculateDimension(stringBounder);
 	}
 
 	public Collection<Connection> getInnerConnections() {
@@ -105,7 +97,7 @@ public abstract class FtileDecorate implements Ftile {
 	public boolean shadowing() {
 		return ftile.shadowing();
 	}
-
+	
 	protected final Ftile getFtileDelegated() {
 		return ftile;
 	}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11635 $
+ * Revision $Revision: 14803 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -52,15 +52,17 @@ class SegmentColored {
 	final private Segment segment;
 	final private HtmlColor backcolor;
 	final private boolean shadowing;
+	final private double pos1Initial;
 
 	SegmentColored(double pos1, double pos2, HtmlColor backcolor, boolean shadowing) {
-		this(new Segment(pos1, pos2), backcolor, shadowing);
+		this(new Segment(pos1, pos2), backcolor, shadowing, pos1);
 	}
 
-	private SegmentColored(Segment segment, HtmlColor backcolor, boolean shadowing) {
+	private SegmentColored(Segment segment, HtmlColor backcolor, boolean shadowing, double pos1Initial) {
 		this.segment = segment;
 		this.backcolor = backcolor;
 		this.shadowing = shadowing;
+		this.pos1Initial = pos1Initial;
 	}
 
 	public HtmlColor getSpecificBackColor() {
@@ -92,24 +94,30 @@ class SegmentColored {
 	}
 
 	public Collection<SegmentColored> cutSegmentIfNeed(Collection<Segment> allDelays) {
-		return new Coll2(segment.cutSegmentIfNeed(allDelays));
+		return new Coll2(segment.cutSegmentIfNeed(allDelays), segment.getPos1());
+	}
+
+	public double getPos1Initial() {
+		return pos1Initial;
 	}
 
 	public SegmentColored merge(SegmentColored this2) {
-		return new SegmentColored(this.segment.merge(this2.segment), backcolor, shadowing);
+		final Segment merge = this.segment.merge(this2.segment);
+		return new SegmentColored(merge, backcolor, shadowing, merge.getPos1());
 	}
 
 	public final Segment getSegment() {
 		return segment;
 	}
 
-
 	class Iterator2 implements Iterator<SegmentColored> {
 
 		private final Iterator<Segment> it;
+		private final double pos1Initial;
 
-		public Iterator2(Iterator<Segment> it) {
+		public Iterator2(Iterator<Segment> it, double pos1Initial) {
 			this.it = it;
+			this.pos1Initial = pos1Initial;
 		}
 
 		public boolean hasNext() {
@@ -117,7 +125,7 @@ class SegmentColored {
 		}
 
 		public SegmentColored next() {
-			return new SegmentColored(it.next(), backcolor, shadowing);
+			return new SegmentColored(it.next(), backcolor, shadowing, pos1Initial);
 		}
 
 		public void remove() {
@@ -128,14 +136,16 @@ class SegmentColored {
 	class Coll2 extends AbstractCollection<SegmentColored> {
 
 		private final Collection<Segment> col;
+		private final double pos1Initial;
 
-		public Coll2(Collection<Segment> col) {
+		public Coll2(Collection<Segment> col, double pos1Initial) {
 			this.col = col;
+			this.pos1Initial = pos1Initial;
 		}
 
 		@Override
 		public Iterator<SegmentColored> iterator() {
-			return new Iterator2(col.iterator());
+			return new Iterator2(col.iterator(), pos1Initial);
 		}
 
 		@Override

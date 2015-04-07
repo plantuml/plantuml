@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -51,12 +51,11 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 
 public class FontChecker {
@@ -163,19 +162,41 @@ public class FontChecker {
 		return new String(os.toByteArray());
 	}
 
-	public BufferedImage getBufferedImage(char c) throws IOException {
+	public BufferedImage getBufferedImage(final char c) throws IOException {
+		assert c != '\t';
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1, null, null, null, 0, 0, null, false);
 		final double dim = 20;
-		UGraphic ug = new FileFormatOption(FileFormat.PNG).createUGraphic(new Dimension2DDouble(dim, dim));
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-		ug.draw(new URectangle(dim - 1, dim - 1));
-		ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
-		final UText text = new UText("" + c, new FontConfiguration(font, HtmlColorUtils.BLACK));
-		ug.draw(text);
+		imageBuilder.addUDrawable(new UDrawable() {
+			public void drawU(UGraphic ug) {
+				ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+				ug.draw(new URectangle(dim - 1, dim - 1));
+				if (ug instanceof UGraphic2) {
+					ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
+					final UText text = new UText("" + c, new FontConfiguration(font, HtmlColorUtils.BLACK,
+							HtmlColorUtils.BLUE, true));
+					ug.draw(text);
+				}
+			}
+		});
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ug.writeImage(os, null, 96);
+		imageBuilder.writeImageTOBEMOVED(FileFormat.PNG, os);
 		os.close();
 		return ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 	}
+
+	// public BufferedImage getBufferedImageOld(char c) throws IOException {
+	// final double dim = 20;
+	// UGraphic2 ug = new FileFormatOption(FileFormat.PNG).createUGraphic(new Dimension2DDouble(dim, dim));
+	// ug = (UGraphic2) ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+	// ug.draw(new URectangle(dim - 1, dim - 1));
+	// ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
+	// final UText text = new UText("" + c, new FontConfiguration(font, HtmlColorUtils.BLACK));
+	// ug.draw(text);
+	// final ByteArrayOutputStream os = new ByteArrayOutputStream();
+	// ug.writeImageTOBEMOVED(os, null, 96);
+	// os.close();
+	// return ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+	// }
 
 	public static void main(String[] args) throws IOException, TransformerException {
 

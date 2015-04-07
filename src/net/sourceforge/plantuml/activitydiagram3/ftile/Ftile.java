@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,27 +33,22 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.awt.geom.Point2D;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockable;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public interface Ftile extends TextBlockable, Swimable {
+public interface Ftile extends Swimable, TextBlock {
 
 	public boolean shadowing();
-
-	public boolean isKilled();
 
 	public LinkRendering getInLinkRendering();
 
 	public LinkRendering getOutLinkRendering();
 
-	public Point2D getPointIn(StringBounder stringBounder);
-
-	public Point2D getPointOut(StringBounder stringBounder);
+	public FtileGeometry calculateDimension(StringBounder stringBounder);
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder);
 

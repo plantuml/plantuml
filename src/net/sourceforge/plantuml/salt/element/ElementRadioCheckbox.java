@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,7 +37,7 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementRadioCheckbox implements Element {
+public class ElementRadioCheckbox extends AbstractElement {
 
 	private static final int RECTANGLE = 10;
 	private static final int ELLIPSE = 10;
@@ -66,9 +66,9 @@ public class ElementRadioCheckbox implements Element {
 	private final boolean checked;
 
 	public ElementRadioCheckbox(List<String> text, UFont font, boolean radio, boolean checked,
-			SpriteContainer spriteContainer) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK);
-		this.block = TextBlockUtils.create(new Display(text), config, HorizontalAlignment.LEFT, spriteContainer);
+			ISkinSimple spriteContainer) {
+		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		this.block = TextBlockUtils.create(Display.create(text), config, HorizontalAlignment.LEFT, spriteContainer);
 		this.radio = radio;
 		this.checked = checked;
 	}
@@ -78,30 +78,32 @@ public class ElementRadioCheckbox implements Element {
 		return Dimension2DDouble.delta(dim, margin, 0);
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		if (zIndex != 0) {
 			return;
 		}
-		block.drawU(ug.apply(new UTranslate((x + margin), y)));
+		block.drawU(ug.apply(new UTranslate(margin, 0)));
 
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		final double height = dim.getHeight();
 
 		ug = ug.apply(new UStroke(stroke));
 		if (radio) {
-			ug.apply(new UTranslate(x + 2, y + (height - ELLIPSE) / 2)).draw(new UEllipse(ELLIPSE, ELLIPSE));
+			ug.apply(new UTranslate(2, (height - ELLIPSE) / 2)).draw(new UEllipse(ELLIPSE, ELLIPSE));
 			if (checked) {
-				ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(x + 2 + (ELLIPSE - ELLIPSE2) / 2, y + (height - ELLIPSE2) / 2)).draw(new UEllipse(ELLIPSE2, ELLIPSE2));
+				ug.apply(new UChangeBackColor(ug.getParam().getColor()))
+						.apply(new UTranslate(2 + (ELLIPSE - ELLIPSE2) / 2, (height - ELLIPSE2) / 2))
+						.draw(new UEllipse(ELLIPSE2, ELLIPSE2));
 			}
 		} else {
-			ug.apply(new UTranslate(x + 2, y + (height - RECTANGLE) / 2)).draw(new URectangle(RECTANGLE, RECTANGLE));
+			ug.apply(new UTranslate(2, (height - RECTANGLE) / 2)).draw(new URectangle(RECTANGLE, RECTANGLE));
 			if (checked) {
 				final UPolygon poly = new UPolygon();
 				poly.addPoint(0, 0);
 				poly.addPoint(3, 3);
 				poly.addPoint(10, -6);
 				poly.addPoint(3, 1);
-				ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(x + 3, y + 6)).draw(poly);
+				ug.apply(new UChangeBackColor(ug.getParam().getColor())).apply(new UTranslate(3, 6)).draw(poly);
 			}
 		}
 	}

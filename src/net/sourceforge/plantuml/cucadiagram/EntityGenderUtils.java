@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -57,7 +57,7 @@ public class EntityGenderUtils {
 				if (test.getStereotype() == null) {
 					return false;
 				}
-				return stereotype.equals(test.getStereotype().getLabel());
+				return stereotype.equals(test.getStereotype().getLabel(false));
 			}
 		};
 	}

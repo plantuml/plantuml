@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -44,7 +44,7 @@ public class DisplayUtils {
 			return texts;
 		}
 		final CharSequence s = texts.get(0);
-		Display result = new Display();
+		Display result = Display.empty();
 		final int nb = s.length() / 2;
 		result = result.add(s.subSequence(0, nb));
 		result = result.add(s.subSequence(nb + 1, s.length()));

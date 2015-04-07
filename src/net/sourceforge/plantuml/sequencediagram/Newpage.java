@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,15 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12054 $
+ * Revision $Revision: 15048 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
-public class Newpage implements Event {
+public class Newpage extends AbstractEvent implements Event {
 
 	private final Display title;
 
@@ -51,14 +50,4 @@ public class Newpage implements Event {
 	public boolean dealWith(Participant someone) {
 		return false;
 	}
-
-	public Url getUrl() {
-		return null;
-	}
-	
-	public boolean hasUrl() {
-		return false;
-	}
-
-
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,12 +40,16 @@
 //  EPL, Eclipse Public License, V1.0 or later, http://www.eclipse.org/legal
 //  LGPL, GNU Lesser General Public License, V2.1 or later, http://www.gnu.org/licenses/lgpl.html
 //  GPL, GNU General Public License, V2 or later, http://www.gnu.org/licenses/gpl.html
+//  AGPL, GNU Affero General Public License V3 or later, http://www.gnu.org/licenses/agpl.html
 //  AL, Apache License, V2.0 or later, http://www.apache.org/licenses
 //  BSD, BSD License, http://www.opensource.org/licenses/bsd-license.php
 //  MIT, MIT License, http://www.opensource.org/licenses/MIT
 //
 // Please contact the author if you need another license.
 // This module is provided "as is", without warranties of any kind.
+//
+// Project home page: www.source-code.biz/base64coder/java
+
 package net.sourceforge.plantuml.code;
 
 /**
@@ -53,11 +57,12 @@ package net.sourceforge.plantuml.code;
  * 
  * <p>
  * This class is used to encode and decode data in Base64 format as described in RFC 1521.
- * 
  * <p>
  * Project home page: <a href="http://www.source-code.biz/base64coder/java/">www.source-code.biz/base64coder/java</a><br>
  * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
  * Multi-licensed: EPL / LGPL / GPL / AL / BSD / MIT.
+ * 
+ * @author Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland, www.source-code.biz
  */
 public class Base64Coder {
 

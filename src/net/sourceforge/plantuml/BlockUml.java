@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,23 +39,23 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.Diagram;
 
 public class BlockUml {
 
 	private final List<? extends CharSequence> data;
+	private final int startLine;
 	private Diagram system;
 
-	// private static final Pattern patternFilename =
-	// Pattern.compile("^@start\\S+\\s+\"?(.*?)\"?$");
-	private static final Pattern patternFilename = Pattern
-			.compile("^@start[^\\s{}\"]+[\\s{][\\s\"]*([^\"]*?)[\\s}\"]*$");
+	private static final Pattern patternFilename = MyPattern.cmpile("^@start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
 	BlockUml(String... strings) {
-		this(Arrays.asList(strings));
+		this(Arrays.asList(strings), 0);
 	}
 
-	public BlockUml(List<? extends CharSequence> strings) {
+	public BlockUml(List<? extends CharSequence> strings, int startLine) {
+		this.startLine = startLine;
 		final String s0 = strings.get(0).toString().trim();
 		if (s0.startsWith("@start") == false) {
 			throw new IllegalArgumentException();
@@ -72,7 +72,11 @@ public class BlockUml {
 		if (ok == false) {
 			return null;
 		}
-		final String result = m.group(1);
+		String result = m.group(1);
+		final int x = result.indexOf(',');
+		if (x != -1) {
+			result = result.substring(0, x);
+		}
 		for (int i = 0; i < result.length(); i++) {
 			final char c = result.charAt(i);
 			if ("<>|".indexOf(c) != -1) {
@@ -82,19 +86,15 @@ public class BlockUml {
 		return result;
 	}
 
-	private Diagram getSystem() {
+	public Diagram getDiagram() {
 		if (system == null) {
-			createSystem();
+			system = new PSystemBuilder().createPSystem(data);
 		}
 		return system;
 	}
 
-	public Diagram getDiagram() {
-		return getSystem();
-	}
-
-	private void createSystem() {
-		system = new PSystemBuilder().createPSystem(data);
+	public final int getStartLine() {
+		return startLine;
 	}
 
 }

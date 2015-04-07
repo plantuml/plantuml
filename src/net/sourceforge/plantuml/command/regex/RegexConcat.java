@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,13 +45,12 @@ public class RegexConcat extends RegexComposed implements IRegex {
 		for (IRegex p : partial) {
 			sb.append(p.getPattern());
 		}
-		this.full = Pattern.compile(sb.toString(), Pattern.CASE_INSENSITIVE);
+		this.full = MyPattern.cmpileNockeck(sb.toString(), Pattern.CASE_INSENSITIVE);
 	}
-	
+
 	@Override
 	protected Pattern getFull() {
 		return full;
 	}
-
 
 }

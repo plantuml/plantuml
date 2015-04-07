@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -62,16 +62,16 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 						new RegexOr("FIRST", //
 								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
 								new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
-								new RegexLeaf("BAR", "(?:==+)\\s*([\\p{L}0-9_.]+)\\s*(?:==+)"), //
-								new RegexLeaf("QUOTED", "\"([^\"]+)\"(?:\\s+as\\s+([\\p{L}0-9_.]+))?"))), //
-				new RegexLeaf("\\s*"), //
+								new RegexLeaf("BAR", "(?:==+)[%s]*([\\p{L}0-9_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"))), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("ARROW", "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
-						new RegexLeaf("IF1", "if\\s*\"([^\"]*)\"\\s*(?:as\\s+([\\p{L}0-9_.]+)\\s+)?"), //
-						new RegexLeaf("IF2", "if\\s+(.+?)\\s*")), //
+						new RegexLeaf("IF1", "if[%s]*[%g]([^%g]*)[%g][%s]*(?:as[%s]+([\\p{L}0-9_.]+)[%s]+)?"), //
+						new RegexLeaf("IF2", "if[%s]+(.+?)[%s]*")), //
 				new RegexLeaf("(?:then)?$"));
 	}
 

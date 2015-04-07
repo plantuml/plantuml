@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class Arrows {
@@ -74,6 +75,16 @@ public class Arrows {
 		polygon.addPoint(delta1, delta2);
 		polygon.addPoint(delta1 - 4, 0);
 		return polygon;
+	}
+
+	public static UPolygon asTo(Direction direction) {
+		if (direction == Direction.UP) {
+			return asToUp();
+		}
+		if (direction == Direction.DOWN) {
+			return asToDown();
+		}
+		throw new IllegalArgumentException();
 	}
 
 }

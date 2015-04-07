@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -75,13 +76,29 @@ public class Boundary implements TextBlock {
 				.apply(new UChangeColor(foregroundColor));
 		final UEllipse circle = new UEllipse(radius * 2, radius * 2);
 		circle.setDeltaShadow(deltaShadow);
-		final ULine line1 = new ULine(0, radius * 2);
-		line1.setDeltaShadow(deltaShadow);
-		ug.apply(new UTranslate(x, y)).draw(line1);
-		final ULine line2 = new ULine(left, 0);
-		line2.setDeltaShadow(deltaShadow);
-		ug.apply(new UTranslate(x, y + radius)).draw(line2);
+
+		final UPath path1 = new UPath();
+		path1.moveTo(0, 0);
+		path1.lineTo(0, radius * 2);
+		path1.setDeltaShadow(deltaShadow);
+
+		final UPath path = new UPath();
+		path.moveTo(0, 0);
+		path.lineTo(0, radius * 2);
+		path.moveTo(0, radius);
+		path.lineTo(left, radius);
+		path.setDeltaShadow(deltaShadow);
+		ug.apply(new UTranslate(x, y)).draw(path);
+
+		// final ULine line1 = new ULine(0, radius * 2);
+		// line1.setDeltaShadow(deltaShadow);
+		// ug.apply(new UTranslate(x, y)).draw(line1);
+		// final ULine line2 = new ULine(left, 0);
+		// line2.setDeltaShadow(deltaShadow);
+		// ug.apply(new UTranslate(x, y + radius)).draw(line2);
+
 		ug.apply(new UTranslate(x + left, y)).draw(circle);
+
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

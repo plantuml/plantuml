@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,14 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11153 $
+ * Revision $Revision: 15811 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -56,10 +56,11 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final HtmlColor backgroundColor;
 	private final UStroke stroke;
 
-	public ComponentRoseGroupingElse(HtmlColor fontColor, HtmlColor groupBorder, UFont smallFont, CharSequence comment,
-			SpriteContainer spriteContainer, HtmlColor backgroundColor, UStroke stroke) {
-		super(comment == null ? null : "[" + comment + "]", fontColor, smallFont, HorizontalAlignment.LEFT, 5, 5, 1,
-				spriteContainer, 0);
+	public ComponentRoseGroupingElse(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
+			HtmlColor groupBorder, UFont smallFont, CharSequence comment, ISkinSimple spriteContainer,
+			HtmlColor backgroundColor, UStroke stroke) {
+		super(comment == null ? null : "[" + comment + "]", fontColor, hyperlinkColor, useUnderlineForHyperlink,
+				smallFont, HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, 0, null, null);
 		this.groupBorder = groupBorder;
 		this.backgroundColor = backgroundColor;
 		this.stroke = stroke;

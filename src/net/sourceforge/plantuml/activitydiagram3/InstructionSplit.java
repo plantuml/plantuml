@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -47,16 +47,18 @@ public class InstructionSplit implements Instruction {
 
 	private final List<InstructionList> splits = new ArrayList<InstructionList>();
 	private final Instruction parent;
+	private final LinkRendering inlinkRendering;
 
-	public InstructionSplit(Instruction parent) {
+	public InstructionSplit(Instruction parent, LinkRendering inlinkRendering) {
 		this.parent = parent;
 		this.splits.add(new InstructionList());
+		this.inlinkRendering = inlinkRendering;
 	}
 
 	private InstructionList getLast() {
 		return splits.get(splits.size() - 1);
 	}
-	
+
 	public void add(Instruction ins) {
 		getLast().add(ins);
 	}
@@ -73,8 +75,19 @@ public class InstructionSplit implements Instruction {
 		return parent;
 	}
 
-	public void splitAgain() {
-		this.splits.add(new InstructionList());
+	public void splitAgain(LinkRendering inlinkRendering) {
+		if (inlinkRendering != null) {
+			getLast().setOutRendering(inlinkRendering);
+		}
+		final InstructionList list = new InstructionList();
+		this.splits.add(list);
+	}
+
+	public void endSplit(LinkRendering inlinkRendering) {
+		if (inlinkRendering != null) {
+			getLast().setOutRendering(inlinkRendering);
+		}
+
 	}
 
 	final public boolean kill() {
@@ -82,7 +95,7 @@ public class InstructionSplit implements Instruction {
 	}
 
 	public LinkRendering getInLinkRendering() {
-		return null;
+		return inlinkRendering;
 	}
 
 	public void addNote(Display note, NotePosition position) {

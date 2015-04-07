@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project2.Value;
 public class CommandAffectation extends SingleLineCommand<PSystemProject2> {
 
 	public CommandAffectation() {
-		super("(?i)^\\s*([~\\^]?[\\w$/]+)\\s*:=\\s*(.+)$");
+		super("(?i)^[%s]*([~\\^]?[\\w$/]+)[%s]*:=[%s]*(.+)$");
 	}
 
 	@Override

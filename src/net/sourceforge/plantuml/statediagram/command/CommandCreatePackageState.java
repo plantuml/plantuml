@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -55,28 +56,26 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 
 	public CommandCreatePackageState() {
 		super(getRegexConcat());
-		// super(diagram,
-		// "(?i)^state\\s+([\\p{L}0-9_.]+)\\s+as\\s+\"([^\"]+)\"\\s*(\\<\\<.*\\>\\>)?\\s*(#\\w+)?(?:\\s*\\{|\\s+begin)$");
 	}
 
-	// "");
-
 	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^state\\s+"), //
+		return new RegexConcat(new RegexLeaf("^state[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)\\s+"), //
-								new RegexLeaf("DISPLAY1", "as\\s+\"([^\"]+)\"")), //
+								new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)[%s]+"), //
+								new RegexLeaf("DISPLAY1", "as[%s]+[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY2", "(?:\"([^\"]+)\"\\s+as\\s+)?"), //
+								new RegexLeaf("DISPLAY2", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?"), //
 								new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)"))), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+)?"), //
-				new RegexLeaf("(?:\\s*\\{|\\s+begin)$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
+				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)$"));
 	}
 
 	private String getNotNull(RegexResult arg, String v1, String v2) {
@@ -87,28 +86,28 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram system, RegexResult arg) {
-		final IGroup currentPackage = system.getCurrentGroup();
+	protected CommandExecutionResult executeArg(StateDiagram diagram, RegexResult arg) {
+		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Code code = Code.of(getNotNull(arg, "CODE1", "CODE2"));
 		String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 		if (display == null) {
-			display = code.getCode();
+			display = code.getFullName();
 		}
-		final IEntity p = system.getOrCreateGroup(code, Display.getWithNewlines(display), null, GroupType.STATE, currentPackage);
+		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.STATE,
+				currentPackage);
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype));
 		}
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
-			final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);
 			p.addUrl(url);
 		}
-		final String color = arg.get("COLOR", 0);
-		if (HtmlColorUtils.getColorIfValid(color) != null) {
-			p.setSpecificBackcolor(HtmlColorUtils.getColorIfValid(color));
-		}
+		p.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		p.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
+		CommandCreateClassMultilines.applyStroke(p, arg.get("LINECOLOR", 0));
 		return CommandExecutionResult.ok();
 	}
 

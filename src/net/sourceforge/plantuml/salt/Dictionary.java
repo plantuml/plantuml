@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,12 +36,13 @@ package net.sourceforge.plantuml.salt;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.ugraphic.Sprite;
 
-public class Dictionary implements SpriteContainer {
+public class Dictionary implements SpriteContainer, ISkinSimple {
 
 	private final Map<String, Element> data = new HashMap<String, Element>();
 
@@ -60,4 +61,17 @@ public class Dictionary implements SpriteContainer {
 	public Sprite getSprite(String name) {
 		return null;
 	}
+
+	public String getValue(String key) {
+		return null;
+	}
+	
+	public double getPadding() {
+		return 0;
+	}
+
+	public boolean useGuillemet() {
+		return true;
+	}
+
 }

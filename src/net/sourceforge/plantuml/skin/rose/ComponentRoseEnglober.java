@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -55,8 +55,9 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final HtmlColor backColor;
 
 	public ComponentRoseEnglober(HtmlColor borderColor, HtmlColor backColor, Display strings, HtmlColor fontColor,
-			UFont font, SpriteContainer spriteContainer) {
-		super(strings, fontColor, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, 0, false);
+			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font, ISkinSimple spriteContainer) {
+		super(strings, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER, 3, 3, 1,
+				spriteContainer, 0, false, null, null);
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 	}

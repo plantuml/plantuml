@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,19 +33,22 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 
 public class CommandRankDir extends SingleLineCommand<CucaDiagram> {
 
 	public CommandRankDir() {
-		super("(?i)^(left to right|top to bottom)\\s+direction$");
+		super("(?i)^(left[%s]to[%s]right|top[%s]to[%s]bottom)[%s]+direction$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, List<String> arg) {
-		final String s = arg.get(0).toUpperCase().replace(' ', '_');
-		diagram.setRankdir(Rankdir.valueOf(s));
+		final String s = StringUtils.goUpperCase(arg.get(0)).replace(' ', '_');
+		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));
+		// diagram.setRankdir(Rankdir.valueOf(s));
 		return CommandExecutionResult.ok();
 	}
 

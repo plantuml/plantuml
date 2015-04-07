@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -44,7 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -65,14 +66,16 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
+		return new RegexConcat(
+				new RegexLeaf("^"), //
+				new RegexLeaf("PARALLEL", "(&%s*)?"), //
 				new RegexOr("PART1", //
 						new RegexLeaf("PART1CODE", "([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART1LONG", "\"([^\"]+)\""), //
-						new RegexLeaf("PART1LONGCODE", "\"([^\"]+)\"\\s*as\\s+([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART1CODELONG", "([\\p{L}0-9_.@]+)\\s+as\\s*\"([^\"]+)\"")), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("ARROW_DRESSING1", "( [ox]|(?: [ox])?<<?|(?: [ox])?//?|(?: [ox])?\\\\\\\\?)?"), //
+						new RegexLeaf("PART1LONG", "[%g]([^%g]+)[%g]"), //
+						new RegexLeaf("PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
+						new RegexLeaf("PART1CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("ARROW_DRESSING1", "([%s][ox]|(?:[%s][ox])?<<?|(?:[%s][ox])?//?|(?:[%s][ox])?\\\\\\\\?)?"), //
 				new RegexOr(new RegexConcat( //
 						new RegexLeaf("ARROW_BODYA1", "(-+)"), //
 						new RegexLeaf("ARROW_STYLE1", getColorOrStylePattern()), //
@@ -81,19 +84,19 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 								new RegexLeaf("ARROW_BODYA2", "(-*)"), //
 								new RegexLeaf("ARROW_STYLE2", getColorOrStylePattern()), //
 								new RegexLeaf("ARROW_BODYB2", "(-+)"))), //
-				new RegexLeaf("ARROW_DRESSING2", "(>>?(?:[ox] )?|//?(?:[ox] )?|\\\\\\\\?(?:[ox] )?|[ox] )?"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("ARROW_DRESSING2", "(>>?(?:[ox][%s])?|//?(?:[ox][%s])?|\\\\\\\\?(?:[ox][%s])?|[ox][%s])?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexOr("PART2", //
 						new RegexLeaf("PART2CODE", "([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART2LONG", "\"([^\"]+)\""), //
-						new RegexLeaf("PART2LONGCODE", "\"([^\"]+)\"\\s*as\\s+([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART2CODELONG", "([\\p{L}0-9_.@]+)\\s+as\\s*\"([^\"]+)\"")), new RegexLeaf(
-						"\\s*"), //
+						new RegexLeaf("PART2LONG", "[%g]([^%g]+)[%g]"), //
+						new RegexLeaf("PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
+						new RegexLeaf("PART2CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
-				new RegexLeaf("\\s*"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
-				new RegexLeaf("\\s*"), //
-				new RegexLeaf("MESSAGE", "(?::\\s*(.*))?$"));
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?$"));
 	}
 
 	private Participant getOrCreateParticipant(SequenceDiagram system, RegexResult arg2, String n) {
@@ -128,13 +131,13 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram system, RegexResult arg2) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
 
 		Participant p1;
 		Participant p2;
 
-		final String dressing1 = CommandLinkClass.notNull(arg2.get("ARROW_DRESSING1", 0)).toLowerCase();
-		final String dressing2 = CommandLinkClass.notNull(arg2.get("ARROW_DRESSING2", 0)).toLowerCase();
+		final String dressing1 = StringUtils.goLowerCase(CommandLinkClass.notNull(arg.get("ARROW_DRESSING1", 0)));
+		final String dressing2 = StringUtils.goLowerCase(CommandLinkClass.notNull(arg.get("ARROW_DRESSING2", 0)));
 
 		final boolean circleAtStart;
 		final boolean circleAtEnd;
@@ -142,13 +145,13 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final boolean hasDressing2 = contains(dressing2, ">", "\\", "/", "x");
 		final boolean hasDressing1 = contains(dressing1, "x", "<", "\\", "/");
 		if (hasDressing2) {
-			p1 = getOrCreateParticipant(system, arg2, "PART1");
-			p2 = getOrCreateParticipant(system, arg2, "PART2");
+			p1 = getOrCreateParticipant(diagram, arg, "PART1");
+			p2 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing1.contains("o");
 			circleAtEnd = dressing2.contains("o");
 		} else if (hasDressing1) {
-			p2 = getOrCreateParticipant(system, arg2, "PART1");
-			p1 = getOrCreateParticipant(system, arg2, "PART2");
+			p2 = getOrCreateParticipant(diagram, arg, "PART1");
+			p1 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing2.contains("o");
 			circleAtEnd = dressing1.contains("o");
 		} else {
@@ -158,13 +161,13 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 		final boolean sync = contains(dressing1, "<<", "\\\\", "//") || contains(dressing2, ">>", "\\\\", "//");
 
-		final boolean dotted = getLength(arg2) > 1;
+		final boolean dotted = getLength(arg) > 1;
 
 		final Display labels;
-		if (arg2.get("MESSAGE", 0) == null) {
-			labels = Display.asList("");
+		if (arg.get("MESSAGE", 0) == null) {
+			labels = Display.create("");
 		} else {
-			labels = Display.getWithNewlines(arg2.get("MESSAGE", 0));
+			labels = Display.getWithNewlines(arg.get("MESSAGE", 0));
 		}
 
 		ArrowConfiguration config = hasDressing1 && hasDressing2 ? ArrowConfiguration.withDirectionBoth()
@@ -182,10 +185,10 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			config = config.withPart(ArrowPart.BOTTOM_PART);
 		}
 		if (circleAtEnd) {
-			config = config.withDecorationEnd(ArrowDecoration.CIRCLE);
+			config = config.withDecoration2(ArrowDecoration.CIRCLE);
 		}
 		if (circleAtStart) {
-			config = config.withDecorationStart(ArrowDecoration.CIRCLE);
+			config = config.withDecoration1(ArrowDecoration.CIRCLE);
 		}
 		if (dressing1.contains("x")) {
 			config = config.withHead2(ArrowHead.CROSSX);
@@ -195,40 +198,48 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			config = config.withHead2(ArrowHead.CROSSX);
 		}
 
-		config = applyStyle(arg2.getLazzy("ARROW_STYLE", 0), config);
+		config = applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);
 
-		final String activationSpec = arg2.get("ACTIVATION", 0);
+		final String activationSpec = arg.get("ACTIVATION", 0);
 
 		if (activationSpec != null && activationSpec.charAt(0) == '*') {
-			system.activate(p2, LifeEventType.CREATE, null);
+			diagram.activate(p2, LifeEventType.CREATE, null);
 		}
 
-		final String error = system.addMessage(new Message(p1, p2, labels, config, system.getNextMessageNumber()));
+		final Message msg = new Message(p1, p2, labels, config, diagram.getNextMessageNumber());
+		final boolean parallel = arg.get("PARALLEL", 0) != null;
+		if (parallel) {
+			msg.goParallel();
+		}
+
+		final String error = diagram.addMessage(msg);
 		if (error != null) {
 			return CommandExecutionResult.error(error);
 		}
 
-		final HtmlColor activationColor = HtmlColorUtils.getColorIfValid(arg2.get("LIFECOLOR", 0));
+		final HtmlColor activationColor = diagram.getSkinParam().getIHtmlColorSet()
+				.getColorIfValid(arg.get("LIFECOLOR", 0));
 
 		if (activationSpec != null) {
 			switch (activationSpec.charAt(0)) {
 			case '+':
-				system.activate(p2, LifeEventType.ACTIVATE, activationColor);
+				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);
 				break;
 			case '-':
-				system.activate(p1, LifeEventType.DEACTIVATE, null);
+				diagram.activate(p1, LifeEventType.DEACTIVATE, null);
 				break;
 			case '!':
-				system.activate(p2, LifeEventType.DESTROY, null);
+				diagram.activate(p2, LifeEventType.DESTROY, null);
 				break;
 			default:
 				break;
 			}
-		} else if (system.isAutoactivate() && config.getHead() == ArrowHead.NORMAL) {
+		} else if (diagram.isAutoactivate()
+				&& (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC)) {
 			if (config.isDotted()) {
-				system.activate(p1, LifeEventType.DEACTIVATE, null);
+				diagram.activate(p1, LifeEventType.DEACTIVATE, null);
 			} else {
-				system.activate(p2, LifeEventType.ACTIVATE, activationColor);
+				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);
 			}
 
 		}
@@ -263,7 +274,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			} else if (s.equalsIgnoreCase("hidden")) {
 				// link.goHidden();
 			} else {
-				config = config.withColor(HtmlColorUtils.getColorIfValid(s));
+				config = config.withColor(HtmlColorSet.getInstance().getColorIfValid(s));
 			}
 		}
 		return config;

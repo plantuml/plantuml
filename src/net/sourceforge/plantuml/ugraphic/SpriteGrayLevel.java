@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.CompressionZlib;
 
@@ -185,7 +186,7 @@ public enum SpriteGrayLevel {
 				}
 				if (strings.get(line).charAt(col) != '0') {
 					final String s = "" + strings.get(line).charAt(col);
-					final int x = Integer.parseInt(s.toUpperCase(), 16);
+					final int x = Integer.parseInt(StringUtils.goUpperCase(s), 16);
 					result.setPixel(col, line, x);
 				}
 			}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,12 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10091 $
+ * Revision $Revision: 12642 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.awt.font.LineMetrics;
+
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
 public class UText implements UShape {
 
@@ -58,5 +61,13 @@ public class UText implements UShape {
 	public FontConfiguration getFontConfiguration() {
 		return font;
 	}
+	
+	public double getDescent() {
+		final LineMetrics fm = TextBlockUtils.getLineMetrics(font.getFont(), text);
+		final double descent = fm.getDescent();
+		return descent;
+	}
+
+
 
 }

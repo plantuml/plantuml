@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,9 +38,10 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StartUtils;
+import net.sourceforge.plantuml.utils.StartUtils;
 
 public class StartDiagramExtractReader implements ReadLine {
 
@@ -48,11 +49,18 @@ public class StartDiagramExtractReader implements ReadLine {
 	private boolean finished = false;
 
 	public StartDiagramExtractReader(File f, int num, String charset) throws IOException {
+		this(getReadLine(f, charset), num, charset);
+	}
+
+	public StartDiagramExtractReader(URL url, int num, String charset) throws IOException {
+		this(getReadLine(url, charset), num, charset);
+	}
+
+	private StartDiagramExtractReader(ReadLine raw, int num, String charset) throws IOException {
 		if (num < 0) {
 			throw new IllegalArgumentException();
 		}
-		// this.charset = charset;
-		raw = getReadLine(f, charset);
+		this.raw = raw;
 		String s = null;
 		while ((s = raw.readLine()) != null) {
 			if (StartUtils.isArobaseStartDiagram(s)) {
@@ -66,7 +74,7 @@ public class StartDiagramExtractReader implements ReadLine {
 	}
 
 	private static ReadLine getReadLine(File f, String charset) throws IOException {
-		
+
 		if (charset == null) {
 			Log.info("Using default charset");
 			return new UncommentReadLine(new ReadLineReader(new FileReader(f)));
@@ -75,10 +83,28 @@ public class StartDiagramExtractReader implements ReadLine {
 		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset)));
 	}
 
+	private static ReadLine getReadLine(URL url, String charset) throws IOException {
+
+		if (charset == null) {
+			Log.info("Using default charset");
+			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream())));
+		}
+		Log.info("Using charset " + charset);
+		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream(), charset)));
+	}
+
 	static public boolean containsStartDiagram(File f, String charset) throws IOException {
-		ReadLine r = null;
+		final ReadLine r = getReadLine(f, charset);
+		return containsStartDiagram(r);
+	}
+
+	static public boolean containsStartDiagram(URL url, String charset) throws IOException {
+		final ReadLine r = getReadLine(url, charset);
+		return containsStartDiagram(r);
+	}
+
+	private static boolean containsStartDiagram(final ReadLine r) throws IOException {
 		try {
-			r = getReadLine(f, charset);
 			String s = null;
 			while ((s = r.readLine()) != null) {
 				if (StartUtils.isArobaseStartDiagram(s)) {

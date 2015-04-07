@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -61,8 +61,8 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("COLOR", "(?::?(" + HtmlColorUtils.COLOR_REGEXP + "))?"), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("COLOR", "(?:(#\\w+[-\\\\|/]?\\w+):)?"), //
 				new RegexLeaf("DATA", "(.*)"), //
 				new RegexLeaf("$"));
 	}
@@ -70,11 +70,11 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, List<String> lines) {
 		lines = StringUtils.removeEmptyColumns(lines);
 		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
-		final HtmlColor color = HtmlColorUtils.getColorIfValid(line0.get("COLOR", 0));
+		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
 		final BoxStyle style = BoxStyle.fromChar(getLastChar(lines));
 		removeStarting(lines, line0.get("DATA", 0));
 		removeEnding(lines);
-		diagram.addActivity(new Display(lines), color, style);
+		diagram.addActivity(Display.create(lines), color, style, null);
 		return CommandExecutionResult.ok();
 	}
 

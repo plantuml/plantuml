@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,12 +33,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
 public class FtileDecoratePointOut extends FtileDecorate {
 
@@ -48,19 +45,16 @@ public class FtileDecoratePointOut extends FtileDecorate {
 	public FtileDecoratePointOut(final Ftile ftile, final double dx, double dy) {
 		super(ftile);
 		this.dx = dx;
+		if (dx != 0) {
+			throw new IllegalArgumentException();
+		}
 		this.dy = dy;
 	}
 
 	@Override
-	public Point2D getPointOut(StringBounder stringBounder) {
-		final Point2D pt = super.getPointOut(stringBounder);
-		return new Point2D.Double(pt.getX() + dx, pt.getY() + dy);
-	}
-	
-	@Override
-	public TextBlock asTextBlock() {
-		final TextBlock result = super.asTextBlock();
-		return TextBlockUtils.withMargin(result, 0, 0, dx, dy);
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		final FtileGeometry geo = super.calculateDimension(stringBounder);
+		return new FtileGeometry(geo.getWidth(), geo.getHeight(), geo.getLeft(), geo.getInY(), geo.getOutY() + dy);
 	}
 
 }

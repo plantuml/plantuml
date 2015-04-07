@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,15 +36,15 @@ package net.sourceforge.plantuml.creole;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CreoleHorizontalLine implements Atom {
@@ -52,14 +52,14 @@ public class CreoleHorizontalLine implements Atom {
 	private final FontConfiguration fontConfiguration;
 	private final String line;
 	private final char style;
-	private final ISkinParam skinParam;
+	private final ISkinSimple skinParam;
 
 	public static CreoleHorizontalLine create(FontConfiguration fontConfiguration, String line, char style,
-			ISkinParam skinParam) {
+			ISkinSimple skinParam) {
 		return new CreoleHorizontalLine(fontConfiguration, line, style, skinParam);
 	}
 
-	private CreoleHorizontalLine(FontConfiguration fontConfiguration, String line, char style, ISkinParam skinParam) {
+	private CreoleHorizontalLine(FontConfiguration fontConfiguration, String line, char style, ISkinSimple skinParam) {
 		this.fontConfiguration = fontConfiguration;
 		this.line = line;
 		this.style = style;
@@ -78,9 +78,9 @@ public class CreoleHorizontalLine implements Atom {
 		if (line.length() == 0) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		final CreoleParser parser = new CreoleParser(fontConfiguration, skinParam);
+		final CreoleParser parser = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, skinParam, false);
 		final Sheet sheet = parser.createSheet(Display.getWithNewlines(line));
-		final TextBlock tb = new SheetBlock(sheet, null, new UStroke());
+		final TextBlock tb = new SheetBlock1(sheet, 0, skinParam.getPadding());
 		return tb;
 	}
 

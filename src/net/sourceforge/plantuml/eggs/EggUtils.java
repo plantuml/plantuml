@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 14727 $
  *
  */
 package net.sourceforge.plantuml.eggs;
 
 import java.math.BigInteger;
+
+import net.sourceforge.plantuml.StringUtils;
 
 public class EggUtils {
 
@@ -75,7 +77,7 @@ public class EggUtils {
 	}
 
 	private static int convertChar(char c) {
-		c = Character.toLowerCase(c);
+		c = StringUtils.goLowerCase(c);
 		if (c >= 'a' && c <= 'z') {
 			return c - 'a';
 		}

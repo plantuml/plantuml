@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -38,7 +38,6 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.MathUtils;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Opale implements TextBlock {
 
@@ -62,11 +62,14 @@ public class Opale implements TextBlock {
 	private Direction strategy;
 	private Point2D pp1;
 	private Point2D pp2;
+	private final boolean withLink;
 
 	private final TextBlock textBlock;
 
-	public Opale(HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock, boolean withShadow) {
+	public Opale(HtmlColor borderColor, HtmlColor noteBackgroundColor, TextBlock textBlock, boolean withShadow,
+			boolean withLink) {
 		this.noteBackgroundColor = noteBackgroundColor;
+		this.withLink = withLink;
 
 		this.withShadow = withShadow;
 		this.borderColor = borderColor;
@@ -104,21 +107,21 @@ public class Opale implements TextBlock {
 		ug = ug.apply(new UChangeBackColor(noteBackgroundColor)).apply(new UChangeColor(borderColor));
 		ug.draw(polygon);
 
-		final UShape polygonOpale;
-		if (strategy == Direction.LEFT) {
-			polygonOpale = getPolygonLeft(stringBounder, pp1, pp2);
-		} else if (strategy == Direction.RIGHT) {
-			polygonOpale = getPolygonRight(stringBounder, pp1, pp2);
-		} else if (strategy == Direction.UP) {
-			polygonOpale = getPolygonUp(stringBounder, pp1, pp2);
-		} else if (strategy == Direction.DOWN) {
-			polygonOpale = getPolygonDown(stringBounder, pp1, pp2);
-		} else {
-			throw new IllegalArgumentException();
+		if (withLink) {
+			final UShape polygonOpale;
+			if (strategy == Direction.LEFT) {
+				polygonOpale = getPolygonLeft(stringBounder, pp1, pp2);
+			} else if (strategy == Direction.RIGHT) {
+				polygonOpale = getPolygonRight(stringBounder, pp1, pp2);
+			} else if (strategy == Direction.UP) {
+				polygonOpale = getPolygonUp(stringBounder, pp1, pp2);
+			} else if (strategy == Direction.DOWN) {
+				polygonOpale = getPolygonDown(stringBounder, pp1, pp2);
+			} else {
+				throw new IllegalArgumentException();
+			}
+			ug.draw(polygonOpale);
 		}
-
-		ug.draw(polygonOpale);
-
 		ug.apply(new UTranslate(getWidth(stringBounder) - cornersize, 0)).draw(new ULine(0, cornersize));
 		ug.apply(new UTranslate(getWidth(stringBounder), cornersize)).draw(new ULine(-cornersize, 0));
 		textBlock.drawU(ug.apply(new UTranslate(marginX1, marginY)));

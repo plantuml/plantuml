@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -49,24 +48,27 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.StringUtils;
 
 public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^note\\s+"), //
-				new RegexLeaf("POSITION", "(right|left)\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
+		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^note\\s+"), //
-				new RegexLeaf("POSITION", "(right|left)\\s*"), //
-				new RegexLeaf("COLOR", "(#\\w+[-\\\\|/]?\\w+)?"), //
-				new RegexLeaf("\\s*:\\s*"), //
+		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
+				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
@@ -84,11 +86,12 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 	}
 
 	public Command<SequenceDiagram> createMultiLine() {
-		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(), MultilinesStrategy.KEEP_STARTING_QUOTE) {
+		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
+				MultilinesStrategy.KEEP_STARTING_QUOTE) {
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end ?note$";
+				return "(?i)^end[%s]?note$";
 			}
 
 			public CommandExecutionResult executeNow(final SequenceDiagram system, List<String> lines) {
@@ -101,24 +104,22 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram system, final RegexResult line0,
-			final List<String> in) {
-		final AbstractMessage m = system.getLastMessage();
-		if (m != null) {
-			final NotePosition position = NotePosition.valueOf(line0.get("POSITION", 0).toUpperCase());
-			List<CharSequence> strings = StringUtils.manageEmbededDiagrams2(in);
+	private CommandExecutionResult executeInternal(SequenceDiagram system, final RegexResult line0, List<String> in) {
+		final EventWithDeactivate m = system.getLastEventWithDeactivate();
+		if (m instanceof AbstractMessage) {
+			final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
 			final Url url;
-			if (strings.size() > 0) {
+			if (in.size() > 0) {
 				final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-				url = urlBuilder.getUrl(strings.get(0).toString());
+				url = urlBuilder.getUrl(in.get(0).toString());
 			} else {
 				url = null;
 			}
 			if (url != null) {
-				strings = strings.subList(1, strings.size());
+				in = in.subList(1, in.size());
 			}
 
-			m.setNote(new Display(strings), position, line0.get("COLOR", 0), url);
+			((AbstractMessage) m).setNote(Display.create(in), position, line0.get("COLOR", 0), url);
 		}
 
 		return CommandExecutionResult.ok();

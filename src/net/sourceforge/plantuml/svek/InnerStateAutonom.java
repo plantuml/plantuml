@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public final class InnerStateAutonom implements IEntityImage {
@@ -56,9 +57,10 @@ public final class InnerStateAutonom implements IEntityImage {
 	private final boolean shadowing;
 	private final Url url;
 	private final boolean withSymbol;
+	private final UStroke stroke;
 
 	public InnerStateAutonom(final IEntityImage im, final TextBlock title, TextBlockWidth attribute,
-			HtmlColor borderColor, HtmlColor backColor, boolean shadowing, Url url, boolean withSymbol) {
+			HtmlColor borderColor, HtmlColor backColor, boolean shadowing, Url url, boolean withSymbol, UStroke stroke) {
 		this.im = im;
 		this.withSymbol = withSymbol;
 		this.title = title;
@@ -67,9 +69,8 @@ public final class InnerStateAutonom implements IEntityImage {
 		this.shadowing = shadowing;
 		this.attribute = attribute;
 		this.url = url;
+		this.stroke = stroke;
 	}
-
-	public final static double THICKNESS_BORDER = 1.5;
 
 	public void drawU(UGraphic ug) {
 		final Dimension2D text = title.calculateDimension(ug.getStringBounder());
@@ -79,7 +80,7 @@ public final class InnerStateAutonom implements IEntityImage {
 
 		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;
 		final RoundedContainer r = new RoundedContainer(total, titreHeight, attr.getHeight() + marginForFields,
-				borderColor, backColor, im.getBackcolor());
+				borderColor, backColor, im.getBackcolor(), stroke);
 
 		if (url != null) {
 			ug.startUrl(url);

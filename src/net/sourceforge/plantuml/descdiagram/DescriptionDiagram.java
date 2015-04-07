@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,63 +33,77 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.StringUtils;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
+	private String namespaceSeparator = null;
+
 	@Override
-	public ILeaf getOrCreateLeaf(Code code, LeafType type) {
+	public ILeaf getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
+		if (namespaceSeparator != null) {
+			code = code.withSeparator(namespaceSeparator);
+		}
+		if (namespaceSeparator != null && code.getFullName().contains(namespaceSeparator)) {
+			// System.err.println("code=" + code);
+			final Code fullyCode = code;
+			// final String namespace = fullyCode.getNamespace(getLeafs());
+			// System.err.println("namespace=" + namespace);
+		}
 		if (type == null) {
-			String code2 = code.getCode();
+			String code2 = code.getFullName();
 			if (code2.startsWith("[") && code2.endsWith("]")) {
-				return getOrCreateLeafDefault(code.eventuallyRemoveStartingAndEndingDoubleQuote(), LeafType.COMPONENT);
+				final USymbol sym = getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
+				return getOrCreateLeafDefault(code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:"),
+						LeafType.DESCRIPTION, sym);
 			}
 			if (code2.startsWith(":") && code2.endsWith(":")) {
-				return getOrCreateLeafDefault(code.eventuallyRemoveStartingAndEndingDoubleQuote(), LeafType.ACTOR);
+				return getOrCreateLeafDefault(code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:"),
+						LeafType.DESCRIPTION, USymbol.ACTOR);
 			}
 			if (code2.startsWith("()")) {
 				code2 = code2.substring(2).trim();
 				code2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code2);
-				return getOrCreateLeafDefault(Code.of(code2), LeafType.CIRCLE_INTERFACE);
+				return getOrCreateLeafDefault(Code.of(code2), LeafType.DESCRIPTION, USymbol.INTERFACE);
 			}
-			code = code.eventuallyRemoveStartingAndEndingDoubleQuote();
-			return getOrCreateLeafDefault(code, LeafType.STILL_UNKNOWN);
+			code = code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+			return getOrCreateLeafDefault(code, LeafType.STILL_UNKNOWN, symbol);
 		}
-		return getOrCreateLeafDefault(code, type);
+		return getOrCreateLeafDefault(code, type, symbol);
 	}
 
-//	@Override
-//	public ILeaf createLeaf(Code code, List<? extends CharSequence> display, LeafType type) {
-//		if (type != LeafType.COMPONENT) {
-//			return super.createLeaf(code, display, type);
-//		}
-//		code = code.getFullyQualifiedCode(getCurrentGroup());
-//		if (super.leafExist(code)) {
-//			throw new IllegalArgumentException("Already known: " + code);
-//		}
-//		return createEntityWithNamespace(code, display, type);
-//	}
+	// @Override
+	// public ILeaf createLeaf(Code code, List<? extends CharSequence> display, LeafType type) {
+	// if (type != LeafType.COMPONENT) {
+	// return super.createLeaf(code, display, type);
+	// }
+	// code = code.getFullyQualifiedCode(getCurrentGroup());
+	// if (super.leafExist(code)) {
+	// throw new IllegalArgumentException("Already known: " + code);
+	// }
+	// return createEntityWithNamespace(code, display, type);
+	// }
 
-//	private ILeaf createEntityWithNamespace(Code fullyCode, List<? extends CharSequence> display, LeafType type) {
-//		IGroup group = getCurrentGroup();
-//		final String namespace = fullyCode.getNamespace(getLeafs());
-//		if (namespace != null && (EntityUtils.groupRoot(group) || group.getCode().equals(namespace) == false)) {
-//			group = getOrCreateGroupInternal(Code.of(namespace), StringUtils.getWithNewlines(namespace), namespace,
-//					GroupType.PACKAGE, getRootGroup());
-//		}
-//		return createLeafInternal(fullyCode,
-//				display == null ? StringUtils.getWithNewlines(fullyCode.getShortName(getLeafs())) : display, type,
-//				group);
-//	}
+	// private ILeaf createEntityWithNamespace(Code fullyCode, List<? extends CharSequence> display, LeafType type) {
+	// IGroup group = getCurrentGroup();
+	// final String namespace = fullyCode.getNamespace(getLeafs());
+	// if (namespace != null && (EntityUtils.groupRoot(group) || group.getCode().equals(namespace) == false)) {
+	// group = getOrCreateGroupInternal(Code.of(namespace), StringUtils.getWithNewlines(namespace), namespace,
+	// GroupType.PACKAGE, getRootGroup());
+	// }
+	// return createLeafInternal(fullyCode,
+	// display == null ? StringUtils.getWithNewlines(fullyCode.getShortName(getLeafs())) : display, type,
+	// group);
+	// }
 
 	private boolean isUsecase() {
-		for (ILeaf leaf : getLeafs().values()) {
+		for (ILeaf leaf : getLeafsvalues()) {
 			final LeafType type = leaf.getEntityType();
 			final USymbol usymbol = leaf.getUSymbol();
 			if (type == LeafType.USECASE || usymbol == USymbol.ACTOR) {
@@ -101,10 +115,12 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public void makeDiagramReady() {
-		final LeafType defaultType = isUsecase() ? LeafType.ACTOR : LeafType.CIRCLE_INTERFACE;
-		for (ILeaf leaf : getLeafs().values()) {
+		super.makeDiagramReady();
+		final LeafType defaultType = isUsecase() ? LeafType.DESCRIPTION : LeafType.DESCRIPTION;
+		final USymbol defaultSymbol = isUsecase() ? USymbol.ACTOR : USymbol.INTERFACE;
+		for (ILeaf leaf : getLeafsvalues()) {
 			if (leaf.getEntityType() == LeafType.STILL_UNKNOWN) {
-				leaf.muteToType(defaultType);
+				leaf.muteToType(defaultType, defaultSymbol);
 			}
 		}
 	}
@@ -113,5 +129,14 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.DESCRIPTION;
 	}
+
+	public void setNamespaceSeparator(String namespaceSeparator) {
+		this.namespaceSeparator = namespaceSeparator;
+	}
+	
+	public String getNamespaceSeparator() {
+		return namespaceSeparator;
+	}
+
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,9 +42,12 @@ import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -53,13 +56,15 @@ public class MessageExoArrow extends Arrow {
 	private final LivingParticipantBox p;
 	private final MessageExoType type;
 	private final boolean shortArrow;
+	private final ArrowConfiguration arrowConfiguration;
 
 	public MessageExoArrow(double startingY, Skin skin, Component arrow, LivingParticipantBox p, MessageExoType type,
-			Url url, boolean shortArrow) {
+			Url url, boolean shortArrow, ArrowConfiguration arrowConfiguration) {
 		super(startingY, skin, arrow, url);
 		this.p = p;
 		this.type = type;
 		this.shortArrow = shortArrow;
+		this.arrowConfiguration = arrowConfiguration;
 	}
 
 	double getActualWidth(StringBounder stringBounder, double maxX) {
@@ -74,6 +79,12 @@ public class MessageExoArrow extends Arrow {
 				return p.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2()
 						- getPreferredWidth(stringBounder);
 			} else {
+				if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_LEFT) {
+					return ComponentRoseArrow.diamCircle;
+				}
+				if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_LEFT) {
+					return ComponentRoseArrow.diamCircle;
+				}
 				return 0;
 			}
 		}
@@ -87,7 +98,14 @@ public class MessageExoArrow extends Arrow {
 		if (shortArrow) {
 			return getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder);
 		}
-		return Math.max(maxX, getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder));
+		double result = Math.max(maxX, getLeftStartInternal(stringBounder) + getPreferredWidth(stringBounder));
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_RIGHT) {
+			result -= ComponentRoseArrow.diamCircle;
+		}
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_RIGHT) {
+			result -= ComponentRoseArrow.diamCircle;
+		}
+		return result;
 	}
 
 	@Override
@@ -107,15 +125,31 @@ public class MessageExoArrow extends Arrow {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return getArrowComponent().getPreferredWidth(stringBounder);
+		double result = getArrowComponent().getPreferredWidth(stringBounder);
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_RIGHT) {
+			result += ComponentRoseArrow.diamCircle;
+		}
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_RIGHT) {
+			result += ComponentRoseArrow.diamCircle;
+		}
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_LEFT) {
+			result += ComponentRoseArrow.diamCircle;
+		}
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_LEFT) {
+			result += ComponentRoseArrow.diamCircle;
+		}
+
+		return result;
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));
+		final double x1 = getStartingX(stringBounder);
+		final double x2 = maxX;
+		ug = ug.apply(new UTranslate(x1, getStartingY()));
 		startUrl(ug);
-		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, maxX)), context);
+		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, x2)), context);
 		endUrl(ug);
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 11432 $
+ * Revision $Revision: 14065 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -46,16 +46,16 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 public class CommandStereotype extends SingleLineCommand<ClassDiagram> {
 
 	public CommandStereotype() {
-		super("(?i)^([\\p{L}0-9_.]+|\"[^\"]+\")\\s*(\\<\\<.*\\>\\>)$");
+		super("(?i)^([\\p{L}0-9_.]+|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram classDiagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, List<String> arg) {
 		final Code code = Code.of(arg.get(0));
 		final String stereotype = arg.get(1);
-		final IEntity entity = classDiagram.getOrCreateLeaf(code, null);
-		entity.setStereotype(new Stereotype(stereotype, classDiagram.getSkinParam().getCircledCharacterRadius(),
-				classDiagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null)));
+		final IEntity entity = diagram.getOrCreateLeaf(code, null, null);
+		entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
+				.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam().getIHtmlColorSet()));
 		return CommandExecutionResult.ok();
 	}
 

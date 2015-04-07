@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9786 $
+ * Revision $Revision: 12235 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -37,11 +37,13 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.MyPattern;
+
 class IfManager implements ReadLine {
 
-	protected static final Pattern ifdefPattern = Pattern.compile("^\\s*!if(n)?def\\s+([A-Za-z_][A-Za-z_0-9]*)$");
-	protected static final Pattern elsePattern = Pattern.compile("^\\s*!else$");
-	protected static final Pattern endifPattern = Pattern.compile("^\\s*!endif$");
+	protected static final Pattern ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+([A-Za-z_][A-Za-z_0-9]*)$");
+	protected static final Pattern elsePattern = MyPattern.cmpile("^[%s]*!else$");
+	protected static final Pattern endifPattern = MyPattern.cmpile("^[%s]*!endif$");
 
 	private final Defines defines;
 	private final ReadLine source;

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.salt.element;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -49,18 +49,17 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class ElementMenuEntry implements Element {
+public class ElementMenuEntry extends AbstractElement {
 
 	private final TextBlock block;
 	private final String text;
 	private HtmlColor background;
-	private double x;
+	private double xxx;
 
-	public ElementMenuEntry(String text, UFont font, SpriteContainer spriteContainer) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK);
-		this.block = TextBlockUtils.create(Display.asList(text), config, HorizontalAlignment.LEFT, spriteContainer);
+	public ElementMenuEntry(String text, UFont font, ISkinSimple spriteContainer) {
+		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		this.block = TextBlockUtils.create(Display.create(text), config, HorizontalAlignment.LEFT, spriteContainer);
 		this.text = text;
 	}
 
@@ -71,20 +70,20 @@ public class ElementMenuEntry implements Element {
 		return block.calculateDimension(stringBounder);
 	}
 
-	public void drawU(UGraphic ug, double x, double y, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
 		if (background != null) {
-			final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), x, y);
-			ug.apply(new UChangeBackColor(background)).apply(new UTranslate(x, y)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
+			final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
+			ug.apply(new UChangeBackColor(background)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
 		}
-		block.drawU(ug.apply(new UTranslate(x, y)));
+		block.drawU(ug);
 	}
 
 	public double getX() {
-		return x;
+		return xxx;
 	}
 
 	public void setX(double x) {
-		this.x = x;
+		this.xxx = x;
 	}
 
 	public String getText() {

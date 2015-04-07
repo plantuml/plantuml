@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11153 $
+ * Revision $Revision: 14726 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -36,20 +36,20 @@ package net.sourceforge.plantuml.command;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.StringUtils;
 
 public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 
 	public CommandMultilinesFooter() {
-		super("(?i)^(?:(left|right|center)?\\s*)footer$");
+		super("(?i)^(?:(left|right|center)?[%s]*)footer$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end ?footer$";
+		return "(?i)^end[%s]?footer$";
 	}
 
 	public CommandExecutionResult execute(final UmlDiagram diagram, List<String> lines) {
@@ -60,9 +60,9 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 		}
 		final String align = m.group(1);
 		if (align != null) {
-			diagram.setFooterAlignment(HorizontalAlignment.valueOf(align.toUpperCase()));
+			diagram.setFooterAlignment(HorizontalAlignment.valueOf(StringUtils.goUpperCase(align)));
 		}
-		final Display strings = new Display(lines.subList(1, lines.size() - 1));
+		final Display strings = Display.create(lines.subList(1, lines.size() - 1));
 		if (strings.size() > 0) {
 			diagram.setFooter(strings);
 			return CommandExecutionResult.ok();

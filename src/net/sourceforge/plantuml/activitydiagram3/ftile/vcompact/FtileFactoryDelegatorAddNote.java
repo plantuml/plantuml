@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,20 +33,16 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 
-	private final Rose rose = new Rose();
+	// private final Rose rose = new Rose();
 
 	public FtileFactoryDelegatorAddNote(FtileFactory factory, ISkinParam skinParam) {
 		super(factory, skinParam);
@@ -57,13 +53,13 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 		if (note == null) {
 			throw new IllegalArgumentException();
 		}
-		final HtmlColor colorlink;
-		final LinkRendering inlinkRendering = ftile.getInLinkRendering();
-		if (inlinkRendering == null || inlinkRendering.getColor() == null) {
-			colorlink = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
-		} else {
-			colorlink = inlinkRendering.getColor();
-		}
-		return new FtileWithNoteOpale(ftile, note, colorlink, notePosition);
+		// final HtmlColor colorlink;
+		// final LinkRendering inlinkRendering = ftile.getInLinkRendering();
+		// if (inlinkRendering == null || inlinkRendering.getColor() == null) {
+		// colorlink = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		// } else {
+		// colorlink = inlinkRendering.getColor();
+		// }
+		return new FtileWithNoteOpale(ftile, note, notePosition, getSkinParam(), true);
 	}
 }

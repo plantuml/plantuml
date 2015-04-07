@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -61,7 +61,7 @@ public class Tile implements TextBlock {
 	private final int num;
 
 	private final UFont numberFont = new UFont("Monospaced", Font.PLAIN, 11);
-	private final FontConfiguration fc = new FontConfiguration(numberFont, HtmlColorUtils.BLACK);
+	private final FontConfiguration fc = new FontConfiguration(numberFont, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 	private final Map<TileGeometry, TileArea> geometries;
 
 	Tile(int num) {
@@ -79,7 +79,7 @@ public class Tile implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-		final TextBlock n = TextBlockUtils.create(Display.asList("" + num), fc, HorizontalAlignment.LEFT,
+		final TextBlock n = TextBlockUtils.create(Display.create("" + num), fc, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 		final Dimension2D dimNum = n.calculateDimension(ug.getStringBounder());
 		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -47,11 +47,13 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.PSystemCreoleFactory;
+import net.sourceforge.plantuml.cute.PSystemCuteFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
+import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemLostFactory;
 import net.sourceforge.plantuml.eggs.PSystemPathFactory;
@@ -59,8 +61,11 @@ import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
+import net.sourceforge.plantuml.jungle.PSystemTreeFactory;
 import net.sourceforge.plantuml.logo.PSystemLogoFactory;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
+import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
+import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.postit.PostIdDiagramFactory;
 import net.sourceforge.plantuml.printskin.PrintSkinFactory;
@@ -75,6 +80,8 @@ import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 
 public class PSystemBuilder {
+
+	public static final long startTime = System.currentTimeMillis();
 
 	final public Diagram createPSystem(final List<? extends CharSequence> strings) {
 
@@ -97,9 +104,9 @@ public class PSystemBuilder {
 		}
 
 		final PSystemError err = merge(errors);
-//		if (OptionFlags.getInstance().isQuiet() == false) {
-//			err.print(System.err);
-//		}
+		// if (OptionFlags.getInstance().isQuiet() == false) {
+		// err.print(System.err);
+		// }
 		return err;
 
 	}
@@ -120,6 +127,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemDonorsFactory());
 		factories.add(new PSystemListFontsFactory());
+		factories.add(new PSystemOpenIconicFactory());
+		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
@@ -140,11 +149,14 @@ public class PSystemBuilder {
 		factories.add(new PSystemLostFactory());
 		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
+		factories.add(new PSystemCharlieFactory());
 		if (License.getCurrent() == License.GPL) {
 			factories.add(new PSystemXearthFactory());
 		}
 		factories.add(new PSystemProjectFactory2());
 		factories.add(new FlowDiagramFactory());
+		factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
+		factories.add(new PSystemCuteFactory(DiagramType.CUTE));
 		return factories;
 	}
 

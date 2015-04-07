@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2013, Arnaud Roques
+ * (C) Copyright 2009-2014, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 11564 $
+ * Revision $Revision: 15096 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Dimension2DDouble extends Dimension2D {
 
@@ -70,6 +72,9 @@ public class Dimension2DDouble extends Dimension2D {
 	}
 
 	public static Dimension2D delta(Dimension2D dim, double deltaWidth, double deltaHeight) {
+		if (deltaHeight == 0 && deltaWidth == 0) {
+			return dim;
+		}
 		return new Dimension2DDouble(dim.getWidth() + deltaWidth, dim.getHeight() + deltaHeight);
 	}
 
@@ -96,7 +101,7 @@ public class Dimension2DDouble extends Dimension2D {
 		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
 		return new Dimension2DDouble(width, height);
 	}
-	
+
 	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2) {
 		return atLeast(dim1, dim2.getWidth(), dim2.getHeight());
 	}
