@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -56,10 +56,9 @@ public class ComponentBlueModernEnglober extends AbstractTextualComponent {
 	private final HtmlColor backColor;
 
 	public ComponentBlueModernEnglober(HtmlColor borderColor, HtmlColor backColor, Display strings,
-			HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font,
-			ISkinSimple spriteContainer) {
-		super(strings, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER, 4, 4, 1,
-				spriteContainer, 0, false, null, null);
+			UFont2 font, ISkinSimple spriteContainer) {
+		super(strings, font, HorizontalAlignment.CENTER, 4, 4, 1, spriteContainer, 0, false,
+				null, null);
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 	}

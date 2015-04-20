@@ -42,9 +42,9 @@ public class UDotPathHand {
 
 	public UDotPathHand(DotPath source) {
 
-		final HandJiggle jiggle = new HandJiggle(source.getStartPoint(), 3.0);
+		final HandJiggle jiggle = new HandJiggle(source.getStartPoint(), 2.0);
 		for (CubicCurve2D curve : source.getBeziers()) {
-			jiggle.addCurve(curve);
+			jiggle.curveTo(curve);
 		}
 
 		this.path = jiggle.toUPath();

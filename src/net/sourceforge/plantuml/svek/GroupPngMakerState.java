@@ -144,7 +144,7 @@ public final class GroupPngMakerState {
 		} else if (group.getGroupType() == GroupType.STATE) {
 			HtmlColor borderColor = group.getSpecificLineColor();
 			if (borderColor == null) {
-				borderColor = getColor(ColorParam.stateBorder, null);
+				borderColor = getColor(ColorParam.stateBorder, group.getStereotype());
 			}
 			final Stereotype stereo = group.getStereotype();
 			final HtmlColor backColor = group.getSpecificBackColor() == null ? getColor(ColorParam.stateBackground,

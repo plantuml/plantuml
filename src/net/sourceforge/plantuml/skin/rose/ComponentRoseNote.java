@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15913 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -41,9 +41,10 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -61,13 +62,12 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final double deltaShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseNote(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor, HtmlColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, UFont font, Display strings, double paddingX, double paddingY,
-			ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
-		super(strings, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.LEFT, 6, 15, 5,
-				spriteContainer, 0, true, null, null);
-		this.back = back;
-		this.foregroundColor = foregroundColor;
+	public ComponentRoseNote(BiColor biColor, UFont2 font, Display strings,
+			double paddingX, double paddingY, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
+		super(strings, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, 0, true,
+				null, null);
+		this.back = biColor.getYellowBack();
+		this.foregroundColor = biColor.getRedBorder();
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.deltaShadow = deltaShadow;

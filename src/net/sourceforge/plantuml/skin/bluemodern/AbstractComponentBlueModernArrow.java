@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15908 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 
 public abstract class AbstractComponentBlueModernArrow extends AbstractTextualComponent implements ArrowComponent {
 
@@ -52,10 +52,9 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 	private final ArrowConfiguration arrowConfiguration;
 	private final HtmlColor foregroundColor;
 
-	public AbstractComponentBlueModernArrow(HtmlColor foregroundColor, HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font,
-			Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.LEFT,
-				17, 17, 2, spriteContainer, 0, false, null, null);
+	public AbstractComponentBlueModernArrow(HtmlColor foregroundColor, UFont2 font, Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer) {
+		super(stringsToDisplay, font, HorizontalAlignment.LEFT, 17, 17, 2,
+				spriteContainer, 0, false, null, null);
 		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}

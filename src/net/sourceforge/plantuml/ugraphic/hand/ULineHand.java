@@ -42,7 +42,7 @@ public class ULineHand {
 		final double endX = line.getDX();
 		final double endY = line.getDY();
 		final HandJiggle jiggle = new HandJiggle(0, 0, 2.0);
-		jiggle.addPoints(endX, endY);
+		jiggle.lineTo(endX, endY);
 
 		this.path = jiggle.toUPath();
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15913 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -41,9 +41,11 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -57,16 +59,15 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final double roundCorner;
 	private final UStroke stroke;
 
-	public ComponentRoseParticipant(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay,
-			ISkinSimple spriteContainer, double deltaShadow, double roundCorner, UStroke stroke,
-			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				7, 7, 7, spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
-		this.back = back;
+	public ComponentRoseParticipant(BiColor biColor, UFont2 font,
+			Display stringsToDisplay, ISkinSimple spriteContainer, double deltaShadow, double roundCorner,
+			UStroke stroke, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
+				spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
+		this.back = biColor.getYellowBack();
 		this.roundCorner = roundCorner;
 		this.deltaShadow = deltaShadow;
-		this.foregroundColor = foregroundColor;
+		this.foregroundColor = biColor.getRedBorder();
 		this.stroke = stroke;
 	}
 

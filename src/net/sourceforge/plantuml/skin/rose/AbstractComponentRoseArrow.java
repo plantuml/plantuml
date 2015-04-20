@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15908 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 
 public abstract class AbstractComponentRoseArrow extends AbstractTextualComponent implements ArrowComponent {
 
@@ -49,12 +49,11 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 	private final HtmlColor foregroundColor;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public AbstractComponentRoseArrow(HtmlColor foregroundColor, HtmlColor fontColor, HtmlColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer,
-			HorizontalAlignment textHorizontalAlignment, double maxMessageSize) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, textHorizontalAlignment, 7,
-				7, 1, spriteContainer, maxMessageSize, false, null, null);
+	public AbstractComponentRoseArrow(HtmlColor foregroundColor, UFont2 font, Display stringsToDisplay,
+			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, HorizontalAlignment textHorizontalAlignment,
+			double maxMessageSize) {
+		super(stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1, spriteContainer,
+				maxMessageSize, false, null, null);
 		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}

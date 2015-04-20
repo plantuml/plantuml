@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14823 $
+ * Revision $Revision: 15886 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -238,7 +238,7 @@ public class DrawableSet {
 		return dimension;
 	}
 
-	void drawU(UGraphic ug, final double delta, double width, Page page, boolean showTail) {
+	void drawU_REMOVEDME_4243(UGraphic ug, final double delta, double width, Page page, boolean showTail) {
 
 		final UGraphic ugOrig = ug;
 
@@ -251,7 +251,7 @@ public class DrawableSet {
 
 		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
 
-		this.drawLineU(ug, showTail, page);
+		this.drawLineU_REMOVEDME_4243(ug, showTail, page);
 		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);
 
 		ug = clipAndTranslate2(delta, width, page, ug);
@@ -303,7 +303,7 @@ public class DrawableSet {
 		}
 	}
 
-	private void drawLineU(UGraphic ug, boolean showTail, Page page) {
+	private void drawLineU_REMOVEDME_4243(UGraphic ug, boolean showTail, Page page) {
 		for (LivingParticipantBox box : getAllLivingParticipantBox()) {
 			final double create = box.getCreate();
 			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());
@@ -319,7 +319,7 @@ public class DrawableSet {
 				}
 			}
 			final double myDelta = page.getNewpage1() - page.getHeaderHeight();
-			box.drawLineU(ug, start, endMax, showTail, myDelta);
+			box.drawLineUTOBEREMOVED_4243(ug, start, endMax, showTail, myDelta);
 		}
 	}
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15532 $
+ * Revision $Revision: 15883 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -495,8 +495,8 @@ public class SvgGraphics {
 			style += "background:" + backcolor + ";";
 		}
 		root.setAttribute("style", style);
-		root.setAttribute("width", format(maxX) + "pt");
-		root.setAttribute("height", format(maxY) + "pt");
+		root.setAttribute("width", format(maxX) + "px");
+		root.setAttribute("height", format(maxY) + "px");
 		root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
 
 		if (pendingBackground != null) {

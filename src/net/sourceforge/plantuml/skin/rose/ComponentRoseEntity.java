@@ -43,8 +43,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.svek.EntityDomain;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -54,14 +56,13 @@ public class ComponentRoseEntity extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseEntity(HtmlColor yellow, HtmlColor red, HtmlColor fontColor, HtmlColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer, double deltaShadow, UStroke stroke, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				3, 3, 0, spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseEntity(BiColor biColor, UFont2 font, Display stringsToDisplay,
+			boolean head, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke,
+			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
+				spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
-		this.stickman = new EntityDomain(yellow, red, deltaShadow, stroke.getThickness());
+		this.stickman = new EntityDomain(biColor.getYellowBack(), biColor.getRedBorder(), deltaShadow, stroke.getThickness());
 	}
 
 	@Override

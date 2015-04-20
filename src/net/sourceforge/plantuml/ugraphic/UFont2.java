@@ -26,39 +26,44 @@
  * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
  * in the United States and other countries.]
  *
- * Original Author:  Adrian Vogt
+ * Original Author:  Arnaud Roques
+ * 
+ * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.ugraphic.hand;
+package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Point2D;
-import java.util.List;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 
-import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+public class UFont2 {
 
-public class UPolygonHand {
+	private final UFont font;
 
-	private final UPolygon poly;
+	private final HtmlColor color;
+	private final HtmlColor hyperlinkColor;
+	private final boolean useUnderlineForHyperlink;
 
-	public UPolygonHand(UPolygon source) {
-		final List<Point2D.Double> pt = source.getPoints();
-		if (pt.size() == 0) {
-			poly = new UPolygon();
-			return;
-		}
-		final HandJiggle jiggle = new HandJiggle(pt.get(0), 1.5);
-		for (int i = 1; i < pt.size(); i++) {
-			jiggle.lineTo(pt.get(i));
-		}
-		jiggle.lineTo(pt.get(0));
-
-		this.poly = jiggle.toUPolygon();
-		this.poly.setDeltaShadow(source.getDeltaShadow());
+	public UFont2(UFont font, HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor) {
+		this.font = font;
+		this.color = color;
+		this.hyperlinkColor = hyperlinkColor;
+		this.useUnderlineForHyperlink = useUnderlineForHyperlink;
 	}
 
-	public Shadowable getHanddrawn() {
-		return this.poly;
+	public final UFont getFont() {
+		return font;
+	}
+
+	public boolean useUnderlineForHyperlink() {
+		return useUnderlineForHyperlink;
+	}
+
+	public HtmlColor getHyperlinkColor() {
+		return hyperlinkColor;
+	}
+
+	public HtmlColor getColor() {
+		return color;
 	}
 
 }

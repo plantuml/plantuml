@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -54,10 +54,10 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
 
-	public ComponentRoseEnglober(HtmlColor borderColor, HtmlColor backColor, Display strings, HtmlColor fontColor,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font, ISkinSimple spriteContainer) {
-		super(strings, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER, 3, 3, 1,
-				spriteContainer, 0, false, null, null);
+	public ComponentRoseEnglober(HtmlColor backColor, HtmlColor borderColor, Display strings, UFont2 font,
+			ISkinSimple spriteContainer) {
+		super(strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, 0, false,
+				null, null);
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 	}

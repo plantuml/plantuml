@@ -63,7 +63,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf(
 						"SYMBOL",
-						"(?:(artifact|actor|folder|package|rectangle|node|frame|cloud|database|storage|agent|usecase|component|boundary|control|entity|interface|\\(\\))[%s]+)?"), //
+						"(?:(artifact|actor|folder|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface|\\(\\))[%s]+)?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CODE_WITH_QUOTE), //
@@ -157,6 +157,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		} else if (symbol.equalsIgnoreCase("database")) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.DATABASE;
+		} else if (symbol.equalsIgnoreCase("queue")) {
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.QUEUE;
 		} else if (symbol.equalsIgnoreCase("storage")) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.STORAGE;

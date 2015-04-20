@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15908 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -36,12 +36,11 @@ package net.sourceforge.plantuml.skin.rose;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -49,10 +48,9 @@ public class ComponentRoseTitle extends AbstractTextualComponent {
 
 	private final int outMargin = 5;
 
-	public ComponentRoseTitle(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
-			UFont font, Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				7, 7, 7, spriteContainer, 0, false, null, null);
+	public ComponentRoseTitle(UFont2 font, Display stringsToDisplay, ISkinSimple spriteContainer) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
+				spriteContainer, 0, false, null, null);
 	}
 
 	@Override

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 14871 $
+ * Revision $Revision: 15892 $
  *
  */
 package net.sourceforge.plantuml;
@@ -201,7 +201,7 @@ public class Run {
 		ftpServer.go();
 	}
 
-	static void printFonts() {
+	public static void printFonts() {
 		final Font fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 		for (Font f : fonts) {
 			System.out.println("f=" + f + "/" + f.getPSName() + "/" + f.getName() + "/" + f.getFontName() + "/"
@@ -244,7 +244,7 @@ public class Run {
 		managePipe(option, br, System.out);
 	}
 
-	static void managePipe(Option option, final BufferedReader br, final PrintStream ps) throws IOException {
+	public static void managePipe(Option option, final BufferedReader br, final PrintStream ps) throws IOException {
 		final StringBuilder sb = new StringBuilder();
 		String s = null;
 		while ((s = br.readLine()) != null) {

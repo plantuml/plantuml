@@ -70,6 +70,7 @@ public abstract class USymbol {
 	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", new USymbolEntityDomain(2));
 	public final static USymbol CONTROL = record("CONTROL", new USymbolControl(2));
 	public final static USymbol INTERFACE = record("INTERFACE", new USymbolInterface());
+	public final static USymbol QUEUE = record("QUEUE", new USymbolQueue());
 
 	private final ColorParam colorParamBorder;
 	private final ColorParam colorParamBack;

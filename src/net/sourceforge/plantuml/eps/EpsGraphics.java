@@ -311,6 +311,11 @@ public class EpsGraphics {
 
 	}
 
+	public void epsPolygon(HtmlColorGradient gr, ColorMapper mapper, double... points) {
+		setFillColor(mapper.getMappedColor(gr.getColor1()));
+		epsPolygon(points);
+	}
+
 	public void epsPolygon(double... points) {
 		checkCloseDone();
 		double lastX = 0;
@@ -368,14 +373,6 @@ public class EpsGraphics {
 			epsRectangleInternal(x, y, width, height, rx, ry, false);
 			append("closepath stroke", true);
 		}
-	}
-
-	public void epsUrlLink(int x, int y, int width, int height, String url) {
-		append("[ /Rect [ " + x + " " + y + " " + (x + width) + " " + (y + height) + " ]", true);
-		append("/Border [ 0 0 0 ]", true);
-		append("/Action << /Subtype /URI /URI (" + url + ") >>", true);
-		append("/Subtype /Link", true);
-		append("/ANN pdfmark", true);
 	}
 
 	public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
@@ -717,6 +714,14 @@ public class EpsGraphics {
 			epsUrlLink(urlArea.xmin, urlArea.ymin, width, height, urlArea.url);
 		}
 		this.urlArea = null;
+	}
+
+	public void epsUrlLink(int x, int y, int width, int height, String url) {
+		append("[ /Rect [ " + x + " " + y + " " + (x + width) + " " + (y + height) + " ]", true);
+		append("/Border [ 0 0 0 ]", true);
+		append("/Action << /Subtype /URI /URI (" + url + ") >>", true);
+		append("/Subtype /Link", true);
+		append("/ANN pdfmark", true);
 	}
 
 	public void openLink(String url) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 13975 $
+ * Revision $Revision: 15877 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -56,6 +56,7 @@ public enum ColorParam {
 	objectBorder(HtmlColorUtils.MY_RED),
 	objectArrow(HtmlColorUtils.MY_RED),
 	
+	classHeaderBackground(null),
 	classBackground(HtmlColorUtils.MY_YELLOW),
 	classBorder(HtmlColorUtils.MY_RED),
 	stereotypeCBackground(HtmlColorUtils.COL_ADD1B2),
@@ -108,6 +109,8 @@ public enum ColorParam {
 	artifactBorder(HtmlColorUtils.MY_RED),
 	cloudBackground(HtmlColorUtils.MY_YELLOW),
 	cloudBorder(HtmlColorUtils.MY_RED),
+	queueBackground(HtmlColorUtils.MY_YELLOW),
+	queueBorder(HtmlColorUtils.MY_RED),
 	databaseBackground(HtmlColorUtils.MY_YELLOW),
 	databaseBorder(HtmlColorUtils.MY_RED),
 	folderBackground(HtmlColorUtils.MY_YELLOW),

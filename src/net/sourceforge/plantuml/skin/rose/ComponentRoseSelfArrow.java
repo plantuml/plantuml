@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15531 $
+ * Revision $Revision: 15908 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -44,13 +44,12 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
-import net.sourceforge.plantuml.skin.ArrowDressing;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -62,11 +61,11 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	private final double arrowWidth = 45;
 	private final boolean niceArrow;
 
-	public ComponentRoseSelfArrow(HtmlColor foregroundColor, HtmlColor colorFont, HtmlColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, double maxMessageSize, boolean niceArrow) {
-		super(foregroundColor, colorFont, hyperlinkColor, useUnderlineForHyperlink, font, stringsToDisplay,
-				arrowConfiguration, spriteContainer, HorizontalAlignment.LEFT, maxMessageSize);
+	public ComponentRoseSelfArrow(HtmlColor foregroundColor, UFont2 font, Display stringsToDisplay,
+			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, double maxMessageSize,
+			boolean niceArrow) {
+		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer, HorizontalAlignment.LEFT,
+				maxMessageSize);
 		this.niceArrow = niceArrow;
 	}
 

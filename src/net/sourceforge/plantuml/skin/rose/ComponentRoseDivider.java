@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -61,11 +61,10 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	private final boolean withShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseDivider(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
-			UFont font, HtmlColor background, Display stringsToDisplay, ISkinSimple spriteContainer,
-			boolean withShadow, UStroke stroke) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				4, 4, 4, spriteContainer, 0, false, null, null);
+	public ComponentRoseDivider(UFont2 font, HtmlColor background, Display stringsToDisplay,
+			ISkinSimple spriteContainer, boolean withShadow, UStroke stroke) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
+				spriteContainer, 0, false, null, null);
 		this.background = background;
 		this.empty = stringsToDisplay.get(0).length() == 0;
 		this.withShadow = withShadow;

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -63,11 +63,9 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private final HorizontalAlignment messagePosition;
 	private final boolean niceArrow;
 
-	public ComponentRoseArrow(HtmlColor foregroundColor, HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, HorizontalAlignment messagePosition, ISkinSimple spriteContainer,
+	public ComponentRoseArrow(HtmlColor foregroundColor, UFont2 font, Display stringsToDisplay, ArrowConfiguration arrowConfiguration, HorizontalAlignment messagePosition, ISkinSimple spriteContainer,
 			HorizontalAlignment textHorizontalAlignment, double maxMessageSize, boolean niceArrow) {
-		super(foregroundColor, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, stringsToDisplay, arrowConfiguration, spriteContainer,
-				textHorizontalAlignment, maxMessageSize);
+		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer, textHorizontalAlignment, maxMessageSize);
 		this.messagePosition = messagePosition;
 		this.niceArrow = niceArrow;
 	}

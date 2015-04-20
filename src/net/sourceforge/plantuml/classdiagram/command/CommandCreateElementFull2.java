@@ -73,10 +73,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			regex = "mix_" + regex;
 		}
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("SYMBOL",
-				// "(?:(artifact|actor|folder|package|rectangle|node|frame|cloud|database|storage|agent|usecase|component|boundary|control|entity|interface|\\(\\))[%s]+)?"),
-				// //
-						regex), //
+				new RegexLeaf("SYMBOL", regex), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CODE_WITH_QUOTE) //

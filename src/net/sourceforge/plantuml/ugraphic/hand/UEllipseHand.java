@@ -31,13 +31,15 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
+import java.awt.geom.Point2D;
+
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class UEllipseHand {
 
-	private final Shadowable poly;
+	private Shadowable poly;
 
 	public UEllipseHand(UEllipse source) {
 
@@ -45,21 +47,37 @@ public class UEllipseHand {
 			this.poly = source;
 			return;
 		}
-		final UPolygon result = new UPolygon();
+		poly = new UPolygon();
 		final double width = source.getWidth();
 		final double height = source.getHeight();
 		double angle = 0;
-		while (angle < Math.PI * 2) {
-			angle += (10 + Math.random() * 10) * Math.PI / 180;
-			final double variation = 1 + (Math.random() - 0.5) / 8;
-			final double x = width / 2 + Math.cos(angle) * width * variation / 2;
-			final double y = height / 2 + Math.sin(angle) * height * variation / 2;
-			// final Point2D.Double p = new Point2D.Double(x, y);
-			result.addPoint(x, y);
+		if (width == height) {
+			while (angle < Math.PI * 2) {
+				angle += (10 + Math.random() * 10) * Math.PI / 180;
+				final double variation = 1 + (Math.random() - 0.5) / 8;
+				final double x = width / 2 + Math.cos(angle) * width * variation / 2;
+				final double y = height / 2 + Math.sin(angle) * height * variation / 2;
+				// final Point2D.Double p = new Point2D.Double(x, y);
+				((UPolygon) poly).addPoint(x, y);
+			}
+		} else {
+			while (angle < Math.PI * 2) {
+				angle += Math.PI / 20;
+				final Point2D pt = getPoint(width, height, angle);
+				((UPolygon) poly).addPoint(pt.getX(), pt.getY());
+			}
+
 		}
 
-		this.poly = result;
 		this.poly.setDeltaShadow(source.getDeltaShadow());
+	}
+
+	private Point2D getPoint(double width, double height, double angle) {
+		final double x = width / 2 + Math.cos(angle) * width / 2;
+		final double y = height / 2 + Math.sin(angle) * height / 2;
+		final double variation = (Math.random() - 0.5) / 50;
+		return new Point2D.Double(x + variation * width, y + variation * height);
+
 	}
 
 	public Shadowable getHanddrawn() {

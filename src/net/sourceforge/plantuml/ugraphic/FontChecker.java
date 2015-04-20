@@ -143,7 +143,7 @@ public class FontChecker {
 
 	}
 
-	protected void printChar(final PrintWriter pw, char c) throws IOException, TransformerException {
+	public void printChar(final PrintWriter pw, char c) throws IOException, TransformerException {
 		pw.println("<p>");
 		final int ascii = (int) c;
 		pw.println(ascii + " - " + Integer.toHexString(ascii) + " - ");

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -59,11 +59,10 @@ public class ComponentBlueModernDivider extends AbstractTextualComponent {
 	private final HtmlColor background2;
 	private final HtmlColor borderColor;
 
-	public ComponentBlueModernDivider(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
-			UFont font, HtmlColor background1, HtmlColor background2, HtmlColor borderColor, Display stringsToDisplay,
-			ISkinSimple spriteContainer) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				4, 4, 4, spriteContainer, 0, false, null, null);
+	public ComponentBlueModernDivider(UFont2 font, HtmlColor background1, HtmlColor background2,
+			HtmlColor borderColor, Display stringsToDisplay, ISkinSimple spriteContainer) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
+				spriteContainer, 0, false, null, null);
 		this.background1 = background1;
 		this.background2 = background2;
 		this.borderColor = borderColor;

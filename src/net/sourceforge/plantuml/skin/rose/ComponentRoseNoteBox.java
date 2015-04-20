@@ -40,9 +40,10 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -55,13 +56,12 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	private final double deltaShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseNoteBox(HtmlColor back, HtmlColor foregroundColor, HtmlColor fontColor,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont font, Display strings,
-			ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
-		super(strings, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.LEFT, 4, 4, 4,
-				spriteContainer, 0, false, null, null);
-		this.back = back;
-		this.foregroundColor = foregroundColor;
+	public ComponentRoseNoteBox(BiColor biColor, UFont2 font,
+			Display strings, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
+		super(strings, font, HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, 0, false,
+				null, null);
+		this.back = biColor.getYellowBack();
+		this.foregroundColor = biColor.getRedBorder();
 		this.deltaShadow = deltaShadow;
 		this.stroke = stroke;
 	}

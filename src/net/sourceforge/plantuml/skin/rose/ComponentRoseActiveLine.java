@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 15913 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -54,7 +54,7 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeDown;
 	private final boolean withShadow;
 
-	public ComponentRoseActiveLine(HtmlColor foregroundColor, HtmlColor lifeLineBackground, boolean closeUp,
+	public ComponentRoseActiveLine(HtmlColor lifeLineBackground, HtmlColor foregroundColor, boolean closeUp,
 			boolean closeDown, boolean withShadow) {
 		this.foregroundColor = foregroundColor;
 		this.lifeLineBackground = lifeLineBackground;

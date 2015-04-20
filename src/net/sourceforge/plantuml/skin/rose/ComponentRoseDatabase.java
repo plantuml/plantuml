@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -56,16 +58,15 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseDatabase(HtmlColor yellow, HtmlColor red, HtmlColor fontColor, HtmlColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer, double deltaShadow, UStroke stroke, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				3, 3, 0, spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseDatabase(BiColor biColor, UFont2 font, Display stringsToDisplay,
+			boolean head, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke,
+			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
+				spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
 
 		// this.stickman = new Control(yellow, red, deltaShadow, stroke.getThickness());
-		final SymbolContext symbolContext = new SymbolContext(yellow, red).withStroke(new UStroke(1.5)).withShadow(
+		final SymbolContext symbolContext = new SymbolContext(biColor.getYellowBack(), biColor.getRedBorder()).withStroke(new UStroke(1.5)).withShadow(
 				deltaShadow > 0);
 		this.stickman = USymbol.DATABASE.asSmall(TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
 				symbolContext);

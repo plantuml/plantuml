@@ -31,16 +31,48 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
+import java.awt.geom.Point2D;
+
 import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.USegment;
+import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 public class UPathHand {
 
 	private final UPath path;
+	private final double defaultVariation = 4.0;
 
 	public UPathHand(UPath source) {
 
-		final PathJiggle jiggle = new PathJiggle(source, 3.0);
-		this.path = jiggle.toUPath();
+		final UPath jigglePath = new UPath();
+
+		Point2D last = new Point2D.Double();
+
+		for (USegment segment : source) {
+			final USegmentType type = segment.getSegmentType();
+			if (type == USegmentType.SEG_MOVETO) {
+				final double x = segment.getCoord()[0];
+				final double y = segment.getCoord()[1];
+				jigglePath.moveTo(x, y);
+				last = new Point2D.Double(x, y);
+
+			} else if (type == USegmentType.SEG_LINETO) {
+				final double x = segment.getCoord()[0];
+				final double y = segment.getCoord()[1];
+				final HandJiggle jiggle = new HandJiggle(last.getX(), last.getY(), defaultVariation);
+				jiggle.lineTo(x, y);
+				for (USegment seg2 : jiggle.toUPath()) {
+					if (seg2.getSegmentType() == USegmentType.SEG_LINETO) {
+						jigglePath.lineTo(seg2.getCoord()[0], seg2.getCoord()[1]);
+					}
+				}
+				last = new Point2D.Double(x, y);
+			} else {
+				this.path = source;
+				return;
+			}
+		}
+		this.path = jigglePath;
 	}
 
 	public UPath getHanddrawn() {

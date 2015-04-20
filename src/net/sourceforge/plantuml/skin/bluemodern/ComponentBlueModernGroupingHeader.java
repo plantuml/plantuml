@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15908 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -67,10 +68,9 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 	private final HtmlColor borderColor;
 
 	public ComponentBlueModernGroupingHeader(HtmlColor headerBackgroundColor, HtmlColor generalBackgroundColor,
-			HtmlColor borderColor, HtmlColor fontColor1, HtmlColor fontColor2, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, UFont bigFont,
-			UFont smallFont, Display strings, ISkinSimple spriteContainer) {
-		super(strings.get(0), fontColor1, hyperlinkColor, useUnderlineForHyperlink, bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
-				spriteContainer, 0, null, null);
+			HtmlColor borderColor, HtmlColor fontColor2, UFont2 bigFont, UFont smallFont, Display strings, ISkinSimple spriteContainer) {
+		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0, null,
+				null);
 		this.headerBackgroundColor = headerBackgroundColor;
 		this.generalBackgroundColor = generalBackgroundColor;
 		this.borderColor = borderColor;
@@ -78,7 +78,7 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 			this.commentTextBlock = null;
 		} else {
 			this.commentTextBlock = TextBlockUtils.create(Display.create("[" + strings.get(1) + "]"),
-					new FontConfiguration(smallFont, fontColor2, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT,
+					new FontConfiguration(smallFont, fontColor2, bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT,
 					spriteContainer);
 		}
 	}

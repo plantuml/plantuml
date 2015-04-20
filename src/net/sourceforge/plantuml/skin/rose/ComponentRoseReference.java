@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -67,11 +68,11 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final double deltaShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseReference(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, HtmlColor fontHeaderColor, UFont font, HtmlColor borderColor,
-			HtmlColor backgroundHeader, HtmlColor background, UFont header, Display stringsToDisplay,
+	public ComponentRoseReference(HtmlColor fontHeaderColor, UFont2 font, HtmlColor backgroundHeader,
+			HtmlColor borderColor, HtmlColor background, UFont header, Display stringsToDisplay,
 			HorizontalAlignment position, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
-		super(stringsToDisplay.subList(1, stringsToDisplay.size()), fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.LEFT, 4, 4,
-				4, spriteContainer, 0, false, null, null);
+		super(stringsToDisplay.subList(1, stringsToDisplay.size()), font, HorizontalAlignment.LEFT, 4, 4, 4,
+				spriteContainer, 0, false, null, null);
 		this.position = position;
 		this.backgroundHeader = backgroundHeader;
 		this.background = background;
@@ -79,8 +80,9 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		this.deltaShadow = deltaShadow;
 		this.stroke = stroke;
 
-		textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), new FontConfiguration(header, fontHeaderColor,
-				hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, spriteContainer);
+		textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), new FontConfiguration(header,
+				fontHeaderColor, font.getHyperlinkColor(), font.useUnderlineForHyperlink()), HorizontalAlignment.LEFT,
+				spriteContainer);
 
 	}
 

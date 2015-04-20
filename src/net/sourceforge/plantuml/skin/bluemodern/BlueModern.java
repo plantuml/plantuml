@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14712 $
+ * Revision $Revision: 15913 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -79,19 +79,17 @@ public class BlueModern implements Skin {
 		if (type.isArrow()) {
 			final HtmlColor sequenceArrow = config.getColor() == null ? HtmlColorUtils.BLACK : config.getColor();
 			if (config.isSelfArrow()) {
-				return new ComponentBlueModernSelfArrow(sequenceArrow, HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, 
-						normalFont, stringsToDisplay, config, param);
+				return new ComponentBlueModernSelfArrow(sequenceArrow, normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, config, 
+						param);
 			}
-			return new ComponentBlueModernArrow(sequenceArrow, HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, normalFont,
-					stringsToDisplay, config, param);
+			return new ComponentBlueModernArrow(sequenceArrow, useUnderlineForHyperlink, normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, config,
+					param);
 		}
 		if (type == ComponentType.PARTICIPANT_HEAD) {
-			return new ComponentBlueModernParticipant(blue1, blue2, HtmlColorUtils.WHITE, hyperlinkColor, useUnderlineForHyperlink, 
-					participantFont, stringsToDisplay, param);
+			return new ComponentBlueModernParticipant(blue1, blue2, participantFont.toFont2(HtmlColorUtils.WHITE, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, param);
 		}
 		if (type == ComponentType.PARTICIPANT_TAIL) {
-			return new ComponentBlueModernParticipant(blue1, blue2, HtmlColorUtils.WHITE, hyperlinkColor, useUnderlineForHyperlink, 
-					participantFont, stringsToDisplay, param);
+			return new ComponentBlueModernParticipant(blue1, blue2, participantFont.toFont2(HtmlColorUtils.WHITE, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, param);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			return new ComponentBlueModernLine(lineColor);
@@ -100,16 +98,14 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernLine(lineColor);
 		}
 		if (type == ComponentType.ACTOR_HEAD) {
-			return new ComponentBlueModernActor(blue2, blue1, blue1, hyperlinkColor, useUnderlineForHyperlink, participantFont, stringsToDisplay,
-					true, param);
+			return new ComponentBlueModernActor(blue2, blue1, participantFont.toFont2(blue1, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, true, param);
 		}
 		if (type == ComponentType.ACTOR_TAIL) {
-			return new ComponentBlueModernActor(blue2, blue1, blue1, hyperlinkColor,useUnderlineForHyperlink,  participantFont, stringsToDisplay,
-					false, param);
+			return new ComponentBlueModernActor(blue2, blue1, participantFont.toFont2(blue1, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay,false,  param);
 		}
 		if (type == ComponentType.NOTE) {
-			return new ComponentBlueModernNote(HtmlColorUtils.WHITE, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK,
-					hyperlinkColor, useUnderlineForHyperlink, normalFont, stringsToDisplay, param);
+			return new ComponentBlueModernNote(HtmlColorUtils.WHITE, HtmlColorUtils.BLACK, normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor),
+					stringsToDisplay, param);
 		}
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 			return new ComponentBlueModernActiveLine(blue1, true, true);
@@ -127,45 +123,43 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernDelayLine(lineColor);
 		}
 		if (type == ComponentType.DELAY_TEXT) {
-			return new ComponentBlueModernDelayText(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, param.getFont(
-					FontParam.SEQUENCE_DELAY, null, false), stringsToDisplay, param);
+			return new ComponentBlueModernDelayText(param.getFont(
+					FontParam.SEQUENCE_DELAY, null, false).toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, param);
 		}
 		if (type == ComponentType.DESTROY) {
 			return new ComponentRoseDestroy(red);
 		}
 		if (type == ComponentType.GROUPING_HEADER) {
-			return new ComponentBlueModernGroupingHeader(blue1, blue3, borderGroupColor, HtmlColorUtils.WHITE,
-					HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, normalFont, smallFont, stringsToDisplay, param);
+			return new ComponentBlueModernGroupingHeader(blue1, blue3, borderGroupColor, HtmlColorUtils.BLACK,
+					normalFont.toFont2(HtmlColorUtils.WHITE, useUnderlineForHyperlink, hyperlinkColor), smallFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
-			return new ComponentRoseGroupingElse(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, HtmlColorUtils.BLACK, smallFont,
-					stringsToDisplay.get(0), param, blue3, Rose.getStroke(param, LineParam.sequenceGroupBorder, 2));
+			return new ComponentRoseGroupingElse(HtmlColorUtils.BLACK, smallFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay.get(0), param, blue3,
+					Rose.getStroke(param, LineParam.sequenceGroupBorder, 2));
 		}
 		if (type == ComponentType.GROUPING_SPACE) {
 			return new ComponentRoseGroupingSpace(7);
 		}
 		if (type == ComponentType.TITLE) {
-			return new ComponentRoseTitle(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, bigFont, stringsToDisplay, param);
+			return new ComponentRoseTitle(bigFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), stringsToDisplay, param);
 		}
 		if (type == ComponentType.REFERENCE) {
-			return new ComponentRoseReference(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, HtmlColorUtils.WHITE, normalFont,
-					borderGroupColor, blue1, blue3, normalFont, stringsToDisplay, HorizontalAlignment.CENTER, param, 0,
-					Rose.getStroke(param, LineParam.sequenceDividerBorder, 2));
+			return new ComponentRoseReference(HtmlColorUtils.WHITE, normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), blue1, borderGroupColor, blue3,
+					normalFont, stringsToDisplay, HorizontalAlignment.CENTER, param, 0, Rose.getStroke(param, LineParam.sequenceDividerBorder, 2));
 		}
 		if (type == ComponentType.NEWPAGE) {
 			return new ComponentBlueModernNewpage(blue1);
 		}
 		if (type == ComponentType.DIVIDER) {
-			return new ComponentBlueModernDivider(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, normalFont, blue2, blue1,
-					HtmlColorUtils.BLACK, stringsToDisplay, param);
+			return new ComponentBlueModernDivider(normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), blue2, blue1, HtmlColorUtils.BLACK, stringsToDisplay, param);
 		}
 		if (type == ComponentType.SIGNATURE) {
-			return new ComponentRoseTitle(HtmlColorUtils.BLACK, hyperlinkColor, useUnderlineForHyperlink, smallFont, Display.create(
+			return new ComponentRoseTitle(smallFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor), Display.create(
 					"This skin was created ", "in April 2009."), param);
 		}
 		if (type == ComponentType.ENGLOBER) {
-			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, HtmlColorUtils.BLACK,
-					hyperlinkColor, useUnderlineForHyperlink, param.getFont(FontParam.SEQUENCE_BOX, null, false), param);
+			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, param.getFont(FontParam.SEQUENCE_BOX, null, false).toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor),
+					param);
 		}
 
 		return null;

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
@@ -164,6 +165,11 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 		final UStroke stroke = getStroke();
 		ug.apply(stroke).draw(rect);
 
+		final HtmlColor headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
+		if (headerBackcolor != null) {
+			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight());
+			ug.apply(new UChangeBackColor(headerBackcolor)).apply(stroke).draw(rect2);
+		}
 		header.drawU(ug, dimTotal.getWidth(), dimHeader.getHeight());
 
 		if (body != null) {

@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -73,9 +74,16 @@ public class UGraphicHandwritten implements UGraphic {
 			drawHand((UEllipse) shape);
 		} else if (shape instanceof DotPath) {
 			drawHand((DotPath) shape);
+		} else if (shape instanceof UPath) {
+			drawHand((UPath) shape);
 		} else {
 			ug.draw(shape);
 		}
+	}
+
+	private void drawHand(UPath shape) {
+		final UPathHand uline = new UPathHand(shape);
+		ug.draw(uline.getHanddrawn());
 	}
 
 	private void drawHand(DotPath shape) {
@@ -93,8 +101,8 @@ public class UGraphicHandwritten implements UGraphic {
 		ug.draw(hand.getHanddrawn());
 	}
 
-	private void drawHand(ULine line) {
-		final ULineHand uline = new ULineHand(line);
+	private void drawHand(ULine shape) {
+		final ULineHand uline = new ULineHand(shape);
 		ug.draw(uline.getHanddrawn());
 	}
 

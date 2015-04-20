@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15913 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -45,9 +45,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -67,13 +69,13 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final double deltaShadow;
 	private final UStroke stroke;
 
-	public ComponentRoseGroupingHeader(HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
-			HtmlColor background, HtmlColor groupBackground, HtmlColor groupBorder, UFont bigFont, UFont smallFont,
-			Display strings, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
-		super(strings.get(0), fontColor, hyperlinkColor, useUnderlineForHyperlink, bigFont, HorizontalAlignment.LEFT,
-				15, 30, 1, spriteContainer, 0, null, null);
-		this.groupBackground = groupBackground;
-		this.groupBorder = groupBorder;
+	public ComponentRoseGroupingHeader(HtmlColor background, BiColor biColor,
+			UFont2 bigFont, UFont smallFont, Display strings, ISkinSimple spriteContainer, double deltaShadow,
+			UStroke stroke) {
+		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1,
+				spriteContainer, 0, null, null);
+		this.groupBackground = biColor.getYellowBack();
+		this.groupBorder = biColor.getRedBorder();
 		this.background = background;
 		this.stroke = stroke;
 		this.deltaShadow = deltaShadow;
@@ -81,8 +83,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 			this.commentTextBlock = null;
 		} else {
 			final Display display = Display.getWithNewlines("[" + strings.get(1) + "]");
-			this.commentTextBlock = TextBlockUtils.create(display, new FontConfiguration(smallFont, fontColor,
-					hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, spriteContainer);
+			this.commentTextBlock = TextBlockUtils.create(display, new FontConfiguration(smallFont, bigFont.getColor(),
+					bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, spriteContainer);
 		}
 		if (this.background == null) {
 			throw new IllegalArgumentException();

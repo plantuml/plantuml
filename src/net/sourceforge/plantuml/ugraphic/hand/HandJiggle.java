@@ -57,11 +57,23 @@ public class HandJiggle {
 		this(start.getX(), start.getY(), defaultVariation);
 	}
 
-	public void addPoints(Point2D end) {
-		addPoints(end.getX(), end.getY());
+	public void lineTo(Point2D end) {
+		lineTo(end.getX(), end.getY());
 	}
 
-	public void addPoints(final double endX, final double endY) {
+	public void arcTo(double angle0, double angle1, double centerX, double centerY, double rx, double ry) {
+		lineTo(pointOnCircle(centerX, centerY, (angle0 + angle1) / 2, rx, ry));
+		lineTo(pointOnCircle(centerX, centerY, angle1, rx, ry));
+	}
+
+	private static Point2D pointOnCircle(double centerX, double centerY, double angle, double rx, double ry) {
+		final double x = centerX + Math.cos(angle) * rx;
+		final double y = centerY + Math.sin(angle) * ry;
+		return new Point2D.Double(x, y);
+
+	}
+
+	public void lineTo(final double endX, final double endY) {
 
 		final double diffX = Math.abs(endX - startX);
 		final double diffY = Math.abs(endY - startY);
@@ -96,6 +108,20 @@ public class HandJiggle {
 		this.startY = endY;
 	}
 
+	public void curveTo(CubicCurve2D curve) {
+		final double flatness = curve.getFlatness();
+		final double dist = curve.getP1().distance(curve.getP2());
+		if (flatness > 0.1 && dist > 20) {
+			final CubicCurve2D left = new CubicCurve2D.Double();
+			final CubicCurve2D right = new CubicCurve2D.Double();
+			curve.subdivide(left, right);
+			curveTo(left);
+			curveTo(right);
+			return;
+		}
+		lineTo(curve.getP2());
+	}
+
 	public UPolygon toUPolygon() {
 		final UPolygon result = new UPolygon();
 		for (Point2D p : points) {
@@ -120,17 +146,4 @@ public class HandJiggle {
 		return path;
 	}
 
-	public void addCurve(CubicCurve2D curve) {
-		final double flatness = curve.getFlatness();
-		final double dist = curve.getP1().distance(curve.getP2());
-		if (flatness > 0.1 && dist > 20) {
-			final CubicCurve2D left = new CubicCurve2D.Double();
-			final CubicCurve2D right = new CubicCurve2D.Double();
-			curve.subdivide(left, right);
-			addCurve(left);
-			addCurve(right);
-			return;
-		}
-		addPoints(curve.getP2());
-	}
 }

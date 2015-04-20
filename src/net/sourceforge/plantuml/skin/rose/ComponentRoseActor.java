@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15811 $
+ * Revision $Revision: 15913 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -43,8 +43,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.skin.StickMan;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -54,14 +56,13 @@ public class ComponentRoseActor extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseActor(HtmlColor yellow, HtmlColor red, HtmlColor fontColor, HtmlColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, UFont font, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer, double deltaShadow, UStroke stroke, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, fontColor, hyperlinkColor, useUnderlineForHyperlink, font, HorizontalAlignment.CENTER,
-				3, 3, 0, spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseActor(BiColor biColor, UFont2 font, Display stringsToDisplay,
+			boolean head, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke,
+			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
+				spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
 		this.head = head;
-		this.stickman = new StickMan(yellow, red, deltaShadow, stroke.getThickness());
+		this.stickman = new StickMan(biColor.getYellowBack(), biColor.getRedBorder(), deltaShadow, stroke.getThickness());
 	}
 
 	@Override

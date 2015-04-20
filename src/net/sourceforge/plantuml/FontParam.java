@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15799 $
+ * Revision $Revision: 15877 $
  *
  */
 package net.sourceforge.plantuml;
@@ -71,6 +71,7 @@ public enum FontParam {
 	RECTANGLE(14, Font.PLAIN), //
 	NODE(14, Font.PLAIN), //
 	DATABASE(14, Font.PLAIN), //
+	QUEUE(14, Font.PLAIN), //
 	SEQUENCE_ARROW(13, Font.PLAIN), //
 	SEQUENCE_BOX(13, Font.BOLD), //
 	SEQUENCE_DIVIDER(13, Font.BOLD), //
@@ -100,6 +101,7 @@ public enum FontParam {
 	FOLDER_STEREOTYPE(14, Font.ITALIC), //
 	FRAME_STEREOTYPE(14, Font.ITALIC), //
 	DATABASE_STEREOTYPE(14, Font.ITALIC), //
+	QUEUE_STEREOTYPE(14, Font.ITALIC), //
 	ACTOR_STEREOTYPE(14, Font.ITALIC), //
 	SEQUENCE_STEREOTYPE(14, Font.ITALIC); //
 
