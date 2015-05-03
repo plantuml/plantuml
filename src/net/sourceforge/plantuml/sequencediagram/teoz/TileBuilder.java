@@ -39,6 +39,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcoloredReference;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
@@ -102,6 +104,21 @@ public class TileBuilder {
 							reverse ? livingSpace1 : livingSpace2);
 				}
 			}
+		} else if (ev instanceof MessageExo) {
+			final MessageExo exo = (MessageExo) ev;
+			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
+			tile = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments.getOrigin(),
+					tileArguments.getOmega());
+			if (exo.getNote() != null) {
+				final NotePosition notePosition = exo.getNotePosition();
+				if (notePosition == NotePosition.LEFT) {
+					tile = new CommunicationTileNoteLeft((TileWithUpdateStairs) tile, exo, skin, skinParam,
+							livingSpace1);
+				} else if (notePosition == NotePosition.RIGHT) {
+					tile = new CommunicationTileNoteRight((TileWithUpdateStairs) tile, exo, skin, skinParam,
+							livingSpace1);
+				}
+			}
 		} else if (ev instanceof Note) {
 			final Note note = (Note) ev;
 			final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
@@ -111,21 +128,17 @@ public class TileBuilder {
 		} else if (ev instanceof Divider) {
 			final Divider divider = (Divider) ev;
 			tile = new DividerTile(divider, skin, skinParam, tileArguments.getOrigin(), tileArguments.getOmega());
-		} else if (ev instanceof MessageExo) {
-			final MessageExo exo = (MessageExo) ev;
-			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
-			tile = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments.getOrigin(),
-					tileArguments.getOmega());
 		} else if (ev instanceof GroupingStart) {
 			final GroupingStart start = (GroupingStart) ev;
-			tile = new GroupingTile(it, start, tileArguments);
+			tile = new GroupingTile(it, start, tileArguments.withBackColorGeneral(start.getBackColorElement(),
+					start.getBackColorGeneral()), tileArguments);
 			// tile = TileUtils.withMargin(tile, 10, 10, 10, 10);
 		} else if (ev instanceof GroupingLeaf && ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {
 			final GroupingLeaf anElse = (GroupingLeaf) ev;
 			tile = new ElseTile(anElse, skin, skinParam, parent);
 		} else if (ev instanceof Reference) {
 			final Reference ref = (Reference) ev;
-			tile = new ReferenceTile(ref, tileArguments);
+			tile = new ReferenceTile(ref, tileArguments.withBackColor(ref));
 		} else if (ev instanceof Delay) {
 			final Delay delay = (Delay) ev;
 			tile = new DelayTile(delay, tileArguments);
@@ -138,5 +151,4 @@ public class TileBuilder {
 		}
 		return tile;
 	}
-
 }

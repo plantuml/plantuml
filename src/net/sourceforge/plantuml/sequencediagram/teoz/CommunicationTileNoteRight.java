@@ -39,13 +39,12 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
-import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -53,20 +52,19 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class CommunicationTileNoteRight implements TileWithUpdateStairs {
 
 	private final TileWithUpdateStairs tile;
-	private final Message message;
+	private final AbstractMessage message;
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private final Display notes;
 	// private final NotePosition notePosition;
 	private final LivingSpace livingSpace;
-	
+
 	public Event getEvent() {
 		return message;
 	}
 
-
-	public CommunicationTileNoteRight(TileWithUpdateStairs tile, Message message, Skin skin, ISkinParam skinParam,
-			LivingSpace livingSpace) {
+	public CommunicationTileNoteRight(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
+			ISkinParam skinParam, LivingSpace livingSpace) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
@@ -75,14 +73,14 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs {
 		// this.notePosition = message.getNotePosition();
 		this.livingSpace = livingSpace;
 	}
-	
+
 	public void updateStairs(StringBounder stringBounder, double y) {
 		tile.updateStairs(stringBounder, y);
 	}
 
-
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null, skinParam, notes);
+		final Component comp = skin.createComponent(ComponentType.NOTE, null,
+				message.getSkinParamNoteBackcolored(skinParam), notes);
 		return comp;
 	}
 

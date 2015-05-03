@@ -146,6 +146,8 @@ public class QuoteUtils {
 					"You Shall Not Pass", //
 					"73.6% Of All Statistics Are Made Up", //
 					"We can neither confirm nor deny that this is crashing"
+					// When the beating of your heart echoes the beating of the drums
+					// Never trust a computer you can't throw out a window
 			);
 	private QuoteUtils() {
 	}

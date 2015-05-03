@@ -43,6 +43,10 @@ public class MathUtils {
 		return Math.max(Math.max(a, b), c);
 	}
 
+	public static double max(double a, double b, double c, double d) {
+		return Math.max(Math.max(a, b), Math.max(c, d));
+	}
+
 	public static double limitation(double v, double min, double max) {
 		if (min >= max) {
 			// assert false : "min="+min+" max="+max+" v="+v;

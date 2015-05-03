@@ -28,24 +28,24 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15913 $
+ * Revision $Revision: 15953 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -59,16 +59,16 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final double roundCorner;
 	private final UStroke stroke;
 
-	public ComponentRoseParticipant(BiColor biColor, UFont2 font,
-			Display stringsToDisplay, ISkinSimple spriteContainer, double deltaShadow, double roundCorner,
-			UStroke stroke, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
-				spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
-		this.back = biColor.getYellowBack();
+	public ComponentRoseParticipant(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay,
+			ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7, spriteContainer, 0, false,
+				fontForStereotype, htmlColorForStereotype);
+		this.back = biColor.getBackColor();
 		this.roundCorner = roundCorner;
-		this.deltaShadow = deltaShadow;
-		this.foregroundColor = biColor.getRedBorder();
-		this.stroke = stroke;
+		this.deltaShadow = biColor.getDeltaShadow();
+		this.foregroundColor = biColor.getForeColor();
+		this.stroke = biColor.getStroke();
 	}
 
 	@Override

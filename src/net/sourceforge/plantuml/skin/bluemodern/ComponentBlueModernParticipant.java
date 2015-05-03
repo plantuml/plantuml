@@ -28,20 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15908 $
+ * Revision $Revision: 15934 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -51,7 +51,7 @@ public class ComponentBlueModernParticipant extends AbstractTextualComponent {
 	private final HtmlColor blue1;
 	private final HtmlColor blue2;
 
-	public ComponentBlueModernParticipant(HtmlColor blue1, HtmlColor blue2, UFont2 font,
+	public ComponentBlueModernParticipant(HtmlColor blue1, HtmlColor blue2, FontConfiguration font,
 			Display stringsToDisplay, ISkinSimple spriteContainer) {
 		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
 				spriteContainer, 0, false, null, null);

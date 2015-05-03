@@ -33,11 +33,17 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import java.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LivingSpaces {
 
@@ -53,6 +59,42 @@ public class LivingSpaces {
 
 	public LivingSpace get(Participant participant) {
 		return all.get(participant);
+	}
+
+	public void drawHeads(final UGraphic ug, Context2D context, VerticalAlignment verticalAlignment) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		final double headHeight = getHeadHeight(stringBounder);
+		for (LivingSpace livingSpace : values()) {
+			final double x = livingSpace.getPosB().getCurrentValue();
+			double y = 0;
+			if (verticalAlignment == VerticalAlignment.BOTTOM) {
+				final Dimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);
+				y = headHeight - dimHead.getHeight();
+			}
+			livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context);
+		}
+	}
+
+	public double getHeadHeight(StringBounder stringBounder) {
+		double headHeight = 0;
+		for (LivingSpace livingSpace : values()) {
+			final Dimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);
+			headHeight = Math.max(headHeight, headDim.getHeight());
+		}
+		return headHeight;
+	}
+
+	public void drawLifeLines(final UGraphic ug, double height, Context2D context) {
+		int i = 0;
+		for (LivingSpace livingSpace : values()) {
+			// if (i++ == 0) {
+			// System.err.println("TEMPORARY SKIPPING OTHERS");
+			// continue;
+			// }
+			// System.err.println("drawing lines " + livingSpace);
+			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();
+			livingSpace.drawLineAndLiveBoxes(ug.apply(new UTranslate(x, 0)), height, context);
+		}
 	}
 
 }

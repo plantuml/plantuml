@@ -28,38 +28,30 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 6054 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
-public class UFont2 {
+public class IntegerColored {
 
-	private final UFont font;
-
+	private final int value;
 	private final HtmlColor color;
-	private final HtmlColor hyperlinkColor;
-	private final boolean useUnderlineForHyperlink;
 
-	public UFont2(UFont font, HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor) {
-		this.font = font;
+	public IntegerColored(int value, HtmlColor color) {
+		this.value = value;
 		this.color = color;
-		this.hyperlinkColor = hyperlinkColor;
-		this.useUnderlineForHyperlink = useUnderlineForHyperlink;
 	}
 
-	public final UFont getFont() {
-		return font;
+	@Override
+	public String toString() {
+		return "" + value + " " + color;
 	}
 
-	public boolean useUnderlineForHyperlink() {
-		return useUnderlineForHyperlink;
-	}
-
-	public HtmlColor getHyperlinkColor() {
-		return hyperlinkColor;
+	public int getValue() {
+		return value;
 	}
 
 	public HtmlColor getColor() {

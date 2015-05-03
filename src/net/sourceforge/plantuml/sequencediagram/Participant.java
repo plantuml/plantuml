@@ -28,12 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12299 $
+ * Revision $Revision: 15995 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -144,6 +146,16 @@ public class Participant implements SpecificBackcolorable {
 
 	public ColorParam getBackgroundColorParam() {
 		return type.getBackgroundColorParam();
+	}
+
+	public SkinParamBackcolored getSkinParamBackcolored(ISkinParam skinParam) {
+		HtmlColor specificBackColor = getSpecificBackColor();
+		final boolean clickable = getUrl() != null;
+		final HtmlColor stereoBackColor = skinParam.getHtmlColor(getBackgroundColorParam(), getStereotype(), clickable);
+		if (stereoBackColor != null && specificBackColor == null) {
+			specificBackColor = stereoBackColor;
+		}
+		return new SkinParamBackcolored(skinParam, specificBackColor, clickable);
 	}
 
 }

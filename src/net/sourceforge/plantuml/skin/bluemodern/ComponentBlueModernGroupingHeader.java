@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15908 $
+ * Revision $Revision: 15934 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -68,7 +67,7 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 	private final HtmlColor borderColor;
 
 	public ComponentBlueModernGroupingHeader(HtmlColor headerBackgroundColor, HtmlColor generalBackgroundColor,
-			HtmlColor borderColor, HtmlColor fontColor2, UFont2 bigFont, UFont smallFont, Display strings, ISkinSimple spriteContainer) {
+			HtmlColor borderColor, HtmlColor fontColor2, FontConfiguration bigFont, UFont smallFont, Display strings, ISkinSimple spriteContainer) {
 		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0, null,
 				null);
 		this.headerBackgroundColor = headerBackgroundColor;

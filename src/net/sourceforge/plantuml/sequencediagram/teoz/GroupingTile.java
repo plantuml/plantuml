@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealMax;
 import net.sourceforge.plantuml.real.RealMin;
-import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Grouping;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -80,13 +78,14 @@ public class GroupingTile implements Tile {
 		return start;
 	}
 
-	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArguments) {
-		final StringBounder stringBounder = tileArguments.getStringBounder();
+	public GroupingTile(Iterator<Event> it, GroupingStart start, TileArguments tileArgumentsBachColorChanged,
+			TileArguments tileArgumentsOriginal) {
+		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();
 		this.start = start;
 		this.display = start.getTitle().equals("group") ? Display.create(start.getComment()) : Display.create(
 				start.getTitle(), start.getComment());
-		this.skin = tileArguments.getSkin();
-		this.skinParam = tileArguments.getSkinParam();
+		this.skin = tileArgumentsOriginal.getSkin();
+		this.skinParam = tileArgumentsBachColorChanged.getSkinParam();
 		// this.max = min.addAtLeast(dim1.getWidth());
 
 		while (it.hasNext()) {
@@ -95,12 +94,12 @@ public class GroupingTile implements Tile {
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END) {
 				break;
 			}
-			final Tile tile = TileBuilder.buildOne(it, tileArguments, ev, this);
+			final Tile tile = TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this);
 			if (tile != null) {
 				tiles.add(tile);
 				min.put(tile.getMinX(stringBounder).addFixed(-MARGINX));
 				final Real m = tile.getMaxX(stringBounder);
-				max.put(m == tileArguments.getOmega() ? m : m.addFixed(MARGINX));
+				max.put(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
 				bodyHeight += tile.getPreferredHeight(stringBounder);
 			}
 		}
@@ -108,8 +107,8 @@ public class GroupingTile implements Tile {
 		final double width = dim1.getWidth();
 		System.err.println("width=" + width);
 		if (min.size() == 0) {
-			min.put(tileArguments.getOrigin());
-			max.put(tileArguments.getOmega());
+			min.put(tileArgumentsOriginal.getOrigin());
+			max.put(tileArgumentsOriginal.getOmega());
 		}
 		// max.ensureBiggerThan(min.addFixed(width));
 		this.max.ensureBiggerThan(getMinX(stringBounder).addFixed(width + 16));

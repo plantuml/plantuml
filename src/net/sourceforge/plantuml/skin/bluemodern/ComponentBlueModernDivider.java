@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
@@ -46,7 +47,6 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -59,7 +59,7 @@ public class ComponentBlueModernDivider extends AbstractTextualComponent {
 	private final HtmlColor background2;
 	private final HtmlColor borderColor;
 
-	public ComponentBlueModernDivider(UFont2 font, HtmlColor background1, HtmlColor background2,
+	public ComponentBlueModernDivider(FontConfiguration font, HtmlColor background1, HtmlColor background2,
 			HtmlColor borderColor, Display stringsToDisplay, ISkinSimple spriteContainer) {
 		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
 				spriteContainer, 0, false, null, null);

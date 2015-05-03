@@ -33,20 +33,21 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.skin.StickMan;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 class USymbolActor extends USymbolSimpleAbstract {
 
-	public USymbolActor() {
-		super(ColorParam.actorBackground, ColorParam.actorBorder, FontParam.ACTOR, FontParam.ACTOR_STEREOTYPE);
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.ACTOR;
 	}
+
 
 	@Override
 	protected TextBlock getDrawing(SymbolContext symbolContext) {
-		return new StickMan(symbolContext.getBackColor(), symbolContext.getForeColor(),
-				symbolContext.isShadowing() ? 4.0 : 0.0);
+		final double deltaShadow = symbolContext.isShadowing() ? 4.0 : 0.0;
+		return new StickMan(symbolContext.withDeltaShadow(deltaShadow).withStroke(new UStroke(2)));
 	}
 
 }

@@ -61,13 +61,12 @@ public class BodyEnhanced2 implements TextBlock {
 
 	// private final List<Url> urls = new ArrayList<Url>();
 
-	public BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple spriteContainer,
-			HorizontalAlignment align, UFont fontNote, HtmlColor fontColor, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+	public BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple spriteContainer, HorizontalAlignment align,
+			FontConfiguration titleConfig) {
 		this.rawBody2 = rawBody;
-		// this.fontParam = fontParam;
 		this.spriteContainer = spriteContainer;
 
-		this.titleConfig = new FontConfiguration(fontNote, fontColor, hyperlinkColor, useUnderlineForHyperlink);
+		this.titleConfig = titleConfig;
 		this.align = align;
 	}
 

@@ -81,7 +81,7 @@ public class CommunicationTileSelfNoteRight implements TileWithUpdateStairs {
 
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null, skinParam, notes);
+		final Component comp = skin.createComponent(ComponentType.NOTE, null, message.getSkinParamNoteBackcolored(skinParam), notes);
 		return comp;
 	}
 

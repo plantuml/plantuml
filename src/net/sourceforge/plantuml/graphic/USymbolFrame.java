@@ -35,9 +35,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -45,9 +43,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolFrame extends USymbol {
 
-	public USymbolFrame() {
-		super(ColorParam.frameBackground, ColorParam.frameBorder, FontParam.FRAME, FontParam.FRAME_STEREOTYPE);
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.FRAME;
 	}
+
 
 	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing) {
 		final URectangle shape = new URectangle(width, height);

@@ -72,11 +72,7 @@ public class EpsGraphics {
 
 	public EpsGraphics() {
 		header.append("%!PS-Adobe-3.0 EPSF-3.0\n");
-		String v = Version.versionString();
-		if (v.endsWith("beta") == false) {
-			v += "    ";
-		}
-		header.append("%%Creator: PlantUML v" + v + "\n");
+		header.append("%%Creator: PlantUML v" + Version.versionString(10) + "\n");
 		header.append("%%Title: noTitle\n");
 		// header.append("%%CreationDate: " + new Date() + "\n");
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));

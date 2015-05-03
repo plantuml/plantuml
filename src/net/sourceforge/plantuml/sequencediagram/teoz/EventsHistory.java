@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
@@ -127,6 +128,27 @@ public class EventsHistory {
 		return false;
 	}
 
+	private HtmlColor getActivateColor(Event event) {
+		for (Iterator<Event> it = events.iterator(); it.hasNext();) {
+			final Event current = it.next();
+			if (event != current) {
+				continue;
+			}
+			if (current instanceof Message) {
+				final Event next = nextButSkippingNotes(it);
+				if (next instanceof LifeEvent) {
+					final LifeEvent le = (LifeEvent) next;
+					if (le.isActivate()) {
+						return le.getSpecificBackColor();
+					}
+					return null;
+				}
+			}
+			return null;
+		}
+		return null;
+	}
+
 	private Event nextButSkippingNotes(Iterator<Event> it) {
 		while (true) {
 			if (it.hasNext() == false) {
@@ -151,11 +173,11 @@ public class EventsHistory {
 			if (position != null) {
 				assert position <= totalHeight : "position=" + position + " totalHeight=" + totalHeight;
 				value = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
-				result.addStep(new StairsPosition(position, isNextEventADestroy(event)), value);
+				result.addStep(new StairsPosition(position, isNextEventADestroy(event)), value, getActivateColor(event));
 			}
 		}
 		System.err.println("EventsHistory::getStairs finishing totalHeight=" + totalHeight);
-		result.addStep(new StairsPosition(totalHeight, false), value);
+		result.addStep(new StairsPosition(totalHeight, false), value, null);
 		// System.err.println("EventsHistory::getStairs " + p + " result=" + result);
 		return result;
 	}

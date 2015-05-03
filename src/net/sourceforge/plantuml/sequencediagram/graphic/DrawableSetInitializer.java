@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14860 $
+ * Revision $Revision: 16005 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Delay;
@@ -431,7 +430,7 @@ class DrawableSetInitializer {
 				p2 = tmp;
 			}
 		}
-		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), n.getSpecificBackColor());
+		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final ComponentType type = getNoteComponentType(n.getStyle());
 		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
 				skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
@@ -581,15 +580,8 @@ class DrawableSetInitializer {
 		} else {
 			throw new IllegalArgumentException();
 		}
-		HtmlColor specificBackColor = p.getSpecificBackColor();
-		final boolean clickable = p.getUrl() != null;
-		final HtmlColor stereoBackColor = drawableSet.getSkinParam().getHtmlColor(p.getBackgroundColorParam(),
-				p.getStereotype(), clickable);
-		if (stereoBackColor != null && specificBackColor == null) {
-			specificBackColor = stereoBackColor;
-		}
 
-		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), specificBackColor, clickable);
+		final ISkinParam skinParam = p.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());
 		final Component head = drawableSet.getSkin().createComponent(headType, null, skinParam, participantDisplay);
 		final Component tail = drawableSet.getSkin().createComponent(tailType, null, skinParam, participantDisplay);

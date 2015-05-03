@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -109,6 +110,10 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public boolean shadowing() {
 		return skinParam.shadowing();
+	}
+
+	public boolean shadowing2(SkinParameter skinParameter) {
+		return skinParam.shadowing2(skinParameter);
 	}
 
 	public PackageStyle getPackageStyle() {

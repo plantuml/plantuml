@@ -33,23 +33,26 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.svek.EntityDomain;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 class USymbolEntityDomain extends USymbolSimpleAbstract {
 
 	private final double thickness;
 
 	public USymbolEntityDomain(double thickness) {
-		super(ColorParam.entityBackground, ColorParam.entityBorder, FontParam.ENTITY, FontParam.ENTITY_STEREOTYPE);
 		this.thickness = thickness;
 	}
+	
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.ENTITY_DOMAIN;
+	}
+
 
 	@Override
 	protected TextBlock getDrawing(final SymbolContext symbolContext) {
-		return new EntityDomain(symbolContext.getBackColor(), symbolContext.getForeColor(),
-				symbolContext.isShadowing() ? 4.0 : 0.0, thickness);
+		return new EntityDomain(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0).withStroke(
+				new UStroke(thickness)));
 	}
-
 }

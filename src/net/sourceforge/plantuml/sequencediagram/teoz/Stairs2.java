@@ -39,14 +39,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
+
 public class Stairs2 {
 
 	private final List<StairsPosition> ys = new ArrayList<StairsPosition>();
-	private final List<Integer> values = new ArrayList<Integer>();
-	private final Map<Double, Integer> cache = new HashMap<Double, Integer>();
+	private final List<IntegerColored> values = new ArrayList<IntegerColored>();
+	private final Map<Double, IntegerColored> cache = new HashMap<Double, IntegerColored>();
 
-	public void addStep(StairsPosition position, int value) {
-		System.err.println("Stairs2::addStep " + position + " " + value);
+	public void addStep(StairsPosition position, int value, HtmlColor color) {
+		System.err.println("Stairs2::addStep " + position + " " + value + " color=" + color);
 		assert ys.size() == values.size();
 		if (ys.size() > 0) {
 			final double lastY = ys.get(ys.size() - 1).getValue();
@@ -54,19 +56,20 @@ public class Stairs2 {
 				throw new IllegalArgumentException();
 			}
 			if (lastY == position.getValue()) {
-				values.set(ys.size() - 1, value);
+				values.set(ys.size() - 1, new IntegerColored(value, color));
 				cache.clear();
 				return;
 			}
 		}
 		ys.add(position);
-		values.add(value);
+		values.add(new IntegerColored(value, color));
 		cache.clear();
 	}
 
 	public int getMaxValue() {
 		int max = Integer.MIN_VALUE;
-		for (Integer v : values) {
+		for (IntegerColored vc : values) {
+			final int v = vc.getValue();
 			if (v > max) {
 				max = v;
 			}
@@ -78,23 +81,23 @@ public class Stairs2 {
 		return Collections.unmodifiableList(ys);
 	}
 
-	public int getValue(double y) {
-		Integer result = cache.get(y);
-		if (result == null) {
-			result = getValueSlow(new StairsPosition(y, false));
-			cache.put(y, result);
+	public IntegerColored getValue(double y) {
+		IntegerColored resultc = cache.get(y);
+		if (resultc == null) {
+			resultc = getValueSlow(new StairsPosition(y, false));
+			cache.put(y, resultc);
 		}
-		return result;
+		return resultc;
 	}
 
-	private int getValueSlow(StairsPosition y) {
+	private IntegerColored getValueSlow(StairsPosition y) {
 		final int idx = Collections.binarySearch(ys, y);
 		if (idx >= 0) {
 			return values.get(idx);
 		}
 		final int insertPoint = -idx - 1;
 		if (insertPoint == 0) {
-			return 0;
+			return new IntegerColored(0, null);
 		}
 		return values.get(insertPoint - 1);
 	}
@@ -104,7 +107,7 @@ public class Stairs2 {
 		if (size == 0) {
 			return 0;
 		}
-		return values.get(size - 1);
+		return values.get(size - 1).getValue();
 	}
 
 }

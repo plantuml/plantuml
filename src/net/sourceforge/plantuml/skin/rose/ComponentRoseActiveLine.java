@@ -28,15 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15913 $
+ * Revision $Revision: 15967 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -48,19 +48,14 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
 
-	private final HtmlColor foregroundColor;
-	private final HtmlColor lifeLineBackground;
+	private final SymbolContext symbolContext;
 	private final boolean closeUp;
 	private final boolean closeDown;
-	private final boolean withShadow;
 
-	public ComponentRoseActiveLine(HtmlColor lifeLineBackground, HtmlColor foregroundColor, boolean closeUp,
-			boolean closeDown, boolean withShadow) {
-		this.foregroundColor = foregroundColor;
-		this.lifeLineBackground = lifeLineBackground;
+	public ComponentRoseActiveLine(SymbolContext symbolContext, boolean closeUp, boolean closeDown) {
+		this.symbolContext = symbolContext;
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
-		this.withShadow = withShadow;
 	}
 
 	protected void drawInternalU(UGraphic ug, Area area) {
@@ -69,15 +64,16 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;
 
 		final URectangle rect = new URectangle(getPreferredWidth(stringBounder), dimensionToUse.getHeight());
-		if (withShadow) {
+		if (symbolContext.isShadowing()) {
 			rect.setDeltaShadow(1);
 		}
-		ug = ug.apply(new UChangeColor(foregroundColor));
+		ug = ug.apply(new UChangeColor(symbolContext.getForeColor()));
 		if (closeUp && closeDown) {
-			ug.apply(new UChangeBackColor(lifeLineBackground)).apply(new UTranslate(x, 0)).draw(rect);
+			ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(new UTranslate(x, 0)).draw(rect);
 			return;
 		}
-		ug.apply(new UChangeBackColor(lifeLineBackground)).apply(new UChangeColor(lifeLineBackground)).apply(new UTranslate(x, 0)).draw(rect);
+		ug.apply(new UChangeBackColor(symbolContext.getBackColor())).apply(new UChangeColor(symbolContext.getBackColor()))
+				.apply(new UTranslate(x, 0)).draw(rect);
 
 		final ULine vline = new ULine(0, dimensionToUse.getHeight());
 		ug.apply(new UTranslate(x, 0)).draw(vline);

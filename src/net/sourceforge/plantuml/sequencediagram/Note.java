@@ -28,11 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15048 $
+ * Revision $Revision: 16005 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -122,6 +124,10 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 
 	public final void setStyle(NoteStyle style) {
 		this.style = style;
+	}
+
+	public SkinParamBackcolored getSkinParamBackcolored(ISkinParam skinParam) {
+		return new SkinParamBackcolored(skinParam, getSpecificBackColor());
 	}
 
 }

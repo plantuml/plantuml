@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15908 $
+ * Revision $Revision: 15934 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -43,7 +44,6 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -54,15 +54,16 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	private final HtmlColor groupBorder;
 	private final HtmlColor backgroundColor;
-	private final UStroke stroke;
 
-	public ComponentRoseGroupingElse(HtmlColor groupBorder, UFont2 smallFont, CharSequence comment,
-			ISkinSimple spriteContainer, HtmlColor backgroundColor, UStroke stroke) {
-		super(comment == null ? null : "[" + comment + "]", smallFont, HorizontalAlignment.LEFT, 5,
-				5, 1, spriteContainer, 0, null, null);
+	// private final UStroke stroke;
+
+	public ComponentRoseGroupingElse(HtmlColor groupBorder, FontConfiguration smallFont, CharSequence comment,
+			ISkinSimple spriteContainer, HtmlColor backgroundColor) {
+		super(comment == null ? null : "[" + comment + "]", smallFont, HorizontalAlignment.LEFT, 5, 5, 1,
+				spriteContainer, 0, null, null);
 		this.groupBorder = groupBorder;
 		this.backgroundColor = backgroundColor;
-		this.stroke = stroke;
+		// this.stroke = stroke;
 	}
 
 	@Override

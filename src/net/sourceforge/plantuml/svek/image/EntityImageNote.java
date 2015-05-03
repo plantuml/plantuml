@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graph2.GeomUtils;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -106,8 +107,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else {
-			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT, fontNote,
-					fontColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
+			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
+					new FontConfiguration(fontNote, fontColor, skinParam.getHyperlinkColor(),
+							skinParam.useUnderlineForHyperlink()));
 		}
 	}
 

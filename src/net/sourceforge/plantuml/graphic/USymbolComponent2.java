@@ -44,9 +44,10 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolComponent2 extends USymbol {
-	
-	public USymbolComponent2() {
-		super(ColorParam.componentBackground, ColorParam.componentBorder, FontParam.COMPONENT, FontParam.COMPONENT_STEREOTYPE);
+
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.COMPONENT2;
 	}
 
 

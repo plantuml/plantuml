@@ -60,8 +60,7 @@ class Step1MessageExo extends Step1Abstract {
 				message.isShortArrow(), message.getArrowConfiguration());
 
 		if (message.getNote() != null) {
-			final ISkinParam skinParam = new SkinParamBackcolored(drawingSet.getSkinParam(),
-					message.getSpecificBackColor());
+			final ISkinParam skinParam = message.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
 			setNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam, message.getNote()));
 			// throw new UnsupportedOperationException();
 		}

@@ -37,35 +37,29 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseEnglober extends AbstractTextualComponent {
 
-	private final HtmlColor borderColor;
-	private final HtmlColor backColor;
+	private final SymbolContext symbolContext;
 
-	public ComponentRoseEnglober(HtmlColor backColor, HtmlColor borderColor, Display strings, UFont2 font,
-			ISkinSimple spriteContainer) {
-		super(strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, 0, false,
-				null, null);
-		this.borderColor = borderColor;
-		this.backColor = backColor;
+	public ComponentRoseEnglober(SymbolContext symbolContext, Display strings, FontConfiguration font, ISkinSimple spriteContainer) {
+		super(strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, 0, false, null, null);
+		this.symbolContext = symbolContext;
 	}
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
-		ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor));
+		ug = symbolContext.apply(ug);
 		ug.draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
 		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;
 		getTextBlock().drawU(ug.apply(new UTranslate(xpos, 0)));

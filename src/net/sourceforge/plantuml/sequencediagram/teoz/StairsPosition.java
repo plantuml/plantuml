@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+
 public class StairsPosition implements Comparable<StairsPosition> {
 
 	private final double value;

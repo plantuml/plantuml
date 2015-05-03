@@ -37,6 +37,8 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -68,11 +70,10 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	public void goParallel() {
 		this.parallel = true;
 	}
-	
+
 	public boolean isParallel() {
 		return parallel;
 	}
-
 
 	final public Url getUrl() {
 		if (url == null) {
@@ -163,8 +164,12 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		return notePosition;
 	}
 
-	public final HtmlColor getSpecificBackColor() {
+	private final HtmlColor getSpecificBackColor() {
 		return noteBackColor;
+	}
+
+	public SkinParamBackcolored getSkinParamNoteBackcolored(ISkinParam skinParam) {
+		return new SkinParamBackcolored(skinParam, getSpecificBackColor());
 	}
 
 	public final NotePosition getNotePosition() {

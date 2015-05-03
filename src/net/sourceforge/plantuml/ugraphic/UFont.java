@@ -39,6 +39,7 @@ import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
@@ -60,8 +61,8 @@ public class UFont {
 		return font;
 	}
 
-	public UFont2 toFont2(HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor) {
-		return new UFont2(this, color, useUnderlineForHyperlink, hyperlinkColor);
+	public FontConfiguration toFont2(HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor) {
+		return new FontConfiguration(this, color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
 	public UFont scaled(double scale) {

@@ -35,19 +35,25 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolRect extends USymbol {
+	
+	private final SkinParameter skinParameter;
 
-	public USymbolRect(ColorParam colorParamBack, ColorParam colorParamBorder, FontParam fontParam,
-			FontParam fontParamStereotype) {
-		super(colorParamBack, colorParamBorder, fontParam, fontParamStereotype);
+
+	public USymbolRect(SkinParameter skinParameter) {
+		this.skinParameter = skinParameter;
 	}
+	
+	@Override
+	public SkinParameter getSkinParameter() {
+		return skinParameter;
+	}
+
 
 	private void drawRect(UGraphic ug, double width, double height, boolean shadowing) {
 		final URectangle shape = new URectangle(width, height);

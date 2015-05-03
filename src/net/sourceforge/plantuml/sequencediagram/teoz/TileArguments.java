@@ -33,13 +33,14 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.util.Collections;
-import java.util.Map;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.SkinParamBackcoloredReference;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Skin;
 
 public class TileArguments {
@@ -58,6 +59,17 @@ public class TileArguments {
 		this.livingSpaces = livingSpaces;
 		this.skin = skin;
 		this.skinParam = skinParam;
+	}
+
+	public TileArguments withBackColorGeneral(HtmlColor backColorElement, HtmlColor backColorGeneral) {
+		return new TileArguments(stringBounder, omega, livingSpaces, skin, new SkinParamBackcolored(skinParam,
+				backColorElement, backColorGeneral), origin);
+	}
+
+	public TileArguments withBackColor(Reference reference) {
+		final ISkinParam newSkinParam = new SkinParamBackcoloredReference(skinParam, reference.getBackColorElement(),
+				reference.getBackColorGeneral());
+		return new TileArguments(stringBounder, omega, livingSpaces, skin, newSkinParam, origin);
 	}
 
 	public final StringBounder getStringBounder() {

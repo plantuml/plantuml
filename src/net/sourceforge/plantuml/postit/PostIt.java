@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseNote;
@@ -111,8 +111,9 @@ public class PostIt {
 
 		final SkinParam param = SkinParam.noShadowing();
 		final UFont fontNote = param.getFont(FontParam.NOTE, null, false);
-		final ComponentRoseNote note = new ComponentRoseNote(new BiColor(noteBackgroundColor, borderColor), fontNote.toFont2(HtmlColorUtils.BLACK, true, HtmlColorUtils.BLUE),
-				text, 0, 0, new SpriteContainerEmpty(), 0, new UStroke());
+		final ComponentRoseNote note = new ComponentRoseNote(
+				new SymbolContext(noteBackgroundColor, borderColor).withStroke(new UStroke()), fontNote.toFont2(
+						HtmlColorUtils.BLACK, true, HtmlColorUtils.BLUE), text, 0, 0, new SpriteContainerEmpty());
 		return note;
 	}
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15908 $
+ * Revision $Revision: 15934 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -39,6 +39,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
@@ -47,7 +48,6 @@ import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.ArrowPart;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentBlueModernArrow extends AbstractComponentBlueModernArrow {
 
-	public ComponentBlueModernArrow(HtmlColor foregroundColor, boolean useUnderlineForHyperlink, UFont2 font, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
+	public ComponentBlueModernArrow(HtmlColor foregroundColor, boolean useUnderlineForHyperlink, FontConfiguration font, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
 			ISkinSimple spriteContainer) {
 		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer);
 	}

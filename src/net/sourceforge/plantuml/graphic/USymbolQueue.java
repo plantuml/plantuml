@@ -35,9 +35,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -47,9 +45,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolQueue extends USymbol {
 
-	public USymbolQueue() {
-		super(ColorParam.queueBackground, ColorParam.queueBorder, FontParam.QUEUE, FontParam.QUEUE_STEREOTYPE);
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.QUEUE;
 	}
+
 
 	private final double dx = 5;
 

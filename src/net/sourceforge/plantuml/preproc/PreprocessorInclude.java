@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 15613 $
+ * Revision $Revision: 15993 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.utils.StartUtils;
 
 class PreprocessorInclude implements ReadLine {
 
@@ -88,6 +89,15 @@ class PreprocessorInclude implements ReadLine {
 	}
 
 	public String readLine() throws IOException {
+		final String result = readLineInternal();
+		if (result != null && (StartUtils.isArobaseEndDiagram(result) || StartUtils.isArobaseStartDiagram(result))) {
+			// http://plantuml.sourceforge.net/qa/?qa=3389/error-generating-when-same-file-included-different-diagram
+			filesUsed.clear();
+		}
+		return result;
+	}
+
+	private String readLineInternal() throws IOException {
 		if (included != null) {
 			final String s = included.readLine();
 			if (s != null) {
@@ -113,9 +123,7 @@ class PreprocessorInclude implements ReadLine {
 		if (mUrl.find()) {
 			return manageUrlInclude(mUrl);
 		}
-
 		return s;
-
 	}
 
 	private String manageUrlInclude(Matcher m) throws IOException {

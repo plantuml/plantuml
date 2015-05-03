@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15870 $
+ * Revision $Revision: 15982 $
  *
  */
 package net.sourceforge.plantuml;
@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -422,6 +423,27 @@ public class SkinParam implements ISkinParam {
 
 	public boolean shadowing() {
 		final String value = getValue("shadowing");
+		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		if ("true".equalsIgnoreCase(value)) {
+			return true;
+		}
+		if (strictUmlStyle()) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean shadowing2(SkinParameter skinParameter) {
+		if (skinParameter == null) {
+			throw new IllegalArgumentException();
+		}
+		final String name = skinParameter.getUpperCaseName();
+		final String value = getValue(name + "shadowing");
+		if (value == null) {
+			return shadowing();
+		}
 		if ("false".equalsIgnoreCase(value)) {
 			return false;
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15907 $
+ * Revision $Revision: 15936 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
 
@@ -62,19 +61,19 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final UFont font;
 	private final HtmlColor fontColor;
 
-	public AbstractTextualComponent(CharSequence label, UFont2 font, HorizontalAlignment horizontalAlignment, int marginX1,
-			int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize,
-			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+	public AbstractTextualComponent(CharSequence label, FontConfiguration font,
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
+			ISkinSimple spriteContainer, double maxMessageSize, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
 		this(Display.getWithNewlines(label == null ? "" : label.toString()), font, horizontalAlignment, marginX1,
 				marginX2, marginY, spriteContainer, maxMessageSize, false, fontForStereotype, htmlColorForStereotype);
 	}
 
-	public AbstractTextualComponent(Display strings, UFont2 font, HorizontalAlignment horizontalAlignment, int marginX1,
-			int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize,
+	public AbstractTextualComponent(Display strings, FontConfiguration font, HorizontalAlignment horizontalAlignment,
+			int marginX1, int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize,
 			boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this.font = font.getFont();
 		this.fontColor = font.getColor();
-		assert fontColor.equals(font.getColor());
 		this.marginX1 = marginX1;
 		this.marginX2 = marginX2;
 		this.marginY = marginY;
@@ -83,12 +82,10 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else if (enhanced) {
-			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT,
-					font.getFont(), fontColor, font.getHyperlinkColor(), font.useUnderlineForHyperlink());
+			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font);
 		} else {
-			textBlock = TextBlockUtils.create(strings, new FontConfiguration(font.getFont(), fontColor, font.getHyperlinkColor(),
-					font.useUnderlineForHyperlink()), horizontalAlignment, spriteContainer, maxMessageSize, false,
-					fontForStereotype, htmlColorForStereotype);
+			textBlock = TextBlockUtils.create(strings, font, horizontalAlignment, spriteContainer, maxMessageSize,
+					false, fontForStereotype, htmlColorForStereotype);
 		}
 	}
 

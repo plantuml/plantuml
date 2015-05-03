@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class LivingSpace {
@@ -60,6 +61,7 @@ public class LivingSpace {
 	private final ComponentType tailType;
 	private final boolean useContinueLineBecauseOfDelay;
 	private final MutingLine mutingLine;
+	private final Rose rose = new Rose();
 
 	// private final LivingSpaceImpl previous;
 	// private LivingSpace next;
@@ -158,14 +160,17 @@ public class LivingSpace {
 	// }
 
 	public void drawHead(UGraphic ug, Context2D context) {
-		final Component comp = skin.createComponent(headType, null, skinParam, p.getDisplay(false));
+		// final Component comp = skin.createComponent(headType, null, skinParam, p.getDisplay(false));
+		final Component comp = rose.createComponent(headType, null, p.getSkinParamBackcolored(skinParam),
+				p.getDisplay(false));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		final Area area = new Area(dim);
 		comp.drawU(ug, area, context);
 	}
 
 	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(headType, null, skinParam, p.getDisplay(false));
+		// final Component comp = skin.createComponent(headType, null, skinParam, p.getDisplay(false));
+		final Component comp = rose.createComponent(headType, null, skinParam, p.getDisplay(false));
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		return dim;
 	}

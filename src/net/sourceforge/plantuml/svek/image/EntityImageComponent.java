@@ -86,7 +86,7 @@ public class EntityImageComponent extends AbstractEntityImage {
 		// backcolor = HtmlColorUtils.BLUE;
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), getStereo());
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing());
+				getSkinParam().shadowing2(symbol.getSkinParameter()));
 
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 

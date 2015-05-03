@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14708 $
+ * Revision $Revision: 15991 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -85,7 +85,7 @@ public class PngTitler {
 				new SpriteContainerEmpty());
 	}
 
-	public double getOffsetX(double imWidth, StringBounder stringBounder) {
+	private double getOffsetX(double imWidth, StringBounder stringBounder) {
 		final TextBlock textBloc = getTextBlock();
 		if (textBloc == null) {
 			return 0;
@@ -98,7 +98,7 @@ public class PngTitler {
 		return (dimText.getWidth() - imWidth) / 2;
 	}
 
-	public double getOffsetY(StringBounder stringBounder) {
+	private double getOffsetY(StringBounder stringBounder) {
 		final TextBlock textBloc = getTextBlock();
 		if (textBloc == null) {
 			return 0;

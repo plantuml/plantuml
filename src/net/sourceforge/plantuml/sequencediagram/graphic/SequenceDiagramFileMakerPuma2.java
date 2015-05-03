@@ -173,7 +173,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		// System.err.println("scale=" + scale);
 
 		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), oneOf(scale,
-				dpiFactor), diagram.getSkinParam().getBackgroundColor(), null, null, 3, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
+				dpiFactor), diagram.getSkinParam().getBackgroundColor(), null, null, 3, 10, diagram.getAnimation(),
+				diagram.getSkinParam().handwritten());
 
 		imageBuilder.addUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {

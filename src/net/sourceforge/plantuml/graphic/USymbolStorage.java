@@ -35,17 +35,16 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolStorage extends USymbol {
 
-	public USymbolStorage() {
-		super(ColorParam.storageBackground, ColorParam.storageBorder, FontParam.STORAGE, FontParam.STORAGE_STEREOTYPE);
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.STORAGE;
 	}
 
 	private void drawStorage(UGraphic ug, double width, double height, boolean shadowing) {

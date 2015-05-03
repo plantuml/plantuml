@@ -41,14 +41,11 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -57,31 +54,23 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseReference extends AbstractTextualComponent {
 
-	private final HtmlColor backgroundHeader;
-	private final HtmlColor borderColor;
 	private final HtmlColor background;
 	private final int cornersize = 10;
 	private final TextBlock textHeader;
 	private final double heightFooter = 5;
 	private final double xMargin = 2;
 	private final HorizontalAlignment position;
-	private final double deltaShadow;
-	private final UStroke stroke;
+	private final SymbolContext symbolContext;
 
-	public ComponentRoseReference(HtmlColor fontHeaderColor, UFont2 font, HtmlColor backgroundHeader,
-			HtmlColor borderColor, HtmlColor background, UFont header, Display stringsToDisplay,
-			HorizontalAlignment position, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
+	public ComponentRoseReference(FontConfiguration font, SymbolContext symbolContext, FontConfiguration header,
+			Display stringsToDisplay, HorizontalAlignment position, ISkinSimple spriteContainer, HtmlColor background) {
 		super(stringsToDisplay.subList(1, stringsToDisplay.size()), font, HorizontalAlignment.LEFT, 4, 4, 4,
 				spriteContainer, 0, false, null, null);
 		this.position = position;
-		this.backgroundHeader = backgroundHeader;
+		this.symbolContext = symbolContext;
 		this.background = background;
-		this.borderColor = borderColor;
-		this.deltaShadow = deltaShadow;
-		this.stroke = stroke;
 
-		textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), new FontConfiguration(header,
-				fontHeaderColor, font.getHyperlinkColor(), font.useUnderlineForHyperlink()), HorizontalAlignment.LEFT,
+		this.textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), header, HorizontalAlignment.LEFT,
 				spriteContainer);
 
 	}
@@ -93,11 +82,11 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		final int textHeaderWidth = (int) (getHeaderWidth(stringBounder));
 		final int textHeaderHeight = (int) (getHeaderHeight(stringBounder));
 
-		ug = ug.apply(stroke);
-		final URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2 - deltaShadow,
-				dimensionToUse.getHeight() - heightFooter);
-		rect.setDeltaShadow(deltaShadow);
-		ug = ug.apply(new UChangeBackColor(background)).apply(new UChangeColor(borderColor));
+		final URectangle rect = new URectangle(
+				dimensionToUse.getWidth() - xMargin * 2 - symbolContext.getDeltaShadow(), dimensionToUse.getHeight()
+						- heightFooter);
+		rect.setDeltaShadow(symbolContext.getDeltaShadow());
+		ug = symbolContext.withBackColor(background).apply(ug);
 		ug.apply(new UTranslate(xMargin, 0)).draw(rect);
 
 		final UPolygon polygon = new UPolygon();
@@ -110,7 +99,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		polygon.addPoint(0, textHeaderHeight);
 		polygon.addPoint(0, 0);
 
-		ug = ug.apply(new UChangeBackColor(backgroundHeader)).apply(new UChangeColor(borderColor));
+		ug = symbolContext.apply(ug);
 		ug.apply(new UTranslate(xMargin, 0)).draw(polygon);
 
 		ug = ug.apply(new UStroke());
@@ -146,7 +135,8 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return Math.max(getTextWidth(stringBounder), getHeaderWidth(stringBounder)) + xMargin * 2 + deltaShadow;
+		return Math.max(getTextWidth(stringBounder), getHeaderWidth(stringBounder)) + xMargin * 2
+				+ symbolContext.getDeltaShadow();
 	}
 
 }

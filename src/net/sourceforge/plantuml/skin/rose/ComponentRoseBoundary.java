@@ -37,18 +37,17 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.BiColor;
 import net.sourceforge.plantuml.svek.Boundary;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ComponentRoseBoundary extends AbstractTextualComponent {
@@ -56,13 +55,12 @@ public class ComponentRoseBoundary extends AbstractTextualComponent {
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseBoundary(BiColor biColor, UFont2 font, Display stringsToDisplay,
-			boolean head, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke,
-			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
-				spriteContainer, 0, false, fontForStereotype, htmlColorForStereotype);
+	public ComponentRoseBoundary(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay, boolean head,
+			ISkinSimple spriteContainer, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, 0, false,
+				fontForStereotype, htmlColorForStereotype);
 		this.head = head;
-		this.stickman = new Boundary(biColor.getYellowBack(), biColor.getRedBorder(), deltaShadow, stroke.getThickness());
+		this.stickman = new Boundary(biColor);
 	}
 
 	@Override

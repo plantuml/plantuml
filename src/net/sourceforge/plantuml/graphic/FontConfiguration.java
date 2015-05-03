@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15812 $
+ * Revision $Revision: 15932 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -65,6 +65,18 @@ public class FontConfiguration {
 		this(SkinParamUtils.getFont(skinParam, fontParam, stereo), SkinParamUtils.getFontColor(skinParam, fontParam,
 				stereo), skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
 	}
+	
+	//---
+	
+	public final boolean useUnderlineForHyperlink() {
+		return useUnderlineForHyperlink;
+	}
+
+	public final HtmlColor getHyperlinkColor() {
+		return hyperlinkColor;
+	}
+
+	//---
 
 	private static EnumSet<FontStyle> getStyles(UFont font) {
 		final boolean bold = font.isBold();

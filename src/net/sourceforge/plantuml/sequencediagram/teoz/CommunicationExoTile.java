@@ -41,16 +41,16 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationExoTile implements Tile {
+public class CommunicationExoTile implements TileWithUpdateStairs {
 
 	private final LivingSpace livingSpace;
 	private final MessageExo message;
@@ -58,11 +58,10 @@ public class CommunicationExoTile implements Tile {
 	private final ISkinParam skinParam;
 	private final Real alpha;
 	private final Real omega;
-	
+
 	public Event getEvent() {
 		return message;
 	}
-
 
 	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Skin skin, ISkinParam skinParam,
 			Real alpha, Real omega) {
@@ -113,6 +112,15 @@ public class CommunicationExoTile implements Tile {
 		} else {
 			point1.ensureBiggerThan(point2.addFixed(width));
 		}
+	}
+
+	public void updateStairs(StringBounder stringBounder, double y) {
+		final ArrowComponent comp = (ArrowComponent) getComponent(stringBounder);
+		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final double arrowY = comp.getStartPoint(stringBounder, dim).getY();
+
+		livingSpace.addStepForLivebox(getEvent(), y + arrowY);
+
 	}
 
 	private Real getPoint1(final StringBounder stringBounder) {

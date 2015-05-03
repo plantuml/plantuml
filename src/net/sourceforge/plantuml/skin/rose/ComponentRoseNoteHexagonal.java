@@ -35,15 +35,12 @@ package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.BiColor;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -52,19 +49,13 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 
 	private final int cornersize = 10;
-	private final HtmlColor back;
-	private final HtmlColor foregroundColor;
-	private final double deltaShadow;
-	private final UStroke stroke;
+	private final SymbolContext symbolContext;
+	
 
-	public ComponentRoseNoteHexagonal(BiColor biColor, UFont2 font,
-			Display strings, ISkinSimple spriteContainer, double deltaShadow, UStroke stroke) {
-		super(strings, font, HorizontalAlignment.LEFT, 12, 12, 4, spriteContainer, 0, false,
-				null, null);
-		this.back = biColor.getYellowBack();
-		this.foregroundColor = biColor.getRedBorder();
-		this.deltaShadow = deltaShadow;
-		this.stroke = stroke;
+	public ComponentRoseNoteHexagonal(SymbolContext symbolContext, FontConfiguration font, Display strings,
+			ISkinSimple spriteContainer) {
+		super(strings, font, HorizontalAlignment.LEFT, 12, 12, 4, spriteContainer, 0, false, null, null);
+		this.symbolContext = symbolContext;
 	}
 
 	@Override
@@ -111,9 +102,8 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 		polygon.addPoint(0, textHeight / 2);
 		polygon.addPoint(cornersize, 0);
 
-		ug = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(foregroundColor));
-		polygon.setDeltaShadow(deltaShadow);
-		ug = ug.apply(stroke);
+		ug = symbolContext.apply(ug);
+		polygon.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.draw(polygon);
 		ug = ug.apply(new UStroke());
 

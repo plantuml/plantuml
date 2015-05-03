@@ -35,18 +35,18 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolCloud extends USymbol {
 
-	public USymbolCloud() {
-		super(ColorParam.cloudBackground, ColorParam.cloudBorder, FontParam.CLOUD, FontParam.CLOUD_STEREOTYPE);
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.CLOUD;
 	}
+
 
 	private void drawCloud(UGraphic ug, double width, double height, boolean shadowing) {
 		final UPath shape = getSpecificFrontierForCloud(width, height);
