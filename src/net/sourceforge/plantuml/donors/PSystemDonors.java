@@ -58,19 +58,14 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "UDfTaikosZ0CXlTw2gypquT8IOTEu5pcqEcYEv7e41sCH6s7DddwYhR11gsiqUtx9TU--cyKu9KI1LTBKc7iu1jLsVG4MyrkY50lfRY7TSWXcc17Uuo9KTop3WArz1hSMYdDT7s-lrl6aeu2Mom6IOA65uSzrBcrNc0tPeG9rbpTcoYq2-KOOPVeF92ubUhPz3NB78gmEJsKQe2LUXRtfcCaQCU7UFMX9cHnpWnF1JMUIjT6rPv-e_IspjN0rlM0OJAbRpVPSe3daZxDyEBvOWKDTqSZlqLOu4kyjPO2eg8BDFE9KvZS5WVj4ThhqdyCQEsBl8fyFfVPSR8r2IRBCpxZQl_1q_5EbVHtxjzAjaRUobv2uXc-vd2lyCJTGDvzHlPJgS3F9KoCZsWjeNngiVivKdJDk0zef_LP_dVzIDGDRXCmOaOwaFtOue2_hX_DKjn6Bmn_0C5QlDy0";
-
-	// public ImageData exportDiagram(OutputStream os, int num, FileFormatOption
-	// fileFormat) throws IOException {
-	// return getGraphicStrings().exportDiagram(os, fileFormat);
-	// }
+	public static final String DONORS = "UDfTaisIsZ0Cn-zw2fypquT8IOTEO7SxIwU7taIY9LgCH6s7DddwYcs33JfPew_VNrRjg_z60RvHek1gIIgC7NodAfkUOAlP3H7gfHJti0uvH1FiQ8ynCOfxra6Wbbw3MokbcQxFjpVBMD9HO8l584dGyEAmXpgtrWlinemmmPghUnE5Tg4S8-mIdGSIjr8zcxvccKCHDgU7KWsmKi_YNdMC1Etu4A_UrOGipfdXgQ36K-dQgDhJ7vJUrhaQsBeUC4oczFKcMmxmNDAd6LuyNwoWuUvevBS82to9jzPIG5HqWMO-SGgJs-AWFK9xNVhF0QrzaLUHpzzbTfniJOB9yepFkDf_y7IyKoNzdVjHoTR8MzbBI3p3rnpk5Pwu6yYxpyX-AXNukOI9yH6j9PHFBNQ_Hegk6VS1xMjzblz3tnDrWzi4Z9YH3cGNMtpWx-kXMOhRw8NBk_cudB-jFS1F";
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final GraphicStrings result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.addUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	private GraphicStrings getGraphicStrings() throws IOException {

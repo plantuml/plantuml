@@ -130,7 +130,7 @@ public class SourceStringReader {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(), null,
 				null, 0, 0, null, false);
 		imageBuilder.addUDrawable(error);
-		imageBuilder.writeImageTOBEMOVED(fileFormatOption.getFileFormat(), os);
+		imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 	}
 
 	public DiagramDescription generateDiagramDescription(OutputStream os) throws IOException {

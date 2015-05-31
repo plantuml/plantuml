@@ -57,9 +57,8 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	public CommandExecutionResult executeNow(final ActivityDiagram3 diagram, List<String> lines) {
-		// final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
 		final List<String> in = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		final NotePosition position = getPosition(line0.get("POSITION", 0));
 		final Display note = Display.create(in);
 		return diagram.addNote(note, position);

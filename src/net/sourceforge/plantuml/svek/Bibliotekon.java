@@ -180,4 +180,13 @@ public class Bibliotekon {
 		throw new IllegalArgumentException();
 	}
 
+	public IEntity getOnlyOther(IEntity entity) {
+		for (Line line : allLines) {
+			final IEntity other = line.getOther(entity);
+			if (other != null) {
+				return other;
+			}
+		}
+		return null;
+	}
 }

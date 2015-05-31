@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,9 +41,10 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.StringUtils;
 
 public class Bodier {
 
@@ -81,6 +83,9 @@ public class Bodier {
 				final BodyEnhanced result = new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier);
 				return result;
 			}
+			public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam, ISkinParam skinParam) {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 
@@ -108,7 +113,7 @@ public class Bodier {
 				if (s.length() == 0 && methodsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new Member(s, true, manageModifier);
+				final Member m = new MemberImpl(s, true, manageModifier, true);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					methodsToDisplay.add(m);
 				}
@@ -136,7 +141,7 @@ public class Bodier {
 				if (s.length() == 0 && fieldsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new Member(s, false, manageModifier);
+				final Member m = new MemberImpl(s, false, manageModifier, true);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					fieldsToDisplay.add(m);
 				}
@@ -147,7 +152,7 @@ public class Bodier {
 	}
 
 	private void removeFinalEmptyMembers(List<Member> result) {
-		while (result.size() > 0 && result.get(result.size() - 1).getDisplay(false).trim().length() == 0) {
+		while (result.size() > 0 && StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).length() == 0) {
 			result.remove(result.size() - 1);
 		}
 	}

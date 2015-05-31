@@ -110,8 +110,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 	}
 
 	public CommandExecutionResult executeNow(ClassDiagram diagram, List<String> lines) {
-		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		StringUtils.trimSmart(lines, 1);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
@@ -155,7 +155,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			}
 			final String codes = arg.get(keyword, 2);
 			for (String s : codes.split(",")) {
-				final Code other = Code.of(s.trim());
+				final Code other = Code.of(StringUtils.trin(s));
 				final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
 				if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {

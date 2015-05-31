@@ -164,19 +164,19 @@ public class EventsHistory {
 	}
 
 	public Stairs2 getStairs(double totalHeight) {
-		System.err.println("EventsHistory::getStairs totalHeight=" + totalHeight);
+		// System.err.println("EventsHistory::getStairs totalHeight=" + totalHeight);
 		final Stairs2 result = new Stairs2();
 		int value = 0;
 		for (Event event : events) {
 			final Double position = ys3.get(event);
-			System.err.println("EventsHistory::getStairs event=" + event + " position=" + position);
+			// System.err.println("EventsHistory::getStairs event=" + event + " position=" + position);
 			if (position != null) {
 				assert position <= totalHeight : "position=" + position + " totalHeight=" + totalHeight;
 				value = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
 				result.addStep(new StairsPosition(position, isNextEventADestroy(event)), value, getActivateColor(event));
 			}
 		}
-		System.err.println("EventsHistory::getStairs finishing totalHeight=" + totalHeight);
+		// System.err.println("EventsHistory::getStairs finishing totalHeight=" + totalHeight);
 		result.addStep(new StairsPosition(totalHeight, false), value, null);
 		// System.err.println("EventsHistory::getStairs " + p + " result=" + result);
 		return result;

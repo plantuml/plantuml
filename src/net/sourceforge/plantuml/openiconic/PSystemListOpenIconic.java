@@ -62,7 +62,7 @@ public class PSystemListOpenIconic extends AbstractPSystem {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.addUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	private GraphicStrings getGraphicStrings() throws IOException {

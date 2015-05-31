@@ -33,87 +33,69 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.awt.geom.Dimension2D;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamBackcolored;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class LiveBoxes implements UDrawable {
+public class LiveBoxes {
 
 	private final EventsHistory eventsHistory;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final double totalHeight;
-	private final Context2D context;
+	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 
-	public LiveBoxes(EventsHistory eventsHistory, Skin skin, ISkinParam skinParam, double totalHeight, Context2D context) {
+	public LiveBoxes(EventsHistory eventsHistory, Skin skin, ISkinParam skinParam) {
 		this.eventsHistory = eventsHistory;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.totalHeight = totalHeight;
-		this.context = context;
 	}
 
-	public void drawU(UGraphic ug) {
+	public void drawBoxes(UGraphic ug, double totalHeight, Context2D context) {
 		final Stairs2 stairs = eventsHistory.getStairs(totalHeight);
 		final int max = stairs.getMaxValue();
+		if (max == 0) {
+			drawDestroys(ug, stairs, context);
+		}
 		for (int i = 1; i <= max; i++) {
 			drawOneLevel(ug, i, stairs, context);
 		}
 	}
 
-	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs2 stairs, Context2D context) {
-		final Component comp1 = skin.createComponent(ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
-		final Component cross = skin.createComponent(ComponentType.DESTROY, null, skinParam, null);
-		final Dimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());
-		final double width = comp1.getPreferredWidth(ug.getStringBounder());
-		ug = ug.apply(new UTranslate((levelToDraw - 1) * width / 2.0, 0));
+	private void drawDestroys(UGraphic ug, Stairs2 stairs, Context2D context) {
+		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);
+		for (StairsPosition yposition : stairs.getYs()) {
+			drawer.drawDestroyIfNeeded(ug, yposition);
+		}
+	}
 
-		double y1 = Double.MAX_VALUE;
-		HtmlColor color = null;
+	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs2 stairs, Context2D context) {
+		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays);
+		ug = ug.apply(new UTranslate((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0, 0));
+
+		boolean pending = true;
 		for (Iterator<StairsPosition> it = stairs.getYs().iterator(); it.hasNext();) {
 			final StairsPosition yposition = it.next();
-			System.err.println("LiveBoxes::drawOneLevel " + levelToDraw + " " + yposition);
 			final IntegerColored integerColored = stairs.getValue(yposition.getValue());
-			System.err.println("integerColored=" + integerColored);
 			final int level = integerColored.getValue();
-			if (y1 == Double.MAX_VALUE && level == levelToDraw) {
-				y1 = yposition.getValue();
-				color = integerColored.getColor();
-			} else if (y1 != Double.MAX_VALUE && (it.hasNext() == false || level < levelToDraw)) {
-				final double y2 = yposition.getValue();
-				final Area area = new Area(width, y2 - y1);
-
-				final ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, color);
-				final Component comp = skin
-						.createComponent(ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam2, null);
-
-				comp.drawU(ug.apply(new UTranslate(-width / 2, y1)), area, context);
-				System.err.println("LiveBoxes::drawOneLevel one block " + y1 + " " + y2);
-				if (yposition.isDestroy()) {
-					System.err.println("LiveBoxes::drawOneLevel DESTROY " + yposition);
-					cross.drawU(ug.apply(new UTranslate(-dimCross.getWidth() / 2, y2 - dimCross.getHeight() / 2)),
-							null, context);
-				} else {
-					System.err.println("LiveBoxes::drawOneLevel NOTDESTROY " + yposition);
-				}
-				y1 = Double.MAX_VALUE;
+			if (pending && level == levelToDraw) {
+				drawer.addStart(yposition.getValue(), integerColored.getColor());
+				pending = false;
+			} else if (pending == false && (it.hasNext() == false || level < levelToDraw)) {
+				drawer.doDrawing(ug, yposition);
+				drawer.drawDestroyIfNeeded(ug, yposition);
+				pending = true;
 			}
 		}
 	}
 
-	private UGraphic withColor(UGraphic ug) {
-		return ug;
+	public void delayOn(double y, double height) {
+		delays.put(y, height);
 	}
 
 }

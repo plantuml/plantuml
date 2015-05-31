@@ -227,7 +227,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 			}
 		});
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 	}
 
 	private double oneOf(double a, double b) {

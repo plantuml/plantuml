@@ -845,4 +845,11 @@ public class Line implements Moveable, Hideable {
 		return new Point2D.Double(dx + end.getX(), dy + end.getY());
 	}
 
+	public IEntity getOther(IEntity entity) {
+		if (link.contains(entity)) {
+			return link.getOther(entity);
+		}
+		return null;
+	}
+
 }

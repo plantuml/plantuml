@@ -70,7 +70,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, List<String> lines) {
 		lines = StringUtils.removeEmptyColumns(lines);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
 		diagram.setColorNextArrow(color);
 		removeStarting(lines, line0.get("LABEL", 0));

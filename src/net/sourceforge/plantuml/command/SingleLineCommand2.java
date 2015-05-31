@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.PSystemError;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -66,7 +67,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = lines.get(0).trim();
+		final String line = StringUtils.trin(lines.get(0));
 		final boolean result = pattern.match(line);
 		if (result) {
 			actionIfCommandValid();
@@ -85,7 +86,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final String line = lines.get(0).trim();
+		final String line = StringUtils.trin(lines.get(0));
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Forbidden line " + line);
 		}

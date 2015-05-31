@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.cute;
 
 import java.util.Map;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public class CuteShapeFactory {
 
 	private final Map<String, Group> groups;
@@ -50,7 +52,7 @@ public class CuteShapeFactory {
 	}
 
 	private CuteShape createCuteShape(String data) {
-		data = data.toLowerCase().trim();
+		data = StringUtils.trin(data.toLowerCase());
 		final VarArgs varArgs = new VarArgs(data);
 		if (data.startsWith("circle ")) {
 			return new Circle(varArgs);

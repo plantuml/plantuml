@@ -37,7 +37,7 @@ import java.awt.Font;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -71,7 +71,7 @@ public class ElementFactoryText implements ElementFactory {
 		if (text.startsWith("{") || text.startsWith("}")) {
 			return false;
 		}
-		return text.trim().length() > 0;
+		return StringUtils.trin(text).length() > 0;
 	}
 
 }

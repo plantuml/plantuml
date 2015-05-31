@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15848 $
+ * Revision $Revision: 16158 $
  *
  */
 package net.sourceforge.plantuml;
@@ -55,6 +55,7 @@ import javax.script.ScriptException;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -166,6 +167,26 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		return footerAlignment;
 	}
 
+	public final HorizontalAlignment getAlignmentTeoz(FontParam param) {
+		if (param == FontParam.FOOTER) {
+			return getFooterAlignment();
+		}
+		if (param == FontParam.HEADER) {
+			return getHeaderAlignment();
+		}
+		throw new IllegalArgumentException();
+	}
+
+	public final Display getFooterOrHeaderTeoz(FontParam param) {
+		if (param == FontParam.FOOTER) {
+			return getFooter();
+		}
+		if (param == FontParam.HEADER) {
+			return getHeader();
+		}
+		throw new IllegalArgumentException();
+	}
+
 	public final void setFooterAlignment(HorizontalAlignment footerAlignment) {
 		this.footerAlignment = footerAlignment;
 	}
@@ -236,7 +257,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 			exportDiagramError(os, e, fileFormatOption, null, null);
 		}
 		return new ImageDataSimple();
-
 	}
 
 	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
@@ -245,18 +265,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		final List<String> strings = getFailureText(exception, graphvizVersion);
 
 		final String flash = getFlashData();
-		for (StackTraceElement ste : exception.getStackTrace()) {
-			strings.add("  " + ste.toString());
-		}
-		if (exception.getCause() != null) {
-			final Throwable cause = exception.getCause();
-			strings.add("  ");
-			strings.add("Caused by " + cause.toString());
-			for (StackTraceElement ste : cause.getStackTrace()) {
-				strings.add("  " + ste.toString());
-			}
-
-		}
+		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, getSkinParam().handwritten());
@@ -283,7 +292,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 				}
 			});
 		}
-		imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	private String getFlashData() {
@@ -320,7 +329,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
 		strings.add("You can try to turn arround this issue by simplifing your diagram.");
 		strings.add(" ");
-		strings.add(exception.toString());
 		return strings;
 	}
 

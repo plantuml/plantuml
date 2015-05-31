@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.suggest;
 
+import net.sourceforge.plantuml.StringUtils;
+
 
 public class SuggestEngineResult {
 
@@ -77,7 +79,7 @@ public class SuggestEngineResult {
 	}
 
 	public SuggestEngineResult(String suggestedLine) {
-		if (suggestedLine.trim().length() == 0) {
+		if (StringUtils.trin(suggestedLine).length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.status = SuggestEngineStatus.ONE_SUGGESTION;

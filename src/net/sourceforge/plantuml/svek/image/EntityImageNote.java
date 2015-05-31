@@ -100,7 +100,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		} else {
 			noteBackgroundColor = entity.getSpecificBackColor();
 		}
-		borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
 		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
 		final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
 
@@ -113,7 +113,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		}
 	}
 
-	private static ISkinParam getSkin(ISkinParam skinParam, IEntity entity) {
+	static ISkinParam getSkin(ISkinParam skinParam, IEntity entity) {
 		final Stereotype stereotype = entity.getStereotype();
 		HtmlColor back = entity.getSpecificBackColor();
 		if (back != null) {

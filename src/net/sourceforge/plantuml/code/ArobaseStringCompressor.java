@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16194 $
  *
  */
 package net.sourceforge.plantuml.code;
@@ -38,6 +38,7 @@ import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
@@ -98,11 +99,11 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	private String clean(String s) {
-		s = s.trim();
+		s = StringUtils.trin(s);
 		s = clean1(s);
 		s = s.replaceAll("@enduml[^\\n\\r]*", "");
 		s = s.replaceAll("@startuml[^\\n\\r]*", "");
-		s = s.trim();
+		s = StringUtils.trin(s);
 		return s;
 	}
 

@@ -45,6 +45,9 @@ public class YPositionedTile implements UDrawable {
 	public YPositionedTile(Tile tile, double y) {
 		this.tile = tile;
 		this.y = y;
+		if (tile instanceof TileWithCallbackY) {
+			((TileWithCallbackY) tile).callbackY(y);
+		}
 	}
 
 	public void drawU(UGraphic ug) {

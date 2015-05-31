@@ -56,7 +56,7 @@ public class BlockUml {
 
 	public BlockUml(List<? extends CharSequence> strings, int startLine) {
 		this.startLine = startLine;
-		final String s0 = strings.get(0).toString().trim();
+		final String s0 = StringUtils.trin(strings.get(0).toString());
 		if (s0.startsWith("@start") == false) {
 			throw new IllegalArgumentException();
 		}
@@ -67,7 +67,7 @@ public class BlockUml {
 		if (OptionFlags.getInstance().isWord()) {
 			return null;
 		}
-		final Matcher m = patternFilename.matcher(data.get(0).toString().trim());
+		final Matcher m = patternFilename.matcher(StringUtils.trin(data.get(0).toString()));
 		final boolean ok = m.find();
 		if (ok == false) {
 			return null;

@@ -121,4 +121,6 @@ public interface ISkinParam extends ISkinSimple {
 
 	public boolean handwritten();
 
+	public String getSvgLinkTarget();
+
 }

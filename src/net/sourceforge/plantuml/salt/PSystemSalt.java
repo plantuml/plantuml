@@ -94,7 +94,7 @@ public class PSystemSalt extends AbstractPSystem {
 				salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 			}
 		});
-		return builder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return builder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	private ImageData exportDiagramOld(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {

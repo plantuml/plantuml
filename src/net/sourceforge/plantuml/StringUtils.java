@@ -117,7 +117,7 @@ public class StringUtils {
 	}
 
 	public static boolean isNotEmpty(String input) {
-		return input != null && input.trim().length() > 0;
+		return input != null && trin(input).length() > 0;
 	}
 
 	public static boolean isNotEmpty(List<? extends CharSequence> input) {
@@ -125,7 +125,7 @@ public class StringUtils {
 	}
 
 	public static boolean isEmpty(String input) {
-		return input == null || input.trim().length() == 0;
+		return input == null || trin(input).length() == 0;
 	}
 
 	public static String manageHtml(String s) {
@@ -179,7 +179,7 @@ public class StringUtils {
 	public static String capitalize(String s) {
 		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
-	
+
 	public static String goUpperCase(String s) {
 		return s.toUpperCase(Locale.ENGLISH);
 	}
@@ -312,6 +312,10 @@ public class StringUtils {
 	public static char hiddenBiggerThan() {
 		return '\u0006';
 	}
+	
+	public static char hiddenNewLine() {
+		return '\u0009';
+	}
 
 	public static String hideComparatorCharacters(String s) {
 		s = s.replace('<', hiddenLesserThan());
@@ -388,10 +392,44 @@ public class StringUtils {
 		return result;
 	}
 
+	public static void trimSmart(List<String> data, int referenceLine) {
+		if (data.size() <= referenceLine) {
+			return;
+		}
+		final int nbStartingSpace = nbStartingSpace(data.get(referenceLine));
+		for (int i = referenceLine; i < data.size(); i++) {
+			final String s = data.get(i);
+			data.set(i, removeStartingSpaces(s, nbStartingSpace));
+		}
+	}
+
+	public static String removeStartingSpaces(String s, int nbStartingSpace) {
+		for (int i = 0; i < nbStartingSpace; i++) {
+			if (s.length() > 0 && isSpaceOrTab(s.charAt(0))) {
+				s = s.substring(1);
+			} else {
+				return s;
+			}
+		}
+		return s;
+	}
+
+	private static boolean isSpaceOrTab(char c) {
+		return c == ' ' || c == '\t';
+	}
+
+	private static int nbStartingSpace(String s) {
+		int nb = 0;
+		while (nb < s.length() && isSpaceOrTab(s.charAt(nb))) {
+			nb++;
+		}
+		return nb;
+	}
+
 	public static void trim(List<String> data, boolean removeEmptyLines) {
 		for (int i = 0; i < data.size(); i++) {
 			final String s = data.get(i);
-			data.set(i, s.trim());
+			data.set(i, trin(s));
 		}
 		if (removeEmptyLines) {
 			for (final Iterator<String> it = data.iterator(); it.hasNext();) {
@@ -439,7 +477,7 @@ public class StringUtils {
 	}
 
 	public static List<String> splitComma(String s) {
-		s = s.trim();
+		s = trin(s);
 		// if (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*") == false) {
 		// throw new IllegalArgumentException();
 		// }
@@ -492,6 +530,36 @@ public class StringUtils {
 
 	public static boolean endsWithBackslash(final String s) {
 		return s.endsWith("\\") && s.endsWith("\\\\") == false;
+	}
+
+	public static String manageGuillemetStrict(String st) {
+		if (st.startsWith("<< ")) {
+			st = "\u00AB" + st.substring(3);
+		} else if (st.startsWith("<<")) {
+			st = "\u00AB" + st.substring(2);
+		}
+		if (st.endsWith(" >>")) {
+			st = st.substring(0, st.length() - 3) + "\u00BB";
+		} else if (st.endsWith(">>")) {
+			st = st.substring(0, st.length() - 2) + "\u00BB";
+		}
+		return st;
+	}
+
+	public static String manageGuillemet(String st) {
+		return st.replaceAll("\\<\\<([^<>]+)\\>\\>", "\u00AB$1\u00BB");
+	}
+
+	public static String trinNoTrace(String s) {
+		return s.trim();
+	}
+
+	public static String trin(String s) {
+		final String result = s.trim();
+		// if (result.equals(s) == false && s.contains("prop")) {
+		// System.err.println("TRIMING " + s);
+		// }
+		return result;
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

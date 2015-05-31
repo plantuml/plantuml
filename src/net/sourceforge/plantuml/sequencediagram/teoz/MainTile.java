@@ -36,44 +36,45 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealMax;
-import net.sourceforge.plantuml.real.RealMin;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class MainTile implements Tile {
 
-	private final RealMin min = new RealMin();
-	private final RealMax max = new RealMax();
-	// private double height;
+	private final Real min;
+	private final Real max;
+	private final boolean isShowFootbox;
 
 	private final List<Tile> tiles = new ArrayList<Tile>();
+	private final LivingSpaces livingSpaces;
 
-	public MainTile(SequenceDiagram diagram, Skin skin, Real omega, LivingSpaces livingSpaces, Real origin) {
+	public MainTile(SequenceDiagram diagram, TileArguments tileArguments) {
 
-		min.put(origin);
-		max.put(omega);
+		this.livingSpaces = tileArguments.getLivingSpaces();
 
-		final ISkinParam skinParam = diagram.getSkinParam();
-		final StringBounder stringBounder = TextBlockUtils.getDummyStringBounder();
+		final List<Real> min2 = new ArrayList<Real>();
+		final List<Real> max2 = new ArrayList<Real>();
 
-		final TileArguments tileArguments = new TileArguments(stringBounder, omega, livingSpaces, skin, skinParam,
-				origin);
+		min2.add(tileArguments.getOrigin());
+		max2.add(tileArguments.getOmega());
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null));
 
 		for (Tile tile : tiles) {
 			// height += tile.getPreferredHeight(stringBounder);
-			min.put(tile.getMinX(stringBounder));
-			max.put(tile.getMaxX(stringBounder));
+			min2.add(tile.getMinX(tileArguments.getStringBounder()));
+			max2.add(tile.getMaxX(tileArguments.getStringBounder()));
 		}
+
+		this.min = RealUtils.min(min2);
+		this.max = RealUtils.max(max2);
+
+		this.isShowFootbox = diagram.isShowFootbox();
 	}
 
 	public void drawU(UGraphic ug) {
@@ -109,16 +110,16 @@ public class MainTile implements Tile {
 		for (YPositionedTile tile : positionedTiles) {
 			tile.drawU(ug);
 		}
-		System.err.println("MainTile::drawUInternal finalY=" + y);
+		// System.err.println("MainTile::drawUInternal finalY=" + y);
 		return y;
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);
-		final double finalY = drawUInternal(interceptor, true);
+		final double finalY = drawUInternal(interceptor, false);
 		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;
-		System.err.println("MainTile::getPreferredHeight=" + result);
+		// System.err.println("MainTile::getPreferredHeight=" + result);
 		return result;
 	}
 
@@ -138,6 +139,14 @@ public class MainTile implements Tile {
 
 	public Event getEvent() {
 		return null;
+	}
+
+	public boolean isShowFootbox() {
+		return isShowFootbox;
+	}
+
+	public LivingSpaces getLivingSpaces() {
+		return livingSpaces;
 	}
 
 }

@@ -96,7 +96,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 
 			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, List<String> lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 
 				final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 

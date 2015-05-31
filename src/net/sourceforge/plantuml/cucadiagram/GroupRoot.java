@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Url;
@@ -274,6 +275,14 @@ public class GroupRoot implements IGroup {
 	}
 
 	public void setConcurrentSeparator(char separator) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void putTip(String member, Display display) {
+		throw new UnsupportedOperationException();
+	}
+
+	public Map<String, Display> getTips() {
 		throw new UnsupportedOperationException();
 	}
 

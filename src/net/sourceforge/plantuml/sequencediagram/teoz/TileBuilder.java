@@ -39,9 +39,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamBackcoloredReference;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -65,7 +64,8 @@ public class TileBuilder {
 			final Tile tile = TileBuilder.buildOne(it, tileArguments, ev, parent);
 			if (tile != null) {
 				tiles.add(tile);
-				tileArguments.getOmega().ensureBiggerThan(tile.getMaxX(tileArguments.getStringBounder()));
+				final Real tmpMax = tile.getMaxX(tileArguments.getStringBounder());
+				tileArguments.getOmega().ensureBiggerThan(tmpMax);
 			}
 		}
 		return Collections.unmodifiableList(tiles);
@@ -107,8 +107,7 @@ public class TileBuilder {
 		} else if (ev instanceof MessageExo) {
 			final MessageExo exo = (MessageExo) ev;
 			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
-			tile = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments.getOrigin(),
-					tileArguments.getOmega());
+			tile = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments);
 			if (exo.getNote() != null) {
 				final NotePosition notePosition = exo.getNotePosition();
 				if (notePosition == NotePosition.LEFT) {

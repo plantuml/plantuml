@@ -64,6 +64,7 @@ import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -214,7 +215,7 @@ class ImageWindow2 extends JFrame {
 			imageBuilder.addUDrawable(error);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				imageBuilder.writeImageTOBEMOVED(FileFormat.PNG, baos);
+				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), baos);
 				baos.close();
 				image = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
 			} catch (IOException e) {

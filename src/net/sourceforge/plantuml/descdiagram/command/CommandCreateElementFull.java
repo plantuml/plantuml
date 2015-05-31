@@ -116,7 +116,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		final String symbol;
 		if (codeRaw.startsWith("()")) {
 			symbol = "interface";
-			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw.substring(2).trim());
+			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));
 		} else if (codeChar == '(' || codeDisplay == '(') {
 			symbol = "usecase";
 		} else if (codeChar == ':' || codeDisplay == ':') {

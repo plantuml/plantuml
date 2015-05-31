@@ -28,50 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4836 $
+ * Revision $Revision: 4636 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram;
+package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class ParticipantEngloberContexted {
+public interface TileWithCallbackY extends Tile {
 
-	final private ParticipantEnglober participantEnglober;
-	final private List<Participant> participants = new ArrayList<Participant>();
-
-	public ParticipantEngloberContexted(ParticipantEnglober participantEnglober, Participant first) {
-		this.participantEnglober = participantEnglober;
-		this.participants.add(first);
-	}
-
-	public final ParticipantEnglober getParticipantEnglober() {
-		return participantEnglober;
-	}
-	
-	public boolean contains(Participant p) {
-		return participants.contains(p);
-	}
-
-	public void add(Participant p) {
-		if (participants.contains(p)) {
-			throw new IllegalArgumentException();
-		}
-		participants.add(p);
-	}
-
-	public final Participant getFirst2() {
-		return participants.get(0);
-	}
-
-	public final Participant getLast2() {
-		return participants.get(participants.size() - 1);
-	}
-	
-	@Override
-	public String toString() {
-		return super.toString()+" "+participants;
-	}
-
+	public void callbackY(double y);
 }

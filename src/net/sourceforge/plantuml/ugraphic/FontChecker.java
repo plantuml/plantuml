@@ -52,6 +52,7 @@ import javax.imageio.ImageIO;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -179,7 +180,7 @@ public class FontChecker {
 			}
 		});
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		imageBuilder.writeImageTOBEMOVED(FileFormat.PNG, os);
+		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), os);
 		os.close();
 		return ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 	}

@@ -39,6 +39,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class DataSourceImpl implements DataSource {
@@ -51,7 +52,7 @@ public class DataSourceImpl implements DataSource {
 		for (String s : data) {
 			final StringTokenizer st = new StringTokenizer(s, "|}", true);
 			while (st.hasMoreTokens()) {
-				final String token = st.nextToken().trim();
+				final String token = StringUtils.trin(st.nextToken());
 				if (token.equals("|")) {
 					continue;
 				}
@@ -82,7 +83,7 @@ public class DataSourceImpl implements DataSource {
 	}
 
 	private void addInternal(String s, Terminator t) {
-		s = s.trim();
+		s = StringUtils.trin(s);
 		if (s.length() > 0) {
 			data.add(new Terminated<String>(s, t));
 		}

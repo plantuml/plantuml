@@ -38,6 +38,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -62,10 +63,22 @@ public class CreoleParser {
 			final StripeTable table = (StripeTable) lastStripe;
 			table.analyzeAndAddNormal(line);
 			return null;
+		} else if (lastStripe instanceof StripeTree && isTreeStart(StringUtils.trinNoTrace(line))) {
+			final StripeTree tree = (StripeTree) lastStripe;
+			tree.analyzeAndAdd(line);
+			return null;
 		} else if (line.startsWith("|=") && line.endsWith("|")) {
 			return new StripeTable(fontConfiguration, skinParam, line);
+		} else if (isTreeStart(line)) {
+			return new StripeTree(fontConfiguration, skinParam, line);
 		}
-		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, modeSimpleLine).createStripe(context);
+		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, modeSimpleLine)
+				.createStripe(context);
+	}
+
+	public static boolean isTreeStart(String line) {
+		// return false;
+		return line.startsWith("|_");
 	}
 
 	public Sheet createSheet(Display display) {

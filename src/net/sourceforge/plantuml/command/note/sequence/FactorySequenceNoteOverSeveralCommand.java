@@ -102,7 +102,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			}
 
 			public CommandExecutionResult executeNow(final SequenceDiagram system, List<String> lines) {
-				final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 				final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 
 				return executeInternal(system, line0, strings);

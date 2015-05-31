@@ -74,7 +74,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
 		final String url = arg.get("URL", 0);
 		final String title = arg.get("URL", 1);
-		final String text = arg.get("TEXT", 0).trim();
+		final String text = StringUtils.trin(arg.get("TEXT", 0));
 
 		final List<Participant> p = new ArrayList<Participant>();
 		for (String s : participants) {

@@ -33,13 +33,14 @@
  */
 package net.sourceforge.plantuml.real;
 
-class RealMiddle implements Real {
+class RealMiddle extends AbstractReal implements Real {
 
 	private final RealMoveable p1;
 	private final RealMoveable p2;
 	private final double delta;
 
 	private RealMiddle(RealMoveable p1, RealMoveable p2, double delta) {
+		super(p1.getLine());
 		this.p1 = p1;
 		this.p2 = p2;
 		this.delta = delta;
@@ -49,7 +50,8 @@ class RealMiddle implements Real {
 		this(p1, p2, 0);
 	}
 
-	public double getCurrentValue() {
+	@Override
+	double getCurrentValueInternal() {
 		return (p1.getCurrentValue() + p2.getCurrentValue()) / 2 + delta;
 	}
 
@@ -65,12 +67,12 @@ class RealMiddle implements Real {
 		throw new UnsupportedOperationException();
 	}
 
-	public void compile() {
-		p1.compile();
-	}
-
 	public String getName() {
 		return "[Middle " + p1.getName() + " and " + p2.getName() + "]";
+	}
+
+	public void printCreationStackTrace() {
+		throw new UnsupportedOperationException();
 	}
 
 }

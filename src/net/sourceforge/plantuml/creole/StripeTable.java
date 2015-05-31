@@ -66,7 +66,7 @@ public class StripeTable implements Stripe {
 		return Collections.<Atom> singletonList(marged);
 	}
 
-	private static Atom asAtom(List<StripeSimple> cells, double padding) {
+	static Atom asAtom(List<StripeSimple> cells, double padding) {
 		final Sheet sheet = new Sheet(HorizontalAlignment.LEFT);
 		for (StripeSimple cell : cells) {
 			sheet.add(cell);
@@ -93,7 +93,7 @@ public class StripeTable implements Stripe {
 		}
 	}
 
-	private static List<String> getWithNewlinesInternal(String s) {
+	static List<String> getWithNewlinesInternal(String s) {
 		final List<String> result = new ArrayList<String>();
 		final StringBuilder current = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {

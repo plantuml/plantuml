@@ -84,7 +84,7 @@ public class Project {
 	}
 
 	public Expression getExpression(String desc) {
-		desc = desc.trim();
+		desc = StringUtils.trin(desc);
 		final int plus = desc.indexOf('+');
 
 		if (plus != -1) {

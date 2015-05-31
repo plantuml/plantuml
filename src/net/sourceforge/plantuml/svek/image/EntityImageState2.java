@@ -90,7 +90,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
 		final TextBlock desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false);
+				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, false);
 
 		asSmall = symbol.asSmall(desc, stereo, ctx);
 

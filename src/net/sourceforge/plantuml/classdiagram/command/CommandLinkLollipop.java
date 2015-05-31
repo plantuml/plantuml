@@ -104,11 +104,13 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		if (arg.get("LOL_THEN_ENT", 0) == null) {
 			assert arg.get("ENT_THEN_LOL", 0) != null;
 			cl1 = diagram.getOrCreateLeaf(ent1, null, null);
-			cl2 = diagram.createLeaf(cl1.getCode().addSuffix(suffix), Display.getWithNewlines(ent2), LeafType.LOLLIPOP, null);
+			cl2 = diagram.createLeaf(cl1.getCode().addSuffix(suffix), Display.getWithNewlines(ent2), LeafType.LOLLIPOP,
+					null);
 			normalEntity = cl1;
 		} else {
 			cl2 = diagram.getOrCreateLeaf(ent2, null, null);
-			cl1 = diagram.createLeaf(cl2.getCode().addSuffix(suffix), Display.getWithNewlines(ent1), LeafType.LOLLIPOP, null);
+			cl1 = diagram.createLeaf(cl2.getCode().addSuffix(suffix), Display.getWithNewlines(ent1), LeafType.LOLLIPOP,
+					null);
 			normalEntity = cl2;
 		}
 
@@ -132,22 +134,24 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				final Matcher m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
-					labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m1.group(2).trim()).trim();
+					labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
+							.trin(m1.group(2))));
 					secondLabel = m1.group(3);
 				} else {
 					final Pattern p2 = MyPattern.cmpile("^\"([^\"]+)\"([^\"]+)$");
 					final Matcher m2 = p2.matcher(labelLink);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
-						labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m2.group(2).trim()).trim();
+						labelLink = StringUtils.trin(StringUtils
+								.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 						secondLabel = null;
 					} else {
 						final Pattern p3 = MyPattern.cmpile("^([^\"]+)\"([^\"]+)\"$");
 						final Matcher m3 = p3.matcher(labelLink);
 						if (m3.matches()) {
 							firstLabel = null;
-							labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m3.group(1).trim())
-									.trim();
+							labelLink = StringUtils.trin(StringUtils
+									.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));
 							secondLabel = m3.group(2);
 						}
 					}
@@ -212,10 +216,10 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 	private String getQueue(RegexResult arg) {
 		if (arg.get("LOL_THEN_ENT", 0) != null) {
-			return arg.get("LOL_THEN_ENT", 0).trim();
+			return StringUtils.trin(arg.get("LOL_THEN_ENT", 0));
 		}
 		if (arg.get("ENT_THEN_LOL", 0) != null) {
-			return arg.get("ENT_THEN_LOL", 0).trim();
+			return StringUtils.trin(arg.get("ENT_THEN_LOL", 0));
 		}
 		throw new IllegalArgumentException();
 	}

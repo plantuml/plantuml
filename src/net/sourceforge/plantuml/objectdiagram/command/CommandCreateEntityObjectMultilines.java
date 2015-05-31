@@ -79,7 +79,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 
 	public CommandExecutionResult executeNow(ObjectDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, true);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");

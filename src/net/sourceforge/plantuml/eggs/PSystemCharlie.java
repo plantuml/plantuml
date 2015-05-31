@@ -66,7 +66,7 @@ public class PSystemCharlie extends AbstractPSystem {
 				ug.draw(im);
 			}
 		});
-		return imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	public DiagramDescription getDescription() {

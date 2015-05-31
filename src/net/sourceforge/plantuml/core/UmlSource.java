@@ -107,7 +107,7 @@ final public class UmlSource {
 	 * @return a iterator that allow counting line number.
 	 */
 	public IteratorCounter iterator() {
-		return new IteratorCounterImpl(source.iterator());
+		return new IteratorCounterImpl(source);
 	}
 
 	/**
@@ -161,7 +161,7 @@ final public class UmlSource {
 			if (s.matches("\\s*'.*")) {
 				continue;
 			}
-			if (s.trim().length() != 0) {
+			if (StringUtils.trin(s).length() != 0) {
 				return false;
 			}
 		}

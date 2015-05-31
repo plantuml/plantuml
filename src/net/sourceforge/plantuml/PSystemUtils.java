@@ -55,6 +55,10 @@ public class PSystemUtils {
 
 	public static List<File> exportDiagrams(Diagram system, File suggestedFile, FileFormatOption fileFormatOption)
 			throws IOException {
+		if (system instanceof UmlDiagram) {
+			final ISkinParam skinParam = ((UmlDiagram) system).getSkinParam();
+			fileFormatOption = fileFormatOption.withSvgLinkTarget(skinParam.getSvgLinkTarget());
+		}
 		if (system instanceof NewpagedDiagram) {
 			return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);
 		}

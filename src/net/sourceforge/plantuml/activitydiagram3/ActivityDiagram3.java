@@ -187,7 +187,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 				margin, margin, getAnimation(), getSkinParam().handwritten());
 		imageBuilder.addUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 
 	}
 

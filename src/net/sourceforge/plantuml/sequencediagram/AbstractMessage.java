@@ -137,6 +137,17 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	public final Display getLabel() {
 		return label;
 	}
+	
+	public final Display getLabelNumbered() {
+		if (getMessageNumber() == null) {
+			return getLabel();
+		}
+		Display result = Display.empty();
+		result = result.add(new MessageNumber(getMessageNumber()));
+		result = result.addAll(getLabel());
+		return result;
+	}
+
 
 	public final ArrowConfiguration getArrowConfiguration() {
 		return arrowConfiguration;

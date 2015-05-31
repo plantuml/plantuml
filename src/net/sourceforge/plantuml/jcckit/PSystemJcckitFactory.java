@@ -40,6 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -108,7 +109,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		if (data == null) {
 			return null;
 		}
-		data.append(line.trim());
+		data.append(StringUtils.trin(line));
 		data.append("\n");
 		return createSystem();
 	}

@@ -66,8 +66,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -106,7 +104,8 @@ class FtileRepeat extends AbstractFtile {
 
 		final FontConfiguration fc = new FontConfiguration(fontTest, HtmlColorUtils.BLACK, hyperlinkColor,
 				useUnderlineForHyperlink);
-		final TextBlock tbTest = TextBlockUtils.create(test, fc, HorizontalAlignment.LEFT, spriteContainer);
+		final TextBlock tbTest = (test == null || test.isWhite()) ? TextBlockUtils.empty(0, 0) : TextBlockUtils.create(
+				test, fc, HorizontalAlignment.LEFT, spriteContainer);
 		final TextBlock yesTb = TextBlockUtils.create(yes, fc, HorizontalAlignment.LEFT, spriteContainer);
 		final TextBlock outTb = TextBlockUtils.create(out, fc, HorizontalAlignment.LEFT, spriteContainer);
 
@@ -137,7 +136,7 @@ class FtileRepeat extends AbstractFtile {
 		final TextBlock tbbackLink1 = backLink1 == null ? null : TextBlockUtils.create(backLink1, fc,
 				HorizontalAlignment.LEFT, spriteContainer, true);
 		conns.add(result.new ConnectionBack(LinkRendering.getColor(backRepeatLinkRendering, arrowColor), tbbackLink1));
-		
+
 		final Display out1 = LinkRendering.getDisplay(repeat.getOutLinkRendering());
 		final TextBlock tbout1 = out1 == null ? null : TextBlockUtils.create(out1, fc, HorizontalAlignment.LEFT,
 				spriteContainer, true);

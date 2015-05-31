@@ -145,9 +145,20 @@ public class QuoteUtils {
 					"If you are a friend, you speak the password, and the doors will open.", //
 					"You Shall Not Pass", //
 					"73.6% Of All Statistics Are Made Up", //
-					"We can neither confirm nor deny that this is crashing"
-					// When the beating of your heart echoes the beating of the drums
-					// Never trust a computer you can't throw out a window
+					"We can neither confirm nor deny that this is crashing", //
+					"When the beating of your heart echoes the beating of the drums", //
+					"Never trust a computer you can't throw out a window", //
+					"Yeah, I'm calm. I'm a calm person. Is there some reason I shouldn't be calm?", //
+					"Everybody just stay calm. The situation is under control.", //
+					"Hippy, you think everything is a conspiracy.", //
+					"These guys are about as much fun as a tax audit.", //
+					"There is something down there! Something not us.", //
+					"I saw a glimpse of my future and everything's changed for me now.", //
+					"In space no one can hear you scream", //
+					"I can't lie to you about your chances, but... you have my sympathies.", // 
+					"There is an explanation for this, you know.", //
+					"Bishop: I'm afraid I have some bad news.", //
+					"Do me a favour. Disconnect me. I could be reworked, but I'll never be top of the line again."
 			);
 	private QuoteUtils() {
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16196 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.Diagram;
 
@@ -61,7 +62,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		Matcher m1 = starting.matcher(lines.get(0).trim());
+		Matcher m1 = starting.matcher(StringUtils.trin(lines.get(0)));
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -69,7 +70,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 			return CommandControl.OK_PARTIAL;
 		}
 
-		m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.get(lines.size() - 1).trim());
+		m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trin(lines.get(lines.size() - 1)));
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}

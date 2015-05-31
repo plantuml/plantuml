@@ -88,7 +88,7 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		arrowConfiguration = arrowConfiguration.self();
 		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabel());
+				message.getLabelNumbered());
 		return comp;
 	}
 

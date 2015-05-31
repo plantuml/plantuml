@@ -56,7 +56,7 @@ class Step1MessageExo extends Step1Abstract {
 
 		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), drawingSet.getSkin()
 				.createComponent(ComponentType.ARROW, getConfig(), drawingSet.getSkinParam(),
-						getLabelOfMessage(message)), getLivingParticipantBox(), message.getType(), message.getUrl(),
+						message.getLabelNumbered()), getLivingParticipantBox(), message.getType(), message.getUrl(),
 				message.isShortArrow(), message.getArrowConfiguration());
 
 		if (message.getNote() != null) {
@@ -106,16 +106,6 @@ class Step1MessageExo extends Step1Abstract {
 
 	private LivingParticipantBox getLivingParticipantBox() {
 		return getDrawingSet().getLivingParticipantBox(((MessageExo) getMessage()).getParticipant());
-	}
-
-	private Display getLabelOfMessage(MessageExo message) {
-		if (message.getMessageNumber() == null) {
-			return message.getLabel();
-		}
-		Display result = Display.empty();
-		result = result.add(new MessageNumber(message.getMessageNumber()));
-		result = result.addAll(message.getLabel());
-		return result;
 	}
 
 	private Arrow createArrow() {

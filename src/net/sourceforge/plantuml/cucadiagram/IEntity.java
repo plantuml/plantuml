@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.LineConfigurable;
@@ -91,5 +92,9 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 	public void setHectorLayer(int layer);
 
 	public int getRawLayout();
+
+	public void putTip(String member, Display display);
+
+	public Map<String, Display> getTips();
 
 }

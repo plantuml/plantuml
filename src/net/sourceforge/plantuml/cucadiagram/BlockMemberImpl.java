@@ -33,12 +33,14 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -56,8 +58,18 @@ public class BlockMemberImpl implements BlockMember {
 	}
 
 	public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
-		return new TextBlockLineBefore(TextBlockUtils.withMargin((TextBlock) new MethodsOrFieldsArea(members,
-				fontParam, skinParam), 6, 4));
+		final MethodsOrFieldsArea methodsOrFieldsArea = new MethodsOrFieldsArea(members, fontParam, skinParam);
+		return new TextBlockLineBefore(TextBlockUtils.withMargin((TextBlock) methodsOrFieldsArea, 6, 4));
+	}
+
+	public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam, ISkinParam skinParam) {
+		final MethodsOrFieldsArea methodsOrFieldsArea = new MethodsOrFieldsArea(members, fontParam, skinParam);
+		return methodsOrFieldsArea.getPosition(member, stringBounder);
+	}
+
+	public boolean contains(String member, FontParam fontParam, ISkinParam skinParam) {
+		final MethodsOrFieldsArea methodsOrFieldsArea = new MethodsOrFieldsArea(members, fontParam, skinParam);
+		return methodsOrFieldsArea.contains(member);
 	}
 
 }

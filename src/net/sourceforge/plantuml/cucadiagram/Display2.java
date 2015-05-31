@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -214,7 +215,7 @@ public class Display2 implements Iterable<CharSequence> {
 			return null;
 		}
 		final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
-		return urlBuilder.getUrl(this.get(0).toString().trim());
+		return urlBuilder.getUrl(StringUtils.trin(this.get(0).toString()));
 	}
 
 	public Display2 removeUrl(Url url) {

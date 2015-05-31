@@ -120,8 +120,6 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		result = addTitle(result);
 		result = addHeaderAndFooter(result);
 
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
 			this.warningOrError = svek2.getBibliotekon().getWarningOrError(Integer.parseInt(widthwarning));
@@ -135,7 +133,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 				result.getBackcolor(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
 				warningOrError, 0, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
 		imageBuilder.addUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 
 	}
 

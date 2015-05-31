@@ -72,13 +72,13 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 
 	@Override
 	protected boolean isLineConsistent(String line, int level) {
-		line = line.trim();
+		line = StringUtils.trin(line);
 		return p1.matcher(line).matches();
 	}
 
 	public CommandExecutionResult execute(UmlDiagram diagram, List<String> lines) {
 		final Context context = new Context();
-		final Matcher mStart = getStartingPattern().matcher(lines.get(0).trim());
+		final Matcher mStart = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		if (mStart.find() == false) {
 			throw new IllegalStateException();
 		}

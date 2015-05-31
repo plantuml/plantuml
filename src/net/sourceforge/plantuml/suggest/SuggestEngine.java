@@ -40,42 +40,27 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandControl;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.version.IteratorCounter;
+import net.sourceforge.plantuml.version.IteratorCounterImpl;
 
 final public class SuggestEngine {
 
 	private final UmlDiagramFactory systemFactory;
 
-	private final Iterator<String> it;
-	private final String startLine;
-
-	private String current = "";
-	private String previous = "";
+	private final IteratorCounter it;
 
 	public SuggestEngine(UmlSource source, UmlDiagramFactory systemFactory) {
 		this.systemFactory = systemFactory;
 		this.it = source.iterator();
-		startLine = next();
+		final String startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
 			throw new UnsupportedOperationException();
 		}
-	}
-
-	private boolean hasNext() {
-		return it.hasNext();
-	}
-
-	private String next() {
-		// nb++;
-		this.previous = this.current;
-		this.current = it.next();
-		return current;
 	}
 
 	public SuggestEngineResult tryToSuggest(AbstractPSystem system) {
@@ -83,30 +68,29 @@ final public class SuggestEngine {
 	}
 
 	private SuggestEngineResult executeUmlCommand(AbstractPSystem system) {
-		// systemFactory.init(startLine);
-		while (hasNext()) {
-			final String s = next();
-			if (StartUtils.isArobaseEndDiagram(s)) {
+		while (it.hasNext()) {
+			if (StartUtils.isArobaseEndDiagram(it.peek())) {
 				return SuggestEngineResult.SYNTAX_OK;
 			}
-			final SuggestEngineResult check = checkAndCorrect(s);
+			final SuggestEngineResult check = checkAndCorrect();
 			if (check.getStatus() != SuggestEngineStatus.SYNTAX_OK) {
 				return check;
 			}
-			final CommandControl commandControl = systemFactory.isValid(Arrays.asList(s));
+			final CommandControl commandControl = systemFactory.isValid2(it);
 			if (commandControl == CommandControl.OK_PARTIAL) {
-				final boolean ok = manageMultiline(s);
-				if (ok == false) {
-					return SuggestEngineResult.CANNOT_CORRECT;
-				}
+				systemFactory.goForwardMultiline(it);
+				// if (ok == false) {
+				// return SuggestEngineResult.CANNOT_CORRECT;
+				// }
 			} else if (commandControl == CommandControl.OK) {
-//				final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
-//				final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
-//				if (result.isOk() == false) {
-//					return SuggestEngineResult.CANNOT_CORRECT;
-//				}
+				it.next();
+				// final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
+				// final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
+				// if (result.isOk() == false) {
+				// return SuggestEngineResult.CANNOT_CORRECT;
+				// }
 			} else {
-				assert false;
+				return SuggestEngineResult.CANNOT_CORRECT;
 			}
 		}
 		throw new IllegalStateException();
@@ -115,8 +99,8 @@ final public class SuggestEngine {
 	private boolean manageMultiline(final String init) {
 		final List<String> lines = new ArrayList<String>();
 		lines.add(init);
-		while (hasNext()) {
-			final String s = next();
+		while (it.hasNext()) {
+			final String s = it.next();
 			if (StartUtils.isArobaseEndDiagram(s)) {
 				return false;
 			}
@@ -135,15 +119,17 @@ final public class SuggestEngine {
 
 	}
 
-	SuggestEngineResult checkAndCorrect(final String incorrectLine) {
-		final CommandControl commandControl = systemFactory.isValid(Arrays.asList(incorrectLine));
+	SuggestEngineResult checkAndCorrect() {
+		final CommandControl commandControl = systemFactory.isValid2(it);
 		if (commandControl != CommandControl.NOT_OK) {
 			return SuggestEngineResult.SYNTAX_OK;
 		}
 
-		if (incorrectLine.trim().startsWith("{")
-				&& systemFactory.isValid(Arrays.asList(previous + " {")) != CommandControl.NOT_OK) {
-			return new SuggestEngineResult(previous + " {");
+		final String incorrectLine = it.peek();
+
+		if (StringUtils.trin(incorrectLine).startsWith("{")
+				&& systemFactory.isValid(Arrays.asList(it.peekPrevious() + " {")) != CommandControl.NOT_OK) {
+			return new SuggestEngineResult(it.peekPrevious() + " {");
 		}
 
 		final Collection<Iterator<String>> all = new ArrayList<Iterator<String>>();
@@ -154,8 +140,8 @@ final public class SuggestEngine {
 		all.add(new VariatorAddOneCharBetweenWords(incorrectLine, ' '));
 		// all.add(new VariatorAddTwoChar(incorrectLine, '\"'));
 
-		for (Iterator<String> it : all) {
-			final SuggestEngineResult result = tryThis(it);
+		for (Iterator<String> it2 : all) {
+			final SuggestEngineResult result = tryThis(it2);
 			if (result != null) {
 				return result;
 			}
@@ -163,18 +149,30 @@ final public class SuggestEngine {
 		return SuggestEngineResult.CANNOT_CORRECT;
 	}
 
-	private SuggestEngineResult tryThis(Iterator<String> it) {
-		while (it.hasNext()) {
-			final String newS = it.next();
-			if (newS.trim().length() == 0) {
+	private SuggestEngineResult tryThis(Iterator<String> it2) {
+		while (it2.hasNext()) {
+			final String newS = it2.next();
+			if (StringUtils.trin(newS).length() == 0) {
 				continue;
 			}
-			final CommandControl commandControl = systemFactory.isValid(Arrays.asList(newS));
-			if (commandControl != CommandControl.NOT_OK) {
+			final CommandControl commandControl = systemFactory.isValid2(replaceFirstLine(newS));
+			if (commandControl == CommandControl.OK) {
 				return new SuggestEngineResult(newS);
 			}
 		}
 		return null;
+	}
 
+	private IteratorCounter replaceFirstLine(String s) {
+		final List<String> tmp = new ArrayList<String>();
+		tmp.add(s);
+		final Iterator<String> it3 = it.cloneMe();
+		if (it3.hasNext()) {
+			it3.next();
+		}
+		while (it3.hasNext()) {
+			tmp.add(it3.next());
+		}
+		return new IteratorCounterImpl(tmp);
 	}
 }

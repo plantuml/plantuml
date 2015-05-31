@@ -73,7 +73,7 @@ public class PSystemTree extends AbstractPSystem {
 		} else {
 			builder.addUDrawable(new GTileOneLevelFactory().createGTile(root));
 		}
-		return builder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return builder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	public CommandExecutionResult addParagraph(int level, String label) {

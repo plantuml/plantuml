@@ -42,11 +42,11 @@ import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -72,9 +72,19 @@ public class NoteTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null, note.getSkinParamBackcolored(skinParam),
-				note.getStrings());
+		final Component comp = skin.createComponent(getNoteComponentType(note.getStyle()), null,
+				note.getSkinParamBackcolored(skinParam), note.getStrings());
 		return comp;
+	}
+
+	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
+		if (noteStyle == NoteStyle.HEXAGONAL) {
+			return ComponentType.NOTE_HEXAGONAL;
+		}
+		if (noteStyle == NoteStyle.BOX) {
+			return ComponentType.NOTE_BOX;
+		}
+		return ComponentType.NOTE;
 	}
 
 	public void drawU(UGraphic ug) {

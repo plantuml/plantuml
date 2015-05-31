@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15849 $
+ * Revision $Revision: 16159 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -145,7 +145,7 @@ public class Stereotype implements CharSequence, Hideable {
 			return null;
 		}
 		if (withGuillement) {
-			return manageGuillemet(label);
+			return StringUtils.manageGuillemetStrict(label);
 		}
 		return label;
 	}
@@ -194,26 +194,12 @@ public class Stereotype implements CharSequence, Hideable {
 		final Matcher m = p.matcher(getLabel(false));
 		while (m.find()) {
 			if (useGuillemet) {
-				result.add(manageGuillemet(m.group()));
+				result.add(StringUtils.manageGuillemetStrict(m.group()));
 			} else {
 				result.add(m.group());
 			}
 		}
 		return Collections.unmodifiableList(result);
-	}
-
-	private static String manageGuillemet(String st) {
-		if (st.startsWith("<< ")) {
-			st = "\u00AB" + st.substring(3);
-		} else if (st.startsWith("<<")) {
-			st = "\u00AB" + st.substring(2);
-		}
-		if (st.endsWith(" >>")) {
-			st = st.substring(0, st.length() - 3) + "\u00BB";
-		} else if (st.endsWith(">>")) {
-			st = st.substring(0, st.length() - 2) + "\u00BB";
-		}
-		return st;
 	}
 
 	public PackageStyle getPackageStyle() {

@@ -69,7 +69,7 @@ public class CommandMouseOver extends CommandMultilines2<ClassDiagram> {
 
 	public CommandExecutionResult executeNow(ClassDiagram system, List<String> lines) {
 		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		Code code = Code.of(line0.get("NAME1", 0));
 		if (code == null) {
 			code = Code.of(line0.get("NAME3", 0));

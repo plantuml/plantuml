@@ -35,9 +35,11 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.awt.geom.Dimension2D;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -51,6 +53,32 @@ public class LivingSpaces {
 
 	public Collection<LivingSpace> values() {
 		return all.values();
+	}
+
+	public LivingSpace previous(LivingSpace element) {
+		LivingSpace previous = null;
+		for (LivingSpace current : all.values()) {
+			if (current == element) {
+				return previous;
+			}
+			previous = current;
+		}
+		return null;
+	}
+
+	public LivingSpace next(LivingSpace element) {
+		for (Iterator<LivingSpace> it = all.values().iterator(); it.hasNext();) {
+			final LivingSpace current = it.next();
+			if (current == element && it.hasNext()) {
+				return it.next();
+			}
+		}
+		return null;
+
+	}
+
+	public Collection<Participant> participants() {
+		return all.keySet();
 	}
 
 	public void put(Participant participant, LivingSpace livingSpace) {
@@ -71,7 +99,7 @@ public class LivingSpaces {
 				final Dimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);
 				y = headHeight - dimHead.getHeight();
 			}
-			livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context);
+			livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment, HorizontalAlignment.LEFT);
 		}
 	}
 
@@ -95,6 +123,16 @@ public class LivingSpaces {
 			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();
 			livingSpace.drawLineAndLiveBoxes(ug.apply(new UTranslate(x, 0)), height, context);
 		}
+	}
+
+	public void delayOn(double y, double height) {
+		for (LivingSpace livingSpace : values()) {
+			livingSpace.delayOn(y, height);
+		}
+	}
+
+	public int size() {
+		return all.size();
 	}
 
 }

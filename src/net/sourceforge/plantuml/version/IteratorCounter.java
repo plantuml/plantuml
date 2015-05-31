@@ -34,7 +34,13 @@ package net.sourceforge.plantuml.version;
 import java.util.Iterator;
 
 public interface IteratorCounter extends Iterator<String> {
-	
+
 	public int currentNum();
+
+	public IteratorCounter cloneMe();
+
+	public String peek();
+
+	public String peekPrevious();
 
 }

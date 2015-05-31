@@ -96,7 +96,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 	public CommandExecutionResult executeNow(final ActivityDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 
 		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
 

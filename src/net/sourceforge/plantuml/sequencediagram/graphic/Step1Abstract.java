@@ -81,17 +81,6 @@ abstract class Step1Abstract {
 
 	abstract Frontier prepareMessage(ConstraintSet constraintSet, InGroupablesStack groupingStructures);
 
-	protected final Display getLabelOfMessage(AbstractMessage message) {
-		if (message.getMessageNumber() == null) {
-			return message.getLabel();
-		}
-		Display result = Display.empty();
-		result = result.add(new MessageNumber(message.getMessageNumber()));
-		result = result.addAll(message.getLabel());
-		return result;
-	}
-
-
 	protected final ArrowConfiguration getConfig() {
 		return config;
 	}

@@ -62,7 +62,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0,
 				null, null, null, 5, 5, null, false);
 		imageBuilder.addUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
-		return imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 
 //		UGraphic2 ug = fileFormat.createUGraphic(dim);
 //		ug = (UGraphic2) ug.apply(new UTranslate(10, 10));

@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.project2;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public class Knowledge {
 
 	private final TaskContainer taskContainer;
@@ -48,7 +50,7 @@ public class Knowledge {
 	}
 
 	public Value evaluate(String exp) {
-		exp = exp.trim();
+		exp = StringUtils.trin(exp);
 		int idx = exp.indexOf('$');
 		if (idx != -1) {
 			return evaluate(exp.substring(0, idx), exp.substring(idx + 1));

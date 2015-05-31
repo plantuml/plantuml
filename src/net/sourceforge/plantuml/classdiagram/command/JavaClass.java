@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16197 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 class JavaClass {
@@ -54,9 +55,9 @@ class JavaClass {
 		if (p == null) {
 			p = "";
 		}
-		final StringTokenizer st = new StringTokenizer(p.trim(), ",");
+		final StringTokenizer st = new StringTokenizer(StringUtils.trin(p), ",");
 		while (st.hasMoreTokens()) {
-			this.parents.add(st.nextToken().trim().replaceAll("\\<.*", ""));
+			this.parents.add(StringUtils.trin(st.nextToken()).replaceAll("\\<.*", ""));
 		}
 		this.type = type;
 		this.parentType = parentType;

@@ -31,33 +31,51 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.util.Iterator;
+import java.util.List;
 
 public class IteratorCounterImpl implements IteratorCounter {
 
-	private final Iterator<String> it;
+	private final List<String> data;
 	private int nb;
-	
-	public IteratorCounterImpl(Iterator<String> it) {
-		this.it = it;
-		this.nb = 0;
+
+	public IteratorCounterImpl(List<String> data) {
+		this(data, 0);
 	}
-	
+
+	private IteratorCounterImpl(List<String> data, int nb) {
+		this.data = data;
+		this.nb = nb;
+	}
+
 	public int currentNum() {
 		return nb;
 	}
 
 	public boolean hasNext() {
-		return it.hasNext();
+		return nb < data.size();
 	}
 
 	public String next() {
-		nb++;
-		return it.next();
+		return data.get(nb++);
+	}
+
+	public String peek() {
+		return data.get(nb);
+	}
+
+	public String peekPrevious() {
+		if (nb == 0) {
+			return null;
+		}
+		return data.get(nb - 1);
 	}
 
 	public void remove() {
 		throw new UnsupportedOperationException();
+	}
+
+	public IteratorCounter cloneMe() {
+		return new IteratorCounterImpl(data, nb);
 	}
 
 }

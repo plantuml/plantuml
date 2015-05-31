@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -58,7 +59,7 @@ abstract class AbstractElementText extends AbstractElement {
 		config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
 		if (manageLength) {
 			this.charLength = getCharNumber(text);
-			text = text.trim();
+			text = StringUtils.trin(text);
 		} else {
 			this.charLength = 0;
 		}

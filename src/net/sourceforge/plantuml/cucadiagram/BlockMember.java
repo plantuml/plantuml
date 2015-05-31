@@ -33,12 +33,17 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.awt.geom.Rectangle2D;
+
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface BlockMember {
 
 	public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam);
+	
+	public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam, ISkinParam skinParam);
 
 }

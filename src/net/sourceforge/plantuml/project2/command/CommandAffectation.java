@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.project2.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.project2.PSystemProject2;
@@ -48,8 +49,8 @@ public class CommandAffectation extends SingleLineCommand<PSystemProject2> {
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemProject2 diagram, List<String> arg) {
-		final Value exp = diagram.getProject().getExpression(arg.get(1).trim());
-		final boolean ok = diagram.getProject().affectation(arg.get(0).trim(), exp);
+		final Value exp = diagram.getProject().getExpression(StringUtils.trin(arg.get(1)));
+		final boolean ok = diagram.getProject().affectation(StringUtils.trin(arg.get(0)), exp);
 		if (ok) {
 			return CommandExecutionResult.ok();
 		}

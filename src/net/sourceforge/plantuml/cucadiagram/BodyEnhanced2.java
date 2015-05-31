@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -143,7 +144,7 @@ public class BodyEnhanced2 implements TextBlock {
 		if (s.length() <= 4) {
 			return null;
 		}
-		s = s.substring(2, s.length() - 2).trim();
+		s = StringUtils.trin(s.substring(2, s.length() - 2));
 		return TextBlockUtils
 				.create(Display.getWithNewlines(s), titleConfig, HorizontalAlignment.LEFT, spriteContainer);
 	}

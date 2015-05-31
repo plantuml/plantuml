@@ -45,7 +45,7 @@ public class PSystemListFontsFactory extends PSystemSingleLineFactory {
 		if (lineLower.equals("listfont") || lineLower.equals("listfonts") || lineLower.startsWith("listfont ")
 				|| lineLower.startsWith("listfonts ")) {
 			final int idx = line.indexOf(' ');
-			return new PSystemListFonts(idx == -1 ? "This is a test" : line.substring(idx).trim());
+			return new PSystemListFonts(idx == -1 ? "This is a test" : StringUtils.trin(line.substring(idx)));
 		}
 		return null;
 	}

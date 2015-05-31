@@ -35,14 +35,11 @@ package net.sourceforge.plantuml.cute;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
@@ -64,7 +61,7 @@ public class PSystemCute extends AbstractPSystem {
 	}
 
 	public void doCommandLine(String line) {
-		line = line.trim();
+		line = StringUtils.trin(line);
 		if (line.length()==0 || line.startsWith("'")) {
 			return;
 		}
@@ -88,6 +85,6 @@ public class PSystemCute extends AbstractPSystem {
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 10, 10, null, false);
 		builder.addUDrawable(root);
-		return builder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return builder.writeImageTOBEMOVED(fileFormat, os);
 	}
 }

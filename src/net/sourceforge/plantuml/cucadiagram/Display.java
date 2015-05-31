@@ -38,8 +38,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.EmbededDiagram;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -98,6 +101,9 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c);
 					current.append(c2);
 				}
+			} else if (c == StringUtils.hiddenNewLine()) {
+				result.add(current.toString());
+				current.setLength(0);
 			} else {
 				current.append(c);
 			}
@@ -125,12 +131,12 @@ public class Display implements Iterable<CharSequence> {
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
 			CharSequence s = it.next();
-			if (s != null && s.toString().trim().equals("{{")) {
+			if (s != null && StringUtils.trin(s.toString()).equals("{{")) {
 				final List<CharSequence> other = new ArrayList<CharSequence>();
 				other.add("@startuml");
 				while (it.hasNext()) {
 					final CharSequence s2 = it.next();
-					if (s2 != null && s2.toString().trim().equals("}}")) {
+					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}")) {
 						break;
 					}
 					other.add(s2);
@@ -240,7 +246,7 @@ public class Display implements Iterable<CharSequence> {
 			return null;
 		}
 		final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
-		return urlBuilder.getUrl(this.get(0).toString().trim());
+		return urlBuilder.getUrl(StringUtils.trin(this.get(0).toString()));
 	}
 
 	public Display removeUrl(Url url) {
@@ -265,6 +271,26 @@ public class Display implements Iterable<CharSequence> {
 
 	public HorizontalAlignment getNaturalHorizontalAlignment() {
 		return naturalHorizontalAlignment;
+	}
+
+	public List<Display> splitMultiline(Pattern separator) {
+		final List<Display> result = new ArrayList<Display>();
+		Display pending = new Display(this.naturalHorizontalAlignment);
+		result.add(pending);
+		for (CharSequence line : display) {
+			final Matcher m = separator.matcher(line);
+			if (m.find()) {
+				final CharSequence s1 = line.subSequence(0, m.start());
+				pending.display.add(s1);
+				final CharSequence s2 = line.subSequence(m.end(), line.length());
+				pending = new Display(this.naturalHorizontalAlignment);
+				result.add(pending);
+				pending.display.add(s2);
+			} else {
+				pending.display.add(line);
+			}
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 }

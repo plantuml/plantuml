@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,6 +192,29 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 		};
 	}
 
+	public Rectangle2D getPosition(String member, StringBounder stringBounder) {
+		double x = 0;
+		double y = 0;
+		for (Member att : members) {
+			final TextBlock bloc = createTextBlock(att);
+			final Dimension2D dim = bloc.calculateDimension(stringBounder);
+			if (att.getDisplay(false).startsWith(member)) {
+				return new Rectangle2D.Double(x, y, dim.getWidth(), dim.getHeight());
+			}
+			y += dim.getHeight();
+		}
+		throw new IllegalArgumentException();
+	}
+
+	public boolean contains(String member) {
+		for (Member att : members) {
+			if (att.getDisplay(false).startsWith(member)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void drawU(UGraphic ug) {
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		final ULayoutGroup group;
@@ -220,4 +244,5 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 		}
 		group.drawU(ug, 0, 0, dim.getWidth(), dim.getHeight());
 	}
+
 }

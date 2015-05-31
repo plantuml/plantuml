@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 14726 $
+ * Revision $Revision: 16194 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -72,7 +72,7 @@ class JavaFile {
 		String javaPackage = null;
 		String s;
 		while ((s = br.readLine()) != null) {
-			s = s.trim();
+			s = StringUtils.trin(s);
 			final Matcher matchPackage = packageDefinition.matcher(s);
 			if (matchPackage.find()) {
 				javaPackage = matchPackage.group(1);

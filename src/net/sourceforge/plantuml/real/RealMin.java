@@ -34,27 +34,24 @@
 package net.sourceforge.plantuml.real;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class RealMin implements Real {
+class RealMin extends AbstractReal implements Real {
 
 	private final List<Real> all = new ArrayList<Real>();
 
-	public void put(Real real) {
-		if (real == null) {
-			throw new IllegalArgumentException();
-		}
-		if (real == this) {
-			return;
-		}
-		all.add(real);
+	RealMin(Collection<Real> reals) {
+		super(RealMax.line(reals));
+		this.all.addAll(reals);
 	}
 
 	public String getName() {
 		return "min " + all;
 	}
 
-	public double getCurrentValue() {
+	@Override
+	double getCurrentValueInternal() {
 		double result = all.get(0).getCurrentValue();
 		for (int i = 1; i < all.size(); i++) {
 			final double v = all.get(i).getCurrentValue();
@@ -74,15 +71,17 @@ public class RealMin implements Real {
 	}
 
 	public void ensureBiggerThan(Real other) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void compile() {
-		all.get(0).compile();
+		for (Real r : all) {
+			r.ensureBiggerThan(other);
+		}
 	}
 
 	public int size() {
 		return all.size();
+	}
+
+	public void printCreationStackTrace() {
+		throw new UnsupportedOperationException();
 	}
 
 }

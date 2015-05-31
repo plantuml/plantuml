@@ -212,5 +212,9 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.handwritten();
 	}
 
+	public String getSvgLinkTarget() {
+		return skinParam.getSvgLinkTarget();
+	}
+
 
 }

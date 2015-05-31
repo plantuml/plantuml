@@ -28,12 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15877 $
+ * Revision $Revision: 16206 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
+
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 interface FontParamConstant {
 	String FAMILY = "SansSerif";
@@ -144,6 +149,14 @@ public enum FontParam {
 
 	public String getDefaultFamily() {
 		return defaultFamily;
+	}
+
+	public FontConfiguration getFontConfiguration(ISkinParam skinParam) {
+		final UFont font = skinParam.getFont(this, null, false);
+		final HtmlColor color = new Rose().getFontColor(skinParam, this);
+		final HtmlColor hyperlinkColor = skinParam.getHyperlinkColor();
+		final boolean useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
+		return new FontConfiguration(font, color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
 }

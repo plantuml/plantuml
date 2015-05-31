@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16005 $
+ * Revision $Revision: 16156 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
-import net.sourceforge.plantuml.sequencediagram.ParticipantEngloberContexted;
+import net.sourceforge.plantuml.sequencediagram.Englober;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Component;
@@ -206,11 +206,11 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberTitleWidth3(StringBounder stringBounder) {
-		for (ParticipantEngloberContexted pe : drawableSet.getExistingParticipantEnglober()) {
+		for (Englober pe : drawableSet.getExistingParticipantEnglober()) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
 					pe.getParticipantEnglober());
-			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2()).getParticipantBox();
-			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2()).getParticipantBox();
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE()).getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE()).getParticipantBox();
 			final double x1 = drawableSet.getX1(pe);
 			final double x2 = drawableSet.getX2(stringBounder, pe);
 			final double missing = preferredWidth - (x2 - x1);

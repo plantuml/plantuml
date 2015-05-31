@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15848 $
+ * Revision $Revision: 16021 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -213,7 +213,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam().getColorMapper(), 1, HtmlColorUtils.WHITE,
 				null, null, 0, 10, null, getSkinParam().handwritten());
 		imageBuilder.addUDrawable(fullLayout);
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 	}
 
 	private RowLayout getRawLayout(int raw) {

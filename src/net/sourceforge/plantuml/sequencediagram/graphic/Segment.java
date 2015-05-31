@@ -44,7 +44,7 @@ public class Segment {
 	final private double pos1;
 	final private double pos2;
 
-	Segment(double pos1, double pos2) {
+	public Segment(double pos1, double pos2) {
 		this.pos1 = pos1;
 		this.pos2 = pos2;
 		if (pos2 < pos1) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15848 $
+ * Revision $Revision: 16158 $
  */
 package net.sourceforge.plantuml;
 
@@ -54,24 +54,15 @@ import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class PSystemError extends AbstractPSystem {
 
-	private String getSuggestColor(boolean useRed) {
-		if (useRed) {
-			return "black";
-		}
-		return "white";
-	}
-
-	private String getRed(boolean useRed) {
-		if (useRed) {
-			return "#CD0A0A";
-		}
-		return "red";
-	}
-
 	private final int higherErrorPosition;
 	private final List<ErrorUml> printedErrors;
+	private final List<String> debugLines = new ArrayList<String>();
 
-	public PSystemError(UmlSource source, List<ErrorUml> all) {
+	public PSystemError(UmlSource source, ErrorUml singleError, List<String> debugLines) {
+		this(source, Collections.singletonList(singleError), debugLines);
+	}
+
+	private PSystemError(UmlSource source, List<ErrorUml> all, List<String> debugLines) {
 		this.setSource(source);
 
 		final int higherErrorPositionExecution = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR, all);
@@ -90,10 +81,24 @@ public class PSystemError extends AbstractPSystem {
 			printedErrors = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR, all);
 		}
 
+		if (debugLines != null) {
+			this.debugLines.addAll(debugLines);
+		}
+
 	}
 
-	public PSystemError(UmlSource source, ErrorUml singleError) {
-		this(source, Collections.singletonList(singleError));
+	private String getSuggestColor(boolean useRed) {
+		if (useRed) {
+			return "black";
+		}
+		return "white";
+	}
+
+	private String getRed(boolean useRed) {
+		if (useRed) {
+			return "#CD0A0A";
+		}
+		return "red";
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
@@ -110,7 +115,7 @@ public class PSystemError extends AbstractPSystem {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.addUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat.getFileFormat(), os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
 	private List<String> getTextStrings() {
@@ -158,6 +163,7 @@ public class PSystemError extends AbstractPSystem {
 			}
 			first = false;
 		}
+		result.addAll(this.debugLines);
 
 		return result;
 	}
@@ -186,10 +192,10 @@ public class PSystemError extends AbstractPSystem {
 		if (StringUtils.isNotEmpty(err)) {
 			htmlStrings.add("<w:" + getRed(useRed) + ">" + err + "</w>");
 		}
-//		final StringBuilder underscore = new StringBuilder();
-//		for (int i = 0; i < errorLine.length(); i++) {
-//			underscore.append("^");
-//		}
+		// final StringBuilder underscore = new StringBuilder();
+		// for (int i = 0; i < errorLine.length(); i++) {
+		// underscore.append("^");
+		// }
 		final Collection<String> textErrors = new LinkedHashSet<String>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());
@@ -207,6 +213,7 @@ public class PSystemError extends AbstractPSystem {
 			}
 			first = false;
 		}
+		htmlStrings.addAll(this.debugLines);
 
 		return htmlStrings;
 	}
@@ -293,4 +300,25 @@ public class PSystemError extends AbstractPSystem {
 		}
 		return sb.toString();
 	}
+
+	public static PSystemError merge(Collection<PSystemError> ps) {
+		UmlSource source = null;
+		final List<ErrorUml> errors = new ArrayList<ErrorUml>();
+		final List<String> debugs = new ArrayList<String>();
+		for (PSystemError system : ps) {
+			if (system.getSource() != null && source == null) {
+				source = system.getSource();
+			}
+			errors.addAll(system.getErrorsUml());
+			debugs.addAll(system.debugLines);
+			if (system.debugLines.size() > 0) {
+				debugs.add("-");
+			}
+		}
+		if (source == null) {
+			throw new IllegalStateException();
+		}
+		return new PSystemError(source, errors, debugs);
+	}
+
 }

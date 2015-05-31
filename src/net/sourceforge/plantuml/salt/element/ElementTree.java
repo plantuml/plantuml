@@ -41,14 +41,12 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementTree extends AbstractElement {
 
@@ -70,14 +68,14 @@ public class ElementTree extends AbstractElement {
 			level++;
 			s = s.substring(1);
 		}
-		final Element elmt = new ElementText(Arrays.asList(s.trim()), font, spriteContainer);
+		final Element elmt = new ElementText(Arrays.asList(StringUtils.trin(s)), font, spriteContainer);
 		entries.add(new ElementTreeEntry(level, elmt));
 	}
 
 	public void addCellToEntry(String s) {
 		final int size = entries.size();
 		if (size > 0) {
-			final Element elmt = new ElementText(Arrays.asList(s.trim()), font, spriteContainer);
+			final Element elmt = new ElementText(Arrays.asList(StringUtils.trin(s)), font, spriteContainer);
 			entries.get(size - 1).addCell(elmt);
 		}
 	}
@@ -151,58 +149,6 @@ public class ElementTree extends AbstractElement {
 			final Grid2 grid = new Grid2(rows, cols, strategy);
 			grid.drawU(ug);
 		}
-	}
-
-	static class Skeleton {
-
-		private final List<Entry> entries = new ArrayList<Entry>();
-
-		static class Entry {
-			private final double xpos;
-			private final double ypos;
-
-			public Entry(double x, double y) {
-				this.xpos = x;
-				this.ypos = y;
-			}
-
-			public void drawRectangle(UGraphic ug) {
-				ug.apply(new UTranslate(xpos, ypos)).draw(new URectangle(2, 2));
-			}
-		}
-
-		public void add(double x, double y) {
-			entries.add(new Entry(x, y));
-		}
-
-		public void draw(UGraphic ug, double x, double y) {
-			for (int i = 0; i < entries.size(); i++) {
-				final Entry en = entries.get(i);
-				if (i + 1 < entries.size() && entries.get(i + 1).xpos > en.xpos) {
-					en.drawRectangle(ug);
-				}
-				Entry parent = null;
-				for (int j = 0; j < i; j++) {
-					final Entry en0 = entries.get(j);
-					if (en0.xpos < en.xpos) {
-						parent = en0;
-					}
-				}
-				if (parent != null) {
-					drawChild(ug, parent, en);
-				}
-			}
-		}
-
-		private void drawChild(UGraphic ug, Entry parent, Entry child) {
-			final double dy = child.ypos - parent.ypos - 2;
-			ug.apply(new UTranslate(parent.xpos + 1, parent.ypos + 3)).draw(new ULine(0, dy));
-
-			final double dx = child.xpos - parent.xpos - 2;
-			ug.apply(new UTranslate(parent.xpos + 1, child.ypos + 1)).draw(new ULine(dx, 0));
-
-		}
-
 	}
 
 }

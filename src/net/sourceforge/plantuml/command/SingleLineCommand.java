@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14321 $
+ * Revision $Revision: 16195 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -67,7 +67,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = lines.get(0).trim();
+		final String line = StringUtils.trin(lines.get(0));
 		final Matcher m = pattern.matcher(line);
 		final boolean result = m.find();
 		if (result) {
@@ -87,7 +87,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final String line = lines.get(0).trim();
+		final String line = StringUtils.trin(lines.get(0));
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Forbidden line " + line);
 		}

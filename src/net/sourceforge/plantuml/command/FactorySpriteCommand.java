@@ -88,7 +88,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 
 			public CommandExecutionResult executeNow(final UmlDiagram system, List<String> lines) {
 				StringUtils.trim(lines, true);
-				final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 
 				final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 				if (strings.size() == 0) {
@@ -130,7 +130,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 	private String concat(final List<String> strings) {
 		final StringBuilder sb = new StringBuilder();
 		for (String s : strings) {
-			sb.append(s.trim());
+			sb.append(StringUtils.trin(s));
 		}
 		return sb.toString();
 	}

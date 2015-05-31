@@ -37,6 +37,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public final class SvgData {
 
 	private String svg;
@@ -92,8 +94,8 @@ public final class SvgData {
 		while (st.hasMoreTokens()) {
 			final String token = st.nextToken();
 			final StringTokenizer st2 = new StringTokenizer(token, ",");
-			final double x = Double.parseDouble(st2.nextToken().trim());
-			final double y = Double.parseDouble(st2.nextToken().trim());
+			final double x = Double.parseDouble(StringUtils.trin(st2.nextToken()));
+			final double y = Double.parseDouble(StringUtils.trin(st2.nextToken()));
 			if (x < minX) {
 				minX = x;
 			}

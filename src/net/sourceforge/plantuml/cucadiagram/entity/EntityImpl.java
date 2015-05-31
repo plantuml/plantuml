@@ -33,10 +33,13 @@
  */
 package net.sourceforge.plantuml.cucadiagram.entity;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -64,6 +67,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -299,6 +303,11 @@ final class EntityImpl implements ILeaf, IGroup {
 				public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
 					return null;
 				}
+
+				public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam,
+						ISkinParam skinParam) {
+					throw new UnsupportedOperationException();
+				}
 			};
 		}
 		return new BlockMember() {
@@ -306,10 +315,11 @@ final class EntityImpl implements ILeaf, IGroup {
 				if (getEntityType().isLikeClass()) {
 
 					if (showFields && showMethods) {
-						return new TextBlockVertical2(new BlockMemberImpl(getFieldsToDisplay()).asTextBlock(fontParam,
-								skinParam),
-								new BlockMemberImpl(getMethodsToDisplay()).asTextBlock(fontParam, skinParam),
-								HorizontalAlignment.LEFT);
+						final BlockMemberImpl bb1 = new BlockMemberImpl(getFieldsToDisplay());
+						final BlockMemberImpl bb2 = new BlockMemberImpl(getMethodsToDisplay());
+						final TextBlock b1 = bb1.asTextBlock(fontParam, skinParam);
+						final TextBlock b2 = bb2.asTextBlock(fontParam, skinParam);
+						return new TextBlockVertical2(b1, b2, HorizontalAlignment.LEFT);
 					} else if (showFields) {
 						return new BlockMemberImpl(getFieldsToDisplay()).asTextBlock(fontParam, skinParam);
 					} else if (showMethods) {
@@ -319,6 +329,25 @@ final class EntityImpl implements ILeaf, IGroup {
 				}
 				if (getEntityType() == LeafType.OBJECT) {
 					return new BlockMemberImpl(getFieldsToDisplay()).asTextBlock(fontParam, skinParam);
+				}
+				throw new UnsupportedOperationException();
+			}
+
+			public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam,
+					ISkinParam skinParam) {
+				if (getEntityType().isLikeClass()) {
+
+					if (showFields && showMethods) {
+						final BlockMemberImpl bb1 = new BlockMemberImpl(getFieldsToDisplay());
+						final BlockMemberImpl bb2 = new BlockMemberImpl(getMethodsToDisplay());
+						if (bb1.contains(member, fontParam, skinParam)) {
+							return bb1.getPosition(member, stringBounder, fontParam, skinParam);
+						}
+						if (bb2.contains(member, fontParam, skinParam)) {
+							return bb2.getPosition(member, stringBounder, fontParam, skinParam);
+						}
+					}
+					return null;
 				}
 				throw new UnsupportedOperationException();
 			}
@@ -332,6 +361,11 @@ final class EntityImpl implements ILeaf, IGroup {
 		return new BlockMember() {
 			public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
 				return new BodyEnhanced(mouseOver, fontParam, skinParam, leafType.manageModifier());
+			}
+
+			public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam,
+					ISkinParam skinParam) {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -646,6 +680,16 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public Neighborhood getNeighborhood() {
 		return neighborhood;
+	}
+
+	private final Map<String, Display> tips = new LinkedHashMap<String, Display>();
+
+	public void putTip(String member, Display display) {
+		tips.put(member, display);
+	}
+
+	public Map<String, Display> getTips() {
+		return Collections.unmodifiableMap(tips);
 	}
 
 }

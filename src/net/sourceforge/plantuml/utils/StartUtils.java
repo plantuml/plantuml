@@ -36,27 +36,28 @@ package net.sourceforge.plantuml.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class StartUtils {
 
 	public static boolean isArobaseStartDiagram(String s) {
-		s = s.trim();
+		s = StringUtils.trinNoTrace(s);
 		return s.startsWith("@start");
 	}
 
 	public static boolean isArobaseEndDiagram(String s) {
-		s = s.trim();
+		s = StringUtils.trinNoTrace(s);
 		return s.startsWith("@end");
 	}
 
 	public static boolean isArobasePauseDiagram(String s) {
-		s = s.trim();
+		s = StringUtils.trinNoTrace(s);
 		return s.startsWith("@pause");
 	}
 
 	public static boolean isArobaseUnpauseDiagram(String s) {
-		s = s.trim();
+		s = StringUtils.trinNoTrace(s);
 		return s.startsWith("@unpause");
 	}
 
@@ -65,7 +66,7 @@ public class StartUtils {
 	public static String getPossibleAppend(String s) {
 		final Matcher m = append.matcher(s);
 		if (m.find()) {
-			return s.substring(m.group(0).length()).trim();
+			return StringUtils.trin(s.substring(m.group(0).length()));
 		}
 		return null;
 	}

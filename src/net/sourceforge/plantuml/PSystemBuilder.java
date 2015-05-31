@@ -103,7 +103,7 @@ public class PSystemBuilder {
 			errors.add((PSystemError) sys);
 		}
 
-		final PSystemError err = merge(errors);
+		final PSystemError err = PSystemError.merge(errors);
 		// if (OptionFlags.getInstance().isQuiet() == false) {
 		// err.print(System.err);
 		// }
@@ -158,21 +158,6 @@ public class PSystemBuilder {
 		factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		factories.add(new PSystemCuteFactory(DiagramType.CUTE));
 		return factories;
-	}
-
-	private PSystemError merge(Collection<PSystemError> ps) {
-		UmlSource source = null;
-		final List<ErrorUml> errors = new ArrayList<ErrorUml>();
-		for (PSystemError system : ps) {
-			if (system.getSource() != null && source == null) {
-				source = system.getSource();
-			}
-			errors.addAll(system.getErrorsUml());
-		}
-		if (source == null) {
-			throw new IllegalStateException();
-		}
-		return new PSystemError(source, errors);
 	}
 
 	private boolean isOk(Diagram ps) {

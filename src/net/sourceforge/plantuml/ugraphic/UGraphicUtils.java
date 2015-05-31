@@ -71,7 +71,7 @@ public abstract class UGraphicUtils {
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
 			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
-					.getMappedColor(background)), false, 1.0);
+					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget());
 			image.drawU(svg);
 			svg.createXml(os);
 		} else if (fileFormat == FileFormat.EPS) {

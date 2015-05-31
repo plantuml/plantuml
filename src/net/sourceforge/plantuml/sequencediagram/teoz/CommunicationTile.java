@@ -36,7 +36,9 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
@@ -50,7 +52,7 @@ import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTile implements TileWithUpdateStairs {
+public class CommunicationTile implements TileWithUpdateStairs, TileWithCallbackY {
 
 	private final LivingSpace livingSpace1;
 	private final LivingSpace livingSpace2;
@@ -72,6 +74,10 @@ public class CommunicationTile implements TileWithUpdateStairs {
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
+
+		if (message.isCreate()) {
+			livingSpace2.goCreate();
+		}
 		// for (LifeEvent lifeEvent : message.getLiveEvents()) {
 		// System.err.println("lifeEvent = " + lifeEvent);
 		// // livingSpace1.addLifeEvent(this, lifeEvent);
@@ -86,7 +92,10 @@ public class CommunicationTile implements TileWithUpdateStairs {
 			return true;
 		}
 		return false;
+	}
 
+	private boolean isCreate() {
+		return message.isCreate();
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -98,7 +107,7 @@ public class CommunicationTile implements TileWithUpdateStairs {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
 		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabel());
+				message.getLabelNumbered());
 		return comp;
 	}
 
@@ -124,25 +133,37 @@ public class CommunicationTile implements TileWithUpdateStairs {
 		double x1 = getPoint1(stringBounder).getCurrentValue();
 		double x2 = getPoint2(stringBounder).getCurrentValue();
 
-		final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-		final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-		// System.err.println("CommunicationTile::draw msg=" + message + " level1=" + level1 + " level2=" + level2);
-
 		final Area area;
 		if (isReverse(stringBounder)) {
-			System.err.println("isreverse!");
-			// x1 -= LIVE_DELTA_SIZE * level1;
+			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			if (level1 > 0) {
+				x1 -= LIVE_DELTA_SIZE;
+			}
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = new Area(x1 - x2, dim.getHeight());
 			ug = ug.apply(new UTranslate(x2, 0));
+			if (isCreate()) {
+				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.CENTER, HorizontalAlignment.RIGHT);
+			}
 		} else {
+			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			if (level2 > 0) {
+				level2 = level2 - 2;
+			}
 			x1 += LIVE_DELTA_SIZE * level1;
-			x2 -= LIVE_DELTA_SIZE * level2;
+			x2 += LIVE_DELTA_SIZE * level2;
 			area = new Area(x2 - x1, dim.getHeight());
 			ug = ug.apply(new UTranslate(x1, 0));
+			if (isCreate()) {
+				livingSpace2.drawHead(ug.apply(new UTranslate(area.getDimensionToUse().getWidth(), 0)), (Context2D) ug,
+						VerticalAlignment.CENTER, HorizontalAlignment.LEFT);
+			}
 		}
 		comp.drawU(ug, area, (Context2D) ug);
 		// ug.draw(new ULine(x2 - x1, 0));
+
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -208,6 +229,12 @@ public class CommunicationTile implements TileWithUpdateStairs {
 			return getPoint1(stringBounder);
 		}
 		return getPoint2(stringBounder);
+	}
+
+	public void callbackY(double y) {
+		if (message.isCreate()) {
+			livingSpace2.goCreate(y);
+		}
 	}
 
 }

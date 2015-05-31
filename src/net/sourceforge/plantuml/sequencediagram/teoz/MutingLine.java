@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.awt.geom.Dimension2D;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.sequencediagram.Delay;
@@ -45,12 +47,14 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class MutingLine {
 
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private final boolean useContinueLineBecauseOfDelay;
+	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 
 	public MutingLine(Skin skin, ISkinParam skinParam, List<Event> events) {
 		this.skin = skin;
@@ -71,13 +75,39 @@ public class MutingLine {
 		return false;
 	}
 
-	public void drawLine(UGraphic ug, double height, Context2D context) {
+	public void drawLine(UGraphic ug, Context2D context, double createY, double endY) {
 		final ComponentType defaultLineType = useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE
 				: ComponentType.PARTICIPANT_LINE;
+		if (delays.size() > 0) {
+			double y = createY;
+			for (Map.Entry<Double, Double> ent : delays.entrySet()) {
+				if (ent.getKey() >= createY) {
+					drawInternal(ug, context, y, ent.getKey(), defaultLineType);
+					drawInternal(ug, context, ent.getKey(), ent.getKey() + ent.getValue(), ComponentType.DELAY_LINE);
+					y = ent.getKey() + ent.getValue();
+				}
+			}
+			drawInternal(ug, context, y, endY, defaultLineType);
+		} else {
+			drawInternal(ug, context, createY, endY, defaultLineType);
+		}
+	}
+
+	private void drawInternal(UGraphic ug, Context2D context, double y1, double y2, final ComponentType defaultLineType) {
+		if (y2 == y1) {
+			return;
+		}
+		if (y2 < y1) {
+			throw new IllegalArgumentException();
+		}
 		final Component comp = skin.createComponent(defaultLineType, null, skinParam, null);
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
-		final Area area = new Area(dim.getWidth(), height);
-		comp.drawU(ug, area, context);
+		final Area area = new Area(dim.getWidth(), y2 - y1);
+		comp.drawU(ug.apply(new UTranslate(0, y1)), area, context);
+	}
+
+	public void delayOn(double y, double height) {
+		delays.put(y, height);
 	}
 
 }

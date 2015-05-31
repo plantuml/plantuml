@@ -31,7 +31,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
+import java.awt.Color;
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -83,6 +85,11 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 			textDecoration = "line-through";
 		}
 
+		String backColor = null;
+		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
+			backColor = StringUtils.getAsHtml(mapper.getMappedColor(fontConfiguration.getExtendedColor()));
+		}
+
 		svg.setFillColor(StringUtils.getAsHtml(mapper.getMappedColor(fontConfiguration.getColor())));
 		String text = shape.getText();
 		if (text.startsWith(" ")) {
@@ -92,9 +99,9 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 				text = text.substring(1);
 			}
 		}
-		text = text.trim();
+		text = StringUtils.trin(text);
 		final Dimension2D dim = stringBounder.calculateDimension(font, text);
 		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
-				dim.getWidth(), fontConfiguration.getAttributes());
+				dim.getWidth(), fontConfiguration.getAttributes(), backColor);
 	}
 }

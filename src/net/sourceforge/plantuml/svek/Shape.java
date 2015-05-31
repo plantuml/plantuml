@@ -260,4 +260,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		return octagon;
 	}
 
+	public Point2D getPoint2D(double x, double y) {
+		return new Point2D.Double(minX + x, minY + y);
+	}
+
 }

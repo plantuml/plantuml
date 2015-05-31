@@ -67,7 +67,7 @@ public class UrlBuilder {
 		} else {
 			throw new IllegalStateException();
 		}
-		final Matcher m = p.matcher(s.trim());
+		final Matcher m = p.matcher(StringUtils.trinNoTrace(s));
 		if (m.matches() == false) {
 			return null;
 		}

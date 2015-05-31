@@ -40,6 +40,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 
 public class AffineTransformation {
@@ -88,7 +89,7 @@ public class AffineTransformation {
 	}
 
 	private static AffineTransformation createSimple(String value) {
-		Matcher m = rotate.matcher(value.trim());
+		Matcher m = rotate.matcher(StringUtils.trin(value));
 		if (m.find()) {
 			final double angle = Double.parseDouble(m.group(1));
 			return new AffineTransformation(AffineTransform.getRotateInstance(angle * Math.PI / 180.0));

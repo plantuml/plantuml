@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15982 $
+ * Revision $Revision: 16196 $
  *
  */
 package net.sourceforge.plantuml;
@@ -70,7 +70,7 @@ public class SkinParam implements ISkinParam {
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 
 	public void setParam(String key, String value) {
-		params.put(cleanForKey(key), value.trim());
+		params.put(cleanForKey(key), StringUtils.trin(value));
 	}
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
@@ -93,7 +93,7 @@ public class SkinParam implements ISkinParam {
 	// }
 
 	static String cleanForKey(String key) {
-		key = StringUtils.goLowerCase(key).trim();
+		key = StringUtils.trin(StringUtils.goLowerCase(key));
 		key = key.replaceAll("_|\\.|\\s", "");
 		key = replaceSmart(key, "partition", "package");
 		key = replaceSmart(key, "sequenceparticipant", "participant");
@@ -662,6 +662,14 @@ public class SkinParam implements ISkinParam {
 			return true;
 		}
 		return false;
+	}
+
+	public String getSvgLinkTarget() {
+		final String value = getValue("svglinktarget");
+		if (value == null) {
+			return "_top";
+		}
+		return value;
 	}
 
 }

@@ -37,7 +37,9 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LivingSpace {
 
@@ -62,6 +65,7 @@ public class LivingSpace {
 	private final boolean useContinueLineBecauseOfDelay;
 	private final MutingLine mutingLine;
 	private final Rose rose = new Rose();
+	private final LiveBoxes liveBoxes;
 
 	// private final LivingSpaceImpl previous;
 	// private LivingSpace next;
@@ -71,6 +75,10 @@ public class LivingSpace {
 	private Real posD;
 
 	private final EventsHistory eventsHistory;
+	private boolean create = false;
+	private double createY = 0;
+	
+	private final ParticipantEnglober englober;
 
 	public int getLevelAt(Tile tile, EventsHistoryMode mode) {
 		// assert mode == EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE;
@@ -99,6 +107,7 @@ public class LivingSpace {
 		this.p = p;
 		this.skin = skin;
 		this.skinParam = skinParam;
+		this.englober = englober;
 		this.posB = position;
 		if (p.getType() == ParticipantType.PARTICIPANT) {
 			headType = ComponentType.PARTICIPANT_HEAD;
@@ -125,7 +134,7 @@ public class LivingSpace {
 		// this.stairs2.addStep2(0, 0);
 		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
 		this.mutingLine = new MutingLine(skin, skinParam, events);
-
+		this.liveBoxes = new LiveBoxes(eventsHistory, skin, skinParam);
 	}
 
 	private boolean useContinueLineBecauseOfDelay(List<Event> events) {
@@ -143,27 +152,28 @@ public class LivingSpace {
 
 	public void drawLineAndLiveBoxes(UGraphic ug, double height, Context2D context) {
 
-		mutingLine.drawLine(ug, height, context);
-		// final ComponentType defaultLineType = useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE
-		// : ComponentType.PARTICIPANT_LINE;
-		// final Component comp = skin.createComponent(defaultLineType, null, skinParam, p.getDisplay(false));
-		// final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
-		// final Area area = new Area(dim.getWidth(), height);
-		// comp.drawU(ug, area, new SimpleContext2D(false));
-
-		final LiveBoxes liveBoxes = new LiveBoxes(eventsHistory, skin, skinParam, height, context);
-		liveBoxes.drawU(ug);
+		mutingLine.drawLine(ug, context, createY, height);
+		liveBoxes.drawBoxes(ug, height, context);
 	}
 
 	// public void addDelayTile(DelayTile tile) {
 	// System.err.println("addDelayTile " + this + " " + tile);
 	// }
 
-	public void drawHead(UGraphic ug, Context2D context) {
-		// final Component comp = skin.createComponent(headType, null, skinParam, p.getDisplay(false));
+	public void drawHead(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
+			HorizontalAlignment horizontalAlignment) {
+		if (create && verticalAlignment == VerticalAlignment.BOTTOM) {
+			return;
+		}
 		final Component comp = rose.createComponent(headType, null, p.getSkinParamBackcolored(skinParam),
 				p.getDisplay(false));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
+		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
+			ug = ug.apply(new UTranslate(-dim.getWidth(), 0));
+		}
+		if (verticalAlignment == VerticalAlignment.CENTER) {
+			ug = ug.apply(new UTranslate(0, -dim.getHeight() / 2));
+		}
 		final Area area = new Area(dim);
 		comp.drawU(ug, area, context);
 	}
@@ -199,6 +209,25 @@ public class LivingSpace {
 
 	public Participant getParticipant() {
 		return p;
+	}
+
+	public void goCreate(double y) {
+		System.err.println("LivingSpace::goCreate");
+		this.createY = y;
+		this.create = true;
+	}
+
+	public void goCreate() {
+		this.create = true;
+	}
+
+	public void delayOn(double y, double height) {
+		mutingLine.delayOn(y, height);
+		liveBoxes.delayOn(y, height);
+	}
+
+	public ParticipantEnglober getEnglober() {
+		return englober;
 	}
 
 }

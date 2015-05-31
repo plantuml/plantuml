@@ -88,7 +88,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram system, List<String> lines) {
 				// StringUtils.trim(lines, true);
-				final RegexResult arg = getStartingPattern().matcher(lines.get(0).trim());
+				final RegexResult arg = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 				Display strings = Display.create(StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1)));
 
 				Url url = null;

@@ -65,8 +65,8 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 
 	@Override
 	public CommandExecutionResult executeNow(UmlDiagram diagram, List<String> lines) {
-		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		StringUtils.trimSmart(lines, 1);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		final String align = line0.get("ALIGN", 0);
 		final String valign = line0.get("VALIGN", 0);
 		final Display strings = Display.create(lines.subList(1, lines.size() - 1)).removeEmptyColumns();

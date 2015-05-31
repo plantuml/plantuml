@@ -39,6 +39,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,7 +59,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
-import net.sourceforge.plantuml.StringUtils;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -190,24 +190,24 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				final Matcher m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
-					labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m1.group(2).trim(), "\"")
-							.trim();
+					labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
+							StringUtils.trin(m1.group(2)), "\""));
 					secondLabel = m1.group(3);
 				} else {
 					final Pattern p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
 					final Matcher m2 = p2.matcher(labelLink);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
-						labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m2.group(2).trim(), "\"")
-								.trim();
+						labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
+								StringUtils.trin(m2.group(2)), "\""));
 						secondLabel = null;
 					} else {
 						final Pattern p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
 						final Matcher m3 = p3.matcher(labelLink);
 						if (m3.matches()) {
 							firstLabel = null;
-							labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m3.group(1).trim(),
-									"\"").trim();
+							labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(
+									StringUtils.trin(m3.group(1)), "\""));
 							secondLabel = m3.group(2);
 						}
 					}
@@ -225,16 +225,16 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			labelLink = null;
 		} else if (labelLink != null && labelLink.startsWith("< ")) {
 			linkArrow = LinkArrow.BACKWARD;
-			labelLink = labelLink.substring(2).trim();
+			labelLink = StringUtils.trin(labelLink.substring(2));
 		} else if (labelLink != null && labelLink.startsWith("> ")) {
 			linkArrow = LinkArrow.DIRECT_NORMAL;
-			labelLink = labelLink.substring(2).trim();
+			labelLink = StringUtils.trin(labelLink.substring(2));
 		} else if (labelLink != null && labelLink.endsWith(" >")) {
 			linkArrow = LinkArrow.DIRECT_NORMAL;
-			labelLink = labelLink.substring(0, labelLink.length() - 2).trim();
+			labelLink = StringUtils.trin(labelLink.substring(0, labelLink.length() - 2));
 		} else if (labelLink != null && labelLink.endsWith(" <")) {
 			linkArrow = LinkArrow.BACKWARD;
-			labelLink = labelLink.substring(0, labelLink.length() - 2).trim();
+			labelLink = StringUtils.trin(labelLink.substring(0, labelLink.length() - 2));
 		}
 
 		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(labelLink), queue, firstLabel, secondLabel,
@@ -295,6 +295,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				diagram.getLabeldistance(), diagram.getLabelangle());
 
 		diagram.resetPragmaLabel();
+		applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
 		addLink(diagram, link, arg.get("HEADER", 0));
 		return CommandExecutionResult.ok();
 	}
@@ -355,7 +356,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (s == null) {
 			return LinkDecor.NONE;
 		}
-		s = s.trim();
+		s = StringUtils.trin(s);
 		if ("<|".equals(s)) {
 			return LinkDecor.EXTENDS;
 		}
@@ -384,7 +385,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (s == null) {
 			return LinkDecor.NONE;
 		}
-		s = s.trim();
+		s = StringUtils.trin(s);
 		if ("|>".equals(s)) {
 			return LinkDecor.EXTENDS;
 		}

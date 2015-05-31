@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -67,7 +68,7 @@ public class ElementFactoryRadioOff implements ElementFactory {
 
 	private List<String> extracted(final String text) {
 		final int x = text.indexOf(')');
-		return Arrays.asList(text.substring(x + 1).trim());
+		return Arrays.asList(StringUtils.trin(text.substring(x + 1)));
 	}
 
 	public boolean ready() {

@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.command;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public enum MultilinesStrategy {
 	REMOVE_STARTING_QUOTE, KEEP_STARTING_QUOTE;
 
@@ -56,6 +58,6 @@ public enum MultilinesStrategy {
 	}
 
 	private boolean hasStartingQuote(String s) {
-		return s.trim().startsWith("\'");
+		return StringUtils.trinNoTrace(s).startsWith("\'");
 	}
 }

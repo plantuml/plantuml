@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileNoteLeft implements TileWithUpdateStairs {
+public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWithCallbackY {
 
 	private final TileWithUpdateStairs tile;
 	private final AbstractMessage message;
@@ -58,14 +58,13 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs {
 	private final Display notes;
 	// private final NotePosition notePosition;
 	private final LivingSpace livingSpace;
-	
+
 	public Event getEvent() {
 		return message;
 	}
 
-
-	public CommunicationTileNoteLeft(TileWithUpdateStairs tile, AbstractMessage message, Skin skin, ISkinParam skinParam,
-			LivingSpace livingSpace) {
+	public CommunicationTileNoteLeft(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
+			ISkinParam skinParam, LivingSpace livingSpace) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
@@ -74,14 +73,14 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs {
 		// this.notePosition = message.getNotePosition();
 		this.livingSpace = livingSpace;
 	}
-	
+
 	public void updateStairs(StringBounder stringBounder, double y) {
 		tile.updateStairs(stringBounder, y);
 	}
 
-
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null, message.getSkinParamNoteBackcolored(skinParam), notes);
+		final Component comp = skin.createComponent(ComponentType.NOTE, null,
+				message.getSkinParamNoteBackcolored(skinParam), notes);
 		return comp;
 	}
 
@@ -118,6 +117,12 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs {
 
 	public Real getMaxX(StringBounder stringBounder) {
 		return tile.getMaxX(stringBounder);
+	}
+
+	public void callbackY(double y) {
+		if (tile instanceof TileWithCallbackY) {
+			((TileWithCallbackY) tile).callbackY(y);
+		}
 	}
 
 }

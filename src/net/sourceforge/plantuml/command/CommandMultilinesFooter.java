@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14726 $
+ * Revision $Revision: 16195 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -54,7 +54,7 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 
 	public CommandExecutionResult execute(final UmlDiagram diagram, List<String> lines) {
 		StringUtils.trim(lines, false);
-		final Matcher m = getStartingPattern().matcher(lines.get(0).trim());
+		final Matcher m = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

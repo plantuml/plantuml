@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.salt;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 
@@ -61,7 +62,7 @@ public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 		if (system == null) {
 			return null;
 		}
-		system.add(line.trim());
+		system.add(StringUtils.trin(line));
 		return system;
 	}
 

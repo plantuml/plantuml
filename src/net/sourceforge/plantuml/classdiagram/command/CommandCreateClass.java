@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 	public static final String CODE = "[^%s{}%g<>]+";
+	public static final String CODE_NO_DOTDOT = "[^%s{}%g<>:]+";
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS

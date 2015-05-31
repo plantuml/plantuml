@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15883 $
+ * Revision $Revision: 16115 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -55,6 +55,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
@@ -62,7 +63,6 @@ import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
-import net.sourceforge.plantuml.StringUtils;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -270,19 +270,26 @@ public class SvgGraphics {
 	}
 
 	public void closeLink() {
-		final Element element = pendingLink2.get(0);
-		pendingLink2.remove(0);
-		getG().appendChild(element);
+		if (pendingLink2.size() > 0) {
+			final Element element = pendingLink2.get(0);
+			pendingLink2.remove(0);
+			getG().appendChild(element);
+		}
 	}
 
 	private final List<Element> pendingLink2 = new ArrayList<Element>();
 
-	public void openLink(String url, String title) {
+	public void openLink(String url, String title, String target) {
 		if (url == null) {
 			throw new IllegalArgumentException();
 		}
 
+		if (pendingLink2.size() > 0) {
+			closeLink();
+		}
+
 		pendingLink2.add(0, (Element) document.createElement("a"));
+		pendingLink2.get(0).setAttribute("target", target);
 		pendingLink2.get(0).setAttribute("xlink:href", url);
 		if (title == null) {
 			pendingLink2.get(0).setAttribute("xlink:title", url);
@@ -386,7 +393,8 @@ public class SvgGraphics {
 	}
 
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes) {
+			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
+			String textBackColor) {
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("text");
 			elt.setAttribute("x", format(x));
@@ -407,6 +415,10 @@ public class SvgGraphics {
 			}
 			if (fontFamily != null) {
 				elt.setAttribute("font-family", fontFamily);
+			}
+			if (textBackColor != null) {
+				final String backFilterId = getFilterBackColor(textBackColor);
+				elt.setAttribute("filter", "url(#" + backFilterId + ")");
 			}
 			for (Map.Entry<String, String> ent : attributes.entrySet()) {
 				elt.setAttribute(ent.getKey(), ent.getValue());
@@ -430,8 +442,33 @@ public class SvgGraphics {
 		ensureVisible(x + textLength, y);
 	}
 
-	public final Element getDefs() {
-		return defs;
+	private final Map<String, String> filterBackColor = new HashMap<String, String>();
+
+	private String getIdFilterBackColor(String color) {
+		String result = filterBackColor.get(color);
+		if (result == null) {
+			result = "b" + filterBackColor.size();
+			filterBackColor.put(color, result);
+		}
+		return result;
+	}
+
+	private String getFilterBackColor(String color) {
+		String id = filterBackColor.get(color);
+		if (id != null) {
+			return id;
+		}
+		id = getIdFilterBackColor(color);
+		final Element filter = (Element) document.createElement("filter");
+		filter.setAttribute("id", id);
+		filter.setAttribute("x", "0");
+		filter.setAttribute("y", "0");
+		filter.setAttribute("width", "1");
+		filter.setAttribute("height", "1");
+		addFilter(filter, "feFlood", "flood-color", color);
+		addFilter(filter, "feComposite", "in", "SourceGraphic");
+		defs.appendChild(filter);
+		return id;
 	}
 
 	private Transformer getTransformer() throws TransformerException {

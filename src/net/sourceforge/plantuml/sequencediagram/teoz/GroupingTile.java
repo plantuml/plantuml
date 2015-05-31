@@ -42,8 +42,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealMax;
-import net.sourceforge.plantuml.real.RealMin;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Grouping;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
@@ -57,13 +56,13 @@ import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GroupingTile implements Tile {
+public class GroupingTile implements TileWithCallbackY {
 
 	private static final int MARGINX = 16;
 	private static final int MARGINY = 10;
 	private final List<Tile> tiles = new ArrayList<Tile>();
-	private final RealMin min = new RealMin();
-	private final RealMax max = new RealMax();
+	private final Real min;
+	private final Real max;
 	private final GroupingStart start;
 
 	// private final double marginX = 20;
@@ -88,6 +87,9 @@ public class GroupingTile implements Tile {
 		this.skinParam = tileArgumentsBachColorChanged.getSkinParam();
 		// this.max = min.addAtLeast(dim1.getWidth());
 
+		final List<Real> min2 = new ArrayList<Real>();
+		final List<Real> max2 = new ArrayList<Real>();
+
 		while (it.hasNext()) {
 			final Event ev = it.next();
 			System.err.println("GroupingTile::ev=" + ev);
@@ -97,21 +99,24 @@ public class GroupingTile implements Tile {
 			final Tile tile = TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this);
 			if (tile != null) {
 				tiles.add(tile);
-				min.put(tile.getMinX(stringBounder).addFixed(-MARGINX));
-				final Real m = tile.getMaxX(stringBounder);
-				max.put(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
 				bodyHeight += tile.getPreferredHeight(stringBounder);
+				if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
+					continue;
+				}
+				min2.add(tile.getMinX(stringBounder).addFixed(-MARGINX));
+				final Real m = tile.getMaxX(stringBounder);
+				max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
 			}
 		}
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final double width = dim1.getWidth();
-		System.err.println("width=" + width);
-		if (min.size() == 0) {
-			min.put(tileArgumentsOriginal.getOrigin());
-			max.put(tileArgumentsOriginal.getOmega());
+		if (min2.size() == 0) {
+			min2.add(tileArgumentsOriginal.getOrigin());
 		}
-		// max.ensureBiggerThan(min.addFixed(width));
-		this.max.ensureBiggerThan(getMinX(stringBounder).addFixed(width + 16));
+		this.min = RealUtils.min(min2);
+		max2.add(this.min.addFixed(width + 16));
+		this.max = RealUtils.max(max2);
+
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -161,5 +166,15 @@ public class GroupingTile implements Tile {
 
 	public Real getMaxX(StringBounder stringBounder) {
 		return max;
+	}
+
+	private double y;
+
+	public void callbackY(double y) {
+		this.y = y;
+	}
+
+	public double getStartY() {
+		return y + MARGINY;
 	}
 }

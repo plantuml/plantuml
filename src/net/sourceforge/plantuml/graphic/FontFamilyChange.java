@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.graphic;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
 class FontFamilyChange implements FontChange {
@@ -49,7 +50,7 @@ class FontFamilyChange implements FontChange {
 		if (matcherColor.find() == false) {
 			throw new IllegalArgumentException();
 		}
-		this.family = matcherColor.group(1).trim();
+		this.family = StringUtils.trin(matcherColor.group(1));
 	}
 
 	public FontConfiguration apply(FontConfiguration initial) {

@@ -167,7 +167,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (s == null) {
 			return "";
 		}
-		return StringUtils.goLowerCase(s.trim());
+		return StringUtils.goLowerCase(StringUtils.trin(s));
 	}
 
 	private Direction getDirection(RegexResult arg) {
@@ -213,7 +213,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Matcher m1 = p1.matcher(labelLink);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
-				labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m1.group(2).trim()).trim();
+				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 				secondLabel = m1.group(3);
 				return;
 			}
@@ -221,7 +221,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Matcher m2 = p2.matcher(labelLink);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
-				labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m2.group(2).trim()).trim();
+				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 				secondLabel = null;
 				return;
 			}
@@ -229,7 +229,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Matcher m3 = p3.matcher(labelLink);
 			if (m3.matches()) {
 				firstLabel = null;
-				labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m3.group(1).trim()).trim();
+				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));
 				secondLabel = m3.group(2);
 			}
 		}
@@ -286,7 +286,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final String code = code2.getFullName();
 		if (code.startsWith("()")) {
 			return diagram.getOrCreateLeaf(
-					Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code.substring(2).trim())),
+					Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(code.substring(2)))),
 					LeafType.DESCRIPTION, USymbol.INTERFACE);
 		}
 		final char codeChar = code.length() > 2 ? code.charAt(0) : 0;

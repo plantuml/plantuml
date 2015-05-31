@@ -75,7 +75,7 @@ public class EntityImageComponent extends AbstractEntityImage {
 
 		final TextBlock desc = entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(
 				entity.getDisplay(), symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER, stereotype,
-				symbol.manageHorizontalLine(), false);
+				symbol.manageHorizontalLine(), false, false);
 
 		this.url = entity.getUrl99();
 

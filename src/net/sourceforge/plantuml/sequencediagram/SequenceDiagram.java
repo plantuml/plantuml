@@ -69,7 +69,8 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
 
-	private Skin skin = new ProtectedSkin(new Rose());
+	private final Skin skinInitial = new ProtectedSkin(new Rose());
+	private Skin skin2 = new ProtectedSkin(new Rose());
 
 	@Deprecated
 	public Participant getOrCreateParticipant(String code) {
@@ -195,11 +196,15 @@ public class SequenceDiagram extends UmlDiagram {
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 		}
 
-		if (OptionFlags.FORCE_TEOZ || getPragma().useTeozLayout()) {
-			return new SequenceDiagramFileMakerTeoz(this, skin, fileFormatOption);
+		if (modeTeoz()) {
+			return new SequenceDiagramFileMakerTeoz(this, getSkin2(), fileFormatOption);
 		}
 
-		return new SequenceDiagramFileMakerPuma2(this, skin, fileFormatOption);
+		return new SequenceDiagramFileMakerPuma2(this, getSkin2(), fileFormatOption);
+	}
+
+	private boolean modeTeoz() {
+		return OptionFlags.FORCE_TEOZ || getPragma().useTeozLayout();
 	}
 
 	@Override
@@ -286,14 +291,17 @@ public class SequenceDiagram extends UmlDiagram {
 		final Skin s = SkinUtils.loadSkin(className);
 		final Integer expected = new Integer(1);
 		if (s != null && expected.equals(s.getProtocolVersion())) {
-			this.skin = new ProtectedSkin(s);
+			this.skin2 = new ProtectedSkin(s);
 			return true;
 		}
 		return false;
 	}
 
-	public Skin getSkin() {
-		return skin;
+	private Skin getSkin2() {
+		if (modeTeoz()) {
+			return skinInitial;
+		}
+		return skin2;
 	}
 
 	private Integer messageNumber = null;
@@ -364,7 +372,12 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public int getNbImages() {
-		return getSequenceDiagramPngMaker(new FileFormatOption(FileFormat.PNG)).getNbPages();
+		try {
+			return getSequenceDiagramPngMaker(new FileFormatOption(FileFormat.PNG)).getNbPages();
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return 1;
+		}
 	}
 
 	public void removeHiddenParticipants() {

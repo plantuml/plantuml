@@ -48,7 +48,7 @@ public class Stairs2 {
 	private final Map<Double, IntegerColored> cache = new HashMap<Double, IntegerColored>();
 
 	public void addStep(StairsPosition position, int value, HtmlColor color) {
-		System.err.println("Stairs2::addStep " + position + " " + value + " color=" + color);
+		// System.err.println("Stairs2::addStep " + position + " " + value + " color=" + color);
 		assert ys.size() == values.size();
 		if (ys.size() > 0) {
 			final double lastY = ys.get(ys.size() - 1).getValue();

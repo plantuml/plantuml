@@ -40,11 +40,15 @@ public class MathUtils {
 	}
 
 	public static double max(double a, double b, double c) {
-		return Math.max(Math.max(a, b), c);
+		return max(max(a, b), c);
 	}
 
 	public static double max(double a, double b, double c, double d) {
-		return Math.max(Math.max(a, b), Math.max(c, d));
+		return max(max(a, b), max(c, d));
+	}
+
+	public static double max(double a, double b, double c, double d, double e) {
+		return max(max(a, b, c), max(d, e));
 	}
 
 	public static double limitation(double v, double min, double max) {

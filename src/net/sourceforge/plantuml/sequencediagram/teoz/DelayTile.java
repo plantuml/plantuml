@@ -43,21 +43,24 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DelayTile implements Tile {
+public class DelayTile implements Tile, TileWithCallbackY {
 
 	private final Delay delay;
 	private final TileArguments tileArguments;
 	private Real first;
 	private Real last;
-	
+	private double y;
+
 	public Event getEvent() {
 		return delay;
 	}
 
+	public void callbackY(double y) {
+		this.y = y;
+	}
 
 	public DelayTile(Delay delay, TileArguments tileArguments) {
 		this.delay = delay;
@@ -88,6 +91,7 @@ public class DelayTile implements Tile {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = new Area(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());
+		tileArguments.getLivingSpaces().delayOn(y, dim.getHeight());
 
 		ug = ug.apply(new UTranslate(first.getCurrentValue(), 0));
 		comp.drawU(ug, area, (Context2D) ug);
@@ -112,14 +116,14 @@ public class DelayTile implements Tile {
 		return this.last;
 	}
 
-//	private double startingY;
-//
-//	public void setStartingY(double startingY) {
-//		this.startingY = startingY;
-//	}
-//
-//	public double getStartingY() {
-//		return startingY;
-//	}
+	// private double startingY;
+	//
+	// public void setStartingY(double startingY) {
+	// this.startingY = startingY;
+	// }
+	//
+	// public double getStartingY() {
+	// return startingY;
+	// }
 
 }

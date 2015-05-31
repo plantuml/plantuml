@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PSystemError;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow3;
 import net.sourceforge.plantuml.core.Diagram;
@@ -80,8 +81,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		AbstractPSystem sys = createEmptyDiagram();
 
 		while (it.hasNext()) {
-			final String line = it.next();
-			if (StartUtils.isArobaseEndDiagram(line)) {
+			if (StartUtils.isArobaseEndDiagram(it.peek())) {
 				final String err = checkFinalError(sys);
 				if (err != null) {
 					return buildEmptyError(source, err);
@@ -99,7 +99,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 				sys.setSource(source);
 				return sys;
 			}
-			sys = executeOneLine(sys, source, it, line);
+			sys = executeOneLine(sys, source, it);
 			if (sys instanceof PSystemError) {
 				return sys;
 			}
@@ -109,11 +109,10 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	}
 
-	private AbstractPSystem executeOneLine(AbstractPSystem sys, UmlSource source, final IteratorCounter it,
-			final String line) {
-		final CommandControl commandControl = isValid(Arrays.asList(line));
+	private AbstractPSystem executeOneLine(AbstractPSystem sys, UmlSource source, final IteratorCounter it) {
+		final CommandControl commandControl = isValid2(it);
 		if (commandControl == CommandControl.NOT_OK) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", it.currentNum() - 1);
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", it.currentNum());
 			if (OptionFlags.getInstance().isUseSuggestEngine()) {
 				final SuggestEngine engine = new SuggestEngine(source, this);
 				final SuggestEngineResult result = engine.tryToSuggest(sys);
@@ -121,20 +120,21 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 					err.setSuggest(result);
 				}
 			}
-			sys = new PSystemError(source, err);
+			sys = new PSystemError(source, err, null);
 		} else if (commandControl == CommandControl.OK_PARTIAL) {
-			final boolean ok = manageMultiline(sys, line, it);
+			final boolean ok = manageMultiline(it, sys);
 			if (ok == false) {
-				sys = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, "Syntax Error?",
-						it.currentNum() - 1));
+				sys = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, "Strange Syntax Error?",
+						it.currentNum() - 1), null);
 
 			}
 		} else if (commandControl == CommandControl.OK) {
-			Command cmd = createCommand(Arrays.asList(line));
+			final String line = it.next();
+			Command cmd = getFirstCommandOkForLines(Arrays.asList(line));
 			final CommandExecutionResult result = sys.executeCommand(cmd, Arrays.asList(line));
 			if (result.isOk() == false) {
 				sys = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-						it.currentNum() - 1));
+						it.currentNum() - 1), result.getDebugLines());
 			}
 			if (result.getNewDiagram() != null) {
 				sys = result.getNewDiagram();
@@ -145,37 +145,67 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		return sys;
 	}
 
-	private boolean manageMultiline(AbstractPSystem system, final String init, IteratorCounter it) {
-		final List<String> lines = new ArrayList<String>();
-		addOneSingleLineManageEmbedded(lines, init, it);
-		while (it.hasNext()) {
-			final String s = it.next();
-			if (StartUtils.isArobaseEndDiagram(s)) {
-				return false;
+	public CommandControl isValid2(final IteratorCounter it) {
+		final List<String> asList = Arrays.asList(it.peek());
+		for (Command cmd : cmds) {
+			final CommandControl result = cmd.isValid(asList);
+			if (result == CommandControl.OK) {
+				return result;
 			}
-			addOneSingleLineManageEmbedded(lines, s, it);
-			final CommandControl commandControl = isValid(lines);
-			if (commandControl == CommandControl.NOT_OK) {
-				// throw new IllegalStateException();
-				return false;
+			if (result == CommandControl.OK_PARTIAL && isMultilineCommandOk(it.cloneMe(), cmd) != null) {
+				return result;
 			}
-			if (commandControl == CommandControl.OK) {
-				final Command cmd = createCommand(lines);
-				final CommandExecutionResult result = system.executeCommand(cmd, lines);
-				return result.isOk();
+		}
+		return CommandControl.NOT_OK;
+	}
+
+	public CommandControl goForwardMultiline(final IteratorCounter it) {
+		final List<String> asList = Arrays.asList(it.peek());
+		for (Command cmd : cmds) {
+			final CommandControl result = cmd.isValid(asList);
+			if (result == CommandControl.OK) {
+				throw new IllegalStateException();
+			}
+			if (result == CommandControl.OK_PARTIAL && isMultilineCommandOk(it, cmd) != null) {
+				return result;
+			}
+		}
+		throw new IllegalStateException();
+	}
+
+	private boolean manageMultiline(IteratorCounter it, AbstractPSystem system) {
+		for (Command cmd : cmds) {
+			if (isMultilineCommandOk(it.cloneMe(), cmd) != null) {
+				final List<String> lines = isMultilineCommandOk(it, cmd);
+				return cmd.execute(system, lines).isOk();
 			}
 		}
 		return false;
-
 	}
 
-	private void addOneSingleLineManageEmbedded(final List<String> lines, final String linetoBeAdded, IteratorCounter it) {
+	private List<String> isMultilineCommandOk(IteratorCounter it, Command cmd) {
+		final List<String> lines = new ArrayList<String>();
+		while (it.hasNext()) {
+			addOneSingleLineManageEmbedded(it, lines);
+			final CommandControl result = cmd.isValid(lines);
+			if (result == CommandControl.NOT_OK) {
+				return null;
+			}
+			if (result == CommandControl.OK) {
+				return lines;
+			}
+		}
+		return null;
+	}
+
+	private void addOneSingleLineManageEmbedded(IteratorCounter it, final List<String> lines) {
+		final String linetoBeAdded = it.next();
 		lines.add(linetoBeAdded);
-		if (linetoBeAdded.trim().equals("{{")) {
+		if (StringUtils.trinNoTrace(linetoBeAdded).equals("{{")) {
 			while (it.hasNext()) {
 				final String s = it.next();
 				lines.add(s);
-				if (s.trim().equals("}}")) {
+				if (StringUtils.trinNoTrace(s).equals("}}")) {
 					return;
 				}
 			}
@@ -187,11 +217,15 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	public String checkFinalError(AbstractPSystem system) {
 		return null;
 	}
+	
 
 	final public CommandControl isValid(List<String> lines) {
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(lines);
-			if (result == CommandControl.OK || result == CommandControl.OK_PARTIAL) {
+			if (result == CommandControl.OK) {
+				return result;
+			}
+			if (result == CommandControl.OK_PARTIAL) {
 				return result;
 			}
 		}
@@ -199,13 +233,11 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	}
 
-	final public Command createCommand(List<String> lines) {
+	private Command getFirstCommandOkForLines(List<String> lines) {
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(lines);
 			if (result == CommandControl.OK) {
 				return cmd;
-			} else if (result == CommandControl.OK_PARTIAL) {
-				throw new IllegalArgumentException();
 			}
 		}
 		throw new IllegalArgumentException();
@@ -244,10 +276,9 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(factorySpriteCommand.createMultiLine());
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(new CommandSpriteFile());
-		
+
 		cmds.add(new CommandHideShow3());
 		cmds.add(new CommandHideShow());
-
 
 	}
 

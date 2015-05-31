@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.command.note.FactoryNoteCommand;
 import net.sourceforge.plantuml.command.note.FactoryNoteOnEntityCommand;
 import net.sourceforge.plantuml.command.note.FactoryNoteOnLinkCommand;
+import net.sourceforge.plantuml.command.note.FactoryTipOnEntityCommand;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
@@ -107,6 +108,11 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandLinkLollipop(UmlDiagramType.CLASS));
 
 		cmds.add(new CommandImport());
+		
+		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand(new RegexLeaf(
+				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([^%s]+)"));
+		cmds.add(factoryTipOnEntityCommand.createMultiLine());
+
 		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexLeaf(
 				"ENTITY", "(" + CommandCreateClass.CODE + "|[%g][^%g]+[%g])"));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
@@ -114,6 +120,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine());
 		cmds.add(factoryNoteCommand.createMultiLine());
+
 		cmds.add(new CommandCreateClassMultilines());
 
 		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();

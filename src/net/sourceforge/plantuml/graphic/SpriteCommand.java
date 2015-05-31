@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public class SpriteCommand implements HtmlCommand {
 
 	private final String sprite;
@@ -47,7 +49,7 @@ public class SpriteCommand implements HtmlCommand {
 		if (sprite.endsWith(">") == false) {
 			throw new IllegalArgumentException();
 		}
-		this.sprite = sprite.substring(2, sprite.length() - 1).trim();
+		this.sprite = StringUtils.trin(sprite.substring(2, sprite.length() - 1));
 	}
 
 	public String getSprite() {

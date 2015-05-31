@@ -56,21 +56,19 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 	private final MessageExo message;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final Real alpha;
-	private final Real omega;
+	private final TileArguments tileArguments;
 
 	public Event getEvent() {
 		return message;
 	}
 
 	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Skin skin, ISkinParam skinParam,
-			Real alpha, Real omega) {
+			TileArguments tileArguments) {
+		this.tileArguments = tileArguments;
 		this.livingSpace = livingSpace;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.alpha = alpha;
-		this.omega = omega;
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -87,8 +85,16 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final double x1 = getPoint1(stringBounder).getCurrentValue();
-		final double x2 = getPoint2(stringBounder).getCurrentValue();
+		double x1 = getPoint1Value(stringBounder);
+		double x2 = getPoint2(stringBounder).getCurrentValue();
+		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+		if (level > 0) {
+			if (message.getType().isRightBorder()) {
+				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;
+			} else {
+				x2 -= CommunicationTile.LIVE_DELTA_SIZE * level;
+			}
+		}
 		final Area area = new Area(x2 - x1, dim.getHeight());
 		ug = ug.apply(new UTranslate(x1, 0));
 		comp.drawU(ug, area, (Context2D) ug);
@@ -127,12 +133,19 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		if (message.getType().isRightBorder()) {
 			return livingSpace.getPosC(stringBounder);
 		}
-		return alpha;
+		return tileArguments.getOrigin();
+	}
+
+	private double getPoint1Value(final StringBounder stringBounder) {
+		if (message.getType().isRightBorder()) {
+			return livingSpace.getPosC(stringBounder).getCurrentValue();
+		}
+		return tileArguments.getOrigin().getMinAbsolute().getCurrentValue();
 	}
 
 	private Real getPoint2(final StringBounder stringBounder) {
 		if (message.getType().isRightBorder()) {
-			return omega;
+			return tileArguments.getOmega();
 		}
 		return livingSpace.getPosC(stringBounder);
 	}

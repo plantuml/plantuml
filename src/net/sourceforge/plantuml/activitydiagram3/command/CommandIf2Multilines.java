@@ -71,7 +71,7 @@ public class CommandIf2Multilines extends CommandMultilines2<ActivityDiagram3> {
 	@Override
 	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, List<String> lines) {
 		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(lines.get(0).trim());
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
 				lines.get(lines.size() - 1));
 

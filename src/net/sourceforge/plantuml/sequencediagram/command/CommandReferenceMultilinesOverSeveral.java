@@ -61,7 +61,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 	}
 
 	public CommandExecutionResult execute(final SequenceDiagram diagram, List<String> lines) {
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), lines.get(0).trim());
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), StringUtils.trin(lines.get(0)));
 		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(0));
 		// final HtmlColor backColorGeneral = HtmlColorSet.getInstance().getColorIfValid(line0.get(1));
 

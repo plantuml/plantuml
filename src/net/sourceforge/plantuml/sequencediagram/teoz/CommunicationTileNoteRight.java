@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class CommunicationTileNoteRight implements TileWithUpdateStairs {
+public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWithCallbackY {
 
 	private final TileWithUpdateStairs tile;
 	private final AbstractMessage message;
@@ -61,6 +61,10 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs {
 
 	public Event getEvent() {
 		return message;
+	}
+	
+	private boolean isCreate() {
+		return message.isCreate();
 	}
 
 	public CommunicationTileNoteRight(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
@@ -87,6 +91,9 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs {
 	private Real getNotePosition(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		if (isCreate()) {
+			return livingSpace.getPosD(stringBounder);
+		}
 		return livingSpace.getPosC(stringBounder);
 	}
 
@@ -119,6 +126,12 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		return getNotePosition(stringBounder).addFixed(dim.getWidth());
+	}
+
+	public void callbackY(double y) {
+		if (tile instanceof TileWithCallbackY) {
+			((TileWithCallbackY) tile).callbackY(y);
+		}
 	}
 
 }

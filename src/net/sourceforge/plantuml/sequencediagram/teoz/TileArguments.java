@@ -112,6 +112,14 @@ public class TileArguments {
 		return result;
 	}
 
+//	public double getAbsoluteMin() {
+//		return line.getAbsoluteMin();
+//	}
+//
+//	public double getAbsoluteMax() {
+//		return line.getAbsoluteMax();
+//	}
+
 	// public void ensure(Tile tile) {
 	// getAlpha().ensureLowerThan(tile.getMinX(getStringBounder()));
 	// getOmega().ensureBiggerThan(tile.getMaxX(getStringBounder()));

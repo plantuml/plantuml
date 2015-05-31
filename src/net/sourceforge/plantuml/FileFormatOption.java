@@ -70,9 +70,14 @@ public class FileFormatOption {
 	private final AffineTransform affineTransform;
 	private final boolean withMetadata;
 	private final boolean useRedForError;
+	private final String svgLinkTarget;
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true, false);
+		this(fileFormat, null, true, false, "_top");
+	}
+	
+	public String getSvgLinkTarget() {
+		return svgLinkTarget;
 	}
 
 	public final boolean isWithMetadata() {
@@ -80,18 +85,23 @@ public class FileFormatOption {
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, false, false);
+		this(fileFormat, null, false, false, "_top");
 	}
 
-	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError) {
+	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError, String svgLinkTarget) {
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
 		this.withMetadata = withMetadata;
 		this.useRedForError = useRedForError;
+		this.svgLinkTarget = svgLinkTarget;
 	}
 
 	public FileFormatOption withUseRedForError() {
-		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true);
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget);
+	}
+
+	public FileFormatOption withSvgLinkTarget(String target) {
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, target);
 	}
 
 	@Override
@@ -152,11 +162,11 @@ public class FileFormatOption {
 		}
 		final UGraphicSvg ug;
 		if (mybackcolor instanceof HtmlColorGradient) {
-			ug = new UGraphicSvg(colorMapper, (HtmlColorGradient) mybackcolor, false, scale);
+			ug = new UGraphicSvg(colorMapper, (HtmlColorGradient) mybackcolor, false, scale, getSvgLinkTarget());
 		} else if (backColor == null || backColor.equals(Color.WHITE)) {
-			ug = new UGraphicSvg(colorMapper, false, scale);
+			ug = new UGraphicSvg(colorMapper, false, scale, getSvgLinkTarget());
 		} else {
-			ug = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(backColor), false, scale);
+			ug = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(backColor), false, scale, getSvgLinkTarget());
 		}
 		return ug;
 
