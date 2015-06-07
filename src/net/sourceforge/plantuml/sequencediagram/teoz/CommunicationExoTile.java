@@ -140,7 +140,8 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		if (message.getType().isRightBorder()) {
 			return livingSpace.getPosC(stringBounder).getCurrentValue();
 		}
-		return tileArguments.getOrigin().getMinAbsolute().getCurrentValue();
+		// return tileArguments.getOrigin().getMinAbsolute().getCurrentValue();
+		return tileArguments.getOrigin().getCurrentValue();
 	}
 
 	private Real getPoint2(final StringBounder stringBounder) {

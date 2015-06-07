@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15957 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.skin;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -46,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class StickMan implements TextBlock {
+public class StickMan extends AbstractTextBlock implements TextBlock {
 
 	private final double armsY = 8;
 	private final double armsLenght = 13;

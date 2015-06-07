@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -44,7 +45,7 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DecorateEntityImage implements TextBlockBackcolored {
+public class DecorateEntityImage extends AbstractTextBlock implements TextBlockBackcolored {
 
 	private final TextBlock original;
 	private final HorizontalAlignment horizontal1;

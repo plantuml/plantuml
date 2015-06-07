@@ -95,4 +95,8 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 		return new UGraphicInterceptorOneSwimlane(getUg().apply(change), swimlane);
 	}
 
+	public final Swimlane getSwimlane() {
+		return swimlane;
+	}
+
 }

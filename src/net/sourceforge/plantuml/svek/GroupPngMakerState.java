@@ -149,7 +149,7 @@ public final class GroupPngMakerState {
 			final Stereotype stereo = group.getStereotype();
 			final HtmlColor backColor = group.getSpecificBackColor() == null ? getColor(ColorParam.stateBackground,
 					stereo) : group.getSpecificBackColor();
-			final List<Member> members = ((IEntity) group).getFieldsToDisplay();
+			final List<Member> members = ((IEntity) group).getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
 			if (members.size() == 0) {
 				attribute = new TextBlockEmpty();

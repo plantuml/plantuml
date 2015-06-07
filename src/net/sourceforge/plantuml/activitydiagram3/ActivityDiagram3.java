@@ -34,10 +34,8 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import java.awt.geom.Dimension2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -145,6 +143,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public void stop() {
 		manageSwimlaneStrategy();
 		current().add(new InstructionStop(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
+	}
+
+	public void end() {
+		manageSwimlaneStrategy();
+		current().add(new InstructionEnd(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
 	}
 
 	public DiagramDescription getDescription() {
@@ -382,7 +385,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor) {
 		manageSwimlaneStrategy();
-		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor);
+		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor, swinlanes.getCurrentSwimlane());
 		current().add(instructionGroup);
 		setCurrent(instructionGroup);
 	}

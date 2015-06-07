@@ -93,20 +93,8 @@ public class MainTile implements Tile {
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		double y = 0;
-		double lastY = 0;
 		final List<YPositionedTile> positionedTiles = new ArrayList<YPositionedTile>();
-		for (Tile tile : tiles) {
-			if (tile.getEvent().isParallel()) {
-				y = lastY;
-			}
-			if (trace) {
-				System.err.println("MainTile::drawUInternal tile=" + tile + " y=" + y);
-			}
-			positionedTiles.add(new YPositionedTile(tile, y));
-			lastY = y;
-			y += tile.getPreferredHeight(stringBounder);
-		}
+		final double y = GroupingTile.fillPositionelTiles(stringBounder, 0, tiles, positionedTiles);
 		for (YPositionedTile tile : positionedTiles) {
 			tile.drawU(ug);
 		}

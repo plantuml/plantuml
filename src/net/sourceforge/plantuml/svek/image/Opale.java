@@ -38,6 +38,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -50,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class Opale implements TextBlock {
+public class Opale extends AbstractTextBlock implements TextBlock {
 
 	private final int cornersize = 10;
 	private final HtmlColor noteBackgroundColor;

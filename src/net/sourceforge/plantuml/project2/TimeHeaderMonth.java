@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
@@ -52,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TimeHeaderMonth implements TextBlock {
+public class TimeHeaderMonth extends AbstractTextBlock implements TextBlock {
 
 	private final Day start;
 	private final Day end;

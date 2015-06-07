@@ -46,7 +46,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 			throw new IllegalArgumentException();
 		}
 		final TextBlock stickman = getDrawing(symbolContext);
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();

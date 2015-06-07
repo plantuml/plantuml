@@ -80,7 +80,7 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 				stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 
 		Display list = Display.empty();
-		for (Member att : entity.getFieldsToDisplay()) {
+		for (Member att : entity.getBodier().getFieldsToDisplay()) {
 			list = list.addAll(Display.getWithNewlines(att.getDisplay(true)));
 		}
 

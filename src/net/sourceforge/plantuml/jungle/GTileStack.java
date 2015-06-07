@@ -37,11 +37,12 @@ import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GTileStack implements GTile {
+public class GTileStack extends AbstractTextBlock implements GTile {
 
 	private final List<GTile> tiles;
 	private final double space;

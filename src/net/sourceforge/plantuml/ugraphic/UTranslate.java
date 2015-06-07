@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public class UTranslate implements UChange {
 
@@ -83,6 +84,10 @@ public class UTranslate implements UChange {
 
 	public UTranslate reverse() {
 		return new UTranslate(-dx, -dy);
+	}
+
+	public Rectangle2D apply(Rectangle2D rect) {
+		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
 	}
 
 }

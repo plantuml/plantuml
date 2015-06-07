@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.SlotSet;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicCompress;
 
-public class TextBlockCompressed implements TextBlock {
+public class TextBlockCompressed extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 

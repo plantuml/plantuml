@@ -35,11 +35,10 @@ package net.sourceforge.plantuml.flowdiagram;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -78,6 +77,10 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	private TilesField field;
 	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<Tile, ActivityBox>();
 	private Tile lastTile;
+
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("Flow Diagram", getClass());

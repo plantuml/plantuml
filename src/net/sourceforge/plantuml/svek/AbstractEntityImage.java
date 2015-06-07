@@ -36,9 +36,10 @@ package net.sourceforge.plantuml.svek;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
-public abstract class AbstractEntityImage implements IEntityImage {
+public abstract class AbstractEntityImage extends AbstractTextBlock implements IEntityImage {
 
 	private final IEntity entity;
 	private final ISkinParam skinParam;

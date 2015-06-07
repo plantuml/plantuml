@@ -87,7 +87,6 @@ public class EntityGenderUtils {
 		};
 	}
 
-
 	static public EntityGender all() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
@@ -99,7 +98,7 @@ public class EntityGenderUtils {
 	static public EntityGender emptyMethods() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getMethodsToDisplay().size()==0;
+				return test.getBodier().getMethodsToDisplay().size() == 0;
 			}
 		};
 	}
@@ -107,7 +106,7 @@ public class EntityGenderUtils {
 	static public EntityGender emptyFields() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getFieldsToDisplay().size()==0;
+				return test.getBodier().getFieldsToDisplay().size() == 0;
 			}
 		};
 	}
@@ -115,7 +114,8 @@ public class EntityGenderUtils {
 	static public EntityGender emptyMembers() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getMethodsToDisplay().size()==0 && test.getFieldsToDisplay().size()==0;
+				return test.getBodier().getMethodsToDisplay().size() == 0
+						&& test.getBodier().getFieldsToDisplay().size() == 0;
 			}
 		};
 	}

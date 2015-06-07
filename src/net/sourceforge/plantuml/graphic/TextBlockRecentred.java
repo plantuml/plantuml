@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockRecentred implements TextBlock {
+public class TextBlockRecentred extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12821 $
+ * Revision $Revision: 16273 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;
@@ -56,7 +56,7 @@ public class CommandAddMethod extends SingleLineCommand<ClassDiagram> {
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field.charAt(0))) {
 			system.setVisibilityModifierPresent(true);
 		}
-		entity.addFieldOrMethod(field);
+		entity.getBodier().addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}
 }

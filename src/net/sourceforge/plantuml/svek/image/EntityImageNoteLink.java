@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
@@ -50,7 +51,7 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class EntityImageNoteLink implements IEntityImage {
+public class EntityImageNoteLink extends AbstractTextBlock implements IEntityImage {
 
 	private final Component comp;
 

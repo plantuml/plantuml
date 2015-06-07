@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15231 $
+ * Revision $Revision: 16293 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -76,8 +76,13 @@ public class LifeEvent extends AbstractEvent implements Event {
 		return type == LifeEventType.DEACTIVATE || type == LifeEventType.DESTROY;
 	}
 
+	@Deprecated
 	public boolean isDestroy() {
 		return type == LifeEventType.DESTROY;
+	}
+
+	public boolean isDestroy(Participant p) {
+		return this.p == p && type == LifeEventType.DESTROY;
 	}
 
 	// public double getStrangePos() {

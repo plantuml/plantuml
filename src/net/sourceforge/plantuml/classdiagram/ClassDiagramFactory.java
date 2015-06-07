@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.classdiagram.command.CommandImport;
 import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkLollipop;
-import net.sourceforge.plantuml.classdiagram.command.CommandMouseOver;
 import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
@@ -108,7 +107,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandLinkLollipop(UmlDiagramType.CLASS));
 
 		cmds.add(new CommandImport());
-		
+
 		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand(new RegexLeaf(
 				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([^%s]+)"));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine());
@@ -128,7 +127,6 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine());
 
 		cmds.add(new CommandDiamondAssociation());
-		cmds.add(new CommandMouseOver());
 
 		cmds.add(new CommandHideShowSpecificClass());
 

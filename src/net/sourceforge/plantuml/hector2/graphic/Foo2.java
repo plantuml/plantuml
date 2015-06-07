@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.hector2.MinMax;
@@ -49,7 +50,7 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class Foo2 implements TextBlock {
+public class Foo2 extends AbstractTextBlock implements TextBlock {
 
 	private final Distribution distribution;
 	private final CucaDiagram diagram;

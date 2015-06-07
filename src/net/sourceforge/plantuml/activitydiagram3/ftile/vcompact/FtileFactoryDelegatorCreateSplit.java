@@ -281,6 +281,18 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 		public void drawU(UGraphic ug) {
 			double minX = Double.MAX_VALUE;
 			double maxX = 0;
+			if (y == 0 && ug instanceof UGraphicInterceptorOneSwimlane) {
+				final Swimlane intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();
+				boolean found = false;
+				for (Ftile tmp : list) {
+					if (tmp.getSwimlaneIn() == intoSw) {
+						found = true;
+					}
+				}
+				if (found == false) {
+					return;
+				}
+			}
 			final StringBounder stringBounder = ug.getStringBounder();
 			for (Ftile tmp : list) {
 				if (y > 0 && tmp.calculateDimension(stringBounder).hasPointOut() == false) {

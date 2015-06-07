@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram.entity;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,16 +41,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.cucadiagram.BlockMember;
-import net.sourceforge.plantuml.cucadiagram.BlockMemberImpl;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
-import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
@@ -61,15 +55,9 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LongCode;
-import net.sourceforge.plantuml.cucadiagram.Member;
-import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -97,8 +85,6 @@ final class EntityImpl implements ILeaf, IGroup {
 	private IGroup parentContainer;
 
 	private boolean top;
-
-	private final List<String> mouseOver = new ArrayList<String>();
 
 	// Group
 	private Code namespace2;
@@ -291,102 +277,8 @@ final class EntityImpl implements ILeaf, IGroup {
 		return generic;
 	}
 
-	public BlockMember getBody(final PortionShower portionShower) {
-		checkNotGroup();
-		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, EntityImpl.this);
-		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, EntityImpl.this);
-		if (getEntityType().isLikeClass() && bodier.isBodyEnhanced()) {
-			if (showMethods && showFields) {
-				return bodier.getBodyEnhanced();
-			}
-			return new BlockMember() {
-				public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
-					return null;
-				}
-
-				public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam,
-						ISkinParam skinParam) {
-					throw new UnsupportedOperationException();
-				}
-			};
-		}
-		return new BlockMember() {
-			public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
-				if (getEntityType().isLikeClass()) {
-
-					if (showFields && showMethods) {
-						final BlockMemberImpl bb1 = new BlockMemberImpl(getFieldsToDisplay());
-						final BlockMemberImpl bb2 = new BlockMemberImpl(getMethodsToDisplay());
-						final TextBlock b1 = bb1.asTextBlock(fontParam, skinParam);
-						final TextBlock b2 = bb2.asTextBlock(fontParam, skinParam);
-						return new TextBlockVertical2(b1, b2, HorizontalAlignment.LEFT);
-					} else if (showFields) {
-						return new BlockMemberImpl(getFieldsToDisplay()).asTextBlock(fontParam, skinParam);
-					} else if (showMethods) {
-						return new BlockMemberImpl(getMethodsToDisplay()).asTextBlock(fontParam, skinParam);
-					}
-					return null;
-				}
-				if (getEntityType() == LeafType.OBJECT) {
-					return new BlockMemberImpl(getFieldsToDisplay()).asTextBlock(fontParam, skinParam);
-				}
-				throw new UnsupportedOperationException();
-			}
-
-			public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam,
-					ISkinParam skinParam) {
-				if (getEntityType().isLikeClass()) {
-
-					if (showFields && showMethods) {
-						final BlockMemberImpl bb1 = new BlockMemberImpl(getFieldsToDisplay());
-						final BlockMemberImpl bb2 = new BlockMemberImpl(getMethodsToDisplay());
-						if (bb1.contains(member, fontParam, skinParam)) {
-							return bb1.getPosition(member, stringBounder, fontParam, skinParam);
-						}
-						if (bb2.contains(member, fontParam, skinParam)) {
-							return bb2.getPosition(member, stringBounder, fontParam, skinParam);
-						}
-					}
-					return null;
-				}
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-
-	public BlockMember getMouseOver() {
-		if (mouseOver.size() == 0) {
-			return null;
-		}
-		return new BlockMember() {
-			public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
-				return new BodyEnhanced(mouseOver, fontParam, skinParam, leafType.manageModifier());
-			}
-
-			public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam,
-					ISkinParam skinParam) {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-
-	public void mouseOver(String s) {
-		mouseOver.add(s);
-	}
-
-	public List<Member> getFieldsToDisplay() {
-		// checkNotGroup();
-		return bodier.getFieldsToDisplay();
-	}
-
-	public List<Member> getMethodsToDisplay() {
-		// checkNotGroup();
-		return bodier.getMethodsToDisplay();
-	}
-
-	public void addFieldOrMethod(String s) {
-		// checkNotGroup();
-		bodier.addFieldOrMethod(s);
+	public Bodier getBodier() {
+		return bodier;
 	}
 
 	public EntityPosition getEntityPosition() {

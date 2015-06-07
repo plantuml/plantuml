@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -88,7 +89,14 @@ public class FtileEmpty extends AbstractFtile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		return Collections.emptySet();
+		final Set<Swimlane> result = new HashSet<Swimlane>();
+		if (swimlaneIn != null) {
+			result.add(swimlaneIn);
+		}
+		if (swimlaneOut != null) {
+			result.add(swimlaneOut);
+		}
+		return Collections.unmodifiableSet(result);
 	}
-	
+
 }

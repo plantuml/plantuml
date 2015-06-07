@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Hideable;
@@ -69,17 +68,7 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public void setStereotype(Stereotype stereotype);
 
-	public List<Member> getFieldsToDisplay();
-
-	public List<Member> getMethodsToDisplay();
-
-	public BlockMember getBody(PortionShower portionShower);
-
-	public BlockMember getMouseOver();
-
-	public void addFieldOrMethod(String s);
-
-	public void mouseOver(String s);
+	public Bodier getBodier();
 
 	public void addUrl(Url url);
 

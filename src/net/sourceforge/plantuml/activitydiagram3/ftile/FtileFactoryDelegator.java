@@ -81,6 +81,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.start(swimlane);
 	}
 
+	public Ftile end(Swimlane swimlane) {
+		return factory.end(swimlane);
+	}
+
 	public Ftile stop(Swimlane swimlane) {
 		return factory.stop(swimlane);
 	}

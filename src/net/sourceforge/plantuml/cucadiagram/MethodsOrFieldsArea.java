@@ -42,11 +42,13 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -60,7 +62,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
 import net.sourceforge.plantuml.utils.CharHidder;
 
-public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
+public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockWidth, TextBlock {
+
+	public TextBlock asBlockMemberImpl() {
+		return new TextBlockLineBefore(TextBlockUtils.withMargin(this, 6, 4));
+	}
 
 	private final UFont font;
 	private final ISkinParam skinParam;
@@ -128,11 +134,12 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 		if (m.isStatic()) {
 			config = config.underline();
 		}
-		final TextBlock bloc = TextBlockUtils.create(Display.getWithNewlines(s), config, align, skinParam, true);
+		TextBlock bloc = TextBlockUtils.create(Display.getWithNewlines(s), config, align, skinParam, true);
+		bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));
 		return new TextBlockTracer(m, bloc);
 	}
 
-	static class TextBlockTracer implements TextBlock {
+	static class TextBlockTracer extends AbstractTextBlock implements TextBlock {
 
 		private final TextBlock bloc;
 		private final Url url;
@@ -156,12 +163,17 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 			final Dimension2D dim = bloc.calculateDimension(stringBounder);
 			return dim;
 		}
+		
+		@Override
+		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+			return bloc.getInnerPosition(member, stringBounder);
+		}
 
 	}
 
 	private TextBlock getUBlock(final VisibilityModifier modifier) {
 		if (modifier == null) {
-			return new TextBlock() {
+			return new AbstractTextBlock() {
 
 				public void drawU(UGraphic ug) {
 				}
@@ -180,30 +192,7 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 	}
 
 	public TextBlock asTextBlock(final double widthToUse) {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				MethodsOrFieldsArea.this.drawU(ug);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return MethodsOrFieldsArea.this.calculateDimension(stringBounder);
-			}
-		};
-	}
-
-	public Rectangle2D getPosition(String member, StringBounder stringBounder) {
-		double x = 0;
-		double y = 0;
-		for (Member att : members) {
-			final TextBlock bloc = createTextBlock(att);
-			final Dimension2D dim = bloc.calculateDimension(stringBounder);
-			if (att.getDisplay(false).startsWith(member)) {
-				return new Rectangle2D.Double(x, y, dim.getWidth(), dim.getHeight());
-			}
-			y += dim.getHeight();
-		}
-		throw new IllegalArgumentException();
+		return this;
 	}
 
 	public boolean contains(String member) {
@@ -215,11 +204,17 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 		return false;
 	}
 
-	public void drawU(UGraphic ug) {
-		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+	@Override
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		final ULayoutGroup group = getLayout(stringBounder);
+		final Dimension2D dim = calculateDimension(stringBounder);
+		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);
+	}
+
+	private ULayoutGroup getLayout(final StringBounder stringBounder) {
 		final ULayoutGroup group;
 		if (hasSmallIcon()) {
-			group = new ULayoutGroup(new PlacementStrategyVisibility(ug.getStringBounder(),
+			group = new ULayoutGroup(new PlacementStrategyVisibility(stringBounder,
 					skinParam.getCircledCharacterRadius() + 3));
 			for (Member att : members) {
 				final TextBlock bloc = createTextBlock(att);
@@ -230,9 +225,9 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 		} else {
 			final PlacementStrategy placementStrategy;
 			if (align == HorizontalAlignment.LEFT) {
-				placementStrategy = new PlacementStrategyY1Y2Left(ug.getStringBounder());
+				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);
 			} else if (align == HorizontalAlignment.CENTER) {
-				placementStrategy = new PlacementStrategyY1Y2Center(ug.getStringBounder());
+				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);
 			} else {
 				throw new IllegalStateException();
 			}
@@ -242,7 +237,13 @@ public class MethodsOrFieldsArea implements TextBlockWidth, TextBlock {
 				group.add(bloc);
 			}
 		}
-		group.drawU(ug, 0, 0, dim.getWidth(), dim.getHeight());
+		return group;
+	}
+
+	public void drawU(UGraphic ug) {
+		final ULayoutGroup group = getLayout(ug.getStringBounder());
+		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+		group.drawU(ug, dim.getWidth(), dim.getHeight());
 	}
 
 }

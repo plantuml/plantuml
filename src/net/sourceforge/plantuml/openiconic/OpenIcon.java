@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -130,7 +131,7 @@ public class OpenIcon {
 	}
 
 	public TextBlock asTextBlock(final HtmlColor color, final double factor) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				svgPath.drawMe(ug.apply(new UChangeColor(color)), factor);
 			}

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 final public class BlockUmlBuilder {
 
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
-	private final Set<File> usedFiles = new HashSet<File>();
+	private Set<File> usedFiles = new HashSet<File>();
 	private final UncommentReadLine reader2;
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir)
@@ -59,11 +59,12 @@ final public class BlockUmlBuilder {
 		Preprocessor includer = null;
 		try {
 			reader2 = new UncommentReadLine(new ReadLineReader(reader));
-			includer = new Preprocessor(reader2, charset, defines, usedFiles, newCurrentDir);
+			includer = new Preprocessor(reader2, charset, defines, newCurrentDir);
 			init(includer, config);
 		} finally {
 			if (includer != null) {
 				includer.close();
+				usedFiles = includer.getFilesUsed();
 			}
 		}
 	}

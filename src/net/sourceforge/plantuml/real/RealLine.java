@@ -68,6 +68,8 @@ class RealLine {
 		int cpt = 0;
 		final Map<PositiveForce, Integer> counter = new HashMap<PositiveForce, Integer>();
 		do {
+			min = 0;
+			max = 0;
 			boolean done = true;
 			for (PositiveForce f : forces) {
 				// System.err.println("force=" + f);

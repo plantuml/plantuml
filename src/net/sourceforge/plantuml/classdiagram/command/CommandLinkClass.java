@@ -105,8 +105,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private static String getClassIdentifier() {
-		return "(" + getSeparator() + "?[\\p{L}0-9_]+(?:" + getSeparator()
-				+ "[\\p{L}0-9_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?";
+		return "(" + getSeparator() + "?[\\p{L}0-9_$]+(?:" + getSeparator()
+				+ "[\\p{L}0-9_$]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?";
 	}
 
 	private static String getSeparator() {

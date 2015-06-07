@@ -47,7 +47,15 @@ public class Stairs2 {
 	private final List<IntegerColored> values = new ArrayList<IntegerColored>();
 	private final Map<Double, IntegerColored> cache = new HashMap<Double, IntegerColored>();
 
+	@Override
+	public String toString() {
+		return ys.toString() + " " + values;
+	}
+
 	public void addStep(StairsPosition position, int value, HtmlColor color) {
+		if (value < 0) {
+			throw new IllegalArgumentException();
+		}
 		// System.err.println("Stairs2::addStep " + position + " " + value + " color=" + color);
 		assert ys.size() == values.size();
 		if (ys.size() > 0) {

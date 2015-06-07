@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.project2;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -75,7 +76,7 @@ public class RowSimple implements Row {
 	}
 
 	public TextBlock asTextBloc(final TimeConverter timeConverter) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final double x1 = getMinXwithoutHeader(timeConverter) + 1;

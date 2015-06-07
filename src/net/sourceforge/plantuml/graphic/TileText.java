@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TileText implements TextBlock {
+public class TileText extends AbstractTextBlock implements TextBlock {
 
 	private final String text;
 	private final FontConfiguration fontConfiguration;

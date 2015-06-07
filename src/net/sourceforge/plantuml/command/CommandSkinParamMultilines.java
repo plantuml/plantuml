@@ -64,7 +64,8 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 	}
 
-	private final static Pattern p1 = MyPattern.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
+	private final static Pattern p1 = MyPattern
+			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	public CommandSkinParamMultilines() {
 		super("(?i)^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?[%s]*\\{$");
@@ -73,7 +74,14 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	@Override
 	protected boolean isLineConsistent(String line, int level) {
 		line = StringUtils.trin(line);
+		if (hasStartingQuote(line)) {
+			return true;
+		}
 		return p1.matcher(line).matches();
+	}
+
+	private boolean hasStartingQuote(String line) {
+		return MyPattern.mtches(line, "[%s]*[%q].*");
 	}
 
 	public CommandExecutionResult execute(UmlDiagram diagram, List<String> lines) {
@@ -91,6 +99,9 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 
 		for (String s : lines) {
 			assert s.length() > 0;
+			if (hasStartingQuote(s)) {
+				continue;
+			}
 			if (s.equals("}")) {
 				context.pop();
 				continue;

@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +46,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -55,7 +57,7 @@ import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class BodyEnhanced implements TextBlock {
+public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 
 	private TextBlock area2;
 	private final FontConfiguration titleConfig;
@@ -214,5 +216,4 @@ public class BodyEnhanced implements TextBlock {
 	public List<Url> getUrls() {
 		return Collections.unmodifiableList(urls);
 	}
-
 }

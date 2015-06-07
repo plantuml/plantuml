@@ -34,12 +34,13 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockMarged implements TextBlock {
+class TextBlockMarged extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final double x1;
@@ -61,7 +62,18 @@ class TextBlockMarged implements TextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		textBlock.drawU(ug.apply(new UTranslate(x1, y1)));
+		final UTranslate translate = new UTranslate(x1, y1);
+		textBlock.drawU(ug.apply(translate));
+	}
+
+	@Override
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		final Rectangle2D parent = textBlock.getInnerPosition(member, stringBounder);
+		if (parent == null) {
+			return null;
+		}
+		final UTranslate translate = new UTranslate(x1, y1);
+		return translate.apply(parent);
 	}
 
 }

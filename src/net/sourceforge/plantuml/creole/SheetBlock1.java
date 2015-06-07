@@ -34,12 +34,14 @@
 package net.sourceforge.plantuml.creole;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -47,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class SheetBlock1 implements TextBlock, Atom, Stencil {
+public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
 
 	private final Sheet sheet;
 	private List<Stripe> stripes;
@@ -128,6 +130,12 @@ public class SheetBlock1 implements TextBlock, Atom, Stencil {
 		initMap(stringBounder);
 		return Dimension2DDouble.delta(minMax.getDimension(), 2 * padding);
 	}
+	
+	@Override
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		return null;
+	}
+
 
 	public void drawU(UGraphic ug) {
 		initMap(ug.getStringBounder());

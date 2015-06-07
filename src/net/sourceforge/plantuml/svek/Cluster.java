@@ -451,7 +451,7 @@ public class Cluster implements Moveable {
 
 	private TextBlockWidth getTextBlockAttribute(DotData dotData) {
 		final TextBlockWidth attribute;
-		final List<Member> members = group.getFieldsToDisplay();
+		final List<Member> members = group.getBodier().getFieldsToDisplay();
 		if (members.size() == 0) {
 			attribute = new TextBlockEmpty();
 		} else {

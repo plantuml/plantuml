@@ -40,9 +40,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandStopLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
+public class CommandEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public CommandStopLegacy1() {
+	public CommandEnd3() {
 		super(getRegexConcat());
 	}
 
@@ -55,11 +55,7 @@ public class CommandStopLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		// if (getSystem().getLastEntityConsulted() == null) {
-		// return CommandExecutionResult.error("No if for this endif");
-		// }
-		diagram.stop();
-
+		diagram.end();
 		return CommandExecutionResult.ok();
 	}
 

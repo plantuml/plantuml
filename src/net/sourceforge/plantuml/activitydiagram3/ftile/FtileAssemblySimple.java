@@ -40,11 +40,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileAssemblySimple implements Ftile {
+public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
 	private final Ftile tile1;
 	private final Ftile tile2;

@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -45,7 +46,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class MainTileAdapter implements TextBlock {
+public class MainTileAdapter extends AbstractTextBlock implements TextBlock {
 
 	private final MainTile mainTile;
 	private Dimension2D cacheDimension;

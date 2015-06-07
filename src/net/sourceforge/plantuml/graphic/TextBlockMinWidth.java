@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockMinWidth implements TextBlock {
+class TextBlockMinWidth extends AbstractTextBlock  implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final double minWidth;

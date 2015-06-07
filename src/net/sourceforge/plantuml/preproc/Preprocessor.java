@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14321 $
+ * Revision $Revision: 16305 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -36,14 +36,16 @@ package net.sourceforge.plantuml.preproc;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.StringUtils;
 
 public class Preprocessor implements ReadLine {
 
@@ -59,10 +61,10 @@ public class Preprocessor implements ReadLine {
 	private final PreprocessorInclude rawSource;
 	private final ReadLineInsertable source;
 
-	public Preprocessor(ReadLine reader, String charset, Defines defines, Set<File> filesUsed, File newCurrentDir) {
+	public Preprocessor(ReadLine reader, String charset, Defines defines, File newCurrentDir) {
 		this.defines = defines;
 		this.defines.saveState();
-		this.rawSource = new PreprocessorInclude(reader, defines, charset, filesUsed, newCurrentDir);
+		this.rawSource = new PreprocessorInclude(reader, defines, charset, newCurrentDir);
 		this.source = new ReadLineInsertable(new IfManager(rawSource, defines));
 	}
 
@@ -155,6 +157,10 @@ public class Preprocessor implements ReadLine {
 
 	public void close() throws IOException {
 		rawSource.close();
+	}
+
+	public Set<File> getFilesUsed() {
+		return Collections.unmodifiableSet(rawSource.getFilesUsedGlobal());
 	}
 
 }

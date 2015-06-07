@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -76,7 +77,7 @@ public enum VisibilityModifier {
 	}
 
 	public TextBlock getUBlock(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return new Dimension2DDouble(size + 1, size + 1);

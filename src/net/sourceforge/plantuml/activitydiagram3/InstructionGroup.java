@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
 public class InstructionGroup implements Instruction {
 
-	private final InstructionList list = new InstructionList();
+	private final InstructionList list;
 	private final Instruction parent;
 	private final HtmlColor backColor;
 	private final HtmlColor titleColor;
@@ -52,7 +52,9 @@ public class InstructionGroup implements Instruction {
 	private final Display test;
 	private Display headerNote;
 
-	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor) {
+	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
+			Swimlane swimlane) {
+		this.list = new InstructionList(swimlane);
 		this.parent = parent;
 		this.test = test;
 		this.backColor = backColor;

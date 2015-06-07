@@ -38,8 +38,8 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UHidden;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public final class SvekResult implements IEntityImage, Moveable {
+public final class SvekResult extends AbstractTextBlock implements IEntityImage, Moveable {
 
 	private final Rose rose = new Rose();
 

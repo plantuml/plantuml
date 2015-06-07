@@ -34,20 +34,27 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class EntityImageProtected implements IEntityImage, Untranslated {
+public class EntityImageProtected extends AbstractTextBlock implements IEntityImage, Untranslated {
 
 	private final IEntityImage orig;
 	private final double border;
 	private final Bibliotekon bibliotekon;
 	private final Neighborhood neighborhood;
+	
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 
 	public EntityImageProtected(IEntityImage orig, double border, Neighborhood neighborhood, Bibliotekon bibliotekon) {
 		this.orig = orig;

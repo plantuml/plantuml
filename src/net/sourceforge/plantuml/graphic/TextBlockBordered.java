@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockBordered implements TextBlock {
+class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final HtmlColor color;

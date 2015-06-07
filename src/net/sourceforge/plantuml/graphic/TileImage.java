@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TileImage implements TextBlock {
+public class TileImage extends AbstractTextBlock implements TextBlock {
 
 	private final BufferedImage image;
 	private final int vspace;

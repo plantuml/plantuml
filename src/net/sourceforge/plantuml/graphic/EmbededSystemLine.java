@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
-class EmbededSystemLine implements Line {
+class EmbededSystemLine extends AbstractTextBlock implements Line {
 
 	final private List<? extends CharSequence> lines;
 

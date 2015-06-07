@@ -36,13 +36,14 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.awt.geom.Dimension2D;
 import java.util.HashMap;
 
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockInterceptorUDrawable implements TextBlock {
+public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 

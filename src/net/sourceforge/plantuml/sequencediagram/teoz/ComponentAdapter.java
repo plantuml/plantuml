@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.Area;
@@ -43,7 +44,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class ComponentAdapter implements TextBlock {
+public class ComponentAdapter extends AbstractTextBlock implements TextBlock {
 
 	private final Component component;
 

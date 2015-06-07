@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -120,13 +121,20 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 			return CommandExecutionResult.error("Nothing to note to");
 		}
 		final IEntity cl1 = diagram.getOrCreateLeaf(code, null, null);
+		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
+				diagram.getSkinParam().getRankdir());
 
-		final Code codeTip = code.addSuffix("$$$right");
+		final Code codeTip = code.addSuffix("$$$" + position.name());
 		IEntity tips = diagram.getLeafsget(codeTip);
 		if (tips == null) {
 			tips = diagram.getOrCreateLeaf(codeTip, LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
-			final Link link = new Link(cl1, (IEntity) tips, type, null, 1);
+			final Link link;
+			if (position == Position.RIGHT) {
+				link = new Link(cl1, (IEntity) tips, type, null, 1);
+			} else {
+				link = new Link((IEntity) tips, cl1, type, null, 1);
+			}
 			diagram.addLink(link);
 		}
 		tips.putTip(member, Display.create(s));

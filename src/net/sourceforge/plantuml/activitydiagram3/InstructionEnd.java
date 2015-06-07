@@ -27,23 +27,45 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4749 $
+ *
+ * Revision $Revision: 9786 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.activitydiagram3;
 
-import java.awt.geom.Rectangle2D;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
+public class InstructionEnd extends MonoSwimable implements Instruction {
 
-public interface BlockMember {
+	private final LinkRendering inlinkRendering;
 
-	public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam);
-	
-	public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam, ISkinParam skinParam);
+	public InstructionEnd(Swimlane swimlane, LinkRendering inlinkRendering) {
+		super(swimlane);
+		this.inlinkRendering = inlinkRendering;
+	}
+
+	public Ftile createFtile(FtileFactory factory) {
+		return factory.end(getSwimlaneIn());
+	}
+
+	public void add(Instruction other) {
+		throw new UnsupportedOperationException();
+	}
+
+	final public boolean kill() {
+		return false;
+	}
+
+	public LinkRendering getInLinkRendering() {
+		return inlinkRendering;
+	}
+
+	public void addNote(Display note, NotePosition position) {
+		throw new UnsupportedOperationException();
+	}
 
 }

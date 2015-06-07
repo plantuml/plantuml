@@ -134,7 +134,7 @@ public class LivingSpace {
 		// this.stairs2.addStep2(0, 0);
 		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
 		this.mutingLine = new MutingLine(skin, skinParam, events);
-		this.liveBoxes = new LiveBoxes(eventsHistory, skin, skinParam);
+		this.liveBoxes = new LiveBoxes(eventsHistory, skin, skinParam, p);
 	}
 
 	private boolean useContinueLineBecauseOfDelay(List<Event> events) {

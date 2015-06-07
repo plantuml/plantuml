@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkHat;
 import net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -137,7 +138,7 @@ public class Line implements Moveable, Hideable {
 		return super.toString() + " color=" + lineColor;
 	}
 
-	class DirectionalTextBlock implements TextBlock {
+	class DirectionalTextBlock extends AbstractTextBlock implements TextBlock {
 
 		private final TextBlock right;
 		private final TextBlock left;

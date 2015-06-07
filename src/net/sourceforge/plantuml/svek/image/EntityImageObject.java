@@ -86,33 +86,26 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner();
-		this.name = TextBlockUtils.withMargin(TextBlockUtils.create(
-				entity.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-						FontParam.OBJECT, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.OBJECT,
-				stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam), 2, 2);
+		this.name = TextBlockUtils.withMargin(TextBlockUtils.create(entity.getDisplay(),
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.OBJECT, stereotype),
+						SkinParamUtils.getFontColor(getSkinParam(), FontParam.OBJECT, stereotype), getSkinParam()
+								.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
+				HorizontalAlignment.CENTER, skinParam), 2, 2);
 		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = TextBlockUtils.create(
-					Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())),
-					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-							FontParam.OBJECT_STEREOTYPE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-					FontParam.OBJECT_STEREOTYPE, stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+			this.stereo = TextBlockUtils
+					.create(Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())),
+							new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.OBJECT_STEREOTYPE,
+									stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+									FontParam.OBJECT_STEREOTYPE, stereotype), getSkinParam().getHyperlinkColor(),
+									getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 		}
 
-		if (entity.getFieldsToDisplay().size() == 0) {
+		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
-			// this.fields =
-			// entity.getFieldsToDisplay().asTextBlock(FontParam.OBJECT_ATTRIBUTE,
-			// skinParam);
-			this.fields = entity.getBody(new PortionShower() {
-				public boolean showPortion(EntityPortion portion, IEntity entity) {
-					return true;
-				}
-			}).asTextBlock(FontParam.OBJECT_ATTRIBUTE, skinParam);
-
+			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, true);
 		}
 		this.url = entity.getUrl99();
 
@@ -159,7 +152,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 			header.add(stereo);
 		}
 		header.add(name);
-		header.drawU(ug, 0, 0, dimTotal.getWidth(), dimTitle.getHeight());
+		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());
 
 		final UGraphic ug2 = new UGraphicStencil(ug, this, stroke);
 		fields.drawU(ug2.apply(new UTranslate(0, dimTitle.getHeight())));

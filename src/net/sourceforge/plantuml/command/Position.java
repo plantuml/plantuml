@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16285 $
  *
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 
 public enum Position {
@@ -59,5 +60,15 @@ public enum Position {
 			return LEFT;
 		}
 		throw new IllegalStateException();
+	}
+
+	public Direction reverseDirection() {
+		if (this == LEFT) {
+			return Direction.RIGHT;
+		}
+		if (this == RIGHT) {
+			return Direction.LEFT;
+		}
+		throw new UnsupportedOperationException();
 	}
 }

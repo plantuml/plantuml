@@ -78,11 +78,20 @@ public class UGraphicCompress extends UGraphicDelegator {
 	}
 
 	private void drawLine(double x1, double y1, double x2, double y2) {
+		if (y1 > y2) {
+			drawLine(x2, y2, x1, y1);
+			return;
+		}
+		assert y1 <= y2;
 		final double xmin = Math.min(x1, x2);
 		final double xmax = Math.max(x1, x2);
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
-		getUg().apply(new UTranslate(xmin, ymin)).draw(new ULine(xmax - xmin, ymax - ymin));
+		if (x2 >= x1) {
+			getUg().apply(new UTranslate(xmin, ymin)).draw(new ULine(xmax - xmin, ymax - ymin));
+		} else {
+			getUg().apply(new UTranslate(xmax, ymin)).draw(new ULine(-(xmax - xmin), ymax - ymin));
+		}
 	}
 
 }

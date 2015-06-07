@@ -38,7 +38,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class TextBlockEmpty implements TextBlockWidth, TextBlock {
+public class TextBlockEmpty extends AbstractTextBlock implements TextBlockWidth, TextBlock {
 
 	private final double width;
 	private final double height;
@@ -60,7 +60,7 @@ public class TextBlockEmpty implements TextBlockWidth, TextBlock {
 	}
 
 	public TextBlock asTextBlock(final double widthToUse) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 			}

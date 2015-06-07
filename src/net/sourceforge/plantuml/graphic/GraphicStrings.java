@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14711 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GraphicStrings implements IEntityImage {
+public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final HtmlColor background;
 

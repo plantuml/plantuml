@@ -89,7 +89,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 			if (VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
 				diagram.setVisibilityModifierPresent(true);
 			}
-			entity.addFieldOrMethod(s);
+			entity.getBodier().addFieldOrMethod(s);
 		}
 		return CommandExecutionResult.ok();
 	}

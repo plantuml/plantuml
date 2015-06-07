@@ -35,9 +35,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -75,7 +73,7 @@ class USymbolComponent2 extends USymbol {
 	}
 
 	public TextBlock asSmall(final TextBlock label, TextBlock stereotype, final SymbolContext symbolContext) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
@@ -94,7 +92,7 @@ class USymbolComponent2 extends USymbol {
 
 	public TextBlock asBig(final TextBlock title, TextBlock stereotype, final double width, final double height,
 			final SymbolContext symbolContext) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());

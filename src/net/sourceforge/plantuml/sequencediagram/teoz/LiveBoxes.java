@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,7 +51,7 @@ public class LiveBoxes {
 	private final ISkinParam skinParam;
 	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
 
-	public LiveBoxes(EventsHistory eventsHistory, Skin skin, ISkinParam skinParam) {
+	public LiveBoxes(EventsHistory eventsHistory, Skin skin, ISkinParam skinParam, Participant participant) {
 		this.eventsHistory = eventsHistory;
 		this.skin = skin;
 		this.skinParam = skinParam;

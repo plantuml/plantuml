@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -44,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class EntityDomain implements TextBlock {
+public class EntityDomain extends AbstractTextBlock implements TextBlock {
 
 	private final double margin = 4;
 

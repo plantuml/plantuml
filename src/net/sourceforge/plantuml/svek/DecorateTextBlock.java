@@ -36,13 +36,14 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DecorateTextBlock implements TextBlock {
+public class DecorateTextBlock extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock original;
 	private final HorizontalAlignment horizontal1;

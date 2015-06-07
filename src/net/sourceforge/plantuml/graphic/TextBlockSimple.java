@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15846 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockSimple implements TextBlock {
+class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 
 	private List<Line> lines2;
 

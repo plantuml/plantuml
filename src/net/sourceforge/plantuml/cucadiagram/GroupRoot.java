@@ -40,9 +40,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -106,17 +108,7 @@ public class GroupRoot implements IGroup {
 
 	}
 
-	public List<Member> getFieldsToDisplay() {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public List<Member> getMethodsToDisplay() {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public BlockMember getBody(PortionShower portionShower) {
+	public TextBlock getBody(PortionShower portionShower, FontParam fontParam, ISkinParam skinParam) {
 		throw new UnsupportedOperationException();
 
 	}
@@ -127,20 +119,6 @@ public class GroupRoot implements IGroup {
 
 	public LongCode getLongCode() {
 		return null;
-	}
-
-	public BlockMember getMouseOver() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void addFieldOrMethod(String s) {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public void mouseOver(String s) {
-		throw new UnsupportedOperationException();
-
 	}
 
 	public void addUrl(Url url) {
@@ -283,6 +261,10 @@ public class GroupRoot implements IGroup {
 	}
 
 	public Map<String, Display> getTips() {
+		throw new UnsupportedOperationException();
+	}
+
+	public Bodier getBodier() {
 		throw new UnsupportedOperationException();
 	}
 

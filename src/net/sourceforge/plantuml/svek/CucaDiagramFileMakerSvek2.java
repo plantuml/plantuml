@@ -390,7 +390,7 @@ public final class CucaDiagramFileMakerSvek2 {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
 				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
 			}
-			if (isHideEmptyDescriptionForState && leaf.getFieldsToDisplay().size() == 0) {
+			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
 			}
 			if (leaf.getStereotype() != null && "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(false))) {
@@ -463,7 +463,7 @@ public final class CucaDiagramFileMakerSvek2 {
 			return new EntityImagePseudoState(leaf, skinParam);
 		}
 		if (leaf.getEntityType() == LeafType.TIPS) {
-			return new EntityImageTips(leaf, skinParam, bibliotekon, portionShower);
+			return new EntityImageTips(leaf, skinParam, bibliotekon);
 		}
 		throw new UnsupportedOperationException(leaf.getEntityType().toString());
 	}
@@ -514,7 +514,7 @@ public final class CucaDiagramFileMakerSvek2 {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final List<Member> members = ((IEntity) g).getFieldsToDisplay();
+			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
 			if (members.size() == 0) {
 				attribute = new TextBlockEmpty();

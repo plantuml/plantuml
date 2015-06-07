@@ -42,13 +42,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
-import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElseTile implements TileWithCallbackY {
 
@@ -68,7 +65,7 @@ public class ElseTile implements TileWithCallbackY {
 		this.parent = parent;
 	}
 
-	private Component getComponent(StringBounder stringBounder) {
+	public Component getComponent(StringBounder stringBounder) {
 		// final Display display = Display.create(anElse.getTitle());
 		final ISkinParam tmp = new SkinParamBackcolored(skinParam, anElse.getBackColorElement(),
 				anElse.getBackColorGeneral());
@@ -79,21 +76,21 @@ public class ElseTile implements TileWithCallbackY {
 	}
 
 	public void drawU(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Real min = getMinX(stringBounder);
-		final Real max = getMaxX(stringBounder);
-		final Context2D context = (Context2D) ug;
-		double height = dim.getHeight();
-		if (context.isBackground() && parent instanceof GroupingTile) {
-			final double startingY = ((GroupingTile) parent).getStartY();
-			final double totalParentHeight = parent.getPreferredHeight(stringBounder);
-			height = totalParentHeight - (startingY - y);
-		}
-		final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), height);
-		ug = ug.apply(new UTranslate(min.getCurrentValue(), 0));
-		comp.drawU(ug, area, context);
+		// final StringBounder stringBounder = ug.getStringBounder();
+		// final Component comp = getComponent(stringBounder);
+		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		// final Real min = getMinX(stringBounder);
+		// final Real max = getMaxX(stringBounder);
+		// final Context2D context = (Context2D) ug;
+		// double height = dim.getHeight();
+		// // if (context.isBackground() && parent instanceof GroupingTile) {
+		// // final double startingY = ((GroupingTile) parent).getStartY();
+		// // final double totalParentHeight = parent.getPreferredHeight(stringBounder);
+		// // height = totalParentHeight - (startingY - y);
+		// // }
+		// final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), height);
+		// ug = ug.apply(new UTranslate(min.getCurrentValue(), 0));
+		// comp.drawU(ug, area, context);
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -113,13 +110,19 @@ public class ElseTile implements TileWithCallbackY {
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return parent.getMaxX(stringBounder);
+		final Component comp = getComponent(stringBounder);
+		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		return getMinX(stringBounder).addFixed(dim.getWidth());
 	}
 
 	private double y;
 
 	public void callbackY(double y) {
 		this.y = y;
+	}
+
+	public double getCallbackY() {
+		return y;
 	}
 
 }

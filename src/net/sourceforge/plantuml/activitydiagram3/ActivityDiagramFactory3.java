@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandSplitAgain3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSplitEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandStart3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandStop3;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandStopLegacy1;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandWhile3;
@@ -122,7 +122,7 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		// cmds.add(new CommandGroupEnd3());
 		cmds.add(new CommandStart3());
 		cmds.add(new CommandStop3());
-		cmds.add(new CommandStopLegacy1());
+		cmds.add(new CommandEnd3());
 		cmds.add(new CommandKill3());
 		cmds.add(new CommandLink3());
 		cmds.add(new CommandNote3());

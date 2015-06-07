@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -44,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GTileLeftRight implements GTile {
+public class GTileLeftRight extends AbstractTextBlock implements GTile {
 
 	private final GTile left;
 	private final GTile right;

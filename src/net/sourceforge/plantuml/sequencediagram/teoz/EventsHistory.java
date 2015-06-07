@@ -102,6 +102,9 @@ public class EventsHistory {
 					}
 
 				}
+				if (level < 0) {
+					return 0;
+				}
 				// System.err.println("<-result1 is " + level);
 				return level;
 			}
@@ -120,7 +123,7 @@ public class EventsHistory {
 				final Event next = nextButSkippingNotes(it);
 				if (next instanceof LifeEvent) {
 					final LifeEvent le = (LifeEvent) next;
-					return le.isDestroy();
+					return le.isDestroy(p);
 				}
 			}
 			return false;

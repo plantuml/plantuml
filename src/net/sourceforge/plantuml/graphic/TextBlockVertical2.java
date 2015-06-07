@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockVertical2 implements TextBlock {
+public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock {
 
 	private final List<TextBlock> blocks = new ArrayList<TextBlock>();
 	private final HorizontalAlignment horizontalAlignment;
@@ -71,18 +72,32 @@ public class TextBlockVertical2 implements TextBlock {
 	public void drawU(UGraphic ug) {
 		double y = 0;
 		final Dimension2D dimtotal = calculateDimension(ug.getStringBounder());
-		for (TextBlock b : blocks) {
-			final Dimension2D dimb = b.calculateDimension(ug.getStringBounder());
+		for (TextBlock block : blocks) {
+			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (horizontalAlignment == HorizontalAlignment.LEFT) {
-				b.drawU(ug.apply(new UTranslate(0, y)));
+				block.drawU(ug.apply(new UTranslate(0, y)));
 			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;
-				b.drawU(ug.apply(new UTranslate(dx, y)));
+				block.drawU(ug.apply(new UTranslate(dx, y)));
 			} else {
 				throw new UnsupportedOperationException();
 			}
 			y += dimb.getHeight();
 		}
+	}
+
+	@Override
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		double y = 0;
+		for (TextBlock block : blocks) {
+			final Dimension2D dimb = block.calculateDimension(stringBounder);
+			final Rectangle2D result = block.getInnerPosition(member, stringBounder);
+			if (result != null) {
+				return new UTranslate(0, y).apply(result);
+			}
+			y += dimb.getHeight();
+		}
+		return null;
 	}
 
 }

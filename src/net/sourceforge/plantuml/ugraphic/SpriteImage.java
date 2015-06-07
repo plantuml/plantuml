@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -50,7 +51,7 @@ public class SpriteImage implements Sprite {
 	}
 
 	public TextBlock asTextBlock(final HtmlColor color) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				ug.draw(img);

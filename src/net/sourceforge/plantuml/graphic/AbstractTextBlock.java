@@ -28,35 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 7163 $
+ * Revision $Revision: 16264 $
  *
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+public abstract class AbstractTextBlock implements TextBlock {
 
-public class TextBlockWidthAdapter extends AbstractTextBlock implements TextBlock {
-
-	private final TextBlockWidth textBlockWidth;
-	private final double width;
-
-	// public final void setWidth(double width) {
-	// this.width = width;
-	// }
-
-	public TextBlockWidthAdapter(TextBlockWidth textBlockWidth, double widthToUse) {
-		this.textBlockWidth = textBlockWidth;
-		this.width = widthToUse;
-	}
-
-	public void drawU(UGraphic ug) {
-		textBlockWidth.asTextBlock(width).drawU(ug);
-	}
-
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return textBlockWidth.calculateDimension(stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		throw new UnsupportedOperationException(getClass().toString());
 	}
 
 }

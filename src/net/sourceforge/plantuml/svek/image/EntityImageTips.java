@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.BlockMember;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -72,15 +72,13 @@ public class EntityImageTips extends AbstractEntityImage {
 	private final HtmlColor borderColor;
 
 	private final Bibliotekon bibliotekon;
-	private PortionShower portionShower;
 
 	private final double ySpacing = 10;
 
-	public EntityImageTips(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon, PortionShower portionShower) {
+	public EntityImageTips(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
 		super(entity, EntityImageNote.getSkin(skinParam, entity));
 		this.skinParam = skinParam;
 		this.bibliotekon = bibliotekon;
-		this.portionShower = portionShower;
 
 		if (entity.getSpecificBackColor() == null) {
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
@@ -88,6 +86,13 @@ public class EntityImageTips extends AbstractEntityImage {
 			noteBackgroundColor = entity.getSpecificBackColor();
 		}
 		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+	}
+
+	private Position getPosition() {
+		if (getEntity().getCode().getFullName().endsWith(Position.RIGHT.name())) {
+			return Position.RIGHT;
+		}
+		return Position.LEFT;
 	}
 
 	public ShapeType getShapeType() {
@@ -115,26 +120,33 @@ public class EntityImageTips extends AbstractEntityImage {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final IEntity other = bibliotekon.getOnlyOther(getEntity());
-		final BlockMember otherBlockMember = other.getBody(portionShower);
-		// .asTextBlock(FontParam.CLASS_ATTRIBUTE, skinParam);
 
 		final Shape shapeMe = bibliotekon.getShape(getEntity());
 		final Shape shapeOther = bibliotekon.getShape(other);
-//		System.err.println("shapeMe=" + shapeMe.getPosition() + " " + shapeMe.getSize());
-//		System.err.println("shapeOther=" + shapeOther.getPosition() + " " + shapeOther.getSize());
+		final Point2D positionMe = shapeMe.getPosition();
+		final Point2D positionOther = shapeOther.getPosition();
 		bibliotekon.getShape(getEntity());
+		final Position position = getPosition();
+		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
-			final Rectangle2D memberPosition = otherBlockMember.getPosition(ent.getKey(), stringBounder,
-					FontParam.CLASS_ATTRIBUTE, skinParam);
-//			System.err.println("memberPosition=" + memberPosition);
+			final Rectangle2D memberPosition = shapeOther.getImage().getInnerPosition(ent.getKey(), stringBounder);
 			final Opale opale = getOpale(display);
-			final Point2D pp1 = shapeMe.getPoint2D(0, 0);
-			final Point2D pp2 = shapeOther.getPoint2D(0, 0);
-			opale.setOpale(Direction.LEFT, pp1, pp2);
 			final Dimension2D dim = opale.calculateDimension(stringBounder);
+			final Point2D pp1 = new Point2D.Double(0, dim.getHeight() / 2);
+			double x = positionOther.getX() - positionMe.getX();
+			if (position == Position.RIGHT) {
+				x += memberPosition.getMaxX();
+			} else {
+				x += 4;
+			}
+			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
+			final Point2D pp2 = new Point2D.Double(x, y);
+			opale.setOpale(position.reverseDirection(), pp1, pp2);
 			opale.drawU(ug);
 			ug = ug.apply(new UTranslate(0, dim.getHeight() + ySpacing));
+			height += dim.getHeight();
+			height += ySpacing;
 		}
 
 	}
@@ -146,7 +158,7 @@ public class EntityImageTips extends AbstractEntityImage {
 		final TextBlock textBlock = new BodyEnhanced2(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
 				new FontConfiguration(fontNote, fontColor, skinParam.getHyperlinkColor(),
 						skinParam.useUnderlineForHyperlink()));
-		final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), false);
+		final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), true);
 		return opale;
 	}
 

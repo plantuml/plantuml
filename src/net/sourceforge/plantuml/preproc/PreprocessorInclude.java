@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 15993 $
+ * Revision $Revision: 16305 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -42,6 +42,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,13 +69,24 @@ class PreprocessorInclude implements ReadLine {
 	private PreprocessorInclude included = null;
 
 	private final File oldCurrentDir;
-	private final Set<File> filesUsed;
+	private final Set<File> filesUsedCurrent;
+	private final Set<File> filesUsedGlobal;
 
-	public PreprocessorInclude(ReadLine reader, Defines defines, String charset, Set<File> filesUsed, File newCurrentDir) {
+	public PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir) {
+		this(reader, defines, charset, newCurrentDir, new HashSet<File>(), new HashSet<File>());
+	}
+
+	public Set<File> getFilesUsedGlobal() {
+		return Collections.unmodifiableSet(filesUsedGlobal);
+	}
+
+	private PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir,
+			Set<File> filesUsedCurrent, Set<File> filesUsedGlobal) {
 		this.defines = defines;
 		this.charset = charset;
 		this.reader2 = reader;
-		this.filesUsed = filesUsed;
+		this.filesUsedCurrent = filesUsedCurrent;
+		this.filesUsedGlobal = filesUsedGlobal;
 		if (newCurrentDir == null) {
 			oldCurrentDir = null;
 		} else {
@@ -92,7 +105,7 @@ class PreprocessorInclude implements ReadLine {
 		final String result = readLineInternal();
 		if (result != null && (StartUtils.isArobaseEndDiagram(result) || StartUtils.isArobaseStartDiagram(result))) {
 			// http://plantuml.sourceforge.net/qa/?qa=3389/error-generating-when-same-file-included-different-diagram
-			filesUsed.clear();
+			filesUsedCurrent.clear();
 		}
 		return result;
 	}
@@ -138,7 +151,8 @@ class PreprocessorInclude implements ReadLine {
 		}
 		try {
 			final URL url = new URL(urlString);
-			included = new PreprocessorInclude(getReaderInclude(url, suf), defines, charset, filesUsed, null);
+			included = new PreprocessorInclude(getReaderInclude(url, suf), defines, charset, null, filesUsedCurrent,
+					filesUsedGlobal);
 		} catch (MalformedURLException e) {
 			return "Cannot include url " + urlString;
 		}
@@ -157,11 +171,13 @@ class PreprocessorInclude implements ReadLine {
 		final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
 		if (f.exists() == false) {
 			return "Cannot include " + f.getAbsolutePath();
-		} else if (filesUsed.contains(f)) {
+		} else if (filesUsedCurrent.contains(f)) {
 			return "File already included " + f.getAbsolutePath();
 		} else {
-			filesUsed.add(f);
-			included = new PreprocessorInclude(getReaderInclude(f, suf), defines, charset, filesUsed, f.getParentFile());
+			filesUsedCurrent.add(f);
+			filesUsedGlobal.add(f);
+			included = new PreprocessorInclude(getReaderInclude(f, suf), defines, charset, f.getParentFile(),
+					filesUsedCurrent, filesUsedGlobal);
 		}
 		return this.readLine();
 	}

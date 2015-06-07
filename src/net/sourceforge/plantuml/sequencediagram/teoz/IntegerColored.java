@@ -41,6 +41,9 @@ public class IntegerColored {
 	private final HtmlColor color;
 
 	public IntegerColored(int value, HtmlColor color) {
+		if (value < 0) {
+			throw new IllegalArgumentException();
+		}
 		this.value = value;
 		this.color = color;
 	}

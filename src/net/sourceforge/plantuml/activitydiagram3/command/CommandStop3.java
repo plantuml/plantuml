@@ -55,11 +55,7 @@ public class CommandStop3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		// if (getSystem().getLastEntityConsulted() == null) {
-		// return CommandExecutionResult.error("No if for this endif");
-		// }
 		diagram.stop();
-
 		return CommandExecutionResult.ok();
 	}
 

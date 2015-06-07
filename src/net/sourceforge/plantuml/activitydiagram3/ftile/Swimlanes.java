@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDele
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -80,7 +81,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class Swimlanes implements TextBlock {
+public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	private final ISkinParam skinParam;;
 

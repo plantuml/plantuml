@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockArrow implements TextBlock {
+public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 
 	private final double size;
 	private final Direction arrow;

@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -43,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public final class InnerActivity implements IEntityImage {
+public final class InnerActivity extends AbstractTextBlock implements IEntityImage {
 
 	private final IEntityImage im;
 	private final HtmlColor borderColor;

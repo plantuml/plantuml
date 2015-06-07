@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.ugraphic.CompressionTransform;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicCompress2;
 
-public class TextBlockCompressed2 implements TextBlock {
+public class TextBlockCompressed2 extends AbstractTextBlock implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final CompressionTransform compressionTransform;

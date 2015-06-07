@@ -134,12 +134,12 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		pw.println("<hr>");
-		if (entity.getFieldsToDisplay().size() == 0) {
+		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
 			pw.println("<h2>No fields</h2>");
 		} else {
 			pw.println("<h2>Fields:</h2>");
 			pw.println("<ul>");
-			for (Member m : entity.getFieldsToDisplay()) {
+			for (Member m : entity.getBodier().getFieldsToDisplay()) {
 				pw.println("<li>");
 				pw.println(StringUtils.unicodeForHtml(m.getDisplay(true)));
 				pw.println("</li>");
@@ -148,12 +148,12 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		pw.println("<hr>");
-		if (entity.getMethodsToDisplay().size() == 0) {
+		if (entity.getBodier().getMethodsToDisplay().size() == 0) {
 			pw.println("<h2>No methods</h2>");
 		} else {
 			pw.println("<h2>Methods:</h2>");
 			pw.println("<ul>");
-			for (Member m : entity.getMethodsToDisplay()) {
+			for (Member m : entity.getBodier().getMethodsToDisplay()) {
 				pw.println("<li>");
 				pw.println(StringUtils.unicodeForHtml(m.getDisplay(true)));
 				pw.println("</li>");

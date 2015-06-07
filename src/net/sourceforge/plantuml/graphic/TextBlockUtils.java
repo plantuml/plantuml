@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15817 $
+ * Revision $Revision: 16278 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -40,6 +40,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -135,7 +136,8 @@ public class TextBlockUtils {
 			return new TextBlockSpotted(circledCharacter, texts, fontConfiguration, horizontalAlignment,
 					spriteContainer);
 		}
-		return new TextBlockSimple(texts, fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype, htmlColorForStereotype);
+		return new TextBlockSimple(texts, fontConfiguration, horizontalAlignment, spriteContainer, 0,
+				fontForStereotype, htmlColorForStereotype);
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
@@ -152,7 +154,7 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock empty(final double width, final double height) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 			}
 
@@ -211,6 +213,27 @@ public class TextBlockUtils {
 
 	public static FontMetrics getFontMetrics(Font font) {
 		return gg.getFontMetrics(font);
+	}
+
+	public static TextBlock fullInnerPosition(final TextBlock bloc, final String display) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				bloc.drawU(ug);
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return bloc.calculateDimension(stringBounder);
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+				if (display.startsWith(member)) {
+					final Dimension2D dim = calculateDimension(stringBounder);
+					return new Rectangle2D.Double(0, 0, dim.getWidth(), dim.getHeight());
+				}
+				return null;
+			}
+		};
 	}
 
 }

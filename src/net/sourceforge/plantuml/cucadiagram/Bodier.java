@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,8 +41,9 @@ import java.util.Set;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class Bodier {
@@ -68,7 +68,7 @@ public class Bodier {
 		rawBody.add(s);
 	}
 
-	public boolean isBodyEnhanced() {
+	private boolean isBodyEnhanced() {
 		for (String s : rawBody) {
 			if (BodyEnhanced.isBlockSeparator(s)) {
 				return true;
@@ -77,26 +77,9 @@ public class Bodier {
 		return false;
 	}
 
-	public BlockMember getBodyEnhanced() {
-		return new BlockMember() {
-			public TextBlock asTextBlock(FontParam fontParam, ISkinParam skinParam) {
-				final BodyEnhanced result = new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier);
-				return result;
-			}
-			public Rectangle2D getPosition(String member, StringBounder stringBounder, FontParam fontParam, ISkinParam skinParam) {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-
-	private LeafType getEntityType() {
-		return type;
-	}
-
 	private boolean isMethod(String s) {
-		if (getEntityType() == LeafType.ANNOTATION || getEntityType() == LeafType.ABSTRACT_CLASS
-				|| getEntityType() == LeafType.CLASS || getEntityType() == LeafType.INTERFACE
-				|| getEntityType() == LeafType.ENUM) {
+		if (type == LeafType.ANNOTATION || type == LeafType.ABSTRACT_CLASS || type == LeafType.CLASS
+				|| type == LeafType.INTERFACE || type == LeafType.ENUM) {
 			return StringUtils.isMethod(s);
 		}
 		return false;
@@ -170,4 +153,33 @@ public class Bodier {
 		}
 		return true;
 	}
+
+	public TextBlock getBody(final FontParam fontParam, final ISkinParam skinParam, final boolean showMethods,
+			final boolean showFields) {
+		if (type.isLikeClass() && isBodyEnhanced()) {
+			if (showMethods && showFields) {
+				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier);
+			}
+			return null;
+		}
+		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam);
+		if (type == LeafType.OBJECT) {
+			return fields.asBlockMemberImpl();
+		}
+		if (type.isLikeClass() == false) {
+			throw new UnsupportedOperationException();
+		}
+		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam);
+		if (showFields && showMethods == false) {
+			return fields.asBlockMemberImpl();
+		} else if (showMethods && showFields == false) {
+			return methods.asBlockMemberImpl();
+		}
+		assert showFields && showMethods;
+
+		final TextBlock bb1 = fields.asBlockMemberImpl();
+		final TextBlock bb2 = methods.asBlockMemberImpl();
+		return new TextBlockVertical2(bb1, bb2, HorizontalAlignment.LEFT);
+	}
+
 }

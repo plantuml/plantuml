@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -52,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public final class CucaDiagramFileMakerSvek2InternalImage implements IEntityImage {
+public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBlock implements IEntityImage {
 
 	private final List<IEntityImage> inners = new ArrayList<IEntityImage>();
 	private final Separator separator;

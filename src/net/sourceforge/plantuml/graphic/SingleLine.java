@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.Sprite;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class SingleLine implements Line {
+class SingleLine extends AbstractTextBlock implements Line {
 
 	private final List<TextBlock> blocs = new ArrayList<TextBlock>();
 	private final HorizontalAlignment horizontalAlignment;

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 13992 $
+ * Revision $Revision: 16273 $
  *
  */
 package net.sourceforge.plantuml.statediagram.command;
@@ -116,7 +116,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		final String addFields = arg.get("ADDFIELD", 0);
 		if (addFields != null) {
-			ent.addFieldOrMethod(addFields);
+			ent.getBodier().addFieldOrMethod(addFields);
 		}
 		return CommandExecutionResult.ok();
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14028 $
+ * Revision $Revision: 16265 $
  *
  */
 package net.sourceforge.plantuml;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 

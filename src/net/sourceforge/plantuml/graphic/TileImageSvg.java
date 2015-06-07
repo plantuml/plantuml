@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
-public class TileImageSvg implements TextBlock {
+public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 
 	private final UImageSvg svg;
 

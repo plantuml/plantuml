@@ -56,7 +56,7 @@ public class CommandAddData extends SingleLineCommand<ObjectDiagram> {
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field.charAt(0))) {
 			diagram.setVisibilityModifierPresent(true);
 		}
-		entity.addFieldOrMethod(field);
+		entity.getBodier().addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}
 }

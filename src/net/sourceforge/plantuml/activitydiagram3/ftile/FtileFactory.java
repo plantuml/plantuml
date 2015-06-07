@@ -54,6 +54,8 @@ public interface FtileFactory extends ISkinSimple {
 
 	public Ftile stop(Swimlane swimlane);
 
+	public Ftile end(Swimlane swimlane);
+
 	public Ftile activity(Display label, HtmlColor color, Swimlane swimlane, BoxStyle style);
 
 	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition);

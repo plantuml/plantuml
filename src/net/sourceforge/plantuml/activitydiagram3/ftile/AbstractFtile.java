@@ -37,10 +37,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public abstract class AbstractFtile implements Ftile {
+public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
 	private final boolean shadowing;
 

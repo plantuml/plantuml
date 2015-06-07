@@ -79,7 +79,7 @@ public class DateEventUtils {
 	}
 
 	private static TextBlock addCharlie(TextBlock textBlock) {
-		final TextBlock charlie = new TextBlock() {
+		final TextBlock charlie = new AbstractTextBlock() {
 			private final BufferedImage charlie = PSystemVersion.getCharlieImage();
 
 			public void drawU(UGraphic ug) {
