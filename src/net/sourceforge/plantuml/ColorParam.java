@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 15877 $
+ * Revision $Revision: 16364 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -106,25 +106,25 @@ public enum ColorParam {
 	sequenceBoxBackground(HtmlColorUtils.COL_DDDDDD, true),
 	
 	artifactBackground(HtmlColorUtils.MY_YELLOW),
-	artifactBorder(HtmlColorUtils.MY_RED),
+	artifactBorder(HtmlColorUtils.BLACK),
 	cloudBackground(HtmlColorUtils.MY_YELLOW),
-	cloudBorder(HtmlColorUtils.MY_RED),
+	cloudBorder(HtmlColorUtils.BLACK),
 	queueBackground(HtmlColorUtils.MY_YELLOW),
 	queueBorder(HtmlColorUtils.MY_RED),
 	databaseBackground(HtmlColorUtils.MY_YELLOW),
-	databaseBorder(HtmlColorUtils.MY_RED),
+	databaseBorder(HtmlColorUtils.BLACK),
 	folderBackground(HtmlColorUtils.MY_YELLOW),
-	folderBorder(HtmlColorUtils.MY_RED),
+	folderBorder(HtmlColorUtils.BLACK),
 	frameBackground(HtmlColorUtils.MY_YELLOW),
-	frameBorder(HtmlColorUtils.MY_RED),
+	frameBorder(HtmlColorUtils.BLACK),
 	nodeBackground(HtmlColorUtils.MY_YELLOW),
-	nodeBorder(HtmlColorUtils.MY_RED),
+	nodeBorder(HtmlColorUtils.BLACK),
 	rectangleBackground(HtmlColorUtils.MY_YELLOW),
-	rectangleBorder(HtmlColorUtils.MY_RED),
+	rectangleBorder(HtmlColorUtils.BLACK),
 	agentBackground(HtmlColorUtils.MY_YELLOW),
 	agentBorder(HtmlColorUtils.MY_RED),
 	storageBackground(HtmlColorUtils.MY_YELLOW),
-	storageBorder(HtmlColorUtils.MY_RED),
+	storageBorder(HtmlColorUtils.BLACK),
 	boundaryBackground(HtmlColorUtils.MY_YELLOW),
 	boundaryBorder(HtmlColorUtils.MY_RED),
 	controlBackground(HtmlColorUtils.MY_YELLOW),

@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.core.Diagram;
@@ -59,12 +57,12 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd2().getPattern() };
 	}
 
-	final public CommandControl isValid(List<String> lines) {
-		lines = strategy.filter(lines);
+	final public CommandControl isValid(BlocLines lines) {
+		lines = lines.cleanList2(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final boolean result1 = starting.match(StringUtils.trin(lines.get(0)));
+		final boolean result1 = starting.match(StringUtils.trin(lines.getFirst499()));
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -72,7 +70,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final String potentialLast = StringUtils.trinNoTrace(lines.get(lines.size() - 1));
+		final String potentialLast = StringUtils.trinNoTrace(lines.getLast499());
 		final boolean m1 = getPatternEnd2().match(potentialLast);
 		if (m1 == false) {
 			return CommandControl.OK_PARTIAL;
@@ -82,11 +80,12 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return CommandControl.OK;
 	}
 
-	public final CommandExecutionResult execute(S system, List<String> lines) {
-		return executeNow(system, strategy.filter(lines));
+	public final CommandExecutionResult execute(S system, BlocLines lines) {
+		lines = lines.cleanList2(strategy);
+		return executeNow(system, lines);
 	}
 
-	public abstract CommandExecutionResult executeNow(S system, List<String> lines);
+	public abstract CommandExecutionResult executeNow(S system, BlocLines lines);
 
 	protected boolean isCommandForbidden() {
 		return false;

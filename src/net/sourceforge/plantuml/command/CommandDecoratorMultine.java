@@ -33,10 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.Collections;
-import java.util.List;
-
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.Diagram;
 
 public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
@@ -47,20 +43,19 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		this.cmd = cmd;
 	}
 
-	public CommandExecutionResult execute(D diagram, List<String> lines) {
-		final String concat = concat(lines);
-		return cmd.execute(diagram, Collections.singletonList(concat));
+	public CommandExecutionResult execute(D diagram, BlocLines lines) {
+		return cmd.execute(diagram, lines.concat2());
 	}
 
-	public CommandControl isValid(List<String> lines) {
+	public CommandControl isValid(BlocLines lines) {
 		if (cmd.isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String concat = concat(lines);
-		if (cmd.isForbidden(concat)) {
+		lines = lines.concat2();
+		if (cmd.isForbidden(lines.getFirst499())) {
 			return CommandControl.NOT_OK;
 		}
-		final CommandControl tmp = cmd.isValid(Collections.singletonList(concat));
+		final CommandControl tmp = cmd.isValid(lines);
 		if (tmp == CommandControl.OK_PARTIAL) {
 			throw new IllegalStateException();
 		}
@@ -68,15 +63,6 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 			return tmp;
 		}
 		return CommandControl.OK_PARTIAL;
-	}
-
-	private String concat(List<String> lines) {
-		final StringBuilder sb = new StringBuilder();
-		for (String line : lines) {
-			sb.append(line);
-			sb.append(StringUtils.hiddenNewLine());
-		}
-		return sb.substring(0, sb.length() - 1);
 	}
 
 	public String[] getDescription() {

@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -64,12 +62,14 @@ public class CommandMultilinesLegend extends CommandMultilines2<UmlDiagram> {
 	}
 
 	@Override
-	public CommandExecutionResult executeNow(UmlDiagram diagram, List<String> lines) {
-		StringUtils.trimSmart(lines, 1);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+	public CommandExecutionResult executeNow(UmlDiagram diagram, BlocLines lines) {
+		lines = lines.trimSmart(1);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final String align = line0.get("ALIGN", 0);
 		final String valign = line0.get("VALIGN", 0);
-		final Display strings = Display.create(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
+		lines = lines.subExtract(1, 1);
+		lines = lines.removeEmptyColumns();
+		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
 			final VerticalAlignment valignment = VerticalAlignment.fromString(valign);
 			HorizontalAlignment alignment = HorizontalAlignment.fromString(align);

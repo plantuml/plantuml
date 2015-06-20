@@ -58,11 +58,12 @@ public class CharHidder {
 				result.append(c);
 			}
 		}
+		// System.err.println("---> " + result);
 		return result.toString();
 	}
 
 	private static boolean isToBeHidden(final char c) {
-		if (c == '_' || c == '\"' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/') {
+		if (c == '_' || c == '\"' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/' || c == '<') {
 			return true;
 		}
 		return false;

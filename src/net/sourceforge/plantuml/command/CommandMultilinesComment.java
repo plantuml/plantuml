@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.core.Diagram;
 
 public class CommandMultilinesComment extends CommandMultilines<Diagram> {
@@ -48,7 +46,7 @@ public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 		return "(?i)^.*[%q]/[%s]*$";
 	}
 
-	public CommandExecutionResult execute(final Diagram diagram, List<String> lines) {
+	public CommandExecutionResult execute(final Diagram diagram, BlocLines lines) {
 		return CommandExecutionResult.ok();
 	}
 

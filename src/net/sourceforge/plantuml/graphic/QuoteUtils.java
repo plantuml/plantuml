@@ -158,7 +158,10 @@ public class QuoteUtils {
 					"I can't lie to you about your chances, but... you have my sympathies.", // 
 					"There is an explanation for this, you know.", //
 					"Bishop: I'm afraid I have some bad news.", //
-					"Do me a favour. Disconnect me. I could be reworked, but I'll never be top of the line again."
+					"Do me a favour. Disconnect me. I could be reworked, but I'll never be top of the line again.", //
+					"Take it easy, don't push the little button on the joystick!", //
+					"I'm a very private person.", //
+					"To sculpt an elephant from a big block of marble, just knock away all the bits that don't look like an elephant."
 			);
 	private QuoteUtils() {
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16195 $
+ * Revision $Revision: 16447 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -37,9 +37,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.StringUtils;
 
 public abstract class SingleLineCommand<S extends Diagram> implements Command<S> {
 
@@ -60,14 +60,14 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		return new String[] { pattern.pattern() };
 	}
 
-	final public CommandControl isValid(List<String> lines) {
+	final public CommandControl isValid(BlocLines lines) {
 		if (lines.size() != 1) {
 			return CommandControl.NOT_OK;
 		}
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = StringUtils.trin(lines.get(0));
+		final String line = StringUtils.trin(lines.getFirst499());
 		final Matcher m = pattern.matcher(line);
 		final boolean result = m.find();
 		if (result) {
@@ -83,11 +83,11 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 	protected void actionIfCommandValid() {
 	}
 
-	public final CommandExecutionResult execute(S system, List<String> lines) {
+	public final CommandExecutionResult execute(S system, BlocLines lines) {
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final String line = StringUtils.trin(lines.get(0));
+		final String line = StringUtils.trin(lines.getFirst499());
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Forbidden line " + line);
 		}

@@ -44,23 +44,37 @@ import net.sourceforge.plantuml.core.Diagram;
 
 public class BlockUml {
 
-	private final List<? extends CharSequence> data;
+	private final List<CharSequence2> data;
 	private final int startLine;
 	private Diagram system;
 
 	private static final Pattern patternFilename = MyPattern.cmpile("^@start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
 	BlockUml(String... strings) {
-		this(Arrays.asList(strings), 0);
+		this(convert(strings), 0);
 	}
 
-	public BlockUml(List<? extends CharSequence> strings, int startLine) {
+	public static List<CharSequence2> convert(String... strings) {
+		return convert(Arrays.asList(strings));
+	}
+
+	public static List<CharSequence2> convert(List<String> strings) {
+		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		LineLocationImpl location = new LineLocationImpl("block", null);
+		for (String s : strings) {
+			location = location.oneLineRead();
+			result.add(new CharSequence2Impl(s, location));
+		}
+		return result;
+	}
+
+	public BlockUml(List<CharSequence2> strings, int startLine) {
 		this.startLine = startLine;
-		final String s0 = StringUtils.trin(strings.get(0).toString());
+		final CharSequence2 s0 = strings.get(0).trin();
 		if (s0.startsWith("@start") == false) {
 			throw new IllegalArgumentException();
 		}
-		this.data = new ArrayList<CharSequence>(strings);
+		this.data = new ArrayList<CharSequence2>(strings);
 	}
 
 	public String getFilename() {

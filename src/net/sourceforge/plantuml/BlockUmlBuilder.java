@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -54,11 +55,11 @@ final public class BlockUmlBuilder {
 	private Set<File> usedFiles = new HashSet<File>();
 	private final UncommentReadLine reader2;
 
-	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir)
-			throws IOException {
+	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
+			String desc) throws IOException {
 		Preprocessor includer = null;
 		try {
-			reader2 = new UncommentReadLine(new ReadLineReader(reader));
+			reader2 = new UncommentReadLine(new ReadLineReader(reader, desc));
 			includer = new Preprocessor(reader2, charset, defines, newCurrentDir);
 			init(includer, config);
 		} finally {
@@ -69,14 +70,19 @@ final public class BlockUmlBuilder {
 		}
 	}
 
+	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader)
+			throws IOException {
+		this(config, charset, defines, reader, null, null);
+	}
+
 	private void init(Preprocessor includer, List<String> config) throws IOException {
-		String s = null;
-		List<String> current = null;
+		CharSequence2 s = null;
+		List<CharSequence2> current2 = null;
 		boolean paused = false;
 		int startLine = 0;
 		while ((s = includer.readLine()) != null) {
 			if (StartUtils.isArobaseStartDiagram(s)) {
-				current = new ArrayList<String>();
+				current2 = new ArrayList<CharSequence2>();
 				paused = false;
 				startLine = includer.getLineNumber();
 			}
@@ -84,12 +90,12 @@ final public class BlockUmlBuilder {
 				paused = true;
 				reader2.setPaused(true);
 			}
-			if (current != null && paused == false) {
-				current.add(s);
+			if (current2 != null && paused == false) {
+				current2.add(s);
 			} else if (paused) {
-				final String append = StartUtils.getPossibleAppend(s);
+				final CharSequence2 append = StartUtils.getPossibleAppend(s);
 				if (append != null) {
-					current.add(append);
+					current2.add(append);
 				}
 			}
 
@@ -97,13 +103,21 @@ final public class BlockUmlBuilder {
 				paused = false;
 				reader2.setPaused(false);
 			}
-			if (StartUtils.isArobaseEndDiagram(s) && current != null) {
-				current.addAll(1, config);
-				blocks.add(new BlockUml(current, startLine));
-				current = null;
+			if (StartUtils.isArobaseEndDiagram(s) && current2 != null) {
+				current2.addAll(1, convert(config, s.getLocation()));
+				blocks.add(new BlockUml(current2, startLine));
+				current2 = null;
 				reader2.setPaused(false);
 			}
 		}
+	}
+
+	private Collection<CharSequence2> convert(List<String> config, LineLocation location) {
+		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		for (String s : config) {
+			result.add(new CharSequence2Impl(s, location));
+		}
+		return result;
 	}
 
 	public List<BlockUml> getBlockUmls() {

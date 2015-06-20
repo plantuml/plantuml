@@ -43,6 +43,8 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -59,6 +61,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
@@ -73,11 +76,11 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 class ImageWindow2 extends JFrame {
 
-	final private static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
-	final private static String KEY_ZOOM_FIT = "zoomfit";
+	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
+	private final static String KEY_ZOOM_FIT = "zoomfit";
 
 	private SimpleLine2 simpleLine2;
-	final private JScrollPane scrollPane;
+	private final JScrollPane scrollPane;
 	private final JButton next = new JButton("Next");
 	private final JButton copy = new JButton("Copy");
 	private final JButton previous = new JButton("Previous");
@@ -104,21 +107,25 @@ class ImageWindow2 extends JFrame {
 		north.add(copy);
 		north.add(next);
 		north.add(zoomFitButt);
+		copy.setFocusable(false);
 		copy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				copy();
 			}
 		});
+		next.setFocusable(false);
 		next.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				next();
 			}
 		});
+		previous.setFocusable(false);
 		previous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				previous();
 			}
 		});
+		zoomFitButt.setFocusable(false);
 		zoomFitButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				zoomFit();
@@ -153,6 +160,34 @@ class ImageWindow2 extends JFrame {
 			sizeMode = SizeMode.ZOOM_FIT;
 		}
 
+		this.setFocusable(true);
+		this.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent evt) {
+				if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+					next();
+				} else if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_LEFT) {
+					previous();
+				} else if (evt.isAltDown() && evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+					next();
+				} else if (evt.isAltDown() && evt.getKeyCode() == KeyEvent.VK_LEFT) {
+					previous();
+				} else if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+					imageRight();
+				} else if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+					imageLeft();
+				} else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+					imageDown();
+				} else if (evt.getKeyCode() == KeyEvent.VK_UP) {
+					imageUp();
+				} else if (evt.getKeyCode() == KeyEvent.VK_C) {
+					copy();
+				} else if (evt.getKeyCode() == KeyEvent.VK_Z) {
+					zoomFitButt.setSelected(!zoomFitButt.isSelected());
+					zoomFit();
+				}
+			}
+		});
+
 	}
 
 	private void next() {
@@ -163,6 +198,26 @@ class ImageWindow2 extends JFrame {
 	private void previous() {
 		index--;
 		updateSimpleLine();
+	}
+
+	private void imageDown() {
+		final JScrollBar bar = scrollPane.getVerticalScrollBar();
+		bar.setValue(bar.getValue() + bar.getBlockIncrement());
+	}
+
+	private void imageUp() {
+		final JScrollBar bar = scrollPane.getVerticalScrollBar();
+		bar.setValue(bar.getValue() - bar.getBlockIncrement());
+	}
+
+	private void imageLeft() {
+		final JScrollBar bar = scrollPane.getHorizontalScrollBar();
+		bar.setValue(bar.getValue() - bar.getBlockIncrement());
+	}
+
+	private void imageRight() {
+		final JScrollBar bar = scrollPane.getHorizontalScrollBar();
+		bar.setValue(bar.getValue() + bar.getBlockIncrement());
 	}
 
 	private void zoomFit() {

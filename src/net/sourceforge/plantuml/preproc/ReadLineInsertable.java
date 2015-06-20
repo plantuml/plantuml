@@ -38,10 +38,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.LineLocation;
+
 class ReadLineInsertable implements ReadLine {
 
 	private final ReadLine source;
-	private final List<String> inserted = new LinkedList<String>();
+	private final List<CharSequence2> inserted = new LinkedList<CharSequence2>();
 
 	public ReadLineInsertable(ReadLine source) {
 		this.source = source;
@@ -51,18 +55,20 @@ class ReadLineInsertable implements ReadLine {
 		source.close();
 	}
 
-	public String readLine() throws IOException {
+	public CharSequence2 readLine() throws IOException {
 		if (inserted.size() > 0) {
-			final Iterator<String> it = inserted.iterator();
-			final String result = it.next();
+			final Iterator<CharSequence2> it = inserted.iterator();
+			final CharSequence2 result = it.next();
 			it.remove();
 			return result;
 		}
 		return source.readLine();
 	}
 
-	public void insert(List<String> data) {
-		inserted.addAll(data);
+	public void insert(List<? extends CharSequence> data, LineLocation location) {
+		for (CharSequence s : data) {
+			inserted.add(new CharSequence2Impl(s, location));
+		}
 	}
 
 }

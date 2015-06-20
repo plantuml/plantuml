@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -65,7 +66,7 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return super.toString() + " SIZE=" + diagrams.size() + " " + diagrams;
 	}
 
-	public CommandExecutionResult executeCommand(Command cmd, List<String> lines) {
+	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines) {
 		final int nb = diagrams.size();
 		final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines);
 		if (tmp.getNewDiagram() instanceof NewpagedDiagram) {

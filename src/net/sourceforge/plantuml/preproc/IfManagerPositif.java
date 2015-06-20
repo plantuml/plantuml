@@ -28,13 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16353 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
+
+import net.sourceforge.plantuml.CharSequence2;
 
 class IfManagerPositif extends IfManager {
 
@@ -43,8 +45,8 @@ class IfManagerPositif extends IfManager {
 	}
 
 	@Override
-	protected String readLineInternal() throws IOException {
-		String s = super.readLineInternal();
+	protected CharSequence2 readLineInternal() throws IOException {
+		CharSequence2 s = super.readLineInternal();
 		if (s == null) {
 			return null;
 		}

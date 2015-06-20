@@ -36,9 +36,11 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -46,7 +48,6 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<SequenceDiagram> {
 
@@ -60,8 +61,8 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		return "(?i)^end[%s]?(ref)?$";
 	}
 
-	public CommandExecutionResult execute(final SequenceDiagram diagram, List<String> lines) {
-		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), StringUtils.trin(lines.get(0)));
+	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines) {
+		final List<String> line0 = StringUtils.getSplit(getStartingPattern(), StringUtils.trin(lines.getFirst499()));
 		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(0));
 		// final HtmlColor backColorGeneral = HtmlColorSet.getInstance().getColorIfValid(line0.get(1));
 
@@ -71,7 +72,9 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 		}
 
-		Display strings = Display.create(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
+		lines = lines.subExtract(1, 1);
+		lines = lines.removeEmptyColumns();
+		Display strings = lines.toDisplay();
 
 		Url u = null;
 		if (strings.size() > 0) {

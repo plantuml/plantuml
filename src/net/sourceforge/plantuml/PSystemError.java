@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16158 $
+ * Revision $Revision: 16367 $
  */
 package net.sourceforge.plantuml;
 
@@ -119,7 +119,10 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private List<String> getTextStrings() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<String>(getStack());
+		if (result.size() > 0) {
+			result.add(" ");
+		}
 
 		final int limit = 4;
 		int start;
@@ -168,8 +171,39 @@ public class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
+	private List<String> getStack() {
+		LineLocation lineLocation = getLineLocation();
+		final List<String> result = new ArrayList<String>();
+		if (lineLocation != null) {
+			append(result, lineLocation);
+			while (lineLocation.getParent() != null) {
+				lineLocation = lineLocation.getParent();
+				append(result, lineLocation);
+			}
+		}
+		return result;
+	}
+
+	public LineLocation getLineLocation() {
+		for (ErrorUml err : printedErrors) {
+			if (err.getLineLocation() != null) {
+				return err.getLineLocation();
+			}
+		}
+		return null;
+	}
+
+	private void append(List<String> result, LineLocation lineLocation) {
+		if (lineLocation.getDescription() != null) {
+			result.add("[From " + lineLocation.getDescription() + " (line " + (lineLocation.getPosition() + 1) + ") ]");
+		}
+	}
+
 	private List<String> getHtmlStrings(boolean useRed) {
-		final List<String> htmlStrings = new ArrayList<String>();
+		final List<String> htmlStrings = new ArrayList<String>(getStack());
+		if (htmlStrings.size() > 0) {
+			htmlStrings.add("----");
+		}
 
 		final int limit = 4;
 		int start;
@@ -306,6 +340,9 @@ public class PSystemError extends AbstractPSystem {
 		final List<ErrorUml> errors = new ArrayList<ErrorUml>();
 		final List<String> debugs = new ArrayList<String>();
 		for (PSystemError system : ps) {
+			if (system == null) {
+				continue;
+			}
 			if (system.getSource() != null && source == null) {
 				source = system.getSource();
 			}

@@ -83,13 +83,13 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(final List<? extends CharSequence> strings) {
+	final public Diagram createPSystem(final List<CharSequence2> strings2) {
 
 		final List<PSystemFactory> factories = getAllFactories();
 
-		final DiagramType type = DiagramType.getTypeFromArobaseStart(strings.get(0).toString());
+		final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).toString2());
 
-		final UmlSource umlSource = new UmlSource(strings, type == DiagramType.UML);
+		final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML);
 		final DiagramType diagramType = umlSource.getDiagramType();
 		final List<PSystemError> errors = new ArrayList<PSystemError>();
 		for (PSystemFactory systemFactory : factories) {

@@ -95,6 +95,7 @@ public class SyntaxChecker {
 			result.setError(true);
 			final PSystemError sys = (PSystemError) system;
 			result.setErrorLinePosition(sys.getHigherErrorPosition());
+			result.setLineLocation(sys.getLineLocation());
 			for (ErrorUml er : sys.getErrorsUml()) {
 				result.addErrorText(er.getError());
 			}
@@ -128,6 +129,7 @@ public class SyntaxChecker {
 			result.setError(true);
 			final PSystemError sys = (PSystemError) system;
 			result.setErrorLinePosition(sys.getHigherErrorPosition());
+			result.setLineLocation(sys.getLineLocation());
 			for (ErrorUml er : sys.getErrorsUml()) {
 				result.addErrorText(er.getError());
 			}

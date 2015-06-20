@@ -99,10 +99,10 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandActivity3());
 		cmds.add(new CommandIf4());
 		cmds.add(new CommandIf2());
-		cmds.add(new CommandDecoratorMultine(new CommandIf2())); // UmlDiagramFactory
-		// cmds.add(new CommandIf2Multilines());
+		cmds.add(new CommandDecoratorMultine(new CommandIf2()));
 		cmds.add(new CommandIfLegacy1());
 		cmds.add(new CommandElseIf2());
+		// cmds.add(new CommandDecoratorMultine(new CommandElseIf2()));
 		cmds.add(new CommandElse3());
 		cmds.add(new CommandDecoratorMultine(new CommandElse3()));
 		cmds.add(new CommandElseLegacy1());

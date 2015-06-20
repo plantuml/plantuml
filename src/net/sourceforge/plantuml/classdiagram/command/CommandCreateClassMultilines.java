@@ -33,13 +33,13 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -57,11 +57,9 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
@@ -109,29 +107,29 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("[%s]*\\{[%s]*$"));
 	}
 
-	public CommandExecutionResult executeNow(ClassDiagram diagram, List<String> lines) {
-		StringUtils.trimSmart(lines, 1);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+	public CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
+		lines = lines.trimSmart(1);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
-		lines = lines.subList(1, lines.size() - 1);
+		lines = lines.subExtract(1, 1);
 		final Url url;
 		if (lines.size() > 0) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-			url = urlBuilder.getUrl(lines.get(0).toString());
+			url = urlBuilder.getUrl(lines.getFirst499().toString());
 		} else {
 			url = null;
 		}
 		if (url != null) {
-			lines = lines.subList(1, lines.size());
+			lines = lines.subExtract(1, 0);
 		}
-		for (String s : lines) {
+		for (CharSequence s : lines) {
 			if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
 				diagram.setVisibilityModifierPresent(true);
 			}
-			entity.getBodier().addFieldOrMethod(s);
+			entity.getBodier().addFieldOrMethod(s.toString());
 		}
 		if (url != null) {
 			entity.addUrl(url);

@@ -89,10 +89,10 @@ public class FtileCircleEnd extends AbstractFtile {
 			circle.setDeltaShadow(3);
 		}
 		ug = ug.apply(new UChangeColor(backColor));
-		ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE))
+		final double thickness = 2.5;
+		ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UStroke(1.5))
 				.apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
 
-		final double thickness = 2.5;
 		final double size2 = (SIZE - thickness) / Math.sqrt(2);
 		final double delta = (SIZE - size2) / 2;
 		ug = ug.apply(new UStroke(thickness));

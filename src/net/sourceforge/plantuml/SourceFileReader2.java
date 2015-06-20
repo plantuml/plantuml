@@ -69,7 +69,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
 
 		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
-				.getParentFile());
+				.getParentFile(), file.getAbsolutePath());
 	}
 
 	public boolean hasError() {

@@ -33,10 +33,10 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandCreateEntityObjectMultilines extends CommandMultilines2<ObjectDiagram> {
 
@@ -77,19 +76,20 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 		return "(?i)^[%s]*\\}[%s]*$";
 	}
 
-	public CommandExecutionResult executeNow(ObjectDiagram diagram, List<String> lines) {
-		StringUtils.trim(lines, true);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+	public CommandExecutionResult executeNow(ObjectDiagram diagram, BlocLines lines) {
+		lines = lines.trim(true);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
-		for (String s : lines.subList(1, lines.size() - 1)) {
+		lines = lines.subExtract(1, 1);
+		for (CharSequence s : lines) {
 			assert s.length() > 0;
 			if (VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
 				diagram.setVisibilityModifierPresent(true);
 			}
-			entity.getBodier().addFieldOrMethod(s);
+			entity.getBodier().addFieldOrMethod(s.toString());
 		}
 		return CommandExecutionResult.ok();
 	}

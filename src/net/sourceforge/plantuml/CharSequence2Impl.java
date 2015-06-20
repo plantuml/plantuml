@@ -27,28 +27,64 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4762 $
+ *
+ * Revision $Revision: 3824 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml;
 
-import java.util.Collections;
-import java.util.List;
+public class CharSequence2Impl implements CharSequence2 {
 
-import net.sourceforge.plantuml.UmlDiagram;
+	private final CharSequence s;
+	private final LineLocation location;
 
-public class CommandAffineTransform extends SingleLineCommand<UmlDiagram> {
+	public CharSequence2Impl(CharSequence s, LineLocation location) {
+		if (s == null) {
+			throw new IllegalArgumentException();
+		}
+		this.s = s;
+		this.location = location;
+	}
 
-	public CommandAffineTransform() {
-		super("(?i)^!transformation[%s]+([^{}]*)$");
+	public static CharSequence2 errorPreprocessor(CharSequence s, LineLocation lineLocation) {
+		return new CharSequence2Impl(s, lineLocation);
+	}
+
+	public int length() {
+		return s.length();
+	}
+
+	public char charAt(int index) {
+		return s.charAt(index);
+	}
+
+	public CharSequence2 subSequence(int start, int end) {
+		return new CharSequence2Impl(s.subSequence(start, end), location);
+	}
+
+	public CharSequence toCharSequence() {
+		return s;
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		final CharSequence value = arg.get(0);
-		diagram.setAnimation(Collections.singletonList(value));
-		return CommandExecutionResult.ok();
+	public String toString() {
+		return s.toString();
+	}
+
+	public String toString2() {
+		return s.toString();
+	}
+
+	public LineLocation getLocation() {
+		return location;
+	}
+
+	public CharSequence2 trin() {
+		return new CharSequence2Impl(StringUtils.trin(s.toString()), location);
+	}
+
+	public boolean startsWith(String start) {
+		return s.toString().startsWith(start);
 	}
 
 }

@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.version.Version;
@@ -47,7 +45,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 		this.cmd = cmd;
 	}
 
-	public CommandExecutionResult execute(S system, List<String> lines) {
+	public CommandExecutionResult execute(S system, BlocLines lines) {
 		try {
 			final CommandExecutionResult result = cmd.execute(system, lines);
 			// if (result.isOk()) {
@@ -65,7 +63,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 		}
 	}
 
-	public CommandControl isValid(List<String> lines) {
+	public CommandControl isValid(BlocLines lines) {
 		return cmd.isValid(lines);
 	}
 

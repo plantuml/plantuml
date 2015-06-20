@@ -35,6 +35,8 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -45,14 +47,12 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.StringUtils;
 
 public final class FactorySequenceNoteCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
@@ -89,10 +89,11 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				return "(?i)^end[%s]?(note|hnote|rnote)$";
 			}
 
-			public CommandExecutionResult executeNow(final SequenceDiagram system, List<String> lines) {
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
-				final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
-				return executeInternal(system, line0, strings);
+			public CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				lines = lines.subExtract(1, 1);
+				lines = lines.removeEmptyColumns();
+				return executeInternal(system, line0, lines);
 			}
 		};
 	}
@@ -102,14 +103,13 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram system, RegexResult arg) {
-				final List<String> strings = StringUtils.getWithNewlines2(arg.get("NOTE", 0));
-				return executeInternal(system, arg, strings);
+				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, final List<String> strings) {
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, BlocLines strings) {
 		final Participant p = diagram.getOrCreateParticipant(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
 
@@ -117,7 +117,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 		if (strings.size() > 0) {
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
-			final Note note = new Note(p, position, Display.create(strings));
+			final Note note = new Note(p, position, strings.toDisplay());
 			note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 			note.setStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
 			diagram.addNote(note, tryMerge);

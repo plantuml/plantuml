@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
-import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity2;
+import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandPartition;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
@@ -66,7 +66,7 @@ public class ActivityDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandPartition());
 		cmds.add(new CommandEndPartition());
-		cmds.add(new CommandLinkLongActivity2());
+		cmds.add(new CommandLinkLongActivity());
 
 		final FactoryNoteActivityCommand factoryNoteActivityCommand = new FactoryNoteActivityCommand();
 		cmds.add(factoryNoteActivityCommand.createSingleLine());

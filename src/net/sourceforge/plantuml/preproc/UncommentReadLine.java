@@ -37,6 +37,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class UncommentReadLine implements ReadLine {
@@ -53,8 +55,8 @@ public class UncommentReadLine implements ReadLine {
 		this.unpause = MyPattern.cmpile("(?i)((?:\\W|\\<[^<>]*\\>)*)@unpause");
 	}
 
-	public String readLine() throws IOException {
-		final String result = raw.readLine();
+	public CharSequence2 readLine() throws IOException {
+		final CharSequence2 result = raw.readLine();
 
 		if (result == null) {
 			return null;
@@ -70,11 +72,11 @@ public class UncommentReadLine implements ReadLine {
 				headerToRemove = m2.group(1);
 			}
 		}
-		if (headerToRemove != null && headerToRemove.startsWith(result)) {
-			return "";
+		if (headerToRemove != null && headerToRemove.startsWith(result.toString2())) {
+			return new CharSequence2Impl("", result.getLocation());
 		}
-		if (headerToRemove != null && result.startsWith(headerToRemove)) {
-			return result.substring(headerToRemove.length());
+		if (headerToRemove != null && result.toString2().startsWith(headerToRemove)) {
+			return result.subSequence(headerToRemove.length(), result.length());
 		}
 		return result;
 	}

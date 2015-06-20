@@ -27,28 +27,57 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4762 $
+ *
+ * Revision $Revision: 3824 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml;
 
-import java.util.Collections;
-import java.util.List;
+public class LineLocationImpl implements LineLocation {
 
-import net.sourceforge.plantuml.UmlDiagram;
-
-public class CommandAffineTransform extends SingleLineCommand<UmlDiagram> {
-
-	public CommandAffineTransform() {
-		super("(?i)^!transformation[%s]+([^{}]*)$");
-	}
+	private final String desc;
+	private final int position;
+	private final LineLocation parent;
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		final CharSequence value = arg.get(0);
-		diagram.setAnimation(Collections.singletonList(value));
-		return CommandExecutionResult.ok();
+	public String toString() {
+		if (desc == null) {
+			return "[?] : " + position;
+		}
+		return desc + " : " + position;
+	}
+
+	public LineLocationImpl(String desc, LineLocation parent) {
+		this(desc, parent, -1);
+	}
+
+	private LineLocationImpl(String desc, LineLocation parent, int position) {
+		this.parent = parent;
+		this.desc = desc;
+		this.position = position;
+	}
+
+	public LineLocationImpl oneLineRead() {
+		return new LineLocationImpl(desc, parent, position + 1);
+	}
+
+	public static LineLocation fromLine(CharSequence cs) {
+		if (cs instanceof CharSequence2) {
+			return ((CharSequence2) cs).getLocation();
+		}
+		return null;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public String getDescription() {
+		return desc;
+	}
+
+	public LineLocation getParent() {
+		return parent;
 	}
 
 }

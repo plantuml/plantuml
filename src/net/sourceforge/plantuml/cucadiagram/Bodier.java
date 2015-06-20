@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
@@ -174,8 +175,9 @@ public class Bodier {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {
 			return methods.asBlockMemberImpl();
+		} else if (showFields == false && showMethods == false) {
+			return TextBlockUtils.empty(0, 0);
 		}
-		assert showFields && showMethods;
 
 		final TextBlock bb1 = fields.asBlockMemberImpl();
 		final TextBlock bb2 = methods.asBlockMemberImpl();

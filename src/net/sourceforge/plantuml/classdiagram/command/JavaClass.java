@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16197 $
+ * Revision $Revision: 16447 $
  *
  */
 package net.sourceforge.plantuml.classdiagram.command;

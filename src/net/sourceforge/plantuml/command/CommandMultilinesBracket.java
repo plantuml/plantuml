@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,11 +66,11 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		return starting;
 	}
 
-	final public CommandControl isValid(List<String> lines) {
+	final public CommandControl isValid(BlocLines lines) {
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final Matcher m1 = starting.matcher(StringUtils.trin(lines.get(0)));
+		final Matcher m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -80,8 +79,8 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		}
 
 		int level = 1;
-		for (int i = 1; i < lines.size(); i++) {
-			final String s = StringUtils.trin(lines.get(i));
+		for (CharSequence cs : lines.subExtract(1, 0)) {
+			final String s = StringUtils.trin(cs);
 			if (isLineConsistent(s, level) == false) {
 				return CommandControl.NOT_OK;
 			}

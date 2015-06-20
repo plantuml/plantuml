@@ -35,9 +35,11 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -53,7 +55,6 @@ import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.StringUtils;
 
 public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
@@ -78,8 +79,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram system, RegexResult arg) {
-				final List<String> strings = StringUtils.getWithNewlines2(arg.get("NOTE", 0));
-				return executeInternal(system, arg, strings);
+				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
 			}
 
 		};
@@ -94,32 +94,32 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				return "(?i)^end[%s]?note$";
 			}
 
-			public CommandExecutionResult executeNow(final SequenceDiagram system, List<String> lines) {
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
-				final List<String> in = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
-
-				return executeInternal(system, line0, in);
+			public CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				lines = lines.subExtract(1, 1);
+				lines = lines.removeEmptyColumns();
+				return executeInternal(system, line0, lines);
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram system, final RegexResult line0, List<String> in) {
+	private CommandExecutionResult executeInternal(SequenceDiagram system, final RegexResult line0, BlocLines lines) {
 		final EventWithDeactivate m = system.getLastEventWithDeactivate();
 		if (m instanceof AbstractMessage) {
 			final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
 			final Url url;
-			if (in.size() > 0) {
+			if (lines.size() > 0) {
 				final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-				url = urlBuilder.getUrl(in.get(0).toString());
+				url = urlBuilder.getUrl(lines.getFirst499().toString());
 			} else {
 				url = null;
 			}
 			if (url != null) {
-				in = in.subList(1, in.size());
+				lines = lines.subExtract(1, 0);
 			}
 
-			((AbstractMessage) m).setNote(Display.create(in), position, line0.get("COLOR", 0), url);
+			((AbstractMessage) m).setNote(lines.toDisplay(), position, line0.get("COLOR", 0), url);
 		}
 
 		return CommandExecutionResult.ok();

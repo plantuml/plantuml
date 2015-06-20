@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16353 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
 class IfManager implements ReadLine {
@@ -55,9 +56,9 @@ class IfManager implements ReadLine {
 		this.source = source;
 	}
 
-	final public String readLine() throws IOException {
+	final public CharSequence2	 readLine() throws IOException {
 		if (child != null) {
-			final String s = child.readLine();
+			final CharSequence2 s = child.readLine();
 			if (s != null) {
 				return s;
 			}
@@ -67,8 +68,8 @@ class IfManager implements ReadLine {
 		return readLineInternal();
 	}
 
-	protected String readLineInternal() throws IOException {
-		final String s = source.readLine();
+	protected CharSequence2 readLineInternal() throws IOException {
+		final CharSequence2 s = source.readLine();
 		if (s == null) {
 			return null;
 		}

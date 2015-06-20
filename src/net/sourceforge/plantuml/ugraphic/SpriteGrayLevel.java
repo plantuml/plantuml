@@ -164,7 +164,7 @@ public enum SpriteGrayLevel {
 		return grey / 16;
 	}
 
-	public Sprite buildSprite(int width, int height, List<String> strings) {
+	public Sprite buildSprite(int width, int height, List<CharSequence> strings) {
 		if (this == SpriteGrayLevel.GRAY_16) {
 			return buildSprite16(strings);
 		}
@@ -177,7 +177,7 @@ public enum SpriteGrayLevel {
 		throw new UnsupportedOperationException(toString());
 	}
 
-	private Sprite buildSprite16(List<String> strings) {
+	private Sprite buildSprite16(List<CharSequence> strings) {
 		final SpriteMonochrome result = new SpriteMonochrome(strings.get(0).length(), strings.size(), 16);
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < result.getHeight(); line++) {
@@ -194,7 +194,7 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
-	private Sprite buildSprite8(int width, int height, List<String> strings) {
+	private Sprite buildSprite8(int width, int height, List<CharSequence> strings) {
 		final AsciiEncoder encoder = new AsciiEncoder();
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, 8);
 		for (int col = 0; col < result.getWidth(); col++) {
@@ -213,7 +213,7 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
-	private Sprite buildSprite4(int width, int height, List<String> strings) {
+	private Sprite buildSprite4(int width, int height, List<CharSequence> strings) {
 		final AsciiEncoder encoder = new AsciiEncoder();
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, 4);
 		for (int col = 0; col < result.getWidth(); col++) {

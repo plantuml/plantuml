@@ -36,10 +36,13 @@ package net.sourceforge.plantuml.activitydiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -58,7 +61,6 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
 
@@ -85,7 +87,15 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				new RegexLeaf("ARROW", "([-=.]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[-=.]*\\>)"), //
+
+				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
+				new RegexLeaf("ARROW_STYLE1",
+						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"), //
+				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
+				new RegexLeaf("ARROW_STYLE2",
+						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"), //
+				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
+
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("BRACKET", "(?:\\[([^\\]*]+[^\\]]*)\\])?"), //
 				new RegexLeaf("[%s]*"), //
@@ -94,9 +104,9 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("$"));
 	}
 
-	public CommandExecutionResult executeNow(final ActivityDiagram diagram, List<String> lines) {
-		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+	public CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines) {
+		lines = lines.trim(false);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 
 		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
 
@@ -112,29 +122,29 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		final String desc0 = line0.get("DESC", 0);
 		Url urlActivity = null;
 		if (StringUtils.isNotEmpty(desc0)) {
-			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-			urlActivity = urlBuilder.getUrl(desc0);
+			urlActivity = extractUrl(diagram, desc0);
 			if (urlActivity == null) {
 				sb.append(desc0);
 				sb.append("\\n");
 			}
 		}
-		for (int i = 1; i < lines.size() - 1; i++) {
+		int i = 0;
+		for (CharSequence cs : lines.subExtract(1, 1)) {
+			i++;
 			if (i == 1 && urlActivity == null) {
-				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-				urlActivity = urlBuilder.getUrl(lines.get(i));
+				urlActivity = extractUrl(diagram, cs);
 				if (urlActivity != null) {
 					continue;
 				}
 			}
-			sb.append(lines.get(i));
+			sb.append(cs);
 			if (i < lines.size() - 2) {
 				sb.append("\\n");
 			}
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
-				lines.get(lines.size() - 1));
+		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
+				.toString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			if (sb.length() > 0 && sb.toString().endsWith("\\n") == false) {
 				sb.append("\\n");
@@ -151,8 +161,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
 		if (partition != null) {
-			diagram.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE,
-					null);
+			diagram.getOrCreateGroup(Code.of(partition), Display.getWithNewlines(partition), GroupType.PACKAGE, null);
 		}
 		final IEntity entity2 = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.ACTIVITY, null);
 		if (partition != null) {
@@ -173,17 +182,22 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			return CommandExecutionResult.error("No such entity");
 		}
 
-		final String arrow = StringUtils.manageArrowForCuca(line0.get("ARROW", 0));
+		final String arrowBody1 = CommandLinkClass.notNull(line0.get("ARROW_BODY1", 0));
+		final String arrowBody2 = CommandLinkClass.notNull(line0.get("ARROW_BODY2", 0));
+		final String arrowDirection = CommandLinkClass.notNull(line0.get("ARROW_DIRECTION", 0));
+
+		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + ">");
+
 		final int lenght = arrow.length() - 1;
 
 		final Display linkLabel = Display.getWithNewlines(line0.get("BRACKET", 0));
 
 		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
-		if (line0.get("ARROW", 0).contains(".")) {
+		if (arrow.contains(".")) {
 			type = type.getDotted();
 		}
 		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
-		final Direction direction = StringUtils.getArrowDirection(line0.get("ARROW", 0));
+		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");
 		if (direction == Direction.LEFT || direction == Direction.UP) {
 			link = link.getInv();
 		}
@@ -194,9 +208,15 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			link.setUrl(urlLink);
 		}
 
+		CommandLinkClass.applyStyle(line0.getLazzy("ARROW_STYLE", 0), link);
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();
+	}
+
+	public Url extractUrl(final ActivityDiagram diagram, CharSequence string) {
+		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+		return urlBuilder.getUrl(string.toString());
 	}
 
 }

@@ -143,6 +143,7 @@ public class ImageBuilder {
 
 		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, affineTransforms, dx, dy);
 		udrawable.drawU(handwritten(ug.apply(new UTranslate(margin1, margin1))));
+		ug.flushUg();
 		ug.writeImageTOBEMOVED(os, metadata, 96);
 		os.flush();
 

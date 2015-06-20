@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16196 $
+ * Revision $Revision: 16447 $
  *
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,11 +57,11 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		return new String[] { "START: " + starting.pattern(), "END: " + getPatternEnd() };
 	}
 
-	final public CommandControl isValid(List<String> lines) {
+	final public CommandControl isValid(BlocLines lines) {
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		Matcher m1 = starting.matcher(StringUtils.trin(lines.get(0)));
+		Matcher m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -70,7 +69,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 			return CommandControl.OK_PARTIAL;
 		}
 
-		m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trin(lines.get(lines.size() - 1)));
+		m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trin(lines.getLast499()));
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}

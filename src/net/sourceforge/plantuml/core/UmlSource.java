@@ -39,16 +39,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.version.IteratorCounter;
-import net.sourceforge.plantuml.version.IteratorCounterImpl;
+import net.sourceforge.plantuml.version.IteratorCounter2;
+import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
 /**
- * Represents the textual source of some diagram.
- * The source should start with a <code>@startfoo</code> and end with <code>@endfoo</code>.
+ * Represents the textual source of some diagram. The source should start with a <code>@startfoo</code> and end with
+ * <code>@endfoo</code>.
  * <p>
  * So the diagram does not have to be a UML one.
  * 
@@ -58,42 +60,45 @@ import net.sourceforge.plantuml.version.IteratorCounterImpl;
 final public class UmlSource {
 
 	final private List<String> source;
+	final private List<CharSequence2> source2;
 
 	/**
 	 * Build the source from a text.
 	 * 
-	 * @param source	the source of the diagram
-	 * @param checkEndingBackslash	<code>true</code> if an ending backslash means that a line has
-	 * to be collapsed with the following one.
+	 * @param source
+	 *            the source of the diagram
+	 * @param checkEndingBackslash
+	 *            <code>true</code> if an ending backslash means that a line has to be collapsed with the following one.
 	 */
-	public UmlSource(List<? extends CharSequence> source, boolean checkEndingBackslash) {
+	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash) {
 		final List<String> tmp = new ArrayList<String>();
-		// final DiagramType type =
-		// DiagramType.getTypeFromArobaseStart(source.get(0).toString());
+		final List<CharSequence2> tmp2 = new ArrayList<CharSequence2>();
+
 		if (checkEndingBackslash) {
 			final StringBuilder pending = new StringBuilder();
-			for (CharSequence cs : source) {
-				final String s = cs.toString();
+			for (CharSequence2 cs : source) {
+				final String s = cs.toString2();
 				if (StringUtils.endsWithBackslash(s)) {
 					pending.append(s.substring(0, s.length() - 1));
 				} else {
 					pending.append(s);
 					tmp.add(pending.toString());
+					tmp2.add(new CharSequence2Impl(pending.toString(), cs.getLocation()));
 					pending.setLength(0);
 				}
 			}
 		} else {
-			for (CharSequence s : source) {
-				tmp.add(s.toString());
+			for (CharSequence2 s : source) {
+				tmp.add(s.toString2());
+				tmp2.add(s);
 			}
 		}
 		this.source = Collections.unmodifiableList(tmp);
+		this.source2 = Collections.unmodifiableList(tmp2);
 	}
 
-
 	/**
-	 * Retrieve the type of the diagram.
-	 * This is based on the first line <code>@startfoo</code>.
+	 * Retrieve the type of the diagram. This is based on the first line <code>@startfoo</code>.
 	 * 
 	 * @return the type of the diagram.
 	 */
@@ -106,8 +111,8 @@ final public class UmlSource {
 	 * 
 	 * @return a iterator that allow counting line number.
 	 */
-	public IteratorCounter iterator() {
-		return new IteratorCounterImpl(source);
+	public IteratorCounter2 iterator2() {
+		return new IteratorCounter2Impl(source2);
 	}
 
 	/**
@@ -128,7 +133,8 @@ final public class UmlSource {
 	/**
 	 * Return a specific line of the diagram description.
 	 * 
-	 * @param n		line number, starting at 0
+	 * @param n
+	 *            line number, starting at 0
 	 * @return
 	 */
 	public String getLine(int n) {
@@ -145,8 +151,7 @@ final public class UmlSource {
 	}
 
 	/**
-	 * Check if a source diagram description is empty.
-	 * Does not take comment line into account.
+	 * Check if a source diagram description is empty. Does not take comment line into account.
 	 * 
 	 * @return <code>true<code> if the diagram does not contain information.
 	 */
@@ -169,8 +174,8 @@ final public class UmlSource {
 	}
 
 	/**
-	 * Retrieve the title, if defined in the diagram source.
-	 * Never return <code>null</code>.
+	 * Retrieve the title, if defined in the diagram source. Never return <code>null</code>.
+	 * 
 	 * @return
 	 */
 	public Display getTitle() {

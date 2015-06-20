@@ -33,12 +33,12 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class FactoryNoteActivityCommand implements SingleMultiFactoryCommand<ActivityDiagram> {
@@ -86,10 +85,13 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 				return "(?i)^end[%s]?note$";
 			}
 
-			public final CommandExecutionResult executeNow(final ActivityDiagram system, List<String> lines) {
+			public final CommandExecutionResult executeNow(final ActivityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, true);
-				final RegexResult arg = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
-				Display strings = Display.create(StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1)));
+				final RegexResult arg = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				lines = lines.subExtract(1, 1);
+				lines = lines.removeEmptyColumns();
+				
+				Display strings = lines.toDisplay();
 
 				Url url = null;
 				if (strings.size() > 0) {

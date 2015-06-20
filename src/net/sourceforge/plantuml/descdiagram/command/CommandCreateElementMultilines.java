@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.descdiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -51,7 +53,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<DescriptionDiagram> {
 
@@ -80,9 +81,9 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 				new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
 	}
 
-	public CommandExecutionResult executeNow(DescriptionDiagram diagram, List<String> lines) {
-		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+	public CommandExecutionResult executeNow(DescriptionDiagram diagram, BlocLines lines) {
+		lines = lines.trim(false);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type;
 		final USymbol usymbol;
@@ -98,14 +99,15 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 		}
 
 		final Code code = Code.of(line0.get("CODE", 0));
-		Display display = Display.create(lines.subList(1, lines.size() - 1));
+		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
+				lines.getLast499().toString());
+		lines = lines.subExtract(1, 1);
+		Display display = lines.toDisplay();
 		final String descStart = line0.get("DESC", 0);
 		if (StringUtils.isNotEmpty(descStart)) {
 			display = display.addFirst(descStart);
 		}
 
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
-				lines.get(lines.size() - 1));
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
 			display = display.add(lineLast.get(0));
 		}

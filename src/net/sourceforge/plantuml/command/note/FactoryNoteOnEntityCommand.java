@@ -33,12 +33,12 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import java.util.List;
-
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -51,14 +51,12 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
@@ -102,7 +100,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, RegexResult arg) {
 				final String s = arg.get("NOTE", 0);
-				return executeInternal(arg, system, null, StringUtils.getWithNewlines2(s));
+				return executeInternal(arg, system, null, BlocLines.getWithNewlines(s));
 			}
 		};
 	}
@@ -116,28 +114,29 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				return "(?i)^(end[%s]?note|\\})$";
 			}
 
-			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, List<String> lines) {
+			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				lines = lines.subExtract(1, 1);
+				lines = lines.removeEmptyColumns();
 
-				List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 				Url url = null;
-				if (strings.size() > 0) {
+				if (lines.size() > 0) {
 					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
 							ModeUrl.STRICT);
-					url = urlBuilder.getUrl(strings.get(0));
+					url = urlBuilder.getUrl(lines.getFirst499().toString());
 				}
 				if (url != null) {
-					strings = strings.subList(1, strings.size());
+					lines = lines.subExtract(1, 0);
 				}
 
-				return executeInternal(line0, system, url, strings);
+				return executeInternal(line0, system, url, lines);
 			}
 		};
 	}
 
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			List<? extends CharSequence> s) {
+			BlocLines strings) {
 
 		final String pos = line0.get("POSITION", 0);
 
@@ -152,7 +151,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 			cl1 = diagram.getOrCreateLeaf(code, null, null);
 		}
 
-		final IEntity note = diagram.createLeaf(UniqueSequence.getCode("GMN"), Display.create(s), LeafType.NOTE, null);
+		final IEntity note = diagram.createLeaf(UniqueSequence.getCode("GMN"), strings.toDisplay(), LeafType.NOTE, null);
 		note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 		if (url != null) {
 			note.addUrl(url);

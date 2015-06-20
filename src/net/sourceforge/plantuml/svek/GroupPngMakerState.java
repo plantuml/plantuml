@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,6 +40,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
-import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -110,8 +109,9 @@ public final class GroupPngMakerState {
 	public IEntityImage getImage() {
 		final Display display = group.getDisplay();
 		final ISkinParam skinParam = diagram.getSkinParam();
+		final HtmlColor textColor = SkinParamUtils.getFontColor(skinParam, FontParam.STATE, group.getStereotype());
 		final TextBlock title = TextBlockUtils.create(display, new FontConfiguration(getFont(FontParam.STATE),
-				HtmlColorUtils.BLACK, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()),
+				textColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()),
 				HorizontalAlignment.CENTER, diagram.getSkinParam());
 
 		if (group.size() == 0) {

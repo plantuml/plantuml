@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16158 $
+ * Revision $Revision: 16441 $
  *
  */
 package net.sourceforge.plantuml;
@@ -205,7 +205,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		return scale;
 	}
 
-	final public void setAnimation(List<String> animationData) {
+	final public void setAnimation(Iterable<CharSequence> animationData) {
 		try {
 			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
 			this.animation = Animation.create(animationDecoder.decode());

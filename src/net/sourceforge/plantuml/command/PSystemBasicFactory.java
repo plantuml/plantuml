@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.PSystemError;
@@ -41,7 +42,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.version.IteratorCounter;
+import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSystemAbstractFactory {
 
@@ -61,24 +62,24 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 
 
 	final public Diagram createSystem(UmlSource source) {
-		final IteratorCounter it = source.iterator();
-		final String startLine = it.next();
-		P system = init(startLine);
+		final IteratorCounter2 it = source.iterator2();
+		final CharSequence2 startLine = it.next();
+		P system = init(startLine.toString2());
 		while (it.hasNext()) {
-			final String s = it.next();
+			final CharSequence2 s = it.next();
 			if (StartUtils.isArobaseEndDiagram(s)) {
 				if (source.getTotalLineCount() == 2) {
-					return buildEmptyError(source);
+					return buildEmptyError(source, s.getLocation());
 				}
 				if (system != null) {
 					system.setSource(source);
 				}
 				return system;
 			}
-			system = executeLine(system, s);
+			system = executeLine(system, s.toString2());
 			if (system == null) {
 				return new PSystemError(source, new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?",
-						it.currentNum() - 1), null);
+						it.currentNum() - 1, s.getLocation()), null);
 			}
 		}
 		if (system != null) {

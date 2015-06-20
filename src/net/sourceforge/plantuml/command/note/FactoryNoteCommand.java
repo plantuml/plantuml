@@ -35,7 +35,9 @@ package net.sourceforge.plantuml.command.note;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -48,9 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.StringUtils;
 
 public final class FactoryNoteCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
@@ -79,7 +79,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, RegexResult arg) {
 				final String display = arg.get("DISPLAY", 0);
-				return executeInternal(system, arg, StringUtils.getWithNewlines2(display));
+				return executeInternal(system, arg, BlocLines.getWithNewlines(display));
 			}
 
 		};
@@ -94,24 +94,22 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 				return "(?i)^end[%s]?note$";
 			}
 
-			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, List<String> lines) {
+			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
-
-				final List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
-
-				return executeInternal(system, line0, strings);
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				lines = lines.subExtract(1, 1);
+				lines = lines.removeEmptyColumns();
+				return executeInternal(system, line0, lines);
 			}
 		};
 	}
 
-	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg,
-			final List<? extends CharSequence> display) {
+	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display) {
 		final Code code = Code.of(arg.get("CODE", 0));
 		if (diagram.leafExist(code)) {
 			return CommandExecutionResult.error("Note already created: " + code.getFullName());
 		}
-		final IEntity entity = diagram.createLeaf(code, Display.create(display), LeafType.NOTE, null);
+		final IEntity entity = diagram.createLeaf(code, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
 		entity.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		return CommandExecutionResult.ok();

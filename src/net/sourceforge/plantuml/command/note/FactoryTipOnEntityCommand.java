@@ -33,13 +33,12 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -50,7 +49,6 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -90,28 +88,29 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 				return "(?i)^(end[%s]?note|\\})$";
 			}
 
-			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, List<String> lines) {
+			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
 				// StringUtils.trim(lines, false);
-				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+				lines = lines.subExtract(1, 1);
+				lines = lines.removeEmptyColumns();
 
-				List<String> strings = StringUtils.removeEmptyColumns(lines.subList(1, lines.size() - 1));
 				Url url = null;
-				if (strings.size() > 0) {
+				if (lines.size() > 0) {
 					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
 							ModeUrl.STRICT);
-					url = urlBuilder.getUrl(strings.get(0));
+					url = urlBuilder.getUrl(lines.getFirst499().toString());
 				}
 				if (url != null) {
-					strings = strings.subList(1, strings.size());
+					lines = lines.subExtract(1, 0);
 				}
 
-				return executeInternal(line0, system, url, strings);
+				return executeInternal(line0, system, url, lines);
 			}
 		};
 	}
 
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			List<? extends CharSequence> s) {
+			BlocLines lines) {
 
 		final String pos = line0.get("POSITION", 0);
 
@@ -137,7 +136,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 			}
 			diagram.addLink(link);
 		}
-		tips.putTip(member, Display.create(s));
+		tips.putTip(member, lines.toDisplay());
 
 		// final IEntity note = diagram.createLeaf(UniqueSequence.getCode("GMN"), Display.create(s), LeafType.NOTE,
 		// null);

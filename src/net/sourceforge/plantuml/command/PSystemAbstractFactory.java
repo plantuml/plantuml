@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -49,15 +50,15 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 		this.type = type;
 	}
 
-	final protected AbstractPSystem buildEmptyError(UmlSource source) {
+	final protected AbstractPSystem buildEmptyError(UmlSource source, LineLocation lineLocation) {
 		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.SYNTAX_ERROR,
-				"Empty description", 1), null);
+				"Empty description", 1, lineLocation), null);
 		result.setSource(source);
 		return result;
 	}
 	
-	final protected PSystemError buildEmptyError(UmlSource source, String err) {
-		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, err, 1), null);
+	final protected PSystemError buildEmptyError(UmlSource source, String err, LineLocation lineLocation) {
+		final PSystemError result = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, err, 1, lineLocation), null);
 		result.setSource(source);
 		return result;
 	}

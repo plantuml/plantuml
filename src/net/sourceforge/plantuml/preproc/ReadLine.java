@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16327 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -36,7 +36,9 @@ package net.sourceforge.plantuml.preproc;
 import java.io.Closeable;
 import java.io.IOException;
 
+import net.sourceforge.plantuml.CharSequence2;
+
 public interface ReadLine extends Closeable {
 
-	public String readLine() throws IOException;
+	public CharSequence2 readLine() throws IOException;
 }

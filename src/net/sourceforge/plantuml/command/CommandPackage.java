@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -91,7 +92,12 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				currentPackage);
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
-			p.setStereotype(new Stereotype(stereotype));
+			final USymbol usymbol = USymbol.getFromString(stereotype);
+			if (usymbol == null) {
+				p.setStereotype(new Stereotype(stereotype));
+			} else {
+				p.setUSymbol(usymbol);
+			}
 		}
 
 		final String urlString = arg.get("URL", 0);

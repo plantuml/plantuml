@@ -72,8 +72,7 @@ public class SourceStringReader {
 		// WARNING GLOBAL LOCK HERE
 		synchronized (SourceStringReader.class) {
 			try {
-				final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
-						null);
+				final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source));
 				this.blocks = builder.getBlockUmls();
 			} catch (IOException e) {
 				Log.error("error " + e);

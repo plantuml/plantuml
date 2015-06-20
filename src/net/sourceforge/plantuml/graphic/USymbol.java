@@ -89,12 +89,12 @@ public abstract class USymbol {
 	}
 
 	public static USymbol getFromString(String s) {
-		final USymbol result = all.get(StringUtils.goUpperCase(s));
+		final USymbol result = all.get(StringUtils.goUpperCase(s.replaceAll("\\W", "")));
 		if (result == null) {
 			if (s.equalsIgnoreCase("component")) {
 				return COMPONENT2;
 			}
-			throw new IllegalArgumentException("s=" + s);
+			return null;
 		}
 		return result;
 	}

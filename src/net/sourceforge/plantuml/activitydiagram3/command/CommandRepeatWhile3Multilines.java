@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -71,10 +72,10 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 	}
 
 	@Override
-	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, List<String> lines) {
-		StringUtils.trim(lines, false);
-		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
-		final RegexResult lineLast = getPatternEnd2().matcher(lines.get(lines.size() - 1));
+	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
+		lines = lines.trim(false);
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast499().toString());
 
 		// System.err.println("line0=" + line0);
 		// System.err.println("linesLast=" + lineLast);
@@ -84,8 +85,8 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 
 		final String test = line0.get("TEST1", 0);
 		Display testDisplay = Display.getWithNewlines(test);
-		for (int i = 1; i < lines.size() - 1; i++) {
-			testDisplay = testDisplay.add(lines.get(i));
+		for (CharSequence s : lines.subExtract(1, 1)) {
+			testDisplay = testDisplay.add(s);
 		}
 		final String trailTest = lineLast.get("TEST1", 0);
 		if (StringUtils.isEmpty(trailTest) == false) {

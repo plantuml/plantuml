@@ -28,16 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14321 $
+ * Revision $Revision: 16435 $
  *
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 
@@ -50,8 +47,10 @@ public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
 		return "(?i)^end[%s]?title$";
 	}
 
-	public CommandExecutionResult execute(final UmlDiagram diagram, List<String> lines) {
-		final Display strings = Display.create(lines.subList(1, lines.size() - 1)).removeEmptyColumns();
+	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
+		lines = lines.subExtract(1, 1);
+		lines = lines.removeEmptyColumns();
+		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
 			diagram.setTitle(strings);
 			return CommandExecutionResult.ok();

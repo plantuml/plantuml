@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.utils.StartUtils;
 
@@ -61,7 +62,7 @@ public class StartDiagramExtractReader implements ReadLine {
 			throw new IllegalArgumentException();
 		}
 		this.raw = raw;
-		String s = null;
+		CharSequence2 s = null;
 		while ((s = raw.readLine()) != null) {
 			if (StartUtils.isArobaseStartDiagram(s)) {
 				if (num == 0) {
@@ -77,20 +78,22 @@ public class StartDiagramExtractReader implements ReadLine {
 
 		if (charset == null) {
 			Log.info("Using default charset");
-			return new UncommentReadLine(new ReadLineReader(new FileReader(f)));
+			return new UncommentReadLine(new ReadLineReader(new FileReader(f), f.getAbsolutePath()));
 		}
 		Log.info("Using charset " + charset);
-		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset)));
+		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset),
+				f.getAbsolutePath()));
 	}
 
 	private static ReadLine getReadLine(URL url, String charset) throws IOException {
 
 		if (charset == null) {
 			Log.info("Using default charset");
-			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream())));
+			return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream()), url.toString()));
 		}
 		Log.info("Using charset " + charset);
-		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(url.openStream(), charset)));
+		return new UncommentReadLine(
+				new ReadLineReader(new InputStreamReader(url.openStream(), charset), url.toString()));
 	}
 
 	static public boolean containsStartDiagram(File f, String charset) throws IOException {
@@ -105,7 +108,7 @@ public class StartDiagramExtractReader implements ReadLine {
 
 	private static boolean containsStartDiagram(final ReadLine r) throws IOException {
 		try {
-			String s = null;
+			CharSequence2 s = null;
 			while ((s = r.readLine()) != null) {
 				if (StartUtils.isArobaseStartDiagram(s)) {
 					return true;
@@ -119,11 +122,11 @@ public class StartDiagramExtractReader implements ReadLine {
 		return false;
 	}
 
-	public String readLine() throws IOException {
+	public CharSequence2 readLine() throws IOException {
 		if (finished) {
 			return null;
 		}
-		final String result = raw.readLine();
+		final CharSequence2 result = raw.readLine();
 		if (result != null && StartUtils.isArobaseEndDiagram(result)) {
 			finished = true;
 			return null;

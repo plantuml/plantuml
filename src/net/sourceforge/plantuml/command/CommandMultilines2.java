@@ -61,12 +61,12 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd() };
 	}
 
-	final public CommandControl isValid(List<String> lines) {
-		lines = strategy.filter(lines);
+	final public CommandControl isValid(BlocLines lines) {
+		lines = lines.cleanList2(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final boolean result1 = starting.match(StringUtils.trin(lines.get(0)));
+		final boolean result1 = starting.match(StringUtils.trin(lines.getFirst499()));
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -74,7 +74,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			return CommandControl.OK_PARTIAL;
 		}
 
-		final Matcher m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trinNoTrace(lines.get(lines.size() - 1)));
+		final Matcher m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trinNoTrace(lines.getLast499()));
 		if (m1.matches() == false) {
 			return CommandControl.OK_PARTIAL;
 		}
@@ -83,11 +83,12 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		return CommandControl.OK;
 	}
 
-	public final CommandExecutionResult execute(S system, List<String> lines) {
-		return executeNow(system, strategy.filter(lines));
+	public final CommandExecutionResult execute(S system, BlocLines lines) {
+		lines = lines.cleanList2(strategy);
+		return executeNow(system, lines);
 	}
 
-	public abstract CommandExecutionResult executeNow(S system, List<String> lines);
+	public abstract CommandExecutionResult executeNow(S system, BlocLines lines);
 
 	protected boolean isCommandForbidden() {
 		return false;

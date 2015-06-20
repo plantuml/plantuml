@@ -27,28 +27,26 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4762 $
+ *
+ * Revision $Revision: 3824 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml;
 
-import java.util.Collections;
-import java.util.List;
+public interface CharSequence2 extends CharSequence {
 
-import net.sourceforge.plantuml.UmlDiagram;
+	public int length();
 
-public class CommandAffineTransform extends SingleLineCommand<UmlDiagram> {
+	public char charAt(int index);
 
-	public CommandAffineTransform() {
-		super("(?i)^!transformation[%s]+([^{}]*)$");
-	}
+	public CharSequence2 subSequence(int start, int end);
 
-	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
-		final CharSequence value = arg.get(0);
-		diagram.setAnimation(Collections.singletonList(value));
-		return CommandExecutionResult.ok();
-	}
+	public String toString2();
+	
+	public LineLocation getLocation();
+
+	public CharSequence2 trin();
+
+	public boolean startsWith(String string);
 
 }

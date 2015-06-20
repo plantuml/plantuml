@@ -38,9 +38,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.StringUtils;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiagram> {
 
@@ -80,13 +80,13 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		return p1.matcher(line).matches();
 	}
 
-	private boolean hasStartingQuote(String line) {
+	private boolean hasStartingQuote(CharSequence line) {
 		return MyPattern.mtches(line, "[%s]*[%q].*");
 	}
 
-	public CommandExecutionResult execute(UmlDiagram diagram, List<String> lines) {
+	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
 		final Context context = new Context();
-		final Matcher mStart = getStartingPattern().matcher(StringUtils.trin(lines.get(0)));
+		final Matcher mStart = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		if (mStart.find() == false) {
 			throw new IllegalStateException();
 		}
@@ -94,15 +94,15 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 			context.push(mStart.group(1));
 		}
 
-		lines = new ArrayList<String>(lines.subList(1, lines.size() - 1));
-		StringUtils.trim(lines, true);
+		lines = lines.subExtract(1, 1);
+		lines = lines.trim(true);
 
-		for (String s : lines) {
+		for (CharSequence s : lines) {
 			assert s.length() > 0;
 			if (hasStartingQuote(s)) {
 				continue;
 			}
-			if (s.equals("}")) {
+			if (s.toString().equals("}")) {
 				context.pop();
 				continue;
 			}
@@ -116,7 +116,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 				final String key = context.getFullParam() + m.group(1);
 				diagram.setParam(key, m.group(3));
 			} else {
-				throw new IllegalStateException();
+				throw new IllegalStateException("." + s.toString() + ".");
 			}
 		}
 

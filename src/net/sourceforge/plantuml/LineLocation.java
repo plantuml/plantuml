@@ -28,19 +28,34 @@
  *
  * Original Author:  Arnaud Roques
  *
+ * Revision $Revision: 3824 $
+ *
  */
-package net.sourceforge.plantuml.version;
+package net.sourceforge.plantuml;
 
-import java.util.Iterator;
-
-public interface IteratorCounter extends Iterator<String> {
-
-	public int currentNum();
-
-	public IteratorCounter cloneMe();
-
-	public String peek();
-
-	public String peekPrevious();
+/**
+ * Indicates the location of a line of code within a resource.
+ * The resource maybe a local file or a remote URL.
+ *
+ */
+public interface LineLocation {
+	
+	/**
+	 * Position of the line, starting at 0.
+	 */
+	public int getPosition();
+	
+	/**
+	 * A description of the ressource.
+	 * If the ressource is a file, this is the complete path of the file.
+	 */
+	public String getDescription();
+	
+	/**
+	 * Get the parent of this location.
+	 * If this resource has been included by a !include or !includeurl directive,
+	 * this return the location of the !include line.
+	 */
+	public LineLocation getParent();
 
 }

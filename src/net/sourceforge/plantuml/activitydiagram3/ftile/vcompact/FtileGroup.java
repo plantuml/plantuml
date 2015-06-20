@@ -53,7 +53,11 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UGraphicInterceptorUDrawable;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.svek.UGraphicForSnake;
+import net.sourceforge.plantuml.ugraphic.LimitFinder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -91,7 +95,7 @@ public class FtileGroup extends AbstractFtile {
 			this.headerNote = new FloatingNote(displayNote, skinParam);
 		}
 	}
-	
+
 	@Override
 	public LinkRendering getInLinkRendering() {
 		return inner.getInLinkRendering();
@@ -119,8 +123,18 @@ public class FtileGroup extends AbstractFtile {
 		return new UTranslate(suppWidth / 2, diffHeightTitle(stringBounder) + headerNoteHeight(stringBounder));
 	}
 
+	private static MinMax getMinMax(TextBlock tb, StringBounder stringBounder) {
+		final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
+		final UGraphicForSnake interceptor = new UGraphicForSnake(limitFinder);
+		final UGraphicInterceptorUDrawable interceptor2 = new UGraphicInterceptorUDrawable(interceptor);
+
+		tb.drawU(interceptor2);
+		interceptor2.flushUg();
+		return limitFinder.getMinMax();
+	}
+
 	public double suppWidth(StringBounder stringBounder) {
-		final FtileGeometry orig = inner.calculateDimension(stringBounder);
+		final FtileGeometry orig = getInnerDimension(stringBounder);
 		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
 		final double suppWidth = MathUtils
@@ -128,8 +142,18 @@ public class FtileGroup extends AbstractFtile {
 		return suppWidth;
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	private FtileGeometry getInnerDimension(StringBounder stringBounder) {
 		final FtileGeometry orig = inner.calculateDimension(stringBounder);
+		final MinMax minMax = getMinMax(inner, stringBounder);
+		final double missingWidth = minMax.getMaxX() - orig.getWidth();
+		if (missingWidth > 0) {
+			return orig.addDim(missingWidth + 5, 0);
+		}
+		return orig;
+	}
+
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		final FtileGeometry orig = getInnerDimension(stringBounder);
 		final double suppWidth = suppWidth(stringBounder);
 		final double width = orig.getWidth() + suppWidth;
 		final double height = orig.getHeight() + diffHeightTitle(stringBounder) + diffYY2

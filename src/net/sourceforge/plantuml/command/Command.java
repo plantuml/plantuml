@@ -28,20 +28,18 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16381 $
  *
  */
 package net.sourceforge.plantuml.command;
-
-import java.util.List;
 
 import net.sourceforge.plantuml.core.Diagram;
 
 public interface Command<D extends Diagram> {
 
-	CommandExecutionResult execute(D diagram, List<String> lines);
+	CommandExecutionResult execute(D diagram, BlocLines lines);
 
-	CommandControl isValid(List<String> lines);
+	CommandControl isValid(BlocLines lines);
 
 	String[] getDescription();
 

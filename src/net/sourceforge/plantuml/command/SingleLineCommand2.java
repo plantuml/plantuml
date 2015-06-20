@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -60,14 +58,14 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return new String[] { pattern.getPattern() };
 	}
 
-	final public CommandControl isValid(List<String> lines) {
+	final public CommandControl isValid(BlocLines lines) {
 		if (lines.size() != 1) {
 			return CommandControl.NOT_OK;
 		}
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final String line = StringUtils.trin(lines.get(0));
+		final String line = StringUtils.trin(lines.getFirst499());
 		final boolean result = pattern.match(line);
 		if (result) {
 			actionIfCommandValid();
@@ -82,11 +80,11 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	protected void actionIfCommandValid() {
 	}
 
-	public final CommandExecutionResult execute(S system, List<String> lines) {
+	public final CommandExecutionResult execute(S system, BlocLines lines) {
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
-		final String line = StringUtils.trin(lines.get(0));
+		final String line = StringUtils.trin(lines.getFirst499());
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Forbidden line " + line);
 		}
@@ -103,7 +101,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return executeArg(system, arg);
 	}
 
-	protected boolean isForbidden(String line) {
+	protected boolean isForbidden(CharSequence line) {
 		return false;
 	}
 

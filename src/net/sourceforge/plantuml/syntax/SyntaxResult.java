@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.UmlDiagramType;
 
@@ -54,6 +55,7 @@ public class SyntaxResult {
 	private List<String> suggest;
 	private boolean hasCmapData;
 	private PSystemError systemError;
+	private LineLocation lineLocation;
 
 	public UmlDiagramType getUmlDiagramType() {
 		return umlDiagramType;
@@ -121,6 +123,14 @@ public class SyntaxResult {
 			throw new IllegalStateException();
 		}
 		systemError.exportDiagram(os, 0, fileFormatOption);
+	}
+
+	public void setLineLocation(LineLocation lineLocation) {
+		this.lineLocation = lineLocation;
+	}
+
+	public LineLocation getLineLocation() {
+		return lineLocation;
 	}
 
 }

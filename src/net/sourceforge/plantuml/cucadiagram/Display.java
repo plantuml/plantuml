@@ -35,13 +35,17 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.EmbededDiagram;
+import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -65,7 +69,7 @@ public class Display implements Iterable<CharSequence> {
 		return create(Arrays.asList(s));
 	}
 
-	public static Display create(List<? extends CharSequence> other) {
+	public static Display create(Collection<? extends CharSequence> other) {
 		return new Display(other, null);
 	}
 
@@ -121,12 +125,12 @@ public class Display implements Iterable<CharSequence> {
 		this.naturalHorizontalAlignment = naturalHorizontalAlignment;
 	}
 
-	private Display(List<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment) {
+	private Display(Collection<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment) {
 		this(naturalHorizontalAlignment);
 		this.display.addAll(manageEmbededDiagrams2(other));
 	}
 
-	private static List<CharSequence> manageEmbededDiagrams2(final List<? extends CharSequence> strings) {
+	private static List<CharSequence> manageEmbededDiagrams2(final Collection<? extends CharSequence> strings) {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
@@ -190,37 +194,6 @@ public class Display implements Iterable<CharSequence> {
 		return result;
 	}
 
-	private boolean firstColumnRemovable() {
-		boolean allEmpty = true;
-		for (CharSequence s : this) {
-			if (s.length() == 0) {
-				continue;
-			}
-			allEmpty = false;
-			final char c = s.charAt(0);
-			if (c != ' ' && c != '\t') {
-				return false;
-			}
-		}
-		return allEmpty == false;
-	}
-
-	public Display removeEmptyColumns() {
-		if (firstColumnRemovable() == false) {
-			return this;
-		}
-		final Display result = new Display(this);
-		do {
-			for (int i = 0; i < result.size(); i++) {
-				final CharSequence s = result.get(i);
-				if (s.length() > 0) {
-					result.display.set(i, s.toString().substring(1));
-				}
-			}
-		} while (result.firstColumnRemovable());
-		return result;
-	}
-
 	public int size() {
 		return display.size();
 	}
@@ -239,6 +212,16 @@ public class Display implements Iterable<CharSequence> {
 
 	public List<? extends CharSequence> as() {
 		return Collections.unmodifiableList(display);
+	}
+
+	public List<CharSequence2> as2() {
+		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		LineLocationImpl location = new LineLocationImpl("inner", null);
+		for (CharSequence cs : display) {
+			location = location.oneLineRead();
+			result.add(new CharSequence2Impl(cs, location));
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public Url initUrl() {

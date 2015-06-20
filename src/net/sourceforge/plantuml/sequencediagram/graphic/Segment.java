@@ -105,11 +105,13 @@ public class Segment {
 				result2.add(new Segment(pendingStart, this.pos2));
 				return Collections.unmodifiableCollection(result2);
 			}
-			if (this.contains(d) == false) {
-				throw new IllegalStateException();
+			// if (this.contains(d) == false) {
+			// throw new IllegalStateException();
+			// }
+			if (this.contains(d)) {
+				result2.add(new Segment(pendingStart, d.pos1));
+				pendingStart = d.pos2;
 			}
-			result2.add(new Segment(pendingStart, d.pos1));
-			pendingStart = d.pos2;
 		}
 		result2.add(new Segment(pendingStart, this.pos2));
 		return Collections.unmodifiableCollection(result2);
