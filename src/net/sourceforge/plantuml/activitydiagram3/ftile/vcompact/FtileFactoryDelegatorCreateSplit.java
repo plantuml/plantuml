@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -209,7 +210,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 	private TextBlock getTextBlock(LinkRendering linkRendering) {
 		// DUP1433
 		final Display display = LinkRendering.getDisplay(linkRendering);
-		if (display == null) {
+		if (Display.isNull(display)) {
 			return null;
 		}
 		final ISkinParam skinParam = getSkinParam();
@@ -217,7 +218,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
 		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
 				skinParam.useUnderlineForHyperlink());
-		return TextBlockUtils.create(display, fontConfiguration, HorizontalAlignment.LEFT, null, true);
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.SIMPLE_LINE);
 	}
 
 	private Ftile simpleSwimlanes(List<Ftile> all) {

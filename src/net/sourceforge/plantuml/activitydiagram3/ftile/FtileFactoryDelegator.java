@@ -67,7 +67,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	protected Display getInLinkRenderingDisplay(Ftile tile) {
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
-			return null;
+			return Display.NULL;
 		}
 		return linkRendering.getDisplay();
 	}

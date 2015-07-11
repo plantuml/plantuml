@@ -86,20 +86,16 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner();
-		this.name = TextBlockUtils.withMargin(TextBlockUtils.create(entity.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.OBJECT, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.OBJECT, stereotype), getSkinParam()
-								.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
-				HorizontalAlignment.CENTER, skinParam), 2, 2);
+		this.name = TextBlockUtils.withMargin(entity.getDisplay().create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.OBJECT, stereotype),
+		SkinParamUtils.getFontColor(getSkinParam(), FontParam.OBJECT, stereotype), getSkinParam()
+				.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam), 2, 2);
 		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = TextBlockUtils
-					.create(Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())),
-							new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.OBJECT_STEREOTYPE,
-									stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-									FontParam.OBJECT_STEREOTYPE, stereotype), getSkinParam().getHyperlinkColor(),
-									getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+			this.stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.OBJECT_STEREOTYPE,
+			stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+			FontParam.OBJECT_STEREOTYPE, stereotype), getSkinParam().getHyperlinkColor(),
+			getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 		}
 
 		if (entity.getBodier().getFieldsToDisplay().size() == 0) {

@@ -81,7 +81,7 @@ public class Bodier {
 	private boolean isMethod(String s) {
 		if (type == LeafType.ANNOTATION || type == LeafType.ABSTRACT_CLASS || type == LeafType.CLASS
 				|| type == LeafType.INTERFACE || type == LeafType.ENUM) {
-			return StringUtils.isMethod(s);
+			return MemberImpl.isMethod(s);
 		}
 		return false;
 	}
@@ -158,7 +158,7 @@ public class Bodier {
 	public TextBlock getBody(final FontParam fontParam, final ISkinParam skinParam, final boolean showMethods,
 			final boolean showFields) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
-			if (showMethods && showFields) {
+			if (showMethods || showFields) {
 				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier);
 			}
 			return null;

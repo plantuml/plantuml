@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.CompressionTransform;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -150,9 +152,12 @@ public class Snake implements UShape {
 		}
 		if (textBlock != null) {
 			final Point2D position = getTextBlockPosition(ug.getStringBounder());
-			// double max = getMaxX(ug.getStringBounder());
-			// ug.apply(new UChangeBackColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(0,
-			// position.getY())).draw(new URectangle(max, 10));
+			// final double max = getMaxX(ug.getStringBounder());
+			// ug.apply(new UChangeBackColor(HtmlColorUtils.LIGHT_GRAY))
+			// .apply(new UTranslate(position.getX(), position.getY()))
+			// .draw(new URectangle(textBlock.calculateDimension(ug.getStringBounder())));
+			// ug.apply(new UChangeBackColor(HtmlColorUtils.RED)).apply(new UTranslate(0, position.getY() + 10))
+			// .draw(new URectangle(max, 10));
 			textBlock.drawU(ug.apply(new UTranslate(position)));
 		}
 	}
@@ -355,7 +360,7 @@ public class Snake implements UShape {
 			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT).equals(patternAt)) {
 				final Point2D.Double p1 = points.get(i + 1);
 				final Point2D.Double p4 = points.get(i + 4);
-				if (p4.x < p1.x) {
+				if (p4.x + 4 < p1.x) {
 					final Point2D.Double newPoint = new Point2D.Double(points.get(i + 1).x, points.get(i + 3).y);
 					points.remove(i + 3);
 					points.remove(i + 2);

@@ -119,7 +119,7 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private TextBlock getTextBlock(Display members2, StringBounder stringBounder) {
-		final TextBlock result = TextBlockUtils.create(members2, titleConfig, align, spriteContainer);
+		final TextBlock result = members2.create(titleConfig, align, spriteContainer);
 		return result;
 	}
 
@@ -144,8 +144,7 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 			return null;
 		}
 		s = StringUtils.trin(s.substring(2, s.length() - 2));
-		return TextBlockUtils
-				.create(Display.getWithNewlines(s), titleConfig, HorizontalAlignment.LEFT, spriteContainer);
+		return Display.getWithNewlines(s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -33,9 +33,6 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 
 public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {

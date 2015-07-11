@@ -55,19 +55,19 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class FtileIfLong extends AbstractFtile {
+class FtileIfLongUnused extends AbstractFtile {
 
 	private final double xSeparation = 20;
 
@@ -77,7 +77,7 @@ class FtileIfLong extends AbstractFtile {
 
 	private final HtmlColor arrowColor;
 
-	private FtileIfLong(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, HtmlColor arrowColor) {
+	private FtileIfLongUnused(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, HtmlColor arrowColor) {
 		super(tiles.get(0).shadowing() || tile2.shadowing());
 		this.diamonds = diamonds;
 		this.tiles = tiles;
@@ -125,22 +125,19 @@ class FtileIfLong extends AbstractFtile {
 		final List<Ftile> diamonds = new ArrayList<Ftile>();
 		final List<Connection> conns = new ArrayList<Connection>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = TextBlockUtils.create(branch.getLabelPositive(), fc, HorizontalAlignment.LEFT,
-					ftileFactory);
-			final TextBlock tbTest = TextBlockUtils.create(branch.getLabelTest(), fc, HorizontalAlignment.LEFT,
-					ftileFactory);
+			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory);
+			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT, ftileFactory);
 			FtileDiamondInside diamond = new FtileDiamondInside(branch.shadowing(), backColor, borderColor, swimlane,
 					tbTest);
 			diamond = diamond.withNorth(tb1);
 			diamonds.add(diamond);
 		}
 
-		final TextBlock tb2 = TextBlockUtils.create(branch2.getLabelPositive(), fc, HorizontalAlignment.LEFT,
-				ftileFactory);
+		final TextBlock tb2 = branch2.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory);
 		final int last = diamonds.size() - 1;
 		diamonds.set(last, ((FtileDiamondInside) diamonds.get(last)).withEast(tb2));
 
-		final FtileIfLong result = new FtileIfLong(diamonds, tiles, tile2, arrowColor);
+		final FtileIfLongUnused result = new FtileIfLongUnused(diamonds, tiles, tile2, arrowColor);
 
 		for (int i = 0; i < thens.size(); i++) {
 			final Ftile ftile = tiles.get(i);

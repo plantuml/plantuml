@@ -47,8 +47,8 @@ public interface Real {
 
 	public void ensureBiggerThan(Real other);
 
-	public Real getMaxAbsolute();
-
-	public Real getMinAbsolute();
-
+//	public Real getMaxAbsolute();
+//
+//	public Real getMinAbsolute();
+//
 }

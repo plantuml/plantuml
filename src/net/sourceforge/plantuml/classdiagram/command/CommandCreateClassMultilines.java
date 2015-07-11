@@ -84,13 +84,13 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf("DISPLAY1", "[%g](.+)[%g]"), //
 								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CommandCreateClass.CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CommandCreateClass.CODE + ")"), //
 								new RegexLeaf("[%s]+as[%s]+"), // //
-								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]")), //
+								new RegexLeaf("DISPLAY2", "[%g](.+)[%g]")), //
 						new RegexLeaf("CODE3", "(" + CommandCreateClass.CODE + ")"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
@@ -159,7 +159,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
 					typeLink = typeLink.getDashed();
 				}
-				final Link link = new Link(cl2, entity, typeLink, null, 2, null, null, system.getLabeldistance(),
+				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null, system.getLabeldistance(),
 						system.getLabelangle());
 				system.addLink(link);
 			}

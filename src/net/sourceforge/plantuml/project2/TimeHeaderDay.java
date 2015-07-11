@@ -74,8 +74,7 @@ public class TimeHeaderDay extends AbstractTextBlock implements TextBlock {
 		int n = 0;
 		for (Day d = start; d.compareTo(end) <= 0; d = (Day) timeline.next(d)) {
 			final String text = "" + d.getNumDay();
-			final TextBlock b = TextBlockUtils.create(Display.create(text), fontConfig, HorizontalAlignment.LEFT,
-					new SpriteContainerEmpty());
+			final TextBlock b = Display.create(text).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final Dimension2D dimText = b.calculateDimension(ug.getStringBounder());
 			final double diffX = dayWidth - dimText.getWidth();
 			final double diffY = getHeight() - dimText.getHeight();

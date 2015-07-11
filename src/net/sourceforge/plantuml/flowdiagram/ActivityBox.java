@@ -72,7 +72,7 @@ public class ActivityBox extends AbstractTextBlock {
 		this.label = label;
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
 		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
-		tb = TextBlockUtils.create(Display.create(label), fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		tb = Display.create(label).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	public Tile getTile() {

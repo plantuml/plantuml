@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16441 $
+ * Revision $Revision: 16549 $
  *
  */
 package net.sourceforge.plantuml;
@@ -92,10 +92,10 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	private Display title;
-	private Display header;
-	private Display footer;
-	private Display legend = null;
+	private Display title = Display.NULL;
+	private Display header = Display.NULL;
+	private Display footer = Display.NULL;
+	private Display legend = Display.NULL;
 	private HorizontalAlignment legendAlignment = HorizontalAlignment.CENTER;
 	private VerticalAlignment legendVerticalAlignment = VerticalAlignment.BOTTOM;
 

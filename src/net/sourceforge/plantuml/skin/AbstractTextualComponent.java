@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15936 $
+ * Revision $Revision: 16527 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -84,8 +85,8 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		} else if (enhanced) {
 			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font);
 		} else {
-			textBlock = TextBlockUtils.create(strings, font, horizontalAlignment, spriteContainer, maxMessageSize,
-					false, fontForStereotype, htmlColorForStereotype);
+			textBlock = strings.create(font, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
+					fontForStereotype, htmlColorForStereotype);
 		}
 	}
 

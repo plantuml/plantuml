@@ -43,42 +43,40 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Skin;
 
-public class TileArguments {
+public class TileArguments implements Bordered {
 	private final StringBounder stringBounder;
-	private final Real omega;
 	private final Real origin;
 	private final LivingSpaces livingSpaces;
 	private final Skin skin;
 	private final ISkinParam skinParam;
 
-	public TileArguments(StringBounder stringBounder, Real omega, LivingSpaces livingSpaces, Skin skin,
-			ISkinParam skinParam, Real origin) {
+	public TileArguments(StringBounder stringBounder, LivingSpaces livingSpaces, Skin skin, ISkinParam skinParam,
+			Real origin) {
 		this.stringBounder = stringBounder;
 		this.origin = origin;
-		this.omega = omega;
 		this.livingSpaces = livingSpaces;
 		this.skin = skin;
 		this.skinParam = skinParam;
 	}
 
 	public TileArguments withBackColorGeneral(HtmlColor backColorElement, HtmlColor backColorGeneral) {
-		return new TileArguments(stringBounder, omega, livingSpaces, skin, new SkinParamBackcolored(skinParam,
+		return new TileArguments(stringBounder, livingSpaces, skin, new SkinParamBackcolored(skinParam,
 				backColorElement, backColorGeneral), origin);
 	}
 
 	public TileArguments withBackColor(Reference reference) {
 		final ISkinParam newSkinParam = new SkinParamBackcoloredReference(skinParam, reference.getBackColorElement(),
 				reference.getBackColorGeneral());
-		return new TileArguments(stringBounder, omega, livingSpaces, skin, newSkinParam, origin);
+		return new TileArguments(stringBounder, livingSpaces, skin, newSkinParam, origin);
 	}
 
 	public final StringBounder getStringBounder() {
 		return stringBounder;
 	}
 
-	public final Real getOmega() {
-		return omega;
-	}
+	// public final Real getMaxAbsolute() {
+	// return origin.getMaxAbsolute();
+	// }
 
 	public final Real getOrigin() {
 		return origin;
@@ -112,13 +110,27 @@ public class TileArguments {
 		return result;
 	}
 
-//	public double getAbsoluteMin() {
-//		return line.getAbsoluteMin();
-//	}
-//
-//	public double getAbsoluteMax() {
-//		return line.getAbsoluteMax();
-//	}
+	private Bordered bordered;
+
+	public void setBordered(Bordered bordered) {
+		this.bordered = bordered;
+	}
+
+	public double getBorder1() {
+		return bordered.getBorder1();
+	}
+
+	public double getBorder2() {
+		return bordered.getBorder2();
+	}
+
+	// public double getAbsoluteMin() {
+	// return line.getAbsoluteMin();
+	// }
+	//
+	// public double getAbsoluteMax() {
+	// return line.getAbsoluteMax();
+	// }
 
 	// public void ensure(Tile tile) {
 	// getAlpha().ensureLowerThan(tile.getMinX(getStringBounder()));

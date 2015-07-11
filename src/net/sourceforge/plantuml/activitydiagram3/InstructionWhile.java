@@ -53,7 +53,7 @@ public class InstructionWhile implements Instruction {
 
 	private final Display test;
 	private final Display yes;
-	private Display out;
+	private Display out = Display.NULL;
 	private LinkRendering endInlinkRendering;
 	private LinkRendering afterEndwhile;
 	private final Swimlane swimlane;
@@ -61,6 +61,12 @@ public class InstructionWhile implements Instruction {
 
 	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
 			Display yes, HtmlColor color, ISkinParam skinParam) {
+		if (test == null) {
+			throw new IllegalArgumentException();
+		}
+		if (yes == null) {
+			throw new IllegalArgumentException();
+		}
 		this.parent = parent;
 		this.test = test;
 		this.nextLinkRenderer = nextLinkRenderer;
@@ -102,6 +108,9 @@ public class InstructionWhile implements Instruction {
 	public void endwhile(LinkRendering nextLinkRenderer, Display out) {
 		this.endInlinkRendering = nextLinkRenderer;
 		this.out = out;
+		if (out == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public void afterEndwhile(LinkRendering linkRenderer) {

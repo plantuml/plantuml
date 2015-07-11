@@ -80,8 +80,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-		final TextBlock n = TextBlockUtils.create(Display.create("" + num), fc, HorizontalAlignment.LEFT,
-				new SpriteContainerEmpty());
+		final TextBlock n = Display.create("" + num).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		final Dimension2D dimNum = n.calculateDimension(ug.getStringBounder());
 		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final double diffx = dimTotal.getWidth() - dimNum.getWidth();

@@ -50,7 +50,7 @@ public class InstructionGroup implements Instruction {
 	private final HtmlColor titleColor;
 
 	private final Display test;
-	private Display headerNote;
+	private Display headerNote = Display.NULL;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
 			Swimlane swimlane) {

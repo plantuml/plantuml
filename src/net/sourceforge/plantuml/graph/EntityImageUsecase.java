@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14708 $
+ * Revision $Revision: 16528 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -41,6 +41,7 @@ import java.awt.geom.QuadCurve2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -48,7 +49,6 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageUsecase extends AbstractEntityImage {
@@ -57,8 +57,8 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	public EntityImageUsecase(IEntity entity) {
 		super(entity);
-		this.name = TextBlockUtils.create(entity.getDisplay(), new FontConfiguration(getFont14(), 
-				HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+		this.name = entity.getDisplay().create(new FontConfiguration(getFont14(), 
+		HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override

@@ -191,14 +191,15 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 			currentPos = livingSpace.getPosD(stringBounder).addAtLeast(0);
 		}
 
-		final TileArguments tileArguments = new TileArguments(stringBounder, currentPos, livingSpaces, skin,
+		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin,
 				diagram.getSkinParam(), origin);
 
 		this.englobers = new Englobers(tileArguments);
-		final MainTile mainTile = new MainTile(diagram, tileArguments);
+		final MainTile mainTile = new MainTile(diagram, englobers, tileArguments);
 		mainTile.addConstraints(stringBounder);
 		this.englobers.addConstraints(stringBounder);
 		origin.compileNow();
+		tileArguments.setBordered(mainTile);
 		return mainTile;
 	}
 
@@ -208,7 +209,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private TextBlock getTitle() {
 		final Display title = diagram.getTitle();
-		if (title == null) {
+		if (Display.isNull(title)) {
 			return new ComponentAdapter(null);
 		}
 		final Component compTitle = skin.createComponent(ComponentType.TITLE, null, getSkinParam(), title);
@@ -217,7 +218,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private TextBlock getLegend() {
 		final Display legend = diagram.getLegend();
-		if (legend == null) {
+		if (Display.isNull(legend)) {
 			return TextBlockUtils.empty(0, 0);
 		}
 		return EntityImageLegend.create(legend, diagram.getSkinParam());
@@ -225,7 +226,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	public TextBlock getFooterOrHeader(final FontParam param) {
 		final Display display = diagram.getFooterOrHeaderTeoz(param);
-		if (display == null) {
+		if (Display.isNull(display)) {
 			return new TeozLayer(null, stringBounder, param);
 		}
 		final HtmlColor hyperlinkColor = getSkinParam().getHyperlinkColor();

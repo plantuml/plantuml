@@ -46,13 +46,13 @@ public class CreoleStripeSimpleParser {
 
 	final private String line;
 	final private StripeStyle style;
-	private final boolean modeSimpleLine;
+	private final CreoleMode modeSimpleLine;
 
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
 
 	public CreoleStripeSimpleParser(String line, CreoleContext creoleContext, FontConfiguration fontConfiguration,
-			ISkinSimple skinParam, boolean modeSimpleLine) {
+			ISkinSimple skinParam, CreoleMode modeSimpleLine) {
 		this.fontConfiguration = fontConfiguration;
 		this.modeSimpleLine = modeSimpleLine;
 		this.skinParam = skinParam;
@@ -80,15 +80,15 @@ public class CreoleStripeSimpleParser {
 			return;
 		}
 
-		if (modeSimpleLine == false) {
-			final Pattern p6 = MyPattern.cmpile("^__([^_]*)__$");
-			final Matcher m6 = p6.matcher(line);
-			if (m6.find()) {
-				this.line = m6.group(1);
-				this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '_');
-				return;
-			}
-		}
+//		if (modeSimpleLine == CreoleMode.FULL) {
+//			final Pattern p6 = MyPattern.cmpile("^__([^_]*)__$");
+//			final Matcher m6 = p6.matcher(line);
+//			if (m6.find()) {
+//				this.line = m6.group(1);
+//				this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '_');
+//				return;
+//			}
+//		}
 
 		final Pattern p7 = MyPattern.cmpile("^\\.\\.([^\\.]*)\\.\\.$");
 		final Matcher m7 = p7.matcher(line);
@@ -98,7 +98,7 @@ public class CreoleStripeSimpleParser {
 			return;
 		}
 
-		if (modeSimpleLine == false) {
+		if (modeSimpleLine == CreoleMode.FULL) {
 			final Pattern p1 = MyPattern.cmpile("^(\\*+)([^*]+(?:[^*]|\\*\\*[^*]+\\*\\*)*)$");
 			final Matcher m1 = p1.matcher(line);
 			if (m1.find()) {
@@ -109,7 +109,7 @@ public class CreoleStripeSimpleParser {
 			}
 		}
 
-		if (modeSimpleLine == false) {
+		if (modeSimpleLine == CreoleMode.FULL) {
 			final Pattern p2 = MyPattern.cmpile("^(#+)(.+)$");
 			final Matcher m2 = p2.matcher(CharHidder.hide(line));
 			if (m2.find()) {

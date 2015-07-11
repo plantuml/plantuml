@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -130,9 +131,9 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT) {
-				link = new Link(cl1, (IEntity) tips, type, null, 1);
+				link = new Link(cl1, (IEntity) tips, type, Display.NULL, 1);
 			} else {
-				link = new Link((IEntity) tips, cl1, type, null, 1);
+				link = new Link((IEntity) tips, cl1, type, Display.NULL, 1);
 			}
 			diagram.addLink(link);
 		}

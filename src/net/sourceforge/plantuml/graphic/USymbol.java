@@ -104,7 +104,7 @@ public abstract class USymbol {
 		return symbol;
 	}
 
-	public abstract TextBlock asSmall(TextBlock label, TextBlock stereotype, SymbolContext symbolContext);
+	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype, SymbolContext symbolContext);
 
 	public abstract TextBlock asBig(TextBlock label, TextBlock stereotype, double width, double height,
 			SymbolContext symbolContext);

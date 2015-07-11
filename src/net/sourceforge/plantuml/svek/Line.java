@@ -224,7 +224,7 @@ public class Line implements Moveable, Hideable {
 		this.endHeadColor = colorSequence.getValue();
 
 		final TextBlock labelOnly;
-		if (link.getLabel() == null) {
+		if (Display.isNull(link.getLabel())) {
 			if (getLinkArrow() == LinkArrow.NONE) {
 				labelOnly = null;
 			} else {
@@ -237,7 +237,7 @@ public class Line implements Moveable, Hideable {
 		} else {
 			final double marginLabel = startUid.equals(endUid) ? 6 : 1;
 			final TextBlock label = TextBlockUtils.withMargin(
-					TextBlockUtils.create(link.getLabel(), labelFont, skinParam.getDefaultTextAlignment(), skinParam),
+					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(), skinParam),
 					marginLabel, marginLabel);
 			if (getLinkArrow() == LinkArrow.NONE) {
 				labelOnly = label;
@@ -282,15 +282,13 @@ public class Line implements Moveable, Hideable {
 		if (link.getQualifier1() == null) {
 			startTailText = null;
 		} else {
-			startTailText = TextBlockUtils.create(Display.getWithNewlines(link.getQualifier1()), labelFont,
-					HorizontalAlignment.CENTER, skinParam);
+			startTailText = Display.getWithNewlines(link.getQualifier1()).create(labelFont, HorizontalAlignment.CENTER, skinParam);
 		}
 
 		if (link.getQualifier2() == null) {
 			endHeadText = null;
 		} else {
-			endHeadText = TextBlockUtils.create(Display.getWithNewlines(link.getQualifier2()), labelFont,
-					HorizontalAlignment.CENTER, skinParam);
+			endHeadText = Display.getWithNewlines(link.getQualifier2()).create(labelFont, HorizontalAlignment.CENTER, skinParam);
 		}
 
 	}

@@ -163,7 +163,11 @@ public class AtomTable implements Atom {
 	private double getColWidth(int col) {
 		double result = 0;
 		for (int i = 0; i < getNbLines(); i++) {
-			final double width = getPosition(i, col).getWidth();
+			final Position position = getPosition(i, col);
+			if (position == null) {
+				continue;
+			}
+			final double width = position.getWidth();
 			result = Math.max(result, width);
 		}
 		return result;
@@ -172,14 +176,24 @@ public class AtomTable implements Atom {
 	private double getLineHeight(int line) {
 		double result = 0;
 		for (int i = 0; i < getNbCols(); i++) {
-			final double height = getPosition(line, i).getHeight();
+			final Position position = getPosition(line, i);
+			if (position == null) {
+				continue;
+			}
+			final double height = position.getHeight();
 			result = Math.max(result, height);
 		}
 		return result;
 	}
 
 	private Position getPosition(int line, int col) {
+		if (line >= lines.size()) {
+			return null;
+		}
 		final Line l = lines.get(line);
+		if (col >= l.cells.size()) {
+			return null;
+		}
 		final Atom atom = l.cells.get(col);
 		return positions.get(atom);
 	}

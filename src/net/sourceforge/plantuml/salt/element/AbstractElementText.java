@@ -63,7 +63,7 @@ abstract class AbstractElementText extends AbstractElement {
 		} else {
 			this.charLength = 0;
 		}
-		this.block = TextBlockUtils.create(Display.create(text), config, HorizontalAlignment.LEFT, spriteContainer);
+		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);
 	}
 
 	private int getCharNumber(String text) {
@@ -96,7 +96,7 @@ abstract class AbstractElementText extends AbstractElement {
 		// double max = 0;
 		// for (int i = 32; i < 127; i++) {
 		// final char c = (char) i;
-		// final double w = TextBlockUtils.create(Arrays.asList("" + c), config, HorizontalAlignment.LEFT)
+		// final double w = Display.create(Arrays.asList("" + c), config, HorizontalAlignment.LEFT)
 		// .calculateDimension(stringBounder).getWidth();
 		// if (w > max) {
 		// Log.println("c="+c+" "+max);

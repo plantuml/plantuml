@@ -87,8 +87,7 @@ class TimeScale {
 			if (printed == null || d.getMonth() != printed) {
 				ug.apply(new UTranslate(curx, y)).draw(new ULine(0, monthHeight));
 				printed = d.getMonth();
-				final TextBlock b = TextBlockUtils.create(Display.create(printed.name()), fontConfig,
-						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+				final TextBlock b = Display.create(printed.name()).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 				final Dimension2D dim = b.calculateDimension(stringBounder);
 				b.drawU(ug.apply(new UTranslate(curx, (y + (monthHeight - dim.getHeight()) / 2))));
 			}
@@ -101,8 +100,7 @@ class TimeScale {
 
 		for (Instant cur = project.getStart(); cur.compareTo(end) <= 0; cur = cur.next(project.getDayClose())) {
 			final Day d = cur.getDay();
-			final TextBlock b = TextBlockUtils.create(Display.create("" + d.getNumDay()), fontConfig,
-					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			final TextBlock b = Display.create("" + d.getNumDay()).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			b.drawU(ug.apply(new UTranslate((curx + (caseWidth - dim.getWidth()) / 2), (y + (caseHeight - dim.getHeight()) / 2))));
 			curx += caseWidth;

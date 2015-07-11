@@ -141,7 +141,6 @@ public class AnimatedGifEncoder {
 	 * 
 	 * @param iter
 	 *            int number of iterations.
-	 * @return
 	 */
 	public void setRepeat(int iter) {
 		if (iter >= 0) {
@@ -263,7 +262,6 @@ public class AnimatedGifEncoder {
 	 * 
 	 * @param quality
 	 *            int greater than 0.
-	 * @return
 	 */
 	public void setQuality(int quality) {
 		if (quality < 1)

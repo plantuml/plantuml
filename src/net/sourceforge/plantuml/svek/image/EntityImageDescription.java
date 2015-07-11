@@ -53,18 +53,19 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class EntityImageComponent extends AbstractEntityImage {
+public class EntityImageDescription extends AbstractEntityImage {
 
 	final private Url url;
 
 	private final TextBlock asSmall;
 
-	public EntityImageComponent(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 		final USymbol symbol = entity.getUSymbol() == null ? (skinParam.useUml2ForComponent() ? USymbol.COMPONENT2
@@ -73,8 +74,10 @@ public class EntityImageComponent extends AbstractEntityImage {
 			throw new IllegalArgumentException();
 		}
 
-		final TextBlock desc = entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(
-				entity.getDisplay(), symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER, stereotype,
+		final Display codeDisplay = Display.getWithNewlines(entity.getCode());
+		final TextBlock desc = (entity.getDisplay().equals(codeDisplay) && symbol instanceof USymbolFolder)
+				|| entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(entity.getDisplay(),
+				symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER, stereotype,
 				symbol.manageHorizontalLine(), false, false);
 
 		this.url = entity.getUrl99();
@@ -92,15 +95,17 @@ public class EntityImageComponent extends AbstractEntityImage {
 
 		if (stereotype != null && stereotype.getLabel(false) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
-			stereo = TextBlockUtils.create(
-					Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())),
+			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
 					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), symbol.getFontParamStereotype(),
 							stereotype), SkinParamUtils.getFontColor(getSkinParam(), symbol.getFontParamStereotype(),
 							null), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
 					HorizontalAlignment.CENTER, skinParam);
 		}
 
-		asSmall = symbol.asSmall(desc, stereo, ctx);
+		final TextBlock name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), skinParam,
+				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, false);
+
+		asSmall = symbol.asSmall(name, desc, stereo, ctx);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

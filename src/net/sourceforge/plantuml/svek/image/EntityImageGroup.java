@@ -50,7 +50,7 @@ public class EntityImageGroup extends AbstractEntityImage {
 
 	public EntityImageGroup(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
-		// this.desc = TextBlockUtils.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
+		// this.desc = Display.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
 		// getFont(FontParam.ACTIVITY), HtmlColorUtils.BLACK), HorizontalAlignment.CENTER);
 	}
 

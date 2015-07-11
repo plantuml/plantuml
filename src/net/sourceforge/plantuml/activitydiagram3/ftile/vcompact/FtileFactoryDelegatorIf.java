@@ -38,11 +38,13 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -59,7 +61,8 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
 		final UFont fontArrow = getSkinParam().getFont(FontParam.ACTIVITY_ARROW, null, false);
 		final UFont fontTest = getSkinParam().getFont(
-				conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND : FontParam.ACTIVITY_ARROW, null, false);
+				conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND : FontParam.ACTIVITY_ARROW, null,
+				false);
 		final Branch branch0 = thens.get(0);
 
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
@@ -69,10 +72,16 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 
 		if (thens.size() > 1) {
 			return FtileIfLong2.create(swimlane, borderColor, backColor, fontArrow, arrowColor, getFactory(),
-					conditionStyle, thens, elseBranch, getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink());
+					conditionStyle, thens, elseBranch, getSkinParam().getHyperlinkColor(), getSkinParam()
+							.useUnderlineForHyperlink());
 		}
-		return FtileIf.create(swimlane, borderColor, backColor, fontArrow, fontTest, arrowColor, getFactory(),
-				conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder());
+		if (OptionFlags.USE_NEW_IF) {
+			return ConditionalBuilder.create(swimlane, borderColor, backColor, fontArrow, fontTest, arrowColor,
+					getFactory(), conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder());
+		} else {
+			return FtileIfOrigin.create(swimlane, borderColor, backColor, fontArrow, fontTest, arrowColor,
+					getFactory(), conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder());
+		}
 	}
 
 }

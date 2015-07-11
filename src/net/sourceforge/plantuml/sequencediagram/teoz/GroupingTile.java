@@ -106,7 +106,8 @@ public class GroupingTile implements TileWithCallbackY {
 				}
 				min2.add(tile.getMinX(stringBounder).addFixed(-MARGINX));
 				final Real m = tile.getMaxX(stringBounder);
-				max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
+				// max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
+				max2.add(m.addFixed(MARGINX));
 			}
 		}
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);

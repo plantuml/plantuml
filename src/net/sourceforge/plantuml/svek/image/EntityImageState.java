@@ -88,11 +88,9 @@ public class EntityImageState extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 
-		this.desc = TextBlockUtils.create(
-				entity.getDisplay(),
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-						FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE,
-				stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+		this.desc = entity.getDisplay().create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+				FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE,
+		stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
 
 		Display list = Display.empty();
 		for (Member att : entity.getBodier().getFieldsToDisplay()) {
@@ -101,11 +99,9 @@ public class EntityImageState extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		this.fields = TextBlockUtils.create(
-				list,
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-						FontParam.STATE_ATTRIBUTE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-				FontParam.STATE_ATTRIBUTE, stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.LEFT, skinParam);
+		this.fields = list.create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
+				FontParam.STATE_ATTRIBUTE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
+		FontParam.STATE_ATTRIBUTE, stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.LEFT, skinParam);
 
 	}
 

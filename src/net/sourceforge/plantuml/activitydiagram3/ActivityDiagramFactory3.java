@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandArrowLong3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElse3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseLegacy1;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndPartition3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndif3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandFork3;
@@ -69,7 +70,6 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandSplitAgain3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSplitEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandStart3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandStop3;
-import net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandWhile3;
@@ -102,7 +102,6 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandDecoratorMultine(new CommandIf2()));
 		cmds.add(new CommandIfLegacy1());
 		cmds.add(new CommandElseIf2());
-		// cmds.add(new CommandDecoratorMultine(new CommandElseIf2()));
 		cmds.add(new CommandElse3());
 		cmds.add(new CommandDecoratorMultine(new CommandElse3()));
 		cmds.add(new CommandElseLegacy1());
@@ -133,6 +132,7 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 
 		cmds.add(new CommandLabel());
 		cmds.add(new CommandGoto());
+		cmds.add(new CommandDecoratorMultine(new CommandElseIf2()));
 
 		return cmds;
 	}

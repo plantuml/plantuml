@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
@@ -85,11 +86,11 @@ public class EventsHistory {
 				}
 			}
 			if (event == current) {
-				if (current instanceof Message) {
+				if (current instanceof AbstractMessage) {
 					final Event next = nextButSkippingNotes(it);
 					if (next instanceof LifeEvent) {
 						final LifeEvent le = (LifeEvent) next;
-						final Message msg = (Message) current;
+						final AbstractMessage msg = (AbstractMessage) current;
 						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE && le.isActivate() && msg.dealWith(p)
 								&& le.getParticipant() == p) {
 							level++;
@@ -183,6 +184,26 @@ public class EventsHistory {
 		result.addStep(new StairsPosition(totalHeight, false), value, null);
 		// System.err.println("EventsHistory::getStairs " + p + " result=" + result);
 		return result;
+	}
+
+	public int getMaxValue() {
+		int max = 0;
+		int level = 0;
+		for (Event current : events) {
+			if (current instanceof LifeEvent) {
+				final LifeEvent le = (LifeEvent) current;
+				if (le.getParticipant() == p && le.isActivate()) {
+					level++;
+				}
+				if (level > max) {
+					max = level;
+				}
+				if (le.getParticipant() == p && le.isDeactivateOrDestroy()) {
+					level--;
+				}
+			}
+		}
+		return max;
 	}
 
 }

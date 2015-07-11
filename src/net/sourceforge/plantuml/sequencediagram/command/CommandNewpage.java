@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16549 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -48,7 +48,7 @@ public class CommandNewpage extends SingleLineCommand<SequenceDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final Display strings = arg.get(0) == null ? null : Display.getWithNewlines(arg.get(0));
+		final Display strings = arg.get(0) == null ? Display.NULL : Display.getWithNewlines(arg.get(0));
 		sequenceDiagram.newpage(strings);
 		return CommandExecutionResult.ok();
 	}

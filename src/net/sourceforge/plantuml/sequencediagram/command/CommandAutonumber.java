@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16583 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.command;
@@ -65,7 +65,7 @@ public class CommandAutonumber extends SingleLineCommand<SequenceDiagram> {
 			return CommandExecutionResult.error("Error in pattern : " + df);
 		}
 
-		sequenceDiagram.goAutonumber(start, inc, decimalFormat);
+		sequenceDiagram.autonumberGo(start, inc, decimalFormat);
 		return CommandExecutionResult.ok();
 	}
 }

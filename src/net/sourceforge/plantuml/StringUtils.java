@@ -390,10 +390,6 @@ public class StringUtils {
 		return uid1 + String.format("%04d", uid2);
 	}
 
-	public static boolean isMethod(String s) {
-		return s.contains("(") || s.contains(")");
-	}
-
 	public static <O> List<O> merge(List<O> l1, List<O> l2) {
 		final List<O> result = new ArrayList<O>(l1);
 		result.addAll(l2);

@@ -82,8 +82,7 @@ public class GanttDiagram2 {
 		final List<Row> rows = new ArrayList<Row>();
 		for (Task t : tasks) {
 			final String text = t.getCode();
-			final TextBlock label = TextBlockUtils.create(Display.create(text), fontConfig, HorizontalAlignment.LEFT,
-					new SpriteContainerEmpty());
+			final TextBlock label = Display.create(text).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			rows.add(new RowSimple((Day) t.getStart(), (Day) t.getEnd(), HtmlColorUtils.BLACK, TextBlockUtils
 					.withMargin(label, 3, 3)));
 		}

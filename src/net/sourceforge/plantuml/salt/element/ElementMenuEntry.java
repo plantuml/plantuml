@@ -59,7 +59,7 @@ public class ElementMenuEntry extends AbstractElement {
 
 	public ElementMenuEntry(String text, UFont font, ISkinSimple spriteContainer) {
 		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
-		this.block = TextBlockUtils.create(Display.create(text), config, HorizontalAlignment.LEFT, spriteContainer);
+		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);
 		this.text = text;
 	}
 

@@ -101,9 +101,11 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 	}
 
 	public void startUrl(Url url) {
+		getGraphicObject().openLink(url.getUrl(), url.getTooltip());
 	}
 
 	public void closeAction() {
+		getGraphicObject().closeLink();
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {

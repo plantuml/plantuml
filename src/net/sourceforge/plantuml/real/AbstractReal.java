@@ -40,6 +40,7 @@ abstract class AbstractReal implements Real {
 
 	AbstractReal(RealLine line) {
 		this.line = line;
+		this.line.register2(this);
 	}
 
 	final RealLine getLine() {

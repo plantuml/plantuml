@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.skin.Area;
@@ -50,8 +51,9 @@ public class DelayTile implements Tile, TileWithCallbackY {
 
 	private final Delay delay;
 	private final TileArguments tileArguments;
-	private Real first;
-	private Real last;
+	// private Real first;
+	// private Real last;
+	private Real middle;
 	private double y;
 
 	public Event getEvent() {
@@ -68,14 +70,13 @@ public class DelayTile implements Tile, TileWithCallbackY {
 	}
 
 	private void init(StringBounder stringBounder) {
-		if (first != null) {
+		if (middle != null) {
 			return;
 		}
-		this.first = tileArguments.getFirstLivingSpace().getPosC(stringBounder);
+		final Real first = tileArguments.getFirstLivingSpace().getPosC(stringBounder);
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		this.last = tileArguments.getLastLivingSpace().getPosC(stringBounder).addAtLeast(0);
-		this.last.ensureBiggerThan(this.first.addFixed(dim.getWidth()));
+		final Real last = tileArguments.getLastLivingSpace().getPosC(stringBounder);
+		this.middle = RealUtils.middle(first, last);
 
 	}
 
@@ -85,15 +86,21 @@ public class DelayTile implements Tile, TileWithCallbackY {
 		return comp;
 	}
 
+	private double getPreferredWidth(StringBounder stringBounder) {
+		final Component comp = getComponent(stringBounder);
+		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		return dim.getWidth();
+	}
+
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		init(stringBounder);
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Area area = new Area(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());
+		final Area area = new Area(getPreferredWidth(stringBounder), dim.getHeight());
 		tileArguments.getLivingSpaces().delayOn(y, dim.getHeight());
 
-		ug = ug.apply(new UTranslate(first.getCurrentValue(), 0));
+		ug = ug.apply(new UTranslate(getMinX(stringBounder).getCurrentValue(), 0));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 
@@ -108,12 +115,12 @@ public class DelayTile implements Tile, TileWithCallbackY {
 
 	public Real getMinX(StringBounder stringBounder) {
 		init(stringBounder);
-		return this.first;
+		return this.middle.addFixed(-getPreferredWidth(stringBounder) / 2);
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
 		init(stringBounder);
-		return this.last;
+		return this.middle.addFixed(getPreferredWidth(stringBounder) / 2);
 	}
 
 	// private double startingY;

@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
@@ -81,7 +82,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class FtileIf extends AbstractFtile {
+class FtileIfOrigin extends AbstractFtile {
 
 	private final Ftile tile1;
 	private final Ftile tile2;
@@ -90,7 +91,7 @@ class FtileIf extends AbstractFtile {
 
 	private final HtmlColor arrowColor;
 
-	private FtileIf(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, HtmlColor arrowColor) {
+	private FtileIfOrigin(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, HtmlColor arrowColor) {
 		super(tile1.shadowing() || tile2.shadowing());
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
@@ -140,12 +141,10 @@ class FtileIf extends AbstractFtile {
 		final FontConfiguration fcTest = new FontConfiguration(fontTest, fontColor, skinParam.getHyperlinkColor(),
 				skinParam.useUnderlineForHyperlink());
 
-		final TextBlock tb1 = TextBlockUtils.create(branch1.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
-				ftileFactory, true);
-		final TextBlock tb2 = TextBlockUtils.create(branch2.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
-				ftileFactory, true);
+		final TextBlock tb1 = branch1.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
+		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
 
-		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, false).createSheet(labelTest);
+		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL).createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), new UStroke(1.5));
 
@@ -164,18 +163,16 @@ class FtileIf extends AbstractFtile {
 		if (tile1.calculateDimension(stringBounder).hasPointOut()
 				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
 			final Display out1 = LinkRendering.getDisplay(branch1.getFtile().getOutLinkRendering());
-			final TextBlock tbout1 = out1 == null ? null : TextBlockUtils.create(out1, fcArrow,
-					HorizontalAlignment.LEFT, ftileFactory, true);
+			final TextBlock tbout1 = out1 == null ? null : out1.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
 			final Display out2 = LinkRendering.getDisplay(branch2.getFtile().getOutLinkRendering());
-			final TextBlock tbout2 = out2 == null ? null : TextBlockUtils.create(out2, fcArrow,
-					HorizontalAlignment.LEFT, ftileFactory, true);
+			final TextBlock tbout2 = out2 == null ? null : out2.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
 			diamond2 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withWest(tbout1).withEast(
 					tbout2);
 		} else {
 			diamond2 = new FtileEmpty(tile1.shadowing(), Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2,
 					swimlane, swimlane);
 		}
-		final FtileIf result = new FtileIf(diamond1, tile1, tile2, diamond2, arrowColor);
+		final FtileIfOrigin result = new FtileIfOrigin(diamond1, tile1, tile2, diamond2, arrowColor);
 
 		final List<Connection> conns = new ArrayList<Connection>();
 		conns.add(result.new ConnectionHorizontalThenVertical(tile1, branch1));

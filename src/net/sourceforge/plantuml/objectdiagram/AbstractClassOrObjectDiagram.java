@@ -155,7 +155,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		void createNew(int mode, LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null) {
-				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null,
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL,
 						2);
 			} else {
 				removeLink(existingLink);
@@ -165,7 +165,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 					existingLink.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
 			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());
-			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null,
+			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), Display.NULL,
 					existingLink.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
 			addLink(entity1ToPoint);
@@ -190,7 +190,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		void createInSecond(LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null) {
-				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null,
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL,
 						2);
 			} else {
 				removeLink(existingLink);
@@ -198,7 +198,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(), 2,
 					existingLink.getQualifier1(), null, existingLink.getLabeldistance(), existingLink.getLabelangle());
-			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), null, 2, null,
+			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), Display.NULL, 2, null,
 					existingLink.getQualifier2(), existingLink.getLabeldistance(), existingLink.getLabelangle());
 			// entity1ToPoint = new Link(entity1, point, existingLink.getType(),
 			// null, 2);
@@ -214,7 +214,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			pointToAssocied = new Link(point, associed, linkType, label, 1);
 			addLink(pointToAssocied);
 
-			final Link lnode = new Link(other.point, this.point, new LinkType(LinkDecor.NONE, LinkDecor.NONE), null, 1);
+			final Link lnode = new Link(other.point, this.point, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL, 1);
 			lnode.setInvis(true);
 			addLink(lnode);
 

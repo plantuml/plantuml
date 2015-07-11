@@ -73,7 +73,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 			return CommandExecutionResult.ok();
 		}
 
-		Display strings = null;
+		Display strings = Display.NULL;
 		if (arg.get("FULL", 0) != null) {
 			strings = Display.getWithNewlines(arg.get("FULL", 0));
 		}

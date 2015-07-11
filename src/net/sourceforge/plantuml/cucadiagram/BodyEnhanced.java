@@ -34,7 +34,6 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -145,11 +145,10 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 				}
 				members = new ArrayList<Member>();
 				final List<String> allTree = buildAllTree(s, it);
-				final TextBlock bloc = TextBlockUtils.create(Display.create(allTree),
-						fontParam.getFontConfiguration(skinParam), align, skinParam, false);
+				final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam), align, skinParam, CreoleMode.FULL);
 				blocks.add(bloc);
 			} else {
-				final Member m = new MemberImpl(s, StringUtils.isMethod(s), manageModifier, manageUrl);
+				final Member m = new MemberImpl(s, MemberImpl.isMethod(s), manageModifier, manageUrl);
 				members.add(m);
 				if (m.getUrl() != null) {
 					urls.add(m.getUrl());
@@ -205,8 +204,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 			return null;
 		}
 		s = StringUtils.trin(s.substring(2, s.length() - 2));
-		return TextBlockUtils
-				.create(Display.getWithNewlines(s), titleConfig, HorizontalAlignment.LEFT, spriteContainer);
+		return Display.getWithNewlines(s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);
 	}
 
 	public void drawU(UGraphic ug) {

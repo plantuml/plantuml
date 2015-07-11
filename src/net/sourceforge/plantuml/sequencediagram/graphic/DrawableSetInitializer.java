@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16156 $
+ * Revision $Revision: 16580 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -209,8 +209,10 @@ class DrawableSetInitializer {
 		for (Englober pe : drawableSet.getExistingParticipantEnglober()) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
 					pe.getParticipantEnglober());
-			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE()).getParticipantBox();
-			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE()).getParticipantBox();
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())
+					.getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())
+					.getParticipantBox();
 			final double x1 = drawableSet.getX1(pe);
 			final double x2 = drawableSet.getX2(stringBounder, pe);
 			final double missing = preferredWidth - (x2 - x1);
@@ -499,8 +501,14 @@ class DrawableSetInitializer {
 			final double delta = comp.getPreferredHeight(stringBounder) / 2;
 			final LivingParticipantBox livingParticipantBox = drawableSet.getLivingParticipantBox(lifeEvent
 					.getParticipant());
-			final LifeDestroy destroy = new LifeDestroy(lifeEvent.getMessage().getPosYendLevel() - delta,
-					livingParticipantBox.getParticipantBox(), comp);
+			double pos2 = y;
+			if (message == null) {
+				pos2 = y;
+				freeY2 = freeY2.add(comp.getPreferredHeight(stringBounder), range);
+			} else {
+				pos2 = message.getPosYendLevel() - delta;
+			}
+			final LifeDestroy destroy = new LifeDestroy(pos2, livingParticipantBox.getParticipantBox(), comp);
 			drawableSet.addEvent(lifeEvent, destroy);
 		} else {
 			drawableSet.addEvent(lifeEvent, new GraphicalElementLiveEvent(y));

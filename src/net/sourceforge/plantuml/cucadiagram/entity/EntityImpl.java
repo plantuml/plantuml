@@ -224,7 +224,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean hasUrl() {
-		if (display != null && display.hasUrl()) {
+		if (Display.isNull(display) == false && display.hasUrl()) {
 			return true;
 		}
 		if (bodier.hasUrl()) {

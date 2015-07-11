@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 public class LinkRendering {
 
 	private final HtmlColor color;
-	private Display display;
+	private Display display = Display.NULL;
 
 	public LinkRendering(HtmlColor color) {
 		this.color = color;
@@ -78,7 +78,7 @@ public class LinkRendering {
 
 	public static Display getDisplay(LinkRendering linkRendering) {
 		if (linkRendering == null) {
-			return null;
+			return Display.NULL;
 		}
 		return linkRendering.getDisplay();
 	}

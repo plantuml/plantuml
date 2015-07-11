@@ -72,8 +72,7 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		if (drop.size() == 0) {
 			this.openDrop = null;
 		} else {
-			this.openDrop = TextBlockUtils.create(Display.create(drop), getConfig(), HorizontalAlignment.LEFT,
-					spriteContainer);
+			this.openDrop = Display.create(drop).create(getConfig(), HorizontalAlignment.LEFT, spriteContainer);
 		}
 	}
 

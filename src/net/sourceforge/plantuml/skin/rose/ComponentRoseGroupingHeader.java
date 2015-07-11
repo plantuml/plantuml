@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15964 $
+ * Revision $Revision: 16528 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -74,9 +74,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 			this.commentTextBlock = null;
 		} else {
 			final Display display = Display.getWithNewlines("[" + strings.get(1) + "]");
-			this.commentTextBlock = TextBlockUtils.create(display, new FontConfiguration(smallFont, bigFont.getColor(),
-					bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT,
-					spriteContainer);
+			this.commentTextBlock = display.create(new FontConfiguration(smallFont, bigFont.getColor(),
+			bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, spriteContainer);
 		}
 		if (this.background == null) {
 			throw new IllegalArgumentException();

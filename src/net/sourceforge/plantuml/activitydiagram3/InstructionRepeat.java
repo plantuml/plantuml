@@ -50,9 +50,9 @@ public class InstructionRepeat implements Instruction {
 	private final Swimlane swimlane;
 	private final HtmlColor color;
 
-	private Display test;
-	private Display yes;
-	private Display out;
+	private Display test = Display.NULL;
+	private Display yes = Display.NULL;
+	private Display out = Display.NULL;
 	private LinkRendering endRepeatLinkRendering;
 	private LinkRendering backRepeatLinkRendering;
 
@@ -76,10 +76,20 @@ public class InstructionRepeat implements Instruction {
 		return parent;
 	}
 
-	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering, LinkRendering backRepeatLinkRendering) {
+	public void setTest(Display test, Display yes, Display out, LinkRendering endRepeatLinkRendering,
+			LinkRendering backRepeatLinkRendering) {
 		this.test = test;
 		this.yes = yes;
 		this.out = out;
+		if (test == null) {
+			throw new IllegalArgumentException();
+		}
+		if (yes == null) {
+			throw new IllegalArgumentException();
+		}
+		if (out == null) {
+			throw new IllegalArgumentException();
+		}
 		this.endRepeatLinkRendering = endRepeatLinkRendering;
 		this.backRepeatLinkRendering = backRepeatLinkRendering;
 	}

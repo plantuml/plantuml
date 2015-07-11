@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15995 $
+ * Revision $Revision: 16520 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -59,7 +59,7 @@ public class Participant implements SpecificBackcolorable {
 		if (code == null || code.length() == 0) {
 			throw new IllegalArgumentException();
 		}
-		if (display == null || display.size() == 0) {
+		if (Display.isNull(display) || display.size() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.code = code;

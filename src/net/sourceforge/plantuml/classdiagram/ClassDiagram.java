@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16021 $
+ * Revision $Revision: 16530 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -39,6 +39,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
@@ -138,9 +139,10 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			group = getOrCreateNamespaceInternal(namespace2, Display.getWithNewlines(namespace), GroupType.PACKAGE,
 					getRootGroup());
 		}
-		return createLeafInternal(fullyCode,
-				display == null ? Display.getWithNewlines(fullyCode.getShortName(getLeafs())) : display, type, group,
-				symbol);
+		return createLeafInternal(
+				fullyCode,
+				Display.isNull(display) ? Display.getWithNewlines(fullyCode.getShortName(getLeafs())).withCreoleMode(
+						CreoleMode.SIMPLE_LINE) : display, type, group, symbol);
 	}
 
 	private final String getNamespace(Code fullyCode) {

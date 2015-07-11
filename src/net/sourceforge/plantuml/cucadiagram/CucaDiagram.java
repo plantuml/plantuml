@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14667 $
+ * Revision $Revision: 16520 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -124,7 +124,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final protected ILeaf createLeafInternal(Code code, Display display, LeafType type, IGroup group, USymbol symbol) {
-		if (display == null) {
+		if (Display.isNull(display)) {
 			display = Display.getWithNewlines(code);
 		}
 		final ILeaf leaf = entityFactory.createLeaf(code, display, type, group, getHides(), getNamespaceSeparator());

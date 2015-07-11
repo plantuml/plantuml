@@ -85,7 +85,7 @@ public class StripeTable implements Stripe {
 			final List<StripeSimple> cells = new ArrayList<StripeSimple>();
 			for (String s : lines) {
 				final StripeSimple cell = new StripeSimple(getFontConfiguration(mode), stripeStyle,
-						new CreoleContext(), skinParam, false);
+						new CreoleContext(), skinParam, CreoleMode.FULL);
 				cell.analyzeAndAdd(s);
 				cells.add(cell);
 			}

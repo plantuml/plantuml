@@ -61,7 +61,8 @@ public class Stairs2 {
 		if (ys.size() > 0) {
 			final double lastY = ys.get(ys.size() - 1).getValue();
 			if (position.getValue() < lastY) {
-				throw new IllegalArgumentException();
+				// throw new IllegalArgumentException();
+				return;
 			}
 			if (lastY == position.getValue()) {
 				values.set(ys.size() - 1, new IntegerColored(value, color));

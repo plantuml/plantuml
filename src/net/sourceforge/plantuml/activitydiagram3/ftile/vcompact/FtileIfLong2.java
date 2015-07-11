@@ -56,13 +56,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -149,18 +149,15 @@ class FtileIfLong2 extends AbstractFtile {
 		List<Ftile> diamonds = new ArrayList<Ftile>();
 		final List<Connection> conns = new ArrayList<Connection>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = TextBlockUtils.create(branch.getLabelPositive(), fc, HorizontalAlignment.LEFT,
-					ftileFactory);
-			final TextBlock tbTest = TextBlockUtils.create(branch.getLabelTest(), fc, HorizontalAlignment.LEFT,
-					ftileFactory);
+			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory);
+			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT, ftileFactory);
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.shadowing(), backColor, borderColor, swimlane,
 					tbTest);
 			diamond = diamond.withNorth(tb1);
 			diamonds.add(diamond);
 		}
 
-		final TextBlock tb2 = TextBlockUtils.create(branch2.getLabelPositive(), fc, HorizontalAlignment.LEFT,
-				ftileFactory);
+		final TextBlock tb2 = branch2.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory);
 		final int last = diamonds.size() - 1;
 		diamonds.set(last, ((FtileDiamondInside2) diamonds.get(last)).withEast(tb2));
 

@@ -73,13 +73,13 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 						"(interface|enum|annotation|abstract[%s]+class|abstract|class)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]"), //
+								new RegexLeaf("DISPLAY1", "[%g](.+)[%g]"), //
 								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CODE + ")"), //
 								new RegexLeaf("[%s]+as[%s]+"), // //
-								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]")), //
+								new RegexLeaf("DISPLAY2", "[%g](.+)[%g]")), //
 						new RegexLeaf("CODE3", "(" + CODE + ")"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //

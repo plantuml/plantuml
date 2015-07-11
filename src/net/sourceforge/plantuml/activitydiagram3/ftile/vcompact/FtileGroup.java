@@ -87,9 +87,9 @@ public class FtileGroup extends AbstractFtile {
 		if (title == null) {
 			this.name = TextBlockUtils.empty(0, 0);
 		} else {
-			this.name = TextBlockUtils.create(title, fc, HorizontalAlignment.LEFT, skinParam);
+			this.name = title.create(fc, HorizontalAlignment.LEFT, skinParam);
 		}
-		if (displayNote == null) {
+		if (Display.isNull(displayNote)) {
 			this.headerNote = TextBlockUtils.empty(0, 0);
 		} else {
 			this.headerNote = new FloatingNote(displayNote, skinParam);

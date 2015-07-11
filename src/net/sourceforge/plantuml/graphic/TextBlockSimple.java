@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16265 $
+ * Revision $Revision: 16518 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockSimple extends AbstractTextBlock implements TextBlock {
+public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 
 	private List<Line> lines2;
 
@@ -66,7 +66,7 @@ class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 		this(texts, fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, null, null);
 	}
 
-	protected TextBlockSimple(Display texts, FontConfiguration fontConfiguration,
+	public TextBlockSimple(Display texts, FontConfiguration fontConfiguration,
 			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer, double maxMessageSize,
 			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this.texts = texts;

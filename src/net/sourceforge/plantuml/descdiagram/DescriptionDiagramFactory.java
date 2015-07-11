@@ -78,10 +78,7 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandLinkElement());
 		//
 		cmds.add(new CommandPackageWithUSymbol());
-		cmds.add(new CommandPackage());
 		cmds.add(new CommandEndPackage());
-		// addCommand(new CommandNamespace());
-		// addCommand(new CommandEndNamespace());
 		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
 		cmds.add(factoryNoteCommand.createMultiLine());
 
@@ -99,12 +96,9 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(new CommandUrl());
-		// addCommand(new CommandCreateComponent2());
 		cmds.add(new CommandCreateElementFull());
-		cmds.add(new CommandCreateElementMultilines());
-		// addCommand(new CommandCreateElementTyped());
-		// addCommand(new CommandCreateCircleInterface());
-		// addCommand(new CommandCreateActorInComponent());
+		cmds.add(new CommandCreateElementMultilines(0));
+		cmds.add(new CommandCreateElementMultilines(1));
 
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine());
 		cmds.add(factoryNoteCommand.createMultiLine());

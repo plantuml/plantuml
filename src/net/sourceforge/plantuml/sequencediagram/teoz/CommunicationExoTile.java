@@ -86,18 +86,22 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1Value(stringBounder);
-		double x2 = getPoint2(stringBounder).getCurrentValue();
+		double x2 = getPoint2Value(stringBounder);
 		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 		if (level > 0) {
 			if (message.getType().isRightBorder()) {
 				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;
 			} else {
-				x2 -= CommunicationTile.LIVE_DELTA_SIZE * level;
+				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);
 			}
 		}
 		final Area area = new Area(x2 - x1, dim.getHeight());
 		ug = ug.apply(new UTranslate(x1, 0));
 		comp.drawU(ug, area, (Context2D) ug);
+	}
+
+	private boolean isShortArrow() {
+		return message.isShortArrow();
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -106,18 +110,34 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		return dim.getHeight();
 	}
 
+	private double getPreferredWidth(StringBounder stringBounder) {
+		final Component comp = getComponent(stringBounder);
+		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		return dim.getWidth();
+	}
+
 	public void addConstraints(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double width = dim.getWidth();
 
-		final Real point1 = getPoint1(stringBounder);
-		final Real point2 = getPoint2(stringBounder);
-		if (point1.getCurrentValue() < point2.getCurrentValue()) {
-			point2.ensureBiggerThan(point1.addFixed(width));
+		if (message.getType().isRightBorder()) {
+
 		} else {
-			point1.ensureBiggerThan(point2.addFixed(width));
+			livingSpace.getPosC(stringBounder).ensureBiggerThan(tileArguments.getOrigin().addFixed(width));
 		}
+
+		// final Real point1 = getPoint1(stringBounder);
+		// if (message.getType().isRightBorder()) {
+		// final Real point2 = point1.addFixed(width);
+		// } else {
+		// final Real point2 = getPoint2(stringBounder);
+		// if (point1.getCurrentValue() < point2.getCurrentValue()) {
+		// point2.ensureBiggerThan(point1.addFixed(width));
+		// } else {
+		// point1.ensureBiggerThan(point2.addFixed(width));
+		// }
+		// }
 	}
 
 	public void updateStairs(StringBounder stringBounder, double y) {
@@ -140,15 +160,20 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		if (message.getType().isRightBorder()) {
 			return livingSpace.getPosC(stringBounder).getCurrentValue();
 		}
-		// return tileArguments.getOrigin().getMinAbsolute().getCurrentValue();
-		return tileArguments.getOrigin().getCurrentValue();
+		if (isShortArrow()) {
+			return getPoint2Value(stringBounder) - getPreferredWidth(stringBounder);
+		}
+		return tileArguments.getBorder1();
 	}
 
-	private Real getPoint2(final StringBounder stringBounder) {
+	private double getPoint2Value(final StringBounder stringBounder) {
 		if (message.getType().isRightBorder()) {
-			return tileArguments.getOmega();
+			if (isShortArrow()) {
+				return getPoint1Value(stringBounder) + getPreferredWidth(stringBounder);
+			}
+			return tileArguments.getBorder2();
 		}
-		return livingSpace.getPosC(stringBounder);
+		return livingSpace.getPosC(stringBounder).getCurrentValue();
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
@@ -156,7 +181,10 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return getPoint2(stringBounder);
+		final Component comp = getComponent(stringBounder);
+		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final double width = dim.getWidth();
+		return getPoint1(stringBounder).addFixed(width);
 	}
 
 }

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
@@ -127,12 +128,12 @@ class FtileIfAndStop extends AbstractFtile {
 
 		final Ftile stopFtile = ftileFactory.stop(swimlane);
 
-		// final TextBlock tb1 = TextBlockUtils.create(branch1.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
+		// final TextBlock tb1 = Display.create(branch1.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
 		// ftileFactory);
-		// final TextBlock tb2 = TextBlockUtils.create(branch2.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
+		// final TextBlock tb2 = Display.create(branch2.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
 		// ftileFactory);
 
-		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, false).createSheet(labelTest);
+		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL).createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), new UStroke(1.5));
 

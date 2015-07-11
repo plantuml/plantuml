@@ -172,14 +172,14 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	private TextBlockBackcolored addHeaderAndFooter(TextBlockBackcolored original) {
 		final Display footer = diagram.getFooter();
 		final Display header = diagram.getHeader();
-		if (footer == null && header == null) {
+		if (Display.isNull(footer) && Display.isNull(header)) {
 			return original;
 		}
-		final TextBlock textFooter = footer == null ? null : TextBlockUtils.create(footer, new FontConfiguration(
+		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(new FontConfiguration(
 				getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null), diagram.getSkinParam()
 						.getHyperlinkColor(), diagram.getSkinParam().useUnderlineForHyperlink()), diagram
 				.getFooterAlignment(), diagram.getSkinParam());
-		final TextBlock textHeader = header == null ? null : TextBlockUtils.create(header, new FontConfiguration(
+		final TextBlock textHeader = Display.isNull(header) ? null : header.create(new FontConfiguration(
 				getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null), diagram.getSkinParam()
 						.getHyperlinkColor(), diagram.getSkinParam().useUnderlineForHyperlink()), diagram
 				.getHeaderAlignment(), diagram.getSkinParam());
@@ -190,19 +190,20 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private TextBlockBackcolored addTitle(TextBlockBackcolored original) {
 		final Display title = diagram.getTitle();
-		if (title == null) {
+		if (Display.isNull(title)) {
 			return original;
 		}
-		final TextBlock text = TextBlockUtils.create(title, new FontConfiguration(getFont(FontParam.TITLE),
-				getFontColor(FontParam.TITLE, null), diagram.getSkinParam().getHyperlinkColor(), diagram.getSkinParam()
-						.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, diagram.getSkinParam());
+		final TextBlock text = title.create(
+				new FontConfiguration(getFont(FontParam.TITLE), getFontColor(FontParam.TITLE, null), diagram
+						.getSkinParam().getHyperlinkColor(), diagram.getSkinParam().useUnderlineForHyperlink()),
+				HorizontalAlignment.CENTER, diagram.getSkinParam());
 
 		return DecorateEntityImage.addTop(original, text, HorizontalAlignment.CENTER);
 	}
 
 	private TextBlockBackcolored addLegend(TextBlockBackcolored original) {
 		final Display legend = diagram.getLegend();
-		if (legend == null) {
+		if (Display.isNull(legend)) {
 			return original;
 		}
 		final TextBlock text = EntityImageLegend.create(legend, diagram.getSkinParam());

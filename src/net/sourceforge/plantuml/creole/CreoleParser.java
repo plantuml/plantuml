@@ -48,10 +48,10 @@ public class CreoleParser {
 	private final FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
 	private final HorizontalAlignment horizontalAlignment;
-	private final boolean modeSimpleLine;
+	private final CreoleMode modeSimpleLine;
 
 	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, boolean modeSimpleLine) {
+			ISkinSimple skinParam, CreoleMode modeSimpleLine) {
 		this.modeSimpleLine = modeSimpleLine;
 		this.fontConfiguration = fontConfiguration;
 		this.skinParam = skinParam;
@@ -83,7 +83,7 @@ public class CreoleParser {
 
 	public Sheet createSheet(Display display) {
 		final Sheet sheet = new Sheet(horizontalAlignment);
-		if (display != null) {
+		if (Display.isNull(display) == false) {
 			final CreoleContext context = new CreoleContext();
 			for (CharSequence cs : display) {
 				final Stripe stripe;

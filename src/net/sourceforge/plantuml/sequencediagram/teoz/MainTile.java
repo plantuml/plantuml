@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class MainTile implements Tile {
+public class MainTile implements Tile, Bordered {
 
 	private final Real min;
 	private final Real max;
@@ -53,7 +53,7 @@ public class MainTile implements Tile {
 	private final List<Tile> tiles = new ArrayList<Tile>();
 	private final LivingSpaces livingSpaces;
 
-	public MainTile(SequenceDiagram diagram, TileArguments tileArguments) {
+	public MainTile(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
 
 		this.livingSpaces = tileArguments.getLivingSpaces();
 
@@ -61,14 +61,23 @@ public class MainTile implements Tile {
 		final List<Real> max2 = new ArrayList<Real>();
 
 		min2.add(tileArguments.getOrigin());
-		max2.add(tileArguments.getOmega());
+		max2.add(tileArguments.getOrigin());
+
+		if (englobers.size() > 0) {
+			min2.add(englobers.getMinX(tileArguments.getStringBounder()));
+			max2.add(englobers.getMaxX(tileArguments.getStringBounder()));
+		}
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null));
 
 		for (Tile tile : tiles) {
-			// height += tile.getPreferredHeight(stringBounder);
 			min2.add(tile.getMinX(tileArguments.getStringBounder()));
 			max2.add(tile.getMaxX(tileArguments.getStringBounder()));
+		}
+
+		for (LivingSpace livingSpace : livingSpaces.values()) {
+			max2.add(livingSpace.getPosD(tileArguments.getStringBounder()));
+			max2.add(livingSpace.getPosC2(tileArguments.getStringBounder()));
 		}
 
 		this.min = RealUtils.min(min2);
@@ -135,6 +144,14 @@ public class MainTile implements Tile {
 
 	public LivingSpaces getLivingSpaces() {
 		return livingSpaces;
+	}
+
+	public double getBorder1() {
+		return min.getCurrentValue();
+	}
+
+	public double getBorder2() {
+		return max.getCurrentValue();
 	}
 
 }

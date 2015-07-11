@@ -70,8 +70,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		this.symbolContext = symbolContext;
 		this.background = background;
 
-		this.textHeader = TextBlockUtils.create(stringsToDisplay.subList(0, 1), header, HorizontalAlignment.LEFT,
-				spriteContainer);
+		this.textHeader = stringsToDisplay.subList(0, 1).create(header, HorizontalAlignment.LEFT, spriteContainer);
 
 	}
 

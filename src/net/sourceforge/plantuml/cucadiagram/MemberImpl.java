@@ -54,6 +54,7 @@ public class MemberImpl implements Member {
 	private final VisibilityModifier visibilityModifier;
 
 	public MemberImpl(String tmpDisplay, boolean isMethod, boolean manageModifier, boolean manageUrl) {
+		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
 		if (manageModifier) {
 			this.hasUrl = new UrlBuilder(null, ModeUrl.ANYWHERE).getUrl(tmpDisplay) != null;
 			final Pattern pstart = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")([^\\[\\]]+)$");
@@ -100,7 +101,8 @@ public class MemberImpl implements Member {
 			}
 
 			if (VisibilityModifier.isVisibilityCharacter(displayClean.charAt(0))) {
-				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean.charAt(0), isMethod == false);
+				visibilityModifier = VisibilityModifier
+						.getVisibilityModifier(displayClean.charAt(0), isMethod == false);
 				this.display = StringUtils.trin(StringUtils.manageGuillemet(displayClean.substring(1)));
 			} else {
 				this.display = StringUtils.manageGuillemet(displayClean);
@@ -122,7 +124,7 @@ public class MemberImpl implements Member {
 		return getDisplayWithoutVisibilityChar();
 	}
 
-	public String getDisplayWithoutVisibilityChar() {
+	private String getDisplayWithoutVisibilityChar() {
 		// assert display.length() == 0 || VisibilityModifier.isVisibilityCharacter(display.charAt(0)) == false;
 		return display;
 	}
@@ -192,6 +194,16 @@ public class MemberImpl implements Member {
 
 	public boolean hasUrl() {
 		return hasUrl;
+	}
+
+	public static boolean isMethod(String s) {
+		if (s.contains("{method}")) {
+			return true;
+		}
+		if (s.contains("{field}")) {
+			return false;
+		}
+		return s.contains("(") || s.contains(")");
 	}
 
 }

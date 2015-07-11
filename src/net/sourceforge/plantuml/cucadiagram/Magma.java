@@ -49,11 +49,11 @@ class Magma {
 	public void putInSquare() {
 		final SquareLinker<ILeaf> linker = new SquareLinker<ILeaf>() {
 			public void topDown(ILeaf top, ILeaf down) {
-				system.addLink(new Link(top, down, linkType, null, 2));
+				system.addLink(new Link(top, down, linkType, Display.NULL, 2));
 			}
 
 			public void leftRight(ILeaf left, ILeaf right) {
-				system.addLink(new Link(left, right, linkType, null, 1));
+				system.addLink(new Link(left, right, linkType, Display.NULL, 1));
 			}
 		};
 		new SquareMaker<ILeaf>().putInSquare(standalones, linker);
@@ -99,12 +99,12 @@ class Magma {
 	}
 
 	public void linkToDown(Magma down) {
-		system.addLink(new Link(this.getBottomLeft(), down.getTopLeft(), linkType, null, 2));
+		system.addLink(new Link(this.getBottomLeft(), down.getTopLeft(), linkType, Display.NULL, 2));
 
 	}
 
 	public void linkToRight(Magma right) {
-		system.addLink(new Link(this.getTopRight(), right.getTopLeft(), linkType, null, 1));
+		system.addLink(new Link(this.getTopRight(), right.getTopLeft(), linkType, Display.NULL, 1));
 	}
 
 }

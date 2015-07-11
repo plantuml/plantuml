@@ -65,7 +65,7 @@ public class TileBuilder {
 			if (tile != null) {
 				tiles.add(tile);
 				final Real tmpMax = tile.getMaxX(tileArguments.getStringBounder());
-				tileArguments.getOmega().ensureBiggerThan(tmpMax);
+				// tileArguments.getOmega().ensureBiggerThan(tmpMax);
 			}
 		}
 		return Collections.unmodifiableList(tiles);
@@ -126,7 +126,7 @@ public class TileBuilder {
 			tile = new NoteTile(livingSpace1, livingSpace2, note, skin, skinParam);
 		} else if (ev instanceof Divider) {
 			final Divider divider = (Divider) ev;
-			tile = new DividerTile(divider, skin, skinParam, tileArguments.getOrigin(), tileArguments.getOmega());
+			tile = new DividerTile(divider, tileArguments);
 		} else if (ev instanceof GroupingStart) {
 			final GroupingStart start = (GroupingStart) ev;
 			tile = new GroupingTile(it, start, tileArguments.withBackColorGeneral(start.getBackColorElement(),

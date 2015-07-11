@@ -58,6 +58,12 @@ public class Branch {
 	}
 
 	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color) {
+		if (labelPositive == null) {
+			throw new IllegalArgumentException();
+		}
+		if (labelTest == null) {
+			throw new IllegalArgumentException();
+		}
 		this.list = new InstructionList(swimlane);
 		this.labelTest = labelTest;
 		this.labelPositive = labelPositive;
@@ -90,7 +96,7 @@ public class Branch {
 
 	public final Display getLabelPositive() {
 		final LinkRendering in = ftile.getInLinkRendering();
-		if (in != null && in.getDisplay() != null) {
+		if (in != null && Display.isNull(in.getDisplay()) == false) {
 			return in.getDisplay();
 		}
 		return labelPositive;

@@ -84,7 +84,7 @@ public class InstructionIf implements Instruction {
 			branch.updateFtile(factory);
 		}
 		if (elseBranch == null) {
-			this.elseBranch = new Branch(swimlane, null, null, null);
+			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null);
 		}
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch);
@@ -103,7 +103,7 @@ public class InstructionIf implements Instruction {
 			return false;
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
-		this.elseBranch = new Branch(swimlane, whenElse, null, null);
+		this.elseBranch = new Branch(swimlane, whenElse, Display.NULL, null);
 		this.current = elseBranch;
 		return true;
 	}
@@ -120,7 +120,7 @@ public class InstructionIf implements Instruction {
 
 	public void endif(LinkRendering nextLinkRenderer) {
 		if (elseBranch == null) {
-			this.elseBranch = new Branch(swimlane, null, null, null);
+			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null);
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
 	}

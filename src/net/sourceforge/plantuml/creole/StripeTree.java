@@ -63,7 +63,7 @@ public class StripeTree implements Stripe {
 		final List<String> lines = StripeTable.getWithNewlinesInternal(line);
 		for (String s : lines) {
 			final StripeSimple cell = new StripeSimple(fontConfiguration, stripeStyle, new CreoleContext(), skinParam,
-					false);
+					CreoleMode.FULL);
 			// EMTEC
 			final String text = s.replaceFirst("^\\s*\\|_", "");
 			final int level = (s.length() - text.length()) / 2;

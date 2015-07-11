@@ -122,7 +122,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		if (color != null) {
 			currentSwimlane.setSpecificBackcolor(color);
 		}
-		if (label != null) {
+		if (Display.isNull(label) == false) {
 			currentSwimlane.setDisplay(label);
 		}
 	}
@@ -250,8 +250,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			}
 
 			if (OptionFlags.SWI2 == false) {
-				final TextBlock swTitle = TextBlockUtils.create(swimlane.getDisplay(), getFontConfiguration(),
-						HorizontalAlignment.LEFT, skinParam);
+				final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 				final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 				final double posTitle = x2 + (swimlane.getTotalWidth() - titleWidth) / 2;
 				swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
@@ -283,8 +282,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			final MinMax minMax = limitFinder.getMinMax();
 
 			final double drawingWidth = minMax.getWidth() + 2 * separationMargin;
-			final TextBlock swTitle = TextBlockUtils.create(swimlane.getDisplay(), getFontConfiguration(),
-					HorizontalAlignment.LEFT, skinParam);
+			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 			final double totalWidth = Math.max(drawingWidth, titleWidth + 2 * separationMargin);
 
@@ -299,8 +297,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	private UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
 		double titlesHeight = 0;
 		for (Swimlane swimlane : swimlanes) {
-			final TextBlock swTitle = TextBlockUtils.create(swimlane.getDisplay(), getFontConfiguration(),
-					HorizontalAlignment.LEFT, skinParam);
+			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 
 			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());
 		}

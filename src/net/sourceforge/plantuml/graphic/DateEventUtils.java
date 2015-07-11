@@ -96,8 +96,8 @@ public class DateEventUtils {
 
 	private static TextBlock getComment(final List<String> asList, HtmlColor color) {
 		final UFont font = new UFont("SansSerif", Font.BOLD, 14);
-		TextBlock comment = TextBlockUtils.create(Display.create(asList), new FontConfiguration(font, color,
-				HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		TextBlock comment = Display.create(asList).create(new FontConfiguration(font, color,
+		HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		comment = TextBlockUtils.withMargin(comment, 4, 4);
 		comment = new TextBlockBordered(comment, color);
 		comment = TextBlockUtils.withMargin(comment, 10, 10);

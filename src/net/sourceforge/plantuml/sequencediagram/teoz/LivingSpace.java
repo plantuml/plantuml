@@ -195,11 +195,17 @@ public class LivingSpace {
 		}
 		return posC;
 	}
+	
+	public Real getPosC2(StringBounder stringBounder) {
+		final double delta = liveBoxes.getMaxPosition(stringBounder);
+		return getPosC(stringBounder).addFixed(delta);
+	}
 
 	public Real getPosD(StringBounder stringBounder) {
 		if (posD == null) {
 			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));
 		}
+		//System.err.println("LivingSpace::getPosD "+posD.getCurrentValue());
 		return posD;
 	}
 

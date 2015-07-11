@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15580 $
+ * Revision $Revision: 16528 $
  *
  */
 package net.sourceforge.plantuml.printskin;
@@ -153,8 +153,8 @@ class PrintSkin extends AbstractPSystem {
 	}
 
 	private void println(String s) {
-		final TextBlock textBlock = TextBlockUtils.create(Display.create(s), new FontConfiguration(FONT1,
-				HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		final TextBlock textBlock = Display.create(s).create(new FontConfiguration(FONT1,
+		HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		textBlock.drawU(ug.apply(new UTranslate(xpos, ypos)));
 		ypos += textBlock.calculateDimension(ug.getStringBounder()).getHeight();
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 16518 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockSpotted extends TextBlockSimple {
+public class TextBlockSpotted extends TextBlockSimple {
 
 	private final CircledCharacter circledCharacter;
 

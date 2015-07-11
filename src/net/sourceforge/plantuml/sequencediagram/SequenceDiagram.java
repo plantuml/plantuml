@@ -97,7 +97,7 @@ public class SequenceDiagram extends UmlDiagram {
 		if (participants.containsKey(code)) {
 			throw new IllegalArgumentException();
 		}
-		if (display == null) {
+		if (Display.isNull(display)) {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(code);
 		}
@@ -304,22 +304,43 @@ public class SequenceDiagram extends UmlDiagram {
 		return skin2;
 	}
 
-	private Integer messageNumber = null;
+	private boolean autonumber = false;
+	private int messageNumber;
 	private int incrementMessageNumber;
 
 	private DecimalFormat decimalFormat;
 
-	public final void goAutonumber(int startingNumber, int increment, DecimalFormat decimalFormat) {
+	public final void autonumberGo(int startingNumber, int increment, DecimalFormat decimalFormat) {
+		this.autonumber = true;
 		this.messageNumber = startingNumber;
 		this.incrementMessageNumber = increment;
 		this.decimalFormat = decimalFormat;
 	}
 
+	public final void autonumberStop() {
+		this.autonumber = false;
+	}
+
+	public final void autonumberResume(DecimalFormat decimalFormat) {
+		this.autonumber = true;
+		if (decimalFormat != null) {
+			this.decimalFormat = decimalFormat;
+		}
+	}
+
+	public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
+		this.autonumber = true;
+		this.incrementMessageNumber = increment;
+		if (decimalFormat != null) {
+			this.decimalFormat = decimalFormat;
+		}
+	}
+
 	public String getNextMessageNumber() {
-		if (messageNumber == null) {
+		if (autonumber == false) {
 			return null;
 		}
-		final Integer result = messageNumber;
+		final int result = messageNumber;
 		messageNumber += incrementMessageNumber;
 		return decimalFormat.format(result);
 	}
@@ -440,7 +461,7 @@ public class SequenceDiagram extends UmlDiagram {
 				return true;
 			}
 		}
-		if (getLegend() != null && getLegend().hasUrl()) {
+		if (Display.isNull(getLegend()) == false && getLegend().hasUrl()) {
 			return true;
 		}
 		return false;

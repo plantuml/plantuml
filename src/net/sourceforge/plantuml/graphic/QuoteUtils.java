@@ -161,7 +161,8 @@ public class QuoteUtils {
 					"Do me a favour. Disconnect me. I could be reworked, but I'll never be top of the line again.", //
 					"Take it easy, don't push the little button on the joystick!", //
 					"I'm a very private person.", //
-					"To sculpt an elephant from a big block of marble, just knock away all the bits that don't look like an elephant."
+					"To sculpt an elephant from a big block of marble, just knock away all the bits that don't look like an elephant.", //
+					"Who said you could talk to me? Have I got something on my face ?"
 			);
 	private QuoteUtils() {
 	}

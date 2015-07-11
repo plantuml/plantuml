@@ -65,8 +65,8 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 
 		final SymbolContext symbolContext = new SymbolContext(biColor.getBackColor(), biColor.getForeColor())
 				.withStroke(new UStroke(1.5)).withShadow(biColor.getDeltaShadow() > 0);
-		this.stickman = USymbol.DATABASE.asSmall(TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
-				symbolContext);
+		this.stickman = USymbol.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17),
+				TextBlockUtils.empty(0, 0), symbolContext);
 	}
 
 	@Override

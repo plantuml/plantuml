@@ -110,9 +110,8 @@ public final class GroupPngMakerState {
 		final Display display = group.getDisplay();
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final HtmlColor textColor = SkinParamUtils.getFontColor(skinParam, FontParam.STATE, group.getStereotype());
-		final TextBlock title = TextBlockUtils.create(display, new FontConfiguration(getFont(FontParam.STATE),
-				textColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()),
-				HorizontalAlignment.CENTER, diagram.getSkinParam());
+		final TextBlock title = display.create(new FontConfiguration(getFont(FontParam.STATE),
+		textColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, diagram.getSkinParam());
 
 		if (group.size() == 0) {
 			return new EntityImageState(group, diagram.getSkinParam());

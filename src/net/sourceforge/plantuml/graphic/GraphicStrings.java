@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16265 $
+ * Revision $Revision: 16528 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -110,14 +110,11 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private TextBlock getTextBlock() {
 		TextBlock result = null;
 		if (maxLine == 0) {
-			result = TextBlockUtils.create(Display.create(strings), new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink),
-					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			result = Display.create(strings).create(new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		} else {
 			for (int i = 0; i < strings.size(); i += maxLine) {
 				final int n = Math.min(i + maxLine, strings.size());
-				final TextBlock textBlock1 = TextBlockUtils.create(Display.create(strings.subList(i, n)),
-						new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT,
-						new SpriteContainerEmpty());
+				final TextBlock textBlock1 = Display.create(strings.subList(i, n)).create(new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 				if (result == null) {
 					result = textBlock1;
 				} else {

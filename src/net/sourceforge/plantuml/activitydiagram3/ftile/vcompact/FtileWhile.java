@@ -106,11 +106,11 @@ class FtileWhile extends AbstractFtile {
 			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
 		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, hyperlinkColor,
 				useUnderlineForHyperlink);
-		final TextBlock tmpb = TextBlockUtils.create(yes, fc, HorizontalAlignment.LEFT, spriteContainer);
+		final TextBlock tmpb = yes.create(fc, HorizontalAlignment.LEFT, spriteContainer);
 		if (test == null) {
 			return tmpb;
 		}
-		return TextBlockUtils.mergeTB(TextBlockUtils.create(test, fc, HorizontalAlignment.LEFT, spriteContainer), tmpb,
+		return TextBlockUtils.mergeTB(test.create(fc, HorizontalAlignment.LEFT, spriteContainer), tmpb,
 				HorizontalAlignment.CENTER);
 	}
 
@@ -123,9 +123,9 @@ class FtileWhile extends AbstractFtile {
 				useUnderlineForHyperlink);
 		final FontConfiguration fcTest = new FontConfiguration(fontTest, HtmlColorUtils.BLACK, hyperlinkColor,
 				useUnderlineForHyperlink);
-		final TextBlock yesTb = TextBlockUtils.create(yes, fcArrow, HorizontalAlignment.LEFT, ftileFactory);
-		final TextBlock testTb = TextBlockUtils.create(test, fcTest, HorizontalAlignment.LEFT, ftileFactory);
-		final TextBlock out = TextBlockUtils.create(out2, fcArrow, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock yesTb = yes.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock testTb = test.create(fcTest, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock out = out2.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory);
 
 		final Ftile diamond1;
 		final TextBlock supplementarySouthText;

@@ -144,7 +144,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), page.getHeight());
 
 		final Component compTitle;
-		if (page.getTitle() == null) {
+		if (Display.isNull(page.getTitle())) {
 			compTitle = null;
 		} else {
 			compTitle = drawableSet.getSkin().createComponent(ComponentType.TITLE, null, drawableSet.getSkinParam(),
@@ -159,7 +159,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		final Display legend = diagram.getLegend();
 		final TextBlock legendBlock;
-		if (legend == null) {
+		if (Display.isNull(legend)) {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			legendBlock = EntityImageLegend.create(legend, diagram.getSkinParam());
@@ -172,8 +172,10 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		// System.err.println("dpiFactor=" + dpiFactor);
 		// System.err.println("scale=" + scale);
 
+		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
+
 		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), oneOf(scale,
-				dpiFactor), diagram.getSkinParam().getBackgroundColor(), null, null, 3, 10, diagram.getAnimation(),
+				dpiFactor), diagram.getSkinParam().getBackgroundColor(), metadata, null, 3, 10, diagram.getAnimation(),
 				diagram.getSkinParam().handwritten());
 
 		imageBuilder.addUDrawable(new UDrawable() {
@@ -199,7 +201,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 				final double delta1 = Math.max(0, dimLegend.getWidth() - area.getWidth());
 
-				final boolean legendTop = legend != null
+				final boolean legendTop = Display.isNull(legend) == false
 						&& diagram.getLegendVerticalAlignment() == VerticalAlignment.TOP;
 
 				double sequenceAreaY = area.getSequenceAreaY();
@@ -212,7 +214,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				addHeader3(area, ug);
 				addFooter3(area, ug);
 
-				if (legend != null) {
+				if (Display.isNull(legend) == false) {
 					final double delta2;
 					if (diagram.getLegendAlignment() == HorizontalAlignment.LEFT) {
 						delta2 = 0;

@@ -72,7 +72,7 @@ public class PSystemCreole extends AbstractPSystem {
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
 		final FontConfiguration fontConfiguration = new FontConfiguration(font, HtmlColorUtils.BLACK,
 				HtmlColorUtils.BLUE, true);
-		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, false)
+		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, 0, 0);
 

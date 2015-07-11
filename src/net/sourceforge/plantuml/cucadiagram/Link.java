@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15543 $
+ * Revision $Revision: 16541 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -110,8 +110,8 @@ public class Link implements Hideable, Removeable {
 		this.cl1 = cl1;
 		this.cl2 = cl2;
 		this.type = type;
-		if (label == null) {
-			this.label = null;
+		if (Display.isNull(label)) {
+			this.label = Display.NULL;
 		} else if (doWeHaveToRemoveUrlAtStart(label)) {
 			this.url = label.initUrl();
 			this.label = label.removeUrl(url);
@@ -130,9 +130,9 @@ public class Link implements Hideable, Removeable {
 		if (qualifier2 != null) {
 			((ILeaf) cl2).setNearDecoration(true);
 		}
-//		if (type.getDecor2() == LinkDecor.EXTENDS) {
-//			setSametail(cl1.getUid());
-//		}
+		// if (type.getDecor2() == LinkDecor.EXTENDS) {
+		// setSametail(cl1.getUid());
+		// }
 	}
 
 	private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
@@ -370,8 +370,9 @@ public class Link implements Hideable, Removeable {
 	private double getQualifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif,
 			ISkinSimple spriteContainer) {
 		if (qualif != null) {
-			final TextBlock b = TextBlockUtils.create(Display.create(qualif), new FontConfiguration(fontQualif,
-					HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, spriteContainer);
+			final TextBlock b = Display.create(qualif).create(
+					new FontConfiguration(fontQualif, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true),
+					HorizontalAlignment.LEFT, spriteContainer);
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
@@ -480,7 +481,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean hasUrl() {
-		if (label != null && label.hasUrl()) {
+		if (Display.isNull(label) == false && label.hasUrl()) {
 			return true;
 		}
 		return getUrl() != null;

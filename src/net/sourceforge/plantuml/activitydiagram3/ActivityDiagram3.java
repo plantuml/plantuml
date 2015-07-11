@@ -161,7 +161,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private TextBlock addLegend(TextBlock original) {
 		final Display legend = getLegend();
-		if (legend == null) {
+		if (Display.isNull(legend)) {
 			return original;
 		}
 		final TextBlock text = EntityImageLegend.create(legend, getSkinParam());
@@ -207,12 +207,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private TextBlock addTitle(TextBlock original) {
 		final Display title = getTitle();
-		if (title == null) {
+		if (Display.isNull(title)) {
 			return original;
 		}
-		final TextBlock text = TextBlockUtils.create(title, new FontConfiguration(getFont(FontParam.TITLE),
-				getFontColor(FontParam.TITLE, null), getSkinParam().getHyperlinkColor(), getSkinParam()
-						.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, getSkinParam());
+		final TextBlock text = title.create(new FontConfiguration(getFont(FontParam.TITLE),
+		getFontColor(FontParam.TITLE, null), getSkinParam().getHyperlinkColor(), getSkinParam()
+				.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, getSkinParam());
 
 		return new DecorateTextBlock(original, text, HorizontalAlignment.CENTER);
 	}
@@ -220,15 +220,15 @@ public class ActivityDiagram3 extends UmlDiagram {
 	private TextBlock addHeaderAndFooter(TextBlock original) {
 		final Display footer = getFooter();
 		final Display header = getHeader();
-		if (footer == null && header == null) {
+		if (Display.isNull(footer) && Display.isNull(header)) {
 			return original;
 		}
-		final TextBlock textFooter = footer == null ? null : TextBlockUtils.create(footer, new FontConfiguration(
-				getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null), getSkinParam().getHyperlinkColor(),
-				getSkinParam().useUnderlineForHyperlink()), getFooterAlignment(), getSkinParam());
-		final TextBlock textHeader = header == null ? null : TextBlockUtils.create(header, new FontConfiguration(
-				getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null), getSkinParam().getHyperlinkColor(),
-				getSkinParam().useUnderlineForHyperlink()), getHeaderAlignment(), getSkinParam());
+		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(new FontConfiguration(
+		getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null), getSkinParam().getHyperlinkColor(),
+		getSkinParam().useUnderlineForHyperlink()), getFooterAlignment(), getSkinParam());
+		final TextBlock textHeader = Display.isNull(header) ? null : header.create(new FontConfiguration(
+		getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null), getSkinParam().getHyperlinkColor(),
+		getSkinParam().useUnderlineForHyperlink()), getHeaderAlignment(), getSkinParam());
 
 		return new DecorateTextBlock(original, textHeader, getHeaderAlignment(), textFooter, getFooterAlignment());
 	}

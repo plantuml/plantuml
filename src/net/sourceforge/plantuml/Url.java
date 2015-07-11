@@ -64,6 +64,15 @@ public class Url implements EnsureVisible {
 			this.label = label;
 		}
 	}
+	
+	public static boolean isLatex(String pendingUrl) {
+		return pendingUrl.startsWith("latex://");
+	}
+	
+	public boolean isLatex() {
+		return isLatex(url);
+	}
+
 
 	public final String getUrl() {
 		return url;

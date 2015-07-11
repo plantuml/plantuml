@@ -41,9 +41,9 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMargedVertically;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMargedRight;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -86,14 +86,20 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 		final ConnectionVerticalDown connection = new ConnectionVerticalDown(tile1, tile2, p1, p2, color, textBlock);
 		result = FtileUtils.addConnection(result, connection);
 		if (textBlock != null) {
-			final double width = result.calculateDimension(stringBounder).getWidth();
+			final FtileGeometry dim = result.calculateDimension(stringBounder);
+			final double width = dim.getWidth();
 			// System.err.println("width=" + width);
 			// System.err.println("p1=" + p1);
 			// System.err.println("p2=" + p2);
 			final double maxX = connection.getMaxX(stringBounder);
+			// System.err.println("FtileFactoryDelegatorAssembly dim=" + dim);
 			// System.err.println("maxX=" + maxX);
 			final double needed = (maxX - width) * 2;
-			result = new FtileMinWidth(result, needed);
+			// result = new FtileMinWidth(result, needed);
+			if (width < maxX) {
+				result = new FtileMargedRight(result, maxX);
+			}
+			// System.err.println("FtileFactoryDelegatorAssembly result=" + result.calculateDimension(stringBounder));
 		}
 		return result;
 	}
@@ -102,7 +108,7 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 
 	private TextBlock getTextBlock(Display display) {
 		// DUP1433
-		if (display == null) {
+		if (Display.isNull(display)) {
 			return null;
 		}
 		final ISkinParam skinParam = getSkinParam();
@@ -110,6 +116,6 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
 		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
 				skinParam.useUnderlineForHyperlink());
-		return TextBlockUtils.create(display, fontConfiguration, HorizontalAlignment.LEFT, null, true);
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.SIMPLE_LINE);
 	}
 }

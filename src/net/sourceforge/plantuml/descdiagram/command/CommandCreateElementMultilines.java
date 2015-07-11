@@ -56,29 +56,52 @@ import net.sourceforge.plantuml.graphic.USymbol;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<DescriptionDiagram> {
 
+	private final int type;
+
 	enum Mode {
 		EXTENDS, IMPLEMENTS
 	};
 
-	public CommandCreateElementMultilines() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
+	public CommandCreateElementMultilines(int type) {
+		super(getRegexConcat(type), MultilinesStrategy.REMOVE_STARTING_QUOTE);
+		this.type = type;
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^(.*)[%g]$";
+		if (type == 0) {
+			return "(?i)^(.*)[%g]$";
+		}
+		if (type == 1) {
+			return "(?i)^(.*)\\]$";
+		}
+		throw new IllegalArgumentException();
 	}
 
-	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("TYPE", "(usecase|database)[%s]+"), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
+	private static RegexConcat getRegexConcat(int type) {
+		if (type == 0) {
+			return new RegexConcat(new RegexLeaf("^"), //
+					new RegexLeaf("TYPE", "(usecase|database|artifact)[%s]+"), //
+					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+					new RegexLeaf("[%s]*"), //
+					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
+					new RegexLeaf("[%s]*"), //
+					new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+					new RegexLeaf("[%s]*"), //
+					new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
+		}
+		if (type == 1) {
+			return new RegexConcat(new RegexLeaf("^"), //
+					new RegexLeaf("TYPE", "(package|usecase|database|artifact)[%s]+"), //
+					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+					new RegexLeaf("[%s]*"), //
+					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
+					new RegexLeaf("[%s]*"), //
+					new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+					new RegexLeaf("[%s]*"), //
+					new RegexLeaf("DESC", "\\[(.*)$"));
+		}
+		throw new IllegalArgumentException();
 	}
 
 	public CommandExecutionResult executeNow(DescriptionDiagram diagram, BlocLines lines) {
@@ -91,16 +114,22 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 		if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("package")) {
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.PACKAGE;
 		} else if (symbol.equalsIgnoreCase("database")) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.DATABASE;
+		} else if (symbol.equalsIgnoreCase("artifact")) {
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.ARTIFACT;
 		} else {
 			throw new IllegalStateException();
 		}
 
 		final Code code = Code.of(line0.get("CODE", 0));
-		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),
-				lines.getLast499().toString());
+		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
+				.toString());
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();
 		final String descStart = line0.get("DESC", 0);

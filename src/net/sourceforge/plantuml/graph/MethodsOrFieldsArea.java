@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14708 $
+ * Revision $Revision: 16528 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -81,8 +81,7 @@ public class MethodsOrFieldsArea {
 	}
 
 	private TextBlock createTextBlock(String s) {
-		return TextBlockUtils.create(Display.create(s), new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		return Display.create(s).create(new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	public void draw(UGraphic ug, double x, double y) {

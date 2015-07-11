@@ -60,6 +60,10 @@ public class FtileUtils {
 		return new FtileMargedVertically(ftile, marginTop, marginBottom);
 	}
 
+	public static Ftile addHorizontalMargin(Ftile ftile, double margin) {
+		return new FtileMarged(ftile, margin);
+	}
+
 	private static Ftile neverNull(Ftile ftile) {
 		if (ftile == null) {
 			return new FtileEmpty(false);

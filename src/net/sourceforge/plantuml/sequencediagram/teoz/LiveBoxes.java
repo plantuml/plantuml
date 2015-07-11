@@ -38,8 +38,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -55,6 +57,12 @@ public class LiveBoxes {
 		this.eventsHistory = eventsHistory;
 		this.skin = skin;
 		this.skinParam = skinParam;
+	}
+
+	public double getMaxPosition(StringBounder stringBounder) {
+		final int max = eventsHistory.getMaxValue();
+		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(new SimpleContext2D(true), skin, skinParam, delays);
+		return drawer.getWidth(stringBounder) / 2.0 * max;
 	}
 
 	public void drawBoxes(UGraphic ug, double totalHeight, Context2D context) {

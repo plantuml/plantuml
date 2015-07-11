@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15934 $
+ * Revision $Revision: 16528 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -76,9 +76,7 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = TextBlockUtils.create(Display.create("[" + strings.get(1) + "]"),
-					new FontConfiguration(smallFont, fontColor2, bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT,
-					spriteContainer);
+			this.commentTextBlock = Display.create("[" + strings.get(1) + "]").create(new FontConfiguration(smallFont, fontColor2, bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, spriteContainer);
 		}
 	}
 

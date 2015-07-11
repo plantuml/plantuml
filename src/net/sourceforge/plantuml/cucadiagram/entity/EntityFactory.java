@@ -104,7 +104,7 @@ public class EntityFactory {
 		final LongCode longCode = getLongCode(code, namespaceSeparator);
 		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, groupType, namespace2, longCode,
 				namespaceSeparator, rawLayout);
-		if (display != null) {
+		if (Display.isNull(display) == false) {
 			result.setDisplay(display);
 		}
 		return result;

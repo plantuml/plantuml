@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -162,15 +163,15 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();
 		if (position == Position.RIGHT) {
-			link = new Link(cl1, note, type, null, 1);
+			link = new Link(cl1, note, type, Display.NULL, 1);
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.LEFT) {
-			link = new Link(note, cl1, type, null, 1);
+			link = new Link(note, cl1, type, Display.NULL, 1);
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(cl1, note, type, null, 2);
+			link = new Link(cl1, note, type, Display.NULL, 2);
 		} else if (position == Position.TOP) {
-			link = new Link(note, cl1, type, null, 2);
+			link = new Link(note, cl1, type, Display.NULL, 2);
 		} else {
 			throw new IllegalArgumentException();
 		}

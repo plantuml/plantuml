@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -134,7 +135,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		if (m.isStatic()) {
 			config = config.underline();
 		}
-		TextBlock bloc = TextBlockUtils.create(Display.getWithNewlines(s), config, align, skinParam, true);
+		TextBlock bloc = Display.getWithNewlines(s).create(config, align, skinParam, CreoleMode.SIMPLE_LINE);
 		bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));
 		return new TextBlockTracer(m, bloc);
 	}

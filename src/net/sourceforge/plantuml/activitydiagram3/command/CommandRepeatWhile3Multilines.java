@@ -93,11 +93,11 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 			testDisplay = testDisplay.add(trailTest);
 		}
 
-		Display yes = null;// Display.getWithNewlines("arg.getLazzy(\"WHEN\", 0)");
-		final Display out = null; // Display.getWithNewlines("arg.getLazzy(\"OUT\", 0)");
+		Display yes = Display.NULL;// Display.getWithNewlines("arg.getLazzy(\"WHEN\", 0)");
+		final Display out = Display.NULL; // Display.getWithNewlines("arg.getLazzy(\"OUT\", 0)");
 		final HtmlColor linkColor = null; // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
 											// 0));
-		final Display linkLabel = null; // Display.getWithNewlines("arg.get(\"LABEL\", 0)");
+		final Display linkLabel = Display.NULL; // Display.getWithNewlines("arg.get(\"LABEL\", 0)");
 		final List<Display> splitted = testDisplay.splitMultiline(MyPattern.cmpile("\\)[%s]*(is|equals?)[%s]*\\(",
 				Pattern.CASE_INSENSITIVE));
 		if (splitted.size() == 2) {
