@@ -81,7 +81,8 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
-		return MyPattern.mtches(line, "[%s]*[%q].*");
+		// return MyPattern.mtches(line, "[%s]*[%q].*");
+		return MyPattern.mtches(line, CommandMultilinesComment.COMMENT_SINGLE_LINE);
 	}
 
 	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
@@ -95,13 +96,14 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 
 		lines = lines.subExtract(1, 1);
+		lines = lines.removeComments();
 		lines = lines.trim(true);
 
 		for (CharSequence s : lines) {
 			assert s.length() > 0;
-			if (hasStartingQuote(s)) {
-				continue;
-			}
+//			if (hasStartingQuote(s)) {
+//				continue;
+//			}
 			if (s.toString().equals("}")) {
 				context.pop();
 				continue;

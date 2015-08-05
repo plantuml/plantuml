@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class BlocLines implements Iterable<CharSequence> {
@@ -49,7 +50,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	private BlocLines(List<? extends CharSequence> lines) {
 		this.lines = Collections.unmodifiableList(lines);
 	}
-	
+
 	public Display toDisplay() {
 		return Display.create(lines);
 	}
@@ -57,11 +58,10 @@ public class BlocLines implements Iterable<CharSequence> {
 	public static BlocLines single(CharSequence single) {
 		return new BlocLines(Arrays.asList(single));
 	}
-	
+
 	public static BlocLines getWithNewlines(CharSequence s) {
 		return new BlocLines(StringUtils.getWithNewlines(s));
 	}
-
 
 	public BlocLines() {
 		this(new ArrayList<CharSequence>());
@@ -219,6 +219,28 @@ public class BlocLines implements Iterable<CharSequence> {
 
 	public Iterator<CharSequence> iterator() {
 		return lines.iterator();
+	}
+
+	public BlocLines removeComments() {
+		final List<CharSequence> copy = new ArrayList<CharSequence>();
+		boolean inComment = false;
+		for (CharSequence cs : lines) {
+			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_SINGLE_LINE)) {
+				continue;
+			}
+			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_START)) {
+				inComment = true;
+				continue;
+			}
+			if (inComment && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_END)) {
+				inComment = false;
+				continue;
+			}
+			if (inComment == false) {
+				copy.add(cs);
+			}
+		}
+		return new BlocLines(copy);
 	}
 
 }

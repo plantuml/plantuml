@@ -39,8 +39,9 @@ import net.sourceforge.plantuml.core.Diagram;
 
 public class CommandComment extends SingleLineCommand<Diagram> {
 
+
 	public CommandComment() {
-		super("(?i)^[%s]*([%q].*||/[%q].*[%q]/[%s]*)$");
+		super(CommandMultilinesComment.COMMENT_SINGLE_LINE);
 	}
 
 	@Override

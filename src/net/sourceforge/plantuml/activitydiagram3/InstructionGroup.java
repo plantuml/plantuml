@@ -81,12 +81,12 @@ public class InstructionGroup implements Instruction {
 		return null;
 	}
 
-	public void addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position) {
 		if (list.isEmpty()) {
 			this.headerNote = note;
-			return;
+			return true;
 		}
-		list.addNote(note, position);
+		return list.addNote(note, position);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

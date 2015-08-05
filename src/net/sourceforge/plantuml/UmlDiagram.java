@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16549 $
+ * Revision $Revision: 16613 $
  *
  */
 package net.sourceforge.plantuml;
@@ -251,24 +251,27 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 			return imageData;
 		} catch (UnparsableGraphvizException e) {
 			e.printStackTrace();
-			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion(), e.getDebugData());
+			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
 		} catch (Exception e) {
 			e.printStackTrace();
-			exportDiagramError(os, e, fileFormatOption, null, null);
+			exportDiagramError(os, e, fileFormatOption, null);
 		}
 		return new ImageDataSimple();
 	}
 
 	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
-			String graphvizVersion, String svg) throws IOException {
-		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		final List<String> strings = getFailureText(exception, graphvizVersion);
+			String graphvizVersion) throws IOException {
+		exportDiagramError2(os, exception, fileFormat, getMetadata(), getFlashData(),
+				getFailureText1(exception, graphvizVersion));
+	}
 
-		final String flash = getFlashData();
+	public static void exportDiagramError2(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+			String metadata, String flash, List<String> strings) throws IOException {
+		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
-				getMetadata(), null, 0, 0, null, getSkinParam().handwritten());
+				metadata, null, 0, 0, null, false);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage im = utils.exportFlashcode(flash);
@@ -296,16 +299,13 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 	}
 
 	private String getFlashData() {
-		// for (Map.Entry<Object, Object> ent : System.getProperties().entrySet()) {
-		// System.err.println("p1=" + ent.getKey() + " " + ent.getValue());
-		// }
 		final StringBuilder result = new StringBuilder();
 		final UmlSource source = getSource();
 		result.append(source.getPlainString());
 		return result.toString();
 	}
 
-	private List<String> getFailureText(Throwable exception, String graphvizVersion) {
+	static private List<String> getFailureText1(Throwable exception, String graphvizVersion) {
 		final List<String> strings = new ArrayList<String>();
 		strings.add("An error has occured : " + exception);
 		final String quote = QuoteUtils.getSomeQuote();
@@ -325,6 +325,20 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		strings.add("This may be caused by :");
 		strings.add(" - a bug in PlantUML");
 		strings.add(" - a problem in GraphViz");
+		strings.add(" ");
+		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
+		strings.add("You can try to turn arround this issue by simplifing your diagram.");
+		strings.add(" ");
+		return strings;
+	}
+
+	public static List<String> getFailureText2(Throwable exception) {
+		final List<String> strings = new ArrayList<String>();
+		strings.add("An error has occured : " + exception);
+		final String quote = QuoteUtils.getSomeQuote();
+		strings.add("<i>" + quote);
+		strings.add(" ");
+		strings.add("PlantUML (" + Version.versionString() + ") has crashed.");
 		strings.add(" ");
 		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
 		strings.add("You can try to turn arround this issue by simplifing your diagram.");

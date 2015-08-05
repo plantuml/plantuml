@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
-public class InstructionWhile implements Instruction {
+public class InstructionWhile implements Instruction, InstructionCollection {
 
 	private final InstructionList repeatList = new InstructionList();
 	private final Instruction parent;
@@ -52,12 +52,16 @@ public class InstructionWhile implements Instruction {
 	private final HtmlColor color;
 
 	private final Display test;
-	private final Display yes;
+	private Display yes;
 	private Display out = Display.NULL;
 	private LinkRendering endInlinkRendering;
 	private LinkRendering afterEndwhile;
 	private final Swimlane swimlane;
 	private final ISkinParam skinParam;
+
+	public void overwriteYes(Display yes) {
+		this.yes = yes;
+	}
 
 	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
 			Display yes, HtmlColor color, ISkinParam skinParam) {
@@ -117,12 +121,13 @@ public class InstructionWhile implements Instruction {
 		this.afterEndwhile = linkRenderer;
 	}
 
-	public void addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position) {
 		if (repeatList.isEmpty()) {
 			this.note = note;
 			this.position = position;
+			return true;
 		} else {
-			repeatList.addNote(note, position);
+			return repeatList.addNote(note, position);
 		}
 	}
 
@@ -137,5 +142,10 @@ public class InstructionWhile implements Instruction {
 	public Swimlane getSwimlaneOut() {
 		return getSwimlaneIn();
 	}
+
+	public Instruction getLast() {
+		return repeatList.getLast();
+	}
+
 
 }

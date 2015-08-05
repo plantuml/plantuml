@@ -54,6 +54,16 @@ public class BlockUml {
 		this(convert(strings), 0);
 	}
 
+	public String getFlashData() {
+		final StringBuilder sb = new StringBuilder();
+		for (CharSequence2 line : data) {
+			sb.append(line);
+			sb.append('\r');
+			sb.append('\n');
+		}
+		return sb.toString();
+	}
+
 	public static List<CharSequence2> convert(String... strings) {
 		return convert(Arrays.asList(strings));
 	}
@@ -77,7 +87,7 @@ public class BlockUml {
 		this.data = new ArrayList<CharSequence2>(strings);
 	}
 
-	public String getFilename() {
+	public String getFileOrDirname() {
 		if (OptionFlags.getInstance().isWord()) {
 			return null;
 		}
@@ -96,6 +106,9 @@ public class BlockUml {
 			if ("<>|".indexOf(c) != -1) {
 				return null;
 			}
+		}
+		if (result.startsWith("file://")) {
+			result = result.substring("file://".length());
 		}
 		return result;
 	}

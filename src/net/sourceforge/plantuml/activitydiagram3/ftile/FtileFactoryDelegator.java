@@ -36,16 +36,22 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
@@ -63,6 +69,19 @@ public class FtileFactoryDelegator implements FtileFactory {
 		}
 		return color;
 	}
+	
+	protected final TextBlock getTextBlock(Display display) {
+		if (Display.isNull(display)) {
+			return null;
+		}
+		final ISkinParam skinParam = getSkinParam();
+		final UFont font = skinParam.getFont(FontParam.ACTIVITY_ARROW, null, false);
+		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
+		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
+				skinParam.useUnderlineForHyperlink());
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.SIMPLE_LINE);
+	}
+
 
 	protected Display getInLinkRenderingDisplay(Ftile tile) {
 		final LinkRendering linkRendering = tile.getInLinkRendering();

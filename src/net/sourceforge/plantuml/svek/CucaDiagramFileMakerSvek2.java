@@ -95,7 +95,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageCircleEnd;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleStart;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
-import net.sourceforge.plantuml.svek.image.EntityImageEmptyPackage2;
+import net.sourceforge.plantuml.svek.image.EntityImageEmptyPackage;
 import net.sourceforge.plantuml.svek.image.EntityImageGroup;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye1;
@@ -153,7 +153,6 @@ public final class CucaDiagramFileMakerSvek2 {
 
 		printGroups(dotData.getRootGroup());
 		printEntities(getUnpackagedEntities());
-
 
 		for (Link link : dotData.getLinks()) {
 			if (link.isRemoved()) {
@@ -454,7 +453,7 @@ public final class CucaDiagramFileMakerSvek2 {
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, HtmlColorUtils.BLACK),
 						portionShower);
 			}
-			return new EntityImageEmptyPackage2(leaf, skinParam);
+			return new EntityImageEmptyPackage(leaf, skinParam);
 		}
 		if (leaf.getEntityType() == LeafType.ASSOCIATION) {
 			return new EntityImageAssociation(leaf, skinParam);
@@ -543,23 +542,25 @@ public final class CucaDiagramFileMakerSvek2 {
 
 	private TextBlock getTitleBlock(IGroup g) {
 		final Display label = g.getDisplay();
-		final Stereotype stereotype2 = g.getStereotype();
+		final Stereotype stereotype = g.getStereotype();
 
 		if (label == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
 
 		final FontParam fontParam = g.getTitleFontParam();
-		return label.create(new FontConfiguration(dotData.getSkinParam().getFont(fontParam, stereotype2, true), dotData
-		.getSkinParam().getFontHtmlColor(fontParam, stereotype2), dotData.getSkinParam()
-		.getHyperlinkColor(), dotData.getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, dotData.getSkinParam());
+		final HtmlColor fontHtmlColor = dotData.getSkinParam().getFontHtmlColor(fontParam, stereotype);
+		return label.create(new FontConfiguration(dotData.getSkinParam().getFont(fontParam, stereotype, true),
+				fontHtmlColor, dotData.getSkinParam().getHyperlinkColor(), dotData.getSkinParam()
+						.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, dotData.getSkinParam());
 	}
 
 	private TextBlock getStereoBlock(IGroup g) {
 		if (g.getStereotype() == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		final List<String> stereos = g.getStereotype().getLabels(dotData.getSkinParam().useGuillemet());
+		final Stereotype stereotype = g.getStereotype();
+		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().useGuillemet());
 		if (stereos == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
@@ -568,12 +569,12 @@ public final class CucaDiagramFileMakerSvek2 {
 			return TextBlockUtils.empty(0, 0);
 		}
 
-		final Stereotype stereotype2 = g.getStereotype();
-
-		final FontParam fontParam = FontParam.COMPONENT_STEREOTYPE;
-		return Display.create(stereos).create(new FontConfiguration(dotData.getSkinParam().getFont(fontParam, stereotype2, false), dotData
-		.getSkinParam().getFontHtmlColor(fontParam, stereotype2), dotData.getSkinParam()
-		.getHyperlinkColor(), dotData.getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, dotData.getSkinParam());
+		final FontParam fontParam = FontParam.PACKAGE_STEREOTYPE;
+		final HtmlColor fontHtmlColor = dotData.getSkinParam().getFontHtmlColor(fontParam, stereotype);
+		return Display.create(stereos).create(
+				new FontConfiguration(dotData.getSkinParam().getFont(fontParam, stereotype, false), fontHtmlColor,
+						dotData.getSkinParam().getHyperlinkColor(), dotData.getSkinParam().useUnderlineForHyperlink()),
+				HorizontalAlignment.CENTER, dotData.getSkinParam());
 	}
 
 }

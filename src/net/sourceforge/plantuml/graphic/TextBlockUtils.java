@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16518 $
+ * Revision $Revision: 16602 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -102,6 +102,14 @@ public class TextBlockUtils {
 		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		gg = imDummy.createGraphics();
 		dummyStringBounder = StringBounderUtils.asStringBounder(gg);
+	}
+
+	public static boolean isEmpty(TextBlock text) {
+		if (text == null) {
+			return true;
+		}
+		final Dimension2D dim = text.calculateDimension(dummyStringBounder);
+		return dim.getHeight() == 0 && dim.getWidth() == 0;
 	}
 
 	public static StringBounder getDummyStringBounder() {

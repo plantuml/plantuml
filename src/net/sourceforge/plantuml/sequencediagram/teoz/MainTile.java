@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class MainTile implements Tile, Bordered {
 
+	private final double startingY = 8;
 	private final Real min;
 	private final Real max;
 	private final boolean isShowFootbox;
@@ -103,7 +104,7 @@ public class MainTile implements Tile, Bordered {
 	private double drawUInternal(UGraphic ug, boolean trace) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final List<YPositionedTile> positionedTiles = new ArrayList<YPositionedTile>();
-		final double y = GroupingTile.fillPositionelTiles(stringBounder, 0, tiles, positionedTiles);
+		final double y = GroupingTile.fillPositionelTiles(stringBounder, startingY, tiles, positionedTiles);
 		for (YPositionedTile tile : positionedTiles) {
 			tile.drawU(ug);
 		}

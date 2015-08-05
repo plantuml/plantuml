@@ -49,6 +49,6 @@ public interface Instruction extends Swimable {
 
 	public LinkRendering getInLinkRendering();
 
-	public void addNote(Display note, NotePosition position);
+	public boolean addNote(Display note, NotePosition position);
 
 }

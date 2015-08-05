@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -57,7 +56,7 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class EntityImageEmptyPackage2 extends AbstractEntityImage {
+public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	final private TextBlock desc;
 	final private static int MARGIN = 10;
@@ -65,14 +64,16 @@ public class EntityImageEmptyPackage2 extends AbstractEntityImage {
 	final private ISkinParam skinParam;
 	final private Stereotype stereotype;
 
-	public EntityImageEmptyPackage2(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		this.skinParam = skinParam;
 		this.specificBackColor = entity.getSpecificBackColor();
 		this.stereotype = entity.getStereotype();
-		this.desc = entity.getDisplay().create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.PACKAGE, stereotype),
-		SkinParamUtils.getFontColor(getSkinParam(), FontParam.PACKAGE, stereotype), getSkinParam()
-				.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+		this.desc = entity.getDisplay().create(
+				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.PACKAGE, stereotype),
+						SkinParamUtils.getFontColor(getSkinParam(), FontParam.PACKAGE, stereotype), getSkinParam()
+								.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
+				HorizontalAlignment.CENTER, skinParam);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -95,13 +96,13 @@ public class EntityImageEmptyPackage2 extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
-		final HtmlColor stateBack = Cluster.getStateBackColor(specificBackColor, skinParam, stereotype);
+		final HtmlColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype);
 
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
-				TextBlockUtils.empty(0, 0), stateBack, 0, 0, widthTotal, heightTotal, getStroke());
+				TextBlockUtils.empty(0, 0), 0, 0, widthTotal, heightTotal, getStroke());
 
-		decoration.drawU(ug, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
-				getSkinParam().shadowing());
+		decoration.drawU(ug, back,
+				SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()), getSkinParam().shadowing());
 	}
 
 	public ShapeType getShapeType() {

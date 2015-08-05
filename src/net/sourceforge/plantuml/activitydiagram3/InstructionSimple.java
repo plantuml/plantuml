@@ -91,9 +91,10 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		return inlinkRendering;
 	}
 
-	public void addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position) {
 		this.note = note;
 		this.notePosition = position;
+		return true;
 	}
 
 }

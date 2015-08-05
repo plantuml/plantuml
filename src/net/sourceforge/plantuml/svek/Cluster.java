@@ -290,16 +290,19 @@ public class Cluster implements Moveable {
 		this.yTitle = y;
 	}
 
-	private static HtmlColor getColor(ColorParam colorParam, ISkinParam skinParam) {
-		return new Rose().getHtmlColor(skinParam, colorParam);
+	private static HtmlColor getColor(ColorParam colorParam, ISkinParam skinParam, Stereotype stereotype) {
+		return new Rose().getHtmlColor(skinParam, colorParam, stereotype);
 	}
 
 	public void drawU(UGraphic ug, DotData dotData, UStroke stroke) {
+
+		final Stereotype stereotype = group.getStereotype();
+
 		HtmlColor borderColor;
 		if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
-			borderColor = getColor(ColorParam.stateBorder, dotData.getSkinParam());
+			borderColor = getColor(ColorParam.stateBorder, dotData.getSkinParam(), stereotype);
 		} else {
-			borderColor = getColor(ColorParam.packageBorder, dotData.getSkinParam());
+			borderColor = getColor(ColorParam.packageBorder, dotData.getSkinParam(), stereotype);
 		}
 
 		final Url url = group.getUrl99();
@@ -337,18 +340,17 @@ public class Cluster implements Moveable {
 			}
 
 			if (ztitle != null || zstereo != null) {
-				final HtmlColor stateBack = getStateBackColor(getBackColor(), dotData.getSkinParam(),
-						group.getStereotype());
+				final HtmlColor back = getBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
-						stateBack, minX, minY, maxX, maxY, getStroke(dotData.getSkinParam(), group.getStereotype()));
-				decoration.drawU(ug, borderColor, dotData.getSkinParam().shadowing());
+						minX, minY, maxX, maxY, getStroke(dotData.getSkinParam(), group.getStereotype()));
+				decoration.drawU(ug, back, borderColor, dotData.getSkinParam().shadowing());
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
 			if (dotData.getSkinParam().shadowing()) {
 				rect.setDeltaShadow(3.0);
 			}
-			final HtmlColor stateBack = getStateBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
+			final HtmlColor stateBack = getBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
 			ug = ug.apply(new UChangeBackColor(stateBack)).apply(new UChangeColor(borderColor));
 			ug.apply(new UStroke(2)).apply(new UTranslate(minX, minY)).draw(rect);
 
@@ -815,17 +817,17 @@ public class Cluster implements Moveable {
 		return group == ent;
 	}
 
-	public static HtmlColor getStateBackColor(HtmlColor stateBack, ISkinParam skinParam, Stereotype stereotype) {
-		if (stateBack == null) {
-			stateBack = skinParam.getHtmlColor(ColorParam.packageBackground, stereotype, false);
+	public static HtmlColor getBackColor(HtmlColor backColor, ISkinParam skinParam, Stereotype stereotype) {
+		if (backColor == null) {
+			backColor = skinParam.getHtmlColor(ColorParam.packageBackground, stereotype, false);
 		}
-		if (stateBack == null) {
-			stateBack = skinParam.getHtmlColor(ColorParam.background, stereotype, false);
+		if (backColor == null) {
+			backColor = skinParam.getHtmlColor(ColorParam.background, stereotype, false);
 		}
-		if (stateBack == null /* || stateBack instanceof HtmlColorTransparent */) {
-			stateBack = new HtmlColorTransparent();
+		if (backColor == null /* || stateBack instanceof HtmlColorTransparent */) {
+			backColor = new HtmlColorTransparent();
 		}
-		return stateBack;
+		return backColor;
 	}
 
 	public double checkFolderPosition(Point2D pt, StringBounder stringBounder) {

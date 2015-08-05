@@ -133,12 +133,13 @@ public class InstructionIf implements Instruction {
 		return inlinkRendering;
 	}
 
-	public void addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position) {
 		if (current.isEmpty()) {
 			this.note = note;
 			this.position = position;
+			return true;
 		} else {
-			current.addNote(note, position);
+			return current.addNote(note, position);
 		}
 	}
 

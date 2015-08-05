@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -55,6 +56,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -108,9 +110,11 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 
 		private final double x;
 		private final HtmlColor arrowColor;
+		private final Display label;
 
 		public ConnectionIn(Ftile ftile1, Ftile ftile2, double x, HtmlColor arrowColor) {
 			super(ftile1, ftile2);
+			label = LinkRendering.getDisplay(ftile2.getInLinkRendering());
 			this.x = x;
 			this.arrowColor = arrowColor;
 		}
@@ -118,10 +122,13 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
-			final Snake s = new Snake(arrowColor, Arrows.asToDown());
-			s.addPoint(geo.getLeft(), 0);
-			s.addPoint(geo.getLeft(), geo.getInY());
-			ug.draw(s);
+			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			if (Display.isNull(label) == false) {
+				snake.setLabel(getTextBlock(label));
+			}
+			snake.addPoint(geo.getLeft(), 0);
+			snake.addPoint(geo.getLeft(), geo.getInY());
+			ug.draw(snake);
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
@@ -131,6 +138,9 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
 
 			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			if (Display.isNull(label) == false) {
+				snake.setLabel(getTextBlock(label));
+			}
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 			final double middle = mp1a.getY() + 4;
@@ -147,9 +157,11 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 		private final double x;
 		private final HtmlColor arrowColor;
 		private final double height;
+		private final Display label;
 
 		public ConnectionOut(Ftile ftile1, Ftile ftile2, double x, HtmlColor arrowColor, double height) {
 			super(ftile1, ftile2);
+			label = LinkRendering.getDisplay(ftile1.getOutLinkRendering());
 			this.x = x;
 			this.arrowColor = arrowColor;
 			this.height = height;
@@ -161,10 +173,13 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Snake s = new Snake(arrowColor, Arrows.asToDown());
-			s.addPoint(geo.getLeft(), geo.getOutY());
-			s.addPoint(geo.getLeft(), height);
-			ug.draw(s);
+			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			if (Display.isNull(label) == false) {
+				snake.setLabel(getTextBlock(label));
+			}
+			snake.addPoint(geo.getLeft(), geo.getOutY());
+			snake.addPoint(geo.getLeft(), height);
+			ug.draw(snake);
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
@@ -177,6 +192,9 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), height);
 
 			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			if (Display.isNull(label) == false) {
+				snake.setLabel(getTextBlock(label));
+			}
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 			final double middle = mp2b.getY() - 14;

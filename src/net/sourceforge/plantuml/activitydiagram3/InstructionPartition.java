@@ -82,7 +82,7 @@ public class InstructionPartition implements Instruction {
 		return list.getInLinkRendering();
 	}
 
-	public void addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position) {
 		throw new UnsupportedOperationException();
 	}
 

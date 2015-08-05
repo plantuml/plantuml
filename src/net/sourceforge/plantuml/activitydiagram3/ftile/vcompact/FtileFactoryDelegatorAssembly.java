@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -106,16 +105,4 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 
 	private final Rose rose = new Rose();
 
-	private TextBlock getTextBlock(Display display) {
-		// DUP1433
-		if (Display.isNull(display)) {
-			return null;
-		}
-		final ISkinParam skinParam = getSkinParam();
-		final UFont font = skinParam.getFont(FontParam.ACTIVITY_ARROW, null, false);
-		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
-		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.SIMPLE_LINE);
-	}
 }

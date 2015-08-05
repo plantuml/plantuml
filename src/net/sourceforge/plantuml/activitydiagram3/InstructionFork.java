@@ -58,7 +58,6 @@ public class InstructionFork implements Instruction {
 	private InstructionList getLast() {
 		return forks.get(forks.size() - 1);
 	}
-	
 
 	public void add(Instruction ins) {
 		getLast().add(ins);
@@ -88,10 +87,10 @@ public class InstructionFork implements Instruction {
 		return inlinkRendering;
 	}
 
-	public void addNote(Display note, NotePosition position) {
-		getLast().addNote(note, position);
+	public boolean addNote(Display note, NotePosition position) {
+		return getLast().addNote(note, position);
 	}
-	
+
 	public Set<Swimlane> getSwimlanes() {
 		return InstructionList.getSwimlanes2(forks);
 	}
@@ -105,5 +104,11 @@ public class InstructionFork implements Instruction {
 		return getLast().getSwimlaneOut();
 	}
 
+	public void manageOutRendering(LinkRendering nextLinkRenderer) {
+		if (nextLinkRenderer == null) {
+			return;
+		}
+		getLast().setOutRendering(nextLinkRenderer);
+	}
 
 }

@@ -125,9 +125,9 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 			sys = new PSystemError(source, err, null);
 		} else if (commandControl == CommandControl.OK_PARTIAL) {
 			final IteratorCounter2 saved = it.cloneMe();
-			final boolean ok = manageMultiline(it, sys);
-			if (ok == false) {
-				sys = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, "Strange Syntax Error?",
+			final CommandExecutionResult result = manageMultiline2(it, sys);
+			if (result.isOk() == false) {
+				sys = new PSystemError(source, new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
 						it.currentNum() - 1, saved.next().getLocation()), null);
 
 			}
@@ -177,14 +177,14 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		throw new IllegalStateException();
 	}
 
-	private boolean manageMultiline(IteratorCounter2 it, AbstractPSystem system) {
+	private CommandExecutionResult manageMultiline2(IteratorCounter2 it, AbstractPSystem system) {
 		for (Command cmd : cmds) {
 			if (isMultilineCommandOk(it.cloneMe(), cmd) != null) {
 				final BlocLines lines = isMultilineCommandOk(it, cmd);
-				return cmd.execute(system, lines).isOk();
+				return cmd.execute(system, lines);
 			}
 		}
-		return false;
+		return CommandExecutionResult.ok();
 	}
 
 	private BlocLines isMultilineCommandOk(IteratorCounter2 it, Command cmd) {

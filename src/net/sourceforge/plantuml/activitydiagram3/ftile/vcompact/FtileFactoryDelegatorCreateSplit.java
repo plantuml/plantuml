@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -58,17 +57,12 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -210,16 +204,10 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 	private TextBlock getTextBlock(LinkRendering linkRendering) {
 		// DUP1433
 		final Display display = LinkRendering.getDisplay(linkRendering);
-		if (Display.isNull(display)) {
-			return null;
-		}
-		final ISkinParam skinParam = getSkinParam();
-		final UFont font = skinParam.getFont(FontParam.ACTIVITY_ARROW, null, false);
-		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
-		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.SIMPLE_LINE);
+		return getTextBlock(display);
 	}
+	
+
 
 	private Ftile simpleSwimlanes(List<Ftile> all) {
 		final HtmlColor arrowColor = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);

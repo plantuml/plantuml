@@ -37,6 +37,7 @@ public enum DiagramType {
 	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, TURING, FLOW, CREOLE, JUNGLE, CUTE, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
+		s = s.toLowerCase();
 //		if (s.startsWith("@startuml2")) {
 //			return UML2;
 //		}

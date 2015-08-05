@@ -78,8 +78,8 @@ public class Branch {
 		return list.kill();
 	}
 
-	public void addNote(Display note, NotePosition position) {
-		list.addNote(note, position);
+	public boolean addNote(Display note, NotePosition position) {
+		return list.addNote(note, position);
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {

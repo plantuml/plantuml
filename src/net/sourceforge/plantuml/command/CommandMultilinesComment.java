@@ -37,13 +37,17 @@ import net.sourceforge.plantuml.core.Diagram;
 
 public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 
+	public static final String COMMENT_MULTILINE_END = "(?i)^.*[%q]/[%s]*$";
+	public static final String COMMENT_MULTILINE_START = "(?i)^[%s]*/[%q].*$";
+	public static final String COMMENT_SINGLE_LINE = "(?i)^[%s]*([%q].*||/[%q].*[%q]/[%s]*)$";
+
 	public CommandMultilinesComment() {
-		super("(?i)^[%s]*/[%q].*$");
+		super(COMMENT_MULTILINE_START);
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^.*[%q]/[%s]*$";
+		return COMMENT_MULTILINE_END;
 	}
 
 	public CommandExecutionResult execute(final Diagram diagram, BlocLines lines) {

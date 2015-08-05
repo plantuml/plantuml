@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16206 $
+ * Revision $Revision: 16629 $
  *
  */
 package net.sourceforge.plantuml;
@@ -63,6 +63,7 @@ public enum FontParam {
 	COMPONENT_STEREOTYPE(14, Font.ITALIC), //
 	NOTE(13, Font.PLAIN), //
 	PACKAGE(14, Font.PLAIN), //
+	PACKAGE_STEREOTYPE(14, Font.ITALIC), //
 	ACTOR(14, Font.PLAIN), //
 	ARTIFACT(14, Font.PLAIN), //
 	CLOUD(14, Font.PLAIN), //

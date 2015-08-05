@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -77,7 +78,7 @@ public class LivingSpace {
 	private final EventsHistory eventsHistory;
 	private boolean create = false;
 	private double createY = 0;
-	
+
 	private final ParticipantEnglober englober;
 
 	public int getLevelAt(Tile tile, EventsHistoryMode mode) {
@@ -175,7 +176,14 @@ public class LivingSpace {
 			ug = ug.apply(new UTranslate(0, -dim.getHeight() / 2));
 		}
 		final Area area = new Area(dim);
+		final Url url = getParticipant().getUrl();
+		if (url != null) {
+			ug.startUrl(url);
+		}
 		comp.drawU(ug, area, context);
+		if (url != null) {
+			ug.closeAction();
+		}
 	}
 
 	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
@@ -195,7 +203,7 @@ public class LivingSpace {
 		}
 		return posC;
 	}
-	
+
 	public Real getPosC2(StringBounder stringBounder) {
 		final double delta = liveBoxes.getMaxPosition(stringBounder);
 		return getPosC(stringBounder).addFixed(delta);
@@ -205,7 +213,7 @@ public class LivingSpace {
 		if (posD == null) {
 			this.posD = posB.addFixed(this.getPreferredWidth(stringBounder));
 		}
-		//System.err.println("LivingSpace::getPosD "+posD.getCurrentValue());
+		// System.err.println("LivingSpace::getPosD "+posD.getCurrentValue());
 		return posD;
 	}
 

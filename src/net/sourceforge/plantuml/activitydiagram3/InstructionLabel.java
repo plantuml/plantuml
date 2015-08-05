@@ -65,7 +65,7 @@ public class InstructionLabel extends MonoSwimable implements Instruction {
 		return null;
 	}
 
-	public void addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position) {
 		throw new UnsupportedOperationException();
 	}
 

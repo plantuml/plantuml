@@ -42,16 +42,16 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.CompressionTransform;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -214,6 +214,13 @@ public class Snake implements UShape {
 		if (mergeable == false || other.mergeable == false) {
 			return null;
 		}
+		if (TextBlockUtils.isEmpty(other.textBlock) == false) {
+			return null;
+			// System.err.println("merge other.textBlock="+other.textBlock+" "+other.textBlock.calculateDimension(TextBlockUtils.getDummyStringBounder()));
+		}
+		// if (other.textBlock != null) {
+		// return null;
+		// }
 		if (same(this.getLast(), other.getFirst())) {
 			final UPolygon oneOf = endDecoration == null ? other.endDecoration : endDecoration;
 			final Snake result = new Snake(color, oneOf);

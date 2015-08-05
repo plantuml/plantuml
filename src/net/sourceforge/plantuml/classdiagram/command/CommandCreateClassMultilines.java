@@ -109,30 +109,33 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	public CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
 		lines = lines.trimSmart(1);
+		lines = lines.removeComments();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final IEntity entity = executeArg0(diagram, line0);
 		if (entity == null) {
 			return CommandExecutionResult.error("No such entity");
 		}
-		lines = lines.subExtract(1, 1);
-		final Url url;
-		if (lines.size() > 0) {
-			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-			url = urlBuilder.getUrl(lines.getFirst499().toString());
-		} else {
-			url = null;
-		}
-		if (url != null) {
-			lines = lines.subExtract(1, 0);
-		}
-		for (CharSequence s : lines) {
-			if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
-				diagram.setVisibilityModifierPresent(true);
+		if (lines.size() > 1) {
+			lines = lines.subExtract(1, 1);
+			final Url url;
+			if (lines.size() > 0) {
+				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+				url = urlBuilder.getUrl(lines.getFirst499().toString());
+			} else {
+				url = null;
 			}
-			entity.getBodier().addFieldOrMethod(s.toString());
-		}
-		if (url != null) {
-			entity.addUrl(url);
+			if (url != null) {
+				lines = lines.subExtract(1, 0);
+			}
+			for (CharSequence s : lines) {
+				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
+					diagram.setVisibilityModifierPresent(true);
+				}
+				entity.getBodier().addFieldOrMethod(s.toString());
+			}
+			if (url != null) {
+				entity.addUrl(url);
+			}
 		}
 
 		manageExtends("EXTENDS", diagram, line0, entity);
@@ -159,8 +162,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				if (type2 == LeafType.INTERFACE && entity.getEntityType() != LeafType.INTERFACE) {
 					typeLink = typeLink.getDashed();
 				}
-				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null, system.getLabeldistance(),
-						system.getLabelangle());
+				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null,
+						system.getLabeldistance(), system.getLabelangle());
 				system.addLink(link);
 			}
 		}

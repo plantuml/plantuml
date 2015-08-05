@@ -98,8 +98,8 @@ public class InstructionSplit implements Instruction {
 		return inlinkRendering;
 	}
 
-	public void addNote(Display note, NotePosition position) {
-		getLast().addNote(note, position);
+	public boolean addNote(Display note, NotePosition position) {
+		return getLast().addNote(note, position);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

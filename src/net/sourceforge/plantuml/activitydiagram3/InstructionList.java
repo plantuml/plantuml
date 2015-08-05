@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
-public class InstructionList implements Instruction {
+public class InstructionList implements Instruction, InstructionCollection {
 
 	private final List<Instruction> all = new ArrayList<Instruction>();
 	private final Swimlane defaultSwimlane;
@@ -118,8 +118,11 @@ public class InstructionList implements Instruction {
 		return all.get(all.size() - 1);
 	}
 
-	public void addNote(Display note, NotePosition position) {
-		getLast().addNote(note, position);
+	public boolean addNote(Display note, NotePosition position) {
+		if (getLast() == null) {
+			return false;
+		}
+		return getLast().addNote(note, position);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

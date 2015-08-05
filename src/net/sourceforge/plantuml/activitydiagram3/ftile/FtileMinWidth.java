@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class FtileMinWidth extends FtileDecorate {
 
 	private final double minWidth;
+	private FtileGeometry calculateDimensionInternal;
 
 	public FtileMinWidth(Ftile tile, double minWidth) {
 		super(tile);
@@ -58,6 +59,13 @@ public class FtileMinWidth extends FtileDecorate {
 
 	@Override
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		if (calculateDimensionInternal == null) {
+			calculateDimensionInternal = calculateDimensionSlow(stringBounder);
+		}
+		return calculateDimensionInternal;
+	}
+
+	private FtileGeometry calculateDimensionSlow(StringBounder stringBounder) {
 		final FtileGeometry geo = super.calculateDimension(stringBounder);
 		final double left = getPoint2(geo.getLeft(), stringBounder);
 		if (geo.hasPointOut() == false) {
