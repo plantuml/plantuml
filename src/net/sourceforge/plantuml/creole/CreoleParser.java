@@ -55,6 +55,9 @@ public class CreoleParser {
 		this.modeSimpleLine = modeSimpleLine;
 		this.fontConfiguration = fontConfiguration;
 		this.skinParam = skinParam;
+		if (skinParam == null) {
+			throw new IllegalArgumentException();
+		}
 		this.horizontalAlignment = horizontalAlignment;
 	}
 

@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -51,7 +51,7 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("COLOR", "(?:(" + HtmlColorUtils.COLOR_REGEXP + "):)?"), //
+				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("TEST", "\\((.*?)\\)"), //

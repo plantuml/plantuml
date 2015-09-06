@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 
@@ -57,7 +57,7 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*\\{$"));
 	}
 

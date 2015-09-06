@@ -80,7 +80,7 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandPackageWithUSymbol());
 		cmds.add(new CommandEndPackage());
 		final FactoryNoteCommand factoryNoteCommand = new FactoryNoteCommand();
-		cmds.add(factoryNoteCommand.createMultiLine());
+		cmds.add(factoryNoteCommand.createMultiLine(false));
 
 		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexOr(
 				"ENTITY", //
@@ -100,12 +100,13 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandCreateElementMultilines(0));
 		cmds.add(new CommandCreateElementMultilines(1));
 
-		cmds.add(factoryNoteOnEntityCommand.createMultiLine());
-		cmds.add(factoryNoteCommand.createMultiLine());
+		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
+		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
+		cmds.add(factoryNoteCommand.createMultiLine(false));
 
 		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
-		cmds.add(factoryNoteOnLinkCommand.createMultiLine());
+		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
 		return cmds;
 	}

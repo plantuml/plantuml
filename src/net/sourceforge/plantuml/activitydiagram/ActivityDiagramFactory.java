@@ -70,11 +70,11 @@ public class ActivityDiagramFactory extends UmlDiagramFactory {
 
 		final FactoryNoteActivityCommand factoryNoteActivityCommand = new FactoryNoteActivityCommand();
 		cmds.add(factoryNoteActivityCommand.createSingleLine());
-		cmds.add(factoryNoteActivityCommand.createMultiLine());
+		cmds.add(factoryNoteActivityCommand.createMultiLine(false));
 
 		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
-		cmds.add(factoryNoteOnLinkCommand.createMultiLine());
+		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
 		cmds.add(new CommandIf());
 		cmds.add(new CommandElse());

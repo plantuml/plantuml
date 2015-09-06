@@ -38,13 +38,23 @@ import net.sourceforge.plantuml.core.Diagram;
 public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 
 	private final SingleLineCommand2<D> cmd;
+	private final boolean removeEmptyColumn;
 
 	public CommandDecoratorMultine(SingleLineCommand2<D> cmd) {
+		this(cmd, false);
+	}
+
+	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, boolean removeEmptyColumn) {
 		this.cmd = cmd;
+		this.removeEmptyColumn = removeEmptyColumn;
 	}
 
 	public CommandExecutionResult execute(D diagram, BlocLines lines) {
-		return cmd.execute(diagram, lines.concat2());
+		if (removeEmptyColumn) {
+			lines = lines.removeEmptyColumns();
+		}
+		lines = lines.concat2();
+		return cmd.execute(diagram, lines);
 	}
 
 	public CommandControl isValid(BlocLines lines) {

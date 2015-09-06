@@ -27,44 +27,67 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 4762 $
+ * 
+ * Revision $Revision: 7946 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.command;
+package net.sourceforge.plantuml.graphic.color;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 
-public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
+public class ColorParser {
 
-	public CommandSwimlane2() {
-		super(getRegexConcat());
+	private static final String COLOR_REGEXP = "#\\w+[-\\\\|/]?\\w+";
+
+	private final RegexLeaf regex;
+	private final String name;
+
+	private ColorParser(String name, RegexLeaf regex) {
+		this.regex = regex;
+		this.name = name;
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("swimlane[%s]+"), //
-				ColorParser.exp7(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("SWIMLANE", "([^|]+)"), //
-				new RegexLeaf("LABEL", "(?:[%s]+as[%s]+([^|]+))?"), //
-				new RegexLeaf("$"));
+	public HtmlColor getColor(RegexResult arg, IHtmlColorSet set) {
+		return set.getColorIfValid(arg.get("COLOR", 0));
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
-		final String name = arg.get("SWIMLANE", 0);
-		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
-		return diagram.swimlane(name, color, label);
+	public static RegexLeaf exp1() {
+		return simpleColor().regex;
+	}
+
+	public static ColorParser simpleColor() {
+		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(" + COLOR_REGEXP + ")?"));
+	}
+
+	public static RegexLeaf exp2() {
+		return new RegexLeaf("BACKCOLOR", "(" + COLOR_REGEXP + ")?");
+	}
+
+	public static RegexLeaf exp3() {
+		return new RegexLeaf("BACKCOLOR2", "(" + COLOR_REGEXP + ")?");
+	}
+
+	public static RegexLeaf exp4() {
+		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + "):)?");
+	}
+
+	public static RegexLeaf exp5() {
+		return new RegexLeaf("COLOR", "(?::?(" + COLOR_REGEXP + "))?");
+	}
+
+	public static RegexLeaf exp6() {
+		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + ")\\|)?");
+	}
+
+	public static RegexLeaf exp7() {
+		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + "))?");
+	}
+
+	public RegexLeaf getRegex() {
+		return regex;
 	}
 
 }

@@ -113,9 +113,9 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 		final FactorySequenceNoteOnArrowCommand factorySequenceNoteOnArrowCommand = new FactorySequenceNoteOnArrowCommand();
 		cmds.add(factorySequenceNoteOnArrowCommand.createSingleLine());
 
-		cmds.add(factorySequenceNoteCommand.createMultiLine());
-		cmds.add(factorySequenceNoteOverSeveralCommand.createMultiLine());
-		cmds.add(factorySequenceNoteOnArrowCommand.createMultiLine());
+		cmds.add(factorySequenceNoteCommand.createMultiLine(false));
+		cmds.add(factorySequenceNoteOverSeveralCommand.createMultiLine(false));
+		cmds.add(factorySequenceNoteOnArrowCommand.createMultiLine(false));
 
 		cmds.add(new CommandNewpage());
 		cmds.add(new CommandIgnoreNewpage());

@@ -41,8 +41,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class LiveBoxesDrawer {
 
 	private double y1;
-	private HtmlColor color;
+	private SymbolContext color;
 
 	private final Component cross;
 	private final Context2D context;
@@ -80,7 +80,7 @@ public class LiveBoxesDrawer {
 		return compForWidth.getPreferredWidth(stringBounder);
 	}
 
-	public void addStart(double y1, HtmlColor color) {
+	public void addStart(double y1, SymbolContext color) {
 		this.y1 = y1;
 		this.color = color;
 	}
@@ -115,7 +115,7 @@ public class LiveBoxesDrawer {
 	private void drawInternal(UGraphic ug, StairsPosition yposition, double ya, double yb, ComponentType type) {
 		final double width = getWidth(ug.getStringBounder());
 		final Area area = new Area(width, yb - ya);
-		final ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, color);
+		final ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, color == null ? null : color.getBackColor());
 		final Component comp = skin.createComponent(type, null, skinParam2, null);
 		comp.drawU(ug.apply(new UTranslate(-width / 2, ya)), area, context);
 	}

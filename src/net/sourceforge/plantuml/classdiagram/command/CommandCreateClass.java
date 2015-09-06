@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.Locale;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
@@ -52,7 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
@@ -88,12 +86,16 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
 				new RegexLeaf("EXTENDS", "([%s]+(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "))?"), //
 				new RegexLeaf("IMPLEMENTS", "([%s]+(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "))?"), //
 				new RegexLeaf("$"));
+	}
+
+	public static ColorParser color() {
+		return ColorParser.simpleColor();
 	}
 
 	@Override
@@ -127,7 +129,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			entity.addUrl(url);
 		}
 
-		entity.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		entity.setSpecificBackcolor(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 		entity.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
 		CommandCreateClassMultilines.applyStroke(entity, arg.get("LINECOLOR", 0));
 

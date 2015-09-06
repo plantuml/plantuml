@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
@@ -227,10 +228,14 @@ public class SequenceDiagram extends UmlDiagram {
 	private LifeEvent pendingCreate = null;
 
 	public String activate(Participant p, LifeEventType lifeEventType, HtmlColor backcolor) {
+		return activate(p, lifeEventType, backcolor, null);
+	}
+
+	public String activate(Participant p, LifeEventType lifeEventType, HtmlColor backcolor, HtmlColor linecolor) {
 		if (lastDelay != null) {
 			return "You cannot Activate/Deactivate just after a ...";
 		}
-		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, backcolor);
+		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new SymbolContext(backcolor, linecolor));
 		events.add(lifeEvent);
 		if (lifeEventType == LifeEventType.CREATE) {
 			pendingCreate = lifeEvent;
@@ -238,7 +243,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		if (lastEventWithDeactivate == null) {
 			if (lifeEventType == LifeEventType.ACTIVATE) {
-				p.incInitialLife(backcolor);
+				p.incInitialLife(new SymbolContext(backcolor, linecolor));
 				return null;
 			}
 			return "Only activate command can occur before message are send";

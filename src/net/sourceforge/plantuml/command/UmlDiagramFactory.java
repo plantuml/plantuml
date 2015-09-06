@@ -174,7 +174,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 				return result;
 			}
 		}
-		throw new IllegalStateException();
+		return CommandControl.NOT_OK;
+		// throw new IllegalStateException();
 	}
 
 	private CommandExecutionResult manageMultiline2(IteratorCounter2 it, AbstractPSystem system) {
@@ -273,11 +274,12 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(new CommandScale());
 		cmds.add(new CommandScaleWidthAndHeight());
 		cmds.add(new CommandScaleWidthOrHeight());
+		cmds.add(new CommandScaleMaxWidthAndHeight());
 		cmds.add(new CommandAffineTransform());
 		cmds.add(new CommandAffineTransformMultiline());
 		cmds.add(new CommandHideUnlinked());
 		final FactorySpriteCommand factorySpriteCommand = new FactorySpriteCommand();
-		cmds.add(factorySpriteCommand.createMultiLine());
+		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(new CommandSpriteFile());
 

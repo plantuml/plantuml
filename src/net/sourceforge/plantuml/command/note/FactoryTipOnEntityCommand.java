@@ -55,23 +55,26 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public final class FactoryTipOnEntityCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
 	private final IRegex partialPattern;
 
-	public FactoryTipOnEntityCommand(IRegex partialPattern) {
+	// private final boolean withBracket;
+
+	public FactoryTipOnEntityCommand(IRegex partialPattern/* , boolean withBracket */) {
 		this.partialPattern = partialPattern;
+		// this.withBracket = withBracket;
 	}
 
-	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern) {
+	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)"), //
 				new RegexLeaf("[%s]+of[%s]+"), partialPattern, //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
-				new RegexLeaf("[%s]*\\{?"), //
+				ColorParser.exp1(), //
+				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				new RegexLeaf("$") //
 		);
 	}
@@ -80,13 +83,16 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 		throw new UnsupportedOperationException();
 	}
 
-	public Command<AbstractEntityDiagram> createMultiLine() {
-		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern),
+	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
+		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern, withBracket),
 				MultilinesStrategy.KEEP_STARTING_QUOTE) {
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^(end[%s]?note|\\})$";
+				if (withBracket) {
+					return "(?i)^(\\})$";
+				}
+				return "(?i)^(end[%s]?note)$";
 			}
 
 			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {

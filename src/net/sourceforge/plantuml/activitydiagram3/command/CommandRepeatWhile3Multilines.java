@@ -58,7 +58,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 	@Override
 	public RegexConcat getPatternEnd2() {
 		return new RegexConcat(//
-				new RegexLeaf("TEST1", "([^)]*)"), new RegexLeaf("\\)"), //
+				new RegexLeaf("TEST1", "(.*)"), new RegexLeaf("\\)"), //
 				new RegexLeaf(";?$"));
 	}
 
@@ -68,7 +68,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 				new RegexLeaf("repeat[%s]?while"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("\\("), //
-				new RegexLeaf("TEST1", "([^)]*)$"));
+				new RegexLeaf("TEST1", "(.*)$"));
 	}
 
 	@Override

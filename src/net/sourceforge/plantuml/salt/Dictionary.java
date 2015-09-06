@@ -38,6 +38,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.ugraphic.Sprite;
@@ -65,13 +66,17 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 	public String getValue(String key) {
 		return null;
 	}
-	
+
 	public double getPadding() {
 		return 0;
 	}
 
 	public boolean useGuillemet() {
 		return true;
+	}
+
+	public String getMonospacedFamily() {
+		return CommandCreoleMonospaced.MONOSPACED;
 	}
 
 }

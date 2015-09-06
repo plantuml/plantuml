@@ -28,40 +28,28 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4762 $
+ * Revision $Revision: 5401 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.command;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
+public class ScaleMaxWidthAndHeight implements Scale {
 
-public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
+	private final double maxWidth;
+	private final double maxHeight;
 
-	public CommandRepeat3() {
-		super(getRegexConcat());
+	public ScaleMaxWidthAndHeight(double maxWidth, double maxHeight) {
+		this.maxWidth = maxWidth;
+		this.maxHeight = maxHeight;
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				ColorParser.exp4(), //
-				new RegexLeaf("repeat"), //
-				new RegexLeaf(";?$"));
+	public double getScale(double width, double height) {
+		final double scale1 = maxWidth / width;
+		final double scale2 = maxHeight / height;
+		final double min = Math.min(scale1, scale2);
+		if (min > 1) {
+			return 1;
+		}
+		return min;
 	}
-
-	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
-		
-		diagram.startRepeat(color);
-
-		return CommandExecutionResult.ok();
-	}
-
 }

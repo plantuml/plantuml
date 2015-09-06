@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -57,7 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
@@ -76,7 +77,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("BACKCOLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp2(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 
@@ -103,7 +104,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("PARTITION2", "(?:in[%s]+([%g][^%g]+[%g]|\\S+))?"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("BACKCOLOR2", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp3(), //
 				new RegexLeaf("$"));
 	}
 

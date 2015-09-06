@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
@@ -46,8 +44,7 @@ import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
@@ -63,7 +60,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("$"));
 	}
 
@@ -74,13 +71,13 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
 
-	public Command<SequenceDiagram> createMultiLine() {
+	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
 				MultilinesStrategy.KEEP_STARTING_QUOTE) {
 

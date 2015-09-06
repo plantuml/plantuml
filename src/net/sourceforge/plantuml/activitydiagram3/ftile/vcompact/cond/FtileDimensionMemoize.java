@@ -33,9 +33,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import java.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public abstract class FtileDimensionMemoize extends AbstractFtile {
@@ -44,14 +43,14 @@ public abstract class FtileDimensionMemoize extends AbstractFtile {
 		super(shadowing);
 	}
 
-	private Dimension2D calculateDimensionInternal;
+	private FtileGeometry calculateDimensionInternal;
 
-	protected final Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
+	protected final FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
 		if (calculateDimensionInternal == null) {
 			calculateDimensionInternal = calculateDimensionInternalSlow(stringBounder);
 		}
 		return calculateDimensionInternal;
 	}
 
-	abstract protected Dimension2D calculateDimensionInternalSlow(StringBounder stringBounder);
+	abstract protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder);
 }

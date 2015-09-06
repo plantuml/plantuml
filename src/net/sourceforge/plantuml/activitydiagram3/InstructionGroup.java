@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
-public class InstructionGroup implements Instruction {
+public class InstructionGroup implements Instruction, InstructionCollection {
 
 	private final InstructionList list;
 	private final Instruction parent;
@@ -99,6 +99,10 @@ public class InstructionGroup implements Instruction {
 
 	public Swimlane getSwimlaneOut() {
 		return list.getSwimlaneOut();
+	}
+
+	public Instruction getLast() {
+		return list.getLast();
 	}
 
 }

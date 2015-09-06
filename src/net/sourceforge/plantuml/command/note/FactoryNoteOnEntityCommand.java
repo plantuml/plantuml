@@ -57,15 +57,18 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
 	private final IRegex partialPattern;
 
-	public FactoryNoteOnEntityCommand(IRegex partialPattern) {
+	// private final boolean withBracket;
+
+	public FactoryNoteOnEntityCommand(IRegex partialPattern/* , boolean withBracket */) {
 		this.partialPattern = partialPattern;
+		// this.withBracket = withBracket;
 	}
 
 	private RegexConcat getRegexConcatSingleLine(IRegex partialPattern) {
@@ -75,22 +78,22 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$") //
 		);
 	}
 
-	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern) {
+	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
-				new RegexLeaf("[%s]*\\{?"), //
+				ColorParser.exp1(), //
+				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				new RegexLeaf("$") //
 		);
 	}
@@ -106,13 +109,16 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 		};
 	}
 
-	public Command<AbstractEntityDiagram> createMultiLine() {
-		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern),
+	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
+		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern, withBracket),
 				MultilinesStrategy.KEEP_STARTING_QUOTE) {
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^(end[%s]?note|\\})$";
+				if (withBracket) {
+					return "(?i)^(\\})$";
+				}
+				return "(?i)^(end[%s]?note)$";
 			}
 
 			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
@@ -152,13 +158,15 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 			cl1 = diagram.getOrCreateLeaf(code, null, null);
 		}
 
-		final IEntity note = diagram.createLeaf(UniqueSequence.getCode("GMN"), strings.toDisplay(), LeafType.NOTE, null);
+		final IEntity note = diagram
+				.createLeaf(UniqueSequence.getCode("GMN"), strings.toDisplay(), LeafType.NOTE, null);
 		note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 		if (url != null) {
 			note.addUrl(url);
 		}
 
-		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(diagram.getSkinParam().getRankdir());
+		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
+				diagram.getSkinParam().getRankdir());
 		final Link link;
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();

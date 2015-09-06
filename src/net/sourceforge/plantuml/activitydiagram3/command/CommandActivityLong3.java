@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -59,7 +59,7 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("COLOR", "(?::?(" + HtmlColorUtils.COLOR_REGEXP + "))?"), //
+				ColorParser.exp5(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("DATA", "(.*)"), //
 				new RegexLeaf("$"));

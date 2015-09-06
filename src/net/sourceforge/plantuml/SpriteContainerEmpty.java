@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.ugraphic.Sprite;
 
 public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
@@ -51,6 +52,10 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 
 	public boolean useGuillemet() {
 		return false;
+	}
+
+	public String getMonospacedFamily() {
+		return CommandCreoleMonospaced.MONOSPACED;
 	}
 
 }

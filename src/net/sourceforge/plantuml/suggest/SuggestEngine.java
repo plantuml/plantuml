@@ -95,7 +95,8 @@ final public class SuggestEngine {
 				return SuggestEngineResult.CANNOT_CORRECT;
 			}
 		}
-		throw new IllegalStateException();
+		return SuggestEngineResult.CANNOT_CORRECT;
+		// throw new IllegalStateException();
 	}
 
 	SuggestEngineResult checkAndCorrect() {

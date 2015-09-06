@@ -78,7 +78,7 @@ public final class FactorySpriteCommand implements SingleMultiFactoryCommand<Uml
 		};
 	}
 
-	public Command<UmlDiagram> createMultiLine() {
+	public Command<UmlDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<UmlDiagram>(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE) {
 
 			@Override

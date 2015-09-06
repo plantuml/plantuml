@@ -82,7 +82,6 @@ public class StringUtils {
 		return Collections.unmodifiableList(result);
 	}
 
-
 	final static public List<String> getSplit(Pattern pattern, String line) {
 		final Matcher m = pattern.matcher(line);
 		if (m.find() == false) {
@@ -416,6 +415,33 @@ public class StringUtils {
 
 	public static String manageGuillemet(String st) {
 		return st.replaceAll("\\<\\<([^<>]+)\\>\\>", "\u00AB$1\u00BB");
+	}
+
+	public static String manageUnicodeNotationUplus(String s) {
+		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4})\\>");
+		final Matcher matcher = pattern.matcher(s);
+		final StringBuffer result = new StringBuffer();
+		while (matcher.find()) {
+			final String num = matcher.group(1);
+			final int value = Integer.parseInt(num, 16);
+			final char c = (char) value;
+			matcher.appendReplacement(result, "" + c);
+		}
+		matcher.appendTail(result);
+		return result.toString();
+	}
+
+	public static String manageAmpDiese(String s) {
+		final Pattern pattern = Pattern.compile("\\&#([0-9]+);");
+		final Matcher matcher = pattern.matcher(s);
+		final StringBuffer result = new StringBuffer();
+		while (matcher.find()) {
+			final String num = matcher.group(1);
+			final char c = (char) Integer.parseInt(num);
+			matcher.appendReplacement(result, "" + c);
+		}
+		matcher.appendTail(result);
+		return result.toString();
 	}
 
 	public static String trinNoTrace(CharSequence s) {

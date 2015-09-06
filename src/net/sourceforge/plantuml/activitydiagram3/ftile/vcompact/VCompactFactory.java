@@ -176,4 +176,8 @@ public class VCompactFactory implements FtileFactory {
 		return skinParam.useGuillemet();
 	}
 
+	public String getMonospacedFamily() {
+		return skinParam.getMonospacedFamily();
+	}
+
 }

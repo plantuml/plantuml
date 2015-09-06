@@ -129,7 +129,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 		final List<Ftile> list = new ArrayList<Ftile>();
 		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(new FtileMarged(tmp, xMargin), height1));
+			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}
 
 		Ftile inner = super.createSplit(list);
@@ -217,7 +217,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 		final List<Ftile> list = new ArrayList<Ftile>();
 		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(new FtileMarged(tmp, xMargin), height1));
+			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}
 
 		Ftile inner = new FtileSplit1(list);

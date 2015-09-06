@@ -6,12 +6,12 @@ Generate UML diagram from textual description
 
 PlantUML is a component that allows to quickly write :
 
- * [Sequence diagram](http://plantuml.sourceforge.net/sequence.html),
- * [Use case diagram](http://plantuml.sourceforge.net/usecase.html),
- * [Class diagram](http://plantuml.sourceforge.net/classes.html),
- * [Activity diagram](http://plantuml.sourceforge.net/activity2.html),
- * [Component diagram](http://plantuml.sourceforge.net/component.html),
- * [State diagram](http://plantuml.sourceforge.net/state.html),
- * [Object diagram](http://plantuml.sourceforge.net/objects.html)
+ * [Sequence diagram](http://plantuml.com/sequence.html),
+ * [Use case diagram](http://plantuml.com/usecase.html),
+ * [Class diagram](http://plantuml.com/classes.html),
+ * [Activity diagram](http://plantuml.com/activity2.html),
+ * [Component diagram](http://plantuml.com/component.html),
+ * [State diagram](http://plantuml.com/state.html),
+ * [Object diagram](http://plantuml.com/objects.html)
 
-To know more about PlantUML, please visit http://plantuml.sourceforge.net/
+To know more about PlantUML, please visit http://plantuml.com/

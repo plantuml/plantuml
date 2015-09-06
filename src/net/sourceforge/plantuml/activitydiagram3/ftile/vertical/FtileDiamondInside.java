@@ -40,6 +40,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -79,6 +80,10 @@ public class FtileDiamondInside extends AbstractFtile {
 
 	public FtileDiamondInside withEast(TextBlock east) {
 		return new FtileDiamondInside(shadowing(), backColor, borderColor, swimlane, label, north, south, west, east);
+	}
+
+	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {
+		return withWest(tb1).withEast(tb2);
 	}
 
 	public FtileDiamondInside withSouth(TextBlock south) {
@@ -127,8 +132,8 @@ public class FtileDiamondInside extends AbstractFtile {
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
 		label.drawU(ug.apply(new UTranslate(lx, ly)));
 
-		final Dimension2D dimWeat = west.calculateDimension(stringBounder);
-		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));
+		final Dimension2D dimWest = west.calculateDimension(stringBounder);
+		west.drawU(ug.apply(new UTranslate(-dimWest.getWidth(), -dimWest.getHeight() + dimTotal.getHeight() / 2)));
 
 		final Dimension2D dimEast = east.calculateDimension(stringBounder);
 		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2)));
@@ -136,12 +141,12 @@ public class FtileDiamondInside extends AbstractFtile {
 	}
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		Dimension2D dim = calculateDimensionAlone(stringBounder);
-		final Dimension2D dimNorth = north.calculateDimension(stringBounder);
-		final double northHeight = dimNorth.getHeight();
-		final double northWidth = dimNorth.getWidth();
-		dim = Dimension2DDouble.delta(dim, 0, northHeight);
-		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight() - northHeight);
+		final FtileGeometry dimDiamonAlone = calculateDimensionAlone(stringBounder);
+		final Dimension2D dimWest = west.calculateDimension(stringBounder);
+		final Dimension2D dimEast = east.calculateDimension(stringBounder);
+		final double northHeight = north.calculateDimension(stringBounder).getHeight();
+		return dimDiamonAlone.incHeight(northHeight);
+		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(), dimEast.getWidth());
 	}
 
 	private FtileGeometry calculateDimensionAlone(StringBounder stringBounder) {

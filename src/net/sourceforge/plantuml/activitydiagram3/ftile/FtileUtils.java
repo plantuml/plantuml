@@ -60,9 +60,23 @@ public class FtileUtils {
 		return new FtileMargedVertically(ftile, marginTop, marginBottom);
 	}
 
-	public static Ftile addHorizontalMargin(Ftile ftile, double margin) {
-		return new FtileMarged(ftile, margin);
+	public static Ftile addHorizontalMargin(Ftile ftile, double margin1, double margin2) {
+		if (margin1 == 0 && margin2 == 0) {
+			return ftile;
+		}
+		return new FtileMarged(ftile, margin1, margin2);
 	}
+
+	public static Ftile addHorizontalMargin(Ftile ftile, double margin) {
+		if (margin == 0) {
+			return ftile;
+		}
+		return new FtileMarged(ftile, margin, margin);
+	}
+
+	// public static Ftile addHorizontalMargin(Ftile ftile, double margin) {
+	// return new FtileMarged(ftile, margin);
+	// }
 
 	private static Ftile neverNull(Ftile ftile) {
 		if (ftile == null) {

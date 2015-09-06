@@ -56,6 +56,9 @@ public class CreoleStripeSimpleParser {
 		this.fontConfiguration = fontConfiguration;
 		this.modeSimpleLine = modeSimpleLine;
 		this.skinParam = skinParam;
+		if (skinParam == null) {
+			throw new IllegalArgumentException();
+		}
 
 		final Pattern p4 = MyPattern.cmpile("^--([^-]*)--$");
 		final Matcher m4 = p4.matcher(line);
@@ -80,15 +83,15 @@ public class CreoleStripeSimpleParser {
 			return;
 		}
 
-//		if (modeSimpleLine == CreoleMode.FULL) {
-//			final Pattern p6 = MyPattern.cmpile("^__([^_]*)__$");
-//			final Matcher m6 = p6.matcher(line);
-//			if (m6.find()) {
-//				this.line = m6.group(1);
-//				this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '_');
-//				return;
-//			}
-//		}
+		// if (modeSimpleLine == CreoleMode.FULL) {
+		// final Pattern p6 = MyPattern.cmpile("^__([^_]*)__$");
+		// final Matcher m6 = p6.matcher(line);
+		// if (m6.find()) {
+		// this.line = m6.group(1);
+		// this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '_');
+		// return;
+		// }
+		// }
 
 		final Pattern p7 = MyPattern.cmpile("^\\.\\.([^\\.]*)\\.\\.$");
 		final Matcher m7 = p7.matcher(line);

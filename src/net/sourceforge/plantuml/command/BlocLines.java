@@ -46,6 +46,11 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 public class BlocLines implements Iterable<CharSequence> {
 
 	private List<CharSequence> lines;
+	
+	@Override
+	public String toString() {
+		return lines.toString();
+	}
 
 	private BlocLines(List<? extends CharSequence> lines) {
 		this.lines = Collections.unmodifiableList(lines);

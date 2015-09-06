@@ -38,7 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
@@ -132,7 +132,7 @@ public class EventsHistory {
 		return false;
 	}
 
-	private HtmlColor getActivateColor(Event event) {
+	private SymbolContext getActivateColor(Event event) {
 		for (Iterator<Event> it = events.iterator(); it.hasNext();) {
 			final Event current = it.next();
 			if (event != current) {
@@ -143,7 +143,7 @@ public class EventsHistory {
 				if (next instanceof LifeEvent) {
 					final LifeEvent le = (LifeEvent) next;
 					if (le.isActivate()) {
-						return le.getSpecificBackColor();
+						return le.getSpecificColors();
 					}
 					return null;
 				}

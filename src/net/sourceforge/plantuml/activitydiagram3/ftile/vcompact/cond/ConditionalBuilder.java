@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
+import java.awt.geom.Dimension2D;
+
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
@@ -119,7 +121,16 @@ public class ConditionalBuilder {
 	private Ftile createWithDiamonds() {
 		final Ftile diamond1 = getDiamond1();
 		final Ftile diamond2 = getDiamond2();
-		return new FtileIfWithDiamonds(diamond1, tile1, tile2, diamond2, swimlane, stringBounder);
+		final FtileIfWithDiamonds ftile = new FtileIfWithDiamonds(diamond1, tile1, tile2, diamond2, swimlane,
+				stringBounder);
+		final Dimension2D label1 = getLabelBranch1().calculateDimension(stringBounder);
+		final Dimension2D label2 = getLabelBranch2().calculateDimension(stringBounder);
+		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);
+		final double diff2 = ftile.computeMarginNeedForBranchLabe2(stringBounder, label2);
+		Ftile result = FtileUtils.addHorizontalMargin(ftile, diff1, diff2);
+		final double suppHeight = ftile.computeVerticalMarginNeedForBranchs(stringBounder, label1, label2);
+		result = FtileUtils.addVerticalMargin(result, suppHeight, 0);
+		return result;
 	}
 
 	private Ftile createWithLinks() {
@@ -127,19 +138,23 @@ public class ConditionalBuilder {
 		final Ftile diamond2 = getDiamond2();
 		final Ftile tmp1 = FtileUtils.addHorizontalMargin(tile1, 10);
 		final Ftile tmp2 = FtileUtils.addHorizontalMargin(tile2, 10);
-		return new FtileIfWithLinks(diamond1, tmp1, tmp2, diamond2, swimlane, arrowColor, stringBounder).addLinks(
-				branch1, branch2, stringBounder);
+		final FtileIfWithLinks ftile = new FtileIfWithLinks(diamond1, tmp1, tmp2, diamond2, swimlane, arrowColor,
+				stringBounder);
+		final Dimension2D label1 = getLabelBranch1().calculateDimension(stringBounder);
+		final Dimension2D label2 = getLabelBranch2().calculateDimension(stringBounder);
+		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);
+		final double diff2 = ftile.computeMarginNeedForBranchLabe2(stringBounder, label2);
+		final double suppHeight = ftile.computeVerticalMarginNeedForBranchs(stringBounder, label1, label2);
+		Ftile result = ftile.addLinks(branch1, branch2, stringBounder);
+		result = FtileUtils.addHorizontalMargin(result, diff1, diff2);
+		result = FtileUtils.addVerticalMargin(result, suppHeight, 0);
+		return result;
 	}
 
 	private Ftile getDiamond1() {
 		final Display labelTest = branch1.getLabelTest();
-
-		final FontConfiguration fcArrow = fcArrow();
-
-		final TextBlock tb1 = branch1.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
-				CreoleMode.SIMPLE_LINE);
-		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
-				CreoleMode.SIMPLE_LINE);
+		final TextBlock tb1 = getLabelBranch1();
+		final TextBlock tb2 = getLabelBranch2();
 
 		final FontConfiguration fcTest = new FontConfiguration(fontTest, fontColor(), skinParam.getHyperlinkColor(),
 				skinParam.useUnderlineForHyperlink());
@@ -151,15 +166,26 @@ public class ConditionalBuilder {
 		final Ftile diamond1;
 		if (conditionStyle == ConditionStyle.INSIDE) {
 			diamond1 = new FtileDiamondInside(tile1.shadowing(), backColor, borderColor, swimlane, tbTest)
-					.withWest(tb1).withEast(tb2);
+					.withWestAndEast(tb1, tb2);
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			diamond1 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withWest(tb1)
-					.withEast(tb2).withNorth(tbTest);
+			diamond1 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withNorth(tbTest)
+					.withWestAndEast(tb1, tb2);
 		} else {
 			throw new IllegalStateException();
 		}
-
 		return diamond1;
+	}
+
+	private TextBlock getLabelBranch2() {
+		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow(), HorizontalAlignment.LEFT, ftileFactory,
+				CreoleMode.SIMPLE_LINE);
+		return tb2;
+	}
+
+	private TextBlock getLabelBranch1() {
+		final TextBlock tb1 = branch1.getLabelPositive().create(fcArrow(), HorizontalAlignment.LEFT, ftileFactory,
+				CreoleMode.SIMPLE_LINE);
+		return tb1;
 	}
 
 	private Ftile getDiamond2() {

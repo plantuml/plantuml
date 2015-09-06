@@ -38,6 +38,8 @@ public interface ISkinSimple extends SpriteContainer {
 	public String getValue(String key);
 
 	public double getPadding();
+	
+	public String getMonospacedFamily();
 
 
 }

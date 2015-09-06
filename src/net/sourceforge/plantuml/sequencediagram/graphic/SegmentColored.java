@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14803 $
+ * Revision $Revision: 16934 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -41,6 +41,7 @@ import java.util.Iterator;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
@@ -50,23 +51,33 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class SegmentColored {
 
 	final private Segment segment;
-	final private HtmlColor backcolor;
+	final private SymbolContext colors;
 	final private boolean shadowing;
 	final private double pos1Initial;
 
-	SegmentColored(double pos1, double pos2, HtmlColor backcolor, boolean shadowing) {
-		this(new Segment(pos1, pos2), backcolor, shadowing, pos1);
+	SegmentColored(double pos1, double pos2, SymbolContext colors, boolean shadowing) {
+		this(new Segment(pos1, pos2), colors, shadowing, pos1);
 	}
 
-	private SegmentColored(Segment segment, HtmlColor backcolor, boolean shadowing, double pos1Initial) {
+	private SegmentColored(Segment segment, SymbolContext colors, boolean shadowing, double pos1Initial) {
 		this.segment = segment;
-		this.backcolor = backcolor;
+		this.colors = colors;
 		this.shadowing = shadowing;
 		this.pos1Initial = pos1Initial;
 	}
 
 	public HtmlColor getSpecificBackColor() {
-		return backcolor;
+		if (colors == null) {
+			return null;
+		}
+		return colors.getBackColor();
+	}
+
+	public HtmlColor getSpecificLineColor() {
+		if (colors == null) {
+			return null;
+		}
+		return colors.getForeColor();
 	}
 
 	@Override
@@ -103,7 +114,7 @@ class SegmentColored {
 
 	public SegmentColored merge(SegmentColored this2) {
 		final Segment merge = this.segment.merge(this2.segment);
-		return new SegmentColored(merge, backcolor, shadowing, merge.getPos1());
+		return new SegmentColored(merge, colors, shadowing, merge.getPos1());
 	}
 
 	public final Segment getSegment() {
@@ -125,7 +136,7 @@ class SegmentColored {
 		}
 
 		public SegmentColored next() {
-			return new SegmentColored(it.next(), backcolor, shadowing, pos1Initial);
+			return new SegmentColored(it.next(), colors, shadowing, pos1Initial);
 		}
 
 		public void remove() {

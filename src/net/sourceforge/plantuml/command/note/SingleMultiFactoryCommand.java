@@ -40,6 +40,6 @@ public interface SingleMultiFactoryCommand<D extends Diagram> {
 
 	public Command<D> createSingleLine();
 
-	public Command<D> createMultiLine();
+	public Command<D> createMultiLine(boolean withBracket);
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16580 $
+ * Revision $Revision: 16937 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
@@ -148,7 +149,7 @@ class DrawableSetInitializer {
 			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);
 			for (int i = 0; i < p.getInitialLife(); i++) {
 				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,
-						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColor());
+						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors());
 			}
 		}
 
@@ -480,7 +481,7 @@ class DrawableSetInitializer {
 				pos = message.getPosYstartLevel() + delta1;
 			}
 			final LifeLine line1 = drawableSet.getLivingParticipantBox(lifeEvent.getParticipant()).getLifeLine();
-			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificBackColor());
+			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificColors());
 		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {
 			double delta = 0;
 			if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage()) {
@@ -492,7 +493,7 @@ class DrawableSetInitializer {
 			if (message != null) {
 				pos2 = message.getPosYendLevel() - delta;
 			}
-			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificBackColor());
+			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificColors());
 		}
 
 		if (lifeEvent.getType() == LifeEventType.DESTROY) {

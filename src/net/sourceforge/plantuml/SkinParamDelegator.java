@@ -216,5 +216,9 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getSvgLinkTarget();
 	}
 
+	public String getMonospacedFamily() {
+		return skinParam.getMonospacedFamily();
+	}
+
 
 }

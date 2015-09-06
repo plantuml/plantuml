@@ -28,20 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16293 $
+ * Revision $Revision: 16932 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 
 public class LifeEvent extends AbstractEvent implements Event {
 
 	private final Participant p;
 	private final LifeEventType type;
-	private final HtmlColor backcolor;
+	private final SymbolContext backcolor;
 
-	public LifeEvent(Participant p, LifeEventType type, HtmlColor backcolor) {
+	public LifeEvent(Participant p, LifeEventType type, SymbolContext backcolor) {
 		this.p = p;
 		this.type = type;
 		this.backcolor = backcolor;
@@ -60,7 +60,7 @@ public class LifeEvent extends AbstractEvent implements Event {
 		return type;
 	}
 
-	public HtmlColor getSpecificBackColor() {
+	public SymbolContext getSpecificColors() {
 		return backcolor;
 	}
 

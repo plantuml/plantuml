@@ -35,14 +35,12 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.utils.MathUtils;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
 
@@ -81,16 +79,19 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	@Override
-	protected Dimension2D calculateDimensionInternalSlow(StringBounder stringBounder) {
+	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
 		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);
 		final FtileGeometry dim2 = diamond2.calculateDimension(stringBounder);
 
-		final Dimension2D dimNude = super.calculateDimensionInternalSlow(stringBounder);
+		final FtileGeometry dimNude = super.calculateDimensionInternalSlow(stringBounder);
 
-		final double width = MathUtils.max(dim1.getWidth(), dim2.getWidth(), dimNude.getWidth());
-		final double height = dimNude.getHeight() + dim1.getHeight() + dim2.getHeight() + getYdelta1a(stringBounder)
-				+ getYdelta1b(stringBounder);
-		return new Dimension2DDouble(width, height);
+		final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);
+
+		return all.addDim(0, getYdelta1a(stringBounder) + getYdelta1b(stringBounder));
+
+		// final double height = dimNude.getHeight() + dim1.getHeight() + dim2.getHeight() + getYdelta1a(stringBounder)
+		// + getYdelta1b(stringBounder);
+		// return new Dimension2DDouble(width, height);
 	}
 
 	@Override
@@ -104,31 +105,66 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 
 	@Override
 	protected UTranslate getTranslate1(StringBounder stringBounder) {
-		final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		return super.getTranslate1(stringBounder).compose(
 				new UTranslate(0, dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	@Override
 	protected UTranslate getTranslate2(StringBounder stringBounder) {
-		final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		return super.getTranslate2(stringBounder).compose(
 				new UTranslate(0, dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final double y1 = 0;
-		final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		final double x1 = getLeft(stringBounder) - dimDiamond1.getWidth() / 2;
+		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
+		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		// final double x1 = getLeft(stringBounder) - dimDiamond1.getWidth() / 2;
+		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();
 		return new UTranslate(x1, y1);
 	}
 
 	protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
+		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
+		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
 		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();
-		final double x2 = getLeft(stringBounder) - dimDiamond2.getWidth() / 2;
+		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;
 		return new UTranslate(x2, y2);
+	}
+
+	public double computeMarginNeedForBranchLabe1(StringBounder stringBounder, Dimension2D label1) {
+		final double widthLabelBranch1 = label1.getWidth();
+		final double dxDiamond = getTranslateDiamond1(stringBounder).getDx();
+		final double diff = widthLabelBranch1 - dxDiamond;
+		if (diff > 0) {
+			return diff;
+		}
+		return 0;
+	}
+
+	public double computeMarginNeedForBranchLabe2(StringBounder stringBounder, Dimension2D label2) {
+		final double widthLabelBranch2 = label2.getWidth();
+		final double theoricalEndNeeded = getTranslateDiamond1(stringBounder).getDx()
+				+ diamond1.calculateDimension(stringBounder).getWidth() + widthLabelBranch2;
+		final double diff = theoricalEndNeeded - calculateDimension(stringBounder).getWidth();
+		if (diff > 0) {
+			return diff;
+		}
+		return 0;
+	}
+
+	public double computeVerticalMarginNeedForBranchs(StringBounder stringBounder, Dimension2D label1,
+			Dimension2D label2) {
+		final double heightLabels = Math.max(label1.getHeight(), label2.getHeight());
+		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		final double dyDiamond = dimDiamond1.getHeight();
+		final double diff = heightLabels - dyDiamond;
+		if (diff > 0) {
+			return diff;
+		}
+		return 0;
 	}
 
 }

@@ -120,24 +120,25 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		if (tile1.calculateDimension(stringBounder).hasPointOut()
 				|| tile2.calculateDimension(stringBounder).hasPointOut()) {
-			return new FtileGeometry(dimTotal, getLeft(stringBounder), 0, dimTotal.getHeight());
+			return dimTotal;
 		}
-		return new FtileGeometry(dimTotal, getLeft(stringBounder), 0);
+		return dimTotal.withoutPointOut();
 	}
 
 	@Override
-	protected Dimension2D calculateDimensionInternalSlow(StringBounder stringBounder) {
+	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);
 		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);
 
-		final double width = dim1.getLeft() + withInner(stringBounder) + (dim2.getWidth() - dim2.getLeft());
+		final double innerMargin = withInner(stringBounder);
+		final double width = dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft());
 
 		final Dimension2D dim12 = Dimension2DDouble.mergeLR(dim1, dim2);
 
-		return new Dimension2DDouble(width, dim12.getHeight());
+		return new FtileGeometry(width, dim12.getHeight(), dim1.getLeft() + innerMargin / 2, 0);
 	}
 
 	protected double withInner(StringBounder stringBounder) {
@@ -146,10 +147,10 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		return (dim1.getWidth() - dim1.getLeft()) + dim2.getLeft();
 	}
 
-	protected double getLeft(StringBounder stringBounder) {
-		final double left1 = tile1.calculateDimension(stringBounder).translate(getTranslate1(stringBounder)).getLeft();
-		final double left2 = tile2.calculateDimension(stringBounder).translate(getTranslate2(stringBounder)).getLeft();
-		return (left1 + left2) / 2;
-	}
+//	protected double getLeft(StringBounder stringBounder) {
+//		final double left1 = tile1.calculateDimension(stringBounder).translate(getTranslate1(stringBounder)).getLeft();
+//		final double left2 = tile2.calculateDimension(stringBounder).translate(getTranslate2(stringBounder)).getLeft();
+//		return (left1 + left2) / 2;
+//	}
 
 }

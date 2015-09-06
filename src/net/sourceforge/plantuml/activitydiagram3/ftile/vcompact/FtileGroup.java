@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMarged;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -78,7 +79,7 @@ public class FtileGroup extends AbstractFtile {
 			HtmlColor titleColor, ISkinParam skinParam) {
 		super(inner.shadowing());
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
-		this.inner = new FtileMarged(inner, 10);
+		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 		this.color = color;
 		this.titleColor = titleColor;
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);

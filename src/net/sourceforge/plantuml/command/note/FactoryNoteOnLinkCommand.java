@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand<CucaDiagram> {
 
@@ -57,7 +57,7 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
@@ -67,11 +67,11 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("$"));
 	}
 
-	public Command<CucaDiagram> createMultiLine() {
+	public Command<CucaDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<CucaDiagram>(getRegexConcatMultiLine(), MultilinesStrategy.KEEP_STARTING_QUOTE) {
 
 			@Override

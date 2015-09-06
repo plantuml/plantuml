@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 
 public class Stairs2 {
 
@@ -52,7 +52,7 @@ public class Stairs2 {
 		return ys.toString() + " " + values;
 	}
 
-	public void addStep(StairsPosition position, int value, HtmlColor color) {
+	public void addStep(StairsPosition position, int value, SymbolContext color) {
 		if (value < 0) {
 			throw new IllegalArgumentException();
 		}

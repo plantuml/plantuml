@@ -28,40 +28,32 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4762 $
+ * Revision $Revision: 4246 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.command;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
 
-public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
+public class SkinParamForceColor extends SkinParamDelegator {
 
-	public CommandRepeat3() {
-		super(getRegexConcat());
+	final private ColorParam colorParam;;
+	final private HtmlColor color;
+
+	public SkinParamForceColor(ISkinParam skinParam, ColorParam colorParam, HtmlColor color) {
+		super(skinParam);
+		this.color = color;
+		this.colorParam = colorParam;
 	}
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				ColorParser.exp4(), //
-				new RegexLeaf("repeat"), //
-				new RegexLeaf(";?$"));
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
-		
-		diagram.startRepeat(color);
-
-		return CommandExecutionResult.ok();
+	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
+		System.err.println("param=" + param);
+		if (colorParam == param) {
+			return color;
+		}
+		// return color;
+		return super.getHtmlColor(param, stereotype, clickable);
 	}
 
 }

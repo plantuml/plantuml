@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16447 $
+ * Revision $Revision: 16732 $
  *
  */
 package net.sourceforge.plantuml;
@@ -45,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -668,6 +669,14 @@ public class SkinParam implements ISkinParam {
 		final String value = getValue("svglinktarget");
 		if (value == null) {
 			return "_top";
+		}
+		return value;
+	}
+
+	public String getMonospacedFamily() {
+		final String value = getValue("defaultMonospacedFontName");
+		if (value == null) {
+			return CommandCreoleMonospaced.MONOSPACED;
 		}
 		return value;
 	}

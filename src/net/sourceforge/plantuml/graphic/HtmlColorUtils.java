@@ -36,8 +36,6 @@ package net.sourceforge.plantuml.graphic;
 
 public class HtmlColorUtils {
 
-	public static final String COLOR_REGEXP = "#\\w+[-\\\\|/]?\\w+";
-
 	public static final HtmlColor BLACK;
 	public static final HtmlColor WHITE;
 	public static final HtmlColor RED_LIGHT;

@@ -84,7 +84,7 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 
 		final List<Ftile> list = new ArrayList<Ftile>();
 		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(new FtileMarged(tmp, xMargin), height1));
+			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}
 
 		Ftile inner = super.createFork(swimlane, list);

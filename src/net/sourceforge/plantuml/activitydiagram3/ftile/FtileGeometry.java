@@ -72,6 +72,10 @@ public class FtileGeometry extends Dimension2D {
 		this.height = height;
 	}
 
+	public FtileGeometry incHeight(double northHeight) {
+		return new FtileGeometry(width, height + northHeight, left, inY, outY);
+	}
+
 	public FtileGeometry(Dimension2D dim, double left, double inY, double outY) {
 		this(dim.getWidth(), dim.getHeight(), left, inY, outY);
 	}
@@ -130,6 +134,10 @@ public class FtileGeometry extends Dimension2D {
 
 	public FtileGeometry addMarginX(double marginx) {
 		return new FtileGeometry(width + 2 * marginx, height, left + marginx, inY, outY);
+	}
+
+	public FtileGeometry addMarginX(double margin1, double margin2) {
+		return new FtileGeometry(width + margin1 + margin2, height, left + margin1, inY, outY);
 	}
 
 	public FtileGeometry fixedHeight(double fixedHeight) {

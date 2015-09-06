@@ -126,4 +126,8 @@ public class Branch {
 		return list.isEmpty();
 	}
 
+	public Instruction getLast() {
+		return list.getLast();
+	}
+
 }

@@ -42,8 +42,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSet;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -54,7 +53,7 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
-				new RegexLeaf("COLOR", "(?:(" + HtmlColorUtils.COLOR_REGEXP + "):)?"), //
+				ColorParser.exp4(), //
 				new RegexLeaf("while"), //
 				new RegexLeaf("TEST", "[%s]*\\((.+?)\\)"), //
 				new RegexOptional(new RegexConcat(//

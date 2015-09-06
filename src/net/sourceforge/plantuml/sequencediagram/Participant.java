@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16520 $
+ * Revision $Revision: 16937 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 
 public class Participant implements SpecificBackcolorable {
 
@@ -109,15 +110,15 @@ public class Participant implements SpecificBackcolorable {
 		return initialLife;
 	}
 
-	private HtmlColor liveBackcolor;
+	private SymbolContext liveBackcolors;
 
-	public final void incInitialLife(HtmlColor backcolor) {
+	public final void incInitialLife(SymbolContext colors) {
 		initialLife++;
-		this.liveBackcolor = backcolor;
+		this.liveBackcolors = colors;
 	}
 
-	public HtmlColor getLiveSpecificBackColor() {
-		return liveBackcolor;
+	public SymbolContext getLiveSpecificBackColors() {
+		return liveBackcolors;
 	}
 
 	private HtmlColor specificBackcolor;

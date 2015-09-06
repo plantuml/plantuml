@@ -97,7 +97,7 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleSpace.create());
 		this.commands.add(CommandCreoleFontFamilyChange.create());
 		this.commands.add(CommandCreoleFontFamilyChange.createEol());
-		this.commands.add(CommandCreoleMonospaced.create());
+		this.commands.add(CommandCreoleMonospaced.create(skinParam.getMonospacedFamily()));
 		this.commands.add(CommandCreoleUrl.create(skinParam));
 		this.commands.add(CommandCreoleSvgAttributeChange.create());
 

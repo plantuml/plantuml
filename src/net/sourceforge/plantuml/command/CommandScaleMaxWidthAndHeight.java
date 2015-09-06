@@ -27,40 +27,28 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  * Revision $Revision: 4762 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.command;
+package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
+import java.util.List;
 
-public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
+import net.sourceforge.plantuml.ScaleMaxWidthAndHeight;
+import net.sourceforge.plantuml.UmlDiagram;
 
-	public CommandRepeat3() {
-		super(getRegexConcat());
-	}
+public class CommandScaleMaxWidthAndHeight extends SingleLineCommand<UmlDiagram> {
 
-	static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^"), //
-				ColorParser.exp4(), //
-				new RegexLeaf("repeat"), //
-				new RegexLeaf(";?$"));
+	public CommandScaleMaxWidthAndHeight() {
+		super("(?i)^scale[%s]+max[%s]+([0-9.]+)[%s]*[*x][%s]*([0-9.]+)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
-		
-		diagram.startRepeat(color);
-
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+		final double width = Double.parseDouble(arg.get(0));
+		final double height = Double.parseDouble(arg.get(1));
+		diagram.setScale(new ScaleMaxWidthAndHeight(width, height));
 		return CommandExecutionResult.ok();
 	}
 

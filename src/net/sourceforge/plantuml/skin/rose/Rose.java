@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15981 $
+ * Revision $Revision: 16778 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -227,7 +227,7 @@ public class Rose implements Skin {
 		if (type == ComponentType.DIVIDER) {
 			return new ComponentRoseDivider(getUFont2(param, FontParam.SEQUENCE_DIVIDER), getHtmlColor(param,
 					ColorParam.sequenceDividerBackground), stringsToDisplay, param, deltaShadow(param) > 0, getStroke(
-					param, LineParam.sequenceDividerBorder, 2));
+					param, LineParam.sequenceDividerBorder, 2), getHtmlColor(param, ColorParam.sequenceDividerBorder));
 		}
 		if (type == ComponentType.REFERENCE) {
 			return new ComponentRoseReference(getUFont2(param, FontParam.SEQUENCE_REFERENCE), getSymbolContext(param,

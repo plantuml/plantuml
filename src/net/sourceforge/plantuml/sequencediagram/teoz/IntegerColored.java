@@ -33,14 +33,14 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 
 public class IntegerColored {
 
 	private final int value;
-	private final HtmlColor color;
+	private final SymbolContext color;
 
-	public IntegerColored(int value, HtmlColor color) {
+	public IntegerColored(int value, SymbolContext color) {
 		if (value < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -57,7 +57,7 @@ public class IntegerColored {
 		return value;
 	}
 
-	public HtmlColor getColor() {
+	public SymbolContext getColors() {
 		return color;
 	}
 

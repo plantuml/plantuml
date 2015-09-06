@@ -93,7 +93,7 @@ public class LiveBoxes {
 			final IntegerColored integerColored = stairs.getValue(yposition.getValue());
 			final int level = integerColored.getValue();
 			if (pending && level == levelToDraw) {
-				drawer.addStart(yposition.getValue(), integerColored.getColor());
+				drawer.addStart(yposition.getValue(), integerColored.getColors());
 				pending = false;
 			} else if (pending == false && (it.hasNext() == false || level < levelToDraw)) {
 				drawer.doDrawing(ug, yposition);

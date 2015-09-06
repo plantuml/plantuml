@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<DescriptionDiagram> {
 
@@ -86,7 +86,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 					new RegexLeaf("[%s]*"), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 					new RegexLeaf("[%s]*"), //
-					new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+					ColorParser.exp1(), //
 					new RegexLeaf("[%s]*"), //
 					new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
 		}
@@ -97,7 +97,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 					new RegexLeaf("[%s]*"), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 					new RegexLeaf("[%s]*"), //
-					new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+					ColorParser.exp1(), //
 					new RegexLeaf("[%s]*"), //
 					new RegexLeaf("DESC", "\\[(.*)$"));
 		}

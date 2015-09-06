@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
-public class InstructionIf implements Instruction {
+public class InstructionIf implements Instruction, InstructionCollection {
 
 	private final List<Branch> thens = new ArrayList<Branch>();
 	private Branch elseBranch;
@@ -161,6 +161,13 @@ public class InstructionIf implements Instruction {
 
 	public Swimlane getSwimlaneOut() {
 		return swimlane;
+	}
+
+	public Instruction getLast() {
+		if (elseBranch == null) {
+			return thens.get(thens.size()-1).getLast();
+		}
+		return elseBranch.getLast();
 	}
 
 }

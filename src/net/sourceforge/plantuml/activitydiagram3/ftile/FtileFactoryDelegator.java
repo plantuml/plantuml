@@ -79,7 +79,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
 		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
 				skinParam.useUnderlineForHyperlink());
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.SIMPLE_LINE);
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, this, CreoleMode.SIMPLE_LINE);
 	}
 
 
@@ -191,6 +191,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	public boolean useGuillemet() {
 		return skinParam.useGuillemet();
+	}
+
+	public String getMonospacedFamily() {
+		return skinParam.getMonospacedFamily();
 	}
 
 }

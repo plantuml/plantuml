@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 14020 $
+ * Revision $Revision: 16938 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -85,35 +85,35 @@ public class Defines {
 			}
 			final String value = Matcher.quoteReplacement(ent.getValue());
 			if (key.contains("(")) {
-				final StringTokenizer st = new StringTokenizer(key, "(),");
-				final String fctName = st.nextToken();
-				String newValue = value;
-				final StringBuilder regex = new StringBuilder("\\b" + fctName + "\\(");
-				int i = 1;
-
-				while (st.hasMoreTokens()) {
-					if (st.hasMoreTokens()) {
-						regex.append("([^,]*?)");
-					} else {
-						regex.append("([^)]*?)");
-					}
-					final String var1 = st.nextToken();
-					final String var2 = "(##" + var1 + "\\b)|(\\b" + var1 + "##)|(\\b" + var1 + "\\b)";
-					newValue = newValue.replaceAll(var2, "\\$" + i);
-					i++;
-					if (st.hasMoreTokens()) {
-						regex.append(",");
-					}
-				}
-
-				regex.append("\\)");
-				line = line.replaceAll(regex.toString(), newValue);
+				line = applyMethod(line, key, value);
 			} else {
 				final String regex = "\\b" + key + "\\b";
 				line = line.replaceAll(regex, value);
 			}
 		}
 		return Arrays.asList(line.split("\n"));
+	}
+
+	private String applyMethod(String line, final String key, final String value) {
+		final StringTokenizer st = new StringTokenizer(key, "(),");
+		final String fctName = st.nextToken();
+		String newValue = value;
+		final StringBuilder regex = new StringBuilder("\\b" + fctName + "\\(");
+		int i = 1;
+
+		while (st.hasMoreTokens()) {
+			regex.append("(?:(?:\\s*\"([^\"]*)\"\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*([^,]*?)\\s*)");
+			final String var1 = st.nextToken();
+			final String var2 = "(##" + var1 + "\\b)|(\\b" + var1 + "##)|(\\b" + var1 + "\\b)";
+			newValue = newValue.replaceAll(var2, "\\$" + i + "\\$" + (i + 1) + "\\$" + (i + 2));
+			i += 3;
+			if (st.hasMoreTokens()) {
+				regex.append(",");
+			}
+		}
+		regex.append("\\)");
+		line = line.replaceAll(regex.toString(), newValue);
+		return line;
 	}
 
 	public void saveState() {

@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -47,10 +45,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 
 public final class FactoryNoteCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
@@ -58,7 +55,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		return new RegexConcat(new RegexLeaf("^(note)[%s]+"), //
 				new RegexLeaf("CODE", "as[%s]+([\\p{L}0-9_.]+)"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("$") //
 		);
 	}
@@ -67,7 +64,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g][%s]+as[%s]+"), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)[%s]*"), //
-				new RegexLeaf("COLOR", "(" + HtmlColorUtils.COLOR_REGEXP + ")?"), //
+				ColorParser.exp1(), //
 				new RegexLeaf("$") //
 		);
 
@@ -85,7 +82,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		};
 	}
 
-	public Command<AbstractEntityDiagram> createMultiLine() {
+	public Command<AbstractEntityDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(),
 				MultilinesStrategy.KEEP_STARTING_QUOTE) {
 

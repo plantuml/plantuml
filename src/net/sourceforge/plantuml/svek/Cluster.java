@@ -333,7 +333,7 @@ public class Cluster implements Moveable {
 				style = dotData.getSkinParam().getPackageStyle();
 			}
 			if (border != null) {
-				final HtmlColor tmp = dotData.getSkinParam().getHtmlColor(border, null, false);
+				final HtmlColor tmp = dotData.getSkinParam().getHtmlColor(border, group.getStereotype(), false);
 				if (tmp != null) {
 					borderColor = tmp;
 				}
@@ -350,8 +350,8 @@ public class Cluster implements Moveable {
 			if (dotData.getSkinParam().shadowing()) {
 				rect.setDeltaShadow(3.0);
 			}
-			final HtmlColor stateBack = getBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
-			ug = ug.apply(new UChangeBackColor(stateBack)).apply(new UChangeColor(borderColor));
+			final HtmlColor backColor = getBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
+			ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor));
 			ug.apply(new UStroke(2)).apply(new UTranslate(minX, minY)).draw(rect);
 
 		} finally {

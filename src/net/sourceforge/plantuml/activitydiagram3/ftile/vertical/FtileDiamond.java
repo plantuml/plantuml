@@ -40,6 +40,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -139,6 +140,10 @@ public class FtileDiamond extends AbstractFtile {
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dim = new Dimension2DDouble(Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2);
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
+	}
+
+	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {
+		return withWest(tb1).withEast(tb2);
 	}
 
 }

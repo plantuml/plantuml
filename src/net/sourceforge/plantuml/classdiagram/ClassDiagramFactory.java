@@ -110,21 +110,23 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand(new RegexLeaf(
 				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([^%s]+)"));
-		cmds.add(factoryTipOnEntityCommand.createMultiLine());
+		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));
+		cmds.add(factoryTipOnEntityCommand.createMultiLine(false));
 
 		final FactoryNoteOnEntityCommand factoryNoteOnEntityCommand = new FactoryNoteOnEntityCommand(new RegexLeaf(
 				"ENTITY", "(" + CommandCreateClass.CODE + "|[%g][^%g]+[%g])"));
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 		cmds.add(new CommandUrl());
 
-		cmds.add(factoryNoteOnEntityCommand.createMultiLine());
-		cmds.add(factoryNoteCommand.createMultiLine());
+		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
+		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
+		cmds.add(factoryNoteCommand.createMultiLine(false));
 
 		cmds.add(new CommandCreateClassMultilines());
 
 		final FactoryNoteOnLinkCommand factoryNoteOnLinkCommand = new FactoryNoteOnLinkCommand();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
-		cmds.add(factoryNoteOnLinkCommand.createMultiLine());
+		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
 		cmds.add(new CommandDiamondAssociation());
 

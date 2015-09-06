@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16364 $
+ * Revision $Revision: 16778 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -99,6 +99,7 @@ public enum ColorParam {
 	sequenceReferenceHeaderBackground(HtmlColorUtils.COL_EEEEEE, true),
 	sequenceReferenceBackground(HtmlColorUtils.WHITE, true),
 	sequenceDividerBackground(HtmlColorUtils.COL_EEEEEE, true),
+	sequenceDividerBorder(HtmlColorUtils.BLACK),
 	sequenceLifeLineBackground(HtmlColorUtils.WHITE, true),
 	sequenceLifeLineBorder(HtmlColorUtils.MY_RED),
 	sequenceArrow(HtmlColorUtils.MY_RED),
