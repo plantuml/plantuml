@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
@@ -57,6 +58,8 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
@@ -65,7 +68,6 @@ import net.sourceforge.plantuml.svek.Shape;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -87,35 +89,42 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private final TextBlock textBlock;
 
 	public EntityImageNote(ILeaf entity, ISkinParam skinParam) {
-		super(entity, getSkin(skinParam, entity));
-		this.skinParam = skinParam;
+		super(entity, getSkin(getISkinParam(skinParam, entity), entity));
+		this.skinParam = getISkinParam(skinParam, entity);
 
-		this.withShadow = skinParam.shadowing();
+		this.withShadow = getSkinParam().shadowing();
 		final Display strings = entity.getDisplay();
 
 		final Rose rose = new Rose();
 
-		if (entity.getSpecificBackColor() == null) {
-			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+		if (entity.getColors(getSkinParam()).getColor(ColorType.BACK) == null) {
+			noteBackgroundColor = rose.getHtmlColor(getSkinParam(), ColorParam.noteBackground);
 		} else {
-			noteBackgroundColor = entity.getSpecificBackColor();
+			noteBackgroundColor = entity.getColors(getSkinParam()).getColor(ColorType.BACK);
 		}
-		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
-		final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
+		// this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+		this.borderColor = SkinParamUtils.getColor(getSkinParam(), ColorParam.noteBorder, null);
+		// final HtmlColor fontColor = rose.getFontColor(getSkinParam(), FontParam.NOTE);
+		// final UFont fontNote = getSkinParam().getFont(FontParam.NOTE, null, false);
 
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else {
-			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
-					new FontConfiguration(fontNote, fontColor, skinParam.getHyperlinkColor(),
-							skinParam.useUnderlineForHyperlink()));
+			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, getSkinParam(), HorizontalAlignment.LEFT,
+					new FontConfiguration(getSkinParam(), FontParam.NOTE, null));
 		}
+	}
+
+	private static ISkinParam getISkinParam(ISkinParam skinParam, IEntity entity) {
+		if (entity.getColors(skinParam) != null) {
+			return entity.getColors(skinParam).mute(skinParam);
+		}
+		return skinParam;
 	}
 
 	static ISkinParam getSkin(ISkinParam skinParam, IEntity entity) {
 		final Stereotype stereotype = entity.getStereotype();
-		HtmlColor back = entity.getSpecificBackColor();
+		HtmlColor back = entity.getColors(skinParam).getColor(ColorType.BACK);
 		if (back != null) {
 			return new SkinParamBackcolored(skinParam, back);
 		}
@@ -190,18 +199,25 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			if (p1.distance(center) > p2.distance(center)) {
 				path = path.reverse();
 				p1 = path.getStartPoint();
-				p2 = path.getEndPoint();
+				// p2 = path.getEndPoint();
 			}
 			final Direction strategy = getOpaleStrategy(textWidth, textHeight, p1);
 			final Point2D pp1 = path.getStartPoint();
 			final Point2D pp2 = path.getEndPoint();
+			final Point2D newRefpp2 = move(pp2, shape.getMinX(), shape.getMinY());
+			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -shape.getMinX(),
+					-shape.getMinY());
 			final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), true);
-			opale.setOpale(strategy, pp1, pp2);
-			opale.drawU(ug2);
+			opale.setOpale(strategy, pp1, projection);
+			opale.drawU(Colors.applyStroke(ug2, getEntity().getColors(skinParam)));
 		}
 		if (url != null) {
 			ug.closeAction();
 		}
+	}
+
+	private static Point2D move(Point2D pt, double dx, double dy) {
+		return new Point2D.Double(pt.getX() + dx, pt.getY() + dy);
 	}
 
 	private void drawNormal(UGraphic ug) {
@@ -260,11 +276,12 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private Line opaleLine;
 	private Shape shape;
+	private Shape other;
 
-	public void setOpaleLine(Line line, Shape shape) {
+	public void setOpaleLine(Line line, Shape shape, Shape other) {
 		this.opaleLine = line;
 		this.shape = shape;
-
+		this.other = other;
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

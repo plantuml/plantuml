@@ -62,12 +62,10 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -99,16 +97,16 @@ class FtileRepeat extends AbstractFtile {
 	}
 
 	public static Ftile create(LinkRendering backRepeatLinkRendering, Swimlane swimlane, Ftile repeat, Display test,
-			Display yes, Display out, HtmlColor borderColor, HtmlColor backColor, UFont fontTest, HtmlColor arrowColor,
+			Display yes, Display out, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
 			HtmlColor endRepeatLinkColor, ConditionStyle conditionStyle, ISkinSimple spriteContainer,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+			FontConfiguration fontConfiguration) {
 
-		final FontConfiguration fc = new FontConfiguration(fontTest, HtmlColorUtils.BLACK, hyperlinkColor,
-				useUnderlineForHyperlink);
+		// final FontConfiguration fc = new FontConfiguration(fontTest, HtmlColorUtils.BLACK, hyperlinkColor,
+		// useUnderlineForHyperlink);
 		final TextBlock tbTest = (Display.isNull(test) || test.isWhite()) ? TextBlockUtils.empty(0, 0) : test.create(
-				fc, HorizontalAlignment.LEFT, spriteContainer);
-		final TextBlock yesTb = yes.create(fc, HorizontalAlignment.LEFT, spriteContainer);
-		final TextBlock outTb = out.create(fc, HorizontalAlignment.LEFT, spriteContainer);
+				fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
+		final TextBlock yesTb = yes.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
+		final TextBlock outTb = out.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
 
 		final Ftile diamond1 = new FtileDiamond(repeat.shadowing(), backColor, borderColor, swimlane);
 		final FtileRepeat result;
@@ -129,17 +127,17 @@ class FtileRepeat extends AbstractFtile {
 
 		final List<Connection> conns = new ArrayList<Connection>();
 		final Display in1 = LinkRendering.getDisplay(repeat.getInLinkRendering());
-		final TextBlock tbin1 = in1 == null ? null : in1.create(fc, HorizontalAlignment.LEFT, spriteContainer,
+		final TextBlock tbin1 = in1 == null ? null : in1.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer,
 				CreoleMode.SIMPLE_LINE);
 		conns.add(result.new ConnectionIn(LinkRendering.getColor(repeat.getInLinkRendering(), arrowColor), tbin1));
 
 		final Display backLink1 = LinkRendering.getDisplay(backRepeatLinkRendering);
-		final TextBlock tbbackLink1 = backLink1 == null ? null : backLink1.create(fc, HorizontalAlignment.LEFT,
+		final TextBlock tbbackLink1 = backLink1 == null ? null : backLink1.create(fontConfiguration, HorizontalAlignment.LEFT,
 				spriteContainer, CreoleMode.SIMPLE_LINE);
 		conns.add(result.new ConnectionBack(LinkRendering.getColor(backRepeatLinkRendering, arrowColor), tbbackLink1));
 
 		final Display out1 = LinkRendering.getDisplay(repeat.getOutLinkRendering());
-		final TextBlock tbout1 = out1 == null ? null : out1.create(fc, HorizontalAlignment.LEFT, spriteContainer,
+		final TextBlock tbout1 = out1 == null ? null : out1.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer,
 				CreoleMode.SIMPLE_LINE);
 
 		conns.add(result.new ConnectionOut(LinkRendering.getColor(endRepeatLinkColor, arrowColor), tbout1));

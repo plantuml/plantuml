@@ -57,8 +57,8 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
@@ -118,7 +118,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			entity1.setStereotype(new Stereotype(arg.get("STEREOTYPE", 0)));
 		}
 		if (arg.get("BACKCOLOR", 0) != null) {
-			entity1.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet()
+			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
 					.getColorIfValid(arg.get("BACKCOLOR", 0)));
 		}
 
@@ -127,7 +127,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			return CommandExecutionResult.error("No such activity");
 		}
 		if (arg.get("BACKCOLOR2", 0) != null) {
-			entity2.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet()
+			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
 					.getColorIfValid(arg.get("BACKCOLOR2", 0)));
 		}
 		if (arg.get("STEREOTYPE2", 0) != null) {

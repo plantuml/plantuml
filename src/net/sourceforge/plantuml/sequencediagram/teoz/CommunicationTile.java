@@ -37,6 +37,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
@@ -49,7 +50,9 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CommunicationTile implements TileWithUpdateStairs, TileWithCallbackY {
@@ -144,7 +147,7 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 			area = new Area(x1 - x2, dim.getHeight());
 			ug = ug.apply(new UTranslate(x2, 0));
 			if (isCreate()) {
-				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.CENTER, HorizontalAlignment.RIGHT);
+				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.TOP, HorizontalAlignment.RIGHT);
 			}
 		} else {
 			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
@@ -158,7 +161,7 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 			ug = ug.apply(new UTranslate(x1, 0));
 			if (isCreate()) {
 				livingSpace2.drawHead(ug.apply(new UTranslate(area.getDimensionToUse().getWidth(), 0)), (Context2D) ug,
-						VerticalAlignment.CENTER, HorizontalAlignment.LEFT);
+						VerticalAlignment.TOP, HorizontalAlignment.LEFT);
 			}
 		}
 		comp.drawU(ug, area, (Context2D) ug);
@@ -169,7 +172,11 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 	public double getPreferredHeight(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return dim.getHeight();
+		double height = dim.getHeight();
+		if (isCreate()) {
+			height = Math.max(height, livingSpace2.getHeadPreferredDimension(stringBounder).getHeight());
+		}
+		return height;
 	}
 
 	public void addConstraints(StringBounder stringBounder) {

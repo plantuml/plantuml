@@ -50,6 +50,8 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand<CucaDiagram> {
 
@@ -57,7 +59,7 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
@@ -67,8 +69,12 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)?[%s]*on[%s]+link"), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	public Command<CucaDiagram> createMultiLine(boolean withBracket) {
@@ -121,8 +127,8 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 		if (url != null) {
 			note = note.subExtract(1, 0);
 		}
-		link.addNote(note.toDisplay(), position,
-				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		link.addNote(note.toDisplay(), position, colors);
 		return CommandExecutionResult.ok();
 	}
 

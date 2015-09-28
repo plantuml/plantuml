@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16732 $
+ * Revision $Revision: 17125 $
  *
  */
 package net.sourceforge.plantuml;
@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -169,11 +170,26 @@ public class SkinParam implements ISkinParam {
 			}
 		}
 		final String value = getValue(getParamName(param, clickable));
-		final boolean acceptTransparent = param == ColorParam.background;
 		if (value == null) {
 			return null;
 		}
+		final boolean acceptTransparent = param == ColorParam.background;
 		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
+	}
+
+	public Colors getColors(ColorParam param, Stereotype stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue(param.name() + "color" + stereotype.getLabel(false));
+			if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
+				return new Colors(value2, getIHtmlColorSet(), param.getColorType());
+			}
+		}
+		final String value = getValue(getParamName(param, false));
+		if (value == null) {
+			return Colors.empty();
+		}
+		return new Colors(value, getIHtmlColorSet(), param.getColorType());
 	}
 
 	private String getParamName(ColorParam param, boolean clickable) {
@@ -679,6 +695,14 @@ public class SkinParam implements ISkinParam {
 			return CommandCreoleMonospaced.MONOSPACED;
 		}
 		return value;
+	}
+
+	public int getTabSize() {
+		final String value = getValue("tabsize");
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return 8;
 	}
 
 }

@@ -54,6 +54,11 @@ public class RegexLeaf implements IRegex {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " " + name + " " + pattern;
+	}
+
 	public String getName() {
 		return name;
 	}

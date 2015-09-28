@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -83,7 +84,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		HtmlColor backcolor = getEntity().getSpecificBackColor();
+		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBack(), getStereo());
 		}
@@ -94,9 +95,9 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 
 		if (stereotype != null && stereotype.getLabel(false) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
-			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-					symbol.getFontParamStereotype(), stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-			symbol.getFontParamStereotype(), null), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
+					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
+					HorizontalAlignment.CENTER, skinParam);
 		} else {
 			stereo = TextBlockUtils.empty(0, 0);
 		}

@@ -93,7 +93,6 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 		if (note != null) {
 			tmp = new FtileWithNoteOpale(tmp, note, position, skinParam, false);
 		}
-		// tmp = factory.decorateOut(tmp, afterEndwhile);
 		return tmp;
 	}
 

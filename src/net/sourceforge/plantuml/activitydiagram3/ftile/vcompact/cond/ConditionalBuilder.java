@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ConditionalBuilder {
@@ -68,8 +67,6 @@ public class ConditionalBuilder {
 	private final Swimlane swimlane;
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
-	private final UFont fontArrow;
-	private final UFont fontTest;
 	private final HtmlColor arrowColor;
 	private final FtileFactory ftileFactory;
 	private final ConditionStyle conditionStyle;
@@ -77,18 +74,18 @@ public class ConditionalBuilder {
 	private final Branch branch2;
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
+	private final FontConfiguration fontArrow;
+	private final FontConfiguration fontTest;
 
 	private final Ftile tile1;
 	private final Ftile tile2;
 
-	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, UFont fontArrow,
-			UFont fontTest, HtmlColor arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle,
-			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder) {
+	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fontArrow, FontConfiguration fontTest) {
 		this.swimlane = swimlane;
 		this.borderColor = borderColor;
 		this.backColor = backColor;
-		this.fontArrow = fontArrow;
-		this.fontTest = fontTest;
 		this.arrowColor = arrowColor;
 		this.ftileFactory = ftileFactory;
 		this.conditionStyle = conditionStyle;
@@ -96,17 +93,19 @@ public class ConditionalBuilder {
 		this.branch2 = branch2;
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
+		this.fontArrow = fontArrow.changeColor(fontColor());
+		this.fontTest = fontTest.changeColor(fontColor());
 
 		this.tile1 = new FtileMinWidth(branch1.getFtile(), 30);
 		this.tile2 = new FtileMinWidth(branch2.getFtile(), 30);
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, UFont fontArrow,
-			UFont fontTest, HtmlColor arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle,
-			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder) {
-		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, fontArrow,
-				fontTest, arrowColor, ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder);
+	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
+		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
+				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
 		return builder.createWithLinks();
 		// return builder.createWithDiamonds();
 		// return builder.createNude();
@@ -156,9 +155,7 @@ public class ConditionalBuilder {
 		final TextBlock tb1 = getLabelBranch1();
 		final TextBlock tb2 = getLabelBranch2();
 
-		final FontConfiguration fcTest = new FontConfiguration(fontTest, fontColor(), skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
-		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
+		final Sheet sheet = new CreoleParser(fontTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), new UStroke(1.5));
@@ -177,28 +174,26 @@ public class ConditionalBuilder {
 	}
 
 	private TextBlock getLabelBranch2() {
-		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow(), HorizontalAlignment.LEFT, ftileFactory,
+		final TextBlock tb2 = branch2.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory,
 				CreoleMode.SIMPLE_LINE);
 		return tb2;
 	}
 
 	private TextBlock getLabelBranch1() {
-		final TextBlock tb1 = branch1.getLabelPositive().create(fcArrow(), HorizontalAlignment.LEFT, ftileFactory,
+		final TextBlock tb1 = branch1.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory,
 				CreoleMode.SIMPLE_LINE);
 		return tb1;
 	}
 
 	private Ftile getDiamond2() {
-		final FontConfiguration fcArrow = fcArrow();
-
 		final Ftile diamond2;
 		if (hasTwoBranches()) {
 			final Display out1 = LinkRendering.getDisplay(branch1.getFtile().getOutLinkRendering());
-			final TextBlock tbout1 = out1 == null ? null : out1.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
-					CreoleMode.SIMPLE_LINE);
+			final TextBlock tbout1 = out1 == null ? null : out1.create(fontArrow, HorizontalAlignment.LEFT,
+					ftileFactory, CreoleMode.SIMPLE_LINE);
 			final Display out2 = LinkRendering.getDisplay(branch2.getFtile().getOutLinkRendering());
-			final TextBlock tbout2 = out2 == null ? null : out2.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
-					CreoleMode.SIMPLE_LINE);
+			final TextBlock tbout2 = out2 == null ? null : out2.create(fontArrow, HorizontalAlignment.LEFT,
+					ftileFactory, CreoleMode.SIMPLE_LINE);
 			diamond2 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withWest(tbout1).withEast(
 					tbout2);
 		} else {
@@ -212,11 +207,6 @@ public class ConditionalBuilder {
 	public boolean hasTwoBranches() {
 		return tile1.calculateDimension(stringBounder).hasPointOut()
 				&& tile2.calculateDimension(stringBounder).hasPointOut();
-	}
-
-	private FontConfiguration fcArrow() {
-		return new FontConfiguration(fontArrow, fontColor(), skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
 	}
 
 	private HtmlColor fontColor() {

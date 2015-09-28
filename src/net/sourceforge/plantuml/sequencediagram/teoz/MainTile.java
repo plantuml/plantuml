@@ -69,6 +69,8 @@ public class MainTile implements Tile, Bordered {
 			max2.add(englobers.getMaxX(tileArguments.getStringBounder()));
 		}
 
+		// tiles.add(new EmptyTile(8, tileArguments));
+
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null));
 
 		for (Tile tile : tiles) {

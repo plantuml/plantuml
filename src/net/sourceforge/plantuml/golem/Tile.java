@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -62,7 +61,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 	private final int num;
 
 	private final UFont numberFont = new UFont("Monospaced", Font.PLAIN, 11);
-	private final FontConfiguration fc = new FontConfiguration(numberFont, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+	private final FontConfiguration fc = FontConfiguration.blackBlueTrue(numberFont);
 	private final Map<TileGeometry, TileArea> geometries;
 
 	Tile(int num) {

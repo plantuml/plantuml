@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16546 $
+ * Revision $Revision: 17072 $
  *
  */
 package net.sourceforge.plantuml.png;
@@ -80,7 +80,8 @@ public class PngTitler {
 			return null;
 		}
 		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return text.create(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink), horizontalAlignment, new SpriteContainerEmpty());
+		return text.create(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
+				horizontalAlignment, new SpriteContainerEmpty());
 	}
 
 	private double getOffsetX(double imWidth, StringBounder stringBounder) {

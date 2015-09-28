@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -116,8 +117,8 @@ public final class GroupPngMakerActivity {
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
 			final Stereotype stereo = group.getStereotype();
 			final HtmlColor borderColor = getColor(ColorParam.activityBorder, stereo);
-			final HtmlColor backColor = group.getSpecificBackColor() == null ? getColor(ColorParam.background, stereo)
-					: group.getSpecificBackColor();
+			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
+					ColorParam.background, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
 			return new InnerActivity(svek2.createFile(), borderColor, backColor, skinParam.shadowing());
 		}
 

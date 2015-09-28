@@ -41,10 +41,8 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -67,7 +65,7 @@ public class ElementRadioCheckbox extends AbstractElement {
 
 	public ElementRadioCheckbox(List<String> text, UFont font, boolean radio, boolean checked,
 			ISkinSimple spriteContainer) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		final FontConfiguration config = FontConfiguration.blackBlueTrue(font);
 		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);
 		this.radio = radio;
 		this.checked = checked;

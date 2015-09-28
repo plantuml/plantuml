@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16938 $
+ * Revision $Revision: 17316 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -102,7 +102,7 @@ public class Defines {
 		int i = 1;
 
 		while (st.hasMoreTokens()) {
-			regex.append("(?:(?:\\s*\"([^\"]*)\"\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*([^,]*?)\\s*)");
+			regex.append("(?:(?:\\s*\"([^\"]*)\"\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*([^,]*))");
 			final String var1 = st.nextToken();
 			final String var2 = "(##" + var1 + "\\b)|(\\b" + var1 + "##)|(\\b" + var1 + "\\b)";
 			newValue = newValue.replaceAll(var2, "\\$" + i + "\\$" + (i + 1) + "\\$" + (i + 2));

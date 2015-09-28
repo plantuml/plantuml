@@ -45,6 +45,7 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 	private final ISkinParam skinParam;
 
 	public AbstractEntityImage(IEntity entity, ISkinParam skinParam) {
+		// System.err.println("Creating abstractEntityImage "+getClass());
 		if (entity == null) {
 			throw new IllegalArgumentException("entity null");
 		}

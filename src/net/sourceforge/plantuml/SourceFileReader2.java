@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class SourceFileReader2 implements ISourceFileReader {
 
@@ -94,7 +95,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 
 			for (File f : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final GeneratedImage generatedImage = new GeneratedImage(f, desc, blockUml);
+				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml);
 				result.add(generatedImage);
 			}
 
@@ -129,7 +130,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		this.fileFormatOption = fileFormatOption;
 	}
 
-	public final Set<File> getIncludedFiles() {
+	public final Set<FileWithSuffix> getIncludedFiles2() {
 		return builder.getIncludedFiles();
 	}
 

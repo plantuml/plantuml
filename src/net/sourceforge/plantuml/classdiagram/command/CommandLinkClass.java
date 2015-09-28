@@ -58,6 +58,10 @@ import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColorSet;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
@@ -100,13 +104,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("COUPLE2",
 								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
 				new RegexLeaf("[%s]*"), //
+				color().getRegex(), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
 				new RegexLeaf("$"));
 	}
 
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.LINE);
+	}
+
 	private static String getClassIdentifier() {
-		return "(" + getSeparator() + "?[\\p{L}0-9_$]+(?:" + getSeparator()
-				+ "[\\p{L}0-9_$]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?";
+		return "(" + getSeparator() + "?[\\p{L}0-9_$]+(?:" + getSeparator() + "[\\p{L}0-9_$]+)*|[%g][^%g]+[%g])";
 	}
 
 	private static String getSeparator() {
@@ -158,16 +167,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				((ILeaf) cl2).muteToType(type, null);
 			}
 		}
-		if (arg.get("ENT1", 2) != null) {
-			cl1.setStereotype(new Stereotype(arg.get("ENT1", 2), diagram.getSkinParam().getCircledCharacterRadius(),
-					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
-							.getIHtmlColorSet()));
-		}
-		if (arg.get("ENT2", 2) != null) {
-			cl2.setStereotype(new Stereotype(arg.get("ENT2", 2), diagram.getSkinParam().getCircledCharacterRadius(),
-					diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
-							.getIHtmlColorSet()));
-		}
+		// if (arg.get("ENT1", 2) != null) {
+		// cl1.setStereotype(new Stereotype(arg.get("ENT1", 2), diagram.getSkinParam().getCircledCharacterRadius(),
+		// diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+		// .getIHtmlColorSet()));
+		// }
+		// if (arg.get("ENT2", 2) != null) {
+		// cl2.setStereotype(new Stereotype(arg.get("ENT2", 2), diagram.getSkinParam().getCircledCharacterRadius(),
+		// diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+		// .getIHtmlColorSet()));
+		// }
+
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -244,7 +255,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			link = link.getInv();
 		}
 		link.setLinkArrow(linkArrow);
-		applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
+		colors = applyStyle(arg.getLazzy("ARROW_STYLE", 0), link, colors);
+		link.setColors(colors);
 
 		addLink(diagram, link, arg.get("HEADER", 0));
 
@@ -288,6 +300,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			queue = getQueueLength(arg);
 		}
 
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
 		final Display labelLink = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
@@ -295,7 +309,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				diagram.getLabeldistance(), diagram.getLabelangle());
 
 		diagram.resetPragmaLabel();
-		applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
+
+		colors = applyStyle(arg.getLazzy("ARROW_STYLE", 0), link, colors);
+		link.setColors(colors);
+
 		addLink(diagram, link, arg.get("HEADER", 0));
 		return CommandExecutionResult.ok();
 	}
@@ -471,9 +488,14 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return s;
 	}
 
-	public static void applyStyle(String arrowStyle, Link link) {
+	@Deprecated
+	public static Colors applyStyle(String arrowStyle, Link link) {
+		return applyStyle(arrowStyle, link, null);
+	}
+
+	public static Colors applyStyle(String arrowStyle, Link link, Colors colors) {
 		if (arrowStyle == null) {
-			return;
+			return colors;
 		}
 		final StringTokenizer st = new StringTokenizer(arrowStyle, ",");
 		while (st.hasMoreTokens()) {
@@ -490,8 +512,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				link.goNorank();
 			} else {
 				link.setSpecificColor(s);
+				if (colors != null) {
+					colors = colors.add(ColorType.LINE, HtmlColorSet.getInstance().getColorIfValid(s));
+				}
 			}
 		}
+		return colors;
 	}
 
 	private boolean isInversed(LinkDecor decors1, LinkDecor decors2) {

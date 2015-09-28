@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16353 $
+ * Revision $Revision: 17341 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -160,7 +160,7 @@ public class Preprocessor implements ReadLine {
 		rawSource.close();
 	}
 
-	public Set<File> getFilesUsed() {
+	public Set<FileWithSuffix> getFilesUsed() {
 		return Collections.unmodifiableSet(rawSource.getFilesUsedGlobal());
 	}
 

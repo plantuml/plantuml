@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -58,11 +60,16 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
-				ColorParser.exp5(), //
+				color().getRegex(), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("LABEL", "(.*)"), //
 				new RegexLeaf("STYLE", ENDING_GROUP), //
 				new RegexLeaf("$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -76,9 +83,9 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
 
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final BoxStyle style = BoxStyle.fromChar(arg.get("STYLE", 0).charAt(0));
-		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), color, style, url);
+		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), style, url, colors);
 		return CommandExecutionResult.ok();
 	}
 

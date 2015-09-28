@@ -48,6 +48,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.ImgValign;
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 
 public class AtomImg implements Atom {
 
+	private static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
 	private final BufferedImage image;
 
 	private AtomImg(BufferedImage image) {
@@ -66,18 +68,25 @@ public class AtomImg implements Atom {
 
 	public static Atom create(String src, final ImgValign valign, final int vspace) {
 		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
+
+		if (src.startsWith(DATA_IMAGE_PNG_BASE64)) {
+			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());
+			try {
+				final byte bytes[] = Base64Coder.decode(data);
+				return build(src, fc, bytes);
+			} catch (Exception e) {
+				return AtomText.create("ERROR " + e.toString(), fc);
+			}
+
+		}
 		try {
 			final File f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 					final byte image[] = getFile(src);
-					final BufferedImage read = ImageIO.read(new ByteArrayInputStream(image));
-					if (read == null) {
-						return AtomText.create("(Cannot decode: " + src + ")", fc);
-					}
-					return new AtomImg(read);
+					return build(src, fc, image);
 				}
 				return AtomText.create("(File not found: " + f + ")", fc);
 			}
@@ -93,6 +102,14 @@ public class AtomImg implements Atom {
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
+	}
+
+	private static Atom build(String source, final FontConfiguration fc, final byte[] data) throws IOException {
+		final BufferedImage read = ImageIO.read(new ByteArrayInputStream(data));
+		if (read == null) {
+			return AtomText.create("(Cannot decode: " + source + ")", fc);
+		}
+		return new AtomImg(read);
 	}
 
 	// Added by Alain Corbiere

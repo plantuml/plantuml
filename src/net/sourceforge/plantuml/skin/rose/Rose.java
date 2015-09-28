@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16778 $
+ * Revision $Revision: 17124 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -77,10 +77,8 @@ public class Rose implements Skin {
 		return result;
 	}
 
-	private FontConfiguration getUFont2(ISkinParam param, FontParam fontParam) {
-		final UFont font = param.getFont(fontParam, null, false);
-		final HtmlColor fontColor = getFontColor(param, fontParam);
-		return new FontConfiguration(font, fontColor, param.getHyperlinkColor(), param.useUnderlineForHyperlink());
+	private FontConfiguration getUFont2(ISkinParam skinParam, FontParam fontParam) {
+		return new FontConfiguration(skinParam, fontParam, null);
 	}
 
 	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,
@@ -191,7 +189,7 @@ public class Rose implements Skin {
 		if (type == ComponentType.GROUPING_HEADER) {
 			return new ComponentRoseGroupingHeader(param.getBackgroundColor(), getSymbolContext(param,
 					ColorParam.sequenceGroupBorder), getUFont2(param, FontParam.SEQUENCE_GROUP_HEADER), fontGrouping,
-					stringsToDisplay, param);
+					stringsToDisplay, param, FontParam.SEQUENCE_GROUP_HEADER);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
 			return new ComponentRoseGroupingElse(getHtmlColor(param, ColorParam.sequenceGroupBorder), getUFont2(param,
@@ -240,7 +238,8 @@ public class Rose implements Skin {
 		}
 		if (type == ComponentType.SIGNATURE) {
 			return new ComponentRoseTitle(fontGrouping.toFont2(HtmlColorUtils.BLACK, param.useUnderlineForHyperlink(),
-					param.getHyperlinkColor()), Display.create("This skin was created ", "in April 2009."), param);
+					param.getHyperlinkColor(), param.getTabSize()), Display.create("This skin was created ",
+					"in April 2009."), param);
 		}
 		if (type == ComponentType.ENGLOBER) {
 			return new ComponentRoseEnglober(getSymbolContext(param, ColorParam.sequenceBoxBorder), stringsToDisplay,

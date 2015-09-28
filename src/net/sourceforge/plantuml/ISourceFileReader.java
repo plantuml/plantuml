@@ -43,5 +43,8 @@ public interface ISourceFileReader {
 	public List<String> getEncodedUrl() throws IOException;
 
 	public boolean hasError();
+	
+	public void setFileFormatOption(FileFormatOption fileFormatOption);
+
 
 }

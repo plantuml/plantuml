@@ -38,7 +38,6 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -76,9 +75,10 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
 		final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
 
-		final FontConfiguration fc = new FontConfiguration(fontNote, fontColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
+		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
-		final Sheet sheet9 = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL).createSheet(display);
+		final Sheet sheet9 = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
+				.createSheet(display);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, 0, 0);
 		return sheetBlock1;
 	}

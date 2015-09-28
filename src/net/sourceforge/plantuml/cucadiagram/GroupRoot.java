@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
@@ -126,16 +128,6 @@ public class GroupRoot implements IGroup {
 
 	}
 
-	public HtmlColor getSpecificBackColor() {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public void setSpecificBackcolor(HtmlColor specificBackcolor) {
-		throw new UnsupportedOperationException();
-
-	}
-
 	public IGroup getParentContainer() {
 		return null;
 	}
@@ -212,22 +204,6 @@ public class GroupRoot implements IGroup {
 		return false;
 	}
 
-	public HtmlColor getSpecificLineColor() {
-		return null;
-	}
-
-	public void setSpecificLineColor(HtmlColor specificLinecolor) {
-		throw new UnsupportedOperationException();
-	}
-
-	public UStroke getSpecificLineStroke() {
-		return null;
-	}
-
-	public void setSpecificLineStroke(UStroke specificLineStoke) {
-		throw new UnsupportedOperationException();
-	}
-
 	public boolean hasUrl() {
 		return false;
 	}
@@ -265,6 +241,30 @@ public class GroupRoot implements IGroup {
 	}
 
 	public Bodier getBodier() {
+		throw new UnsupportedOperationException();
+	}
+
+	public Colors getColors(ISkinParam skinParam) {
+		return Colors.empty();
+	}
+
+	public void setColors(Colors colors) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setSpecificLineStroke(UStroke specificLineStroke) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void applyStroke(String s) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void applyStroke(Colors colors) {
 		throw new UnsupportedOperationException();
 	}
 

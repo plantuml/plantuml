@@ -79,4 +79,8 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		return CommandCreoleMonospaced.MONOSPACED;
 	}
 
+	public int getTabSize() {
+		return 8;
+	}
+
 }

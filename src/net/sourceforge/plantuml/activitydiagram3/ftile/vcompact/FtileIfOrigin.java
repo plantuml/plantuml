@@ -120,9 +120,9 @@ class FtileIfOrigin extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, UFont fontArrow, UFont fontTest,
-			HtmlColor arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1,
-			Branch branch2, ISkinParam skinParam, StringBounder stringBounder) {
+	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 
 		final Display labelTest = branch1.getLabelTest();
 		// if (branch1.isOnlySingleStop() || branch2.isOnlySingleStop()) {
@@ -134,17 +134,18 @@ class FtileIfOrigin extends AbstractFtile {
 		final Ftile tile1 = new FtileMinWidth(branch1.getFtile(), 30);
 		final Ftile tile2 = new FtileMinWidth(branch2.getFtile(), 30);
 
-		final HtmlColor fontColor = skinParam.getFontHtmlColor(FontParam.ACTIVITY_DIAMOND, null);
+		// final FontConfiguration fcArrow = new FontConfiguration(fontArrow, fontColor, skinParam.getHyperlinkColor(),
+		// skinParam.useUnderlineForHyperlink());
+		// final FontConfiguration fcTest = new FontConfiguration(fontTest, fontColor, skinParam.getHyperlinkColor(),
+		// skinParam.useUnderlineForHyperlink());
 
-		final FontConfiguration fcArrow = new FontConfiguration(fontArrow, fontColor, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
-		final FontConfiguration fcTest = new FontConfiguration(fontTest, fontColor, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
+		final TextBlock tb1 = branch1.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
+				CreoleMode.SIMPLE_LINE);
+		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
+				CreoleMode.SIMPLE_LINE);
 
-		final TextBlock tb1 = branch1.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
-		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
-
-		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL).createSheet(labelTest);
+		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
+				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), new UStroke(1.5));
 
@@ -163,9 +164,11 @@ class FtileIfOrigin extends AbstractFtile {
 		if (tile1.calculateDimension(stringBounder).hasPointOut()
 				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
 			final Display out1 = LinkRendering.getDisplay(branch1.getFtile().getOutLinkRendering());
-			final TextBlock tbout1 = out1 == null ? null : out1.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
+			final TextBlock tbout1 = out1 == null ? null : out1.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
+					CreoleMode.SIMPLE_LINE);
 			final Display out2 = LinkRendering.getDisplay(branch2.getFtile().getOutLinkRendering());
-			final TextBlock tbout2 = out2 == null ? null : out2.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory, CreoleMode.SIMPLE_LINE);
+			final TextBlock tbout2 = out2 == null ? null : out2.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory,
+					CreoleMode.SIMPLE_LINE);
 			diamond2 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withWest(tbout1).withEast(
 					tbout2);
 		} else {
@@ -216,7 +219,7 @@ class FtileIfOrigin extends AbstractFtile {
 			color = getInColor(branch);
 			usingArrow = branch.isEmpty() ? null : Arrows.asToDown();
 		}
-		
+
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Point2D p1 = getP1(stringBounder);
@@ -299,7 +302,7 @@ class FtileIfOrigin extends AbstractFtile {
 			this.myArrowColor = myArrowColor == null ? arrowColor : myArrowColor;
 			this.branchEmpty = branchEmpty;
 		}
-		
+
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -57,7 +58,7 @@ public class CommandActivityLegacy1 extends SingleLineCommand2<ActivityDiagram3>
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), null, BoxStyle.PLAIN, null);
+		diagram.addActivity(Display.getWithNewlines(arg.get("LABEL", 0)), BoxStyle.PLAIN, null, Colors.empty());
 		return CommandExecutionResult.ok();
 	}
 

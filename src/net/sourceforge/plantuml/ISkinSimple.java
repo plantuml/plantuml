@@ -41,5 +41,6 @@ public interface ISkinSimple extends SpriteContainer {
 	
 	public String getMonospacedFamily();
 
+	public int getTabSize();
 
 }

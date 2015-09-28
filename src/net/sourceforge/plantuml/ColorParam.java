@@ -28,110 +28,111 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16778 $
+ * Revision $Revision: 17054 $
  * 
  */
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 
 
 public enum ColorParam {
-	background(HtmlColorUtils.WHITE),
+	background(HtmlColorUtils.WHITE, ColorType.BACK),
 	hyperlink(HtmlColorUtils.BLUE),
 	
-	activityBackground(HtmlColorUtils.MY_YELLOW),
-	activityBorder(HtmlColorUtils.MY_RED),
+	activityBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	activityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	activityStart(HtmlColorUtils.BLACK),
 	activityEnd(HtmlColorUtils.BLACK),
 	activityBar(HtmlColorUtils.BLACK),
-	activityArrow(HtmlColorUtils.MY_RED),
+	activityArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	
-	usecaseBorder(HtmlColorUtils.MY_RED),
-	usecaseBackground(HtmlColorUtils.MY_YELLOW),
-	usecaseArrow(HtmlColorUtils.MY_RED),
+	usecaseBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	usecaseBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	usecaseArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 
-	objectBackground(HtmlColorUtils.MY_YELLOW),
-	objectBorder(HtmlColorUtils.MY_RED),
-	objectArrow(HtmlColorUtils.MY_RED),
+	objectBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	objectBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	objectArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	
-	classHeaderBackground(null),
-	classBackground(HtmlColorUtils.MY_YELLOW),
-	classBorder(HtmlColorUtils.MY_RED),
+	classHeaderBackground(null, ColorType.BACK),
+	classBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	classBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	stereotypeCBackground(HtmlColorUtils.COL_ADD1B2),
 	stereotypeABackground(HtmlColorUtils.COL_A9DCDF),
 	stereotypeIBackground(HtmlColorUtils.COL_B4A7E5),
 	stereotypeEBackground(HtmlColorUtils.COL_EB937F),
-	classArrow(HtmlColorUtils.MY_RED),
+	classArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 		
-	packageBackground(HtmlColorUtils.MY_YELLOW),
-	packageBorder(HtmlColorUtils.BLACK),
+	packageBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	packageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 
-	partitionBackground(HtmlColorUtils.MY_YELLOW),
-	partitionBorder(HtmlColorUtils.BLACK),
+	partitionBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	partitionBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 
-	componentBackground(HtmlColorUtils.MY_YELLOW),
-	componentBorder(HtmlColorUtils.MY_RED),
-	interfaceBackground(HtmlColorUtils.MY_YELLOW),
-	interfaceBorder(HtmlColorUtils.MY_RED),
-	// componentArrow,
+	componentBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	componentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	interfaceBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	interfaceBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	componentArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 
-	stateBackground(HtmlColorUtils.MY_YELLOW),
-	stateBorder(HtmlColorUtils.MY_RED),
-	stateArrow(HtmlColorUtils.MY_RED),
+	stateBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	stateBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	stateArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	stateStart(HtmlColorUtils.BLACK),
 	stateEnd(HtmlColorUtils.BLACK),
 
-	noteBackground(HtmlColorUtils.COL_FBFB77, true),
-	noteBorder(HtmlColorUtils.MY_RED),
+	noteBackground(HtmlColorUtils.COL_FBFB77, true, ColorType.BACK),
+	noteBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	
-	legendBackground(HtmlColorUtils.COL_DDDDDD, true),
-	legendBorder(HtmlColorUtils.BLACK),
+	legendBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
+	legendBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	
-	actorBackground(HtmlColorUtils.MY_YELLOW, true),
-	actorBorder(HtmlColorUtils.MY_RED),
-	participantBackground(HtmlColorUtils.MY_YELLOW, true),
-	participantBorder(HtmlColorUtils.MY_RED),
-	sequenceGroupBorder(HtmlColorUtils.BLACK),
-	sequenceGroupBackground(HtmlColorUtils.COL_EEEEEE, true),
-	sequenceReferenceBorder(HtmlColorUtils.BLACK),
-	sequenceReferenceHeaderBackground(HtmlColorUtils.COL_EEEEEE, true),
-	sequenceReferenceBackground(HtmlColorUtils.WHITE, true),
-	sequenceDividerBackground(HtmlColorUtils.COL_EEEEEE, true),
-	sequenceDividerBorder(HtmlColorUtils.BLACK),
-	sequenceLifeLineBackground(HtmlColorUtils.WHITE, true),
-	sequenceLifeLineBorder(HtmlColorUtils.MY_RED),
+	actorBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
+	actorBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	participantBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
+	participantBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	sequenceGroupBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	sequenceGroupBackground(HtmlColorUtils.COL_EEEEEE, true, ColorType.BACK),
+	sequenceReferenceBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	sequenceReferenceHeaderBackground(HtmlColorUtils.COL_EEEEEE, true, ColorType.BACK),
+	sequenceReferenceBackground(HtmlColorUtils.WHITE, true, ColorType.BACK),
+	sequenceDividerBackground(HtmlColorUtils.COL_EEEEEE, true, ColorType.BACK),
+	sequenceDividerBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	sequenceLifeLineBackground(HtmlColorUtils.WHITE, true, ColorType.BACK),
+	sequenceLifeLineBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	sequenceArrow(HtmlColorUtils.MY_RED),
-	sequenceBoxBorder(HtmlColorUtils.MY_RED),
-	sequenceBoxBackground(HtmlColorUtils.COL_DDDDDD, true),
+	sequenceBoxBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	sequenceBoxBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
 	
-	artifactBackground(HtmlColorUtils.MY_YELLOW),
-	artifactBorder(HtmlColorUtils.BLACK),
-	cloudBackground(HtmlColorUtils.MY_YELLOW),
-	cloudBorder(HtmlColorUtils.BLACK),
-	queueBackground(HtmlColorUtils.MY_YELLOW),
-	queueBorder(HtmlColorUtils.MY_RED),
-	databaseBackground(HtmlColorUtils.MY_YELLOW),
-	databaseBorder(HtmlColorUtils.BLACK),
-	folderBackground(HtmlColorUtils.MY_YELLOW),
-	folderBorder(HtmlColorUtils.BLACK),
-	frameBackground(HtmlColorUtils.MY_YELLOW),
-	frameBorder(HtmlColorUtils.BLACK),
-	nodeBackground(HtmlColorUtils.MY_YELLOW),
-	nodeBorder(HtmlColorUtils.BLACK),
-	rectangleBackground(HtmlColorUtils.MY_YELLOW),
-	rectangleBorder(HtmlColorUtils.BLACK),
-	agentBackground(HtmlColorUtils.MY_YELLOW),
-	agentBorder(HtmlColorUtils.MY_RED),
-	storageBackground(HtmlColorUtils.MY_YELLOW),
-	storageBorder(HtmlColorUtils.BLACK),
-	boundaryBackground(HtmlColorUtils.MY_YELLOW),
-	boundaryBorder(HtmlColorUtils.MY_RED),
-	controlBackground(HtmlColorUtils.MY_YELLOW),
-	controlBorder(HtmlColorUtils.MY_RED),
-	entityBackground(HtmlColorUtils.MY_YELLOW),
-	entityBorder(HtmlColorUtils.MY_RED),
+	artifactBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	artifactBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	cloudBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	cloudBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	queueBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	queueBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	databaseBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	databaseBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	folderBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	folderBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	frameBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	frameBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	nodeBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	nodeBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	rectangleBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	rectangleBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	agentBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	agentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	storageBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	storageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	boundaryBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	boundaryBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	controlBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	controlBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	entityBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	entityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 
 	
 	iconPrivate(HtmlColorUtils.COL_C82930),
@@ -145,22 +146,28 @@ public enum ColorParam {
 	
 	private final boolean isBackground;
 	private final HtmlColor defaultValue;
+	private final ColorType colorType;
+	
+	private ColorParam(HtmlColor defaultValue, ColorType colorType) {
+		this(defaultValue, false, colorType);
+	}
 	
 	private ColorParam(HtmlColor defaultValue) {
-		this(defaultValue, false);
+		this(defaultValue, false, null);
 	}
 	
 	private ColorParam() {
-		this(null, false);
+		this(null, false, null);
 	}
 	
 	private ColorParam(boolean isBackground) {
-		this(null, isBackground);
+		this(null, isBackground, null);
 	}
 	
-	private ColorParam(HtmlColor defaultValue, boolean isBackground) {
+	private ColorParam(HtmlColor defaultValue, boolean isBackground, ColorType colorType) {
 		this.isBackground = isBackground;
 		this.defaultValue = defaultValue;
+		this.colorType = colorType;
 	}
 
 	protected boolean isBackground() {
@@ -169,5 +176,9 @@ public enum ColorParam {
 
 	public final HtmlColor getDefaultValue() {
 		return defaultValue;
+	}
+
+	public ColorType getColorType() {
+		return colorType;
 	}
 }

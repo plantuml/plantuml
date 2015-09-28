@@ -40,14 +40,15 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 
@@ -56,13 +57,10 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch) {
+	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
+			LinkRendering topInlinkRendering) {
 
 		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
-		final UFont fontArrow = getSkinParam().getFont(FontParam.ACTIVITY_ARROW, null, false);
-		final UFont fontTest = getSkinParam().getFont(
-				conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND : FontParam.ACTIVITY_ARROW, null,
-				false);
 		final Branch branch0 = thens.get(0);
 
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
@@ -70,17 +68,20 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 				ColorParam.activityBackground) : branch0.getColor();
 		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
 
+		final FontConfiguration fcArrow = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY_ARROW, null);
 		if (thens.size() > 1) {
-			return FtileIfLong2.create(swimlane, borderColor, backColor, fontArrow, arrowColor, getFactory(),
-					conditionStyle, thens, elseBranch, getSkinParam().getHyperlinkColor(), getSkinParam()
-							.useUnderlineForHyperlink());
+			return FtileIfLong2.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
+					thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
 		}
+		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
+				: FontParam.ACTIVITY_ARROW;
+		final FontConfiguration fcTest = new FontConfiguration(getSkinParam(), testParam, null);
 		if (OptionFlags.USE_NEW_IF) {
-			return ConditionalBuilder.create(swimlane, borderColor, backColor, fontArrow, fontTest, arrowColor,
-					getFactory(), conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder());
+			return ConditionalBuilder.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
+					conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder(), fcArrow, fcTest);
 		} else {
-			return FtileIfOrigin.create(swimlane, borderColor, backColor, fontArrow, fontTest, arrowColor,
-					getFactory(), conditionStyle, thens.get(0), elseBranch, getSkinParam(), getStringBounder());
+			return FtileIfOrigin.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
+					thens.get(0), elseBranch, getSkinParam(), getStringBounder(), fcArrow, fcTest);
 		}
 	}
 

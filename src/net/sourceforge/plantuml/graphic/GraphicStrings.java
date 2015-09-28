@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16528 $
+ * Revision $Revision: 17072 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -61,7 +61,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private final HtmlColor green;
 
 	private final HtmlColor hyperlinkColor = HtmlColorUtils.BLUE;
-	
+
 	private final boolean useUnderlineForHyperlink = true;
 
 	private final List<String> strings;
@@ -110,11 +110,15 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private TextBlock getTextBlock() {
 		TextBlock result = null;
 		if (maxLine == 0) {
-			result = Display.create(strings).create(new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			result = Display.create(strings).create(
+					new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink),
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		} else {
 			for (int i = 0; i < strings.size(); i += maxLine) {
 				final int n = Math.min(i + maxLine, strings.size());
-				final TextBlock textBlock1 = Display.create(strings.subList(i, n)).create(new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+				final TextBlock textBlock1 = Display.create(strings.subList(i, n)).create(
+						new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink),
+						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 				if (result == null) {
 					result = textBlock1;
 				} else {

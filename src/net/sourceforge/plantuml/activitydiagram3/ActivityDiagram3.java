@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockCompressed;
 import net.sourceforge.plantuml.graphic.TextBlockRecentred;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
@@ -109,10 +110,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return swinlanes.nextLinkRenderer();
 	}
 
-	public void addActivity(Display activity, HtmlColor color, BoxStyle style, Url url) {
+	public void addActivity(Display activity, BoxStyle style, Url url, Colors colors) {
 		manageSwimlaneStrategy();
-		final InstructionSimple ins = new InstructionSimple(activity, color, nextLinkRenderer(),
-				swinlanes.getCurrentSwimlane(), style, url);
+		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),
+				swinlanes.getCurrentSwimlane(), style, url, colors);
 		current().add(ins);
 		setNextLinkRendererInternal(null);
 		manageHasUrl(activity);
@@ -210,10 +211,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		if (Display.isNull(title)) {
 			return original;
 		}
-		final TextBlock text = title.create(
-				new FontConfiguration(getFont(FontParam.TITLE), getFontColor(FontParam.TITLE, null), getSkinParam()
-						.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER,
-				getSkinParam());
+		final TextBlock text = title.create(new FontConfiguration(getSkinParam(), FontParam.TITLE, null),
+				HorizontalAlignment.CENTER, getSkinParam());
 
 		return new DecorateTextBlock(original, text, HorizontalAlignment.CENTER);
 	}
@@ -225,11 +224,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 			return original;
 		}
 		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(new FontConfiguration(
-				getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null), getSkinParam().getHyperlinkColor(),
-				getSkinParam().useUnderlineForHyperlink()), getFooterAlignment(), getSkinParam());
+				getSkinParam(), FontParam.FOOTER, null), getFooterAlignment(), getSkinParam());
 		final TextBlock textHeader = Display.isNull(header) ? null : header.create(new FontConfiguration(
-				getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null), getSkinParam().getHyperlinkColor(),
-				getSkinParam().useUnderlineForHyperlink()), getHeaderAlignment(), getSkinParam());
+				getSkinParam(), FontParam.HEADER, null), getHeaderAlignment(), getSkinParam());
 
 		return new DecorateTextBlock(original, textHeader, getHeaderAlignment(), textFooter, getFooterAlignment());
 	}
@@ -330,6 +327,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public CommandExecutionResult endif() {
+		// System.err.println("Activity3::endif");
 		if (current() instanceof InstructionIf) {
 			((InstructionIf) current()).endif(nextLinkRenderer());
 			setNextLinkRendererInternal(null);
@@ -407,14 +405,18 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	private void setNextLinkRendererInternal(LinkRendering link) {
+		// System.err.println("setNextLinkRendererInternal=" + link);
 		swinlanes.setNextLinkRenderer(link);
 	}
 
 	private void setNextLink(LinkRendering linkRenderer) {
+		// System.err.println("setNextLink=" + linkRenderer);
 		if (current() instanceof InstructionCollection) {
 			final Instruction last = ((InstructionCollection) current()).getLast();
 			if (last instanceof InstructionWhile) {
 				((InstructionWhile) last).afterEndwhile(linkRenderer);
+			} else if (last instanceof InstructionIf) {
+				((InstructionIf) last).afterEndwhile(linkRenderer);
 			}
 		}
 		this.setNextLinkRendererInternal(linkRenderer);

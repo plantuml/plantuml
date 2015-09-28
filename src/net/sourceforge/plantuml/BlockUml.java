@@ -124,4 +124,8 @@ public class BlockUml {
 		return startLine;
 	}
 
+	public final List<CharSequence2> getData() {
+		return data;
+	}
+
 }

@@ -31,6 +31,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
@@ -45,6 +46,7 @@ import java.util.Stack;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -482,6 +484,17 @@ public class SequenceDiagram extends UmlDiagram {
 			return false;
 		}
 		return true;
+	}
+
+	public double getDpiFactor(FileFormatOption fileFormatOption, Dimension2D dim) {
+		final double dpiFactor;
+		final Scale scale = getScale();
+		if (scale == null) {
+			dpiFactor = getDpiFactor(fileFormatOption);
+		} else {
+			dpiFactor = scale.getScale(dim.getWidth(), dim.getHeight());
+		}
+		return dpiFactor;
 	}
 
 }

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -56,6 +57,8 @@ public interface ISkinParam extends ISkinSimple {
 	public HtmlColor getBackgroundColor();
 
 	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable);
+
+	public Colors getColors(ColorParam param, Stereotype stereotype);
 
 	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype);
 
@@ -116,11 +119,13 @@ public interface ISkinParam extends ISkinSimple {
 	public IHtmlColorSet getIHtmlColorSet();
 
 	public int groupInheritance();
-	
+
 	public boolean useGuillemet();
 
 	public boolean handwritten();
 
 	public String getSvgLinkTarget();
+	
+	public int getTabSize();
 
 }

@@ -124,7 +124,8 @@ class TurtleGraphicsPane {
 		final HtmlColor turtleColor1 = htmlColorSet.getColorIfValid("OliveDrab");
 		final HtmlColor turtleColor2 = htmlColorSet.getColorIfValid("MediumSpringGreen");
 
-		ug.apply(new UChangeColor(turtleColor1)).apply(new UChangeBackColor(turtleColor2)).apply(new UTranslate(x, -y)).draw(poly);
+		ug.apply(new UChangeColor(turtleColor1)).apply(new UChangeBackColor(turtleColor2)).apply(new UTranslate(x, -y))
+				.draw(poly);
 		// ug.setAntiAliasing(true);
 	}
 
@@ -197,8 +198,9 @@ class TurtleGraphicsPane {
 		}
 		drawTurtle(ug);
 		if (message != null) {
-			final FontConfiguration font = new FontConfiguration(new UFont("", Font.PLAIN, 14), HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
-			final TextBlock text = Display.create(message).create(font, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			final FontConfiguration font = FontConfiguration.blackBlueTrue(new UFont("", Font.PLAIN, 14));
+			final TextBlock text = Display.create(message).create(font, HorizontalAlignment.LEFT,
+					new SpriteContainerEmpty());
 			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
 			final double textHeight = dim.getHeight();
 			text.drawU(ug.apply(new UTranslate(0, (height - textHeight))));

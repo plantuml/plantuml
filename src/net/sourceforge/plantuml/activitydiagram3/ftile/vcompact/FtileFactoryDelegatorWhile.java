@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
@@ -61,14 +61,17 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
 
 		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
-		final UFont fontArrow = getSkinParam().getFont(FontParam.ACTIVITY_ARROW, null, false);
-		final UFont fontTest = getSkinParam().getFont(
-				conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND : FontParam.ACTIVITY_ARROW, null, false);
+		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
+				: FontParam.ACTIVITY_ARROW;
+		final FontConfiguration fcTest = new FontConfiguration(getSkinParam(), testParam, null);
 
 		final LinkRendering endInlinkRendering = whileBlock.getOutLinkRendering();
 		final HtmlColor endInlinkColor = endInlinkRendering == null ? arrowColor : endInlinkRendering.getColor();
+
+		final FontConfiguration fontArrow = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY_ARROW, null);
+
 		return FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
-				fontArrow, endInlinkColor, afterEndwhile, getFactory(), conditionStyle, fontTest, getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink());
+				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest);
 	}
 
 }

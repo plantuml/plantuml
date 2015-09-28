@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15932 $
+ * Revision $Revision: 17124 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FontConfiguration {
@@ -55,19 +57,29 @@ public class FontConfiguration {
 	private final SvgAttributes svgAttributes;
 	private final boolean hyperlink;
 	private final boolean useUnderlineForHyperlink;
+	private final int tabSize;
 
 	public FontConfiguration(UFont font, HtmlColor color, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+		this(font, color, hyperlinkColor, useUnderlineForHyperlink, 8);
+	}
+
+	public FontConfiguration(UFont font, HtmlColor color, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink,
+			int tabSize) {
 		this(getStyles(font), font, color, font, color, null, FontPosition.NORMAL, new SvgAttributes(), false,
-				hyperlinkColor, useUnderlineForHyperlink);
+				hyperlinkColor, useUnderlineForHyperlink, tabSize);
+	}
+
+	public static FontConfiguration blackBlueTrue(UFont font) {
+		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true, 8);
 	}
 
 	public FontConfiguration(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
 		this(SkinParamUtils.getFont(skinParam, fontParam, stereo), SkinParamUtils.getFontColor(skinParam, fontParam,
-				stereo), skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
+				stereo), skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 	}
-	
-	//---
-	
+
+	// ---
+
 	public final boolean useUnderlineForHyperlink() {
 		return useUnderlineForHyperlink;
 	}
@@ -76,7 +88,7 @@ public class FontConfiguration {
 		return hyperlinkColor;
 	}
 
-	//---
+	// ---
 
 	private static EnumSet<FontStyle> getStyles(UFont font) {
 		final boolean bold = font.isBold();
@@ -100,7 +112,7 @@ public class FontConfiguration {
 
 	private FontConfiguration(EnumSet<FontStyle> styles, UFont motherFont, HtmlColor motherColor, UFont currentFont,
 			HtmlColor currentColor, HtmlColor extendedColor, FontPosition fontPosition, SvgAttributes svgAttributes,
-			boolean hyperlink, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+			boolean hyperlink, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink, int tabSize) {
 		this.styles = styles;
 		this.currentFont = currentFont;
 		this.motherFont = motherFont;
@@ -112,6 +124,7 @@ public class FontConfiguration {
 		this.hyperlink = hyperlink;
 		this.hyperlinkColor = hyperlinkColor;
 		this.useUnderlineForHyperlink = useUnderlineForHyperlink;
+		this.tabSize = tabSize;
 	}
 
 	public FontConfiguration forceFont(UFont newFont, HtmlColor htmlColorForStereotype) {
@@ -119,7 +132,8 @@ public class FontConfiguration {
 			return add(FontStyle.ITALIC);
 		}
 		FontConfiguration result = new FontConfiguration(styles, newFont, motherColor, newFont, currentColor,
-				extendedColor, fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				extendedColor, fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink,
+				tabSize);
 		if (htmlColorForStereotype != null) {
 			result = result.changeColor(htmlColorForStereotype);
 		}
@@ -128,27 +142,40 @@ public class FontConfiguration {
 
 	public FontConfiguration changeAttributes(SvgAttributes toBeAdded) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,
-				fontPosition, svgAttributes.add(toBeAdded), hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes.add(toBeAdded), hyperlink, hyperlinkColor, useUnderlineForHyperlink,
+				tabSize);
 	}
 
 	private FontConfiguration withHyperlink() {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,
-				fontPosition, svgAttributes, true, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes, true, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public FontConfiguration changeColor(HtmlColor htmlColor) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont, htmlColor, extendedColor,
-				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
+	}
+
+	public FontConfiguration mute(Colors colors) {
+		if (colors == null) {
+			throw new IllegalArgumentException();
+		}
+		final HtmlColor color = colors.getColor(ColorType.TEXT);
+		if (color == null) {
+			return this;
+		}
+		return changeColor(color);
 	}
 
 	FontConfiguration changeExtendedColor(HtmlColor newExtendedColor) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, newExtendedColor,
-				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public FontConfiguration changeSize(float size) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont.deriveSize(size), currentColor,
-				extendedColor, fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				extendedColor, fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink,
+				tabSize);
 	}
 
 	public FontConfiguration bigger(double delta) {
@@ -157,25 +184,25 @@ public class FontConfiguration {
 
 	public FontConfiguration changeFontPosition(FontPosition fontPosition) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,
-				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public FontConfiguration changeFamily(String family) {
 		return new FontConfiguration(styles, motherFont, motherColor, new UFont(family, currentFont.getStyle(),
 				currentFont.getSize()), currentColor, extendedColor, fontPosition, svgAttributes, hyperlink,
-				hyperlinkColor, useUnderlineForHyperlink);
+				hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public FontConfiguration resetFont() {
 		return new FontConfiguration(styles, motherFont, motherColor, motherFont, motherColor, null,
-				FontPosition.NORMAL, new SvgAttributes(), hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				FontPosition.NORMAL, new SvgAttributes(), hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	FontConfiguration add(FontStyle style) {
 		final EnumSet<FontStyle> r = styles.clone();
 		r.add(style);
 		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor,
-				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public FontConfiguration italic() {
@@ -201,7 +228,7 @@ public class FontConfiguration {
 		final EnumSet<FontStyle> r = styles.clone();
 		r.remove(style);
 		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor,
-				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink);
+				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public UFont getFont() {
@@ -237,6 +264,10 @@ public class FontConfiguration {
 
 	public double getSize2D() {
 		return currentFont.getSize2D();
+	}
+
+	public int getTabSize() {
+		return tabSize;
 	}
 
 }

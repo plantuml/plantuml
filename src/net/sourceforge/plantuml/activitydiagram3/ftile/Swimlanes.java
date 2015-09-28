@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.CompressionTransform;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
@@ -73,7 +74,6 @@ import net.sourceforge.plantuml.ugraphic.SlotSet;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -98,9 +98,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = skinParam.getFont(FontParam.TITLE, null, false);
-		return new FontConfiguration(font, HtmlColorUtils.BLACK, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
+		return new FontConfiguration(skinParam, FontParam.TITLE, null);
 	}
 
 	private FtileFactory getFtileFactory() {
@@ -120,7 +118,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	public void swimlane(String name, HtmlColor color, Display label) {
 		currentSwimlane = getOrCreate(name);
 		if (color != null) {
-			currentSwimlane.setSpecificBackcolor(color);
+			currentSwimlane.setSpecificColorTOBEREMOVED(ColorType.BACK, color);
 		}
 		if (Display.isNull(label) == false) {
 			currentSwimlane.setDisplay(label);
@@ -242,15 +240,17 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 		double x2 = 0;
 		for (Swimlane swimlane : swimlanes) {
-			if (swimlane.getSpecificBackColor() != null) {
-				final UGraphic background = ug.apply(new UChangeBackColor(swimlane.getSpecificBackColor()))
-						.apply(new UChangeColor(swimlane.getSpecificBackColor())).apply(new UTranslate(x2, 0));
+			final HtmlColor back = swimlane.getColors(skinParam).getColor(ColorType.BACK);
+			if (back != null) {
+				final UGraphic background = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(back))
+						.apply(new UTranslate(x2, 0));
 				background.draw(new URectangle(swimlane.getTotalWidth(), dimensionFull.getHeight()
 						+ titleHeightTranslate.getDy()));
 			}
 
 			if (OptionFlags.SWI2 == false) {
-				final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+				final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(),
+						HorizontalAlignment.LEFT, skinParam);
 				final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 				final double posTitle = x2 + (swimlane.getTotalWidth() - titleWidth) / 2;
 				swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
@@ -282,7 +282,8 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			final MinMax minMax = limitFinder.getMinMax();
 
 			final double drawingWidth = minMax.getWidth() + 2 * separationMargin;
-			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
+					skinParam);
 			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
 			final double totalWidth = Math.max(drawingWidth, titleWidth + 2 * separationMargin);
 
@@ -297,7 +298,8 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	private UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
 		double titlesHeight = 0;
 		for (Swimlane swimlane : swimlanes) {
-			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
+					skinParam);
 
 			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());
 		}

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -61,28 +62,33 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class EntityImageDescription extends AbstractEntityImage {
 
+	private final ShapeType shapeType;
+
 	final private Url url;
 
 	private final TextBlock asSmall;
 
+	private final TextBlock name;
+
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
-		super(entity, skinParam);
+		super(entity, entity.getColors(skinParam).mute(skinParam));
 		final Stereotype stereotype = entity.getStereotype();
-		final USymbol symbol = entity.getUSymbol() == null ? (skinParam.useUml2ForComponent() ? USymbol.COMPONENT2
+		final USymbol symbol = entity.getUSymbol() == null ? (getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2
 				: USymbol.COMPONENT1) : entity.getUSymbol();
 		if (symbol == null) {
 			throw new IllegalArgumentException();
 		}
+		shapeType = symbol == USymbol.FOLDER ? ShapeType.FOLDER : ShapeType.RECTANGLE;
 
 		final Display codeDisplay = Display.getWithNewlines(entity.getCode());
 		final TextBlock desc = (entity.getDisplay().equals(codeDisplay) && symbol instanceof USymbolFolder)
 				|| entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(entity.getDisplay(),
-				symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER, stereotype,
+				symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER, stereotype,
 				symbol.manageHorizontalLine(), false, false);
 
 		this.url = entity.getUrl99();
 
-		HtmlColor backcolor = getEntity().getSpecificBackColor();
+		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBack(), getStereo());
 		}
@@ -96,16 +102,18 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (stereotype != null && stereotype.getLabel(false) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
-					new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), symbol.getFontParamStereotype(),
-							stereotype), SkinParamUtils.getFontColor(getSkinParam(), symbol.getFontParamStereotype(),
-							null), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
-					HorizontalAlignment.CENTER, skinParam);
+					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
+					HorizontalAlignment.CENTER, getSkinParam());
 		}
 
-		final TextBlock name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, false);
+		name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
+				stereotype, symbol.manageHorizontalLine(), false, false);
 
 		asSmall = symbol.asSmall(name, desc, stereo, ctx);
+	}
+
+	public Dimension2D getNameDimension(StringBounder stringBounder) {
+		return name.calculateDimension(stringBounder);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -124,7 +132,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	public ShapeType getShapeType() {
-		return ShapeType.RECTANGLE;
+		return shapeType;
 	}
 
 	public int getShield() {

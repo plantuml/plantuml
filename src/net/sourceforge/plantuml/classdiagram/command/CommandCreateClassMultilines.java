@@ -54,12 +54,13 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
@@ -99,12 +100,16 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
 				new RegexLeaf("EXTENDS", "([%s]+(extends)[%s]+(" + CODES + "))?"), //
 				new RegexLeaf("IMPLEMENTS", "([%s]+(implements)[%s]+(" + CODES + "))?"), //
 				new RegexLeaf("[%s]*\\{[%s]*$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	public CommandExecutionResult executeNow(ClassDiagram diagram, BlocLines lines) {
@@ -199,36 +204,27 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			result.addUrl(url);
 		}
 
-		result.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
-		result.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
-		applyStroke(result, arg.get("LINECOLOR", 0));
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
+		final HtmlColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1));
+		if (lineColor != null) {
+			colors = colors.add(ColorType.LINE, lineColor);
+		}
+		if (arg.get("LINECOLOR", 0) != null) {
+			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
+		}
+		result.setColors(colors);
+
+		// result.setSpecificColorTOBEREMOVED(ColorType.BACK,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		// result.setSpecificColorTOBEREMOVED(ColorType.LINE,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
+		// result.applyStroke(arg.get("LINECOLOR", 0));
 
 		if (generic != null) {
 			result.setGeneric(generic);
 		}
 		return result;
-	}
-
-	public static UStroke getStroke(LinkStyle style) {
-		if (style == LinkStyle.DASHED) {
-			return new UStroke(6, 6, 1);
-		}
-		if (style == LinkStyle.DOTTED) {
-			return new UStroke(1, 3, 1);
-		}
-		if (style == LinkStyle.BOLD) {
-			return new UStroke(2.5);
-		}
-		return new UStroke();
-	}
-
-	public static void applyStroke(IEntity entity, String s) {
-		if (s == null) {
-			return;
-		}
-		final LinkStyle style = LinkStyle.valueOf(StringUtils.goUpperCase(s));
-		entity.setSpecificLineStroke(getStroke(style));
-
 	}
 
 }

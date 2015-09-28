@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -71,13 +70,10 @@ public class EntityImageLegend extends AbstractTextBlock implements TextBlock {
 		final Rose rose = new Rose();
 
 		noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.legendBackground);
-
 		borderColor = rose.getHtmlColor(skinParam, ColorParam.legendBorder);
-		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.LEGEND);
-		final UFont fontNote = skinParam.getFont(FontParam.LEGEND, null, false);
 
-		this.textBlock = note.create(new FontConfiguration(fontNote, fontColor,
-		skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, skinParam);
+		this.textBlock = note.create(new FontConfiguration(skinParam, FontParam.LEGEND, null),
+				HorizontalAlignment.LEFT, skinParam);
 	}
 
 	public static TextBlock create(Display legend, ISkinParam skinParam) {

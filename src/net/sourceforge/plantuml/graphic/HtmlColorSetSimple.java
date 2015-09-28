@@ -245,6 +245,9 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 		final Color color;
 		if (s.equalsIgnoreCase("transparent")) {
 			return new HtmlColorTransparent();
+		} else if (s.matches("[0-9A-Fa-f]{3}")) {
+			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(1) + s.charAt(1) + s.charAt(2) + s.charAt(2);
+			color = new Color(Integer.parseInt(s, 16));
 		} else if (s.matches("[0-9A-Fa-f]{6}")) {
 			color = new Color(Integer.parseInt(s, 16));
 		} else {
@@ -259,6 +262,9 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 
 	private boolean isValid(String s, boolean acceptTransparent) {
 		s = removeFirstDieseAndgoLowerCase(s);
+		if (s.matches("[0-9A-Fa-f]{3}")) {
+			return true;
+		}
 		if (s.matches("[0-9A-Fa-f]{6}")) {
 			return true;
 		}

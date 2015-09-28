@@ -34,16 +34,18 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public interface LineConfigurable {
 
-	public HtmlColor getSpecificLineColor();
+	public Colors getColors(ISkinParam skinParam);
+	
+	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
 
-	public void setSpecificLineColor(HtmlColor specificLinecolor);
+//	public void setSpecificLineStroke(UStroke specificLineStroke);
 
-	public UStroke getSpecificLineStroke();
 
-	public void setSpecificLineStroke(UStroke specificLineStoke);
 
 }

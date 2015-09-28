@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16005 $
+ * Revision $Revision: 17004 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -41,6 +41,8 @@ import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class Note extends AbstractEvent implements Event, SpecificBackcolorable {
 
@@ -96,14 +98,20 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		return position;
 	}
 
-	private HtmlColor specificBackcolor;
-
-	public HtmlColor getSpecificBackColor() {
-		return specificBackcolor;
+	public Colors getColors(ISkinParam skinParam) {
+		return colors;
 	}
 
-	public void setSpecificBackcolor(HtmlColor color) {
-		this.specificBackcolor = color;
+	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
+		if (color != null) {
+			this.colors = colors.add(type, color);
+		}
+	}
+
+	private Colors colors = Colors.empty();
+
+	public void setColors(Colors colors) {
+		this.colors = colors;
 	}
 
 	public boolean dealWith(Participant someone) {
@@ -127,7 +135,7 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 	}
 
 	public SkinParamBackcolored getSkinParamBackcolored(ISkinParam skinParam) {
-		return new SkinParamBackcolored(skinParam, getSpecificBackColor());
+		return new SkinParamBackcolored(skinParam, getColors(skinParam).getColor(ColorType.BACK));
 	}
 
 }

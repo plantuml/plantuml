@@ -34,7 +34,9 @@ package net.sourceforge.plantuml.descdiagram.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,7 +55,9 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
@@ -83,7 +87,15 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				new RegexLeaf("[%s]*"), //
 				getGroup("ENT2"), //
 				new RegexLeaf("[%s]*"), //
+				color().getRegex(), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.LINE);
 	}
 
 	private LinkType getLinkType(RegexResult arg) {
@@ -186,7 +198,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	private static RegexLeaf getGroup(String name) {
 		return new RegexLeaf(
 				name,
-				"([\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|(?!\\[\\*\\])\\[[^\\[\\]]+\\]|\\((?!\\*\\))[^)]+\\))(?:[%s]*(\\<\\<.*\\>\\>))?");
+				"([\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|(?!\\[\\*\\])\\[[^\\[\\]]+\\]|\\((?!\\*\\))[^)]+\\))");
 	}
 
 	static class Labels {
@@ -213,7 +225,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Matcher m1 = p1.matcher(labelLink);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
-				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
+				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
+						.trin(m1.group(2))));
 				secondLabel = m1.group(3);
 				return;
 			}
@@ -221,7 +234,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Matcher m2 = p2.matcher(labelLink);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
-				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
+				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
+						.trin(m2.group(2))));
 				secondLabel = null;
 				return;
 			}
@@ -229,7 +243,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Matcher m3 = p3.matcher(labelLink);
 			if (m3.matches()) {
 				firstLabel = null;
-				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m3.group(1))));
+				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
+						.trin(m3.group(1))));
 				secondLabel = m3.group(2);
 			}
 		}
@@ -244,21 +259,18 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (diagram.isGroup(ent1) && diagram.isGroup(ent2)) {
 			return executePackageLink(diagram, arg);
 		}
-		// if (diagram.isGroup(ent1) || diagram.isGroup(ent2)) {
-		// return CommandExecutionResult.error("Package can be only linked to other package");
-		// }
 
 		final IEntity cl1 = diagram.isGroup(ent1) ? diagram.getGroup(Code.of(arg.get("ENT1", 0))) : getOrCreateLeaf(
 				diagram, ent1);
 		final IEntity cl2 = diagram.isGroup(ent2) ? diagram.getGroup(Code.of(arg.get("ENT2", 0))) : getOrCreateLeaf(
 				diagram, ent2);
 
-		if (arg.get("ENT1", 1) != null) {
-			cl1.setStereotype(new Stereotype(arg.get("ENT1", 1)));
-		}
-		if (arg.get("ENT2", 1) != null) {
-			cl2.setStereotype(new Stereotype(arg.get("ENT2", 1)));
-		}
+		// if (arg.get("ENT1", 1) != null) {
+		// cl1.setStereotype(new Stereotype(arg.get("ENT1", 1)));
+		// }
+		// if (arg.get("ENT2", 1) != null) {
+		// cl2.setStereotype(new Stereotype(arg.get("ENT2", 1)));
+		// }
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -277,7 +289,14 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}
-		CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link);
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		colors = CommandLinkClass.applyStyle(arg.getLazzy("ARROW_STYLE", 0), link, colors);
+		if (arg.get("STEREOTYPE", 0) != null) {
+			final Stereotype stereotype = new Stereotype(arg.get("STEREOTYPE", 0));
+			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.componentArrow);
+		}
+
+		link.setColors(colors);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
@@ -285,9 +304,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	private ILeaf getOrCreateLeaf(DescriptionDiagram diagram, final Code code2) {
 		final String code = code2.getFullName();
 		if (code.startsWith("()")) {
-			return diagram.getOrCreateLeaf(
-					Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(code.substring(2)))),
-					LeafType.DESCRIPTION, USymbol.INTERFACE);
+			return diagram.getOrCreateLeaf(Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
+					.trin(code.substring(2)))), LeafType.DESCRIPTION, USymbol.INTERFACE);
 		}
 		final char codeChar = code.length() > 2 ? code.charAt(0) : 0;
 		if (codeChar == '(') {

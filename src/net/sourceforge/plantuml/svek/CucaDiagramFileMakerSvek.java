@@ -175,14 +175,12 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (Display.isNull(footer) && Display.isNull(header)) {
 			return original;
 		}
-		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(new FontConfiguration(
-				getFont(FontParam.FOOTER), getFontColor(FontParam.FOOTER, null), diagram.getSkinParam()
-						.getHyperlinkColor(), diagram.getSkinParam().useUnderlineForHyperlink()), diagram
-				.getFooterAlignment(), diagram.getSkinParam());
-		final TextBlock textHeader = Display.isNull(header) ? null : header.create(new FontConfiguration(
-				getFont(FontParam.HEADER), getFontColor(FontParam.HEADER, null), diagram.getSkinParam()
-						.getHyperlinkColor(), diagram.getSkinParam().useUnderlineForHyperlink()), diagram
-				.getHeaderAlignment(), diagram.getSkinParam());
+		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(
+				new FontConfiguration(diagram.getSkinParam(), FontParam.FOOTER, null), diagram.getFooterAlignment(),
+				diagram.getSkinParam());
+		final TextBlock textHeader = Display.isNull(header) ? null : header.create(
+				new FontConfiguration(diagram.getSkinParam(), FontParam.HEADER, null), diagram.getHeaderAlignment(),
+				diagram.getSkinParam());
 
 		return new DecorateEntityImage(original, textHeader, diagram.getHeaderAlignment(), textFooter,
 				diagram.getFooterAlignment());
@@ -193,9 +191,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (Display.isNull(title)) {
 			return original;
 		}
-		final TextBlock text = title.create(
-				new FontConfiguration(getFont(FontParam.TITLE), getFontColor(FontParam.TITLE, null), diagram
-						.getSkinParam().getHyperlinkColor(), diagram.getSkinParam().useUnderlineForHyperlink()),
+		final TextBlock text = title.create(new FontConfiguration(diagram.getSkinParam(), FontParam.TITLE, null),
 				HorizontalAlignment.CENTER, diagram.getSkinParam());
 
 		return DecorateEntityImage.addTop(original, text, HorizontalAlignment.CENTER);

@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -65,9 +64,8 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	public EntityImagePseudoState(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
-		this.desc = Display.create("H").create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-				FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE,
-		stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+		this.desc = Display.create("H").create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
+				HorizontalAlignment.CENTER, skinParam);
 
 	}
 

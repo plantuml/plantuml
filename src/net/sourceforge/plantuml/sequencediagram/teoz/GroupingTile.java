@@ -58,6 +58,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GroupingTile implements TileWithCallbackY {
 
+	private static final int EXTERNAL_MARGINX1 = 3;
+	private static final int EXTERNAL_MARGINX2 = 9;
 	private static final int MARGINX = 16;
 	private static final int MARGINY = 10;
 	private final List<Tile> tiles = new ArrayList<Tile>();
@@ -96,8 +98,7 @@ public class GroupingTile implements TileWithCallbackY {
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END) {
 				break;
 			}
-			final Tile tile = TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this);
-			if (tile != null) {
+			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this)) {
 				tiles.add(tile);
 				bodyHeight += tile.getPreferredHeight(stringBounder);
 				if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
@@ -195,11 +196,11 @@ public class GroupingTile implements TileWithCallbackY {
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-		return min;
+		return min.addFixed(-EXTERNAL_MARGINX1);
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return max;
+		return max.addFixed(EXTERNAL_MARGINX2);
 	}
 
 	private double y;

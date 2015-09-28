@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16528 $
+ * Revision $Revision: 17124 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -67,16 +67,19 @@ public class ComponentBlueModernGroupingHeader extends AbstractTextualComponent 
 	private final HtmlColor borderColor;
 
 	public ComponentBlueModernGroupingHeader(HtmlColor headerBackgroundColor, HtmlColor generalBackgroundColor,
-			HtmlColor borderColor, HtmlColor fontColor2, FontConfiguration bigFont, UFont smallFont, Display strings, ISkinSimple spriteContainer) {
-		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0, null,
-				null);
+			HtmlColor borderColor, HtmlColor fontColor2, FontConfiguration bigFont, UFont smallFont, Display strings,
+			ISkinSimple spriteContainer) {
+		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0, null, null);
 		this.headerBackgroundColor = headerBackgroundColor;
 		this.generalBackgroundColor = generalBackgroundColor;
 		this.borderColor = borderColor;
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			this.commentTextBlock = Display.create("[" + strings.get(1) + "]").create(new FontConfiguration(smallFont, fontColor2, bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, spriteContainer);
+			final FontConfiguration fontConfiguration = new FontConfiguration(smallFont, fontColor2,
+					bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink(), spriteContainer.getTabSize());
+			this.commentTextBlock = Display.create("[" + strings.get(1) + "]").create(fontConfiguration,
+					HorizontalAlignment.LEFT, spriteContainer);
 		}
 	}
 

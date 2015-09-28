@@ -67,7 +67,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		this.arrowColor = arrowColor;
 	}
 
-	private HtmlColor getInColor(Branch branch) {
+	public static HtmlColor getInColor(Branch branch, HtmlColor arrowColor) {
 		if (branch.isEmpty()) {
 			return LinkRendering.getColor(branch.getFtile().getOutLinkRendering(), arrowColor);
 		}
@@ -84,7 +84,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		public ConnectionHorizontalThenVertical(Ftile tile, Branch branch) {
 			super(diamond1, tile);
-			color = getInColor(branch);
+			color = getInColor(branch, arrowColor);
 			usingArrow = branch.isEmpty() ? null : Arrows.asToDown();
 		}
 

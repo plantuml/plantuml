@@ -77,8 +77,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 		this.skinParam = skinParam;
 		this.manageUrl = true;
 
-		this.titleConfig = new FontConfiguration(skinParam.getFont(fontParam, null, false), new Rose().getFontColor(
-				skinParam, fontParam), skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
+		this.titleConfig = new FontConfiguration(skinParam, fontParam, null);
 		this.lineFirst = true;
 		this.align = HorizontalAlignment.LEFT;
 		this.manageHorizontalLine = true;
@@ -145,7 +144,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 				}
 				members = new ArrayList<Member>();
 				final List<String> allTree = buildAllTree(s, it);
-				final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam), align, skinParam, CreoleMode.FULL);
+				final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam), align,
+						skinParam, CreoleMode.FULL);
 				blocks.add(bloc);
 			} else {
 				final Member m = new MemberImpl(s, MemberImpl.isMethod(s), manageModifier, manageUrl);

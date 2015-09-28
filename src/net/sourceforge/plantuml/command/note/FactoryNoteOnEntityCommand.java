@@ -58,6 +58,8 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
@@ -78,11 +80,15 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$") //
 		);
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
@@ -92,7 +98,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				new RegexLeaf("$") //
 		);
@@ -160,7 +166,12 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 
 		final IEntity note = diagram
 				.createLeaf(UniqueSequence.getCode("GMN"), strings.toDisplay(), LeafType.NOTE, null);
-		note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+
+		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		// System.err.println("colors=" + colors);
+		// note.setSpecificColorTOBEREMOVED(ColorType.BACK,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+		note.setColors(colors);
 		if (url != null) {
 			note.addUrl(url);
 		}

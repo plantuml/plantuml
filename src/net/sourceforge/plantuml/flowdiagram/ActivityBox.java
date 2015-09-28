@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -71,7 +70,7 @@ public class ActivityBox extends AbstractTextBlock {
 		this.id = id;
 		this.label = label;
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 		tb = Display.create(label).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
@@ -90,14 +89,14 @@ public class ActivityBox extends AbstractTextBlock {
 	public void drawU(UGraphic ug) {
 		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		// final Dimension2D dimDesc = tb.calculateDimension(ug.getStringBounder());
-		
+
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal, CORNER, CORNER);
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
 		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_YELLOW));
 		ug.apply(new UStroke(1.5)).draw(rect);
-		
+
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
 	}
 

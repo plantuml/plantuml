@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
@@ -59,10 +60,11 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 final class EntityImpl implements ILeaf, IGroup {
@@ -94,15 +96,11 @@ final class EntityImpl implements ILeaf, IGroup {
 	private boolean autonom = true;
 
 	// Other
-
-	private HtmlColor specificBackcolor;
 	private boolean nearDecoration = false;
 	private int xposition;
 	private IEntityImage svekImage;
 
 	private boolean removed = false;
-	private HtmlColor specificLineColor;
-	private UStroke specificStroke;
 	private USymbol symbol;
 	private final int rawLayout;
 	private char concurrentSeparator;
@@ -209,14 +207,6 @@ final class EntityImpl implements ILeaf, IGroup {
 	@Override
 	public String toString() {
 		return code + " " + display + "(" + leafType + ") " + xposition + " " + getUid();
-	}
-
-	public HtmlColor getSpecificBackColor() {
-		return specificBackcolor;
-	}
-
-	public void setSpecificBackcolor(HtmlColor color) {
-		this.specificBackcolor = color;
 	}
 
 	public final Url getUrl99() {
@@ -512,22 +502,6 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.removed = removed;
 	}
 
-	public HtmlColor getSpecificLineColor() {
-		return specificLineColor;
-	}
-
-	public void setSpecificLineColor(HtmlColor specificLinecolor) {
-		this.specificLineColor = specificLinecolor;
-	}
-
-	public UStroke getSpecificLineStroke() {
-		return specificStroke;
-	}
-
-	public void setSpecificLineStroke(UStroke specificLineStroke) {
-		this.specificStroke = specificLineStroke;
-	}
-
 	private int layer;
 
 	public int getHectorLayer() {
@@ -582,6 +556,37 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public Map<String, Display> getTips() {
 		return Collections.unmodifiableMap(tips);
+	}
+
+	private Colors colors = Colors.empty();
+
+	public Colors getColors(ISkinParam skinParam) {
+		return colors;
+	}
+
+	public void setColors(Colors colors) {
+		this.colors = colors;
+	}
+
+	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
+		if (color != null) {
+			this.colors = colors.add(type, color);
+		}
+	}
+
+//	public void setSpecificLineStroke(UStroke specificLineStroke) {
+//		colors = colors.addSpecificLineStroke(specificLineStroke);
+//	}
+
+	@Deprecated
+	public void applyStroke(String s) {
+		throw new UnsupportedOperationException();
+//		if (s == null) {
+//			return;
+//		}
+//		final LinkStyle style = LinkStyle.valueOf(StringUtils.goUpperCase(s));
+//		colors = colors.addSpecificLineStroke(style);
+//		// setSpecificLineStroke(LinkStyle.getStroke(style));
 	}
 
 }

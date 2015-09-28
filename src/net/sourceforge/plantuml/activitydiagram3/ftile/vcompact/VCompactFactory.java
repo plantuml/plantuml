@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOut
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.Sprite;
@@ -91,12 +92,13 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileCircleEnd(shadowing(), color, swimlane);
 	}
 
-	public Ftile activity(Display label, final HtmlColor color, Swimlane swimlane, BoxStyle style) {
-		final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.activityBorder);
-		final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityBackground) : color;
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors) {
+		// final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.activityBorder);
+		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityBackground) :
+		// color;
 		final UFont font = skinParam.getFont(FontParam.ACTIVITY, null, false);
 		final HtmlColor arrowColor = rose.getHtmlColor(skinParam, ColorParam.activityArrow);
-		return new FtileBox(shadowing(), label, borderColor, backColor, font, arrowColor, swimlane, style, skinParam);
+		return new FtileBox(shadowing(), label, font, arrowColor, swimlane, style, colors.mute(skinParam));
 	}
 
 	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition) {
@@ -121,7 +123,8 @@ public class VCompactFactory implements FtileFactory {
 		return whileBlock;
 	}
 
-	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch) {
+	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
+			LinkRendering topInlinkRendering) {
 		final List<Ftile> ftiles = new ArrayList<Ftile>();
 		for (Branch branch : thens) {
 			ftiles.add(branch.getFtile());
@@ -178,6 +181,10 @@ public class VCompactFactory implements FtileFactory {
 
 	public String getMonospacedFamily() {
 		return skinParam.getMonospacedFamily();
+	}
+
+	public int getTabSize() {
+		return skinParam.getTabSize();
 	}
 
 }

@@ -48,7 +48,6 @@ public class Branch {
 	private final Display labelTest;
 	private final Display labelPositive;
 	private final HtmlColor color;
-
 	private LinkRendering inlinkRendering;
 
 	private Ftile ftile;

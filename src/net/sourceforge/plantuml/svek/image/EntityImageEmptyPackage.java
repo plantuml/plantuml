@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
@@ -67,12 +68,10 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		this.skinParam = skinParam;
-		this.specificBackColor = entity.getSpecificBackColor();
+		this.specificBackColor = entity.getColors(skinParam).getColor(ColorType.BACK);
 		this.stereotype = entity.getStereotype();
 		this.desc = entity.getDisplay().create(
-				new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.PACKAGE, stereotype),
-						SkinParamUtils.getFontColor(getSkinParam(), FontParam.PACKAGE, stereotype), getSkinParam()
-								.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
+				new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype),
 				HorizontalAlignment.CENTER, skinParam);
 	}
 

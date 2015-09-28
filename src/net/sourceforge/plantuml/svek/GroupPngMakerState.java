@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -109,9 +110,9 @@ public final class GroupPngMakerState {
 	public IEntityImage getImage() {
 		final Display display = group.getDisplay();
 		final ISkinParam skinParam = diagram.getSkinParam();
-		final HtmlColor textColor = SkinParamUtils.getFontColor(skinParam, FontParam.STATE, group.getStereotype());
-		final TextBlock title = display.create(new FontConfiguration(getFont(FontParam.STATE),
-		textColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, diagram.getSkinParam());
+		final TextBlock title = display.create(
+				new FontConfiguration(skinParam, FontParam.STATE, group.getStereotype()), HorizontalAlignment.CENTER,
+				diagram.getSkinParam());
 
 		if (group.size() == 0) {
 			return new EntityImageState(group, diagram.getSkinParam());
@@ -132,7 +133,7 @@ public final class GroupPngMakerState {
 
 		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma());
-		UStroke stroke = group.getSpecificLineStroke();
+		UStroke stroke = group.getColors(skinParam).getSpecificLineStroke();
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}
@@ -141,13 +142,13 @@ public final class GroupPngMakerState {
 			// return new InnerStateConcurrent(svek2.createFile());
 			return svek2.createFile();
 		} else if (group.getGroupType() == GroupType.STATE) {
-			HtmlColor borderColor = group.getSpecificLineColor();
+			HtmlColor borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 			if (borderColor == null) {
 				borderColor = getColor(ColorParam.stateBorder, group.getStereotype());
 			}
 			final Stereotype stereo = group.getStereotype();
-			final HtmlColor backColor = group.getSpecificBackColor() == null ? getColor(ColorParam.stateBackground,
-					stereo) : group.getSpecificBackColor();
+			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
+					ColorParam.stateBackground, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
 			final List<Member> members = ((IEntity) group).getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
 			if (members.size() == 0) {

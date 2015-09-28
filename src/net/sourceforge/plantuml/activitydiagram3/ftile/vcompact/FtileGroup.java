@@ -84,7 +84,7 @@ public class FtileGroup extends AbstractFtile {
 		this.titleColor = titleColor;
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
 		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
+				skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 		if (title == null) {
 			this.name = TextBlockUtils.empty(0, 0);
 		} else {

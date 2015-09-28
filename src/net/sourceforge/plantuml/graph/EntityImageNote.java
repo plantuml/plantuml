@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16528 $
+ * Revision $Revision: 17128 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -40,11 +40,9 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -59,8 +57,8 @@ class EntityImageNote extends AbstractEntityImage {
 
 	public EntityImageNote(IEntity entity) {
 		super(entity);
-		this.text = entity.getDisplay().create(new FontConfiguration(getFont14(), 
-		HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+		this.text = entity.getDisplay().create(FontConfiguration.blackBlueTrue(getFont14()),
+				HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -92,7 +90,7 @@ class EntityImageNote extends AbstractEntityImage {
 		g2d.drawLine(width - xMargin, yMargin, width, yMargin);
 
 		g2d.setColor(Color.BLACK);
-//		text.drawTOBEREMOVED(colorMapper, g2d, xMargin, yMargin);
+		// text.drawTOBEREMOVED(colorMapper, g2d, xMargin, yMargin);
 
 	}
 }

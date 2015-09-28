@@ -42,24 +42,57 @@ public class ColorParser {
 
 	private static final String COLOR_REGEXP = "#\\w+[-\\\\|/]?\\w+";
 
+	private static final String PART2 = "#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+";
+	private static final String COLORS_REGEXP = "(?:" + COLOR_REGEXP + ")|(?:" + PART2 + ")";
+
 	private final RegexLeaf regex;
 	private final String name;
+	private final ColorType mainType;
 
-	private ColorParser(String name, RegexLeaf regex) {
+	private ColorParser(String name, RegexLeaf regex, ColorType mainType) {
 		this.regex = regex;
 		this.name = name;
+		this.mainType = mainType;
 	}
 
-	public HtmlColor getColor(RegexResult arg, IHtmlColorSet set) {
-		return set.getColorIfValid(arg.get("COLOR", 0));
+	public HtmlColor getLegacyColoe(RegexResult arg, IHtmlColorSet set) {
+		if (mainType != null) {
+			throw new IllegalStateException();
+		}
+		final String data = arg.get("COLOR", 0);
+		if (data != null && data.matches(PART2)) {
+			throw new IllegalStateException();
+		}
+		final HtmlColor result = set.getColorIfValid(data);
+		return result;
 	}
+
+	public Colors getColor(RegexResult arg, IHtmlColorSet set) {
+		if (mainType == null) {
+			throw new IllegalStateException();
+		}
+		final String data = arg.get(name, 0);
+		if (data == null) {
+			return Colors.empty();
+		}
+		return new Colors(data, set, mainType);
+		// return result.getColor(type);
+	}
+
+	// New Parsers
+	public static ColorParser simpleColor(ColorType mainType) {
+		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(" + COLORS_REGEXP + ")?"), mainType);
+	}
+
+	public static ColorParser simpleColor(String optPrefix, ColorType mainType) {
+		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(?:" + optPrefix + " (" + COLORS_REGEXP + "))?"),
+				mainType);
+	}
+
+	// Old Parsers
 
 	public static RegexLeaf exp1() {
-		return simpleColor().regex;
-	}
-
-	public static ColorParser simpleColor() {
-		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(" + COLOR_REGEXP + ")?"));
+		return simpleColor(null).regex;
 	}
 
 	public static RegexLeaf exp2() {

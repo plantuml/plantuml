@@ -53,5 +53,5 @@ public class SkinParamUtils {
 	public static HtmlColor getColor(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
 		return rose.getHtmlColor(skinParam, colorParam, stereo);
 	}
-
+	
 }

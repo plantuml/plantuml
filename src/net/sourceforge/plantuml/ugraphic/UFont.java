@@ -61,8 +61,9 @@ public class UFont {
 		return font;
 	}
 
-	public FontConfiguration toFont2(HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor) {
-		return new FontConfiguration(this, color, hyperlinkColor, useUnderlineForHyperlink);
+	public FontConfiguration toFont2(HtmlColor color, boolean useUnderlineForHyperlink, HtmlColor hyperlinkColor,
+			int tabSize) {
+		return new FontConfiguration(this, color, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public UFont scaled(double scale) {

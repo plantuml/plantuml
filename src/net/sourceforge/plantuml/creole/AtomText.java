@@ -158,7 +158,15 @@ public class AtomText implements Atom {
 	}
 
 	private double getTabSize(StringBounder stringBounder) {
-		return stringBounder.calculateDimension(fontConfiguration.getFont(), "        ").getWidth();
+		return stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();
+	}
+
+	private String tabString() {
+		final int nb = fontConfiguration.getTabSize();
+		if (nb >= 1 && nb < 7) {
+			return "        ".substring(0, nb);
+		}
+		return "        ";
 	}
 
 	public void drawU(UGraphic ug) {

@@ -43,6 +43,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
@@ -55,16 +56,14 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -131,10 +130,9 @@ class FtileIfLong2 extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, UFont font,
-			HtmlColor arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens,
-			Branch branch2, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
-
+	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
+			FontConfiguration fc, LinkRendering topInlinkRendering, LinkRendering afterEndwhile) {
 		final List<Ftile> tiles = new ArrayList<Ftile>();
 
 		for (Branch branch : thens) {
@@ -142,9 +140,6 @@ class FtileIfLong2 extends AbstractFtile {
 		}
 
 		final Ftile tile2 = new FtileMinWidth(branch2.getFtile(), 30);
-
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, hyperlinkColor,
-				useUnderlineForHyperlink);
 
 		List<Ftile> diamonds = new ArrayList<Ftile>();
 		final List<Connection> conns = new ArrayList<Connection>();
@@ -169,20 +164,22 @@ class FtileIfLong2 extends AbstractFtile {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
 
-			final HtmlColor color = thens.get(i).getInlinkRenderingColor();
+			final HtmlColor color = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
 			conns.add(result.new ConnectionVerticalIn(diam, ftile, color == null ? arrowColor : color));
 			conns.add(result.new ConnectionVerticalOut(ftile, arrowColor));
 		}
 
+		final HtmlColor topInColor = LinkRendering.getColor(topInlinkRendering, arrowColor);
 		for (int i = 0; i < diamonds.size() - 1; i++) {
 			final Ftile diam1 = diamonds.get(i);
 			final Ftile diam2 = diamonds.get(i + 1);
-			conns.add(result.new ConnectionHorizontal(diam1, diam2, arrowColor));
+			conns.add(result.new ConnectionHorizontal(diam1, diam2, topInColor));
 		}
-		conns.add(result.new ConnectionIn(arrowColor));
-		conns.add(result.new ConnectionLastElseIn(arrowColor));
+		conns.add(result.new ConnectionIn(topInColor));
+		conns.add(result.new ConnectionLastElseIn(FtileIfWithLinks.getInColor(branch2, arrowColor)));
 		conns.add(result.new ConnectionLastElseOut(arrowColor));
-		conns.add(result.new ConnectionHline(arrowColor));
+		final HtmlColor horizontalOutColor = LinkRendering.getColor(afterEndwhile, arrowColor);
+		conns.add(result.new ConnectionHline(horizontalOutColor));
 
 		return FtileUtils.addConnection(result, conns);
 	}
@@ -502,6 +499,5 @@ class FtileIfLong2 extends AbstractFtile {
 		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);
 
 	}
-
 
 }

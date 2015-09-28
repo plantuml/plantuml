@@ -182,7 +182,7 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double width = dim.getWidth();
-		return livingSpace1.getPosC(stringBounder).addFixed(width);
+		return livingSpace1.getPosC2(stringBounder).addFixed(width);
 	}
 
 }

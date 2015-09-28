@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -61,7 +60,7 @@ public class TimeHeaderDay extends AbstractTextBlock implements TextBlock {
 	private final double dayWidth;
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+	private final FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(font);
 
 	public TimeHeaderDay(Day start, Day end, TimeLine timeline, double dayWidth) {
 		this.start = start;
@@ -74,7 +73,8 @@ public class TimeHeaderDay extends AbstractTextBlock implements TextBlock {
 		int n = 0;
 		for (Day d = start; d.compareTo(end) <= 0; d = (Day) timeline.next(d)) {
 			final String text = "" + d.getNumDay();
-			final TextBlock b = Display.create(text).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			final TextBlock b = Display.create(text).create(fontConfig, HorizontalAlignment.LEFT,
+					new SpriteContainerEmpty());
 			final Dimension2D dimText = b.calculateDimension(ug.getStringBounder());
 			final double diffX = dayWidth - dimText.getWidth();
 			final double diffY = getHeight() - dimText.getHeight();

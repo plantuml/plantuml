@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.project.Item;
 import net.sourceforge.plantuml.project.Project;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -57,7 +56,7 @@ class ItemHeader {
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
 	private final Project project;
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+	private final FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(font);
 
 	public ItemHeader(Project project) {
 		this.project = project;
@@ -71,7 +70,8 @@ class ItemHeader {
 		ug.apply(new UTranslate(x, y)).draw(new URectangle(getWidth(stringBounder), getHeight(stringBounder)));
 
 		for (Item it : project.getValidItems()) {
-			final TextBlock b = Display.create("" + it.getCode()).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			final TextBlock b = Display.create("" + it.getCode()).create(fontConfig, HorizontalAlignment.LEFT,
+					new SpriteContainerEmpty());
 			final Dimension2D dim = b.calculateDimension(stringBounder);
 			b.drawU(ug.apply(new UTranslate(x, y)));
 			y += dim.getHeight();

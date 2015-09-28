@@ -175,7 +175,8 @@ public class DotStringFactory implements Moveable {
 			line.appendLine(sb);
 		}
 		root.fillRankMin(rankMin);
-		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotData.getDotMode(), getGraphvizVersion(), dotData.getUmlDiagramType());
+		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotData.getDotMode(), getGraphvizVersion(),
+				dotData.getUmlDiagramType());
 		printMinRanking(sb);
 
 		for (Line line : bibliotekon.lines1()) {
@@ -298,7 +299,8 @@ public class DotStringFactory implements Moveable {
 
 		for (Shape sh : bibliotekon.allShapes()) {
 			int idx = svg.indexOf("<title>" + sh.getUid() + "</title>");
-			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.DIAMOND) {
+			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.FOLDER
+					|| sh.getType() == ShapeType.DIAMOND) {
 				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
 				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);

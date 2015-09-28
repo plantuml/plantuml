@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16528 $
+ * Revision $Revision: 17068 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -59,8 +59,8 @@ class EntityImageActivity extends AbstractEntityImage {
 
 	public EntityImageActivity(IEntity entity) {
 		super(entity);
-		this.text = entity.getDisplay().create(new FontConfiguration(getFont14(), 
-		HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+		this.text = entity.getDisplay().create(FontConfiguration.blackBlueTrue(getFont14()),
+				HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -97,7 +97,7 @@ class EntityImageActivity extends AbstractEntityImage {
 		g2d.draw(p);
 		// g2d.drawRect(0, 0, width - 1, height - 1);
 		g2d.setColor(Color.BLACK);
-//		text.drawTOBEREMOVED(colorMapper, g2d, xMargin, yMargin);
+		// text.drawTOBEREMOVED(colorMapper, g2d, xMargin, yMargin);
 
 	}
 }

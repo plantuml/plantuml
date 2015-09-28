@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.posimo.BezierUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.posimo.Moveable;
@@ -94,7 +95,7 @@ public class Line implements Moveable, Hideable {
 
 	private final TextBlock startTailText;
 	private final TextBlock endHeadText;
-	private final TextBlock noteLabelText;
+	private final TextBlock labelText;
 
 	private final int lineColor;
 	private final int noteLabelColor;
@@ -108,7 +109,7 @@ public class Line implements Moveable, Hideable {
 
 	private Positionable startTailLabelXY;
 	private Positionable endHeadLabelXY;
-	private Positionable noteLabelXY;
+	private Positionable labelXY;
 
 	private UDrawable extremity2;
 	private UDrawable extremity1;
@@ -208,6 +209,10 @@ public class Line implements Moveable, Hideable {
 		if (startUid == null || endUid == null || link == null) {
 			throw new IllegalArgumentException();
 		}
+		if (link.getColors() != null) {
+			skinParam = link.getColors().mute(skinParam);
+			labelFont = labelFont.mute(link.getColors());
+		}
 		this.graphvizVersion = graphvizVersion;
 		this.pragma = pragma;
 		this.bibliotekon = bibliotekon;
@@ -237,8 +242,8 @@ public class Line implements Moveable, Hideable {
 		} else {
 			final double marginLabel = startUid.equals(endUid) ? 6 : 1;
 			final TextBlock label = TextBlockUtils.withMargin(
-					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(), skinParam),
-					marginLabel, marginLabel);
+					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(), skinParam), marginLabel,
+					marginLabel);
 			if (getLinkArrow() == LinkArrow.NONE) {
 				labelOnly = label;
 			} else {
@@ -258,43 +263,45 @@ public class Line implements Moveable, Hideable {
 		if (link.getNote() == null) {
 			noteOnly = null;
 		} else {
-			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColor(), skinParam);
+			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColors(), skinParam);
 		}
 
 		if (labelOnly != null && noteOnly != null) {
 			if (link.getNotePosition() == Position.LEFT) {
-				noteLabelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
+				labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
 			} else if (link.getNotePosition() == Position.RIGHT) {
-				noteLabelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
+				labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
 			} else if (link.getNotePosition() == Position.TOP) {
-				noteLabelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
+				labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
 			} else {
-				noteLabelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
+				labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
 			}
 		} else if (labelOnly != null) {
-			noteLabelText = labelOnly;
+			labelText = labelOnly;
 		} else if (noteOnly != null) {
-			noteLabelText = noteOnly;
+			labelText = noteOnly;
 		} else {
-			noteLabelText = null;
+			labelText = null;
 		}
 
 		if (link.getQualifier1() == null) {
 			startTailText = null;
 		} else {
-			startTailText = Display.getWithNewlines(link.getQualifier1()).create(labelFont, HorizontalAlignment.CENTER, skinParam);
+			startTailText = Display.getWithNewlines(link.getQualifier1()).create(labelFont, HorizontalAlignment.CENTER,
+					skinParam);
 		}
 
 		if (link.getQualifier2() == null) {
 			endHeadText = null;
 		} else {
-			endHeadText = Display.getWithNewlines(link.getQualifier2()).create(labelFont, HorizontalAlignment.CENTER, skinParam);
+			endHeadText = Display.getWithNewlines(link.getQualifier2()).create(labelFont, HorizontalAlignment.CENTER,
+					skinParam);
 		}
 
 	}
 
 	public boolean hasNoteLabelText() {
-		return noteLabelText != null;
+		return labelText != null;
 	}
 
 	private LinkArrow getLinkArrow() {
@@ -329,10 +336,10 @@ public class Line implements Moveable, Hideable {
 			sb.append(",");
 		}
 		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
-		if (noteLabelText != null) {
+		if (labelText != null) {
 			sb.append(",");
 			sb.append("label=<");
-			appendTable(sb, noteLabelText.calculateDimension(stringBounder), noteLabelColor);
+			appendTable(sb, labelText.calculateDimension(stringBounder), noteLabelColor);
 			sb.append(">");
 			// sb.append(",labelfloat=true");
 		}
@@ -469,11 +476,11 @@ public class Line implements Moveable, Hideable {
 		this.extremity2 = getExtremity(linkType.getHat2(), linkType.getDecor2(), pointListIterator);
 		this.extremity1 = getExtremity(linkType.getHat1(), linkType.getDecor1(), pointListIterator);
 
-		if (this.noteLabelText != null) {
+		if (this.labelText != null) {
 			final Point2D pos = getXY(svg, this.noteLabelColor, fullHeight);
 			if (pos != null) {
 				corner1.manage(pos);
-				this.noteLabelXY = TextBlockUtils.asPositionable(noteLabelText, stringBounder, pos);
+				this.labelXY = TextBlockUtils.asPositionable(labelText, stringBounder, pos);
 			}
 		}
 
@@ -556,13 +563,24 @@ public class Line implements Moveable, Hideable {
 		if (link.isInvis()) {
 			return;
 		}
-		if (this.link.getSpecificColor() != null) {
+
+		if (this.link.getColors() != null) {
+			final HtmlColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
+			if (newColor != null) {
+				color = newColor;
+			}
+
+		} else if (this.link.getSpecificColor() != null) {
 			color = this.link.getSpecificColor();
 		}
 
 		ug = ug.apply(new UChangeBackColor(null)).apply(new UChangeColor(color));
 		final LinkType linkType = link.getType();
-		ug = ug.apply(linkType.getStroke());
+		UStroke stroke = linkType.getStroke();
+		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
+			stroke = link.getColors().getSpecificLineStroke();
+		}
+		ug = ug.apply(stroke);
 		double moveStartX = 0;
 		double moveStartY = 0;
 		double moveEndX = 0;
@@ -621,9 +639,9 @@ public class Line implements Moveable, Hideable {
 			}
 			this.extremity2.drawU(ug.apply(new UTranslate(x + moveStartX, y + moveStartY)));
 		}
-		if (this.noteLabelText != null && this.noteLabelXY != null) {
-			this.noteLabelText.drawU(ug.apply(new UTranslate(x + this.noteLabelXY.getPosition().getX(), y
-					+ this.noteLabelXY.getPosition().getY())));
+		if (this.labelText != null && this.labelXY != null) {
+			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX(), y
+					+ this.labelXY.getPosition().getY())));
 		}
 		if (this.startTailText != null) {
 			this.startTailText.drawU(ug.apply(new UTranslate(x + this.startTailLabelXY.getPosition().getX(), y
@@ -668,8 +686,8 @@ public class Line implements Moveable, Hideable {
 		} else {
 			return 0;
 		}
-		if (noteLabelText != null) {
-			strategy.eat(noteLabelText.calculateDimension(stringBounder).getWidth());
+		if (labelText != null) {
+			strategy.eat(labelText.calculateDimension(stringBounder).getWidth());
 		}
 		if (startTailText != null) {
 			strategy.eat(startTailText.calculateDimension(stringBounder).getWidth());
@@ -692,8 +710,8 @@ public class Line implements Moveable, Hideable {
 			return 0;
 		}
 		final ArithmeticStrategy strategy = new ArithmeticStrategySum();
-		if (noteLabelText != null) {
-			strategy.eat(noteLabelText.calculateDimension(stringBounder).getHeight());
+		if (labelText != null) {
+			strategy.eat(labelText.calculateDimension(stringBounder).getHeight());
 		}
 		if (startTailText != null) {
 			strategy.eat(startTailText.calculateDimension(stringBounder).getHeight());

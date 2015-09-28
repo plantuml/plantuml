@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.Preprocessor;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
@@ -52,7 +53,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 final public class BlockUmlBuilder {
 
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
-	private Set<File> usedFiles = new HashSet<File>();
+	private Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
 	private final UncommentReadLine reader2;
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
@@ -70,8 +71,7 @@ final public class BlockUmlBuilder {
 		}
 	}
 
-	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader)
-			throws IOException {
+	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader) throws IOException {
 		this(config, charset, defines, reader, null, null);
 	}
 
@@ -124,7 +124,7 @@ final public class BlockUmlBuilder {
 		return Collections.unmodifiableList(blocks);
 	}
 
-	public final Set<File> getIncludedFiles() {
+	public final Set<FileWithSuffix> getIncludedFiles() {
 		return Collections.unmodifiableSet(usedFiles);
 	}
 

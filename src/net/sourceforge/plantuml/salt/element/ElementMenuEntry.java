@@ -41,10 +41,8 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -58,7 +56,7 @@ public class ElementMenuEntry extends AbstractElement {
 	private double xxx;
 
 	public ElementMenuEntry(String text, UFont font, ISkinSimple spriteContainer) {
-		final FontConfiguration config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		final FontConfiguration config = FontConfiguration.blackBlueTrue(font);
 		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);
 		this.text = text;
 	}

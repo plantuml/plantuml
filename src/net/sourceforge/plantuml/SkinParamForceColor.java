@@ -48,7 +48,6 @@ public class SkinParamForceColor extends SkinParamDelegator {
 	}
 
 	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
-		System.err.println("param=" + param);
 		if (colorParam == param) {
 			return color;
 		}

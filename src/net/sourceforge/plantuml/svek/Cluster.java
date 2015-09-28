@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -68,6 +69,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -140,7 +142,7 @@ public class Cluster implements Moveable {
 		}
 		this.color = colorSequence.getValue();
 		this.colorTitle = colorSequence.getValue();
-		this.skinParam = skinParam;
+		this.skinParam = group.getColors(skinParam).mute(skinParam);
 	}
 
 	@Override
@@ -291,18 +293,17 @@ public class Cluster implements Moveable {
 	}
 
 	private static HtmlColor getColor(ColorParam colorParam, ISkinParam skinParam, Stereotype stereotype) {
-		return new Rose().getHtmlColor(skinParam, colorParam, stereotype);
+		return SkinParamUtils.getColor(skinParam, colorParam, stereotype);
 	}
 
 	public void drawU(UGraphic ug, DotData dotData, UStroke stroke) {
 
 		final Stereotype stereotype = group.getStereotype();
-
 		HtmlColor borderColor;
 		if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
-			borderColor = getColor(ColorParam.stateBorder, dotData.getSkinParam(), stereotype);
+			borderColor = getColor(ColorParam.stateBorder, skinParam, stereotype);
 		} else {
-			borderColor = getColor(ColorParam.packageBorder, dotData.getSkinParam(), stereotype);
+			borderColor = getColor(ColorParam.packageBorder, skinParam, stereotype);
 		}
 
 		final Url url = group.getUrl99();
@@ -319,11 +320,11 @@ public class Cluster implements Moveable {
 			}
 			final boolean isState = dotData.getUmlDiagramType() == UmlDiagramType.STATE;
 			if (isState) {
-				if (group.getSpecificLineStroke() != null) {
-					stroke = group.getSpecificLineStroke();
+				if (group.getColors(skinParam).getSpecificLineStroke() != null) {
+					stroke = group.getColors(skinParam).getSpecificLineStroke();
 				}
-				if (group.getSpecificLineColor() != null) {
-					borderColor = group.getSpecificLineColor();
+				if (group.getColors(skinParam).getColor(ColorType.LINE) != null) {
+					borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 				}
 				drawUState(ug, borderColor, dotData, stroke);
 				return;
@@ -793,7 +794,7 @@ public class Cluster implements Moveable {
 		if (EntityUtils.groupRoot(group)) {
 			return null;
 		}
-		final HtmlColor result = group.getSpecificBackColor();
+		final HtmlColor result = group.getColors(skinParam).getColor(ColorType.BACK);
 		if (result != null) {
 			return result;
 		}

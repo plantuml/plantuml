@@ -38,6 +38,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -64,7 +65,7 @@ import net.sourceforge.plantuml.StringUtils;
  * @author Arnaud Roques
  * 
  */
-public class FileFormatOption {
+public class FileFormatOption implements Serializable {
 
 	private final FileFormat fileFormat;
 	private final AffineTransform affineTransform;
@@ -75,7 +76,7 @@ public class FileFormatOption {
 	public FileFormatOption(FileFormat fileFormat) {
 		this(fileFormat, null, true, false, "_top");
 	}
-	
+
 	public String getSvgLinkTarget() {
 		return svgLinkTarget;
 	}
@@ -88,7 +89,8 @@ public class FileFormatOption {
 		this(fileFormat, null, false, false, "_top");
 	}
 
-	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError, String svgLinkTarget) {
+	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError,
+			String svgLinkTarget) {
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
 		this.withMetadata = withMetadata;

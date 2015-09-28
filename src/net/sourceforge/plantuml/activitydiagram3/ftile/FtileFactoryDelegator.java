@@ -48,10 +48,10 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.Sprite;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
@@ -69,19 +69,15 @@ public class FtileFactoryDelegator implements FtileFactory {
 		}
 		return color;
 	}
-	
+
 	protected final TextBlock getTextBlock(Display display) {
 		if (Display.isNull(display)) {
 			return null;
 		}
 		final ISkinParam skinParam = getSkinParam();
-		final UFont font = skinParam.getFont(FontParam.ACTIVITY_ARROW, null, false);
-		final HtmlColor color = rose.getFontColor(skinParam, FontParam.ACTIVITY_ARROW);
-		final FontConfiguration fontConfiguration = new FontConfiguration(font, color, skinParam.getHyperlinkColor(),
-				skinParam.useUnderlineForHyperlink());
+		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.ACTIVITY_ARROW, null);
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, this, CreoleMode.SIMPLE_LINE);
 	}
-
 
 	protected Display getInLinkRenderingDisplay(Ftile tile) {
 		final LinkRendering linkRendering = tile.getInLinkRendering();
@@ -108,8 +104,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.stop(swimlane);
 	}
 
-	public Ftile activity(Display label, HtmlColor color, Swimlane swimlane, BoxStyle style) {
-		return factory.activity(label, color, swimlane, style);
+	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors) {
+		return factory.activity(label, swimlane, style, colors);
 	}
 
 	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition) {
@@ -132,7 +128,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.assembly(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test, Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering) {
+	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test, Display yes, Display out, HtmlColor color,
+			LinkRendering backRepeatLinkRendering) {
 		return factory.repeat(swimlane, repeat, test, yes, out, color, backRepeatLinkRendering);
 	}
 
@@ -141,8 +138,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createWhile(swimlane, whileBlock, test, yes, out, afterEndwhile, color);
 	}
 
-	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch) {
-		return factory.createIf(swimlane, thens, elseBranch);
+	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile, LinkRendering topInlinkRendering) {
+		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
 	}
 
 	public Ftile createFork(Swimlane swimlane, List<Ftile> all) {
@@ -195,6 +192,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	public String getMonospacedFamily() {
 		return skinParam.getMonospacedFamily();
+	}
+
+	public int getTabSize() {
+		return skinParam.getTabSize();
 	}
 
 }

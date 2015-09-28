@@ -41,10 +41,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -56,7 +54,7 @@ abstract class AbstractElementText extends AbstractElement {
 	private final int charLength;
 
 	public AbstractElementText(String text, UFont font, boolean manageLength, ISkinSimple spriteContainer) {
-		config = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+		config = FontConfiguration.blackBlueTrue(font);
 		if (manageLength) {
 			this.charLength = getCharNumber(text);
 			text = StringUtils.trin(text);

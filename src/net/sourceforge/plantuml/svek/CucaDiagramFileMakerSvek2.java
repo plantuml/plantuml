@@ -86,6 +86,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.image.EntityImageActivity;
 import net.sourceforge.plantuml.svek.image.EntityImageArcCircle;
 import net.sourceforge.plantuml.svek.image.EntityImageAssociation;
@@ -175,9 +176,7 @@ public final class CucaDiagramFileMakerSvek2 {
 					lhead = getCluster2((IEntity) link.getEntity2()).getClusterId();
 				}
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = new FontConfiguration(skinParam.getFont(FontParam.GENERIC_ARROW,
-						null, false), skinParam.getFontHtmlColor(FontParam.GENERIC_ARROW, null),
-						skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
+				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
 
 				final Line line = new Line(shapeUid1, shapeUid2, link, colorSequence, ltail, lhead, skinParam,
 						stringBounder, labelFont, getBibliotekon(), dotStringFactory.getGraphvizVersion(),
@@ -188,12 +187,14 @@ public final class CucaDiagramFileMakerSvek2 {
 				if (link.getEntity1().isGroup() == false && link.getEntity1().getEntityType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity1())) {
 					final Shape shape = getBibliotekon().getShape(link.getEntity1());
-					((EntityImageNote) shape.getImage()).setOpaleLine(line, shape);
+					final Shape other = getBibliotekon().getShape(link.getEntity2());
+					((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 					line.setOpale(true);
 				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getEntityType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity2())) {
 					final Shape shape = getBibliotekon().getShape(link.getEntity2());
-					((EntityImageNote) shape.getImage()).setOpaleLine(line, shape);
+					final Shape other = getBibliotekon().getShape(link.getEntity1());
+					((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 					line.setOpale(true);
 				}
 			} catch (IllegalStateException e) {
@@ -487,12 +488,14 @@ public final class CucaDiagramFileMakerSvek2 {
 						g.getParentContainer(), null, dotData.getNamespaceSeparator());
 				final USymbol symbol = g.getUSymbol();
 				folder.setUSymbol(symbol);
-				if (g.getSpecificBackColor() == null) {
+				if (g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK) == null) {
 					final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
 					final HtmlColor c1 = dotData.getSkinParam().getHtmlColor(param, g.getStereotype(), false);
-					folder.setSpecificBackcolor(c1 == null ? dotData.getSkinParam().getBackgroundColor() : c1);
+					folder.setSpecificColorTOBEREMOVED(ColorType.BACK, c1 == null ? dotData.getSkinParam()
+							.getBackgroundColor() : c1);
 				} else {
-					folder.setSpecificBackcolor(g.getSpecificBackColor());
+					folder.setSpecificColorTOBEREMOVED(ColorType.BACK,
+							g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK));
 				}
 				printEntity(folder);
 			} else {
@@ -550,9 +553,10 @@ public final class CucaDiagramFileMakerSvek2 {
 
 		final FontParam fontParam = g.getTitleFontParam();
 		final HtmlColor fontHtmlColor = dotData.getSkinParam().getFontHtmlColor(fontParam, stereotype);
-		return label.create(new FontConfiguration(dotData.getSkinParam().getFont(fontParam, stereotype, true),
-				fontHtmlColor, dotData.getSkinParam().getHyperlinkColor(), dotData.getSkinParam()
-						.useUnderlineForHyperlink()), HorizontalAlignment.CENTER, dotData.getSkinParam());
+		final FontConfiguration fontConfiguration = new FontConfiguration(dotData.getSkinParam().getFont(fontParam,
+				stereotype, true), fontHtmlColor, dotData.getSkinParam().getHyperlinkColor(), dotData.getSkinParam()
+				.useUnderlineForHyperlink(), dotData.getSkinParam().getTabSize());
+		return label.create(fontConfiguration, HorizontalAlignment.CENTER, dotData.getSkinParam());
 	}
 
 	private TextBlock getStereoBlock(IGroup g) {
@@ -570,11 +574,7 @@ public final class CucaDiagramFileMakerSvek2 {
 		}
 
 		final FontParam fontParam = FontParam.PACKAGE_STEREOTYPE;
-		final HtmlColor fontHtmlColor = dotData.getSkinParam().getFontHtmlColor(fontParam, stereotype);
-		return Display.create(stereos).create(
-				new FontConfiguration(dotData.getSkinParam().getFont(fontParam, stereotype, false), fontHtmlColor,
-						dotData.getSkinParam().getHyperlinkColor(), dotData.getSkinParam().useUnderlineForHyperlink()),
+		return Display.create(stereos).create(new FontConfiguration(dotData.getSkinParam(), fontParam, stereotype),
 				HorizontalAlignment.CENTER, dotData.getSkinParam());
 	}
-
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16528 $
+ * Revision $Revision: 17068 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -39,11 +39,9 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -55,8 +53,8 @@ class EntityImageDefault extends AbstractEntityImage {
 
 	public EntityImageDefault(IEntity entity) {
 		super(entity);
-		this.textBlock = entity.getDisplay().create(new FontConfiguration(getFont14(), HtmlColorUtils.BLACK,
-		HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+		this.textBlock = entity.getDisplay().create(FontConfiguration.blackBlueTrue(getFont14()),
+				HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -72,6 +70,6 @@ class EntityImageDefault extends AbstractEntityImage {
 		final int height = (int) dim.getHeight();
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(0, 0, width, height);
-//		textBlock.drawTOBEREMOVED(colorMapper, g2d, 0, 0);
+		// textBlock.drawTOBEREMOVED(colorMapper, g2d, 0, 0);
 	}
 }

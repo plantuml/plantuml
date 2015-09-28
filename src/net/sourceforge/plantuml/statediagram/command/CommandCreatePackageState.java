@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
-import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -49,7 +48,10 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> {
@@ -72,11 +74,16 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
 				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)$"));
 	}
+	
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 
 	private String getNotNull(RegexResult arg, String v1, String v2) {
 		if (arg.get(v1, 0) == null) {
@@ -105,9 +112,21 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 			final Url url = urlBuilder.getUrl(urlString);
 			p.addUrl(url);
 		}
-		p.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
-		p.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
-		CommandCreateClassMultilines.applyStroke(p, arg.get("LINECOLOR", 0));
+		
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
+		final HtmlColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1));
+		if (lineColor != null) {
+			colors = colors.add(ColorType.LINE, lineColor);
+		}
+		if (arg.get("LINECOLOR", 0) != null) {
+			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
+		}
+		p.setColors(colors);
+
+//		p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+//		p.setSpecificColorTOBEREMOVED(ColorType.LINE, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
+//		p.applyStroke(arg.get("LINECOLOR", 0));
 		return CommandExecutionResult.ok();
 	}
 

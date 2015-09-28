@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12866 $
+ * Revision $Revision: 17341 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -38,12 +38,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 @Deprecated
 public class DirWatcher {
@@ -78,7 +78,7 @@ public class DirWatcher {
 			if (watcher == null || watcher.hasChanged()) {
 				final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
 						option.getConfig(), option.getCharset(), option.getFileFormatOption());
-				final Set<File> files = new HashSet<File>(sourceFileReader.getIncludedFiles());
+				final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
 				files.add(f);
 				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
 					result.add(g);

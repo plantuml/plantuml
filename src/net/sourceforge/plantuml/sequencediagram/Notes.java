@@ -62,4 +62,8 @@ public class Notes extends AbstractEvent implements Event, Iterable<Note> {
 	public Iterator<Note> iterator() {
 		return notes.iterator();
 	}
+
+	public Note get(int i) {
+		return notes.get(i);
+	}
 }

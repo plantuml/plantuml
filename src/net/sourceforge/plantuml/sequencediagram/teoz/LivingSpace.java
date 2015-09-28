@@ -154,7 +154,7 @@ public class LivingSpace {
 	public void drawLineAndLiveBoxes(UGraphic ug, double height, Context2D context) {
 
 		mutingLine.drawLine(ug, context, createY, height);
-		liveBoxes.drawBoxes(ug, height, context);
+		liveBoxes.drawBoxes(ug, context, createY, height);
 	}
 
 	// public void addDelayTile(DelayTile tile) {
@@ -226,7 +226,7 @@ public class LivingSpace {
 	}
 
 	public void goCreate(double y) {
-		System.err.println("LivingSpace::goCreate");
+		System.err.println("LivingSpace::goCreate y=" + y);
 		this.createY = y;
 		this.create = true;
 	}

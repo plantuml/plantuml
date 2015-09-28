@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16528 $
+ * Revision $Revision: 17068 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -57,8 +57,8 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	public EntityImageUsecase(IEntity entity) {
 		super(entity);
-		this.name = entity.getDisplay().create(new FontConfiguration(getFont14(), 
-		HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true), HorizontalAlignment.CENTER, new SpriteContainerEmpty());
+		this.name = entity.getDisplay().create(FontConfiguration.blackBlueTrue(getFont14()),
+				HorizontalAlignment.CENTER, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -93,9 +93,9 @@ class EntityImageUsecase extends AbstractEntityImage {
 		g2d.setColor(colorMapper.getMappedColor(getRed()));
 		g2d.draw(ellipse);
 
-//		final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
-//		final double posx = (w - nameDim.getWidth()) / 2;
-//		final double posy = (h - nameDim.getHeight()) / 2;
+		// final Dimension2D nameDim = name.calculateDimension(StringBounderUtils.asStringBounder(g2d));
+		// final double posx = (w - nameDim.getWidth()) / 2;
+		// final double posy = (h - nameDim.getHeight()) / 2;
 		// final Shape rect = new Rectangle2D.Double(posx, posy, nameDim.getWidth(), nameDim.getHeight());
 		// g2d.draw(rect);
 

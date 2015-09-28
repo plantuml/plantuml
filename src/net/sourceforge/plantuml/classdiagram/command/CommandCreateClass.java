@@ -49,8 +49,12 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
@@ -94,8 +98,8 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				new RegexLeaf("$"));
 	}
 
-	public static ColorParser color() {
-		return ColorParser.simpleColor();
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -129,9 +133,27 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			entity.addUrl(url);
 		}
 
-		entity.setSpecificBackcolor(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
-		entity.setSpecificLineColor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
-		CommandCreateClassMultilines.applyStroke(entity, arg.get("LINECOLOR", 0));
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
+		final HtmlColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1));
+		if (lineColor != null) {
+			colors = colors.add(ColorType.LINE, lineColor);
+		}
+		if (arg.get("LINECOLOR", 0) != null) {
+			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
+		}
+		entity.setColors(colors);
+
+		// entity.setSpecificColorTOBEREMOVED(ColorType.LINE, lineColor);
+		// entity.setSpecificColorTOBEREMOVED(ColorType.HEADER, colors.getColor(ColorType.HEADER));
+		//
+		// if (colors.getLineStyle() != null) {
+		// entity.setSpecificLineStroke(LinkStyle.getStroke(colors.getLineStyle()));
+		// }
+		//
+		// if (arg.get("LINECOLOR", 0) != null) {
+		// entity.applyStroke(arg.get("LINECOLOR", 0));
+		// }
 
 		// manageExtends(diagram, arg, entity);
 		CommandCreateClassMultilines.manageExtends("EXTENDS", diagram, arg, entity);
@@ -139,7 +161,6 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		return CommandExecutionResult.ok();
 	}
-
 	// public static void manageExtends(ClassDiagram system, RegexResult arg, final IEntity entity) {
 	// if (arg.get("EXTENDS", 1) != null) {
 	// final Mode mode = arg.get("EXTENDS", 1).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;

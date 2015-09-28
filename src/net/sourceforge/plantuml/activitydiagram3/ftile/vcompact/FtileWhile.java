@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.FileGroup;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
@@ -63,7 +62,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -71,7 +69,6 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -102,10 +99,7 @@ class FtileWhile extends AbstractFtile {
 		this.supplementarySouthText = supplementarySouthText;
 	}
 
-	private static TextBlock createLabel1(Display test, Display yes, UFont font, ISkinSimple spriteContainer,
-			HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, hyperlinkColor,
-				useUnderlineForHyperlink);
+	private static TextBlock createLabel1(Display test, Display yes, ISkinSimple spriteContainer, FontConfiguration fc) {
 		final TextBlock tmpb = yes.create(fc, HorizontalAlignment.LEFT, spriteContainer);
 		if (test == null) {
 			return tmpb;
@@ -115,17 +109,13 @@ class FtileWhile extends AbstractFtile {
 	}
 
 	public static Ftile create(Swimlane swimlane, Ftile whileBlock, Display test, HtmlColor borderColor,
-			HtmlColor backColor, HtmlColor arrowColor, Display yes, Display out2, UFont fontArrow,
-			HtmlColor endInlinkColor, LinkRendering afterEndwhile, FtileFactory ftileFactory,
-			ConditionStyle conditionStyle, UFont fontTest, HtmlColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+			HtmlColor backColor, HtmlColor arrowColor, Display yes, Display out2, HtmlColor endInlinkColor,
+			LinkRendering afterEndwhile, FontConfiguration fontArrow, FtileFactory ftileFactory,
+			ConditionStyle conditionStyle, FontConfiguration fcTest) {
 
-		final FontConfiguration fcArrow = new FontConfiguration(fontArrow, HtmlColorUtils.BLACK, hyperlinkColor,
-				useUnderlineForHyperlink);
-		final FontConfiguration fcTest = new FontConfiguration(fontTest, HtmlColorUtils.BLACK, hyperlinkColor,
-				useUnderlineForHyperlink);
-		final TextBlock yesTb = yes.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory);
 		final TextBlock testTb = test.create(fcTest, HorizontalAlignment.LEFT, ftileFactory);
-		final TextBlock out = out2.create(fcArrow, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory);
 
 		final Ftile diamond1;
 		final TextBlock supplementarySouthText;
@@ -138,8 +128,7 @@ class FtileWhile extends AbstractFtile {
 			diamond1 = new FtileDiamondFoo1(whileBlock.shadowing(), backColor, borderColor, swimlane, testTb)
 					.withNorth(yesTb).withWest(out);
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			supplementarySouthText = createLabel1(test, yes, fontArrow, ftileFactory, hyperlinkColor,
-					useUnderlineForHyperlink);
+			supplementarySouthText = createLabel1(test, yes, ftileFactory, fontArrow);
 			diamond1 = new FtileDiamond(whileBlock.shadowing(), backColor, borderColor, swimlane).withWest(out)
 					.withSouth(supplementarySouthText);
 		} else {

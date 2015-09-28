@@ -42,6 +42,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -53,6 +54,18 @@ public class LivingSpaces {
 
 	public Collection<LivingSpace> values() {
 		return all.values();
+	}
+
+	public void addConstraints(StringBounder stringBounder) {
+		LivingSpace previous = null;
+		for (LivingSpace current : all.values()) {
+			if (previous != null) {
+				final Real point1 = previous.getPosD(stringBounder);
+				final Real point2 = current.getPosB();
+				point2.ensureBiggerThan(point1.addFixed(10));
+			}
+			previous = current;
+		}
 	}
 
 	public LivingSpace previous(LivingSpace element) {

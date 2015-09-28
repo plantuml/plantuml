@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 16359 $
+ * Revision $Revision: 17341 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -72,19 +72,19 @@ class PreprocessorInclude implements ReadLine {
 	private PreprocessorInclude included = null;
 
 	private final File oldCurrentDir;
-	private final Set<File> filesUsedCurrent;
-	private final Set<File> filesUsedGlobal;
+	private final Set<FileWithSuffix> filesUsedCurrent;
+	private final Set<FileWithSuffix> filesUsedGlobal;
 
 	public PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir) {
-		this(reader, defines, charset, newCurrentDir, new HashSet<File>(), new HashSet<File>());
+		this(reader, defines, charset, newCurrentDir, new HashSet<FileWithSuffix>(), new HashSet<FileWithSuffix>());
 	}
 
-	public Set<File> getFilesUsedGlobal() {
+	public Set<FileWithSuffix> getFilesUsedGlobal() {
 		return Collections.unmodifiableSet(filesUsedGlobal);
 	}
 
 	private PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir,
-			Set<File> filesUsedCurrent, Set<File> filesUsedGlobal) {
+			Set<FileWithSuffix> filesUsedCurrent, Set<FileWithSuffix> filesUsedGlobal) {
 		this.defines = defines;
 		this.charset = charset;
 		this.reader2 = reader;
@@ -172,13 +172,14 @@ class PreprocessorInclude implements ReadLine {
 			fileName = fileName.substring(0, idx);
 		}
 		final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
+		final FileWithSuffix f2 = new FileWithSuffix(f, suf);
 		if (f.exists() == false) {
 			return CharSequence2Impl.errorPreprocessor("Cannot include " + f.getAbsolutePath(), lineLocation);
-		} else if (filesUsedCurrent.contains(f)) {
+		} else if (filesUsedCurrent.contains(f2)) {
 			return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
 		} else {
-			filesUsedCurrent.add(f);
-			filesUsedGlobal.add(f);
+			filesUsedCurrent.add(f2);
+			filesUsedGlobal.add(f2);
 			included = new PreprocessorInclude(getReaderInclude(f, suf, lineLocation), defines, charset, f.getParentFile(),
 					filesUsedCurrent, filesUsedGlobal);
 		}

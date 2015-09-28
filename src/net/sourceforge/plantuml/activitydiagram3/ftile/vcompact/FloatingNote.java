@@ -64,17 +64,17 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 	public FloatingNote(Display note, ISkinParam skinParam) {
 
 		final Rose rose = new Rose();
-		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
-		final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
 
 		final HtmlColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 		final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
 
-		final FontConfiguration fc = new FontConfiguration(fontNote, fontColor, skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink());
+		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
-		final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL).createSheet(note);
-		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), this, new UStroke(1));
-		this.opale =  new Opale(borderColor, noteBackgroundColor, sheetBlock2, skinParam.shadowing(), false);
+		final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
+				.createSheet(note);
+		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), this,
+				new UStroke(1));
+		this.opale = new Opale(borderColor, noteBackgroundColor, sheetBlock2, skinParam.shadowing(), false);
 
 		// this.text = sheetBlock2;
 

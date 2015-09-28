@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -61,7 +60,7 @@ public class TimeHeaderMonth extends AbstractTextBlock implements TextBlock {
 	private final double dayWidth;
 
 	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
-	private final FontConfiguration fontConfig = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, true);
+	private final FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(font);
 
 	public TimeHeaderMonth(Day start, Day end, TimeLine timeline, double dayWidth) {
 		this.start = start;
@@ -73,7 +72,7 @@ public class TimeHeaderMonth extends AbstractTextBlock implements TextBlock {
 	public void drawU(UGraphic ug) {
 		int n = 0;
 		String last = null;
-		
+
 		double pendingX = -1;
 		for (Day d = start; d.compareTo(end) <= 0; d = (Day) timeline.next(d)) {
 			final String text = "" + d.getMonth().name();
@@ -96,7 +95,8 @@ public class TimeHeaderMonth extends AbstractTextBlock implements TextBlock {
 	private void manage(UGraphic ug, double x, double y, int n, String last, double pendingX) {
 		final double width = n * dayWidth - pendingX;
 		ug.apply(new UTranslate(x + pendingX, y)).draw(new URectangle(width, getHeight()));
-		final TextBlock b = Display.create(last).create(fontConfig, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		final TextBlock b = Display.create(last).create(fontConfig, HorizontalAlignment.LEFT,
+				new SpriteContainerEmpty());
 		final Dimension2D dimText = b.calculateDimension(ug.getStringBounder());
 		final double diffX = width - dimText.getWidth();
 		final double diffY = getHeight() - dimText.getHeight();

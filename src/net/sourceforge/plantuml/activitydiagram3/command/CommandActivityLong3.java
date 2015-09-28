@@ -43,8 +43,9 @@ import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -57,9 +58,13 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 		return "^(.*)" + CommandActivity3.ENDING_GROUP + "$";
 	}
 
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				ColorParser.exp5(), //
+				color().getRegex(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("DATA", "(.*)"), //
 				new RegexLeaf("$"));
@@ -68,10 +73,11 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
 		final BoxStyle style = BoxStyle.fromChar(lines.getLastChar());
 		lines = lines.removeStartingAndEnding2(line0.get("DATA", 0));
-		diagram.addActivity(lines.toDisplay(), color, style, null);
+		diagram.addActivity(lines.toDisplay(), style, null, colors);
 		return CommandExecutionResult.ok();
 	}
 }

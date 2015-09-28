@@ -1,0 +1,189 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2014, Arnaud Roques
+ *
+ * Project Info:  http://plantuml.sourceforge.net
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
+ * in the United States and other countries.]
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ * Revision $Revision: 7946 $
+ *
+ */
+package net.sourceforge.plantuml.graphic.color;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.SkinParamColors;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.LinkStyle;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+
+public class Colors {
+
+	private final Map<ColorType, HtmlColor> map = new EnumMap<ColorType, HtmlColor>(ColorType.class);
+	private LinkStyle lineStyle = null;
+
+	@Override
+	public String toString() {
+		return map.toString() + " " + lineStyle;
+	}
+
+	public static Colors empty() {
+		return new Colors();
+	}
+
+	private Colors copy() {
+		final Colors result = new Colors();
+		result.map.putAll(this.map);
+		result.lineStyle = this.lineStyle;
+		return result;
+	}
+
+	private Colors() {
+	}
+
+	public Colors(String data, IHtmlColorSet set, ColorType mainType) {
+		data = StringUtils.goLowerCase(data);
+
+		for (final StringTokenizer st = new StringTokenizer(data, "#;"); st.hasMoreTokens();) {
+			final String s = st.nextToken();
+			final int x = s.indexOf(':');
+			if (x == -1) {
+				if (s.contains(".") == false) {
+					map.put(mainType, set.getColorIfValid(s));
+				}
+			} else {
+				final ColorType key = ColorType.getType(s.substring(0, x));
+				final HtmlColor color = set.getColorIfValid(s.substring(x + 1));
+				map.put(key, color);
+			}
+		}
+		if (data.contains("line.dashed")) {
+			lineStyle = LinkStyle.DASHED;
+		} else if (data.contains("line.dotted")) {
+			lineStyle = LinkStyle.DOTTED;
+		} else if (data.contains("line.bold")) {
+			lineStyle = LinkStyle.BOLD;
+		}
+	}
+
+	public HtmlColor getColor(ColorType key) {
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+		return map.get(key);
+	}
+
+	public HtmlColor getColor(ColorType key1, ColorType key2) {
+		final HtmlColor result = getColor(key1);
+		if (result != null) {
+			return result;
+		}
+		return getColor(key2);
+	}
+
+	public UStroke getSpecificLineStroke() {
+		if (lineStyle == null) {
+			return null;
+		}
+		return LinkStyle.getStroke(lineStyle);
+	}
+
+	// public Colors addSpecificLineStroke(UStroke specificStroke) {
+	// final Colors result = copy();
+	// result.specificStroke = specificStroke;
+	// return result;
+	// }
+
+	public Colors add(ColorType type, HtmlColor color) {
+		final Colors result = copy();
+		result.map.put(type, color);
+		return result;
+	}
+
+	private Colors add(ColorType colorType, Colors other) {
+		final Colors result = copy();
+		result.map.putAll(other.map);
+		if (other.lineStyle != null) {
+			result.lineStyle = other.lineStyle;
+		}
+		return result;
+	}
+
+	public final LinkStyle getLineStyle() {
+		return lineStyle;
+	}
+
+	public ISkinParam mute(ISkinParam skinParam) {
+		return new SkinParamColors(skinParam, this);
+	}
+
+	public Colors addLegacyStroke(String s) {
+		if (s == null) {
+			throw new IllegalArgumentException();
+		}
+		final Colors result = copy();
+		result.lineStyle = LinkStyle.valueOf(StringUtils.goUpperCase(s));
+		return result;
+
+	}
+
+	public static UGraphic applyStroke(UGraphic ug, Colors colors) {
+		if (colors == null) {
+			return ug;
+		}
+		if (colors.lineStyle == null) {
+			return ug;
+		}
+		return ug.apply(LinkStyle.getStroke(colors.lineStyle));
+	}
+
+	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param) {
+		if (stereotype == null) {
+			throw new IllegalArgumentException();
+		}
+		if (param == null) {
+			throw new IllegalArgumentException();
+		}
+		final ColorType colorType = param.getColorType();
+		if (colorType == null) {
+			throw new IllegalArgumentException();
+		}
+		if (getColor(colorType) != null) {
+			return this;
+		}
+		final Colors colors = skinParam.getColors(param, stereotype);
+		return add(colorType, colors);
+	}
+
+}

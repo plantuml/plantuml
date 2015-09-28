@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
@@ -88,9 +89,8 @@ public class EntityImageState extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 
-		this.desc = entity.getDisplay().create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-				FontParam.STATE, stereotype), SkinParamUtils.getFontColor(getSkinParam(), FontParam.STATE,
-		stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam);
+		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
+				HorizontalAlignment.CENTER, skinParam);
 
 		Display list = Display.empty();
 		for (Member att : entity.getBodier().getFieldsToDisplay()) {
@@ -99,9 +99,8 @@ public class EntityImageState extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		this.fields = list.create(new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-				FontParam.STATE_ATTRIBUTE, stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-		FontParam.STATE_ATTRIBUTE, stereotype), getSkinParam().getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.LEFT, skinParam);
+		this.fields = list.create(new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype),
+				HorizontalAlignment.LEFT, skinParam);
 
 	}
 
@@ -131,12 +130,12 @@ public class EntityImageState extends AbstractEntityImage {
 			rect.setDeltaShadow(4);
 		}
 
-		HtmlColor classBorder = lineConfig.getSpecificLineColor();
+		HtmlColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (classBorder == null) {
 			classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBorder, getStereo());
 		}
 		ug = ug.apply(getStroke()).apply(new UChangeColor(classBorder));
-		HtmlColor backcolor = getEntity().getSpecificBackColor();
+		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.stateBackground, getStereo());
 		}
@@ -169,7 +168,7 @@ public class EntityImageState extends AbstractEntityImage {
 	}
 
 	private UStroke getStroke() {
-		UStroke stroke = lineConfig.getSpecificLineStroke();
+		UStroke stroke = lineConfig.getColors(getSkinParam()).getSpecificLineStroke();
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}

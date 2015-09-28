@@ -73,9 +73,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		final HtmlColor color = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS, getStereo());
 		final Stereotype stereotype = entity.getStereotype();
 		final String generic = entity.getGeneric();
-		FontConfiguration fontConfigurationName = new FontConfiguration(SkinParamUtils.getFont(getSkinParam(),
-				FontParam.CLASS, stereotype), color, getSkinParam().getHyperlinkColor(), getSkinParam()
-				.useUnderlineForHyperlink());
+		FontConfiguration fontConfigurationName = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
 		if (italic) {
 			fontConfigurationName = fontConfigurationName.italic();
 		}
@@ -90,11 +88,8 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		} else {
 			stereo = TextBlockUtils.withMargin(
 					Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
-							new FontConfiguration(SkinParamUtils.getFont(getSkinParam(), FontParam.CLASS_STEREOTYPE,
-									stereotype), SkinParamUtils.getFontColor(getSkinParam(),
-									FontParam.CLASS_STEREOTYPE, stereotype), getSkinParam().getHyperlinkColor(),
-									getSkinParam().useUnderlineForHyperlink()), HorizontalAlignment.CENTER, skinParam),
-					1, 0);
+							new FontConfiguration(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
+							HorizontalAlignment.CENTER, skinParam), 1, 0);
 		}
 
 		TextBlock genericBlock;
@@ -102,10 +97,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 			genericBlock = null;
 		} else {
 			genericBlock = Display.getWithNewlines(generic).create(
-					new FontConfiguration(
-							SkinParamUtils.getFont(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
-							SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
-							skinParam.getHyperlinkColor(), getSkinParam().useUnderlineForHyperlink()),
+					new FontConfiguration(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 			final HtmlColor classBackground = SkinParamUtils

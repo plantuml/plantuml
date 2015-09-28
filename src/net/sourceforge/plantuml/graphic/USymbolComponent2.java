@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.USymbol.Margin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -47,7 +48,6 @@ class USymbolComponent2 extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.COMPONENT2;
 	}
-
 
 	private void drawNode(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing) {
 
@@ -72,7 +72,8 @@ class USymbolComponent2 extends USymbol {
 		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, TextBlock stereotype, final SymbolContext symbolContext) {
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -80,12 +81,16 @@ class USymbolComponent2 extends USymbol {
 				ug = symbolContext.apply(ug);
 				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Margin margin = getMargin();
-				label.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
+				
+				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
+				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
+				// label.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dim = label.calculateDimension(stringBounder);
-				return getMargin().addDimension(dim);
+				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
+				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel));
 			}
 		};
 	}

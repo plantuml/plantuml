@@ -39,13 +39,14 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Hideable;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Positionable;
+import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.StringUtils;
 
 public class Shape implements Positionable, IShapePseudo, Hideable {
 
@@ -77,6 +78,11 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 
 	public final void setCluster(Cluster cluster) {
 		this.cluster = cluster;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + image + " " + type;
 	}
 
 	public Shape(IEntityImage image, ShapeType type, double width, double height, ColorSequence colorSequence,
@@ -178,7 +184,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	private void appendShapeInternal(StringBuilder sb) {
 		if (type == ShapeType.RECTANGLE && shield > 0) {
 			throw new UnsupportedOperationException();
-		} else if (type == ShapeType.RECTANGLE) {
+		} else if (type == ShapeType.RECTANGLE || type == ShapeType.FOLDER) {
 			sb.append("shape=rect");
 		} else if (type == ShapeType.OCTAGON) {
 			sb.append("shape=octagon");
@@ -264,4 +270,18 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		return new Point2D.Double(minX + x, minY + y);
 	}
 
+	public Point2D projection(Point2D pt, StringBounder stringBounder) {
+		if (getType() != ShapeType.FOLDER) {
+			return pt;
+		}
+		final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + width, minY + height);
+		if (clusterPosition.isPointJustUpper(pt)) {
+			final Dimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
+			if (pt.getX() < minX + dimName.getWidth()) {
+				return pt;
+			}
+			return new Point2D.Double(pt.getX(), pt.getY() + dimName.getHeight() + 4);
+		}
+		return pt;
+	}
 }

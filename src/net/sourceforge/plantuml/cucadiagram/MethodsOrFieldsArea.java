@@ -69,7 +69,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		return new TextBlockLineBefore(TextBlockUtils.withMargin(this, 6, 4));
 	}
 
-	private final UFont font;
+	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final HtmlColor color;
 	private final HtmlColor hyperlinkColor;
@@ -86,7 +86,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			HorizontalAlignment align) {
 		this.align = align;
 		this.skinParam = skinParam;
-		this.font = skinParam.getFont(fontParam, null, false);
+		this.fontParam = fontParam;
 		this.color = rose.getFontColor(skinParam, fontParam);
 		this.hyperlinkColor = skinParam.getHyperlinkColor();
 		this.useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
@@ -128,7 +128,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		if (withVisibilityChar && s.startsWith("#")) {
 			s = CharHidder.addTileAtBegin(s);
 		}
-		FontConfiguration config = new FontConfiguration(font, color, hyperlinkColor, useUnderlineForHyperlink);
+		FontConfiguration config = new FontConfiguration(skinParam, fontParam, null);
 		if (m.isAbstract()) {
 			config = config.italic();
 		}
@@ -164,7 +164,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			final Dimension2D dim = bloc.calculateDimension(stringBounder);
 			return dim;
 		}
-		
+
 		@Override
 		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
 			return bloc.getInnerPosition(member, stringBounder);

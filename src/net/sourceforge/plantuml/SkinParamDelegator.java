@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -179,7 +180,7 @@ public class SkinParamDelegator implements ISkinParam {
 	public Rankdir getRankdir() {
 		return skinParam.getRankdir();
 	}
-	
+
 	public boolean useOctagonForActivity(Stereotype stereotype) {
 		return skinParam.useOctagonForActivity(stereotype);
 	}
@@ -220,5 +221,12 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getMonospacedFamily();
 	}
 
+	public Colors getColors(ColorParam param, Stereotype stereotype) {
+		return skinParam.getColors(param, stereotype);
+	}
+
+	public int getTabSize() {
+		return skinParam.getTabSize();
+	}
 
 }

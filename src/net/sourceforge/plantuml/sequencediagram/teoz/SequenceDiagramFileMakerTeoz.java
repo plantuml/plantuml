@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
@@ -122,9 +123,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		final UTranslate min1translate = new UTranslate(-min1.getCurrentValue(), 0);
-		final UGraphic2 ug2 = (UGraphic2) fileFormatOption.createUGraphic(getSkinParam().getColorMapper(),
-				diagram.getDpiFactor(fileFormatOption), dimTotal, getSkinParam().getBackgroundColor(), false).apply(
-				min1translate);
+		final double dpiFactor = diagram.getDpiFactor(fileFormatOption, dimTotal);
+		final UGraphic2 ug2 = (UGraphic2) fileFormatOption.createUGraphic(getSkinParam().getColorMapper(), dpiFactor,
+				dimTotal, getSkinParam().getBackgroundColor(), false).apply(min1translate);
 
 		UGraphic ug = getSkinParam().handwritten() ? new UGraphicHandwritten(ug2) : ug2;
 		englobers.drawEnglobers(goDownForEnglobers(ug), main.calculateDimension(stringBounder).getHeight()
@@ -196,6 +197,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 		this.englobers = new Englobers(tileArguments);
 		final MainTile mainTile = new MainTile(diagram, englobers, tileArguments);
+		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints(stringBounder);
 		this.englobers.addConstraints(stringBounder);
 		origin.compileNow();
