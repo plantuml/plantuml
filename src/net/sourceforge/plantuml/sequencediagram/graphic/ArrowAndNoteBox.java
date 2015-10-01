@@ -89,7 +89,7 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	public double getPreferredWidth(StringBounder stringBounder) {
 		double w = arrow.getPreferredWidth(stringBounder);
 		w = Math.max(w, arrow.getActualWidth(stringBounder));
-		return w + noteBox.getPreferredWidth(stringBounder);
+		return w + noteBox.getPreferredWidth(stringBounder) + 20;
 	}
 
 	@Override
