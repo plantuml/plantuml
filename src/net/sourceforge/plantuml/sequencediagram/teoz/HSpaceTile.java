@@ -28,31 +28,47 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5957 $
+ * Revision $Revision: 4636 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.HSpace;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class CommandMultilinesComment extends CommandMultilines<Diagram> {
+public class HSpaceTile implements Tile {
 
-	public static final String COMMENT_MULTILINE_START = "(?i)^[%s]*/[%q]([^%q]|[%q][^/])*$";
-	public static final String COMMENT_MULTILINE_END = "(?i)^([^%q]|[%q][^/])*[%q]/[%s]*$";
-	public static final String COMMENT_SINGLE_LINE = "(?i)^[%s]*([%q].*||/[%q].*[%q]/[%s]*)$";
-	public static final String INNER_COMMENT = "/[%q].*?[%q]/";
+	private final HSpace hspace;
+	private final Real origin;
 
-	public CommandMultilinesComment() {
-		super(COMMENT_MULTILINE_START);
+	public Event getEvent() {
+		return hspace;
 	}
 
-	@Override
-	public String getPatternEnd() {
-		return COMMENT_MULTILINE_END;
+	public HSpaceTile(HSpace hspace, TileArguments tileArguments) {
+		this.hspace = hspace;
+		this.origin = tileArguments.getOrigin();
 	}
 
-	public CommandExecutionResult execute(final Diagram diagram, BlocLines lines) {
-		return CommandExecutionResult.ok();
+	public void drawU(UGraphic ug) {
+	}
+
+	public double getPreferredHeight(StringBounder stringBounder) {
+		return hspace.getPixel();
+	}
+
+	public void addConstraints(StringBounder stringBounder) {
+	}
+
+	public Real getMinX(StringBounder stringBounder) {
+		return origin;
+	}
+
+	public Real getMaxX(StringBounder stringBounder) {
+		return origin.addFixed(10);
 	}
 
 }

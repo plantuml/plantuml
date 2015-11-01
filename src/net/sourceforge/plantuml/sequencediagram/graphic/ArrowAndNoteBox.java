@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 12235 $
+ * Revision $Revision: 17359 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -89,7 +89,11 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	public double getPreferredWidth(StringBounder stringBounder) {
 		double w = arrow.getPreferredWidth(stringBounder);
 		w = Math.max(w, arrow.getActualWidth(stringBounder));
-		return w + noteBox.getPreferredWidth(stringBounder);
+		double result = w + noteBox.getPreferredWidth(stringBounder);
+		if (noteBox.getNotePosition() == NotePosition.RIGHT) {
+			result += noteBox.getRightShift(arrow.getStartingY());
+		}
+		return result;
 	}
 
 	@Override

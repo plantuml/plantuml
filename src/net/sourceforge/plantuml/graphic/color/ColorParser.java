@@ -35,15 +35,14 @@ package net.sourceforge.plantuml.graphic.color;
 
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 
 public class ColorParser {
 
 	private static final String COLOR_REGEXP = "#\\w+[-\\\\|/]?\\w+";
 
-	private static final String PART2 = "#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+";
-	private static final String COLORS_REGEXP = "(?:" + COLOR_REGEXP + ")|(?:" + PART2 + ")";
+	private static final String PART2 = "#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold|shadowing)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+";
+	private static final String COLORS_REGEXP = "(?:" + PART2 + ")|(?:" + COLOR_REGEXP + ")";
 
 	private final RegexLeaf regex;
 	private final String name;
@@ -53,18 +52,6 @@ public class ColorParser {
 		this.regex = regex;
 		this.name = name;
 		this.mainType = mainType;
-	}
-
-	public HtmlColor getLegacyColoe(RegexResult arg, IHtmlColorSet set) {
-		if (mainType != null) {
-			throw new IllegalStateException();
-		}
-		final String data = arg.get("COLOR", 0);
-		if (data != null && data.matches(PART2)) {
-			throw new IllegalStateException();
-		}
-		final HtmlColor result = set.getColorIfValid(data);
-		return result;
 	}
 
 	public Colors getColor(RegexResult arg, IHtmlColorSet set) {
@@ -105,10 +92,6 @@ public class ColorParser {
 
 	public static RegexLeaf exp4() {
 		return new RegexLeaf("COLOR", "(?:(" + COLOR_REGEXP + "):)?");
-	}
-
-	public static RegexLeaf exp5() {
-		return new RegexLeaf("COLOR", "(?::?(" + COLOR_REGEXP + "))?");
 	}
 
 	public static RegexLeaf exp6() {

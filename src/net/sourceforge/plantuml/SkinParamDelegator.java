@@ -229,4 +229,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getTabSize();
 	}
 
+	public boolean shadowingForNote(Stereotype stereotype) {
+		return shadowingForNote(stereotype);
+	}
+
 }

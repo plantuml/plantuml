@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -65,5 +66,9 @@ public class Notes extends AbstractEvent implements Event, Iterable<Note> {
 
 	public Note get(int i) {
 		return notes.get(i);
+	}
+
+	public List<Note> asList() {
+		return Collections.unmodifiableList(notes);
 	}
 }

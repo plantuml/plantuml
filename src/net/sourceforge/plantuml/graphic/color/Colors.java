@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.StringUtils;
@@ -52,6 +53,7 @@ public class Colors {
 
 	private final Map<ColorType, HtmlColor> map = new EnumMap<ColorType, HtmlColor>(ColorType.class);
 	private LinkStyle lineStyle = null;
+	private Boolean shadowing = null;
 
 	@Override
 	public String toString() {
@@ -83,9 +85,15 @@ public class Colors {
 					map.put(mainType, set.getColorIfValid(s));
 				}
 			} else {
-				final ColorType key = ColorType.getType(s.substring(0, x));
-				final HtmlColor color = set.getColorIfValid(s.substring(x + 1));
-				map.put(key, color);
+				final String name = s.substring(0, x);
+				final String value = s.substring(x + 1);
+				if (name.equalsIgnoreCase("shadowing")) {
+					this.shadowing = value.equalsIgnoreCase("true");
+				} else {
+					final ColorType key = ColorType.getType(name);
+					final HtmlColor color = set.getColorIfValid(value);
+					map.put(key, color);
+				}
 			}
 		}
 		if (data.contains("line.dashed")) {
@@ -126,6 +134,9 @@ public class Colors {
 	// }
 
 	public Colors add(ColorType type, HtmlColor color) {
+		if (color == null) {
+			return this;
+		}
 		final Colors result = copy();
 		result.map.put(type, color);
 		return result;
@@ -184,6 +195,42 @@ public class Colors {
 		}
 		final Colors colors = skinParam.getColors(param, stereotype);
 		return add(colorType, colors);
+	}
+
+	private Colors applyFontParamStereotype(Stereotype stereotype, ISkinParam skinParam, FontParam param) {
+		if (stereotype == null) {
+			throw new IllegalArgumentException();
+		}
+		if (param == null) {
+			return this;
+		}
+		final ColorType colorType = ColorType.TEXT;
+		if (getColor(colorType) != null) {
+			return this;
+		}
+		final HtmlColor col = skinParam.getFontHtmlColor(param, stereotype);
+		return add(colorType, col);
+	}
+
+	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, FontParam fontParam,
+			ColorParam... params) {
+		if (stereotype == null) {
+			throw new IllegalArgumentException();
+		}
+		if (params == null) {
+			throw new IllegalArgumentException();
+		}
+		Colors result = this;
+		for (ColorParam param : params) {
+			result = result.applyStereotype(stereotype, skinParam, param);
+		}
+		result = result.applyFontParamStereotype(stereotype, skinParam, fontParam);
+		result.shadowing = skinParam.shadowingForNote(stereotype);
+		return result;
+	}
+
+	public Boolean getShadowing() {
+		return shadowing;
 	}
 
 }

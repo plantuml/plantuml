@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.utils.StartUtils;
 
 public class UncommentReadLine implements ReadLine {
 
@@ -51,8 +52,8 @@ public class UncommentReadLine implements ReadLine {
 
 	public UncommentReadLine(ReadLine source) {
 		this.raw = source;
-		this.start = MyPattern.cmpile("(?i)((?:\\W|\\<[^<>]*\\>)*)@start");
-		this.unpause = MyPattern.cmpile("(?i)((?:\\W|\\<[^<>]*\\>)*)@unpause");
+		this.start = MyPattern.cmpile(StartUtils.START_PATTERN);
+		this.unpause = MyPattern.cmpile(StartUtils.PAUSE_PATTERN);
 	}
 
 	public CharSequence2 readLine() throws IOException {

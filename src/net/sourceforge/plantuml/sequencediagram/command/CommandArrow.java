@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -167,7 +168,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (arg.get("MESSAGE", 0) == null) {
 			labels = Display.create("");
 		} else {
-			labels = Display.getWithNewlines(arg.get("MESSAGE", 0));
+			final String message = UrlBuilder.multilineTooltip(arg.get("MESSAGE", 0));
+			labels = Display.getWithNewlines(message);
 		}
 
 		ArrowConfiguration config = hasDressing1 && hasDressing2 ? ArrowConfiguration.withDirectionBoth()

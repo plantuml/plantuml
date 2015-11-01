@@ -167,7 +167,7 @@ public class LivingSpace {
 			return;
 		}
 		final Component comp = rose.createComponent(headType, null, p.getSkinParamBackcolored(skinParam),
-				p.getDisplay(false));
+				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 			ug = ug.apply(new UTranslate(-dim.getWidth(), 0));
@@ -187,8 +187,7 @@ public class LivingSpace {
 	}
 
 	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-		// final Component comp = skin.createComponent(headType, null, skinParam, p.getDisplay(false));
-		final Component comp = rose.createComponent(headType, null, skinParam, p.getDisplay(false));
+		final Component comp = rose.createComponent(headType, null, skinParam, p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		return dim;
 	}

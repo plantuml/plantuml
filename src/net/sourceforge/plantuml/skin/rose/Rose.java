@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 17124 $
+ * Revision $Revision: 17432 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -186,10 +187,15 @@ public class Rose implements Skin {
 			return new ComponentRoseNoteBox(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,
 					FontParam.NOTE), stringsToDisplay, param);
 		}
+		final FontConfiguration bigFont = getUFont2(param, FontParam.SEQUENCE_GROUP_HEADER);
 		if (type == ComponentType.GROUPING_HEADER) {
+			FontConfiguration smallFont = bigFont.forceFont(fontGrouping, null);
+			final HtmlColor smallColor = SkinParamUtils.getFontColor(param, FontParam.SEQUENCE_GROUP, null);
+			if (smallColor != null) {
+				smallFont = smallFont.changeColor(smallColor);
+			}
 			return new ComponentRoseGroupingHeader(param.getBackgroundColor(), getSymbolContext(param,
-					ColorParam.sequenceGroupBorder), getUFont2(param, FontParam.SEQUENCE_GROUP_HEADER), fontGrouping,
-					stringsToDisplay, param, FontParam.SEQUENCE_GROUP_HEADER);
+					ColorParam.sequenceGroupBorder), bigFont, smallFont, stringsToDisplay, param);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
 			return new ComponentRoseGroupingElse(getHtmlColor(param, ColorParam.sequenceGroupBorder), getUFont2(param,
@@ -229,9 +235,9 @@ public class Rose implements Skin {
 		}
 		if (type == ComponentType.REFERENCE) {
 			return new ComponentRoseReference(getUFont2(param, FontParam.SEQUENCE_REFERENCE), getSymbolContext(param,
-					ColorParam.sequenceReferenceBorder), getUFont2(param, FontParam.SEQUENCE_GROUP_HEADER),
-					stringsToDisplay, param.getHorizontalAlignment(AlignParam.SEQUENCE_REFERENCE_ALIGN), param,
-					getHtmlColor(param, ColorParam.sequenceReferenceBackground));
+					ColorParam.sequenceReferenceBorder), bigFont, stringsToDisplay,
+					param.getHorizontalAlignment(AlignParam.SEQUENCE_REFERENCE_ALIGN), param, getHtmlColor(param,
+							ColorParam.sequenceReferenceBackground));
 		}
 		if (type == ComponentType.TITLE) {
 			return new ComponentRoseTitle(getUFont2(param, FontParam.SEQUENCE_TITLE), stringsToDisplay, param);

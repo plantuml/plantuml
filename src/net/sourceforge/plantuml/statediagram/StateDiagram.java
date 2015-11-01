@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 15147 $
+ * Revision $Revision: 17451 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -42,11 +42,12 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class StateDiagram extends AbstractEntityDiagram {
+
+	private static final String CONCURRENT_PREFIX = "CONC";
 
 	public boolean checkConcurrentStateOk(Code code) {
 		if (leafExist(code) == false) {
@@ -121,12 +122,12 @@ public class StateDiagram extends AbstractEntityDiagram {
 			super.endGroup();
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
-		final IGroup conc1 = getOrCreateGroup(UniqueSequence.getCode("CONC"), Display.create(""),
+		final IGroup conc1 = getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""),
 				GroupType.CONCURRENT_STATE, getCurrentGroup());
 		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
-			getOrCreateGroup(UniqueSequence.getCode("CONC"), Display.create(""), GroupType.CONCURRENT_STATE,
+			getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
 					getCurrentGroup());
 		}
 		// printlink("AFTER");

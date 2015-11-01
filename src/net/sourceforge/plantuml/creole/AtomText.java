@@ -118,8 +118,8 @@ public class AtomText implements Atom {
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
 		// this.text = StringUtils.showComparatorCharacters(StringUtils.manageBackslash(text));
-		this.text = StringUtils.manageUnicodeNotationUplus(StringUtils.manageAmpDiese(StringUtils
-				.showComparatorCharacters(CharHidder.unhide(text))));
+		this.text = StringUtils.manageTildeArobaseStart(StringUtils.manageUnicodeNotationUplus(StringUtils
+				.manageAmpDiese(StringUtils.showComparatorCharacters(CharHidder.unhide(text)))));
 		this.fontConfiguration = style;
 		this.url = url;
 	}

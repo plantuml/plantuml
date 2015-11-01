@@ -40,13 +40,16 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
+import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -95,6 +98,22 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);
 			}
 		}
+
+		final ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
+		final MessageExoType type = message.getType();
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_LEFT) {
+			x1 += ComponentRoseArrow.diamCircle / 2 + 2;
+		}
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_LEFT) {
+			x1 += ComponentRoseArrow.diamCircle / 2 + 2;
+		}
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_RIGHT) {
+			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;
+		}
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_RIGHT) {
+			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;
+		}
+
 		final Area area = new Area(x2 - x1, dim.getHeight());
 		ug = ug.apply(new UTranslate(x1, 0));
 		comp.drawU(ug, area, (Context2D) ug);

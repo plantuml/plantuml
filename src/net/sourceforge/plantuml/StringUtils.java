@@ -444,6 +444,11 @@ public class StringUtils {
 		return result.toString();
 	}
 
+	public static String manageTildeArobaseStart(String s) {
+		s = s.replaceAll("~@start", "@start");
+		return s;
+	}
+
 	public static String trinNoTrace(CharSequence s) {
 		return s.toString().trim();
 	}

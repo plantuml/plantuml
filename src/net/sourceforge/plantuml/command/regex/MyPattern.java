@@ -91,12 +91,16 @@ public abstract class MyPattern {
 		return p;
 	}
 
-//	public static boolean mtches(String input, String regex) {
-//		return cmpile(regex).matcher(input).matches();
-//	}
-//
+	// public static boolean mtches(String input, String regex) {
+	// return cmpile(regex).matcher(input).matches();
+	// }
+	//
 	public static boolean mtches(CharSequence input, String regex) {
 		return cmpile(regex).matcher(input).matches();
+	}
+
+	public static CharSequence removeAll(CharSequence src, String regex) {
+		return src.toString().replaceAll(transform(regex), "");
 	}
 
 }

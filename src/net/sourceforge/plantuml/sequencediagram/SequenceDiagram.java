@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.OptionFlags;
@@ -129,6 +130,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void addNote(Note n, boolean tryMerge) {
+		// this.lastEventWithDeactivate = null;
 		if (tryMerge && events.size() > 0) {
 			final Event last = events.get(events.size() - 1);
 			if (last instanceof Note) {
@@ -271,6 +273,9 @@ public class SequenceDiagram extends UmlDiagram {
 			HtmlColor backColorElement) {
 		if (type != GroupingType.START && openGroupings.size() == 0) {
 			return false;
+		}
+		if (backColorGeneral == null) {
+			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);
 		}
 
 		final GroupingStart top = openGroupings.size() > 0 ? openGroupings.get(0) : null;

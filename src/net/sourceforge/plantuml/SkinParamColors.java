@@ -52,6 +52,14 @@ public class SkinParamColors extends SkinParamDelegator {
 		return super.toString() + colors;
 	}
 
+	@Override
+	public boolean shadowing() {
+		if (colors.getShadowing() == null) {
+			return super.shadowing();
+		}
+		return colors.getShadowing();
+	}
+
 	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype) {
 		final HtmlColor value = colors.getColor(ColorType.TEXT);
 		if (value == null) {

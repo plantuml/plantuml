@@ -167,10 +167,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 		final IEntity note = diagram
 				.createLeaf(UniqueSequence.getCode("GMN"), strings.toDisplay(), LeafType.NOTE, null);
 
-		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
-		// System.err.println("colors=" + colors);
-		// note.setSpecificColorTOBEREMOVED(ColorType.BACK,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		note.setColors(colors);
 		if (url != null) {
 			note.addUrl(url);

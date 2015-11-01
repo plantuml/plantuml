@@ -152,7 +152,7 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 
 		final LivingSpace next = getNext();
 		if (next != null) {
-			next.getPosB().ensureBiggerThan(getMaxX(stringBounder));
+			next.getPosC(stringBounder).ensureBiggerThan(getMaxX(stringBounder));
 		}
 	}
 

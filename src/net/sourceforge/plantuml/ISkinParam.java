@@ -83,6 +83,8 @@ public interface ISkinParam extends ISkinSimple {
 	public GraphvizLayoutStrategy getStrategy();
 
 	public boolean shadowing();
+	
+	public boolean shadowingForNote(Stereotype stereotype);
 
 	public boolean shadowing2(SkinParameter skinParameter);
 

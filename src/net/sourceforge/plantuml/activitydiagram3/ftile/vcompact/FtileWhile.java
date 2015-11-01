@@ -208,6 +208,11 @@ class FtileWhile extends AbstractFtile {
 			return getTranslateForWhile(stringBounder).getTranslated(geo.getPointOut());
 		}
 
+		private double getBottom(final StringBounder stringBounder) {
+			final FtileGeometry geo = whileBlock.calculateDimension(stringBounder);
+			return getTranslateForWhile(stringBounder).getDy() + geo.getHeight();
+		}
+
 		private Point2D getP2(final StringBounder stringBounder) {
 			return getTranslateDiamond1(stringBounder).getTranslated(new Point2D.Double(0, 0));
 		}
@@ -230,16 +235,17 @@ class FtileWhile extends AbstractFtile {
 			final double y2 = p2.getY() + dimDiamond1.getOutY() / 2;
 
 			snake.addPoint(x1, y1);
-			snake.addPoint(x1, y1 + Diamond.diamondHalfSize);
+			final double y1bis = Math.max(y1, getBottom(stringBounder)) + Diamond.diamondHalfSize;
+			snake.addPoint(x1, y1bis);
 			final double xx = dimTotal.getWidth();
-			snake.addPoint(xx, y1 + Diamond.diamondHalfSize);
+			snake.addPoint(xx, y1bis);
 			snake.addPoint(xx, y2);
 			snake.addPoint(x2, y2);
 			snake.emphasizeDirection(Direction.UP);
 
 			ug.draw(snake);
 
-			ug.apply(new UTranslate(x1, y1 + Diamond.diamondHalfSize)).draw(new UEmpty(5, Diamond.diamondHalfSize));
+			ug.apply(new UTranslate(x1, y1bis)).draw(new UEmpty(5, Diamond.diamondHalfSize));
 
 			// ug = ug.apply(new UChangeColor(endInlinkColor)).apply(new UChangeBackColor(endInlinkColor));
 			// ug.apply(new UTranslate(xx, (y1 + y2) / 2)).draw(Arrows.asToUp());

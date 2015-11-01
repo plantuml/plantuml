@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.HSpace;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
@@ -129,11 +130,7 @@ public class TileBuilder {
 			tiles.add(new NoteTile(livingSpace1, livingSpace2, note, skin, skinParam));
 		} else if (ev instanceof Notes) {
 			final Notes notes = (Notes) ev;
-			final List<LivingSpace> noteLivingSpaces = new ArrayList<LivingSpace>();
-			for (Note n : notes) {
-				noteLivingSpaces.add(livingSpaces.get(n.getParticipant()));
-			}
-			tiles.add(new NotesTile(noteLivingSpaces, notes, skin, skinParam));
+			tiles.add(new NotesTile(livingSpaces, notes, skin, skinParam));
 		} else if (ev instanceof Divider) {
 			final Divider divider = (Divider) ev;
 			tiles.add(new DividerTile(divider, tileArguments));
@@ -153,6 +150,9 @@ public class TileBuilder {
 		} else if (ev instanceof Delay) {
 			final Delay delay = (Delay) ev;
 			tiles.add(new DelayTile(delay, tileArguments));
+		} else if (ev instanceof HSpace) {
+			final HSpace hspace = (HSpace) ev;
+			tiles.add(new HSpaceTile(hspace, tileArguments));
 		} else if (ev instanceof LifeEvent) {
 			final LifeEvent lifeEvent = (LifeEvent) ev;
 			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());

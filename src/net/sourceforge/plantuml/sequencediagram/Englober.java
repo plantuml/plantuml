@@ -206,7 +206,7 @@ public class Englober {
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return getX2();
+		return getX2().addFixed(10);
 	}
 
 

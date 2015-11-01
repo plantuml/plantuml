@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class NotesTile implements Tile {
 
-	private final List<LivingSpace> noteLivingSpaces;
+	private final LivingSpaces livingSpaces;
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private final Notes notes;
@@ -65,15 +65,14 @@ public class NotesTile implements Tile {
 		return notes;
 	}
 
-	public NotesTile(List<LivingSpace> noteLivingSpaces, Notes notes, Skin skin, ISkinParam skinParam) {
-		this.noteLivingSpaces = noteLivingSpaces;
+	public NotesTile(LivingSpaces livingSpaces, Notes notes, Skin skin, ISkinParam skinParam) {
+		this.livingSpaces = livingSpaces;
 		this.notes = notes;
 		this.skin = skin;
 		this.skinParam = skinParam;
 	}
 
-	private Component getComponent(StringBounder stringBounder, int i) {
-		final Note note = notes.get(i);
+	private Component getComponent(StringBounder stringBounder, Note note) {
 		final Component comp = skin.createComponent(getNoteComponentType(note.getStyle()), null,
 				note.getSkinParamBackcolored(skinParam), note.getStrings());
 		return comp;
@@ -92,45 +91,28 @@ public class NotesTile implements Tile {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		for (int i = 0; i < noteLivingSpaces.size(); i++) {
-			final Component comp = getComponent(stringBounder, i);
+		for (Note note : notes) {
+			final Component comp = getComponent(stringBounder, note);
 			final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-			final double x = getX(stringBounder, i).getCurrentValue();
-			final Area area = new Area(getUsedWidth(stringBounder, i), dim.getHeight());
+			final double x = getX(stringBounder, note).getCurrentValue();
+			final Area area = new Area(getUsedWidth(stringBounder, note), dim.getHeight());
 
 			final UGraphic ug2 = ug.apply(new UTranslate(x, 0));
 			comp.drawU(ug2, area, (Context2D) ug2);
 		}
-
-		// final Component comp = getComponent(stringBounder);
-		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final double x = getX(stringBounder).getCurrentValue();
-		// final Area area = new Area(getUsedWidth(stringBounder), dim.getHeight());
-		//
-		// ug = ug.apply(new UTranslate(x, 0));
-		// comp.drawU(ug, area, (Context2D) ug);
 	}
 
-	private double getUsedWidth(StringBounder stringBounder, int i) {
-		final Component comp = getComponent(stringBounder, i);
+	private double getUsedWidth(StringBounder stringBounder, Note note) {
+		final Component comp = getComponent(stringBounder, note);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double width = dim.getWidth();
-		// if (note.getPosition() == NotePosition.OVER_SEVERAL) {
-		// final double x1 = livingSpace1.getPosB().getCurrentValue();
-		// final double x2 = livingSpace2.getPosD(stringBounder).getCurrentValue();
-		// final double w = x2 - x1;
-		// if (width < w) {
-		// return w;
-		// }
-		// }
 		return width;
 	}
 
-	private Real getX(StringBounder stringBounder, int i) {
-		final Note note = notes.get(i);
-		final LivingSpace livingSpace1 = noteLivingSpaces.get(i);
+	private Real getX(StringBounder stringBounder, Note note) {
+		final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
 		final NotePosition position = note.getPosition();
-		final double width = getUsedWidth(stringBounder, i);
+		final double width = getUsedWidth(stringBounder, note);
 		if (position == NotePosition.LEFT) {
 			return livingSpace1.getPosC(stringBounder).addFixed(-width);
 		} else if (position == NotePosition.RIGHT) {
@@ -138,10 +120,10 @@ public class NotesTile implements Tile {
 			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;
 			return livingSpace1.getPosC(stringBounder).addFixed(dx);
 		} else if (position == NotePosition.OVER_SEVERAL) {
-			// final Real x1 = livingSpace1.getPosC(stringBounder);
-			// final Real x2 = livingSpace2.getPosC(stringBounder);
-			// return RealUtils.middle(x1, x2).addFixed(-width / 2);
-			throw new UnsupportedOperationException(position.toString());
+			final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());
+			final Real x1 = livingSpace1.getPosC(stringBounder);
+			final Real x2 = livingSpace2.getPosC(stringBounder);
+			return RealUtils.middle(x1, x2).addFixed(-width / 2);
 		} else if (position == NotePosition.OVER) {
 			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);
 		} else {
@@ -151,8 +133,8 @@ public class NotesTile implements Tile {
 
 	public double getPreferredHeight(StringBounder stringBounder) {
 		double result = 0;
-		for (int i = 0; i < noteLivingSpaces.size(); i++) {
-			final Component comp = getComponent(stringBounder, i);
+		for (Note note : notes) {
+			final Component comp = getComponent(stringBounder, note);
 			final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 			result = Math.max(result, dim.getHeight());
 		}
@@ -160,10 +142,11 @@ public class NotesTile implements Tile {
 	}
 
 	public void addConstraints(StringBounder stringBounder) {
-		for (int i = 0; i < noteLivingSpaces.size() - 1; i++) {
-			for (int j = i + 1; j < noteLivingSpaces.size(); j++) {
-				final Real point1 = getX2(stringBounder, i);
-				final Real point2 = getX(stringBounder, j);
+		final List<Note> all = notes.asList();
+		for (int i = 0; i < all.size() - 1; i++) {
+			for (int j = i + 1; j < all.size(); j++) {
+				final Real point1 = getX2(stringBounder, all.get(i));
+				final Real point2 = getX(stringBounder, all.get(j));
 				point2.ensureBiggerThan(point1);
 			}
 		}
@@ -171,20 +154,20 @@ public class NotesTile implements Tile {
 
 	public Real getMinX(StringBounder stringBounder) {
 		final List<Real> reals = new ArrayList<Real>();
-		for (int i = 0; i < noteLivingSpaces.size(); i++) {
-			reals.add(getX(stringBounder, i));
+		for (Note note : notes) {
+			reals.add(getX(stringBounder, note));
 		}
 		return RealUtils.min(reals);
 	}
 
-	private Real getX2(StringBounder stringBounder, int i) {
-		return getX(stringBounder, i).addFixed(getUsedWidth(stringBounder, i));
+	private Real getX2(StringBounder stringBounder, Note note) {
+		return getX(stringBounder, note).addFixed(getUsedWidth(stringBounder, note));
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
 		final List<Real> reals = new ArrayList<Real>();
-		for (int i = 0; i < noteLivingSpaces.size(); i++) {
-			reals.add(getX2(stringBounder, i));
+		for (Note note : notes) {
+			reals.add(getX2(stringBounder, note));
 		}
 		return RealUtils.max(reals);
 	}

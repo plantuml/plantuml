@@ -89,9 +89,9 @@ public class LifeEventTile implements TileWithUpdateStairs {
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-		if (lifeEvent.isActivate()) {
-			return 20;
-		}
+//		if (lifeEvent.isActivate()) {
+//			return 20;
+//		}
 		if (isDestroyWithoutMessage()) {
 			final Component cross = skin.createComponent(ComponentType.DESTROY, null, skinParam, null);
 			final Dimension2D dimCross = cross.getPreferredDimension(stringBounder);

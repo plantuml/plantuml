@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 17125 $
+ * Revision $Revision: 17444 $
  *
  */
 package net.sourceforge.plantuml;
@@ -78,21 +78,11 @@ public class SkinParam implements ISkinParam {
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
 	private static final Pattern stereoPattern = MyPattern.cmpile(stereoPatternString);
 
-	// public SkinParam() {
-	//
-	// }
-
 	public static SkinParam noShadowing() {
 		final SkinParam result = new SkinParam();
 		result.setParam("shadowing", "false");
 		return result;
 	}
-
-	// public SkinParam(String type) {
-	// if (type == null) {
-	// setParam("shadowing", "false");
-	// }
-	// }
 
 	static String cleanForKey(String key) {
 		key = StringUtils.trin(StringUtils.goLowerCase(key));
@@ -450,6 +440,21 @@ public class SkinParam implements ISkinParam {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean shadowingForNote(Stereotype stereotype) {
+		if (stereotype != null) {
+			checkStereotype(stereotype);
+			final String value2 = getValue("note" + "shadowing" + stereotype.getLabel(false));
+			if (value2 != null) {
+				return value2.equalsIgnoreCase("true");
+			}
+		}
+		final String value2 = getValue("note" + "shadowing");
+		if (value2 != null) {
+			return value2.equalsIgnoreCase("true");
+		}
+		return shadowing();
 	}
 
 	public boolean shadowing2(SkinParameter skinParameter) {

@@ -40,7 +40,6 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
@@ -58,10 +57,8 @@ import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -114,7 +111,7 @@ public final class GroupPngMakerState {
 				new FontConfiguration(skinParam, FontParam.STATE, group.getStereotype()), HorizontalAlignment.CENTER,
 				diagram.getSkinParam());
 
-		if (group.size() == 0) {
+		if (group.size() == 0 && group.getChildren().size() == 0) {
 			return new EntityImageState(group, diagram.getSkinParam());
 		}
 		final List<Link> links = getPureInnerLinks();

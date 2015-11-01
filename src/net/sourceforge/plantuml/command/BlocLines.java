@@ -46,14 +46,14 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 public class BlocLines implements Iterable<CharSequence> {
 
 	private List<CharSequence> lines;
-	
+
 	@Override
 	public String toString() {
 		return lines.toString();
 	}
 
 	private BlocLines(List<? extends CharSequence> lines) {
-		this.lines = Collections.unmodifiableList(lines);
+		this.lines = (List<CharSequence>) Collections.unmodifiableList(lines);
 	}
 
 	public Display toDisplay() {
@@ -244,6 +244,14 @@ public class BlocLines implements Iterable<CharSequence> {
 			if (inComment == false) {
 				copy.add(cs);
 			}
+		}
+		return new BlocLines(copy);
+	}
+
+	public BlocLines removeInnerComments() {
+		final List<CharSequence> copy = new ArrayList<CharSequence>();
+		for (CharSequence cs : lines) {
+			copy.add(MyPattern.removeAll(cs, CommandMultilinesComment.INNER_COMMENT));
 		}
 		return new BlocLines(copy);
 	}

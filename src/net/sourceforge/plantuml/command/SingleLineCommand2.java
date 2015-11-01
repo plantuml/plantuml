@@ -62,6 +62,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (lines.size() != 1) {
 			return CommandControl.NOT_OK;
 		}
+		lines = lines.removeInnerComments();
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
@@ -84,6 +85,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (lines.size() != 1) {
 			throw new IllegalArgumentException();
 		}
+		lines = lines.removeInnerComments();
 		final String line = StringUtils.trin(lines.getFirst499());
 		if (isForbidden(line)) {
 			return CommandExecutionResult.error("Forbidden line " + line);

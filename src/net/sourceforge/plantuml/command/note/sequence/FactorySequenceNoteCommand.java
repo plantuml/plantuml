@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.command.note.sequence;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
@@ -44,8 +46,10 @@ import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
@@ -58,10 +62,13 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
 				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("$"));
 	}
 
@@ -69,13 +76,20 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
 				new RegexLeaf("VMERGE", "(/)?[%s]*"), //
-				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
@@ -116,7 +130,15 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		if (strings.size() > 0) {
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
 			final Note note = new Note(p, position, strings.toDisplay());
-			note.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+			final String stereotypeString = arg.get("STEREO", 0);
+			if (stereotypeString != null) {
+				final Stereotype stereotype = new Stereotype(stereotypeString);
+				note.setStereotype(stereotype);
+				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
+						ColorParam.noteBackground, ColorParam.noteBorder);
+			}
+			note.setColors(colors);
 			note.setStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
 			diagram.addNote(note, tryMerge);
 		}

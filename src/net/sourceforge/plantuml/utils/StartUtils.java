@@ -42,6 +42,10 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class StartUtils {
 
+	public static final String PAUSE_PATTERN = "(?i)((?:\\W|\\<[^<>]*\\>)*)@unpause";
+	public static final String START_PATTERN = "(?i)((?:[^\\w~]|\\<[^<>]*\\>)*)@start";
+	
+
 	public static boolean isArobaseStartDiagram(CharSequence s) {
 		return StringUtils.trinNoTrace(s).startsWith("@start");
 	}

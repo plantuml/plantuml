@@ -33,15 +33,13 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 
 public interface SpecificBackcolorable {
 
 	public Colors getColors(ISkinParam skinParam);
 
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
+	// public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
 	
 	public void setColors(Colors colors);
 

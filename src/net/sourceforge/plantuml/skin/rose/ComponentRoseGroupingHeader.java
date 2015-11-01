@@ -28,14 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 17092 $
+ * Revision $Revision: 17431 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -48,7 +47,6 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -66,7 +64,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final SymbolContext symbolContext;
 
 	public ComponentRoseGroupingHeader(HtmlColor background, SymbolContext symbolContext, FontConfiguration bigFont,
-			UFont smallFont, Display strings, ISkinSimple spriteContainer, FontParam sequenceGroupHeader) {
+			FontConfiguration smallFont2, Display strings, ISkinSimple spriteContainer) {
 		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0, null, null);
 		this.symbolContext = symbolContext;
 		this.background = background;
@@ -74,16 +72,16 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 			this.commentTextBlock = null;
 		} else {
 			final Display display = Display.getWithNewlines("[" + strings.get(1) + "]");
-			final FontConfiguration fontConfiguration = bigFont.forceFont(smallFont, null);
-			// new FontConfiguration(smallFont, bigFont.getColor(),
-			// bigFont.getHyperlinkColor(), bigFont.useUnderlineForHyperlink());
-			this.commentTextBlock = display.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
+			// final FontConfiguration smallFont2 = bigFont.forceFont(smallFont, null);
+			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, spriteContainer);
 		}
 		if (this.background == null) {
 			throw new IllegalArgumentException();
 		}
-
 	}
+
+	// new FontConfiguration(smallFont, bigFont.getColor(), bigFont.getHyperlinkColor(),
+	// bigFont.useUnderlineForHyperlink());
 
 	private double getSuppHeightForComment(StringBounder stringBounder) {
 		if (commentTextBlock == null) {

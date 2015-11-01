@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -60,7 +61,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+over[%s]+"), //
 				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,[%s]*"), //
 				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("$") //
 		);
 	}
@@ -72,11 +73,16 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				new RegexLeaf("STYLE", "(note|hnote|rnote)[%s]+over[%s]+"), //
 				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*\\,[%s]*"), //
 				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
 	}
+	
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 
 	public Command<SequenceDiagram> createSingleLine() {
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
@@ -119,7 +125,9 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		if (lines.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;
 			final Note note = new Note(p1, p2, lines.toDisplay());
-			note.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+			final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+			note.setColors(colors);
+			// note.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 			note.setStyle(NoteStyle.getNoteStyle(line0.get("STYLE", 0)));
 			diagram.addNote(note, tryMerge);
 		}

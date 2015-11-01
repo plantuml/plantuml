@@ -56,13 +56,12 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWit
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private final Display notes;
-	// private final NotePosition notePosition;
 	private final LivingSpace livingSpace;
 
 	public Event getEvent() {
 		return message;
 	}
-	
+
 	private boolean isCreate() {
 		return message.isCreate();
 	}
@@ -74,7 +73,6 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWit
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.notes = message.getNote();
-		// this.notePosition = message.getNotePosition();
 		this.livingSpace = livingSpace;
 	}
 
@@ -89,12 +87,13 @@ public class CommunicationTileNoteRight implements TileWithUpdateStairs, TileWit
 	}
 
 	private Real getNotePosition(StringBounder stringBounder) {
-		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		// final Component comp = getComponent(stringBounder);
+		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		if (isCreate()) {
 			return livingSpace.getPosD(stringBounder);
 		}
-		return livingSpace.getPosC(stringBounder);
+		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+		return livingSpace.getPosC(stringBounder).addFixed(level * CommunicationTile.LIVE_DELTA_SIZE);
 	}
 
 	public void drawU(UGraphic ug) {

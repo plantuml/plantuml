@@ -37,7 +37,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.real.Real;
@@ -50,9 +49,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CommunicationTile implements TileWithUpdateStairs, TileWithCallbackY {
@@ -184,25 +181,24 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double width = dim.getWidth();
 
-		// if (isSelf()) {
-		// final LivingSpace next = livingSpace1.getNext();
-		// if (next != null) {
-		// next.getPosB().ensureBiggerThan(getMaxX(stringBounder));
-		// }
-		// } else {
-		final Real point1 = getPoint1(stringBounder);
-		final Real point2 = getPoint2(stringBounder);
-		if (point1.getCurrentValue() < point2.getCurrentValue()) {
-			point2.ensureBiggerThan(point1.addFixed(width));
-		} else {
+		Real point1 = getPoint1(stringBounder);
+		Real point2 = getPoint2(stringBounder);
+		if (isReverse(stringBounder)) {
+			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			if (level1 > 0) {
+				point1 = point1.addFixed(-LIVE_DELTA_SIZE);
+			}
+			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);
 			point1.ensureBiggerThan(point2.addFixed(width));
-			// }
+		} else {
+			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+			if (level2 > 0) {
+				point2 = point2.addFixed(-LIVE_DELTA_SIZE);
+			}
+			point2.ensureBiggerThan(point1.addFixed(width));
 		}
 	}
-
-	// private boolean isSelf() {
-	// return livingSpace1 == livingSpace2;
-	// }
 
 	private Real getPoint1(final StringBounder stringBounder) {
 		return livingSpace1.getPosC(stringBounder);
@@ -226,12 +222,6 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		// if (isSelf()) {
-		// final Component comp = getComponent(stringBounder);
-		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final double width = dim.getWidth();
-		// return livingSpace1.getPosC(stringBounder).addFixed(width);
-		// }
 		if (isReverse(stringBounder)) {
 			return getPoint1(stringBounder);
 		}
