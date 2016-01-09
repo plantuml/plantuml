@@ -57,7 +57,7 @@ public class CommandGroup3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		diagram.startGroup(Display.getWithNewlines(arg.get("NAME", 0)), null, null);
+		diagram.startGroup(Display.getWithNewlines(arg.get("NAME", 0)), null, null, null);
 		return CommandExecutionResult.ok();
 	}
 

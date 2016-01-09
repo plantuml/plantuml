@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 17479 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -69,8 +69,9 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		this.p2 = p2;
 		this.position = position;
 		if (strings != null && strings.size() > 0) {
-			final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.STRICT);
-			this.url = urlBuilder.getUrl(strings.get(0).toString());
+			final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
+			final String s = strings.asStringWithHiddenNewLine();
+			this.url = urlBuilder.getUrl(s);
 		} else {
 			this.url = null;
 		}
@@ -78,7 +79,7 @@ public class Note extends AbstractEvent implements Event, SpecificBackcolorable 
 		if (this.url == null) {
 			this.strings = strings;
 		} else {
-			this.strings = strings.subList(1, strings.size());
+			this.strings = strings.removeUrlHiddenNewLineUrl();
 		}
 	}
 

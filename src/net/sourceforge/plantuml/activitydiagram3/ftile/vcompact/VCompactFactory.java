@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -96,7 +96,7 @@ public class VCompactFactory implements FtileFactory {
 		// final HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.activityBorder);
 		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityBackground) :
 		// color;
-		final UFont font = skinParam.getFont(FontParam.ACTIVITY, null, false);
+		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		final HtmlColor arrowColor = rose.getHtmlColor(skinParam, ColorParam.activityArrow);
 		return new FtileBox(shadowing(), label, font, arrowColor, swimlane, style, colors.mute(skinParam));
 	}
@@ -141,7 +141,7 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileForkInner(all);
 	}
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote) {
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote, HtmlColor borderColor) {
 		return list;
 	}
 

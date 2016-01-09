@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 16562 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml;
@@ -53,11 +53,13 @@ public class OptionFlags {
 	static public final boolean USE_HECTOR = false;
 	static public boolean ADD_NICE_FOR_DOT = false;
 	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
-	static public final boolean USE_NEW_IF = true;
+
+	// static public final boolean USE_IF_VERTICAL = true;
 	static public final boolean FORCE_TEOZ = false;
 	static public final boolean USE_INTERFACE_EYE1 = false;
 	static public final boolean USE_INTERFACE_EYE2 = false;
 	static public final boolean SWI2 = false;
+	static public final boolean USE_COMPOUND = false;
 
 	public void reset() {
 		reset(false);

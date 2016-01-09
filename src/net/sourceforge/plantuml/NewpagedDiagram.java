@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -64,6 +64,10 @@ public class NewpagedDiagram extends AbstractPSystem {
 	@Override
 	public String toString() {
 		return super.toString() + " SIZE=" + diagrams.size() + " " + diagrams;
+	}
+
+	public Diagram getLastDiagram() {
+		return diagrams.get(diagrams.size() - 1);
 	}
 
 	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines) {

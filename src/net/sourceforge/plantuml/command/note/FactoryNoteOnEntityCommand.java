@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -74,7 +74,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 	}
 
 	private RegexConcat getRegexConcatSingleLine(IRegex partialPattern) {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
@@ -92,7 +92,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 	}
 
 	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)"), //
 				new RegexOr(//
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
@@ -124,7 +124,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				if (withBracket) {
 					return "(?i)^(\\})$";
 				}
-				return "(?i)^(end[%s]?note)$";
+				return "(?i)^[%s]*(end[%s]?note)$";
 			}
 
 			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {
@@ -160,6 +160,8 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 			if (cl1 == null) {
 				return CommandExecutionResult.error("Nothing to note to");
 			}
+		} else if (diagram.isGroup(code)) {
+			cl1 = diagram.getGroup(code);
 		} else {
 			cl1 = diagram.getOrCreateLeaf(code, null, null);
 		}

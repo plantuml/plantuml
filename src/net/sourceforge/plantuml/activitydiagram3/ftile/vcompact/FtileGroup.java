@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,7 +37,9 @@ import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Set;
 
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -71,19 +73,25 @@ public class FtileGroup extends AbstractFtile {
 	private final Ftile inner;
 	private final TextBlock name;
 	private final TextBlock headerNote;
-	private final HtmlColor color;
+	private final HtmlColor arrowColor;
+	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
 	private final HtmlColor titleColor;
+	private final UStroke stroke;
 
-	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor color, HtmlColor backColor,
-			HtmlColor titleColor, ISkinParam skinParam) {
+	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor arrowColor, HtmlColor backColor,
+			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor) {
 		super(inner.shadowing());
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
-		this.color = color;
+		this.arrowColor = arrowColor;
 		this.titleColor = titleColor;
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
-		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, skinParam.getHyperlinkColor(),
+		this.borderColor = backColor == null ? HtmlColorUtils.BLACK : borderColor;
+		final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
+		// final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		// final HtmlColor fontColor = HtmlColorUtils.BLACK;
+		final HtmlColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
+		final FontConfiguration fc = new FontConfiguration(font, fontColor, skinParam.getHyperlinkColor(),
 				skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 		if (title == null) {
 			this.name = TextBlockUtils.empty(0, 0);
@@ -95,6 +103,9 @@ public class FtileGroup extends AbstractFtile {
 		} else {
 			this.headerNote = new FloatingNote(displayNote, skinParam);
 		}
+
+		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);
+		this.stroke = thickness == null ? new UStroke(2) : thickness;
 	}
 
 	@Override
@@ -176,8 +187,8 @@ public class FtileGroup extends AbstractFtile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
-		final SymbolContext symbolContext = new SymbolContext(backColor, HtmlColorUtils.BLACK).withShadow(shadowing())
-				.withStroke(new UStroke(2));
+		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(shadowing())
+				.withStroke(stroke);
 		USymbol.FRAME.asBig(name, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext)
 				.drawU(ug);
 

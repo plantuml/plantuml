@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -48,7 +48,10 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.version.PSystemVersion;
+import net.sourceforge.plantuml.webp.Portrait;
+import net.sourceforge.plantuml.webp.Portraits;
 
 public class DateEventUtils {
 
@@ -72,10 +75,46 @@ public class DateEventUtils {
 			return TextBlockUtils.mergeTB(textBlock, getComment(asList, color), HorizontalAlignment.LEFT);
 		} else if ("01-07".equals(today) || "01-08".equals(today)) {
 			return addCharlie(textBlock);
-
 		}
 
+		// return addMemorial(textBlock, color);
 		return textBlock;
+	}
+
+	private static TextBlock addMemorial(TextBlock textBlock, HtmlColor color) {
+		final Portrait portrait = new Portraits().getOne();
+		if (portrait == null) {
+			return textBlock;
+		}
+		final BufferedImage im = portrait.getBufferedImage();
+		if (im == null) {
+			return textBlock;
+		}
+
+		final List<String> asList = Arrays.asList("A thought for those who died in Paris the 13th November 2015.");
+
+		final String name = portrait.getName();
+		final UFont font = new UFont("SansSerif", Font.BOLD, 12);
+		TextBlock comment = Display.create(name).create(new FontConfiguration(font, color, HtmlColorUtils.BLUE, true),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		comment = TextBlockUtils.withMargin(comment, 4, 4);
+
+		final TextBlock bottom0 = getComment(asList, color);
+		final TextBlock bottom1 = new AbstractTextBlock() {
+			private double margin = 10;
+
+			public void drawU(UGraphic ug) {
+				ug = ug.apply(new UTranslate(0, margin));
+				ug.draw(new UImage(im));
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(im.getWidth(), margin + im.getHeight());
+			}
+		};
+		final TextBlock bottom = TextBlockUtils.mergeTB(bottom0,
+				TextBlockUtils.mergeLR(bottom1, comment, VerticalAlignment.CENTER), HorizontalAlignment.LEFT);
+		return TextBlockUtils.mergeTB(textBlock, bottom, HorizontalAlignment.LEFT);
 	}
 
 	private static TextBlock addCharlie(TextBlock textBlock) {

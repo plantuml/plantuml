@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -111,7 +111,7 @@ public class PostIt {
 		final HtmlColor borderColor = HtmlColorUtils.MY_RED;
 
 		final SkinParam param = SkinParam.noShadowing();
-		final UFont fontNote = param.getFont(FontParam.NOTE, null, false);
+		final UFont fontNote = param.getFont(null, false, FontParam.NOTE);
 		final FontConfiguration font2 = fontNote.toFont2(HtmlColorUtils.BLACK, true, HtmlColorUtils.BLUE, 8);
 		final ComponentRoseNote note = new ComponentRoseNote(
 				new SymbolContext(noteBackgroundColor, borderColor).withStroke(new UStroke()), font2, text, 0, 0,

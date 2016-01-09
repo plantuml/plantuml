@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -64,7 +64,9 @@ public class CMapData {
 		appendString("\" href=\"");
 		appendString(url.getUrl());
 		appendString("\" title=\"");
-		appendString(url.getTooltip());
+		final String tooltip = url.getTooltip().replaceAll("\\\\n", "\n").replaceAll("&", "&#38;")
+				.replaceAll("\"", "&#34;").replaceAll("\'", "&#39;");
+		appendString(tooltip);
 		appendString("\" alt=\"\" coords=\"");
 		appendString(url.getCoords(scale));
 		appendString("\"/>");

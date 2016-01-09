@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 public final class FactoryNoteActivityCommand implements SingleMultiFactoryCommand<ActivityDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*"), //
@@ -69,7 +69,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left|top|bottom)[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
@@ -83,7 +83,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?note$";
+				return "(?i)^[%s]*end[%s]?note$";
 			}
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram system, BlocLines lines) {

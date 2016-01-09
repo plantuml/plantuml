@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 17432 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -60,7 +60,7 @@ public class Rose implements Skin {
 	final private double paddingY = 5;
 
 	public HtmlColor getFontColor(ISkinParam skin, FontParam fontParam) {
-		return skin.getFontHtmlColor(fontParam, null);
+		return skin.getFontHtmlColor(null, fontParam);
 	}
 
 	public HtmlColor getHtmlColor(ISkinParam param, ColorParam color) {
@@ -84,9 +84,9 @@ public class Rose implements Skin {
 
 	public Component createComponent(ComponentType type, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
-		final UFont fontGrouping = param.getFont(FontParam.SEQUENCE_GROUP, null, false);
+		final UFont fontGrouping = param.getFont(null, false, FontParam.SEQUENCE_GROUP);
 
-		final UFont newFontForStereotype = param.getFont(FontParam.SEQUENCE_STEREOTYPE, null, false);
+		final UFont newFontForStereotype = param.getFont(null, false, FontParam.SEQUENCE_STEREOTYPE);
 
 		if (type.isArrow()) {
 			// if (param.maxMessageSize() > 0) {

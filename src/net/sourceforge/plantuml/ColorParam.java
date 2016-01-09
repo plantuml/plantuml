@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 17433 $
+ * Revision $Revision: 18280 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -48,6 +48,7 @@ public enum ColorParam {
 	activityEnd(HtmlColorUtils.BLACK),
 	activityBar(HtmlColorUtils.BLACK),
 	activityArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	swimlaneBorder(HtmlColorUtils.BLACK),
 	
 	usecaseBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	usecaseBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),

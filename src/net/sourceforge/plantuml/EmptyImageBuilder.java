@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 12235 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml;
@@ -46,12 +46,21 @@ public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
+	static final private int LIMIT = 4096;
 
 	public EmptyImageBuilder(double width, double height, Color background) {
 		this((int) width, (int) height, background);
 	}
 
 	public EmptyImageBuilder(int width, int height, Color background) {
+		if (width > LIMIT) {
+			Log.info("Width too large " + width);
+			width = LIMIT;
+		}
+		if (height > LIMIT) {
+			Log.info("Height too large " + height);
+			height = LIMIT;
+		}
 		Log.info("Creating image " + width + "x" + height);
 		im = new BufferedImage(width, height, background == null ? BufferedImage.TYPE_INT_ARGB
 				: BufferedImage.TYPE_INT_RGB);

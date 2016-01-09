@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -135,15 +135,6 @@ public class FtileDiamondInside2 extends AbstractFtile {
 
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		final Dimension2D diamond = calculateDimensionAlone(stringBounder);
-		final Dimension2D north = this.north.calculateDimension(stringBounder);
-		final double height = diamond.getHeight() + north.getHeight();
-		final double left = diamond.getWidth() / 2;
-		final double width = north.getWidth() > left ? left + north.getWidth() : diamond.getWidth();
-		return new FtileGeometry(width, height, left, 0, diamond.getHeight());
-	}
-
 	private FtileGeometry calculateDimensionAlone(StringBounder stringBounder) {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dim;
@@ -155,6 +146,15 @@ public class FtileDiamondInside2 extends AbstractFtile {
 					Diamond.diamondHalfSize * 2, 0);
 		}
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
+	}
+
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		final Dimension2D diamond = calculateDimensionAlone(stringBounder);
+		final Dimension2D north = this.north.calculateDimension(stringBounder);
+		final double height = diamond.getHeight() + north.getHeight();
+		final double left = diamond.getWidth() / 2;
+		final double width = north.getWidth() > left ? left + north.getWidth() : diamond.getWidth();
+		return new FtileGeometry(width, height, left, 0, diamond.getHeight());
 	}
 
 }

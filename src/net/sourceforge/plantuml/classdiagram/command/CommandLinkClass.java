@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -124,7 +124,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	private static String optionalKeywords(UmlDiagramType type) {
 		if (type == UmlDiagramType.CLASS) {
-			return "(interface|enum|annotation|abstract[%s]+class|abstract|class)";
+			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object)";
 		}
 		if (type == UmlDiagramType.OBJECT) {
 			return "(object)";
@@ -132,10 +132,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		throw new IllegalArgumentException();
 	}
 
+	private LeafType getTypeIfObject(String type) {
+		if ("object".equalsIgnoreCase(type)) {
+			return LeafType.OBJECT;
+		}
+		return null;
+	}
+
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		Code ent1 = Code.of(arg.get("ENT1", 1));
 		Code ent2 = Code.of(arg.get("ENT2", 1));
+
 		if (ent1 == null) {
 			return executeArgSpecial1(diagram, arg);
 		}
@@ -148,12 +156,22 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return executePackageLink(diagram, arg);
 		}
 
+		final String type1 = arg.get("ENT1", 0);
+		final LeafType typeIfObject1 = getTypeIfObject(type1);
+
 		final IEntity cl1 = diagram.isGroup(ent1) ? diagram.getGroup(Code.of(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1), "\""))) : diagram.getOrCreateLeaf(
-				ent1, null, null);
+				ent1, typeIfObject1, null);
+
+		final String type2 = arg.get("ENT2", 0);
+		LeafType typeIfObject2 = getTypeIfObject(type2);
+		if (diagram.leafExist(ent2) == false && cl1.getEntityType() == LeafType.OBJECT && typeIfObject2 == null) {
+			typeIfObject2 = LeafType.OBJECT;
+		}
+
 		final IEntity cl2 = diagram.isGroup(ent2) ? diagram.getGroup(Code.of(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1), "\""))) : diagram.getOrCreateLeaf(
-				ent2, null, null);
+				ent2, typeIfObject2, null);
 
 		if (arg.get("ENT1", 0) != null) {
 			final LeafType type = LeafType.getLeafType(arg.get("ENT1", 0));

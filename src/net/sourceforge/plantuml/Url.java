@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -56,7 +56,7 @@ public class Url implements EnsureVisible {
 		if (tooltip == null) {
 			this.tooltip = url;
 		} else {
-			this.tooltip = tooltip;
+			this.tooltip = StringUtils.manageNewLine(tooltip);
 		}
 		if (label == null) {
 			this.label = url;

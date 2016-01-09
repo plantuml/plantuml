@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.svek.extremity;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -47,14 +48,20 @@ class ExtremityPlus extends Extremity {
 	private final UEllipse circle;
 	private final double px;
 	private final double py;
-	private final double radius = 8;
+	private static final double radius = 8;
 	private final double angle;
 
-	public ExtremityPlus(Point2D p1, double angle) {
+	private ExtremityPlus(double x, double y, double angle) {
 		this.angle = angle;
 		this.circle = new UEllipse(2 * radius, 2 * radius);
-		this.px = p1.getX() - radius + radius * Math.sin(angle);
-		this.py = p1.getY() - radius - radius * Math.cos(angle);
+		this.px = x;
+		this.py = y;
+	}
+
+	public static UDrawable create(Point2D p1, double angle) {
+		final double x = p1.getX() - radius + radius * Math.sin(angle);
+		final double y = p1.getY() - radius - radius * Math.cos(angle);
+		return new ExtremityPlus(x, y, angle);
 	}
 
 	public void drawU(UGraphic ug) {

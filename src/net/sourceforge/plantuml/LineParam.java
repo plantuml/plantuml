@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -43,7 +43,9 @@ public enum LineParam {
 	sequenceLifeLineBorder,
 	sequenceParticipantBorder, noteBorder, sequenceGroupBorder, sequenceReferenceBorder,
 	classBorder, objectBorder,
-	packageBorder;
+	partitionBorder,
+	packageBorder,
+	swimlaneBorder;
 //	sequenceBoxBorder(0.1);
 	
 }

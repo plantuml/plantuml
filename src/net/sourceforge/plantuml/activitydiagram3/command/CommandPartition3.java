@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -41,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -62,12 +64,26 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
 		final String partitionTitle = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-		final HtmlColor backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("BACKCOLOR", 0));
 		final HtmlColor titleColor = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("TITLECOLOR", 0));
-		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor);
+
+		final HtmlColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(ColorParam.partitionBackground,
+				null, false);
+		final HtmlColor backColor;
+		if (backColorInSkinparam == null) {
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("BACKCOLOR", 0));
+		} else {
+			backColor = backColorInSkinparam;
+
+		}
+
+		HtmlColor borderColor = diagram.getSkinParam().getHtmlColor(ColorParam.partitionBorder, null, false);
+		if (borderColor == null) {
+			borderColor = HtmlColorUtils.BLACK;
+		}
+
+		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor);
 
 		return CommandExecutionResult.ok();
 	}
-
 }

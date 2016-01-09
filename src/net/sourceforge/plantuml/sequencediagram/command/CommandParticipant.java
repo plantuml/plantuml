@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -100,7 +100,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		if (stereotype != null) {
 			final ISkinParam skinParam = diagram.getSkinParam();
 			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();
-			final UFont font = skinParam.getFont(FontParam.CIRCLED_CHARACTER, null, false);
+			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);
 			participant.setStereotype(new Stereotype(stereotype, skinParam.getCircledCharacterRadius(), font, diagram
 					.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);
 		}

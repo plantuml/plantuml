@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -58,6 +58,8 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LongCode;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -65,6 +67,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 final class EntityImpl implements ILeaf, IGroup {
@@ -165,9 +168,12 @@ final class EntityImpl implements ILeaf, IGroup {
 				throw new IllegalArgumentException("type=" + leafType);
 			}
 			if (newType != LeafType.ANNOTATION && newType != LeafType.ABSTRACT_CLASS && newType != LeafType.CLASS
-					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE) {
+					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE && newType != LeafType.OBJECT) {
 				throw new IllegalArgumentException("newtype=" + newType);
 			}
+		}
+		if (leafType == LeafType.CLASS && newType == LeafType.OBJECT) {
+			bodier.muteClassToObject();
 		}
 		this.leafType = newType;
 		this.symbol = newSymbol;
@@ -467,6 +473,9 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public USymbol getUSymbol() {
+		if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
+			return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
+		}
 		return symbol;
 	}
 
@@ -519,11 +528,20 @@ final class EntityImpl implements ILeaf, IGroup {
 		return longCode;
 	}
 
-	public FontParam getTitleFontParam() {
+	private FontParam getTitleFontParam() {
 		if (symbol != null) {
 			return symbol.getFontParam();
 		}
 		return getGroupType() == GroupType.STATE ? FontParam.STATE : FontParam.PACKAGE;
+	}
+
+	public FontConfiguration getFontConfigurationForTitle(final ISkinParam skinParam) {
+		final FontParam fontParam = getTitleFontParam();
+		final HtmlColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);
+		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);
+		final FontConfiguration fontConfiguration = new FontConfiguration(font, fontHtmlColor,
+				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
+		return fontConfiguration;
 	}
 
 	public final int getRawLayout() {
@@ -574,19 +592,19 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 	}
 
-//	public void setSpecificLineStroke(UStroke specificLineStroke) {
-//		colors = colors.addSpecificLineStroke(specificLineStroke);
-//	}
+	// public void setSpecificLineStroke(UStroke specificLineStroke) {
+	// colors = colors.addSpecificLineStroke(specificLineStroke);
+	// }
 
 	@Deprecated
 	public void applyStroke(String s) {
 		throw new UnsupportedOperationException();
-//		if (s == null) {
-//			return;
-//		}
-//		final LinkStyle style = LinkStyle.valueOf(StringUtils.goUpperCase(s));
-//		colors = colors.addSpecificLineStroke(style);
-//		// setSpecificLineStroke(LinkStyle.getStroke(style));
+		// if (s == null) {
+		// return;
+		// }
+		// final LinkStyle style = LinkStyle.valueOf(StringUtils.goUpperCase(s));
+		// colors = colors.addSpecificLineStroke(style);
+		// // setSpecificLineStroke(LinkStyle.getStroke(style));
 	}
 
 }

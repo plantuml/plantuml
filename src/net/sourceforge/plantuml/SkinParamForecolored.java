@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamForecolored extends SkinParamDelegator {
@@ -44,7 +45,8 @@ public class SkinParamForecolored extends SkinParamDelegator {
 		this.forecolor = forecolor;
 	}
 
-	public HtmlColor getHtmlColor(ColorParam param, String stereotype, boolean clickable) {
+	@Override
+	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		return forecolor;
 	}
 

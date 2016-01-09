@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -66,11 +66,11 @@ abstract class AbstractEntityImage2 implements IEntityImageBlock {
 	}
 
 	protected UFont getFont(FontParam fontParam) {
-		return skinParam.getFont(fontParam, null, false);
+		return skinParam.getFont(null, false, fontParam);
 	}
 
 	protected HtmlColor getFontColor(FontParam fontParam) {
-		return skinParam.getFontHtmlColor(fontParam, null);
+		return skinParam.getFontHtmlColor(null, fontParam);
 	}
 
 	protected final HtmlColor getColor(ColorParam colorParam) {

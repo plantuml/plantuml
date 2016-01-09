@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,7 +45,15 @@ class SimpleLine2 implements Comparable<SimpleLine2> {
 	private final GeneratedImage generatedImage;
 	private final Future<List<GeneratedImage>> future;
 
-	public SimpleLine2(File file, GeneratedImage generatedImage, Future<List<GeneratedImage>> future) {
+	public static SimpleLine2 fromFuture(File file, Future<List<GeneratedImage>> future) {
+		return new SimpleLine2(file, null, future);
+	}
+
+	public static SimpleLine2 fromGeneratedImage(File file, GeneratedImage generatedImage) {
+		return new SimpleLine2(file, generatedImage, null);
+	}
+
+	private SimpleLine2(File file, GeneratedImage generatedImage, Future<List<GeneratedImage>> future) {
 		this.generatedImage = generatedImage;
 		this.file = file;
 		this.future = future;

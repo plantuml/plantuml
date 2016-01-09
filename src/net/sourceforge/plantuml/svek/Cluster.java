@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -371,7 +371,7 @@ public class Cluster implements Moveable {
 		return stroke;
 	}
 
-	private void manageEntryExitPoint(DotData dotData, StringBounder stringBounder) {
+	public void manageEntryExitPoint(DotData dotData, StringBounder stringBounder) {
 		final Collection<ClusterPosition> insides = new ArrayList<ClusterPosition>();
 		final List<Point2D> points = new ArrayList<Point2D>();
 		for (Shape sh : shapes) {

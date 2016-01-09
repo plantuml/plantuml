@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 public final class FactoryNoteCommand implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^(note)[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*(note)[%s]+"), //
 				new RegexLeaf("CODE", "as[%s]+([\\p{L}0-9_.]+)"), //
 				new RegexLeaf("[%s]*"), //
 				ColorParser.exp1(), //
@@ -62,7 +62,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g][%s]+as[%s]+"), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)[%s]*"), //
 				ColorParser.exp1(), //
@@ -89,7 +89,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?note$";
+				return "(?i)^[%s]*end[%s]?note$";
 			}
 
 			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -73,7 +73,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		final Stereotype stereotype = entity.getStereotype();
-		final USymbol symbol = entity.getUSymbol() == null ? (getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2
+		USymbol symbol = entity.getUSymbol() == null ? (getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2
 				: USymbol.COMPONENT1) : entity.getUSymbol();
 		if (symbol == null) {
 			throw new IllegalArgumentException();
@@ -99,7 +99,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
-		if (stereotype != null && stereotype.getLabel(false) != null
+		if (stereotype != null && stereotype.getSprite() != null
+				&& getSkinParam().getSprite(stereotype.getSprite()) != null) {
+			symbol = symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
+			stereo = getSkinParam().getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor());
+		} else if (stereotype != null && stereotype.getLabel(false) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(
 					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),

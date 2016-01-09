@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 17341 $
+ * Revision $Revision: 18282 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -137,17 +137,18 @@ public class Preprocessor implements ReadLine {
 		} else {
 			final List<String> strings = defines.applyDefines(group2);
 			if (strings.size() > 1) {
-				throw new UnsupportedOperationException();
+				defines.define(group1, strings);
+			} else {
+				final StringBuilder value = new StringBuilder(strings.get(0));
+				while (StringUtils.endsWithBackslash(value.toString())) {
+					value.setLength(value.length() - 1);
+					final CharSequence2 read = this.readLine();
+					value.append(read.toString2());
+				}
+				final List<String> li = new ArrayList<String>();
+				li.add(value.toString());
+				defines.define(group1, li);
 			}
-			final StringBuilder value = new StringBuilder(strings.get(0));
-			while (StringUtils.endsWithBackslash(value.toString())) {
-				value.setLength(value.length() - 1);
-				final CharSequence2 read = this.readLine();
-				value.append(read.toString2());
-			}
-			final List<String> li = new ArrayList<String>();
-			li.add(value.toString());
-			defines.define(group1, li);
 		}
 		return this.readLine();
 	}

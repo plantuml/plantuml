@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,6 +35,10 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -61,6 +65,29 @@ public class SpriteImage implements Sprite {
 				return new Dimension2DDouble(img.getWidth(), img.getHeight());
 			}
 		};
+	}
+
+	public static Sprite fromInternal(String name) {
+		if (name.endsWith(".png")) {
+			throw new IllegalArgumentException();
+		}
+		final InputStream is = getInternalSprite(name + ".png");
+		if (is == null) {
+			return null;
+		}
+		try {
+			return new SpriteImage(ImageIO.read(is));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public static InputStream getInternalSprite(final String inner) {
+		final String path = "/sprites/" + inner;
+		final InputStream is = SpriteImage.class.getResourceAsStream(path);
+		return is;
 	}
 
 }

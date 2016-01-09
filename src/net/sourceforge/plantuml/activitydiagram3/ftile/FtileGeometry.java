@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -146,6 +146,22 @@ public class FtileGeometry extends Dimension2D {
 
 	public FtileGeometry appendBottom(FtileGeometry other) {
 		return new FtileGeometryMerger(this, other).getResult();
+	}
+
+	public FtileGeometry ensureHeight(double newHeight) {
+		if (this.height > newHeight) {
+			return this;
+		}
+		return fixedHeight(newHeight);
+	}
+
+	private FtileGeometry ensureRightStrange(double newRight) {
+		final double right = this.width - this.left;
+		if (right > newRight) {
+			return this;
+		}
+		// return addMarginX(0, newRight - right);
+		return addMarginX(0, newRight);
 	}
 
 }

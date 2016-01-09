@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -69,7 +69,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 	}
 
 	private RegexConcat getRegexConcatMultiLine(IRegex partialPattern, final boolean withBracket) {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)"), //
 				new RegexLeaf("[%s]+of[%s]+"), partialPattern, //
 				new RegexLeaf("[%s]*"), //
@@ -92,7 +92,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 				if (withBracket) {
 					return "(?i)^(\\})$";
 				}
-				return "(?i)^(end[%s]?note)$";
+				return "(?i)^[%s]*(end[%s]?note)$";
 			}
 
 			public CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) {

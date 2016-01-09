@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -73,7 +73,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 		final Rose rose = new Rose();
 		final SkinParam skinParam = new SkinParam();
 		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
-		final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
+		final UFont fontNote = skinParam.getFont(null, false, FontParam.NOTE);
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 

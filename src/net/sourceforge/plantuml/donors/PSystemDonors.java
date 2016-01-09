@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "UDfTKi6IsZ0ClUihVCwq7v4b7Jg1tUr0syFUHA8b0cEbjaERV7sLROCDEbaZFUaz-PMs-1_auHj5ygPqKHnZ0z-fI24Ns4fAVO1oWU81rZwLQ8Gz7J14HcTUf7DGkbQyMGl5YURd-xjsBEteO8lP8XUXuYLX2sKQBLVO3ud226ikxiC9r0lB8S0-Kj-HCokHNlLLonuAiBayGCN3IYmxivCX4DJ3GxquYGfPafxXEMEDbppLLQMbF-XQFUUgOvrwH3-gqjrDjZl2Iyu-Jl1g-Qg0YfkpChzLsC6NS1ljCX85NQ6QBXpzQBROIOjGpqT_wr37Ptq5sVHT6kTHp-GmQf_oKrxrF_9qlbFbshlq0yawo2hirKUUu6igjmBFt7HapHEo7NC5Tih9XF18hIPqdsjiVWqKJ3KSFEhNsYJ_fvmYDPtPU0oOA1r97PjzuE_PQDfYDdBbt3SVplcHz3F2BlFolE9EvqdHVUOoES-7UXAF3ct_oRnHHEa3x5Gl-jPiUFvf-0laPjiQ";
+	public static final String DONORS = "UDfTKa5osp0ClECLF6lIHoXMwuvi9ncxxI4tM48is3IXa9HRwMszzME5qigYZHDtW0LsGUGs-n_auOKYUPExA8wnWc-KpI5dMCiCVO1yek8UbdvEKGyxscE8ZCuyIUCWTxLuinIA0utFjpUjcChHmHgJGIv2mHDW2_dSMYwmwsO9FImvkmqdK4ugkm2xI6r3pYn4MlLNJ7CemEfyHnKF2x7ip5QwG51sT_diA6fa0Yt39b6DvnJggDpIBtIrhdFHi7OzeE_LwVPgsntWALKV1tYsV552mTL9bLypxE1pkBPsYOYCBb0CPuw-Dsjif4OenwM_DgZjaxgCxFnT6gTUr-GmQftgKrtbF_5qkd7bwXlumMHjP9Nsx2CFy7LErm8RhXgovX7Pzga3EwHYGhYNLXAwJoLMxnq5KtHxZ_grThR_GuwHgiQiF0QS9Hr8BpRvm9_ZeMc9MSc5qxlvk9plitz6s2QtF8wuyNbKTfjScPp6HJsAHuUsVJ2l557Q05lrYxusAnv_6hvOyUFwDtz-MwluBytvuOe0";
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final GraphicStrings result = getGraphicStrings();

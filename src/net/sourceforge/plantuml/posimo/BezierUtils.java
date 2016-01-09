@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -95,16 +95,20 @@ public class BezierUtils {
 
 	}
 
-	public static void subdivide(CubicCurve2D src, CubicCurve2D left, CubicCurve2D right, final double coef) {
+	private static void subdivide(CubicCurve2D src, CubicCurve2D left, CubicCurve2D right, final double coef) {
 		final double coef1 = coef;
 		final double coef2 = 1 - coef;
 		final double centerxA = src.getCtrlX1() * coef1 + src.getCtrlX2() * coef2;
 		final double centeryA = src.getCtrlY1() * coef1 + src.getCtrlY2() * coef2;
 
-		final double ctrlx1 = src.getX1() * coef1 + src.getCtrlX1() * coef1;
-		final double ctrly1 = src.getY1() * coef1 + src.getCtrlY1() * coef1;
-		final double ctrlx2 = src.getX2() * coef1 + src.getCtrlX2() * coef1;
-		final double ctrly2 = src.getY2() * coef1 + src.getCtrlY2() * coef1;
+		final double x1 = src.getX1();
+		final double y1 = src.getY1();
+		final double x2 = src.getX2();
+		final double y2 = src.getY2();
+		final double ctrlx1 = x1 * coef1 + src.getCtrlX1() * coef1;
+		final double ctrly1 = y1 * coef1 + src.getCtrlY1() * coef1;
+		final double ctrlx2 = x2 * coef1 + src.getCtrlX2() * coef1;
+		final double ctrly2 = y2 * coef1 + src.getCtrlY2() * coef1;
 
 		final double ctrlx12 = ctrlx1 * coef1 + centerxA * coef1;
 		final double ctrly12 = ctrly1 * coef1 + centeryA * coef1;
@@ -112,8 +116,8 @@ public class BezierUtils {
 		final double ctrly21 = ctrly2 * coef1 + centeryA * coef1;
 		final double centerxB = ctrlx12 * coef1 + ctrlx21 * coef1;
 		final double centeryB = ctrly12 * coef1 + ctrly21 * coef1;
-		left.setCurve(src.getX1(), src.getY1(), ctrlx1, ctrly1, ctrlx12, ctrly12, centerxB, centeryB);
-		right.setCurve(centerxB, centeryB, ctrlx21, ctrly21, ctrlx2, ctrly2, src.getX2(), src.getY2());
+		left.setCurve(x1, y1, ctrlx1, ctrly1, ctrlx12, ctrly12, centerxB, centeryB);
+		right.setCurve(centerxB, centeryB, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);
 	}
 
 	static double dist(CubicCurve2D.Double seg) {

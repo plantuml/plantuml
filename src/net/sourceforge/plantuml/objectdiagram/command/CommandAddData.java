@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -39,17 +39,17 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
+import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class CommandAddData extends SingleLineCommand<ObjectDiagram> {
+public class CommandAddData extends SingleLineCommand<AbstractClassOrObjectDiagram> {
 
 	public CommandAddData() {
 		super("(?i)^([\\p{L}0-9_.]+)[%s]*:[%s]*(.*)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ObjectDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, List<String> arg) {
 		final IEntity entity = diagram.getOrCreateLeaf(Code.of(arg.get(0)), null, null);
 
 		final String field = arg.get(1);

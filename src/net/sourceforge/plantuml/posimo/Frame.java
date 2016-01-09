@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -118,8 +118,8 @@ public class Frame implements Component {
 	}
 
 	private TextBlock createTextBloc() {
-		final UFont font = skinParam.getFont(FontParam.PACKAGE, null, false);
-		final HtmlColor textColor = skinParam.getFontHtmlColor(FontParam.PACKAGE, null);
+		final UFont font = skinParam.getFont(null, false, FontParam.PACKAGE);
+		final HtmlColor textColor = skinParam.getFontHtmlColor(null, FontParam.PACKAGE);
 		// final TextBlock bloc = Display.create(name).create(new FontConfiguration(font, textColor,
 		// skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, new
 		// SpriteContainerEmpty());

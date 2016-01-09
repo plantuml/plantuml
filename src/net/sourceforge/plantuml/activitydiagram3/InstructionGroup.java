@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -47,16 +47,18 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final InstructionList list;
 	private final Instruction parent;
 	private final HtmlColor backColor;
+	private final HtmlColor borderColor;
 	private final HtmlColor titleColor;
 
 	private final Display test;
 	private Display headerNote = Display.NULL;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
-			Swimlane swimlane) {
+			Swimlane swimlane, HtmlColor borderColor) {
 		this.list = new InstructionList(swimlane);
 		this.parent = parent;
 		this.test = test;
+		this.borderColor = borderColor;
 		this.backColor = backColor;
 		this.titleColor = titleColor;
 	}
@@ -66,7 +68,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, headerNote);
+		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, headerNote, borderColor);
 	}
 
 	public Instruction getParent() {

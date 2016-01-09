@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -56,14 +56,14 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
@@ -88,7 +88,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?note$";
+				return "(?i)^[%s]*end[%s]?note$";
 			}
 
 			public CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines) {

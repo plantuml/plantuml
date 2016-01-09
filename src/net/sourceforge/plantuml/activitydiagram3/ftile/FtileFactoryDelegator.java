@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -138,7 +138,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createWhile(swimlane, whileBlock, test, yes, out, afterEndwhile, color);
 	}
 
-	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile, LinkRendering topInlinkRendering) {
+	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
+			LinkRendering topInlinkRendering) {
 		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
 	}
 
@@ -150,8 +151,9 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createSplit(all);
 	}
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote) {
-		return factory.createGroup(list, name, backColor, titleColor, headerNote);
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+			HtmlColor borderColor) {
+		return factory.createGroup(list, name, backColor, titleColor, headerNote, borderColor);
 	}
 
 	public StringBounder getStringBounder() {

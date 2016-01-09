@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -279,6 +279,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private Shape other;
 
 	public void setOpaleLine(Line line, Shape shape, Shape other) {
+		if (other == null) {
+			throw new IllegalArgumentException();
+		}
 		this.opaleLine = line;
 		this.shape = shape;
 		this.other = other;

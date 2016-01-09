@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16159 $
+ * Revision $Revision: 18291 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -53,7 +53,7 @@ public class Stereotype implements CharSequence, Hideable {
 	private final static Pattern circleChar = MyPattern
 			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
 	private final static Pattern circleSprite = MyPattern
-			.cmpile("\\<\\<[%s]*\\(?\\$([\\p{L}0-9_]+)[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
+			.cmpile("\\<\\<[%s]*\\(?\\$([-\\p{L}0-9_/]+)[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
 
 	private final String label;
 	private final HtmlColor htmlColor;
@@ -120,7 +120,11 @@ public class Stereotype implements CharSequence, Hideable {
 		this.character = '\0';
 		this.radius = 0;
 		this.circledFont = null;
-		this.sprite = null;
+		if (label.startsWith("<<$") && label.endsWith(">>")) {
+			this.sprite = label.substring(3, label.length() - 2);
+		} else {
+			this.sprite = null;
+		}
 	}
 
 	public HtmlColor getHtmlColor() {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -353,7 +353,7 @@ public class MainWindow2 extends JFrame {
 			final File file = ent.getKey();
 			removeAllThatUseThisFile(file);
 			final Future<List<GeneratedImage>> future = ent.getValue();
-			final SimpleLine2 simpleLine = new SimpleLine2(file, null, future);
+			final SimpleLine2 simpleLine = SimpleLine2.fromFuture(file, future);
 			currentDirectoryListing2.add(simpleLine);
 			changed = true;
 		}
@@ -365,7 +365,7 @@ public class MainWindow2 extends JFrame {
 				final Future<List<GeneratedImage>> future = line.getFuture();
 				for (GeneratedImage im : future.get()) {
 					mayRefreshImageWindow(im.getPngFile());
-					final SimpleLine2 simpleLine = new SimpleLine2(line.getFile(), im, null);
+					final SimpleLine2 simpleLine = SimpleLine2.fromGeneratedImage(line.getFile(), im);
 					currentDirectoryListing2.add(simpleLine);
 				}
 			}
@@ -389,7 +389,7 @@ public class MainWindow2 extends JFrame {
 				continue;
 			}
 			if (pngFile.equals(win.getSimpleLine().getGeneratedImage().getPngFile())) {
-				win.refreshImage();
+				win.refreshImage(true);
 			}
 		}
 
@@ -400,6 +400,10 @@ public class MainWindow2 extends JFrame {
 		if (ok == false) {
 			throw new IllegalStateException();
 		}
+	}
+
+	public List<SimpleLine2> getCurrentDirectoryListing2() {
+		return Collections.unmodifiableList(currentDirectoryListing2);
 	}
 
 }

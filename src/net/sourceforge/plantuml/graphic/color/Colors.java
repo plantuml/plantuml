@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -208,7 +208,7 @@ public class Colors {
 		if (getColor(colorType) != null) {
 			return this;
 		}
-		final HtmlColor col = skinParam.getFontHtmlColor(param, stereotype);
+		final HtmlColor col = skinParam.getFontHtmlColor(stereotype, param);
 		return add(colorType, col);
 	}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -50,10 +50,11 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class CommandCreateEntityObjectMultilines extends CommandMultilines2<ObjectDiagram> {
+public class CommandCreateEntityObjectMultilines extends CommandMultilines2<AbstractClassOrObjectDiagram> {
 
 	public CommandCreateEntityObjectMultilines() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
@@ -77,7 +78,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 		return "(?i)^[%s]*\\}[%s]*$";
 	}
 
-	public CommandExecutionResult executeNow(ObjectDiagram diagram, BlocLines lines) {
+	public CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines) {
 		lines = lines.trim(true);
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final IEntity entity = executeArg0(diagram, line0);
@@ -95,17 +96,17 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Obje
 		return CommandExecutionResult.ok();
 	}
 
-	private IEntity executeArg0(ObjectDiagram diagram, RegexResult line0) {
+	private IEntity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) {
 		final Code code = Code.of(line0.get("NAME", 1));
 		final String display = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
 		if (diagram.leafExist(code)) {
-			return diagram.getOrCreateLeaf(code, null, null);
+			return diagram.getOrCreateLeaf(code, LeafType.OBJECT, null);
 		}
 		final IEntity entity = diagram.createLeaf(code, Display.getWithNewlines(display), LeafType.OBJECT, null);
 		if (stereotype != null) {
 			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-					.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
+					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
 					.getIHtmlColorSet()));
 		}
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));

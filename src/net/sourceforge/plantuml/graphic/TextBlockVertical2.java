@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -78,6 +78,9 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock {
 				block.drawU(ug.apply(new UTranslate(0, y)));
 			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;
+				block.drawU(ug.apply(new UTranslate(dx, y)));
+			} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
+				final double dx = dimtotal.getWidth() - dimb.getWidth();
 				block.drawU(ug.apply(new UTranslate(dx, y)));
 			} else {
 				throw new UnsupportedOperationException();

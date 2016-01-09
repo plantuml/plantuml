@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -90,7 +90,7 @@ public class SpriteMonochrome implements Sprite {
 			backcolor = HtmlColorUtils.WHITE;
 		}
 		if (color == null) {
-			backcolor = HtmlColorUtils.BLACK;
+			color = HtmlColorUtils.BLACK;
 		}
 		final HtmlColorGradient gradient = new HtmlColorGradient(backcolor, color, '\0');
 		for (int col = 0; col < width; col++) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -78,7 +78,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private SwimlaneStrategy swimlaneStrategy;
 
-	private final Swimlanes swinlanes = new Swimlanes(getSkinParam());
+	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
 
 	private void manageSwimlaneStrategy() {
 		if (swimlaneStrategy == null) {
@@ -233,12 +233,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private final UFont getFont(FontParam fontParam) {
 		final ISkinParam skinParam = getSkinParam();
-		return skinParam.getFont(fontParam, null, false);
+		return skinParam.getFont(null, false, fontParam);
 	}
 
 	private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereotype2) {
 		final ISkinParam skinParam = getSkinParam();
-		return skinParam.getFontHtmlColor(fontParam, stereotype2);
+		return skinParam.getFontHtmlColor(stereotype2, fontParam);
 	}
 
 	public void fork() {
@@ -388,10 +388,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor) {
+	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor) {
 		manageSwimlaneStrategy();
 		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,
-				swinlanes.getCurrentSwimlane());
+				swinlanes.getCurrentSwimlane(), borderColor);
 		current().add(instructionGroup);
 		setCurrent(instructionGroup);
 	}

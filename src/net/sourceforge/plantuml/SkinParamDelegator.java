@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -69,12 +69,12 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getCircledCharacterRadius();
 	}
 
-	public UFont getFont(FontParam fontParam, Stereotype stereotype, boolean inPackageTitle) {
-		return skinParam.getFont(fontParam, stereotype, false);
+	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
+		return skinParam.getFont(stereotype, false, fontParam);
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype) {
-		return skinParam.getFontHtmlColor(param, stereotype);
+	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
+		return skinParam.getFontHtmlColor(stereotype, param);
 	}
 
 	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {

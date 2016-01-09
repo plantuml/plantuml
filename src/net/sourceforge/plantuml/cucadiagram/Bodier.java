@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -51,10 +51,16 @@ public class Bodier {
 
 	private final List<String> rawBody = new ArrayList<String>();
 	private final Set<VisibilityModifier> hides;
-	private final LeafType type;
+	private LeafType type;
 	private List<Member> methodsToDisplay;
 	private List<Member> fieldsToDisplay;
 	private final boolean manageModifier;
+
+	public void muteClassToObject() {
+		methodsToDisplay = null;
+		fieldsToDisplay = null;
+		type = LeafType.OBJECT;
+	}
 
 	public Bodier(LeafType type, Set<VisibilityModifier> hides) {
 		this.hides = hides;

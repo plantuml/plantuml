@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -60,14 +60,16 @@ public class SkinParamColors extends SkinParamDelegator {
 		return colors.getShadowing();
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype) {
+	@Override
+	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 		final HtmlColor value = colors.getColor(ColorType.TEXT);
 		if (value == null) {
-			return super.getFontHtmlColor(param, stereotype);
+			return super.getFontHtmlColor(stereotype, param);
 		}
 		return value;
 	}
 
+	@Override
 	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		final ColorType type = param.getColorType();
 		if (type == null) {

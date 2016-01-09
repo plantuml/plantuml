@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 17071 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml;
@@ -88,6 +88,7 @@ public enum FontParam {
 	STATE_ATTRIBUTE(12, Font.PLAIN), //
 	LEGEND(14, Font.PLAIN), //
 	TITLE(18, Font.PLAIN), //
+	SWIMLANE_TITLE(18, Font.PLAIN), //
 	FOOTER(10, Font.PLAIN, "#888888", FontParamConstant.FAMILY), //
 	HEADER(10, Font.PLAIN, "#888888", FontParamConstant.FAMILY), //
 	USECASE(14, Font.PLAIN), //
@@ -106,7 +107,9 @@ public enum FontParam {
 	DATABASE_STEREOTYPE(14, Font.ITALIC), //
 	QUEUE_STEREOTYPE(14, Font.ITALIC), //
 	ACTOR_STEREOTYPE(14, Font.ITALIC), //
-	SEQUENCE_STEREOTYPE(14, Font.ITALIC); //
+	SEQUENCE_STEREOTYPE(14, Font.ITALIC), //
+	PARTITION(14, Font.PLAIN); //
+
 
 	private final int defaultSize;
 	private final int fontStyle;

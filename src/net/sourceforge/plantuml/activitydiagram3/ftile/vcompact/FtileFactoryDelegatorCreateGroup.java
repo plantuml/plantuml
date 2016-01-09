@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -51,9 +51,10 @@ public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote) {
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+			HtmlColor borderColor) {
 		final HtmlColor arrowColor = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
-		return new FtileGroup(list, name, headerNote, arrowColor, backColor, titleColor, getSkinParam());
+		return new FtileGroup(list, name, headerNote, arrowColor, backColor, titleColor, getSkinParam(), borderColor);
 	}
 
 }

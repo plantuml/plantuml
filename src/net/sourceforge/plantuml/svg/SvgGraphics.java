@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16115 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -294,6 +294,7 @@ public class SvgGraphics {
 		if (title == null) {
 			pendingLink2.get(0).setAttribute("xlink:title", url);
 		} else {
+			title = title.replaceAll("\\\\n", "\n");
 			pendingLink2.get(0).setAttribute("xlink:title", title);
 		}
 	}

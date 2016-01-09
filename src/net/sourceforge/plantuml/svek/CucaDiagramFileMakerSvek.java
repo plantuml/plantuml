@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -210,12 +210,12 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private final UFont getFont(FontParam fontParam) {
 		final ISkinParam skinParam = diagram.getSkinParam();
-		return skinParam.getFont(fontParam, null, false);
+		return skinParam.getFont(null, false, fontParam);
 	}
 
 	private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereo) {
 		final ISkinParam skinParam = diagram.getSkinParam();
-		return skinParam.getFontHtmlColor(fontParam, stereo);
+		return skinParam.getFontHtmlColor(stereo, fontParam);
 	}
 
 	private double getScale(FileFormatOption fileFormatOption, final Dimension2D dim) {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -70,12 +70,12 @@ public class CuteShapeFactory {
 			return new Triangle(varArgs);
 		}
 		final String first = data.split(" ")[0];
-		System.err.println("Looking for group " + first + " in " + groups.keySet());
+		// System.err.println("Looking for group " + first + " in " + groups.keySet());
 		final Group group = groups.get(first);
 		if (group == null) {
 			throw new IllegalArgumentException("Cannot find group " + first + " in " + groups.keySet());
 		}
-		System.err.println("Found group " + first + " in " + groups.keySet());
+		// System.err.println("Found group " + first + " in " + groups.keySet());
 		return group;
 	}
 

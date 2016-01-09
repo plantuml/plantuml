@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -140,15 +140,6 @@ public class FtileDiamondInside extends AbstractFtile {
 
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		final FtileGeometry dimDiamonAlone = calculateDimensionAlone(stringBounder);
-		final Dimension2D dimWest = west.calculateDimension(stringBounder);
-		final Dimension2D dimEast = east.calculateDimension(stringBounder);
-		final double northHeight = north.calculateDimension(stringBounder).getHeight();
-		return dimDiamonAlone.incHeight(northHeight);
-		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(), dimEast.getWidth());
-	}
-
 	private FtileGeometry calculateDimensionAlone(StringBounder stringBounder) {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dim;
@@ -160,6 +151,15 @@ public class FtileDiamondInside extends AbstractFtile {
 					Diamond.diamondHalfSize * 2, 0);
 		}
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
+	}
+
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		final FtileGeometry dimDiamonAlone = calculateDimensionAlone(stringBounder);
+		final Dimension2D dimWest = west.calculateDimension(stringBounder);
+		final Dimension2D dimEast = east.calculateDimension(stringBounder);
+		final double northHeight = north.calculateDimension(stringBounder).getHeight();
+		return dimDiamonAlone.incHeight(northHeight);
+		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(), dimEast.getWidth());
 	}
 
 }

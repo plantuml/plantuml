@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 16520 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -112,6 +112,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			result = createLeafInternal(code, Display.getWithNewlines(code), type, getCurrentGroup(), symbol);
 			result.setUSymbol(symbol);
 		}
+		if (result.getEntityType() == LeafType.CLASS && type == LeafType.OBJECT) {
+			result.muteToType(type, symbol);
+		}
 		this.lastEntity = result;
 		return result;
 	}
@@ -154,8 +157,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return g;
 	}
 
-	private IGroup getOrCreateGroupInternal(Code code, Display display, Code namespace2, GroupType type,
-			IGroup parent) {
+	private IGroup getOrCreateGroupInternal(Code code, Display display, Code namespace2, GroupType type, IGroup parent) {
 		IGroup result = entityFactory.getGroups().get(code);
 		if (result != null) {
 			return result;

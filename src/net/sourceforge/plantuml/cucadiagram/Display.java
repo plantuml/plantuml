@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -80,6 +80,12 @@ public class Display implements Iterable<CharSequence> {
 	// public void setDefaultCreoleMode(CreoleMode defaultCreoleMode) {
 	// this.defaultCreoleMode = defaultCreoleMode;
 	// }
+
+	public Display removeUrlHiddenNewLineUrl() {
+		final String full = UrlBuilder.purgeUrl(asStringWithHiddenNewLine());
+		return new Display(StringUtils.splitHiddenNewLine(full), this.naturalHorizontalAlignment, this.isNull,
+				this.defaultCreoleMode);
+	}
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
@@ -199,6 +205,17 @@ public class Display implements Iterable<CharSequence> {
 			throw new IllegalArgumentException();
 		}
 		return new Display(this, mode);
+	}
+
+	public String asStringWithHiddenNewLine() {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < display.size(); i++) {
+			sb.append(display.get(i));
+			if (i < display.size() - 1) {
+				sb.append(StringUtils.hiddenNewLine());
+			}
+		}
+		return sb.toString();
 	}
 
 	@Override
@@ -326,9 +343,9 @@ public class Display implements Iterable<CharSequence> {
 	// ------
 
 	public static boolean isNull(Display display) {
-//		if (display == null) {
-//			throw new IllegalArgumentException();
-//		}
+		// if (display == null) {
+		// throw new IllegalArgumentException();
+		// }
 		return display == null || display.isNull;
 	}
 

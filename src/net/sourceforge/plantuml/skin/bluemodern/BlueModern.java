@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 17124 $
+ * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -129,7 +129,7 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernDelayLine(lineColor);
 		}
 		if (type == ComponentType.DELAY_TEXT) {
-			return new ComponentBlueModernDelayText(param.getFont(FontParam.SEQUENCE_DELAY, null, false).toFont2(
+			return new ComponentBlueModernDelayText(param.getFont(null, false, FontParam.SEQUENCE_DELAY).toFont2(
 					HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor, param.getTabSize()),
 					stringsToDisplay, param);
 		}
@@ -174,7 +174,7 @@ public class BlueModern implements Skin {
 		}
 		if (type == ComponentType.ENGLOBER) {
 			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, param.getFont(
-					FontParam.SEQUENCE_BOX, null, false).toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
+					null, false, FontParam.SEQUENCE_BOX).toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
 					hyperlinkColor, param.getTabSize()), param);
 		}
 

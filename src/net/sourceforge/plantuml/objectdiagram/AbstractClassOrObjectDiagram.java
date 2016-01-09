@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -155,17 +155,19 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		void createNew(int mode, LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null) {
-				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL,
-						2);
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL, 2);
 			} else {
 				removeLink(existingLink);
 			}
 
-			entity1ToPoint = new Link(entity1, point, existingLink.getType().getPart2(), existingLink.getLabel(),
+			final IEntity entity1real = existingLink.isInverted() ? existingLink.getEntity2() : existingLink.getEntity1();
+			final IEntity entity2real = existingLink.isInverted() ? existingLink.getEntity1() : existingLink.getEntity2();
+
+			entity1ToPoint = new Link(entity1real, point, existingLink.getType().getPart2(), existingLink.getLabel(),
 					existingLink.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
 			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());
-			pointToEntity2 = new Link(point, entity2, existingLink.getType().getPart1(), Display.NULL,
+			pointToEntity2 = new Link(point, entity2real, existingLink.getType().getPart1(), Display.NULL,
 					existingLink.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
 			addLink(entity1ToPoint);
@@ -190,8 +192,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		void createInSecond(LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null) {
-				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL,
-						2);
+				existingLink = new Link(entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL, 2);
 			} else {
 				removeLink(existingLink);
 			}
@@ -214,7 +215,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			pointToAssocied = new Link(point, associed, linkType, label, 1);
 			addLink(pointToAssocied);
 
-			final Link lnode = new Link(other.point, this.point, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL, 1);
+			final Link lnode = new Link(other.point, this.point, new LinkType(LinkDecor.NONE, LinkDecor.NONE),
+					Display.NULL, 1);
 			lnode.setInvis(true);
 			addLink(lnode);
 

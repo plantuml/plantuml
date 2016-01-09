@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -40,9 +40,14 @@ import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 
 public class ExtremityFactoryArrow extends AbstractExtremityFactory implements ExtremityFactory {
 
+	public UDrawable createUDrawable(Point2D p0, double angle) {
+		return new ExtremityArrow(p0, angle);
+	}
+
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2) {
 		final double ortho = atan2(p0, p2);
 		final Point2D center = new Point2D.Double((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
 		return new ExtremityArrow(p1, ortho, center);
 	}
+
 }

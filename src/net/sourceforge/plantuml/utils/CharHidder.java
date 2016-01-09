@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -63,7 +63,8 @@ public class CharHidder {
 	}
 
 	private static boolean isToBeHidden(final char c) {
-		if (c == '_' || c == '\"' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/' || c == '<') {
+		if (c == '_' || c == '-' || c == '\"' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/'
+				|| c == '<') {
 			return true;
 		}
 		return false;

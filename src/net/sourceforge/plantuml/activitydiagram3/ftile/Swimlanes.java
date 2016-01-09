@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -37,9 +37,12 @@ import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.InstructionList;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -65,6 +68,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.CompressionTransform;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
@@ -84,6 +88,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	private final ISkinParam skinParam;;
+	private final Pragma pragma;
 
 	private final List<Swimlane> swimlanes = new ArrayList<Swimlane>();
 	private Swimlane currentSwimlane = null;
@@ -93,19 +98,20 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	private LinkRendering nextLinkRenderer;
 
-	public Swimlanes(ISkinParam skinParam) {
+	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
 		this.skinParam = skinParam;
+		this.pragma = pragma;
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		return new FontConfiguration(skinParam, FontParam.TITLE, null);
+		return new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
 	}
 
 	private FtileFactory getFtileFactory() {
 		FtileFactory factory = new VCompactFactory(skinParam, TextBlockUtils.getDummyStringBounder());
 		factory = new FtileFactoryDelegatorAddUrl(factory, skinParam);
 		factory = new FtileFactoryDelegatorAssembly(factory, skinParam);
-		factory = new FtileFactoryDelegatorIf(factory, skinParam);
+		factory = new FtileFactoryDelegatorIf(factory, skinParam, pragma);
 		factory = new FtileFactoryDelegatorWhile(factory, skinParam);
 		factory = new FtileFactoryDelegatorRepeat(factory, skinParam);
 		factory = new FtileFactoryDelegatorCreateFork(factory, skinParam);
@@ -328,7 +334,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	}
 
 	private void drawSeparation(UGraphic ug, double height) {
-		ug.apply(new UStroke(2)).apply(new UChangeColor(HtmlColorUtils.BLACK)).draw(new ULine(0, height));
+		final HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
+		final UStroke thickness = Rose.getStroke(skinParam, LineParam.swimlaneBorder, 2);
+		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

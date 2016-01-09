@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -160,9 +161,11 @@ public class DotStringFactory implements Moveable {
 		SvekUtils.println(sb);
 		sb.append("searchsize=500;");
 		SvekUtils.println(sb);
-		sb.append("compound=true;");
-		SvekUtils.println(sb);
-
+		if (OptionFlags.USE_COMPOUND) {
+			sb.append("compound=true;");
+			SvekUtils.println(sb);
+		}
+		
 		if (dotData.getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT) {
 			sb.append("rankdir=LR;");
 			SvekUtils.println(sb);
@@ -365,7 +368,7 @@ public class DotStringFactory implements Moveable {
 		}
 
 		for (Line line : bibliotekon.allLines()) {
-			line.solveLine(svg, fullHeight, corner1);
+			line.solveLine(svg, fullHeight, corner1, dotData);
 		}
 
 		for (Line line : bibliotekon.allLines()) {

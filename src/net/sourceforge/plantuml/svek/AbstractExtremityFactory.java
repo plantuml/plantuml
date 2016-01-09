@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -35,9 +35,14 @@ package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 
 public abstract class AbstractExtremityFactory implements ExtremityFactory {
+
+	public UDrawable createUDrawable(Point2D p0, double angle) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
 
 	protected double atan2(Point2D p1, Point2D p0) {
 		double a = Math.atan2(p1.getY() - p0.getY(), p1.getX() - p0.getX());

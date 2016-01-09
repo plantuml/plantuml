@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -56,8 +56,8 @@ public abstract class USymbol {
 	public final static USymbol PACKAGE = record("PACKAGE", SkinParameter.PACKAGE, new USymbolFolder(
 			SkinParameter.PACKAGE));
 	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER));
-	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.CARD, new USymbolRect(SkinParameter.CARD));
-	public final static USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRect(SkinParameter.AGENT));
+	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.CARD, new USymbolRect(SkinParameter.CARD, HorizontalAlignment.CENTER));
+	public final static USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRect(SkinParameter.AGENT, HorizontalAlignment.CENTER));
 	public final static USymbol ACTOR = record("ACTOR", SkinParameter.ACTOR, new USymbolActor());
 	public final static USymbol USECASE = null;
 	public final static USymbol COMPONENT1 = record("COMPONENT1", SkinParameter.COMPONENT1, new USymbolComponent1());
@@ -70,6 +70,10 @@ public abstract class USymbol {
 	public final static USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
 
 	abstract public SkinParameter getSkinParameter();
+	
+	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
+		return this;
+	}
 
 	public FontParam getFontParam() {
 		return getSkinParameter().getFontParam();

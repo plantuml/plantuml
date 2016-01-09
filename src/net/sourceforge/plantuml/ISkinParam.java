@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -60,11 +60,11 @@ public interface ISkinParam extends ISkinSimple {
 
 	public Colors getColors(ColorParam param, Stereotype stereotype);
 
-	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype);
+	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param);
 
 	public UStroke getThickness(LineParam param, Stereotype stereotype);
 
-	public UFont getFont(FontParam fontParam, Stereotype stereotype, boolean inPackageTitle);
+	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
 
 	public HorizontalAlignment getHorizontalAlignment(AlignParam param);
 

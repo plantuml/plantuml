@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -163,17 +163,17 @@ public final class CucaDiagramFileMakerSvek2 {
 				final String shapeUid1 = getBibliotekon().getShapeUid((ILeaf) link.getEntity1());
 				final String shapeUid2 = getBibliotekon().getShapeUid((ILeaf) link.getEntity2());
 
-				String ltail = null;
+				Cluster ltail = null;
 				if (shapeUid1.startsWith(Cluster.CENTER_ID)) {
 					// final Group g1 = ((IEntityMutable)
 					// link.getEntity1()).getContainerOrEquivalent();
-					ltail = getCluster2((IEntity) link.getEntity1()).getClusterId();
+					ltail = getCluster2((IEntity) link.getEntity1());
 				}
-				String lhead = null;
+				Cluster lhead = null;
 				if (shapeUid2.startsWith(Cluster.CENTER_ID)) {
 					// final Group g2 = ((IEntityMutable)
 					// link.getEntity2()).getContainerOrEquivalent();
-					lhead = getCluster2((IEntity) link.getEntity2()).getClusterId();
+					lhead = getCluster2((IEntity) link.getEntity2());
 				}
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
@@ -188,14 +188,18 @@ public final class CucaDiagramFileMakerSvek2 {
 						&& onlyOneLink(link.getEntity1())) {
 					final Shape shape = getBibliotekon().getShape(link.getEntity1());
 					final Shape other = getBibliotekon().getShape(link.getEntity2());
-					((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
-					line.setOpale(true);
+					if (other != null) {
+						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
+						line.setOpale(true);
+					}
 				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getEntityType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity2())) {
 					final Shape shape = getBibliotekon().getShape(link.getEntity2());
 					final Shape other = getBibliotekon().getShape(link.getEntity1());
-					((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
-					line.setOpale(true);
+					if (other != null) {
+						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
+						line.setOpale(true);
+					}
 				}
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
@@ -488,6 +492,7 @@ public final class CucaDiagramFileMakerSvek2 {
 						g.getParentContainer(), null, dotData.getNamespaceSeparator());
 				final USymbol symbol = g.getUSymbol();
 				folder.setUSymbol(symbol);
+				folder.setStereotype(g.getStereotype());
 				if (g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK) == null) {
 					final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
 					final HtmlColor c1 = dotData.getSkinParam().getHtmlColor(param, g.getStereotype(), false);
@@ -545,25 +550,23 @@ public final class CucaDiagramFileMakerSvek2 {
 
 	private TextBlock getTitleBlock(IGroup g) {
 		final Display label = g.getDisplay();
-		final Stereotype stereotype = g.getStereotype();
-
 		if (label == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
 
-		final FontParam fontParam = g.getTitleFontParam();
-		final HtmlColor fontHtmlColor = dotData.getSkinParam().getFontHtmlColor(fontParam, stereotype);
-		final FontConfiguration fontConfiguration = new FontConfiguration(dotData.getSkinParam().getFont(fontParam,
-				stereotype, true), fontHtmlColor, dotData.getSkinParam().getHyperlinkColor(), dotData.getSkinParam()
-				.useUnderlineForHyperlink(), dotData.getSkinParam().getTabSize());
-		return label.create(fontConfiguration, HorizontalAlignment.CENTER, dotData.getSkinParam());
+		final ISkinParam skinParam = dotData.getSkinParam();
+		final FontConfiguration fontConfiguration = g.getFontConfigurationForTitle(skinParam);
+		return label.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 	}
 
 	private TextBlock getStereoBlock(IGroup g) {
-		if (g.getStereotype() == null) {
+		final Stereotype stereotype = g.getStereotype();
+		if (stereotype == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		final Stereotype stereotype = g.getStereotype();
+		if (stereotype.getSprite() != null) {
+			return dotData.getSkinParam().getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor());
+		}
 		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().useGuillemet());
 		if (stereos == null) {
 			return TextBlockUtils.empty(0, 0);

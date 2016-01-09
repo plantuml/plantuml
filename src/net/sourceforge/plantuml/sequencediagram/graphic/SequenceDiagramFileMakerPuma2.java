@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -261,9 +261,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private void addFooter2(SequenceDiagramArea area) {
 		final HtmlColor hyperlinkColor = diagram.getSkinParam().getHyperlinkColor();
-		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null);
-		final String fontFamily = diagram.getSkinParam().getFont(FontParam.FOOTER, null, false).getFamily(null);
-		final int fontSize = diagram.getSkinParam().getFont(FontParam.FOOTER, null, false).getSize();
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(null, FontParam.FOOTER);
+		final String fontFamily = diagram.getSkinParam().getFont(null, false, FontParam.FOOTER).getFamily(null);
+		final int fontSize = diagram.getSkinParam().getFont(null, false, FontParam.FOOTER).getSize();
 		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getFooter(), fontSize, fontFamily,
 				diagram.getFooterAlignment(), hyperlinkColor, diagram.getSkinParam().useUnderlineForHyperlink());
 		final Dimension2D dim = pngTitler.getTextDimension(dummyStringBounder);
@@ -274,9 +274,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private void addHeader2(SequenceDiagramArea area) {
 		final HtmlColor hyperlinkColor = diagram.getSkinParam().getHyperlinkColor();
-		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null);
-		final String fontFamily = diagram.getSkinParam().getFont(FontParam.HEADER, null, false).getFamily(null);
-		final int fontSize = diagram.getSkinParam().getFont(FontParam.HEADER, null, false).getSize();
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(null, FontParam.HEADER);
+		final String fontFamily = diagram.getSkinParam().getFont(null, false, FontParam.HEADER).getFamily(null);
+		final int fontSize = diagram.getSkinParam().getFont(null, false, FontParam.HEADER).getSize();
 		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getHeader(), fontSize, fontFamily,
 				diagram.getHeaderAlignment(), hyperlinkColor, diagram.getSkinParam().useUnderlineForHyperlink());
 		final Dimension2D dim = pngTitler.getTextDimension(dummyStringBounder);
@@ -287,9 +287,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private void addFooter3(SequenceDiagramArea area, UGraphic ug) {
 		final HtmlColor hyperlinkColor = diagram.getSkinParam().getHyperlinkColor();
-		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.FOOTER, null);
-		final String fontFamily = diagram.getSkinParam().getFont(FontParam.FOOTER, null, false).getFamily(null);
-		final int fontSize = diagram.getSkinParam().getFont(FontParam.FOOTER, null, false).getSize();
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(null, FontParam.FOOTER);
+		final String fontFamily = diagram.getSkinParam().getFont(null, false, FontParam.FOOTER).getFamily(null);
+		final int fontSize = diagram.getSkinParam().getFont(null, false, FontParam.FOOTER).getSize();
 		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getFooter(), fontSize, fontFamily,
 				diagram.getFooterAlignment(), hyperlinkColor, diagram.getSkinParam().useUnderlineForHyperlink());
 		final TextBlock text = pngTitler.getTextBlock();
@@ -301,9 +301,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private void addHeader3(SequenceDiagramArea area, UGraphic ug) {
 		final HtmlColor hyperlinkColor = diagram.getSkinParam().getHyperlinkColor();
-		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(FontParam.HEADER, null);
-		final String fontFamily = diagram.getSkinParam().getFont(FontParam.HEADER, null, false).getFamily(null);
-		final int fontSize = diagram.getSkinParam().getFont(FontParam.HEADER, null, false).getSize();
+		final HtmlColor titleColor = diagram.getSkinParam().getFontHtmlColor(null, FontParam.HEADER);
+		final String fontFamily = diagram.getSkinParam().getFont(null, false, FontParam.HEADER).getFamily(null);
+		final int fontSize = diagram.getSkinParam().getFont(null, false, FontParam.HEADER).getSize();
 		final PngTitler pngTitler = new PngTitler(titleColor, diagram.getHeader(), fontSize, fontFamily,
 				diagram.getHeaderAlignment(), hyperlinkColor, diagram.getSkinParam().useUnderlineForHyperlink());
 		final TextBlock text = pngTitler.getTextBlock();

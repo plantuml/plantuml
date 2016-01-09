@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 17444 $
+ * Revision $Revision: 18291 $
  *
  */
 package net.sourceforge.plantuml;
@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
 import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.ugraphic.SpriteImage;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
@@ -198,78 +199,88 @@ public class SkinParam implements ISkinParam {
 		// }
 	}
 
-	private int getFontSize(FontParam param, Stereotype stereotype) {
+	private int getFontSize(Stereotype stereotype, FontParam... param) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "fontsize" + stereotype.getLabel(false));
+			final String value2 = getFirstValueNonNullWithSuffix("fontsize" + stereotype.getLabel(false), param);
 			if (value2 != null && value2.matches("\\d+")) {
 				return Integer.parseInt(value2);
 			}
 		}
-		String value = getValue(param.name() + "fontsize");
+		String value = getFirstValueNonNullWithSuffix("fontsize", param);
 		if (value == null || value.matches("\\d+") == false) {
 			value = getValue("defaultfontsize");
 		}
 		if (value == null || value.matches("\\d+") == false) {
-			return param.getDefaultSize(this);
+			return param[0].getDefaultSize(this);
 		}
 		return Integer.parseInt(value);
 	}
 
-	private String getFontFamily(FontParam param, Stereotype stereotype) {
+	private String getFontFamily(Stereotype stereotype, FontParam... param) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "fontname" + stereotype.getLabel(false));
+			final String value2 = getFirstValueNonNullWithSuffix("fontname" + stereotype.getLabel(false), param);
 			if (value2 != null) {
 				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value2);
 			}
 		}
 		// Times, Helvetica, Courier or Symbol
-		String value = getValue(param.name() + "fontname");
+		String value = getFirstValueNonNullWithSuffix("fontname", param);
 		if (value != null) {
 			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
 		}
-		if (param != FontParam.CIRCLED_CHARACTER) {
+		if (param[0] != FontParam.CIRCLED_CHARACTER) {
 			value = getValue("defaultfontname");
 			if (value != null) {
 				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value);
 			}
 		}
-		return param.getDefaultFamily();
+		return param[0].getDefaultFamily();
 	}
 
-	public HtmlColor getFontHtmlColor(FontParam param, Stereotype stereotype) {
+	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			value = getValue(param.name() + "fontcolor" + stereotype.getLabel(false));
+			value = getFirstValueNonNullWithSuffix("fontcolor" + stereotype.getLabel(false), param);
 		}
 		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
-			value = getValue(param.name() + "fontcolor");
+			value = getFirstValueNonNullWithSuffix("fontcolor", param);
 		}
 		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
 			value = getValue("defaultfontcolor");
 		}
 		if (value == null || getIHtmlColorSet().getColorIfValid(value) == null) {
-			value = param.getDefaultColor();
+			value = param[0].getDefaultColor();
 		}
 		return getIHtmlColorSet().getColorIfValid(value);
 	}
 
-	private int getFontStyle(FontParam param, Stereotype stereotype, boolean inPackageTitle) {
+	private String getFirstValueNonNullWithSuffix(String suffix, FontParam... param) {
+		for (FontParam p : param) {
+			final String v = getValue(p.name() + suffix);
+			if (v != null) {
+				return v;
+			}
+		}
+		return null;
+	}
+
+	private int getFontStyle(Stereotype stereotype, boolean inPackageTitle, FontParam... param) {
 		String value = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			value = getValue(param.name() + "fontstyle" + stereotype.getLabel(false));
+			value = getFirstValueNonNullWithSuffix("fontstyle" + stereotype.getLabel(false), param);
 		}
 		if (value == null) {
-			value = getValue(param.name() + "fontstyle");
+			value = getFirstValueNonNullWithSuffix("fontstyle", param);
 		}
 		if (value == null) {
 			value = getValue("defaultfontstyle");
 		}
 		if (value == null) {
-			return param.getDefaultFontStyle(this, inPackageTitle);
+			return param[0].getDefaultFontStyle(this, inPackageTitle);
 		}
 		int result = Font.PLAIN;
 		if (StringUtils.goLowerCase(value).contains("bold")) {
@@ -281,13 +292,13 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public UFont getFont(FontParam fontParam, Stereotype stereotype, boolean inPackageTitle) {
+	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 		}
-		final String fontFamily = getFontFamily(fontParam, stereotype);
-		final int fontStyle = getFontStyle(fontParam, stereotype, inPackageTitle);
-		final int fontSize = getFontSize(fontParam, stereotype);
+		final String fontFamily = getFontFamily(stereotype, fontParam);
+		final int fontStyle = getFontStyle(stereotype, inPackageTitle, fontParam);
+		final int fontSize = getFontSize(stereotype, fontParam);
 		return new UFont(fontFamily, fontStyle, fontSize);
 	}
 
@@ -299,7 +310,7 @@ public class SkinParam implements ISkinParam {
 		// return 11;
 		// Log.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER));
 		// Log.println("SIZE1="+getFontSize(FontParam.CIRCLED_CHARACTER)/3);
-		return getFontSize(FontParam.CIRCLED_CHARACTER, null) / 3 + 6;
+		return getFontSize(null, FontParam.CIRCLED_CHARACTER) / 3 + 6;
 	}
 
 	public int classAttributeIconSize() {
@@ -494,7 +505,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public Sprite getSprite(String name) {
-		return sprites.get(name);
+		Sprite result = sprites.get(name);
+		if (result == null) {
+			result = SpriteImage.fromInternal(name);
+		}
+		return result;
 	}
 
 	public boolean useUml2ForComponent() {

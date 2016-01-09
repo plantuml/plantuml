@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -45,7 +45,7 @@ public class URectangleHand {
 		final HandJiggle jiggle;
 		final double rx = Math.min(rectangle.getRx() / 2, width / 2);
 		final double ry = Math.min(rectangle.getRy() / 2, height / 2);
-		System.err.println("rx=" + rx + " ry=" + ry);
+		// System.err.println("rx=" + rx + " ry=" + ry);
 		if (rx == 0 && ry == 0) {
 			jiggle = new HandJiggle(0, 0, 1.5);
 			jiggle.lineTo(width, 0);

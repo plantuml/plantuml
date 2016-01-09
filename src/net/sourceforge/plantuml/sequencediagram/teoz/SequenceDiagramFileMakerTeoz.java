@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -232,9 +232,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 			return new TeozLayer(null, stringBounder, param);
 		}
 		final HtmlColor hyperlinkColor = getSkinParam().getHyperlinkColor();
-		final HtmlColor titleColor = getSkinParam().getFontHtmlColor(param, null);
-		final String fontFamily = getSkinParam().getFont(param, null, false).getFamily(null);
-		final int fontSize = getSkinParam().getFont(param, null, false).getSize();
+		final HtmlColor titleColor = getSkinParam().getFontHtmlColor(null, param);
+		final String fontFamily = getSkinParam().getFont(null, false, param).getFamily(null);
+		final int fontSize = getSkinParam().getFont(null, false, param).getSize();
 		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily,
 				diagram.getAlignmentTeoz(param), hyperlinkColor, getSkinParam().useUnderlineForHyperlink());
 		return new TeozLayer(pngTitler, stringBounder, param);

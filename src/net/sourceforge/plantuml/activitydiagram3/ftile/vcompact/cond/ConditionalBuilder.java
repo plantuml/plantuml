@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -93,8 +94,8 @@ public class ConditionalBuilder {
 		this.branch2 = branch2;
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
-		this.fontArrow = fontArrow.changeColor(fontColor());
-		this.fontTest = fontTest.changeColor(fontColor());
+		this.fontArrow = fontArrow;
+		this.fontTest = fontTest;
 
 		this.tile1 = new FtileMinWidth(branch1.getFtile(), 30);
 		this.tile2 = new FtileMinWidth(branch2.getFtile(), 30);
@@ -209,8 +210,8 @@ public class ConditionalBuilder {
 				&& tile2.calculateDimension(stringBounder).hasPointOut();
 	}
 
-	private HtmlColor fontColor() {
-		return skinParam.getFontHtmlColor(FontParam.ACTIVITY_DIAMOND, null);
-	}
+	// private HtmlColor fontColor() {
+	// return skinParam.getFontHtmlColor(FontParam.ACTIVITY_DIAMOND, null);
+	// }
 
 }

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -33,17 +33,17 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
-public class CommandHideShowSpecificClass extends SingleLineCommand2<ClassDiagram> {
+public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram> {
 
 	public CommandHideShowSpecificClass() {
 		super(getRegexConcat());
@@ -58,20 +58,20 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<ClassDiagra
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram classDiagram, RegexResult arg) {
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, RegexResult arg) {
 
 		final String codeString = arg.get("CODE", 0);
 		if (codeString.equals("class")) {
-			classDiagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		} else if (codeString.equals("interface")) {
-			classDiagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		} else {
 			final Code code = Code.of(codeString);
-			final ILeaf leaf = classDiagram.getEntityFactory().getLeafs().get(code);
+			final ILeaf leaf = diagram.getEntityFactory().getLeafs().get(code);
 			if (leaf == null) {
 				return CommandExecutionResult.error("Class does not exist : " + code.getFullName());
 			}
-			classDiagram.hideOrShow(leaf, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			diagram.hideOrShow(leaf, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		}
 		return CommandExecutionResult.ok();
 	}

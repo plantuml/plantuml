@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -469,6 +470,14 @@ public class StringUtils {
 			return arg.toString();
 		}
 		return arg.subSequence(i, j + 1).toString();
+	}
+
+	public static List<String> splitHiddenNewLine(String s) {
+		return Arrays.asList(s.split("" + hiddenNewLine()));
+	}
+
+	public static String manageNewLine(String string) {
+		return string.replace(hiddenNewLine(), '\n');
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.StringUtils;
@@ -182,6 +183,11 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		for (Command cmd : cmds) {
 			if (isMultilineCommandOk(it.cloneMe(), cmd) != null) {
 				final BlocLines lines = isMultilineCommandOk(it, cmd);
+				if (system instanceof NewpagedDiagram) {
+					final NewpagedDiagram newpagedDiagram = (NewpagedDiagram) system;
+					return cmd.execute(newpagedDiagram.getLastDiagram(), lines);
+					
+				}
 				return cmd.execute(system, lines);
 			}
 		}

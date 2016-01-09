@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2014, Arnaud Roques
+ * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
  * 
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -216,10 +217,6 @@ public class GroupRoot implements IGroup {
 		throw new UnsupportedOperationException();
 	}
 
-	public FontParam getTitleFontParam() {
-		throw new UnsupportedOperationException();
-	}
-
 	public int getRawLayout() {
 		throw new UnsupportedOperationException();
 	}
@@ -229,7 +226,7 @@ public class GroupRoot implements IGroup {
 	}
 
 	public void setConcurrentSeparator(char separator) {
-		throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException();
 	}
 
 	public void putTip(String member, Display display) {
@@ -265,6 +262,10 @@ public class GroupRoot implements IGroup {
 	}
 
 	public void applyStroke(Colors colors) {
+		throw new UnsupportedOperationException();
+	}
+
+	public FontConfiguration getFontConfigurationForTitle(ISkinParam skinParam) {
 		throw new UnsupportedOperationException();
 	}
 
