@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 public class InstructionStop extends MonoSwimable implements Instruction {
 
 	private final LinkRendering inlinkRendering;
+	private Display note;
+	private NotePosition notePosition;
 
 	public InstructionStop(Swimlane swimlane, LinkRendering inlinkRendering) {
 		super(swimlane);
@@ -49,7 +51,11 @@ public class InstructionStop extends MonoSwimable implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.stop(getSwimlaneIn());
+		Ftile result = factory.stop(getSwimlaneIn());
+		if (note != null) {
+			result = factory.addNote(result, note, notePosition);
+		}
+		return result;
 	}
 
 	public void add(Instruction other) {
@@ -65,7 +71,9 @@ public class InstructionStop extends MonoSwimable implements Instruction {
 	}
 
 	public boolean addNote(Display note, NotePosition position) {
-		throw new UnsupportedOperationException();
+		this.note = note;
+		this.notePosition = position;
+		return true;
 	}
 
 }

@@ -162,4 +162,5 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	public double getEndingX(StringBounder stringBounder, double y) {
 		return calculateDimension(stringBounder).getWidth();
 	}
+	
 }

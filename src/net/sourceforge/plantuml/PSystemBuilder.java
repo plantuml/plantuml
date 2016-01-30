@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.turing.PSystemTuringFactory;
+import net.sourceforge.plantuml.ugraphic.sprite.PSystemListInternalSpritesFactory;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
@@ -129,6 +130,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemListFontsFactory());
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
+		factories.add(new PSystemListInternalSpritesFactory());
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemDotFactory(DiagramType.DOT));

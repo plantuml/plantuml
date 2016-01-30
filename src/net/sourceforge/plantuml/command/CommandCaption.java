@@ -28,48 +28,30 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3837 $
+ * Revision $Revision: 18788 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.command;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class SpriteUtils {
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-	private SpriteUtils() {
+public class CommandCaption extends SingleLineCommand<UmlDiagram> {
+
+	public CommandCaption() {
+		super("(?i)^caption(?:[%s]*:[%s]*|[%s]+)(.*[\\p{L}0-9_.].*)$");
 	}
 
-	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor()
-				+ "] {\n");
-		final List<String> result = level.encode(img);
-		for (String s : result) {
-			sb.append(s);
-			sb.append("\n");
-		}
-		sb.append("}\n");
-		return sb.toString();
-	}
-
-	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "z] ");
-		final List<String> list = level.encodeZ(img);
-		if (list.size() == 1) {
-			sb.append(list.get(0));
-			sb.append("\n");
-		} else {
-			sb.append("{\n");
-			for (String s : list) {
-				sb.append(s);
-				sb.append("\n");
-			}
-			sb.append("}\n");
-		}
-		return sb.toString();
+	@Override
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+		diagram.setCaption(new DisplayPositionned(Display.getWithNewlines(arg.get(0)), HorizontalAlignment.CENTER,
+				VerticalAlignment.BOTTOM));
+		return CommandExecutionResult.ok();
 	}
 
 }

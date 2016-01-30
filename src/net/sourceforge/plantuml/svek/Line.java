@@ -85,7 +85,6 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Line implements Moveable, Hideable {
 
@@ -323,7 +322,7 @@ public class Line implements Moveable, Hideable {
 		sb.append(endUid);
 		// }
 		sb.append("[");
-		final LinkType linkType = link.getType();
+		final LinkType linkType = link.getTypePatchCluster();
 		String decoration = linkType.getSpecificDecorationSvek();
 		if (decoration.endsWith(",") == false) {
 			decoration += ",";
@@ -435,7 +434,7 @@ public class Line implements Moveable, Hideable {
 	}
 
 	private UDrawable getExtremity(LinkHat hat, LinkDecor decor, PointListIterator pointListIterator, Point2D center,
-			double angle, Cluster cluster) {
+			double angle, Cluster cluster, boolean isGroup) {
 		final ExtremityFactory extremityFactory = decor.getExtremityFactory();
 
 		if (OptionFlags.USE_COMPOUND == false && cluster != null) {
@@ -480,6 +479,7 @@ public class Line implements Moveable, Hideable {
 		}
 		final int end = svg.indexOf("\"", idx + 3);
 		final String path = svg.substring(idx + 3, end);
+
 		dotPath = new DotPath(path, fullHeight);
 		if (OptionFlags.USE_COMPOUND == false) {
 			if (projectionCluster != null) {
@@ -498,9 +498,9 @@ public class Line implements Moveable, Hideable {
 
 		final LinkType linkType = link.getType();
 		this.extremity2 = getExtremity(linkType.getHat2(), linkType.getDecor2(), pointListIterator,
-				dotPath.getStartPoint(), dotPath.getStartAngle() + Math.PI, ltail);
+				dotPath.getStartPoint(), dotPath.getStartAngle() + Math.PI, ltail, link.getEntity1().isGroup());
 		this.extremity1 = getExtremity(linkType.getHat1(), linkType.getDecor1(), pointListIterator,
-				dotPath.getEndPoint(), dotPath.getEndAngle(), lhead);
+				dotPath.getEndPoint(), dotPath.getEndAngle(), lhead, link.getEntity2().isGroup());
 
 		if (this.labelText != null) {
 			final Point2D pos = getXY(svg, this.noteLabelColor, fullHeight);

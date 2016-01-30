@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18291 $
+ * Revision $Revision: 18309 $
  *
  */
 package net.sourceforge.plantuml;
@@ -62,10 +62,10 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
-import net.sourceforge.plantuml.ugraphic.Sprite;
-import net.sourceforge.plantuml.ugraphic.SpriteImage;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 
 public class SkinParam implements ISkinParam {
 

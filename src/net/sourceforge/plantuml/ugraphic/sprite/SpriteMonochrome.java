@@ -31,7 +31,7 @@
  * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
@@ -44,6 +44,9 @@ import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
 
 public class SpriteMonochrome implements Sprite {
 

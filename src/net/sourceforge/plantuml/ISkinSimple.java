@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+
 public interface ISkinSimple extends SpriteContainer {
 
 	public String getValue(String key);
@@ -42,5 +44,7 @@ public interface ISkinSimple extends SpriteContainer {
 	public String getMonospacedFamily();
 
 	public int getTabSize();
+	
+	public IHtmlColorSet getIHtmlColorSet();
 
 }

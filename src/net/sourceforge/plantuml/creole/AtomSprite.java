@@ -61,5 +61,5 @@ public class AtomSprite implements Atom {
 	public void drawU(UGraphic ug) {
 		sprite.drawU(ug);
 	}
-
+	
 }

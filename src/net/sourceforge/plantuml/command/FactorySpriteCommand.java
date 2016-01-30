@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.ugraphic.Sprite;
-import net.sourceforge.plantuml.ugraphic.SpriteGrayLevel;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 
 public final class FactorySpriteCommand implements SingleMultiFactoryCommand<UmlDiagram> {
 

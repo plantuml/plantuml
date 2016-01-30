@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18802 $
  *
  */
 package net.sourceforge.plantuml;
@@ -88,6 +88,7 @@ public enum FontParam {
 	STATE_ATTRIBUTE(12, Font.PLAIN), //
 	LEGEND(14, Font.PLAIN), //
 	TITLE(18, Font.PLAIN), //
+	CAPTION(14, Font.PLAIN), //
 	SWIMLANE_TITLE(18, Font.PLAIN), //
 	FOOTER(10, Font.PLAIN, "#888888", FontParamConstant.FAMILY), //
 	HEADER(10, Font.PLAIN, "#888888", FontParamConstant.FAMILY), //

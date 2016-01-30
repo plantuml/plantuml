@@ -46,12 +46,13 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
@@ -198,6 +199,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	public int getTabSize() {
 		return skinParam.getTabSize();
+	}
+
+	public IHtmlColorSet getIHtmlColorSet() {
+		return skinParam.getIHtmlColorSet();
 	}
 
 }

@@ -31,7 +31,7 @@
  * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UImage;
 
 public class SpriteImage implements Sprite {
 

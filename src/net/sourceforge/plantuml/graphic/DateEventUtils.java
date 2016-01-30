@@ -73,7 +73,7 @@ public class DateEventUtils {
 					"a character on a keyboard and seen it show up on their",
 					"own computer's screen right in front of them.\"", "\t\t\t\t\t\t\t\t\t\t<i>Steve Wozniak");
 			return TextBlockUtils.mergeTB(textBlock, getComment(asList, color), HorizontalAlignment.LEFT);
-		} else if ("01-07".equals(today) || "01-08".equals(today)) {
+		} else if ("01-07".equals(today)) {
 			return addCharlie(textBlock);
 		}
 

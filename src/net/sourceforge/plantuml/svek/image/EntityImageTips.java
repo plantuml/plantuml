@@ -138,6 +138,9 @@ public class EntityImageTips extends AbstractEntityImage {
 			} else {
 				x += 4;
 			}
+			if (memberPosition == null) {
+				return;
+			}
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
 			final Point2D pp2 = new Point2D.Double(x, y);
 			opale.setOpale(position.reverseDirection(), pp1, pp2);

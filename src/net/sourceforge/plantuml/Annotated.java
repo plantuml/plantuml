@@ -27,44 +27,24 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 18789 $
+ *
+ * Revision $Revision: 18790 $
  *
  */
-package net.sourceforge.plantuml.graphic;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 
-public enum HorizontalAlignment {
+public interface Annotated {
 
-	LEFT, CENTER, RIGHT;
+	public DisplayPositionned getTitle();
 
-	public static HorizontalAlignment fromString(String s) {
-		if (LEFT.name().equalsIgnoreCase(s)) {
-			return LEFT;
-		}
-		if (CENTER.name().equalsIgnoreCase(s)) {
-			return CENTER;
-		}
-		if (RIGHT.name().equalsIgnoreCase(s)) {
-			return RIGHT;
-		}
-		return null;
-	}
+	public DisplayPositionned getCaption();
 
-	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
-		if (defaultValue == null) {
-			throw new IllegalArgumentException();
-		}
-		if (s == null) {
-			return defaultValue;
-		}
-		s = StringUtils.goUpperCase(s);
-		final HorizontalAlignment result = fromString(s);
-		if (result == null) {
-			return defaultValue;
-		}
-		return result;
-	}
+	public DisplayPositionned getLegend();
+
+	public DisplayPositionned getHeader();
+
+	public DisplayPositionned getFooter();
 
 }

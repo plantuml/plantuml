@@ -255,4 +255,5 @@ public class AtomText implements Atom {
 	public final String getText() {
 		return text;
 	}
+
 }

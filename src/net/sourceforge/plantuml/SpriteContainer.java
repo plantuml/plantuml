@@ -33,7 +33,7 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public interface SpriteContainer {
 

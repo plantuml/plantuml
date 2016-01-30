@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18790 $
  *
  */
 package net.sourceforge.plantuml;
@@ -43,6 +43,9 @@ import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
@@ -87,11 +90,11 @@ public abstract class AbstractPSystem implements Diagram {
 		return 1;
 	}
 
-	public Display getTitle() {
+	public DisplayPositionned getTitle() {
 		if (source == null) {
-			return Display.empty();
+			return new DisplayPositionned(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 		}
-		return source.getTitle();
+		return new DisplayPositionned(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 	}
 
 	public String getWarningOrError() {
@@ -109,7 +112,7 @@ public abstract class AbstractPSystem implements Diagram {
 		cmd = new ProtectedCommand(cmd);
 		return cmd.execute(this, lines);
 	}
-	
+
 	public boolean hasUrl() {
 		return false;
 	}

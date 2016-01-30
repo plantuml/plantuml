@@ -36,6 +36,7 @@ package net.sourceforge.plantuml;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.BlocLines;
@@ -134,6 +135,10 @@ public class NewpagedDiagram extends AbstractPSystem {
 		for (Diagram diagram : diagrams) {
 			((AbstractPSystem) diagram).makeDiagramReady();
 		}
+	}
+
+	public final List<Diagram> getDiagrams() {
+		return Collections.unmodifiableList(diagrams);
 	}
 
 }

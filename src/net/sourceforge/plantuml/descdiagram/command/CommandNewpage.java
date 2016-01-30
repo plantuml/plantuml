@@ -59,8 +59,8 @@ public class CommandNewpage extends SingleLineCommand2<AbstractPSystem> {
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractPSystem diagram, RegexResult arg) {
-		// NewpagedDiagram result = NewpagedDiagram.newpage(diagram, factory.createEmptyDiagram());
 		NewpagedDiagram result = new NewpagedDiagram(diagram, factory.createEmptyDiagram());
+		// NewpagedDiagram result = NewpagedDiagram.newpage(diagram, factory.createEmptyDiagram());
 		return CommandExecutionResult.newDiagram(result);
 	}
 }

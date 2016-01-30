@@ -31,34 +31,28 @@
  * Revision $Revision: 4041 $
  *
  */
-package net.sourceforge.plantuml.donors;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
 import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.Set;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.code.Transcoder;
-import net.sourceforge.plantuml.code.TranscoderImpl;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class PSystemDonors extends AbstractPSystem {
-
-	public static final String DONORS = "UDfTKa6MsZ0CtUiKNkTD3v4XBNq1PlgWxM9sWcY8m5YfxT26itNNYrMX3JPePJtfI__BlxJ5_o0FNoYIDwMBuXXty9MA57A2fQJK1oWdA6vXxbE91jZG5aDaTEP5MWUbQyIRkL2yqFXyVzUEgHqTB35Rv29KF2LieKoZvGoRFb4OOCx5VJY1UcBP1zX4wbfoPYRIgRvgsaC15gS7g7YOYMLdrj87Whf_g1S7KI5JqZ6iCjPuobDTLLhwXQxHSyvQrgbxz8CgNTzakpsyvEpZ1LujdnLGyUwep6yLTl0nt4QxZ4H1PwWk9uv-C4jifK6enwE_jQZZixw2RFekZUEWPt8OjK_vAQ_w7tawtgbopLrwHR8EiWfxzP4ly3cL6u4LxrgovXdP3ha2Uyd9XF18hIPq7shS_UWfcAhVUjIljKd-Tpb4shLcuJ5WehGdTMpsWJz7escBMSYPSzzSdVCjwMU4TURbSSMTpeEYkynbSXmFzImU7ThkoRnHHEa2h5Kl-iOiUFnf-6J5Z-TV_VbjxTK3oHysywgwwo_hGETg";
+public class PSystemListInternalSprites extends AbstractPSystem {
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final GraphicStrings result = getGraphicStrings();
@@ -70,46 +64,30 @@ public class PSystemDonors extends AbstractPSystem {
 
 	private GraphicStrings getGraphicStrings() throws IOException {
 		final List<String> lines = new ArrayList<String>();
-		lines.add("<b>Special thanks to our sponsors and donors !");
+		lines.add("<b>List Current Sprits");
+		lines.add("<i>Credit to");
+		lines.add("http://www.archimatetool.com");
 		lines.add(" ");
-		int i = 0;
-		final List<String> donors = getDonors();
-		final int maxLine = (donors.size() + 1) / 2;
-		for (String d : donors) {
-			lines.add(d);
-			i++;
-			if (i == maxLine) {
-				lines.add(" ");
-				lines.add(" ");
-				i = 0;
+		for (String folder : RessourcesUtils.getJarFile("sprites", true)) {
+			lines.add("<u>" + folder + "</u> :");
+			lines.add(" ");
+			for (String png : RessourcesUtils.getJarFile("sprites/" + folder, false)) {
+				if (png.endsWith(".png")) {
+					final String spriteName = png.substring(0, png.length() - 4);
+					lines.add("<$archimate/" + spriteName + "> " + spriteName);
+				}
 			}
 		}
-		lines.add(" ");
+
 		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
 		final GraphicStrings graphicStrings = new GraphicStrings(lines, font, HtmlColorUtils.BLACK,
-				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON, PSystemVersion.getPlantumlImage(),
-				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
-		graphicStrings.setMaxLine(maxLine + 2);
+				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON);
+		graphicStrings.setMaxLine(35);
 		return graphicStrings;
 	}
 
-	private List<String> getDonors() throws IOException {
-		final List<String> lines = new ArrayList<String>();
-		final Transcoder t = new TranscoderImpl();
-		final String s = t.decode(DONORS).replace('*', '.');
-		final StringTokenizer st = new StringTokenizer(s, "\n");
-		while (st.hasMoreTokens()) {
-			lines.add(st.nextToken());
-		}
-		return lines;
-	}
-
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Donors)", getClass());
-	}
-
-	public static PSystemDonors create() {
-		return new PSystemDonors();
+		return new DiagramDescriptionImpl("(Sprites)", getClass());
 	}
 
 }

@@ -42,18 +42,27 @@ import java.util.Map;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class AtomTable implements Atom {
 
 	class Line {
 		private final List<Atom> cells = new ArrayList<Atom>();
+		private final List<HtmlColor> cellsBackColor = new ArrayList<HtmlColor>();
+		private final HtmlColor lineBackColor;
 
-		public void add(Atom cell) {
+		private Line(HtmlColor lineBackColor) {
+			this.lineBackColor = lineBackColor;
+		}
+
+		public void add(Atom cell, HtmlColor cellBackColor) {
 			cells.add(cell);
+			cellsBackColor.add(cellBackColor);
 		}
 
 		public int size() {
@@ -87,8 +96,27 @@ public class AtomTable implements Atom {
 
 	public void drawU(UGraphic ug) {
 		initMap(ug.getStringBounder());
-		for (Line line : lines) {
-			for (Atom cell : line.cells) {
+		for (int i = 0; i < getNbLines(); i++) {
+			final Line line = lines.get(i);
+			if (line.lineBackColor != null) {
+				final double y1 = getStartingY(i);
+				final double y2 = getStartingY(i + 1);
+				final double x1 = getStartingX(0);
+				final double x2 = getStartingX(getNbCols());
+				ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(line.lineBackColor))
+						.apply(new UTranslate(x1, y1)).draw(new URectangle(x2 - x1, y2 - y1));
+			}
+			for (int j = 0; j < getNbCols(); j++) {
+				final Atom cell = line.cells.get(j);
+				final HtmlColor cellBackColor = line.cellsBackColor.get(j);
+				if (cellBackColor != null) {
+					final double y1 = getStartingY(i);
+					final double y2 = getStartingY(i + 1);
+					final double x1 = getStartingX(j);
+					final double x2 = getStartingX(j + 1);
+					ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(cellBackColor))
+							.apply(new UTranslate(x1, y1)).draw(new URectangle(x2 - x1, y2 - y1));
+				}
 				final Position pos = positions.get(cell);
 				cell.drawU(ug.apply(pos.getTranslate()));
 			}
@@ -210,13 +238,12 @@ public class AtomTable implements Atom {
 		return lines.get(lines.size() - 1);
 	}
 
-	public void addCell(Atom cell) {
-		lastLine().add(cell);
+	public void addCell(Atom cell, HtmlColor cellBackColor) {
+		lastLine().add(cell, cellBackColor);
 		positions.clear();
 	}
 
-	public void newLine() {
-		lines.add(new Line());
+	public void newLine(HtmlColor lineBackColor) {
+		lines.add(new Line(lineBackColor));
 	}
-
 }

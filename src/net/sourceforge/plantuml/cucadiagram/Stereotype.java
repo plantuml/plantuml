@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18291 $
+ * Revision $Revision: 18317 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -48,12 +48,13 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence, Hideable {
 	private final static Pattern circleChar = MyPattern
 			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
-	private final static Pattern circleSprite = MyPattern
-			.cmpile("\\<\\<[%s]*\\(?\\$([-\\p{L}0-9_/]+)[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
+	private final static Pattern circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
+			+ ")[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
 
 	private final String label;
 	private final HtmlColor htmlColor;

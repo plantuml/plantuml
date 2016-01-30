@@ -212,7 +212,7 @@ public enum License {
 		text.add("");
 		text.add("(C) Copyright 2009-2017, Arnaud Roques");
 		text.add("");
-		text.add("Project Info:  http://plantuml.sourceforge.net");
+		text.add("Project Info:  http://plantuml.com");
 		text.add("");
 		return text;
 	}
@@ -225,7 +225,7 @@ public enum License {
 		h.add(" *");
 		h.add(" * (C) Copyright 2009-2017, Arnaud Roques");
 		h.add(" *");
-		h.add(" * Project Info:  http://plantuml.sourceforge.net");
+		h.add(" * Project Info:  http://plantuml.com");
 		h.add(" * ");
 		h.add(" * This file is part of PlantUML.");
 		h.add(" *");
@@ -320,7 +320,8 @@ public enum License {
 			throw new IllegalStateException();
 		}
 		text.add("");
-		text.add("Icon provided by OpenIconic :  https://useiconic.com/open/");
+		text.add("Icons provided by OpenIconic :  https://useiconic.com/open");
+		text.add("Archimate sprites provided by Archi :  http://www.archimatetool.com");
 		text.add("");
 		return text;
 	}

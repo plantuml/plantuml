@@ -98,5 +98,5 @@ public class AtomTree implements Atom {
 		this.cells.add(cell);
 		this.levels.put(cell, level);
 	}
-
+	
 }

@@ -69,5 +69,5 @@ public class AtomOpenIcon implements Atom {
 	public void drawU(UGraphic ug) {
 		asTextBlock().drawU(ug);
 	}
-
+	
 }

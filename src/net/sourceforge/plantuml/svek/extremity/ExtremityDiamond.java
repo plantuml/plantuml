@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -61,6 +62,8 @@ class ExtremityDiamond extends Extremity {
 	public void drawU(UGraphic ug) {
 		if (fill) {
 			ug = ug.apply(new UChangeBackColor(ug.getParam().getColor()));
+		} else {
+			ug = ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE));
 		}
 		ug.draw(polygon);
 	}

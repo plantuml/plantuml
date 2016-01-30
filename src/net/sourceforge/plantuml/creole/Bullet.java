@@ -104,6 +104,6 @@ public class Bullet implements Atom {
 	private Dimension2D calculateDimension1(StringBounder stringBounder) {
 		return new Dimension2DDouble(getWidth(stringBounder), 3);
 	}
-
+	
 
 }

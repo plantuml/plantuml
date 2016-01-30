@@ -37,26 +37,22 @@ import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
-import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockCompressed;
@@ -65,10 +61,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.svek.DecorateEntityImage;
-import net.sourceforge.plantuml.svek.DecorateTextBlock;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ActivityDiagram3 extends UmlDiagram {
 
@@ -160,16 +153,6 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return UmlDiagramType.ACTIVITY;
 	}
 
-	private TextBlock addLegend(TextBlock original) {
-		final Display legend = getLegend();
-		if (Display.isNull(legend)) {
-			return original;
-		}
-		final TextBlock text = EntityImageLegend.create(legend, getSkinParam());
-
-		return DecorateEntityImage.add(original, text, getLegendAlignment(), getLegendVerticalAlignment());
-	}
-
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
@@ -178,10 +161,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		// TextBlock result = swinlanes;
 		TextBlock result = new TextBlockCompressed(swinlanes);
 		result = new TextBlockRecentred(result);
-		result = addLegend(result);
-		result = addTitle(result);
-		result = addHeaderAndFooter(result);
 		final ISkinParam skinParam = getSkinParam();
+		result = new AnnotatedWorker(this, skinParam).addAdd(result);
 		final Dimension2D dim = TextBlockUtils.getMinMax(result).getDimension();
 		final double margin = 10;
 		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
@@ -206,40 +187,15 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return dpiFactor;
 	}
 
-	private TextBlock addTitle(TextBlock original) {
-		final Display title = getTitle();
-		if (Display.isNull(title)) {
-			return original;
-		}
-		final TextBlock text = title.create(new FontConfiguration(getSkinParam(), FontParam.TITLE, null),
-				HorizontalAlignment.CENTER, getSkinParam());
-
-		return new DecorateTextBlock(original, text, HorizontalAlignment.CENTER);
-	}
-
-	private TextBlock addHeaderAndFooter(TextBlock original) {
-		final Display footer = getFooter();
-		final Display header = getHeader();
-		if (Display.isNull(footer) && Display.isNull(header)) {
-			return original;
-		}
-		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(new FontConfiguration(
-				getSkinParam(), FontParam.FOOTER, null), getFooterAlignment(), getSkinParam());
-		final TextBlock textHeader = Display.isNull(header) ? null : header.create(new FontConfiguration(
-				getSkinParam(), FontParam.HEADER, null), getHeaderAlignment(), getSkinParam());
-
-		return new DecorateTextBlock(original, textHeader, getHeaderAlignment(), textFooter, getFooterAlignment());
-	}
-
-	private final UFont getFont(FontParam fontParam) {
-		final ISkinParam skinParam = getSkinParam();
-		return skinParam.getFont(null, false, fontParam);
-	}
-
-	private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereotype2) {
-		final ISkinParam skinParam = getSkinParam();
-		return skinParam.getFontHtmlColor(stereotype2, fontParam);
-	}
+	// private final UFont getFont(FontParam fontParam) {
+	// final ISkinParam skinParam = getSkinParam();
+	// return skinParam.getFont(null, false, fontParam);
+	// }
+	//
+	// private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereotype2) {
+	// final ISkinParam skinParam = getSkinParam();
+	// return skinParam.getFontHtmlColor(stereotype2, fontParam);
+	// }
 
 	public void fork() {
 		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer());
@@ -307,7 +263,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public CommandExecutionResult elseIf(Display test, Display whenThen, HtmlColor color) {
 		if (current() instanceof InstructionIf) {
-			((InstructionIf) current()).elseIf(test, whenThen, nextLinkRenderer(), color);
+			final boolean ok = ((InstructionIf) current()).elseIf(test, whenThen, nextLinkRenderer(), color);
+			if (ok == false) {
+				return CommandExecutionResult.error("You cannot put an elseIf here");
+			}
 			setNextLinkRendererInternal(null);
 			return CommandExecutionResult.ok();
 		}

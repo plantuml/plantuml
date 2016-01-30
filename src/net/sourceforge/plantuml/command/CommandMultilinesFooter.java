@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18789 $
  *
  */
 package net.sourceforge.plantuml.command;
@@ -38,7 +38,9 @@ import java.util.regex.Matcher;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 
@@ -58,13 +60,11 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 			throw new IllegalStateException();
 		}
 		final String align = m.group(1);
-		if (align != null) {
-			diagram.setFooterAlignment(HorizontalAlignment.valueOf(StringUtils.goUpperCase(align)));
-		}
 		lines = lines.subExtract(1, 1);
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setFooter(strings);
+			diagram.setFooter(new DisplayPositionned(strings, HorizontalAlignment.fromString(align,
+					HorizontalAlignment.CENTER), VerticalAlignment.BOTTOM));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty footer");

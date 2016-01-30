@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18790 $
  */
 package net.sourceforge.plantuml;
 
@@ -323,7 +323,7 @@ public class PSystemError extends AbstractPSystem {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(getDescription());
 		sb.append('\n');
-		for (CharSequence t : getTitle()) {
+		for (CharSequence t : getTitle().getDisplay()) {
 			sb.append(t);
 			sb.append('\n');
 		}

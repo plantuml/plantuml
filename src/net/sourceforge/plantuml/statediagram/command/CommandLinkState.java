@@ -77,7 +77,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 				new RegexLeaf("[%s]*"), //
 				getStatePattern("ENT2"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("LABEL", "(?::[%s]*([^%g]+))?"), //
+				new RegexLeaf("LABEL", "(?::[%s]*(.+))?"), //
 				new RegexLeaf("$"));
 	}
 

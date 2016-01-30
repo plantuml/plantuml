@@ -28,12 +28,17 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18806 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.awt.geom.Dimension2D;
+
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.png.PngTitler;
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class SequenceDiagramArea {
 
@@ -47,6 +52,9 @@ public class SequenceDiagramArea {
 	private double titleWidth;
 	private double titleHeight;
 
+	private double captionWidth;
+	private double captionHeight;
+
 	private double footerWidth;
 	private double footerHeight;
 	private double footerMargin;
@@ -56,9 +64,18 @@ public class SequenceDiagramArea {
 		this.sequenceHeight = height;
 	}
 
-	public void setTitleArea(double titleWidth, double titleHeight) {
-		this.titleWidth = titleWidth;
-		this.titleHeight = titleHeight;
+	public void setTitleArea(double width, double height) {
+		this.titleWidth = width;
+		this.titleHeight = height;
+	}
+
+	private void setCaptionArea(double width, double height) {
+		this.captionWidth = width;
+		this.captionHeight = height;
+	}
+
+	public void setCaptionArea(Dimension2D dim) {
+		setCaptionArea(dim.getWidth(), dim.getHeight());
 	}
 
 	public void setHeaderArea(double headerWidth, double headerHeight, double headerMargin) {
@@ -74,21 +91,11 @@ public class SequenceDiagramArea {
 	}
 
 	public double getWidth() {
-		double result = sequenceWidth;
-		if (headerWidth > result) {
-			result = headerWidth;
-		}
-		if (titleWidth > result) {
-			result = titleWidth;
-		}
-		if (footerWidth > result) {
-			result = footerWidth;
-		}
-		return result;
+		return MathUtils.max(sequenceWidth, headerWidth, titleWidth, footerWidth, captionWidth);
 	}
 
 	public double getHeight() {
-		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + footerHeight;
+		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + footerHeight + captionHeight;
 	}
 
 	public double getTitleX() {
@@ -97,6 +104,14 @@ public class SequenceDiagramArea {
 
 	public double getTitleY() {
 		return headerHeight + headerMargin;
+	}
+
+	public double getCaptionX() {
+		return (getWidth() - captionWidth) / 2;
+	}
+
+	public double getCaptionY() {
+		return sequenceHeight + headerHeight + headerMargin + titleHeight;
 	}
 
 	public double getSequenceAreaX() {
@@ -112,7 +127,7 @@ public class SequenceDiagramArea {
 	}
 
 	public double getFooterY() {
-		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin;
+		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + captionHeight;
 	}
 
 	public double getFooterX(HorizontalAlignment align) {
@@ -139,6 +154,20 @@ public class SequenceDiagramArea {
 			return (getWidth() - headerWidth) / 2;
 		}
 		throw new IllegalStateException();
+	}
+
+	public void initFooter(PngTitler pngTitler) {
+		final Dimension2D dim = pngTitler.getTextDimension(TextBlockUtils.getDummyStringBounder());
+		if (dim != null) {
+			setFooterArea(dim.getWidth(), dim.getHeight(), 3);
+		}
+	}
+
+	public void initHeader(PngTitler pngTitler) {
+		final Dimension2D dim = pngTitler.getTextDimension(TextBlockUtils.getDummyStringBounder());
+		if (dim != null) {
+			setHeaderArea(dim.getWidth(), dim.getHeight(), 3);
+		}
 	}
 
 }

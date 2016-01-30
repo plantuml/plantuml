@@ -77,4 +77,5 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
 		return block.getInnerPosition(member, stringBounder);
 	}
+	
 }

@@ -162,13 +162,13 @@ public class QuoteUtils {
 					"Take it easy, don't push the little button on the joystick!", //
 					"I'm a very private person.", //
 					"To sculpt an elephant from a big block of marble, just knock away all the bits that don't look like an elephant.", //
-					"Who said you could talk to me? Have I got something on my face ?"
+					"Who said you could talk to me? Have I got something on my face ?", //
+					"We've been through worst", //
+					"United we stand", //
+					"We shall never surrender", //
+					"Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.", //
+					"Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... " //
 			);
-	// We've been through worst
-	// United we stand
-	// We shall never surrender
-	// Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.
-	// Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... 
 	private QuoteUtils() {
 	}
 

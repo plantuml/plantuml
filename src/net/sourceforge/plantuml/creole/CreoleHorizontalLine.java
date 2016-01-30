@@ -102,5 +102,5 @@ public class CreoleHorizontalLine implements Atom {
 	public double getStartingAltitude(StringBounder stringBounder) {
 		return 0;
 	}
-
+	
 }

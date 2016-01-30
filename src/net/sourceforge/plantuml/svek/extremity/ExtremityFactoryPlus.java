@@ -40,8 +40,9 @@ import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 
 public class ExtremityFactoryPlus extends AbstractExtremityFactory implements ExtremityFactory {
 
+	@Override
 	public UDrawable createUDrawable(Point2D center, double angle) {
-		return ExtremityPlus.create(center, angle + Math.PI / 2);
+		return ExtremityPlus.create(center, angle - Math.PI / 2);
 	}
 
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2) {

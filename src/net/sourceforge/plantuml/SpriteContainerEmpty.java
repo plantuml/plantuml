@@ -34,12 +34,15 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
-import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
+import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 
 public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 
 	public Sprite getSprite(String name) {
-		return null;
+		return SpriteImage.fromInternal(name);
 	}
 
 	public String getValue(String key) {
@@ -60,6 +63,10 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 
 	public int getTabSize() {
 		return 8;
+	}
+
+	public IHtmlColorSet getIHtmlColorSet() {
+		return new HtmlColorSetSimple();
 	}
 
 }

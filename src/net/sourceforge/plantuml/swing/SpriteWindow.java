@@ -51,8 +51,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.ugraphic.SpriteGrayLevel;
-import net.sourceforge.plantuml.ugraphic.SpriteUtils;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class SpriteWindow extends JFrame {

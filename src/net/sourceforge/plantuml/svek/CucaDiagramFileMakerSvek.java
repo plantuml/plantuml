@@ -40,29 +40,23 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
@@ -116,9 +110,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
 			result = svek2.createFile(diagram.getDotStringSkek());
 		}
-		result = addLegend(result);
-		result = addTitle(result);
-		result = addHeaderAndFooter(result);
+		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
 
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
@@ -167,45 +159,6 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private String getWarningOrError() {
 		return warningOrError;
-	}
-
-	private TextBlockBackcolored addHeaderAndFooter(TextBlockBackcolored original) {
-		final Display footer = diagram.getFooter();
-		final Display header = diagram.getHeader();
-		if (Display.isNull(footer) && Display.isNull(header)) {
-			return original;
-		}
-		final TextBlock textFooter = Display.isNull(footer) ? null : footer.create(
-				new FontConfiguration(diagram.getSkinParam(), FontParam.FOOTER, null), diagram.getFooterAlignment(),
-				diagram.getSkinParam());
-		final TextBlock textHeader = Display.isNull(header) ? null : header.create(
-				new FontConfiguration(diagram.getSkinParam(), FontParam.HEADER, null), diagram.getHeaderAlignment(),
-				diagram.getSkinParam());
-
-		return new DecorateEntityImage(original, textHeader, diagram.getHeaderAlignment(), textFooter,
-				diagram.getFooterAlignment());
-	}
-
-	private TextBlockBackcolored addTitle(TextBlockBackcolored original) {
-		final Display title = diagram.getTitle();
-		if (Display.isNull(title)) {
-			return original;
-		}
-		final TextBlock text = title.create(new FontConfiguration(diagram.getSkinParam(), FontParam.TITLE, null),
-				HorizontalAlignment.CENTER, diagram.getSkinParam());
-
-		return DecorateEntityImage.addTop(original, text, HorizontalAlignment.CENTER);
-	}
-
-	private TextBlockBackcolored addLegend(TextBlockBackcolored original) {
-		final Display legend = diagram.getLegend();
-		if (Display.isNull(legend)) {
-			return original;
-		}
-		final TextBlock text = EntityImageLegend.create(legend, diagram.getSkinParam());
-
-		return DecorateEntityImage.add(original, text, diagram.getLegendAlignment(),
-				diagram.getLegendVerticalAlignment());
 	}
 
 	private final UFont getFont(FontParam fontParam) {

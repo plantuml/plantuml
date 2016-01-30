@@ -108,13 +108,14 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		return true;
 	}
 
-	public void elseIf(Display test, Display whenThen, LinkRendering nextLinkRenderer, HtmlColor color) {
+	public boolean elseIf(Display test, Display whenThen, LinkRendering nextLinkRenderer, HtmlColor color) {
 		if (elseBranch != null) {
-			throw new IllegalStateException();
+			return false;
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
 		this.current = new Branch(swimlane, whenThen, test, color);
 		this.thens.add(current);
+		return true;
 
 	}
 

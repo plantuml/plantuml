@@ -118,8 +118,6 @@ public interface ISkinParam extends ISkinSimple {
 
 	public boolean useOctagonForActivity(Stereotype stereotype);
 
-	public IHtmlColorSet getIHtmlColorSet();
-
 	public int groupInheritance();
 
 	public boolean useGuillemet();

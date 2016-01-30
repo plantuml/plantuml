@@ -52,6 +52,14 @@ public class LinkType {
 		this(hat1, decor1, LinkStyle.NORMAL, LinkMiddleDecor.NONE, decor2, hat2);
 	}
 
+	public LinkType withoutDecors1() {
+		return new LinkType(hat1, LinkDecor.NONE, style, middleDecor, decor2, hat2);
+	}
+
+	public LinkType withoutDecors2() {
+		return new LinkType(hat1, decor1, style, middleDecor, LinkDecor.NONE, hat2);
+	}
+
 	// public boolean contains(LinkDecor decors) {
 	// return decor1 == decors || decor2 == decors;
 	// }

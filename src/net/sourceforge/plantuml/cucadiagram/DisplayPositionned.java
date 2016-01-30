@@ -28,37 +28,49 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18788 $
+ * Revision $Revision: 8218 $
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class CommandMultilinesTitle extends CommandMultilines<UmlDiagram> {
+public class DisplayPositionned {
 
-	public CommandMultilinesTitle() {
-		super("(?i)^title$");
+	private final Display display;
+	private final HorizontalAlignment horizontalAlignment;
+	private final VerticalAlignment verticalAlignment;
+
+	public DisplayPositionned(Display display, HorizontalAlignment horizontalAlignment,
+			VerticalAlignment verticalAlignment) {
+		this.display = display;
+		this.horizontalAlignment = horizontalAlignment;
+		this.verticalAlignment = verticalAlignment;
 	}
 
-	@Override
-	public String getPatternEnd() {
-		return "(?i)^end[%s]?title$";
+	public static DisplayPositionned none(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
+		return new DisplayPositionned(Display.NULL, horizontalAlignment, verticalAlignment);
 	}
 
-	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
-		lines = lines.subExtract(1, 1);
-		lines = lines.removeEmptyColumns();
-		final Display strings = lines.toDisplay();
-		if (strings.size() > 0) {
-			diagram.setTitle(new DisplayPositionned(strings, HorizontalAlignment.CENTER, VerticalAlignment.TOP));
-			return CommandExecutionResult.ok();
-		}
-		return CommandExecutionResult.error("No title defined");
+	public final Display getDisplay() {
+		return display;
+	}
+
+	public final HorizontalAlignment getHorizontalAlignment() {
+		return horizontalAlignment;
+	}
+
+	public final VerticalAlignment getVerticalAlignment() {
+		return verticalAlignment;
+	}
+
+	public static boolean isNull(DisplayPositionned data) {
+		return data == null || Display.isNull(data.display);
+	}
+
+	public boolean hasUrl() {
+		return display.hasUrl();
 	}
 
 }

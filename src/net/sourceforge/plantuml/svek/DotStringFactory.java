@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
+import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
@@ -165,7 +166,16 @@ public class DotStringFactory implements Moveable {
 			sb.append("compound=true;");
 			SvekUtils.println(sb);
 		}
-		
+
+		final DotSplines dotSplines = dotData.getSkinParam().getDotSplines();
+		if (dotSplines == DotSplines.POLYLINE) {
+			sb.append("splines=polyline;");
+			SvekUtils.println(sb);
+		} else if (dotSplines == DotSplines.ORTHO) {
+			sb.append("splines=ortho;");
+			SvekUtils.println(sb);
+		}
+
 		if (dotData.getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT) {
 			sb.append("rankdir=LR;");
 			SvekUtils.println(sb);

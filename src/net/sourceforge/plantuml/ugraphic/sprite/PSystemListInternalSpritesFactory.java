@@ -28,43 +28,24 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18789 $
+ * Revision $Revision: 3830 $
  *
  */
-package net.sourceforge.plantuml.graphic;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-public enum HorizontalAlignment {
+public class PSystemListInternalSpritesFactory extends PSystemSingleLineFactory {
 
-	LEFT, CENTER, RIGHT;
-
-	public static HorizontalAlignment fromString(String s) {
-		if (LEFT.name().equalsIgnoreCase(s)) {
-			return LEFT;
-		}
-		if (CENTER.name().equalsIgnoreCase(s)) {
-			return CENTER;
-		}
-		if (RIGHT.name().equalsIgnoreCase(s)) {
-			return RIGHT;
+	@Override
+	protected AbstractPSystem executeLine(String line) {
+		final String lineLower = StringUtils.goLowerCase(line);
+		if (lineLower.startsWith("listsprite")) {
+			return new PSystemListInternalSprites();
 		}
 		return null;
-	}
-
-	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
-		if (defaultValue == null) {
-			throw new IllegalArgumentException();
-		}
-		if (s == null) {
-			return defaultValue;
-		}
-		s = StringUtils.goUpperCase(s);
-		final HorizontalAlignment result = fromString(s);
-		if (result == null) {
-			return defaultValue;
-		}
-		return result;
 	}
 
 }

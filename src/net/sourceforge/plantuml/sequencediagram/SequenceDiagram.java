@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -473,7 +474,7 @@ public class SequenceDiagram extends UmlDiagram {
 				return true;
 			}
 		}
-		if (Display.isNull(getLegend()) == false && getLegend().hasUrl()) {
+		if (DisplayPositionned.isNull(getLegend()) == false && getLegend().hasUrl()) {
 			return true;
 		}
 		return false;

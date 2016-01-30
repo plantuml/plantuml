@@ -41,11 +41,11 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -131,14 +131,14 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		englobers.drawEnglobers(goDownForEnglobers(ug), main.calculateDimension(stringBounder).getHeight()
 				+ this.heightEnglober1 + this.heightEnglober2 / 2, new SimpleContext2D(true));
 
-		printAligned(ug, diagram.getAlignmentTeoz(FontParam.HEADER), header);
+		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
 		ug = goDown(ug, header);
 
 		printAligned(ug, HorizontalAlignment.CENTER, title);
 		ug = goDown(ug, title);
 
-		if (diagram.getLegendVerticalAlignment() == VerticalAlignment.TOP) {
-			printAligned(ug, diagram.getLegendAlignment(), legend);
+		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
+			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
 			ug = goDown(ug, legend);
 		}
 
@@ -147,12 +147,12 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		ug = goDown(ug, main);
 		ug = ug.apply(new UTranslate(0, this.heightEnglober2));
 
-		if (diagram.getLegendVerticalAlignment() == VerticalAlignment.BOTTOM) {
-			printAligned(ug, diagram.getLegendAlignment(), legend);
+		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
+			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
 			ug = goDown(ug, legend);
 		}
 
-		printAligned(ug, diagram.getAlignmentTeoz(FontParam.FOOTER), footer);
+		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
 
 		ug2.writeImageTOBEMOVED(os, isWithMetadata ? diagram.getMetadata() : null, diagram.getDpi(fileFormatOption));
 
@@ -162,7 +162,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private UGraphic goDownForEnglobers(UGraphic ug) {
 		ug = goDown(ug, title);
 		ug = goDown(ug, header);
-		if (diagram.getLegendVerticalAlignment() == VerticalAlignment.TOP) {
+		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
 			ug = goDown(ug, legend);
 		}
 		return ug;
@@ -210,16 +210,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private TextBlock getTitle() {
-		final Display title = diagram.getTitle();
-		if (Display.isNull(title)) {
+		if (DisplayPositionned.isNull(diagram.getTitle())) {
 			return new ComponentAdapter(null);
 		}
-		final Component compTitle = skin.createComponent(ComponentType.TITLE, null, getSkinParam(), title);
+		final Component compTitle = skin.createComponent(ComponentType.TITLE, null, getSkinParam(), diagram.getTitle()
+				.getDisplay());
 		return new ComponentAdapter(compTitle);
 	}
 
 	private TextBlock getLegend() {
-		final Display legend = diagram.getLegend();
+		final Display legend = diagram.getLegend().getDisplay();
 		if (Display.isNull(legend)) {
 			return TextBlockUtils.empty(0, 0);
 		}
@@ -227,16 +227,17 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	public TextBlock getFooterOrHeader(final FontParam param) {
-		final Display display = diagram.getFooterOrHeaderTeoz(param);
-		if (Display.isNull(display)) {
+		if (DisplayPositionned.isNull(diagram.getFooterOrHeaderTeoz(param))) {
 			return new TeozLayer(null, stringBounder, param);
 		}
+		final Display display = diagram.getFooterOrHeaderTeoz(param).getDisplay();
 		final HtmlColor hyperlinkColor = getSkinParam().getHyperlinkColor();
 		final HtmlColor titleColor = getSkinParam().getFontHtmlColor(null, param);
 		final String fontFamily = getSkinParam().getFont(null, false, param).getFamily(null);
 		final int fontSize = getSkinParam().getFont(null, false, param).getSize();
-		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily,
-				diagram.getAlignmentTeoz(param), hyperlinkColor, getSkinParam().useUnderlineForHyperlink());
+		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, diagram
+				.getFooterOrHeaderTeoz(param).getHorizontalAlignment(), hyperlinkColor, getSkinParam()
+				.useUnderlineForHyperlink());
 		return new TeozLayer(pngTitler, stringBounder, param);
 	}
 

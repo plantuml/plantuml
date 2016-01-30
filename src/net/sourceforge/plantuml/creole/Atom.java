@@ -46,5 +46,5 @@ interface Atom extends UShape {
 	public double getStartingAltitude(StringBounder stringBounder);
 
 	public void drawU(UGraphic ug);
-
+	
 }

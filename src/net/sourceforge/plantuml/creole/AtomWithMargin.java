@@ -63,5 +63,5 @@ class AtomWithMargin implements Atom {
 	public void drawU(UGraphic ug) {
 		atom.drawU(ug.apply(new UTranslate(0, marginY1)));
 	}
-
+	
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18309 $
  *
  */
 package net.sourceforge.plantuml;
@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.swing.MainWindow2;
-import net.sourceforge.plantuml.ugraphic.SpriteGrayLevel;
-import net.sourceforge.plantuml.ugraphic.SpriteUtils;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
+import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {

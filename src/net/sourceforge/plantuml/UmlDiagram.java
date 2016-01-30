@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18801 $
  *
  */
 package net.sourceforge.plantuml;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
@@ -77,41 +77,47 @@ import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.Sprite;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.version.Version;
 
-public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
+public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Annotated {
 
 	private boolean rotation;
 	private boolean hideUnlinkedData;
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	private Display title = Display.NULL;
-	private Display header = Display.NULL;
-	private Display footer = Display.NULL;
-	private Display legend = Display.NULL;
-	private HorizontalAlignment legendAlignment = HorizontalAlignment.CENTER;
-	private VerticalAlignment legendVerticalAlignment = VerticalAlignment.BOTTOM;
+	private DisplayPositionned title = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);
+	private DisplayPositionned caption = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
+	private DisplayPositionned header = DisplayPositionned.none(HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
+	private DisplayPositionned footer = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
+	private DisplayPositionned legend = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 
-	private HorizontalAlignment headerAlignment = HorizontalAlignment.RIGHT;
-	private HorizontalAlignment footerAlignment = HorizontalAlignment.CENTER;
 	private final Pragma pragma = new Pragma();
 	private Scale scale;
 	private Animation animation;
 
 	private final SkinParam skinParam = new SkinParam();
 
-	final public void setTitle(Display strings) {
-		this.title = strings;
+	final public void setTitle(DisplayPositionned title) {
+		this.title = title;
 	}
 
-	final public Display getTitle() {
+	final public void setCaption(DisplayPositionned caption) {
+		this.caption = caption;
+	}
+
+	final public DisplayPositionned getCaption() {
+		return caption;
+	}
+
+	@Override
+	final public DisplayPositionned getTitle() {
 		return title;
 	}
 
@@ -139,45 +145,23 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		skinParam.setParam(StringUtils.goLowerCase(key), value);
 	}
 
-	public final Display getHeader() {
+	public final DisplayPositionned getHeader() {
 		return header;
 	}
 
-	public final void setHeader(Display header) {
+	public final void setHeader(DisplayPositionned header) {
 		this.header = header;
 	}
 
-	public final Display getFooter() {
+	public final DisplayPositionned getFooter() {
 		return footer;
 	}
 
-	public final void setFooter(Display footer) {
+	public final void setFooter(DisplayPositionned footer) {
 		this.footer = footer;
 	}
 
-	public final HorizontalAlignment getHeaderAlignment() {
-		return headerAlignment;
-	}
-
-	public final void setHeaderAlignment(HorizontalAlignment headerAlignment) {
-		this.headerAlignment = headerAlignment;
-	}
-
-	public final HorizontalAlignment getFooterAlignment() {
-		return footerAlignment;
-	}
-
-	public final HorizontalAlignment getAlignmentTeoz(FontParam param) {
-		if (param == FontParam.FOOTER) {
-			return getFooterAlignment();
-		}
-		if (param == FontParam.HEADER) {
-			return getHeaderAlignment();
-		}
-		throw new IllegalArgumentException();
-	}
-
-	public final Display getFooterOrHeaderTeoz(FontParam param) {
+	public final DisplayPositionned getFooterOrHeaderTeoz(FontParam param) {
 		if (param == FontParam.FOOTER) {
 			return getFooter();
 		}
@@ -185,10 +169,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 			return getHeader();
 		}
 		throw new IllegalArgumentException();
-	}
-
-	public final void setFooterAlignment(HorizontalAlignment footerAlignment) {
-		this.footerAlignment = footerAlignment;
 	}
 
 	abstract public UmlDiagramType getUmlDiagramType();
@@ -431,21 +411,11 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram {
 		skinParam.addSprite(name, sprite);
 	}
 
-	public final Display getLegend() {
+	public final DisplayPositionned getLegend() {
 		return legend;
 	}
 
-	public final HorizontalAlignment getLegendAlignment() {
-		return legendAlignment;
-	}
-
-	public final VerticalAlignment getLegendVerticalAlignment() {
-		return legendVerticalAlignment;
-	}
-
-	public final void setLegend(Display legend, HorizontalAlignment horizontalAlignment, VerticalAlignment valignment) {
+	public final void setLegend(DisplayPositionned legend) {
 		this.legend = legend;
-		this.legendAlignment = horizontalAlignment;
-		this.legendVerticalAlignment = valignment;
 	}
 }

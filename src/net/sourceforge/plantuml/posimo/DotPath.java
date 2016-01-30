@@ -543,60 +543,21 @@ public class DotPath implements UShape, Moveable {
 		if (tail != null) {
 			// System.err.println("beziers1=" + this.toString());
 			final ClusterPosition clusterPosition = tail.getClusterPosition();
-			if (clusterPosition.contains(getStartPoint()) == false) {
-				throw new IllegalStateException();
-			}
-			final DotPath result = new DotPath();
-			int idx = 0;
-			while (idx + 1 < this.beziers.size() && clusterPosition.contains(this.beziers.get(idx).getP2())) {
-				if (clusterPosition.contains(this.beziers.get(idx).getP1()) == false) {
-					throw new IllegalStateException();
-				}
-				idx++;
-			}
-			if (clusterPosition.contains(this.beziers.get(idx).getP2())) {
-				// System.err.println("strange1");
-			} else {
-				assert clusterPosition.contains(this.beziers.get(idx).getP1());
-				assert clusterPosition.contains(this.beziers.get(idx).getP2()) == false;
-				CubicCurve2D current = this.beziers.get(idx);
-				for (int k = 0; k < 8; k++) {
-					// System.err.println("length=" + length(current));
-					final CubicCurve2D.Double part1 = new CubicCurve2D.Double();
-					final CubicCurve2D.Double part2 = new CubicCurve2D.Double();
-					current.subdivide(part1, part2);
-					assert part1.getP2().equals(part2.getP1());
-					if (clusterPosition.contains(part1.getP2())) {
-						current = part2;
-					} else {
-						result.beziers.add(0, part2);
-						current = part1;
+			if (clusterPosition.contains(getStartPoint())) {
+				final DotPath result = new DotPath();
+				int idx = 0;
+				while (idx + 1 < this.beziers.size() && clusterPosition.contains(this.beziers.get(idx).getP2())) {
+					if (clusterPosition.contains(this.beziers.get(idx).getP1()) == false) {
+						throw new IllegalStateException();
 					}
+					idx++;
 				}
-				for (int i = idx + 1; i < this.beziers.size(); i++) {
-					result.beziers.add(this.beziers.get(i));
-				}
-				me = result;
-			}
-		}
-		if (head != null) {
-			// System.err.println("beziers2=" + me.toString());
-			final DotPath result = new DotPath();
-			final ClusterPosition clusterPosition = head.getClusterPosition();
-			if (clusterPosition.contains(getEndPoint()) == false) {
-				// System.err.println("strange3");
-				return me;
-			}
-			for (CubicCurve2D.Double current : me.beziers) {
-				if (clusterPosition.contains(current.getP2()) == false) {
-					result.beziers.add(current);
+				if (clusterPosition.contains(this.beziers.get(idx).getP2())) {
+					// System.err.println("strange1");
 				} else {
-					if (clusterPosition.contains(current.getP1())) {
-						// System.err.println("strange2");
-						return me;
-					}
-					assert clusterPosition.contains(current.getP1()) == false;
-					assert clusterPosition.contains(current.getP2());
+					assert clusterPosition.contains(this.beziers.get(idx).getP1());
+					assert clusterPosition.contains(this.beziers.get(idx).getP2()) == false;
+					CubicCurve2D current = this.beziers.get(idx);
 					for (int k = 0; k < 8; k++) {
 						// System.err.println("length=" + length(current));
 						final CubicCurve2D.Double part1 = new CubicCurve2D.Double();
@@ -604,15 +565,51 @@ public class DotPath implements UShape, Moveable {
 						current.subdivide(part1, part2);
 						assert part1.getP2().equals(part2.getP1());
 						if (clusterPosition.contains(part1.getP2())) {
-							current = part1;
-						} else {
-							result.beziers.add(part1);
 							current = part2;
-							// System.err.println("k=" + k + " result=" + result.toString());
+						} else {
+							result.beziers.add(0, part2);
+							current = part1;
 						}
 					}
-					// System.err.println("Final Result=" + result.toString());
-					return result;
+					for (int i = idx + 1; i < this.beziers.size(); i++) {
+						result.beziers.add(this.beziers.get(i));
+					}
+					me = result;
+				}
+			}
+		}
+		if (head != null) {
+			// System.err.println("beziers2=" + me.toString());
+			final DotPath result = new DotPath();
+			final ClusterPosition clusterPosition = head.getClusterPosition();
+			if (clusterPosition.contains(getEndPoint())) {
+				for (CubicCurve2D.Double current : me.beziers) {
+					if (clusterPosition.contains(current.getP2()) == false) {
+						result.beziers.add(current);
+					} else {
+						if (clusterPosition.contains(current.getP1())) {
+							// System.err.println("strange2");
+							return me;
+						}
+						assert clusterPosition.contains(current.getP1()) == false;
+						assert clusterPosition.contains(current.getP2());
+						for (int k = 0; k < 8; k++) {
+							// System.err.println("length=" + length(current));
+							final CubicCurve2D.Double part1 = new CubicCurve2D.Double();
+							final CubicCurve2D.Double part2 = new CubicCurve2D.Double();
+							current.subdivide(part1, part2);
+							assert part1.getP2().equals(part2.getP1());
+							if (clusterPosition.contains(part1.getP2())) {
+								current = part1;
+							} else {
+								result.beziers.add(part1);
+								current = part2;
+								// System.err.println("k=" + k + " result=" + result.toString());
+							}
+						}
+						// System.err.println("Final Result=" + result.toString());
+						return result;
+					}
 				}
 			}
 

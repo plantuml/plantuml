@@ -28,43 +28,50 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18789 $
+ * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.graphic;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
-import net.sourceforge.plantuml.StringUtils;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
-public enum HorizontalAlignment {
+public class SpriteUtils {
 
-	LEFT, CENTER, RIGHT;
+	public static final String SPRITE_NAME = "[-\\p{L}0-9_/]+";
 
-	public static HorizontalAlignment fromString(String s) {
-		if (LEFT.name().equalsIgnoreCase(s)) {
-			return LEFT;
-		}
-		if (CENTER.name().equalsIgnoreCase(s)) {
-			return CENTER;
-		}
-		if (RIGHT.name().equalsIgnoreCase(s)) {
-			return RIGHT;
-		}
-		return null;
+	private SpriteUtils() {
 	}
 
-	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
-		if (defaultValue == null) {
-			throw new IllegalArgumentException();
+	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor()
+				+ "] {\n");
+		final List<String> result = level.encode(img);
+		for (String s : result) {
+			sb.append(s);
+			sb.append("\n");
 		}
-		if (s == null) {
-			return defaultValue;
+		sb.append("}\n");
+		return sb.toString();
+	}
+
+	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "z] ");
+		final List<String> list = level.encodeZ(img);
+		if (list.size() == 1) {
+			sb.append(list.get(0));
+			sb.append("\n");
+		} else {
+			sb.append("{\n");
+			for (String s : list) {
+				sb.append(s);
+				sb.append("\n");
+			}
+			sb.append("}\n");
 		}
-		s = StringUtils.goUpperCase(s);
-		final HorizontalAlignment result = fromString(s);
-		if (result == null) {
-			return defaultValue;
-		}
-		return result;
+		return sb.toString();
 	}
 
 }

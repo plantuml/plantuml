@@ -44,13 +44,13 @@ import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
-import net.sourceforge.plantuml.ugraphic.Sprite;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
 
 	final private List<Atom> atoms = new ArrayList<Atom>();
-	private final List<Command> commands = new ArrayList<Command>();
+	final private List<Command> commands = new ArrayList<Command>();
 
 	private FontConfiguration fontConfiguration;
 

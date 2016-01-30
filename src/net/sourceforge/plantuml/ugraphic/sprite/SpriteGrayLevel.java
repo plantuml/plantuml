@@ -31,7 +31,7 @@
  * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.CompressionZlib;
+import net.sourceforge.plantuml.ugraphic.ColorChangerMonochrome;
 
 public enum SpriteGrayLevel {
 

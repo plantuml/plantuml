@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18823 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -241,6 +241,25 @@ public class Link implements Hideable, Removeable {
 			if (isLollipopInterfaceEye(cl2)) {
 				type = type.withLollipopInterfaceEye2();
 			}
+		}
+		return result;
+	}
+
+	private boolean isReallyGroup(IEntity ent) {
+		if (ent.isGroup() == false) {
+			return false;
+		}
+		final IGroup group = (IGroup) ent;
+		return group.getChildren().size() + group.getLeafsDirect().size() > 0;
+	}
+
+	public LinkType getTypePatchCluster() {
+		LinkType result = getType();
+		if (isReallyGroup(getEntity1())) {
+			result = result.withoutDecors2();
+		}
+		if (isReallyGroup(getEntity2())) {
+			result = result.withoutDecors1();
 		}
 		return result;
 	}

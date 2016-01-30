@@ -35,11 +35,12 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockRecentred extends AbstractTextBlock implements TextBlock {
+public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBackcolored {
 
 	private final TextBlock textBlock;
 
@@ -55,6 +56,10 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlock {
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final MinMax minMax = TextBlockUtils.getMinMax(textBlock);
 		return minMax.getDimension();
+	}
+
+	public HtmlColor getBackcolor() {
+		return ((TextBlockBackcolored) textBlock).getBackcolor();
 	}
 
 }

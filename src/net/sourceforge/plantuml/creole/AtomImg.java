@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -149,5 +148,6 @@ public class AtomImg implements Atom {
 		ug.draw(new UImage(image));
 		// tileImage.drawU(ug.apply(new UTranslate(0, -h)));
 	}
+	
 
 }
