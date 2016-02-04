@@ -46,7 +46,7 @@ public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
-	static final private int LIMIT = 4096;
+	static final private int LIMIT = 65536;
 
 	public EmptyImageBuilder(double width, double height, Color background) {
 		this((int) width, (int) height, background);
