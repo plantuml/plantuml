@@ -27,54 +27,25 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4041 $
+ *
+ * Revision $Revision: 5401 $
  *
  */
-package net.sourceforge.plantuml.cute;
+package net.sourceforge.plantuml;
 
-import java.awt.geom.Point2D;
+public class ScaleMaxWidth implements Scale {
 
-import net.sourceforge.plantuml.geom.AbstractLineSegment;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+	private final double maxWidth;
 
-public class InfiniteLine {
-
-	private final Point2D a;
-	private final Point2D b;
-
-	public InfiniteLine(Point2D a, Point2D b) {
-		this.a = a;
-		this.b = b;
+	public ScaleMaxWidth(double maxWidth) {
+		this.maxWidth = maxWidth;
 	}
 
-	public InfiniteLine(AbstractLineSegment segment) {
-		this(segment.getP1(), segment.getP2());
+	public double getScale(double width, double height) {
+		final double result = maxWidth / width;
+		if (result > 1) {
+			return 1;
+		}
+		return result;
 	}
-
-	@Override
-	public String toString() {
-		return "{" + a + ";" + b + "}";
-	}
-
-	public double getDeltaX() {
-		return b.getX() - a.getX();
-	}
-
-	public double getDeltaY() {
-		return b.getY() - a.getY();
-	}
-
-	public double getDr() {
-		return a.distance(b);
-	}
-
-	public double getDiscriminant() {
-		return a.getX() * b.getY() - b.getX() * a.getY();
-	}
-
-	public InfiniteLine translate(UTranslate translate) {
-		return new InfiniteLine(translate.getTranslated(a), translate.getTranslated(b));
-	}
-
 }

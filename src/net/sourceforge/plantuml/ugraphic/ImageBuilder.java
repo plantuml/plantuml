@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
@@ -71,6 +72,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+import net.sourceforge.plantuml.ugraphic.crossing.UGraphicCrossing;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
@@ -142,8 +144,9 @@ public class ImageBuilder {
 		}
 
 		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, affineTransforms, dx, dy);
-		udrawable.drawU(handwritten(ug.apply(new UTranslate(margin1, margin1))));
-		ug.flushUg();
+		final UGraphic ugDecored = handwritten(ug.apply(new UTranslate(margin1, margin1)));
+		udrawable.drawU(ugDecored);
+		ugDecored.flushUg();
 		ug.writeImageTOBEMOVED(os, metadata, 96);
 		os.flush();
 
@@ -162,7 +165,11 @@ public class ImageBuilder {
 		if (useHandwritten) {
 			return new UGraphicHandwritten(ug);
 		}
-		return ug;
+		if (OptionFlags.OMEGA_CROSSING) {
+			return new UGraphicCrossing(ug);
+		} else {
+			return ug;
+		}
 	}
 
 	private ImageData writeImageMjpeg(OutputStream os) throws IOException {
@@ -234,8 +241,8 @@ public class ImageBuilder {
 		return im;
 	}
 
-	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, final Dimension2D dim, Animation affineTransforms,
-			double dx, double dy) {
+	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, final Dimension2D dim,
+			Animation affineTransforms, double dx, double dy) {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
@@ -257,7 +264,8 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor, String svgLinkTarget) {
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
+			String svgLinkTarget) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);

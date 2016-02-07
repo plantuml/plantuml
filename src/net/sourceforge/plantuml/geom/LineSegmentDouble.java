@@ -28,11 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18930 $
  *
  */
 package net.sourceforge.plantuml.geom;
 
+import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.Locale;
 
@@ -47,8 +48,8 @@ public class LineSegmentDouble extends AbstractLineSegment {
 
 	@Override
 	public String toString() {
-		return String.format(Locale.US, "( %.2f,%.2f - %.2f,%.2f )", getP1().getX(), getP1().getY(), getP2().getX(), getP2()
-				.getY());
+		return String.format(Locale.US, "( %.2f,%.2f - %.2f,%.2f )", getP1().getX(), getP1().getY(), getP2().getX(),
+				getP2().getY());
 	}
 
 	public LineSegmentDouble(double x1, double y1, double x2, double y2) {
@@ -64,6 +65,14 @@ public class LineSegmentDouble extends AbstractLineSegment {
 		assert p1 != null && p2 != null;
 		assert getLength() > 0;
 		assert this.getDistance(this) == 0;
+	}
+
+	public LineSegmentDouble(CubicCurve2D.Double curve) {
+		this(curve.getP1(), curve.getP2());
+	}
+
+	public LineSegmentDouble translate(UTranslate translate) {
+		return new LineSegmentDouble(translate.getTranslated(getP1()), translate.getTranslated(getP2()));
 	}
 
 	@Override
@@ -103,7 +112,8 @@ public class LineSegmentDouble extends AbstractLineSegment {
 		final double y2 = p2.getY();
 		ug = ug.apply(new UTranslate(x1, y1));
 		ug.draw(new ULine(x2 - x1, y2 - y1));
-		
+
 	}
+
 
 }

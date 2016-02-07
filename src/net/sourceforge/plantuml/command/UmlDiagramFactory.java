@@ -281,6 +281,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(new CommandScale());
 		cmds.add(new CommandScaleWidthAndHeight());
 		cmds.add(new CommandScaleWidthOrHeight());
+		cmds.add(new CommandScaleMaxWidth());
+		cmds.add(new CommandScaleMaxHeight());
 		cmds.add(new CommandScaleMaxWidthAndHeight());
 		cmds.add(new CommandAffineTransform());
 		cmds.add(new CommandAffineTransformMultiline());

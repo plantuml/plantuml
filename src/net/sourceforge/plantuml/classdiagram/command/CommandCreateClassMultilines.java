@@ -64,7 +64,8 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
-	private static final String CODE = "(?:\\.|::)?[\\p{L}0-9_]+(?:(?:\\.|::)[\\p{L}0-9_]+)*";
+	private static final String CODE = CommandLinkClass.getSeparator() + "?[\\p{L}0-9_]+" + "(?:"
+			+ CommandLinkClass.getSeparator() + "[\\p{L}0-9_]+)*";
 	public static final String CODES = CODE + "(?:\\s*,\\s*" + CODE + ")*";
 
 	enum Mode {

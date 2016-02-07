@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18917 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -84,6 +84,9 @@ public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 
 	public void drawStringsLR(Collection<? extends CharSequence> strings, int x, int y) {
 		int i = 0;
+		if (x < 0) {
+			x = 0;
+		}
 		for (CharSequence s : strings) {
 			this.drawStringLR(s.toString(), x, y + i);
 			i++;

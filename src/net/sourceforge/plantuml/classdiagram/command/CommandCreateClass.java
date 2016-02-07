@@ -49,12 +49,11 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
-import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 

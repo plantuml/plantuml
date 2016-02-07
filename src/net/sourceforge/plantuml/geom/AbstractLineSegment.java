@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18930 $
  *
  */
 package net.sourceforge.plantuml.geom;
@@ -76,7 +76,7 @@ public abstract class AbstractLineSegment extends Line2D {
 		} else if (other.isHorizontal()) {
 			u = getIntersectionHorizontal(other.getP1().getY());
 		} else {
-			throw new UnsupportedOperationException();
+			return getDichoIntersection(other);
 		}
 		if (java.lang.Double.isNaN(u) || u < 0 || u > 1) {
 			return null;
@@ -86,6 +86,28 @@ public abstract class AbstractLineSegment extends Line2D {
 			return result;
 		}
 		return null;
+	}
+
+	private Point2D getDichoIntersection(AbstractLineSegment other) {
+		if (doesIntersect(other) == false) {
+			return null;
+		}
+		if (other.getLength() < 0.01) {
+			return other.getMiddle();
+		}
+		final LineSegmentDouble p1 = new LineSegmentDouble(other.getP1(), other.getMiddle());
+		final LineSegmentDouble p2 = new LineSegmentDouble(other.getMiddle(), other.getP2());
+		if (doesIntersect(p1)) {
+			return getDichoIntersection(p1);
+		}
+		if (doesIntersect(p2)) {
+			return getDichoIntersection(p2);
+		}
+		throw new IllegalStateException();
+	}
+
+	private Point2D.Double getMiddle() {
+		return getPoint2D(0.5);
 	}
 
 	private static boolean isBetween(double value, double v1, double v2) {
@@ -164,6 +186,10 @@ public abstract class AbstractLineSegment extends Line2D {
 		return Math.abs(a1 - a2) < 0.0001;
 	}
 
+	public boolean isPointOnSegment(Point2D pt) {
+		return equals(pt.distance(getP1()) + pt.distance(getP2()), getLength());
+	}
+
 	private double getDistanceInternal(AbstractLineSegment other) {
 		double result = this.getDistance(other.getP1());
 		result += this.getDistance(other.getP2());
@@ -237,8 +263,7 @@ public abstract class AbstractLineSegment extends Line2D {
 
 	public double determinant(AbstractLineSegment other) {
 		return determinant(this.getP1().getX() - this.getP2().getX(), this.getP1().getY() - this.getP2().getY(), other
-				.getP1().getX()
-				- other.getP2().getX(), other.getP1().getY() - other.getP2().getY());
+				.getP1().getX() - other.getP2().getX(), other.getP1().getY() - other.getP2().getY());
 	}
 
 	private static double determinant(double x1, double y1, double x2, double y2) {

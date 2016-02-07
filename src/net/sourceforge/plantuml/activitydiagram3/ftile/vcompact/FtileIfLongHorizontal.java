@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileAssemblySimple;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -58,9 +59,11 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -180,6 +183,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		conns.add(result.new ConnectionLastElseOut(arrowColor));
 		final HtmlColor horizontalOutColor = LinkRendering.getColor(afterEndwhile, arrowColor);
 		conns.add(result.new ConnectionHline(horizontalOutColor));
+		// conns.add(result.new ConnectionHline(HtmlColorUtils.BLUE));
 
 		return FtileUtils.addConnection(result, conns);
 	}
@@ -304,7 +308,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	}
 
-	class ConnectionVerticalIn extends AbstractConnection {
+	class ConnectionVerticalIn extends AbstractConnection implements ConnectionTranslatable {
 
 		private final HtmlColor color;
 
@@ -332,6 +336,22 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		private Point2D getP2(StringBounder stringBounder) {
 			final Point2D p = getFtile2().calculateDimension(stringBounder).getPointIn();
 			return getTranslate1(getFtile2(), stringBounder).getTranslated(p);
+		}
+
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+			final Point2D p1 = getP1(ug.getStringBounder());
+			final Point2D p2 = getP2(ug.getStringBounder());
+
+			final Snake snake = new Snake(color, Arrows.asToDown());
+
+			final Point2D mp1a = translate1.getTranslated(p1);
+			final Point2D mp2b = translate2.getTranslated(p2);
+			final double middle = mp1a.getY() + 4;
+			snake.addPoint(mp1a);
+			snake.addPoint(mp1a.getX(), middle);
+			snake.addPoint(mp2b.getX(), middle);
+			snake.addPoint(mp2b);
+			ug.draw(snake);
 		}
 
 	}
@@ -384,18 +404,36 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Dimension2D totalDim = calculateDimensionInternal(stringBounder);
 
+			final Swimlane intoSw;
+			if (ug instanceof UGraphicInterceptorOneSwimlane) {
+				intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();
+			} else {
+				intoSw = null;
+			}
+
 			final List<Ftile> all = new ArrayList<Ftile>(couples);
 			all.add(tile2);
 			double minX = totalDim.getWidth() / 2;
 			double maxX = totalDim.getWidth() / 2;
+			boolean atLeastOne = false;
 			for (Ftile tmp : all) {
 				if (tmp.calculateDimension(stringBounder).hasPointOut() == false) {
 					continue;
 				}
+				if (intoSw != null && tmp.getSwimlanes().contains(intoSw) == false) {
+					continue;
+				}
+				if (intoSw != null && tmp.getSwimlaneOut() != intoSw) {
+					continue;
+				}
+				atLeastOne = true;
 				final UTranslate ut = getTranslateFor(tmp, stringBounder);
 				final double out = tmp.calculateDimension(stringBounder).translate(ut).getLeft();
 				minX = Math.min(minX, out);
 				maxX = Math.max(maxX, out);
+			}
+			if (atLeastOne == false) {
+				return;
 			}
 
 			final Snake s = new Snake(arrowColor);

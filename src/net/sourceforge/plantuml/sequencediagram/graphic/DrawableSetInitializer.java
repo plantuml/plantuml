@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18917 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -598,7 +598,8 @@ class DrawableSetInitializer {
 				drawableSet.getSkinParam(), participantDisplay);
 		final Component delayLine = drawableSet.getSkin().createComponent(ComponentType.DELAY_LINE, null,
 				drawableSet.getSkinParam(), participantDisplay);
-		final ParticipantBox box = new ParticipantBox(head, line, tail, delayLine, this.freeX);
+		final ParticipantBox box = new ParticipantBox(head, line, tail, delayLine, this.freeX,
+				skinParam.maxAsciiMessageLength() > 0 ? 1 : 5);
 
 		final Component comp = drawableSet.getSkin().createComponent(ComponentType.ALIVE_BOX_CLOSE_CLOSE, null,
 				drawableSet.getSkinParam(), null);

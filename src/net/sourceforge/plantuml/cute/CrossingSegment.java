@@ -34,47 +34,38 @@
 package net.sourceforge.plantuml.cute;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.sourceforge.plantuml.geom.AbstractLineSegment;
+import net.sourceforge.plantuml.geom.LineSegmentDouble;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class InfiniteLine {
+public class CrossingSegment {
 
-	private final Point2D a;
-	private final Point2D b;
+	private final Balloon balloon;
+	private final LineSegmentDouble segment;
 
-	public InfiniteLine(Point2D a, Point2D b) {
-		this.a = a;
-		this.b = b;
+	public CrossingSegment(Balloon balloon, LineSegmentDouble segment) {
+		this.balloon = balloon;
+		this.segment = segment;
 	}
 
-	public InfiniteLine(AbstractLineSegment segment) {
-		this(segment.getP1(), segment.getP2());
-	}
+	public List<Point2D> intersection() {
+		final List<Point2D> result = new ArrayList<Point2D>();
 
-	@Override
-	public String toString() {
-		return "{" + a + ";" + b + "}";
-	}
+		final UTranslate tr = new UTranslate(balloon.getCenter());
+		final UTranslate trInverse = tr.reverse();
 
-	public double getDeltaX() {
-		return b.getX() - a.getX();
-	}
+		final CrossingSimple simple = new CrossingSimple(balloon.getRadius(),
+				new InfiniteLine(segment).translate(trInverse));
+		for (Point2D pt : simple.intersection()) {
+			pt = tr.getTranslated(pt);
+			if (segment.isPointOnSegment(pt)) {
+				result.add(pt);
+			}
+		}
 
-	public double getDeltaY() {
-		return b.getY() - a.getY();
-	}
-
-	public double getDr() {
-		return a.distance(b);
-	}
-
-	public double getDiscriminant() {
-		return a.getX() * b.getY() - b.getX() * a.getY();
-	}
-
-	public InfiniteLine translate(UTranslate translate) {
-		return new InfiniteLine(translate.getTranslated(a), translate.getTranslated(b));
+		return result;
 	}
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18910 $
  *
  */
 package net.sourceforge.plantuml;
@@ -60,6 +60,7 @@ public class OptionFlags {
 	static public final boolean USE_INTERFACE_EYE2 = false;
 	static public final boolean SWI2 = false;
 	static public final boolean USE_COMPOUND = false;
+	static public final boolean OMEGA_CROSSING = false;
 
 	public void reset() {
 		reset(false);

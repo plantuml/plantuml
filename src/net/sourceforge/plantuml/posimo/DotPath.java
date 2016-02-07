@@ -41,7 +41,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
 import net.sourceforge.plantuml.eps.EpsGraphics;
+import net.sourceforge.plantuml.geom.LineSegmentDouble;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterPosition;
 import net.sourceforge.plantuml.svek.MinFinder;
@@ -619,6 +619,26 @@ public class DotPath implements UShape, Moveable {
 
 	private double length(CubicCurve2D curve) {
 		return curve.getP1().distance(curve.getP2());
+	}
+
+	public boolean isLine() {
+		for (CubicCurve2D.Double curve : beziers) {
+			if (curve.getFlatnessSq() > 0.001) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public List<LineSegmentDouble> getLineSegments() {
+		final List<LineSegmentDouble> result = new ArrayList<LineSegmentDouble>();
+		for (CubicCurve2D.Double curve : beziers) {
+			if (curve.getFlatnessSq() <= 0.001) {
+				result.add(new LineSegmentDouble(curve));
+
+			}
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 }

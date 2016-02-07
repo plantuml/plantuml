@@ -233,4 +233,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return shadowingForNote(stereotype);
 	}
 
+	public int maxAsciiMessageLength() {
+		return skinParam.maxAsciiMessageLength();
+	}
+
 }

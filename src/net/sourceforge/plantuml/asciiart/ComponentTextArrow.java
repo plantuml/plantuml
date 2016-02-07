@@ -36,18 +36,17 @@ package net.sourceforge.plantuml.asciiart;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
-import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
-import net.sourceforge.plantuml.StringUtils;
 
 public class ComponentTextArrow extends AbstractComponentText {
 
@@ -55,9 +54,11 @@ public class ComponentTextArrow extends AbstractComponentText {
 	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
 	private final ArrowConfiguration config;
+	private final int maxAsciiMessageLength;
 
 	public ComponentTextArrow(ComponentType type, ArrowConfiguration config, Display stringsToDisplay,
-			FileFormat fileFormat) {
+			FileFormat fileFormat, int maxAsciiMessageLength) {
+		this.maxAsciiMessageLength = maxAsciiMessageLength;
 		this.type = type;
 		this.config = config;
 		this.stringsToDisplay = clean(stringsToDisplay);
@@ -107,6 +108,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 		} else {
 			throw new UnsupportedOperationException();
 		}
+		// final int position = Math.max(0, (width - textWidth) / 2);
 		charArea.drawStringsLR(stringsToDisplay.as(), (width - textWidth) / 2, 0);
 	}
 
@@ -115,7 +117,11 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWidth(stringsToDisplay) + 2;
+		final int width = StringUtils.getWidth(stringsToDisplay) + 2;
+		if (maxAsciiMessageLength > 0) {
+			return Math.min(maxAsciiMessageLength, width);
+		}
+		return width;
 	}
 
 }

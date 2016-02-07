@@ -38,7 +38,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,7 +56,6 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -118,8 +116,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return "(" + getSeparator() + "?[\\p{L}0-9_$]+(?:" + getSeparator() + "[\\p{L}0-9_$]+)*|[%g][^%g]+[%g])";
 	}
 
-	private static String getSeparator() {
-		return "(?:\\.|::)";
+	public static String getSeparator() {
+		return "(?:\\.|::|\\\\|\\\\\\\\)";
 	}
 
 	private static String optionalKeywords(UmlDiagramType type) {

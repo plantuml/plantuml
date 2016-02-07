@@ -34,8 +34,6 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.awt.geom.Line2D;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 

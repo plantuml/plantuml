@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18896 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -176,7 +176,8 @@ class PreprocessorInclude implements ReadLine {
 		if (f.exists() == false) {
 			return CharSequence2Impl.errorPreprocessor("Cannot include " + f.getAbsolutePath(), lineLocation);
 		} else if (filesUsedCurrent.contains(f2)) {
-			return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
+			// return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
+			return this.readLine();
 		} else {
 			filesUsedCurrent.add(f2);
 			filesUsedGlobal.add(f2);

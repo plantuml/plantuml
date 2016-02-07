@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18906 $
  *
  */
 package net.sourceforge.plantuml;
@@ -38,6 +38,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -46,7 +47,7 @@ public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
-	static final private int LIMIT = 4096;
+	static final private int LIMIT = GraphvizUtils.getenvImageLimit();
 
 	public EmptyImageBuilder(double width, double height, Color background) {
 		this((int) width, (int) height, background);

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18309 $
+ * Revision $Revision: 18917 $
  *
  */
 package net.sourceforge.plantuml;
@@ -723,6 +723,14 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		return 8;
+	}
+
+	public int maxAsciiMessageLength() {
+		final String value = getValue("maxasciimessagelength");
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return -1;
 	}
 
 }

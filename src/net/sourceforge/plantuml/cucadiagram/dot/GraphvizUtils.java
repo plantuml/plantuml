@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 18909 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -85,6 +85,18 @@ public class GraphvizUtils {
 			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(getenv);
 		}
 		return null;
+	}
+
+	public static int getenvImageLimit() {
+		final String env = System.getProperty("PLANTUML_LIMIT_SIZE");
+		if (StringUtils.isNotEmpty(env) && env.matches("\\d+")) {
+			return Integer.parseInt(env);
+		}
+		final String getenv = System.getenv("PLANTUML_LIMIT_SIZE");
+		if (StringUtils.isNotEmpty(getenv) && getenv.matches("\\d+")) {
+			return Integer.parseInt(getenv);
+		}
+		return 4096;
 	}
 
 	public static String getenvLogData() {
