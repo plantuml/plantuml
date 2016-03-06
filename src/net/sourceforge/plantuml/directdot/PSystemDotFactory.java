@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -50,7 +50,7 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 
 	@Override
 	public PSystemDot executeLine(PSystemDot system, String line) {
-		if (system == null && line.matches("(di)?graph\\s+\\w+\\s+\\{")) {
+		if (system == null && line.matches("(strict\\s+)?(di)?graph\\s+\\w+\\s+\\{")) {
 			data = new StringBuilder(line);
 			data.append("\n");
 			return new PSystemDot(data.toString());

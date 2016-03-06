@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -34,7 +34,6 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemLostFactory;
+import net.sourceforge.plantuml.eggs.PSystemMemorialFactory;
 import net.sourceforge.plantuml.eggs.PSystemPathFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jungle.PSystemTreeFactory;
 import net.sourceforge.plantuml.logo.PSystemLogoFactory;
-import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
@@ -114,6 +113,7 @@ public class PSystemBuilder {
 
 	private List<PSystemFactory> getAllFactories() {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
+		//factories.add(new PSystemMemorialFactory());
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18917 $
+ * Revision $Revision: 19248 $
  *
  */
 package net.sourceforge.plantuml;
@@ -155,9 +155,11 @@ public class SkinParam implements ISkinParam {
 	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
-			final String value2 = getValue(param.name() + "color" + stereotype.getLabel(false));
-			if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
-				return getIHtmlColorSet().getColorIfValid(value2);
+			for (String s : stereotype.getMultipleLabels()) {
+				final String value2 = getValue(param.name() + "color" + "<<" + s + ">>");
+				if (value2 != null && getIHtmlColorSet().getColorIfValid(value2) != null) {
+					return getIHtmlColorSet().getColorIfValid(value2);
+				}
 			}
 		}
 		final String value = getValue(getParamName(param, clickable));

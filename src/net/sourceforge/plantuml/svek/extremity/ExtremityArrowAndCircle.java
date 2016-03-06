@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -46,10 +46,15 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class ExtremityArrowAndCircle extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
-	// private final ULine line;
 	private final Point2D contact;
 	private final Point2D dest;
 	private final double radius = 5;
+	
+	@Override
+	public Point2D somePoint() {
+		return contact;
+	}
+
 
 	public ExtremityArrowAndCircle(Point2D p1, double angle, Point2D center) {
 		angle = manageround(angle);

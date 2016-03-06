@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -95,8 +95,6 @@ final class EntityImpl implements ILeaf, IGroup {
 	private Code namespace2;
 
 	private GroupType groupType;
-
-	private boolean autonom = true;
 
 	// Other
 	private boolean nearDecoration = false;
@@ -395,16 +393,6 @@ final class EntityImpl implements ILeaf, IGroup {
 		return namespace2;
 	}
 
-	public boolean isAutonom() {
-		checkGroup();
-		return autonom;
-	}
-
-	public void setAutonom(boolean autonom) {
-		this.autonom = autonom;
-
-	}
-
 	public PackageStyle getPackageStyle() {
 		checkGroup();
 		if (stereotype == null) {
@@ -463,7 +451,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean isHidden() {
-		if (entityFactory.isHidden(leafType)) {
+		if (entityFactory.isHidden(this)) {
 			return true;
 		}
 		if (stereotype != null) {

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -66,8 +66,8 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	}
 
-	public UGraphicTikz(ColorMapper colorMapper) {
-		this(colorMapper, new TikzGraphics());
+	public UGraphicTikz(ColorMapper colorMapper, boolean withPreamble) {
+		this(colorMapper, new TikzGraphics(withPreamble));
 
 	}
 

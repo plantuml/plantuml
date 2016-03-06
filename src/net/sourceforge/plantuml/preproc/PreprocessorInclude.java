@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 18896 $
+ * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.preproc;

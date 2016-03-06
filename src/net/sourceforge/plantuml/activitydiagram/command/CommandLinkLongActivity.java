@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -91,10 +91,10 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
 				new RegexLeaf("ARROW_STYLE1",
-						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"), //
+						"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
 				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
 				new RegexLeaf("ARROW_STYLE2",
-						"(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?"), //
+						"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
 				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
 
 				new RegexLeaf("[%s]*"), //

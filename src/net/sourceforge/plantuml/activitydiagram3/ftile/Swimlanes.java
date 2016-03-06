@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -334,7 +334,10 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	}
 
 	private void drawSeparation(UGraphic ug, double height) {
-		final HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
+		HtmlColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
+		if (color == null) {
+			color = ColorParam.swimlaneBorder.getDefaultValue();
+		}
 		final UStroke thickness = Rose.getStroke(skinParam, LineParam.swimlaneBorder, 2);
 		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
 	}

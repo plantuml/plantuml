@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
@@ -53,10 +52,8 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkHat;
 import net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
-import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -76,6 +73,7 @@ import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.svek.SvekUtils.PointListIterator;
+import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -361,16 +359,6 @@ public class Line implements Moveable, Hideable {
 			// sb.append(",labelangle=0");
 		}
 
-		if (OptionFlags.USE_COMPOUND && ltail != null) {
-			sb.append(",");
-			sb.append("ltail=");
-			sb.append(ltail.getClusterId());
-		}
-		if (OptionFlags.USE_COMPOUND && lhead != null) {
-			sb.append(",");
-			sb.append("lhead=");
-			sb.append(lhead.getClusterId());
-		}
 		if (link.isInvis()) {
 			sb.append(",");
 			sb.append("style=invis");
@@ -433,11 +421,11 @@ public class Line implements Moveable, Hideable {
 		return endUid;
 	}
 
-	private UDrawable getExtremity(LinkHat hat, LinkDecor decor, PointListIterator pointListIterator, Point2D center,
-			double angle, Cluster cluster, boolean isGroup) {
+	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, Point2D center, double angle,
+			Cluster cluster) {
 		final ExtremityFactory extremityFactory = decor.getExtremityFactory();
 
-		if (OptionFlags.USE_COMPOUND == false && cluster != null) {
+		if (cluster != null) {
 			if (extremityFactory != null) {
 				// System.err.println("angle=" + angle * 180 / Math.PI);
 				return extremityFactory.createUDrawable(center, angle);
@@ -463,7 +451,7 @@ public class Line implements Moveable, Hideable {
 
 	}
 
-	public void solveLine(final String svg, final int fullHeight, MinFinder corner1, DotData dotData) {
+	public void solveLine(final String svg, final int fullHeight, MinFinder corner1) {
 		if (this.link.isInvis()) {
 			return;
 		}
@@ -481,26 +469,44 @@ public class Line implements Moveable, Hideable {
 		final String path = svg.substring(idx + 3, end);
 
 		dotPath = new DotPath(path, fullHeight);
-		if (OptionFlags.USE_COMPOUND == false) {
-			if (projectionCluster != null) {
-				System.err.println("Line::solveLine1 projectionCluster=" + projectionCluster.getClusterPosition());
-				projectionCluster.manageEntryExitPoint(dotData, TextBlockUtils.getDummyStringBounder());
-				System.err.println("Line::solveLine2 projectionCluster=" + projectionCluster.getClusterPosition());
-				if (lhead != null)
-					System.err.println("Line::solveLine ltail=" + lhead.getClusterPosition());
-				if (ltail != null)
-					System.err.println("Line::solveLine ltail=" + ltail.getClusterPosition());
-			}
-			dotPath = dotPath.simulateCompound(lhead, ltail);
-		}
 
-		final PointListIterator pointListIterator = new PointListIterator(svg.substring(end), fullHeight);
+		if (projectionCluster != null) {
+			// System.err.println("Line::solveLine1 projectionCluster=" + projectionCluster.getClusterPosition());
+			projectionCluster.manageEntryExitPoint(TextBlockUtils.getDummyStringBounder());
+			// System.err.println("Line::solveLine2 projectionCluster=" + projectionCluster.getClusterPosition());
+			// if (lhead != null)
+			// System.err.println("Line::solveLine ltail=" + lhead.getClusterPosition());
+			// if (ltail != null)
+			// System.err.println("Line::solveLine ltail=" + ltail.getClusterPosition());
+		}
+		dotPath = dotPath.simulateCompound(lhead, ltail);
+
+		PointListIterator pointListIterator = new PointListIterator(svg.substring(end), fullHeight);
 
 		final LinkType linkType = link.getType();
-		this.extremity2 = getExtremity(linkType.getHat2(), linkType.getDecor2(), pointListIterator,
-				dotPath.getStartPoint(), dotPath.getStartAngle() + Math.PI, ltail, link.getEntity1().isGroup());
-		this.extremity1 = getExtremity(linkType.getHat1(), linkType.getDecor1(), pointListIterator,
-				dotPath.getEndPoint(), dotPath.getEndAngle(), lhead, link.getEntity2().isGroup());
+		this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
+				dotPath.getStartAngle() + Math.PI, ltail);
+		this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
+				dotPath.getEndAngle(), lhead);
+		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
+			final Point2D p1 = ((Extremity) extremity1).somePoint();
+			final Point2D p2 = ((Extremity) extremity2).somePoint();
+			if (p1 != null && p2 != null) {
+				// http://plantuml.sourceforge.net/qa/?qa=4240/some-relations-point-wrong-direction-when-the-linetype-ortho
+				final double dist1start = p1.distance(dotPath.getStartPoint());
+				final double dist1end = p1.distance(dotPath.getEndPoint());
+				final double dist2start = p2.distance(dotPath.getStartPoint());
+				final double dist2end = p2.distance(dotPath.getEndPoint());
+				if (dist1start > dist1end && dist2end > dist2start) {
+					pointListIterator = new PointListIterator(svg.substring(end), fullHeight);
+					this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
+							dotPath.getEndAngle(), lhead);
+					this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
+							dotPath.getStartAngle() + Math.PI, ltail);
+				}
+			}
+
+		}
 
 		if (this.labelText != null) {
 			final Point2D pos = getXY(svg, this.noteLabelColor, fullHeight);
@@ -580,8 +586,10 @@ public class Line implements Moveable, Hideable {
 
 		if (link.isAutoLinkOfAGroup()) {
 			final Cluster cl = bibliotekon.getCluster((IGroup) link.getEntity1());
-			x += cl.getWidth();
-			x -= dotPath.getStartPoint().getX() - cl.getMinX();
+			if (cl != null) {
+				x += cl.getWidth();
+				x -= dotPath.getStartPoint().getX() - cl.getMinX();
+			}
 		}
 
 		x += dx;
@@ -608,76 +616,45 @@ public class Line implements Moveable, Hideable {
 			stroke = link.getColors().getSpecificLineStroke();
 		}
 		ug = ug.apply(stroke);
-		double moveStartX = 0;
-		double moveStartY = 0;
-		double moveEndX = 0;
 		double moveEndY = 0;
-		if (OptionFlags.USE_COMPOUND && projectionCluster != null && link.getEntity1() == projectionCluster.getGroup()) {
-			final DotPath copy = new DotPath(dotPath);
-			final Point2D start = copy.getStartPoint();
-			final Point2D proj = projectionCluster.getClusterPosition().getProjectionOnFrontier(start);
-			moveStartX = proj.getX() - start.getX();
-			moveStartY = proj.getY() - start.getY();
-			copy.forceStartPoint(proj.getX(), proj.getY());
-			ug.apply(new UTranslate(x, y)).draw(copy);
-		} else if (OptionFlags.USE_COMPOUND && projectionCluster != null
-				&& link.getEntity2() == projectionCluster.getGroup()) {
-			final DotPath copy = new DotPath(dotPath);
-			final Point2D end = copy.getEndPoint();
-			final Point2D proj = projectionCluster.getClusterPosition().getProjectionOnFrontier(end);
-			moveEndX = proj.getX() - end.getX();
-			moveEndY = proj.getY() - end.getY();
-			copy.forceEndPoint(proj.getX(), proj.getY());
-			ug.apply(new UTranslate(x, y)).draw(copy);
-		} else {
-			if (dotPath == null) {
-				Log.info("DotPath is null for " + this);
-				return;
-			}
-			DotPath todraw = dotPath;
-			if (link.getEntity2().isGroup() && link.getEntity2().getUSymbol() instanceof USymbolFolder) {
-				final Cluster endCluster = bibliotekon.getCluster((IGroup) link.getEntity2());
-				if (endCluster != null) {
-					final double deltaFolderH = endCluster.checkFolderPosition(dotPath.getEndPoint(),
-							ug.getStringBounder());
-					todraw = new DotPath(dotPath);
-					todraw.moveEndPoint(0, deltaFolderH);
-					moveEndY = deltaFolderH;
-				}
-			}
 
-			ug.apply(new UTranslate(x, y)).draw(todraw);
+		if (dotPath == null) {
+			Log.info("DotPath is null for " + this);
+			return;
 		}
+		DotPath todraw = dotPath;
+		if (link.getEntity2().isGroup() && link.getEntity2().getUSymbol() instanceof USymbolFolder) {
+			final Cluster endCluster = bibliotekon.getCluster((IGroup) link.getEntity2());
+			if (endCluster != null) {
+				final double deltaFolderH = endCluster
+						.checkFolderPosition(dotPath.getEndPoint(), ug.getStringBounder());
+				todraw = new DotPath(dotPath);
+				todraw.moveEndPoint(0, deltaFolderH);
+				moveEndY = deltaFolderH;
+			}
+		}
+
+		ug.apply(new UTranslate(x, y)).draw(todraw);
 
 		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
 
-		if (this.extremity1 != null) {
+		if (this.extremity2 != null) {
 			if (linkType.getDecor1().isFill()) {
 				ug = ug.apply(new UChangeBackColor(color));
 			} else {
 				ug = ug.apply(new UChangeBackColor(null));
 			}
-			if (OptionFlags.USE_COMPOUND || lhead == null) {
-				this.extremity1.drawU(ug.apply(new UTranslate(x + moveEndX, y + moveEndY)));
-			} else {
-				// System.err.println("Line::draw EXTREMITY1");
-				this.extremity1.drawU(ug.apply(new UTranslate(x, y)));
-			}
+			// System.err.println("Line::draw EXTREMITY1");
+			this.extremity2.drawU(ug.apply(new UTranslate(x, y)));
 		}
-		if (this.extremity2 != null) {
+		if (this.extremity1 != null) {
 			if (linkType.getDecor2().isFill()) {
 				ug = ug.apply(new UChangeBackColor(color));
 			} else {
 				ug = ug.apply(new UChangeBackColor(null));
 			}
-			if (OptionFlags.USE_COMPOUND || ltail == null) {
-				this.extremity2.drawU(ug.apply(new UTranslate(x + moveStartX, y + moveStartY)));
-			} else {
-				// System.err.println("Line::draw EXTREMITY2");
-				this.extremity2.drawU(ug.apply(new UTranslate(x, y)));
-				// this.extremity2.drawU(ug.apply(new UTranslate(dotPath.getStartPoint())));
-
-			}
+			// System.err.println("Line::draw EXTREMITY2");
+			this.extremity1.drawU(ug.apply(new UTranslate(x, y)));
 		}
 		if (this.labelText != null && this.labelXY != null) {
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX(), y

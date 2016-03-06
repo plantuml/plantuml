@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LongCode;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class EntityFactory {
@@ -63,13 +64,23 @@ public class EntityFactory {
 
 	private final IGroup rootGroup = new GroupRoot(this);
 	private final Set<LeafType> hiddenTypes;
+	private final Set<String> hiddenStereotype;
 
-	public EntityFactory(Set<LeafType> hiddenTypes) {
+	public EntityFactory(Set<LeafType> hiddenTypes, Set<String> hiddenStereotype) {
 		this.hiddenTypes = hiddenTypes;
+		this.hiddenStereotype = hiddenStereotype;
 	}
 
-	public boolean isHidden(LeafType leafType) {
-		return hiddenTypes.contains(leafType);
+	public boolean isHidden(ILeaf leaf) {
+		if (hiddenTypes.contains(leaf.getEntityType())) {
+			return true;
+		}
+		final Stereotype stereotype = leaf.getStereotype();
+		if (stereotype != null && hiddenStereotype.contains(stereotype.getLabel(false))) {
+			return true;
+		}
+		return false;
+
 	}
 
 	public ILeaf createLeaf(Code code, Display display, LeafType entityType, IGroup parentContainer,

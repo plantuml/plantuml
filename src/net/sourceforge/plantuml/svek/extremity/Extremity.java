@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -33,9 +33,11 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
+import java.awt.geom.Point2D;
+
 import net.sourceforge.plantuml.graphic.UDrawable;
 
-abstract class Extremity implements UDrawable {
+public abstract class Extremity implements UDrawable {
 
 
 	protected double manageround(double angle) {
@@ -64,5 +66,7 @@ abstract class Extremity implements UDrawable {
 		}
 		return false;
 	}
+	
+	public abstract Point2D somePoint();
 
 }

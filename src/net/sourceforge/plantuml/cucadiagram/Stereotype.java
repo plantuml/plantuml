@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18317 $
+ * Revision $Revision: 19251 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -122,7 +122,7 @@ public class Stereotype implements CharSequence, Hideable {
 		this.radius = 0;
 		this.circledFont = null;
 		if (label.startsWith("<<$") && label.endsWith(">>")) {
-			this.sprite = label.substring(3, label.length() - 2);
+			this.sprite = label.substring(3, label.length() - 2).trim();
 		} else {
 			this.sprite = null;
 		}
@@ -150,9 +150,21 @@ public class Stereotype implements CharSequence, Hideable {
 			return null;
 		}
 		if (withGuillement) {
-			return StringUtils.manageGuillemetStrict(label);
+			return StringUtils.manageGuillemet(label);
 		}
 		return label;
+	}
+
+	public List<String> getMultipleLabels() {
+		final List<String> result = new ArrayList<String>();
+		if (label != null) {
+			final Pattern p = Pattern.compile("\\<\\<\\s?([^<>]+?)\\s?\\>\\>");
+			final Matcher m = p.matcher(label);
+			while (m.find()) {
+				result.add(m.group(1));
+			}
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public boolean isSpotted() {

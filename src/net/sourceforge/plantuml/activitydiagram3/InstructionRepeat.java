@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -37,6 +37,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -49,10 +50,12 @@ public class InstructionRepeat implements Instruction {
 	private final LinkRendering nextLinkRenderer;
 	private final Swimlane swimlane;
 	private final HtmlColor color;
+	private boolean killed = false;
 
 	private Display test = Display.NULL;
 	private Display yes = Display.NULL;
 	private Display out = Display.NULL;
+	private boolean testCalled = false;
 	private LinkRendering endRepeatLinkRendering;
 	private LinkRendering backRepeatLinkRendering;
 
@@ -68,8 +71,13 @@ public class InstructionRepeat implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.repeat(swimlane, factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering),
-				test, yes, out, color, backRepeatLinkRendering);
+		final Ftile result = factory.repeat(swimlane,
+				factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering), test, yes, out, color,
+				backRepeatLinkRendering);
+		if (killed) {
+			return new FtileKilled(result);
+		}
+		return result;
 	}
 
 	public Instruction getParent() {
@@ -92,9 +100,14 @@ public class InstructionRepeat implements Instruction {
 		}
 		this.endRepeatLinkRendering = endRepeatLinkRendering;
 		this.backRepeatLinkRendering = backRepeatLinkRendering;
+		this.testCalled = true;
 	}
 
 	final public boolean kill() {
+		if (testCalled) {
+			this.killed = true;
+			return true;
+		}
 		return repeatList.kill();
 	}
 

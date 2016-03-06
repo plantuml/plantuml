@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18947 $
+ * Revision $Revision: 19252 $
  *
  */
 package net.sourceforge.plantuml.version;
@@ -39,7 +39,7 @@ import java.util.Date;
 public class Version {
 
 	public static int version() {
-		return 8036;
+		return 8037;
 	}
 
 	public static String versionString() {
@@ -63,7 +63,7 @@ public class Version {
 	}
 
 	private static long compileTime() {
-		return 1454874605178L;
+		return 1457273929160L;
 	}
 
 	public static String compileTimeString() {

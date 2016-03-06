@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -146,7 +146,9 @@ public class FileFormatOption implements Serializable {
 		case VDX:
 			return new UGraphicVdx(colorMapper);
 		case LATEX:
-			return new UGraphicTikz(colorMapper);
+			return new UGraphicTikz(colorMapper, true);
+		case LATEX_NO_PREAMBLE:
+			return new UGraphicTikz(colorMapper, false);
 		default:
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml;
@@ -78,6 +78,8 @@ public class OptionPrint {
 		System.out.println("    -thtml\t\tTo generate HTML files for class diagram");
 		System.out.println("    -ttxt\t\tTo generate images with ASCII art");
 		System.out.println("    -tutxt\t\tTo generate images with ASCII art using Unicode characters");
+		System.out.println("    -tlatex\t\tTo generate images using LaTeX/Tikz format");
+		System.out.println("    -tlatex:nopreamble\tTo generate images using LaTeX/Tikz format without preamble");
 		System.out.println("    -o[utput] \"dir\"\tTo generate images in the specified directory");
 		System.out.println("    -DVAR1=value\tTo set a preprocessing variable as if '!define VAR1 value' were used");
 		System.out.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
@@ -90,8 +92,6 @@ public class OptionPrint {
 		System.out.println("    -checkversion\tTo check if a newer version is available for download");
 		System.out.println("    -v[erbose]\t\tTo have log information");
 		System.out.println("    -quiet\t\tTo NOT print error message into the console");
-		// Log.println("    -forcegd\t\tTo force dot to use GD PNG library");
-		// Log.println("    -forcecairo\t\tTo force dot to use Cairo PNG library");
 		System.out.println("    -keepfiles\t\tTo NOT delete temporary files after process");
 		System.out.println("    -h[elp]\t\tTo display this help message");
 		System.out.println("    -testdot\t\tTo test the installation of graphviz");

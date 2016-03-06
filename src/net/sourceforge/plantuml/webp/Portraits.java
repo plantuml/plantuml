@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -37,23 +37,22 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class Portraits {
 
-	private final List<Portrait> all = new ArrayList<Portrait>();
-
-	public void all(Portrait p) {
-		all.add(p);
-	}
+	private final static List<Portrait> all = new ArrayList<Portrait>();
+	private final static AtomicInteger current = new AtomicInteger();
 
 	private static InputStream getInputStream() {
 		return PSystemVersion.class.getResourceAsStream("out.png");
 	}
 
-	public Portraits() {
+	static {
 		final InputStream is = getInputStream();
 		if (is != null) {
 			try {
@@ -71,33 +70,36 @@ public class Portraits {
 
 	}
 
-	private void read(InputStream is) throws IOException {
+	private static void read(InputStream is) throws IOException {
 		final DataInputStream dis = new DataInputStream(is);
 		final int nb = dis.readShort();
 		final List<String> names = new ArrayList<String>();
 		final List<Integer> ages = new ArrayList<Integer>();
+		final List<String> quotes = new ArrayList<String>();
 		for (int i = 0; i < nb; i++) {
 			names.add(dis.readUTF());
 			ages.add((int) dis.readByte());
+			quotes.add(dis.readUTF());
 		}
 		for (int i = 0; i < nb; i++) {
 			final int len = dis.readShort();
 			final byte data[] = new byte[len];
 			dis.readFully(data);
-			all.add(new Portrait(names.get(i), ages.get(i), data));
+			all.add(new Portrait(names.get(i), ages.get(i), quotes.get(i), data));
 		}
+		Collections.shuffle(all);
 	}
 
-	public static void main(String[] args) {
-		final Portraits p = new Portraits();
-		System.err.println(p.all);
-	}
-
-	public Portrait getOne() {
+	public static Portrait getOne() {
 		if (all.size() == 0) {
 			return null;
 		}
-		return all.get(0);
+		final int nb = current.get() % all.size();
+		return all.get(nb);
+	}
+
+	public static void nextOne() {
+		current.getAndIncrement();
 	}
 
 }

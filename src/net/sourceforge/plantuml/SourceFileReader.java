@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -196,7 +196,7 @@ public class SourceFileReader implements ISourceFileReader {
 				OutputStream os = null;
 				try {
 					os = new BufferedOutputStream(new FileOutputStream(suggested));
-					UmlDiagram.exportDiagramError2(os, t, fileFormatOption, null, blockUml.getFlashData(),
+					UmlDiagram.exportDiagramError(os, t, fileFormatOption, null, blockUml.getFlashData(),
 							UmlDiagram.getFailureText2(t));
 				} finally {
 					if (os != null) {

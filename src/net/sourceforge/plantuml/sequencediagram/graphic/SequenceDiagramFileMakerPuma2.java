@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -182,7 +182,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				dpiFactor), diagram.getSkinParam().getBackgroundColor(), metadata, null, 3, 10, diagram.getAnimation(),
 				diagram.getSkinParam().handwritten());
 
-		imageBuilder.addUDrawable(new UDrawable() {
+		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
 
 				double delta = 0;

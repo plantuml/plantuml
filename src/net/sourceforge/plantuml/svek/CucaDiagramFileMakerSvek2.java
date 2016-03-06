@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -111,6 +111,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public final class CucaDiagramFileMakerSvek2 {
 
@@ -341,9 +342,9 @@ public final class CucaDiagramFileMakerSvek2 {
 		}
 		if (ent.getSvekImage() == null) {
 			ISkinParam skinParam = dotData.getSkinParam();
-			if (dotData.getSkinParam().sameClassWidth()) {
+			if (skinParam.sameClassWidth()) {
 				final double width = getMaxWidth();
-				skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
+				skinParam = new SkinParamSameClassWidth(skinParam, width);
 			}
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,
@@ -526,7 +527,7 @@ public final class CucaDiagramFileMakerSvek2 {
 			if (members.size() == 0) {
 				attribute = new TextBlockEmpty();
 			} else {
-				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam());
+				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(), g.getStereotype());
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
@@ -565,7 +566,10 @@ public final class CucaDiagramFileMakerSvek2 {
 			return TextBlockUtils.empty(0, 0);
 		}
 		if (stereotype.getSprite() != null) {
-			return dotData.getSkinParam().getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor());
+			final Sprite tmp = dotData.getSkinParam().getSprite(stereotype.getSprite());
+			if (tmp != null) {
+				return tmp.asTextBlock(stereotype.getHtmlColor());
+			}
 		}
 		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().useGuillemet());
 		if (stereos == null) {

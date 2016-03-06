@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
+import java.awt.geom.Point2D;
+
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -44,6 +46,12 @@ class MiddleCircle extends Extremity {
 
 	private final double radius = 6;
 	private final UEllipse circle = new UEllipse(2 * radius, 2 * radius);
+	
+	@Override
+	public Point2D somePoint() {
+		return null;
+	}
+
 
 	public void drawU(UGraphic ug) {
 		ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UStroke(1.5)).apply(new UTranslate(-radius, -radius)).draw(circle);

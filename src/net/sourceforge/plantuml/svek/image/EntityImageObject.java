@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -98,7 +98,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
-			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, true);
+			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, true, entity.getStereotype());
 		}
 		this.url = entity.getUrl99();
 

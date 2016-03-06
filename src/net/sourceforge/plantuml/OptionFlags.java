@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18910 $
+ * Revision $Revision: 19196 $
  *
  */
 package net.sourceforge.plantuml;
@@ -59,8 +59,9 @@ public class OptionFlags {
 	static public final boolean USE_INTERFACE_EYE1 = false;
 	static public final boolean USE_INTERFACE_EYE2 = false;
 	static public final boolean SWI2 = false;
-	static public final boolean USE_COMPOUND = false;
+	// static public final boolean USE_COMPOUND = false;
 	static public final boolean OMEGA_CROSSING = false;
+	// static public final boolean USE_JDOT = false;
 
 	public void reset() {
 		reset(false);

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -39,6 +39,10 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 
 public class ExtremityFactorySquarre extends AbstractExtremityFactory implements ExtremityFactory {
+
+	public UDrawable createUDrawable(Point2D p0, double angle) {
+		return new ExtremitySquarre(p0);
+		}
 
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2) {
 		// final double ortho = atan2(p0, p2);

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -70,14 +70,16 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 	private final boolean manageModifier;
 	private final List<Url> urls = new ArrayList<Url>();
 	private final boolean manageUrl;
+	private final Stereotype stereotype;
 
-	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier) {
+	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier, Stereotype stereotype) {
 		this.rawBody = new ArrayList<String>(rawBody);
+		this.stereotype = stereotype;
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
 		this.manageUrl = true;
 
-		this.titleConfig = new FontConfiguration(skinParam, fontParam, null);
+		this.titleConfig = new FontConfiguration(skinParam, fontParam, stereotype);
 		this.lineFirst = true;
 		this.align = HorizontalAlignment.LEFT;
 		this.manageHorizontalLine = true;
@@ -87,6 +89,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
 			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, boolean manageUrl) {
 		this.manageUrl = manageUrl;
+		this.stereotype = stereotype;
 		this.rawBody = new ArrayList<String>();
 		for (CharSequence s : display) {
 			this.rawBody.add(s.toString());
@@ -132,14 +135,14 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {
-				blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align),
+				blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype),
 						separator, title));
 				separator = s.charAt(0);
 				title = getTitle(s, skinParam);
 				members = new ArrayList<Member>();
 			} else if (CreoleParser.isTreeStart(s)) {
 				if (members.size() > 0) {
-					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align),
+					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype),
 							separator, title));
 				}
 				members = new ArrayList<Member>();
@@ -155,7 +158,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 				}
 			}
 		}
-		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align), separator,
+		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype), separator,
 				title));
 
 		if (blocks.size() == 1) {

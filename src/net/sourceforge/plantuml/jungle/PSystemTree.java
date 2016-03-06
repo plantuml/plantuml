@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -69,9 +69,9 @@ public class PSystemTree extends AbstractPSystem {
 			final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
 			tmp.drawU(limitFinder);
 			final double minY = limitFinder.getMinY();
-			builder.addUDrawable(UDrawableUtils.move(tmp, 0, -minY));
+			builder.setUDrawable(UDrawableUtils.move(tmp, 0, -minY));
 		} else {
-			builder.addUDrawable(new GTileOneLevelFactory().createGTile(root));
+			builder.setUDrawable(new GTileOneLevelFactory().createGTile(root));
 		}
 		return builder.writeImageTOBEMOVED(fileFormat, os);
 	}

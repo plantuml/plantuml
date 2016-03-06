@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
@@ -80,7 +80,6 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Cluster implements Moveable {
@@ -296,11 +295,11 @@ public class Cluster implements Moveable {
 		return SkinParamUtils.getColor(skinParam, colorParam, stereotype);
 	}
 
-	public void drawU(UGraphic ug, DotData dotData, UStroke stroke) {
+	public void drawU(UGraphic ug, UStroke stroke, final UmlDiagramType umlDiagramType, final ISkinParam skinParam2) {
 
 		final Stereotype stereotype = group.getStereotype();
 		HtmlColor borderColor;
-		if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
+		if (umlDiagramType == UmlDiagramType.STATE) {
 			borderColor = getColor(ColorParam.stateBorder, skinParam, stereotype);
 		} else {
 			borderColor = getColor(ColorParam.packageBorder, skinParam, stereotype);
@@ -312,13 +311,13 @@ public class Cluster implements Moveable {
 		}
 		try {
 			if (hasEntryOrExitPoint()) {
-				manageEntryExitPoint(dotData, ug.getStringBounder());
+				manageEntryExitPoint(ug.getStringBounder());
 			}
-			if (skinParam.useSwimlanes(dotData.getUmlDiagramType())) {
-				drawSwinLinesState(ug, borderColor, dotData);
+			if (skinParam.useSwimlanes(umlDiagramType)) {
+				drawSwinLinesState(ug, borderColor);
 				return;
 			}
-			final boolean isState = dotData.getUmlDiagramType() == UmlDiagramType.STATE;
+			final boolean isState = umlDiagramType == UmlDiagramType.STATE;
 			if (isState) {
 				if (group.getColors(skinParam).getSpecificLineStroke() != null) {
 					stroke = group.getColors(skinParam).getSpecificLineStroke();
@@ -326,32 +325,32 @@ public class Cluster implements Moveable {
 				if (group.getColors(skinParam).getColor(ColorType.LINE) != null) {
 					borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 				}
-				drawUState(ug, borderColor, dotData, stroke);
+				drawUState(ug, borderColor, skinParam2, stroke);
 				return;
 			}
 			PackageStyle style = group.getPackageStyle();
 			if (style == null) {
-				style = dotData.getSkinParam().getPackageStyle();
+				style = skinParam2.getPackageStyle();
 			}
 			if (border != null) {
-				final HtmlColor tmp = dotData.getSkinParam().getHtmlColor(border, group.getStereotype(), false);
+				final HtmlColor tmp = skinParam2.getHtmlColor(border, group.getStereotype(), false);
 				if (tmp != null) {
 					borderColor = tmp;
 				}
 			}
 
 			if (ztitle != null || zstereo != null) {
-				final HtmlColor back = getBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
+				final HtmlColor back = getBackColor(getBackColor(), skinParam2, group.getStereotype());
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
-						minX, minY, maxX, maxY, getStroke(dotData.getSkinParam(), group.getStereotype()));
-				decoration.drawU(ug, back, borderColor, dotData.getSkinParam().shadowing());
+						minX, minY, maxX, maxY, getStroke(skinParam2, group.getStereotype()));
+				decoration.drawU(ug, back, borderColor, skinParam2.shadowing());
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
-			if (dotData.getSkinParam().shadowing()) {
+			if (skinParam2.shadowing()) {
 				rect.setDeltaShadow(3.0);
 			}
-			final HtmlColor backColor = getBackColor(getBackColor(), dotData.getSkinParam(), group.getStereotype());
+			final HtmlColor backColor = getBackColor(getBackColor(), skinParam2, group.getStereotype());
 			ug = ug.apply(new UChangeBackColor(backColor)).apply(new UChangeColor(borderColor));
 			ug.apply(new UStroke(2)).apply(new UTranslate(minX, minY)).draw(rect);
 
@@ -371,7 +370,7 @@ public class Cluster implements Moveable {
 		return stroke;
 	}
 
-	public void manageEntryExitPoint(DotData dotData, StringBounder stringBounder) {
+	public void manageEntryExitPoint(StringBounder stringBounder) {
 		final Collection<ClusterPosition> insides = new ArrayList<ClusterPosition>();
 		final List<Point2D> points = new ArrayList<Point2D>();
 		for (Shape sh : shapes) {
@@ -399,7 +398,7 @@ public class Cluster implements Moveable {
 		xTitle = minX + ((maxX - minX - widthTitle) / 2);
 	}
 
-	private void drawSwinLinesState(UGraphic ug, HtmlColor borderColor, DotData dotData) {
+	private void drawSwinLinesState(UGraphic ug, HtmlColor borderColor) {
 		if (ztitle != null) {
 			ztitle.drawU(ug.apply(new UTranslate(xTitle, 0)));
 		}
@@ -410,11 +409,11 @@ public class Cluster implements Moveable {
 
 	}
 
-	private HtmlColor getColor(DotData dotData, ColorParam colorParam, Stereotype stereo) {
-		return new Rose().getHtmlColor(dotData.getSkinParam(), colorParam, stereo);
+	private HtmlColor getColor(ISkinParam skinParam, ColorParam colorParam, Stereotype stereo) {
+		return new Rose().getHtmlColor(skinParam, colorParam, stereo);
 	}
 
-	private void drawUState(UGraphic ug, HtmlColor borderColor, DotData dotData, UStroke stroke) {
+	private void drawUState(UGraphic ug, HtmlColor borderColor, ISkinParam skinParam2, UStroke stroke) {
 		final Dimension2D total = new Dimension2DDouble(maxX - minX, maxY - minY);
 		final double suppY;
 		if (ztitle == null) {
@@ -426,14 +425,14 @@ public class Cluster implements Moveable {
 
 		HtmlColor stateBack = getBackColor();
 		if (stateBack == null) {
-			stateBack = getColor(dotData, ColorParam.stateBackground, group.getStereotype());
+			stateBack = getColor(skinParam2, ColorParam.stateBackground, group.getStereotype());
 		}
-		final HtmlColor background = getColor(dotData, ColorParam.background, null);
-		final TextBlockWidth attribute = getTextBlockAttribute(dotData);
+		final HtmlColor background = getColor(skinParam2, ColorParam.background, null);
+		final TextBlockWidth attribute = getTextBlockAttribute(skinParam2);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		final RoundedContainer r = new RoundedContainer(total, suppY, attributeHeight
 				+ (attributeHeight > 0 ? IEntityImage.MARGIN : 0), borderColor, stateBack, background, stroke);
-		r.drawU(ug.apply(new UTranslate(minX, minY)), dotData.getSkinParam().shadowing());
+		r.drawU(ug.apply(new UTranslate(minX, minY)), skinParam2.shadowing());
 
 		if (ztitle != null) {
 			ztitle.drawU(ug.apply(new UTranslate(xTitle, yTitle)));
@@ -452,13 +451,13 @@ public class Cluster implements Moveable {
 
 	}
 
-	private TextBlockWidth getTextBlockAttribute(DotData dotData) {
+	private TextBlockWidth getTextBlockAttribute(ISkinParam skinParam) {
 		final TextBlockWidth attribute;
 		final List<Member> members = group.getBodier().getFieldsToDisplay();
 		if (members.size() == 0) {
 			attribute = new TextBlockEmpty();
 		} else {
-			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam());
+			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, skinParam, group.getStereotype());
 		}
 		return attribute;
 	}

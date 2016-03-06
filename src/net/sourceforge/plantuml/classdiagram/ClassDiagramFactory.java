@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2.Mode;
 import net.sourceforge.plantuml.classdiagram.command.CommandDiamondAssociation;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandImport;
 import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
@@ -90,6 +91,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
+		cmds.add(new CommandHideShowSpecificStereotype());
 		cmds.add(new CommandPage());
 		cmds.add(new CommandAddMethod());
 

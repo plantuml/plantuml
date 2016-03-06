@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -81,7 +81,7 @@ class USymbolComponent2 extends USymbol {
 				ug = symbolContext.apply(ug);
 				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Margin margin = getMargin();
-				
+
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 				// label.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -95,7 +95,7 @@ class USymbolComponent2 extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, TextBlock stereotype, final double width, final double height,
+	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
 			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
@@ -103,7 +103,12 @@ class USymbolComponent2 extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
 				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
-				title.drawU(ug.apply(new UTranslate(3, 13)));
+				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
+				final double posStereo = (width - dimStereo.getWidth()) / 2;
+				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));
+				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+				final double posTitle = (width - dimTitle.getWidth()) / 2;
+				title.drawU(ug.apply(new UTranslate(posTitle, 13 + dimStereo.getHeight())));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

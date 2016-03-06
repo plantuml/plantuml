@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -49,6 +49,12 @@ class ExtremityStateLine2 extends Extremity {
 	private final Point2D dest;
 	private final double radius = 5;
 	private final double angle;
+	
+	@Override
+	public Point2D somePoint() {
+		return dest;
+	}
+
 
 	public ExtremityStateLine2(double angle, Point2D center) {
 		this.angle = manageround(angle);

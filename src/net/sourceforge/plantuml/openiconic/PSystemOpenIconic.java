@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -61,7 +61,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0,
 				null, null, null, 5, 5, null, false);
-		imageBuilder.addUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
+		imageBuilder.setUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 
 //		UGraphic2 ug = fileFormat.createUGraphic(dim);

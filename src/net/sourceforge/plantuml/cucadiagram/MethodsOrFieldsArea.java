@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
@@ -58,7 +59,6 @@ import net.sourceforge.plantuml.ugraphic.PlacementStrategy;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyVisibility;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Center;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Left;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
 import net.sourceforge.plantuml.utils.CharHidder;
@@ -77,13 +77,15 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	private final Rose rose = new Rose();
 	private final List<Member> members = new ArrayList<Member>();
 	private final HorizontalAlignment align;
+	private final Stereotype stereotype;
 
-	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam) {
-		this(members, fontParam, skinParam, HorizontalAlignment.LEFT);
+	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype) {
+		this(members, fontParam, skinParam, HorizontalAlignment.LEFT, stereotype);
 	}
 
 	public MethodsOrFieldsArea(List<Member> members, FontParam fontParam, ISkinParam skinParam,
-			HorizontalAlignment align) {
+			HorizontalAlignment align, Stereotype stereotype) {
+		this.stereotype = stereotype;
 		this.align = align;
 		this.skinParam = skinParam;
 		this.fontParam = fontParam;
@@ -128,7 +130,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		if (withVisibilityChar && s.startsWith("#")) {
 			s = CharHidder.addTileAtBegin(s);
 		}
-		FontConfiguration config = new FontConfiguration(skinParam, fontParam, null);
+		FontConfiguration config = new FontConfiguration(skinParam, fontParam, stereotype);
 		if (m.isAbstract()) {
 			config = config.italic();
 		}

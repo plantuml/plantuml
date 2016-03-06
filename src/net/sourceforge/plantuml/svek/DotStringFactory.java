@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -44,9 +44,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
@@ -59,7 +61,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.Moveable;
-import net.sourceforge.plantuml.StringUtils;
 
 public class DotStringFactory implements Moveable {
 
@@ -71,15 +72,31 @@ public class DotStringFactory implements Moveable {
 	private final Cluster root;
 
 	private Cluster current;
-	private final DotData dotData;
+	private final UmlDiagramType umlDiagramType;
+	private final ISkinParam skinParam;
+	private final DotMode dotMode;
 
 	private final StringBounder stringBounder;
 
 	public DotStringFactory(ColorSequence colorSequence, StringBounder stringBounder, DotData dotData) {
+		this.skinParam = dotData.getSkinParam();
+		this.umlDiagramType = dotData.getUmlDiagramType();
+		this.dotMode = dotData.getDotMode();
+
 		this.colorSequence = colorSequence;
-		this.dotData = dotData;
 		this.stringBounder = stringBounder;
-		this.root = new Cluster(colorSequence, dotData.getSkinParam(), dotData.getRootGroup());
+		this.root = new Cluster(colorSequence, skinParam, dotData.getRootGroup());
+		this.current = root;
+	}
+
+	public DotStringFactory(ColorSequence colorSequence, StringBounder stringBounder, CucaDiagram diagram) {
+		this.skinParam = diagram.getSkinParam();
+		this.umlDiagramType = diagram.getUmlDiagramType();
+		this.dotMode = DotMode.NORMAL;
+
+		this.colorSequence = colorSequence;
+		this.stringBounder = stringBounder;
+		this.root = new Cluster(colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
 		this.current = root;
 	}
 
@@ -129,8 +146,8 @@ public class DotStringFactory implements Moveable {
 		if (nodesep < getMinNodeSep()) {
 			nodesep = getMinNodeSep();
 		}
-		if (dotData.getSkinParam().getNodesep() != 0) {
-			nodesep = dotData.getSkinParam().getNodesep();
+		if (skinParam.getNodesep() != 0) {
+			nodesep = skinParam.getNodesep();
 		}
 		final String nodesepInches = SvekUtils.pixelToInches(nodesep);
 		// Log.println("nodesep=" + nodesepInches);
@@ -138,8 +155,8 @@ public class DotStringFactory implements Moveable {
 		if (ranksep < getMinRankSep()) {
 			ranksep = getMinRankSep();
 		}
-		if (dotData.getSkinParam().getRanksep() != 0) {
-			ranksep = dotData.getSkinParam().getRanksep();
+		if (skinParam.getRanksep() != 0) {
+			ranksep = skinParam.getRanksep();
 		}
 		final String ranksepInches = SvekUtils.pixelToInches(ranksep);
 		// Log.println("ranksep=" + ranksepInches);
@@ -162,12 +179,12 @@ public class DotStringFactory implements Moveable {
 		SvekUtils.println(sb);
 		sb.append("searchsize=500;");
 		SvekUtils.println(sb);
-		if (OptionFlags.USE_COMPOUND) {
-			sb.append("compound=true;");
-			SvekUtils.println(sb);
-		}
+		// if (OptionFlags.USE_COMPOUND) {
+		// sb.append("compound=true;");
+		// SvekUtils.println(sb);
+		// }
 
-		final DotSplines dotSplines = dotData.getSkinParam().getDotSplines();
+		final DotSplines dotSplines = skinParam.getDotSplines();
 		if (dotSplines == DotSplines.POLYLINE) {
 			sb.append("splines=polyline;");
 			SvekUtils.println(sb);
@@ -176,7 +193,7 @@ public class DotStringFactory implements Moveable {
 			SvekUtils.println(sb);
 		}
 
-		if (dotData.getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT) {
+		if (skinParam.getRankdir() == Rankdir.LEFT_TO_RIGHT) {
 			sb.append("rankdir=LR;");
 			SvekUtils.println(sb);
 		}
@@ -188,8 +205,7 @@ public class DotStringFactory implements Moveable {
 			line.appendLine(sb);
 		}
 		root.fillRankMin(rankMin);
-		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotData.getDotMode(), getGraphvizVersion(),
-				dotData.getUmlDiagramType());
+		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(), umlDiagramType);
 		printMinRanking(sb);
 
 		for (Line line : bibliotekon.lines1()) {
@@ -205,11 +221,11 @@ public class DotStringFactory implements Moveable {
 		final List<String> minPointCluster = new ArrayList<String>();
 		final List<String> maxPointCluster = new ArrayList<String>();
 		for (Cluster cluster : bibliotekon.allCluster()) {
-			final String minPoint = cluster.getMinPoint(dotData.getUmlDiagramType());
+			final String minPoint = cluster.getMinPoint(umlDiagramType);
 			if (minPoint != null) {
 				minPointCluster.add(minPoint);
 			}
-			final String maxPoint = cluster.getMaxPoint(dotData.getUmlDiagramType());
+			final String maxPoint = cluster.getMaxPoint(umlDiagramType);
 			if (maxPoint != null) {
 				maxPointCluster.add(maxPoint);
 			}
@@ -237,7 +253,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private int getMinRankSep() {
-		if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+		if (umlDiagramType == UmlDiagramType.ACTIVITY) {
 			// return 29;
 			return 40;
 		}
@@ -245,7 +261,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private int getMinNodeSep() {
-		if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+		if (umlDiagramType == UmlDiagramType.ACTIVITY) {
 			// return 15;
 			return 20;
 		}
@@ -378,7 +394,7 @@ public class DotStringFactory implements Moveable {
 		}
 
 		for (Line line : bibliotekon.allLines()) {
-			line.solveLine(svg, fullHeight, corner1, dotData);
+			line.solveLine(svg, fullHeight, corner1);
 		}
 
 		for (Line line : bibliotekon.allLines()) {
@@ -406,7 +422,7 @@ public class DotStringFactory implements Moveable {
 	public void openCluster(IGroup g, int titleAndAttributeWidth, int titleAndAttributeHeight, TextBlock title,
 			TextBlock stereo) {
 		this.current = current.createChild(g, titleAndAttributeWidth, titleAndAttributeHeight, title, stereo,
-				colorSequence, dotData.getSkinParam());
+				colorSequence, skinParam);
 		bibliotekon.addCluster(this.current);
 	}
 

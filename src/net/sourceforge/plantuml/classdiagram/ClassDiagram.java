@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -214,7 +214,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		}
 		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam().getColorMapper(), 1, HtmlColorUtils.WHITE,
 				null, null, 0, 10, null, getSkinParam().handwritten());
-		imageBuilder.addUDrawable(fullLayout);
+		imageBuilder.setUDrawable(fullLayout);
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 	}
 

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -168,7 +168,7 @@ public class FontChecker {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1, null, null, null, 0, 0, null,
 				false);
 		final double dim = 20;
-		imageBuilder.addUDrawable(new UDrawable() {
+		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
 				ug.draw(new URectangle(dim - 1, dim - 1));

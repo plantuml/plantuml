@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -46,6 +46,11 @@ class ExtremitySquarre extends Extremity {
 
 	private final Point2D dest;
 	private final double radius = 5;
+
+	@Override
+	public Point2D somePoint() {
+		return dest;
+	}
 
 	public ExtremitySquarre(Point2D p1) {
 		this.dest = new Point2D.Double(p1.getX(), p1.getY());

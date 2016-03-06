@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -84,7 +84,7 @@ public class PSystemCute extends AbstractPSystem {
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 10, 10, null, false);
-		builder.addUDrawable(root);
+		builder.setUDrawable(root);
 		return builder.writeImageTOBEMOVED(fileFormat, os);
 	}
 }

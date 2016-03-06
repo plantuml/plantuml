@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -188,5 +188,14 @@ public class Bibliotekon {
 			}
 		}
 		return null;
+	}
+
+	public ILeaf getLeaf(Shape shape) {
+		for (Map.Entry<ILeaf, Shape> ent : shapeMap.entrySet()) {
+			if (ent.getValue() == shape) {
+				return ent.getKey();
+			}
+		}
+		throw new IllegalArgumentException();
 	}
 }

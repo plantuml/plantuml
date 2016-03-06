@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -161,16 +161,6 @@ public class GroupRoot implements IGroup {
 	}
 
 	public Code getNamespace2() {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public boolean isAutonom() {
-		throw new UnsupportedOperationException();
-
-	}
-
-	public void setAutonom(boolean autonom) {
 		throw new UnsupportedOperationException();
 
 	}

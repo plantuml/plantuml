@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -170,7 +170,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final ImageBuilder imageBuilder = new ImageBuilder(skinParam.getColorMapper(), dpiFactor, getSkinParam()
 				.getBackgroundColor(), fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(),
 				margin, margin, getAnimation(), getSkinParam().handwritten());
-		imageBuilder.addUDrawable(result);
+		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18801 $
+ * Revision $Revision: 19235 $
  *
  */
 package net.sourceforge.plantuml;
@@ -239,13 +239,13 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return new ImageDataSimple();
 	}
 
-	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	public void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
 			String graphvizVersion) throws IOException {
-		exportDiagramError2(os, exception, fileFormat, getMetadata(), getFlashData(),
+		exportDiagramError(os, exception, fileFormat, getMetadata(), getFlashData(),
 				getFailureText1(exception, graphvizVersion));
 	}
 
-	public static void exportDiagramError2(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
 			String metadata, String flash, List<String> strings) throws IOException {
 		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
@@ -264,9 +264,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 
 		if (im == null) {
-			imageBuilder.addUDrawable(graphicStrings);
+			imageBuilder.setUDrawable(graphicStrings);
 		} else {
-			imageBuilder.addUDrawable(new UDrawable() {
+			imageBuilder.setUDrawable(new UDrawable() {
 				public void drawU(UGraphic ug) {
 					graphicStrings.drawU(ug);
 					final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
@@ -278,7 +278,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
-	private String getFlashData() {
+	public String getFlashData() {
 		final StringBuilder result = new StringBuilder();
 		final UmlSource source = getSource();
 		result.append(source.getPlainString());
@@ -417,5 +417,15 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	public final void setLegend(DisplayPositionned legend) {
 		this.legend = legend;
+	}
+
+	private boolean useJDot;
+
+	public void setUseJDot(boolean useJDot) {
+		this.useJDot = useJDot;
+	}
+
+	public boolean isUseJDot() {
+		return useJDot;
 	}
 }

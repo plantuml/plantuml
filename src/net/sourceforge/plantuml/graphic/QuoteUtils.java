@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -169,6 +169,7 @@ public class QuoteUtils {
 					"Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.", //
 					"Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... " //
 			);
+	// It's... complicated.
 	private QuoteUtils() {
 	}
 

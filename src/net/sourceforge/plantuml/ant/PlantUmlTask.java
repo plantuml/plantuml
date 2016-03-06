@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 18280 $
+ * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -298,6 +298,9 @@ public class PlantUmlTask extends Task {
 		}
 		if ("latex".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.LATEX);
+		}
+		if ("latex:nopreamble".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.LATEX_NO_PREAMBLE);
 		}
 		if ("eps:text".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.EPS_TEXT);

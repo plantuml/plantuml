@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  *
  * This file is part of PlantUML.
  *
@@ -285,7 +285,7 @@ class ImageWindow2 extends JFrame {
 			final GraphicStrings error = GraphicStrings.createDefault(Arrays.asList(msg), false);
 			final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(),
 					null, null, 0, 0, null, false);
-			imageBuilder.addUDrawable(error);
+			imageBuilder.setUDrawable(error);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
 				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), baos);

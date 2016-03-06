@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -90,17 +90,13 @@ public class ImageBuilder {
 	private final String warningOrError;
 	private final double margin1;
 	private final double margin2;
-	private final Animation affineTransformations;
+	private final Animation animation;
 	private final boolean useHandwritten;
-
-	// private final AffineTransform affineTransform;
-	// private final boolean withMetadata;
-	// private final boolean useRedForError;
 
 	private UDrawable udrawable;
 
 	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HtmlColor mybackcolor, String metadata,
-			String warningOrError, double margin1, double margin2, Animation affineTransformations,
+			String warningOrError, double margin1, double margin2, Animation animation,
 			boolean useHandwritten) {
 		this.colorMapper = colorMapper;
 		this.dpiFactor = dpiFactor;
@@ -109,11 +105,11 @@ public class ImageBuilder {
 		this.warningOrError = warningOrError;
 		this.margin1 = margin1;
 		this.margin2 = margin2;
-		this.affineTransformations = affineTransformations;
+		this.animation = animation;
 		this.useHandwritten = useHandwritten;
 	}
 
-	public void addUDrawable(UDrawable udrawable) {
+	public void setUDrawable(UDrawable udrawable) {
 		this.udrawable = udrawable;
 	}
 
@@ -124,26 +120,23 @@ public class ImageBuilder {
 		} else if (fileFormat == FileFormat.ANIMATED_GIF) {
 			return writeImageAnimatedGif(os);
 		}
-		return writeImageTOBEMOVED(fileFormatOption, os, affineTransformations);
+		return writeImageInternal(fileFormatOption, os, animation);
 	}
 
-	private ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, OutputStream os, Animation affineTransforms)
+	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os, Animation animationArg)
 			throws IOException {
-		final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
-		udrawable.drawU(limitFinder);
-		Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2, limitFinder.getMaxY()
-				+ 1 + margin1 + margin2);
+		Dimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
-		if (affineTransforms != null) {
-			final MinMax minmax = affineTransformations.getMinMax(dim);
-			affineTransforms.setDimension(dim);
+		if (animationArg != null) {
+			final MinMax minmax = animation.getMinMax(dim);
+			animationArg.setDimension(dim);
 			dim = minmax.getDimension();
 			dx = -minmax.getMinX();
 			dy = -minmax.getMinY();
 		}
 
-		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, affineTransforms, dx, dy);
+		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
 		final UGraphic ugDecored = handwritten(ug.apply(new UTranslate(margin1, margin1)));
 		udrawable.drawU(ugDecored);
 		ugDecored.flushUg();
@@ -159,6 +152,14 @@ public class ImageBuilder {
 		}
 
 		return new ImageDataSimple(dim);
+	}
+
+	public Dimension2D getFinalDimension() {
+		final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
+		udrawable.drawU(limitFinder);
+		Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2, limitFinder.getMaxY()
+				+ 1 + margin1 + margin2);
+		return dim;
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
@@ -210,7 +211,7 @@ public class ImageBuilder {
 		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2,
 				limitFinder.getMaxY() + 1 + margin1 + margin2);
 
-		final MinMax minmax = affineTransformations.getMinMax(dim);
+		final MinMax minmax = animation.getMinMax(dim);
 
 		final AnimatedGifEncoder e = new AnimatedGifEncoder();
 		// e.setQuality(1);
@@ -221,7 +222,7 @@ public class ImageBuilder {
 		e.setDelay(60); // 16 frame per sec
 		// e.setDelay(50); // 20 frame per sec
 
-		for (AffineTransformation at : affineTransformations.getAll()) {
+		for (AffineTransformation at : animation.getAll()) {
 			final ImageIcon ii = new ImageIcon(getAviImage(at));
 			e.addFrame((BufferedImage) ii.getImage());
 		}
@@ -232,7 +233,7 @@ public class ImageBuilder {
 
 	private Image getAviImage(AffineTransformation affineTransform) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), baos, Animation.singleton(affineTransform));
+		writeImageInternal(new FileFormatOption(FileFormat.PNG), baos, Animation.singleton(affineTransform));
 		baos.close();
 
 		final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
@@ -242,11 +243,11 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, final Dimension2D dim,
-			Animation affineTransforms, double dx, double dy) {
+			Animation animationArg, double dx, double dy) {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
-			return createUGraphicPNG(colorMapper, dpiFactor, dim, mybackcolor, affineTransforms, dx, dy);
+			return createUGraphicPNG(colorMapper, dpiFactor, dim, mybackcolor, animationArg, dx, dy);
 		case SVG:
 			return createUGraphicSVG(colorMapper, dpiFactor, dim, mybackcolor, fileFormatOption.getSvgLinkTarget());
 		case EPS:
@@ -258,7 +259,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(colorMapper);
 		case LATEX:
-			return new UGraphicTikz(colorMapper);
+			return new UGraphicTikz(colorMapper, true);
+		case LATEX_NO_PREAMBLE:
+			return new UGraphicTikz(colorMapper, false);
 		default:
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}

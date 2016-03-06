@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -151,7 +151,7 @@ public final class GroupPngMakerState {
 			if (members.size() == 0) {
 				attribute = new TextBlockEmpty();
 			} else {
-				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam());
+				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(), group.getStereotype());
 			}
 
 			final Stereotype stereotype = group.getStereotype();

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -46,6 +46,12 @@ class ExtremityArrow extends Extremity {
 	private UPolygon polygon = new UPolygon();
 	private final ULine line;
 	private final Point2D contact;
+	
+	@Override
+	public Point2D somePoint() {
+		return contact;
+	}
+
 
 	public ExtremityArrow(Point2D p1, double angle, Point2D center) {
 		angle = manageround(angle);
@@ -85,5 +91,6 @@ class ExtremityArrow extends Extremity {
 			ug.apply(new UTranslate(contact.getX(), contact.getY())).draw(line);
 		}
 	}
+
 
 }

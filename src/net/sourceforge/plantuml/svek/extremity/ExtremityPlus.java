@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -57,6 +57,12 @@ class ExtremityPlus extends Extremity {
 		this.px = x;
 		this.py = y;
 	}
+	
+	@Override
+	public Point2D somePoint() {
+		return new Point2D.Double(px, py);
+	}
+
 
 	public static UDrawable create(Point2D p1, double angle) {
 		final double x = p1.getX() - radius + radius * Math.sin(angle);

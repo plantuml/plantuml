@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -162,21 +162,21 @@ public class Bodier {
 	}
 
 	public TextBlock getBody(final FontParam fontParam, final ISkinParam skinParam, final boolean showMethods,
-			final boolean showFields) {
+			final boolean showFields, Stereotype stereotype) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
-				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier);
+				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier, stereotype);
 			}
 			return null;
 		}
-		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam);
+		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam, stereotype);
 		if (type == LeafType.OBJECT) {
 			return fields.asBlockMemberImpl();
 		}
 		if (type.isLikeClass() == false) {
 			throw new UnsupportedOperationException();
 		}
-		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam);
+		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam, stereotype);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {

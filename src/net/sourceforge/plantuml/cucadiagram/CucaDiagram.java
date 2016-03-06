@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 19243 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -47,7 +47,6 @@ import java.util.Set;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -55,7 +54,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.hector2.CucaDiagramFileMakerHectorC1;
+import net.sourceforge.plantuml.jdot.CucaDiagramFileMakerJDot;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
@@ -67,8 +66,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private int horizontalPages = 1;
 	private int verticalPages = 1;
 	private final Set<LeafType> hiddenType = new HashSet<LeafType>();
+	private final Set<String> hiddenStereotype = new HashSet<String>();
 
-	protected final EntityFactory entityFactory = new EntityFactory(hiddenType);
+	protected final EntityFactory entityFactory = new EntityFactory(hiddenType, hiddenStereotype);
 	protected IGroup currentGroup = entityFactory.getRootGroup();
 
 	private boolean visibilityModifierPresent;
@@ -311,7 +311,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			throw new UnsupportedOperationException();
 		}
 
-		final CucaDiagramFileMaker maker = OptionFlags.USE_HECTOR ? new CucaDiagramFileMakerHectorC1(this)
+		// final CucaDiagramFileMaker maker = OptionFlags.USE_HECTOR ? new CucaDiagramFileMakerHectorC1(this)
+		// : new CucaDiagramFileMakerSvek(this);
+		final CucaDiagramFileMaker maker = this.isUseJDot() ? new CucaDiagramFileMakerJDot(this)
 				: new CucaDiagramFileMakerSvek(this);
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
 
@@ -470,6 +472,14 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public void hideOrShow(ILeaf leaf, boolean show) {
 		leaf.setRemoved(!show);
+	}
+
+	public void hideOrShow(Stereotype stereotype, boolean show) {
+		if (show) {
+			hiddenStereotype.remove(stereotype.getLabel(false));
+		} else {
+			hiddenStereotype.add(stereotype.getLabel(false));
+		}
 	}
 
 	public void hideOrShow(LeafType leafType, boolean show) {

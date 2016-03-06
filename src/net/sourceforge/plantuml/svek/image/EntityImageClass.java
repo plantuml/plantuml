@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -81,7 +81,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
-		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields);
+		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields, entity.getStereotype());
 
 		header = new EntityImageClassHeader2(entity, getSkinParam(), portionShower);
 		this.url = entity.getUrl99();

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -42,7 +42,8 @@ import java.io.File;
  * 
  */
 public enum FileFormat {
-	PNG, SVG, EPS, EPS_TEXT, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO, PDF, MJPEG, ANIMATED_GIF, HTML, HTML5, VDX, LATEX, BASE64;
+	PNG, SVG, EPS, EPS_TEXT, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO,
+	PDF, MJPEG, ANIMATED_GIF, HTML, HTML5, VDX, LATEX, LATEX_NO_PREAMBLE, BASE64;
 
 	/**
 	 * Returns the file format to be used for that format.
@@ -55,6 +56,9 @@ public enum FileFormat {
 		}
 		if (this == MJPEG) {
 			return ".avi";
+		}
+		if (this == LATEX_NO_PREAMBLE) {
+			return ".latex";
 		}
 		if (this == ANIMATED_GIF) {
 			return ".gif";

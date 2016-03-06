@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -58,13 +58,13 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "UDfTKa6MsZ0CtUiKNkTD3v4XBNq1PlgWxM9sWcY8m5YfxT26itNNYrMX3JPePJtfI__BlxJ5_o0FNoYIDwMBuXXty9MA57A2fQJK1oWdA6vXxbE91jZG5aDaTEP5MWUbQyIRkL2yqFXyVzUEgHqTB35Rv29KF2LieKoZvGoRFb4OOCx5VJY1UcBP1zX4wbfoPYRIgRvgsaC15gS7g7YOYMLdrj87Whf_g1S7KI5JqZ6iCjPuobDTLLhwXQxHSyvQrgbxz8CgNTzakpsyvEpZ1LujdnLGyUwep6yLTl0nt4QxZ4H1PwWk9uv-C4jifK6enwE_jQZZixw2RFekZUEWPt8OjK_vAQ_w7tawtgbopLrwHR8EiWfxzP4ly3cL6u4LxrgovXdP3ha2Uyd9XF18hIPq7shS_UWfcAhVUjIljKd-Tpb4shLcuJ5WehGdTMpsWJz7escBMSYPSzzSdVCjwMU4TURbSSMTpeEYkynbSXmFzImU7ThkoRnHHEa2h5Kl-iOiUFnf-6J5Z-TV_VbjxTK3oHysywgwwo_hGETg";
+	public static final String DONORS = "UDfTKa5osp0ClECLF6lIHoXMwevi9nqxwI4tM48isZIXafHJwMszzME5tCgaZ1Cnm0AxuEOc-n_au3i5SYgtWQt62bufYy5dM7DCdOTyWk8UbYwMg8STxT47ZLOzSsCXjpKxjMGA0utFZm_fcDhHmXgJHJP0eQT46yZZQBx0heiKUbZgR1wMePnOTXvsWTg6h5emjwAlcFQGXzNv3ieE5coqLLlkF47PtTMp8ukGAMarR1BMU4vJMPKR-eMsbdCk6YrJ3-XwKRgzoRO7U4xPXm5UZBu8eD3LIPZVAjh2ax-DjWc9Z2vG36STNA_Ms72DK8v7VszGnYTz6PduNHAdNivaCKYVy1DUvJ_oT9gfilKilIAr3382Ut513_0jbck6ZQuQCkeHjUbJ1MP8oNX_Jwqaj5zAh7vsv5NHxHtArvee_mSV0rMDMZdq62aTI1oRVE3dQ3HfKIk-wDGtL-UyHVqQOPjuULmnqtaKT9kuZ4_ZeHxPeKNJFgXt2iYjXwteHLUhbHv_6huQTkFvDtz-6tFrGFI7IRmgxbhVtELmElveWcQkoCDVlhxmVW00";
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final GraphicStrings result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
-		imageBuilder.addUDrawable(result);
+		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 

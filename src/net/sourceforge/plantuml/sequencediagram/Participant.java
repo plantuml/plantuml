@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
+ * Revision $Revision: 19161 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -135,7 +135,6 @@ public class Participant implements SpecificBackcolorable {
 
 	private Colors colors = Colors.empty();
 
-	
 	public void setColors(Colors colors) {
 		this.colors = colors;
 	}
@@ -165,7 +164,13 @@ public class Participant implements SpecificBackcolorable {
 		if (stereoBackColor != null && specificBackColor == null) {
 			specificBackColor = stereoBackColor;
 		}
-		return new SkinParamBackcolored(skinParam, specificBackColor, clickable);
+		final SkinParamBackcolored result = new SkinParamBackcolored(skinParam, specificBackColor, clickable);
+		final HtmlColor stereoBorderColor = skinParam.getHtmlColor(ColorParam.participantBorder, getStereotype(),
+				clickable);
+		if (stereoBorderColor != null) {
+			result.forceColor(ColorParam.participantBorder, stereoBorderColor);
+		}
+		return result;
 	}
 
 }

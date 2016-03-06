@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -45,10 +45,12 @@ public class Portrait {
 
 	private final String name;
 	private final int age;
+	private final String quote;
 	private final byte webp[];
 
-	public Portrait(String name, int age, byte webp[]) throws IOException {
+	public Portrait(String name, int age, String quote, byte webp[]) throws IOException {
 		this.name = name;
+		this.quote = quote;
 		this.age = age;
 		this.webp = webp;
 	}
@@ -73,6 +75,10 @@ public class Portrait {
 
 	public int getAge() {
 		return age;
+	}
+
+	public String getQuote() {
+		return quote;
 	}
 
 }

@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -124,7 +124,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale,
 				result.getBackcolor(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
 				warningOrError, 0, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
-		imageBuilder.addUDrawable(result);
+		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 
 	}

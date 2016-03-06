@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -61,6 +61,12 @@ class ExtremityParenthesis2 extends Extremity {
 		final double len = Math.round(distance1 + EntityImageLollipopInterfaceEye2.SIZE / 2);
 		this.center = new Point2D.Double(contact.getX() + dx / distance1 * len, contact.getY() + dy / distance1 * len);
 	}
+	
+	@Override
+	public Point2D somePoint() {
+		return contact;
+	}
+
 
 	public void drawU(UGraphic ug) {
 		final double deg = -ortho * 180 / Math.PI + 90 - ang;

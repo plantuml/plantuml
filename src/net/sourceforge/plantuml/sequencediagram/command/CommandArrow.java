@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -63,7 +63,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	public static String getColorOrStylePattern() {
-		return "(?:\\[((?:#\\w+|dotted|dashed|bold|hidden)(?:,#\\w+|,dotted|,dashed|,bold|,hidden)*)\\])?";
+		return "(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?";
 	}
 
 	static RegexConcat getRegexConcat() {

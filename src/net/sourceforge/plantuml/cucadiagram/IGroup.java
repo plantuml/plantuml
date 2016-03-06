@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -56,10 +56,6 @@ public interface IGroup extends IEntity {
 	public GroupType getGroupType();
 
 	public Code getNamespace2();
-
-	public boolean isAutonom();
-
-	public void setAutonom(boolean autonom);
 
 	public PackageStyle getPackageStyle();
 

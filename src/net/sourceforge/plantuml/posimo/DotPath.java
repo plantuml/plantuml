@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -106,6 +106,25 @@ public class DotPath implements UShape, Moveable {
 
 	private DotPath(List<CubicCurve2D.Double> beziers) {
 		this.beziers.addAll(beziers);
+	}
+
+	public DotPath addCurve(Point2D pt1, Point2D pt2, Point2D pt3, Point2D pt4) {
+		final List<CubicCurve2D.Double> beziersNew = new ArrayList<CubicCurve2D.Double>(beziers);
+		beziersNew.add(new CubicCurve2D.Double(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),
+				pt4.getX(), pt4.getY()));
+		return new DotPath(beziersNew);
+	}
+
+	public DotPath addCurve(Point2D pt2, Point2D pt3, Point2D pt4) {
+		final CubicCurve2D.Double last = beziers.get(beziers.size() - 1);
+		final Point2D p1 = last.getP2();
+		return addCurve(p1, pt2, pt3, pt4);
+	}
+
+	private Point2D mirror(Point2D center, Point2D pt) {
+		final double x = 2 * center.getX() - pt.getX();
+		final double y = 2 * center.getY() - pt.getY();
+		return new Point2D.Double(x, y);
 	}
 
 	public DotPath(String init, double deltaY) {
@@ -532,9 +551,9 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath simulateCompound(Cluster head, Cluster tail) {
-		if (OptionFlags.USE_COMPOUND) {
-			throw new IllegalStateException();
-		}
+//		if (OptionFlags.USE_COMPOUND) {
+//			throw new IllegalStateException();
+//		}
 		if (head == null && tail == null) {
 			return this;
 		}

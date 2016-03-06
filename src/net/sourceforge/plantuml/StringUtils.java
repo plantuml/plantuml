@@ -4,7 +4,7 @@
  *
  * (C) Copyright 2009-2017, Arnaud Roques
  *
- * Project Info:  http://plantuml.sourceforge.net
+ * Project Info:  http://plantuml.com
  * 
  * This file is part of PlantUML.
  *
@@ -415,7 +415,7 @@ public class StringUtils {
 	}
 
 	public static String manageGuillemet(String st) {
-		return st.replaceAll("\\<\\<([^<>]+)\\>\\>", "\u00AB$1\u00BB");
+		return st.replaceAll("\\<\\<\\s?([^<>]+?)\\s?\\>\\>", "\u00AB$1\u00BB");
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {
