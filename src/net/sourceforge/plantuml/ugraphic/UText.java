@@ -5,7 +5,7 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -27,7 +27,7 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  * Revision $Revision: 18280 $
  *
  */
@@ -40,33 +40,34 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 
 public class UText implements UShape {
 
-	private final String text;
-	private final FontConfiguration font;
+    private final String text;
+    private final FontConfiguration font;
 
-	@Override
-	public String toString() {
-		return "UText[" + text + "]";
-	}
+    @Override
+    public String toString() {
+        return "UText[" + text + "]";
+    }
 
-	public UText(String text, FontConfiguration font) {
-		assert text.indexOf('\t') == -1;
-		this.text = text;
-		this.font = font;
-	}
+    public UText(String text, FontConfiguration font) {
+        System.out.println(text);
+        assert text.indexOf('\t') == -1;
+        this.text = text;
+        this.font = font;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public FontConfiguration getFontConfiguration() {
-		return font;
-	}
-	
-	public double getDescent() {
-		final LineMetrics fm = TextBlockUtils.getLineMetrics(font.getFont(), text);
-		final double descent = fm.getDescent();
-		return descent;
-	}
+    public FontConfiguration getFontConfiguration() {
+        return font;
+    }
+
+    public double getDescent() {
+        final LineMetrics fm = TextBlockUtils.getLineMetrics(font.getFont(), text);
+        final double descent = fm.getDescent();
+        return descent;
+    }
 
 
 

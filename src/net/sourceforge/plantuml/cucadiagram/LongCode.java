@@ -76,11 +76,12 @@ public class LongCode implements Comparable<LongCode> {
 	@Override
 	public boolean equals(Object obj) {
 		final LongCode other = (LongCode) obj;
-		return this.fullName.equals(other.fullName);
+		return fullName.equals(other.fullName);
 	}
 
-	public int compareTo(LongCode other) {
-		return this.fullName.compareTo(other.fullName);
+	@Override
+    public int compareTo(LongCode other) {
+		return fullName.compareTo(other.fullName);
 	}
 
 	private LongCode eventuallyRemoveStartingAndEndingDoubleQuote() {

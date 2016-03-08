@@ -87,6 +87,8 @@ public class SvgGraphics {
     final private Element defs;
     final private Element gRoot;
     private String filterId;
+    public static String keyClass;
+    public static ArrayList<String> currentComponents = new ArrayList<String>();
 
     private String fill = "black";
     private String stroke = "black";
@@ -398,15 +400,20 @@ public class SvgGraphics {
     public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
             String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
             String textBackColor) {
+
         if (hidden == false) {
             final Element elt = document.createElement("text");
+
             elt.setAttribute("x", format(x));
             elt.setAttribute("y", format(y));
-            elt.setAttribute("fill", fill);
+            if (keyClass != null && keyClass.equals(text)) {
+                elt.setAttribute("fill", "#0fb6f2");
+            } else {
+                elt.setAttribute("fill", fill);
+            }
             elt.setAttribute("font-size", format(fontSize));
             // elt.setAttribute("text-anchor", "middle");
             elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
-            elt.setAttribute("textLength", format(textLength));
             if (fontWeight != null) {
                 elt.setAttribute("font-weight", fontWeight);
             }
@@ -426,23 +433,34 @@ public class SvgGraphics {
             for (final Map.Entry<String, String> ent : attributes.entrySet()) {
                 elt.setAttribute(ent.getKey(), ent.getValue());
             }
-            elt.setTextContent(text);
-            getG().appendChild(elt);
 
             if (textDecoration != null && textDecoration.contains("underline")) {
                 final double delta = 2;
                 final Element elt2 = document.createElement("line");
                 elt2.setAttribute("x1", format(x));
                 elt2.setAttribute("y1", format(y + delta));
-                elt2.setAttribute("x2", format(x + textLength));
+                elt2.setAttribute("x2", format(x));
                 elt2.setAttribute("y2", format(y + delta));
                 elt2.setAttribute("style", getStyleInternal(fill, "1.0", null));
                 getG().appendChild(elt2);
             }
 
+            if (currentComponents.contains(text)) {
+                elt.setAttribute("class", "snippetCandidate");
+                elt.setAttribute("id", text);
+                elt.setTextContent(text.substring(text.lastIndexOf(".") + 1));
+                elt.setAttribute("textLength", text.substring(text.lastIndexOf(".") + 1));
+                elt.setAttribute("onclick", "displayComponentTooltip('" + text + "')");
+                textLength = text.substring(text.lastIndexOf(".") + 1).length();
+                elt.setAttribute("x", format(x + (text.lastIndexOf(".") * 2)));
+            } else {
+                elt.setTextContent(text);
+            }
+            getG().appendChild(elt);
         }
         ensureVisible(x, y);
         ensureVisible(x + textLength, y);
+
     }
 
     private final Map<String, String> filterBackColor = new HashMap<String, String>();

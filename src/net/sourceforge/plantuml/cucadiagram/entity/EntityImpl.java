@@ -109,12 +109,14 @@ final class EntityImpl implements ILeaf, IGroup {
 	private char concurrentSeparator;
 
 	// Back to Entity
-	public final boolean isTop() {
+	@Override
+    public final boolean isTop() {
 		checkNotGroup();
 		return top;
 	}
 
-	public final void setTop(boolean top) {
+	@Override
+    public final void setTop(boolean top) {
 		checkNotGroup();
 		this.top = top;
 	}
@@ -145,19 +147,22 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.namespace2 = namespace2;
 	}
 
-	public void setContainer(IGroup container) {
+	@Override
+    public void setContainer(IGroup container) {
 		checkNotGroup();
 		if (container == null) {
 			throw new IllegalArgumentException();
 		}
-		this.parentContainer = container;
+		parentContainer = container;
 	}
 
-	public LeafType getEntityType() {
+	@Override
+    public LeafType getEntityType() {
 		return leafType;
 	}
 
-	public void muteToType(LeafType newType, USymbol newSymbol) {
+	@Override
+    public void muteToType(LeafType newType, USymbol newSymbol) {
 		checkNotGroup();
 		if (newType == null) {
 			throw new IllegalArgumentException();
@@ -175,35 +180,42 @@ final class EntityImpl implements ILeaf, IGroup {
 		if (leafType == LeafType.CLASS && newType == LeafType.OBJECT) {
 			bodier.muteClassToObject();
 		}
-		this.leafType = newType;
-		this.symbol = newSymbol;
+		leafType = newType;
+		symbol = newSymbol;
 	}
 
-	public Code getCode() {
+	@Override
+    public Code getCode() {
 		return code;
 	}
 
-	public Display getDisplay() {
+	@Override
+    public Display getDisplay() {
 		return display;
 	}
 
-	public void setDisplay(Display display) {
+	@Override
+    public void setDisplay(Display display) {
 		this.display = display;
 	}
 
-	public String getUid() {
+	@Override
+    public String getUid() {
 		return uid;
 	}
 
-	public Stereotype getStereotype() {
+	@Override
+    public Stereotype getStereotype() {
 		return stereotype;
 	}
 
-	public final void setStereotype(Stereotype stereotype) {
+	@Override
+    public final void setStereotype(Stereotype stereotype) {
 		this.stereotype = stereotype;
 	}
 
-	public final IGroup getParentContainer() {
+	@Override
+    public final IGroup getParentContainer() {
 		if (parentContainer == null) {
 			throw new IllegalArgumentException();
 		}
@@ -215,11 +227,13 @@ final class EntityImpl implements ILeaf, IGroup {
 		return code + " " + display + "(" + leafType + ") " + xposition + " " + getUid();
 	}
 
-	public final Url getUrl99() {
+	@Override
+    public final Url getUrl99() {
 		return url;
 	}
 
-	public boolean hasUrl() {
+	@Override
+    public boolean hasUrl() {
 		if (Display.isNull(display) == false && display.hasUrl()) {
 			return true;
 		}
@@ -229,55 +243,66 @@ final class EntityImpl implements ILeaf, IGroup {
 		return url != null;
 	}
 
-	public final void addUrl(Url url) {
+	@Override
+    public final void addUrl(Url url) {
 		this.url = url;
 	}
 
-	public final boolean hasNearDecoration() {
+	@Override
+    public final boolean hasNearDecoration() {
 		checkNotGroup();
 		return nearDecoration;
 	}
 
-	public final void setNearDecoration(boolean nearDecoration) {
+	@Override
+    public final void setNearDecoration(boolean nearDecoration) {
 		// checkNotGroup();
 		this.nearDecoration = nearDecoration;
 	}
 
-	public int getXposition() {
+	@Override
+    public int getXposition() {
 		checkNotGroup();
 		return xposition;
 	}
 
-	public void setXposition(int pos) {
+	@Override
+    public void setXposition(int pos) {
 		checkNotGroup();
 		xposition = pos;
 	}
 
-	public final IEntityImage getSvekImage() {
+	@Override
+    public final IEntityImage getSvekImage() {
 		checkNotGroup();
 		return svekImage;
 	}
 
-	public final void setSvekImage(IEntityImage svekImage) {
+	@Override
+    public final void setSvekImage(IEntityImage svekImage) {
 		checkNotGroup();
 		this.svekImage = svekImage;
 	}
 
-	public final void setGeneric(String generic) {
+	@Override
+    public final void setGeneric(String generic) {
 		checkNotGroup();
 		this.generic = generic;
 	}
 
-	public final String getGeneric() {
+	@Override
+    public final String getGeneric() {
 		checkNotGroup();
 		return generic;
 	}
 
-	public Bodier getBodier() {
+	@Override
+    public Bodier getBodier() {
 		return bodier;
 	}
 
-	public EntityPosition getEntityPosition() {
+	@Override
+    public EntityPosition getEntityPosition() {
 		checkNotGroup();
 		if (leafType != LeafType.STATE) {
 			return EntityPosition.NORMAL;
@@ -314,7 +339,8 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 	}
 
-	public boolean containsLeafRecurse(ILeaf leaf) {
+	@Override
+    public boolean containsLeafRecurse(ILeaf leaf) {
 		if (leaf == null) {
 			throw new IllegalArgumentException();
 		}
@@ -325,7 +351,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		if (leaf.getParentContainer() == this) {
 			return true;
 		}
-		for (IGroup child : getChildren()) {
+		for (final IGroup child : getChildren()) {
 			if (child.containsLeafRecurse(leaf)) {
 				return true;
 			}
@@ -333,10 +359,11 @@ final class EntityImpl implements ILeaf, IGroup {
 		return false;
 	}
 
-	public Collection<ILeaf> getLeafsDirect() {
+	@Override
+    public Collection<ILeaf> getLeafsDirect() {
 		checkGroup();
 		final List<ILeaf> result = new ArrayList<ILeaf>();
-		for (ILeaf ent : entityFactory.getLeafs().values()) {
+		for (final ILeaf ent : entityFactory.getLeafs().values()) {
 			if (ent.isGroup()) {
 				throw new IllegalStateException();
 			}
@@ -347,10 +374,11 @@ final class EntityImpl implements ILeaf, IGroup {
 		return Collections.unmodifiableCollection(result);
 	}
 
-	public Collection<IGroup> getChildren() {
+	@Override
+    public Collection<IGroup> getChildren() {
 		checkGroup();
 		final Collection<IGroup> result = new ArrayList<IGroup>();
-		for (IGroup g : entityFactory.getGroups().values()) {
+		for (final IGroup g : entityFactory.getGroups().values()) {
 			if (g != this && g.getParentContainer() == this) {
 				result.add(g);
 			}
@@ -358,20 +386,21 @@ final class EntityImpl implements ILeaf, IGroup {
 		return Collections.unmodifiableCollection(result);
 	}
 
-	public void moveEntitiesTo(IGroup dest) {
+	@Override
+    public void moveEntitiesTo(IGroup dest) {
 		checkGroup();
 		if (dest.isGroup() == false) {
 			throw new UnsupportedOperationException();
 		}
-		for (ILeaf ent : getLeafsDirect()) {
+		for (final ILeaf ent : getLeafsDirect()) {
 			((EntityImpl) ent).parentContainer = dest;
 		}
-		for (IGroup g : dest.getChildren()) {
+		for (final IGroup g : dest.getChildren()) {
 			// ((EntityImpl) g).parentContainer = dest;
 			throw new IllegalStateException();
 		}
 
-		for (IGroup g : getChildren()) {
+		for (final IGroup g : getChildren()) {
 			if (g == dest) {
 				continue;
 			}
@@ -380,32 +409,38 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	}
 
-	public int size() {
+	@Override
+    public int size() {
 		checkGroup();
 		return getLeafsDirect().size();
 	}
 
-	public GroupType getGroupType() {
+	@Override
+    public GroupType getGroupType() {
 		checkGroup();
 		return groupType;
 	}
 
-	public Code getNamespace2() {
+	@Override
+    public Code getNamespace2() {
 		checkGroup();
 		return namespace2;
 	}
 
-	public boolean isAutonom() {
+	@Override
+    public boolean isAutonom() {
 		checkGroup();
 		return autonom;
 	}
 
-	public void setAutonom(boolean autonom) {
+	@Override
+    public void setAutonom(boolean autonom) {
 		this.autonom = autonom;
 
 	}
 
-	public PackageStyle getPackageStyle() {
+	@Override
+    public PackageStyle getPackageStyle() {
 		checkGroup();
 		if (stereotype == null) {
 			return null;
@@ -413,7 +448,8 @@ final class EntityImpl implements ILeaf, IGroup {
 		return stereotype.getPackageStyle();
 	}
 
-	public boolean isGroup() {
+	@Override
+    public boolean isGroup() {
 		if (groupType != null && leafType != null) {
 			throw new IllegalStateException();
 		}
@@ -428,10 +464,11 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// ---- other
 
-	public void overideImage(IEntityImage img, LeafType leafType) {
+	@Override
+    public void overideImage(IEntityImage img, LeafType leafType) {
 		checkGroup();
-		this.svekImage = img;
-		this.url = null;
+		svekImage = img;
+		url = null;
 
 		for (final Link link : new ArrayList<Link>(entityFactory.getLinks())) {
 			if (EntityUtils.isPureInnerLink12(this, link)) {
@@ -440,14 +477,14 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 
 		entityFactory.removeGroup(this.getCode());
-		for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.getLeafs().values())) {
+		for (final ILeaf ent : new ArrayList<ILeaf>(entityFactory.getLeafs().values())) {
 			if (this != ent && this == ent.getParentContainer()) {
 				entityFactory.removeLeaf(ent.getCode());
 			}
 		}
 
 		entityFactory.addLeaf(this);
-		this.groupType = null;
+		groupType = null;
 		this.leafType = leafType;
 	}
 
@@ -458,11 +495,12 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 		this.namespace2 = namespace2;
 		this.groupType = groupType;
-		this.leafType = null;
+		leafType = null;
 		this.parentContainer = parentContainer;
 	}
 
-	public boolean isHidden() {
+	@Override
+    public boolean isHidden() {
 		if (entityFactory.isHidden(leafType)) {
 			return true;
 		}
@@ -472,32 +510,36 @@ final class EntityImpl implements ILeaf, IGroup {
 		return false;
 	}
 
-	public USymbol getUSymbol() {
+	@Override
+    public USymbol getUSymbol() {
 		if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
 			return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
 		}
 		return symbol;
 	}
 
-	public void setUSymbol(USymbol symbol) {
+	@Override
+    public void setUSymbol(USymbol symbol) {
 		this.symbol = symbol;
 	}
 
-	public SingleStrategy getSingleStrategy() {
+	@Override
+    public SingleStrategy getSingleStrategy() {
 		return SingleStrategy.SQUARRE;
 	}
 
-	public boolean isRemoved() {
+	@Override
+    public boolean isRemoved() {
 		if (isGroup()) {
 			if (getLeafsDirect().size() == 0) {
 				return false;
 			}
-			for (ILeaf leaf : getLeafsDirect()) {
+			for (final ILeaf leaf : getLeafsDirect()) {
 				if (leaf.isRemoved() == false) {
 					return false;
 				}
 			}
-			for (IGroup g : getChildren()) {
+			for (final IGroup g : getChildren()) {
 				if (g.isRemoved() == false) {
 					return false;
 				}
@@ -507,24 +549,28 @@ final class EntityImpl implements ILeaf, IGroup {
 		return removed;
 	}
 
-	public void setRemoved(boolean removed) {
+	@Override
+    public void setRemoved(boolean removed) {
 		this.removed = removed;
 	}
 
 	private int layer;
 
-	public int getHectorLayer() {
+	@Override
+    public int getHectorLayer() {
 		return layer;
 	}
 
-	public void setHectorLayer(int layer) {
+	@Override
+    public void setHectorLayer(int layer) {
 		this.layer = layer;
 		if (layer > 1000) {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	public LongCode getLongCode() {
+	@Override
+    public LongCode getLongCode() {
 		return longCode;
 	}
 
@@ -535,7 +581,8 @@ final class EntityImpl implements ILeaf, IGroup {
 		return getGroupType() == GroupType.STATE ? FontParam.STATE : FontParam.PACKAGE;
 	}
 
-	public FontConfiguration getFontConfigurationForTitle(final ISkinParam skinParam) {
+	@Override
+    public FontConfiguration getFontConfigurationForTitle(final ISkinParam skinParam) {
 		final FontParam fontParam = getTitleFontParam();
 		final HtmlColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);
 		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);
@@ -544,51 +591,61 @@ final class EntityImpl implements ILeaf, IGroup {
 		return fontConfiguration;
 	}
 
-	public final int getRawLayout() {
+	@Override
+    public final int getRawLayout() {
 		return rawLayout;
 	}
 
-	public char getConcurrentSeparator() {
+	@Override
+    public char getConcurrentSeparator() {
 		return concurrentSeparator;
 	}
 
-	public void setConcurrentSeparator(char separator) {
-		this.concurrentSeparator = separator;
+	@Override
+    public void setConcurrentSeparator(char separator) {
+		concurrentSeparator = separator;
 	}
 
 	private Neighborhood neighborhood;
 
-	public void setNeighborhood(Neighborhood neighborhood) {
+	@Override
+    public void setNeighborhood(Neighborhood neighborhood) {
 		this.neighborhood = neighborhood;
 	}
 
-	public Neighborhood getNeighborhood() {
+	@Override
+    public Neighborhood getNeighborhood() {
 		return neighborhood;
 	}
 
 	private final Map<String, Display> tips = new LinkedHashMap<String, Display>();
 
-	public void putTip(String member, Display display) {
+	@Override
+    public void putTip(String member, Display display) {
 		tips.put(member, display);
 	}
 
-	public Map<String, Display> getTips() {
+	@Override
+    public Map<String, Display> getTips() {
 		return Collections.unmodifiableMap(tips);
 	}
 
 	private Colors colors = Colors.empty();
 
-	public Colors getColors(ISkinParam skinParam) {
+	@Override
+    public Colors getColors(ISkinParam skinParam) {
 		return colors;
 	}
 
-	public void setColors(Colors colors) {
+	@Override
+    public void setColors(Colors colors) {
 		this.colors = colors;
 	}
 
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
+	@Override
+    public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color) {
 		if (color != null) {
-			this.colors = colors.add(type, color);
+			colors = colors.add(type, color);
 		}
 	}
 
@@ -596,7 +653,8 @@ final class EntityImpl implements ILeaf, IGroup {
 	// colors = colors.addSpecificLineStroke(specificLineStroke);
 	// }
 
-	@Deprecated
+	@Override
+    @Deprecated
 	public void applyStroke(String s) {
 		throw new UnsupportedOperationException();
 		// if (s == null) {
