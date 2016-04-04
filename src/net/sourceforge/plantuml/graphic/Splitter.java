@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19271 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -55,12 +55,14 @@ public class Splitter {
 	static final String fontSup = "\\<sup\\>";
 	static final String fontSub = "\\<sub\\>";
 	static final String imgPattern = "\\<img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g>]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>";
-	public static final String imgPatternNoSrcColon = "\\<img[\\s:]+([^>]+)/?\\>";
+	public static final String imgPatternNoSrcColon = "\\<img[\\s:]+([^>{}]+)" + "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
 	public static final String fontFamilyPattern = "\\<font[\\s:]+([^>]+)/?\\>";
 	public static final String svgAttributePattern = "\\<text[\\s:]+([^>]+)/?\\>";
 	public static final String openiconPattern = "\\<&([-\\w]+)\\>";
-	public static final String spritePattern = "\\<\\$" + SpriteUtils.SPRITE_NAME + "\\>";
-	public static final String spritePattern2 = "\\<\\$(" + SpriteUtils.SPRITE_NAME + ")\\>";
+	public static final String spritePattern = "\\<\\$" + SpriteUtils.SPRITE_NAME + "(?:\\{scale=(?:[0-9.]+)\\})?"
+			+ "\\>";
+	public static final String spritePattern2 = "\\<\\$(" + SpriteUtils.SPRITE_NAME + ")"
+			+ "(\\{scale=(?:[0-9.]+)\\})?" + "\\>";
 	static final String htmlTag;
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";

@@ -40,7 +40,7 @@ public class jmp_buf {
 	}
 
 	public void saveCallingEnvironment() {
-		System.err.println("jmp_buf::saveCallingEnvironment");
+		// System.err.println("jmp_buf::saveCallingEnvironment");
 		hasBeenCalled = true;
 	}
 

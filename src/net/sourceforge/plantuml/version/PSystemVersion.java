@@ -175,7 +175,7 @@ public class PSystemVersion extends AbstractPSystem {
 		strings.add("<u>Logo</u>: Benjamin Croizet");
 
 		strings.add(" ");
-		strings.add("http://plantuml.sourceforge.net");
+		strings.add("http://plantuml.com");
 		strings.add(" ");
 		return new PSystemVersion(true, strings);
 	}

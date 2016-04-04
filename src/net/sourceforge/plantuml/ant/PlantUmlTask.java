@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19396 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
 
 import org.apache.tools.ant.BuildException;
@@ -317,7 +318,7 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setGraphvizDot(String s) {
-		OptionFlags.getInstance().setDotExecutable(s);
+		GraphvizUtils.setDotExecutable(s);
 	}
 
 	public void setNbThread(String s) {

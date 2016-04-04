@@ -34,8 +34,6 @@
 package net.sourceforge.plantuml.xmi;
 
 import java.io.OutputStream;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,27 +47,28 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.Member;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.utils.UniqueSequence;
+import net.sourceforge.plantuml.version.Version;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class XmiClassDiagramStar implements IXmiClassDiagram {
+public class XmiStateDiagram implements IXmiClassDiagram {
 
-	private final ClassDiagram classDiagram;
+	private final StateDiagram diagram;
 	private final Document document;
 	private final Element ownedElement;
 
-	private final Set<IEntity> done = new HashSet<IEntity>();
-
-	public XmiClassDiagramStar(ClassDiagram classDiagram) throws ParserConfigurationException {
-		this.classDiagram = classDiagram;
+	public XmiStateDiagram(StateDiagram diagram) throws ParserConfigurationException {
+		this.diagram = diagram;
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		final DocumentBuilder builder = factory.newDocumentBuilder();
@@ -98,37 +97,44 @@ public class XmiClassDiagramStar implements IXmiClassDiagram {
 		// isLeaf="false" isAbstract="false">
 		final Element model = document.createElement("UML:Model");
 		model.setAttribute("xmi.id", "model1");
-		model.setAttribute("name", "PlantUML");
+		model.setAttribute("name", "PlantUML "+Version.versionString());
 		content.appendChild(model);
 
 		// <UML:Namespace.ownedElement>
 		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
 		model.appendChild(ownedElement);
 
-		for (final IEntity ent : classDiagram.getLeafsvalues()) {
-			// if (fileFormat == FileFormat.XMI_ARGO && isStandalone(ent) == false) {
-			// continue;
-			// }
-			final Element cla = createEntityNode(ent);
-			ownedElement.appendChild(cla);
-			done.add(ent);
+		for (final IGroup gr : diagram.getGroups(false)) {
+			if (gr.getParentContainer() instanceof GroupRoot) {
+				addState(gr, ownedElement);
+			}
 		}
 
-		// if (fileFormat != FileFormat.XMI_STANDARD) {
-		for (final Link link : classDiagram.getLinks()) {
+		for (final IEntity ent : diagram.getLeafsvalues()) {
+			if (ent.getParentContainer() instanceof GroupRoot) {
+				addState(ent, ownedElement);
+			}
+		}
+
+		for (final Link link : diagram.getLinks()) {
 			addLink(link);
 		}
-		// }
 	}
 
-	// private boolean isStandalone(IEntity ent) {
-	// for (final Link link : classDiagram.getLinks()) {
-	// if (link.getEntity1() == ent || link.getEntity2() == ent) {
-	// return false;
-	// }
-	// }
-	// return true;
-	// }
+	private void addState(final IEntity tobeAdded, Element container) {
+		final Element elementState = createEntityNode(tobeAdded);
+		container.appendChild(elementState);
+		for (final IEntity ent : diagram.getGroups(false)) {
+			if (ent.getParentContainer() == tobeAdded) {
+				addState(ent, elementState);
+			}
+		}
+		for (final IEntity ent : diagram.getLeafsvalues()) {
+			if (ent.getParentContainer() == tobeAdded) {
+				addState(ent, elementState);
+			}
+		}
+	}
 
 	public static String forXMI(String s) {
 		return s.replace(':', ' ');
@@ -140,10 +146,7 @@ public class XmiClassDiagramStar implements IXmiClassDiagram {
 
 	private void addLink(Link link) {
 		final String assId = "ass" + UniqueSequence.getValue();
-		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {
-			addExtension(link, assId);
-			return;
-		}
+
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
 		association.setAttribute("namespace", "model1");
@@ -160,14 +163,7 @@ public class XmiClassDiagramStar implements IXmiClassDiagram {
 			end1.setAttribute("name", forXMI(link.getQualifier1()));
 		}
 		final Element endparticipant1 = document.createElement("UML:AssociationEnd.participant");
-		// if (fileFormat == FileFormat.XMI_ARGO) {
-		// if (done.contains(link.getEntity1())) {
-		// endparticipant1.appendChild(createEntityNodeRef(link.getEntity1()));
-		// } else {
-		// endparticipant1.appendChild(createEntityNode(link.getEntity1()));
-		// done.add(link.getEntity1());
-		// }
-		// } else if (fileFormat == FileFormat.XMI_STAR) {
+
 		if (link.getType().getDecor2() == LinkDecor.COMPOSITION) {
 			end1.setAttribute("aggregation", "composite");
 		}
@@ -186,14 +182,6 @@ public class XmiClassDiagramStar implements IXmiClassDiagram {
 			end2.setAttribute("name", forXMI(link.getQualifier2()));
 		}
 		final Element endparticipant2 = document.createElement("UML:AssociationEnd.participant");
-		// if (fileFormat == FileFormat.XMI_ARGO) {
-		// if (done.contains(link.getEntity2())) {
-		// endparticipant2.appendChild(createEntityNodeRef(link.getEntity2()));
-		// } else {
-		// endparticipant2.appendChild(createEntityNode(link.getEntity2()));
-		// done.add(link.getEntity2());
-		// }
-		// } else if (fileFormat == FileFormat.XMI_STAR) {
 		if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {
 			end2.setAttribute("aggregation", "composite");
 		}
@@ -210,33 +198,13 @@ public class XmiClassDiagramStar implements IXmiClassDiagram {
 
 	}
 
-	private void addExtension(Link link, String assId) {
-		final Element association = document.createElement("UML:Generalization");
-		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", "model1");
-		if (link.getLabel() != null) {
-			association.setAttribute("name", forXMI(link.getLabel()));
-		}
-		if (link.getType().getDecor1() == LinkDecor.EXTENDS) {
-			association.setAttribute("child", link.getEntity1().getUid());
-			association.setAttribute("parent", link.getEntity2().getUid());
-		} else if (link.getType().getDecor2() == LinkDecor.EXTENDS) {
-			association.setAttribute("child", link.getEntity2().getUid());
-			association.setAttribute("parent", link.getEntity1().getUid());
-		} else {
-			throw new IllegalStateException();
-		}
-		ownedElement.appendChild(association);
-
-	}
-
 	private Element createEntityNode(IEntity entity) {
 		// <UML:Class xmi.id="UMLClass.5" name="Class1" visibility="public"
 		// isSpecification="false"
 		// namespace="UMLModel.4" isRoot="false" isLeaf="false"
 		// isAbstract="false" participant="UMLAssociationEnd.11"
 		// isActive="false">
-		final Element cla = document.createElement("UML:Class");
+		final Element cla = document.createElement("UML:State");
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
@@ -267,12 +235,6 @@ public class XmiClassDiagramStar implements IXmiClassDiagram {
 			operation.setAttribute("name", m.getDisplay(false));
 			feature.appendChild(operation);
 		}
-		return cla;
-	}
-
-	private Element createEntityNodeRef(IEntity entity) {
-		final Element cla = document.createElement("UML:Class");
-		cla.setAttribute("xmi.idref", entity.getUid());
 		return cla;
 	}
 

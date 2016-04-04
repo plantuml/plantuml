@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19398 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
@@ -47,31 +48,31 @@ abstract class AbstractGraphviz implements Graphviz {
 	private final File dotExe;
 	private final String dotString;
 	private final String[] type;
+	private final ISkinParam skinParam;
 
 	static boolean isWindows() {
 		return File.separatorChar == '\\';
 	}
 
-	AbstractGraphviz(String dotString, String... type) {
+	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
+		this.skinParam = skinParam;
 		this.dotExe = searchDotExe();
 		this.dotString = dotString;
 		this.type = type;
 	}
 
 	private File searchDotExe() {
-		if (OptionFlags.getInstance().getDotExecutable() == null) {
+		if (skinParam == null || skinParam.getDotExecutable() == null) {
 			final String getenv = GraphvizUtils.getenvGraphvizDot();
 			if (getenv == null) {
 				return specificDotExe();
 			}
 			return new File(getenv);
 		}
-
-		return new File(OptionFlags.getInstance().getDotExecutable());
-
+		return new File(skinParam.getDotExecutable());
 	}
 
 	abstract protected File specificDotExe();

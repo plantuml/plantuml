@@ -43,12 +43,16 @@ import static gen.lib.cdt.dtrestore__c.dtrestore;
 import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.function;
+import static smetana.core.JUtils.strcmp;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import static smetana.core.Macro.UNSUPPORTED_INT;
 import h.Dtcompar_f;
 import h._dt_s;
+import smetana.core.CFunction;
+import smetana.core.CString;
 import smetana.core.__ptr__;
 
 public class dtview__c {
@@ -124,19 +128,19 @@ public static __ptr__ dtvsearch(_dt_s dt, __ptr__ obj, int type) {
 ENTERING("6spidg45w8teb64726drdswaa","dtvsearch");
 try {
 	_dt_s		d, p;
-	__ptr__		o, n, ok, nk;
+	__ptr__		o=null, n, ok, nk;
 	int		cmp, lk, sz, ky;
 	Dtcompar_f	cmpf;
 	/* these operations only happen at the top level */
 	if ((type&(0000001|0000002|0000100|0000040))!=0)
 		return (__ptr__) dt.getPtr("meth").call("searchf", dt, obj, type);
 	if(((type&(0001000|0000004))!=0) || /* order sets first/last done below */
-	   (((type&(0000200|0000400))!=0) && N(dt.getPtr("meth").getInt("type")&(0000010|0000004)) ) ) {
-UNSUPPORTED("eh58afn12udc5q8yzr25advls"); // 	{	for(d = dt; d; d = d->view)
-UNSUPPORTED("99dyygo1p8ivdwvxg0kyro2wb"); // 			if((o = (*(d->meth->searchf))(d,obj,type)) )
-UNSUPPORTED("1dhrv6aj5eq8ntuvb7qbs8aot"); // 				break;
-UNSUPPORTED("66mzv36wy2mflr2u2a5pwa2vg"); // 		dt->walk = d;
-UNSUPPORTED("c4mj2aqm6yf1jzso7g9z92g39"); // 		return o;
+	   (((type&(0000200|0000400))!=0) && N(dt.getPtr("meth").getInt("type")&(0000010|0000004)) ) )
+	{	for(d = dt; d!=null; d = (_dt_s) d.getPtr("view"))
+			if((o = (__ptr__) d.getPtr("meth").call("searchf", d,obj,type))!=null )
+				break;
+		dt.setPtr("walk", d);
+		return o;
 	}
 	if((dt.getPtr("meth").getInt("type") & (0000010|0000004) )!=0)
 	{	if(N(type & (0000200|0000400|0000010|0000020)) )
@@ -145,19 +149,22 @@ UNSUPPORTED("c4mj2aqm6yf1jzso7g9z92g39"); // 		return o;
 		for(d = dt; d!=null; d = (_dt_s) d.getPtr("view"))
 		{	if(N(o = (__ptr__) d.getPtr("meth").call("searchf", d, obj, type) ))
 				continue;
-UNSUPPORTED("4f62457uttr71ofvfr1j1o5w1"); // 			(ky = d->disc->key, sz = d->disc->size, lk = d->disc->link, cmpf = d->disc->comparf);
-UNSUPPORTED("3toy9k4m6evk7wvheiwlwrqac"); // 			ok = (void*)(sz < 0 ? *((char**)((char*)(o)+ky)) : ((char*)(o)+ky));
-UNSUPPORTED("4ccvzqq1qhq1n54s3zk1n1g6m"); // 			if(n) /* get the right one among all dictionaries */
-UNSUPPORTED("3901wgr15qsodkeaua3t1cowa"); // 			{	cmp = (cmpf ? (*cmpf)(d,ok,nk,d->disc) : (sz <= 0 ? strcmp(ok,nk) : memcmp(ok,nk,sz)) );
-UNSUPPORTED("dbakrc2nyretewvmfasl8hcya"); // 				if(((type & (0000010|0000200)) && cmp < 0) ||
-UNSUPPORTED("dtwrbl1qp7i61npnve1m7w05f"); // 				   ((type & (0000020|0000400)) && cmp > 0) )
+			ky = d.getPtr("disc").getInt("key");
+			sz = d.getPtr("disc").getInt("size");
+			lk = d.getPtr("disc").getInt("link");
+			cmpf = (Dtcompar_f) d.getPtr("disc").getPtr("comparf");
+			ok = (__ptr__) (sz < 0 ? ((__ptr__)o).addVirtualBytes(ky) : ((__ptr__)o).addVirtualBytes(ky));
+			if(n!=null) /* get the right one among all dictionaries */
+			{	cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(d,ok,nk,d.getPtr("disc")) : (sz <= 0 ? strcmp((CString)ok,(CString)nk) : UNSUPPORTED_INT("memcmp(ok,nk,sz)")) );
+				if(((type & (0000010|0000200))!=0 && cmp < 0) ||
+				   ((type & (0000020|0000400))!=0 && cmp > 0) )
 UNSUPPORTED("5o3u9aaanyd9yh74sjfkkofmo"); // 					goto a_dj;
-UNSUPPORTED("3to5h0rvqxdeqs38mhv47mm3o"); // 			}
-UNSUPPORTED("8i5fu2uj3vy2l5q8mvuvj9ko8"); // 			else /* looks good for now */
-UNSUPPORTED("9xbf1cn825arg4uuemeup3va4"); // 			{ a_dj: p  = d;
-UNSUPPORTED("9oscy9gf8ohksry0rta6xvh5a"); // 				n  = o;
-UNSUPPORTED("9lzq8mn8zytb3ohf1f25weiml"); // 				nk = ok;
-UNSUPPORTED("3to5h0rvqxdeqs38mhv47mm3o"); // 			}
+			}
+			else /* looks good for now */
+			{ a_dj: p  = d;
+				n  = o;
+				nk = ok;
+			}
 		}
 		dt.setPtr("walk", p);
 		return n;

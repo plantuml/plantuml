@@ -38,6 +38,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -50,10 +51,12 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
 	private final HtmlColor color;
+	private boolean killed = false;
 
 	private final Display test;
 	private Display yes;
 	private Display out = Display.NULL;
+	private boolean testCalled = false;
 	private LinkRendering endInlinkRendering;
 	private LinkRendering afterEndwhile;
 	private final Swimlane swimlane;
@@ -93,6 +96,9 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 		if (note != null) {
 			tmp = new FtileWithNoteOpale(tmp, note, position, skinParam, false);
 		}
+		if (killed) {
+			return new FtileKilled(tmp);
+		}
 		return tmp;
 	}
 
@@ -101,6 +107,10 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 	}
 
 	final public boolean kill() {
+		if (testCalled) {
+			this.killed = true;
+			return true;
+		}
 		return repeatList.kill();
 	}
 
@@ -114,6 +124,7 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 		if (out == null) {
 			throw new IllegalArgumentException();
 		}
+		this.testCalled = true;
 	}
 
 	public void afterEndwhile(LinkRendering linkRenderer) {

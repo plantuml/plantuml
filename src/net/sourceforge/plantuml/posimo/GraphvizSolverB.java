@@ -102,7 +102,7 @@ public class GraphvizSolverB {
 
 		// exportPng(dotString, new File("png", "test1.png"));
 
-		final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
+		final Graphviz graphviz = GraphvizUtils.create(null, dotString, "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz.createFile3(baos);
 		baos.close();
@@ -243,7 +243,7 @@ public class GraphvizSolverB {
 	}
 
 	private void exportPng(final String dotString, File f) throws IOException {
-		final Graphviz graphviz = GraphvizUtils.create(dotString, "png");
+		final Graphviz graphviz = GraphvizUtils.create(null, dotString, "png");
 		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
 		final ProcessState state = graphviz.createFile3(os);
 		os.close();

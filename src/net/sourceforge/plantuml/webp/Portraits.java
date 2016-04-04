@@ -36,10 +36,13 @@ package net.sourceforge.plantuml.webp;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.version.PSystemVersion;
 
@@ -102,4 +105,49 @@ public class Portraits {
 		current.getAndIncrement();
 	}
 
+	public static Portrait getOne(String line) {
+		Portrait candidat = null;
+		for (Portrait p : all) {
+			final int dist = similar(p.getName(), line);
+			if (dist <= 3) {
+				if (candidat != null && dist < similar(candidat.getName(), line)) {
+					continue;
+				}
+				candidat = p;
+			}
+		}
+		return candidat;
+	}
+
+	public static int similar(String s1, String s2) {
+		final int[] tab1 = countLetter(s1);
+		final int[] tab2 = countLetter(s2);
+		int result = 0;
+		for (int i = 0; i < tab1.length; i++) {
+			result += Math.abs(tab1[i] - tab2[i]);
+		}
+		return result;
+	}
+
+	private static String noAccent(String str) {
+		final String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+		final Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(nfdNormalizedString).replaceAll("");
+	}
+
+	private static int[] countLetter(String s) {
+		s = noAccent(s).toLowerCase(Locale.US);
+		final int[] result = new int[26];
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c >= 'a' && c <= 'z') {
+				result[c - 'a']++;
+			}
+		}
+		return result;
+	}
+
+	static final List<Portrait> getAll() {
+		return all;
+	}
 }

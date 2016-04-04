@@ -269,7 +269,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	public GraphvizVersion getGraphvizVersion() {
-		final Graphviz graphviz = GraphvizUtils.create("foo;", "svg");
+		final Graphviz graphviz = GraphvizUtils.create(skinParam, "foo;", "svg");
 		final File f = graphviz.getDotExe();
 		return GraphvizVersions.getInstance().getVersion(f);
 	}
@@ -282,7 +282,7 @@ public class DotStringFactory implements Moveable {
 			SvekUtils.traceDotString(dotString);
 		}
 
-		final Graphviz graphviz = GraphvizUtils.create(dotString, "svg");
+		final Graphviz graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz.createFile3(baos);
 		baos.close();
@@ -301,13 +301,13 @@ public class DotStringFactory implements Moveable {
 	}
 
 	public boolean illegalDotExe() {
-		final Graphviz graphviz = GraphvizUtils.create(null, "svg");
+		final Graphviz graphviz = GraphvizUtils.create(skinParam, "svg");
 		final File dotExe = graphviz.getDotExe();
 		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
 	}
 
 	public File getDotExe() {
-		final Graphviz graphviz = GraphvizUtils.create(null, "svg");
+		final Graphviz graphviz = GraphvizUtils.create(skinParam, "svg");
 		return graphviz.getDotExe();
 	}
 
@@ -448,6 +448,10 @@ public class DotStringFactory implements Moveable {
 
 	public final Bibliotekon getBibliotekon() {
 		return bibliotekon;
+	}
+
+	public ColorSequence getColorSequence() {
+		return colorSequence;
 	}
 
 }

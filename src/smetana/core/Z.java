@@ -79,7 +79,7 @@ public class Z {
 
 	private static final ThreadLocal<LinkedList<Z>> instances2 = new ThreadLocal<LinkedList<Z>>();
 
-	public final Map<Integer, Object> all = new HashMap<Integer, Object>();
+	public final Map<Integer, CString> all = new HashMap<Integer, CString>();
 
 	public final __struct__<_dtmethod_s> _Dttree = __struct__.from(_dtmethod_s.class);
 	public final _dtmethod_s Dttree = _Dttree.amp();

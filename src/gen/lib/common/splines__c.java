@@ -942,10 +942,10 @@ try {
     for (orig = fe; ED_edge_type(orig) != 0; orig = ED_to_orig(orig));
     /* may be a reversed flat edge */
     if (N(info.getBoolean("ignoreSwap")) && (ND_rank(tn) == ND_rank(hn)) && (ND_order(tn) > ND_order(hn))) {
-UNSUPPORTED("65xicmirciyw0gw730ccs8jmj"); // 	node_t *tmp;
-UNSUPPORTED("c3kh6s8fmv0y5nmh7a8ra0vjl"); // 	tmp = hn;
-UNSUPPORTED("48krk9qra5nhqezsw5jka9dl4"); // 	hn = tn;
-UNSUPPORTED("4jl5028eiwqrnkrhwhsxk8hk7"); // 	tn = tmp;
+	Agnode_s tmp;
+	tmp = hn;
+	hn = tn;
+	tn = tmp;
     }
     if (EQ(tn, agtail(orig))) {
 	clipTail = ED_tail_port(orig).getInt("clip");

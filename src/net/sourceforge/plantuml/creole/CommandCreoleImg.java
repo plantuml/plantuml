@@ -66,12 +66,25 @@ public class CommandCreoleImg implements Command {
 			throw new IllegalStateException();
 		}
 		String src = m.group(2);
+		final double scale = getScale(m.group(3));
 		if (src.toLowerCase().startsWith("src=")) {
 			src = src.substring(4);
 		}
 		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, "\"");
-		stripe.addImage(src);
+		stripe.addImage(src, scale);
 		return line.substring(m.group(1).length());
+	}
+
+	public static double getScale(String s) {
+		if (s == null) {
+			return 1;
+		}
+		final Pattern p = Pattern.compile("scale=([0-9.]+)");
+		final Matcher m = p.matcher(s);
+		if (m.find()) {
+			return Double.parseDouble(m.group(1));
+		}
+		return 1;
 	}
 
 }

@@ -59,7 +59,8 @@ public class AreaInt implements Area {
 	}
 
 	private boolean trace() {
-		return getUID36().equals("2z7");
+		return false;
+		//return getUID36().equals("2z7");
 	}
 
 	public int getInternal() {

@@ -113,7 +113,6 @@ public class PSystemBuilder {
 
 	private List<PSystemFactory> getAllFactories() {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
-		//factories.add(new PSystemMemorialFactory());
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -152,6 +151,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemCharlieFactory());
+		factories.add(new PSystemMemorialFactory());
 		if (License.getCurrent() == License.GPL) {
 			factories.add(new PSystemXearthFactory());
 		}

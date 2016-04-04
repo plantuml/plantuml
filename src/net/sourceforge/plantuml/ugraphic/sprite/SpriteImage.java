@@ -56,15 +56,15 @@ public class SpriteImage implements Sprite {
 		this.img = new UImage(img);
 	}
 
-	public TextBlock asTextBlock(final HtmlColor color) {
+	public TextBlock asTextBlock(final HtmlColor color, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				ug.draw(img);
+				ug.draw(img.scale(scale));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(img.getWidth(), img.getHeight());
+				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
 			}
 		};
 	}

@@ -287,14 +287,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		if (stereotype == null) {
 			return EntityPosition.NORMAL;
 		}
-		final String label = stereotype.getLabel(false);
-		if ("<<entrypoint>>".equalsIgnoreCase(label)) {
-			return EntityPosition.ENTRY_POINT;
-		}
-		if ("<<exitpoint>>".equalsIgnoreCase(label)) {
-			return EntityPosition.EXIT_POINT;
-		}
-		return EntityPosition.NORMAL;
+		return EntityPosition.fromStereotype(stereotype.getLabel(false));
 
 	}
 

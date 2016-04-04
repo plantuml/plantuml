@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19361 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -165,52 +165,5 @@ public class StateDiagram extends AbstractEntityDiagram {
 		return hideEmptyDescription;
 	}
 
-	// public Link isEntryPoint(IEntity ent) {
-	// final Stereotype stereotype = ent.getStereotype();
-	// if (stereotype == null) {
-	// return null;
-	// }
-	// final String label = stereotype.getLabel();
-	// if ("<<entrypoint>>".equalsIgnoreCase(label) == false) {
-	// return null;
-	// }
-	// Link inLink = null;
-	// Link outLink = null;
-	// for (Link link : getLinks()) {
-	// if (link.getEntity1() == ent) {
-	// if (outLink != null) {
-	// return null;
-	// }
-	// outLink = link;
-	// }
-	// if (link.getEntity2() == ent) {
-	// if (inLink != null) {
-	// return null;
-	// }
-	// inLink = link;
-	// }
-	// }
-	// if (inLink == null || outLink == null) {
-	// return null;
-	// }
-	// final Link result = Link.mergeForEntryPoint(inLink, outLink);
-	// result.setEntryPoint(ent.getContainer());
-	// return result;
-	// }
-	//
-	// public void manageExitAndEntryPoints() {
-	// for (IEntity ent : getEntities().values()) {
-	// final Link entryPointLink = isEntryPoint(ent);
-	// if (entryPointLink != null) {
-	// addLink(entryPointLink);
-	// for (Link link : new ArrayList<Link>(getLinks())) {
-	// if (link.contains(ent)) {
-	// removeLink(link);
-	// }
-	// }
-	// }
-	// }
-	//
-	// }
 
 }

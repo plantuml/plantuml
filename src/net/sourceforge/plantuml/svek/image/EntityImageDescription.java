@@ -102,7 +102,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (stereotype != null && stereotype.getSprite() != null
 				&& getSkinParam().getSprite(stereotype.getSprite()) != null) {
 			symbol = symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
-			stereo = getSkinParam().getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor());
+			stereo = getSkinParam().getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor(), 1);
 		} else if (stereotype != null && stereotype.getLabel(false) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet())).create(

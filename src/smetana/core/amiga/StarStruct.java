@@ -270,6 +270,9 @@ public class StarStruct extends UnsupportedC implements Area, AllH {
 
 	public __array_of_struct__ getArrayOfStruct(String fieldName) {
 		Area area = getArea(fieldName);
+		if (area instanceof StarArrayOfStruct) {
+			return ((StarArrayOfStruct) area).getInternalArray();
+		}
 		return (__array_of_struct__) area;
 	}
 
@@ -492,6 +495,8 @@ public class StarStruct extends UnsupportedC implements Area, AllH {
 		if (source instanceof StarArrayOfPtr) {
 			final __array_of_ptr__ array = ((StarArrayOfPtr) source).getInternalArray();
 			copyDataFrom((StarStruct) array.getInternal(0));
+		} else if (source instanceof __struct__) {
+			copyDataFrom((__struct__) source);
 		} else {
 			copyDataFrom((StarStruct) source);
 		}
@@ -533,6 +538,8 @@ public class StarStruct extends UnsupportedC implements Area, AllH {
 					fields.put(fieldName, otherField);
 				} else if (otherField instanceof CFunction) {
 					fields.put(fieldName, otherField);
+				} else if (otherField instanceof StarArrayOfStruct) {
+					fields.put(fieldName, otherField);
 				} else {
 					System.err.println("XX otherField = " + otherField);
 					throw new UnsupportedOperationException(otherField.getClass().toString());
@@ -553,6 +560,8 @@ public class StarStruct extends UnsupportedC implements Area, AllH {
 				field.memcopyFrom(otherField);
 			} else if (field instanceof StarStruct && inlineFields.contains(fieldName) == false) {
 				fields.put(fieldName, otherField);
+			} else if (field instanceof StarArrayOfPtr) {
+				field.memcopyFrom(otherField);
 			} else {
 				System.err.println("fieldName=" + fieldName + " " + field);
 				System.err.println("otherField = " + otherField);

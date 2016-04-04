@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -156,7 +156,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		if (hasAffineTransform) {
 			return TextBlockUtils.getDummyStringBounder();
 		}
-		return StringBounderUtils.asStringBounder(getGraphicObject());
+		return StringBounderUtils.asStringBounder();
 	}
 
 	@Override

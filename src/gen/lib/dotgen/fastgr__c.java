@@ -801,13 +801,13 @@ LEAVING("1yw7ahdnxnexnicj552zqyyej","find_fast_node");
 
 //3 bf1j97keudu416avridkj9fpb
 // edge_t *find_flat_edge(node_t * u, node_t * v) 
-public static Object find_flat_edge(Object... arg) {
-UNSUPPORTED("7vpm7qea310e9m7awi46kfwai"); // edge_t *find_flat_edge(node_t * u, node_t * v)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("18qalexpxkuadlxy4m2s0n3kj"); //     return ffe(u, ND_flat_out(u), v, ND_flat_in(v));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static Agedge_s find_flat_edge(Agnode_s u, Agnode_s v) {
+ENTERING("bf1j97keudu416avridkj9fpb","find_flat_edge");
+try {
+    return ffe(u, ND_flat_out(u), v, ND_flat_in(v));
+} finally {
+LEAVING("bf1j97keudu416avridkj9fpb","find_flat_edge");
+}
 }
 
 
@@ -1105,17 +1105,17 @@ LEAVING("8dvukicq96g5t3xgdl0ue35mj","flat_edge");
 
 //3 clspalhiuedfnk9g9rlvfqpg7
 // void delete_flat_edge(edge_t * e) 
-public static Object delete_flat_edge(Object... arg) {
-UNSUPPORTED("aqfnj6ol88hxku6kp95jau3of"); // void delete_flat_edge(edge_t * e)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("axei6r4pdvrumkaqc9p82yzjh"); //     assert(e != NULL);
-UNSUPPORTED("9v6s5qnulknm8ocmw3u5trsva"); //     if (ED_to_orig(e) && ED_to_virt(ED_to_orig(e)) == e)
-UNSUPPORTED("c888zxlacyihq4c88giw4nx8t"); // 	ED_to_virt(ED_to_orig(e)) = NULL;
-UNSUPPORTED("2xqnpgrhajmcb90rpbjdy5rvg"); //     zapinlist(&(ND_flat_out(agtail(e))), e);
-UNSUPPORTED("j90opr99k7w1rnczlsb5e6es"); //     zapinlist(&(ND_flat_in(aghead(e))), e);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static void delete_flat_edge(Agedge_s e) {
+ENTERING("clspalhiuedfnk9g9rlvfqpg7","delete_flat_edge");
+try {
+    assert(e != null);
+    if (ED_to_orig(e)!=null && EQ(ED_to_virt(ED_to_orig(e)), e))
+	ED_to_virt(ED_to_orig(e), null);
+    zapinlist((ND_flat_out(agtail(e))).amp(), e);
+    zapinlist((ND_flat_in(aghead(e))).amp(), e);
+} finally {
+LEAVING("clspalhiuedfnk9g9rlvfqpg7","delete_flat_edge");
+}
 }
 
 

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -101,7 +101,7 @@ public class TextBlockUtils {
 	static {
 		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		gg = imDummy.createGraphics();
-		dummyStringBounder = StringBounderUtils.asStringBounder(gg);
+		dummyStringBounder = StringBounderUtils.asStringBounder();
 	}
 
 	public static boolean isEmpty(TextBlock text) {

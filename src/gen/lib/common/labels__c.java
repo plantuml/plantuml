@@ -58,6 +58,7 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.ED_head_port;
 import static smetana.core.Macro.ED_label;
 import static smetana.core.Macro.ED_tail_port;
+import static smetana.core.Macro.GD_label;
 import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
@@ -738,9 +739,7 @@ try {
     if (line!=null && line.charAt(0)!='\0') {
 	Z._().tf.setPtr("name", lp.getPtr("fontname"));
 	Z._().tf.setDouble("size", lp.getDouble("fontsize"));
-	
 	// WE CHEAT
-	System.err.println("WE CHEAT");
 	size.setDouble("x", 0.0);
 	size.setDouble("y", (int)(lp.getDouble("fontsize") * 1.20));
 	hackInitDimensionFromLabel(size, line.getContent());
@@ -757,8 +756,6 @@ try {
     lp.getStruct("dimen").setDouble("x", MAX(lp.getStruct("dimen").getDouble("x"), size.getDouble("x")));
     /* accumulate height */
     lp.getStruct("dimen").setDouble("y", lp.getStruct("dimen").getDouble("y") + size.getDouble("y"));
-    	System.err.println("storeline "+lp.getStruct("dimen").getDouble("x")+" "+lp.getStruct("dimen").getDouble("y"));
-    
 } finally {
 LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 }
@@ -852,9 +849,9 @@ try {
         CString s = null;
     switch (agobjkind(obj)) {
     case AGRAPH:
-UNSUPPORTED("bwd3pkmgxgamoepwkryrpg8p7"); //         sg = (graph_t*)obj;
-UNSUPPORTED("8byoc47jwp4w8nf5iybv3m1l7"); // 	g = sg->root;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
+        sg = (Agraph_s)obj;
+	g = (Agraph_s) sg.getPtr("root");
+	break;
     case AGNODE:
         n = (Agnode_s)obj.castTo(Agnode_s.class);
 	g = agroot(agraphof(n));
@@ -1045,13 +1042,13 @@ try {
     /* prepare substitution strings */
     switch (agobjkind(obj)) {
 	case AGRAPH:
-UNSUPPORTED("252e5onb5khztxbbkgkxu143p"); // 	    g_str = agnameof((graph_t *)obj);
-UNSUPPORTED("adpn2we6kz16aaww9d5tnk9rn"); // 	    g_len = strlen(g_str);
-UNSUPPORTED("18f5p2uhidluaf11rbt5hbl1t"); // 	    tl = (((Agraphinfo_t*)(((Agobj_t*)((graph_t *)obj))->data))->label);
-UNSUPPORTED("3o7pm1he74eo27l1vxwasnht9"); // 	    if (tl) {
-UNSUPPORTED("88b430s6vk0irhr2k7x9crz9l"); // 		l_str = tl->text;
-UNSUPPORTED("5hjl5oveu3muui5b0fffh0dz2"); // 	    	if (str) l_len = strlen(l_str);
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
+	    g_str = agnameof((Agraph_s)obj);
+	    g_len = strlen(g_str);
+	    tl = GD_label((Agraph_s)obj);
+	    if (tl!=null) {
+		l_str = tl.getCString("text");
+	    	if (str!=null) l_len = strlen(l_str);
+	    }
 	    break;
 	case AGNODE:
 	    g_str = agnameof(agraphof(obj.castTo(Agnode_s.class)));

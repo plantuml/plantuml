@@ -41,14 +41,20 @@
 package gen.lib.common;
 import static gen.lib.cgraph.attr__c.agattr;
 import static gen.lib.cgraph.attr__c.agget;
+import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.cgraph.refstr__c.aghtmlstr;
 import static gen.lib.common.emit__c.init_xdot;
+import static gen.lib.common.labels__c.make_label;
 import static gen.lib.common.labels__c.strdup_and_subst_obj;
 import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.utils__c.late_double;
 import static gen.lib.common.utils__c.late_int;
+import static gen.lib.common.utils__c.late_nnstring;
 import static gen.lib.common.utils__c.late_string;
 import static gen.lib.common.utils__c.mapbool;
 import static gen.lib.common.utils__c.maptoken;
+import static smetana.core.JUtils.EQ;
+import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.enumAsInt;
@@ -60,10 +66,15 @@ import static smetana.core.JUtilsDebug.LEAVING;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.GD_border;
 import static smetana.core.Macro.GD_charset;
 import static smetana.core.Macro.GD_drawing;
 import static smetana.core.Macro.GD_exact_ranksep;
+import static smetana.core.Macro.GD_flip;
 import static smetana.core.Macro.GD_fontnames;
+import static smetana.core.Macro.GD_has_labels;
+import static smetana.core.Macro.GD_label;
+import static smetana.core.Macro.GD_label_pos;
 import static smetana.core.Macro.GD_nodesep;
 import static smetana.core.Macro.GD_rankdir2;
 import static smetana.core.Macro.GD_ranksep;
@@ -1545,58 +1556,59 @@ try {
     int pos_ix;
     /* it would be nice to allow multiple graph labels in the future */
     if ((str = agget(sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
-UNSUPPORTED("870awelvu7e70c2b6yzrscdmj"); // 	char pos_flag;
-UNSUPPORTED("5akoaiiuv98eqw2njspssx259"); // 	pointf dimen;
-UNSUPPORTED("j6j6btotp10oau0fwjieumbq"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg->root))->data))->has_labels) |= (1 << 3);
-UNSUPPORTED("718mqxi481h1fey0widydj84u"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label) = make_label((void*)sg, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
-UNSUPPORTED("5eppzbm3ot2n9s827fwgarhnj"); // 	    late_double(sg, (agattr(sg,0,"fontsize",NULL)),
-UNSUPPORTED("5wcv6vb07yxavnoqf1x6ukmjo"); // 			14.0, 1.0),
-UNSUPPORTED("a78pgsl49k0lgc1pf416osz67"); // 	    late_nnstring(sg, (agattr(sg,0,"fontname",NULL)),
-UNSUPPORTED("en7hy7l4lwo04yl6d7mpzcsaj"); // 			"Times-Roman"),
-UNSUPPORTED("7d6h8i2zz7oivfsekvhlhnvo9"); // 	    late_nnstring(sg, (agattr(sg,0,"fontcolor",NULL)),
-UNSUPPORTED("wtkg0k7czfm64rcp7mfg3nv5"); // 			"black"));
-UNSUPPORTED("6kd93dutj8fw7han1m9pecd3"); // 	/* set label position */
-UNSUPPORTED("f23fin5ejwocjpmwtld0c9j62"); // 	pos = agget(sg, "labelloc");
-UNSUPPORTED("c93de0m6dhkiaf8l0coz0c6ln"); // 	if (sg != agroot(sg)) {
-UNSUPPORTED("amk3d0y3br7s3hcrmw90dg7mc"); // 	    if (pos && (pos[0] == 'b'))
-UNSUPPORTED("6m5sy5ew8izdy8i10zb5o2dvu"); // 		pos_flag = 0;
-UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
-UNSUPPORTED("bxai2kktsidvda3696ctyk63c"); // 		pos_flag = 1;
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
+	char pos_flag=0;
+	final __struct__<pointf> dimen = __struct__.from(pointf.class);
+	GD_has_labels(sg.getPtr("root"), GD_has_labels(sg.getPtr("root")) | (1 << 3));
+	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+	    late_double(sg, (agattr(sg,AGRAPH,new CString("fontsize"),null)),
+			14.0, 1.0),
+	    late_nnstring(sg, (agattr(sg,AGRAPH,new CString("fontname"),null)),
+			new CString("Times-Roman")),
+	    late_nnstring(sg, (agattr(sg,AGRAPH,new CString("fontcolor"),null)),
+			new CString("black"))));
+	/* set label position */
+	pos = agget(sg, new CString("labelloc"));
+	if (NEQ(sg, agroot(sg))) {
+	    if (pos!=null && (pos.charAt(0) == 'b'))
+		pos_flag = 0;
+	    else
+		pos_flag = 1;
+	} else {
 UNSUPPORTED("601b6yrqr391vnfpa74d7fec7"); // 	    if (pos && (pos[0] == 't'))
 UNSUPPORTED("bxai2kktsidvda3696ctyk63c"); // 		pos_flag = 1;
 UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
 UNSUPPORTED("6m5sy5ew8izdy8i10zb5o2dvu"); // 		pos_flag = 0;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("5fnsitpv3llu01j66gcdbgvvq"); // 	just = agget(sg, "labeljust");
-UNSUPPORTED("ahtohblws3c14vgpfzs41ht0e"); // 	if (just) {
+	}
+	just = agget(sg, new CString("labeljust"));
+	if (just!=null) {
 UNSUPPORTED("3gxohpfqzahytaf7f9apn58az"); // 	    if (just[0] == 'l')
 UNSUPPORTED("ch7sydr4cg29o8ky9fbk5vnlg"); // 		pos_flag |= 2;
 UNSUPPORTED("336to8kpmovx00pexhhenz74b"); // 	    else if (just[0] == 'r')
 UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("b2fkpvbcook0ajijb9zef4wxi"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label_pos) = pos_flag;
-UNSUPPORTED("430l4z4ptplzks1utmcytwgo6"); // 	if (sg == agroot(sg))
-UNSUPPORTED("6cprbghvenu9ldc0ez1ifc63q"); // 	    return;
-UNSUPPORTED("ddtgsgye853y5wi52ulakg84v"); // 	/* Set border information for cluster labels to allow space
-UNSUPPORTED("62wb43w2xc6ex6hootjubbx22"); // 	 */
-UNSUPPORTED("7x1rb14xb550h7valqrcswhg8"); // 	dimen = (((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label)->dimen;
-UNSUPPORTED("22jhn709g4c5wh0gb6v40rh19"); // 	{((dimen).x += 4*4); ((dimen).y += 2*4);};
-UNSUPPORTED("bw5ihew2828hgpvqdgdenaq5h"); // 	if (!((((Agraphinfo_t*)(((Agobj_t*)(agroot(sg)))->data))->rankdir & 0x3) & 1)) {
-UNSUPPORTED("cabz6xbjdvz5vmjulzrhlxh48"); // 	    if ((((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label_pos) & 1)
-UNSUPPORTED("8wqj2vt1bsb6cuz0adrc3wcru"); // 		pos_ix = 2;
-UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
-UNSUPPORTED("1xf4bbxn0ev8w6eiuliutjlyn"); // 		pos_ix = 0;
-UNSUPPORTED("9v5mj5pdhqolg491aisuxoopo"); // 	    (((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->border)[pos_ix] = dimen;
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
-UNSUPPORTED("1uc4opf2arepq1a2qd6nw5hj"); // 	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
+	}
+	GD_label_pos(sg, pos_flag);
+	if (EQ(sg, agroot(sg)))
+	    return;
+	/* Set border information for cluster labels to allow space
+	 */
+	dimen.____(GD_label(sg).getStruct("dimen"));
+	dimen.setDouble("x", dimen.getDouble("x") + 4*4);
+	dimen.setDouble("y", dimen.getDouble("y") + 2*4);
+	if (N(GD_flip(agroot(sg)))) {
+	    if ((GD_label_pos(sg) & 1)!=0)
+		pos_ix = 2;
+	    else
+		pos_ix = 0;
+	    GD_border(sg).plus(pos_ix).setStruct(dimen);
+	} else {
+	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
 UNSUPPORTED("cabz6xbjdvz5vmjulzrhlxh48"); // 	    if ((((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label_pos) & 1)
 UNSUPPORTED("dx7v6663o9o0x1j5r8z4wumxb"); // 		pos_ix = 1;
 UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
 UNSUPPORTED("97dtv6k7yw1qvfzgs65cj2v0l"); // 		pos_ix = 3;
 UNSUPPORTED("21iuie8b11x65je8vampstgt6"); // 	    (((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->border)[pos_ix].x = dimen.y;
 UNSUPPORTED("8cawl3kik853hkvgm39y34urs"); // 	    (((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->border)[pos_ix].y = dimen.x;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
+	}
     }
 } finally {
 LEAVING("5vks1zdadu5vjinaivs0j2bkb","do_graph_label");

@@ -39,7 +39,22 @@
  *
  */
 package gen.lib.cgraph;
+import static gen.lib.cgraph.subg__c.agfstsubg;
+import static gen.lib.cgraph.subg__c.agnxtsubg;
+import static smetana.core.JUtils.function;
+import static smetana.core.JUtilsDebug.ENTERING;
+import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.AGINEDGE;
+import static smetana.core.Macro.AGNODE;
+import static smetana.core.Macro.AGOUTEDGE;
+import static smetana.core.Macro.AGRAPH;
+import static smetana.core.Macro.AGTYPE;
+import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.Agobj_s;
+import h.Agraph_s;
+import smetana.core.CFunction;
+import smetana.core.__ptr__;
 
 public class apply__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -210,14 +225,13 @@ throw new UnsupportedOperationException();
 
 //3 95y4aknoddh42lieikrb72vxw
 // static Agobj_t *subgraph_search(Agraph_t * sub, Agobj_t * g) 
-public static Object subgraph_search(Object... arg) {
-UNSUPPORTED("677qey6vnubfomkqie4a9ik4n"); // static Agobj_t *subgraph_search(Agraph_t * sub, Agobj_t * g)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("2q3myz3ctrvxg2tezy4xtlm09"); //     (void) g;
-UNSUPPORTED("4ky7l2y5ts9tb7afavs7n5k9q"); //     return (Agobj_t *) sub;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static Agobj_s subgraph_search(Agraph_s sub, Agobj_s g) {
+ENTERING("95y4aknoddh42lieikrb72vxw","subgraph_search");
+try {
+    return (Agobj_s) sub.castTo(Agobj_s.class);
+} finally {
+LEAVING("95y4aknoddh42lieikrb72vxw","subgraph_search");
+}
 }
 
 
@@ -225,23 +239,22 @@ throw new UnsupportedOperationException();
 
 //3 8s9l15wqucf1glmbeb6fmya8e
 // static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder) 
-public static Object rec_apply(Object... arg) {
-UNSUPPORTED("6z5t1j8cwcxwmp9sz4e1t3wiy"); // static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg,
-UNSUPPORTED("c06siaf5y6pxt2eu9c81arqlo"); // 		      agobjsearchfn_t objsearch, int preorder)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("79n2pjp1uguypbr6roza1ub1g"); //     Agraph_t *sub;
-UNSUPPORTED("74ksz0vip222qhabd8je4tglq"); //     Agobj_t *subobj;
-UNSUPPORTED("53h14y4e0c041auiny3xh8dz2"); //     if (preorder)
-UNSUPPORTED("dc3321q1hebfhs985iyuxhxyz"); // 	fn(g, obj, arg);
-UNSUPPORTED("2jkaunh3bokdbr7jo1b1emaba"); //     for (sub = agfstsubg(g); sub; sub = agnxtsubg(sub)) {
-UNSUPPORTED("3knmujvbyabrc7idjorv5snck"); // 	if ((subobj = objsearch(sub, obj)))
-UNSUPPORTED("998d3a8qmt0mxahzfwm6mup3y"); // 	    rec_apply(sub, subobj, fn, arg, objsearch, preorder);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("a5s7e7k3ssj17sh0y83glwrzn"); //     if (NOT(preorder))
-UNSUPPORTED("dc3321q1hebfhs985iyuxhxyz"); // 	fn(g, obj, arg);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static void rec_apply(Agraph_s g, Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
+ENTERING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
+try {
+    Agraph_s sub;
+    Agobj_s subobj;
+    if (preorder)
+	fn.exe(g, obj, arg);
+    for (sub = agfstsubg(g); sub!=null; sub = agnxtsubg(sub)) {
+    if ((subobj = (Agobj_s) objsearch.exe(sub, obj))!=null)
+	    rec_apply(sub, subobj, fn, arg, objsearch, preorder);
+    }
+    if (N(preorder))
+	fn.exe(g, obj, arg);
+} finally {
+LEAVING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
+}
 }
 
 
@@ -249,36 +262,38 @@ throw new UnsupportedOperationException();
 
 //3 9hqql178zpl8iudlf6sgnv7aj
 // int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder) 
-public static Object agapply(Object... arg) {
-UNSUPPORTED("e476td28zc0kt691usvzlzhgr"); // int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg,
-UNSUPPORTED("8ue4wcckdwchuzs2ruoxxtjfs"); // 	    int preorder)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("74ksz0vip222qhabd8je4tglq"); //     Agobj_t *subobj;
-UNSUPPORTED("6mu533v201u4fakomplchi1d7"); //     agobjsearchfn_t objsearch;
-UNSUPPORTED("3kwdmn4ezymvab9oercol2gfj"); //     switch (AGTYPE(obj)) {
-UNSUPPORTED("eyna33dobiebmtd0nihpgura4"); //     case AGRAPH:
-UNSUPPORTED("4t8gfa99dayxje8eoyg7cahbn"); // 	objsearch = subgraph_search;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("6x7ztvlgv763oeop84udp1egg"); //     case AGNODE:
+public static int agapply(Agraph_s g, Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
+ENTERING("9hqql178zpl8iudlf6sgnv7aj","agapply");
+try {
+    Agobj_s subobj;
+    CFunction objsearch=null;
+    switch (AGTYPE(obj)) {
+    case AGRAPH:
+ 	objsearch = function(apply__c.class, "subgraph_search");
+	break;
+    case AGNODE:
 UNSUPPORTED("arkoj4niyfqe213zut6szzeji"); // 	objsearch = subnode_search;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("a6ls4lkgjoheqwo2e7yqt9zz8"); //     case AGOUTEDGE:
-UNSUPPORTED("c9o8hr6x8n5dty1y3eej1fept"); //     case AGINEDGE:
+	break;
+    case AGOUTEDGE:
+    case AGINEDGE:
 UNSUPPORTED("3h8kzrrsobdp839772gupdrbf"); // 	objsearch = subedge_search;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("8l3rwj6ctswoa4gvh2j4poq70"); //     default:
+	break;
+    default:
 UNSUPPORTED("2pc67byzirrkhe1cmdoguh6i1"); // 	agerr(AGERR, "agapply: unknown object type %d\n", AGTYPE(obj));
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
-UNSUPPORTED("6aw91xzjmqvmtdvt1di23af8y"); // 	break;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("9sf5nvln1ruzl4z0vipihtgcf"); //     if ((subobj = objsearch(g, obj))) {
-UNSUPPORTED("aqxyz0schnatyimnwxwy0e1io"); // 	rec_apply(g, subobj, fn, arg, objsearch, preorder);
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
-UNSUPPORTED("2lkbqgh2h6urnppaik3zo7ywi"); //     } else
+	break;
+    }
+    if ((subobj = (Agobj_s) objsearch.exe(g, obj))!=null) {
+	rec_apply(g, subobj, fn, arg, objsearch, preorder);
+	return 0;
+    } else
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 
 throw new UnsupportedOperationException();
+} finally {
+LEAVING("9hqql178zpl8iudlf6sgnv7aj","agapply");
+}
 }
 
 

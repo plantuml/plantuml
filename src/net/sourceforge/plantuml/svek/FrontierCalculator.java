@@ -36,11 +36,11 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Point2D;
 import java.util.Collection;
 
-import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
+import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 
 public class FrontierCalculator {
 
-	private static final double DELTA = 3 * EntityImageStateBorder.RADIUS;
+	private static final double DELTA = 3 * EntityPosition.RADIUS;
 	private ClusterPosition core;
 	private final ClusterPosition initial;
 

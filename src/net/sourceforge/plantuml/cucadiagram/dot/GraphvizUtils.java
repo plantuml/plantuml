@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19398 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizUtils {
@@ -52,13 +53,22 @@ public class GraphvizUtils {
 		return File.separatorChar == '\\';
 	}
 
-	@Deprecated
-	public static Graphviz create(String dotString, String... type) {
+	private static String dotExecutable;
+
+	public static final String getDotExecutableForTest() {
+		return dotExecutable;
+	}
+
+	public static final void setDotExecutable(String value) {
+		dotExecutable = value;
+	}
+
+	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {
 		final AbstractGraphviz result;
 		if (isWindows()) {
-			result = new GraphvizWindows(dotString, type);
+			result = new GraphvizWindows(skinParam, dotString, type);
 		} else {
-			result = new GraphvizLinux(dotString, type);
+			result = new GraphvizLinux(skinParam, dotString, type);
 		}
 		// if (OptionFlags.GRAPHVIZCACHE) {
 		// return new GraphvizCached(result);
@@ -66,16 +76,14 @@ public class GraphvizUtils {
 		return result;
 	}
 
-	// public static Graphviz create2(GraphvizLayoutStrategy strategy, String
-	// dotString, String... type) {
-	// return new AbstractGraphviz2(getOS(), strategy, dotString, type);
-	// }
-
 	static public File getDotExe() {
 		return create(null, "png").getDotExe();
 	}
 
 	public static String getenvGraphvizDot() {
+		if (StringUtils.isNotEmpty(dotExecutable)) {
+			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(dotExecutable);
+		}
 		final String env = System.getProperty("GRAPHVIZ_DOT");
 		if (StringUtils.isNotEmpty(env)) {
 			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);
@@ -204,7 +212,7 @@ public class GraphvizUtils {
 	}
 
 	static String getTestCreateSimpleFile() throws IOException {
-		final Graphviz graphviz2 = GraphvizUtils.create("digraph foo { test; }", "svg");
+		final Graphviz graphviz2 = GraphvizUtils.create(null, "digraph foo { test; }", "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz2.createFile3(baos);
 		if (state.differs(ProcessState.TERMINATED_OK())) {
@@ -222,12 +230,5 @@ public class GraphvizUtils {
 		}
 		return null;
 	}
-
-	// public static OS getOS() {
-	// if (isWindows()) {
-	// return new OSWindows();
-	// }
-	// return new OSLinux();
-	// }
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19462 $
  *
  */
 package net.sourceforge.plantuml;
@@ -274,7 +274,16 @@ public class Run {
 				ps.println(system.getDescription());
 			}
 		} else if (option.isPipe()) {
-			sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
+			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
+			if ("(error)".equalsIgnoreCase(result)) {
+				System.err.println("ERROR");
+				final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
+				final PSystemError sys = (PSystemError) system;
+				System.err.println(sys.getHigherErrorPosition());
+				for (ErrorUml er : sys.getErrorsUml()) {
+					System.err.println(er.getError());
+				}
+			}
 		}
 	}
 

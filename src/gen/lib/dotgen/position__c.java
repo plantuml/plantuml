@@ -912,21 +912,21 @@ LEAVING("90vn63m6v0w9fn9a2dgfxxx3h","nsiter2");
 
 //3 5bax8ut6nnk4pr7yxdumk9chl
 // static int go(node_t * u, node_t * v) 
-public static Object go(Object... arg) {
-UNSUPPORTED("du9fkh4e3ytotaov5j9lvdf8m"); // static int go(node_t * u, node_t * v)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("b17di9c7wgtqm51bvsyxz6e2f"); //     int i;
-UNSUPPORTED("5gypxs09iuryx5a2eho9lgdcp"); //     edge_t *e;
-UNSUPPORTED("eveu2z2y0w7zqrw75i6lrylfh"); //     if (u == v)
-UNSUPPORTED("bp2y18pqq5n09006utwifdyxo"); // 	return NOT(0);
-UNSUPPORTED("cwft57krh42f5w81qkosv232u"); //     for (i = 0; (e = ND_out(u).list[i]); i++) {
-UNSUPPORTED("2lunxrm3s4yalew19asx9twp3"); // 	if (go(aghead(e), v))
-UNSUPPORTED("9qhn9m3123s8n6wwxjfo8awlm"); // 	    return NOT(0);
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("5oxhd3fvp0gfmrmz12vndnjt"); //     return 0;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static boolean go(Agnode_s u, Agnode_s v) {
+ENTERING("5bax8ut6nnk4pr7yxdumk9chl","go");
+try {
+    int i;
+    Agedge_s e;
+    if (EQ(u, v))
+	return NOT(false);
+    for (i = 0; (e = (Agedge_s) ND_out(u).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	if (go(aghead(e), v))
+	    return NOT(false);
+    }
+    return false;
+} finally {
+LEAVING("5bax8ut6nnk4pr7yxdumk9chl","go");
+}
 }
 
 
@@ -934,15 +934,10 @@ throw new UnsupportedOperationException();
 
 //3 9xz8numztzj4qsq85pziahv1k
 // static int canreach(node_t * u, node_t * v) 
-public static int canreach(Agnode_s u, Agnode_s v) {
+public static boolean canreach(Agnode_s u, Agnode_s v) {
 ENTERING("9xz8numztzj4qsq85pziahv1k","canreach");
 try {
- UNSUPPORTED("3s0ewlrlu43uwu0l0qufqx5cv"); // static int canreach(node_t * u, node_t * v)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7y60k9o06xiya28w59cc3pe0"); //     return go(u, v);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+    return go(u, v);
 } finally {
 LEAVING("9xz8numztzj4qsq85pziahv1k","canreach");
 }
@@ -1071,11 +1066,11 @@ try {
 		m1 = m0 + ((int)(ND_rw(aghead(e0)) + ND_lw(agtail(e0))));
 		/* these guards are needed because the flat edges
 		 * work very poorly with cluster layout */
-		if (canreach(agtail(e0), aghead(e0)) == 0)
+		if (canreach(agtail(e0), aghead(e0)) == false)
 		    make_aux_edge(aghead(e0), agtail(e0), m1,
 			ED_weight(e));
 		m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));
-		if (canreach(aghead(e1), agtail(e1)) == 0)
+		if (canreach(aghead(e1), agtail(e1)) == false)
 		    make_aux_edge(agtail(e1), aghead(e1), m1,
 			ED_weight(e));
 	    }
@@ -1220,10 +1215,10 @@ try {
 	for (i = ND_order(v) - 1; i >= 0; i--) {
 	    u = (Agnode_s) GD_rank(dot_root(g)).plus(r).getArrayOfPtr("v").plus(i).getPtr();
 	    /* can't use "is_a_vnode_of" because elists are swapped */
-UNSUPPORTED("1u1psf6u6uvy7d3qjlwojrkgp"); // 	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
-UNSUPPORTED("76fuk1ed83l1ghp7j9rmhrfcy"); // 		make_aux_edge(u, GD_ln(g), margin + ND_rw(u), 0);
-UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
+	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
+		make_aux_edge(u, GD_ln(g), margin + ND_rw(u), 0);
+		break;
+	    }
 	}
 	for (i = ND_order(v) + GD_rank(g).plus(r).getInt("n"); i < GD_rank(dot_root(g)).plus(r).getInt("n");
 	     i++) {
@@ -1283,24 +1278,24 @@ try {
 	make_lrvn((Agraph_s) GD_clust(g).plus(i).getPtr());
     for (i = 1; i <= GD_n_cluster(g); i++) {
 	for (j = i + 1; j <= GD_n_cluster(g); j++) {
-UNSUPPORTED("b48z8w7dnun90uu22eubqf3ba"); // 	    low = GD_clust(g)[i];
-UNSUPPORTED("b4bomfgcbfoeb0x86ajnx3rtj"); // 	    high = GD_clust(g)[j];
-UNSUPPORTED("vo4qmqyvzlhhbt0j7ug6t0ko"); // 	    if (GD_minrank(low) > GD_minrank(high)) {
-UNSUPPORTED("8lj913vkr5f3g8lhn0j3jns04"); // 		graph_t *temp = low;
-UNSUPPORTED("30p2o6g0q9ig9oxjny2uotj7x"); // 		low = high;
-UNSUPPORTED("a15s004bpmrww58h27n7hccfc"); // 		high = temp;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("276toniyxhad8vepjexcictjb"); // 	    if (GD_maxrank(low) < GD_minrank(high))
-UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
-UNSUPPORTED("7qjv295ka7fo6i7wdqnfzgxgf"); // 	    if (ND_order(GD_rank(low)[GD_minrank(high)].v[0])
-UNSUPPORTED("2ssyjgg7hi2c8lxyahi0vpvag"); // 		< ND_order(GD_rank(high)[GD_minrank(high)].v[0])) {
-UNSUPPORTED("8mbnhsgk6ygbfbtr0ub1ua8hm"); // 		left = low;
-UNSUPPORTED("6a0lq4h8rsmgdgdhmojhwjjoz"); // 		right = high;
-UNSUPPORTED("175pyfe8j8mbhdwvrbx3gmew9"); // 	    } else {
-UNSUPPORTED("9bglj5z5yjbj7kdxit59pg9nn"); // 		left = high;
-UNSUPPORTED("cccouqr9pvz3dlpiqjaiqpfeh"); // 		right = low;
-UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
-UNSUPPORTED("4y4h66g0xeki0v3ihql3aw6ii"); // 	    make_aux_edge(GD_rn(left), GD_ln(right), margin, 0);
+	    low = (Agraph_s) GD_clust(g).plus(i).getPtr();
+	    high = (Agraph_s) GD_clust(g).plus(j).getPtr();
+	    if (GD_minrank(low) > GD_minrank(high)) {
+		Agraph_s temp = low;
+		low = high;
+		high = temp;
+	    }
+	    if (GD_maxrank(low) < GD_minrank(high))
+		continue;
+	    if (ND_order(GD_rank(low).plus(GD_minrank(high)).getPtr("v").plus(0).getPtr())
+		< ND_order(GD_rank(high).plus(GD_minrank(high)).getPtr("v").plus(0).getPtr())) {
+		left = low;
+		right = high;
+	    } else {
+		left = high;
+		right = low;
+	    }
+	    make_aux_edge(GD_rn(left), GD_ln(right), margin, 0);
 	}
 	separate_subclust((Agraph_s) GD_clust(g).plus(i).getPtr());
     }
@@ -2082,8 +2077,8 @@ try {
     rn = virtual_node(dot_root(g));
     ND_node_type(rn, 2);
     if (GD_label(g)!=null && NEQ(g, dot_root(g)) && N(GD_flip(agroot(g)))) {
-UNSUPPORTED("470nwt9sh3uwq56a0edpk2hzs"); // 	int w = MAX(GD_border(g)[0].x, GD_border(g)[2].x);
-UNSUPPORTED("b91l57rpte7zb5f3pknr7bnm0"); // 	make_aux_edge(ln, rn, w, 0);
+	int w = MAX((int)GD_border(g).plus(0).getDouble("x"), (int)GD_border(g).plus(2).getDouble("x"));
+	make_aux_edge(ln, rn, w, 0);
     }
     GD_ln(g, ln);
     GD_rn(g, rn);

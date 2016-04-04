@@ -44,6 +44,7 @@ import static gen.lib.cgraph.graph__c.agisdirected;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.common.splines__c.bezier_clip;
 import static gen.lib.common.utils__c.late_double;
+import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.function;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
@@ -826,7 +827,7 @@ try {
     CString next;
     int i, f;
     flag[0] = 0;
-    System.err.println("Skipping arrow_match_name");
+    LOG2("Skipping arrow_match_name");
 } finally {
 LEAVING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
 }

@@ -80,7 +80,6 @@ import h.Agrec_s;
 import h.Agsym_s;
 import h._dt_s;
 import h._dtdisc_s;
-import h.agobjfn_t;
 import smetana.core.CString;
 import smetana.core.Memory;
 import smetana.core.Z;
@@ -613,7 +612,7 @@ try {
 	    rdict.castTo(_dt_s.class).call("searchf",rdict,rsym,0000001);
 	    switch (kind) {
 	    case AGRAPH:
-		agapply(root, root.castTo(Agobj_s.class), (agobjfn_t) function(attr__c.class, "addattr"),
+		agapply(root, (Agobj_s) root.castTo(Agobj_s.class), function(attr__c.class, "addattr"),
 			rsym, (N(0)));
 		break;
 	    case AGNODE:
@@ -908,13 +907,13 @@ try {
     if (hdr.getStruct("tag").getInt("objtype") == AGRAPH) {
 	/* also update dict default */
 	_dt_s dict;
-	dict = (_dt_s) agdatadict(g, false).getPtr("dict").getPtr("g");
+	dict = (_dt_s) agdatadict(g, false).getPtr("dict.g");
 	if ((lsym = aglocaldictsym(dict, sym.getCString("name")))!=null) {
 	    agstrfree(g, lsym.getCString("defval"));
 	    lsym.setPtr("defval", agstrdup(g, value));
 	} else {
-	    UNSUPPORTED("lsym = agnewsym(g, sym->name, value, sym->id, ((((Agobj_t*)(hdr))->tag).objtype));");
-	    UNSUPPORTED("(*(((Dt_t*)(dict))->searchf))((dict),(void*)(lsym),0000001);");
+	    lsym = agnewsym(g, sym.getCString("name"), value, sym.getInt("id"), AGTYPE(hdr));
+	    dict.call("searchf", dict, lsym, 0000001);
 	}
     }
     agmethod_upd(g, obj, sym);

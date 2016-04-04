@@ -31,9 +31,6 @@
 
 package smetana.core;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import h.Agedge_s;
 import h.Agedgeinfo_t;
 import h.Agnode_s;
@@ -52,6 +49,9 @@ import h.pointf;
 import h.port;
 import h.splines;
 import h.textlabel_t;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Macro {
 
@@ -374,11 +374,11 @@ public class Macro {
 	}
 
 	// #define GD_has_labels(g) (((Agraphinfo_t*)AGDATA(g))->has_labels)
-	public static int GD_has_labels(Agraph_s g) {
+	public static int GD_has_labels(__ptr__ g) {
 		return AGDATA(g).castTo(Agraphinfo_t.class).getInt("has_labels");
 	}
 
-	public static void GD_has_labels(Agraph_s g, int v) {
+	public static void GD_has_labels(__ptr__ g, int v) {
 		AGDATA(g).castTo(Agraphinfo_t.class).setInt("has_labels", v);
 	}
 
@@ -421,8 +421,11 @@ public class Macro {
 	}
 
 	// #define GD_label(g) (((Agraphinfo_t*)AGDATA(g))->label)
-	public static __ptr__ GD_label(Agraph_s g) {
-		return AGDATA(g).castTo(Agraphinfo_t.class).getPtr("label");
+	public static textlabel_t GD_label(__ptr__ g) {
+		return (textlabel_t) AGDATA(g).castTo(Agraphinfo_t.class).getPtr("label");
+	}
+	public static void GD_label(__ptr__ g, __ptr__ v) {
+		AGDATA(g).castTo(Agraphinfo_t.class).setPtr("label", v);
 	}
 
 	// #define GD_leader(g) (((Agraphinfo_t*)AGDATA(g))->leader)
@@ -576,6 +579,13 @@ public class Macro {
 	
 	
 	// #define GD_label_pos(g) (((Agraphinfo_t*)AGDATA(g))->label_pos)
+	public static int GD_label_pos(Agraph_s g) {
+		return AGDATA(g).castTo(Agraphinfo_t.class).getInt("label_pos");
+	}
+	public static void GD_label_pos(Agraph_s g, int v) {
+		AGDATA(g).castTo(Agraphinfo_t.class).setInt("label_pos", v);
+	}
+	
 	// #define GD_showboxes(g) (((Agraphinfo_t*)AGDATA(g))->showboxes)
 	public static int GD_showboxes(Agraph_s g) {
 		return AGDATA(g).castTo(Agraphinfo_t.class).getInt("showboxes");
@@ -606,6 +616,9 @@ public class Macro {
 	// #define ND_alg(n) (((Agnodeinfo_t*)AGDATA(n))->alg)
 	public static __ptr__ ND_alg(Agnode_s n) {
 		return AGDATA(n).castTo(Agnodeinfo_t.class).getPtr("alg");
+	}
+	public static void ND_alg(Agnode_s n, __ptr__ value) {
+		AGDATA(n).castTo(Agnodeinfo_t.class).setPtr("alg", value);
 	}
 
 	// #define ND_UF_parent(n) (((Agnodeinfo_t*)AGDATA(n))->UF_parent)
@@ -785,7 +798,7 @@ public class Macro {
 	public static int ND_order(__ptr__ n) {
 		return AGDATA(n).castTo(Agnodeinfo_t.class).getInt("order");
 	}
-	public static void ND_order(Agnode_s n, int v) {
+	public static void ND_order(__ptr__ n, int v) {
 		AGDATA(n).castTo(Agnodeinfo_t.class).setInt("order", v);
 	}
 
@@ -1142,7 +1155,7 @@ public class Macro {
 		if (ptr == null) {
 			return (__ptr__) JUtils.sizeof(type, nb).malloc();
 		}
-		return (__ptr__) JUtils.sizeof(type, nb).malloc();
+		return (__ptr__) JUtils.sizeof(type, nb).realloc(ptr);
 	}
 
 	// #define elist_append(item,L) do {L.list = ALLOC(L.size + 2,L.list,edge_t*); L.list[L.size++] = item;
@@ -1242,7 +1255,7 @@ public class Macro {
 	// (type*)zrealloc(ptr,size,sizeof(type),osize):(type*)zmalloc((size)*sizeof(type)))
 	public static __ptr__ ZALLOC(int size, __ptr__ ptr, Class type, int osize) {
 		if (ptr != null) {
-			throw new UnsupportedOperationException();
+			return Memory.realloc(ptr, JUtils.sizeof(type, size));
 		}
 		return (__ptr__) JUtils.sizeof(type, size).malloc();
 	}
@@ -1346,7 +1359,7 @@ public class Macro {
 			int hh = Integer.parseInt(m.group(2));
 			size.setDouble("x", ww);
 			size.setDouble("y", hh);
-			System.err.println("Hacking dimension to width=" + ww + " height=" + hh);
+			JUtils.LOG2("Hacking dimension to width=" + ww + " height=" + hh);
 		}
 	}
 	

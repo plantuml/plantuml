@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19396 $
  *
  */
 package net.sourceforge.plantuml;
@@ -47,6 +47,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
 
 public class Option {
@@ -140,8 +141,7 @@ public class Option {
 				if (i == arg.length) {
 					continue;
 				}
-				OptionFlags.getInstance().setDotExecutable(
-						StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
+				GraphvizUtils.setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
 			} else if (s.equalsIgnoreCase("-charset")) {
 				i++;
 				if (i == arg.length) {

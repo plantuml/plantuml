@@ -50,6 +50,7 @@ import static gen.lib.common.memory__c.zmalloc;
 import static gen.lib.common.shapes__c.bind_shape;
 import static gen.lib.common.shapes__c.shapeOf;
 import static smetana.core.JUtils.EQ;
+import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.enumAsInt;
@@ -972,7 +973,7 @@ UNSUPPORTED("35c97tyk6tzw1g527j6rp6xoo"); // 	u = UF_find(u);
 	ND_UF_parent(v, v);
 	ND_UF_size(v, 1);
     } else
-UNSUPPORTED("ej1tfzdtk6s4n8diwx5i3e4ri"); // 	v = UF_find(v);
+	v = UF_find(v);
     if (ND_id(u) > ND_id(v)) {
 UNSUPPORTED("2igr3ntnkm6svji4pbnjlp54e"); // 	ND_UF_parent(u) = v;
 UNSUPPORTED("3lht90i6tvxbr10meir8nvcic"); // 	ND_UF_size(v) += ND_UF_size(u);
@@ -2350,7 +2351,7 @@ throw new UnsupportedOperationException();
 public static CString htmlEntityUTF8(CString s, Agraph_s g) {
 ENTERING("9yungx7uxqkmzfh2ub6gs9l48","htmlEntityUTF8");
 try {
-	System.err.println("htmlEntityUTF8 "+s);
+	LOG2("htmlEntityUTF8 "+s);
 if (s!=null) return s.duplicate();
 UNSUPPORTED("1xtgr84lklglr4gz1i1m3t30"); // char* htmlEntityUTF8 (char* s, graph_t* g)
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {

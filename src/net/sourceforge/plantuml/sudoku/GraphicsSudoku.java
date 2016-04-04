@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19254 $
  *
  */
 package net.sourceforge.plantuml.sudoku;
@@ -127,7 +127,7 @@ public class GraphicsSudoku {
 
 		ug = ug.apply(new UTranslate(0, sudoHeight));
 		final List<String> texts = new ArrayList<String>();
-		texts.add("http://plantuml.sourceforge.net");
+		texts.add("http://plantuml.com");
 		texts.add("Seed " + Long.toString(sudoku.getSeed(), 36));
 		texts.add("Difficulty " + sudoku.getRatting());
 		final TextBlock textBlock = Display.create(texts).create(FontConfiguration.blackBlueTrue(font),

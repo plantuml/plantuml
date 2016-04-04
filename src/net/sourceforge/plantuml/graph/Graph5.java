@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -57,8 +57,6 @@ import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class Graph5 {
 
-	final private static Graphics2D dummyGraphics2D;
-
 	private final int spaceWidth = 40;
 	private final int spaceHeight = 40;
 
@@ -72,11 +70,6 @@ public class Graph5 {
 	private final IInflationTransform inflationTransform = new InflationTransform2();
 	// private final IInflationTransform inflationTransform = new
 	// IdentityInflationTransform();
-
-	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		dummyGraphics2D = builder.getGraphics2D();
-	}
 
 	private AbstractEntityImage getImage(ANode n) {
 		return new EntityImageFactory().createEntityImage((IEntity) n.getUserData());
@@ -95,9 +88,9 @@ public class Graph5 {
 		for (ANode n : board.getNodes()) {
 			final AbstractEntityImage image = getImage(n);
 			final Point2D.Double pos = getPosition(n);
-			final int widthCell = (int) image.getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D))
+			final int widthCell = (int) image.getDimension(StringBounderUtils.asStringBounder())
 					.getWidth() + 20;
-			final int heightCell = (int) image.getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D))
+			final int heightCell = (int) image.getDimension(StringBounderUtils.asStringBounder())
 					.getHeight() + 20;
 			inflationTransform.addInflationX(pos.getX(), widthCell);
 			inflationTransform.addInflationY(pos.getY(), heightCell);
@@ -136,8 +129,8 @@ public class Graph5 {
 			final AbstractEntityImage image = getImage(n);
 			Point2D pos = getPosition(n);
 			pos = inflationTransform.inflatePoint2D(pos);
-			final double x = pos.getX() - image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth() / 2;
-			final double y = pos.getY() - image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight() / 2;
+			final double x = pos.getX() - image.getDimension(StringBounderUtils.asStringBounder()).getWidth() / 2;
+			final double y = pos.getY() - image.getDimension(StringBounderUtils.asStringBounder()).getHeight() / 2;
 			g2d.translate(x, y);
 			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-x, -y);

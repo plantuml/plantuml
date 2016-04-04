@@ -36,17 +36,12 @@ package net.sourceforge.plantuml;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.StringUtils;
-
 public class Pragma {
 
 	private final Map<String, String> values = new LinkedHashMap<String, String>();
 
 	public void define(String name, String value) {
 		values.put(name, value);
-		if (name.equalsIgnoreCase("graphviz_dot")) {
-			OptionFlags.getInstance().setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value));
-		}
 	}
 
 	public boolean isDefine(String name) {

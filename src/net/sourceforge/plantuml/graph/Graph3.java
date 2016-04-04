@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -67,8 +67,6 @@ import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class Graph3 {
 
-	final private static Graphics2D dummyGraphics2D;
-
 	private final int spaceWidth = 40;
 	private final int spaceHeight = 40;
 	private final int minDistBetweenPoint = 20;
@@ -83,11 +81,6 @@ public class Graph3 {
 
 	private int maxRow;
 	private int maxCol;
-
-	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		dummyGraphics2D = builder.getGraphics2D();
-	}
 
 	class ANodePoint implements Pointable, XMoveable {
 		final private ANode node;
@@ -154,8 +147,8 @@ public class Graph3 {
 			final Point2DInt p = nodePoint.getPosition();
 			final AbstractEntityImage image = getImage(nodePoint.getNode());
 
-			int widthCell = (int) image.getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D)).getWidth();
-			int heightCell = (int) image.getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D)).getHeight();
+			int widthCell = (int) image.getDimension(StringBounderUtils.asStringBounder()).getWidth();
+			int heightCell = (int) image.getDimension(StringBounderUtils.asStringBounder()).getHeight();
 			if (widthCell % 2 == 1) {
 				widthCell++;
 			}
@@ -185,7 +178,7 @@ public class Graph3 {
 			final double x = point.getPosition().getX();
 			final double y = point.getPosition().getY();
 			final Dimension2D dim = getImage(point.getNode()).getDimension(
-					StringBounderUtils.asStringBounder(dummyGraphics2D));
+					StringBounderUtils.asStringBounder());
 			final Frame frame = new Frame(x, y, (int) dim.getWidth(), (int) dim.getHeight());
 			frames.put(point, frame);
 			world.addFrame(frame);
@@ -433,8 +426,8 @@ public class Graph3 {
 		for (ANodePoint nodePoint : nodePoints.values()) {
 			final Frame frame = frames.get(nodePoint);
 			final AbstractEntityImage image = getImage(nodePoint.getNode());
-			final double width = image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth();
-			final double height = image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight();
+			final double width = image.getDimension(StringBounderUtils.asStringBounder()).getWidth();
+			final double height = image.getDimension(StringBounderUtils.asStringBounder()).getHeight();
 			g2d.translate(frame.getX() - width / 2, frame.getY() - height / 2);
 			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-frame.getX() + width / 2, -frame.getY() + height / 2);
@@ -461,8 +454,8 @@ public class Graph3 {
 			final Point2DInt p = nodePoint.getPosition();
 			// Log.println("p=" + p);
 			final AbstractEntityImage image = getImage(nodePoint.getNode());
-			final int width = (int) (image.getDimension(StringBounderUtils.asStringBounder(g2d)).getWidth());
-			final int height = (int) (image.getDimension(StringBounderUtils.asStringBounder(g2d)).getHeight());
+			final int width = (int) (image.getDimension(StringBounderUtils.asStringBounder()).getWidth());
+			final int height = (int) (image.getDimension(StringBounderUtils.asStringBounder()).getHeight());
 			g2d.translate(p.getXint() - width / 2, p.getYint() - height / 2);
 			image.draw(new ColorMapperIdentity(), g2d);
 			g2d.translate(-p.getXint() + width / 2, -p.getYint() + height / 2);

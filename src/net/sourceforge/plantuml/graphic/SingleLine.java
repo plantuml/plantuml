@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19273 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -71,7 +71,7 @@ class SingleLine extends AbstractTextBlock implements Line {
 			} else if (cmd instanceof SpriteCommand) {
 				final Sprite sprite = spriteContainer.getSprite(((SpriteCommand) cmd).getSprite());
 				if (sprite != null) {
-					blocs.add(sprite.asTextBlock(fontConfiguration.getColor()));
+					blocs.add(sprite.asTextBlock(fontConfiguration.getColor(), 1));
 				}
 			} else if (cmd instanceof FontChange) {
 				fontConfiguration = ((FontChange) cmd).apply(fontConfiguration);

@@ -32,6 +32,7 @@
 package smetana.core;
 
 import smetana.core.amiga.StarArrayOfPtr;
+import smetana.core.amiga.StarStar;
 
 public class size_t_array_of_something implements size_t {
 
@@ -68,6 +69,10 @@ public class size_t_array_of_something implements size_t {
 	}
 
 	public __ptr__ realloc(Object old) {
+		if (old instanceof StarStar) {
+			((StarStar) old).realloc(nb);
+			return (__ptr__) old;
+		}
 		((StarArrayOfPtr) old).realloc(nb);
 		return (__ptr__) old;
 	}

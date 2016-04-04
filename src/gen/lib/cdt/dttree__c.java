@@ -55,8 +55,8 @@ import h._dthold_s;
 import h._dtlink_s;
 import smetana.core.CFunction;
 import smetana.core.CString;
-import smetana.core.Memory;
 import smetana.core.__ptr__;
+import smetana.core.__struct__;
 
 public class dttree__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -138,7 +138,8 @@ ENTERING("abqfzg1d1vkzk51225tcdlik5","dttree");
 try {
 	_dtlink_s	root, t;
 	int		cmp, lk, sz, ky;
-	_dtlink_s	l, r, me=null, link = (_dtlink_s) Memory.malloc(_dtlink_s.class);
+	_dtlink_s	l, r, me=null;
+	final __struct__<_dtlink_s> link = __struct__.from(_dtlink_s.class);
 	Object		o, k, key = null;
 	int		n, minp; //, turn[(sizeof(size_t)*8 - 2)];
 	Dtcompar_f	cmpf;
@@ -191,7 +192,7 @@ try {
 		}
 	}
 	/* note that link.right is LEFT tree and link.left is RIGHT tree */
-	l = r = link;
+	l = r = link.amp();
 	/* allow apps to delete an object "actually" in the dictionary */
 	try {
 	if(dt.getPtr("meth").getInt("type") == 0000010 && ((type&(0000002|0010000))!=0) ) {
@@ -224,7 +225,7 @@ try {
 //			goto do_search;
 	}
 	else if(root!=null && (lk < 0 ? (root.castTo(_dthold_s.class).getPtr("obj")!=null): NEQ(root.addVirtualBytes(-lk), obj)))
-	{	key = (sz < 0 ? UNSUPPORTED("*((char**)((char*)(obj)+ky))") : ((__ptr__)obj).addVirtualBytes(ky));
+	{	key = (sz < 0 ? ((__ptr__)obj).addVirtualBytes(ky) : ((__ptr__)obj).addVirtualBytes(ky));
 		throw new do_search();
 	}
 	} catch (do_search do_search) {
@@ -319,7 +320,7 @@ try {
 			else /* if(cmp > 0) */
 			{	if ((t = (_dtlink_s) root.getPtr("right"))!=null )
 				{
-					k = (lk < 0 ? UNSUPPORTED("((Dthold_t*)(t))->obj") : t.addVirtualBytes(-lk) ); 
+					k = (lk < 0 ? t.castTo(_dthold_s.class).getPtr("obj") : t.addVirtualBytes(-lk) ); 
  					k = sz < 0 ? ((__ptr__)k).addVirtualBytes(ky) : ((__ptr__)k).addVirtualBytes(ky);
 					if((cmp = (cmpf!=null ? (Integer)((CFunction)cmpf).exe(dt,key,k,disc) 
  					 : (sz <= 0 ? strcmp((CString)key,(CString)k) : UNSUPPORTED_INT("memcmp(key,k,sz))") ))) > 0)
@@ -407,11 +408,10 @@ try {
 //				dt->data->size = -1;
 //			goto no_root;
 		}
-		else if((type&(0000001|0004000))!=0) {
-		throw new UnsupportedOperationException();
-//		{	if(dt->meth->type&0000004)
-//				goto has_root;
-//			else
+		else if((type&(0000001|0004000))!=0)
+		{	if((dt.getPtr("meth").getInt("type")&0000004)!=0)
+				throw new has_root();
+			else throw new UnsupportedOperationException();
 //			{	root->hl._left = ((Dtlink_t*)0);
 //				root->right = link.hl._left;
 //				link.hl._left = root;
@@ -440,7 +440,20 @@ try {
 		r.setPtr("hl._left", null);
 		l.setPtr("right", null);
 		if((type&0000010)!=0)
-			throw new UnsupportedOperationException("goto dt_next");
+		{
+		    //goto dt_next:
+			if((root = (_dtlink_s) link.getPtr("hl._left"))!=null )	
+			{	while((t = (_dtlink_s) root.getPtr("hl._left"))!=null ) {
+					root.setPtr("hl._left", t.getPtr("right"));
+					t.setPtr("right", root);
+					root = t;
+				}
+				link.setPtr("hl._left", root.getPtr("right"));
+				throw new has_root();
+			}
+			else	throw new no_root();
+		
+		}
 		else if((type&0000020)!=0)
 			throw new UnsupportedOperationException("goto dt_prev");
 		else if((type&(0000004|0001000))!=0)

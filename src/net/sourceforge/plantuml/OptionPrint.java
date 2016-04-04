@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19254 $
  *
  */
 package net.sourceforge.plantuml;
@@ -155,11 +155,11 @@ public class OptionPrint {
 		final int lastversion = PSystemVersion.extractDownloadableVersion(null, null);
 		if (lastversion == -1) {
 			System.out.println("Error");
-			System.out.println("Cannot connect to http://plantuml.sourceforge.net/");
+			System.out.println("Cannot connect to http://plantuml.com/");
 			System.out.println("Maybe you should set your proxy ?");
 		} else if (lastversion == 0) {
 			System.out.println("Error");
-			System.out.println("Cannot retrieve last version from http://plantuml.sourceforge.net/");
+			System.out.println("Cannot retrieve last version from http://plantuml.com/");
 		} else {
 			System.out.println("Last available version for download : " + lastversion);
 			System.out.println();

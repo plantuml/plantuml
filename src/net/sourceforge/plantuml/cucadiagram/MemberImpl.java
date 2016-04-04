@@ -61,7 +61,7 @@ public class MemberImpl implements Member {
 			final Matcher mstart = pstart.matcher(tmpDisplay);
 
 			if (mstart.matches()) {
-				if (mstart.groupCount() != 5) {
+				if (mstart.groupCount() != 4) {
 					throw new IllegalStateException();
 				}
 				final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
@@ -74,7 +74,7 @@ public class MemberImpl implements Member {
 				final Matcher mend = pend.matcher(tmpDisplay);
 
 				if (mend.matches()) {
-					if (mend.groupCount() != 5) {
+					if (mend.groupCount() != 4) {
 						throw new IllegalStateException();
 					}
 					final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_END);

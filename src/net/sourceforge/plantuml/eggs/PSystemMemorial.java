@@ -75,7 +75,7 @@ public class PSystemMemorial extends AbstractPSystem {
 				final String name = portrait.getName();
 				final String quote = portrait.getQuote();
 				final String age = "" + portrait.getAge() + " years old";
-				final UFont font = new UFont("SansSerif", Font.BOLD, 16);
+				final UFont font = new UFont("SansSerif", Font.BOLD, 14);
 				final BufferedImage im = portrait.getBufferedImage();
 				final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK,
 						true);

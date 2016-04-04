@@ -52,6 +52,7 @@ import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.cgraph.rec__c.agbindrec;
 import static gen.lib.cgraph.subg__c.agparent;
 import static smetana.core.JUtils.EQ;
+import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.sizeof;
 import static smetana.core.JUtilsDebug.ENTERING;
@@ -263,13 +264,24 @@ LEAVING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 
 //3 bek79ccvjys1j9q404i3y6oh8
 // Agnode_t *agnxtnode(Agraph_t * g, Agnode_t * n) 
+public static int NB = 0;
 public static Agnode_s agnxtnode(Agraph_s g, Agnode_s n) {
 ENTERING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 try {
+	//ZOOTO
+	if (NB==0) {
+	//StructureDefinition.from(IMapEntry_t.class);
+	}
+	NB++;
+    LOG2("NB="+NB);
     Agsubnode_s sn;
     sn = agsubrep(g, n);
+    LOG2("sn1="+sn);
     if (sn!=null) sn = (Agsubnode_s) g.getPtr("n_seq").castTo(_dt_s.class).call("searchf", g.getPtr("n_seq"),sn,0000010);
-    return (Agnode_s) (sn!=null ? sn.getPtr("node") : null);
+    LOG2("sn2="+sn);
+    final __ptr__ result = sn!=null ? sn.getPtr("node") : null;
+    LOG2("result="+result);
+	return (Agnode_s) result;
 } finally {
 LEAVING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 }

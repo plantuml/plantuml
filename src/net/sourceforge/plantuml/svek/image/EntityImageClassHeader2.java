@@ -121,7 +121,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 	private TextBlock getCircledCharacter(ILeaf entity, ISkinParam skinParam) {
 		final Stereotype stereotype = entity.getStereotype();
 		if (stereotype != null && stereotype.getSprite() != null) {
-			return skinParam.getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor());
+			return skinParam.getSprite(stereotype.getSprite()).asTextBlock(stereotype.getHtmlColor(), 1);
 		}
 		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
 		final HtmlColor classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.classBorder, stereotype);

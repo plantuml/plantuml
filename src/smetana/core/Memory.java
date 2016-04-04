@@ -60,8 +60,12 @@ public class Memory {
 	public static void free(Object arg) {
 	}
 
-	public static int identityHashCode(Object data) {
-		int result = 2 * System.identityHashCode(data);
+	public static int identityHashCode(CString data) {
+		if (data==null) {
+			return 0;
+		}
+		//int result = 2 * System.identityHashCode(data);
+		int result = data.getUid();
 		Z._().all.put(result, data);
 		// System.err.println("Memory::identityHashCode data=" + data);
 		// System.err.println("Memory::identityHashCode result=" + result + " " + Z._().all.size());

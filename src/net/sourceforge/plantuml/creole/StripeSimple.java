@@ -137,8 +137,8 @@ public class StripeSimple implements Stripe {
 		}
 	}
 
-	public void addImage(String src) {
-		atoms.add(AtomImg.create(src, ImgValign.TOP, 0));
+	public void addImage(String src, double scale) {
+		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale));
 	}
 
 	public void addSpace(int size) {
@@ -149,10 +149,10 @@ public class StripeSimple implements Stripe {
 		atoms.add(AtomText.createUrl(url, fontConfiguration));
 	}
 
-	public void addSprite(String src) {
+	public void addSprite(String src, double scale) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null) {
-			atoms.add(new AtomSprite(sprite.asTextBlock(fontConfiguration.getColor()), fontConfiguration));
+			atoms.add(new AtomSprite(sprite.asTextBlock(fontConfiguration.getColor(), scale), fontConfiguration));
 		}
 	}
 

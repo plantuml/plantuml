@@ -36,7 +36,6 @@ package net.sourceforge.plantuml;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
@@ -97,8 +96,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getDotSplines();
 	}
 
-	public GraphvizLayoutStrategy getStrategy() {
-		return skinParam.getStrategy();
+	public String getDotExecutable() {
+		return skinParam.getDotExecutable();
 	}
 
 	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {

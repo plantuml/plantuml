@@ -168,8 +168,13 @@ public class QuoteUtils {
 					"We shall never surrender", //
 					"Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.", //
 					"Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... " //
+					// It's... complicated.
+					// Do not open until 1985
+					// I still mess up but I'll just start again
+					// I won't give up, no I won't give in; Till I reach the end; And then I'll start again
+					// I wanna try even though I could fail
+					// Sometimes we come last but we did our best
 			);
-	// It's... complicated.
 	private QuoteUtils() {
 	}
 

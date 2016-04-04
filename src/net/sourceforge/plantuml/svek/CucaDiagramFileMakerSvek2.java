@@ -125,8 +125,7 @@ public final class CucaDiagramFileMakerSvek2 {
 	static private final StringBounder stringBounder;
 
 	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		stringBounder = StringBounderUtils.asStringBounder(builder.getGraphics2D());
+		stringBounder = StringBounderUtils.asStringBounder();
 	}
 
 	public CucaDiagramFileMakerSvek2(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma) {
@@ -568,7 +567,7 @@ public final class CucaDiagramFileMakerSvek2 {
 		if (stereotype.getSprite() != null) {
 			final Sprite tmp = dotData.getSkinParam().getSprite(stereotype.getSprite());
 			if (tmp != null) {
-				return tmp.asTextBlock(stereotype.getHtmlColor());
+				return tmp.asTextBlock(stereotype.getHtmlColor(), 1);
 			}
 		}
 		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().useGuillemet());

@@ -60,12 +60,14 @@ public class AtomImg implements Atom {
 
 	private static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
 	private final BufferedImage image;
+	private final double scale;
 
-	private AtomImg(BufferedImage image) {
+	private AtomImg(BufferedImage image, double scale) {
 		this.image = image;
+		this.scale = scale;
 	}
 
-	public static Atom create(String src, final ImgValign valign, final int vspace) {
+	public static Atom create(String src, final ImgValign valign, final int vspace, final double scale) {
 		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
@@ -73,7 +75,7 @@ public class AtomImg implements Atom {
 			final String data = src.substring(DATA_IMAGE_PNG_BASE64.length(), src.length());
 			try {
 				final byte bytes[] = Base64Coder.decode(data);
-				return build(src, fc, bytes);
+				return build(src, fc, bytes, scale);
 			} catch (Exception e) {
 				return AtomText.create("ERROR " + e.toString(), fc);
 			}
@@ -85,7 +87,7 @@ public class AtomImg implements Atom {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 					final byte image[] = getFile(src);
-					return build(src, fc, image);
+					return build(src, fc, image, scale);
 				}
 				return AtomText.create("(File not found: " + f + ")", fc);
 			}
@@ -97,18 +99,19 @@ public class AtomImg implements Atom {
 			if (read == null) {
 				return AtomText.create("(Cannot decode: " + f + ")", fc);
 			}
-			return new AtomImg(ImageIO.read(f));
+			return new AtomImg(ImageIO.read(f), scale);
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
 	}
 
-	private static Atom build(String source, final FontConfiguration fc, final byte[] data) throws IOException {
+	private static Atom build(String source, final FontConfiguration fc, final byte[] data, double scale)
+			throws IOException {
 		final BufferedImage read = ImageIO.read(new ByteArrayInputStream(data));
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + source + ")", fc);
 		}
-		return new AtomImg(read);
+		return new AtomImg(read, scale);
 	}
 
 	// Added by Alain Corbiere
@@ -136,7 +139,7 @@ public class AtomImg implements Atom {
 	// End
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(image.getWidth(), image.getHeight());
+		return new Dimension2DDouble(image.getWidth() * scale, image.getHeight() * scale);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -145,9 +148,8 @@ public class AtomImg implements Atom {
 
 	public void drawU(UGraphic ug) {
 		// final double h = calculateDimension(ug.getStringBounder()).getHeight();
-		ug.draw(new UImage(image));
+		ug.draw(new UImage(image, scale));
 		// tileImage.drawU(ug.apply(new UTranslate(0, -h)));
 	}
-	
 
 }

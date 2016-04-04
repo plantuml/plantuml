@@ -72,6 +72,7 @@ import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsubnode_s;
 import h._dt_s;
+import h._dtdisc_s;
 import h._dtlink_s;
 import smetana.core.ACCESS;
 import smetana.core.CString;
@@ -574,18 +575,18 @@ LEAVING("2bz40qf0qo7pd6er1ut25gthp","agdegree");
 
 //3 dhbtfzzp8n5yygqmhmluo9bxl
 // int agraphidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc) 
-public static Object agraphidcmpf(Object... arg) {
-UNSUPPORTED("1it8rnlidopuz32pqdsmdhc6q"); // int agraphidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("ccl2joincnprtk47hwmpz1o7n"); //     long	v;
-UNSUPPORTED("73bfha5x7xhgp9p6wxa9jap6j"); //     Agraph_t *sg0, *sg1;
-UNSUPPORTED("e8rx1ahgpoym3u3v0jgarn58y"); //     sg0 = (Agraph_t *) arg0;
-UNSUPPORTED("bc6x70wml3jh4l4ana92njtid"); //     sg1 = (Agraph_t *) arg1;
-UNSUPPORTED("306jxfq0wwqtke0uv1s7nmjd9"); //     v = (AGID(sg0) - AGID(sg1));
-UNSUPPORTED("2tgj1svqq4v5mqo7525nw7icj"); //     return ((v==0)?0:(v<0?-1:1));
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static int agraphidcmpf(_dt_s d, __ptr__ arg0, __ptr__ arg1, _dtdisc_s disc) {
+ENTERING("dhbtfzzp8n5yygqmhmluo9bxl","agraphidcmpf");
+try {
+    int v;
+    Agraph_s sg0, sg1;
+    sg0 = (Agraph_s) arg0;
+    sg1 = (Agraph_s) arg1;
+    v = (AGID(sg0) - AGID(sg1));
+    return ((v==0)?0:(v<0?-1:1));
+} finally {
+LEAVING("dhbtfzzp8n5yygqmhmluo9bxl","agraphidcmpf");
+}
 }
 
 

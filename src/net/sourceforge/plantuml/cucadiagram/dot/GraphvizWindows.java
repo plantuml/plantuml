@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19395 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 
 class GraphvizWindows extends AbstractGraphviz {
@@ -86,8 +87,8 @@ class GraphvizWindows extends AbstractGraphviz {
 		return dots.get(0);
 	}
 
-	GraphvizWindows(String dotString, String... type) {
-		super(dotString, type);
+	GraphvizWindows(ISkinParam skinParam, String dotString, String... type) {
+		super(skinParam, dotString, type);
 	}
 
 }

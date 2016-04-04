@@ -40,6 +40,7 @@
  */
 package gen.lib.pathplan;
 import static smetana.core.JUtils.EQ;
+import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.setjmp;
 import static smetana.core.JUtils.sizeof;
@@ -149,15 +150,15 @@ try {
 	    Z._().pnll++;
 	}
     } else {
-UNSUPPORTED("6r16p93hkrjz2x5g64y5fvgp"); // 	for (pi = 0; pi < polyp->pn; pi++) {
-UNSUPPORTED("ag73m5oix1rqdl22sblc6xe7n"); // 	    if (pi > 0 && polyp->ps[pi].x == polyp->ps[pi - 1].x &&
-UNSUPPORTED("ve8lcg4wuejy1iamgezldd1l"); // 		polyp->ps[pi].y == polyp->ps[pi - 1].y)
-UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
-UNSUPPORTED("f1orneg1h1k54qv8qiymscdmu"); // 	    pnls[pnll].pp = &polyp->ps[pi];
-UNSUPPORTED("c7iuzik6cedqibya39odsn8rs"); // 	    pnls[pnll].link = &pnls[pnll % polyp->pn];
-UNSUPPORTED("263qphtd3ct9iq5g9ttrt3v8"); // 	    pnlps[pnll] = &pnls[pnll];
-UNSUPPORTED("91ms6j3km9gat978l2eswlq29"); // 	    pnll++;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
+	for (pi = 0; pi < polyp.getInt("pn"); pi++) {
+	    if (pi > 0 && polyp.getPtr("ps").plus(pi).getDouble("x") == polyp.getPtr("ps").plus(pi - 1).getDouble("x") &&
+		polyp.getPtr("ps").plus(pi).getDouble("y") == polyp.getPtr("ps").plus(pi - 1).getDouble("y"))
+		continue;
+	    Z._().pnls.plus(Z._().pnll).setPtr("pp", polyp.getPtr("ps").plus(pi));
+	    Z._().pnls.plus(Z._().pnll).setPtr("link", Z._().pnls.plus(Z._().pnll % polyp.getInt("pn")));
+	    Z._().pnlps.plus(Z._().pnll).setPtr(Z._().pnls.plus(Z._().pnll));
+	    Z._().pnll++;
+	}
     }
     /* generate list of triangles */
     triangulate(Z._().pnlps, Z._().pnll);
@@ -178,8 +179,8 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
 	if (pointintri(trii, eps.plus(1).getStruct().amp()))
 	    break;
     if (trii == Z._().tril) {
-UNSUPPORTED("qofj6tr7dq65r0b7a12fhakq"); // 	fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("destination point not in any triangle"));
-UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
+        System.err.println("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("destination point not in any triangle"));
+        return -1;
     }
     ltrii = trii;
     /* mark the strip of triangles from eps[0] to eps[1] */
@@ -292,6 +293,7 @@ public static void triangulate(__ptr__ pnlps, int pnln) {
 ENTERING("73cr7m3mqvtuotpzrmaw2y8zm","triangulate");
 try {
     int pnli, pnlip1, pnlip2;
+    LOG2("triangulate "+pnln);
 	if (pnln > 3) 
 	{
 		for (pnli = 0; pnli < pnln; pnli++) 
@@ -307,7 +309,7 @@ try {
 				return;
 			}
 		}
-UNSUPPORTED("b7cubu75mkrcno7zj7e0t4dqk"); // 		fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("triangulation failed"));
+		throw new IllegalStateException("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("triangulation failed"));
     } 
 	else
 		loadtriangle(pnlps.plus(0).getPtr(), pnlps.plus(1).getPtr(), pnlps.plus(2).getPtr());

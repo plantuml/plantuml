@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19196 $
+ * Revision $Revision: 19396 $
  *
  */
 package net.sourceforge.plantuml;
@@ -73,7 +73,7 @@ public class OptionFlags {
 		metadata = false;
 		word = false;
 		systemExit = exit;
-		dotExecutable = null;
+		GraphvizUtils.setDotExecutable(null);
 		gui = false;
 		quiet = false;
 		checkDotError = false;
@@ -95,7 +95,6 @@ public class OptionFlags {
 	private boolean metadata;
 	private boolean word;
 	private boolean systemExit;
-	private String dotExecutable;
 	private boolean gui;
 	private boolean quiet;
 	private boolean checkDotError;
@@ -152,14 +151,6 @@ public class OptionFlags {
 
 	public final void setSystemExit(boolean systemExit) {
 		this.systemExit = systemExit;
-	}
-
-	public final String getDotExecutable() {
-		return dotExecutable;
-	}
-
-	public final void setDotExecutable(String dotExecutable) {
-		this.dotExecutable = dotExecutable;
 	}
 
 	public final boolean isGui() {

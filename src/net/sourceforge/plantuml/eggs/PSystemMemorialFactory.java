@@ -42,7 +42,7 @@ public class PSystemMemorialFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {
-		final Portrait portrait = Portraits.getOne();
+		final Portrait portrait = Portraits.getOne(line);
 		if (portrait != null) {
 			return new PSystemMemorial(portrait);
 		}

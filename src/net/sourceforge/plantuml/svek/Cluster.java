@@ -38,6 +38,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -198,12 +199,12 @@ public class Cluster implements Moveable {
 		return firsts;
 	}
 
-	private List<Shape> getShapesEntryExit(EntityPosition position) {
+	private List<Shape> getShapesEntryExit(EnumSet<EntityPosition> positions) {
 		final List<Shape> result = new ArrayList<Shape>();
 
 		for (final Iterator<Shape> it = shapes.iterator(); it.hasNext();) {
 			final Shape sh = it.next();
-			if (sh.getEntityPosition() == position) {
+			if (positions.contains(sh.getEntityPosition())) {
 				result.add(sh);
 			}
 		}
@@ -511,8 +512,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void printClusterEntryExit(StringBuilder sb, StringBounder stringBounder) {
-		// final List<? extends IShapePseudo> entries = getShapesEntryExit(EntityPosition.ENTRY_POINT);
-		final List<Shape> shapesEntryExitList = getShapesEntryExit(EntityPosition.ENTRY_POINT);
+		final List<Shape> shapesEntryExitList = getShapesEntryExit(EntityPosition.getInputs());
 		final double maxWith = getMaxWidthFromLabelForEntryExit(shapesEntryExitList, stringBounder);
 		final double naturalSpace = 70;
 		final List<? extends IShapePseudo> entries;
@@ -531,7 +531,7 @@ public class Cluster implements Moveable {
 				sh.appendShape(sb);
 			}
 		}
-		final List<Shape> exits = getShapesEntryExit(EntityPosition.EXIT_POINT);
+		final List<Shape> exits = getShapesEntryExit(EntityPosition.getOutputs());
 		if (exits.size() > 0) {
 			sb.append("{rank=sink;");
 			for (Shape sh : exits) {
@@ -700,9 +700,8 @@ public class Cluster implements Moveable {
 		sb.append("style=solid;");
 		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\";");
 
-		final boolean isLabel = getTitleAndAttributeHeight() > 0 && getTitleAndAttributeWidth() > 0;
 		final String label;
-		if (isLabel) {
+		if (isLabel()) {
 			final StringBuilder sblabel = new StringBuilder("<");
 			Line.appendTable(sblabel, getTitleAndAttributeWidth(), getTitleAndAttributeHeight() - 5, colorTitle);
 			sblabel.append(">");
@@ -769,6 +768,10 @@ public class Cluster implements Moveable {
 			sb.append("}");
 		}
 		SvekUtils.println(sb);
+	}
+
+	public boolean isLabel() {
+		return getTitleAndAttributeHeight() > 0 && getTitleAndAttributeWidth() > 0;
 	}
 
 	private void subgraphCluster(StringBuilder sb, String id) {

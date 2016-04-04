@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -46,22 +46,15 @@ import net.sourceforge.plantuml.graphic.StringBounderUtils;
 
 public class Graph2 {
 
-	final private static Graphics2D dummyGraphics2D;
-
 	private final Elastane elastane;
 	private int widthCell;
 	private int heightCell;
-
-	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		dummyGraphics2D = builder.getGraphics2D();
-	}
 
 	public Graph2(Board board) {
 		board.normalize();
 
 		for (ANode n : board.getNodes()) {
-			final Dimension2D dim = images(n).getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D));
+			final Dimension2D dim = images(n).getDimension(StringBounderUtils.asStringBounder());
 			widthCell = Math.max(widthCell, (int) dim.getWidth());
 			heightCell = Math.max(heightCell, (int) dim.getHeight());
 		}
@@ -69,7 +62,7 @@ public class Graph2 {
 		elastane = new Elastane(galaxy);
 
 		for (ANode n : board.getNodes()) {
-			final Dimension2D dim = images(n).getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D));
+			final Dimension2D dim = images(n).getDimension(StringBounderUtils.asStringBounder());
 			elastane.addBox(n, (int) dim.getWidth(), (int) dim.getHeight());
 		}
 

@@ -67,8 +67,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	static private final StringBounder stringBounder;
 
 	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		stringBounder = StringBounderUtils.asStringBounder(builder.getGraphics2D());
+		stringBounder = StringBounderUtils.asStringBounder();
 	}
 
 	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {

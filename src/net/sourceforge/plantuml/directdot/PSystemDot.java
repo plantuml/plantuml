@@ -66,7 +66,7 @@ public class PSystemDot extends AbstractPSystem {
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final Graphviz graphviz = GraphvizUtils
-				.create(data, StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
+				.create(null, data, StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
 		if (graphviz.illegalDotExe()) {
 			final TextBlock result = GraphicStrings.createDefault(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
 			UGraphicUtils.writeImage(os, null, fileFormat, new ColorMapperIdentity(), HtmlColorUtils.WHITE, result);

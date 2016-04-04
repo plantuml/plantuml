@@ -33,6 +33,7 @@ package smetana.core;
 
 import smetana.core.amiga.Area;
 import smetana.core.amiga.StarArrayOfPtr;
+import smetana.core.amiga.StarArrayOfStruct;
 import smetana.core.amiga.StarStruct;
 
 public class __struct__<C extends __ptr__> implements __c__fields, Area {
@@ -76,6 +77,11 @@ public class __struct__<C extends __ptr__> implements __c__fields, Area {
 		}
 		if (other instanceof StarStruct) {
 			memcopyFrom((StarStruct) other);
+			return;
+		}
+		if (other instanceof StarArrayOfStruct) {
+			StarArrayOfStruct array = (StarArrayOfStruct) other;
+			memcopyFrom(array.getStruct());
 			return;
 		}
 		throw new UnsupportedOperationException();

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19265 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -37,18 +37,22 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class StringBounderUtils {
 
-	public static StringBounder asStringBounder(final Graphics2D g2d) {
-		
+	final static BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+	final static Graphics2D gg = imDummy.createGraphics();
+	
+	public static StringBounder asStringBounder() {
+
 		return new StringBounder() {
 			public Dimension2D calculateDimension(UFont font, String text) {
-				final FontMetrics fm = g2d.getFontMetrics(font.getFont());
-				final Rectangle2D rect = fm.getStringBounds(text, g2d);
+				final FontMetrics fm = gg.getFontMetrics(font.getFont());
+				final Rectangle2D rect = fm.getStringBounds(text, gg);
 				return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
 			}
 		};

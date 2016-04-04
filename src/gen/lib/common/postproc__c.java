@@ -40,7 +40,10 @@
  */
 package gen.lib.common;
 import static gen.lib.cgraph.edge__c.agfstout;
+import static gen.lib.cgraph.edge__c.aghead;
 import static gen.lib.cgraph.edge__c.agnxtout;
+import static gen.lib.cgraph.edge__c.agtail;
+import static gen.lib.cgraph.id__c.agnameof;
 import static gen.lib.cgraph.node__c.agfstnode;
 import static gen.lib.cgraph.node__c.agnxtnode;
 import static gen.lib.cgraph.obj__c.agroot;
@@ -48,22 +51,26 @@ import static gen.lib.common.geom__c.ccwrotatepf;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.ED_edge_type;
 import static smetana.core.Macro.ED_head_label;
 import static smetana.core.Macro.ED_label;
 import static smetana.core.Macro.ED_spl;
 import static smetana.core.Macro.ED_tail_label;
 import static smetana.core.Macro.ED_xlabel;
 import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_border;
 import static smetana.core.Macro.GD_clust;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
 import static smetana.core.Macro.GD_has_labels;
 import static smetana.core.Macro.GD_label;
+import static smetana.core.Macro.GD_label_pos;
 import static smetana.core.Macro.GD_n_cluster;
 import static smetana.core.Macro.GD_rankdir;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_xlabel;
+import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.Agedge_s;
 import h.Agnode_s;
@@ -760,10 +767,10 @@ try {
     int j, k;
     final __struct__<bezier> bz = __struct__.from(bezier.class);
     if (ED_spl(e) == null) {
-UNSUPPORTED("pk4pq268vlnm46hq9osu453d"); // 	if ((Concentrate == 0) && (ED_edge_type(e) != 6))
-UNSUPPORTED("9z8dzb6h2lyt2qzqjofeqql09"); // 	    agerr(AGERR, "lost %s %s edge\n", agnameof(agtail(e)),
-UNSUPPORTED("74pedndsd738qx562cc6mhr7i"); // 		  agnameof(aghead(e)));
-UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
+	if ((Z._().Concentrate == false) && (ED_edge_type(e) != 6))
+	    System.err.println("lost %s %s edge\n"+ agnameof(agtail(e))+
+		  agnameof(aghead(e)));
+	return;
     }
     for (j = 0; j < ED_spl(e).getInt("size"); j++) {
 	bz.____(ED_spl(e).getArrayOfPtr("list").plus(j).getStruct());
@@ -810,7 +817,7 @@ UNSUPPORTED("crysiae5zxc69cj3v2ygfs8xn"); // 	new_bb.UR = map_point(pointfof(bb.
     }
     GD_bb(g).____(new_bb);
     if (GD_label(g)!=null) {
-UNSUPPORTED("bkn67oo24unyb5eif9prtw0et"); // 	GD_label(g)->pos = map_point(GD_label(g)->pos);
+	GD_label(g).setStruct("pos", map_point(GD_label(g).getStruct("pos")));
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
 	translate_bb((Agraph_s) GD_clust(g).plus(c).getPtr(), rankdir);
@@ -1472,23 +1479,23 @@ ENTERING("72zw1alhd5vd0g6mhum507rvx","place_graph_label");
 try {
     int c;
     final __struct__<pointf> p = __struct__.from(pointf.class), d = __struct__.from(pointf.class);
-    if (NEQ(g, agroot(g)) && (GD_label(g)!=null) && N(GD_label(g).getPtr("set"))) {
-UNSUPPORTED("bb9kbz7bijh4xjt97fdn2q90k"); // 	if (GD_label_pos(g) & 1) {
-UNSUPPORTED("5lv96pqhcx8svzq467h22fwih"); // 	    d = GD_border(g)[2];
-UNSUPPORTED("a7anlx7s8s2pqd73q59ep0kpf"); // 	    p.y = GD_bb(g).UR.y - d.y / 2;
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
+    if (NEQ(g, agroot(g)) && (GD_label(g)!=null) && N(GD_label(g).getInt("set"))) {
+	if ((GD_label_pos(g) & 1)!=0) {
+	    d.____(GD_border(g).plus(2).getStruct());
+	    p.setDouble("y", GD_bb(g).getStruct("UR").getDouble("y") - d.getDouble("y") / 2);
+	} else {
 UNSUPPORTED("1w38no4welthbwa0i10hei16b"); // 	    d = GD_border(g)[0];
 UNSUPPORTED("2xa4n9ca16xpf1kahaycmkl4r"); // 	    p.y = GD_bb(g).LL.y + d.y / 2;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("2qpji9cqj2p2czgcug3wvnqpl"); // 	if (GD_label_pos(g) & 4) {
+	}
+	if ((GD_label_pos(g) & 4)!=0) {
 UNSUPPORTED("cgv3bcg9c274cdwxi1y0sja3p"); // 	    p.x = GD_bb(g).UR.x - d.x / 2;
-UNSUPPORTED("blrmgi2c43f98h1nso1k757hi"); // 	} else if (GD_label_pos(g) & 2) {
+	} else if ((GD_label_pos(g) & 2)!=0) {
 UNSUPPORTED("7ictv9eqmjvxjii5lqlyw8nu"); // 	    p.x = GD_bb(g).LL.x + d.x / 2;
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
-UNSUPPORTED("2j8xggcs05suub0imusgk58jw"); // 	    p.x = (GD_bb(g).LL.x + GD_bb(g).UR.x) / 2;
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("ptjqgn3loi94u957cup0fi1"); // 	GD_label(g)->pos = p;
-UNSUPPORTED("5ezl5j9dxa3ewoj8hxw72wn4n"); // 	GD_label(g)->set = NOT(0);
+	} else {
+	    p.setDouble("x", (GD_bb(g).getStruct("LL").getDouble("x") + GD_bb(g).getStruct("UR").getDouble("x")) / 2);
+	}
+	GD_label(g).setStruct("pos", p);
+	GD_label(g).setBoolean("set", NOT(false));
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
 	place_graph_label((Agraph_s) GD_clust(g).plus(c).getPtr());

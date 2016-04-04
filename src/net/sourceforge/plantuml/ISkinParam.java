@@ -36,10 +36,8 @@ package net.sourceforge.plantuml;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -80,7 +78,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public DotSplines getDotSplines();
 
-	public GraphvizLayoutStrategy getStrategy();
+	public String getDotExecutable();
 
 	public boolean shadowing();
 	

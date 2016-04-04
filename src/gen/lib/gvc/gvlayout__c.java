@@ -43,6 +43,7 @@ import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.cgraph.rec__c.agbindrec;
 import static gen.lib.common.emit__c.gv_fixLocale;
 import static gen.lib.common.input__c.graph_init;
+import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.enumAsInt;
 import static smetana.core.JUtils.function;
@@ -241,7 +242,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	gvle.call("layout", g);
 	if (gvle.getPtr("cleanup")!=null)
 	if (GD_cleanup(g)==null) 
-	System.err.println("WARNING WE CHEAT GD_cleanup(g) is NULL"); else
+	LOG2("WARNING WE CHEAT GD_cleanup(g) is NULL"); else
 	    GD_cleanup(g).setPtr(gvle.getPtr("cleanup"));
     }
     gv_fixLocale (0);

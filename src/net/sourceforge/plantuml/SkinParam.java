@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19248 $
+ * Revision $Revision: 19398 $
  *
  */
 package net.sourceforge.plantuml;
@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizLayoutStrategy;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
@@ -69,15 +68,24 @@ import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 
 public class SkinParam implements ISkinParam {
 
+	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
+	private static final Pattern stereoPattern = MyPattern.cmpile(stereoPatternString);
+
 	private final Map<String, String> params = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
+	private String dotExecutable;
+
+	public String getDotExecutable() {
+		return dotExecutable;
+	}
+
+	public void setDotExecutable(String dotExecutable) {
+		this.dotExecutable = dotExecutable;
+	}
 
 	public void setParam(String key, String value) {
 		params.put(cleanForKey(key), StringUtils.trin(value));
 	}
-
-	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
-	private static final Pattern stereoPattern = MyPattern.cmpile(stereoPatternString);
 
 	public static SkinParam noShadowing() {
 		final SkinParam result = new SkinParam();
@@ -376,23 +384,6 @@ public class SkinParam implements ISkinParam {
 			return DotSplines.ORTHO;
 		}
 		return DotSplines.SPLINES;
-	}
-
-	public GraphvizLayoutStrategy getStrategy() {
-		final String value = getValue("layout");
-		if ("neato".equalsIgnoreCase(value)) {
-			return GraphvizLayoutStrategy.NEATO;
-		}
-		if ("circo".equalsIgnoreCase(value)) {
-			return GraphvizLayoutStrategy.CIRCO;
-		}
-		if ("fdp".equalsIgnoreCase(value)) {
-			return GraphvizLayoutStrategy.FDP;
-		}
-		if ("twopi".equalsIgnoreCase(value)) {
-			return GraphvizLayoutStrategy.TWOPI;
-		}
-		return GraphvizLayoutStrategy.DOT;
 	}
 
 	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {

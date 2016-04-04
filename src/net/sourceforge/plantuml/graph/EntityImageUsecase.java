@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -76,7 +76,7 @@ class EntityImageUsecase extends AbstractEntityImage {
 
 	@Override
 	public void draw(ColorMapper colorMapper, Graphics2D g2d) {
-		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder(g2d));
+		final Dimension2D dimTotal = getDimension(StringBounderUtils.asStringBounder());
 
 		// Shape ellipse = new Ellipse2D.Double(0, 0, dimTotal.getWidth(),
 		// dimTotal.getHeight());

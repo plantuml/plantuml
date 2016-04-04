@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -63,8 +63,6 @@ import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class Graph4 {
 
-	final private static Graphics2D dummyGraphics2D;
-
 	private final int spaceWidth = 40;
 	private final int spaceHeight = 40;
 
@@ -79,11 +77,6 @@ public class Graph4 {
 
 	private int addedWidth = 0;
 	private int addedHeight = 0;
-
-	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		dummyGraphics2D = builder.getGraphics2D();
-	}
 
 	class ANodePoint implements Pointable, XMoveable {
 		final private ANode node;
@@ -128,8 +121,8 @@ public class Graph4 {
 			final Point2DInt p = nodePoint.getPosition();
 			final AbstractEntityImage image = getImage(nodePoint.getNode());
 
-			int widthCell = (int) image.getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D)).getWidth();
-			int heightCell = (int) image.getDimension(StringBounderUtils.asStringBounder(dummyGraphics2D)).getHeight();
+			int widthCell = (int) image.getDimension(StringBounderUtils.asStringBounder()).getWidth();
+			int heightCell = (int) image.getDimension(StringBounderUtils.asStringBounder()).getHeight();
 			if (widthCell % 2 == 1) {
 				widthCell++;
 			}
@@ -155,7 +148,7 @@ public class Graph4 {
 			final double x = point.getPosition().getX();
 			final double y = point.getPosition().getY();
 			final Dimension2D dim = getImage(point.getNode()).getDimension(
-					StringBounderUtils.asStringBounder(dummyGraphics2D));
+					StringBounderUtils.asStringBounder());
 			final int width = (int) dim.getWidth();
 			final int height = (int) dim.getHeight();
 			final Frame frame = new Frame(x - width / 2, y - height / 2, width, height);

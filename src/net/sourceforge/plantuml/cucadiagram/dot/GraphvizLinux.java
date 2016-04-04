@@ -28,17 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19395 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 import java.io.File;
 
+import net.sourceforge.plantuml.ISkinParam;
+
 class GraphvizLinux extends AbstractGraphviz {
 
-	GraphvizLinux(String dotString, String... type) {
-		super(dotString, type);
+	GraphvizLinux(ISkinParam skinParam, String dotString, String... type) {
+		super(skinParam, dotString, type);
 	}
 
 	@Override

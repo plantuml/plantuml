@@ -56,8 +56,9 @@ public class UrlBuilder {
 	}
 
 	private static final String URL_PATTERN_OLD = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{((?:[^{}]|\\{[^{}]*\\})+)\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";
+	private static final String URL_PATTERN = "\\[\\[([%g][^%g]+[%g])?([\\w\\W]*)\\]\\]";
 
-	private static final String URL_PATTERN = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{" + "(" + levelN(3)
+	private static final String URL_PATTERN_BAD = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{" + "(" + levelN(3)
 			+ ")" + "\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";
 
 	private final String topurl;
@@ -100,14 +101,41 @@ public class UrlBuilder {
 		if (m.matches() == false) {
 			return null;
 		}
-		String url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(1));
-		if (url.startsWith("http:") == false && url.startsWith("https:") == false) {
-			// final String top = getSystem().getSkinParam().getValue("topurl");
-			if (topurl != null) {
-				url = topurl + url;
+		// String url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(1));
+		// if (url.startsWith("http:") == false && url.startsWith("https:") == false) {
+		// // final String top = getSystem().getSkinParam().getValue("topurl");
+		// if (topurl != null) {
+		// url = topurl + url;
+		// }
+		// }
+
+		final String quotedPart = m.group(1);
+		final String full = m.group(2);
+		final int openBracket = full.indexOf('{');
+		final int closeBracket = full.lastIndexOf('}');
+		if (quotedPart == null) {
+			if (openBracket != -1 && closeBracket != -1) {
+				return new Url(withTopUrl(full.substring(0, openBracket)),
+						full.substring(openBracket + 1, closeBracket), full.substring(closeBracket + 1).trim());
 			}
+			final int firstSpace = full.indexOf(' ');
+			if (firstSpace == -1) {
+				return new Url(full, null, null);
+			}
+			return new Url(withTopUrl(full.substring(0, firstSpace)), null, full.substring(firstSpace + 1).trim());
 		}
-		return new Url(url, m.group(2), m.group(3));
+		if (openBracket != -1 && closeBracket != -1) {
+			return new Url(withTopUrl(quotedPart), full.substring(openBracket + 1, closeBracket), full.substring(
+					closeBracket + 1).trim());
+		}
+		return new Url(withTopUrl(quotedPart), null, null);
+	}
+
+	private String withTopUrl(String url) {
+		if (url.startsWith("http:") == false && url.startsWith("https:") == false && topurl != null) {
+			return topurl + url;
+		}
+		return url;
 	}
 
 	public static String getRegexp() {

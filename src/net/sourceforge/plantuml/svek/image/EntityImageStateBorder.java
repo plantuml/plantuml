@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -55,26 +56,24 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.Shape;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageStateBorder extends AbstractEntityImage {
 
-	public static final double RADIUS = 6;
 	private final TextBlock desc;
 	private final Cluster stateParent;
 	private final EntityPosition entityPosition;
 	private final Bibliotekon bibliotekon;
+	private final Rankdir rankdir;
 
 	public EntityImageStateBorder(ILeaf leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon) {
 		super(leaf, skinParam);
 		this.bibliotekon = bibliotekon;
+		this.rankdir = skinParam.getRankdir();
 
 		this.entityPosition = leaf.getEntityPosition();
 		if (entityPosition == EntityPosition.NORMAL) {
@@ -94,7 +93,7 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(RADIUS * 2, RADIUS * 2);
+		return entityPosition.getDimension(rankdir);
 	}
 
 	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
@@ -103,18 +102,14 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		final Shadowable circle = new UEllipse(RADIUS * 2, RADIUS * 2);
-		// if (getSkinParam().shadowing()) {
-		// circle.setDeltaShadow(4);
-		// }
 
 		double y = 0;
 		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
-		final double x = 0 - (dimDesc.getWidth() - 2 * RADIUS) / 2;
+		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
 		if (upPosition()) {
-			y -= 2 * RADIUS + dimDesc.getHeight();
+			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();
 		} else {
-			y += 2 * RADIUS;
+			y += 2 * EntityPosition.RADIUS;
 		}
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
@@ -126,33 +121,12 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 		}
 		ug = ug.apply(new UChangeBackColor(backcolor));
 
-		ug.draw(circle);
-		if (entityPosition == EntityPosition.EXIT_POINT) {
-			final double xc = 0 + RADIUS + .5;
-			final double yc = 0 + RADIUS + .5;
-			final double radius = RADIUS - .5;
-			drawLine(ug, getPointOnCircle(xc, yc, Math.PI / 4, radius),
-					getPointOnCircle(xc, yc, Math.PI + Math.PI / 4, radius));
-			drawLine(ug, getPointOnCircle(xc, yc, -Math.PI / 4, radius),
-					getPointOnCircle(xc, yc, Math.PI - Math.PI / 4, radius));
-		}
-	}
-
-	private Point2D getPointOnCircle(double xc, double yc, double angle, double radius) {
-		final double x = xc + radius * Math.cos(angle);
-		final double y = yc + radius * Math.sin(angle);
-		return new Point2D.Double(x, y);
-	}
-
-	static private void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
-		final double dx = p2.getX() - p1.getX();
-		final double dy = p2.getY() - p1.getY();
-		ug.apply(new UTranslate(p1.getX(), p1.getY())).draw(new ULine(dx, dy));
+		entityPosition.drawSymbol(ug, rankdir);
 
 	}
 
 	public ShapeType getShapeType() {
-		return ShapeType.CIRCLE;
+		return entityPosition.getShapeType();
 	}
 
 	public int getShield() {

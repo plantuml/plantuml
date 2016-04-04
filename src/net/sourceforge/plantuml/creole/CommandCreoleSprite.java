@@ -65,7 +65,8 @@ public class CommandCreoleSprite implements Command {
 			throw new IllegalStateException();
 		}
 		final String src = m.group(2);
-		stripe.addSprite(src);
+		final double scale = CommandCreoleImg.getScale(m.group(3));
+		stripe.addSprite(src, scale);
 		return line.substring(m.group(1).length());
 	}
 

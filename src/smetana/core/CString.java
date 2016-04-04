@@ -39,10 +39,13 @@ import smetana.core.amiga.StarStruct;
 
 public class CString extends UnsupportedC implements __ptr__, Area {
 
+	private static int UID = 100;
+	
 	private final Throwable creation = new Throwable();
 	private final List<Character> data2;
 	private final int currentStart;
 	private final List<__ptr__> fathers = new ArrayList<__ptr__>();
+	private final int uid;
 
 	public boolean isSameThan(CString other) {
 		if (this.data2 != other.data2) {
@@ -92,6 +95,8 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 	private CString(List<Character> data2, int currentStart) {
 		this.data2 = data2;
 		this.currentStart = currentStart;
+		this.uid = UID;
+		UID+=2;
 		creation.fillInStackTrace();
 	}
 
@@ -220,6 +225,10 @@ public class CString extends UnsupportedC implements __ptr__, Area {
 			JUtils.LOG("CString::setMyFather " + this + "  " + fathers.size());
 		}
 		this.fathers.add(struct);
+	}
+
+	public int getUid() {
+		return uid;
 	}
 
 }

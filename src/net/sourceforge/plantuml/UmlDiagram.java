@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19235 $
+ * Revision $Revision: 19398 $
  *
  */
 package net.sourceforge.plantuml;
@@ -427,5 +427,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	public boolean isUseJDot() {
 		return useJDot;
+	}
+
+	public void setDotExecutable(String dotExecutable) {
+		skinParam.setDotExecutable(dotExecutable);
 	}
 }

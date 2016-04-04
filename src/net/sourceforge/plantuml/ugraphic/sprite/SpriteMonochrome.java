@@ -106,15 +106,16 @@ public class SpriteMonochrome implements Sprite {
 		return new UImage(im);
 	}
 
-	public TextBlock asTextBlock(final HtmlColor color) {
+	public TextBlock asTextBlock(final HtmlColor color, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				ug.draw(toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), color));
+				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), color);
+				ug.draw(image.scale(scale));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(getWidth(), getHeight());
+				return new Dimension2DDouble(getWidth() * scale, getHeight() * scale);
 			}
 		};
 	}

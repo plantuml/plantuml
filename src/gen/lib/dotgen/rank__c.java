@@ -63,6 +63,7 @@ import static gen.lib.dotgen.class1__c.class1_;
 import static gen.lib.dotgen.decomp__c.decompose;
 import static gen.lib.dotgen.dotinit__c.dot_root;
 import static smetana.core.JUtils.EQ;
+import static smetana.core.JUtils.LOG2;
 import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strncmp;
 import static smetana.core.JUtilsDebug.ENTERING;
@@ -936,7 +937,7 @@ try {
     Agnode_s n, nn;
     Agedge_s e;
     int i;
-    System.err.println("node_induce");
+    LOG2("node_induce");
     /* enforce that a node is in at most one cluster at this level */
     for (n = agfstnode(g); n!=null; n = nn) {
 	nn = agnxtnode(g, n);

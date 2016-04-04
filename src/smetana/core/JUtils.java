@@ -185,6 +185,10 @@ public class JUtils {
 		// System.err.println(s);
 	}
 
+	public static void LOG2(String s) {
+		// System.err.println(s);
+	}
+
 	public static boolean EQ(Object o1, Object o2) {
 		if (o1 == o2) {
 			return true;
@@ -235,6 +239,19 @@ public class JUtils {
 				throw new UnsupportedOperationException();
 			}
 			return EQ(o1b, o2b);
+		}
+		if (o1 instanceof StarArrayOfStruct && o2 instanceof StarArrayOfStruct) { 
+			StarArrayOfStruct oo1 = (StarArrayOfStruct) o1;
+			StarArrayOfStruct oo2 = (StarArrayOfStruct) o2;
+			return oo1.isSameThan(oo2);
+		}
+		if (o1 instanceof StarArrayOfPtr && o2 instanceof StarArrayOfStruct) { 
+			StarArrayOfPtr oo1 = (StarArrayOfPtr) o1;
+			StarArrayOfStruct oo2 = (StarArrayOfStruct) o2;
+			__struct__ s1 = oo1.getStruct();
+			__struct__ s2 = oo2.getStruct();
+			boolean result = s1.getInternalData().isSameThan(s2.getInternalData());
+			return result;
 		}
 		System.err.println("o1=" + o1.getClass() + " " + o1);
 		System.err.println("o2=" + o2.getClass() + " " + o2);
