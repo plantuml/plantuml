@@ -193,7 +193,7 @@ public class SvgGraphics {
             elt.setAttribute("fill", fill);
             elt.setAttribute("style", getStyle());
             if (deltaShadow > 0) {
-                elt.setAttribute("filter", "url(#" + filterId + ")");
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
             }
             getG().appendChild(elt);
         }
@@ -318,7 +318,7 @@ public class SvgGraphics {
         if (hidden == false) {
             final Element elt = createRectangleInternal(x, y, width, height);
             if (deltaShadow > 0) {
-                elt.setAttribute("filter", "url(#" + filterId + ")");
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
             }
             if (rx > 0 && ry > 0) {
                 elt.setAttribute("rx", format(rx));
@@ -351,7 +351,7 @@ public class SvgGraphics {
             elt.setAttribute("y2", format(y2));
             elt.setAttribute("style", getStyle());
             if (deltaShadow > 0) {
-                elt.setAttribute("filter", "url(#" + filterId + ")");
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
             }
             getG().appendChild(elt);
         }
@@ -386,7 +386,7 @@ public class SvgGraphics {
             elt.setAttribute("fill", fill);
             elt.setAttribute("style", getStyle());
             if (deltaShadow > 0) {
-                elt.setAttribute("filter", "url(#" + filterId + ")");
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
             }
             getG().appendChild(elt);
         }
@@ -403,6 +403,9 @@ public class SvgGraphics {
 
         if (hidden == false) {
             final Element elt = document.createElement("text");
+
+            // required for web-kit based browsers
+            elt.setAttribute("text-rendering", "geometricPrecision");
 
             elt.setAttribute("x", format(x));
             elt.setAttribute("y", format(y));
@@ -428,7 +431,7 @@ public class SvgGraphics {
             }
             if (textBackColor != null) {
                 final String backFilterId = getFilterBackColor(textBackColor);
-                elt.setAttribute("filter", "url(#" + backFilterId + ")");
+                // elt.setAttribute("filter", "url(#" + backFilterId + ")");
             }
             for (final Map.Entry<String, String> ent : attributes.entrySet()) {
                 elt.setAttribute(ent.getKey(), ent.getValue());
@@ -449,8 +452,8 @@ public class SvgGraphics {
                 elt.setAttribute("class", "snippetCandidate");
                 elt.setAttribute("id", text);
                 elt.setTextContent(text.substring(text.lastIndexOf(".") + 1));
-                elt.setAttribute("textLength", text.substring(text.lastIndexOf(".") + 1));
-                elt.setAttribute("onclick", "displayComponentTooltip('" + text + "')");
+                elt.setAttribute("textLength", String.valueOf(text.substring(text.lastIndexOf(".") + 1).length()));
+                elt.setAttribute("onclick", "displayComponentInfoPopup('" + text + "')");
                 textLength = text.substring(text.lastIndexOf(".") + 1).length();
                 elt.setAttribute("x", format(x + (text.lastIndexOf(".") * 2)));
             } else {
@@ -488,7 +491,7 @@ public class SvgGraphics {
         filter.setAttribute("height", "1");
         addFilter(filter, "feFlood", "flood-color", color);
         addFilter(filter, "feComposite", "in", "SourceGraphic");
-        defs.appendChild(filter);
+        // defs.appendChild(filter);
         return id;
     }
 
@@ -612,7 +615,7 @@ public class SvgGraphics {
             elt.setAttribute("style", getStyle());
             elt.setAttribute("fill", fill);
             if (deltaShadow > 0) {
-                elt.setAttribute("filter", "url(#" + filterId + ")");
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
             }
             getG().appendChild(elt);
         }
@@ -732,7 +735,7 @@ public class SvgGraphics {
                 addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy", ""
                         + (4 * scale));
                 addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
-                defs.appendChild(filter);
+                // defs.appendChild(filter);
 
             }
             withShadow = true;
