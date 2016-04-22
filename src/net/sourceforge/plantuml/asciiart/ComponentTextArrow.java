@@ -105,6 +105,9 @@ public class ComponentTextArrow extends AbstractComponentText {
 			charArea.drawChar('>', width - 1, yarrow);
 		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
 			charArea.drawChar('<', 1, yarrow);
+		} else if (config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {
+			charArea.drawChar('>', width - 1, yarrow);
+			charArea.drawChar('<', 1, yarrow);
 		} else {
 			throw new UnsupportedOperationException();
 		}

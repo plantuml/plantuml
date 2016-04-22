@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19528 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -434,7 +434,7 @@ class DrawableSetInitializer {
 			}
 		}
 		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());
-		final ComponentType type = getNoteComponentType(n.getStyle());
+		final ComponentType type = n.getStyle().getNoteComponentType();
 		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
 				skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 		return noteBox;
@@ -454,16 +454,6 @@ class DrawableSetInitializer {
 
 		drawableSet.addEvent(notes, notesBoxes);
 		freeY2 = freeY2.add(notesBoxes.getPreferredHeight(stringBounder), range);
-	}
-
-	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
-		if (noteStyle == NoteStyle.HEXAGONAL) {
-			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (noteStyle == NoteStyle.BOX) {
-			return ComponentType.NOTE_BOX;
-		}
-		return ComponentType.NOTE;
 	}
 
 	private void prepareLiveEvent(StringBounder stringBounder, LifeEvent lifeEvent, ParticipantRange range) {

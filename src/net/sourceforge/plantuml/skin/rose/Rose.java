@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19510 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -226,7 +226,7 @@ public class Rose implements Skin {
 			return new ComponentRoseDestroy(getHtmlColor(param, ColorParam.sequenceLifeLineBorder));
 		}
 		if (type == ComponentType.NEWPAGE) {
-			return new ComponentRoseNewpage(getFontColor(param, FontParam.SEQUENCE_GROUP));
+			return new ComponentRoseNewpage(getHtmlColor(param, ColorParam.sequenceNewpageSeparator));
 		}
 		if (type == ComponentType.DIVIDER) {
 			return new ComponentRoseDivider(getUFont2(param, FontParam.SEQUENCE_DIVIDER), getHtmlColor(param,

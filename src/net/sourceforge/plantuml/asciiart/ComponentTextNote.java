@@ -36,15 +36,14 @@ package net.sourceforge.plantuml.asciiart;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
-import net.sourceforge.plantuml.StringUtils;
 
 public class ComponentTextNote extends AbstractComponentText {
 
@@ -64,10 +63,18 @@ public class ComponentTextNote extends AbstractComponentText {
 		final int width = (int) dimensionToUse.getWidth() - 1;
 		final int height = (int) dimensionToUse.getHeight();
 		charArea.fillRect(' ', 2, 1, width - 3, height - 2);
-		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawNoteSimpleUnicode(2, 0, width - 2, height);
-		} else {
-			charArea.drawNoteSimple(2, 0, width - 2, height);
+		if (type == ComponentType.NOTE) {
+			if (fileFormat == FileFormat.UTXT) {
+				charArea.drawNoteSimpleUnicode(2, 0, width - 2, height);
+			} else {
+				charArea.drawNoteSimple(2, 0, width - 2, height);
+			}
+		} else if (type == ComponentType.NOTE_BOX) {
+			if (fileFormat == FileFormat.UTXT) {
+				charArea.drawBoxSimpleUnicode(2, 0, width - 2, height);
+			} else {
+				charArea.drawBoxSimple(2, 0, width - 2, height);
+			}
 		}
 		charArea.drawStringsLR(stringsToDisplay.as(), 3, 1);
 	}

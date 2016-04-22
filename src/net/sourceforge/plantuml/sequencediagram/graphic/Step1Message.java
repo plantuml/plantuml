@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19528 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -73,7 +73,8 @@ class Step1Message extends Step1Abstract {
 
 		if (message.getNote() != null) {
 			final ISkinParam skinParam = message.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
-			setNote(drawingSet.getSkin().createComponent(ComponentType.NOTE, null, skinParam, message.getNote()));
+			setNote(drawingSet.getSkin().createComponent(message.getNoteStyle().getNoteComponentType(), null,
+					skinParam, message.getNote()));
 		}
 
 	}

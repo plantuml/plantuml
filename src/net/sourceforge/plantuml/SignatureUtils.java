@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19602 $
  *
  */
 package net.sourceforge.plantuml;
@@ -48,6 +48,22 @@ public class SignatureUtils {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
+			msgDigest.update(s.getBytes("UTF-8"));
+			final byte[] digest = msgDigest.digest();
+			return coder.encode(digest);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	public static String getSignatureSha512(String s) {
+		try {
+			final AsciiEncoder coder = new AsciiEncoder();
+			final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
 			msgDigest.update(s.getBytes("UTF-8"));
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);

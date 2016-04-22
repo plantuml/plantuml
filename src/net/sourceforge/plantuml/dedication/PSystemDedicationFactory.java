@@ -28,35 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 3837 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram;
+package net.sourceforge.plantuml.dedication;
 
-import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-public enum NoteStyle {
+public class PSystemDedicationFactory extends PSystemSingleLineFactory {
 
-	NORMAL, HEXAGONAL, BOX;
-
-	public static NoteStyle getNoteStyle(String s) {
-		if (s.equalsIgnoreCase("hnote")) {
-			return NoteStyle.HEXAGONAL;
-		} else if (s.equalsIgnoreCase("rnote")) {
-			return NoteStyle.BOX;
+	@Override
+	protected AbstractPSystem executeLine(String line) {
+		final Dedication dedication = Dedications.get(line);
+		if (dedication != null) {
+			return new PSystemDedication(dedication, Dedications.keepLetter(line));
 		}
-		return NoteStyle.NORMAL;
+		return null;
 	}
-	
-	public ComponentType getNoteComponentType() {
-		if (this == NoteStyle.HEXAGONAL) {
-			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (this == NoteStyle.BOX) {
-			return ComponentType.NOTE_BOX;
-		}
-		return ComponentType.NOTE;
-	}
-
 
 }

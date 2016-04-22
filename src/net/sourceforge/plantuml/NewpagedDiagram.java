@@ -124,7 +124,12 @@ public class NewpagedDiagram extends AbstractPSystem {
 			if (sb.length() > 0) {
 				sb.append(" ");
 			}
-			sb.append(d.getWarningOrError());
+			if (d.getWarningOrError() != null) {
+				sb.append(d.getWarningOrError());
+			}
+		}
+		if (sb.length() == 0) {
+			return null;
 		}
 		return sb.toString();
 	}

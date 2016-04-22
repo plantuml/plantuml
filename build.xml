@@ -20,7 +20,7 @@
 	<target name="compile">
 		<delete dir="build" />
 		<mkdir dir="build" />
-		<javac target="1.6" srcdir="src" destdir="build" />
+		<javac target="1.6" srcdir="src" destdir="build" debug="on" />
 		<copy file="src/net/sourceforge/plantuml/version/logo.png"
 			todir="build/net/sourceforge/plantuml/version" />
 		<copy file="src/net/sourceforge/plantuml/version/favicon.png"
@@ -41,6 +41,16 @@
 				<include name="*.png" />
 			</fileset>
 		</copy>
+		<copy todir="build/sprites/archimate">
+			<fileset dir="src/sprites/archimate">
+				<include name="*.png" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/dedication">
+			<fileset dir="src/net/sourceforge/plantuml/dedication">
+				<include name="*.png" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="dist" depends="compile">
@@ -49,6 +59,8 @@
 		<jar jarfile="plantuml.jar" basedir="build">
 			<manifest>
 				<attribute name="Main-Class" value="net.sourceforge.plantuml.Run" />
+				<attribute name="SplashScreen-Image" value="net/sourceforge/plantuml/version/logo.png" />
+				<attribute name="Class-Path" value="batik-all-1.7.jar fop.jar" />
 			</manifest>
 		</jar>
 		<delete dir="build" />

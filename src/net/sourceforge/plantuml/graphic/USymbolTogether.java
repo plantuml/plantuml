@@ -28,35 +28,39 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 8066 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram;
+package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.skin.ComponentType;
+import java.awt.geom.Dimension2D;
 
-public enum NoteStyle {
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-	NORMAL, HEXAGONAL, BOX;
+class USymbolTogether extends USymbol {
 
-	public static NoteStyle getNoteStyle(String s) {
-		if (s.equalsIgnoreCase("hnote")) {
-			return NoteStyle.HEXAGONAL;
-		} else if (s.equalsIgnoreCase("rnote")) {
-			return NoteStyle.BOX;
-		}
-		return NoteStyle.NORMAL;
-	}
-	
-	public ComponentType getNoteComponentType() {
-		if (this == NoteStyle.HEXAGONAL) {
-			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (this == NoteStyle.BOX) {
-			return ComponentType.NOTE_BOX;
-		}
-		return ComponentType.NOTE;
+	@Override
+	public SkinParameter getSkinParameter() {
+		return SkinParameter.STORAGE;
 	}
 
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
+		throw new UnsupportedOperationException();
+	}
+
+	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
+			final SymbolContext symbolContext) {
+		return new AbstractTextBlock() {
+
+			public void drawU(UGraphic ug) {
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(width, height);
+			}
+		};
+	}
 
 }

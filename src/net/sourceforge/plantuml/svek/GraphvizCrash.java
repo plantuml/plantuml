@@ -90,7 +90,8 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 			strings.add("Cannot determine dot version: " + e.toString());
 		}
 		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
+		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
 		strings.add("You can try to turn arround this issue by simplifing your diagram.");
 		if (flashCode != null) {
 			addDecodeHint(strings);

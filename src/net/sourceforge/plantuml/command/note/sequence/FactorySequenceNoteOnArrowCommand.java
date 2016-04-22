@@ -51,19 +51,24 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFactoryCommand<SequenceDiagram> {
 
 	private RegexConcat getRegexConcatMultiLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("$"));
 	}
 
 	private RegexConcat getRegexConcatSingleLine() {
-		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
+		return new RegexConcat(new RegexLeaf("^[%s]*"), //
+				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
+				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
@@ -116,7 +121,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				lines = lines.subExtract(1, 0);
 			}
 
-			((AbstractMessage) m).setNote(lines.toDisplay(), position, line0.get("COLOR", 0), url);
+			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
+			((AbstractMessage) m).setNote(lines.toDisplay(), position, style, line0.get("COLOR", 0), url);
 		}
 
 		return CommandExecutionResult.ok();

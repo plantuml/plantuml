@@ -56,7 +56,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 		} catch (Throwable t) {
 			Log.error("Error " + t);
 			t.printStackTrace();
-			String msg = "You should send a mail to plantuml@gmail.com with this log (V" + Version.versionString()
+			String msg = "You should send a mail to plantuml@gmail.com or post to http://plantuml.com/qa with this log (V" + Version.versionString()
 					+ ")";
 			Log.error(msg);
 			msg += " " + t.toString();

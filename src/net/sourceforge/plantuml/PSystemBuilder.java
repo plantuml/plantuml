@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.PSystemCreoleFactory;
 import net.sourceforge.plantuml.cute.PSystemCuteFactory;
+import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
@@ -159,6 +160,7 @@ public class PSystemBuilder {
 		factories.add(new FlowDiagramFactory());
 		factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		factories.add(new PSystemCuteFactory(DiagramType.CUTE));
+		factories.add(new PSystemDedicationFactory());
 		return factories;
 	}
 

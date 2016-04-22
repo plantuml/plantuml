@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19254 $
+ * Revision $Revision: 19604 $
  *
  */
 package net.sourceforge.plantuml;
@@ -75,7 +75,8 @@ public class OptionPrint {
 		System.out.println("    -tpdf\t\tTo generate images using PDF format");
 		System.out.println("    -tvdx\t\tTo generate images using VDX format");
 		System.out.println("    -txmi\t\tTo generate XMI file for class diagram");
-		System.out.println("    -thtml\t\tTo generate HTML files for class diagram");
+		System.out.println("    -tscxml\t\tTo generate SCXML file for state diagram");
+		System.out.println("    -thtml\t\tTo generate HTML file for class diagram");
 		System.out.println("    -ttxt\t\tTo generate images with ASCII art");
 		System.out.println("    -tutxt\t\tTo generate images with ASCII art using Unicode characters");
 		System.out.println("    -tlatex\t\tTo generate images using LaTeX/Tikz format");

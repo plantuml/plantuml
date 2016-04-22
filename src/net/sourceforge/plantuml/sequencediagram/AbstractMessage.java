@@ -56,6 +56,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	private NotePosition notePosition;
 	private HtmlColor noteBackColor;
 	private Url urlNote;
+	private NoteStyle noteStyle;
 	private final Url url;
 	private final String messageNumber;
 	private boolean parallel = false;
@@ -137,7 +138,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	public final Display getLabel() {
 		return label;
 	}
-	
+
 	public final Display getLabelNumbered() {
 		if (getMessageNumber() == null) {
 			return getLabel();
@@ -148,7 +149,6 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		return result;
 	}
 
-
 	public final ArrowConfiguration getArrowConfiguration() {
 		return arrowConfiguration;
 	}
@@ -156,15 +156,20 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	public final Display getNote() {
 		return notes == null ? notes : notes;
 	}
+	
+	public final NoteStyle getNoteStyle() {
+		return noteStyle;
+	}
 
 	public final Url getUrlNote() {
 		return urlNote;
 	}
 
-	public final void setNote(Display strings, NotePosition notePosition, String backcolor, Url url) {
+	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
 		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {
 			throw new IllegalArgumentException();
 		}
+		this.noteStyle = noteStyle;
 		this.notes = strings;
 		this.urlNote = url;
 		this.notePosition = overideNotePosition(notePosition);

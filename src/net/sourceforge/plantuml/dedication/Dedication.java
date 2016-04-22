@@ -28,52 +28,57 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19570 $
+ * Revision $Revision: 4041 $
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.dedication;
 
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
-public class UImage implements UShape {
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 
-	private final BufferedImage image;
+import net.sourceforge.plantuml.webp.VP8Decoder;
 
-	public UImage(BufferedImage image) {
-		this.image = image;
+public class Dedication {
+
+	private final String signature;
+
+	public Dedication(String signature) {
+		this.signature = signature;
 	}
 
-	public UImage(BufferedImage before, double scale) {
-		if (scale == 1) {
-			this.image = before;
-			return;
+	public String getSignature() {
+		return signature;
+	}
+
+	public byte[] getKey(String keepLetter) {
+		try {
+			return keepLetter.getBytes("UTF8");
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException(e);
 		}
-
-		final int w = (int) Math.round(before.getWidth() * scale);
-		final int h = (int) Math.round(before.getHeight() * scale);
-		final BufferedImage after = new BufferedImage(w, h, before.getType());
-		final AffineTransform at = new AffineTransform();
-		at.scale(scale, scale);
-		final AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-		this.image = scaleOp.filter(before, after);
 	}
 
-	public UImage scale(double scale) {
-		return new UImage(image, scale);
+	private InputStream getInputStream(String keepLetter) {
+		final byte[] key = getKey(keepLetter);
+		final InputStream tmp = PSystemDedication.class.getResourceAsStream(getSignature() + ".png");
+		return new DecoderInputStream(tmp, key);
 	}
 
-	public final BufferedImage getImage() {
-		return image;
-	}
-
-	public double getWidth() {
-		return image.getWidth()-1;
-	}
-
-	public double getHeight() {
-		return image.getHeight()-1;
+	public BufferedImage getBufferedImage(String keepLetter) {
+		try {
+			final InputStream is = getInputStream(keepLetter);
+			final ImageInputStream iis = ImageIO.createImageInputStream(is);
+			final VP8Decoder vp8Decoder = new VP8Decoder();
+			vp8Decoder.decodeFrame(iis, false);
+			iis.close();
+			return vp8Decoder.getFrame().getBufferedImage();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

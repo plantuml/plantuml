@@ -58,6 +58,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -294,7 +296,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final String height = "" + (shape.getHeight() / 72);
 		agsafeset(node, new CString("width"), new CString(width), new CString(""));
 		agsafeset(node, new CString("height"), new CString(height), new CString(""));
-		System.err.println("NODE " + leaf.getUid() + " " + width + " " + height);
+		// System.err.println("NODE " + leaf.getUid() + " " + width + " " + height);
 		nodes.put(leaf, node);
 	}
 
@@ -370,7 +372,19 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
+	private static final Lock lock = new ReentrantLock();
+
 	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+			throws IOException {
+		lock.lock();
+		try {
+			return createFileLocked(os, dotStrings, fileFormatOption);
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		for (ILeaf leaf : diagram.getLeafsvalues()) {
@@ -399,9 +413,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			// }
 			//
 			for (Link link : diagram.getLinks()) {
-				System.err.println("link=" + link);
+				// System.err.println("link=" + link);
 				final Agedge_s e = createEdge(g, link);
-				System.err.println("Agedge_s=" + e);
+				// System.err.println("Agedge_s=" + e);
 				if (e != null) {
 					edges.put(link, e);
 				}
@@ -510,8 +524,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		// if (/* pragma.horizontalLineBetweenDifferentPackageAllowed() || */link.isInvis() || length != 1) {
 		agsafeset(e, new CString("minlen"), new CString("" + (length - 1)), new CString(""));
 		// }
-		System.err.print("EDGE " + link.getEntity1().getUid() + "->" + link.getEntity2().getUid() + " minlen="
-				+ (length - 1) + " ");
+		// System.err.print("EDGE " + link.getEntity1().getUid() + "->" + link.getEntity2().getUid() + " minlen="
+		// + (length - 1) + " ");
 
 		final TextBlock label = getLabel(link);
 		if (TextBlockUtils.isEmpty(label) == false) {
@@ -520,9 +534,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());
 			agsafeset(e, new CString("label"), hackDim, new CString(""));
-			System.err.print(" label=" + hackDim.getContent());
+			// System.err.print("label=" + hackDim.getContent());
 		}
-		System.err.println();
+		// System.err.println();
 		return e;
 	}
 
@@ -537,7 +551,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		strings.add(" ");
 		strings.add("Sorry, the subproject Smetana is not finished yet...");
 		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
+		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
 		strings.add(" ");
 		return strings;
 	}

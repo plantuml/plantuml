@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19398 $
+ * Revision $Revision: 19591 $
  *
  */
 package net.sourceforge.plantuml;
@@ -306,8 +306,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		strings.add(" - a bug in PlantUML");
 		strings.add(" - a problem in GraphViz");
 		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
-		strings.add("You can try to turn arround this issue by simplifing your diagram.");
+		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
 		strings.add(" ");
 		return strings;
 	}
@@ -320,7 +320,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		strings.add(" ");
 		strings.add("PlantUML (" + Version.versionString() + ") has crashed.");
 		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> to solve this issue.");
+		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
 		strings.add("You can try to turn arround this issue by simplifing your diagram.");
 		strings.add(" ");
 		return strings;

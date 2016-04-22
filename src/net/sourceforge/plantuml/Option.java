@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19396 $
+ * Revision $Revision: 19543 $
  *
  */
 package net.sourceforge.plantuml;
@@ -96,6 +96,8 @@ public class Option {
 				setFileFormat(FileFormat.SVG);
 			} else if (s.equalsIgnoreCase("-thtml") || s.equalsIgnoreCase("-html")) {
 				setFileFormat(FileFormat.HTML);
+			} else if (s.equalsIgnoreCase("-tscxml") || s.equalsIgnoreCase("-scxml")) {
+				setFileFormat(FileFormat.SCXML);
 			} else if (s.equalsIgnoreCase("-txmi") || s.equalsIgnoreCase("-xmi")) {
 				setFileFormat(FileFormat.XMI_STANDARD);
 			} else if (s.equalsIgnoreCase("-txmi:argo") || s.equalsIgnoreCase("-xmi:argo")) {

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19529 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
@@ -60,7 +60,9 @@ public class TextSkin implements Skin {
 			return new ComponentTextActor(type, stringsToDisplay, fileFormat);
 		}
 		if (type.isArrow()
-				&& ((config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) || (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE))) {
+				&& (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
+						|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE || config
+						.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)) {
 			return new ComponentTextArrow(type, config, stringsToDisplay, fileFormat, param.maxAsciiMessageLength());
 		}
 		if (type.isArrow() && config.isSelfArrow()) {
@@ -87,7 +89,7 @@ public class TextSkin implements Skin {
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN) {
 			return new ComponentTextActiveLine(fileFormat);
 		}
-		if (type == ComponentType.NOTE) {
+		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX) {
 			return new ComponentTextNote(type, stringsToDisplay, fileFormat);
 		}
 		if (type == ComponentType.DIVIDER) {

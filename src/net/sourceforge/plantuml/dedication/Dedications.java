@@ -28,35 +28,51 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 4041 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram;
+package net.sourceforge.plantuml.dedication;
 
-import net.sourceforge.plantuml.skin.ComponentType;
+import java.util.HashMap;
+import java.util.Map;
 
-public enum NoteStyle {
+import net.sourceforge.plantuml.SignatureUtils;
 
-	NORMAL, HEXAGONAL, BOX;
+public class Dedications {
 
-	public static NoteStyle getNoteStyle(String s) {
-		if (s.equalsIgnoreCase("hnote")) {
-			return NoteStyle.HEXAGONAL;
-		} else if (s.equalsIgnoreCase("rnote")) {
-			return NoteStyle.BOX;
-		}
-		return NoteStyle.NORMAL;
-	}
-	
-	public ComponentType getNoteComponentType() {
-		if (this == NoteStyle.HEXAGONAL) {
-			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (this == NoteStyle.BOX) {
-			return ComponentType.NOTE_BOX;
-		}
-		return ComponentType.NOTE;
+	private static final Map<String, Dedication> all = new HashMap<String, Dedication>();
+
+	static {
+		addNormal("Write your own dedication!");
+		addCrypted("RyHcSMMTGTW-ZlDelq18AwlwfbZZdfo-Yo0ketavjyFxRAFoKx1mAI032reWO3p4Mog-AV6jFqjXfi8G6pKo7G00");
 	}
 
+	private static void addNormal(String sentence) {
+		final String signature = SignatureUtils.getSignatureSha512(keepLetter(sentence));
+		addCrypted(signature);
+	}
+
+	private static void addCrypted(String signature) {
+		all.put(signature, new Dedication(signature));
+	}
+
+	private Dedications() {
+	}
+
+	public static Dedication get(String line) {
+		final String signature = SignatureUtils.getSignatureSha512(keepLetter(line));
+		return all.get(signature);
+	}
+
+	public static String keepLetter(String s) {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (Character.isLetter(c)) {
+				sb.append(c);
+			}
+		}
+		return sb.toString().toUpperCase();
+	}
 
 }

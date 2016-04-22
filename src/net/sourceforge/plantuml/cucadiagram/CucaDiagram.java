@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19243 $
+ * Revision $Revision: 19540 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -56,10 +56,12 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.jdot.CucaDiagramFileMakerJDot;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
+import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower {
 
@@ -288,6 +290,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		maker.createFiles(suggestedFile);
 	}
 
+	private void createFilesScxml(OutputStream suggestedFile) throws IOException {
+		final StateDiagramScxmlMaker maker = new StateDiagramScxmlMaker((StateDiagram) this);
+		maker.createFiles(suggestedFile);
+	}
+
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
@@ -304,6 +311,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		if (fileFormat.name().startsWith("XMI")) {
 			createFilesXmi(os, fileFormat);
+			return new ImageDataSimple();
+		}
+
+		if (fileFormat == FileFormat.SCXML) {
+			createFilesScxml(os);
 			return new ImageDataSimple();
 		}
 

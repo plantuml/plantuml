@@ -28,35 +28,42 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6575 $
+ * Revision $Revision: 5079 $
  *
  */
-package net.sourceforge.plantuml.sequencediagram;
+package net.sourceforge.plantuml.xmlsc;
 
-import net.sourceforge.plantuml.skin.ComponentType;
+import java.io.IOException;
+import java.io.OutputStream;
 
-public enum NoteStyle {
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
-	NORMAL, HEXAGONAL, BOX;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.statediagram.StateDiagram;
 
-	public static NoteStyle getNoteStyle(String s) {
-		if (s.equalsIgnoreCase("hnote")) {
-			return NoteStyle.HEXAGONAL;
-		} else if (s.equalsIgnoreCase("rnote")) {
-			return NoteStyle.BOX;
-		}
-		return NoteStyle.NORMAL;
-	}
-	
-	public ComponentType getNoteComponentType() {
-		if (this == NoteStyle.HEXAGONAL) {
-			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (this == NoteStyle.BOX) {
-			return ComponentType.NOTE_BOX;
-		}
-		return ComponentType.NOTE;
+public final class StateDiagramScxmlMaker {
+
+	private final StateDiagram diagram;
+
+	public StateDiagramScxmlMaker(StateDiagram diagram) throws IOException {
+		this.diagram = diagram;
 	}
 
+	public void createFiles(OutputStream fos) throws IOException {
+		try {
+			final ScxmlStateDiagramStandard xmi;
+			xmi = new ScxmlStateDiagramStandard(diagram);
+			xmi.transformerXml(fos);
+		} catch (ParserConfigurationException e) {
+			Log.error(e.toString());
+			e.printStackTrace();
+			throw new IOException(e.toString());
+		} catch (TransformerException e) {
+			Log.error(e.toString());
+			e.printStackTrace();
+			throw new IOException(e.toString());
+		}
+	}
 
 }
