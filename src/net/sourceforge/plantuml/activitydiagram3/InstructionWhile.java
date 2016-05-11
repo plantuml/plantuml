@@ -57,8 +57,8 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 	private Display yes;
 	private Display out = Display.NULL;
 	private boolean testCalled = false;
-	private LinkRendering endInlinkRendering;
-	private LinkRendering afterEndwhile;
+	private LinkRendering endInlinkRendering = LinkRendering.none();
+	private LinkRendering afterEndwhile = LinkRendering.none();
 	private final Swimlane swimlane;
 	private final ISkinParam skinParam;
 
@@ -77,6 +77,9 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 		this.parent = parent;
 		this.test = test;
 		this.nextLinkRenderer = nextLinkRenderer;
+		if (nextLinkRenderer == null) {
+			throw new IllegalArgumentException();
+		}
 		this.yes = yes;
 		this.swimlane = swimlane;
 		this.color = color;
@@ -156,6 +159,5 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 	public Instruction getLast() {
 		return repeatList.getLast();
 	}
-
 
 }

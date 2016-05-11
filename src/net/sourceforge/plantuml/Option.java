@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19543 $
+ * Revision $Revision: 19636 $
  *
  */
 package net.sourceforge.plantuml;
@@ -65,6 +65,7 @@ public class Option {
 	private boolean failfast2 = false;
 	private boolean pattern = false;
 	private boolean duration = false;
+	private boolean debugsvek = false;
 	private int nbThreads = 0;
 	private int ftpPort = -1;
 
@@ -200,8 +201,10 @@ public class Option {
 				OptionFlags.getInstance().setQuiet(true);
 			} else if (s.equalsIgnoreCase("-duration")) {
 				duration = true;
+			} else if (s.equalsIgnoreCase("-debugsvek") || s.equalsIgnoreCase("-debug_svek")) {
+				debugsvek = true;
 			} else if (s.equalsIgnoreCase("-keepfiles") || s.equalsIgnoreCase("-keepfile")) {
-				OptionFlags.getInstance().setKeepTmpFiles(true);
+				System.err.println("-keepfiles option has been removed. Please consider -debugsvek instead");
 			} else if (s.equalsIgnoreCase("-metadata")) {
 				OptionFlags.getInstance().setMetadata(true);
 			} else if (s.equalsIgnoreCase("-logdata")) {
@@ -369,7 +372,11 @@ public class Option {
 	}
 
 	public FileFormatOption getFileFormatOption() {
-		return new FileFormatOption(getFileFormat());
+		final FileFormatOption fileFormatOption = new FileFormatOption(getFileFormat());
+		if (debugsvek) {
+			fileFormatOption.setDebugSvek(true);
+		}
+		return fileFormatOption;
 	}
 
 	public final boolean isDuration() {
@@ -414,6 +421,14 @@ public class Option {
 
 	public final File getOutputFile() {
 		return outputFile;
+	}
+
+	public final void setDebugSvek(boolean debugsvek) {
+		this.debugsvek = debugsvek;
+	}
+
+	boolean isDebugSvek() {
+		return debugsvek;
 	}
 
 }

@@ -1447,24 +1447,24 @@ try {
     fontinfo fi = (fontinfo) Memory.malloc(fontinfo.class);
     CString str;
     ND_width(n,
-	late_double(n, Z._().N_width, 0.75, 0.01));
+	late_double(n, Z.z().N_width, 0.75, 0.01));
     ND_height(n,
-	late_double(n, Z._().N_height, 0.5, 0.02));
+	late_double(n, Z.z().N_height, 0.5, 0.02));
     ND_shape(n,
-	bind_shape(late_nnstring(n, Z._().N_shape, new CString("ellipse")), n));
-    str = agxget(n, Z._().N_label);
-    fi.setDouble("fontsize", late_double(n, Z._().N_fontsize, 14.0, 1.0));
-    fi.setPtr("fontname", late_nnstring(n, Z._().N_fontname, new CString("Times-Roman")));
-    fi.setPtr("fontcolor", late_nnstring(n, Z._().N_fontcolor, new CString("black")));
+	bind_shape(late_nnstring(n, Z.z().N_shape, new CString("ellipse")), n));
+    str = agxget(n, Z.z().N_label);
+    fi.setDouble("fontsize", late_double(n, Z.z().N_fontsize, 14.0, 1.0));
+    fi.setPtr("fontname", late_nnstring(n, Z.z().N_fontname, new CString("Times-Roman")));
+    fi.setPtr("fontcolor", late_nnstring(n, Z.z().N_fontcolor, new CString("black")));
     ND_label(n, make_label(n, str,
 	        ((aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)) | ( (shapeOf(n) == enumAsInt(shape_kind.class, "SH_RECORD")) ? (2 << 1) : (0 << 1))),
 		fi.getDouble("fontsize"), fi.getCString("fontname"), fi.getCString("fontcolor")));
-    if (Z._().N_xlabel!=null && (str = agxget(n, Z._().N_xlabel))!=null && (str.charAt(0)!='\0')) {
+    if (Z.z().N_xlabel!=null && (str = agxget(n, Z.z().N_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("4ua9vld76wpovsm1celv2ff6e"); // 	ND_xlabel(n) = make_label((void*)n, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
 UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fontcolor);
 UNSUPPORTED("ail0d4qmxj2aqh2q721inwgqu"); // 	GD_has_labels(agraphof(n)) |= (1 << 4);
     }
-    ND_showboxes(n, late_int(n, Z._().N_showboxes, 0, 0));
+    ND_showboxes(n, late_int(n, Z.z().N_showboxes, 0, 0));
     ND_shape(n).getPtr("fns").call("initfn", n);
 } finally {
 LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
@@ -1479,9 +1479,9 @@ LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 public static void initFontEdgeAttr(Agedge_s e, fontinfo fi) {
 ENTERING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 try {
-    fi.setDouble("fontsize", late_double(e, Z._().E_fontsize, 14.0, 1.0));
-    fi.setPtr("fontname", late_nnstring(e, Z._().E_fontname, new CString("Times-Roman")));
-    fi.setPtr("fontcolor", late_nnstring(e, Z._().E_fontcolor, new CString("black")));
+    fi.setDouble("fontsize", late_double(e, Z.z().E_fontsize, 14.0, 1.0));
+    fi.setPtr("fontname", late_nnstring(e, Z.z().E_fontname, new CString("Times-Roman")));
+    fi.setPtr("fontcolor", late_nnstring(e, Z.z().E_fontcolor, new CString("black")));
 } finally {
 LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 }
@@ -1573,16 +1573,16 @@ try {
     Agraph_s sg = agraphof(agtail(e));
     fi.setPtr("fontname", null);
     lfi.setPtr("fontname", null);
-    if (Z._().E_label!=null && (str = agxget(e, Z._().E_label))!=null && (str.charAt(0)!='\0')) {
+    if (Z.z().E_label!=null && (str = agxget(e, Z.z().E_label))!=null && (str.charAt(0)!='\0')) {
 	r = 1;
 	initFontEdgeAttr(e, fi.amp());
 	ED_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
 				fi.getDouble("fontsize"), fi.getCString("fontname"), fi.getCString("fontcolor")));
 	GD_has_labels(sg, GD_has_labels(sg) | (1 << 0));
 	ED_label_ontop(e,
-	    mapbool(late_string(e, Z._().E_label_float, new CString("false"))));
+	    mapbool(late_string(e, Z.z().E_label_float, new CString("false"))));
     }
-    if (Z._().E_xlabel!=null && (str = agxget(e, Z._().E_xlabel))!=null && (str.charAt(0)!='\0')) {
+    if (Z.z().E_xlabel!=null && (str = agxget(e, Z.z().E_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("1j3mhgq7abuh3n19q2jtjddbc"); // 	if (!fi.fontname)
 UNSUPPORTED("bmqo2g5g107quod3h31r8iudr"); // 	    initFontEdgeAttr(e, &fi);
 UNSUPPORTED("3s7kg9x748riuy3tm697s6e8t"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->xlabel) = make_label((void*)e, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
@@ -1590,13 +1590,13 @@ UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fo
 UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->has_labels) |= (1 << 5);
     }
     /* vladimir */
-    if (Z._().E_headlabel!=null && (str = agxget(e, Z._().E_headlabel))!=null && (str.charAt(0)!='\0')) {
+    if (Z.z().E_headlabel!=null && (str = agxget(e, Z.z().E_headlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("cgznvdnh671wl8jq8q3tyhv1r"); // 	initFontLabelEdgeAttr(e, &fi, &lfi);
 UNSUPPORTED("6nfh8swason2akjp45hm0o5b0"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->head_label) = make_label((void*)e, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
 UNSUPPORTED("eu3ztkfva2x87y72tnu7vv4re"); // 				lfi.fontsize, lfi.fontname, lfi.fontcolor);
 UNSUPPORTED("axtvdewh7zhtm1diu8c6dprx4"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->has_labels) |= (1 << 1);
     }
-    if (Z._().E_taillabel!=null && (str = agxget(e, Z._().E_taillabel))!=null && (str.charAt(0)!='\0')) {
+    if (Z.z().E_taillabel!=null && (str = agxget(e, Z.z().E_taillabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("6y6e1y496y6j6a6065nfesr8o"); // 	if (!lfi.fontname)
 UNSUPPORTED("4w2bicw8rsgyy40x0vhyzzlnm"); // 	    initFontLabelEdgeAttr(e, &fi, &lfi);
 UNSUPPORTED("ans0pi92t6ou5mworb3ohiqj3"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->tail_label) = make_label((void*)e, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
@@ -1615,7 +1615,7 @@ UNSUPPORTED("50hobbhvpqr6dj302waqr59mu"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
 UNSUPPORTED("j71lo2acx1ydov0uj7xjjce"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(((((((Agobj_t*)(e))->tag).objtype) == 3?(e):((e)+1))->node)))->data))->has_port) = (!(0));
 
     ED_tail_port(e, chkPort ((CFunction) ND_shape(agtail(e)).getPtr("fns").getPtr("portfn"), agtail(e), str));
-    if (noClip(e, Z._().E_tailclip))
+    if (noClip(e, Z.z().E_tailclip))
 UNSUPPORTED("cg4z67u0dm6h9nrcx8kkalnlt"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->tail_port).clip = 0;
     str = agget(e, new CString("headport"));
     /* libgraph always defines tailport/headport; libcgraph doesn't */
@@ -1625,7 +1625,7 @@ UNSUPPORTED("542y57dbsosmjvsmdnzon2qb5"); // 	(((Agnodeinfo_t*)(((Agobj_t*)(((((
 
     ED_head_port(e, chkPort((CFunction) ND_shape(aghead(e)).getPtr("fns").getPtr("portfn"), aghead(e), str));
 
-    if (noClip(e, Z._().E_headclip))
+    if (noClip(e, Z.z().E_headclip))
 UNSUPPORTED("ayqscz30ekhcje94wh4ib1hcu"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->head_port).clip = 0;
     return r;
 } finally {

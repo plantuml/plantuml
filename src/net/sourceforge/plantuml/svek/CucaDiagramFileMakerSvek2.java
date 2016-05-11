@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +42,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
@@ -147,7 +146,7 @@ public final class CucaDiagramFileMakerSvek2 {
 
 	}
 
-	public IEntityImage createFile(String... dotStrings) {
+	public IEntityImage createFile(BaseFile basefile, String dotStrings[]) {
 
 		dotData.removeIrrelevantSametail();
 		dotStringFactory = new DotStringFactory(colorSequence, stringBounder, dotData);
@@ -210,10 +209,16 @@ public final class CucaDiagramFileMakerSvek2 {
 			return error(dotStringFactory.getDotExe());
 		}
 
-		final boolean trace = OptionFlags.getInstance().isKeepTmpFiles() || OptionFlags.TRACE_DOT || isSvekTrace();
+		// final boolean trace = OptionFlags.getInstance().isKeepTmpFiles() || OptionFlags.TRACE_DOT || isSvekTrace();
+		// option.isDebugSvek
+		// System.err.println("FOO11 svekDebug=" + svekDebug);
+		if (basefile == null && isSvekTrace()) {
+			basefile = new BaseFile();
+		}
+		// System.err.println("FOO11 basefile=" + basefile);
 		final String svg;
 		try {
-			svg = dotStringFactory.getSvg(trace, dotStrings);
+			svg = dotStringFactory.getSvg(basefile, dotStrings);
 		} catch (IOException e) {
 			return new GraphvizCrash(source.getPlainString());
 		}
@@ -526,7 +531,8 @@ public final class CucaDiagramFileMakerSvek2 {
 			if (members.size() == 0) {
 				attribute = new TextBlockEmpty();
 			} else {
-				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(), g.getStereotype());
+				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),
+						g.getStereotype());
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();

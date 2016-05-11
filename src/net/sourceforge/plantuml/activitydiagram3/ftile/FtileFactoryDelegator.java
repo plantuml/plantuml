@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -60,13 +62,16 @@ public class FtileFactoryDelegator implements FtileFactory {
 	private final ISkinParam skinParam;
 	private final Rose rose = new Rose();
 
-	protected HtmlColor getInLinkRenderingColor(Ftile tile) {
-		final HtmlColor color;
+	protected final Rainbow getInLinkRenderingColor(Ftile tile) {
+		Rainbow color;
 		final LinkRendering linkRendering = tile.getInLinkRendering();
-		if (linkRendering == null || linkRendering.getColor() == null) {
-			color = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		if (linkRendering == null) {
+			color = HtmlColorAndStyle.build(getSkinParam());
 		} else {
-			color = linkRendering.getColor();
+			color = linkRendering.getRainbow();
+		}
+		if (color.size() == 0) {
+			color = HtmlColorAndStyle.build(getSkinParam());
 		}
 		return color;
 	}
@@ -118,10 +123,16 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile decorateIn(Ftile ftile, LinkRendering linkRendering) {
+		if (linkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 		return factory.decorateIn(ftile, linkRendering);
 	}
 
 	public Ftile decorateOut(Ftile ftile, LinkRendering linkRendering) {
+		if (linkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 		return factory.decorateOut(ftile, linkRendering);
 	}
 
@@ -129,9 +140,9 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.assembly(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test, Display yes, Display out, HtmlColor color,
-			LinkRendering backRepeatLinkRendering) {
-		return factory.repeat(swimlane, repeat, test, yes, out, color, backRepeatLinkRendering);
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
+			HtmlColor color, LinkRendering backRepeatLinkRendering) {
+		return factory.repeat(swimlane, swimlaneOut, repeat, test, yes, out, color, backRepeatLinkRendering);
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,

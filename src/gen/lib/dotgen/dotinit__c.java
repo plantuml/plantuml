@@ -808,9 +808,9 @@ try {
     CString tailgroup, headgroup;
     agbindrec(e, new CString("Agedgeinfo_t"), sizeof(Agedgeinfo_t.class), (N(0)));	//graph custom data
     common_init_edge(e);
-    ED_weight(e, late_int(e, Z._().E_weight, 1, 0));
-    tailgroup = late_string(agtail(e), Z._().N_group, new CString(""));
-    headgroup = late_string(aghead(e), Z._().N_group, new CString(""));
+    ED_weight(e, late_int(e, Z.z().E_weight, 1, 0));
+    tailgroup = late_string(agtail(e), Z.z().N_group, new CString(""));
+    headgroup = late_string(aghead(e), Z.z().N_group, new CString(""));
     ED_count(e, 1);
     ED_xpenalty(e, 1);
     if (tailgroup.charAt(0)!='\0' && (tailgroup.isSame(headgroup))) {
@@ -821,8 +821,8 @@ UNSUPPORTED("5y0yunmvmngg67c9exlbn6jbk"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-
 UNSUPPORTED("54niz21n2omf1i9v67brdid9w"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->xpenalty) = 0;
 UNSUPPORTED("2v5u5jdguhhn7vjihniotrml0"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->weight) = 0;
     }
-    ED_showboxes(e, late_int(e, Z._().E_showboxes, 0, 0));
-    ED_minlen(e, late_int(e, Z._().E_minlen, 1, 0));
+    ED_showboxes(e, late_int(e, Z.z().E_showboxes, 0, 0));
+    ED_minlen(e, late_int(e, Z.z().E_minlen, 1, 0));
 } finally {
 LEAVING("zbvhnhd78bppq8wb872847bj","dot_init_edge");
 }

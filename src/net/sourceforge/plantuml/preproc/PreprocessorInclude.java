@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19729 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 class PreprocessorInclude implements ReadLine {
 
 	private static final Pattern includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
 
 	private final ReadLine reader2;
@@ -129,10 +130,14 @@ class PreprocessorInclude implements ReadLine {
 			return null;
 		}
 		if (OptionFlags.ALLOW_INCLUDE) {
-			final Matcher m = includePattern.matcher(s);
 			assert included == null;
-			if (m.find()) {
-				return manageFileInclude(m, s.getLocation());
+			final Matcher m1 = includePattern.matcher(s);
+			if (m1.find()) {
+				return manageFileInclude(m1, s.getLocation(), false);
+			}
+			final Matcher m2 = includeManyPattern.matcher(s);
+			if (m2.find()) {
+				return manageFileInclude(m2, s.getLocation(), true);
 			}
 		}
 		final Matcher mUrl = includeURLPattern.matcher(s);
@@ -154,16 +159,16 @@ class PreprocessorInclude implements ReadLine {
 		}
 		try {
 			final URL url = new URL(urlString);
-			included = new PreprocessorInclude(getReaderInclude(url, suf, lineLocation), defines, charset, null, filesUsedCurrent,
-					filesUsedGlobal);
+			included = new PreprocessorInclude(getReaderInclude(url, suf, lineLocation), defines, charset, null,
+					filesUsedCurrent, filesUsedGlobal);
 		} catch (MalformedURLException e) {
 			return CharSequence2Impl.errorPreprocessor("Cannot include url " + urlString, lineLocation);
 		}
 		return this.readLine();
 	}
 
-	private CharSequence2 manageFileInclude(Matcher m, LineLocation lineLocation) throws IOException {
-		String fileName = m.group(1);
+	private CharSequence2 manageFileInclude(Matcher matcher, LineLocation lineLocation, boolean allowMany) throws IOException {
+		String fileName = matcher.group(1);
 		fileName = defines.applyDefines(fileName).get(0);
 		final int idx = fileName.lastIndexOf('!');
 		String suf = null;
@@ -175,14 +180,14 @@ class PreprocessorInclude implements ReadLine {
 		final FileWithSuffix f2 = new FileWithSuffix(f, suf);
 		if (f.exists() == false) {
 			return CharSequence2Impl.errorPreprocessor("Cannot include " + f.getAbsolutePath(), lineLocation);
-		} else if (filesUsedCurrent.contains(f2)) {
+		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
 			// return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
 			return this.readLine();
 		} else {
 			filesUsedCurrent.add(f2);
 			filesUsedGlobal.add(f2);
-			included = new PreprocessorInclude(getReaderInclude(f, suf, lineLocation), defines, charset, f.getParentFile(),
-					filesUsedCurrent, filesUsedGlobal);
+			included = new PreprocessorInclude(getReaderInclude(f, suf, lineLocation), defines, charset,
+					f.getParentFile(), filesUsedCurrent, filesUsedGlobal);
 		}
 		return this.readLine();
 	}
@@ -218,11 +223,7 @@ class PreprocessorInclude implements ReadLine {
 
 	private ReadLine getReaderInclude(final File f, String suf, LineLocation parent) throws IOException {
 		if (StartDiagramExtractReader.containsStartDiagram(f, charset)) {
-			int bloc = 0;
-			if (suf != null && suf.matches("\\d+")) {
-				bloc = Integer.parseInt(suf);
-			}
-			return new StartDiagramExtractReader(f, bloc, charset);
+			return new StartDiagramExtractReader(f, suf, charset);
 		}
 		if (charset == null) {
 			Log.info("Using default charset");
@@ -234,11 +235,7 @@ class PreprocessorInclude implements ReadLine {
 
 	private ReadLine getReaderInclude(final URL url, String suf, LineLocation parent) throws IOException {
 		if (StartDiagramExtractReader.containsStartDiagram(url, charset)) {
-			int bloc = 0;
-			if (suf != null && suf.matches("\\d+")) {
-				bloc = Integer.parseInt(suf);
-			}
-			return new StartDiagramExtractReader(url, bloc, charset);
+			return new StartDiagramExtractReader(url, suf, charset);
 		}
 		final InputStream is = url.openStream();
 		if (charset == null) {

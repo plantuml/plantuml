@@ -770,28 +770,28 @@ try {
     if (polyline)
 	make_polyline (pl, spl.amp());
     else {
-	if (poly.getInt("pn") > Z._().edgen) {
-	    Z._().edges = ALLOC(poly.getInt("pn"), Z._().edges, Pedge_t.class);
-	    Z._().edgen = poly.getInt("pn");
+	if (poly.getInt("pn") > Z.z().edgen) {
+	    Z.z().edges = ALLOC(poly.getInt("pn"), Z.z().edges, Pedge_t.class);
+	    Z.z().edgen = poly.getInt("pn");
 	}
 	for (i = 0; i < poly.getInt("pn"); i++) {
-	    Z._().edges.plus(i).setStruct("a", poly.getArrayOfStruct("ps").plus(i).getStruct());
-	    Z._().edges.plus(i).setStruct("b", poly.getArrayOfStruct("ps").plus((i + 1) % poly.getInt("pn")).getStruct());
+	    Z.z().edges.plus(i).setStruct("a", poly.getArrayOfStruct("ps").plus(i).getStruct());
+	    Z.z().edges.plus(i).setStruct("b", poly.getArrayOfStruct("ps").plus((i + 1) % poly.getInt("pn")).getStruct());
 	}
 	    evs.plus(0).setDouble("x", 0);
 	    evs.plus(0).setDouble("y", 0);
 	    evs.plus(1).setDouble("x", 0);
 	    evs.plus(1).setDouble("y", 0);
-	if (Proutespline(Z._().edges, poly.getInt("pn"), pl, evs.asPtr(), spl.amp()) < 0)
+	if (Proutespline(Z.z().edges, poly.getInt("pn"), pl, evs.asPtr(), spl.amp()) < 0)
             return null;
     }
     if (mkspacep(spl.getInt("pn")))
 	return null;
     for (i = 0; i < spl.getInt("pn"); i++) {
-        Z._().ps.plus(i).setStruct(spl.getArrayOfPtr("ps").plus(i).getStruct());
+        Z.z().ps.plus(i).setStruct(spl.getArrayOfPtr("ps").plus(i).getStruct());
     }
     n_spl_pts[0] = spl.getInt("pn");
-    return (pointf) Z._().ps;
+    return (pointf) Z.z().ps;
 } finally {
 LEAVING("7ebl6qohcfpf1b9ucih5r9qgp","simpleSplineRoute");
 }
@@ -805,14 +805,14 @@ LEAVING("7ebl6qohcfpf1b9ucih5r9qgp","simpleSplineRoute");
 public static int routesplinesinit() {
 ENTERING("bfsrazjf3vkf12stnke48vc8t","routesplinesinit");
 try {
-    if (++Z._().routeinit > 1) return 0;
-    if (N(Z._().ps = gmalloc(sizeof(pointf.class, 300)))) {
+    if (++Z.z().routeinit > 1) return 0;
+    if (N(Z.z().ps = gmalloc(sizeof(pointf.class, 300)))) {
 UNSUPPORTED("2qoo3na2ur9oh7hmvt6xv1txd"); // 	agerr(AGERR, "routesplinesinit: cannot allocate ps\n");
 UNSUPPORTED("eleqpc2p2r3hvma6tipoy7tr"); // 	return 1;
     }
-    Z._().maxpn = 300;
-    Z._().nedges = 0;
-    Z._().nboxes = 0;
+    Z.z().maxpn = 300;
+    Z.z().nedges = 0;
+    Z.z().nboxes = 0;
     /*if (Verbose)
 	start_timer();*/
     return 0;
@@ -829,8 +829,8 @@ LEAVING("bfsrazjf3vkf12stnke48vc8t","routesplinesinit");
 public static void routesplinesterm() {
 ENTERING("55j3tny5cxemrsvrt3m21jxg8","routesplinesterm");
 try {
-    if (--Z._().routeinit > 0) return;
-    Memory.free(Z._().ps);
+    if (--Z.z().routeinit > 0) return;
+    Memory.free(Z.z().ps);
     /*if (Verbose)
 	fprintf(stderr,
 		"routesplines: %d edges, %d boxes %.2f sec\n",
@@ -909,8 +909,8 @@ try {
     int flip;
     int loopcnt, delta = 10;
     boolean unbounded;
-    Z._().nedges++;
-    Z._().nboxes += pp.getInt("nbox");
+    Z.z().nedges++;
+    Z.z().nboxes += pp.getInt("nbox");
     for (realedge = (Agedge_s) pp.getPtr("data").castTo(Agedge_s.class);
 	 realedge!=null && ED_edge_type(realedge) != 0;
 	 realedge = ED_to_orig(realedge));
@@ -922,9 +922,9 @@ try {
     boxn = pp.getInt("nbox");
     if (checkpath(boxn, boxes, pp)!=0)
 	return null;
-    if (boxn * 8 > Z._().polypointn) {
-	Z._().polypoints = ALLOC_allocated2(boxn * 8, Z._().polypoints, pointf.class);
-	Z._().polypointn = boxn * 8;
+    if (boxn * 8 > Z.z().polypointn) {
+	Z.z().polypoints = ALLOC_allocated2(boxn * 8, Z.z().polypoints, pointf.class);
+	Z.z().polypointn = boxn * 8;
     }
     if ((boxn > 1) && (boxes.plus(0).getStruct().getStruct("LL").getDouble("y") > boxes.plus(1).getStruct().getStruct("LL").getDouble("y"))) {
         flip = 1;
@@ -946,15 +946,15 @@ try {
 		next = (boxes.plus(bi+1).getStruct().getStruct("LL").getDouble("y") > boxes.plus(bi).getStruct().getStruct("LL").getDouble("y")) ? 1 : -1;
 	    if (prev != next) {
 		if (next == -1 || prev == 1) {
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
 		} else {
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
 		}
 	    }
 	    else if (prev == 0) { /* single box */
@@ -978,15 +978,15 @@ UNSUPPORTED("9idk92zg2ysz316lfwzvvvde6"); // 		    return NULL;
 		next = (boxes.plus(bi-1).getStruct().getStruct("LL").getDouble("y") > boxes.plus(bi).getStruct().getStruct("LL").getDouble("y")) ? 1 : -1;
 	    if (prev != next) {
 		if (next == -1 || prev == 1 ) {
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
 		} else {
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
-		    Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
-		    Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
+		    Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
+		    Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
 		}
 	    } 
 	    else if (prev == 0) { /* single box */
@@ -1001,14 +1001,14 @@ UNSUPPORTED("87y5d0ts6xdjyx905bha50f3s"); // 		    /* it went badly, e.g. degene
 UNSUPPORTED("1qt7hixteu3pt64wk1sqw352a"); // 		    agerr(AGERR, "in routesplines, illegal values of prev %d and next %d, line %d\n", prev, next, 476);
 UNSUPPORTED("35untdbpd42pt4c74gjbxqx7q"); // 		    return NULL; /* for correctness sake, it's best to just stop */
 		}
-		Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
-		Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
-		Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
-		Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
-		Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
-		Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
-		Z._().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
-		Z._().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
+		Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
+		Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
+		Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("UR").getDouble("x"));
+		Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
+		Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
+		Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("UR").getDouble("y"));
+		Z.z().polypoints.plus(pi).setDouble("x", boxes.plus(bi).getStruct().getStruct("LL").getDouble("x"));
+		Z.z().polypoints.plus(pi++).setDouble("y", boxes.plus(bi).getStruct().getStruct("LL").getDouble("y"));
 	    }
 	}
     }
@@ -1024,13 +1024,13 @@ UNSUPPORTED("11hwqop4xebvtcskop4uhpp01"); // 	return NULL;
 	    boxes.plus(bi).getStruct().getStruct("LL").setDouble("y", -v);
 	}
 	for (i = 0; i < pi; i++)
-	    Z._().polypoints.plus(i).setDouble("y", -1 * Z._().polypoints.plus(i).getDouble("y"));
+	    Z.z().polypoints.plus(i).setDouble("y", -1 * Z.z().polypoints.plus(i).getDouble("y"));
     }
     for (bi = 0; bi < boxn; bi++) {
 	boxes.plus(bi).getStruct().getStruct("LL").setDouble("x", INT_MAX);
 	boxes.plus(bi).getStruct().getStruct("UR").setDouble("x", INT_MIN);
 	}
-    poly.setPtr("ps", Z._().polypoints);
+    poly.setPtr("ps", Z.z().polypoints);
     poly.setInt("pn", pi);
     eps.plus(0).getStruct().setDouble("x", pp.getStruct("start").getStruct("p").getDouble("x"));
     eps.plus(0).getStruct().setDouble("y", pp.getStruct("start").getStruct("p").getDouble("y"));
@@ -1044,13 +1044,13 @@ UNSUPPORTED("11hwqop4xebvtcskop4uhpp01"); // 	return NULL;
 UNSUPPORTED("48veztc3k9dfw8tqolu7jsktk"); // 	make_polyline (pl, &spl);
     }
     else {
-	if (poly.getInt("pn") > Z._().edgen) {
-	    Z._().edges = ALLOC_allocated2(poly.getInt("pn"), Z._().edges, Pedge_t.class);
-	    Z._().edgen = poly.getInt("pn");
+	if (poly.getInt("pn") > Z.z().edgen) {
+	    Z.z().edges = ALLOC_allocated2(poly.getInt("pn"), Z.z().edges, Pedge_t.class);
+	    Z.z().edgen = poly.getInt("pn");
 	}
 	for (edgei = 0; edgei < poly.getInt("pn"); edgei++) {
-	    Z._().edges.plus(edgei).setStruct("a", Z._().polypoints.plus(edgei).getStruct());
-	    Z._().edges.plus(edgei).setStruct("b", Z._().polypoints.plus((edgei + 1) % poly.getInt("pn")).getStruct());
+	    Z.z().edges.plus(edgei).setStruct("a", Z.z().polypoints.plus(edgei).getStruct());
+	    Z.z().edges.plus(edgei).setStruct("b", Z.z().polypoints.plus((edgei + 1) % poly.getInt("pn")).getStruct());
 	}
 	if (pp.getStruct("start").getBoolean("constrained")) {
  	    evs.plus(0).getStruct().setDouble("x", cos(pp.getStruct("start").getDouble("theta")));
@@ -1068,7 +1068,7 @@ UNSUPPORTED("48veztc3k9dfw8tqolu7jsktk"); // 	make_polyline (pl, &spl);
 	    evs.plus(1).getStruct().setDouble("x", 0);
 	    evs.plus(1).getStruct().setDouble("y", 0);
 	}
-	if (Proutespline(Z._().edges, poly.getInt("pn"), pl, evs.asPtr(), spl.amp()) < 0) {
+	if (Proutespline(Z.z().edges, poly.getInt("pn"), pl, evs.asPtr(), spl.amp()) < 0) {
 UNSUPPORTED("elkeyywrfd4hq75w7toc94rzs"); // 	    agerr(AGERR, "in routesplines, Proutespline failed\n");
 UNSUPPORTED("7t3fvwp9cv90qu5bdjdglcgtk"); // 	    return NULL;
 	}
@@ -1081,10 +1081,10 @@ UNSUPPORTED("7x5kpcbvg4va887hky7ufm45y"); // 	return NULL;  /* Bailout if no mem
     }
     unbounded = NOT(false);
     for (splinepi = 0; splinepi < spl.getInt("pn"); splinepi++) {
-	Z._().ps.plus(splinepi).setStruct(spl.getArrayOfPtr("ps").plus(splinepi).getStruct());
+	Z.z().ps.plus(splinepi).setStruct(spl.getArrayOfPtr("ps").plus(splinepi).getStruct());
     }
     for (loopcnt = 0; unbounded && (loopcnt < 15); loopcnt++) {
-	limitBoxes (boxes, boxn, Z._().ps, spl.getInt("pn"), delta);
+	limitBoxes (boxes, boxn, Z.z().ps, spl.getInt("pn"), delta);
     /* The following check is necessary because if a box is not very 
      * high, it is possible that the sampling above might miss it.
      * Therefore, we make the sample finer until all boxes have
@@ -1116,7 +1116,7 @@ UNSUPPORTED("7x5kpcbvg4va887hky7ufm45y"); // 	return NULL;  /* Bailout if no mem
 	Memory.free (polyspl.getPtr("ps"));
     }
     npoints[0] = spl.getInt("pn");
-    return Z._().ps;
+    return Z.z().ps;
 } finally {
 LEAVING("3mcnemqisisnqtd4mr72ej76y","_routesplines");
 }
@@ -1340,14 +1340,14 @@ LEAVING("dxqjhiid5f58b9gjxp0v3j97b","checkpath");
 public static boolean mkspacep(int size) {
 ENTERING("de6jvvw786rx88318tuuqywgq","mkspacep");
 try {
-    if (size > Z._().maxpn) {
-	int newmax = Z._().maxpn + (size / 300 + 1) * 300;
-	Z._().ps = RALLOC(newmax, Z._().ps, pointf.class);
-	if (N(Z._().ps)) {
+    if (size > Z.z().maxpn) {
+	int newmax = Z.z().maxpn + (size / 300 + 1) * 300;
+	Z.z().ps = RALLOC(newmax, Z.z().ps, pointf.class);
+	if (N(Z.z().ps)) {
 UNSUPPORTED("ds2v91aohji00tc7zmjuc3v6q"); // 	    agerr(AGERR, "cannot re-allocate ps\n");
 UNSUPPORTED("btmwubugs9vkexo4yb7a5nqel"); // 	    return 1;
 	}
-	Z._().maxpn = newmax;
+	Z.z().maxpn = newmax;
     }
     return false;
 } finally {

@@ -127,5 +127,8 @@ public interface ISkinParam extends ISkinSimple {
 	public int getTabSize();
 	
 	public int maxAsciiMessageLength();
+	
+	public int colorArrowSeparationSpace();
+
 
 }

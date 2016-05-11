@@ -98,8 +98,7 @@ public class VCompactFactory implements FtileFactory {
 		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityBackground) :
 		// color;
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		final HtmlColor arrowColor = rose.getHtmlColor(skinParam, ColorParam.activityArrow);
-		return new FtileBox(shadowing(), label, font, arrowColor, swimlane, style, colors.mute(skinParam));
+		return new FtileBox(shadowing(), label, font, swimlane, style, colors.mute(skinParam));
 	}
 
 	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition) {
@@ -114,8 +113,8 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileAssemblySimple(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test, Display yes, Display out, HtmlColor color,
-			LinkRendering backRepeatLinkRendering) {
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
+			HtmlColor color, LinkRendering backRepeatLinkRendering) {
 		return repeat;
 	}
 
@@ -142,7 +141,8 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileForkInner(all);
 	}
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote, HtmlColor borderColor) {
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+			HtmlColor borderColor) {
 		return list;
 	}
 

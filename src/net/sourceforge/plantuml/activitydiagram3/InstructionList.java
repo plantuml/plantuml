@@ -82,9 +82,10 @@ public class InstructionList implements Instruction, InstructionCollection {
 		Ftile result = null;
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
-			if (ins.getInLinkRendering() != null) {
+			if (ins.getInLinkRendering().isNone() == false) {
 				cur = factory.decorateIn(cur, ins.getInLinkRendering());
 			}
+
 			if (result == null) {
 				result = cur;
 			} else {

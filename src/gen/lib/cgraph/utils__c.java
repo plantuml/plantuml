@@ -202,7 +202,7 @@ public static Object agdictobjmem(_dt_s dict, Object p, size_t size, _dtdisc_s d
 ENTERING("7dkudp41c9byhicatk2sxtxqk","agdictobjmem");
 try {
 	Agraph_s g;
-    g = Z._().Ag_dictop_G;
+    g = Z.z().Ag_dictop_G;
     if (g!=null) {
 	if (p!=null)
 	    agfree(g, p);
@@ -253,10 +253,10 @@ try {
     _dt_s d;
     memf = (Dtmemory_f) disc.getPtr("memoryf");
     disc.setPtr("memoryf", function(utils__c.class, "agdictobjmem"));
-    Z._().Ag_dictop_G = g;
+    Z.z().Ag_dictop_G = g;
     d = dtopen(disc, method);
     disc.setPtr("memoryf", memf);
-    Z._().Ag_dictop_G = null;
+    Z.z().Ag_dictop_G = null;
     return d;
 } finally {
 LEAVING("48ox0bg1qmasrer8np51uwsyk","agdtopen");

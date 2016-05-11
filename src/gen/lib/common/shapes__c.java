@@ -2603,8 +2603,8 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	width = (ROUND((ND_width(n))*72));
 	height = (ROUND((ND_height(n))*72));
     }
-    peripheries = late_int(n, Z._().N_peripheries, peripheries, 0);
-    orientation += late_double(n, Z._().N_orientation, 0.0, -360.0);
+    peripheries = late_int(n, Z.z().N_peripheries, peripheries, 0);
+    orientation += late_double(n, Z.z().N_orientation, 0.0, -360.0);
     if (sides == 0) {		/* not for builtins */
 UNSUPPORTED("dd178b113cb8130tl6q70lcp3"); // 	skew = late_double(n, N_skew, 0.0, -100.0);
 UNSUPPORTED("cp83hdn3dp0a7rp9bauc3bgki"); // 	sides = late_int(n, N_sides, 4, 0);
@@ -2724,7 +2724,7 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     /* at this point, bb is the minimum size of node that can hold the label */
     min_bb.____(bb);
     /* increase node size to width/height if needed */
-    fxd = late_string(n, Z._().N_fixed, new CString("false"));
+    fxd = late_string(n, Z.z().N_fixed, new CString("false"));
     if ((fxd.charAt(0) == 's') && (N(strcmp(fxd,new CString("shape"))))) {
 	bb.setDouble("x", width);
 	bb.setDouble("y", height);
@@ -2754,7 +2754,7 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     bb.setDouble("y", width);
     }
     /* Compute space available for label.  Provides the justification borders */
-    if (N(mapbool(late_string(n, Z._().N_nojustify, new CString("false"))))) {
+    if (N(mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))))) {
 	if (isBox) {
 	    ND_label(n).getStruct("space").setDouble("x", MAX(dimen.getDouble("x"),bb.getDouble("x")) - spacex);
 	}
@@ -2981,12 +2981,12 @@ try {
 	bbox.____(bp.getStruct());
 	return INSIDE(P, bbox);
     }
-    if (NEQ(n, Z._().lastn)) {
+    if (NEQ(n, Z.z().lastn)) {
 	double n_width = 0, n_height = 0;
-	Z._().poly = (polygon_t) ND_shape_info(n);
-	Z._().vertex = (pointf) Z._().poly.getPtr("vertices");
-	Z._().sides = Z._().poly.getInt("sides");
-	if ((Z._().poly.getInt("option") & (1 << 11))!=0) {
+	Z.z().poly = (polygon_t) ND_shape_info(n);
+	Z.z().vertex = (pointf) Z.z().poly.getPtr("vertices");
+	Z.z().sides = Z.z().poly.getInt("sides");
+	if ((Z.z().poly.getInt("option") & (1 << 11))!=0) {
 UNSUPPORTED("18yw1scg4sol8bhyf1vedj9kn"); // 	   boxf bb = polyBB(poly); 
 UNSUPPORTED("7rz7vxyxao0efec2nvd6g19m1"); // 	    n_width = bb.UR.x - bb.LL.x;
 UNSUPPORTED("4h0k2wroz3xqx1ljokdbaqaad"); // 	    n_height = bb.UR.y - bb.LL.y;
@@ -3004,62 +3004,62 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("dapvd4c0ggliaqcj08jvao221"); // 		ysize = ND_lw(n) + ND_rw(n);
 UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	    } else {
-		Z._().xsize = ND_lw(n) + ND_rw(n);
-		Z._().ysize = ND_ht(n);
+		Z.z().xsize = ND_lw(n) + ND_rw(n);
+		Z.z().ysize = ND_ht(n);
 	    }
 	    n_width = (ROUND((ND_width(n))*72));
 	    n_height = (ROUND((ND_height(n))*72));
 	}
 	/* scale */
-	if (Z._().xsize == 0.0)
-	    Z._().xsize = 1.0;
-	if (Z._().ysize == 0.0)
-	    Z._().ysize = 1.0;
-	Z._().scalex = n_width / Z._().xsize;
-	Z._().scaley = n_height / Z._().ysize;
-	Z._().box_URx = n_width / 2.0;
-	Z._().box_URy = n_height / 2.0;
+	if (Z.z().xsize == 0.0)
+	    Z.z().xsize = 1.0;
+	if (Z.z().ysize == 0.0)
+	    Z.z().ysize = 1.0;
+	Z.z().scalex = n_width / Z.z().xsize;
+	Z.z().scaley = n_height / Z.z().ysize;
+	Z.z().box_URx = n_width / 2.0;
+	Z.z().box_URy = n_height / 2.0;
 	/* index to outer-periphery */
-	Z._().outp = (Z._().poly.getInt("peripheries") - 1) * Z._().sides;
-	if (Z._().outp < 0)
-	    Z._().outp = 0;
-	Z._().lastn = (Agnode_s) n;
+	Z.z().outp = (Z.z().poly.getInt("peripheries") - 1) * Z.z().sides;
+	if (Z.z().outp < 0)
+	    Z.z().outp = 0;
+	Z.z().lastn = (Agnode_s) n;
     }
     /* scale */
-    P.setDouble("x", P.getDouble("x") * Z._().scalex);
-    P.setDouble("y", P.getDouble("y") * Z._().scaley);
+    P.setDouble("x", P.getDouble("x") * Z.z().scalex);
+    P.setDouble("y", P.getDouble("y") * Z.z().scaley);
     /* inside bounding box? */
-    if ((fabs(P.getDouble("x")) > Z._().box_URx) || (fabs(P.getDouble("y")) > Z._().box_URy))
+    if ((fabs(P.getDouble("x")) > Z.z().box_URx) || (fabs(P.getDouble("y")) > Z.z().box_URy))
 	return false;
     /* ellipses */
-    if (Z._().sides <= 2)
-	return (hypot(P.getDouble("x") / Z._().box_URx, P.getDouble("y") / Z._().box_URy) < 1.);
+    if (Z.z().sides <= 2)
+	return (hypot(P.getDouble("x") / Z.z().box_URx, P.getDouble("y") / Z.z().box_URy) < 1.);
     /* use fast test in case we are converging on a segment */
-    i = Z._().last % Z._().sides;		/* in case last left over from larger polygon */
-    i1 = (i + 1) % Z._().sides;
-    Q.____(Z._().vertex.plus(i + Z._().outp).getStruct());
-    R.____(Z._().vertex.plus(i1 + Z._().outp).getStruct());
-    if (N(same_side(P, Z._().O, Q, R)))   /* false if outside the segment's face */
+    i = Z.z().last % Z.z().sides;		/* in case last left over from larger polygon */
+    i1 = (i + 1) % Z.z().sides;
+    Q.____(Z.z().vertex.plus(i + Z.z().outp).getStruct());
+    R.____(Z.z().vertex.plus(i1 + Z.z().outp).getStruct());
+    if (N(same_side(P, Z.z().O, Q, R)))   /* false if outside the segment's face */
 	return false;
     /* else inside the segment face... */
-    if ((s = same_side(P, Q, R, Z._().O)) && (same_side(P, R, Z._().O, Q))) /* true if between the segment's sides */
+    if ((s = same_side(P, Q, R, Z.z().O)) && (same_side(P, R, Z.z().O, Q))) /* true if between the segment's sides */
 	return NOT(0);
     /* else maybe in another segment */
-    for (j = 1; j < Z._().sides; j++) { /* iterate over remaining segments */
+    for (j = 1; j < Z.z().sides; j++) { /* iterate over remaining segments */
 	if (s) { /* clockwise */
 	    i = i1;
-	    i1 = (i + 1) % Z._().sides;
+	    i1 = (i + 1) % Z.z().sides;
 	} else { /* counter clockwise */
 	    i1 = i;
-	    i = (i + Z._().sides - 1) % Z._().sides;
+	    i = (i + Z.z().sides - 1) % Z.z().sides;
 	}
-	if (N(same_side(P, Z._().O, Z._().vertex.plus(i + Z._().outp).getStruct(), Z._().vertex.plus(i1 + Z._().outp).getStruct()))) { /* false if outside any other segment's face */
-	    Z._().last = i;
+	if (N(same_side(P, Z.z().O, Z.z().vertex.plus(i + Z.z().outp).getStruct(), Z.z().vertex.plus(i1 + Z.z().outp).getStruct()))) { /* false if outside any other segment's face */
+	    Z.z().last = i;
 	    return false;
 	}
     }
     /* inside all segments' faces */
-    Z._().last = i;			/* in case next edge is to same side */
+    Z.z().last = i;			/* in case next edge is to same side */
     return NOT(0);
 } finally {
 LEAVING("570t4xovyyfqipaikkf63crmk","poly_inside");
@@ -3429,7 +3429,7 @@ try {
     boxf bp;
     int sides;			/* bitmap of which sides the port lies along */
     if (portname.charAt(0) == '\0')
-	return Z._().Center.copy();
+	return Z.z().Center.copy();
 UNSUPPORTED("cm99rhftfe8nq2suzac5fwbgp"); //     if (compass == NULL)
 UNSUPPORTED("238a13tlawcw3bixwliz859y5"); // 	compass = "_";
 UNSUPPORTED("ci2ge3idao9rokpvacvcspaxl"); //     sides = (1<<0) | (1<<1) | (1<<2) | (1<<3);
@@ -4591,7 +4591,7 @@ try {
     if (str!=null && UNSUPPORTED("!(*(name)==*(\"epsf\")&&!strcmp(name,\"epsf\"))")!=null)
 	name = new CString("custom");
     if (N(name.charAt(0)=='c' && N(strcmp(name,new CString("custom"))))) {
-	for (shape_desc ptr : Z._().Shapes) {
+	for (shape_desc ptr : Z.z().Shapes) {
 	    if ((N(strcmp(ptr.getCString("name"),name)))) {
 		rv = ptr;
 		break;

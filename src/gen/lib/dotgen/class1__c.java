@@ -721,7 +721,7 @@ public static boolean nonconstraint_edge(Agedge_s e) {
 ENTERING("2luyof8ca7ewf9r08z3os3lk7","nonconstraint_edge");
 try {
     CString constr;
-    if (Z._().E_constr!=null && (constr = agxget(e, Z._().E_constr))!=null) {
+    if (Z.z().E_constr!=null && (constr = agxget(e, Z.z().E_constr))!=null) {
 	if (constr.charAt(0)!='\0' && mapbool(constr) == false)
 	    return (!(false));
     }

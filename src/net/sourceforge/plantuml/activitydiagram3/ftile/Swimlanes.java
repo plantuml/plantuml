@@ -96,7 +96,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	private final Instruction root = new InstructionList();
 	private Instruction currentInstruction = root;
 
-	private LinkRendering nextLinkRenderer;
+	private LinkRendering nextLinkRenderer = LinkRendering.none();
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {
 		this.skinParam = skinParam;
@@ -174,7 +174,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	}
 
-	static final double separationMargin = 10;
+	static private final double separationMargin = 10;
 
 	public void drawU(UGraphic ug) {
 		final FtileFactory factory = getFtileFactory();
@@ -359,6 +359,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	}
 
 	public void setNextLinkRenderer(LinkRendering link) {
+		if (link == null) {
+			throw new IllegalArgumentException();
+		}
 		this.nextLinkRenderer = link;
 	}
 

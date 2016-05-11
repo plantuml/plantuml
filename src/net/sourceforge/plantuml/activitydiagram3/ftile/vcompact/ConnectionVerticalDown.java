@@ -37,12 +37,10 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -52,12 +50,14 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 
 	private final Point2D p1;
 	private final Point2D p2;
-	private final HtmlColor color;
+	private final Rainbow color;
 	private final TextBlock textBlock;
 
-	public ConnectionVerticalDown(Ftile ftile1, Ftile ftile2, Point2D p1, Point2D p2, HtmlColor color,
-			TextBlock textBlock) {
+	public ConnectionVerticalDown(Ftile ftile1, Ftile ftile2, Point2D p1, Point2D p2, Rainbow color, TextBlock textBlock) {
 		super(ftile1, ftile2);
+		if (color.size() == 0) {
+			throw new IllegalArgumentException();
+		}
 		this.p1 = p1;
 		this.p2 = p2;
 		this.color = color;

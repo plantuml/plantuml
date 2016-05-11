@@ -58,15 +58,15 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
+	public static final String ALL_TYPES = "artifact|actor|folder|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface";
+
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf(
-						"SYMBOL",
-						"(?:(artifact|actor|folder|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface|\\(\\))[%s]+)?"), //
+				new RegexLeaf("SYMBOL", "(?:(" + ALL_TYPES + "|\\(\\))[%s]+)?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CODE_WITH_QUOTE), //
@@ -93,11 +93,10 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 				color().getRegex(), //
 				new RegexLeaf("$"));
 	}
-	
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
-
 
 	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
 	private static final String CODE = "(" + CODE_CORE + ")";
@@ -203,6 +202,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		}
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
+		if (diagram.isGroup(code)) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		String display = displayRaw;
 		if (display == null) {
 			display = code.getFullName();
@@ -233,7 +235,8 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		}
 		entity.setColors(colors);
 
-		//entity.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		return CommandExecutionResult.ok();
 	}
 

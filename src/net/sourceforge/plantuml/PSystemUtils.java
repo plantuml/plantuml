@@ -186,7 +186,7 @@ public class PSystemUtils {
 		return result;
 	}
 
-	static public List<File> exportDiagramsCuca(CucaDiagram system, File suggestedFile, FileFormatOption fileFormat)
+	static private List<File> exportDiagramsCuca(CucaDiagram system, File suggestedFile, FileFormatOption fileFormat)
 			throws IOException {
 		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
@@ -202,7 +202,9 @@ public class PSystemUtils {
 			if (canFileBeWritten(suggestedFile) == false) {
 				return Collections.emptyList();
 			}
-			os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
+			// System.err.println("FOO11=" + suggestedFile);
+			// os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
+			os = new NamedOutputStream(suggestedFile);
 			cmap = system.exportDiagram(os, 0, fileFormat);
 		} finally {
 			if (os != null) {

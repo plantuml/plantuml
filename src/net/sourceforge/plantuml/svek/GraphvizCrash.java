@@ -72,14 +72,51 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 				UAntiAliasing.ANTI_ALIASING_ON, IconLoader.getRandom(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}
 
-	private List<String> init() {
+	public static List<String> anErrorHasOccured(Throwable exception) {
 		final List<String> strings = new ArrayList<String>();
-		strings.add("An error has occured!");
+		if (exception == null) {
+			strings.add("An error has occured!");
+		} else {
+			strings.add("An error has occured : " + exception);
+		}
 		final String quote = QuoteUtils.getSomeQuote();
 		strings.add("<i>" + quote);
 		strings.add(" ");
+		return strings;
+	}
+
+	public static void checkOldVersionWarning(final List<String> strings) {
+		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;
+		if (days >= 90) {
+			strings.add("This version of PlantUML is " + days + " days old, so you should");
+			strings.add("  consider upgrading from http://plantuml.com/download.html");
+		}
+	}
+
+	public static void pleaseGoTo(final List<String> strings) {
+		strings.add(" ");
+		strings.add("Please go to http://plantuml.com/graphvizdot.html to check your GraphViz version.");
+		strings.add(" ");
+	}
+
+	public static void youShouldSendThisDiagram(final List<String> strings) {
+		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
+		strings.add("You can try to turn arround this issue by simplifing your diagram.");
+	}
+	
+	public static void thisMayBeCaused(final List<String> strings) {
+		strings.add("This may be caused by :");
+		strings.add(" - a bug in PlantUML");
+		strings.add(" - a problem in GraphViz");
+	}
+
+
+	private List<String> init() {
+		final List<String> strings = anErrorHasOccured(null);
 		strings.add("For some reason, dot/Graphviz has crashed.");
 		strings.add("This has been generated with PlantUML (" + Version.versionString() + ").");
+		checkOldVersionWarning(strings);
 		strings.add(" ");
 		addProperties(strings);
 		strings.add(" ");
@@ -89,10 +126,8 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		} catch (Throwable e) {
 			strings.add("Cannot determine dot version: " + e.toString());
 		}
-		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
-		strings.add("You can try to turn arround this issue by simplifing your diagram.");
+		pleaseGoTo(strings);
+		youShouldSendThisDiagram(strings);
 		if (flashCode != null) {
 			addDecodeHint(strings);
 		}

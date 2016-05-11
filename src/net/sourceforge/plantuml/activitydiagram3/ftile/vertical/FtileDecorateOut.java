@@ -42,6 +42,9 @@ public class FtileDecorateOut extends FtileDecorate {
 
 	public FtileDecorateOut(final Ftile ftile, final LinkRendering linkRendering) {
 		super(ftile);
+		if (linkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 		this.linkRendering = linkRendering;
 	}
 

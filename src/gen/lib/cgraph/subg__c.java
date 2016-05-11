@@ -199,7 +199,7 @@ public static Agraph_s agfindsubg_by_id(Agraph_s g, int id) {
 ENTERING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 try {
     final __struct__<Agraph_s> template = __struct__.from(Agraph_s.class);
-    agdtdisc(g, (_dt_s) g.getPtr("g_dict"), Z._().Ag_subgraph_id_disc.amp());
+    agdtdisc(g, (_dt_s) g.getPtr("g_dict"), Z.z().Ag_subgraph_id_disc.amp());
     AGID(template.amp(), id);
     return (Agraph_s) g.getPtr("g_dict").castTo(_dt_s.class).call("searchf", g.getPtr("g_dict"), template.amp(), 0000004);
 } finally {

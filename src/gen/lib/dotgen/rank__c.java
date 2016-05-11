@@ -1039,7 +1039,7 @@ try {
     if (agfstnode(subg) == null)
 	return;
     make_new_cluster(g, subg);
-    if (Z._().CL_type == 100) {
+    if (Z.z().CL_type == 100) {
 	dot1_rank(subg, null);
 	cluster_leader(subg);
     } else
@@ -1062,7 +1062,7 @@ try {
     for (subg = agfstsubg(g); subg!=null; subg = agnxtsubg(subg)) {
 	c = rank_set_class(subg);
 	if (c!=0) {
-	    if ((c == 7) && Z._().CL_type == 100)
+	    if ((c == 7) && Z.z().CL_type == 100)
 		collapse_cluster(rg, subg);
 	    else
 		collapse_rankset(rg, subg, c);
@@ -1244,7 +1244,7 @@ try {
 	    n = agnxtnode(g, n);
 	}
 	if (EQ(g, dot_root(g))) {
-	    if (Z._().CL_type == 100) {
+	    if (Z.z().CL_type == 100) {
 		for (c = 1; c <= GD_n_cluster(g); c++)
 		    set_minmax((Agraph_s) GD_clust(g).plus(c).getPtr());
 	    } else {

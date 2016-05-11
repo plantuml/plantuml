@@ -869,7 +869,7 @@ try {
 	return;			/* ignore empty graph */
     mark_lowclusters(g);	/* we could remove from splines.c now */
     set_ycoords(g);
-    if (Z._().Concentrate)
+    if (Z.z().Concentrate)
 	dot_concentrate(g);
     expand_leaves(g);
     if (flat_edges(g)!=0)
@@ -1205,7 +1205,7 @@ ENTERING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 try {
     int i, c, r, margin;
     Agnode_s u, v;
-    margin = late_int (g, Z._().G_margin, 8, 0);
+    margin = late_int (g, Z.z().G_margin, 8, 0);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	if (GD_rank(g).plus(r).getInt("n") == 0)
 	    continue;
@@ -1246,7 +1246,7 @@ ENTERING("c734mx1638sfqtl7vh7itaxyx","contain_subclust");
 try {
     int margin, c;
     Agraph_s subg;
-    margin = late_int (g, Z._().G_margin, 8, 0);
+    margin = late_int (g, Z.z().G_margin, 8, 0);
     make_lrvn(g);
     for (c = 1; c <= GD_n_cluster(g); c++) {
 	subg = (Agraph_s) GD_clust(g).plus(c).getPtr();
@@ -1273,7 +1273,7 @@ try {
     int i, j, margin;
     Agraph_s low, high;
     Agraph_s left, right;
-    margin = late_int (g, Z._().G_margin, 8, 0);
+    margin = late_int (g, Z.z().G_margin, 8, 0);
     for (i = 1; i <= GD_n_cluster(g); i++)
 	make_lrvn((Agraph_s) GD_clust(g).plus(i).getPtr());
     for (i = 1; i <= GD_n_cluster(g); i++) {
@@ -1542,7 +1542,7 @@ try {
     if (EQ(g, dot_root(g))) 
 	margin = 8;
     else
-	margin = late_int (g, Z._().G_margin, 8, 0);
+	margin = late_int (g, Z.z().G_margin, 8, 0);
     ht1 = GD_ht1(g);
     ht2 = GD_ht2(g);
     /* account for sub-clusters */
@@ -1617,7 +1617,7 @@ try {
 		}
 	    /* update nearest enclosing cluster rank ht */
 	    if ((clust = ND_clust(n))!=null) {
-		int yoff = (clust == g ? 0 : late_int (clust, Z._().G_margin, 8, 0));
+		int yoff = (clust == g ? 0 : late_int (clust, Z.z().G_margin, 8, 0));
 		if (ND_rank(n) == GD_minrank(clust))
 		    GD_ht2(clust, MAX(GD_ht2(clust), ht2 + yoff));
 		if (ND_rank(n) == GD_maxrank(clust))
@@ -2097,7 +2097,7 @@ ENTERING("daz786541idcxnywckcbncazb","contain_nodes");
 try {
     int margin, r;
     Agnode_s ln, rn, v;
-    margin = late_int (g, Z._().G_margin, 8, 0);
+    margin = late_int (g, Z.z().G_margin, 8, 0);
     make_lrvn(g);
     ln = GD_ln(g);
     rn = GD_rn(g);

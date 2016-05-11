@@ -62,6 +62,8 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -109,7 +111,7 @@ class FtileWhile extends AbstractFtile {
 	}
 
 	public static Ftile create(Swimlane swimlane, Ftile whileBlock, Display test, HtmlColor borderColor,
-			HtmlColor backColor, HtmlColor arrowColor, Display yes, Display out2, HtmlColor endInlinkColor,
+			HtmlColor backColor, Rainbow arrowColor, Display yes, Display out2, Rainbow endInlinkColor,
 			LinkRendering afterEndwhile, FontConfiguration fontArrow, FtileFactory ftileFactory,
 			ConditionStyle conditionStyle, FontConfiguration fcTest) {
 
@@ -136,22 +138,22 @@ class FtileWhile extends AbstractFtile {
 		}
 
 		final FtileWhile result = new FtileWhile(whileBlock, diamond1, supplementarySouthText);
-		HtmlColor afterEndwhileColor = arrowColor;
-		if (afterEndwhile != null && afterEndwhile.getColor() != null) {
-			afterEndwhileColor = afterEndwhile.getColor();
+		Rainbow afterEndwhileColor = arrowColor;
+		if (afterEndwhile != null && afterEndwhile.getRainbow() != null && afterEndwhile.getRainbow().size() != 0) {
+			afterEndwhileColor = afterEndwhile.getRainbow();
 		}
 
 		final List<Connection> conns = new ArrayList<Connection>();
-		conns.add(result.new ConnectionIn(LinkRendering.getColor(whileBlock.getInLinkRendering(), arrowColor)));
+		conns.add(result.new ConnectionIn(whileBlock.getInLinkRendering().getRainbow(arrowColor)));
 		conns.add(result.new ConnectionBack(endInlinkColor));
 		conns.add(result.new ConnectionOut(afterEndwhileColor));
 		return FtileUtils.addConnection(result, conns);
 	}
 
 	class ConnectionIn extends AbstractConnection implements ConnectionTranslatable {
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionIn(HtmlColor arrowColor) {
+		public ConnectionIn(Rainbow arrowColor) {
 			super(diamond1, whileBlock);
 			this.arrowColor = arrowColor;
 		}
@@ -193,9 +195,9 @@ class FtileWhile extends AbstractFtile {
 	}
 
 	class ConnectionBack extends AbstractConnection implements ConnectionTranslatable {
-		private final HtmlColor endInlinkColor;
+		private final Rainbow endInlinkColor;
 
-		public ConnectionBack(HtmlColor endInlinkColor) {
+		public ConnectionBack(Rainbow endInlinkColor) {
 			super(whileBlock, diamond1);
 			this.endInlinkColor = endInlinkColor;
 		}
@@ -278,7 +280,8 @@ class FtileWhile extends AbstractFtile {
 
 			ug.apply(new UTranslate(x1, y1 + Diamond.diamondHalfSize)).draw(new UEmpty(5, Diamond.diamondHalfSize));
 
-			ug = ug.apply(new UChangeColor(endInlinkColor)).apply(new UChangeBackColor(endInlinkColor));
+			ug = ug.apply(new UChangeColor(endInlinkColor.getColor())).apply(
+					new UChangeBackColor(endInlinkColor.getColor()));
 			ug.apply(new UTranslate(xx, (y1 + y2) / 2)).draw(Arrows.asToUp());
 
 		}
@@ -286,9 +289,9 @@ class FtileWhile extends AbstractFtile {
 	}
 
 	class ConnectionOut extends AbstractConnection {
-		private final HtmlColor afterEndwhileColor;
+		private final Rainbow afterEndwhileColor;
 
-		public ConnectionOut(HtmlColor afterEndwhileColor) {
+		public ConnectionOut(Rainbow afterEndwhileColor) {
 			super(diamond1, null);
 			this.afterEndwhileColor = afterEndwhileColor;
 		}

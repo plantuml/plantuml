@@ -280,7 +280,7 @@ public class Z {
 	public __ptr__ ops_route;
 	public __ptr__ ops_shortest;
 
-	public static Z _() {
+	public static Z z() {
 		return instances2.get().peekFirst();
 	}
 

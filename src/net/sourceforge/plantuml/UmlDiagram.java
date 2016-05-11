@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19591 $
+ * Revision $Revision: 19753 $
  *
  */
 package net.sourceforge.plantuml;
@@ -46,7 +46,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -68,7 +67,6 @@ import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
@@ -286,43 +284,32 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	}
 
 	static private List<String> getFailureText1(Throwable exception, String graphvizVersion) {
-		final List<String> strings = new ArrayList<String>();
-		strings.add("An error has occured : " + exception);
-		final String quote = QuoteUtils.getSomeQuote();
-		strings.add("<i>" + quote);
-		strings.add(" ");
+		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception);
 		strings.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
 		if (exception instanceof EmptySvgException) {
 			strings.add("Because dot/GraphViz returns an empty string.");
 		}
+		GraphvizCrash.checkOldVersionWarning(strings);
 		if (graphvizVersion != null) {
 			strings.add(" ");
 			strings.add("GraphViz version used : " + graphvizVersion);
 		}
-		strings.add(" ");
+		GraphvizCrash.pleaseGoTo(strings);
 		GraphvizCrash.addProperties(strings);
 		strings.add(" ");
-		strings.add("This may be caused by :");
-		strings.add(" - a bug in PlantUML");
-		strings.add(" - a problem in GraphViz");
+		GraphvizCrash.thisMayBeCaused(strings);
 		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
+		GraphvizCrash.youShouldSendThisDiagram(strings);
 		strings.add(" ");
 		return strings;
 	}
 
 	public static List<String> getFailureText2(Throwable exception) {
-		final List<String> strings = new ArrayList<String>();
-		strings.add("An error has occured : " + exception);
-		final String quote = QuoteUtils.getSomeQuote();
-		strings.add("<i>" + quote);
-		strings.add(" ");
+		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception);
 		strings.add("PlantUML (" + Version.versionString() + ") has crashed.");
+		GraphvizCrash.checkOldVersionWarning(strings);
 		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
-		strings.add("You can try to turn arround this issue by simplifing your diagram.");
+		GraphvizCrash.youShouldSendThisDiagram(strings);
 		strings.add(" ");
 		return strings;
 	}

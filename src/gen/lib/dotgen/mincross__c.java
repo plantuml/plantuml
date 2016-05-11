@@ -870,7 +870,7 @@ try {
     if ((GD_n_cluster(g) > 0)
 	&& (N(s = agget(g, new CString("remincross"))) || (mapbool(s)))) {
 	mark_lowclusters(g);
-	Z._().ReMincross = NOT(0);
+	Z.z().ReMincross = NOT(0);
 	nc = mincross_(g, 2, 2, doBalance);
     }
     cleanup2(g, nc);
@@ -1053,7 +1053,7 @@ public static void ordered_edges(Agraph_s g) {
 ENTERING("hzoz2czb672i0nbjvjhbc3na","ordered_edges");
 try {
     CString ordering;
-    if (N(Z._().G_ordering) && N(Z._().N_ordering))
+    if (N(Z.z().G_ordering) && N(Z.z().N_ordering))
 	return;
 UNSUPPORTED("98iqppixxkdndoz210i5ejppy"); //     if ((ordering = late_string(g, G_ordering, NULL))) {
 UNSUPPORTED("lhhw62wj3on36enoy6ug6u1p"); // 	if ((*(ordering)==*("out")&&!strcmp(ordering,"out")))
@@ -1115,7 +1115,7 @@ try {
     adjmatrix_t M;
     boolean rv=false;
     /* CLUSTER indicates orig nodes of clusters, and vnodes of skeletons */
-    if (Z._().ReMincross == false) {
+    if (Z.z().ReMincross == false) {
 	if (NEQ(ND_clust(v), ND_clust(w)) && (ND_clust(v)!=null) && (ND_clust(w)!=null)) {
 	    /* the following allows cluster skeletons to be swapped */
 	    if ((ND_ranktype(v) == 7)
@@ -1216,9 +1216,9 @@ try {
     vi = ND_order(v);
     wi = ND_order(w);
     ND_order(v, wi);
-    GD_rank(Z._().Root).plus(r).getArrayOfPtr("v").plus(wi).setPtr(v);
+    GD_rank(Z.z().Root).plus(r).getArrayOfPtr("v").plus(wi).setPtr(v);
     ND_order(w, vi);
-    GD_rank(Z._().Root).plus(r).getArrayOfPtr("v").plus(vi).setPtr(w);
+    GD_rank(Z.z().Root).plus(r).getArrayOfPtr("v").plus(vi).setPtr(w);
 } finally {
 LEAVING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 }
@@ -1379,14 +1379,14 @@ try {
 	if ((c1 < c0) || ((c0 > 0) && reverse && (c1 == c0))) {
 	    exchange(v, w);
 	    rv += (c0 - c1);
-	    GD_rank(Z._().Root).plus(r).getPtr().setBoolean("valid", false);
+	    GD_rank(Z.z().Root).plus(r).getPtr().setBoolean("valid", false);
 	    GD_rank(g).plus(r).getPtr().setBoolean("candidate", NOT(false));
 	    if (r > GD_minrank(g)) {
-		GD_rank(Z._().Root).plus(r - 1).getPtr().setBoolean("valid", false);
+		GD_rank(Z.z().Root).plus(r - 1).getPtr().setBoolean("valid", false);
 		GD_rank(g).plus(r - 1).getPtr().setBoolean("candidate", NOT(false));
 	    }
 	    if (r < GD_maxrank(g)) {
-		GD_rank(Z._().Root).plus(r + 1).getPtr().setBoolean("valid", false);
+		GD_rank(Z.z().Root).plus(r + 1).getPtr().setBoolean("valid", false);
 		GD_rank(g).plus(r + 1).getPtr().setBoolean("candidate", NOT(false));
 	    }
 	}
@@ -1439,7 +1439,7 @@ try {
 	cur_cross = best_cross = INT_MAX;
     for (pass = startpass; pass <= endpass; pass++) {
 	if (pass <= 1) {
-	    maxthispass = MIN(4, Z._().MaxIter);
+	    maxthispass = MIN(4, Z.z().MaxIter);
 	    if (EQ(g, dot_root(g)))
 		build_ranks(g, pass);
 	    if (pass == 0)
@@ -1451,7 +1451,7 @@ try {
 	    }
 	    trying = 0;
 	} else {
-	    maxthispass = Z._().MaxIter;
+	    maxthispass = Z.z().MaxIter;
 	    if (cur_cross > best_cross)
 		restore_best(g);
 	    cur_cross = best_cross;
@@ -1462,14 +1462,14 @@ try {
 		fprintf(stderr,
 			"mincross: pass %d iter %d trying %d cur_cross %d best_cross %d\n",
 			pass, iter, trying, cur_cross, best_cross);*/
-	    if (trying++ >= Z._().MinQuit)
+	    if (trying++ >= Z.z().MinQuit)
 		break;
 	    if (cur_cross == 0)
 		break;
 	    mincross_step(g, iter);
 	    if ((cur_cross = ncross(g)) <= best_cross) {
 		save_best(g);
-		if (cur_cross < Z._().Convergence * best_cross)
+		if (cur_cross < Z.z().Convergence * best_cross)
 		    trying = 0;
 		best_cross = cur_cross;
 	    }
@@ -1506,7 +1506,7 @@ try {
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
 	ND_order(n, (int)ND_coord(n).getDouble("x"));
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	GD_rank(Z._().Root).plus(r).setBoolean("valid", false);
+	GD_rank(Z.z().Root).plus(r).setBoolean("valid", false);
     qsort(GD_rank(g).plus(r).getPtr("v"),
     	    GD_rank(g).plus(r).getInt("n"),
     	    sizeof(GD_rank(g).plus(r).getPtr("v").plus(0)),
@@ -1558,8 +1558,8 @@ try {
     }
     GD_comp(g).setInt("size", 1);
     GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(0).getPtr());
-    GD_minrank(g, Z._().GlobalMinRank);
-    GD_maxrank(g, Z._().GlobalMaxRank);
+    GD_minrank(g, Z.z().GlobalMinRank);
+    GD_maxrank(g, Z.z().GlobalMaxRank);
 } finally {
 LEAVING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 }
@@ -1610,13 +1610,13 @@ try {
     int i, j, r, c;
     Agnode_s v;
     Agedge_s e;
-    if (Z._().TI_list!=null) {
-	Memory.free(Z._().TI_list);
-	Z._().TI_list = null;
+    if (Z.z().TI_list!=null) {
+	Memory.free(Z.z().TI_list);
+	Z.z().TI_list = null;
     }
-    if (Z._().TE_list!=null) {
-	Memory.free(Z._().TE_list);
-	Z._().TE_list = null;
+    if (Z.z().TE_list!=null) {
+	Memory.free(Z.z().TE_list);
+	Z.z().TE_list = null;
     }
     /* fix vlists of clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
@@ -1659,9 +1659,9 @@ try {
 assert(v!=null);
     if (dir < 0) {
 	if (ND_order(v) > 0)
-	    rv = (Agnode_s) GD_rank(Z._().Root).plus(ND_rank(v)).getArrayOfPtr("v").plus(ND_order(v) - 1).getPtr();
+	    rv = (Agnode_s) GD_rank(Z.z().Root).plus(ND_rank(v)).getArrayOfPtr("v").plus(ND_order(v) - 1).getPtr();
     } else
-	rv = (Agnode_s) GD_rank(Z._().Root).plus(ND_rank(v)).getArrayOfPtr("v").plus(ND_order(v) + 1).getPtr();
+	rv = (Agnode_s) GD_rank(Z.z().Root).plus(ND_rank(v)).getArrayOfPtr("v").plus(ND_order(v) + 1).getPtr();
 assert((rv == null) || (ND_order(rv)-ND_order(v))*dir > 0);
     return rv;
 } finally {
@@ -1883,14 +1883,14 @@ try {
     int size;
     //if (Verbose)
 	//start_timer();
-    Z._().ReMincross = false;
-    Z._().Root = g;
+    Z.z().ReMincross = false;
+    Z.z().Root = g;
     /* alloc +1 for the null terminator usage in do_ordering() */
     /* also, the +1 avoids attempts to alloc 0 sizes, something
        that efence complains about */
     size = agnedges(dot_root(g)) + 1;
-    Z._().TE_list = zmalloc(sizeof_starstar_empty(Agedge_s.class, size));
-    Z._().TI_list = zmalloc(size_t_array_of_integer(size));
+    Z.z().TE_list = zmalloc(sizeof_starstar_empty(Agedge_s.class, size));
+    Z.z().TI_list = zmalloc(size_t_array_of_integer(size));
     mincross_options(g);
     if ((GD_flags(g) & (1 << 4))!=0)
 	fillRanks (g);
@@ -1898,8 +1898,8 @@ try {
     decompose(g, 1);
     allocate_ranks(g);
     ordered_edges(g);
-    Z._().GlobalMinRank = GD_minrank(g);
-    Z._().GlobalMaxRank = GD_maxrank(g);
+    Z.z().GlobalMinRank = GD_minrank(g);
+    Z.z().GlobalMaxRank = GD_maxrank(g);
 } finally {
 LEAVING("7fy4chyk12o7bgp1rv3h27yl3","init_mincross");
 }
@@ -2087,7 +2087,7 @@ UNSUPPORTED("53h8d82ax23hys2k21hjswp72"); // 	      1034, agnameof(g), agnameof(
     ND_order(n, i);
     GD_rank(g).plus(r).setInt("n", 1+GD_rank(g).plus(r).getInt("n"));
     // assert(GD_rank(g)[r].n <= GD_rank(g)[r].an);
-    if (ND_order(n) > GD_rank(Z._().Root).plus(r).getInt("an")) {
+    if (ND_order(n) > GD_rank(Z.z().Root).plus(r).getInt("an")) {
 UNSUPPORTED("399szcw1txekt1xssyw7s2x07"); // 	agerr(AGERR, "install_in_rank, line %d: ND_order(%s) [%d] > GD_rank(Root)[%d].an [%d]\n",
 UNSUPPORTED("9puojrmsk6vb1qc0jtr8ge4g8"); // 	      1052, agnameof(n), ND_order(n), r, GD_rank(Root)[r].an);
 	return;
@@ -2098,7 +2098,7 @@ UNSUPPORTED("d2ugluzf7bmj7osicgitgy3sr"); // 	      1057, r, GD_minrank(g), GD_m
 	return;
     }
     if (GD_rank(g).plus(r).getPtr("v").plus(ND_order(n)).comparePointer(
-	GD_rank(g).plus(r).getPtr("av").plus(GD_rank(Z._().Root).plus(r).getInt("an")))>0) {
+	GD_rank(g).plus(r).getPtr("av").plus(GD_rank(Z.z().Root).plus(r).getInt("an")))>0) {
 UNSUPPORTED("3eb32nc5czs5auwzz5p5mtl04"); // 	agerr(AGERR, "install_in_rank, line %d: GD_rank(g)[%d].v + ND_order(%s) [%d] > GD_rank(g)[%d].av + GD_rank(Root)[%d].an [%d]\n",
 UNSUPPORTED("3qe3qpw5h6vse39xs1ca9sjmo"); // 	      1062, r, agnameof(n),GD_rank(g)[r].v + ND_order(n), r, r, GD_rank(g)[r].av+GD_rank(Root)[r].an);
 	return;
@@ -2145,7 +2145,7 @@ try {
     if (dequeue(q)!=null)
 UNSUPPORTED("1b3hbd5artrq77i58q2o9kgz3"); // 	agerr(AGERR, "surprise\n");
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
-	GD_rank(Z._().Root).plus(i).setInt("valid", 0);
+	GD_rank(Z.z().Root).plus(i).setInt("valid", 0);
 	if (GD_flip(g)!=0 && (GD_rank(g).plus(i).getInt("n") > 0)) {
 	    int nn, ndiv2;
 	    __ptr__ vlist = GD_rank(g).plus(i).getPtr("v");
@@ -2318,7 +2318,7 @@ try {
 	    /* postprocess to restore intended order */
 	}
 	/* else do no harm! */
-	GD_rank(Z._().Root).plus(r).setInt("valid", 0);
+	GD_rank(Z.z().Root).plus(r).setInt("valid", 0);
     }
     if (temprank!=null)
 	Memory.free(temprank);
@@ -2378,9 +2378,9 @@ try {
 	    ep = ep.plus(-1);
     }
     if (changed) {
-	GD_rank(Z._().Root).plus(r).setBoolean("valid", false);
+	GD_rank(Z.z().Root).plus(r).setBoolean("valid", false);
 	if (r > 0)
-	    GD_rank(Z._().Root).plus(r - 1).setBoolean("valid", false);
+	    GD_rank(Z.z().Root).plus(r - 1).setBoolean("valid", false);
     }
 } finally {
 LEAVING("inv6wazjcnh4xkzzphsdcmg4","reorder");
@@ -2411,14 +2411,14 @@ try {
     }				/* down pass */
     if (pass % 2 == 0) {	/* down pass */
 	first = GD_minrank(g) + 1;
-	if (GD_minrank(g) > GD_minrank(Z._().Root))
+	if (GD_minrank(g) > GD_minrank(Z.z().Root))
 	    first--;
 	last = GD_maxrank(g);
 	dir = 1;
     } else {			/* up pass */
 	first = GD_maxrank(g) - 1;
 	last = GD_minrank(g);
-	if (GD_maxrank(g) < GD_maxrank(Z._().Root))
+	if (GD_maxrank(g) < GD_maxrank(Z.z().Root))
 	    first++;
 	dir = -1;
     }
@@ -2492,25 +2492,25 @@ try {
     cross = 0;
     max = 0;
     rtop = GD_rank(g).plus(r).getPtr("v");
-    if (Z._().C <= GD_rank(Z._().Root).plus(r + 1).getInt("n")) {
-	Z._().C = GD_rank(Z._().Root).plus(r + 1).getInt("n") + 1;
-	Z._().Count = ALLOC_INT(Z._().C, Z._().Count);
+    if (Z.z().C <= GD_rank(Z.z().Root).plus(r + 1).getInt("n")) {
+	Z.z().C = GD_rank(Z.z().Root).plus(r + 1).getInt("n") + 1;
+	Z.z().Count = ALLOC_INT(Z.z().C, Z.z().Count);
     }
     for (i = 0; i < GD_rank(g).plus(r + 1).getInt("n"); i++)
-	Z._().Count.plus(i).setInt(0);
+	Z.z().Count.plus(i).setInt(0);
     for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
 	Agedge_s e;
 	if (max > 0) {
 	    for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 		for (k = ND_order(aghead(e)) + 1; k <= max; k++)
-		    cross += Z._().Count.plus(k).getInt() * ED_xpenalty(e);
+		    cross += Z.z().Count.plus(k).getInt() * ED_xpenalty(e);
 	    }
 	}
 	for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 	    int inv = ND_order(aghead(e));
 	    if (inv > max)
 		max = inv;
-	    Z._().Count.plus(inv).setInt(Z._().Count.plus(inv).getInt() + ED_xpenalty(e));
+	    Z.z().Count.plus(inv).setInt(Z.z().Count.plus(inv).getInt() + ED_xpenalty(e));
 	}
     }
     for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
@@ -2538,7 +2538,7 @@ public static int ncross(Agraph_s g) {
 ENTERING("dbjmz2tnii2pn9sxg26ap6w5r","ncross");
 try {
     int r, count, nc;
-    g = Z._().Root;
+    g = Z.z().Root;
     count = 0;
     for (r = GD_minrank(g); r < GD_maxrank(g); r++) {
 	if (GD_rank(g).plus(r).getBoolean("valid"))
@@ -2623,7 +2623,7 @@ try {
     __ptr__ v;
     Agedge_s e;
     boolean hasfixed = false;
-    list = Z._().TI_list;
+    list = Z.z().TI_list;
     v = GD_rank(g).plus(r0).getPtr("v");
     for (i = 0; i < GD_rank(g).plus(r0).getInt("n"); i++) {
 	n = (Agnode_s) v.plus(i).getPtr();
@@ -2761,9 +2761,9 @@ try {
     CString p;
     double f;
     /* set default values */
-    Z._().MinQuit = 8;
-    Z._().MaxIter = 24;
-    Z._().Convergence = .995;
+    Z.z().MinQuit = 8;
+    Z.z().MaxIter = 24;
+    Z.z().Convergence = .995;
     p = agget(g, new CString("mclimit"));
     if (p!=null && ((f = atof(p)) > 0.0)) {
 UNSUPPORTED("4iu53eiz077u6joqgwawca8ya"); // 	MinQuit = ((1)>(MinQuit * f)?(1):(MinQuit * f));

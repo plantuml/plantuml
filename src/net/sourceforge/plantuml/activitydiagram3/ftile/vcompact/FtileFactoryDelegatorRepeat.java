@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
@@ -53,23 +55,24 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile repeat(Swimlane swimlane, Ftile repeat, Display test, Display yes, Display out, HtmlColor color,
-			LinkRendering backRepeatLinkRendering) {
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
+			HtmlColor color, LinkRendering backRepeatLinkRendering) {
 		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
 
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
 		final HtmlColor backColor = color == null ? getRose().getHtmlColor(getSkinParam(),
 				ColorParam.activityBackground) : color;
-		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
-		final HtmlColor endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getColor();
+		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering
+				.getRainbow();
 
 		final FontParam fontParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ACTIVITY_ARROW;
 		final FontConfiguration fc = new FontConfiguration(getSkinParam(), fontParam, null);
 
-		return FtileRepeat.create(backRepeatLinkRendering, swimlane, repeat, test, yes, out, borderColor, backColor,
-				arrowColor, endRepeatLinkColor, conditionStyle, this, fc);
+		return FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, repeat, test, yes, out, borderColor,
+				backColor, arrowColor, endRepeatLinkColor, conditionStyle, this, fc);
 	}
 }

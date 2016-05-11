@@ -236,4 +236,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.maxAsciiMessageLength();
 	}
 
+	public int colorArrowSeparationSpace() {
+		return skinParam.colorArrowSeparationSpace();
+	}
+
 }

@@ -98,16 +98,7 @@ class USymbolArtifact extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
-				final Stencil stencil = new Stencil() {
-					public double getStartingX(StringBounder stringBounder, double y) {
-						return 0;
-					}
-
-					public double getEndingX(StringBounder stringBounder, double y) {
-						return dim.getWidth();
-					}
-				};
-				ug = new UGraphicStencil(ug, stencil, new UStroke());
+				ug = new UGraphicStencil(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
 				drawArtifact(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Margin margin = getMargin();

@@ -54,6 +54,9 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 
 	final public Diagram createSystem(UmlSource source) {
 
+		if (source.getTotalLineCount() != 3) {
+			return null;
+		}
 		final IteratorCounter2 it = source.iterator2();
 		if (source.isEmpty()) {
 			return buildEmptyError(source, it.peek().getLocation());

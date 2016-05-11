@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.creole.Stencil;
 
 public abstract class USymbol {
 
@@ -159,5 +160,19 @@ public abstract class USymbol {
 	public int suppWidthBecauseOfShape() {
 		return 0;
 	}
+	
+	final Stencil getRectangleStencil(final Dimension2D dim) {
+		return new Stencil() {
+			public double getStartingX(StringBounder stringBounder, double y) {
+				return 0;
+			}
+
+			public double getEndingX(StringBounder stringBounder, double y) {
+				return dim.getWidth();
+			}
+		};
+	}
+
+
 
 }

@@ -53,6 +53,9 @@ public class InstructionSplit implements Instruction {
 		this.parent = parent;
 		this.splits.add(new InstructionList());
 		this.inlinkRendering = inlinkRendering;
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	private InstructionList getLast() {

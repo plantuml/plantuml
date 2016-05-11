@@ -67,9 +67,7 @@ public class FileUtils {
 			f = new File(name);
 		}
 		Log.info("Creating temporary file: " + f);
-		if (OptionFlags.getInstance().isKeepTmpFiles() == false) {
-			f.deleteOnExit();
-		}
+		f.deleteOnExit();
 		return f;
 	}
 

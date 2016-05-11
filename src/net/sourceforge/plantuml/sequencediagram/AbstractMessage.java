@@ -63,7 +63,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 
 	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
 		this.url = label.initUrl();
-		this.label = label.removeUrl(url);
+		this.label = label.removeHeadingUrl(url);
 		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19396 $
+ * Revision $Revision: 19636 $
  *
  */
 package net.sourceforge.plantuml;
@@ -46,7 +46,7 @@ public class OptionFlags {
 
 	// static public final boolean PBBACK = false;
 	// static public boolean GRAPHVIZCACHE = false;
-	static public final boolean TRACE_DOT = false;
+	// static public final boolean TRACE_DOT = false;
 
 	static public boolean ALLOW_INCLUDE = true;
 
@@ -61,6 +61,7 @@ public class OptionFlags {
 	static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
 	static public final boolean OMEGA_CROSSING = false;
+
 	// static public final boolean USE_JDOT = false;
 
 	public void reset() {
@@ -68,7 +69,7 @@ public class OptionFlags {
 	}
 
 	private void reset(boolean exit) {
-		keepTmpFiles = false;
+		// keepTmpFiles = false;
 		verbose = false;
 		metadata = false;
 		word = false;
@@ -90,7 +91,7 @@ public class OptionFlags {
 
 	private static final OptionFlags singleton = new OptionFlags();
 
-	private boolean keepTmpFiles;
+	// private boolean keepTmpFiles;
 	private boolean verbose;
 	private boolean metadata;
 	private boolean word;
@@ -113,13 +114,13 @@ public class OptionFlags {
 		return singleton;
 	}
 
-	public synchronized final boolean isKeepTmpFiles() {
-		return keepTmpFiles;
-	}
-
-	public synchronized final void setKeepTmpFiles(boolean keepTmpFiles) {
-		this.keepTmpFiles = keepTmpFiles;
-	}
+	// public synchronized final boolean isKeepTmpFiles() {
+	// return keepTmpFiles;
+	// }
+	//
+	// public synchronized final void setKeepTmpFiles(boolean keepTmpFiles) {
+	// this.keepTmpFiles = keepTmpFiles;
+	// }
 
 	public final boolean isVerbose() {
 		return verbose;

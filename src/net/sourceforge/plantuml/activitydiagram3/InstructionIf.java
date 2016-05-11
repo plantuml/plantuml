@@ -52,13 +52,14 @@ public class InstructionIf implements Instruction, InstructionCollection {
 
 	private final List<Branch> thens = new ArrayList<Branch>();
 	private Branch elseBranch;
+	private boolean endifCalled = false;
 	private final ISkinParam skinParam;
 
 	private final Instruction parent;
 
 	private Branch current;
 	private final LinkRendering topInlinkRendering;
-	private LinkRendering afterEndwhile;
+	private LinkRendering afterEndwhile = LinkRendering.none();
 
 	private final Swimlane swimlane;
 
@@ -67,6 +68,9 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		this.parent = parent;
 		this.skinParam = skinParam;
 		this.topInlinkRendering = inlinkRendering;
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 		this.swimlane = swimlane;
 		this.thens.add(new Branch(swimlane, whenThen, labelTest, color));
 		this.current = this.thens.get(0);
@@ -120,6 +124,7 @@ public class InstructionIf implements Instruction, InstructionCollection {
 	}
 
 	public void endif(LinkRendering nextLinkRenderer) {
+		endifCalled = true;
 		if (elseBranch == null) {
 			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null);
 		}
@@ -127,6 +132,17 @@ public class InstructionIf implements Instruction, InstructionCollection {
 	}
 
 	final public boolean kill() {
+		if (endifCalled) {
+			for (Branch branch : thens) {
+				if (branch.getLast().kill() == false) {
+					return false;
+				}
+				if (elseBranch != null && elseBranch.getLast().kill() == false) {
+					return false;
+				}
+				return true;
+			}
+		}
 		return current.kill();
 	}
 

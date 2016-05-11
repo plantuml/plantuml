@@ -53,13 +53,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -122,7 +122,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 		// // } else if (isSeveralSwimlanes(all)) {
 		// // return severalSwimlanes(all);
 		// }
-		final HtmlColor arrowColor = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
 
 		final Dimension2D dimSuper = super.createSplit(all).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
@@ -149,10 +149,11 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 			x += dim.getWidth();
 		}
 		final double totalWidth = inner.calculateDimension(getStringBounder()).getWidth();
-		conns.add(new ConnectionHline2(inner, OptionFlags.SWI2 ? HtmlColorUtils.BLUE : arrowColor, 0, list, totalWidth));
+		conns.add(new ConnectionHline2(inner, OptionFlags.SWI2 ? HtmlColorAndStyle.fromColor(HtmlColorUtils.BLUE)
+				: arrowColor, 0, list, totalWidth));
 		if (hasOut) {
-			conns.add(new ConnectionHline2(inner, OptionFlags.SWI2 ? HtmlColorUtils.GREEN : arrowColor, height1, list,
-					totalWidth));
+			conns.add(new ConnectionHline2(inner, OptionFlags.SWI2 ? HtmlColorAndStyle.fromColor(HtmlColorUtils.GREEN)
+					: arrowColor, height1, list, totalWidth));
 		}
 
 		inner = FtileUtils.addConnection(inner, conns);
@@ -203,14 +204,12 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 	private TextBlock getTextBlock(LinkRendering linkRendering) {
 		// DUP1433
-		final Display display = LinkRendering.getDisplay(linkRendering);
+		final Display display = linkRendering.getDisplay();
 		return getTextBlock(display);
 	}
-	
-
 
 	private Ftile simpleSwimlanes(List<Ftile> all) {
-		final HtmlColor arrowColor = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
 
 		final Dimension2D dimSuper = new FtileSplit1(all).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
@@ -254,11 +253,11 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 		private final Ftile inner;
 		private final double y;
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 		private final List<Ftile> list;
 		private final double totalWidth;
 
-		public ConnectionHline2(Ftile inner, HtmlColor arrowColor, double y, List<Ftile> list, double totalWidth) {
+		public ConnectionHline2(Ftile inner, Rainbow arrowColor, double y, List<Ftile> list, double totalWidth) {
 			super(null, null);
 			this.inner = inner;
 			this.y = y;
@@ -314,11 +313,11 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 		private final Ftile inner;
 		private final double y;
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 		private final List<Ftile> list;
 		private final double totalWidth;
 
-		public ConnectionHline3(Ftile inner, HtmlColor arrowColor, double y, List<Ftile> list, double totalWidth) {
+		public ConnectionHline3(Ftile inner, Rainbow arrowColor, double y, List<Ftile> list, double totalWidth) {
 			super(null, null);
 			this.inner = inner;
 			this.y = y;
@@ -360,10 +359,10 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 	static class ConnectionIn extends AbstractConnection {
 
 		private final double x;
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 		private final TextBlock text;
 
-		public ConnectionIn(Ftile tmp, double x, HtmlColor arrowColor, TextBlock text) {
+		public ConnectionIn(Ftile tmp, double x, Rainbow arrowColor, TextBlock text) {
 			super(null, tmp);
 			this.x = x;
 			this.arrowColor = arrowColor;
@@ -385,11 +384,11 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 	static class ConnectionOut extends AbstractConnection {
 
 		private final double x;
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 		private final double height;
 		private final TextBlock text;
 
-		public ConnectionOut(Ftile tmp, double x, HtmlColor arrowColor, double height, TextBlock text) {
+		public ConnectionOut(Ftile tmp, double x, Rainbow arrowColor, double height, TextBlock text) {
 			super(tmp, null);
 			this.x = x;
 			this.arrowColor = arrowColor;

@@ -599,7 +599,7 @@ try {
     if (agisstrict(g)) {
 	if (g.getPtr("desc").getBoolean("no_loop") && (EQ(t, h))) /* simple graphs */
 	    return false;
-	key.____(Z._().Tag);
+	key.____(Z.z().Tag);
 	key.setInt("objtype", 0);	/* wild card */
 	if (agfindedge_by_key(g, t, h, key)!=null)
 	    return false;
@@ -655,7 +655,7 @@ try {
     if (have_id!=0 || ((name == null) && ((NOT(cflag)) || agisstrict(g)))) {
 	/* probe for pre-existing edge */
 	final __struct__<Agtag_s> key = __struct__.from(Agtag_s.class);
-	key.____(Z._().Tag);
+	key.____(Z.z().Tag);
 	if (have_id!=0) {
 	    key.setInt("id", id[0]);
 	    key.setInt("objtype", AGEDGE);

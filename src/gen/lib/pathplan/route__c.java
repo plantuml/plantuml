@@ -101,14 +101,14 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     /* generate the splines */
     evs.plus(0).getStruct().____(normv(evs.plus(0).getStruct()));
     evs.plus(1).getStruct().____(normv(evs.plus(1).getStruct()));
-    Z._().opl = 0;
+    Z.z().opl = 0;
     growops(4);
-    Z._().ops_route.plus(Z._().opl).setStruct(inps.plus(0).getStruct());
-    Z._().opl++;
+    Z.z().ops_route.plus(Z.z().opl).setStruct(inps.plus(0).getStruct());
+    Z.z().opl++;
     if (reallyroutespline(edges, edgen, inps, inpn, evs.plus(0).getStruct(), evs.plus(1).getStruct()) == -1)
 	return -1;
-    output.setInt("pn", Z._().opl);
-    output.setPtr("ps", Z._().ops_route);
+    output.setInt("pn", Z.z().opl);
+    output.setPtr("ps", Z.z().ops_route);
     return 0;
 } finally {
 LEAVING("9stmrdqlmufyk2wutp3totr5j","Proutespline");
@@ -133,33 +133,33 @@ try {
     final __struct__<pointf> v1 = __struct__.from(pointf.class), v2 = __struct__.from(pointf.class), splitv = __struct__.from(pointf.class), splitv1 = __struct__.from(pointf.class), splitv2 = __struct__.from(pointf.class);
     double maxd, d, t;
     int maxi, i, spliti;
-    if (Z._().tnan < inpn) {
-	if (N(Z._().tnas)) {
-	    if (N(Z._().tnas = Memory.malloc(sizeof(tna_t.class, inpn))))
+    if (Z.z().tnan < inpn) {
+	if (N(Z.z().tnas)) {
+	    if (N(Z.z().tnas = Memory.malloc(sizeof(tna_t.class, inpn))))
 		return -1;
 	} else {
-	    if (N(Z._().tnas = Memory.realloc(Z._().tnas, sizeof(tna_t.class, inpn))))
+	    if (N(Z.z().tnas = Memory.realloc(Z.z().tnas, sizeof(tna_t.class, inpn))))
 		return -1;
 	}
-	Z._().tnan = inpn;
+	Z.z().tnan = inpn;
     }
-    Z._().tnas.plus(0).getStruct().setDouble("t", 0);
+    Z.z().tnas.plus(0).getStruct().setDouble("t", 0);
     for (i = 1; i < inpn; i++)
-	Z._().tnas.plus(i).getStruct().setDouble("t", Z._().tnas.plus(i-1).getStruct().getDouble("t") + dist(inps.plus(i).getStruct(), inps.plus(i-1).getStruct()));
+	Z.z().tnas.plus(i).getStruct().setDouble("t", Z.z().tnas.plus(i-1).getStruct().getDouble("t") + dist(inps.plus(i).getStruct(), inps.plus(i-1).getStruct()));
     for (i = 1; i < inpn; i++)
-	Z._().tnas.plus(i).getStruct().setDouble("t", Z._().tnas.plus(i).getStruct().getDouble("t") / Z._().tnas.plus(inpn - 1).getStruct().getDouble("t"));
+	Z.z().tnas.plus(i).getStruct().setDouble("t", Z.z().tnas.plus(i).getStruct().getDouble("t") / Z.z().tnas.plus(inpn - 1).getStruct().getDouble("t"));
     for (i = 0; i < inpn; i++) {
-	Z._().tnas.plus(i).getStruct().getArrayOfStruct("a").plus(0).setStruct(scale(ev0, B1(Z._().tnas.plus(i).getStruct().getDouble("t"))));
-	Z._().tnas.plus(i).getStruct().getArrayOfStruct("a").plus(1).setStruct(scale(ev1, B2(Z._().tnas.plus(i).getStruct().getDouble("t"))));
+	Z.z().tnas.plus(i).getStruct().getArrayOfStruct("a").plus(0).setStruct(scale(ev0, B1(Z.z().tnas.plus(i).getStruct().getDouble("t"))));
+	Z.z().tnas.plus(i).getStruct().getArrayOfStruct("a").plus(1).setStruct(scale(ev1, B2(Z.z().tnas.plus(i).getStruct().getDouble("t"))));
     }
-    if (mkspline(inps, inpn, Z._().tnas, ev0, ev1, p1.amp(), v1.amp(), p2.amp(), v2.amp()) == -1)
+    if (mkspline(inps, inpn, Z.z().tnas, ev0, ev1, p1.amp(), v1.amp(), p2.amp(), v2.amp()) == -1)
 	return -1;
     if (splinefits(edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)
 	return 0;
     cp1.____(add(p1, scale(v1, 1 / 3.0)));
     cp2.____(sub(p2, scale(v2, 1 / 3.0)));
     for (maxd = -1, maxi = -1, i = 1; i < inpn - 1; i++) {
-	t = Z._().tnas.plus(i).getDouble("t");
+	t = Z.z().tnas.plus(i).getDouble("t");
 	p.setDouble("x", B0(t) * p1.getDouble("x") + B1(t) * cp1.getDouble("x") + B2(t) * cp2.getDouble("x") + B3(t) * p2.getDouble("x"));
 	p.setDouble("y", B0(t) * p1.getDouble("y") + B1(t) * cp1.getDouble("y") + B2(t) * cp2.getDouble("y") + B3(t) * p2.getDouble("y"));
 	if ((d = dist(p, inps.plus(i).getStruct())) > maxd)
@@ -292,22 +292,22 @@ try {
 	    return 0;
 	first = 0;
 	if (splineisinside(edges, edgen, sps)) {
-	    growops(Z._().opl + 4);
+	    growops(Z.z().opl + 4);
 	    for (pi = 1; pi < 4; pi++) {
-		Z._().ops_route.plus(Z._().opl).setDouble("x", sps.plus(pi).getStruct().getDouble("x"));
-		Z._().ops_route.plus(Z._().opl).setDouble("y", sps.plus(pi).getStruct().getDouble("y"));
-		Z._().opl++;
+		Z.z().ops_route.plus(Z.z().opl).setDouble("x", sps.plus(pi).getStruct().getDouble("x"));
+		Z.z().ops_route.plus(Z.z().opl).setDouble("y", sps.plus(pi).getStruct().getDouble("y"));
+		Z.z().opl++;
 		}
 	    return 1;
 	}
 	if (a == 0 && b == 0) {
 	    if (forceflag!=0) {
-		growops(Z._().opl + 4);
+		growops(Z.z().opl + 4);
 		for (pi = 1; pi < 4; pi++)
 		{
-			Z._().ops_route.plus(Z._().opl).setDouble("x", sps.plus(pi).getStruct().getDouble("x"));
-			Z._().ops_route.plus(Z._().opl).setDouble("y", sps.plus(pi).getStruct().getDouble("y"));
-		    Z._().opl++;
+			Z.z().ops_route.plus(Z.z().opl).setDouble("x", sps.plus(pi).getStruct().getDouble("x"));
+			Z.z().ops_route.plus(Z.z().opl).setDouble("y", sps.plus(pi).getStruct().getDouble("y"));
+		    Z.z().opl++;
 		}
 		return 1;
 	    }
@@ -531,21 +531,21 @@ LEAVING("3i8m1m9fg7qmnt8jloorwlu8e","normv");
 public static void growops(int newopn) {
 ENTERING("d59jcnpi1y0wr8e9uwxny2fvk","growops");
 try {
-    if (newopn <= Z._().opn_route)
+    if (newopn <= Z.z().opn_route)
 	return;
-    if (N(Z._().ops_route)) {
-	if (N(Z._().ops_route = Memory.malloc(sizeof (pointf.class, newopn)))) {
+    if (N(Z.z().ops_route)) {
+	if (N(Z.z().ops_route = Memory.malloc(sizeof (pointf.class, newopn)))) {
 UNSUPPORTED("413an1hqgkb4ezaec6qdsdplx"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\route.c", 32, ("cannot malloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z._().ops_route = Memory.realloc(Z._().ops_route,
+	if (N(Z.z().ops_route = Memory.realloc(Z.z().ops_route,
 					 sizeof (pointf.class, newopn)))) {
 UNSUPPORTED("8u0qgahxvk5pplf90thmhwxhl"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\route.c", 32, ("cannot realloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z._().opn_route = newopn;
+    Z.z().opn_route = newopn;
 } finally {
 LEAVING("d59jcnpi1y0wr8e9uwxny2fvk","growops");
 }

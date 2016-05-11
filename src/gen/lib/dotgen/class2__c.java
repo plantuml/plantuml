@@ -1020,7 +1020,7 @@ try {
 		}
 		if ((ED_label(e) == null) && (ED_label(prev) == null)
 		    && ports_eq(e, prev)) {
-		    if (Z._().Concentrate)
+		    if (Z.z().Concentrate)
 			ED_edge_type(e, 6);
 		    else {
 			merge_chain(g, e, ED_to_virt(prev), NOT(false));
@@ -1065,7 +1065,7 @@ try {
 			make_chain(g, agtail(opp), aghead(opp), opp);
 		    if ((ED_label(e) == null) && (ED_label(opp) == null)
 			&& ports_eq(e, opp)) {
-			if (Z._().Concentrate) {
+			if (Z.z().Concentrate) {
 			    ED_edge_type(e, 6);
 			    ED_conc_opp_flag(opp, NOT(false));
 			} else {	/* see above.  this is getting out of hand */

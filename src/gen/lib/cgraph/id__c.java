@@ -226,8 +226,8 @@ try {
 	    s = agstrbind(g, str);
 	id[0] = Memory.identityHashCode(s);
     } else {
-	id[0] = Z._().ctr;
-	Z._().ctr += 2;
+	id[0] = Z.z().ctr;
+	Z.z().ctr += 2;
     }
     return ASINT(N(0));
 } finally {

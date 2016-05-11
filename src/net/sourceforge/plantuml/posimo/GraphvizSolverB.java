@@ -39,10 +39,8 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,50 +49,47 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.svek.MinFinder;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class GraphvizSolverB {
 
-	static private void traceDotString(String dotString) throws IOException {
-		final File f = new File("dottmpfile" + UniqueSequence.getValue() + ".tmp");
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(new FileWriter(f));
-			pw.print(dotString);
-			Log.info("Creating file " + f);
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
-		}
-	}
-
-	static private void traceSvgString(String svg) throws IOException {
-		final File f = new File("svgtmpfile" + UniqueSequence.getValue() + ".svg");
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(new FileWriter(f));
-			pw.print(svg);
-			Log.info("Creating file " + f);
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
-		}
-	}
+	// static private void traceDotString(String dotString) throws IOException {
+	// final File f = new File("dottmpfile" + UniqueSequence.getValue() + ".tmp");
+	// PrintWriter pw = null;
+	// try {
+	// pw = new PrintWriter(new FileWriter(f));
+	// pw.print(dotString);
+	// Log.info("Creating file " + f);
+	// } finally {
+	// if (pw != null) {
+	// pw.close();
+	// }
+	// }
+	// }
+	//
+	// static private void traceSvgString(String svg) throws IOException {
+	// final File f = new File("svgtmpfile" + UniqueSequence.getValue() + ".svg");
+	// PrintWriter pw = null;
+	// try {
+	// pw = new PrintWriter(new FileWriter(f));
+	// pw.print(svg);
+	// Log.info("Creating file " + f);
+	// } finally {
+	// if (pw != null) {
+	// pw.close();
+	// }
+	// }
+	// }
 
 	public Dimension2D solve(Cluster root, Collection<Path> paths) throws IOException {
 		final String dotString = new DotxMaker(root, paths).createDotString("nodesep=0.2;", "ranksep=0.2;");
 
-		if (OptionFlags.getInstance().isKeepTmpFiles()) {
-			traceDotString(dotString);
-		}
+		// if (OptionFlags.getInstance().isKeepTmpFiles()) {
+		// traceDotString(dotString);
+		// }
 
 		final MinFinder minMax = new MinFinder();
 
@@ -113,9 +108,9 @@ public class GraphvizSolverB {
 		final String s = new String(result, "UTF-8");
 		// Log.println("result=" + s);
 
-		if (OptionFlags.getInstance().isKeepTmpFiles()) {
-			traceSvgString(s);
-		}
+		// if (OptionFlags.getInstance().isKeepTmpFiles()) {
+		// traceSvgString(s);
+		// }
 
 		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(s);

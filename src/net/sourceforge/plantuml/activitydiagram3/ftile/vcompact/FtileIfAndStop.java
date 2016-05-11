@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -79,9 +80,9 @@ class FtileIfAndStop extends AbstractFtile {
 	private final Ftile diamond1;
 	private final Ftile stop2;
 
-	private final HtmlColor arrowColor;
+	private final Rainbow arrowColor;
 
-	private FtileIfAndStop(Ftile diamond1, Ftile tile1, HtmlColor arrowColor, Ftile stopFtile) {
+	private FtileIfAndStop(Ftile diamond1, Ftile tile1, Rainbow arrowColor, Ftile stopFtile) {
 		super(tile1.shadowing());
 		this.diamond1 = diamond1;
 		this.tile1 = tile1;
@@ -108,7 +109,7 @@ class FtileIfAndStop extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch nonStop, ISkinParam skinParam,
 			StringBounder stringBounder, Display labelTest) {
 
@@ -209,9 +210,9 @@ class FtileIfAndStop extends AbstractFtile {
 
 	class ConnectionHorizontal extends AbstractConnection {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 
-		public ConnectionHorizontal(HtmlColor color) {
+		public ConnectionHorizontal(Rainbow color) {
 			super(diamond1, stop2);
 			this.color = color;
 		}

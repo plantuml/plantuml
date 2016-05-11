@@ -359,19 +359,19 @@ try {
     Agdatadict_s parent_dd, dd;
     dd = (Agdatadict_s) agbindrec(g, DataDictName, sizeof(Agdatadict_s.class),
 				    false).castTo(Agdatadict_s.class);
-    dd.setPtr("dict.n", agdtopen(g, Z._().AgDataDictDisc.amp(), Z._().Dttree));
-    dd.setPtr("dict.e", agdtopen(g, Z._().AgDataDictDisc.amp(),Z._(). Dttree));
-    dd.setPtr("dict.g", agdtopen(g, Z._().AgDataDictDisc.amp(), Z._().Dttree));
+    dd.setPtr("dict.n", agdtopen(g, Z.z().AgDataDictDisc.amp(), Z.z().Dttree));
+    dd.setPtr("dict.e", agdtopen(g, Z.z().AgDataDictDisc.amp(),Z.z(). Dttree));
+    dd.setPtr("dict.g", agdtopen(g, Z.z().AgDataDictDisc.amp(), Z.z().Dttree));
     if ((par = agparent(g))!=null) {
 	parent_dd = agdatadict(par, false);
 	dtview((_dt_s)dd.getPtr("dict.n"), (_dt_s)parent_dd.getPtr("dict.n"));
 	dtview((_dt_s)dd.getPtr("dict.e"), (_dt_s)parent_dd.getPtr("dict.e"));
 	dtview((_dt_s)dd.getPtr("dict.g"), (_dt_s)parent_dd.getPtr("dict.g"));
     } else {
-	if (Z._().ProtoGraph!=null && NEQ(g, Z._().ProtoGraph)) {
+	if (Z.z().ProtoGraph!=null && NEQ(g, Z.z().ProtoGraph)) {
 	    /* it's not ok to dtview here for several reasons. the proto
 	       graph could change, and the sym indices don't match */
-	    parent_dd = agdatadict(Z._().ProtoGraph, false);
+	    parent_dd = agdatadict(Z.z().ProtoGraph, false);
 	    agcopydict(parent_dd.getPtr("dict.n"), dd.getPtr("dict.n"), g, AGNODE);
 	    agcopydict(parent_dd.getPtr("dict.e"), dd.getPtr("dict.e"), g, AGEDGE);
 	    agcopydict(parent_dd.getPtr("dict.g"), dd.getPtr("dict.g"), g, AGRAPH);
@@ -667,9 +667,9 @@ ENTERING("blr3drm2hxuzwd6gpeeb84yyg","agattr");
 try {
     Agsym_s rv;
     if (g == null) {
-	if (Z._().ProtoGraph == null)
-	    Z._().ProtoGraph = agopen(null, Z._().ProtoDesc.copy(), null);
-	g = Z._().ProtoGraph;
+	if (Z.z().ProtoGraph == null)
+	    Z.z().ProtoGraph = agopen(null, Z.z().ProtoDesc.copy(), null);
+	g = Z.z().ProtoGraph;
     }
     if (value!=null)
 	rv = setattr(g, kind, name, value);

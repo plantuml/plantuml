@@ -80,7 +80,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	}
 
 	public LinkRendering getInLinkRendering() {
-		return null;
+		return LinkRendering.none();
 	}
 
 	public boolean addNote(Display note, NotePosition position) {

@@ -53,6 +53,10 @@ public enum Direction {
 		}
 		throw new IllegalStateException();
 	}
+	
+	public String getShortCode() {
+		return name().substring(0, 1);
+	}
 
 	public static Direction fromChar(char c) {
 		if (c == '<') {

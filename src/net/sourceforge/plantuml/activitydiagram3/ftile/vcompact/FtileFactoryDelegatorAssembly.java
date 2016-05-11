@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -43,15 +42,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMargedRight;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
-import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
@@ -80,7 +74,7 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 		final UTranslate translate2 = result.getTranslateFor(tile2, stringBounder);
 		final Point2D p2 = tile2.calculateDimension(stringBounder).translate(translate2).getPointIn();
 
-		final HtmlColor color = getInLinkRenderingColor(tile2);
+		final Rainbow color = getInLinkRenderingColor(tile2);
 
 		final ConnectionVerticalDown connection = new ConnectionVerticalDown(tile1, tile2, p1, p2, color, textBlock);
 		result = FtileUtils.addConnection(result, connection);

@@ -41,7 +41,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
@@ -62,6 +61,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInsi
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -80,9 +80,9 @@ class FtileIfLongVertical extends AbstractFtile {
 	private final Ftile lastDiamond;
 	// private final List<Ftile> couples = new ArrayList<Ftile>();
 
-	private final HtmlColor arrowColor;
+	private final Rainbow arrowColor;
 
-	private FtileIfLongVertical(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, HtmlColor arrowColor,
+	private FtileIfLongVertical(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, Rainbow arrowColor,
 			Ftile lastDiamond) {
 		super(tiles.get(0).shadowing() || tile2.shadowing());
 		if (diamonds.size() != tiles.size()) {
@@ -136,7 +136,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
 			FontConfiguration fc, LinkRendering topInlinkRendering, LinkRendering afterEndwhile) {
 		final List<Ftile> tiles = new ArrayList<Ftile>();
@@ -172,7 +172,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
 
-			final HtmlColor color = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
+			final Rainbow color = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
 			conns.add(result.new ConnectionVerticalIn(diam, ftile, color == null ? arrowColor : color));
 			// conns.add(result.new ConnectionVerticalOut(ftile, arrowColor));
 		}
@@ -185,7 +185,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			conns.add(result.new ConnectionThenOutConnect(tiles.get(i), arrowColor));
 		}
 
-		final HtmlColor topInColor = LinkRendering.getColor(topInlinkRendering, arrowColor);
+		final Rainbow topInColor = topInlinkRendering.getRainbow(arrowColor);
 		// for (int i = 0; i < diamonds.size() - 1; i++) {
 		// final Ftile diam1 = diamonds.get(i);
 		// final Ftile diam2 = diamonds.get(i + 1);
@@ -208,9 +208,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionIn extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionIn(HtmlColor arrowColor) {
+		public ConnectionIn(Rainbow arrowColor) {
 			super(null, diamonds.get(0));
 			this.arrowColor = arrowColor;
 		}
@@ -232,9 +232,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionVerticalIn extends AbstractConnection {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 
-		public ConnectionVerticalIn(Ftile diamond, Ftile tile, HtmlColor color) {
+		public ConnectionVerticalIn(Ftile diamond, Ftile tile, Rainbow color) {
 			super(diamond, tile);
 			this.color = color;
 		}
@@ -267,9 +267,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionVertical extends AbstractConnection {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 
-		public ConnectionVertical(Ftile diamond1, Ftile diamond2, HtmlColor color) {
+		public ConnectionVertical(Ftile diamond1, Ftile diamond2, Rainbow color) {
 			super(diamond1, diamond2);
 			this.color = color;
 		}
@@ -299,9 +299,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionLastElse extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionLastElse(HtmlColor arrowColor) {
+		public ConnectionLastElse(Rainbow arrowColor) {
 			super(diamonds.get(diamonds.size() - 1), tile2);
 			this.arrowColor = arrowColor;
 		}
@@ -327,9 +327,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionLastElseOut extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionLastElseOut(HtmlColor arrowColor) {
+		public ConnectionLastElseOut(Rainbow arrowColor) {
 			super(tile2, lastDiamond);
 			this.arrowColor = arrowColor;
 		}
@@ -356,9 +356,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionThenOut extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionThenOut(Ftile tile1, HtmlColor arrowColor) {
+		public ConnectionThenOut(Ftile tile1, Rainbow arrowColor) {
 			super(tile1, lastDiamond);
 			this.arrowColor = arrowColor;
 		}
@@ -390,9 +390,9 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	class ConnectionThenOutConnect extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionThenOutConnect(Ftile tile1, HtmlColor arrowColor) {
+		public ConnectionThenOutConnect(Ftile tile1, Rainbow arrowColor) {
 			super(tile1, lastDiamond);
 			this.arrowColor = arrowColor;
 		}

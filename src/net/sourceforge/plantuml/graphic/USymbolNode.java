@@ -36,7 +36,10 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -47,7 +50,6 @@ class USymbolNode extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.NODE;
 	}
-
 
 	private void drawNode(UGraphic ug, double width, double height, boolean shadowing) {
 		final UPolygon shape = new UPolygon();
@@ -69,11 +71,44 @@ class USymbolNode extends USymbol {
 
 	}
 
+	class MyUGraphicNode extends AbstractUGraphicHorizontalLine {
+
+		private final double endingX;
+
+		@Override
+		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
+			return new MyUGraphicNode(ug, endingX);
+		}
+
+		public MyUGraphicNode(UGraphic ug, double endingX) {
+			super(ug);
+			this.endingX = endingX;
+		}
+
+		@Override
+		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
+			ug = ug.apply(translate);
+
+			drawHlineInternal(ug, line);
+			if (line.isDouble()) {
+				drawHlineInternal(ug.apply(new UTranslate(0, 2)), line);
+			}
+			line.drawTitleInternal(ug, 0, endingX - 10, 0, true);
+		}
+
+		private void drawHlineInternal(UGraphic ug, UHorizontalLine line) {
+			ug = ug.apply(line.getStroke()).apply(new UChangeBackColor(null));
+			ug.draw(new ULine(endingX - 10, 0));
+			ug.apply(new UTranslate(endingX - 10, 0)).draw(new ULine(10, -10));
+		}
+	}
+
 	private Margin getMargin() {
 		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -82,7 +117,8 @@ class USymbolNode extends USymbol {
 				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
-				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
+				final UGraphic ug2 = new MyUGraphicNode(ug, dim.getWidth());
+				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -116,6 +152,10 @@ class USymbolNode extends USymbol {
 				return new Dimension2DDouble(width, height);
 			}
 		};
+	}
+
+	public boolean manageHorizontalLine() {
+		return true;
 	}
 
 	@Override

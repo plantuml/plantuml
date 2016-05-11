@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
 public class Branch {
@@ -48,7 +49,7 @@ public class Branch {
 	private final Display labelTest;
 	private final Display labelPositive;
 	private final HtmlColor color;
-	private LinkRendering inlinkRendering;
+	private LinkRendering inlinkRendering = LinkRendering.none();
 
 	private Ftile ftile;
 
@@ -82,6 +83,9 @@ public class Branch {
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 		this.inlinkRendering = inlinkRendering;
 	}
 
@@ -105,8 +109,8 @@ public class Branch {
 		return labelTest;
 	}
 
-	public final HtmlColor getInlinkRenderingColor() {
-		return inlinkRendering == null ? null : inlinkRendering.getColor();
+	public final Rainbow getInlinkRenderingColorAndStyle() {
+		return inlinkRendering == null ? null : inlinkRendering.getRainbow();
 	}
 
 	public final Ftile getFtile() {

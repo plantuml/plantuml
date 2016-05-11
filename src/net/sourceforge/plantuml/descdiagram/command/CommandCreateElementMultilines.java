@@ -82,7 +82,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 	private static RegexConcat getRegexConcat(int type) {
 		if (type == 0) {
 			return new RegexConcat(new RegexLeaf("^"), //
-					new RegexLeaf("TYPE", "(usecase|database|artifact)[%s]+"), //
+					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
 					new RegexLeaf("[%s]*"), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
@@ -93,7 +93,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 		}
 		if (type == 1) {
 			return new RegexConcat(new RegexLeaf("^"), //
-					new RegexLeaf("TYPE", "(package|usecase|database|artifact)[%s]+"), //
+					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
 					new RegexLeaf("[%s]*"), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
@@ -110,22 +110,17 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type;
-		final USymbol usymbol;
+		USymbol usymbol;
 
 		if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
-		} else if (symbol.equalsIgnoreCase("package")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.PACKAGE;
-		} else if (symbol.equalsIgnoreCase("database")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.DATABASE;
-		} else if (symbol.equalsIgnoreCase("artifact")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ARTIFACT;
 		} else {
-			throw new IllegalStateException();
+			usymbol = USymbol.getFromString(symbol);
+			if (usymbol == null) {
+				throw new IllegalStateException();
+			}
+			type = LeafType.DESCRIPTION;
 		}
 
 		final Code code = Code.of(line0.get("CODE", 0));
@@ -152,9 +147,9 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 					.getIHtmlColorSet()));
 		}
 
-		result.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
+		result.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
 
 		return CommandExecutionResult.ok();
 	}
-
 }

@@ -51,13 +51,14 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -77,7 +78,7 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 	@Override
 	public Ftile createFork(Swimlane swimlane, List<Ftile> all) {
 		final HtmlColor colorBar = rose.getHtmlColor(getSkinParam(), ColorParam.activityBar);
-		final HtmlColor arrowColor = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
 
 		final Dimension2D dimSuper = super.createFork(swimlane, all).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
@@ -109,12 +110,12 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 	class ConnectionIn extends AbstractConnection implements ConnectionTranslatable {
 
 		private final double x;
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 		private final Display label;
 
-		public ConnectionIn(Ftile ftile1, Ftile ftile2, double x, HtmlColor arrowColor) {
+		public ConnectionIn(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor) {
 			super(ftile1, ftile2);
-			label = LinkRendering.getDisplay(ftile2.getInLinkRendering());
+			label = ftile2.getInLinkRendering().getDisplay();
 			this.x = x;
 			this.arrowColor = arrowColor;
 		}
@@ -155,13 +156,13 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 	class ConnectionOut extends AbstractConnection implements ConnectionTranslatable {
 
 		private final double x;
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 		private final double height;
 		private final Display label;
 
-		public ConnectionOut(Ftile ftile1, Ftile ftile2, double x, HtmlColor arrowColor, double height) {
+		public ConnectionOut(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor, double height) {
 			super(ftile1, ftile2);
-			label = LinkRendering.getDisplay(ftile1.getOutLinkRendering());
+			label = ftile1.getOutLinkRendering().getDisplay();
 			this.x = x;
 			this.arrowColor = arrowColor;
 			this.height = height;

@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -57,7 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -68,7 +67,7 @@ public class ConditionalBuilder {
 	private final Swimlane swimlane;
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
-	private final HtmlColor arrowColor;
+	private final Rainbow arrowColor;
 	private final FtileFactory ftileFactory;
 	private final ConditionStyle conditionStyle;
 	private final Branch branch1;
@@ -81,9 +80,10 @@ public class ConditionalBuilder {
 	private final Ftile tile1;
 	private final Ftile tile2;
 
-	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
-			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fontArrow, FontConfiguration fontTest) {
+	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor,
+			Rainbow arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1,
+			Branch branch2, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fontArrow,
+			FontConfiguration fontTest) {
 		this.swimlane = swimlane;
 		this.borderColor = borderColor;
 		this.backColor = backColor;
@@ -102,9 +102,10 @@ public class ConditionalBuilder {
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
-			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
+	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor,
+			Rainbow arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1,
+			Branch branch2, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow,
+			FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
 		return builder.createWithLinks();
@@ -189,10 +190,10 @@ public class ConditionalBuilder {
 	private Ftile getDiamond2() {
 		final Ftile diamond2;
 		if (hasTwoBranches()) {
-			final Display out1 = LinkRendering.getDisplay(branch1.getFtile().getOutLinkRendering());
+			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();
 			final TextBlock tbout1 = out1 == null ? null : out1.create(fontArrow, HorizontalAlignment.LEFT,
 					ftileFactory, CreoleMode.SIMPLE_LINE);
-			final Display out2 = LinkRendering.getDisplay(branch2.getFtile().getOutLinkRendering());
+			final Display out2 = branch2.getFtile().getOutLinkRendering().getDisplay();
 			final TextBlock tbout2 = out2 == null ? null : out2.create(fontArrow, HorizontalAlignment.LEFT,
 					ftileFactory, CreoleMode.SIMPLE_LINE);
 			diamond2 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withWest(tbout1).withEast(

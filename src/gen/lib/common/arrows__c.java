@@ -795,7 +795,7 @@ ENTERING("b669zec8aznq4obnil98j5lby","arrow_match_shape");
 try {
     CString next, rest;
     int f[] = new int[] {0};
-    rest = arrow_match_name_frag(name, Z._().Arrowsynonyms, f);
+    rest = arrow_match_name_frag(name, Z.z().Arrowsynonyms, f);
 UNSUPPORTED("304yfmlt3qwn4zydpx1hgmf5o"); //     if (rest == name) {
 UNSUPPORTED("8vxyvy38lzpbd83cu26nejaan"); // 	do {
 UNSUPPORTED("do0zgfzipmk0sgv0q0u14es1c"); // 	    next = rest;
@@ -845,7 +845,7 @@ try {
     arrowdir_t arrowdir;
     sflag[0] = (0);
     eflag[0] = agisdirected(agraphof(e)) ? 1 : (0);
-    if (Z._().E_dir!=null && ((attr = agxget(e, Z._().E_dir))).charAt(0)!='\0') {
+    if (Z.z().E_dir!=null && ((attr = agxget(e, Z.z().E_dir))).charAt(0)!='\0') {
 UNSUPPORTED("em7x45v09orjeey5u06gf9b4s"); // 	for (arrowdir = Arrowdirs; arrowdir->dir; arrowdir++) {
 UNSUPPORTED("dhaookuw0a1xqmh07lldcvlgi"); // 	    if ((*(attr)==*(arrowdir->dir)&&!strcmp(attr,arrowdir->dir))) {
 UNSUPPORTED("1d32qbc447n7nmmvedj3bnhr4"); // 		*sflag = arrowdir->sflag;
@@ -854,9 +854,9 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
-    if (Z._().E_arrowhead!=null && (eflag[0] == 1) && ((attr = agxget(e,Z._(). E_arrowhead))).charAt(0)!='\0')
+    if (Z.z().E_arrowhead!=null && (eflag[0] == 1) && ((attr = agxget(e,Z.z(). E_arrowhead))).charAt(0)!='\0')
 	arrow_match_name(attr, eflag);
-    if (Z._().E_arrowtail!=null && (sflag[0] == 1) && ((attr = agxget(e, Z._().E_arrowtail))).charAt(0)!='\0')
+    if (Z.z().E_arrowtail!=null && (sflag[0] == 1) && ((attr = agxget(e, Z.z().E_arrowtail))).charAt(0)!='\0')
 	arrow_match_name(attr, sflag);
     if (ED_conc_opp_flag(e)) {
 UNSUPPORTED("1p2usipxeqlorwroqo37t3yfy"); // 	edge_t *f;
@@ -886,7 +886,7 @@ try {
     for (i = 0; i < 4; i++) {
         /* we don't simply index with flag because arrowtypes are not necessarily sorted */
         f = (flag >> (i * 8)) & ((1 << 4) - 1);
-        for (arrowtype = Z._().Arrowtypes.asPtr(); arrowtype.getPtr("gen")!=null; arrowtype=arrowtype.plus(1)) {
+        for (arrowtype = Z.z().Arrowtypes.asPtr(); arrowtype.getPtr("gen")!=null; arrowtype=arrowtype.plus(1)) {
 	    if (f == arrowtype.getInt("type")) {
 	        lenfact += arrowtype.getDouble("lenfact");
 	        break;
@@ -895,7 +895,7 @@ try {
     }
     /* The original was missing the factor E_arrowsz, but I believe it
        should be here for correct arrow clipping */
-    return 10. * lenfact * late_double(e, Z._().E_arrowsz, 1.0, 0.0);
+    return 10. * lenfact * late_double(e, Z.z().E_arrowsz, 1.0, 0.0);
 } finally {
 LEAVING("1yk5wl46i7rlzcern0tefd24s","arrow_length");
 }

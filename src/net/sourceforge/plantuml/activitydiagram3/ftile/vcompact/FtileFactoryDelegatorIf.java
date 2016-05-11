@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
@@ -69,7 +71,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
 		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(getSkinParam(),
 				ColorParam.activityBackground) : branch0.getColor();
-		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
 
 		final FontConfiguration fcArrow = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY_ARROW, null);
 		// .changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));

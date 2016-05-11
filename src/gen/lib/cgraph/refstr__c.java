@@ -238,17 +238,17 @@ try {
 		else
 			dictref = STARSTAR.amp(new ACCESS<_dt_s>() {
 				public _dt_s get() {
-					return Z._().Refdict_default;
+					return Z.z().Refdict_default;
 				}
 				public void set(_dt_s obj) {
-					Z._().Refdict_default = obj;
+					Z.z().Refdict_default = obj;
 				}
 			});
     if (dictref.getMe() == null) {
-	dictref.setMe(agdtopen(g, Z._().Refstrdisc.amp(), Z._().Dttree));
+	dictref.setMe(agdtopen(g, Z.z().Refstrdisc.amp(), Z.z().Dttree));
 		}
-	Z._().HTML_BIT = 1 << 31;
-	Z._().CNT_BITS = ~Z._().HTML_BIT;
+	Z.z().HTML_BIT = 1 << 31;
+	Z.z().CNT_BITS = ~Z.z().HTML_BIT;
     return dictref.getMe();
 } finally {
 LEAVING("f1nwss2xoaub1hyord232ugoj","refdict");
@@ -408,7 +408,7 @@ try {
     if (r!=null) r = (refstr_t) r.castTo(refstr_t.class);
     if (r!=null && (EQ(r.getPtr("s"), s))) {
 	r.setInt("refcnt", r.getInt("refcnt")-1);
-	if ((r.getInt("refcnt")!=0 && Z._().CNT_BITS!=0) == false) {
+	if ((r.getInt("refcnt")!=0 && Z.z().CNT_BITS!=0) == false) {
 	    agdtdelete(g, strdict, r);
 	    /*
 	       if (g) agfree(g,r);
@@ -436,7 +436,7 @@ try {
     if (s == null)
 	return 0;
 	key = (refstr_t) s.addVirtualBytes(-OFFSET.create(refstr_t.class, "s").toInt());
-    return (key.getInt("refcnt") & Z._().HTML_BIT);
+    return (key.getInt("refcnt") & Z.z().HTML_BIT);
 } finally {
 LEAVING("3em4wzjnpajd5d3igb90l3rml","aghtmlstr");
 }

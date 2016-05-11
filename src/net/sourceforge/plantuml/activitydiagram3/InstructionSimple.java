@@ -54,8 +54,8 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final BoxStyle style;
 	private final Url url;
 
-	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane,
-			BoxStyle style, Url url, Colors colors) {
+	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle style, Url url,
+			Colors colors) {
 		super(swimlane);
 		if (colors == null) {
 			throw new IllegalArgumentException();
@@ -64,6 +64,9 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		this.style = style;
 		this.label = label;
 		this.inlinkRendering = inlinkRendering;
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 		this.colors = colors;
 	}
 

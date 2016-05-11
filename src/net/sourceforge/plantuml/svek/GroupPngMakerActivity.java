@@ -119,7 +119,7 @@ public final class GroupPngMakerActivity {
 			final HtmlColor borderColor = getColor(ColorParam.activityBorder, stereo);
 			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 					ColorParam.background, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
-			return new InnerActivity(svek2.createFile(), borderColor, backColor, skinParam.shadowing());
+			return new InnerActivity(svek2.createFile(null, new String[0]), borderColor, backColor, skinParam.shadowing());
 		}
 
 		throw new UnsupportedOperationException(group.getGroupType().toString());

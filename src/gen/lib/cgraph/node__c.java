@@ -216,9 +216,9 @@ public static Agnode_s agfindnode_by_id(Agraph_s g, int id) {
 ENTERING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 try {
     Agsubnode_s sn;
-    Z._().dummy.getStruct("base").getStruct("tag").setInt("id", id);
-    Z._().template.setPtr("node", Z._().dummy.amp());
-    sn = (Agsubnode_s) (g.getPtr("n_id").call("searchf", g.getPtr("n_id"), Z._().template.amp(),0000004));
+    Z.z().dummy.getStruct("base").getStruct("tag").setInt("id", id);
+    Z.z().template.setPtr("node", Z.z().dummy.amp());
+    sn = (Agsubnode_s) (g.getPtr("n_id").call("searchf", g.getPtr("n_id"), Z.z().template.amp(),0000004));
     return (Agnode_s) (sn!=null ? sn.getPtr("node") : null);
 } finally {
 LEAVING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");

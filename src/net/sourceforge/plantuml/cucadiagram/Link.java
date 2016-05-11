@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19635 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -113,7 +113,7 @@ public class Link implements Hideable, Removeable {
 			this.label = Display.NULL;
 		} else if (doWeHaveToRemoveUrlAtStart(label)) {
 			this.url = label.initUrl();
-			this.label = label.removeUrl(url);
+			this.label = label.removeHeadingUrl(url);
 		} else {
 			this.label = label;
 		}

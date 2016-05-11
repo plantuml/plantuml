@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19543 $
+ * Revision $Revision: 19636 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -270,8 +270,12 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setKeepTmpFiles(String s) {
+		// Deprecated
+	}
+
+	public void setDebugSvek(String s) {
 		if ("true".equalsIgnoreCase(s)) {
-			OptionFlags.getInstance().setKeepTmpFiles(true);
+			option.setDebugSvek(true);
 		}
 	}
 

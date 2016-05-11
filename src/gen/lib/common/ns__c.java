@@ -777,19 +777,19 @@ try {
 UNSUPPORTED("cq4nqjjxvb0dtdfy4c7pwpqai"); // 	agerr(AGERR, "add_tree_edge: missing tree edge\n");
 UNSUPPORTED("6fzmgjpkhmnx0a2cnt0q0rceg"); // 	longjmp (jbuf, 1);
     }
-    ED_tree_index(e, Z._().Tree_edge.getInt("size"));
+    ED_tree_index(e, Z.z().Tree_edge.getInt("size"));
     
-    Z._().Tree_edge.getArrayOfPtr("list").plus(Z._().Tree_edge.getInt("size")).setPtr(e);
-    Z._().Tree_edge.setInt("size", 1+ Z._().Tree_edge.getInt("size"));
+    Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().Tree_edge.getInt("size")).setPtr(e);
+    Z.z().Tree_edge.setInt("size", 1+ Z.z().Tree_edge.getInt("size"));
         
     if (ND_mark(agtail(e)) == 0) {
-	Z._().Tree_node.getArrayOfPtr("list").plus(Z._().Tree_node.getInt("size")).setPtr(agtail(e));
-    Z._().Tree_node.setInt("size", 1+ Z._().Tree_node.getInt("size"));
+	Z.z().Tree_node.getArrayOfPtr("list").plus(Z.z().Tree_node.getInt("size")).setPtr(agtail(e));
+    Z.z().Tree_node.setInt("size", 1+ Z.z().Tree_node.getInt("size"));
 	}
 	
     if (ND_mark(aghead(e)) == 0) {
-	Z._().Tree_node.getArrayOfPtr("list").plus(Z._().Tree_node.getInt("size")).setPtr(aghead(e));
-    Z._().Tree_node.setInt("size", 1+ Z._().Tree_node.getInt("size"));
+	Z.z().Tree_node.getArrayOfPtr("list").plus(Z.z().Tree_node.getInt("size")).setPtr(aghead(e));
+    Z.z().Tree_node.setInt("size", 1+ Z.z().Tree_node.getInt("size"));
 	}
     n = agtail(e);
     ND_mark(n, 1);
@@ -829,7 +829,7 @@ try {
     int i, j;
     Agnode_s n;
     ED_tree_index(f, ED_tree_index(e));
-    Z._().Tree_edge.getArrayOfPtr("list").plus(ED_tree_index(e)).setPtr(f);
+    Z.z().Tree_edge.getArrayOfPtr("list").plus(ED_tree_index(e)).setPtr(f);
     ED_tree_index(e, -1);
     n = agtail(e);
     ND_tree_out(n).setInt("size", ND_tree_out(n).getInt("size") -1);
@@ -872,9 +872,9 @@ try {
     nodequeue Q;
     Agnode_s v;
     Agedge_s e;
-    Q = new_queue(Z._().N_nodes);
+    Q = new_queue(Z.z().N_nodes);
     ctr = 0;
-    for (v = GD_nlist(Z._().G_ns); v!=null; v = ND_next(v)) {
+    for (v = GD_nlist(Z.z().G_ns); v!=null; v = ND_next(v)) {
 	if (ND_priority(v) == 0)
 	    enqueue(Q, v);
     }
@@ -889,7 +889,7 @@ try {
 		enqueue(Q, aghead(e));
 	}
     }
-    if (ctr != Z._().N_nodes) {
+    if (ctr != Z.z().N_nodes) {
 UNSUPPORTED("7sgp99x1l3hzfks5wykxa87gf"); // 	agerr(AGERR, "trouble in init_rank\n");
 UNSUPPORTED("bwwunxmw4kgz6qntbn6xp0cur"); // 	for (v = (((Agraphinfo_t*)(((Agobj_t*)(G))->data))->nlist); v; v = (((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->next))
 UNSUPPORTED("3dk132mz1u2pf0tla64kl6hv0"); // 	    if ((((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->priority))
@@ -932,32 +932,32 @@ ENTERING("4i9tcvid2iql874c6k70s9aqm","leave_edge");
 try {
     Agedge_s f, rv = null;
     int j, cnt = 0;
-    j = Z._().S_i;
-    while (Z._().S_i < Z._().Tree_edge.getInt("size")) {
-	if (ED_cutvalue(f = (Agedge_s) Z._().Tree_edge.getArrayOfPtr("list").plus(Z._().S_i).getPtr()) < 0) {
+    j = Z.z().S_i;
+    while (Z.z().S_i < Z.z().Tree_edge.getInt("size")) {
+	if (ED_cutvalue(f = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr()) < 0) {
 	    if (rv!=null) {
 		if (ED_cutvalue(rv) > ED_cutvalue(f))
 		    rv = f;
 	    } else
-		rv = (Agedge_s) Z._().Tree_edge.getArrayOfPtr("list").plus(Z._().S_i).getPtr();
-	    if (++cnt >= Z._().Search_size)
+		rv = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr();
+	    if (++cnt >= Z.z().Search_size)
 		return rv;
 	}
-	Z._().S_i++;
+	Z.z().S_i++;
     }
     if (j > 0) {
-	Z._().S_i = 0;
-	while (Z._().S_i < j) {
-	    if (ED_cutvalue(f = (Agedge_s) Z._().Tree_edge.getArrayOfPtr("list").plus(Z._().S_i).getPtr()) < 0) {
+	Z.z().S_i = 0;
+	while (Z.z().S_i < j) {
+	    if (ED_cutvalue(f = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr()) < 0) {
 		if (rv!=null) {
 		    if (ED_cutvalue(rv) > ED_cutvalue(f))
 			rv = f;
 		} else
-		    rv = (Agedge_s) Z._().Tree_edge.getArrayOfPtr("list").plus(Z._().S_i).getPtr();
-		if (++cnt >= Z._().Search_size)
+		    rv = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr();
+		if (++cnt >= Z.z().Search_size)
 		    return rv;
 	    }
-	    Z._().S_i++;
+	    Z.z().S_i++;
 	}
     }
     return rv;
@@ -986,17 +986,17 @@ try {
     Agedge_s e;
     for (i = 0; (e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 	if (TREE_EDGE(e) == false) {
-	    if (N(SEQ(Z._().Low, ND_lim(aghead(e)), Z._().Lim))) {
+	    if (N(SEQ(Z.z().Low, ND_lim(aghead(e)), Z.z().Lim))) {
 		slack = SLACK(e);
-		if ((slack < Z._().Slack) || (Z._().Enter == null)) {
-		    Z._().Enter = e;
-		    Z._().Slack = slack;
+		if ((slack < Z.z().Slack) || (Z.z().Enter == null)) {
+		    Z.z().Enter = e;
+		    Z.z().Slack = slack;
 		}
 	    }
 	} else if (ND_lim(aghead(e)) < ND_lim(v))
 	    dfs_enter_outedge(aghead(e));
     }
-    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null && (Z._().Slack > 0); i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null && (Z.z().Slack > 0); i++)
 	if (ND_lim(agtail(e)) < ND_lim(v))
 	    dfs_enter_outedge(agtail(e));
 } finally {
@@ -1016,17 +1016,17 @@ try {
     Agedge_s e;
     for (i = 0; (e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 	if (TREE_EDGE(e) == false) {
-	    if (N(SEQ(Z._().Low, ND_lim(agtail(e)), Z._().Lim))) {
+	    if (N(SEQ(Z.z().Low, ND_lim(agtail(e)), Z.z().Lim))) {
 		slack = SLACK(e);
-		if ((slack < Z._().Slack) || (Z._().Enter == null)) {
-		    Z._().Enter = e;
-		    Z._().Slack = slack;
+		if ((slack < Z.z().Slack) || (Z.z().Enter == null)) {
+		    Z.z().Enter = e;
+		    Z.z().Slack = slack;
 		}
 	    }
 	} else if (ND_lim(agtail(e)) < ND_lim(v))
 	    dfs_enter_inedge(agtail(e));
     }
-    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null && (Z._().Slack > 0); i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null && (Z.z().Slack > 0); i++)
 	if (ND_lim(aghead(e)) < ND_lim(v))
 	    dfs_enter_inedge(aghead(e));
 } finally {
@@ -1052,15 +1052,15 @@ try {
 	v = aghead(e);
 	outsearch = 1;
     }
-    Z._().Enter = null;
-    Z._().Slack = INT_MAX;
-    Z._().Low = ND_low(v);
-    Z._().Lim = ND_lim(v);
+    Z.z().Enter = null;
+    Z.z().Slack = INT_MAX;
+    Z.z().Low = ND_low(v);
+    Z.z().Lim = ND_lim(v);
     if (outsearch!=0)
 	dfs_enter_outedge(v);
     else
 	dfs_enter_inedge(v);
-    return Z._().Enter;
+    return Z.z().Enter;
 } finally {
 LEAVING("aeu2po1o1rvibmafk0k8dw0fh","enter_edge");
 }
@@ -1079,14 +1079,14 @@ try {
     for (i = 0; (e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 	if ((ND_mark(aghead(e)) == 0) && (SLACK(e) == 0)) {
 	    add_tree_edge(e);
-	    if ((Z._().Tree_edge.getInt("size") == Z._().N_nodes - 1) || treesearch(aghead(e)))
+	    if ((Z.z().Tree_edge.getInt("size") == Z.z().N_nodes - 1) || treesearch(aghead(e)))
 		return NOT(0);
 	}
     }
     for (i = 0; (e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 	if ((ND_mark(agtail(e)) == 0) && (SLACK(e) == 0)) {
 	    add_tree_edge(e);
-	    if ((Z._().Tree_edge.getInt("size") == Z._().N_nodes - 1) || treesearch(agtail(e)))
+	    if ((Z.z().Tree_edge.getInt("size") == Z.z().N_nodes - 1) || treesearch(agtail(e)))
 		return NOT(0);
 	}
     }
@@ -1106,20 +1106,20 @@ ENTERING("c98bj1u8j43cdezeczn33mec0","tight_tree");
 try {
     int i;
     Agnode_s n;
-    for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n)) {
+    for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
 	ND_mark(n, 0);
 	ND_tree_in(n).getArrayOfPtr("list").plus(0).setPtr(null);
 	ND_tree_out(n).getArrayOfPtr("list").plus(0).setPtr(null);
 	ND_tree_in(n).setInt("size", 0);
 	ND_tree_out(n).setInt("size", 0);
     }
-    for (i = 0; i < Z._().Tree_edge.getInt("size"); i++)
-	ED_tree_index(Z._().Tree_edge.getArrayOfPtr("list").plus(i).getPtr(), -1);
-    Z._().Tree_node.setInt("size", 0);
-    Z._().Tree_edge.setInt("size", 0);
-    for (n = GD_nlist(Z._().G_ns); n!=null && (Z._().Tree_edge.getInt("size") == 0); n = ND_next(n))
+    for (i = 0; i < Z.z().Tree_edge.getInt("size"); i++)
+	ED_tree_index(Z.z().Tree_edge.getArrayOfPtr("list").plus(i).getPtr(), -1);
+    Z.z().Tree_node.setInt("size", 0);
+    Z.z().Tree_edge.setInt("size", 0);
+    for (n = GD_nlist(Z.z().G_ns); n!=null && (Z.z().Tree_edge.getInt("size") == 0); n = ND_next(n))
 	treesearch(n);
-    return Z._().Tree_node.getInt("size");
+    return Z.z().Tree_node.getInt("size");
 } finally {
 LEAVING("c98bj1u8j43cdezeczn33mec0","tight_tree");
 }
@@ -1133,8 +1133,8 @@ LEAVING("c98bj1u8j43cdezeczn33mec0","tight_tree");
 public static void init_cutvalues() {
 ENTERING("10o7oe8d097fx7swmpqd4tf0h","init_cutvalues");
 try {
-    dfs_range(GD_nlist(Z._().G_ns), null, 1);
-    dfs_cutval(GD_nlist(Z._().G_ns), null);
+    dfs_range(GD_nlist(Z.z().G_ns), null, 1);
+    dfs_cutval(GD_nlist(Z.z().G_ns), null);
 } finally {
 LEAVING("10o7oe8d097fx7swmpqd4tf0h","init_cutvalues");
 }
@@ -1151,11 +1151,11 @@ try {
     int i, delta;
     Agnode_s n;
     Agedge_s e, f;
-    if (Z._().N_nodes <= 1)
+    if (Z.z().N_nodes <= 1)
 	return 0;
-    while (tight_tree() < Z._().N_nodes) {
+    while (tight_tree() < Z.z().N_nodes) {
 	e = null;
-	for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n)) {
+	for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
 	    for (i = 0; (f = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 		if ((TREE_EDGE(f) == false) && incident(f)!=null && ((e == null)
 							       || (SLACK(f)
@@ -1170,8 +1170,8 @@ try {
 	    if (delta!=0) {
 		if (EQ(incident(e), aghead(e)))
 		    delta = -delta;
-		for (i = 0; i < Z._().Tree_node.getInt("size"); i++)
-		    ND_rank(Z._().Tree_node.getArrayOfPtr("list").plus(i).getPtr(), ND_rank(Z._().Tree_node.getArrayOfPtr("list").plus(i).getPtr()) + delta);
+		for (i = 0; i < Z.z().Tree_node.getInt("size"); i++)
+		    ND_rank(Z.z().Tree_node.getArrayOfPtr("list").plus(i).getPtr(), ND_rank(Z.z().Tree_node.getArrayOfPtr("list").plus(i).getPtr()) + delta);
 	    }
 	} else {
 	    return 1;
@@ -1290,19 +1290,19 @@ public static void scan_and_normalize() {
 ENTERING("3yw7w42hz7af67d6qse3b2172","scan_and_normalize");
 try {
     Agnode_s n;
-    Z._().Minrank = Integer.MAX_VALUE;
-    Z._().Maxrank = -Integer.MAX_VALUE;
-    for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n)) {
+    Z.z().Minrank = Integer.MAX_VALUE;
+    Z.z().Maxrank = -Integer.MAX_VALUE;
+    for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
 	if (ND_node_type(n) == 0) {
-	    Z._().Minrank = MIN(Z._().Minrank, ND_rank(n));
-	    Z._().Maxrank = MAX(Z._().Maxrank, ND_rank(n));
+	    Z.z().Minrank = MIN(Z.z().Minrank, ND_rank(n));
+	    Z.z().Maxrank = MAX(Z.z().Maxrank, ND_rank(n));
 	}
     }
-    if (Z._().Minrank != 0) {
-	for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n))
-	    ND_rank(n, ND_rank(n) - Z._().Minrank);
-	Z._().Maxrank -= Z._().Minrank;
-	Z._().Minrank = 0;
+    if (Z.z().Minrank != 0) {
+	for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n))
+	    ND_rank(n, ND_rank(n) - Z.z().Minrank);
+	Z.z().Maxrank -= Z.z().Minrank;
+	Z.z().Minrank = 0;
     }
 } finally {
 LEAVING("3yw7w42hz7af67d6qse3b2172","scan_and_normalize");
@@ -1318,7 +1318,7 @@ public static void freeTreeList(Agraph_s g) {
 ENTERING("7eg6zti36nbg4tqyo8yunh86r","freeTreeList");
 try {
     Agnode_s n;
-    for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n)) {
+    for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
 	free_list(ND_tree_in(n));
 	free_list(ND_tree_out(n));
 	ND_mark(n, 0);
@@ -1338,8 +1338,8 @@ ENTERING("9gx8p7md3v3mzp640xdjj814a","LR_balance");
 try {
     int i, delta;
     Agedge_s e, f;
-    for (i = 0; i < Z._().Tree_edge.getInt("size"); i++) {
-	e = (Agedge_s) Z._().Tree_edge.getArrayOfPtr("list").plus(i).getPtr();
+    for (i = 0; i < Z.z().Tree_edge.getInt("size"); i++) {
+	e = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(i).getPtr();
 	if (ED_cutvalue(e) == 0) {
 	    f = enter_edge(e);
 	    if (f == null)
@@ -1353,7 +1353,7 @@ try {
 		rerank(aghead(e), -delta / 2);
 	}
     }
-    freeTreeList (Z._().G_ns);
+    freeTreeList (Z.z().G_ns);
 } finally {
 LEAVING("9gx8p7md3v3mzp640xdjj814a","LR_balance");
 }
@@ -1374,18 +1374,18 @@ try {
     int inweight, outweight;
     scan_and_normalize();
     /* find nodes that are not tight and move to less populated ranks */
-    nrank = zmalloc(size_t_array_of_integer(Z._().Maxrank + 1));
-    for (i = 0; i <= Z._().Maxrank; i++)
+    nrank = zmalloc(size_t_array_of_integer(Z.z().Maxrank + 1));
+    for (i = 0; i <= Z.z().Maxrank; i++)
 	nrank.plus(i).setInt(0);
-    for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n))
+    for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n))
 	if (ND_node_type(n) == 0)
 	    nrank.plus(ND_rank(n)).setInt(1+nrank.plus(ND_rank(n)).getInt());
-    for (n = GD_nlist(Z._().G_ns); n!=null; n = ND_next(n)) {
+    for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
 	if (ND_node_type(n) != 0)
 	    continue;
 	inweight = outweight = 0;
 	low = 0;
-	high = Z._().Maxrank;
+	high = Z.z().Maxrank;
 	for (i = 0; (e = (Agedge_s) ND_in(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 	    inweight += ED_weight(e);
 	    low = MAX(low, ND_rank(agtail(e)) + ED_minlen(e));
@@ -1426,18 +1426,18 @@ try {
     int i, feasible;
     Agnode_s n;
     Agedge_s e;
-    Z._().G_ns = g;
-    Z._().N_nodes = Z._().N_edges = Z._().S_i = 0;
+    Z.z().G_ns = g;
+    Z.z().N_nodes = Z.z().N_edges = Z.z().S_i = 0;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	ND_mark(n, 0);
-	Z._().N_nodes++;
+	Z.z().N_nodes++;
 	for (i = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
-	    Z._().N_edges++;
+	    Z.z().N_edges++;
     }
-    Z._().Tree_node.setPtr("list", ALLOC_empty(Z._().N_nodes, Z._().Tree_node.getPtr("list"), Agnode_s.class));
-    Z._().Tree_node.setInt("size", 0);
-    Z._().Tree_edge.setPtr("list", ALLOC_empty(Z._().N_nodes, Z._().Tree_edge.getPtr("list"), Agedge_s.class));
-    Z._().Tree_edge.setInt("size", 0);
+    Z.z().Tree_node.setPtr("list", ALLOC_empty(Z.z().N_nodes, Z.z().Tree_node.getPtr("list"), Agnode_s.class));
+    Z.z().Tree_node.setInt("size", 0);
+    Z.z().Tree_edge.setPtr("list", ALLOC_empty(Z.z().N_nodes, Z.z().Tree_edge.getPtr("list"), Agedge_s.class));
+    Z.z().Tree_edge.setInt("size", 0);
     feasible = 1;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	ND_priority(n, 0);
@@ -1513,9 +1513,9 @@ try {
 	return 1;
     }
     if (search_size >= 0)
-	Z._().Search_size = search_size;
+	Z.z().Search_size = search_size;
     else
-	Z._().Search_size = 30;
+	Z.z().Search_size = 30;
     if (setjmp (jbuf)!=0) {
 	return 2;
     }
@@ -1546,7 +1546,7 @@ try {
 	break;
     default:
 	scan_and_normalize();
-	freeTreeList (Z._().G_ns);
+	freeTreeList (Z.z().G_ns);
 	break;
     }
     /*if (Verbose) {

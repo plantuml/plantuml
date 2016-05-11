@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19398 $
+ * Revision $Revision: 19706 $
  *
  */
 package net.sourceforge.plantuml;
@@ -724,6 +724,14 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		return -1;
+	}
+
+	public int colorArrowSeparationSpace() {
+		final String value = getValue("colorarrowseparationspace");
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return 0;
 	}
 
 }

@@ -33,70 +33,70 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-public class DecoderInputStream extends FilterInputStream {
+public class DecoderInputStream extends InputStream {
 
-	private final byte key[];
-	private int idx;
+	private final TurningBytes message;
+	private final TurningBytes sha;
 	private final Random rnd;
+	private final InputStream source;
 
-	public DecoderInputStream(InputStream source, byte key[]) {
-		super(source);
-		this.key = key;
-		this.rnd = new Random(getSeed());
+	public DecoderInputStream(InputStream source, String s) {
+		this.source = source;
+		try {
+			final byte[] text = s.getBytes("UTF-8");
+			final byte[] key = getSignatureSha512(text);
+			this.rnd = new Random(getSeed(key));
+			this.message = new TurningBytes(text);
+			this.sha = new TurningBytes(key);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
-	private long getSeed() {
+	private static byte[] getSignatureSha512(byte[] bytes) {
+		try {
+			final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
+			msgDigest.update(bytes);
+			return msgDigest.digest();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	private long getSeed(byte[] bytes) {
 		long result = 17;
-		for (byte b : key) {
+		for (byte b : bytes) {
 			result = result * 37 + b;
 		}
 		return result;
 	}
 
 	private byte getNextByte() {
-		for (int i = 0; i < nextKey(); i++) {
-			rnd.nextInt();
-		}
-		return (byte) rnd.nextInt();
+		return (byte) (rnd.nextInt() ^ message.nextByte() ^ sha.nextByte());
 	}
 
-	private int nextKey() {
-		final int result = key[idx];
-		idx++;
-		if (idx >= key.length) {
-			idx = 0;
-		}
-		if (result < 0) {
-			return result + 256;
-		}
-		return result;
+	@Override
+	public void close() throws IOException {
+		source.close();
 	}
 
 	@Override
 	public int read() throws IOException {
-		int b = super.read();
+		int b = source.read();
 		if (b == -1) {
 			return -1;
 		}
-		b = b ^ getNextByte();
+		b = (b ^ getNextByte()) & 0xFF;
 		return b;
-	}
-
-	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
-		final int nb = super.read(b, off, len);
-		if (nb == -1) {
-			return nb;
-		}
-		for (int i = 0; i < nb; i++) {
-			b[i + off] = (byte) (b[i + off] ^ getNextByte());
-		}
-		return nb;
 	}
 
 }

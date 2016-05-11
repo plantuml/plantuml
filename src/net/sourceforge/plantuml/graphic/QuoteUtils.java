@@ -173,7 +173,12 @@ public class QuoteUtils {
 					"I still mess up but I'll just start again", //
 					"I won't give up, no I won't give in; Till I reach the end; And then I'll start again", //
 					"I wanna try even though I could fail", //
-					"Sometimes we come last but we did our best");
+					"Sometimes we come last but we did our best", //
+					"If you see something, say something", //
+					"In theory there is no difference between theory and practice. But, in practice, there is.");
+	// Well I never, was there ever, A cat so clever, as magical Mr Mistoffelees
+	// Daylight, I must wait for the sunrise. I must think of a new life. And I mustn't give in.
+	// Do you like your morning tea weak or strong ?
 
 	private QuoteUtils() {
 	}

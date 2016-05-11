@@ -747,9 +747,9 @@ return map_point_w_(p.copy()).copy();
 private static __struct__<pointf> map_point_w_(final __struct__<pointf> p) {
 ENTERING("dajapw16wus3rwimkrk5ihi2b","map_point");
 try {
-    p.____(ccwrotatepf(p, Z._().Rankdir * 90));
-    p.setDouble("x", p.getDouble("x") - Z._().Offset.getDouble("x"));
-    p.setDouble("y", p.getDouble("y") - Z._().Offset.getDouble("y"));
+    p.____(ccwrotatepf(p, Z.z().Rankdir * 90));
+    p.setDouble("x", p.getDouble("x") - Z.z().Offset.getDouble("x"));
+    p.setDouble("y", p.getDouble("y") - Z.z().Offset.getDouble("y"));
     return p;
 } finally {
 LEAVING("dajapw16wus3rwimkrk5ihi2b","map_point");
@@ -767,7 +767,7 @@ try {
     int j, k;
     final __struct__<bezier> bz = __struct__.from(bezier.class);
     if (ED_spl(e) == null) {
-	if ((Z._().Concentrate == false) && (ED_edge_type(e) != 6))
+	if ((Z.z().Concentrate == false) && (ED_edge_type(e) != 6))
 	    System.err.println("lost %s %s edge\n"+ agnameof(agtail(e))+
 		  agnameof(aghead(e)));
 	return;
@@ -836,16 +836,16 @@ ENTERING("h4i5qxnd7hlrew919abswd13","translate_drawing");
 try {
     Agnode_s v;
     Agedge_s e;
-    boolean shift = (Z._().Offset.getDouble("x")!=0.0 || Z._().Offset.getDouble("y")!=0.0);
-    if (N(shift) && N(Z._().Rankdir))
+    boolean shift = (Z.z().Offset.getDouble("x")!=0.0 || Z.z().Offset.getDouble("y")!=0.0);
+    if (N(shift) && N(Z.z().Rankdir))
 	return;
     for (v = agfstnode(g); v!=null; v = agnxtnode(g, v)) {
-	if (Z._().Rankdir!=0)
+	if (Z.z().Rankdir!=0)
 UNSUPPORTED("e0j848r4j1j7sojfht5gwikvi"); // 	    gv_nodesize(v, 0);
 	ND_coord(v).____(map_point(ND_coord(v)));
 	if (ND_xlabel(v)!=null)
 UNSUPPORTED("3fy0l7w2v24hzrvlpstpknwl7"); // 	    ND_xlabel(v)->pos = map_point(ND_xlabel(v)->pos);
-	if (Z._().State == 1)
+	if (Z.z().State == 1)
 	    for (e = agfstout(g, v); e!=null; e = agnxtout(g, e))
 		map_edge(e);
     }
@@ -1166,7 +1166,7 @@ try {
 	N(GD_has_labels(gp) & (1 << 5)) &&
 	N(GD_has_labels(gp) & (1 << 2)) &&
 	N(GD_has_labels(gp) & (1 << 1)) &&
-	(N(GD_has_labels(gp) & (1 << 0)) || Z._().EdgeLabelsDone!=0))
+	(N(GD_has_labels(gp) & (1 << 0)) || Z.z().EdgeLabelsDone!=0))
 	return;
 UNSUPPORTED("27ppdplfezcqw6rdrkzyrr8yg"); //     for (np = agfstnode(gp); np; np = agnxtnode(gp, np)) {
 UNSUPPORTED("eezvruvdh9ueqsgad8k5xzbqi"); // 	if (ND_xlabel(np)) {
@@ -1340,10 +1340,10 @@ ENTERING("8fc0zxg8y7hec3n4evx3jw6cq","gv_postprocess");
 try {
     double diff;
     final __struct__<pointf> dimen = __struct__.from(pointf.class);
-    Z._().Rankdir = GD_rankdir(g);
-    Z._().Flip = GD_flip(g)!=0;
+    Z.z().Rankdir = GD_rankdir(g);
+    Z.z().Flip = GD_flip(g)!=0;
     /* Handle cluster labels */
-    if (Z._().Flip)
+    if (Z.z().Flip)
 UNSUPPORTED("4hxky2sp978rmy6018sfmts6m"); // 	place_flip_graph_label(g);
     else
 	place_graph_label(g);
@@ -1388,9 +1388,9 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     if (allowTranslation!=0) {
-	switch (Z._().Rankdir) {
+	switch (Z.z().Rankdir) {
 	case 0:
-	    Z._().Offset.____(GD_bb(g).getStruct("LL"));
+	    Z.z().Offset.____(GD_bb(g).getStruct("LL"));
 	    break;
 	case 1:
 UNSUPPORTED("5t3j9lrc86kd5ouaqgzvz3qcm"); // 	    Offset = pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x);
@@ -1406,7 +1406,7 @@ UNSUPPORTED("3xtu7zkpqq7nsx9oe68oi6ebt"); // 	    Offset = pointfof(GD_bb(g).LL.
     }
     if (GD_label(g)!=null && N(GD_label(g).getPtr("set")))
 UNSUPPORTED("6dds0zsvqw48u510zcy954fh1"); // 	place_root_label(g, dimen);
-    if (Z._().Show_boxes!=null) {
+    if (Z.z().Show_boxes!=null) {
 UNSUPPORTED("8c7x8di5w36ib05qan9z4sl9"); // 	char buf[BUFSIZ];
 UNSUPPORTED("83qqprhiseoxlwtwi991aag0c"); // 	if (Flip)
 UNSUPPORTED("86tova7pv19alt02nlk0d17oj"); // 	    sprintf(buf, "/pathbox {\n    /X exch neg %.5g sub def\n    /Y exch %.5g sub def\n    /x exch neg %.5g sub def\n    /y exch %.5g sub def\n    newpath x y moveto\n    X y lineto\n    X Y lineto\n    x Y lineto\n    closepath stroke\n} def\n", Offset.x, Offset.y, Offset.x, Offset.y);

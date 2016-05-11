@@ -737,8 +737,8 @@ try {
     span.setPtr("str", line);
     span.setInt("just", terminator);
     if (line!=null && line.charAt(0)!='\0') {
-	Z._().tf.setPtr("name", lp.getPtr("fontname"));
-	Z._().tf.setDouble("size", lp.getDouble("fontsize"));
+	Z.z().tf.setPtr("name", lp.getPtr("fontname"));
+	Z.z().tf.setDouble("size", lp.getDouble("fontsize"));
 	// WE CHEAT
 	size.setDouble("x", 0.0);
 	size.setDouble("y", (int)(lp.getDouble("fontsize") * 1.20));

@@ -946,7 +946,7 @@ try {
     Agnode_s n;
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
 	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
-	    if ((Boolean)Z._().sinfo.call("swapEnds", e) && ED_spl(e)!=null)
+	    if ((Boolean)Z.z().sinfo.call("swapEnds", e) && ED_spl(e)!=null)
 		swap_spline(ED_spl(e));
 	}
     }
@@ -1036,7 +1036,7 @@ UNSUPPORTED("4k888z8ymdp2b653twxc1ugbu"); // 	    agerr (AGWARN, "edge labels wi
 	}
 	for (n = agfstnode (g); n!=null; n = agnxtnode(g, n)) {
 	    for (e = agfstout(g, n); e!=null; e = agnxtout(g,e)) {
-		makeStraightEdge(g, e, et, Z._().sinfo);
+		makeStraightEdge(g, e, et, Z.z().sinfo);
 	    }
 	}
 UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
@@ -1072,7 +1072,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		ED_label(fe).setBoolean("set", NOT(false));
 	    }
 	    if ((ND_node_type(n) != 0) &&
-		((Boolean)Z._().sinfo.call("splineMerge", n) == false))
+		((Boolean)Z.z().sinfo.call("splineMerge", n) == false))
 		continue;
 	    for (k = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(k).getPtr())!=null; k++) {
 		if ((ED_edge_type(e) == 4)
@@ -1192,7 +1192,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		int dwny = (int) (ND_coord(n).getDouble("y") - ND_coord(GD_rank(g).plus(r+1).getArrayOfPtr("v").plus(0).getPtr()).getDouble("y"));
 		sizey = MIN(upy, dwny);
 	    }
-	    makeSelfEdge(P, edges, ind, cnt, sd.getInt("Multisep"), sizey/2, Z._().sinfo.amp());
+	    makeSelfEdge(P, edges, ind, cnt, sd.getInt("Multisep"), sizey/2, Z.z().sinfo.amp());
 	    for (b = 0; b < cnt; b++) {
 		e = (Agedge_s) edges.plus(ind+b).getPtr();
 		if (ED_label(e)!=null)
@@ -1219,7 +1219,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 finish :
     /* vladimir: place port labels */
     /* FIX: head and tail labels are not part of cluster bbox */
-    if ((Z._().E_headlabel!=null || Z._().E_taillabel!=null) && (Z._().E_labelangle!=null || Z._().E_labeldistance!=null)) {
+    if ((Z.z().E_headlabel!=null || Z.z().E_taillabel!=null) && (Z.z().E_labelangle!=null || Z.z().E_labeldistance!=null)) {
 UNSUPPORTED("attp4bsjqe99xnhi7lr7pszar"); // 	for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
 UNSUPPORTED("54jm4bbgzyl0txauszo1mappu"); // 	    if (E_headlabel) {
 UNSUPPORTED("dw8yu56thd0wpolmtby8r5doo"); // 		for (e = agfstin(g, n); e; e = agnxtin(g, e))
@@ -1246,8 +1246,8 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	Memory.free(sd.getPtr("Rank_box"));
 	routesplinesterm();
     } 
-    Z._().State = 1;
-    Z._().EdgeLabelsDone = 1;
+    Z.z().State = 1;
+    Z.z().EdgeLabelsDone = 1;
 } finally {
 LEAVING("6agx6m2qof9lg57co232lwakj","_dot_splines");
 }
@@ -1735,7 +1735,7 @@ try {
     points.plus(pointn++).setStruct(tp);
     points.plus(pointn++).setStruct(hp);
     points.plus(pointn++).setStruct(hp);
-    clip_and_install(e, aghead(e), points.asPtr(), pointn, Z._().sinfo.amp());
+    clip_and_install(e, aghead(e), points.asPtr(), pointn, Z.z().sinfo.amp());
     ED_label(e).getStruct("pos").setDouble("x", ctrx);
     ED_label(e).getStruct("pos").setDouble("y", tp.getDouble("y") + (ED_label(e).getStruct("dimen").getDouble("y")+6)/2.0);
     ED_label(e).setBoolean("set", NOT(false));
@@ -1793,7 +1793,7 @@ UNSUPPORTED("e2zgxycgqefryde9nbv6cqz1u"); // 	    maxy += ED_label(e)->dimen.y +
 	ED_label(e).getStruct("pos").setDouble("x", ctrx);
 	ED_label(e).getStruct("pos").setDouble("y", ctry);
 	ED_label(e).setBoolean("set", NOT(false));
-	clip_and_install(e, aghead(e), ps, pn[0], Z._().sinfo.amp());
+	clip_and_install(e, aghead(e), ps, pn[0], Z.z().sinfo.amp());
     }
     /* edges with no labels */
     for (; i < cnt; i++) {
@@ -1841,7 +1841,7 @@ UNSUPPORTED("7un2qk34mmmhqi296vl50bacs"); // 	    maxy += + 6;
 	poly.setPtr("ps", points.asPtr());
 	ps = simpleSplineRoute (tp, hp, poly, pn, et == (3 << 1));
 	if (pn[0] == 0) return;
-	clip_and_install(e, aghead(e), ps, pn[0], Z._().sinfo.amp());
+	clip_and_install(e, aghead(e), ps, pn[0], Z.z().sinfo.amp());
     }
     Memory.free (earray);
 } finally {
@@ -1888,7 +1888,7 @@ UNSUPPORTED("59cwjy3j5e0igp278migykzi"); // 	    points[pointn++] = hp;
 UNSUPPORTED("59cwjy3j5e0igp278migykzi"); // 	    points[pointn++] = hp;
 	}
 	dy += stepy;
-	clip_and_install(e, aghead(e), points.asPtr(), pointn, Z._().sinfo.amp());
+	clip_and_install(e, aghead(e), points.asPtr(), pointn, Z.z().sinfo.amp());
     }
 } finally {
 LEAVING("8kqyzk43ovc2sq6jegua6ytp","makeSimpleFlat");
@@ -2132,29 +2132,29 @@ UNSUPPORTED("1uunj4jbr2uhiqxwor6rzmr3j"); // 	pn = 7;
 	boxn = 0;
 	makeFlatEnd (g, sp, P, tn, e, tend.amp(), NOT(false));
 	makeFlatEnd (g, sp, P, hn, e, hend.amp(), false);
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", lb.getStruct("LL").getDouble("x"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("LL").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", lb.getStruct("LL").getDouble("x"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("LL").getDouble("y"));
 	boxn++;
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", lb.getStruct("LL").getDouble("y"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("UR").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", lb.getStruct("LL").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("UR").getDouble("y"));
 	boxn++;
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", lb.getStruct("UR").getDouble("x"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("LL").getDouble("y"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", lb.getStruct("UR").getDouble("x"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("LL").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
 	boxn++;
 	for (i = 0; i < tend.getInt("boxn"); i++) add_box(P, tend.getArrayOfStruct("boxes").plus(i).getStruct());
-	for (i = 0; i < boxn; i++) add_box(P, Z._().boxes.plus(i).getStruct());
+	for (i = 0; i < boxn; i++) add_box(P, Z.z().boxes.plus(i).getStruct());
 	for (i = hend.getInt("boxn") - 1; i >= 0; i--) add_box(P, hend.getArrayOfStruct("boxes").plus(i).getStruct());
 	if (et == (5 << 1)) ps = routesplines(P, pn);
 	else ps = routepolylines(P, pn);
 	if (pn[0] == 0) return;
     }
-    clip_and_install(e, aghead(e), ps, pn[0], Z._().sinfo.amp());
+    clip_and_install(e, aghead(e), ps, pn[0], Z.z().sinfo.amp());
 } finally {
 LEAVING("w8ptjibydq995d2lexg85mku","make_flat_labeled_edge");
 }
@@ -2308,30 +2308,30 @@ try {
 	e = (Agedge_s) edges.plus(ind + i).getPtr();
 	boxn = 0;
 	b.____(tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct());
- 	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", b.getStruct("LL").getDouble("x")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", b.getStruct("UR").getDouble("y")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", b.getStruct("UR").getDouble("x") + (i + 1) * stepx);
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", b.getStruct("UR").getDouble("y") + (i + 1) * stepy);
+ 	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", b.getStruct("LL").getDouble("x")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", b.getStruct("UR").getDouble("y")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", b.getStruct("UR").getDouble("x") + (i + 1) * stepx);
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", b.getStruct("UR").getDouble("y") + (i + 1) * stepy);
 	boxn++;
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", Z._().boxes.plus(boxn-1).getStruct().getStruct("UR").getDouble("y"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", Z._().boxes.plus(boxn).getStruct().getStruct("LL").getDouble("y") + stepy);
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", Z.z().boxes.plus(boxn-1).getStruct().getStruct("UR").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", Z.z().boxes.plus(boxn).getStruct().getStruct("LL").getDouble("y") + stepy);
 	boxn++;
 	b.____(hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct());
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", b.getStruct("UR").getDouble("x"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", b.getStruct("UR").getDouble("y"));
-	Z._().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", b.getStruct("LL").getDouble("x") - (i + 1) * stepx);
-	Z._().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", Z._().boxes.plus(boxn-1).getStruct().getStruct("LL").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", b.getStruct("UR").getDouble("x"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", b.getStruct("UR").getDouble("y"));
+	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", b.getStruct("LL").getDouble("x") - (i + 1) * stepx);
+	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", Z.z().boxes.plus(boxn-1).getStruct().getStruct("LL").getDouble("y"));
 	boxn++;
 	for (j = 0; j < tend.getInt("boxn"); j++) add_box(P, tend.getArrayOfStruct("boxes").plus(j).getStruct());
-	for (j = 0; j < boxn; j++) add_box(P, Z._().boxes.plus(j).getStruct());
+	for (j = 0; j < boxn; j++) add_box(P, Z.z().boxes.plus(j).getStruct());
 	for (j = hend.getInt("boxn") - 1; j >= 0; j--) add_box(P, hend.getArrayOfStruct("boxes").plus(j).getStruct());
 	if (et == (5 << 1)) ps = (pointf) routesplines(P, pn);
 	else ps = (pointf) routepolylines(P, pn);
 	if (pn[0] == 0)
 	    return;
-	clip_and_install(e, aghead(e), ps, pn[0], Z._().sinfo.amp());
+	clip_and_install(e, aghead(e), ps, pn[0], Z.z().sinfo.amp());
 	P.setInt("nbox",  0);
     }
 } finally {
@@ -2456,11 +2456,11 @@ try {
     fwdedgea.getStruct("out").getStruct("base").setPtr("data", fwdedgeai.amp());
     fwdedgeb.getStruct("out").getStruct("base").setPtr("data", fwdedgebi.amp());
     fwdedge.getStruct("out").getStruct("base").setPtr("data", fwdedgei.amp());
-    if (N(Z._().pointfs)) {
-	Z._().pointfs = gmalloc(sizeof(pointf.class, 2000));
-   	Z._().pointfs2 = gmalloc(sizeof(pointf.class, 2000));
-	Z._().numpts = 2000;
-	Z._().numpts2 = 2000;
+    if (N(Z.z().pointfs)) {
+	Z.z().pointfs = gmalloc(sizeof(pointf.class, 2000));
+   	Z.z().pointfs2 = gmalloc(sizeof(pointf.class, 2000));
+	Z.z().numpts = 2000;
+	Z.z().numpts2 = 2000;
     }
     sl = 0;
     e = (Agedge_s) edges.plus(ind).getPtr();
@@ -2497,7 +2497,7 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
     }
     fe = e;
     /* compute the spline points for the edge */
-    if ((et == (1 << 1)) && (pointn[0] = makeLineEdge (g, fe, Z._().pointfs, hn.unsupported()))!=0) {
+    if ((et == (1 << 1)) && (pointn[0] = makeLineEdge (g, fe, Z.z().pointfs, hn.unsupported()))!=0) {
     }
     else {
 	boolean splines = (et == (5 << 1));
@@ -2522,9 +2522,9 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	}
 	longedge = 0;
 	smode = false; si = -1;
-	while (ND_node_type(hn) == 1 && N(((Boolean)Z._().sinfo.call("splineMerge", hn)).booleanValue())) {
+	while (ND_node_type(hn) == 1 && N(((Boolean)Z.z().sinfo.call("splineMerge", hn)).booleanValue())) {
 	    longedge = 1;
-	    Z._().boxes.plus(boxn++).setStruct(rank_box(sp, g, ND_rank(tn)));
+	    Z.z().boxes.plus(boxn++).setStruct(rank_box(sp, g, ND_rank(tn)));
 	    if (N(smode)
 	        && ((sl = straight_len(hn)) >=
 	    	((GD_has_labels(g) & (1 << 0))!=0 ? 4 + 1 : 2 + 1))) {
@@ -2533,7 +2533,7 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	    }
 	    if (N(smode) || si > 0) {
 	        si--;
-	        Z._().boxes.plus(boxn++).setStruct( maximal_bbox(g, sp, hn, e, (Agedge_s) ND_out(hn).getArrayOfPtr("list").plus(0).getPtr()));
+	        Z.z().boxes.plus(boxn++).setStruct( maximal_bbox(g, sp, hn, e, (Agedge_s) ND_out(hn).getArrayOfPtr("list").plus(0).getPtr()));
 	        e = (Agedge_s) ND_out(hn).getArrayOfPtr("list").plus(0).getPtr();
 	        tn = agtail(e);
 	        hn = aghead(e);
@@ -2547,7 +2547,7 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 UNSUPPORTED("1crhubfzekx1qi2ti9ajqsfoc"); // 	        hend.boxes[hend.boxn++] = b;
 	    P.getStruct("end").setDouble("theta", M_PI / 2);
 	    P.getStruct("end").setBoolean("constrained", NOT(false));
-	    completeregularpath(P, segfirst, e, tend.amp(), hend.amp(), Z._().boxes, boxn, 1);
+	    completeregularpath(P, segfirst, e, tend.amp(), hend.amp(), Z.z().boxes, boxn, 1);
 	    if (splines) ps = routesplines(P, pn);
 	    else {
 UNSUPPORTED("biyp75vm751j3qmqacagfej4b"); // 		ps = routepolylines (P, &pn);
@@ -2559,7 +2559,7 @@ UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 	    }
 	    if (pn[0] == 0)
 	        return;
-	    if (pointn[0] + pn[0] > Z._().numpts) {
+	    if (pointn[0] + pn[0] > Z.z().numpts) {
                 /* This should be enough to include 3 extra points added by
                  * straight_path below.
                  */
@@ -2567,9 +2567,9 @@ UNSUPPORTED("k37sqlxbjikqg4xdonnvefo3"); // 		numpts = 2*(pointn+pn);
 UNSUPPORTED("8kbxhk7qirj3tr7hn1ukwar3h"); // 		pointfs = RALLOC(numpts, pointfs, pointf);
 	    }
 	    for (i = 0; i < pn[0]; i++) {
-		Z._().pointfs.plus(pointn[0]++).setStruct(ps.plus(i).getStruct());
+		Z.z().pointfs.plus(pointn[0]++).setStruct(ps.plus(i).getStruct());
 	    }
-	    e = straight_path((Agedge_s)ND_out(hn).getArrayOfPtr("list").plus(0).getPtr(), sl, Z._().pointfs, pointn);
+	    e = straight_path((Agedge_s)ND_out(hn).getArrayOfPtr("list").plus(0).getPtr(), sl, Z.z().pointfs, pointn);
 	    recover_slack(segfirst, P);
 	    segfirst = e;
 	    tn = agtail(e);
@@ -2585,7 +2585,7 @@ UNSUPPORTED("cjx6tldge3otk1pk6ks1pkn2w"); // 	        tend.boxes[tend.boxn++] = 
 	    P.getStruct("start").setBoolean("constrained", NOT(false));
 	    smode = false;
 	}
-	Z._().boxes.plus(boxn++).setStruct(rank_box(sp, g, ND_rank(tn)));
+	Z.z().boxes.plus(boxn++).setStruct(rank_box(sp, g, ND_rank(tn)));
 	b.____(maximal_bbox(g, sp, hn, e, null));
 	hend.getStruct("nb").____(b);
 	endpath(P, hackflag!=0 ? fwdedgeb.getStruct("out").amp() : e, 1, hend.amp(), spline_merge(aghead(e)));
@@ -2598,7 +2598,7 @@ UNSUPPORTED("cjx6tldge3otk1pk6ks1pkn2w"); // 	        tend.boxes[tend.boxn++] = 
 	    hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn")).setStruct(b);
 	    hend.setInt("boxn", hend.getInt("boxn")+1);
 	    }
-	completeregularpath(P, segfirst, e, tend.amp(), hend.amp(), Z._().boxes, boxn,
+	completeregularpath(P, segfirst, e, tend.amp(), hend.amp(), Z.z().boxes, boxn,
 	    		longedge);
 	if (splines) ps = routesplines(P, pn);
 	else ps = routepolylines (P, pn);
@@ -2613,12 +2613,12 @@ UNSUPPORTED("95b6xp8h5ai070bekyjhmiehh"); // 	    pn = 4;
         }
 	if (pn[0] == 0)
 	    return;
-	if (pointn[0] + pn[0] > Z._().numpts) {
+	if (pointn[0] + pn[0] > Z.z().numpts) {
 UNSUPPORTED("c6ux5effs02grz7xh3k8ernda"); // 	    numpts = 2*(pointn+pn); 
 UNSUPPORTED("bedaqcn9h03q6ia6zbezuee1m"); // 	    pointfs = RALLOC(numpts, pointfs, pointf);
 	}
 	for (i = 0; i < pn[0]; i++) {
-	    Z._().pointfs.plus(pointn[0]).setStruct(ps.plus(i).getStruct());
+	    Z.z().pointfs.plus(pointn[0]).setStruct(ps.plus(i).getStruct());
 	    pointn[0]++;
 	}
 	recover_slack(segfirst, P);
@@ -2626,19 +2626,19 @@ UNSUPPORTED("bedaqcn9h03q6ia6zbezuee1m"); // 	    pointfs = RALLOC(numpts, point
     }
     /* make copies of the spline points, one per multi-edge */
     if (cnt == 1) {
-	clip_and_install(fe, hn, Z._().pointfs, pointn[0], Z._().sinfo.amp());
+	clip_and_install(fe, hn, Z.z().pointfs, pointn[0], Z.z().sinfo.amp());
 	return;
     }
     dx = sp.getInt("Multisep") * (cnt - 1) / 2;
     for (i = 1; i < pointn[0] - 1; i++)
-	Z._().pointfs.plus(i).setDouble("x", Z._().pointfs.plus(i).getDouble("x") - dx);
-    if (Z._().numpts > Z._().numpts2) {
+	Z.z().pointfs.plus(i).setDouble("x", Z.z().pointfs.plus(i).getDouble("x") - dx);
+    if (Z.z().numpts > Z.z().numpts2) {
 UNSUPPORTED("9ubr4m7bdv5f5ldk2ta6yw3up"); // 	numpts2 = numpts; 
 UNSUPPORTED("8qwp7ddy5ztgam63fzfjmu890"); // 	pointfs2 = RALLOC(numpts2, pointfs2, pointf);
     }
     for (i = 0; i < pointn[0]; i++)
-	Z._().pointfs2.plus(i).setStruct(Z._().pointfs.plus(i).getStruct());
-    clip_and_install(fe, hn, Z._().pointfs2, pointn[0], Z._().sinfo.amp());
+	Z.z().pointfs2.plus(i).setStruct(Z.z().pointfs.plus(i).getStruct());
+    clip_and_install(fe, hn, Z.z().pointfs2, pointn[0], Z.z().sinfo.amp());
     for (j = 1; j < cnt; j++) {
 	e = (Agedge_s) edges.plus(ind + j).getPtr();
 	if ((ED_tree_index(e) & 32)!=0) {
@@ -2646,10 +2646,10 @@ UNSUPPORTED("8qwp7ddy5ztgam63fzfjmu890"); // 	pointfs2 = RALLOC(numpts2, pointfs
 	    e = (Agedge_s) fwdedge.getStruct("out").amp();
 	}
 	for (i = 1; i < pointn[0] - 1; i++)
-	    Z._().pointfs.plus(i).setDouble("x", Z._().pointfs.plus(i).getDouble("x") + sp.getInt("Multisep"));
+	    Z.z().pointfs.plus(i).setDouble("x", Z.z().pointfs.plus(i).getDouble("x") + sp.getInt("Multisep"));
 	for (i = 0; i < pointn[0]; i++)
-	    Z._().pointfs2.plus(i).setStruct(Z._().pointfs.plus(i).getStruct());
-	clip_and_install(e, aghead(e), Z._().pointfs2, pointn[0], Z._().sinfo.amp());
+	    Z.z().pointfs2.plus(i).setStruct(Z.z().pointfs.plus(i).getStruct());
+	clip_and_install(e, aghead(e), Z.z().pointfs2, pointn[0], Z.z().sinfo.amp());
     }
 } finally {
 LEAVING("30wfq1dby4t07hft9io52nq6z","make_regular_edge");
@@ -2875,7 +2875,7 @@ try {
     Agnode_s vn;
     b = 0;			/* skip first rank box */
     for (vn = aghead(e);
-	 ND_node_type(vn) == 1 && N(((Boolean)Z._().sinfo.call("splineMerge", vn)).booleanValue());
+	 ND_node_type(vn) == 1 && N(((Boolean)Z.z().sinfo.call("splineMerge", vn)).booleanValue());
 	 vn = aghead(ND_out(vn).getArrayOfPtr("list").plus(0).getPtr())) {
 	while ((b < p.getInt("nbox")) && (p.getPtr("boxes").plus(b).getStruct("LL").getDouble("y") > ND_coord(vn).getDouble("y")))
 	    b++;

@@ -44,8 +44,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -274,12 +274,12 @@ public class DotStringFactory implements Moveable {
 		return GraphvizVersions.getInstance().getVersion(f);
 	}
 
-	public String getSvg(boolean trace, String... dotStrings) throws IOException {
+	public String getSvg(BaseFile basefile, String[] dotStrings) throws IOException {
 		final String dotString = createDotString(dotStrings);
 
-		if (trace) {
-			Log.info("Creating temporary file svek.dot");
-			SvekUtils.traceDotString(dotString);
+		if (basefile != null) {
+			final File f = basefile.getTraceFile("svek.dot");
+			SvekUtils.traceString(f, dotString);
 		}
 
 		final Graphviz graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
@@ -292,9 +292,9 @@ public class DotStringFactory implements Moveable {
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, "UTF-8");
 
-		if (trace) {
-			Log.info("Creating temporary file svek.svg");
-			SvekUtils.traceSvgString(s);
+		if (basefile != null) {
+			final File f = basefile.getTraceFile("svek.svg");
+			SvekUtils.traceString(f, s);
 		}
 
 		return s;

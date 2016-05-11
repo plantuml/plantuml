@@ -393,7 +393,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 		Z.open();
 		try {
-			final Agraph_s g = agopen(new CString("g"), Z._().Agdirected, null);
+			final Agraph_s g = agopen(new CString("g"), Z.z().Agdirected, null);
 
 			// printCluster(g, root);
 			exportEntities(g, getUnpackagedEntities());

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
@@ -110,13 +111,13 @@ public class FtileBox extends AbstractFtile {
 
 	}
 
-	public FtileBox(boolean shadowing, Display label, UFont font, HtmlColor arrowColor, Swimlane swimlane,
-			BoxStyle style, ISkinParam skinParam) {
+	public FtileBox(boolean shadowing, Display label, UFont font, Swimlane swimlane, BoxStyle style,
+			ISkinParam skinParam) {
 		super(shadowing);
 		this.style = style;
 		this.skinParam = skinParam;
 		this.swimlane = swimlane;
-		this.inRenreding = new LinkRendering(arrowColor);
+		this.inRenreding = new LinkRendering(HtmlColorAndStyle.build(skinParam));
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 		final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(label);

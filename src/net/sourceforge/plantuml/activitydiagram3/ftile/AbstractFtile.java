@@ -54,11 +54,11 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	}
 
 	public LinkRendering getInLinkRendering() {
-		return null;
+		return LinkRendering.none();
 	}
 
 	public LinkRendering getOutLinkRendering() {
-		return null;
+		return LinkRendering.none();
 	}
 
 	public Collection<Connection> getInnerConnections() {

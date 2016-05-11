@@ -59,11 +59,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -79,9 +78,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 	private final List<Ftile> diamonds;
 	private final List<Ftile> couples = new ArrayList<Ftile>();
 
-	private final HtmlColor arrowColor;
+	private final Rainbow arrowColor;
 
-	private FtileIfLongHorizontal(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, HtmlColor arrowColor) {
+	private FtileIfLongHorizontal(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, Rainbow arrowColor) {
 		super(tiles.get(0).shadowing() || tile2.shadowing());
 		if (diamonds.size() != tiles.size()) {
 			throw new IllegalArgumentException();
@@ -133,9 +132,12 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, HtmlColor arrowColor,
+	static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
 			FontConfiguration fc, LinkRendering topInlinkRendering, LinkRendering afterEndwhile) {
+		if (afterEndwhile == null) {
+			throw new IllegalArgumentException();
+		}
 		final List<Ftile> tiles = new ArrayList<Ftile>();
 
 		for (Branch branch : thens) {
@@ -167,12 +169,12 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
 
-			final HtmlColor color = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
+			final Rainbow color = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
 			conns.add(result.new ConnectionVerticalIn(diam, ftile, color == null ? arrowColor : color));
 			conns.add(result.new ConnectionVerticalOut(ftile, arrowColor));
 		}
 
-		final HtmlColor topInColor = LinkRendering.getColor(topInlinkRendering, arrowColor);
+		final Rainbow topInColor = topInlinkRendering.getRainbow(arrowColor);
 		for (int i = 0; i < diamonds.size() - 1; i++) {
 			final Ftile diam1 = diamonds.get(i);
 			final Ftile diam2 = diamonds.get(i + 1);
@@ -181,7 +183,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		conns.add(result.new ConnectionIn(topInColor));
 		conns.add(result.new ConnectionLastElseIn(FtileIfWithLinks.getInColor(branch2, arrowColor)));
 		conns.add(result.new ConnectionLastElseOut(arrowColor));
-		final HtmlColor horizontalOutColor = LinkRendering.getColor(afterEndwhile, arrowColor);
+		final Rainbow horizontalOutColor = afterEndwhile.getRainbow(arrowColor);
 		conns.add(result.new ConnectionHline(horizontalOutColor));
 		// conns.add(result.new ConnectionHline(HtmlColorUtils.BLUE));
 
@@ -190,9 +192,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionHorizontal extends AbstractConnection {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 
-		public ConnectionHorizontal(Ftile diam1, Ftile diam2, HtmlColor color) {
+		public ConnectionHorizontal(Ftile diam1, Ftile diam2, Rainbow color) {
 			super(diam1, diam2);
 			this.color = color;
 		}
@@ -230,9 +232,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionIn extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionIn(HtmlColor arrowColor) {
+		public ConnectionIn(Rainbow arrowColor) {
 			super(null, diamonds.get(0));
 			this.arrowColor = arrowColor;
 		}
@@ -253,9 +255,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionLastElseIn extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionLastElseIn(HtmlColor arrowColor) {
+		public ConnectionLastElseIn(Rainbow arrowColor) {
 			super(diamonds.get(diamonds.size() - 1), tile2);
 			this.arrowColor = arrowColor;
 		}
@@ -282,9 +284,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionLastElseOut extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionLastElseOut(HtmlColor arrowColor) {
+		public ConnectionLastElseOut(Rainbow arrowColor) {
 			super(tile2, null);
 			this.arrowColor = arrowColor;
 		}
@@ -310,9 +312,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionVerticalIn extends AbstractConnection implements ConnectionTranslatable {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 
-		public ConnectionVerticalIn(Ftile diamond, Ftile tile, HtmlColor color) {
+		public ConnectionVerticalIn(Ftile diamond, Ftile tile, Rainbow color) {
 			super(diamond, tile);
 			this.color = color;
 		}
@@ -358,9 +360,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionVerticalOut extends AbstractConnection {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 
-		public ConnectionVerticalOut(Ftile tile, HtmlColor color) {
+		public ConnectionVerticalOut(Ftile tile, Rainbow color) {
 			super(tile, null);
 			this.color = color;
 		}
@@ -393,9 +395,9 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	class ConnectionHline extends AbstractConnection {
 
-		private final HtmlColor arrowColor;
+		private final Rainbow arrowColor;
 
-		public ConnectionHline(HtmlColor arrowColor) {
+		public ConnectionHline(Rainbow arrowColor) {
 			super(null, null);
 			this.arrowColor = arrowColor;
 		}

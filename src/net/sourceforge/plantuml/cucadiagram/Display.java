@@ -296,13 +296,16 @@ public class Display implements Iterable<CharSequence> {
 		return urlBuilder.getUrl(StringUtils.trin(this.get(0).toString()));
 	}
 
-	public Display removeUrl(Url url) {
+	public Display removeHeadingUrl(Url url) {
 		if (url == null) {
 			return this;
 		}
 		final Display result = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 		result.display.add(UrlBuilder.purgeUrl(this.get(0).toString()));
 		result.display.addAll(this.subList(1, this.size()).display);
+		if (result.isWhite() && url.getLabel() != null) {
+			return Display.getWithNewlines(url.getLabel());
+		}
 		return result;
 	}
 

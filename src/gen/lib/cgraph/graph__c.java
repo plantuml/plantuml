@@ -229,13 +229,13 @@ try {
 		__ptr__  memclosure;
 		Agclos_s rv;
 		/* establish an allocation arena */
-		memdisc = (Agmemdisc_s) ((proto != null && proto.getPtr("mem") != null) ? proto.getPtr("mem") : Z._().AgMemDisc.amp());
+		memdisc = (Agmemdisc_s) ((proto != null && proto.getPtr("mem") != null) ? proto.getPtr("mem") : Z.z().AgMemDisc.amp());
 		memclosure = (__ptr__) memdisc.call("open", proto);
 		rv = (Agclos_s) memdisc.call("alloc", memclosure, sizeof(Agclos_s.class));
 		rv.getStruct("disc").setPtr("mem", memdisc);
 		rv.getStruct("state").setPtr("mem", memclosure);
-		rv.getStruct("disc").setPtr("id", ((proto != null && proto.getPtr("id") != null) ? proto.getPtr("id") : Z._().AgIdDisc.amp()));
-		rv.getStruct("disc").setPtr("io", ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z._().AgIdDisc.amp()));
+		rv.getStruct("disc").setPtr("id", ((proto != null && proto.getPtr("id") != null) ? proto.getPtr("id") : Z.z().AgIdDisc.amp()));
+		rv.getStruct("disc").setPtr("io", ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z.z().AgIdDisc.amp()));
 		rv.setBoolean("callbacks_enabled", (N(0)));
 		return rv;
 } finally {
@@ -286,11 +286,11 @@ public static Agraph_s agopen1(Agraph_s g) {
 ENTERING("8jyhwfdfm0a877qfz8cjlb8rk","agopen1");
 try {
     Agraph_s par;
-    g.setPtr("n_seq", agdtopen(g, Z._().Ag_subnode_seq_disc.amp(), Z._().Dttree));
-    g.setPtr("n_id", agdtopen(g, Z._().Ag_subnode_id_disc.amp(), Z._().Dttree));
-    g.setPtr("e_seq", agdtopen(g, EQ(g, agroot(g))? Z._().Ag_mainedge_seq_disc.amp() : Z._().Ag_subedge_seq_disc.amp(), Z._().Dttree));
-    g.setPtr("e_id", agdtopen(g, EQ(g, agroot(g))? Z._().Ag_mainedge_id_disc.amp() : Z._().Ag_subedge_id_disc.amp(), Z._().Dttree));
-    g.setPtr("g_dict", agdtopen(g, Z._().Ag_subgraph_id_disc.amp(), Z._().Dttree));
+    g.setPtr("n_seq", agdtopen(g, Z.z().Ag_subnode_seq_disc.amp(), Z.z().Dttree));
+    g.setPtr("n_id", agdtopen(g, Z.z().Ag_subnode_id_disc.amp(), Z.z().Dttree));
+    g.setPtr("e_seq", agdtopen(g, EQ(g, agroot(g))? Z.z().Ag_mainedge_seq_disc.amp() : Z.z().Ag_subedge_seq_disc.amp(), Z.z().Dttree));
+    g.setPtr("e_id", agdtopen(g, EQ(g, agroot(g))? Z.z().Ag_mainedge_id_disc.amp() : Z.z().Ag_subedge_id_disc.amp(), Z.z().Dttree));
+    g.setPtr("g_dict", agdtopen(g, Z.z().Ag_subgraph_id_disc.amp(), Z.z().Dttree));
     par = agparent(g);
     if (par!=null) {
 	AGSEQ(g, agnextseq(par, AGRAPH));

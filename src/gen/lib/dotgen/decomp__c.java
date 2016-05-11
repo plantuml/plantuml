@@ -726,8 +726,8 @@ throw new UnsupportedOperationException();
 public static void begin_component() {
 ENTERING("7ggrwt0f912kp1marrxdjq155","begin_component");
 try {
-    Z._().Last_node_decomp = null;
-    GD_nlist(Z._().G_decomp, null);
+    Z.z().Last_node_decomp = null;
+    GD_nlist(Z.z().G_decomp, null);
 } finally {
 LEAVING("7ggrwt0f912kp1marrxdjq155","begin_component");
 }
@@ -741,16 +741,16 @@ LEAVING("7ggrwt0f912kp1marrxdjq155","begin_component");
 public static void add_to_component(Agnode_s n) {
 ENTERING("7icc6b2pvnj6te1yndbel47gg","add_to_component");
 try {
-    GD_n_nodes(Z._().G_decomp, 1+GD_n_nodes(Z._().G_decomp));
-    ND_mark(n, Z._().Cmark);
-    if (Z._().Last_node_decomp!=null) {
-	ND_prev(n, Z._().Last_node_decomp);
-	ND_next(Z._().Last_node_decomp, n);
+    GD_n_nodes(Z.z().G_decomp, 1+GD_n_nodes(Z.z().G_decomp));
+    ND_mark(n, Z.z().Cmark);
+    if (Z.z().Last_node_decomp!=null) {
+	ND_prev(n, Z.z().Last_node_decomp);
+	ND_next(Z.z().Last_node_decomp, n);
     } else {
 	ND_prev(n, null);
-	GD_nlist(Z._().G_decomp, n);
+	GD_nlist(Z.z().G_decomp, n);
     }
-    Z._().Last_node_decomp = n;
+    Z.z().Last_node_decomp = n;
     ND_next(n, null);
 } finally {
 LEAVING("7icc6b2pvnj6te1yndbel47gg","add_to_component");
@@ -766,10 +766,10 @@ public static void end_component() {
 ENTERING("5o8hxpr6ppi15pinuy79m7u04","end_component");
 try {
     int i;
-    i = GD_comp(Z._().G_decomp).getInt("size");
-    GD_comp(Z._().G_decomp).setInt("size", 1+GD_comp(Z._().G_decomp).getInt("size"));
-    GD_comp(Z._().G_decomp).setPtr("list", ALLOC_empty(GD_comp(Z._().G_decomp).getInt("size"), GD_comp(Z._().G_decomp).getPtr("list"), Agnode_s.class));
-    GD_comp(Z._().G_decomp).getArrayOfPtr("list").plus(i).setPtr(GD_nlist(Z._().G_decomp));
+    i = GD_comp(Z.z().G_decomp).getInt("size");
+    GD_comp(Z.z().G_decomp).setInt("size", 1+GD_comp(Z.z().G_decomp).getInt("size"));
+    GD_comp(Z.z().G_decomp).setPtr("list", ALLOC_empty(GD_comp(Z.z().G_decomp).getInt("size"), GD_comp(Z.z().G_decomp).getPtr("list"), Agnode_s.class));
+    GD_comp(Z.z().G_decomp).getArrayOfPtr("list").plus(i).setPtr(GD_nlist(Z.z().G_decomp));
 } finally {
 LEAVING("5o8hxpr6ppi15pinuy79m7u04","end_component");
 }
@@ -797,7 +797,7 @@ try {
 	    for (i = 0; (e = (Agedge_s) vec.plus(c).getStruct().getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
 		if (EQ(other = aghead(e), n))
 		    other = agtail(e);
-		if ((ND_mark(other) != Z._().Cmark) && (EQ(other, UF_find(other))))
+		if ((ND_mark(other) != Z.z().Cmark) && (EQ(other, UF_find(other))))
 		    search_component(g, other);
 	    }
     }
@@ -816,9 +816,9 @@ ENTERING("2t7r964kqtl5qrl7i57i22tqy","decompose");
 try {
     Agraph_s subg;
     Agnode_s n, v;
-    Z._().G_decomp = g;
-    if (++Z._().Cmark == 0)
-	Z._().Cmark = 1;
+    Z.z().G_decomp = g;
+    if (++Z.z().Cmark == 0)
+	Z.z().Cmark = 1;
     GD_n_nodes(g, 0);
     GD_comp(g).setInt("size", 0);
     for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
@@ -827,7 +827,7 @@ try {
 	    v = (Agnode_s) GD_rankleader(subg).plus(ND_rank(v)).getPtr();
 	else if (v != UF_find(v))
 	    continue;
-	if (ND_mark(v) != Z._().Cmark) {
+	if (ND_mark(v) != Z.z().Cmark) {
 	    begin_component();
 	    search_component(g, v);
 	    end_component();

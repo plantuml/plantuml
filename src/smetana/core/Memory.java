@@ -66,9 +66,9 @@ public class Memory {
 		}
 		//int result = 2 * System.identityHashCode(data);
 		int result = data.getUid();
-		Z._().all.put(result, data);
+		Z.z().all.put(result, data);
 		// System.err.println("Memory::identityHashCode data=" + data);
-		// System.err.println("Memory::identityHashCode result=" + result + " " + Z._().all.size());
+		// System.err.println("Memory::identityHashCode result=" + result + " " + Z.z().all.size());
 		return result;
 	}
 
@@ -77,7 +77,7 @@ public class Memory {
 		if (hash % 2 != 0) {
 			throw new IllegalArgumentException();
 		}
-		Object result = Z._().all.get(hash);
+		Object result = Z.z().all.get(hash);
 		// System.err.println("Memory::fromIdentityHashCode result=" + result);
 		if (result == null) {
 			throw new UnsupportedOperationException();

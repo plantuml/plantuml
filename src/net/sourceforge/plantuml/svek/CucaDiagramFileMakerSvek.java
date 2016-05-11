@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -41,10 +40,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
-import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.NamedOutputStream;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
@@ -103,11 +103,18 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			new CucaDiagramSimplifierState(diagram, dotStrings);
 		}
 
+		// System.err.println("FOO11 type=" + os.getClass());
 		CucaDiagramFileMakerSvek2 svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NORMAL);
-		TextBlockBackcolored result = svek2.createFile(diagram.getDotStringSkek());
+		BaseFile basefile = null;
+		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream) {
+			basefile = ((NamedOutputStream) os).getBasefile();
+		}
+		// System.err.println("FOO11 basefile=" + basefile);
+
+		TextBlockBackcolored result = svek2.createFile(basefile, diagram.getDotStringSkek());
 		if (result instanceof GraphvizCrash) {
 			svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
-			result = svek2.createFile(diagram.getDotStringSkek());
+			result = svek2.createFile(basefile, diagram.getDotStringSkek());
 		}
 		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
 

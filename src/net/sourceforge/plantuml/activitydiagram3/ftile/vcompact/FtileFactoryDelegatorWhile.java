@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
@@ -58,7 +60,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
 		final HtmlColor backColor = color == null ? getRose().getHtmlColor(getSkinParam(),
 				ColorParam.activityBackground) : color;
-		final HtmlColor arrowColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityArrow);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
 
 		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
@@ -66,7 +68,8 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final FontConfiguration fcTest = new FontConfiguration(getSkinParam(), testParam, null);
 
 		final LinkRendering endInlinkRendering = whileBlock.getOutLinkRendering();
-		final HtmlColor endInlinkColor = endInlinkRendering == null ? arrowColor : endInlinkRendering.getColor();
+		final Rainbow endInlinkColor = endInlinkRendering == null || endInlinkRendering.getRainbow().size() == 0 ? arrowColor
+				: endInlinkRendering.getRainbow();
 
 		final FontConfiguration fontArrow = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY_ARROW, null);
 

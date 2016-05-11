@@ -46,6 +46,9 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 	public InstructionEnd(Swimlane swimlane, LinkRendering inlinkRendering) {
 		super(swimlane);
 		this.inlinkRendering = inlinkRendering;
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

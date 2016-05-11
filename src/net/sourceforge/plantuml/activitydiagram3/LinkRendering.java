@@ -34,53 +34,54 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class LinkRendering {
 
-	private final HtmlColor color;
-	private Display display = Display.NULL;
+	private final Rainbow rainbow;
+	private final Display display;
 
-	public LinkRendering(HtmlColor color) {
-		this.color = color;
+	public LinkRendering(Rainbow rainbow) {
+		this(rainbow, Display.NULL);
 	}
 
-	public void setDisplay(Display display) {
+	private LinkRendering(Rainbow rainbow, Display display) {
+		if (rainbow == null) {
+			throw new IllegalArgumentException();
+		}
+		this.rainbow = rainbow;
 		this.display = display;
+	}
+
+	public static LinkRendering none() {
+		return new LinkRendering(Rainbow.none());
+	}
+
+	public LinkRendering withDisplay(Display display) {
+		return new LinkRendering(rainbow, display);
 	}
 
 	public Display getDisplay() {
 		return display;
 	}
 
-	public HtmlColor getColor() {
-		return color;
+	public Rainbow getRainbow() {
+		return rainbow;
+	}
+
+	public Rainbow getRainbow(Rainbow defaultColor) {
+		if (rainbow.size() == 0) {
+			return defaultColor;
+		}
+		return rainbow;
+	}
+
+	public boolean isNone() {
+		return Display.isNull(display) && rainbow.size() == 0;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + display + " " + color;
+		return super.toString() + " " + display + " " + rainbow;
 	}
-
-	public static HtmlColor getColor(LinkRendering inLinkRendering, HtmlColor defaultColor) {
-		if (inLinkRendering == null || inLinkRendering.getColor() == null) {
-			return defaultColor;
-		}
-		return inLinkRendering.getColor();
-	}
-
-	public static HtmlColor getColor(HtmlColor col, HtmlColor defaultColor) {
-		if (col == null) {
-			return defaultColor;
-		}
-		return col;
-	}
-
-	public static Display getDisplay(LinkRendering linkRendering) {
-		if (linkRendering == null) {
-			return Display.NULL;
-		}
-		return linkRendering.getDisplay();
-	}
-
 }

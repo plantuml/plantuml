@@ -48,6 +48,9 @@ public class InstructionStop extends MonoSwimable implements Instruction {
 	public InstructionStop(Swimlane swimlane, LinkRendering inlinkRendering) {
 		super(swimlane);
 		this.inlinkRendering = inlinkRendering;
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

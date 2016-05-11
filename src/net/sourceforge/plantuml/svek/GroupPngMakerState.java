@@ -137,7 +137,7 @@ public final class GroupPngMakerState {
 
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE) {
 			// return new InnerStateConcurrent(svek2.createFile());
-			return svek2.createFile();
+			return svek2.createFile(null, new String[0]);
 		} else if (group.getGroupType() == GroupType.STATE) {
 			HtmlColor borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 			if (borderColor == null) {
@@ -159,7 +159,7 @@ public final class GroupPngMakerState {
 
 			final boolean containsOnlyConcurrentStates = containsOnlyConcurrentStates(dotData);
 			final IEntityImage image = containsOnlyConcurrentStates ? svek2.createFileForConcurrentState() : svek2
-					.createFile();
+					.createFile(null, new String[0]);
 			return new InnerStateAutonom(image, title, attribute, borderColor, backColor, skinParam.shadowing(),
 					group.getUrl99(), withSymbol, stroke);
 		}

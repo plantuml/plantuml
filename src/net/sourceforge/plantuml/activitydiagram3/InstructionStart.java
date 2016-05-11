@@ -58,7 +58,7 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 	}
 
 	public LinkRendering getInLinkRendering() {
-		return null;
+		return LinkRendering.none();
 	}
 
 	public boolean addNote(Display note, NotePosition position) {

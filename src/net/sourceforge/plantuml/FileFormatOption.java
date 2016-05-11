@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
-import net.sourceforge.plantuml.StringUtils;
 
 /**
  * A FileFormat with some parameters.
@@ -74,7 +73,7 @@ public class FileFormatOption implements Serializable {
 	private final String svgLinkTarget;
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true, false, "_top");
+		this(fileFormat, null, true, false, "_top", false);
 	}
 
 	public String getSvgLinkTarget() {
@@ -86,24 +85,25 @@ public class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, false, false, "_top");
+		this(fileFormat, null, false, false, "_top", false);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError,
-			String svgLinkTarget) {
+			String svgLinkTarget, boolean debugsvek) {
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
 		this.withMetadata = withMetadata;
 		this.useRedForError = useRedForError;
 		this.svgLinkTarget = svgLinkTarget;
+		this.debugsvek = debugsvek;
 	}
 
 	public FileFormatOption withUseRedForError() {
-		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget);
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget, debugsvek);
 	}
 
 	public FileFormatOption withSvgLinkTarget(String target) {
-		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, target);
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, target, debugsvek);
 	}
 
 	@Override
@@ -211,6 +211,16 @@ public class FileFormatOption implements Serializable {
 
 	public final boolean isUseRedForError() {
 		return useRedForError;
+	}
+
+	private boolean debugsvek = false;
+
+	public void setDebugSvek(boolean debugsvek) {
+		this.debugsvek = debugsvek;
+	}
+
+	public boolean isDebugSvek() {
+		return debugsvek;
 	}
 
 }

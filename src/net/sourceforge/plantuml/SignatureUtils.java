@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19602 $
+ * Revision $Revision: 19670 $
  *
  */
 package net.sourceforge.plantuml;
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -60,11 +61,23 @@ public class SignatureUtils {
 		}
 	}
 
-	public static String getSignatureSha512(String s) {
+	public static String getSignatureSha512(File f) throws IOException {
+		final InputStream is = new FileInputStream(f);
+		try {
+			return getSignatureSha512(is);
+		} finally {
+			is.close();
+		}
+	}
+
+	public static String getSignatureSha512(InputStream is) throws IOException {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
-			msgDigest.update(s.getBytes("UTF-8"));
+			int read = 0;
+			while ((read = is.read()) != -1) {
+				msgDigest.update((byte) read);
+			}
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
 		} catch (NoSuchAlgorithmException e) {

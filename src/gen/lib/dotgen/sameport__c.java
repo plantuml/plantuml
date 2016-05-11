@@ -707,9 +707,9 @@ try {
     int n_samehead;		/* number of same_t groups on current node */
     int n_sametail;		/* number of same_t groups on current node */
     int i;
-    Z._().E_samehead = agattr(g, AGEDGE, new CString("samehead"),null);
-    Z._().E_sametail = agattr(g, AGEDGE, new CString("sametail"),null);
-    if (N(Z._().E_samehead!=null || Z._().E_sametail!=null))
+    Z.z().E_samehead = agattr(g, AGEDGE, new CString("samehead"),null);
+    Z.z().E_sametail = agattr(g, AGEDGE, new CString("sametail"),null);
+    if (N(Z.z().E_samehead!=null || Z.z().E_sametail!=null))
 	return;
 UNSUPPORTED("44thr6ep72jsj3fksjiwdx3yr"); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {
 UNSUPPORTED("4roxmr5lxkjz6gn1j9mndurq2"); // 	n_samehead = n_sametail = 0;

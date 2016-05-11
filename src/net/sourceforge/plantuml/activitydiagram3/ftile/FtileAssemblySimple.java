@@ -97,7 +97,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 	}
 
 	public LinkRendering getOutLinkRendering() {
-		return null;
+		return LinkRendering.none();
 	}
 
 	private FtileGeometry calculateDimension;

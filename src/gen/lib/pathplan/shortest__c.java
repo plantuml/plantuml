@@ -123,11 +123,11 @@ try {
 	return -2;
     /* make space */
     growpnls(polyp.getInt("pn"));
-    Z._().pnll = 0;
-    Z._().tril = 0;
+    Z.z().pnll = 0;
+    Z.z().tril = 0;
     growdq(polyp.getInt("pn") * 2);
-    Z._().dq.setInt("fpnlpi", Z._().dq.getInt("pnlpn") / 2);
-    Z._().dq.setInt("lpnlpi", Z._().dq.getInt("fpnlpi") - 1);
+    Z.z().dq.setInt("fpnlpi", Z.z().dq.getInt("pnlpn") / 2);
+    Z.z().dq.setInt("lpnlpi", Z.z().dq.getInt("fpnlpi") - 1);
     /* make sure polygon is CCW and load pnls array */
     for (pi = 0, minx = HUGE_VAL, minpi = -1; pi < polyp.getInt("pn"); pi++) {
 	if (minx > polyp.getPtr("ps").plus(pi).getDouble("x"))
@@ -144,41 +144,41 @@ try {
 		&& polyp.getPtr("ps").plus(pi).getDouble("x") == polyp.getPtr("ps").plus(pi+1).getDouble("x")
 		&& polyp.getPtr("ps").plus(pi).getDouble("y") == polyp.getPtr("ps").plus(pi+1).getDouble("y"))
 		continue;
-	    Z._().pnls.plus(Z._().pnll).setPtr("pp", polyp.getPtr("ps").plus(pi));
-	    Z._().pnls.plus(Z._().pnll).setPtr("link", Z._().pnls.plus(Z._().pnll % polyp.getInt("pn")));
-	    Z._().pnlps.plus(Z._().pnll).setPtr(Z._().pnls.plus(Z._().pnll).getPtr());
-	    Z._().pnll++;
+	    Z.z().pnls.plus(Z.z().pnll).setPtr("pp", polyp.getPtr("ps").plus(pi));
+	    Z.z().pnls.plus(Z.z().pnll).setPtr("link", Z.z().pnls.plus(Z.z().pnll % polyp.getInt("pn")));
+	    Z.z().pnlps.plus(Z.z().pnll).setPtr(Z.z().pnls.plus(Z.z().pnll).getPtr());
+	    Z.z().pnll++;
 	}
     } else {
 	for (pi = 0; pi < polyp.getInt("pn"); pi++) {
 	    if (pi > 0 && polyp.getPtr("ps").plus(pi).getDouble("x") == polyp.getPtr("ps").plus(pi - 1).getDouble("x") &&
 		polyp.getPtr("ps").plus(pi).getDouble("y") == polyp.getPtr("ps").plus(pi - 1).getDouble("y"))
 		continue;
-	    Z._().pnls.plus(Z._().pnll).setPtr("pp", polyp.getPtr("ps").plus(pi));
-	    Z._().pnls.plus(Z._().pnll).setPtr("link", Z._().pnls.plus(Z._().pnll % polyp.getInt("pn")));
-	    Z._().pnlps.plus(Z._().pnll).setPtr(Z._().pnls.plus(Z._().pnll));
-	    Z._().pnll++;
+	    Z.z().pnls.plus(Z.z().pnll).setPtr("pp", polyp.getPtr("ps").plus(pi));
+	    Z.z().pnls.plus(Z.z().pnll).setPtr("link", Z.z().pnls.plus(Z.z().pnll % polyp.getInt("pn")));
+	    Z.z().pnlps.plus(Z.z().pnll).setPtr(Z.z().pnls.plus(Z.z().pnll));
+	    Z.z().pnll++;
 	}
     }
     /* generate list of triangles */
-    triangulate(Z._().pnlps, Z._().pnll);
+    triangulate(Z.z().pnlps, Z.z().pnll);
     /* connect all pairs of triangles that share an edge */
-    for (trii = 0; trii < Z._().tril; trii++)
-	for (trij = trii + 1; trij < Z._().tril; trij++)
+    for (trii = 0; trii < Z.z().tril; trii++)
+	for (trij = trii + 1; trij < Z.z().tril; trij++)
 	    connecttris(trii, trij);
     /* find first and last triangles */
-    for (trii = 0; trii < Z._().tril; trii++)
+    for (trii = 0; trii < Z.z().tril; trii++)
 	if (pointintri(trii, eps.plus(0).getStruct().amp()))
 	    break;
-    if (trii == Z._().tril) {
+    if (trii == Z.z().tril) {
 UNSUPPORTED("4ma3y8l4lmjcsw49kmsgknig6"); // 	fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("source point not in any triangle"));
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     }
     ftrii = trii;
-    for (trii = 0; trii < Z._().tril; trii++)
+    for (trii = 0; trii < Z.z().tril; trii++)
 	if (pointintri(trii, eps.plus(1).getStruct().amp()))
 	    break;
-    if (trii == Z._().tril) {
+    if (trii == Z.z().tril) {
         System.err.println("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("destination point not in any triangle"));
         return -1;
     }
@@ -189,9 +189,9 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
 	/* a straight line is better than failing */
 	growops(2);
 	output.setInt("pn", 2);
-	Z._().ops_shortest.plus(0).setStruct(eps.plus(0).getStruct());
-	Z._().ops_shortest.plus(1).setStruct(eps.plus(1).getStruct());
-	output.setPtr("ps", Z._().ops_shortest);
+	Z.z().ops_shortest.plus(0).setStruct(eps.plus(0).getStruct());
+	Z.z().ops_shortest.plus(1).setStruct(eps.plus(1).getStruct());
+	output.setPtr("ps", Z.z().ops_shortest);
 	return 0;
     }
     /* if endpoints in same triangle, use a single line */
@@ -208,10 +208,10 @@ UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
     epnls.plus(1).getStruct().setPtr("pp", eps.plus(1).asPtr());
     epnls.plus(1).getStruct().setPtr("link", null);
     add2dq(1, epnls.plus(0).asPtr());
-    Z._().dq.setInt("apex", Z._().dq.getInt("fpnlpi"));
+    Z.z().dq.setInt("apex", Z.z().dq.getInt("fpnlpi"));
     trii = ftrii;
     while (trii != -1) {
-	trip = (triangle_t) Z._().tris.plus(trii);
+	trip = (triangle_t) Z.z().tris.plus(trii);
 	trip.setInt("mark", 2);
 	/* find the left and right points of the exiting edge */
 	for (ei = 0; ei < 3; ei++)
@@ -219,14 +219,14 @@ UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
 	      trip.getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp").getInt("mark") == 1)
 		break;
 	if (ei == 3) {		/* in last triangle */
-	    if (ccw(eps.plus(1).asPtr(), Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("fpnlpi")).getPtr().getPtr("pp"),
-		    Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("lpnlpi")).getPtr().getPtr("pp")) == 1)
+	    if (ccw(eps.plus(1).asPtr(), Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("fpnlpi")).getPtr().getPtr("pp"),
+		    Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("lpnlpi")).getPtr().getPtr("pp")) == 1)
 		{
-		lpnlp = (pointnlink_t) Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("lpnlpi")).getPtr();
+		lpnlp = (pointnlink_t) Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("lpnlpi")).getPtr();
 		rpnlp = (pointnlink_t) epnls.plus(1).asPtr();
 	    } else {
 		lpnlp = (pointnlink_t) epnls.plus(1).asPtr();
-		rpnlp = (pointnlink_t) Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("lpnlpi")).getPtr();
+		rpnlp = (pointnlink_t) Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("lpnlpi")).getPtr();
 		}
 	} else {
 	    pnlp = (pointnlink_t) trip.getArrayOfStruct("e").plus((ei + 1) % 3).getStruct().getPtr("pnl1p");
@@ -244,30 +244,30 @@ UNSUPPORTED("2cii65lhw4wb8nyvjv702v7md"); // 		lpnlp = trip->e[ei].pnl1p, rpnlp 
 	    add2dq(2, lpnlp);
 	    add2dq(1, rpnlp);
 	} else {
-	    if (NEQ(Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("fpnlpi")).getPtr(), rpnlp)
-		&& NEQ(Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("lpnlpi")).getPtr(), rpnlp)) {
+	    if (NEQ(Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("fpnlpi")).getPtr(), rpnlp)
+		&& NEQ(Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("lpnlpi")).getPtr(), rpnlp)) {
 		/* add right point to deque */
 		splitindex = finddqsplit(rpnlp);
 		splitdq(2, splitindex);
 		add2dq(1, rpnlp);
 		/* if the split is behind the apex, then reset apex */
-		if (splitindex > Z._().dq.getInt("apex"))
-		    Z._().dq.setInt("apex", splitindex);
+		if (splitindex > Z.z().dq.getInt("apex"))
+		    Z.z().dq.setInt("apex", splitindex);
 	    } else {
 		/* add left point to deque */
 		splitindex = finddqsplit(lpnlp);
 		splitdq(1, splitindex);
 		add2dq(2, lpnlp);
 		/* if the split is in front of the apex, then reset apex */
-		if (splitindex < Z._().dq.getInt("apex"))
-		    Z._().dq.setInt("apex", splitindex);
+		if (splitindex < Z.z().dq.getInt("apex"))
+		    Z.z().dq.setInt("apex", splitindex);
 	    }
 	}
 	trii = -1;
 	for (ei = 0; ei < 3; ei++)
 	    if (trip.getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp")!=null && 
 	      trip.getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp").getInt("mark") == 1) {
-		trii = trip.getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp").minus(Z._().tris);
+		trii = trip.getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp").minus(Z.z().tris);
 		break;
 	    }
     }
@@ -276,8 +276,8 @@ UNSUPPORTED("2cii65lhw4wb8nyvjv702v7md"); // 		lpnlp = trip->e[ei].pnl1p, rpnlp 
     growops(pi);
     output.setInt("pn", pi);
     for (pi = pi - 1, pnlp = (pointnlink_t) epnls.plus(1).asPtr(); pnlp!=null; pi--, pnlp = (pointnlink_t) pnlp.getPtr("link"))
-	Z._().ops_shortest.plus(pi).setPtr(pnlp.getPtr("pp"));
-    output.setPtr("ps", Z._().ops_shortest);
+	Z.z().ops_shortest.plus(pi).setPtr(pnlp.getPtr("pp"));
+    output.setPtr("ps", Z.z().ops_shortest);
     return 0;
 } finally {
 LEAVING("2gub5b19vo2qexn56nw23wage","Pshortestpath");
@@ -371,9 +371,9 @@ try {
     triangle_t trip;
     int ei;
     /* make space */
-    if (Z._().tril >= Z._().trin)
-	growtris(Z._().trin + 20);
-    trip = (triangle_t) Z._().tris.plus(Z._().tril++);
+    if (Z.z().tril >= Z.z().trin)
+	growtris(Z.z().trin + 20);
+    trip = (triangle_t) Z.z().tris.plus(Z.z().tril++);
     trip.setInt("mark", 0);
     trip.getArrayOfStruct("e").plus(0).getStruct().setPtr("pnl0p", pnlap);
     trip.getArrayOfStruct("e").plus(0).getStruct().setPtr("pnl1p", pnlbp);
@@ -403,8 +403,8 @@ try {
     int ei, ej;
     for (ei = 0; ei < 3; ei++) {
 	for (ej = 0; ej < 3; ej++) {
-	    tri1p = (triangle_t) Z._().tris.plus(tri1);
-	    tri2p = (triangle_t) Z._().tris.plus(tri2);
+	    tri1p = (triangle_t) Z.z().tris.plus(tri1);
+	    tri2p = (triangle_t) Z.z().tris.plus(tri2);
 	    if ((EQ(tri1p.getArrayOfStruct("e").plus(ei).getStruct().getPtr("pnl0p").getPtr("pp"),
 	    		tri2p.getArrayOfStruct("e").plus(ej).getStruct().getPtr("pnl0p").getPtr("pp")) &&
 		 EQ(tri1p.getArrayOfStruct("e").plus(ei).getStruct().getPtr("pnl1p").getPtr("pp"),
@@ -433,16 +433,16 @@ public static boolean marktripath(int trii, int trij) {
 ENTERING("3waxf5wy3mwt12wpg5hxg3o9c","marktripath");
 try {
     int ei;
-    if (Z._().tris.plus(trii).getBoolean("mark"))
+    if (Z.z().tris.plus(trii).getBoolean("mark"))
 	return false;
-    Z._().tris.plus(trii).setInt("mark", 1);
+    Z.z().tris.plus(trii).setInt("mark", 1);
     if (trii == trij)
 	return ((!(false)));
     for (ei = 0; ei < 3; ei++)
-	if (Z._().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp")!=null &&
-	    marktripath(Z._().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp").minus(Z._().tris), trij))
+	if (Z.z().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp")!=null &&
+	    marktripath(Z.z().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("rtp").minus(Z.z().tris), trij))
 	    return ((!(false)));
-    Z._().tris.plus(trii).setInt("mark", 0);
+    Z.z().tris.plus(trii).setInt("mark", 0);
     return false;
 } finally {
 LEAVING("3waxf5wy3mwt12wpg5hxg3o9c","marktripath");
@@ -458,17 +458,17 @@ public static void add2dq(int side, __ptr__ pnlp) {
 ENTERING("44szdl31mg8mt5qrfj70kb2sn","add2dq");
 try {
     if (side == 1) {
-	if (Z._().dq.getInt("lpnlpi") - Z._().dq.getInt("fpnlpi") >= 0)
-	    pnlp.setPtr("link", Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("fpnlpi")).getPtr());
+	if (Z.z().dq.getInt("lpnlpi") - Z.z().dq.getInt("fpnlpi") >= 0)
+	    pnlp.setPtr("link", Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("fpnlpi")).getPtr());
 	    /* shortest path links */
-	Z._().dq.setInt("fpnlpi", Z._().dq.getInt("fpnlpi")-1);
-	Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("fpnlpi")).setPtr(pnlp);
+	Z.z().dq.setInt("fpnlpi", Z.z().dq.getInt("fpnlpi")-1);
+	Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("fpnlpi")).setPtr(pnlp);
     } else {
-	if (Z._().dq.getInt("lpnlpi") - Z._().dq.getInt("fpnlpi") >= 0)
-	    pnlp.setPtr("link", Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("lpnlpi")).getPtr());
+	if (Z.z().dq.getInt("lpnlpi") - Z.z().dq.getInt("fpnlpi") >= 0)
+	    pnlp.setPtr("link", Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("lpnlpi")).getPtr());
 	    /* shortest path links */
-	Z._().dq.setInt("lpnlpi", Z._().dq.getInt("lpnlpi")+1);
-	Z._().dq.getPtr("pnlps").plus(Z._().dq.getInt("lpnlpi")).setPtr(pnlp);
+	Z.z().dq.setInt("lpnlpi", Z.z().dq.getInt("lpnlpi")+1);
+	Z.z().dq.getPtr("pnlps").plus(Z.z().dq.getInt("lpnlpi")).setPtr(pnlp);
     }
 } finally {
 LEAVING("44szdl31mg8mt5qrfj70kb2sn","add2dq");
@@ -484,9 +484,9 @@ public static void splitdq(int side, int index) {
 ENTERING("572sssdz1se16w790xceiy5vr","splitdq");
 try {
     if (side == 1)
-	Z._().dq.setInt("lpnlpi", index);
+	Z.z().dq.setInt("lpnlpi", index);
     else
-	Z._().dq.setInt("fpnlpi", index);
+	Z.z().dq.setInt("fpnlpi", index);
 } finally {
 LEAVING("572sssdz1se16w790xceiy5vr","splitdq");
 }
@@ -501,15 +501,15 @@ public static int finddqsplit(pointnlink_t pnlp) {
 ENTERING("9dnrc8vqpffp5t3bmsackgqtl","finddqsplit");
 try {
     int index;
-    for (index = Z._().dq.getInt("fpnlpi"); index < Z._().dq.getInt("apex"); index++)
-	if (ccw(Z._().dq.getPtr("pnlps").plus(index + 1).getPtr().getPtr("pp"), Z._().dq.getPtr("pnlps").plus(index).getPtr().getPtr("pp"), pnlp.getPtr("pp")) ==
+    for (index = Z.z().dq.getInt("fpnlpi"); index < Z.z().dq.getInt("apex"); index++)
+	if (ccw(Z.z().dq.getPtr("pnlps").plus(index + 1).getPtr().getPtr("pp"), Z.z().dq.getPtr("pnlps").plus(index).getPtr().getPtr("pp"), pnlp.getPtr("pp")) ==
 	    1)
 	    return index;
-    for (index = Z._().dq.getInt("lpnlpi"); index > Z._().dq.getInt("apex"); index--)
-	if (ccw(Z._().dq.getPtr("pnlps").plus(index - 1).getPtr().getPtr("pp"), Z._().dq.getPtr("pnlps").plus(index).getPtr().getPtr("pp"), pnlp.getPtr("pp")) ==
+    for (index = Z.z().dq.getInt("lpnlpi"); index > Z.z().dq.getInt("apex"); index--)
+	if (ccw(Z.z().dq.getPtr("pnlps").plus(index - 1).getPtr().getPtr("pp"), Z.z().dq.getPtr("pnlps").plus(index).getPtr().getPtr("pp"), pnlp.getPtr("pp")) ==
 	    2)
 	    return index;
-    return Z._().dq.getInt("apex");
+    return Z.z().dq.getInt("apex");
 } finally {
 LEAVING("9dnrc8vqpffp5t3bmsackgqtl","finddqsplit");
 }
@@ -591,8 +591,8 @@ ENTERING("zti1mzm2m7tr2xwnbf7e8u3d","pointintri");
 try {
     int ei, sum;
     for (ei = 0, sum = 0; ei < 3; ei++)
-	if (ccw(Z._().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("pnl0p").getPtr("pp"),
-		Z._().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("pnl1p").getPtr("pp"), pp) != 2)
+	if (ccw(Z.z().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("pnl0p").getPtr("pp"),
+		Z.z().tris.plus(trii).getArrayOfStruct("e").plus(ei).getStruct().getPtr("pnl1p").getPtr("pp"), pp) != 2)
 	    sum++;
     return (sum == 3 || sum == 0);
 } finally {
@@ -608,30 +608,30 @@ LEAVING("zti1mzm2m7tr2xwnbf7e8u3d","pointintri");
 public static void growpnls(int newpnln) {
 ENTERING("85wstb60jkjd0kbh9tyninm4h","growpnls");
 try {
-    if (newpnln <= Z._().pnln)
+    if (newpnln <= Z.z().pnln)
 	return;
-    if (N(Z._().pnls)) {
-	if (N(Z._().pnls = (pointnlink_t) Memory.malloc(sizeof (pointnlink_t.class,  newpnln)))) {
+    if (N(Z.z().pnls)) {
+	if (N(Z.z().pnls = (pointnlink_t) Memory.malloc(sizeof (pointnlink_t.class,  newpnln)))) {
 UNSUPPORTED("9zyfc4bjg3i6rrna9vqf8doys"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
-	if (N(Z._().pnlps = Memory.malloc(sizeof_starstar_empty(pointnlink_t.class, newpnln)))) {
+	if (N(Z.z().pnlps = Memory.malloc(sizeof_starstar_empty(pointnlink_t.class, newpnln)))) {
 UNSUPPORTED("1etar0wd2cbbvqo4jnmbvjiz4"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc pnlps"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z._().pnls = (pointnlink_t) Memory.realloc(Z._().pnls,
+	if (N(Z.z().pnls = (pointnlink_t) Memory.realloc(Z.z().pnls,
 					      sizeof (pointnlink_t.class, newpnln)))) {
 UNSUPPORTED("105nogpkt0qqut0yu4alvkk1u"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
-	if (N(Z._().pnlps = Memory.realloc(Z._().pnlps,
+	if (N(Z.z().pnlps = Memory.realloc(Z.z().pnlps,
 						sizeof_starstar_empty(pointnlink_t.class, newpnln)))) {
 UNSUPPORTED("be84alh84ub40x4um989aj20d"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc pnlps"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z._().pnln = newpnln;
+    Z.z().pnln = newpnln;
 } finally {
 LEAVING("85wstb60jkjd0kbh9tyninm4h","growpnls");
 }
@@ -645,20 +645,20 @@ LEAVING("85wstb60jkjd0kbh9tyninm4h","growpnls");
 public static void growtris(int newtrin) {
 ENTERING("c5q8ult6w26jppe5ifzgcoq82","growtris");
 try {
-    if (newtrin <= Z._().trin)
+    if (newtrin <= Z.z().trin)
 	return;
-    if (N(Z._().tris)) {
-	if (N(Z._().tris = Memory.malloc(sizeof(triangle_t.class, newtrin)))) {
+    if (N(Z.z().tris)) {
+	if (N(Z.z().tris = Memory.malloc(sizeof(triangle_t.class, newtrin)))) {
 UNSUPPORTED("5782e28cjpaa3dpf8up4zmtq7"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc tris"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z._().tris = Memory.realloc(Z._().tris, sizeof (triangle_t.class, newtrin)))) {
+	if (N(Z.z().tris = Memory.realloc(Z.z().tris, sizeof (triangle_t.class, newtrin)))) {
 UNSUPPORTED("d3fgu54pn5tydfhn7z73v73ra"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc tris"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z._().trin = newtrin;
+    Z.z().trin = newtrin;
 } finally {
 LEAVING("c5q8ult6w26jppe5ifzgcoq82","growtris");
 }
@@ -672,23 +672,23 @@ LEAVING("c5q8ult6w26jppe5ifzgcoq82","growtris");
 public static void growdq(int newdqn) {
 ENTERING("bzym9u6dtatii1vp4hcmofc80","growdq");
 try {
-    if (newdqn <= Z._().dq.getInt("pnlpn"))
+    if (newdqn <= Z.z().dq.getInt("pnlpn"))
 	return;
-    if (N(Z._().dq.getPtr("pnlps"))) {
+    if (N(Z.z().dq.getPtr("pnlps"))) {
 	if (N
-	    (Z._().dq.setPtr("pnlps",
+	    (Z.z().dq.setPtr("pnlps",
 	     (__ptr__) Memory.malloc(sizeof_starstar_empty(pointnlink_t.class, newdqn))))) {
 UNSUPPORTED("88fwpb40wz9jc8jiz7u032s4t"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc dq.pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z._().dq.setPtr("pnlps", (__ptr__) Memory.realloc(Z._().dq.getPtr("pnlps"),
+	if (N(Z.z().dq.setPtr("pnlps", (__ptr__) Memory.realloc(Z.z().dq.getPtr("pnlps"),
 						   sizeof_starstar_empty(pointnlink_t.class, newdqn))))) {
 UNSUPPORTED("exqx4ck7h15m8whgip6xpnhoo"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc dq.pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z._().dq.setInt("pnlpn", newdqn);
+    Z.z().dq.setInt("pnlpn", newdqn);
 } finally {
 LEAVING("bzym9u6dtatii1vp4hcmofc80","growdq");
 }
@@ -702,21 +702,21 @@ LEAVING("bzym9u6dtatii1vp4hcmofc80","growdq");
 public static void growops(int newopn) {
 ENTERING("d7vtt8xqxbdnx9kwtt1zzof75","growops");
 try {
-    if (newopn <= Z._().opn_shortest)
+    if (newopn <= Z.z().opn_shortest)
 	return;
-    if (N(Z._().ops_shortest)) {
-	if (N(Z._().ops_shortest = Memory.malloc(sizeof(pointf.class, newopn)))) {
+    if (N(Z.z().ops_shortest)) {
+	if (N(Z.z().ops_shortest = Memory.malloc(sizeof(pointf.class, newopn)))) {
 UNSUPPORTED("7wxgcgah7iy6vetj5yszoq4k4"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z._().ops_shortest = Memory.realloc(Z._().ops_shortest,
+	if (N(Z.z().ops_shortest = Memory.realloc(Z.z().ops_shortest,
 					 sizeof(pointf.class, newopn)))) {
 UNSUPPORTED("7azrdo5s3kc44taqmtmeu1s33"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
     }
     }
-    Z._().opn_shortest = newopn;
+    Z.z().opn_shortest = newopn;
 } finally {
 LEAVING("d7vtt8xqxbdnx9kwtt1zzof75","growops");
 }

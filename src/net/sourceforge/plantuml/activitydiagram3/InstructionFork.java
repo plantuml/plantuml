@@ -53,6 +53,9 @@ public class InstructionFork implements Instruction {
 		this.parent = parent;
 		this.inlinkRendering = inlinkRendering;
 		this.forks.add(new InstructionList());
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	private InstructionList getLast() {

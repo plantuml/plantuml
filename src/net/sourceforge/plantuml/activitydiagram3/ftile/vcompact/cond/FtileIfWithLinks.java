@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -59,32 +59,41 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
-	private final HtmlColor arrowColor;
+	private final Rainbow arrowColor;
 
-	public FtileIfWithLinks(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in,
-			HtmlColor arrowColor, StringBounder stringBounder) {
+	public FtileIfWithLinks(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in, Rainbow arrowColor,
+			StringBounder stringBounder) {
 		super(diamond1, tile1, tile2, diamond2, in, stringBounder);
 		this.arrowColor = arrowColor;
+		if (arrowColor.size() == 0) {
+			throw new IllegalArgumentException();
+		}
 	}
 
-	public static HtmlColor getInColor(Branch branch, HtmlColor arrowColor) {
+	public static Rainbow getInColor(Branch branch, Rainbow arrowColor) {
 		if (branch.isEmpty()) {
-			return LinkRendering.getColor(branch.getFtile().getOutLinkRendering(), arrowColor);
+			return branch.getFtile().getOutLinkRendering().getRainbow(arrowColor);
 		}
 		final LinkRendering linkIn = branch.getFtile().getInLinkRendering();
-		final HtmlColor color = linkIn == null ? arrowColor : linkIn.getColor();
+		final Rainbow color = linkIn == null ? arrowColor : linkIn.getRainbow();
+		if (color.size() == 0) {
+			return arrowColor;
+		}
 		return color;
-
 	}
 
 	class ConnectionHorizontalThenVertical extends AbstractConnection implements ConnectionTranslatable {
 
-		private final HtmlColor color;
+		private final Rainbow color;
 		private final UPolygon usingArrow;
 
 		public ConnectionHorizontalThenVertical(Ftile tile, Branch branch) {
 			super(diamond1, tile);
 			color = getInColor(branch, arrowColor);
+			if (color.size() == 0) {
+				getInColor(branch, arrowColor);
+				throw new IllegalArgumentException();
+			}
 			usingArrow = branch.isEmpty() ? null : Arrows.asToDown();
 		}
 
@@ -163,12 +172,12 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 	}
 
 	class ConnectionVerticalThenHorizontal extends AbstractConnection implements ConnectionTranslatable {
-		private final HtmlColor myArrowColor;
+		private final Rainbow myArrowColor;
 		private final boolean branchEmpty;
 
-		public ConnectionVerticalThenHorizontal(Ftile tile, HtmlColor myArrowColor, boolean branchEmpty) {
+		public ConnectionVerticalThenHorizontal(Ftile tile, Rainbow myArrowColor, boolean branchEmpty) {
 			super(tile, diamond2);
-			this.myArrowColor = myArrowColor == null ? arrowColor : myArrowColor;
+			this.myArrowColor = myArrowColor == null || myArrowColor.size() == 0 ? arrowColor : myArrowColor;
 			this.branchEmpty = branchEmpty;
 		}
 
@@ -276,12 +285,12 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 	}
 
 	class ConnectionVerticalThenHorizontalDirect extends AbstractConnection implements ConnectionTranslatable {
-		private final HtmlColor myArrowColor;
+		private final Rainbow myArrowColor;
 		private final boolean branchEmpty;
 
-		public ConnectionVerticalThenHorizontalDirect(Ftile tile, HtmlColor myArrowColor, boolean branchEmpty) {
+		public ConnectionVerticalThenHorizontalDirect(Ftile tile, Rainbow myArrowColor, boolean branchEmpty) {
 			super(tile, diamond2);
-			this.myArrowColor = myArrowColor == null ? arrowColor : myArrowColor;
+			this.myArrowColor = myArrowColor == null || myArrowColor.size() == 0 ? arrowColor : myArrowColor;
 			this.branchEmpty = branchEmpty;
 		}
 
@@ -361,16 +370,18 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));
 		if (tile1.calculateDimension(stringBounder).hasPointOut()
 				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
-			conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColor(), branch1.isEmpty()));
-			conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColor(), branch2.isEmpty()));
+			conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColorAndStyle(), branch1
+					.isEmpty()));
+			conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(), branch2
+					.isEmpty()));
 		} else if (tile1.calculateDimension(stringBounder).hasPointOut()
 				&& tile2.calculateDimension(stringBounder).hasPointOut() == false) {
-			conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColor(), branch1
-					.isEmpty()));
+			conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
+					branch1.isEmpty()));
 		} else if (tile1.calculateDimension(stringBounder).hasPointOut() == false
 				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
-			conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColor(), branch2
-					.isEmpty()));
+			conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
+					branch2.isEmpty()));
 		}
 
 		return FtileUtils.addConnection(this, conns);
