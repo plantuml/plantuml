@@ -45,6 +45,8 @@ import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 
+	public static final String STYLE_COLORS = "-\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*(?:;(?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)*)\\]->";
+
 	public CommandArrow3() {
 		super(getRegexConcat());
 	}
@@ -53,9 +55,7 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
-						new RegexLeaf(
-								"COLOR",
-								"-\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*(?:;(?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)*)\\]->")), //
+						new RegexLeaf("COLOR", STYLE_COLORS)), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("LABEL", "(.*);"), //

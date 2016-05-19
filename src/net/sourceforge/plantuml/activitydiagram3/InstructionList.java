@@ -45,8 +45,9 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public class InstructionList implements Instruction, InstructionCollection {
+public class InstructionList extends WithNote implements Instruction, InstructionCollection {
 
 	private final List<Instruction> all = new ArrayList<Instruction>();
 	private final Swimlane defaultSwimlane;
@@ -79,7 +80,7 @@ public class InstructionList implements Instruction, InstructionCollection {
 		if (all.size() == 0) {
 			return new FtileEmpty(factory.shadowing(), defaultSwimlane);
 		}
-		Ftile result = null;
+		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn());
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
 			if (ins.getInLinkRendering().isNone() == false) {
@@ -119,11 +120,11 @@ public class InstructionList implements Instruction, InstructionCollection {
 		return all.get(all.size() - 1);
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position, NoteType type) {
 		if (getLast() == null) {
-			return false;
+			return super.addNote(note, position, type);
 		}
-		return getLast().addNote(note, position);
+		return getLast().addNote(note, position, type);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

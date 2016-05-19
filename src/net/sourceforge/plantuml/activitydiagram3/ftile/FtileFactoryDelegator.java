@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
@@ -114,8 +114,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.activity(label, swimlane, style, colors);
 	}
 
-	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition) {
-		return factory.addNote(ftile, note, notePosition);
+	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane) {
+		return factory.addNote(ftile, note, notePosition, type, swimlane);
 	}
 
 	public Ftile addUrl(Ftile ftile, Url url) {

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpa
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionIf implements Instruction, InstructionCollection {
 
@@ -82,6 +83,7 @@ public class InstructionIf implements Instruction, InstructionCollection {
 
 	private Display note;
 	private NotePosition position;
+	private NoteType type;
 
 	public Ftile createFtile(FtileFactory factory) {
 		for (Branch branch : thens) {
@@ -93,7 +95,7 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
 		if (note != null) {
-			result = new FtileWithNoteOpale(result, note, position, skinParam, false);
+			result = new FtileWithNoteOpale(result, note, position, type, skinParam, false);
 		}
 		return result;
 	}
@@ -150,13 +152,14 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		return topInlinkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position, NoteType type) {
 		if (current.isEmpty()) {
 			this.note = note;
 			this.position = position;
+			this.type = type;
 			return true;
 		} else {
-			return current.addNote(note, position);
+			return current.addNote(note, position, type);
 		}
 	}
 
@@ -168,7 +171,9 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		for (Branch branch : thens) {
 			result.addAll(branch.getSwimlanes());
 		}
-		result.addAll(elseBranch.getSwimlanes());
+		if (elseBranch != null) {
+			result.addAll(elseBranch.getSwimlanes());
+		}
 		return Collections.unmodifiableSet(result);
 	}
 

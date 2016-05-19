@@ -34,6 +34,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -72,7 +73,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 	private final boolean manageUrl;
 	private final Stereotype stereotype;
 
-	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier, Stereotype stereotype) {
+	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
+			Stereotype stereotype) {
 		this.rawBody = new ArrayList<String>(rawBody);
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
@@ -135,15 +137,15 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {
-				blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype),
-						separator, title));
+				blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
+						stereotype), separator, title));
 				separator = s.charAt(0);
 				title = getTitle(s, skinParam);
 				members = new ArrayList<Member>();
 			} else if (CreoleParser.isTreeStart(s)) {
 				if (members.size() > 0) {
-					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype),
-							separator, title));
+					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
+							stereotype), separator, title));
 				}
 				members = new ArrayList<Member>();
 				final List<String> allTree = buildAllTree(s, it);
@@ -158,8 +160,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 				}
 			}
 		}
-		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype), separator,
-				title));
+		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype),
+				separator, title));
 
 		if (blocks.size() == 1) {
 			this.area2 = blocks.get(0);
@@ -217,4 +219,9 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 	public List<Url> getUrls() {
 		return Collections.unmodifiableList(urls);
 	}
+
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		return getArea(stringBounder).getInnerPosition(member, stringBounder);
+	}
+
 }

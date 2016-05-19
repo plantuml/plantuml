@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class Branch {
 
@@ -78,8 +79,8 @@ public class Branch {
 		return list.kill();
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
-		return list.addNote(note, position);
+	public boolean addNote(Display note, NotePosition position, NoteType type) {
+		return list.addNote(note, position, type);
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {

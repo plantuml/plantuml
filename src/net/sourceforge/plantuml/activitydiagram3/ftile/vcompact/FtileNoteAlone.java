@@ -34,16 +34,13 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -58,44 +55,36 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
+public class FtileNoteAlone extends AbstractFtile implements Stencil {
 
-	private final Ftile tile;
 	private final Opale opale;
-
-	// private final HtmlColor arrowColor;
-	private final NotePosition notePosition;
-	private final double suppSpace = 20;
+	private final boolean withOutPoint;
+	private final Swimlane swimlane;
 
 	public Set<Swimlane> getSwimlanes() {
-		return tile.getSwimlanes();
+		if (swimlane == null) {
+			return Collections.emptySet();
+		}
+		return Collections.singleton(swimlane);
 	}
 
 	public Swimlane getSwimlaneIn() {
-		return tile.getSwimlaneIn();
+		return swimlane;
 	}
 
 	public Swimlane getSwimlaneOut() {
-		return tile.getSwimlaneOut();
+		return swimlane;
 	}
 
-	public FtileWithNoteOpale(Ftile tile, Display note, NotePosition notePosition, NoteType type, ISkinParam skinParam,
-			boolean withLink) {
-		super(tile.shadowing());
-		this.tile = tile;
-		this.notePosition = notePosition;
-		if (type == NoteType.FLOATING_NOTE) {
-			withLink = false;
-		}
-
+	public FtileNoteAlone(boolean shadow, Display note, ISkinParam skinParam, boolean withOutPoint, Swimlane swimlane) {
+		super(shadow);
+		this.swimlane = swimlane;
+		this.withOutPoint = withOutPoint;
 		final Rose rose = new Rose();
 
 		final HtmlColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
@@ -106,75 +95,24 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 		final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(note);
 		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), this, new UStroke(1));
-		opale = new Opale(borderColor, noteBackgroundColor, text, skinParam.shadowing(), withLink);
+		opale = new Opale(borderColor, noteBackgroundColor, text, skinParam.shadowing(), false);
 
-	}
-
-	private UTranslate getTranslate(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
-		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
-		final double yForFtile = (dimTotal.getHeight() - dimTile.getHeight()) / 2;
-		final double marge;
-		if (notePosition == NotePosition.LEFT) {
-			marge = dimNote.getWidth() + suppSpace;
-		} else {
-			marge = 0;
-		}
-
-		return new UTranslate(marge, yForFtile);
-
-	}
-
-	private UTranslate getTranslateForOpale(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
-
-		final double yForNote = (dimTotal.getHeight() - dimNote.getHeight()) / 2;
-
-		if (notePosition == NotePosition.LEFT) {
-			return new UTranslate(0, yForNote);
-		}
-		final double dx = dimTotal.getWidth() - dimNote.getWidth();
-		return new UTranslate(dx, yForNote);
 	}
 
 	public void drawU(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
-
-		if (notePosition == NotePosition.LEFT) {
-			final Direction strategy = Direction.RIGHT;
-			final Point2D pp1 = new Point2D.Double(dimNote.getWidth(), dimNote.getHeight() / 2);
-			final Point2D pp2 = new Point2D.Double(dimNote.getWidth() + suppSpace, dimNote.getHeight() / 2);
-			opale.setOpale(strategy, pp1, pp2);
-		} else {
-			final Direction strategy = Direction.LEFT;
-			final Point2D pp1 = new Point2D.Double(0, dimNote.getHeight() / 2);
-			final Point2D pp2 = new Point2D.Double(-suppSpace, dimNote.getHeight() / 2);
-			opale.setOpale(strategy, pp1, pp2);
-		}
-		opale.drawU(ug.apply(getTranslateForOpale(ug)));
-		ug.apply(getTranslate(stringBounder)).draw(tile);
+		opale.drawU(ug);
 	}
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		final FtileGeometry orig = tile.calculateDimension(stringBounder);
-		final UTranslate translate = getTranslate(stringBounder);
-		if (orig.hasPointOut()) {
-			return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy(),
-					orig.getOutY() + translate.getDy());
+		if (withOutPoint) {
+			return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());
 		}
-		return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy());
+		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);
 	}
 
 	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
-		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
-		final double height = Math.max(dimNote.getHeight(), dimTile.getHeight());
-		return new Dimension2DDouble(dimTile.getWidth() + 1 * dimNote.getWidth() + suppSpace, height);
+		return opale.calculateDimension(stringBounder);
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

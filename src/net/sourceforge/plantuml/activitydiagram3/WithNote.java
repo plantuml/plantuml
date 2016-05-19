@@ -33,79 +33,31 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
-import java.util.Set;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public class InstructionGroup implements Instruction, InstructionCollection {
+public class WithNote {
 
-	private final InstructionList list;
-	private final Instruction parent;
-	private final HtmlColor backColor;
-	private final HtmlColor borderColor;
-	private final HtmlColor titleColor;
-
-	private final Display test;
-	private Display headerNote = Display.NULL;
-
-	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
-			Swimlane swimlane, HtmlColor borderColor) {
-		this.list = new InstructionList(swimlane);
-		this.parent = parent;
-		this.test = test;
-		this.borderColor = borderColor;
-		this.backColor = backColor;
-		this.titleColor = titleColor;
-	}
-
-	public void add(Instruction ins) {
-		list.add(ins);
-	}
-
-	public Ftile createFtile(FtileFactory factory) {
-		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, headerNote, borderColor);
-	}
-
-	public Instruction getParent() {
-		return parent;
-	}
-
-	final public boolean kill() {
-		return list.kill();
-	}
-
-	public LinkRendering getInLinkRendering() {
-		return LinkRendering.none();
-	}
+	private Display note;
+	private NotePosition notePosition;
+	private NoteType type;
 
 	public boolean addNote(Display note, NotePosition position, NoteType type) {
-		if (list.isEmpty()) {
-			this.headerNote = note;
-			return true;
+		this.note = note;
+		this.notePosition = position;
+		this.type = type;
+		return true;
+	}
+
+	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
+		if (note != null) {
+			return factory.addNote(ftile, note, notePosition, type, swimlane);
 		}
-		return list.addNote(note, position, type);
-	}
-
-	public Set<Swimlane> getSwimlanes() {
-		return list.getSwimlanes();
-	}
-
-	public Swimlane getSwimlaneIn() {
-		return list.getSwimlaneIn();
-	}
-
-	public Swimlane getSwimlaneOut() {
-		return list.getSwimlaneOut();
-	}
-
-	public Instruction getLast() {
-		return list.getLast();
+		return ftile;
 	}
 
 }

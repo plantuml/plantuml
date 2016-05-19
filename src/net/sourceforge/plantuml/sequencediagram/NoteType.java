@@ -27,44 +27,22 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- *
- * Revision $Revision: 9786 $
+ * 
+ * Revision $Revision: 19109 $
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.StringUtils;
 
-public class InstructionStop extends MonoSwimable implements Instruction {
+public enum NoteType {
+	NOTE, FLOATING_NOTE;
 
-	private final LinkRendering inlinkRendering;
-
-	public InstructionStop(Swimlane swimlane, LinkRendering inlinkRendering) {
-		super(swimlane);
-		this.inlinkRendering = inlinkRendering;
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
+	public static NoteType defaultType(String s) {
+		if (s == null) {
+			return NoteType.NOTE;
 		}
-	}
-
-	public Ftile createFtile(FtileFactory factory) {
-		Ftile result = factory.stop(getSwimlaneIn());
-		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
-		return result;
-	}
-
-	public void add(Instruction other) {
-		throw new UnsupportedOperationException();
-	}
-
-	final public boolean kill() {
-		return false;
-	}
-
-	public LinkRendering getInLinkRendering() {
-		return inlinkRendering;
+		return NoteType.valueOf(StringUtils.goUpperCase(s).replace(' ', '_'));
 	}
 
 }

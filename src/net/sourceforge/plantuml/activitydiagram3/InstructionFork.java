@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionFork implements Instruction {
 
@@ -58,12 +59,12 @@ public class InstructionFork implements Instruction {
 		}
 	}
 
-	private InstructionList getLast() {
+	private InstructionList getLastList() {
 		return forks.get(forks.size() - 1);
 	}
 
 	public void add(Instruction ins) {
-		getLast().add(ins);
+		getLastList().add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
@@ -83,15 +84,18 @@ public class InstructionFork implements Instruction {
 	}
 
 	final public boolean kill() {
-		return getLast().kill();
+		return getLastList().kill();
 	}
 
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
-		return getLast().addNote(note, position);
+	public boolean addNote(Display note, NotePosition position, NoteType type) {
+		if (getLastList().getLast() == null) {
+			return getLastList().addNote(note, position, type);
+		}
+		return getLastList().addNote(note, position, type);
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -104,14 +108,14 @@ public class InstructionFork implements Instruction {
 	}
 
 	public Swimlane getSwimlaneOut() {
-		return getLast().getSwimlaneOut();
+		return getLastList().getSwimlaneOut();
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer) {
 		if (nextLinkRenderer == null) {
 			return;
 		}
-		getLast().setOutRendering(nextLinkRenderer);
+		getLastList().setOutRendering(nextLinkRenderer);
 	}
 
 }

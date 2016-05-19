@@ -28,11 +28,22 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19813 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public enum NotePosition {
-	LEFT, RIGHT, OVER, OVER_SEVERAL
+	LEFT, RIGHT, OVER, OVER_SEVERAL;
+	
+	public static NotePosition defaultLeft(String s) {
+		if (s == null) {
+			return NotePosition.LEFT;
+		}
+		return NotePosition.valueOf(StringUtils.goUpperCase(s));
+	}
+
+
 }

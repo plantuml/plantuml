@@ -175,10 +175,15 @@ public class QuoteUtils {
 					"I wanna try even though I could fail", //
 					"Sometimes we come last but we did our best", //
 					"If you see something, say something", //
-					"In theory there is no difference between theory and practice. But, in practice, there is.");
-	// Well I never, was there ever, A cat so clever, as magical Mr Mistoffelees
-	// Daylight, I must wait for the sunrise. I must think of a new life. And I mustn't give in.
-	// Do you like your morning tea weak or strong ?
+					"In theory there is no difference between theory and practice. But, in practice, there is.", //
+					"Daylight, I must wait for the sunrise. I must think of a new life. And I mustn't give in.", //
+					"If I cannot bring you comfort then at least I bring you hope", //
+					"We all must learn from small misfortune, count the blessings that are real", //
+					"Prepare Three Sealed Envelopes...",
+					"You know that thing you just did? Don't do that"
+			// Well I never, was there ever, A cat so clever, as magical Mr Mistoffelees
+			// Do you like your morning tea weak or strong ?
+			);
 
 	private QuoteUtils() {
 	}

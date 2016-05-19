@@ -33,8 +33,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -46,6 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -62,21 +61,15 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
-		final NotePosition position = getPosition(line0.get("POSITION", 0));
+		final NotePosition position = NotePosition.defaultLeft(line0.get("POSITION", 0));
+		final NoteType type = NoteType.defaultType(line0.get("TYPE", 0));
 		final Display note = lines.toDisplay();
-		return diagram.addNote(note, position);
-	}
-
-	private NotePosition getPosition(String s) {
-		if (s == null) {
-			return NotePosition.LEFT;
-		}
-		return NotePosition.valueOf(StringUtils.goUpperCase(s));
+		return diagram.addNote(note, position, type);
 	}
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("note"), //
+				new RegexLeaf("TYPE", "(note|floating note)"), //
 				new RegexLeaf("POSITION", "[%s]*(left|right)?"), //
 				new RegexLeaf("$"));
 	}

@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
 
@@ -49,8 +48,6 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final Display label;
 	private final Colors colors;
 	private final LinkRendering inlinkRendering;
-	private Display note;
-	private NotePosition notePosition;
 	private final BoxStyle style;
 	private final Url url;
 
@@ -75,9 +72,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		if (url != null) {
 			result = factory.addUrl(result, url);
 		}
-		if (note != null) {
-			result = factory.addNote(result, note, notePosition);
-		}
+		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
 		if (killed) {
 			return new FtileKilled(result);
 		}
@@ -95,12 +90,6 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
-	}
-
-	public boolean addNote(Display note, NotePosition position) {
-		this.note = note;
-		this.notePosition = position;
-		return true;
 	}
 
 }

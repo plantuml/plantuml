@@ -37,29 +37,25 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
-
-	// private final Rose rose = new Rose();
 
 	public FtileFactoryDelegatorAddNote(FtileFactory factory, ISkinParam skinParam) {
 		super(factory, skinParam);
 	}
 
 	@Override
-	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition) {
+	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane) {
 		if (note == null) {
 			throw new IllegalArgumentException();
 		}
-		// final HtmlColor colorlink;
-		// final LinkRendering inlinkRendering = ftile.getInLinkRendering();
-		// if (inlinkRendering == null || inlinkRendering.getColor() == null) {
-		// colorlink = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
-		// } else {
-		// colorlink = inlinkRendering.getColor();
-		// }
-		return new FtileWithNoteOpale(ftile, note, notePosition, getSkinParam(), true);
+		if (ftile == null) {
+			return new FtileNoteAlone(getSkinParam().shadowing(), note, getSkinParam(), type == NoteType.NOTE, swimlane);
+		}
+		return new FtileWithNoteOpale(ftile, note, notePosition, type, getSkinParam(), true);
 	}
 }

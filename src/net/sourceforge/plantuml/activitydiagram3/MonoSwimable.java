@@ -39,7 +39,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 
-public class MonoSwimable implements Swimable {
+public class MonoSwimable extends WithNote implements Swimable {
 
 	private final Swimlane swimlane;
 

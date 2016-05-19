@@ -43,7 +43,9 @@ public class SmallestEnclosingCircle {
 	private Circle lastSolution;
 
 	public void append(Point2D pt) {
-		all.add(pt);
+		if (all.contains(pt) == false) {
+			all.add(pt);
+		}
 		this.lastSolution = null;
 	}
 

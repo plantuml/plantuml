@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.graphic.TextBlockRecentred;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
@@ -404,8 +405,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		setNextLink(link);
 	}
 
-	public CommandExecutionResult addNote(Display note, NotePosition position) {
-		final boolean ok = current().addNote(note, position);
+	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type) {
+		final boolean ok = current().addNote(note, position, type);
 		if (ok == false) {
 			return CommandExecutionResult.error("Cannot add note here");
 		}

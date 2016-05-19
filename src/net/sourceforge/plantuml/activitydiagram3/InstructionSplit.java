@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionSplit implements Instruction {
 
@@ -101,8 +102,8 @@ public class InstructionSplit implements Instruction {
 		return inlinkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
-		return getLast().addNote(note, position);
+	public boolean addNote(Display note, NotePosition position, NoteType type) {
+		return getLast().addNote(note, position, type);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

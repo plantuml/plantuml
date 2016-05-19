@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
@@ -101,7 +102,7 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileBox(shadowing(), label, font, swimlane, style, colors.mute(skinParam));
 	}
 
-	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition) {
+	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane) {
 		return ftile;
 	}
 

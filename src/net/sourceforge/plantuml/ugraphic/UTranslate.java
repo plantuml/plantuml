@@ -67,6 +67,10 @@ public class UTranslate implements UChange {
 		return dy;
 	}
 
+	public boolean isAlmostSame(UTranslate other) {
+		return this.dx == other.dx || this.dy == other.dy;
+	}
+
 	public Point2D getTranslated(Point2D p) {
 		if (p == null) {
 			return null;

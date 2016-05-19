@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 
@@ -63,7 +64,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexOr(//
 						new RegexLeaf("->"), //
-						new RegexLeaf("COLOR", "-\\[(#\\w+)\\]->")), //
+						new RegexLeaf("COLOR", CommandArrow3.STYLE_COLORS)), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LABEL", "(.*)"), //
 				new RegexLeaf("$"));
@@ -72,8 +73,14 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 	public CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
-		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
-		diagram.setColorNextArrow(HtmlColorAndStyle.fromColor(color));
+		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
+		// diagram.setColorNextArrow(HtmlColorAndStyle.fromColor(color));
+		final String colorString = line0.get("COLOR", 0);
+		if (colorString != null) {
+			Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam()
+					.colorArrowSeparationSpace());
+			diagram.setColorNextArrow(rainbow);
+		}
 		lines = lines.removeStartingAndEnding2(line0.get("LABEL", 0));
 		diagram.setLabelNextArrow(lines.toDisplay());
 		return CommandExecutionResult.ok();

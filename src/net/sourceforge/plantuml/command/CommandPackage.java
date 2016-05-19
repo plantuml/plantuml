@@ -60,7 +60,10 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	private static RegexConcat getRegexConcat() {
-		return new RegexConcat(new RegexLeaf("^package[%s]+"), //
+		return new RegexConcat(//
+				new RegexLeaf("^"), //
+				new RegexLeaf("TYPE", "(package|together)"), //
+				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("NAME", "([%g][^%g]+[%g]|[^#%s{}]*)"), //
 				new RegexLeaf("AS", "(?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"), //
 				new RegexLeaf("[%s]*"), //
@@ -71,7 +74,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				color().getRegex(), //
 				new RegexLeaf("[%s]*\\{$"));
 	}
-	
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
@@ -97,7 +100,10 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE,
 				currentPackage);
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype != null) {
+		final USymbol type = USymbol.getFromString(arg.get("TYPE", 0));
+		if (type == USymbol.TOGETHER) {
+			p.setUSymbol(type);
+		} else if (stereotype != null) {
 			final USymbol usymbol = USymbol.getFromString(stereotype);
 			if (usymbol == null) {
 				p.setStereotype(new Stereotype(stereotype));
@@ -116,10 +122,6 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		p.setColors(colors);
 
-//		final String color = arg.get("COLOR", 0);
-//		if (color != null) {
-//			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
-//		}
 		return CommandExecutionResult.ok();
 	}
 

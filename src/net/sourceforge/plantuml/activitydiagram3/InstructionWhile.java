@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpa
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionWhile implements Instruction, InstructionCollection {
 
@@ -92,12 +93,13 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 
 	private Display note;
 	private NotePosition position;
+	private NoteType type;
 
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
 		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color);
 		if (note != null) {
-			tmp = new FtileWithNoteOpale(tmp, note, position, skinParam, false);
+			tmp = new FtileWithNoteOpale(tmp, note, position, type, skinParam, false);
 		}
 		if (killed) {
 			return new FtileKilled(tmp);
@@ -134,13 +136,14 @@ public class InstructionWhile implements Instruction, InstructionCollection {
 		this.afterEndwhile = linkRenderer;
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
+	public boolean addNote(Display note, NotePosition position, NoteType type) {
 		if (repeatList.isEmpty()) {
 			this.note = note;
 			this.position = position;
+			this.type = type;
 			return true;
 		} else {
-			return repeatList.addNote(note, position);
+			return repeatList.addNote(note, position, type);
 		}
 	}
 

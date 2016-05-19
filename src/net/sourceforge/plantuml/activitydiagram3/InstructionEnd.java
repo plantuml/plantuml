@@ -67,8 +67,4 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 		return inlinkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position) {
-		throw new UnsupportedOperationException();
-	}
-
 }

@@ -468,6 +468,9 @@ public class Line implements Moveable, Hideable {
 		final int end = svg.indexOf("\"", idx + 3);
 		final String path = svg.substring(idx + 3, end);
 
+		if (DotPath.isPathConsistent(path) == false) {
+			return;
+		}
 		dotPath = new DotPath(path, fullHeight);
 
 		if (projectionCluster != null) {

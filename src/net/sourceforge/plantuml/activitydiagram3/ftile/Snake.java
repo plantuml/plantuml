@@ -135,6 +135,7 @@ public class Snake implements UShape {
 		final int colorArrowSeparationSpace = color.getColorArrowSeparationSpace();
 		final double move = 2 + colorArrowSeparationSpace;
 		final WormMutation mutation = WormMutation.create(worm, move);
+		ug = ug.apply(mutation.getGlobalTranslate(colors.size()));
 		Worm current = worm;
 		for (int i = 0; i < colors.size(); i++) {
 			double stroke = 1.5;
@@ -144,7 +145,8 @@ public class Snake implements UShape {
 			current.drawInternalOneColor(ug, colors.get(i), stroke, emphasizeDirection, endDecoration);
 			current = mutation.mute(current);
 		}
-		drawInternalLabel(ug.apply(new UTranslate(0, 0)));
+		final UTranslate textTranslate = mutation.getTextTranslate(colors.size());
+		drawInternalLabel(ug.apply(textTranslate));
 	}
 
 	// private void drawRainbowOld(UGraphic ug) {

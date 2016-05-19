@@ -128,7 +128,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath(String init, double deltaY) {
-		if (init.startsWith("M") == false) {
+		if (isPathConsistent(init) == false) {
 			throw new IllegalArgumentException();
 		}
 		final int posC = init.indexOf("C");
@@ -156,6 +156,13 @@ public class DotPath implements UShape, Moveable {
 			y = p.y;
 		}
 		// this.print = triPoints.toString();
+	}
+
+	public static boolean isPathConsistent(String init) {
+		if (init.startsWith("M") == false) {
+			return false;
+		}
+		return true;
 	}
 
 	// private final String print;
@@ -551,9 +558,9 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath simulateCompound(Cluster head, Cluster tail) {
-//		if (OptionFlags.USE_COMPOUND) {
-//			throw new IllegalStateException();
-//		}
+		// if (OptionFlags.USE_COMPOUND) {
+		// throw new IllegalStateException();
+		// }
 		if (head == null && tail == null) {
 			return this;
 		}

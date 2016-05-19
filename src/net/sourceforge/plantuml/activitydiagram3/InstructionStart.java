@@ -36,8 +36,6 @@ package net.sourceforge.plantuml.activitydiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
 
 public class InstructionStart extends MonoSwimable implements Instruction {
 
@@ -46,7 +44,9 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.start(getSwimlaneIn());
+		Ftile result = factory.start(getSwimlaneIn());
+		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
+		return result;
 	}
 
 	public void add(Instruction other) {
@@ -59,10 +59,6 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 
 	public LinkRendering getInLinkRendering() {
 		return LinkRendering.none();
-	}
-
-	public boolean addNote(Display note, NotePosition position) {
-		throw new UnsupportedOperationException();
 	}
 
 }
