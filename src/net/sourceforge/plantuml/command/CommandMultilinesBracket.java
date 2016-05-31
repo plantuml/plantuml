@@ -33,16 +33,15 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.Diagram;
 
 public abstract class CommandMultilinesBracket<S extends Diagram> implements Command<S> {
 
-	private final Pattern starting;
+	private final Pattern2 starting;
 
 	public CommandMultilinesBracket(String patternStart) {
 		if (patternStart.startsWith("(?i)^") == false || patternStart.endsWith("$") == false) {
@@ -62,7 +61,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 	protected void actionIfCommandValid() {
 	}
 
-	protected final Pattern getStartingPattern() {
+	protected final Pattern2 getStartingPattern() {
 		return starting;
 	}
 
@@ -70,7 +69,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final Matcher m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
+		final Matcher2 m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}

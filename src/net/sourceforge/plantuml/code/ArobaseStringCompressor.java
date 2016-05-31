@@ -28,26 +28,26 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.code;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 
 public class ArobaseStringCompressor implements StringCompressor {
 
-	private final static Pattern p = MyPattern.cmpile("(?s)(?i)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+	private final static Pattern2 p = MyPattern.cmpile("(?s)(?i)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
 
 	public String compress(final String data) throws IOException {
 		final ReadLine r = new UncommentReadLine(new ReadLineReader(new StringReader(data), "COMPRESS"));
@@ -79,7 +79,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	private String compressOld(String s) throws IOException {
-		final Matcher m = p.matcher(s);
+		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			return clean(m.group(2));
 		}
@@ -109,7 +109,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	private String clean1(String s) {
-		final Matcher m = p.matcher(s);
+		final Matcher2 m = p.matcher(s);
 		if (m.matches()) {
 			return m.group(2);
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19251 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -42,7 +42,9 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
@@ -51,9 +53,9 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence, Hideable {
-	private final static Pattern circleChar = MyPattern
+	private final static Pattern2 circleChar = MyPattern
 			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
-	private final static Pattern circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
+	private final static Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
 			+ ")[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
 
 	private final String label;
@@ -79,8 +81,8 @@ public class Stereotype implements CharSequence, Hideable {
 		this.automaticPackageStyle = automaticPackageStyle;
 		this.radius = radius;
 		this.circledFont = circledFont;
-		final Matcher mCircleChar = circleChar.matcher(label);
-		final Matcher mCircleSprite = circleSprite.matcher(label);
+		final Matcher2 mCircleChar = circleChar.matcher(label);
+		final Matcher2 mCircleSprite = circleSprite.matcher(label);
 		if (mCircleSprite.find()) {
 			if (StringUtils.isNotEmpty(mCircleSprite.group(3))) {
 				this.label = "<<" + mCircleSprite.group(3) + ">>";
@@ -207,8 +209,8 @@ public class Stereotype implements CharSequence, Hideable {
 			return null;
 		}
 		final List<String> result = new ArrayList<String>();
-		final Pattern p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
-		final Matcher m = p.matcher(getLabel(false));
+		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
+		final Matcher2 m = p.matcher(getLabel(false));
 		while (m.find()) {
 			if (useGuillemet) {
 				result.add(StringUtils.manageGuillemetStrict(m.group()));

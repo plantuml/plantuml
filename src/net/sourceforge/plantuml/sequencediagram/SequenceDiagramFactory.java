@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteCommand;
@@ -135,15 +134,6 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandUrl());
 
 		return cmds;
-	}
-
-	@Override
-	public String checkFinalError(AbstractPSystem sys) {
-		final SequenceDiagram system = (SequenceDiagram) sys;
-		if (system.isHideUnlinkedData()) {
-			system.removeHiddenParticipants();
-		}
-		return super.checkFinalError(system);
 	}
 
 }

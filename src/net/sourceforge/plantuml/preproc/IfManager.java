@@ -28,23 +28,23 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class IfManager implements ReadLine {
 
-	protected static final Pattern ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+([A-Za-z_][A-Za-z_0-9]*)$");
-	protected static final Pattern elsePattern = MyPattern.cmpile("^[%s]*!else$");
-	protected static final Pattern endifPattern = MyPattern.cmpile("^[%s]*!endif$");
+	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+([A-Za-z_][A-Za-z_0-9]*)$");
+	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else$");
+	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif$");
 
 	private final Defines defines;
 	private final ReadLine source;
@@ -74,7 +74,7 @@ class IfManager implements ReadLine {
 			return null;
 		}
 
-		final Matcher m = ifdefPattern.matcher(s);
+		final Matcher2 m = ifdefPattern.matcher(s);
 		if (m.find()) {
 			boolean ok = defines.isDefine(m.group(2));
 			if (m.group(1) != null) {

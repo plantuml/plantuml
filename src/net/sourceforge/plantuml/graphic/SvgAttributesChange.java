@@ -33,18 +33,17 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class SvgAttributesChange implements FontChange {
 
-	static final Pattern pattern = MyPattern.cmpile(Splitter.svgAttributePattern);
+	static final Pattern2 pattern = MyPattern.cmpile(Splitter.svgAttributePattern);
 	private final SvgAttributes attributes;
 
 	SvgAttributesChange(String s) {
-		final Matcher m = pattern.matcher(s);
+		final Matcher2 m = pattern.matcher(s);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

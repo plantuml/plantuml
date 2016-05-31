@@ -32,10 +32,8 @@
 package net.sourceforge.plantuml.ugraphic.eps;
 
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.Dimension2D;
 import java.awt.geom.PathIterator;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
@@ -55,7 +53,6 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
-import net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d;
 
 public class DriverTextEps implements UDriver<EpsGraphics> {
 

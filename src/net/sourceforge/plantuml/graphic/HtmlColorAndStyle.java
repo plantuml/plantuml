@@ -45,6 +45,11 @@ public class HtmlColorAndStyle {
 	private final HtmlColor color;
 	private final LinkStyle style;
 
+	@Override
+	public String toString() {
+		return color + " " + style;
+	}
+
 	public static Rainbow fromColor(HtmlColor color) {
 		if (color == null) {
 			return Rainbow.none();

@@ -41,9 +41,11 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.LineLocationImpl;
+import net.sourceforge.plantuml.Log;
 
 public class ReadLineReader implements ReadLine {
 
+	private static final int LIMIT = 700;
 	private final BufferedReader br;
 	private LineLocationImpl location;
 
@@ -61,6 +63,10 @@ public class ReadLineReader implements ReadLine {
 		location = location.oneLineRead();
 		if (s == null) {
 			return null;
+		}
+		if (s.length() > LIMIT) {
+			Log.debug("Line truncated from " + s.length() + " to " + LIMIT);
+			s = s.substring(0, LIMIT);
 		}
 		if (s.startsWith("\uFEFF")) {
 			s = s.substring(1);

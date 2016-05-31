@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
-import net.sourceforge.plantuml.sequencediagram.teoz.Bordered;
 import net.sourceforge.plantuml.sequencediagram.teoz.LivingSpace;
 import net.sourceforge.plantuml.sequencediagram.teoz.TileArguments;
 import net.sourceforge.plantuml.skin.Area;

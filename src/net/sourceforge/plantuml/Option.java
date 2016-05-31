@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19636 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml;
@@ -43,10 +43,10 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
 
@@ -283,16 +283,16 @@ public class Option {
 	}
 
 	private void manageDefine(String s) {
-		final Pattern p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
-		final Matcher m = p.matcher(s);
+		final Pattern2 p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
+		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			define(m.group(1), m.group(2));
 		}
 	}
 
 	private void manageSkinParam(String s) {
-		final Pattern p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
-		final Matcher m = p.matcher(s);
+		final Pattern2 p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
+		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			skinParam(m.group(1), m.group(2));
 		}

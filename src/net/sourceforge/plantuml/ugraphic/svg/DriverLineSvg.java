@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -41,7 +42,6 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.StringUtils;
 
 public class DriverLineSvg implements UDriver<SvgGraphics> {
 

@@ -32,8 +32,6 @@
 package net.sourceforge.plantuml.ugraphic.txt;
 
 import java.awt.geom.Dimension2D;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;

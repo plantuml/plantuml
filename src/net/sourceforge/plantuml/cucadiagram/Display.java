@@ -39,8 +39,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
@@ -52,6 +50,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -323,12 +323,12 @@ public class Display implements Iterable<CharSequence> {
 		return naturalHorizontalAlignment;
 	}
 
-	public List<Display> splitMultiline(Pattern separator) {
+	public List<Display> splitMultiline(Pattern2 separator) {
 		final List<Display> result = new ArrayList<Display>();
 		Display pending = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 		result.add(pending);
 		for (CharSequence line : display) {
-			final Matcher m = separator.matcher(line);
+			final Matcher2 m = separator.matcher(line);
 			if (m.find()) {
 				final CharSequence s1 = line.subSequence(0, m.start());
 				pending.display.add(s1);

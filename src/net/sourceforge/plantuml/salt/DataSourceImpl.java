@@ -36,11 +36,11 @@ package net.sourceforge.plantuml.salt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class DataSourceImpl implements DataSource {
 
@@ -48,7 +48,7 @@ public class DataSourceImpl implements DataSource {
 	private final List<Terminated<String>> data = new ArrayList<Terminated<String>>();
 
 	public DataSourceImpl(List<String> data) {
-		final Pattern p = MyPattern.cmpile("\\{[-+#!*/]?");
+		final Pattern2 p = MyPattern.cmpile("\\{[-+#!*/]?");
 		for (String s : data) {
 			final StringTokenizer st = new StringTokenizer(s, "|}", true);
 			while (st.hasMoreTokens()) {
@@ -57,7 +57,7 @@ public class DataSourceImpl implements DataSource {
 					continue;
 				}
 				final Terminator terminator = st.hasMoreTokens() ? Terminator.NEWCOL : Terminator.NEWLINE;
-				final Matcher m = p.matcher(token);
+				final Matcher2 m = p.matcher(token);
 				final boolean found = m.find();
 				if (found == false) {
 					addInternal(token, terminator);

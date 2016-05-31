@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.descdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
@@ -111,14 +110,6 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandHideShowSpecificClass());
 
 		return cmds;
-	}
-
-	@Override
-	public String checkFinalError(AbstractPSystem system) {
-		if (system instanceof DescriptionDiagram) {
-			((DescriptionDiagram) system).applySingleStrategy();
-		}
-		return super.checkFinalError(system);
 	}
 
 }

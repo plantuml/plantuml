@@ -33,10 +33,9 @@
  */
 package net.sourceforge.plantuml;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class UrlBuilder {
 
@@ -70,8 +69,8 @@ public class UrlBuilder {
 	}
 
 	public static String multilineTooltip(String label) {
-		final Pattern p = MyPattern.cmpile("(?i)^(" + URL_PATTERN + ")?(.*)$");
-		final Matcher m = p.matcher(label);
+		final Pattern2 p = MyPattern.cmpile("(?i)^(" + URL_PATTERN + ")?(.*)$");
+		final Matcher2 m = p.matcher(label);
 		if (m.matches() == false) {
 			return label;
 		}
@@ -85,7 +84,7 @@ public class UrlBuilder {
 	}
 
 	public Url getUrl(String s) {
-		final Pattern p;
+		final Pattern2 p;
 		if (mode == ModeUrl.STRICT) {
 			p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
 		} else if (mode == ModeUrl.AT_START) {
@@ -97,7 +96,7 @@ public class UrlBuilder {
 		} else {
 			throw new IllegalStateException();
 		}
-		final Matcher m = p.matcher(StringUtils.trinNoTrace(s));
+		final Matcher2 m = p.matcher(StringUtils.trinNoTrace(s));
 		if (m.matches() == false) {
 			return null;
 		}
@@ -143,8 +142,8 @@ public class UrlBuilder {
 	}
 
 	public static String purgeUrl(final String label) {
-		final Pattern p = MyPattern.cmpile("[%s]*" + URL_PATTERN + "[%s]*");
-		final Matcher m = p.matcher(label);
+		final Pattern2 p = MyPattern.cmpile("[%s]*" + URL_PATTERN + "[%s]*");
+		final Matcher2 m = p.matcher(label);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

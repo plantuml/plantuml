@@ -48,7 +48,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.geom.LineSegmentDouble;

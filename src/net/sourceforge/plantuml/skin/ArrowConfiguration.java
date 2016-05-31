@@ -102,8 +102,8 @@ public class ArrowConfiguration {
 		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true);
 	}
 
-	public ArrowConfiguration withDotted() {
-		return new ArrowConfiguration(ArrowBody.DOTTED, dressing1, dressing2, decoration1, decoration2, color, isSelf);
+	public ArrowConfiguration withBody(ArrowBody type) {
+		return new ArrowConfiguration(type, dressing1, dressing2, decoration1, decoration2, color, isSelf);
 	}
 
 	public ArrowConfiguration withHead(ArrowHead head) {
@@ -177,6 +177,10 @@ public class ArrowConfiguration {
 
 	public boolean isDotted() {
 		return body == ArrowBody.DOTTED;
+	}
+
+	public boolean isHidden() {
+		return body == ArrowBody.HIDDEN;
 	}
 
 	public ArrowHead getHead() {

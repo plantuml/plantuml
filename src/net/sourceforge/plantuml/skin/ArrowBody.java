@@ -34,5 +34,5 @@
 package net.sourceforge.plantuml.skin;
 
 public enum ArrowBody {
-	NORMAL, DOTTED;
+	NORMAL, DOTTED, DASHED, HIDDEN, BOLD;
 }

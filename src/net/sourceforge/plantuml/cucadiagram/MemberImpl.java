@@ -33,14 +33,13 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class MemberImpl implements Member {
@@ -57,8 +56,8 @@ public class MemberImpl implements Member {
 		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
 		if (manageModifier) {
 			this.hasUrl = new UrlBuilder(null, ModeUrl.ANYWHERE).getUrl(tmpDisplay) != null;
-			final Pattern pstart = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")([^\\[\\]]+)$");
-			final Matcher mstart = pstart.matcher(tmpDisplay);
+			final Pattern2 pstart = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")([^\\[\\]]+)$");
+			final Matcher2 mstart = pstart.matcher(tmpDisplay);
 
 			if (mstart.matches()) {
 				if (mstart.groupCount() != 4) {
@@ -69,9 +68,9 @@ public class MemberImpl implements Member {
 				this.url.setMember(true);
 				tmpDisplay = /* mstart.group(1).trim() + */StringUtils.trin(mstart.group(mstart.groupCount()));
 			} else {
-				final Pattern pend = MyPattern.cmpile("^((?:[^\\[\\]]|\\[[^\\[\\]]*\\])+)(" + UrlBuilder.getRegexp()
+				final Pattern2 pend = MyPattern.cmpile("^((?:[^\\[\\]]|\\[[^\\[\\]]*\\])+)(" + UrlBuilder.getRegexp()
 						+ ")$");
-				final Matcher mend = pend.matcher(tmpDisplay);
+				final Matcher2 mend = pend.matcher(tmpDisplay);
 
 				if (mend.matches()) {
 					if (mend.groupCount() != 4) {

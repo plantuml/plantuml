@@ -76,6 +76,9 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 	@Override
 	public void drawInternalU(UGraphic ug, Area area) {
+		if (getArrowConfiguration().isHidden()) {
+			return;
+		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);

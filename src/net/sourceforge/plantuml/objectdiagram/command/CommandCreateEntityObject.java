@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
-import net.sourceforge.plantuml.objectdiagram.ObjectDiagram;
 
 public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 

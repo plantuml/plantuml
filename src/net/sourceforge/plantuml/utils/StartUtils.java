@@ -33,21 +33,46 @@
  */
 package net.sourceforge.plantuml.utils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class StartUtils {
 
 	public static final String PAUSE_PATTERN = "(?i)((?:\\W|\\<[^<>]*\\>)*)@unpause";
 	public static final String START_PATTERN = "(?i)((?:[^\\w~]|\\<[^<>]*\\>)*)@start";
-	
 
 	public static boolean isArobaseStartDiagram(CharSequence s) {
 		return StringUtils.trinNoTrace(s).startsWith("@start");
+	}
+
+	public static String beforeStartUml(final CharSequence2 result) {
+		boolean inside = false;
+		for (int i = 0; i < result.length(); i++) {
+			final String single = result.subSequence(i, i + 1).toString();
+			if (inside) {
+				if (single.equals(">")) {
+					inside = false;
+				}
+				continue;
+			}
+			if (result.subSequence(i, result.length()).startsWith("@start")) {
+				return result.subSequence(0, i).toString();
+			}
+			if (single.equals("<")) {
+				inside = true;
+			} else if (single.matches("[\\w~]")) {
+				return null;
+			}
+		}
+		return null;
+		// final Matcher m = MyPattern.cmpile(START_PATTERN).matcher(result);
+		// if (m.find()) {
+		// return m.group(1);
+		// }
+		// return null;
 	}
 
 	public static boolean isArobaseEndDiagram(CharSequence s) {
@@ -62,13 +87,13 @@ public class StartUtils {
 		return StringUtils.trinNoTrace(s).startsWith("@unpause");
 	}
 
-	private static final Pattern append = MyPattern.cmpile("^\\W*@append");
+	private static final Pattern2 append = MyPattern.cmpile("^\\W*@append");
 
 	public static CharSequence2 getPossibleAppend(CharSequence2 s) {
-		final Matcher m = append.matcher(s);
+		final Matcher2 m = append.matcher(s);
 		if (m.find()) {
 			return s.subSequence(m.group(0).length(), s.length()).trin();
-			//return StringUtils.trin(s.toString().substring(m.group(0).length()));
+			// return StringUtils.trin(s.toString().substring(m.group(0).length()));
 		}
 		return null;
 	}

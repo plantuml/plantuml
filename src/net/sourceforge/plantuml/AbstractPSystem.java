@@ -28,12 +28,11 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19886 $
  *
  */
 package net.sourceforge.plantuml;
 
-import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.command.BlocLines;
@@ -100,6 +99,11 @@ public abstract class AbstractPSystem implements Diagram {
 	public String getWarningOrError() {
 		return null;
 	}
+	
+	public String checkFinalError() {
+		return null;
+	}
+
 
 	public void makeDiagramReady() {
 	}

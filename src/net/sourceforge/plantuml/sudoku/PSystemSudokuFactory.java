@@ -33,21 +33,20 @@
  */
 package net.sourceforge.plantuml.sudoku;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 
-	final private static Pattern p = MyPattern.cmpile("(?i)^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
+	final private static Pattern2 p = MyPattern.cmpile("(?i)^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {
-		final Matcher m = p.matcher(line);
+		final Matcher2 m = p.matcher(line);
 		if (m.find() == false) {
 			return null;
 		}

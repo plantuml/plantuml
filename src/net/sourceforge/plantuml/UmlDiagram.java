@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19753 $
+ * Revision $Revision: 19863 $
  *
  */
 package net.sourceforge.plantuml;
@@ -277,10 +277,11 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	}
 
 	public String getFlashData() {
-		final StringBuilder result = new StringBuilder();
 		final UmlSource source = getSource();
-		result.append(source.getPlainString());
-		return result.toString();
+		if (source == null) {
+			return "";
+		}
+		return source.getPlainString();
 	}
 
 	static private List<String> getFailureText1(Throwable exception, String graphvizVersion) {

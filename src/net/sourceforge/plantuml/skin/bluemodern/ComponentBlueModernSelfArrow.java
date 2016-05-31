@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19873 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -62,6 +62,9 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
+		if (getArrowConfiguration().isHidden()) {
+			return;
+		}
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textHeight = (int) getTextHeight(stringBounder);
 

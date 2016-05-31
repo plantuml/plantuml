@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.ugraphic.html5;
 
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UClip;
@@ -40,7 +41,6 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.StringUtils;
 
 public class DriverLineHtml5 implements UDriver<Html5Drawer> {
 

@@ -35,8 +35,6 @@ package net.sourceforge.plantuml.cute;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ugraphic.UPath;
-
 public class Arc {
 
 	private final Segment segment;

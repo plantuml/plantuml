@@ -47,6 +47,11 @@ public class Rainbow {
 	private Rainbow(int colorArrowSeparationSpace) {
 		this.colorArrowSeparationSpace = colorArrowSeparationSpace;
 	}
+	
+	@Override
+	public String toString() {
+		return colors.toString();
+	}
 
 	public static Rainbow none() {
 		return new Rainbow(0);
@@ -67,7 +72,7 @@ public class Rainbow {
 		result.colors.add(color);
 		return result;
 	}
-
+	
 	public static Rainbow build(ISkinParam skinParam, String colorString, int colorArrowSeparationSpace) {
 		if (colorString == null) {
 			return Rainbow.none();

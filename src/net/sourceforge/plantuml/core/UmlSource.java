@@ -36,13 +36,13 @@ package net.sourceforge.plantuml.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
@@ -179,9 +179,9 @@ final public class UmlSource {
 	 * @return
 	 */
 	public Display getTitle() {
-		final Pattern p = MyPattern.cmpile("(?i)^[%s]*title[%s]+(.+)$");
+		final Pattern2 p = MyPattern.cmpile("(?i)^[%s]*title[%s]+(.+)$");
 		for (String s : source) {
-			final Matcher m = p.matcher(s);
+			final Matcher2 m = p.matcher(s);
 			final boolean ok = m.matches();
 			if (ok) {
 				return Display.create(m.group(1));

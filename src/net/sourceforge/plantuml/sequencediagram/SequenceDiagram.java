@@ -502,5 +502,15 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		return dpiFactor;
 	}
+	
+	
+	@Override
+	public String checkFinalError() {
+		if (this.isHideUnlinkedData()) {
+			this.removeHiddenParticipants();
+		}
+		return super.checkFinalError();
+	}
+
 
 }

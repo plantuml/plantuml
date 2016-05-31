@@ -39,14 +39,16 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 
 	private final SingleLineCommand2<D> cmd;
 	private final boolean removeEmptyColumn;
+	private final int nbMaxLines;
 
-	public CommandDecoratorMultine(SingleLineCommand2<D> cmd) {
-		this(cmd, false);
+	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, int nbMaxLines) {
+		this(cmd, false, nbMaxLines);
 	}
 
-	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, boolean removeEmptyColumn) {
+	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, boolean removeEmptyColumn, int nbMaxLines) {
 		this.cmd = cmd;
 		this.removeEmptyColumn = removeEmptyColumn;
+		this.nbMaxLines = nbMaxLines;
 	}
 
 	public CommandExecutionResult execute(D diagram, BlocLines lines) {
@@ -77,6 +79,10 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 
 	public String[] getDescription() {
 		return cmd.getDescription();
+	}
+
+	public int getNbMaxLines() {
+		return nbMaxLines;
 	}
 
 }

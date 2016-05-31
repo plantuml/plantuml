@@ -84,15 +84,15 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 		while (it.hasNext()) {
 			if (StartUtils.isArobaseEndDiagram(it.peek())) {
-				final String err = checkFinalError(sys);
+				if (sys == null) {
+					return null;
+				}
+				final String err = sys.checkFinalError();
 				if (err != null) {
 					return buildEmptyError(source, err, it.peek().getLocation());
 				}
 				if (source.getTotalLineCount() == 2) {
 					return buildEmptyError(source, it.peek().getLocation());
-				}
-				if (sys == null) {
-					return null;
 				}
 				sys.makeDiagramReady();
 				if (sys.isOk() == false) {
@@ -186,7 +186,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 				if (system instanceof NewpagedDiagram) {
 					final NewpagedDiagram newpagedDiagram = (NewpagedDiagram) system;
 					return cmd.execute(newpagedDiagram.getLastDiagram(), lines);
-					
+
 				}
 				return cmd.execute(system, lines);
 			}
@@ -196,6 +196,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	private BlocLines isMultilineCommandOk(IteratorCounter2 it, Command cmd) {
 		BlocLines lines = new BlocLines();
+		int nb = 0;
 		while (it.hasNext()) {
 			lines = addOneSingleLineManageEmbedded2(it, lines);
 			final CommandControl result = cmd.isValid(lines);
@@ -204,6 +205,10 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 			}
 			if (result == CommandControl.OK) {
 				return lines;
+			}
+			nb++;
+			if (cmd instanceof CommandDecoratorMultine && nb > ((CommandDecoratorMultine) cmd).getNbMaxLines()) {
+				return null;
 			}
 		}
 		return null;
@@ -225,10 +230,6 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	// -----------------------------------
-
-	public String checkFinalError(AbstractPSystem system) {
-		return null;
-	}
 
 	final public CommandControl isValid(BlocLines lines) {
 		for (Command cmd : cmds) {

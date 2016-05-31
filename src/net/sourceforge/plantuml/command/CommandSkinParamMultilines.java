@@ -35,12 +35,12 @@ package net.sourceforge.plantuml.command;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiagram> {
 
@@ -64,7 +64,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 	}
 
-	private final static Pattern p1 = MyPattern
+	private final static Pattern2 p1 = MyPattern
 			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	public CommandSkinParamMultilines() {
@@ -87,7 +87,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 
 	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
 		final Context context = new Context();
-		final Matcher mStart = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final Matcher2 mStart = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		if (mStart.find() == false) {
 			throw new IllegalStateException();
 		}
@@ -108,7 +108,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 				context.pop();
 				continue;
 			}
-			final Matcher m = p1.matcher(s);
+			final Matcher2 m = p1.matcher(s);
 			if (m.find() == false) {
 				throw new IllegalStateException();
 			}

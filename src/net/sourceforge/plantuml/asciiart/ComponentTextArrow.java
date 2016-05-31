@@ -87,6 +87,9 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
+		if (config.isHidden()) {
+			return;
+		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();

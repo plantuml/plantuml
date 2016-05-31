@@ -28,14 +28,12 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19885 $
  *
  */
 package net.sourceforge.plantuml.asciiart;
 
 import java.util.Collection;
-
-import net.sourceforge.plantuml.ugraphic.ClipContainer;
 
 public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 

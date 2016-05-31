@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 
 public class RegexConcat extends RegexComposed implements IRegex {
 
-	private final Pattern full;
+	private final Pattern2 full;
 
 	public RegexConcat(IRegex... partial) {
 		super(partial);
@@ -49,7 +49,7 @@ public class RegexConcat extends RegexComposed implements IRegex {
 	}
 
 	@Override
-	protected Pattern getFull() {
+	protected Pattern2 getFull() {
 		return full;
 	}
 

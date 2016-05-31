@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19267 $
+ * Revision $Revision: 19885 $
  *
  */
 package net.sourceforge.plantuml.graph;
@@ -47,7 +47,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.geom.InflationTransform;

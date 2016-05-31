@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -39,24 +39,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class Preprocessor implements ReadLine {
 
 	private static final String ID = "[A-Za-z_][A-Za-z_0-9]*";
 	private static final String ARG = "(?:\\(" + ID + "(?:," + ID + ")*?\\))?";
-	private static final Pattern definePattern = MyPattern.cmpile("^[%s]*!define[%s]+(" + ID + ARG + ")"
+	private static final Pattern2 definePattern = MyPattern.cmpile("^[%s]*!define[%s]+(" + ID + ARG + ")"
 			+ "(?:[%s]+(.*))?$");
-	private static final Pattern undefPattern = MyPattern.cmpile("^[%s]*!undef[%s]+(" + ID + ")$");
-	private static final Pattern definelongPattern = MyPattern.cmpile("^[%s]*!definelong[%s]+(" + ID + ARG + ")");
-	private static final Pattern enddefinelongPattern = MyPattern.cmpile("^[%s]*!enddefinelong[%s]*$");
+	private static final Pattern2 undefPattern = MyPattern.cmpile("^[%s]*!undef[%s]+(" + ID + ")$");
+	private static final Pattern2 definelongPattern = MyPattern.cmpile("^[%s]*!definelong[%s]+(" + ID + ARG + ")");
+	private static final Pattern2 enddefinelongPattern = MyPattern.cmpile("^[%s]*!enddefinelong[%s]*$");
 
 	private final Defines defines;
 	private final PreprocessorInclude rawSource;
@@ -78,7 +78,7 @@ public class Preprocessor implements ReadLine {
 			this.defines.restoreState();
 		}
 
-		Matcher m = definePattern.matcher(s);
+		Matcher2 m = definePattern.matcher(s);
 		if (m.find()) {
 			return manageDefine(m);
 		}
@@ -108,12 +108,12 @@ public class Preprocessor implements ReadLine {
 
 	private int ignoreDefineDuringSeveralLines = 0;
 
-	private CharSequence2 manageUndef(Matcher m) throws IOException {
+	private CharSequence2 manageUndef(Matcher2 m) throws IOException {
 		defines.undefine(m.group(1));
 		return this.readLine();
 	}
 
-	private CharSequence2 manageDefineLong(Matcher m) throws IOException {
+	private CharSequence2 manageDefineLong(Matcher2 m) throws IOException {
 		final String group1 = m.group(1);
 		final List<String> def = new ArrayList<String>();
 		while (true) {
@@ -129,7 +129,7 @@ public class Preprocessor implements ReadLine {
 		}
 	}
 
-	private CharSequence2 manageDefine(Matcher m) throws IOException {
+	private CharSequence2 manageDefine(Matcher2 m) throws IOException {
 		final String group1 = m.group(1);
 		final String group2 = m.group(2);
 		if (group2 == null) {

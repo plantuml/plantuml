@@ -28,14 +28,13 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19636 $
+ * Revision $Revision: 19885 $
  *
  */
 package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.util.Date;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;

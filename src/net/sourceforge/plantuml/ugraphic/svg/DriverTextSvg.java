@@ -31,10 +31,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import java.awt.Color;
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Rectangle2D;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -48,7 +47,6 @@ import net.sourceforge.plantuml.ugraphic.UFontContext;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
-import net.sourceforge.plantuml.StringUtils;
 
 public class DriverTextSvg implements UDriver<SvgGraphics> {
 

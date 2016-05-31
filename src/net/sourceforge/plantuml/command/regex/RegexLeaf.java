@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 public class RegexLeaf implements IRegex {
 
-	private final Pattern pattern;
+	private final Pattern2 pattern;
 	private final String name;
 
 	private int count = -1;

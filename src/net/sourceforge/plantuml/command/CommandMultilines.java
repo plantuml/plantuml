@@ -28,21 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.Diagram;
 
 public abstract class CommandMultilines<S extends Diagram> implements Command<S> {
 
-	private final Pattern starting;
+	private final Pattern2 starting;
 
 	public CommandMultilines(String patternStart) {
 		if (patternStart.startsWith("(?i)^") == false || patternStart.endsWith("$") == false) {
@@ -61,7 +60,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		Matcher m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
+		Matcher2 m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
 		if (m1.matches() == false) {
 			return CommandControl.NOT_OK;
 		}
@@ -85,7 +84,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	protected void actionIfCommandValid() {
 	}
 
-	protected final Pattern getStartingPattern() {
+	protected final Pattern2 getStartingPattern() {
 		return starting;
 	}
 

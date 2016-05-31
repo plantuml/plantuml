@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -108,9 +109,9 @@ public class PSystemXearth extends AbstractPSystem {
 	private Date extractGmt(String s) {
 		final SimpleDateFormat timeFormat;
 		if (s.matches("\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}")) {
-			timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
 		} else if (s.matches("\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}")) {
-			timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+			timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.US);
 		} else {
 			throw new UnsupportedOperationException(s);
 		}

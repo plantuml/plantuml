@@ -169,9 +169,11 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
 
-			final Rainbow color = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
-			conns.add(result.new ConnectionVerticalIn(diam, ftile, color == null ? arrowColor : color));
-			conns.add(result.new ConnectionVerticalOut(ftile, arrowColor));
+			final Rainbow rainbowIn = FtileIfWithLinks.getInColor(thens.get(i), arrowColor);
+			final Branch branch = thens.get(i);
+			final Rainbow rainbowOut = branch.getInlinkRenderingColorAndStyle();
+			conns.add(result.new ConnectionVerticalIn(diam, ftile, rainbowIn.size() == 0 ? arrowColor : rainbowIn));
+			conns.add(result.new ConnectionVerticalOut(ftile, rainbowOut.size() == 0 ? arrowColor : rainbowOut));
 		}
 
 		final Rainbow topInColor = topInlinkRendering.getRainbow(arrowColor);

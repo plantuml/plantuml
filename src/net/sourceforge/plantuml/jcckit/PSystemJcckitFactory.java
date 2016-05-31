@@ -36,13 +36,13 @@ package net.sourceforge.plantuml.jcckit;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramType;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
@@ -72,8 +72,8 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	private void extractDimension(String startLine) {
-		final Pattern p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
-		final Matcher m = p.matcher(startLine);
+		final Pattern2 p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
+		final Matcher2 m = p.matcher(startLine);
 		final boolean ok = m.find();
 		if (ok) {
 			width = Integer.parseInt(m.group(1));

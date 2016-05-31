@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.ArrowHead;
@@ -175,7 +176,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		ArrowConfiguration config = hasDressing1 && hasDressing2 ? ArrowConfiguration.withDirectionBoth()
 				: ArrowConfiguration.withDirectionNormal();
 		if (dotted) {
-			config = config.withDotted();
+			config = config.withBody(ArrowBody.DOTTED);
 		}
 		if (sync) {
 			config = config.withHead(ArrowHead.ASYNC);
@@ -268,12 +269,15 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		while (st.hasMoreTokens()) {
 			final String s = st.nextToken();
 			if (s.equalsIgnoreCase("dashed")) {
+				config = config.withBody(ArrowBody.DOTTED);
 				// link.goDashed();
 			} else if (s.equalsIgnoreCase("bold")) {
 				// link.goBold();
 			} else if (s.equalsIgnoreCase("dotted")) {
+				config = config.withBody(ArrowBody.DOTTED);
 				// link.goDotted();
 			} else if (s.equalsIgnoreCase("hidden")) {
+				config = config.withBody(ArrowBody.HIDDEN);
 				// link.goHidden();
 			} else {
 				config = config.withColor(HtmlColorSet.getInstance().getColorIfValid(s));

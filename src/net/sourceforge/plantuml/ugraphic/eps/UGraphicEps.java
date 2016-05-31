@@ -31,10 +31,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;

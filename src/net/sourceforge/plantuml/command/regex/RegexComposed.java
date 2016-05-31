@@ -38,14 +38,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public abstract class RegexComposed implements IRegex {
 
 	private final List<IRegex> partials;
 
-	abstract protected Pattern getFull();
+	abstract protected Pattern2 getFull();
 
 	public RegexComposed(IRegex... partial) {
 		this.partials = Arrays.asList(partial);
@@ -72,7 +70,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public RegexResult matcher(String s) {
-		final Matcher matcher = getFull().matcher(s);
+		final Matcher2 matcher = getFull().matcher(s);
 		if (matcher.find() == false) {
 			throw new IllegalArgumentException(getClass()+" "+s);
 		}

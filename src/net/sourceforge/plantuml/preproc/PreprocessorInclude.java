@@ -29,7 +29,7 @@
  * Original Author:  Arnaud Roques
  * Modified by: Nicolas Jouanin
  * 
- * Revision $Revision: 19729 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -55,14 +55,16 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 class PreprocessorInclude implements ReadLine {
 
-	private static final Pattern includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
-	private static final Pattern includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
-	private static final Pattern includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
 
 	private final ReadLine reader2;
 	private final String charset;
@@ -131,23 +133,23 @@ class PreprocessorInclude implements ReadLine {
 		}
 		if (OptionFlags.ALLOW_INCLUDE) {
 			assert included == null;
-			final Matcher m1 = includePattern.matcher(s);
+			final Matcher2 m1 = includePattern.matcher(s);
 			if (m1.find()) {
 				return manageFileInclude(m1, s.getLocation(), false);
 			}
-			final Matcher m2 = includeManyPattern.matcher(s);
+			final Matcher2 m2 = includeManyPattern.matcher(s);
 			if (m2.find()) {
 				return manageFileInclude(m2, s.getLocation(), true);
 			}
 		}
-		final Matcher mUrl = includeURLPattern.matcher(s);
+		final Matcher2 mUrl = includeURLPattern.matcher(s);
 		if (mUrl.find()) {
 			return manageUrlInclude(mUrl, s.getLocation());
 		}
 		return s;
 	}
 
-	private CharSequence2 manageUrlInclude(Matcher m, LineLocation lineLocation) throws IOException {
+	private CharSequence2 manageUrlInclude(Matcher2 m, LineLocation lineLocation) throws IOException {
 		String urlString = m.group(1);
 		urlString = defines.applyDefines(urlString).get(0);
 		//
@@ -167,7 +169,7 @@ class PreprocessorInclude implements ReadLine {
 		return this.readLine();
 	}
 
-	private CharSequence2 manageFileInclude(Matcher matcher, LineLocation lineLocation, boolean allowMany) throws IOException {
+	private CharSequence2 manageFileInclude(Matcher2 matcher, LineLocation lineLocation, boolean allowMany) throws IOException {
 		String fileName = matcher.group(1);
 		fileName = defines.applyDefines(fileName).get(0);
 		final int idx = fileName.lastIndexOf('!');

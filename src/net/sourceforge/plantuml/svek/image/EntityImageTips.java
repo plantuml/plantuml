@@ -129,6 +129,9 @@ public class EntityImageTips extends AbstractEntityImage {
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
 			final Rectangle2D memberPosition = shapeOther.getImage().getInnerPosition(ent.getKey(), stringBounder);
+			if (memberPosition == null) {
+				return;
+			}
 			final Opale opale = getOpale(display);
 			final Dimension2D dim = opale.calculateDimension(stringBounder);
 			final Point2D pp1 = new Point2D.Double(0, dim.getHeight() / 2);
@@ -137,9 +140,6 @@ public class EntityImageTips extends AbstractEntityImage {
 				x += memberPosition.getMaxX();
 			} else {
 				x += 4;
-			}
-			if (memberPosition == null) {
-				return;
 			}
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
 			final Point2D pp2 = new Point2D.Double(x, y);

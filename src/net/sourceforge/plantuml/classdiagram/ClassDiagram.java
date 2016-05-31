@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19886 $
  *
  */
 package net.sourceforge.plantuml.classdiagram;
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -230,6 +231,23 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	private TextBlock getEntityImageClass(ILeaf entity) {
 		return new EntityImageClass(null, entity, getSkinParam(), this);
+	}
+
+
+	@Override
+	public String checkFinalError() {
+		for (Link link : this.getLinks()) {
+			final int len = link.getLength();
+			if (len == 1) {
+				for (Link link2 : this.getLinks()) {
+					if (link2.sameConnections(link) && link2.getLength() != 1) {
+						link2.setLength(1);
+					}
+				}
+			}
+		}
+		this.applySingleStrategy();
+		return super.checkFinalError();
 	}
 
 }

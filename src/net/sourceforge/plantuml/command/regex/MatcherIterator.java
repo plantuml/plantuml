@@ -34,14 +34,13 @@
 package net.sourceforge.plantuml.command.regex;
 
 import java.util.Iterator;
-import java.util.regex.Matcher;
 
 public class MatcherIterator implements Iterator<String> {
 
 	private int cpt = 1;
-	private final Matcher matcher;
+	private final Matcher2 matcher;
 
-	MatcherIterator(Matcher matcher) {
+	MatcherIterator(Matcher2 matcher) {
 		this.matcher = matcher;
 	}
 

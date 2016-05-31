@@ -34,19 +34,19 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class UncommentReadLine implements ReadLine {
 
 	private final ReadLine raw;
-	private final Pattern start;
-	private final Pattern unpause;
+	private final Pattern2 start;
+	private final Pattern2 unpause;
 	private String headerToRemove;
 	private boolean paused;
 
@@ -63,12 +63,16 @@ public class UncommentReadLine implements ReadLine {
 			return null;
 		}
 
-		final Matcher m = start.matcher(result);
-		if (m.find()) {
-			headerToRemove = m.group(1);
+		// final Matcher m = start.matcher(result);
+		// if (m.find()) {
+		// headerToRemove = m.group(1);
+		// }
+		final String tmp = StartUtils.beforeStartUml(result);
+		if (tmp != null) {
+			headerToRemove = tmp;
 		}
 		if (paused) {
-			final Matcher m2 = unpause.matcher(result);
+			final Matcher2 m2 = unpause.matcher(result);
 			if (m2.find()) {
 				headerToRemove = m2.group(1);
 			}

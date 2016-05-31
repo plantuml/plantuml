@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19636 $
+ * Revision $Revision: 19870 $
  *
  */
 package net.sourceforge.plantuml;
@@ -66,6 +66,10 @@ public class OptionFlags {
 
 	public void reset() {
 		reset(false);
+	}
+
+	public final void setDotExecutable(String dotExecutable) {
+		GraphvizUtils.setDotExecutable(dotExecutable);
 	}
 
 	private void reset(boolean exit) {

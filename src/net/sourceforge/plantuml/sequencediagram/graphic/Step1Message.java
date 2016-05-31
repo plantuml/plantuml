@@ -28,19 +28,19 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19528 $
+ * Revision $Revision: 19885 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.Component;
@@ -223,7 +223,10 @@ class Step1Message extends Step1Abstract {
 		// return m.getArrowConfiguration().self();
 		ArrowConfiguration result = ArrowConfiguration.withDirectionSelf();
 		if (m.getArrowConfiguration().isDotted()) {
-			result = result.withDotted();
+			result = result.withBody(ArrowBody.DOTTED);
+		}
+		if (m.getArrowConfiguration().isHidden()) {
+			result = result.withBody(ArrowBody.HIDDEN);
 		}
 		if (m.getArrowConfiguration().isAsync()) {
 			result = result.withHead(ArrowHead.ASYNC);

@@ -31,16 +31,15 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
@@ -221,8 +220,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 
 		private void init() {
-			final Pattern p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
-			final Matcher m1 = p1.matcher(labelLink);
+			final Pattern2 p1 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)[%g]([^%g]+)[%g]$");
+			final Matcher2 m1 = p1.matcher(labelLink);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
 				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
@@ -230,8 +229,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				secondLabel = m1.group(3);
 				return;
 			}
-			final Pattern p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
-			final Matcher m2 = p2.matcher(labelLink);
+			final Pattern2 p2 = MyPattern.cmpile("^[%g]([^%g]+)[%g]([^%g]+)$");
+			final Matcher2 m2 = p2.matcher(labelLink);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
 				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
@@ -239,8 +238,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				secondLabel = null;
 				return;
 			}
-			final Pattern p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
-			final Matcher m3 = p3.matcher(labelLink);
+			final Pattern2 p3 = MyPattern.cmpile("^([^%g]+)[%g]([^%g]+)[%g]$");
+			final Matcher2 m3 = p3.matcher(labelLink);
 			if (m3.matches()) {
 				firstLabel = null;
 				labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils

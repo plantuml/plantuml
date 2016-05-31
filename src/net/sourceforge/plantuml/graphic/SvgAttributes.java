@@ -36,11 +36,11 @@ package net.sourceforge.plantuml.graphic;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class SvgAttributes {
 
@@ -54,8 +54,8 @@ public class SvgAttributes {
 	}
 
 	public SvgAttributes(String args) {
-		final Pattern p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
-		final Matcher m = p.matcher(args);
+		final Pattern2 p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
+		final Matcher2 m = p.matcher(args);
 		while (m.find()) {
 			attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));
 		}

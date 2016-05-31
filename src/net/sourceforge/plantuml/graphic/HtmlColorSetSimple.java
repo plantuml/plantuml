@@ -40,9 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
 public class HtmlColorSetSimple implements IHtmlColorSet {
@@ -62,7 +62,7 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 		if (s == null) {
 			return null;
 		}
-		final Matcher m = MyPattern.cmpile("[-\\\\|/]").matcher(s);
+		final Matcher2 m = MyPattern.cmpile("[-\\\\|/]").matcher(s);
 		if (m.find()) {
 			final char sep = m.group(0).charAt(0);
 			final int idx = s.indexOf(sep);

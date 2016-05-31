@@ -33,15 +33,14 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleSprite implements Command {
 
-	private final Pattern pattern;
+	private final Pattern2 pattern;
 
 	private CommandCreoleSprite(String p) {
 		this.pattern = MyPattern.cmpile(p);
@@ -52,7 +51,7 @@ public class CommandCreoleSprite implements Command {
 	}
 
 	public int matchingSize(String line) {
-		final Matcher m = pattern.matcher(line);
+		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false) {
 			return 0;
 		}
@@ -60,7 +59,7 @@ public class CommandCreoleSprite implements Command {
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher m = pattern.matcher(line);
+		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

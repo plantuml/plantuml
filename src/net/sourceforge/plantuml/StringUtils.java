@@ -43,7 +43,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
@@ -83,8 +85,8 @@ public class StringUtils {
 		return Collections.unmodifiableList(result);
 	}
 
-	final static public List<String> getSplit(Pattern pattern, String line) {
-		final Matcher m = pattern.matcher(line);
+	final static public List<String> getSplit(Pattern2 pattern, String line) {
+		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false) {
 			return null;
 		}
@@ -354,8 +356,8 @@ public class StringUtils {
 		// throw new IllegalArgumentException();
 		// }
 		final List<String> result = new ArrayList<String>();
-		final Pattern p = MyPattern.cmpile("([\\p{L}0-9_.]+|[%g][^%g]+[%g])");
-		final Matcher m = p.matcher(s);
+		final Pattern2 p = MyPattern.cmpile("([\\p{L}0-9_.]+|[%g][^%g]+[%g])");
+		final Matcher2 m = p.matcher(s);
 		while (m.find()) {
 			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19878 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -40,11 +40,12 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class HtmlCommandFactory {
 
-	static final Pattern addStyle;
-	static final Pattern removeStyle;
+	static final Pattern2 addStyle;
+	static final Pattern2 removeStyle;
 
 	static {
 		final StringBuilder sbAddStyle = new StringBuilder();
@@ -66,7 +67,7 @@ class HtmlCommandFactory {
 		removeStyle = MyPattern.cmpile(sbRemoveStyle.toString(), Pattern.CASE_INSENSITIVE);
 	}
 
-	private Pattern htmlTag = MyPattern.cmpile(Splitter.htmlTag, Pattern.CASE_INSENSITIVE);
+	private Pattern2 htmlTag = MyPattern.cmpile(Splitter.htmlTag, Pattern.CASE_INSENSITIVE);
 
 	HtmlCommand getHtmlCommand(String s) {
 		if (htmlTag.matcher(s).matches() == false) {

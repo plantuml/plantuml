@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.PathIterator;
 import java.util.EnumSet;
+
 import net.sourceforge.plantuml.ugraphic.arc.ExtendedPathIterator;
 
 public enum USegmentType {

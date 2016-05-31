@@ -142,6 +142,17 @@ public class NewpagedDiagram extends AbstractPSystem {
 		}
 	}
 
+	@Override
+	public String checkFinalError() {
+		for (Diagram p : getDiagrams()) {
+			final String check = ((AbstractPSystem) p).checkFinalError();
+			if (check != null) {
+				return check;
+			}
+		}
+		return super.checkFinalError();
+	}
+
 	public final List<Diagram> getDiagrams() {
 		return Collections.unmodifiableList(diagrams);
 	}

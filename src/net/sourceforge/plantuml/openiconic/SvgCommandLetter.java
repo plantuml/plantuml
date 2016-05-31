@@ -33,13 +33,7 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class SvgCommandLetter implements SvgCommand {
 

@@ -28,15 +28,14 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.regex.Matcher;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -55,7 +54,7 @@ public class CommandMultilinesHeader extends CommandMultilines<UmlDiagram> {
 
 	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
-		final Matcher m = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
+		final Matcher2 m = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

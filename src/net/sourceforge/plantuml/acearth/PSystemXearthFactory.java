@@ -37,11 +37,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 import com.ctreber.acearth.plugins.markers.Marker;
 
@@ -61,8 +61,8 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 	}
 
 	private void extractDimension(String startLine) {
-		final Pattern p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
-		final Matcher m = p.matcher(startLine);
+		final Pattern2 p = MyPattern.cmpile("\\((\\d+),(\\d+)\\)");
+		final Matcher2 m = p.matcher(startLine);
 		final boolean ok = m.find();
 		if (ok) {
 			width = Integer.parseInt(m.group(1));
@@ -83,8 +83,8 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 		if (line.startsWith("#") || line.startsWith("'")) {
 			return system;
 		}
-		final Pattern p = MyPattern.cmpile("(\\w+)[%s]*=[%s]*(.*)");
-		final Matcher m = p.matcher(line);
+		final Pattern2 p = MyPattern.cmpile("(\\w+)[%s]*=[%s]*(.*)");
+		final Matcher2 m = p.matcher(line);
 		if (m.find()) {
 			config.put(m.group(1), m.group(2));
 			return system;

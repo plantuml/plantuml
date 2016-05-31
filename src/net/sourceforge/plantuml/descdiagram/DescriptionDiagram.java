@@ -33,13 +33,13 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.StringUtils;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
@@ -126,6 +126,12 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	}
 
 	@Override
+	public String checkFinalError() {
+		this.applySingleStrategy();
+		return super.checkFinalError();
+	}
+
+	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.DESCRIPTION;
 	}
@@ -133,10 +139,9 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	public void setNamespaceSeparator(String namespaceSeparator) {
 		this.namespaceSeparator = namespaceSeparator;
 	}
-	
+
 	public String getNamespaceSeparator() {
 		return namespaceSeparator;
 	}
-
 
 }

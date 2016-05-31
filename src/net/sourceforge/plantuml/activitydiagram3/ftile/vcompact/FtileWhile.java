@@ -62,9 +62,9 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -143,9 +143,14 @@ class FtileWhile extends AbstractFtile {
 			afterEndwhileColor = afterEndwhile.getRainbow();
 		}
 
+		final Dimension2D dim = whileBlock.calculateDimension(StringBounderUtils.asStringBounder());
 		final List<Connection> conns = new ArrayList<Connection>();
-		conns.add(result.new ConnectionIn(whileBlock.getInLinkRendering().getRainbow(arrowColor)));
-		conns.add(result.new ConnectionBack(endInlinkColor));
+		if (dim.getWidth() == 0 || dim.getHeight() == 0) {
+			conns.add(result.new ConnectionBackEmpty(endInlinkColor));
+		} else {
+			conns.add(result.new ConnectionIn(whileBlock.getInLinkRendering().getRainbow(arrowColor)));
+			conns.add(result.new ConnectionBack(endInlinkColor));
+		}
 		conns.add(result.new ConnectionOut(afterEndwhileColor));
 		return FtileUtils.addConnection(result, conns);
 	}
@@ -283,6 +288,59 @@ class FtileWhile extends AbstractFtile {
 			ug = ug.apply(new UChangeColor(endInlinkColor.getColor())).apply(
 					new UChangeBackColor(endInlinkColor.getColor()));
 			ug.apply(new UTranslate(xx, (y1 + y2) / 2)).draw(Arrows.asToUp());
+
+		}
+
+	}
+
+	class ConnectionBackEmpty extends AbstractConnection {
+		private final Rainbow endInlinkColor;
+
+		public ConnectionBackEmpty(Rainbow endInlinkColor) {
+			super(diamond1, diamond1);
+			this.endInlinkColor = endInlinkColor;
+		}
+
+		private Point2D getP1(final StringBounder stringBounder) {
+			return getTranslateDiamond1(stringBounder).getTranslated(
+					diamond1.calculateDimension(stringBounder).getPointOut());
+		}
+
+		private double getBottom(final StringBounder stringBounder) {
+			final FtileGeometry geo = whileBlock.calculateDimension(stringBounder);
+			return getTranslateForWhile(stringBounder).getDy() + geo.getHeight();
+		}
+
+		private Point2D getP2(final StringBounder stringBounder) {
+			return getTranslateDiamond1(stringBounder).getTranslated(new Point2D.Double(0, 0));
+		}
+
+		public void drawU(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+
+			final Snake snake = new Snake(endInlinkColor, Arrows.asToLeft());
+			final Dimension2D dimTotal = calculateDimension(stringBounder);
+			final Point2D p1 = getP1(stringBounder);
+			final Point2D p2 = getP2(stringBounder);
+			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+
+			final double x1 = p1.getX();
+			final double y1 = p1.getY();
+			final double x2 = p2.getX() + dimDiamond1.getWidth();
+			final double y2 = p2.getY() + dimDiamond1.getOutY() / 2;
+
+			snake.addPoint(x1, y1);
+			final double y1bis = Math.max(y1, getBottom(stringBounder)) + Diamond.diamondHalfSize;
+			snake.addPoint(x1, y1bis);
+			final double xx = dimTotal.getWidth();
+			snake.addPoint(xx, y1bis);
+			snake.addPoint(xx, y2);
+			snake.addPoint(x2, y2);
+			snake.emphasizeDirection(Direction.UP);
+
+			ug.draw(snake);
+
+			ug.apply(new UTranslate(x1, y1bis)).draw(new UEmpty(5, Diamond.diamondHalfSize));
 
 		}
 

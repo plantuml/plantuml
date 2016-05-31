@@ -28,28 +28,27 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 3830 $
+ * Revision $Revision: 4762 $
  *
  */
-package net.sourceforge.plantuml.eggs;
+package net.sourceforge.plantuml.command.regex;
 
-import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
+import java.util.regex.Pattern;
 
-public class PSystemPathFactory extends PSystemSingleLineFactory {
+public class Pattern2 {
 
-	final private static Pattern2 p = MyPattern.cmpile("(?i)^path[%s]+([0-9A-Za-z]+)$");
+	private final Pattern pattern;
 
-	@Override
-	protected AbstractPSystem executeLine(String line) {
-		final Matcher2 m = p.matcher(line);
-		if (m.find() == false) {
-			return null;
-		}
-		return new PSystemPath(m.group(1));
+	public Pattern2(Pattern pattern) {
+		this.pattern = pattern;
+	}
+
+	public Matcher2 matcher(CharSequence input) {
+		return Matcher2.build(pattern, input);
+	}
+
+	public String pattern() {
+		return pattern.pattern();
 	}
 
 }

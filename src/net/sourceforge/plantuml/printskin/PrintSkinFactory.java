@@ -34,20 +34,20 @@
 package net.sourceforge.plantuml.printskin;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class PrintSkinFactory extends PSystemSingleLineFactory {
 
-	static final Pattern p = MyPattern.cmpile("(?i)^testskin[%s]+([\\w.]+)[%s]*(.*)$");
+	static final Pattern2 p = MyPattern.cmpile("(?i)^testskin[%s]+([\\w.]+)[%s]*(.*)$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {
-		final Matcher m = p.matcher(line);
+		final Matcher2 m = p.matcher(line);
 		if (m.find() == false) {
 			return null;
 		}

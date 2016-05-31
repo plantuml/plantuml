@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19706 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml;
@@ -41,10 +41,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
 public class SkinParam implements ISkinParam {
 
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
-	private static final Pattern stereoPattern = MyPattern.cmpile(stereoPatternString);
+	private static final Pattern2 stereoPattern = MyPattern.cmpile(stereoPatternString);
 
 	private final Map<String, String> params = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
@@ -109,7 +109,7 @@ public class SkinParam implements ISkinParam {
 		// // key = key.replaceAll("componentarrow", "genericarrow");
 		// // key = key.replaceAll("statearrow", "genericarrow");
 		// // key = key.replaceAll("usecasearrow", "genericarrow");
-		final Matcher m = stereoPattern.matcher(key);
+		final Matcher2 m = stereoPattern.matcher(key);
 		if (m.find()) {
 			final String s = m.group(1);
 			key = key.replaceAll(stereoPatternString, "");

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDiagram3> {
 
@@ -95,8 +95,8 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 
 		Display yes = Display.NULL;// Display.getWithNewlines("arg.getLazzy(\"WHEN\", 0)");
 		final Display out = Display.NULL; // Display.getWithNewlines("arg.getLazzy(\"OUT\", 0)");
-		final HtmlColor linkColor = null; // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
-											// 0));
+		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
+		// 0));
 		final Display linkLabel = Display.NULL; // Display.getWithNewlines("arg.get(\"LABEL\", 0)");
 		final List<Display> splitted = testDisplay.splitMultiline(MyPattern.cmpile("\\)[%s]*(is|equals?)[%s]*\\(",
 				Pattern.CASE_INSENSITIVE));

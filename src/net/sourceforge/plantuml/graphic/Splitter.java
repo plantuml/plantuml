@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19271 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -38,11 +38,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Splitter {
@@ -67,7 +68,7 @@ public class Splitter {
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";
 
-	private static final Pattern tagOrText;
+	private static final Pattern2 tagOrText;
 
 	static {
 		final StringBuilder sb = new StringBuilder("(?i)");
@@ -114,7 +115,7 @@ public class Splitter {
 	private final List<String> splitted = new ArrayList<String>();
 
 	public Splitter(String s) {
-		final Matcher matcher = tagOrText.matcher(s);
+		final Matcher2 matcher = tagOrText.matcher(s);
 		while (matcher.find()) {
 			String part = matcher.group(0);
 			part = StringUtils.showComparatorCharacters(part);

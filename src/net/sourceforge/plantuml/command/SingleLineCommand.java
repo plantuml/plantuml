@@ -28,22 +28,22 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.command;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.Diagram;
 
 public abstract class SingleLineCommand<S extends Diagram> implements Command<S> {
 
-	private final Pattern pattern;
+	private final Pattern2 pattern;
 
 	public SingleLineCommand(String pattern) {
 		if (pattern == null) {
@@ -69,7 +69,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 			return CommandControl.NOT_OK;
 		}
 		final String line = StringUtils.trin(lines.getFirst499());
-		final Matcher m = pattern.matcher(line);
+		final Matcher2 m = pattern.matcher(line);
 		final boolean result = m.find();
 		if (result) {
 			actionIfCommandValid();

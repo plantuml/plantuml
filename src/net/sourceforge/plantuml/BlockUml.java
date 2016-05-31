@@ -36,10 +36,10 @@ package net.sourceforge.plantuml;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.Diagram;
 
 public class BlockUml {
@@ -48,7 +48,7 @@ public class BlockUml {
 	private final int startLine;
 	private Diagram system;
 
-	private static final Pattern patternFilename = MyPattern.cmpile("^@start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
+	private static final Pattern2 patternFilename = MyPattern.cmpile("^@start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
 	BlockUml(String... strings) {
 		this(convert(strings), 0);
@@ -91,7 +91,7 @@ public class BlockUml {
 		if (OptionFlags.getInstance().isWord()) {
 			return null;
 		}
-		final Matcher m = patternFilename.matcher(StringUtils.trin(data.get(0).toString()));
+		final Matcher2 m = patternFilename.matcher(StringUtils.trin(data.get(0).toString()));
 		final boolean ok = m.find();
 		if (ok == false) {
 			return null;

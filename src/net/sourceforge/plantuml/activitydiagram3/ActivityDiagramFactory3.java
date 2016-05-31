@@ -99,11 +99,11 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandActivity3());
 		cmds.add(new CommandIf4());
 		cmds.add(new CommandIf2());
-		cmds.add(new CommandDecoratorMultine(new CommandIf2()));
+		cmds.add(new CommandDecoratorMultine(new CommandIf2(), 50));
 		cmds.add(new CommandIfLegacy1());
 		cmds.add(new CommandElseIf2());
 		cmds.add(new CommandElse3());
-		cmds.add(new CommandDecoratorMultine(new CommandElse3()));
+		cmds.add(new CommandDecoratorMultine(new CommandElse3(), 50));
 		cmds.add(new CommandElseLegacy1());
 		cmds.add(new CommandEndif3());
 		cmds.add(new CommandRepeat3());
@@ -132,7 +132,7 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 
 		cmds.add(new CommandLabel());
 		cmds.add(new CommandGoto());
-		cmds.add(new CommandDecoratorMultine(new CommandElseIf2()));
+		cmds.add(new CommandDecoratorMultine(new CommandElseIf2(), 50));
 
 		return cmds;
 	}

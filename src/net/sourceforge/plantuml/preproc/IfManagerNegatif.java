@@ -28,15 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19880 $
  *
  */
 package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
 
 import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.command.regex.Matcher2;
 
 class IfManagerNegatif extends IfManager {
 
@@ -55,7 +55,7 @@ class IfManagerNegatif extends IfManager {
 				if (s == null) {
 					return null;
 				}
-				Matcher m = endifPattern.matcher(s);
+				Matcher2 m = endifPattern.matcher(s);
 				if (m.find()) {
 					return null;
 				}
@@ -70,7 +70,7 @@ class IfManagerNegatif extends IfManager {
 		if (s == null) {
 			return null;
 		}
-		final Matcher m = endifPattern.matcher(s);
+		final Matcher2 m = endifPattern.matcher(s);
 		if (m.find()) {
 			return null;
 		}

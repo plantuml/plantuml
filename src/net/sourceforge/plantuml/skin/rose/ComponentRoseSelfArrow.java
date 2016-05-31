@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19873 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -71,6 +71,9 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
+		if (getArrowConfiguration().isHidden()) {
+			return;
+		}
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double textHeight = getTextHeight(stringBounder);
 
