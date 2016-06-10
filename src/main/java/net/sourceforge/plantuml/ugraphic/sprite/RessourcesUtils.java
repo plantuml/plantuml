@@ -33,6 +33,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.sprite;
 
+import net.sourceforge.plantuml.version.Version;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -45,15 +47,13 @@ import java.util.TreeSet;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import net.sourceforge.plantuml.version.Version;
-
 public class RessourcesUtils {
 
 	public static Set<String> getJarFile(String path, boolean folder) throws IOException {
 		if (path.startsWith("/") || path.endsWith("/")) {
 			throw new IllegalArgumentException();
 		}
-		final URL resource = Version.class.getClassLoader().getResource("net/sourceforge/plantuml/version/logo.png");
+		final URL resource = Version.class.getClassLoader().getResource("logo.png");
 		final String protocol = resource.getProtocol();
 		if ("file".equals(protocol)) {
 			final URL local = Version.class.getClassLoader().getResource(path);
