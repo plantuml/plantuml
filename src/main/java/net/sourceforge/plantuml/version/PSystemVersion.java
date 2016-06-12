@@ -31,24 +31,6 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.awt.Font;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
-
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
@@ -64,6 +46,19 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class PSystemVersion extends AbstractPSystem {
 
 	private final List<String> strings = new ArrayList<String>();
@@ -78,7 +73,7 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static BufferedImage getPlantumlImage() {
 		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("logo.png");
+			final InputStream is = PSystemVersion.class.getResourceAsStream("/logo.png");
 			final BufferedImage image = ImageIO.read(is);
 			is.close();
 			return image;
@@ -90,7 +85,7 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static BufferedImage getCharlieImage() {
 		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("charlie.png");
+			final InputStream is = PSystemVersion.class.getResourceAsStream("/charlie.png");
 			final BufferedImage image = ImageIO.read(is);
 			is.close();
 			return image;
@@ -102,7 +97,7 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static BufferedImage getPlantumlSmallIcon() {
 		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream("favicon.png");
+			final InputStream is = PSystemVersion.class.getResourceAsStream("/favicon.png");
 			final BufferedImage image = ImageIO.read(is);
 			is.close();
 			return image;

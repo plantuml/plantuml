@@ -33,23 +33,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.imageio.ImageIO;
-import javax.swing.UIManager;
-
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.Transcoder;
@@ -67,6 +50,17 @@ import net.sourceforge.plantuml.swing.MainWindow2;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 import net.sourceforge.plantuml.version.Version;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Run {
 

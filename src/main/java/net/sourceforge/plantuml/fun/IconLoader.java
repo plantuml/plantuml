@@ -31,13 +31,12 @@
  */
 package net.sourceforge.plantuml.fun;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.imageio.ImageIO;
 
 public class IconLoader {
 
@@ -69,7 +68,7 @@ public class IconLoader {
 
 	private static BufferedImage getIconSlow(String name) {
 		try {
-			final InputStream is = IconLoader.class.getResourceAsStream(name);
+			final InputStream is = IconLoader.class.getResourceAsStream("/fun/" + name);
 			if (is == null) {
 				return null;
 			}

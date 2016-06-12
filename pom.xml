@@ -4,31 +4,31 @@
 	PlantUML : a free UML diagram generator
 	========================================================================
 	(C) Copyright 2009, Arnaud Roques
-	
+
 	Project Info:  http://plantuml.sourceforge.net
-	 
+
 	This file is part of PlantUML.
-	
+
 	PlantUML is free software; you can redistribute it and/or modify it
 	under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
-	
+
 	PlantUML distributed in the hope that it will be useful, but
 	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
 	License for more details.
-	
+
 	You should have received a copy of the GNU General Public
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
 	USA.
-	
+
 	[Java is a trademark or registered trademark of Sun Microsystems, Inc.
 	in the United States and other countries.]
-	
+
 	Script Author: Julien Eluard
-	
+
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -41,7 +41,7 @@
 
     <name>PlantUML</name>
     <description>
-      PlantUML is a component that allows to quickly write :
+        PlantUML is a component that allows to quickly write :
         * sequence diagram,
         * use case diagram,
         * class diagram,
@@ -52,21 +52,14 @@
     </description>
     <url>http://plantuml.sourceforge.net</url>
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>5</version>
-    </parent>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.8.1</version>
+            <version>1.9.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
     <licenses>
         <license>
             <name>The GNU General Public License</name>
@@ -94,45 +87,24 @@
         </developer>
     </developers>
 
-	<profiles>
-	  <profile>
-		<id>doclint-java8-disable</id>
-		<activation>
-		  <jdk>[1.8,)</jdk>
-		</activation>
-		<properties>
-		  <javadoc.opts>-Xdoclint:none</javadoc.opts>
-		</properties>
-	  </profile>
-	</profiles>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <build>
-        <sourceDirectory>${project.basedir}/src</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>${project.basedir}/src</directory>
-                <includes>
-                    <include>net/sourceforge/plantuml/version/*.png</include>
-                    <include>net/sourceforge/plantuml/openiconic/data/*.txt</include>
-                    <include>net/sourceforge/plantuml/openiconic/data/*.svg</include>
-                    <include>net/sourceforge/plantuml/fun/*.png</include>
-                    <include>sprite/archimate/*.png</include>
-                    <include>net/sourceforge/plantuml/dedication/*.png</include>
-                </includes>
-            </resource>
-        </resources>        
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.5.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                    <debug>false</debug>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <!--<debug>false</debug>-->
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -144,31 +116,37 @@
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
-			            <configuration>
-							<additionalparam>${javadoc.opts}</additionalparam>
-			            </configuration>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.0</version>
                 <configuration>
                     <archive>
                         <manifest>
                             <mainClass>net.sourceforge.plantuml.Run</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Main-Class>net.sourceforge.plantuml.Run</Main-Class>
+                            <SplashScreen-Image>/logo.png</SplashScreen-Image>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.5.3</version>
                 <configuration>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>

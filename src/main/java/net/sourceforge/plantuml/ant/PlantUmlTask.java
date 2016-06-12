@@ -33,6 +33,15 @@
  */
 package net.sourceforge.plantuml.ant;
 
+import net.sourceforge.plantuml.*;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.preproc.Defines;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.FileList;
+import org.apache.tools.ant.types.FileSet;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,20 +52,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.Option;
-import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.SourceFileReader;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
-import net.sourceforge.plantuml.preproc.Defines;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.types.FileList;
-import org.apache.tools.ant.types.FileSet;
 
 // <?xml version="1.0"?>
 //
