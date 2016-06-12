@@ -33,16 +33,6 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.awt.geom.Dimension2D;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -51,6 +41,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+
+import java.awt.geom.Dimension2D;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OpenIcon {
 
@@ -77,8 +72,8 @@ public class OpenIcon {
 
 	private static InputStream getRessource(String name) {
 		// System.err.println("OPENING " + name);
-		return DummyIcon.class.getResourceAsStream(name + ".svg");
-	}
+        return DummyIcon.class.getResourceAsStream("/openiconic/" + name + ".svg");
+    }
 
 	private OpenIcon(InputStream is, String id) throws IOException {
 		this.id = id;
