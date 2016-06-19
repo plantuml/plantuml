@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.Collection;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -118,8 +119,8 @@ public class Branch {
 		return ftile;
 	}
 
-	public boolean shadowing() {
-		return ftile.shadowing();
+	public ISkinParam skinParam() {
+		return ftile.skinParam();
 	}
 
 	public final HtmlColor getColor() {

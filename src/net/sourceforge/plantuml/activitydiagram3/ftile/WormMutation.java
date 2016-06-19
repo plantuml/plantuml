@@ -179,10 +179,16 @@ public class WormMutation {
 
 	public UChange getGlobalTranslate(int size) {
 		final MinMax result = new MinMax();
-		for (UTranslate tr : translations) {
-			result.append(tr.getDx());
+		if (translations.get(0).getDy() == 0) {
+			for (UTranslate tr : translations) {
+				result.append(tr.getDx());
+			}
+			return new UTranslate(-result.getExtreme() * (size - 1) / 2.0, 0);
 		}
-		return new UTranslate(-result.getExtreme() * (size - 1) / 2.0, 0);
+		for (UTranslate tr : translations) {
+			result.append(tr.getDy());
+		}
+		return new UTranslate(0, -result.getExtreme() * (size - 1) / 2.0);
 	}
 
 	public Worm mute(Worm original) {

@@ -169,6 +169,7 @@ public class PSystemVersion extends AbstractPSystem {
 		strings.add("<u>Original idea</u>: Arnaud Roques");
 		strings.add("<u>Word Macro</u>: Alain Bertucat & Matthieu Sabatier");
 		strings.add("<u>Word Add-in</u>: Adriaan van den Brand");
+		strings.add("<u>J2V8 & viz.js integration</u>: Andreas Studer");
 		strings.add("<u>Eclipse Plugin</u>: Claude Durif & Anne Pecoil");
 		strings.add("<u>Servlet & XWiki</u>: Maxime Sinclair");
 		strings.add("<u>Site design</u>: Raphael Cotisson");

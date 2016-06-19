@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -50,28 +49,28 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
-	public FtileFactoryDelegatorWhile(FtileFactory factory, ISkinParam skinParam) {
-		super(factory, skinParam);
+	public FtileFactoryDelegatorWhile(FtileFactory factory) {
+		super(factory);
 	}
 
 	@Override
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
 			LinkRendering afterEndwhile, HtmlColor color) {
-		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = color == null ? getRose().getHtmlColor(getSkinParam(),
+		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
+		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(),
 				ColorParam.activityBackground) : color;
-		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
-		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
+		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ACTIVITY_ARROW;
-		final FontConfiguration fcTest = new FontConfiguration(getSkinParam(), testParam, null);
+		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null);
 
 		final LinkRendering endInlinkRendering = whileBlock.getOutLinkRendering();
 		final Rainbow endInlinkColor = endInlinkRendering == null || endInlinkRendering.getRainbow().size() == 0 ? arrowColor
 				: endInlinkRendering.getRainbow();
 
-		final FontConfiguration fontArrow = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fontArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
 
 		return FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
 				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest);

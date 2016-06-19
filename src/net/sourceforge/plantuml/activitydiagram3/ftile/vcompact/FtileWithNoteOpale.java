@@ -89,7 +89,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 
 	public FtileWithNoteOpale(Ftile tile, Display note, NotePosition notePosition, NoteType type, ISkinParam skinParam,
 			boolean withLink) {
-		super(tile.shadowing());
+		super(tile.skinParam());
 		this.tile = tile;
 		this.notePosition = notePosition;
 		if (type == NoteType.FLOATING_NOTE) {

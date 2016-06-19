@@ -119,20 +119,9 @@ public class Line implements Moveable, Hideable {
 
 	private boolean opale;
 	private Cluster projectionCluster;
-	private final GraphvizVersion graphvizVersion;
 
 	private final Pragma pragma;
-
-	// private GraphvizVersion getGraphvizVersion() {
-	// if (pragma.isDefine("graphviz")==false) {
-	// return GraphvizVersion.COMMON;
-	// }
-	// final String value = pragma.getValue("graphviz");
-	// if ("2.34".equals(value)) {
-	// return GraphvizVersion.V2_34_0;
-	// }
-	// return GraphvizVersion.COMMON;
-	// }
+	private final HtmlColor backgroundColor;
 
 	@Override
 	public String toString() {
@@ -205,7 +194,7 @@ public class Line implements Moveable, Hideable {
 
 	public Line(String startUid, String endUid, Link link, ColorSequence colorSequence, Cluster ltail, Cluster lhead,
 			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration labelFont, Bibliotekon bibliotekon,
-			GraphvizVersion graphvizVersion, Pragma pragma) {
+			Pragma pragma) {
 		if (startUid == null || endUid == null || link == null) {
 			throw new IllegalArgumentException();
 		}
@@ -213,7 +202,7 @@ public class Line implements Moveable, Hideable {
 			skinParam = link.getColors().mute(skinParam);
 			labelFont = labelFont.mute(link.getColors());
 		}
-		this.graphvizVersion = graphvizVersion;
+		this.backgroundColor = skinParam.getBackgroundColor();
 		this.pragma = pragma;
 		this.bibliotekon = bibliotekon;
 		this.stringBounder = stringBounder;
@@ -308,7 +297,7 @@ public class Line implements Moveable, Hideable {
 		return link.getLinkArrow();
 	}
 
-	public void appendLine(StringBuilder sb) {
+	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {
 		// sb.append(endUid);
@@ -332,14 +321,20 @@ public class Line implements Moveable, Hideable {
 		// length = 2;
 		// }
 		if (pragma.horizontalLineBetweenDifferentPackageAllowed() || link.isInvis() || length != 1) {
+			// if (graphvizVersion.isJs() == false) {
 			sb.append("minlen=" + (length - 1));
 			sb.append(",");
+			// }
 		}
 		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
 		if (labelText != null) {
 			sb.append(",");
-			sb.append("label=<");
-			appendTable(sb, labelText.calculateDimension(stringBounder), noteLabelColor);
+			if (graphvizVersion.modeSafe()) {
+				sb.append("xlabel=<");
+			} else {
+				sb.append("label=<");
+			}
+			appendTable(sb, labelText.calculateDimension(stringBounder), noteLabelColor, graphvizVersion);
 			sb.append(">");
 			// sb.append(",labelfloat=true");
 		}
@@ -347,14 +342,14 @@ public class Line implements Moveable, Hideable {
 		if (startTailText != null) {
 			sb.append(",");
 			sb.append("taillabel=<");
-			appendTable(sb, startTailText.calculateDimension(stringBounder), startTailColor);
+			appendTable(sb, startTailText.calculateDimension(stringBounder), startTailColor, graphvizVersion);
 			sb.append(">");
 			// sb.append(",labelangle=0");
 		}
 		if (endHeadText != null) {
 			sb.append(",");
 			sb.append("headlabel=<");
-			appendTable(sb, endHeadText.calculateDimension(stringBounder), endHeadColor);
+			appendTable(sb, endHeadText.calculateDimension(stringBounder), endHeadColor, graphvizVersion);
 			sb.append(">");
 			// sb.append(",labelangle=0");
 		}
@@ -380,13 +375,14 @@ public class Line implements Moveable, Hideable {
 		// if (graphvizVersion == GraphvizVersion.V2_34_0) {
 		// return null;
 		// }
-		if (pragma.horizontalLineBetweenDifferentPackageAllowed() == false && link.getLength() == 1) {
+		if (pragma.horizontalLineBetweenDifferentPackageAllowed() == false && link.getLength() == 1
+		/* && graphvizVersion.isJs() == false */) {
 			return "{rank=same; " + getStartUid() + "; " + getEndUid() + "}";
 		}
 		return null;
 	}
 
-	public static void appendTable(StringBuilder sb, Dimension2D dim, int col) {
+	public static void appendTable(StringBuilder sb, Dimension2D dim, int col, GraphvizVersion graphvizVersion) {
 		final int w = (int) dim.getWidth();
 		final int h = (int) dim.getHeight();
 		appendTable(sb, w, h, col);
@@ -423,7 +419,7 @@ public class Line implements Moveable, Hideable {
 
 	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, Point2D center, double angle,
 			Cluster cluster) {
-		final ExtremityFactory extremityFactory = decor.getExtremityFactory();
+		final ExtremityFactory extremityFactory = decor.getExtremityFactory(backgroundColor);
 
 		if (cluster != null) {
 			if (extremityFactory != null) {

@@ -33,14 +33,15 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class FtileGoto extends FtileEmpty {
 
 	private final String name;
 
-	public FtileGoto(boolean shadowing, Swimlane swimlane, String name) {
-		super(shadowing, swimlane);
+	public FtileGoto(ISkinParam skinParam, Swimlane swimlane, String name) {
+		super(skinParam, swimlane);
 		this.name = name;
 	}
 

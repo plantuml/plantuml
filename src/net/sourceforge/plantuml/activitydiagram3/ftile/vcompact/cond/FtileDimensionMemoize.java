@@ -33,14 +33,15 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public abstract class FtileDimensionMemoize extends AbstractFtile {
 
-	public FtileDimensionMemoize(boolean shadowing) {
-		super(shadowing);
+	public FtileDimensionMemoize(ISkinParam skinParam) {
+		super(skinParam);
 	}
 
 	private FtileGeometry calculateDimensionInternal;

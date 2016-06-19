@@ -47,7 +47,7 @@ public class FtileMarged extends AbstractFtile {
 	private final double margin2;
 
 	public FtileMarged(Ftile tile, double margin1, double margin2) {
-		super(tile.shadowing());
+		super(tile.skinParam());
 		this.tile = tile;
 		this.margin1 = margin1;
 		this.margin2 = margin2;

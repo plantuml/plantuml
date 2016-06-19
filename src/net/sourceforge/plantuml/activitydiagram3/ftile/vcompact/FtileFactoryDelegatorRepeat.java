@@ -35,7 +35,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -50,29 +49,28 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
-	public FtileFactoryDelegatorRepeat(FtileFactory factory, ISkinParam skinParam) {
-		super(factory, skinParam);
+	public FtileFactoryDelegatorRepeat(FtileFactory factory) {
+		super(factory);
 	}
 
 	@Override
 	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
 			HtmlColor color, LinkRendering backRepeatLinkRendering) {
-		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
+		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
-		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = color == null ? getRose().getHtmlColor(getSkinParam(),
-				ColorParam.activityBackground) : color;
-		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
+		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
+		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityBackground)
+				: color;
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
-		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering
-				.getRainbow();
+		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();
 
 		final FontParam fontParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ACTIVITY_ARROW;
-		final FontConfiguration fc = new FontConfiguration(getSkinParam(), fontParam, null);
+		final FontConfiguration fc = new FontConfiguration(skinParam(), fontParam, null);
 
 		return FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, repeat, test, yes, out, borderColor,
-				backColor, arrowColor, endRepeatLinkColor, conditionStyle, this, fc);
+				backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fc);
 	}
 }

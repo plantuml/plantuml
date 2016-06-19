@@ -115,6 +115,9 @@ class RealLine {
 	}
 
 	private void printCounter(Map<PositiveForce, Integer> counter) {
+		for (PositiveForce f : forces) {
+			System.err.println("force=" + f);
+		}
 		for (Map.Entry<PositiveForce, Integer> ent : counter.entrySet()) {
 			System.err.println("count=" + ent.getValue() + " for " + ent.getKey());
 		}

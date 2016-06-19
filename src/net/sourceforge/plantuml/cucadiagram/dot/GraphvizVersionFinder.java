@@ -42,13 +42,21 @@ import net.sourceforge.plantuml.StringUtils;
 public class GraphvizVersionFinder {
 
 	final private File dotExe;
-	final private static GraphvizVersion DEFAULT = new GraphvizVersion() {
+	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {
 		public boolean useShield() {
 			return true;
 		}
 
 		public boolean useProtectionWhenThereALinkFromOrToGroup() {
 			return true;
+		}
+
+		public boolean modeSafe() {
+			return false;
+		}
+
+		public boolean isVizjs() {
+			return false;
 		}
 	};
 
@@ -74,6 +82,14 @@ public class GraphvizVersionFinder {
 			public boolean useProtectionWhenThereALinkFromOrToGroup() {
 				// return v < 238;
 				return true;
+			}
+
+			public boolean modeSafe() {
+				return false;
+			}
+
+			public boolean isVizjs() {
+				return false;
 			}
 
 		};

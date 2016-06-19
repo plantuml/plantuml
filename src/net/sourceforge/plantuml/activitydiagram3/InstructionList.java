@@ -78,7 +78,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public Ftile createFtile(FtileFactory factory) {
 		if (all.size() == 0) {
-			return new FtileEmpty(factory.shadowing(), defaultSwimlane);
+			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
 		}
 		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn());
 		for (Instruction ins : all) {

@@ -61,6 +61,8 @@ import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.Moveable;
+import net.sourceforge.plantuml.vizjs.GraphvizJs;
+import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
 public class DotStringFactory implements Moveable {
 
@@ -202,14 +204,14 @@ public class DotStringFactory implements Moveable {
 
 		root.printCluster1(sb, bibliotekon.allLines());
 		for (Line line : bibliotekon.lines0()) {
-			line.appendLine(sb);
+			line.appendLine(getGraphvizVersion(), sb);
 		}
 		root.fillRankMin(rankMin);
 		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(), umlDiagramType);
 		printMinRanking(sb);
 
 		for (Line line : bibliotekon.lines1()) {
-			line.appendLine(sb);
+			line.appendLine(getGraphvizVersion(), sb);
 		}
 		SvekUtils.println(sb);
 		sb.append("}");
@@ -268,26 +270,51 @@ public class DotStringFactory implements Moveable {
 		return 35;
 	}
 
+	private GraphvizVersion graphvizVersion;
+
 	public GraphvizVersion getGraphvizVersion() {
+		if (graphvizVersion == null) {
+			graphvizVersion = getGraphvizVersionInternal();
+		}
+		return graphvizVersion;
+	}
+
+	private GraphvizVersion getGraphvizVersionInternal() {
 		final Graphviz graphviz = GraphvizUtils.create(skinParam, "foo;", "svg");
+		if (graphviz instanceof GraphvizJs) {
+			return GraphvizJs.getGraphvizVersion(false);
+		}
 		final File f = graphviz.getDotExe();
 		return GraphvizVersions.getInstance().getVersion(f);
 	}
 
-	public String getSvg(BaseFile basefile, String[] dotStrings) throws IOException {
-		final String dotString = createDotString(dotStrings);
+	public String getSvg(BaseFile basefile, String[] dotOptions) throws IOException {
+		String dotString = createDotString(dotOptions);
 
 		if (basefile != null) {
 			final File f = basefile.getTraceFile("svek.dot");
 			SvekUtils.traceString(f, dotString);
 		}
 
-		final Graphviz graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final ProcessState state = graphviz.createFile3(baos);
-		baos.close();
-		if (state.differs(ProcessState.TERMINATED_OK())) {
-			throw new IllegalStateException("Timeout4 " + state, state.getCause());
+		Graphviz graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			final ProcessState state = graphviz.createFile3(baos);
+			baos.close();
+			if (state.differs(ProcessState.TERMINATED_OK())) {
+				throw new IllegalStateException("Timeout4 " + state, state.getCause());
+			}
+		} catch (GraphvizJsRuntimeException e) {
+			System.err.println("GraphvizJsRuntimeException");
+			graphvizVersion = GraphvizJs.getGraphvizVersion(true);
+			dotString = createDotString(dotOptions);
+			graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
+			baos = new ByteArrayOutputStream();
+			final ProcessState state = graphviz.createFile3(baos);
+			baos.close();
+			if (state.differs(ProcessState.TERMINATED_OK())) {
+				throw new IllegalStateException("Timeout4 " + state, state.getCause());
+			}
 		}
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, "UTF-8");
@@ -302,6 +329,9 @@ public class DotStringFactory implements Moveable {
 
 	public boolean illegalDotExe() {
 		final Graphviz graphviz = GraphvizUtils.create(skinParam, "svg");
+		if (graphviz instanceof GraphvizJs) {
+			return false;
+		}
 		final File dotExe = graphviz.getDotExe();
 		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
 	}

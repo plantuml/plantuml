@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19398 $
+ * Revision $Revision: 19931 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -44,9 +44,12 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.vizjs.GraphvizJs;
+import net.sourceforge.plantuml.vizjs.VizJsEngine;
 
 public class GraphvizUtils {
 
+	// private static final String VIZJS = "vizjs";
 	private static int DOT_VERSION_LIMIT = 226;
 
 	private static boolean isWindows() {
@@ -64,6 +67,9 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {
+		if (VizJsEngine.isOk()) {
+			return new GraphvizJs(dotString);
+		}
 		final AbstractGraphviz result;
 		if (isWindows()) {
 			result = new GraphvizWindows(skinParam, dotString, type);
@@ -157,7 +163,24 @@ public class GraphvizUtils {
 			red = "<b><color:red>";
 			bold = "<b>";
 		}
+
 		final List<String> result = new ArrayList<String>();
+		if (VizJsEngine.isOk()) {
+			result.add("VizJs library is used!");
+			try {
+				final String err = getTestCreateSimpleFile();
+				if (err == null) {
+					result.add(bold + "Installation seems OK. File generation OK");
+				} else {
+					result.add(red + err);
+				}
+			} catch (Exception e) {
+				result.add(red + e.toString());
+				e.printStackTrace();
+			}
+			return Collections.unmodifiableList(result);
+		}
+
 		final String ent = GraphvizUtils.getenvGraphvizDot();
 		if (ent == null) {
 			result.add("The environment variable GRAPHVIZ_DOT has not been set");

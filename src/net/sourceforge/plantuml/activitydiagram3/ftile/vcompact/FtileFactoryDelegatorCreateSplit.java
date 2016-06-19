@@ -39,7 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
@@ -73,8 +72,8 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 	private final Rose rose = new Rose();
 
-	public FtileFactoryDelegatorCreateSplit(FtileFactory factory, ISkinParam skinParam) {
-		super(factory, skinParam);
+	public FtileFactoryDelegatorCreateSplit(FtileFactory factory) {
+		super(factory);
 	}
 
 	static private boolean isSimpleSwimlanes(List<Ftile> all) {
@@ -121,7 +120,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 		// // } else if (isSeveralSwimlanes(all)) {
 		// // return severalSwimlanes(all);
 		// }
-		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final Dimension2D dimSuper = super.createSplit(all).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
@@ -208,7 +207,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 	}
 
 	private Ftile simpleSwimlanes(List<Ftile> all) {
-		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final Dimension2D dimSuper = new FtileSplit1(all).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;

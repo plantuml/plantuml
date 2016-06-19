@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19978 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -58,12 +58,16 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final double deltaShadow;
 	private final double roundCorner;
 	private final UStroke stroke;
+	private final double minWidth;
+	private final boolean collections;
 
 	public ComponentRoseParticipant(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay,
-			ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
+			ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype, HtmlColor htmlColorForStereotype,
+			double minWidth, boolean collections) {
 		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7, spriteContainer, 0, false,
 				fontForStereotype, htmlColorForStereotype);
+		this.minWidth = minWidth;
+		this.collections = collections;
 		this.back = biColor.getBackColor();
 		this.roundCorner = roundCorner;
 		this.deltaShadow = biColor.getDeltaShadow();
@@ -79,19 +83,40 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		final URectangle rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder), roundCorner,
 				roundCorner);
 		rect.setDeltaShadow(deltaShadow);
+		if (collections) {
+			ug.apply(new UTranslate(getDeltaCollection(), 0)).draw(rect);
+			ug = ug.apply(new UTranslate(0, getDeltaCollection()));
+		}
 		ug.draw(rect);
 		ug = ug.apply(new UStroke());
 		final TextBlock textBlock = getTextBlock();
-		textBlock.drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
+		textBlock.drawU(ug.apply(new UTranslate(getMarginX1() + suppWidth(stringBounder) / 2, getMarginY())));
+	}
+
+	private double getDeltaCollection() {
+		if (collections) {
+			return 4;
+		}
+		return 0;
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return getTextHeight(stringBounder) + deltaShadow + 1;
+		return getTextHeight(stringBounder) + deltaShadow + 1 + getDeltaCollection();
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return getTextWidth(stringBounder) + deltaShadow;
+		return getTextWidth(stringBounder) + deltaShadow + getDeltaCollection();
 	}
+
+	@Override
+	protected double getPureTextWidth(StringBounder stringBounder) {
+		return Math.max(super.getPureTextWidth(stringBounder), minWidth);
+	}
+
+	private final double suppWidth(StringBounder stringBounder) {
+		return getPureTextWidth(stringBounder) - super.getPureTextWidth(stringBounder);
+	}
+
 }

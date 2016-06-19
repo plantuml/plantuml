@@ -41,7 +41,13 @@ import java.util.zip.Inflater;
 public class CompressionZlib implements Compression {
 
 	public byte[] compress(byte[] in) {
+		if (in.length == 0) {
+			return null;
+		}
 		int len = in.length * 2;
+		if (len < 100) {
+			len = 100;
+		}
 		byte[] result = null;
 		while (result == null) {
 			result = tryCompress(in, len);

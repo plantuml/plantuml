@@ -37,7 +37,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -56,8 +55,8 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 
 	private final Pragma pragma;
 
-	public FtileFactoryDelegatorIf(FtileFactory factory, ISkinParam skinParam, Pragma pragma) {
-		super(factory, skinParam);
+	public FtileFactoryDelegatorIf(FtileFactory factory, Pragma pragma) {
+		super(factory);
 		this.pragma = pragma;
 	}
 
@@ -65,15 +64,15 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering) {
 
-		final ConditionStyle conditionStyle = getSkinParam().getConditionStyle();
+		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final Branch branch0 = thens.get(0);
 
-		final HtmlColor borderColor = getRose().getHtmlColor(getSkinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(getSkinParam(),
+		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
+		final HtmlColor backColor = branch0.getColor() == null ? getRose().getHtmlColor(skinParam(),
 				ColorParam.activityBackground) : branch0.getColor();
-		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
-		final FontConfiguration fcArrow = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
 		// .changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 		if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
@@ -84,15 +83,15 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		}
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
 				: FontParam.ACTIVITY_ARROW;
-		final FontConfiguration fcTest = new FontConfiguration(getSkinParam(), testParam, null)
+		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null)
 				.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 
 		return ConditionalBuilder.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
-				thens.get(0), elseBranch, getSkinParam(), getStringBounder(), fcArrow, fcTest);
+				thens.get(0), elseBranch, skinParam(), getStringBounder(), fcArrow, fcTest);
 	}
 
 	private HtmlColor fontColor(FontParam param) {
-		return getSkinParam().getFontHtmlColor(null, param);
+		return skinParam().getFontHtmlColor(null, param);
 	}
 
 }

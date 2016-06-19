@@ -48,7 +48,7 @@ public class InstructionLabel extends MonoSwimable implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return new FtileLabel(factory.shadowing(), getSwimlaneIn(), name);
+		return new FtileLabel(factory.skinParam(), getSwimlaneIn(), name);
 	}
 
 	public void add(Instruction other) {

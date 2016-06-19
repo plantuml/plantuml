@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.svek.ConditionStyle;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ConditionalBuilder {
 
@@ -79,10 +78,9 @@ public class ConditionalBuilder {
 	private final Ftile tile1;
 	private final Ftile tile2;
 
-	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor,
-			Rainbow arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1,
-			Branch branch2, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fontArrow,
-			FontConfiguration fontTest) {
+	public ConditionalBuilder(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fontArrow, FontConfiguration fontTest) {
 		this.swimlane = swimlane;
 		this.borderColor = borderColor;
 		this.backColor = backColor;
@@ -101,10 +99,9 @@ public class ConditionalBuilder {
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor,
-			Rainbow arrowColor, FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1,
-			Branch branch2, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow,
-			FontConfiguration fcTest) {
+	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
 		return builder.createWithLinks();
@@ -159,14 +156,14 @@ public class ConditionalBuilder {
 		final Sheet sheet = new CreoleParser(fontTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
-		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), new UStroke(1.5));
+		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
 		final Ftile diamond1;
 		if (conditionStyle == ConditionStyle.INSIDE) {
-			diamond1 = new FtileDiamondInside(tile1.shadowing(), backColor, borderColor, swimlane, tbTest)
+			diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
 					.withWestAndEast(tb1, tb2);
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			diamond1 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withNorth(tbTest)
+			diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
 					.withWestAndEast(tb1, tb2);
 		} else {
 			throw new IllegalStateException();
@@ -175,13 +172,13 @@ public class ConditionalBuilder {
 	}
 
 	private TextBlock getLabelBranch2() {
-		final TextBlock tb2 = branch2.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory,
+		final TextBlock tb2 = branch2.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
 				CreoleMode.SIMPLE_LINE);
 		return tb2;
 	}
 
 	private TextBlock getLabelBranch1() {
-		final TextBlock tb1 = branch1.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory,
+		final TextBlock tb1 = branch1.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
 				CreoleMode.SIMPLE_LINE);
 		return tb1;
 	}
@@ -191,16 +188,16 @@ public class ConditionalBuilder {
 		if (hasTwoBranches()) {
 			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();
 			final TextBlock tbout1 = out1 == null ? null : out1.create(fontArrow, HorizontalAlignment.LEFT,
-					ftileFactory, CreoleMode.SIMPLE_LINE);
+					ftileFactory.skinParam(), CreoleMode.SIMPLE_LINE);
 			final Display out2 = branch2.getFtile().getOutLinkRendering().getDisplay();
 			final TextBlock tbout2 = out2 == null ? null : out2.create(fontArrow, HorizontalAlignment.LEFT,
-					ftileFactory, CreoleMode.SIMPLE_LINE);
-			diamond2 = new FtileDiamond(tile1.shadowing(), backColor, borderColor, swimlane).withWest(tbout1).withEast(
+					ftileFactory.skinParam(), CreoleMode.SIMPLE_LINE);
+			diamond2 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withWest(tbout1).withEast(
 					tbout2);
 		} else {
 			// diamond2 = new FtileEmpty(tile1.shadowing(), Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2,
 			// swimlane, swimlane);
-			diamond2 = new FtileEmpty(tile1.shadowing(), 0, Diamond.diamondHalfSize / 2, swimlane, swimlane);
+			diamond2 = new FtileEmpty(tile1.skinParam(), 0, Diamond.diamondHalfSize / 2, swimlane, swimlane);
 		}
 		return diamond2;
 	}

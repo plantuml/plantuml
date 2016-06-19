@@ -54,7 +54,7 @@ class FtileForkInner extends AbstractFtile {
 	private final List<Ftile> forks = new ArrayList<Ftile>();
 
 	public FtileForkInner(List<Ftile> forks) {
-		super(forks.get(0).shadowing());
+		super(forks.get(0).skinParam());
 		for (Ftile ftile : forks) {
 			this.forks.add(ftile);
 		}

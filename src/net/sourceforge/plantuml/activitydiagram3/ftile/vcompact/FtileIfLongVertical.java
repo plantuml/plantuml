@@ -84,7 +84,7 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	private FtileIfLongVertical(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, Rainbow arrowColor,
 			Ftile lastDiamond) {
-		super(tiles.get(0).shadowing() || tile2.shadowing());
+		super(tiles.get(0).skinParam());
 		if (diamonds.size() != tiles.size()) {
 			throw new IllegalArgumentException();
 		}
@@ -149,21 +149,21 @@ class FtileIfLongVertical extends AbstractFtile {
 
 		List<Ftile> diamonds = new ArrayList<Ftile>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory);
-			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT, ftileFactory);
-			FtileDiamondInside3 diamond = new FtileDiamondInside3(branch.shadowing(), backColor, borderColor, swimlane,
+			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+			FtileDiamondInside3 diamond = new FtileDiamondInside3(branch.skinParam(), backColor, borderColor, swimlane,
 					tbTest);
 			diamond = diamond.withEast(tb1);
 			diamonds.add(diamond);
 		}
 
-		final TextBlock tb2 = branch2.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock tb2 = branch2.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 		final int last = diamonds.size() - 1;
 		diamonds.set(last, ((FtileDiamondInside3) diamonds.get(last)).withSouth(tb2));
 
 		// diamonds = alignDiamonds(diamonds, ftileFactory.getStringBounder());
 
-		final Ftile lastDiamond = new FtileDiamond(tiles.get(0).shadowing(), backColor, borderColor, swimlane);
+		final Ftile lastDiamond = new FtileDiamond(tiles.get(0).skinParam(), backColor, borderColor, swimlane);
 
 		final FtileIfLongVertical result = new FtileIfLongVertical(diamonds, tiles, tile2, arrowColor, lastDiamond);
 

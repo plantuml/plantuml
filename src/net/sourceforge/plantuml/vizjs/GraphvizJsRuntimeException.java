@@ -28,20 +28,15 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11325 $
+ * Revision $Revision: 19398 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram.dot;
+package net.sourceforge.plantuml.vizjs;
 
-public interface GraphvizVersion {
-	public boolean useShield();
+public class GraphvizJsRuntimeException extends RuntimeException {
 
-	public boolean useProtectionWhenThereALinkFromOrToGroup();
-
-	public boolean modeSafe();
-
-	public boolean isVizjs();
-
-	// COMMON, V2_34_0
+	public GraphvizJsRuntimeException(Exception e) {
+		// TODO Auto-generated constructor stub
+	}
 
 }

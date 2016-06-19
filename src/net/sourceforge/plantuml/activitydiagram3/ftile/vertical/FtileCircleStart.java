@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -53,8 +54,8 @@ public class FtileCircleStart extends AbstractFtile {
 	private final HtmlColor backColor;
 	private final Swimlane swimlane;
 
-	public FtileCircleStart(boolean shadowing, HtmlColor backColor, Swimlane swimlane) {
-		super(shadowing);
+	public FtileCircleStart(ISkinParam skinParam, HtmlColor backColor, Swimlane swimlane) {
+		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
 	}
@@ -76,7 +77,7 @@ public class FtileCircleStart extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (shadowing()) {
+		if (skinParam().shadowing()) {
 			circle.setDeltaShadow(3);
 		}
 		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor)).draw(circle);

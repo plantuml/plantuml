@@ -78,7 +78,7 @@ class FtileRepeat extends AbstractFtile {
 	private final TextBlock tbTest;
 
 	private FtileRepeat(Ftile repeat, Ftile diamond1, Ftile diamond2, TextBlock tbTest) {
-		super(repeat.shadowing());
+		super(repeat.skinParam());
 		this.repeat = repeat;
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
@@ -108,20 +108,20 @@ class FtileRepeat extends AbstractFtile {
 		final TextBlock yesTb = yes.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
 		final TextBlock outTb = out.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
 
-		final Ftile diamond1 = new FtileDiamond(repeat.shadowing(), backColor, borderColor, swimlane);
+		final Ftile diamond1 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane);
 		final FtileRepeat result;
 		if (conditionStyle == ConditionStyle.INSIDE) {
-			final Ftile diamond2 = new FtileDiamondInside(repeat.shadowing(), backColor, borderColor, swimlaneOut,
+			final Ftile diamond2 = new FtileDiamondInside(repeat.skinParam(), backColor, borderColor, swimlaneOut,
 					tbTest).withEast(yesTb).withSouth(outTb);
 			// final Ftile diamond2 = new FtileDiamondInside(repeat.shadowing(), backColor, borderColor, swimlane,
 			// tbTest).withEast(yesTb).withSouth(outTb);
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0));
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			final Ftile diamond2 = new FtileDiamond(repeat.shadowing(), backColor, borderColor, swimlane)
+			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane)
 					.withEast(tbTest);
 			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest);
 		} else if (conditionStyle == ConditionStyle.FOO1) {
-			final Ftile diamond2 = new FtileDiamondFoo1(repeat.shadowing(), backColor, borderColor, swimlane, tbTest);
+			final Ftile diamond2 = new FtileDiamondFoo1(repeat.skinParam(), backColor, borderColor, swimlane, tbTest);
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0));
 		} else {
 			throw new IllegalStateException();

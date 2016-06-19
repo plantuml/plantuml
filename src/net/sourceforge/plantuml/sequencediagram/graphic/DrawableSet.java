@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19885 $
+ * Revision $Revision: 19976 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -45,6 +45,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -61,6 +62,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class DrawableSet {
@@ -279,7 +281,7 @@ public class DrawableSet {
 				}
 			}
 			final double myDelta = page.getNewpage1() - page.getHeaderHeight();
-			box.drawLineU22(ug, start,  endMax, showTail, myDelta);
+			box.drawLineU22(ug, start, endMax, showTail, myDelta);
 		}
 	}
 
@@ -415,6 +417,14 @@ public class DrawableSet {
 			}
 		}
 		return list.get(max);
+	}
+
+	public double getArrowThickness() {
+		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);
+		if (result == null) {
+			return 1;
+		}
+		return result.getThickness();
 	}
 
 }

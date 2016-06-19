@@ -82,7 +82,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil {
 	}
 
 	public FtileNoteAlone(boolean shadow, Display note, ISkinParam skinParam, boolean withOutPoint, Swimlane swimlane) {
-		super(shadow);
+		super(skinParam);
 		this.swimlane = swimlane;
 		this.withOutPoint = withOutPoint;
 		final Rose rose = new Rose();

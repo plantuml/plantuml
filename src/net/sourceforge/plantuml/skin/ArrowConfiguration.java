@@ -34,6 +34,8 @@
 package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class ArrowConfiguration {
 
@@ -48,12 +50,14 @@ public class ArrowConfiguration {
 	private final HtmlColor color;
 
 	private final boolean isSelf;
+	private final double thickness;
 
 	private ArrowConfiguration(ArrowBody body, ArrowDressing dressing1, ArrowDressing dressing2,
-			ArrowDecoration decoration1, ArrowDecoration decoration2, HtmlColor color, boolean isSelf) {
+			ArrowDecoration decoration1, ArrowDecoration decoration2, HtmlColor color, boolean isSelf, double thickness) {
 		if (body == null || dressing1 == null || dressing2 == null) {
 			throw new IllegalArgumentException();
 		}
+		this.thickness = thickness;
 		this.body = body;
 		this.dressing1 = dressing1;
 		this.dressing2 = dressing2;
@@ -75,19 +79,19 @@ public class ArrowConfiguration {
 
 	public static ArrowConfiguration withDirectionNormal() {
 		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(), ArrowDressing.create().withHead(
-				ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null, false);
+				ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null, false, 1);
 	}
 
 	public static ArrowConfiguration withDirectionBoth() {
 		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),
 				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,
-				false);
+				false, 1);
 	}
 
 	public static ArrowConfiguration withDirectionSelf() {
 		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),
 				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,
-				true);
+				true, 1);
 	}
 
 	public static ArrowConfiguration withDirectionReverse() {
@@ -95,21 +99,22 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration reverse() {
-		return new ArrowConfiguration(body, dressing2, dressing1, decoration2, decoration1, color, isSelf);
+		return new ArrowConfiguration(body, dressing2, dressing1, decoration2, decoration1, color, isSelf, thickness);
 	}
 
 	public ArrowConfiguration self() {
-		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true);
+		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, true, thickness);
 	}
 
 	public ArrowConfiguration withBody(ArrowBody type) {
-		return new ArrowConfiguration(type, dressing1, dressing2, decoration1, decoration2, color, isSelf);
+		return new ArrowConfiguration(type, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness);
 	}
 
 	public ArrowConfiguration withHead(ArrowHead head) {
 		final ArrowDressing newDressing1 = addHead(dressing1, head);
 		final ArrowDressing newDressing2 = addHead(dressing2, head);
-		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf);
+		return new ArrowConfiguration(body, newDressing1, newDressing2, decoration1, decoration2, color, isSelf,
+				thickness);
 	}
 
 	private static ArrowDressing addHead(ArrowDressing dressing, ArrowHead head) {
@@ -121,33 +126,33 @@ public class ArrowConfiguration {
 
 	public ArrowConfiguration withHead1(ArrowHead head) {
 		return new ArrowConfiguration(body, dressing1.withHead(head), dressing2, decoration1, decoration2, color,
-				isSelf);
+				isSelf, thickness);
 	}
 
 	public ArrowConfiguration withHead2(ArrowHead head) {
 		return new ArrowConfiguration(body, dressing1, dressing2.withHead(head), decoration1, decoration2, color,
-				isSelf);
+				isSelf, thickness);
 	}
 
 	public ArrowConfiguration withPart(ArrowPart part) {
 		if (dressing2.getHead() != ArrowHead.NONE) {
 			return new ArrowConfiguration(body, dressing1, dressing2.withPart(part), decoration1, decoration2, color,
-					isSelf);
+					isSelf, thickness);
 		}
 		return new ArrowConfiguration(body, dressing1.withPart(part), dressing2, decoration1, decoration2, color,
-				isSelf);
+				isSelf, thickness);
 	}
 
 	public ArrowConfiguration withDecoration1(ArrowDecoration decoration1) {
-		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf);
+		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness);
 	}
 
 	public ArrowConfiguration withDecoration2(ArrowDecoration decoration2) {
-		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf);
+		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness);
 	}
 
 	public ArrowConfiguration withColor(HtmlColor color) {
-		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf);
+		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness);
 	}
 
 	public final ArrowDecoration getDecoration1() {
@@ -211,6 +216,25 @@ public class ArrowConfiguration {
 
 	public ArrowDressing getDressing2() {
 		return dressing2;
+	}
+
+	public static UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
+		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));
+	}
+
+	public UGraphic applyStroke(UGraphic ug) {
+		if (isDotted()) {
+			return ug.apply(new UStroke(2, 2, thickness));
+		}
+		return ug.apply(new UStroke(thickness));
+	}
+
+	public UGraphic applyThicknessOnly(UGraphic ug) {
+		return ug.apply(new UStroke(thickness));
+	}
+
+	public ArrowConfiguration withThickness(double thickness) {
+		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness);
 	}
 
 }

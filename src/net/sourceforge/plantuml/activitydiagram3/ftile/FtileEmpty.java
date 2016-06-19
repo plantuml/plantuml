@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -47,12 +48,12 @@ public class FtileEmpty extends AbstractFtile {
 	private final Swimlane swimlaneIn;
 	private final Swimlane swimlaneOut;
 
-	public FtileEmpty(boolean shadowing, double width, double height) {
-		this(shadowing, width, height, null, null);
+	public FtileEmpty(ISkinParam skinParam, double width, double height) {
+		this(skinParam, width, height, null, null);
 	}
 
-	public FtileEmpty(boolean shadowing, double width, double height, Swimlane swimlaneIn, Swimlane swimlaneOut) {
-		super(shadowing);
+	public FtileEmpty(ISkinParam skinParam, double width, double height, Swimlane swimlaneIn, Swimlane swimlaneOut) {
+		super(skinParam);
 		this.width = width;
 		this.height = height;
 		this.swimlaneIn = swimlaneIn;
@@ -60,12 +61,12 @@ public class FtileEmpty extends AbstractFtile {
 
 	}
 
-	public FtileEmpty(boolean shadowing) {
-		this(shadowing, 0, 0, null, null);
+	public FtileEmpty(ISkinParam skinParam) {
+		this(skinParam, 0, 0, null, null);
 	}
 
-	public FtileEmpty(boolean shadowing, Swimlane swimlane) {
-		this(shadowing, 0, 0, swimlane, swimlane);
+	public FtileEmpty(ISkinParam skinParam, Swimlane swimlane) {
+		this(skinParam, 0, 0, swimlane, swimlane);
 	}
 
 	@Override

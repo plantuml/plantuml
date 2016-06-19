@@ -35,7 +35,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -46,11 +46,11 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public interface FtileFactory extends ISkinSimple {
+public interface FtileFactory {
 
 	public StringBounder getStringBounder();
 
-	public boolean shadowing();
+	public ISkinParam skinParam();
 
 	public Ftile start(Swimlane swimlane);
 

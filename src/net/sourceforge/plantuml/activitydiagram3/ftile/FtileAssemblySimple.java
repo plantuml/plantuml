@@ -39,10 +39,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
@@ -132,8 +134,12 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		return Collections.unmodifiableSet(result);
 	}
 
-	public boolean shadowing() {
-		return tile1.shadowing() || tile2.shadowing();
+	public ISkinParam skinParam() {
+		return tile1.skinParam();
+	}
+
+	public UStroke getThickness() {
+		return tile1.getThickness();
 	}
 
 }

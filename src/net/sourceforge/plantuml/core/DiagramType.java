@@ -33,45 +33,47 @@
  */
 package net.sourceforge.plantuml.core;
 
+import net.sourceforge.plantuml.utils.StartUtils;
+
 public enum DiagramType {
 	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, TURING, FLOW, CREOLE, JUNGLE, CUTE, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
-//		if (s.startsWith("@startuml2")) {
-//			return UML2;
-//		}
-		if (s.startsWith("@startuml")) {
+		// if (s.startsWith("@startuml2")) {
+		// return UML2;
+		// }
+		if (StartUtils.startsWithSymbolAnd("startuml", s)) {
 			return UML;
 		}
-		if (s.startsWith("@startdot")) {
+		if (StartUtils.startsWithSymbolAnd("startdot", s)) {
 			return DOT;
 		}
-		if (s.startsWith("@startjcckit")) {
+		if (StartUtils.startsWithSymbolAnd("startjcckit", s)) {
 			return JCCKIT;
 		}
-		if (s.startsWith("@startditaa")) {
+		if (StartUtils.startsWithSymbolAnd("startditaa", s)) {
 			return DITAA;
 		}
-		if (s.startsWith("@startproject")) {
+		if (StartUtils.startsWithSymbolAnd("startproject", s)) {
 			return PROJECT;
 		}
-		if (s.startsWith("@startsalt")) {
+		if (StartUtils.startsWithSymbolAnd("startsalt", s)) {
 			return SALT;
 		}
-		if (s.startsWith("@startturing")) {
+		if (StartUtils.startsWithSymbolAnd("startturing", s)) {
 			return TURING;
 		}
-		if (s.startsWith("@startflow")) {
+		if (StartUtils.startsWithSymbolAnd("startflow", s)) {
 			return FLOW;
 		}
-		if (s.startsWith("@startcreole")) {
+		if (StartUtils.startsWithSymbolAnd("startcreole", s)) {
 			return CREOLE;
 		}
-		if (s.startsWith("@starttree")) {
+		if (StartUtils.startsWithSymbolAnd("starttree", s)) {
 			return JUNGLE;
 		}
-		if (s.startsWith("@startcute")) {
+		if (StartUtils.startsWithSymbolAnd("startcute", s)) {
 			return CUTE;
 		}
 		return UNKNOWN;

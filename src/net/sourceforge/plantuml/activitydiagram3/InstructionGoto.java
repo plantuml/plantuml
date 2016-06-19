@@ -48,7 +48,7 @@ public class InstructionGoto extends MonoSwimable implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return new FtileGoto(factory.shadowing(), getSwimlaneIn(), name);
+		return new FtileGoto(factory.skinParam(), getSwimlaneIn(), name);
 	}
 
 	public void add(Instruction other) {

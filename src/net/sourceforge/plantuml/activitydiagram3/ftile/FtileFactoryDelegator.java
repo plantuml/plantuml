@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -54,24 +53,23 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class FtileFactoryDelegator implements FtileFactory {
 
 	private final FtileFactory factory;
-	private final ISkinParam skinParam;
+
 	private final Rose rose = new Rose();
 
 	protected final Rainbow getInLinkRenderingColor(Ftile tile) {
 		Rainbow color;
 		final LinkRendering linkRendering = tile.getInLinkRendering();
 		if (linkRendering == null) {
-			color = HtmlColorAndStyle.build(getSkinParam());
+			color = HtmlColorAndStyle.build(skinParam());
 		} else {
 			color = linkRendering.getRainbow();
 		}
 		if (color.size() == 0) {
-			color = HtmlColorAndStyle.build(getSkinParam());
+			color = HtmlColorAndStyle.build(skinParam());
 		}
 		return color;
 	}
@@ -80,9 +78,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		if (Display.isNull(display)) {
 			return null;
 		}
-		final ISkinParam skinParam = getSkinParam();
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.ACTIVITY_ARROW, null);
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, this, CreoleMode.SIMPLE_LINE);
+		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 
 	protected Display getInLinkRenderingDisplay(Ftile tile) {
@@ -93,9 +90,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return linkRendering.getDisplay();
 	}
 
-	public FtileFactoryDelegator(FtileFactory factory, ISkinParam skinParam) {
+	public FtileFactoryDelegator(FtileFactory factory) {
 		this.factory = factory;
-		this.skinParam = skinParam;
 	}
 
 	public Ftile start(Swimlane swimlane) {
@@ -172,48 +168,15 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.getStringBounder();
 	}
 
-	protected final ISkinParam getSkinParam() {
-		return skinParam;
-	}
-
 	protected final Rose getRose() {
 		return rose;
 	}
 
-	public boolean shadowing() {
-		return skinParam.shadowing();
+	public final ISkinParam skinParam() {
+		return factory.skinParam();
 	}
 
 	protected FtileFactory getFactory() {
 		return factory;
 	}
-
-	public Sprite getSprite(String name) {
-		return skinParam.getSprite(name);
-	}
-
-	public String getValue(String key) {
-		return skinParam.getValue(key);
-	}
-
-	public double getPadding() {
-		return skinParam.getPadding();
-	}
-
-	public boolean useGuillemet() {
-		return skinParam.useGuillemet();
-	}
-
-	public String getMonospacedFamily() {
-		return skinParam.getMonospacedFamily();
-	}
-
-	public int getTabSize() {
-		return skinParam.getTabSize();
-	}
-
-	public IHtmlColorSet getIHtmlColorSet() {
-		return skinParam.getIHtmlColorSet();
-	}
-
 }

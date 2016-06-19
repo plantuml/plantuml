@@ -78,11 +78,11 @@ public class FtileUtils {
 	// return new FtileMarged(ftile, margin);
 	// }
 
-	private static Ftile neverNull(Ftile ftile) {
-		if (ftile == null) {
-			return new FtileEmpty(false);
-		}
-		return ftile;
-	}
+	// private static Ftile neverNull(Ftile ftile, ISkinParam skinParam) {
+	// if (ftile == null) {
+	// return new FtileEmpty(skinParam);
+	// }
+	// return ftile;
+	// }
 
 }

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19978 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -41,7 +41,8 @@ public enum ParticipantType {
 	BOUNDARY(ColorParam.boundaryBackground), //
 	CONTROL(ColorParam.controlBackground), //
 	ENTITY(ColorParam.entityBackground), //
-	DATABASE(ColorParam.databaseBackground);
+	DATABASE(ColorParam.databaseBackground), //
+	COLLECTIONS(ColorParam.collectionsBackground);
 
 	private final ColorParam background;
 

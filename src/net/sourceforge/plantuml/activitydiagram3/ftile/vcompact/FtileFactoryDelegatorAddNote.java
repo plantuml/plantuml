@@ -33,7 +33,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
@@ -44,8 +43,8 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 
-	public FtileFactoryDelegatorAddNote(FtileFactory factory, ISkinParam skinParam) {
-		super(factory, skinParam);
+	public FtileFactoryDelegatorAddNote(FtileFactory factory) {
+		super(factory);
 	}
 
 	@Override
@@ -54,8 +53,8 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 			throw new IllegalArgumentException();
 		}
 		if (ftile == null) {
-			return new FtileNoteAlone(getSkinParam().shadowing(), note, getSkinParam(), type == NoteType.NOTE, swimlane);
+			return new FtileNoteAlone(skinParam().shadowing(), note, skinParam(), type == NoteType.NOTE, swimlane);
 		}
-		return new FtileWithNoteOpale(ftile, note, notePosition, type, getSkinParam(), true);
+		return new FtileWithNoteOpale(ftile, note, notePosition, type, skinParam(), true);
 	}
 }

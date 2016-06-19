@@ -38,28 +38,29 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.core.DiagramType;
 
 public class StartUtils {
 
-	public static final String PAUSE_PATTERN = "(?i)((?:\\W|\\<[^<>]*\\>)*)@unpause";
-	public static final String START_PATTERN = "(?i)((?:[^\\w~]|\\<[^<>]*\\>)*)@start";
+	public static final Pattern2 patternFilename = MyPattern
+			.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
-	public static boolean isArobaseStartDiagram(CharSequence s) {
-		return StringUtils.trinNoTrace(s).startsWith("@start");
-	}
+	public static final String PAUSE_PATTERN = "(?i)((?:\\W|\\<[^<>]*\\>)*)[@\\\\]unpause";
+	public static final String START_PATTERN = "(?i)((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
 
 	public static String beforeStartUml(final CharSequence2 result) {
 		boolean inside = false;
 		for (int i = 0; i < result.length(); i++) {
+			final CharSequence2 tmp = result.subSequence(i, result.length());
+			if (startsWithSymbolAnd("start", tmp)) {
+				return result.subSequence(0, i).toString();
+			}
 			final String single = result.subSequence(i, i + 1).toString();
 			if (inside) {
 				if (single.equals(">")) {
 					inside = false;
 				}
 				continue;
-			}
-			if (result.subSequence(i, result.length()).startsWith("@start")) {
-				return result.subSequence(0, i).toString();
 			}
 			if (single.equals("<")) {
 				inside = true;
@@ -75,19 +76,35 @@ public class StartUtils {
 		// return null;
 	}
 
+	public static boolean isArobaseStartDiagram(CharSequence s) {
+		final String s2 = StringUtils.trinNoTrace(s);
+		return DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
+	}
+
+	public static boolean startsWithSymbolAnd(String value, final CharSequence2 tmp) {
+		return tmp.startsWith("@" + value) || tmp.startsWith("\\" + value);
+	}
+
+	public static boolean startsWithSymbolAnd(String value, final String tmp) {
+		return tmp.startsWith("@" + value) || tmp.startsWith("\\" + value);
+	}
+
 	public static boolean isArobaseEndDiagram(CharSequence s) {
-		return StringUtils.trinNoTrace(s).startsWith("@end");
+		final String s2 = StringUtils.trinNoTrace(s);
+		return startsWithSymbolAnd("end", s2);
 	}
 
 	public static boolean isArobasePauseDiagram(CharSequence s) {
-		return StringUtils.trinNoTrace(s).startsWith("@pause");
+		final String s2 = StringUtils.trinNoTrace(s);
+		return startsWithSymbolAnd("pause", s2);
 	}
 
 	public static boolean isArobaseUnpauseDiagram(CharSequence s) {
-		return StringUtils.trinNoTrace(s).startsWith("@unpause");
+		final String s2 = StringUtils.trinNoTrace(s);
+		return startsWithSymbolAnd("unpause", s2);
 	}
 
-	private static final Pattern2 append = MyPattern.cmpile("^\\W*@append");
+	private static final Pattern2 append = MyPattern.cmpile("^\\W*[@\\\\]append");
 
 	public static CharSequence2 getPossibleAppend(CharSequence2 s) {
 		final Matcher2 m = append.matcher(s);

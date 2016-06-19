@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19510 $
+ * Revision $Revision: 19978 $
  * 
  */
 package net.sourceforge.plantuml;
@@ -132,6 +132,8 @@ public enum ColorParam {
 	storageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	boundaryBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
 	boundaryBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
+	collectionsBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	collectionsBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	controlBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
 	controlBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	entityBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),

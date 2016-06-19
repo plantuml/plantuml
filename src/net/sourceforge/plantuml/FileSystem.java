@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19896 $
  *
  */
 package net.sourceforge.plantuml;
@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 
 public class FileSystem {
 
@@ -92,10 +91,11 @@ public class FileSystem {
 
 	private List<File> getPath(String prop) {
 		final List<File> result = new ArrayList<File>();
-		final String paths = System.getProperty(prop);
+		String paths = System.getProperty(prop);
 		if (paths == null) {
 			return result;
 		}
+		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);
 		final StringTokenizer st = new StringTokenizer(paths, System.getProperty("path.separator"));
 		while (st.hasMoreTokens()) {
 			final File f = new File(st.nextToken());

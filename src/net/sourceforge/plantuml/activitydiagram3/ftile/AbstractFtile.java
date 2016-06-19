@@ -36,21 +36,34 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.Collection;
 import java.util.Collections;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
 	private final boolean shadowing;
+	private final ISkinParam skinParam;
 
-	public AbstractFtile(boolean shadowing) {
+	private AbstractFtile(boolean shadowing) {
 		this.shadowing = shadowing;
+		this.skinParam = null;
 	}
 
-	final public boolean shadowing() {
-		return shadowing;
+	public AbstractFtile(ISkinParam skinParam) {
+		this.shadowing = skinParam.shadowing();
+		this.skinParam = skinParam;
+	}
+
+	final public ISkinParam skinParam() {
+		if (skinParam == null) {
+			throw new IllegalStateException();
+		}
+		return skinParam;
 	}
 
 	public LinkRendering getInLinkRendering() {
@@ -67,6 +80,14 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 		throw new UnsupportedOperationException();
+	}
+
+	public final UStroke getThickness() {
+		UStroke thickness = skinParam.getThickness(LineParam.activityBorder, null);
+		if (thickness == null) {
+			thickness = new UStroke(1.5);
+		}
+		return thickness;
 	}
 
 }

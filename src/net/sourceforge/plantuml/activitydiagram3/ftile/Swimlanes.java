@@ -109,15 +109,15 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	private FtileFactory getFtileFactory() {
 		FtileFactory factory = new VCompactFactory(skinParam, TextBlockUtils.getDummyStringBounder());
-		factory = new FtileFactoryDelegatorAddUrl(factory, skinParam);
-		factory = new FtileFactoryDelegatorAssembly(factory, skinParam);
-		factory = new FtileFactoryDelegatorIf(factory, skinParam, pragma);
-		factory = new FtileFactoryDelegatorWhile(factory, skinParam);
-		factory = new FtileFactoryDelegatorRepeat(factory, skinParam);
-		factory = new FtileFactoryDelegatorCreateFork(factory, skinParam);
-		factory = new FtileFactoryDelegatorCreateSplit(factory, skinParam);
-		factory = new FtileFactoryDelegatorAddNote(factory, skinParam);
-		factory = new FtileFactoryDelegatorCreateGroup(factory, skinParam);
+		factory = new FtileFactoryDelegatorAddUrl(factory);
+		factory = new FtileFactoryDelegatorAssembly(factory);
+		factory = new FtileFactoryDelegatorIf(factory, pragma);
+		factory = new FtileFactoryDelegatorWhile(factory);
+		factory = new FtileFactoryDelegatorRepeat(factory);
+		factory = new FtileFactoryDelegatorCreateFork(factory);
+		factory = new FtileFactoryDelegatorCreateSplit(factory);
+		factory = new FtileFactoryDelegatorAddNote(factory);
+		factory = new FtileFactoryDelegatorCreateGroup(factory);
 		return factory;
 	}
 

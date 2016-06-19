@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -70,14 +69,14 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 
 	private final Rose rose = new Rose();
 
-	public FtileFactoryDelegatorCreateFork(FtileFactory factory, ISkinParam skinParam) {
-		super(factory, skinParam);
+	public FtileFactoryDelegatorCreateFork(FtileFactory factory) {
+		super(factory);
 	}
 
 	@Override
 	public Ftile createFork(Swimlane swimlane, List<Ftile> all) {
-		final HtmlColor colorBar = rose.getHtmlColor(getSkinParam(), ColorParam.activityBar);
-		final Rainbow arrowColor = HtmlColorAndStyle.build(getSkinParam());
+		final HtmlColor colorBar = rose.getHtmlColor(skinParam(), ColorParam.activityBar);
+		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final Dimension2D dimSuper = super.createFork(swimlane, all).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
@@ -91,7 +90,7 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 
 		final List<Connection> conns = new ArrayList<Connection>();
 
-		final Ftile black = new FtileBlackBlock(shadowing(), colorBar, list.get(0).getSwimlaneIn());
+		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, list.get(0).getSwimlaneIn());
 		double x = 0;
 		for (Ftile tmp : list) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());

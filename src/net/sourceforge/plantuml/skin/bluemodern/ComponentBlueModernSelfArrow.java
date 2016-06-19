@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19873 $
+ * Revision $Revision: 19949 $
  *
  */
 package net.sourceforge.plantuml.skin.bluemodern;
@@ -56,7 +56,8 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 
 	private final double arrowWidth = 45;
 
-	public ComponentBlueModernSelfArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer) {
+	public ComponentBlueModernSelfArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
+			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer) {
 		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer);
 	}
 
@@ -72,7 +73,7 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 		final double x2 = arrowWidth - 3;
 
 		if (getArrowConfiguration().isDotted()) {
-			ug = stroke(ug, 5, 2);
+			ug = ArrowConfiguration.stroke(ug, 5, 2, 1);
 		} else {
 			ug = ug.apply(new UStroke(2));
 		}
@@ -90,10 +91,14 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 
 		if (getArrowConfiguration().isAsync()) {
 			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
-				ug.apply(new UStroke(1.5)).apply(new UTranslate(getArrowDeltaX2(), textHeight - getArrowDeltaY2() + delta)).draw(new ULine(-getArrowDeltaX2(), getArrowDeltaY2()));
+				ug.apply(new UStroke(1.5))
+						.apply(new UTranslate(getArrowDeltaX2(), textHeight - getArrowDeltaY2() + delta))
+						.draw(new ULine(-getArrowDeltaX2(), getArrowDeltaY2()));
 			}
 			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
-				ug.apply(new UStroke(1.5)).apply(new UTranslate(getArrowDeltaX2(), textHeight + getArrowDeltaY2() + delta)).draw(new ULine(-getArrowDeltaX2(), -getArrowDeltaY2()));
+				ug.apply(new UStroke(1.5))
+						.apply(new UTranslate(getArrowDeltaX2(), textHeight + getArrowDeltaY2() + delta))
+						.draw(new ULine(-getArrowDeltaX2(), -getArrowDeltaY2()));
 			}
 		} else {
 			final UPolygon polygon = getPolygon(textHeight, delta);

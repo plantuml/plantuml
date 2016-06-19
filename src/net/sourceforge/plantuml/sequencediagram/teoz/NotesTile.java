@@ -109,6 +109,11 @@ public class NotesTile implements Tile {
 		return width;
 	}
 
+	private Real getXcenter(StringBounder stringBounder, Note note) {
+		final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
+		return livingSpace1.getPosC(stringBounder);
+	}
+
 	private Real getX(StringBounder stringBounder, Note note) {
 		final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
 		final NotePosition position = note.getPosition();
@@ -145,9 +150,17 @@ public class NotesTile implements Tile {
 		final List<Note> all = notes.asList();
 		for (int i = 0; i < all.size() - 1; i++) {
 			for (int j = i + 1; j < all.size(); j++) {
-				final Real point1 = getX2(stringBounder, all.get(i));
-				final Real point2 = getX(stringBounder, all.get(j));
-				point2.ensureBiggerThan(point1);
+				final double center1 = getXcenter(stringBounder, all.get(i)).getCurrentValue();
+				final double center2 = getXcenter(stringBounder, all.get(j)).getCurrentValue();
+				if (center2 > center1) {
+					final Real point1b = getX2(stringBounder, all.get(i));
+					final Real point2 = getX(stringBounder, all.get(j));
+					point2.ensureBiggerThan(point1b);
+				} else {
+					final Real point1 = getX(stringBounder, all.get(i));
+					final Real point2b = getX2(stringBounder, all.get(j));
+					point1.ensureBiggerThan(point2b);
+				}
 			}
 		}
 	}

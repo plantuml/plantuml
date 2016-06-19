@@ -80,7 +80,7 @@ abstract class Step1Abstract {
 	}
 
 	protected final void setConfig(ArrowConfiguration config) {
-		this.config = config;
+		this.config = config.withThickness(drawingSet.getArrowThickness());
 	}
 
 	protected final Component getNote() {

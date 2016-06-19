@@ -79,7 +79,7 @@ public class FtileGroup extends AbstractFtile {
 
 	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor arrowColor, HtmlColor backColor,
 			HtmlColor titleColor, ISkinParam skinParam, HtmlColor borderColor) {
-		super(inner.shadowing());
+		super(inner.skinParam());
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 		this.arrowColor = arrowColor;
@@ -185,7 +185,7 @@ public class FtileGroup extends AbstractFtile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
-		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(shadowing())
+		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(skinParam().shadowing())
 				.withStroke(stroke);
 		USymbol.FRAME.asBig(name, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext)
 				.drawU(ug);

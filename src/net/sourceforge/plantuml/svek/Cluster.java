@@ -693,6 +693,10 @@ public class Cluster implements Moveable {
 			protection0 = false;
 			protection1 = false;
 		}
+//		if (graphvizVersion.modeSafe()) {
+//			protection0 = false;
+//			protection1 = false;
+//		}
 		if (protection0) {
 			subgraphCluster(sb, "p0");
 		}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19885 $
+ * Revision $Revision: 19978 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -574,6 +574,9 @@ class DrawableSetInitializer {
 		} else if (p.getType() == ParticipantType.DATABASE) {
 			headType = ComponentType.DATABASE_HEAD;
 			tailType = ComponentType.DATABASE_TAIL;
+		} else if (p.getType() == ParticipantType.COLLECTIONS) {
+			headType = ComponentType.COLLECTIONS_HEAD;
+			tailType = ComponentType.COLLECTIONS_TAIL;
 		} else {
 			throw new IllegalArgumentException();
 		}

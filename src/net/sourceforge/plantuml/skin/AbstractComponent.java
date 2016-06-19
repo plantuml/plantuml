@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19945 $
  *
  */
 package net.sourceforge.plantuml.skin;
@@ -45,22 +45,22 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class AbstractComponent implements Component {
 
-	final protected void stroke(Graphics2D g2d, float dash, float thickness) {
-		final float[] style = { dash, dash };
-		g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, style, 0));
-	}
-
-	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
-		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));
-	}
-
-	final protected void stroke(Graphics2D g2d, float dash) {
-		stroke(g2d, dash, 1);
-	}
-
-	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace) {
-		return stroke(ug, dashVisible, dashSpace, 1);
-	}
+//	final protected void stroke(Graphics2D g2d, float dash, float thickness) {
+//		final float[] style = { dash, dash };
+//		g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, style, 0));
+//	}
+//
+//	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace, double thickness) {
+//		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));
+//	}
+//
+//	final protected void stroke(Graphics2D g2d, float dash) {
+//		stroke(g2d, dash, 1);
+//	}
+//
+//	final protected UGraphic stroke(UGraphic ug, double dashVisible, double dashSpace) {
+//		return stroke(ug, dashVisible, dashSpace, 1);
+//	}
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);
 

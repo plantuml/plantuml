@@ -45,7 +45,7 @@ public class FtileMargedRight extends AbstractFtile {
 	private final double maxX;
 
 	public FtileMargedRight(Ftile tile, double maxX) {
-		super(tile.shadowing());
+		super(tile.skinParam());
 		this.tile = tile;
 		this.maxX = maxX;
 	}

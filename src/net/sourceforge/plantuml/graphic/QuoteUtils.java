@@ -183,6 +183,7 @@ public class QuoteUtils {
 					"You know that thing you just did? Don't do that"
 			// Well I never, was there ever, A cat so clever, as magical Mr Mistoffelees
 			// Do you like your morning tea weak or strong ?
+			// It took me a long time to understand that if you want to do this job well you have to stay detached.
 			);
 
 	private QuoteUtils() {

@@ -53,7 +53,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	private final Swimlane in;
 
 	FtileIfNude(Ftile tile1, Ftile tile2, Swimlane in) {
-		super(tile1.shadowing() || tile2.shadowing());
+		super(tile1.skinParam());
 		this.tile1 = tile1;
 		this.tile2 = tile2;
 		this.in = in;
@@ -147,10 +147,10 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		return (dim1.getWidth() - dim1.getLeft()) + dim2.getLeft();
 	}
 
-//	protected double getLeft(StringBounder stringBounder) {
-//		final double left1 = tile1.calculateDimension(stringBounder).translate(getTranslate1(stringBounder)).getLeft();
-//		final double left2 = tile2.calculateDimension(stringBounder).translate(getTranslate2(stringBounder)).getLeft();
-//		return (left1 + left2) / 2;
-//	}
+	// protected double getLeft(StringBounder stringBounder) {
+	// final double left1 = tile1.calculateDimension(stringBounder).translate(getTranslate1(stringBounder)).getLeft();
+	// final double left2 = tile2.calculateDimension(stringBounder).translate(getTranslate2(stringBounder)).getLeft();
+	// return (left1 + left2) / 2;
+	// }
 
 }

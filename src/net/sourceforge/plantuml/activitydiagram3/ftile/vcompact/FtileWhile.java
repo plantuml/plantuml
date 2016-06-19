@@ -95,7 +95,7 @@ class FtileWhile extends AbstractFtile {
 	}
 
 	private FtileWhile(Ftile whileBlock, Ftile diamond1, TextBlock supplementarySouthText) {
-		super(whileBlock.shadowing());
+		super(whileBlock.skinParam());
 		this.whileBlock = whileBlock;
 		this.diamond1 = diamond1;
 		this.supplementarySouthText = supplementarySouthText;
@@ -115,23 +115,23 @@ class FtileWhile extends AbstractFtile {
 			LinkRendering afterEndwhile, FontConfiguration fontArrow, FtileFactory ftileFactory,
 			ConditionStyle conditionStyle, FontConfiguration fcTest) {
 
-		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory);
-		final TextBlock testTb = test.create(fcTest, HorizontalAlignment.LEFT, ftileFactory);
-		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory);
+		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+		final TextBlock testTb = test.create(fcTest, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 		final Ftile diamond1;
 		final TextBlock supplementarySouthText;
 		if (conditionStyle == ConditionStyle.INSIDE) {
 			supplementarySouthText = TextBlockUtils.empty(0, 0);
-			diamond1 = new FtileDiamondInside(whileBlock.shadowing(), backColor, borderColor, swimlane, testTb)
+			diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
 					.withNorth(yesTb).withWest(out);
 		} else if (conditionStyle == ConditionStyle.FOO1) {
 			supplementarySouthText = TextBlockUtils.empty(0, 0);
-			diamond1 = new FtileDiamondFoo1(whileBlock.shadowing(), backColor, borderColor, swimlane, testTb)
+			diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
 					.withNorth(yesTb).withWest(out);
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			supplementarySouthText = createLabel1(test, yes, ftileFactory, fontArrow);
-			diamond1 = new FtileDiamond(whileBlock.shadowing(), backColor, borderColor, swimlane).withWest(out)
+			supplementarySouthText = createLabel1(test, yes, ftileFactory.skinParam(), fontArrow);
+			diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withWest(out)
 					.withSouth(supplementarySouthText);
 		} else {
 			throw new IllegalStateException();

@@ -55,14 +55,12 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateIn;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOut;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class VCompactFactory implements FtileFactory {
 
@@ -81,17 +79,17 @@ public class VCompactFactory implements FtileFactory {
 
 	public Ftile start(Swimlane swimlane) {
 		final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityStart);
-		return new FtileCircleStart(shadowing(), color, swimlane);
+		return new FtileCircleStart(skinParam(), color, swimlane);
 	}
 
 	public Ftile stop(Swimlane swimlane) {
 		final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityEnd);
-		return new FtileCircleStop(shadowing(), color, swimlane);
+		return new FtileCircleStop(skinParam(), color, swimlane);
 	}
 
 	public Ftile end(Swimlane swimlane) {
 		final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityEnd);
-		return new FtileCircleEnd(shadowing(), color, swimlane);
+		return new FtileCircleEnd(skinParam(), color, swimlane);
 	}
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors) {
@@ -99,7 +97,7 @@ public class VCompactFactory implements FtileFactory {
 		// final HtmlColor backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityBackground) :
 		// color;
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		return new FtileBox(shadowing(), label, font, swimlane, style, colors.mute(skinParam));
+		return new FtileBox(colors.mute(skinParam), label, font, swimlane, style);
 	}
 
 	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane) {
@@ -161,36 +159,8 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileDecorateOut(ftile, linkRendering);
 	}
 
-	public boolean shadowing() {
-		return skinParam.shadowing();
-	}
-
-	public Sprite getSprite(String name) {
-		return skinParam.getSprite(name);
-	}
-
-	public String getValue(String key) {
-		return skinParam.getValue(key);
-	}
-
-	public double getPadding() {
-		return skinParam.getPadding();
-	}
-
-	public boolean useGuillemet() {
-		return skinParam.useGuillemet();
-	}
-
-	public String getMonospacedFamily() {
-		return skinParam.getMonospacedFamily();
-	}
-
-	public int getTabSize() {
-		return skinParam.getTabSize();
-	}
-
-	public IHtmlColorSet getIHtmlColorSet() {
-		return skinParam.getIHtmlColorSet();
+	public ISkinParam skinParam() {
+		return skinParam;
 	}
 
 }

@@ -28,20 +28,40 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11325 $
+ * Revision $Revision: 19398 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram.dot;
+package net.sourceforge.plantuml.vizjs;
 
-public interface GraphvizVersion {
-	public boolean useShield();
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
-	public boolean useProtectionWhenThereALinkFromOrToGroup();
+public class VizJsEngine {
 
-	public boolean modeSafe();
+	public static boolean isOk() {
+		try {
+			final Class classVizJS = Class.forName("ch.braincell.viz.VizJS");
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-	public boolean isVizjs();
+	private final Object viz;
+	private final Method mExecute;
 
-	// COMMON, V2_34_0
+	public VizJsEngine() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		final Class classVizJS = Class.forName("ch.braincell.viz.VizJS");
+		final Method mCreate = classVizJS.getMethod("create");
+		mExecute = classVizJS.getMethod("execute", String.class);
+		this.viz = mCreate.invoke(null);
+		System.err.println("Creating one engine");
+	}
+
+	public String execute(String dot) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException {
+		return (String) mExecute.invoke(viz, dot);
+	}
 
 }

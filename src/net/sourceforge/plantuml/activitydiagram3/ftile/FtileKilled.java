@@ -43,7 +43,7 @@ public class FtileKilled extends AbstractFtile {
 	private final Ftile tile;
 
 	public FtileKilled(Ftile tileToKill) {
-		super(tileToKill.shadowing());
+		super(tileToKill.skinParam());
 		this.tile = tileToKill;
 	}
 

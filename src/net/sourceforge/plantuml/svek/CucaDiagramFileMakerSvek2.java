@@ -178,8 +178,7 @@ public final class CucaDiagramFileMakerSvek2 {
 				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
 
 				final Line line = new Line(shapeUid1, shapeUid2, link, colorSequence, ltail, lhead, skinParam,
-						stringBounder, labelFont, getBibliotekon(), dotStringFactory.getGraphvizVersion(),
-						dotData.getPragma());
+						stringBounder, labelFont, getBibliotekon(), dotData.getPragma());
 
 				getBibliotekon().addLine(line);
 

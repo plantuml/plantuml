@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19510 $
+ * Revision $Revision: 19978 $
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -110,12 +110,22 @@ public class Rose implements Skin {
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(), newFontForStereotype,
-					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE));
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false);
 		}
 		if (type == ComponentType.PARTICIPANT_TAIL) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(), newFontForStereotype,
-					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE));
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false);
+		}
+		if (type == ComponentType.COLLECTIONS_HEAD) {
+			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
+					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(), newFontForStereotype,
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true);
+		}
+		if (type == ComponentType.COLLECTIONS_TAIL) {
+			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
+					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(), newFontForStereotype,
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			final HtmlColor borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder);
