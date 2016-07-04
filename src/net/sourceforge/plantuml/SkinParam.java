@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19880 $
+ * Revision $Revision: 20003 $
  *
  */
 package net.sourceforge.plantuml;
@@ -96,7 +96,7 @@ public class SkinParam implements ISkinParam {
 	static String cleanForKey(String key) {
 		key = StringUtils.trin(StringUtils.goLowerCase(key));
 		key = key.replaceAll("_|\\.|\\s", "");
-		key = replaceSmart(key, "partition", "package");
+		// key = replaceSmart(key, "partition", "package");
 		key = replaceSmart(key, "sequenceparticipant", "participant");
 		key = replaceSmart(key, "sequenceactor", "actor");
 		if (key.contains("arrow")) {
@@ -405,11 +405,11 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	public HorizontalAlignment getDefaultTextAlignment() {
+	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue) {
 		final String value = getValue("defaulttextalignment");
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
 		if (result == null) {
-			return HorizontalAlignment.CENTER;
+			return defaultValue;
 		}
 		return result;
 	}

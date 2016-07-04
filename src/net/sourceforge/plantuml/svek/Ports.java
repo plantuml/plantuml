@@ -27,50 +27,37 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4749 $
  *
+ * Revision $Revision: 4236 $
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
-import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.svek.IEntityImage;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public interface ILeaf extends IEntity {
+public class Ports {
 
-	public EntityPosition getEntityPosition();
+	private final Map<String, PortGeometry> all = new LinkedHashMap<String, PortGeometry>();
 
-	public void setContainer(IGroup container);
+	public void addThis(Ports other) {
+		all.putAll(other.all);
+	}
 
-	public boolean isTop();
+	public Ports translateY(double deltaY) {
+		final Ports result = new Ports();
+		for (Map.Entry<String, PortGeometry> ent : all.entrySet()) {
+			result.all.put(ent.getKey(), ent.getValue().translateY(deltaY));
+		}
+		return result;
+	}
 
-	public void setTop(boolean top);
+	public void add(String portName, double position, double height) {
+		all.put(portName, new PortGeometry(position, height));
+	}
 
-	public boolean hasNearDecoration();
-
-	public void setNearDecoration(boolean nearDecoration);
-
-	public int getXposition();
-
-	public void setXposition(int pos);
-
-	public IEntityImage getSvekImage();
-
-	public String getGeneric();
-
-	public void muteToType(LeafType newType, USymbol newSymbol);
-
-	public void setGeneric(String generic);
-
-	public void setSvekImage(IEntityImage svekImage);
-
-	public void setNeighborhood(Neighborhood neighborhood);
-
-	public Neighborhood getNeighborhood();
-
-	public boolean hasPort();
-
-	public void setHasPort(boolean hasPort);
+	public Map<String, PortGeometry> getAll() {
+		return all;
+	}
 
 }

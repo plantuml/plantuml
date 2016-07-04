@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
@@ -83,7 +84,7 @@ public class InstructionPartition implements Instruction {
 		return list.getInLinkRendering();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
 		throw new UnsupportedOperationException();
 	}
 

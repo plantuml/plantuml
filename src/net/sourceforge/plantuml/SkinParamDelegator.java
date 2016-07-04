@@ -192,8 +192,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.useUnderlineForHyperlink();
 	}
 
-	public HorizontalAlignment getDefaultTextAlignment() {
-		return skinParam.getDefaultTextAlignment();
+	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue) {
+		return skinParam.getDefaultTextAlignment(defaultValue);
 	}
 
 	public double getPadding() {

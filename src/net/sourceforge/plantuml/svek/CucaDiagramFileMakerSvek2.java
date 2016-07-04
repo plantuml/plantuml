@@ -159,26 +159,11 @@ public final class CucaDiagramFileMakerSvek2 {
 				continue;
 			}
 			try {
-				final String shapeUid1 = getBibliotekon().getShapeUid((ILeaf) link.getEntity1());
-				final String shapeUid2 = getBibliotekon().getShapeUid((ILeaf) link.getEntity2());
-
-				Cluster ltail = null;
-				if (shapeUid1.startsWith(Cluster.CENTER_ID)) {
-					// final Group g1 = ((IEntityMutable)
-					// link.getEntity1()).getContainerOrEquivalent();
-					ltail = getCluster2((IEntity) link.getEntity1());
-				}
-				Cluster lhead = null;
-				if (shapeUid2.startsWith(Cluster.CENTER_ID)) {
-					// final Group g2 = ((IEntityMutable)
-					// link.getEntity2()).getContainerOrEquivalent();
-					lhead = getCluster2((IEntity) link.getEntity2());
-				}
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
 
-				final Line line = new Line(shapeUid1, shapeUid2, link, colorSequence, ltail, lhead, skinParam,
-						stringBounder, labelFont, getBibliotekon(), dotData.getPragma());
+				final Line line = new Line(link, colorSequence, skinParam, stringBounder, labelFont, getBibliotekon(),
+						dotData.getPragma());
 
 				getBibliotekon().addLine(line);
 
@@ -270,24 +255,6 @@ public final class CucaDiagramFileMakerSvek2 {
 			}
 		}
 		return nb == 1;
-	}
-
-	// private Cluster getCluster(IEntity g) {
-	// for (Cluster cl : getBibliotekon().allCluster()) {
-	// if (cl.getGroup() == g) {
-	// return cl;
-	// }
-	// }
-	// throw new IllegalArgumentException(g.toString());
-	// }
-
-	private Cluster getCluster2(IEntity entityMutable) {
-		for (Cluster cl : getBibliotekon().allCluster()) {
-			if (entityMutable == cl.getGroup()) {
-				return cl;
-			}
-		}
-		throw new IllegalArgumentException();
 	}
 
 	private IEntityImage error(File dotExe) {

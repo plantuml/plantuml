@@ -86,7 +86,5 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public Map<String, Display> getTips();
 
-	@Deprecated
-	public void applyStroke(String s);
-
+	public void setRemoved(boolean removed);
 }

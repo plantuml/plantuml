@@ -198,7 +198,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	// }
 
 	public void fork() {
-		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer());
+		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(), getSkinParam());
 		current().add(instructionFork);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionFork);
@@ -207,7 +207,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult forkAgain() {
 		if (current() instanceof InstructionFork) {
 			final InstructionFork currentFork = (InstructionFork) current();
-			currentFork.manageOutRendering(nextLinkRenderer());
+			currentFork.manageOutRendering(nextLinkRenderer(), false);
 			setNextLinkRendererInternal(LinkRendering.none());
 			currentFork.forkAgain();
 			return CommandExecutionResult.ok();
@@ -218,7 +218,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult endFork() {
 		if (current() instanceof InstructionFork) {
 			final InstructionFork currentFork = (InstructionFork) current();
-			currentFork.manageOutRendering(nextLinkRenderer());
+			currentFork.manageOutRendering(nextLinkRenderer(), true);
 			setNextLinkRendererInternal(LinkRendering.none());
 			setCurrent(currentFork.getParent());
 			return CommandExecutionResult.ok();
@@ -349,7 +349,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public void startGroup(Display name, HtmlColor backColor, HtmlColor titleColor, HtmlColor borderColor) {
 		manageSwimlaneStrategy();
 		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,
-				swinlanes.getCurrentSwimlane(), borderColor);
+				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer());
 		current().add(instructionGroup);
 		setCurrent(instructionGroup);
 	}
@@ -403,8 +403,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		setNextLink(link);
 	}
 
-	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type) {
-		final boolean ok = current().addNote(note, position, type);
+	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+		final boolean ok = current().addNote(note, position, type, colors);
 		if (ok == false) {
 			return CommandExecutionResult.error("Cannot add note here");
 		}

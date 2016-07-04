@@ -247,15 +247,11 @@ public class GroupRoot implements IGroup {
 		throw new UnsupportedOperationException();
 	}
 
-	public void applyStroke(String s) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void applyStroke(Colors colors) {
-		throw new UnsupportedOperationException();
-	}
-
 	public FontConfiguration getFontConfigurationForTitle(ISkinParam skinParam) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setRemoved(boolean removed) {
 		throw new UnsupportedOperationException();
 	}
 

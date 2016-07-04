@@ -483,7 +483,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
-		final TextBlock label = link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(), skinParam);
+		final TextBlock label = link.getLabel().create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label)) {
 			return label;
 		}

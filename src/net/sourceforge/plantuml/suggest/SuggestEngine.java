@@ -52,6 +52,8 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
 final public class SuggestEngine {
 
+	private static final int LIMIT = 500;
+
 	private final UmlDiagramFactory systemFactory;
 
 	private final IteratorCounter2 it99;
@@ -100,12 +102,14 @@ final public class SuggestEngine {
 	}
 
 	SuggestEngineResult checkAndCorrect() {
+		final String incorrectLine = it99.peek().toString();
+		if (incorrectLine.length() > LIMIT) {
+			return SuggestEngineResult.CANNOT_CORRECT;
+		}
 		final CommandControl commandControl = systemFactory.isValid2(it99);
 		if (commandControl != CommandControl.NOT_OK) {
 			return SuggestEngineResult.SYNTAX_OK;
 		}
-
-		final String incorrectLine = it99.peek().toString();
 
 		if (StringUtils.trin(incorrectLine).startsWith("{")
 				&& systemFactory.isValid(BlocLines.single(it99.peekPrevious() + " {")) != CommandControl.NOT_OK) {

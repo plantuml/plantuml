@@ -33,12 +33,14 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.Collection;
+
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
@@ -48,13 +50,22 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane) {
-		if (note == null) {
+	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes) {
+		if (notes.size() == 0) {
 			throw new IllegalArgumentException();
 		}
-		if (ftile == null) {
-			return new FtileNoteAlone(skinParam().shadowing(), note, skinParam(), type == NoteType.NOTE, swimlane);
+		if (notes.size() > 1) {
+			throw new IllegalArgumentException();
 		}
-		return new FtileWithNoteOpale(ftile, note, notePosition, type, skinParam(), true);
+		ISkinParam skinParam = skinParam();
+		final PositionedNote note = notes.iterator().next();
+		if (note.getColors() != null) {
+			skinParam = note.getColors().mute(skinParam);
+		}
+		if (ftile == null) {
+			return new FtileNoteAlone(skinParam.shadowing(), note.getDisplay(), skinParam,
+					note.getType() == NoteType.NOTE, swimlane);
+		}
+		return FtileWithNoteOpale.create(ftile, notes, skinParam, true);
 	}
 }

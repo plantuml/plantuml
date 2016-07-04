@@ -40,6 +40,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
@@ -48,11 +51,18 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 	public CommandNote3() {
 		super(getRegexConcat());
 	}
+	
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("TYPE", "(note|floating note)"), //
 				new RegexLeaf("POSITION", "[%s]*(left|right)?"), //
+				new RegexLeaf("[%s]*"), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
@@ -60,10 +70,11 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final Display note = Display.getWithNewlines(arg.get("NOTE", 0));
 		final NotePosition position = NotePosition.defaultLeft(arg.get("POSITION", 0));
 		final NoteType type = NoteType.defaultType(arg.get("TYPE", 0));
-		return diagram.addNote(note, position, type);
+		return diagram.addNote(note, position, type, colors);
 	}
 
 }

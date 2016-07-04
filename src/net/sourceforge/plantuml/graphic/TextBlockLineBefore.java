@@ -37,11 +37,13 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 
-public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock {
+public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
 
 	private final TextBlock textBlock;
 	private final char separator;
@@ -81,10 +83,14 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock 
 			UHorizontalLine.infinite(1, 1, title, separator).drawMe(ug);
 		}
 	}
-	
+
 	@Override
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
 		return textBlock.getInnerPosition(member, stringBounder);
+	}
+
+	public Ports getPorts(StringBounder stringBounder) {
+		return ((WithPorts) textBlock).getPorts(stringBounder);
 	}
 
 }

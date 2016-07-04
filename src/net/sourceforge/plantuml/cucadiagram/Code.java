@@ -50,9 +50,25 @@ public class Code implements Comparable<Code> {
 		this.separator = separator;
 	}
 
-//	public String getNamespaceSeparator() {
-//		return separator;
-//	}
+	public Code removeMemberPart() {
+		final int x = fullName.lastIndexOf("::");
+		if (x == -1) {
+			return null;
+		}
+		return new Code(fullName.substring(0, x), separator);
+	}
+
+	public String getPortMember() {
+		final int x = fullName.lastIndexOf("::");
+		if (x == -1) {
+			return null;
+		}
+		return fullName.substring(x + 2);
+	}
+
+	// public String getNamespaceSeparator() {
+	// return separator;
+	// }
 
 	public Code withSeparator(String separator) {
 		if (separator == null) {

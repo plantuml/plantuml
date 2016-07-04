@@ -98,6 +98,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// Other
 	private boolean nearDecoration = false;
+	private boolean hasPort = false;
 	private int xposition;
 	private IEntityImage svekImage;
 
@@ -470,6 +471,9 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public boolean isRemoved() {
 		if (isGroup()) {
+			if (removed) {
+				return true;
+			}
 			if (getLeafsDirect().size() == 0) {
 				return false;
 			}
@@ -577,15 +581,13 @@ final class EntityImpl implements ILeaf, IGroup {
 	// colors = colors.addSpecificLineStroke(specificLineStroke);
 	// }
 
-	@Deprecated
-	public void applyStroke(String s) {
-		throw new UnsupportedOperationException();
-		// if (s == null) {
-		// return;
-		// }
-		// final LinkStyle style = LinkStyle.valueOf(StringUtils.goUpperCase(s));
-		// colors = colors.addSpecificLineStroke(style);
-		// // setSpecificLineStroke(LinkStyle.getStroke(style));
+	public boolean hasPort() {
+		checkNotGroup();
+		return hasPort;
+	}
+
+	public void setHasPort(boolean hasPort) {
+		this.hasPort = hasPort;
 	}
 
 }

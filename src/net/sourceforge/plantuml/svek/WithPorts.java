@@ -27,50 +27,16 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4749 $
  *
+ * Revision $Revision: 4236 $
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
-import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-public interface ILeaf extends IEntity {
+public interface WithPorts {
 
-	public EntityPosition getEntityPosition();
-
-	public void setContainer(IGroup container);
-
-	public boolean isTop();
-
-	public void setTop(boolean top);
-
-	public boolean hasNearDecoration();
-
-	public void setNearDecoration(boolean nearDecoration);
-
-	public int getXposition();
-
-	public void setXposition(int pos);
-
-	public IEntityImage getSvekImage();
-
-	public String getGeneric();
-
-	public void muteToType(LeafType newType, USymbol newSymbol);
-
-	public void setGeneric(String generic);
-
-	public void setSvekImage(IEntityImage svekImage);
-
-	public void setNeighborhood(Neighborhood neighborhood);
-
-	public Neighborhood getNeighborhood();
-
-	public boolean hasPort();
-
-	public void setHasPort(boolean hasPort);
+	Ports getPorts(StringBounder stringBounder);
 
 }

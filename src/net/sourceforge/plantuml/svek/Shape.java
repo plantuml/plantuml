@@ -36,12 +36,14 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
@@ -96,7 +98,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
 		this.shield = shield;
-		if (shield > 0 && type != ShapeType.RECTANGLE) {
+		if (shield > 0 && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -114,6 +116,10 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public void appendShape(StringBuilder sb) {
+		if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+			appendLabelHtmlSpecialForLink(sb);
+			return;
+		}
 		if (type == ShapeType.RECTANGLE && shield > 0) {
 			appendHtml(sb);
 			return;
@@ -169,6 +175,47 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append("</TABLE>");
 	}
 
+	private void appendLabelHtmlSpecialForLink(StringBuilder sb) {
+		final Ports ports = ((WithPorts) this.image).getPorts(StringBounderUtils.asStringBounder());
+
+		sb.append(uid);
+		sb.append(" [");
+		sb.append("shape=plaintext,");
+		// sb.append("color=\"" + StringUtils.getAsHtml(color) + "\",");
+		sb.append("label=<");
+		sb.append("<TABLE BGCOLOR=\"" + StringUtils.getAsHtml(color)
+				+ "\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
+		double position = 0;
+		for (Map.Entry<String, PortGeometry> ent : ports.getAll().entrySet()) {
+			final String portName = ent.getKey();
+			final PortGeometry geom = ent.getValue();
+			final double missing = geom.getPosition() - position;
+			appendTr(sb, null, missing);
+			appendTr(sb, portName, geom.getHeight());
+			position = geom.getLastY();
+		}
+		appendTr(sb, null, getHeight() - position);
+		sb.append("</TABLE>");
+		sb.append(">");
+		sb.append("];");
+		SvekUtils.println(sb);
+	}
+
+	private void appendTr(StringBuilder sb, final String portName, final double height) {
+		if (height <= 0) {
+			return;
+		}
+		sb.append("<TR>");
+		sb.append("<TD ");
+		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + height + "\"");
+		if (portName != null) {
+			sb.append(" PORT=\"" + portName + "\"");
+		}
+		sb.append(">");
+		sb.append("</TD>");
+		sb.append("</TR>");
+	}
+
 	private void appendTd(StringBuilder sb, int w, int h) {
 		sb.append("<TD");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\"");
@@ -186,6 +233,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 			throw new UnsupportedOperationException();
 		} else if (type == ShapeType.RECTANGLE || type == ShapeType.FOLDER) {
 			sb.append("shape=rect");
+		} else if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+			throw new UnsupportedOperationException();
 		} else if (type == ShapeType.OCTAGON) {
 			sb.append("shape=octagon");
 		} else if (type == ShapeType.DIAMOND) {

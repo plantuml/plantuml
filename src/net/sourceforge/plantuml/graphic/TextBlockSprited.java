@@ -41,20 +41,20 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TextBlockSpotted extends TextBlockSimple {
+public class TextBlockSprited extends TextBlockSimple {
 
-	private final CircledCharacter circledCharacter;
+	private final TextBlock sprite;
 
-	public TextBlockSpotted(CircledCharacter circledCharacter, Display texts, FontConfiguration fontConfiguration,
+	public TextBlockSprited(TextBlock sprite, Display texts, FontConfiguration fontConfiguration,
 			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
 		super(texts, fontConfiguration, horizontalAlignment, spriteContainer, 0);
-		this.circledCharacter = circledCharacter;
+		this.sprite = sprite;
 	}
 
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
-		final double heightCircledCharacter = circledCharacter.getPreferredHeight(stringBounder);
+		final double heightCircledCharacter = sprite.calculateDimension(stringBounder).getHeight();
 
 		final Dimension2D dim = super.calculateDimension(stringBounder);
 		return new Dimension2DDouble(dim.getWidth() + widthCircledCharacter, Math.max(heightCircledCharacter,
@@ -62,19 +62,18 @@ public class TextBlockSpotted extends TextBlockSimple {
 	}
 
 	private double getCircledCharacterWithAndMargin(StringBounder stringBounder) {
-		return circledCharacter.getPreferredWidth(stringBounder) + 6.0;
+		return sprite.calculateDimension(stringBounder).getWidth() + 6.0;
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		circledCharacter.drawU(ug);
+		sprite.drawU(ug);
 
 		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
 
 		super.drawU(ug.apply(new UTranslate(widthCircledCharacter, 0)));
 	}
-
 
 }

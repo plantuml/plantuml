@@ -71,7 +71,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
 		return new RegexConcat(
 				new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
-				new RegexOr(//
+				new RegexOr(
+				//
 						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
 								+ getClassIdentifier()),
 						new RegexLeaf("COUPLE1",
@@ -139,6 +140,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+
 		Code ent1 = Code.of(arg.get("ENT1", 1));
 		Code ent2 = Code.of(arg.get("ENT2", 1));
 
@@ -152,6 +154,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		ent2 = ent2.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
 		if (diagram.isGroup(ent1) && diagram.isGroup(ent2)) {
 			return executePackageLink(diagram, arg);
+		}
+
+		String port1 = null;
+		String port2 = null;
+
+		if (removeMemberPart(diagram, ent1) != null) {
+			port1 = ent1.getPortMember();
+			ent1 = removeMemberPart(diagram, ent1);
+		}
+		if (removeMemberPart(diagram, ent2) != null) {
+			port2 = ent2.getPortMember();
+			ent2 = removeMemberPart(diagram, ent2);
 		}
 
 		final String type1 = arg.get("ENT1", 0);
@@ -183,16 +197,6 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				((ILeaf) cl2).muteToType(type, null);
 			}
 		}
-		// if (arg.get("ENT1", 2) != null) {
-		// cl1.setStereotype(new Stereotype(arg.get("ENT1", 2), diagram.getSkinParam().getCircledCharacterRadius(),
-		// diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
-		// .getIHtmlColorSet()));
-		// }
-		// if (arg.get("ENT2", 2) != null) {
-		// cl2.setStereotype(new Stereotype(arg.get("ENT2", 2), diagram.getSkinParam().getCircledCharacterRadius(),
-		// diagram.getSkinParam().getFont(FontParam.CIRCLED_CHARACTER, null, false), diagram.getSkinParam()
-		// .getIHtmlColorSet()));
-		// }
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
@@ -266,6 +270,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(labelLink), queue, firstLabel, secondLabel,
 				diagram.getLabeldistance(), diagram.getLabelangle());
+		link.setPortMembers(port1, port2);
 
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
@@ -278,6 +283,26 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		return CommandExecutionResult.ok();
 	}
+
+	private Code removeMemberPart(AbstractClassOrObjectDiagram diagram, Code code) {
+		if (diagram.leafExist(code)) {
+			return null;
+		}
+		final Code before = code.removeMemberPart();
+		if (before == null) {
+			return null;
+		}
+		if (diagram.leafExist(before) == false) {
+			return null;
+		}
+		return before;
+	}
+
+	// private CommandExecutionResult executeLinkFields(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	// System.err.println("field1=" + arg.get("ENT1", 1));
+	// System.err.println("field2=" + arg.get("ENT2", 1));
+	// return CommandExecutionResult.error("not working yet");
+	// }
 
 	private void addLink(AbstractClassOrObjectDiagram diagram, Link link, String weight) {
 		diagram.addLink(link);

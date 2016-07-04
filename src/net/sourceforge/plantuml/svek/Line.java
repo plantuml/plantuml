@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -90,8 +91,8 @@ public class Line implements Moveable, Hideable {
 	private final Cluster lhead;
 	private final Link link;
 
-	private final String startUid;
-	private final String endUid;
+	private final EntityPort startUid;
+	private final EntityPort endUid;
 
 	private final TextBlock startTailText;
 	private final TextBlock endHeadText;
@@ -188,16 +189,33 @@ public class Line implements Moveable, Hideable {
 
 	}
 
-	// private boolean projectionStart() {
-	// return startUid.startsWith(Cluster.CENTER_ID);
-	// }
+	private Cluster getCluster2(Bibliotekon bibliotekon, IEntity entityMutable) {
+		for (Cluster cl : bibliotekon.allCluster()) {
+			if (entityMutable == cl.getGroup()) {
+				return cl;
+			}
+		}
+		throw new IllegalArgumentException();
+	}
 
-	public Line(String startUid, String endUid, Link link, ColorSequence colorSequence, Cluster ltail, Cluster lhead,
-			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration labelFont, Bibliotekon bibliotekon,
-			Pragma pragma) {
-		if (startUid == null || endUid == null || link == null) {
+	public Line(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
+			FontConfiguration labelFont, Bibliotekon bibliotekon, Pragma pragma) {
+
+		if (link == null) {
 			throw new IllegalArgumentException();
 		}
+		this.startUid = link.getEntityPort1(bibliotekon);
+		this.endUid = link.getEntityPort2(bibliotekon);
+
+		Cluster ltail = null;
+		if (startUid.startsWith(Cluster.CENTER_ID)) {
+			ltail = getCluster2(bibliotekon, link.getEntity1());
+		}
+		Cluster lhead = null;
+		if (endUid.startsWith(Cluster.CENTER_ID)) {
+			lhead = getCluster2(bibliotekon, link.getEntity2());
+		}
+
 		if (link.getColors() != null) {
 			skinParam = link.getColors().mute(skinParam);
 			labelFont = labelFont.mute(link.getColors());
@@ -207,8 +225,6 @@ public class Line implements Moveable, Hideable {
 		this.bibliotekon = bibliotekon;
 		this.stringBounder = stringBounder;
 		this.link = link;
-		this.startUid = startUid;
-		this.endUid = endUid;
 		this.ltail = ltail;
 		this.lhead = lhead;
 
@@ -229,10 +245,10 @@ public class Line implements Moveable, Hideable {
 				labelOnly = new DirectionalTextBlock(right, left, up, down);
 			}
 		} else {
-			final double marginLabel = startUid.equals(endUid) ? 6 : 1;
+			final double marginLabel = startUid.equalsId(endUid) ? 6 : 1;
 			final TextBlock label = TextBlockUtils.withMargin(
-					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(), skinParam), marginLabel,
-					marginLabel);
+					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
+							skinParam), marginLabel, marginLabel);
 			if (getLinkArrow() == LinkArrow.NONE) {
 				labelOnly = label;
 			} else {
@@ -304,9 +320,9 @@ public class Line implements Moveable, Hideable {
 		// sb.append("->");
 		// sb.append(startUid);
 		// } else {
-		sb.append(startUid);
+		sb.append(startUid.getFullString());
 		sb.append("->");
-		sb.append(endUid);
+		sb.append(endUid.getFullString());
 		// }
 		sb.append("[");
 		final LinkType linkType = link.getTypePatchCluster();
@@ -377,7 +393,7 @@ public class Line implements Moveable, Hideable {
 		// }
 		if (pragma.horizontalLineBetweenDifferentPackageAllowed() == false && link.getLength() == 1
 		/* && graphvizVersion.isJs() == false */) {
-			return "{rank=same; " + getStartUid() + "; " + getEndUid() + "}";
+			return "{rank=same; " + getStartUidPrefix() + "; " + getEndUidPrefix() + "}";
 		}
 		return null;
 	}
@@ -403,18 +419,12 @@ public class Line implements Moveable, Hideable {
 		sb.append("</TABLE>");
 	}
 
-	public final String getStartUid() {
-		if (startUid.endsWith(":h")) {
-			return startUid.substring(0, startUid.length() - 2);
-		}
-		return startUid;
+	public final String getStartUidPrefix() {
+		return startUid.getPrefix();
 	}
 
-	public final String getEndUid() {
-		if (endUid.endsWith(":h")) {
-			return endUid.substring(0, endUid.length() - 2);
-		}
-		return endUid;
+	public final String getEndUidPrefix() {
+		return endUid.getPrefix();
 	}
 
 	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, Point2D center, double angle,
@@ -693,7 +703,7 @@ public class Line implements Moveable, Hideable {
 	}
 
 	public double getHorizontalDzeta(StringBounder stringBounder) {
-		if (startUid.equals(endUid)) {
+		if (startUid.equalsId(endUid)) {
 			return getDecorDzeta();
 		}
 		final ArithmeticStrategy strategy;
@@ -719,7 +729,7 @@ public class Line implements Moveable, Hideable {
 	}
 
 	public double getVerticalDzeta(StringBounder stringBounder) {
-		if (startUid.equals(endUid)) {
+		if (startUid.equalsId(endUid)) {
 			return getDecorDzeta();
 		}
 		if (isHorizontal()) {

@@ -116,7 +116,7 @@
                     <include>net/sourceforge/plantuml/openiconic/data/*.txt</include>
                     <include>net/sourceforge/plantuml/openiconic/data/*.svg</include>
                     <include>net/sourceforge/plantuml/fun/*.png</include>
-                    <include>sprite/archimate/*.png</include>
+                    <include>sprites/archimate/*.png</include>
                     <include>net/sourceforge/plantuml/dedication/*.png</include>
                 </includes>
             </resource>

@@ -66,11 +66,10 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
 		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();
 
-		final FontParam fontParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
-				: FontParam.ACTIVITY_ARROW;
-		final FontConfiguration fc = new FontConfiguration(skinParam(), fontParam, null);
+		final FontConfiguration fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
+		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
 
 		return FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, repeat, test, yes, out, borderColor,
-				backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fc);
+				backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond, fcArrow);
 	}
 }

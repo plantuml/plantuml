@@ -33,18 +33,18 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public interface FtileFactory {
 
@@ -60,7 +60,7 @@ public interface FtileFactory {
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors);
 
-	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane);
+	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes);
 
 	public Ftile addUrl(Ftile ftile, Url url);
 

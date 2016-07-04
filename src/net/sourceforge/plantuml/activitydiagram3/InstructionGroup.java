@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
@@ -50,13 +51,15 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final HtmlColor backColor;
 	private final HtmlColor borderColor;
 	private final HtmlColor titleColor;
+	private final LinkRendering linkRendering;
 
 	private final Display test;
 	private Display headerNote = Display.NULL;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
-			Swimlane swimlane, HtmlColor borderColor) {
+			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering) {
 		this.list = new InstructionList(swimlane);
+		this.linkRendering = linkRendering;
 		this.parent = parent;
 		this.test = test;
 		this.borderColor = borderColor;
@@ -81,15 +84,15 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	}
 
 	public LinkRendering getInLinkRendering() {
-		return LinkRendering.none();
+		return linkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
 		if (list.isEmpty()) {
 			this.headerNote = note;
 			return true;
 		}
-		return list.addNote(note, position, type);
+		return list.addNote(note, position, type, colors);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

@@ -28,19 +28,16 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19945 $
+ * Revision $Revision: 20080 $
  *
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class AbstractComponent implements Component {

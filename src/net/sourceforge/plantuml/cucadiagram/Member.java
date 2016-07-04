@@ -49,4 +49,6 @@ public interface Member {
 	public boolean isStatic();
 
 	public boolean isAbstract();
+
+	public String getPort();
 }

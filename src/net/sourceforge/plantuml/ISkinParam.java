@@ -66,7 +66,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public HorizontalAlignment getHorizontalAlignment(AlignParam param);
 
-	public HorizontalAlignment getDefaultTextAlignment();
+	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
 
 	public int getCircledCharacterRadius();
 

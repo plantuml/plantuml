@@ -54,7 +54,9 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -64,7 +66,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class EntityImageClass extends AbstractEntityImage implements Stencil {
+public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock body;
 	final private int shield;
@@ -81,7 +83,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
-		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields, entity.getStereotype());
+		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields,
+				entity.getStereotype());
 
 		header = new EntityImageClassHeader2(entity, getSkinParam(), portionShower);
 		this.url = entity.getUrl99();
@@ -165,6 +168,11 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 		}
 	}
 
+	public Ports getPorts(StringBounder stringBounder) {
+		final Dimension2D dimHeader = header.calculateDimension(stringBounder);
+		return ((WithPorts) body).getPorts(stringBounder).translateY(dimHeader.getHeight());
+	}
+
 	private UStroke getStroke() {
 		UStroke stroke = lineConfig.getColors(getSkinParam()).getSpecificLineStroke();
 		if (stroke == null) {
@@ -177,6 +185,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil {
 	}
 
 	public ShapeType getShapeType() {
+		if (((ILeaf) getEntity()).hasPort()) {
+			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
+		}
 		return ShapeType.RECTANGLE;
 	}
 

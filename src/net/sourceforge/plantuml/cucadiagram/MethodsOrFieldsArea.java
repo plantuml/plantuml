@@ -54,6 +54,8 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategy;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyVisibility;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Center;
@@ -62,7 +64,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
 import net.sourceforge.plantuml.utils.CharHidder;
 
-public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockWidth, TextBlock {
+public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockWidth, TextBlock, WithPorts {
 
 	public TextBlock asBlockMemberImpl() {
 		return new TextBlockLineBefore(TextBlockUtils.withMargin(this, 6, 4));
@@ -121,6 +123,18 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		}
 		x += smallIcon;
 		return new Dimension2DDouble(x, y);
+	}
+
+	public Ports getPorts(StringBounder stringBounder) {
+		final Ports result = new Ports();
+		double y = 0;
+		for (Member m : members) {
+			final TextBlock bloc = createTextBlock(m);
+			final Dimension2D dim = bloc.calculateDimension(stringBounder);
+			result.add(m.getPort(), y, dim.getHeight());
+			y += dim.getHeight();
+		}
+		return result;
 	}
 
 	private TextBlock createTextBlock(Member m) {

@@ -63,12 +63,13 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockSimple;
-import net.sourceforge.plantuml.graphic.TextBlockSpotted;
+import net.sourceforge.plantuml.graphic.TextBlockSprited;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -413,15 +414,22 @@ public class Display implements Iterable<CharSequence> {
 	private TextBlock createStereotype(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer, int position, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		final Stereotype stereotype = (Stereotype) get(position);
+		TextBlock circledCharacter = null;
 		if (stereotype.isSpotted()) {
-			final CircledCharacter circledCharacter = new CircledCharacter(stereotype.getCharacter(),
-					stereotype.getRadius(), stereotype.getCircledFont(), stereotype.getHtmlColor(), null,
-					fontConfiguration.getColor());
+			circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype.getRadius(),
+					stereotype.getCircledFont(), stereotype.getHtmlColor(), null, fontConfiguration.getColor());
+		} else if (stereotype.getSprite() != null) {
+			final Sprite tmp = spriteContainer.getSprite(stereotype.getSprite());
+			if (tmp != null) {
+				circledCharacter = tmp.asTextBlock(stereotype.getHtmlColor(), 1);
+			}
+		}
+		if (circledCharacter != null) {
 			if (stereotype.getLabel(false) == null) {
-				return new TextBlockSpotted(circledCharacter, this.subList(1, this.size()), fontConfiguration,
+				return new TextBlockSprited(circledCharacter, this.subList(1, this.size()), fontConfiguration,
 						horizontalAlignment, spriteContainer);
 			}
-			return new TextBlockSpotted(circledCharacter, this, fontConfiguration, horizontalAlignment, spriteContainer);
+			return new TextBlockSprited(circledCharacter, this, fontConfiguration, horizontalAlignment, spriteContainer);
 		}
 		return new TextBlockSimple(this, fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype,
 				htmlColorForStereotype);

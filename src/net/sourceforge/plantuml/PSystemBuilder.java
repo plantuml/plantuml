@@ -135,7 +135,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
-		if (License.getCurrent() == License.GPL) {
+		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
 			factories.add(new PSystemDitaaFactory(DiagramType.UML));
 			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
@@ -153,7 +153,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemCharlieFactory());
 		factories.add(new PSystemMemorialFactory());
-		if (License.getCurrent() == License.GPL) {
+		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
 		factories.add(new PSystemProjectFactory2());

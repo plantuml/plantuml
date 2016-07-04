@@ -37,10 +37,12 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockMarged extends AbstractTextBlock implements TextBlock {
+class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts {
 
 	private final TextBlock textBlock;
 	private final double x1;
@@ -74,6 +76,10 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock {
 		}
 		final UTranslate translate = new UTranslate(x1, y1);
 		return translate.apply(parent);
+	}
+
+	public Ports getPorts(StringBounder stringBounder) {
+		return ((WithPorts) textBlock).getPorts(stringBounder).translateY(y1);
 	}
 
 }

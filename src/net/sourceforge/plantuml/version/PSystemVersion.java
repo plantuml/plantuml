@@ -189,8 +189,8 @@ public class PSystemVersion extends AbstractPSystem {
 
 		int lim = 7;
 		if (lastversion == -1) {
-			strings.add("<b><color:red>Error</b>");
-			strings.add("<color:red>Cannot connect to http://plantuml.com/</b>");
+			strings.add("<b><color:red>Error");
+			strings.add("<color:red>Cannot connect to http://plantuml.com/");
 			strings.add("Maybe you should set your proxy ?");
 			strings.add("@startuml");
 			strings.add("checkversion(proxy=myproxy.com,port=8080)");
@@ -198,14 +198,14 @@ public class PSystemVersion extends AbstractPSystem {
 			lim = 9;
 		} else if (lastversion == 0) {
 			strings.add("<b><color:red>Error</b>");
-			strings.add("Cannot retrieve last version from http://plantuml.com/</b>");
+			strings.add("Cannot retrieve last version from http://plantuml.com/");
 		} else {
 			strings.add("<b>Last available version for download</b> : " + lastversion);
 			strings.add(" ");
 			if (Version.version() >= lastversion) {
-				strings.add("<b><color:green>Your version is up to date.</b>");
+				strings.add("<b><color:green>Your version is up to date.");
 			} else {
-				strings.add("<b><color:red>A newer version is available for download.</b>");
+				strings.add("<b><color:red>A newer version is available for download.");
 			}
 		}
 

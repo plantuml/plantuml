@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
@@ -120,11 +121,11 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return all.get(all.size() - 1);
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
 		if (getLast() == null) {
-			return super.addNote(note, position, type);
+			return super.addNote(note, position, type, colors);
 		}
-		return getLast().addNote(note, position, type);
+		return getLast().addNote(note, position, type, colors);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

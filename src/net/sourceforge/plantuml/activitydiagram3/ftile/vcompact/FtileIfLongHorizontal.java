@@ -180,7 +180,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		for (int i = 0; i < diamonds.size() - 1; i++) {
 			final Ftile diam1 = diamonds.get(i);
 			final Ftile diam2 = diamonds.get(i + 1);
-			conns.add(result.new ConnectionHorizontal(diam1, diam2, topInColor));
+			conns.add(result.new ConnectionHorizontal(diam1, diam2, arrowColor));
 		}
 		conns.add(result.new ConnectionIn(topInColor));
 		conns.add(result.new ConnectionLastElseIn(FtileIfWithLinks.getInColor(branch2, arrowColor)));

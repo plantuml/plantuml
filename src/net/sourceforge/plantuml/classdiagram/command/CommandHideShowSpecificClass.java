@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram> {
@@ -67,11 +67,14 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		} else {
 			final Code code = Code.of(codeString);
-			final ILeaf leaf = diagram.getEntityFactory().getLeafs().get(code);
-			if (leaf == null) {
-				return CommandExecutionResult.error("Class does not exist : " + code.getFullName());
+			IEntity hidden = diagram.getEntityFactory().getLeafs().get(code);
+			if (hidden == null) {
+				hidden = diagram.getEntityFactory().getGroups().get(code);
 			}
-			diagram.hideOrShow(leaf, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			if (hidden == null) {
+				return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
+			}
+			diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		}
 		return CommandExecutionResult.ok();
 	}

@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19870 $
+ * Revision $Revision: 20057 $
  *
  */
 package net.sourceforge.plantuml;
@@ -61,6 +61,7 @@ public class OptionFlags {
 	static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
 	static public final boolean OMEGA_CROSSING = false;
+	// static public final boolean LINK_BETWEEN_FIELDS = true;
 
 	// static public final boolean USE_JDOT = false;
 

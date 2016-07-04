@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
+ * Revision $Revision: 19999 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -66,9 +66,9 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 		this(texts, fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, null, null);
 	}
 
-	public TextBlockSimple(Display texts, FontConfiguration fontConfiguration,
-			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer, double maxMessageSize,
-			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+	public TextBlockSimple(Display texts, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			SpriteContainer spriteContainer, double maxMessageSize, UFont fontForStereotype,
+			HtmlColor htmlColorForStereotype) {
 		this.texts = texts;
 		this.fontConfiguration = fontConfiguration;
 		this.horizontalAlignment = horizontalAlignment;
@@ -159,7 +159,6 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 		assert s.getLabel(false) != null;
 		final List<SingleLine> result = new ArrayList<SingleLine>();
 		for (String st : s.getLabels(spriteContainer.useGuillemet())) {
-//			st = Stereotype.manageGuillemet(st);
 			result.add(new SingleLine(st, fontConfiguration, horizontalAlignment, spriteContainer));
 		}
 		return Collections.unmodifiableList(result);

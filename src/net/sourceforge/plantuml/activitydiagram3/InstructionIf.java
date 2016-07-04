@@ -46,10 +46,11 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public class InstructionIf implements Instruction, InstructionCollection {
+public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
 	private final List<Branch> thens = new ArrayList<Branch>();
 	private Branch elseBranch;
@@ -81,10 +82,6 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		current.add(ins);
 	}
 
-	private Display note;
-	private NotePosition position;
-	private NoteType type;
-
 	public Ftile createFtile(FtileFactory factory) {
 		for (Branch branch : thens) {
 			branch.updateFtile(factory);
@@ -94,8 +91,8 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		}
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
-		if (note != null) {
-			result = new FtileWithNoteOpale(result, note, position, type, skinParam, false);
+		if (getPositionedNotes().size() > 0) {
+			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
 		return result;
 	}
@@ -152,14 +149,12 @@ public class InstructionIf implements Instruction, InstructionCollection {
 		return topInlinkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type) {
-		if (current.isEmpty()) {
-			this.note = note;
-			this.position = position;
-			this.type = type;
-			return true;
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+		if (endifCalled || current.isEmpty()) {
+			return super.addNote(note, position, type, colors);
 		} else {
-			return current.addNote(note, position, type);
+			return current.addNote(note, position, type, colors);
 		}
 	}
 

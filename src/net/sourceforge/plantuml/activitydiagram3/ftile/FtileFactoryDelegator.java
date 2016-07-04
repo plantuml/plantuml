@@ -33,6 +33,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
@@ -40,6 +41,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -50,8 +52,6 @@ import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class FtileFactoryDelegator implements FtileFactory {
@@ -110,8 +110,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.activity(label, swimlane, style, colors);
 	}
 
-	public Ftile addNote(Ftile ftile, Display note, NotePosition notePosition, NoteType type, Swimlane swimlane) {
-		return factory.addNote(ftile, note, notePosition, type, swimlane);
+	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes) {
+		return factory.addNote(ftile, swimlane, notes);
 	}
 
 	public Ftile addUrl(Ftile ftile, Url url) {

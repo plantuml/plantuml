@@ -118,8 +118,8 @@ public class FtileBox extends AbstractFtile {
 		this.swimlane = swimlane;
 		this.inRenreding = new LinkRendering(HtmlColorAndStyle.build(skinParam));
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
-		final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
-				.createSheet(label);
+		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+				skinParam, CreoleMode.FULL).createSheet(label);
 		this.tb = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), new MyStencil(), new UStroke(1));
 		this.print = label.toString();
 	}

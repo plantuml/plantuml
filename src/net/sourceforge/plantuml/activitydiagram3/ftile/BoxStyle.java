@@ -88,7 +88,7 @@ public enum BoxStyle {
 			ug.apply(new UTranslate(width - PADDING, 0)).draw(vline);
 		}
 	},
-	SDL_SAVE('/') {
+	SDL_SAVE('\\') {
 		@Override
 		protected Shadowable getShape(double width, double height) {
 			final UPolygon result = new UPolygon();
@@ -96,6 +96,17 @@ public enum BoxStyle {
 			result.addPoint(width - DELTA_INPUT_OUTPUT, 0.0);
 			result.addPoint(width, height);
 			result.addPoint(DELTA_INPUT_OUTPUT, height);
+			return result;
+		}
+	},
+	SDL_ANTISAVE('/') {
+		@Override
+		protected Shadowable getShape(double width, double height) {
+			final UPolygon result = new UPolygon();
+			result.addPoint(DELTA_INPUT_OUTPUT, 0.0);
+			result.addPoint(width, 0.0);
+			result.addPoint(width - DELTA_INPUT_OUTPUT, height);
+			result.addPoint(0, height);
 			return result;
 		}
 	},

@@ -27,50 +27,49 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 4749 $
+ *
+ * Revision $Revision: 9786 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.activitydiagram3;
 
-import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
-import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public interface ILeaf extends IEntity {
+public class PositionedNote {
 
-	public EntityPosition getEntityPosition();
+	private final Display display;
+	private final NotePosition notePosition;
+	private final NoteType type;
+	private final Colors colors;
 
-	public void setContainer(IGroup container);
+	public PositionedNote(Display display, NotePosition position, NoteType type, Colors colors) {
+		this.display = display;
+		this.notePosition = position;
+		this.type = type;
+		this.colors = colors;
+	}
 
-	public boolean isTop();
+	public PositionedNote(Display note, NotePosition position, NoteType type) {
+		this(note, position, type, null);
+	}
 
-	public void setTop(boolean top);
+	public Display getDisplay() {
+		return display;
+	}
 
-	public boolean hasNearDecoration();
+	public NotePosition getNotePosition() {
+		return notePosition;
+	}
 
-	public void setNearDecoration(boolean nearDecoration);
+	public NoteType getType() {
+		return type;
+	}
 
-	public int getXposition();
-
-	public void setXposition(int pos);
-
-	public IEntityImage getSvekImage();
-
-	public String getGeneric();
-
-	public void muteToType(LeafType newType, USymbol newSymbol);
-
-	public void setGeneric(String generic);
-
-	public void setSvekImage(IEntityImage svekImage);
-
-	public void setNeighborhood(Neighborhood neighborhood);
-
-	public Neighborhood getNeighborhood();
-
-	public boolean hasPort();
-
-	public void setHasPort(boolean hasPort);
+	public Colors getColors() {
+		return colors;
+	}
 
 }
