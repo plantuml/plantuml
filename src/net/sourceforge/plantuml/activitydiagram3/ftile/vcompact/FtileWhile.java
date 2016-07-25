@@ -116,7 +116,8 @@ class FtileWhile extends AbstractFtile {
 			ConditionStyle conditionStyle, FontConfiguration fcTest) {
 
 		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
-		final TextBlock testTb = test.create(fcTest, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+		final TextBlock testTb = test.create(fcTest,
+				whileBlock.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), ftileFactory.skinParam());
 		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 		final Ftile diamond1;

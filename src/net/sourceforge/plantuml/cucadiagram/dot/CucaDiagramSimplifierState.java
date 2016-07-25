@@ -36,9 +36,11 @@ package net.sourceforge.plantuml.cucadiagram.dot;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -55,7 +57,7 @@ public final class CucaDiagramSimplifierState {
 		boolean changed;
 		do {
 			changed = false;
-			final Collection<IGroup> groups = putConcurrentStateAtEnd(diagram.getGroups(false));
+			final Collection<IGroup> groups = getOrdered(diagram.getRootGroup());
 			for (IGroup g : groups) {
 				if (diagram.isAutarkic(g)) {
 					final IEntityImage img = computeImage(g);
@@ -68,17 +70,39 @@ public final class CucaDiagramSimplifierState {
 		} while (changed);
 	}
 
-	private Collection<IGroup> putConcurrentStateAtEnd(Collection<IGroup> groups) {
-		final List<IGroup> result = new ArrayList<IGroup>();
-		final List<IGroup> end = new ArrayList<IGroup>();
-		for (IGroup g : groups) {
-			if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
-				end.add(g);
-			} else {
-				result.add(g);
+	private Collection<IGroup> getOrdered(IGroup root) {
+		final Collection<IGroup> ordered = new LinkedHashSet<IGroup>();
+		ordered.add(root);
+		int size = 1;
+		while (true) {
+			size = ordered.size();
+			addOneLevel(ordered);
+			if (size == ordered.size()) {
+				break;
 			}
 		}
-		result.addAll(end);
+		final List<IGroup> result = new ArrayList<IGroup>();
+		for (IGroup g : ordered) {
+			if (g instanceof GroupRoot == false) {
+				result.add(0, g);
+			}
+		}
+		return result;
+	}
+
+	private void addOneLevel(Collection<IGroup> currents) {
+		for (IGroup g : new ArrayList<IGroup>(currents)) {
+			for (IGroup child : reverse(g.getChildren())) {
+				currents.add(child);
+			}
+		}
+	}
+
+	private List<IGroup> reverse(Collection<IGroup> source) {
+		final List<IGroup> result = new ArrayList<IGroup>();
+		for (IGroup g : source) {
+			result.add(0, g);
+		}
 		return result;
 	}
 

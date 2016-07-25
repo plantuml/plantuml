@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20028 $
+ * Revision $Revision: 20149 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -197,7 +197,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public final boolean isGroup(Code code) {
-		return entityFactory.getGroups().containsKey(code);
+		return leafExist(code) == false && entityFactory.getGroups().containsKey(code);
 	}
 
 	public final Collection<IGroup> getGroups(boolean withRootGroup) {

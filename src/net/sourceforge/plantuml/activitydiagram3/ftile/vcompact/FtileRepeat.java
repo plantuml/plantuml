@@ -106,7 +106,8 @@ class FtileRepeat extends AbstractFtile {
 		final FontConfiguration fontConfiguration1 = conditionStyle == ConditionStyle.INSIDE ? fcDiamond : fcArrow;
 
 		final TextBlock tbTest = (Display.isNull(test) || test.isWhite()) ? TextBlockUtils.empty(0, 0) : test.create(
-				fontConfiguration1, HorizontalAlignment.LEFT, spriteContainer);
+				fontConfiguration1, repeat.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
+				spriteContainer);
 		final TextBlock yesTb = yes.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 		final TextBlock outTb = out.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 

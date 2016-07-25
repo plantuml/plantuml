@@ -99,8 +99,8 @@ public class FtileWithNotes extends AbstractFtile /* implements Stencil */{
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
 		for (PositionedNote note : notes) {
-			final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
-					.createSheet(note.getDisplay());
+			final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+					skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
 			final SheetBlock1 sheet1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
 
 			final TextBlock opale = TextBlockUtils.withMargin(new Opale(borderColor, noteBackgroundColor, sheet1,

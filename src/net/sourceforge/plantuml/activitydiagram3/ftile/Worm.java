@@ -113,6 +113,64 @@ public class Worm implements Iterable<Point2D.Double> {
 		return result;
 	}
 
+	public Worm moveFirstPoint(UTranslate move) {
+		final double dx = move.getDx();
+		final double dy = move.getDy();
+		if (dx != 0 && dy != 0) {
+			throw new IllegalArgumentException("move=" + move);
+		}
+		final Worm result = new Worm();
+		double x0 = this.points.get(0).getX();
+		double y0 = this.points.get(0).getY();
+		double x1 = this.points.get(1).getX();
+		double y1 = this.points.get(1).getY();
+
+		if (dx != 0 && x0 == x1) {
+			x1 += dx;
+		}
+		if (dy != 0 && y0 == y1) {
+			y1 += dy;
+		}
+		x0 += dx;
+		y0 += dy;
+
+		result.addPoint(x0, y0);
+		result.addPoint(x1, y1);
+		for (int i = 2; i < this.points.size(); i++) {
+			result.addPoint(this.points.get(i));
+		}
+		return result;
+	}
+
+	public Worm moveLastPoint(UTranslate move) {
+		final double dx = move.getDx();
+		final double dy = move.getDy();
+		if (dx != 0 && dy != 0) {
+			throw new IllegalArgumentException("move=" + move);
+		}
+		final Worm result = new Worm();
+		double x8 = this.points.get(this.points.size() - 2).getX();
+		double y8 = this.points.get(this.points.size() - 2).getY();
+		double x9 = this.points.get(this.points.size() - 1).getX();
+		double y9 = this.points.get(this.points.size() - 1).getY();
+
+		if (dx != 0 && x8 == x9) {
+			x8 += dx;
+		}
+		if (dy != 0 && y8 == y9) {
+			y8 += dy;
+		}
+		x9 += dx;
+		y9 += dy;
+
+		for (int i = 0; i < this.points.size() - 2; i++) {
+			result.addPoint(this.points.get(i));
+		}
+		result.addPoint(x8, y8);
+		result.addPoint(x9, y9);
+		return result;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder result = new StringBuilder();

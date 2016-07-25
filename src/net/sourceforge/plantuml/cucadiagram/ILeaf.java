@@ -35,6 +35,7 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.IEntityImage;
 
 public interface ILeaf extends IEntity {
@@ -72,5 +73,9 @@ public interface ILeaf extends IEntity {
 	public boolean hasPort();
 
 	public void setHasPort(boolean hasPort);
+
+	public void setVisibilityModifier(VisibilityModifier visibility);
+
+	public VisibilityModifier getVisibilityModifier();
 
 }

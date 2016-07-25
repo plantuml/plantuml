@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
@@ -590,4 +591,14 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.hasPort = hasPort;
 	}
 
+	private VisibilityModifier visibility;
+
+	public void setVisibilityModifier(VisibilityModifier visibility) {
+		this.visibility = visibility;
+
+	}
+
+	public VisibilityModifier getVisibilityModifier() {
+		return visibility;
+	}
 }

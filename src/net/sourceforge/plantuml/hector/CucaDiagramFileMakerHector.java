@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek2;
+import net.sourceforge.plantuml.svek.DotDataImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -97,7 +97,7 @@ public class CucaDiagramFileMakerHector implements CucaDiagramFileMaker {
 	}
 
 	private IEntityImage computeImage(final ILeaf leaf) {
-		final IEntityImage image = CucaDiagramFileMakerSvek2.createEntityImageBlock(leaf, diagram.getSkinParam(),
+		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
 				false, diagram, null, null, null);
 		return image;
 	}

@@ -27,23 +27,46 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 20172 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram.dot;
+package net.sourceforge.plantuml.braille;
 
-import java.io.File;
-import java.io.OutputStream;
+import java.awt.geom.Line2D;
 
-public interface Graphviz {
+import net.sourceforge.plantuml.ugraphic.ClipContainer;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UClip;
+import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UShape;
 
-	ProcessState createFile3(OutputStream os);
+public class DriverLineBraille implements UDriver<BrailleGrid> {
 
-	File getDotExe();
+	private final ClipContainer clipContainer;
 
-	String dotVersion();
+	public DriverLineBraille(ClipContainer clipContainer) {
+		this.clipContainer = clipContainer;
+	}
 
-	ExeState getExeState();
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
+		final ULine shape = (ULine) ushape;
 
+		double x2 = x + shape.getDX();
+		double y2 = y + shape.getDY();
+
+		final UClip clip = clipContainer.getClip();
+		if (clip != null) {
+			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));
+			if (line == null) {
+				return;
+			}
+			x = line.x1;
+			y = line.y1;
+			x2 = line.x2;
+			y2 = line.y2;
+		}
+
+		grid.line(x, y, x2, y2);
+	}
 }

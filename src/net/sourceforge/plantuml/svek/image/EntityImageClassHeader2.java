@@ -53,6 +53,9 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockGeneric;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -76,9 +79,20 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		if (italic) {
 			fontConfigurationName = fontConfigurationName.italic();
 		}
-		final TextBlock name = TextBlockUtils.withMargin(
-				entity.getDisplay().createWithNiceCreoleMode(fontConfigurationName, HorizontalAlignment.CENTER,
-						skinParam), 3, 3, 0, 0);
+		TextBlock name = entity.getDisplay().createWithNiceCreoleMode(fontConfigurationName,
+				HorizontalAlignment.CENTER, skinParam);
+		final VisibilityModifier modifier = entity.getVisibilityModifier();
+		if (modifier == null) {
+			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
+		} else {
+			final Rose rose = new Rose();
+			final HtmlColor back = rose.getHtmlColor(skinParam, modifier.getBackground());
+			final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
+
+			final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back);
+			name = TextBlockUtils.mergeLR(uBlock, name, VerticalAlignment.CENTER);
+			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
+		}
 
 		final TextBlock stereo;
 		if (stereotype == null || stereotype.getLabel(false) == null

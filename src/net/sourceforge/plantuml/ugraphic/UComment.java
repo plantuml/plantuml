@@ -28,38 +28,20 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5079 $
+ * Revision $Revision: 19109 $
  *
  */
-package net.sourceforge.plantuml.hector2.graphic;
+package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Dimension2D;
+public class UComment implements UShape {
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.hector2.layering.Layer;
-import net.sourceforge.plantuml.svek.DotDataImageBuilder;
-import net.sourceforge.plantuml.svek.IEntityImage;
+	private final String comment;
 
-public class Foo1 {
-
-	public static Dimension2D getMaxCellDimension(StringBounder stringBounder, Layer layer, CucaDiagram diagram) {
-		Dimension2D result = new Dimension2DDouble(0, 0);
-		for (IEntity ent : layer.entities()) {
-			final IEntityImage image = computeImage((ILeaf) ent, diagram);
-			final Dimension2D dim = image.calculateDimension(stringBounder);
-			result = Dimension2DDouble.max(result, dim);
-		}
-		return result;
+	public UComment(String comment) {
+		this.comment = comment;
 	}
 
-	private static IEntityImage computeImage(final ILeaf leaf, CucaDiagram diagram) {
-		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null);
-		return image;
+	public String getComment() {
+		return comment;
 	}
-
 }

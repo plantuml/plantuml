@@ -42,33 +42,21 @@ import java.util.List;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.NamedOutputStream;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
-
-	static private final StringBounder stringBounder;
-
-	static {
-		stringBounder = StringBounderUtils.asStringBounder();
-	}
 
 	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
 		this.diagram = diagram;
@@ -84,14 +72,12 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		}
 	}
 
-	private CucaDiagramFileMakerSvek2 buildCucaDiagramFileMakerSvek2(DotMode dotMode) {
+	private DotDataImageBuilder createDotDataImageBuilder(DotMode dotMode) {
 		final DotData dotData = new DotData(diagram.getEntityFactory().getRootGroup(), getOrderedLinks(),
 				diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
 				diagram.getColorMapper(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
 				dotMode, diagram.getNamespaceSeparator(), diagram.getPragma());
-		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma());
-		return svek2;
+		return new DotDataImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma());
 
 	}
 
@@ -104,27 +90,26 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		}
 
 		// System.err.println("FOO11 type=" + os.getClass());
-		CucaDiagramFileMakerSvek2 svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NORMAL);
+		DotDataImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL);
 		BaseFile basefile = null;
 		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream) {
 			basefile = ((NamedOutputStream) os).getBasefile();
 		}
 		// System.err.println("FOO11 basefile=" + basefile);
 
-		TextBlockBackcolored result = svek2.createFile(basefile, diagram.getDotStringSkek());
+		TextBlockBackcolored result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		if (result instanceof GraphvizCrash) {
-			svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
-			result = svek2.createFile(basefile, diagram.getDotStringSkek());
+			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT);
+			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
 		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
 
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
+		String warningOrError = null;
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
-			this.warningOrError = svek2.getBibliotekon().getWarningOrError(Integer.parseInt(widthwarning));
-		} else {
-			this.warningOrError = null;
+			warningOrError = svek2.getWarningOrError(Integer.parseInt(widthwarning));
 		}
-		final Dimension2D dim = result.calculateDimension(stringBounder);
+		final Dimension2D dim = result.calculateDimension(StringBounderUtils.asStringBounder());
 		final double scale = getScale(fileFormatOption, dim);
 
 		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale,
@@ -159,22 +144,6 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			}
 		}
 		result.add(link);
-	}
-
-	private String warningOrError;
-
-	private String getWarningOrError() {
-		return warningOrError;
-	}
-
-	private final UFont getFont(FontParam fontParam) {
-		final ISkinParam skinParam = diagram.getSkinParam();
-		return skinParam.getFont(null, false, fontParam);
-	}
-
-	private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereo) {
-		final ISkinParam skinParam = diagram.getSkinParam();
-		return skinParam.getFontHtmlColor(stereo, fontParam);
 	}
 
 	private double getScale(FileFormatOption fileFormatOption, final Dimension2D dim) {

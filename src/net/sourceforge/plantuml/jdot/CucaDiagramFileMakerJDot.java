@@ -94,9 +94,8 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
-import net.sourceforge.plantuml.svek.ColorSequence;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek2;
+import net.sourceforge.plantuml.svek.DotDataImageBuilder;
 import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
@@ -173,7 +172,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	public CucaDiagramFileMakerJDot(CucaDiagram diagram) {
 		this.diagram = diagram;
-		this.dotStringFactory = new DotStringFactory(new ColorSequence(), stringBounder, diagram);
+		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
 
 		printGroups(diagram.getRootGroup());
 		printEntities(getUnpackagedEntities());
@@ -586,9 +585,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				// skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
 			}
 
-			return CucaDiagramFileMakerSvek2.createEntityImageBlock(ent, skinParam,
-					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null,
-					diagram.getUmlDiagramType());
+			return DotDataImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
+					diagram, getBibliotekon(), null, diagram.getUmlDiagramType());
 		}
 		return ent.getSvekImage();
 	}

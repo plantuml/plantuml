@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -115,6 +116,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	final public void drawU(UGraphic ug) {
+		ug.draw(new UComment("class " + getEntity().getCode().getFullName()));
 		if (url != null) {
 			ug.startUrl(url);
 		}

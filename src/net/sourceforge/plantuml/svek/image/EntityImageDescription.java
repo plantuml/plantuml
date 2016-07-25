@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
@@ -125,6 +126,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
+		ug.draw(new UComment("entity " + getEntity().getCode().getFullName()));
 		if (url != null) {
 			ug.startUrl(url);
 		}

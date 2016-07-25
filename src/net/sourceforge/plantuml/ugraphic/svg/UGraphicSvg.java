@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
+import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -157,6 +158,11 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
 		createXml(os);
+	}
+
+	@Override
+	protected void drawComment(UComment comment) {
+		getGraphicObject().addComment(comment.getComment());
 	}
 
 	// @Override

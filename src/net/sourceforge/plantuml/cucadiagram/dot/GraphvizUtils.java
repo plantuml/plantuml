@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19931 $
+ * Revision $Revision: 20173 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -43,13 +43,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
 
 public class GraphvizUtils {
 
-	// private static final String VIZJS = "vizjs";
+	private static final String VIZJS = "vizjs";
 	private static int DOT_VERSION_LIMIT = 226;
 
 	private static boolean isWindows() {
@@ -67,7 +68,8 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {
-		if (VizJsEngine.isOk()) {
+		if (useVizJs(skinParam)) {
+			Log.info("Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
 		final AbstractGraphviz result;
@@ -76,10 +78,22 @@ public class GraphvizUtils {
 		} else {
 			result = new GraphvizLinux(skinParam, dotString, type);
 		}
-		// if (OptionFlags.GRAPHVIZCACHE) {
-		// return new GraphvizCached(result);
-		// }
+		if (result.getExeState() != ExeState.OK && VizJsEngine.isOk()) {
+			Log.info("Error with file " + result.getDotExe() + ": " + result.getExeState().getTextMessage());
+			Log.info("Using " + VIZJS);
+			return new GraphvizJs(dotString);
+		}
 		return result;
+	}
+
+	private static boolean useVizJs(ISkinParam skinParam) {
+		if (skinParam != null && VIZJS.equalsIgnoreCase(skinParam.getDotExecutable()) && VizJsEngine.isOk()) {
+			return true;
+		}
+		if (VIZJS.equalsIgnoreCase(getenvGraphvizDot()) && VizJsEngine.isOk()) {
+			return true;
+		}
+		return false;
 	}
 
 	static public File getDotExe() {
@@ -125,16 +139,12 @@ public class GraphvizUtils {
 
 	public static String dotVersion() throws IOException, InterruptedException {
 		if (dotVersion == null) {
-			if (GraphvizUtils.getDotExe() == null) {
-				dotVersion = "Error: Dot not installed";
-			} else if (GraphvizUtils.getDotExe().exists() == false) {
-				dotVersion = "Error: " + GraphvizUtils.getDotExe().getAbsolutePath() + " does not exist";
-			} else if (GraphvizUtils.getDotExe().isFile() == false) {
-				dotVersion = "Error: " + GraphvizUtils.getDotExe().getAbsolutePath() + " is not a file";
-			} else if (GraphvizUtils.getDotExe().canRead() == false) {
-				dotVersion = "Error: " + GraphvizUtils.getDotExe().getAbsolutePath() + " cannot be read";
-			} else {
+			final File dotExe = GraphvizUtils.getDotExe();
+			final ExeState exeState = ExeState.checkFile(dotExe);
+			if (exeState == ExeState.OK) {
 				dotVersion = create(null, "png").dotVersion();
+			} else {
+				dotVersion = "Error:" + exeState.getTextMessage(dotExe);
 			}
 		}
 		return dotVersion;
@@ -165,7 +175,7 @@ public class GraphvizUtils {
 		}
 
 		final List<String> result = new ArrayList<String>();
-		if (VizJsEngine.isOk()) {
+		if (useVizJs(null)) {
 			result.add("VizJs library is used!");
 			try {
 				final String err = getTestCreateSimpleFile();
@@ -190,22 +200,9 @@ public class GraphvizUtils {
 		final File dotExe = GraphvizUtils.getDotExe();
 		result.add("Dot executable is " + dotExe);
 
-		boolean ok = true;
-		if (dotExe == null) {
-			result.add(red + "Error: No dot executable found");
-			ok = false;
-		} else if (dotExe.exists() == false) {
-			result.add(red + "Error: file does not exist");
-			ok = false;
-		} else if (dotExe.isFile() == false) {
-			result.add(red + "Error: not a valid file");
-			ok = false;
-		} else if (dotExe.canRead() == false) {
-			result.add(red + "Error: cannot be read");
-			ok = false;
-		}
+		final ExeState exeState = ExeState.checkFile(dotExe);
 
-		if (ok) {
+		if (exeState == ExeState.OK) {
 			try {
 				final String version = GraphvizUtils.dotVersion();
 				result.add("Dot version: " + version);
@@ -228,6 +225,7 @@ public class GraphvizUtils {
 				e.printStackTrace();
 			}
 		} else {
+			result.add(red + "Error: " + exeState.getTextMessage());
 			result.add("Error: only sequence diagrams will be generated");
 		}
 

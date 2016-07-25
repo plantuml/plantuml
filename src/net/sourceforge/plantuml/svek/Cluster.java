@@ -76,6 +76,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -297,7 +298,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void drawU(UGraphic ug, UStroke stroke, final UmlDiagramType umlDiagramType, final ISkinParam skinParam2) {
-
+		ug.draw(new UComment("cluster " + group.getCode().getFullName()));
 		final Stereotype stereotype = group.getStereotype();
 		HtmlColor borderColor;
 		if (umlDiagramType == UmlDiagramType.STATE) {

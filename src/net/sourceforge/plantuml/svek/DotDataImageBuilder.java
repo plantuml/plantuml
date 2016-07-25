@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +55,7 @@ import net.sourceforge.plantuml.SkinParamSameClassWidth;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -69,6 +71,7 @@ import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
+import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
@@ -112,14 +115,13 @@ import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
-public final class CucaDiagramFileMakerSvek2 {
-
-	private final ColorSequence colorSequence = new ColorSequence();
+public final class DotDataImageBuilder {
 
 	private final DotData dotData;
 	private final EntityFactory entityFactory;
 	private final UmlSource source;
 	private final Pragma pragma;
+	private Map<Code, Double> maxX;
 
 	static private final StringBounder stringBounder;
 
@@ -127,32 +129,19 @@ public final class CucaDiagramFileMakerSvek2 {
 		stringBounder = StringBounderUtils.asStringBounder();
 	}
 
-	public CucaDiagramFileMakerSvek2(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma) {
+	public DotDataImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma) {
 		this.dotData = dotData;
 		this.entityFactory = entityFactory;
 		this.source = source;
 		this.pragma = pragma;
 	}
 
-	private DotStringFactory dotStringFactory;
-
-	public Bibliotekon getBibliotekon() {
-		return dotStringFactory.getBibliotekon();
-	}
-
-	public IEntityImage createFileForConcurrentState() {
-		return new CucaDiagramFileMakerSvek2InternalImage(dotData.getLeafs(), dotData.getTopParent()
-				.getConcurrentSeparator(), dotData.getSkinParam(), dotData.getSkinParam().getBackgroundColor());
-
-	}
-
-	public IEntityImage createFile(BaseFile basefile, String dotStrings[]) {
-
+	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
 		dotData.removeIrrelevantSametail();
-		dotStringFactory = new DotStringFactory(colorSequence, stringBounder, dotData);
+		final DotStringFactory dotStringFactory = new DotStringFactory(stringBounder, dotData);
 
-		printGroups(dotData.getRootGroup());
-		printEntities(getUnpackagedEntities());
+		printGroups(dotStringFactory, dotData.getRootGroup());
+		printEntities(dotStringFactory, getUnpackagedEntities());
 
 		for (Link link : dotData.getLinks()) {
 			if (link.isRemoved()) {
@@ -162,23 +151,23 @@ public final class CucaDiagramFileMakerSvek2 {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
 
-				final Line line = new Line(link, colorSequence, skinParam, stringBounder, labelFont, getBibliotekon(),
-						dotData.getPragma());
+				final Line line = new Line(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
+						labelFont, dotStringFactory.getBibliotekon(), dotData.getPragma());
 
-				getBibliotekon().addLine(line);
+				dotStringFactory.getBibliotekon().addLine(line);
 
 				if (link.getEntity1().isGroup() == false && link.getEntity1().getEntityType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity1())) {
-					final Shape shape = getBibliotekon().getShape(link.getEntity1());
-					final Shape other = getBibliotekon().getShape(link.getEntity2());
+					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
+					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
 					if (other != null) {
 						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 						line.setOpale(true);
 					}
 				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getEntityType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity2())) {
-					final Shape shape = getBibliotekon().getShape(link.getEntity2());
-					final Shape other = getBibliotekon().getShape(link.getEntity1());
+					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
+					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
 					if (other != null) {
 						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 						line.setOpale(true);
@@ -219,6 +208,7 @@ public final class CucaDiagramFileMakerSvek2 {
 			}
 			final SvekResult result = new SvekResult(position, dotData, dotStringFactory);
 			result.moveSvek(6 - minX, -minY);
+			this.maxX = dotStringFactory.getBibliotekon().getMaxX();
 			return result;
 		} catch (Exception e) {
 			Log.error("Exception " + e);
@@ -261,17 +251,8 @@ public final class CucaDiagramFileMakerSvek2 {
 
 		final List<String> msg = new ArrayList<String>();
 		msg.add("Dot Executable: " + dotExe);
-		if (dotExe != null) {
-			if (dotExe.exists() == false) {
-				msg.add("File does not exist");
-			} else if (dotExe.isDirectory()) {
-				msg.add("It should be an executable, not a directory");
-			} else if (dotExe.isFile() == false) {
-				msg.add("Not a valid file");
-			} else if (dotExe.canRead() == false) {
-				msg.add("File cannot be read");
-			}
-		}
+		final ExeState exeState = ExeState.checkFile(dotExe);
+		msg.add(exeState.getTextMessage());
 		msg.add("Cannot find Graphviz. You should try");
 		msg.add(" ");
 		msg.add("@startuml");
@@ -285,45 +266,46 @@ public final class CucaDiagramFileMakerSvek2 {
 		return GraphicStrings.createDefault(msg, false);
 	}
 
-	private void printEntities(Collection<ILeaf> entities2) {
+	private void printEntities(DotStringFactory dotStringFactory, Collection<ILeaf> entities2) {
 		for (ILeaf ent : entities2) {
 			if (ent.isRemoved()) {
 				continue;
 			}
-			printEntity(ent);
+			printEntity(dotStringFactory, ent);
 		}
 	}
 
-	private void printEntity(ILeaf ent) {
+	private void printEntity(DotStringFactory dotStringFactory, ILeaf ent) {
 		if (ent.isRemoved()) {
 			throw new IllegalStateException();
 		}
-		final IEntityImage image = printEntityInternal(ent);
+		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
-		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(), colorSequence,
-				ent.isTop(), image.getShield(), ent.getEntityPosition());
+		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(), ent.getEntityPosition());
 		dotStringFactory.addShape(shape);
-		getBibliotekon().putShape(ent, shape);
+		dotStringFactory.getBibliotekon().putShape(ent, shape);
 	}
 
-	private IEntityImage printEntityInternal(ILeaf ent) {
+	private IEntityImage printEntityInternal(DotStringFactory dotStringFactory, ILeaf ent) {
 		if (ent.isRemoved()) {
 			throw new IllegalStateException();
 		}
 		if (ent.getSvekImage() == null) {
 			ISkinParam skinParam = dotData.getSkinParam();
 			if (skinParam.sameClassWidth()) {
-				final double width = getMaxWidth();
+				final double width = getMaxWidth(dotStringFactory);
 				skinParam = new SkinParamSameClassWidth(skinParam, width);
 			}
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,
-					getBibliotekon(), dotStringFactory.getGraphvizVersion(), dotData.getUmlDiagramType());
+					dotStringFactory.getBibliotekon(), dotStringFactory.getGraphvizVersion(),
+					dotData.getUmlDiagramType());
 		}
 		return ent.getSvekImage();
 	}
 
-	private double getMaxWidth() {
+	private double getMaxWidth(DotStringFactory dotStringFactory) {
 		double result = 0;
 		for (ILeaf ent : dotData.getLeafs()) {
 			if (ent.getEntityType().isLikeClass() == false) {
@@ -453,7 +435,7 @@ public final class CucaDiagramFileMakerSvek2 {
 		return result;
 	}
 
-	private void printGroups(IGroup parent) {
+	private void printGroups(DotStringFactory dotStringFactory, IGroup parent) {
 		for (IGroup g : dotData.getGroupHierarchy().getChildrenGroups(parent)) {
 			if (g.isRemoved()) {
 				continue;
@@ -473,14 +455,14 @@ public final class CucaDiagramFileMakerSvek2 {
 					folder.setSpecificColorTOBEREMOVED(ColorType.BACK,
 							g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK));
 				}
-				printEntity(folder);
+				printEntity(dotStringFactory, folder);
 			} else {
-				printGroup(g);
+				printGroup(dotStringFactory, g);
 			}
 		}
 	}
 
-	private void printGroup(IGroup g) {
+	private void printGroup(DotStringFactory dotStringFactory, IGroup g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
 			return;
 		}
@@ -513,9 +495,9 @@ public final class CucaDiagramFileMakerSvek2 {
 		}
 
 		dotStringFactory.openCluster(g, titleAndAttributeWidth, titleAndAttributeHeight, title, stereo);
-		this.printEntities(g.getLeafsDirect());
+		this.printEntities(dotStringFactory, g.getLeafsDirect());
 
-		printGroups(g);
+		printGroups(dotStringFactory, g);
 
 		dotStringFactory.closeCluster();
 	}
@@ -554,5 +536,19 @@ public final class CucaDiagramFileMakerSvek2 {
 		final FontParam fontParam = FontParam.PACKAGE_STEREOTYPE;
 		return Display.create(stereos).create(new FontConfiguration(dotData.getSkinParam(), fontParam, stereotype),
 				HorizontalAlignment.CENTER, dotData.getSkinParam());
+	}
+
+	public String getWarningOrError(int warningOrError) {
+		if (maxX == null) {
+			return "";
+		}
+		final StringBuilder sb = new StringBuilder();
+		for (Map.Entry<Code, Double> ent : maxX.entrySet()) {
+			if (ent.getValue() > warningOrError) {
+				sb.append(ent.getKey() + " is overpassing the width limit.");
+				sb.append("\n");
+			}
+		}
+		return sb.length() == 0 ? "" : sb.toString();
 	}
 }

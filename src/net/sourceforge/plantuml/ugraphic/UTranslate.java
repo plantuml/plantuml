@@ -94,4 +94,8 @@ public class UTranslate implements UChange {
 		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
 	}
 
+	public UTranslate multiplyBy(double v) {
+		return new UTranslate(dx * v, dy * v);
+	}
+
 }

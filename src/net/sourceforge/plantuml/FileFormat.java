@@ -43,7 +43,7 @@ import java.io.File;
  */
 public enum FileFormat {
 	PNG, SVG, EPS, EPS_TEXT, ATXT, UTXT, XMI_STANDARD, XMI_STAR, XMI_ARGO, SCXML,
-	PDF, MJPEG, ANIMATED_GIF, HTML, HTML5, VDX, LATEX, LATEX_NO_PREAMBLE, BASE64;
+	PDF, MJPEG, ANIMATED_GIF, HTML, HTML5, VDX, LATEX, LATEX_NO_PREAMBLE, BASE64, BRAILLE_PNG;
 
 	/**
 	 * Returns the file format to be used for that format.
@@ -62,6 +62,9 @@ public enum FileFormat {
 		}
 		if (this == ANIMATED_GIF) {
 			return ".gif";
+		}
+		if (this == BRAILLE_PNG) {
+			return ".braille.png";
 		}
 		if (this == EPS_TEXT) {
 			return EPS.getFileSuffix();

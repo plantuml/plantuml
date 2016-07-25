@@ -83,6 +83,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
 				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
@@ -178,6 +179,11 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 	private IEntity executeArg0(ClassDiagram diagram, RegexResult arg) {
 
 		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(arg.get("TYPE", 0)));
+		final String visibilityString = arg.get("VISIBILITY", 0);
+		VisibilityModifier visibilityModifier = null;
+		if (visibilityString != null) {
+			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString.charAt(0), false);
+		}
 
 		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
@@ -192,6 +198,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		} else {
 			result = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
 		}
+		result.setVisibilityModifier(visibilityModifier);
 		if (stereotype != null) {
 			result.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
 					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
@@ -227,5 +234,4 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		}
 		return result;
 	}
-
 }

@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class WormMutation {
@@ -83,12 +82,21 @@ public class WormMutation {
 		return result;
 	}
 
-	private UTranslate getLast() {
+	public UTranslate getLast() {
 		return translations.get(translations.size() - 1);
+	}
+
+	public UTranslate getFirst() {
+		return translations.get(0);
+	}
+	
+	public int size() {
+		return translations.size();
 	}
 
 	private static WormMutation createFromSimpleSignature(final String signature, final double delta) {
 		final WormMutation result = new WormMutation();
+		// System.err.println("signature=" + signature);
 		if (signature.equals("D") || signature.equals("U")) {
 			final UTranslate translate = new UTranslate(delta, 0);
 			result.translations.add(translate);
@@ -175,20 +183,6 @@ public class WormMutation {
 			result.append(tr.getDx());
 		}
 		return new UTranslate(result.getExtreme() * (size - 1), 0);
-	}
-
-	public UChange getGlobalTranslate(int size) {
-		final MinMax result = new MinMax();
-		if (translations.get(0).getDy() == 0) {
-			for (UTranslate tr : translations) {
-				result.append(tr.getDx());
-			}
-			return new UTranslate(-result.getExtreme() * (size - 1) / 2.0, 0);
-		}
-		for (UTranslate tr : translations) {
-			result.append(tr.getDy());
-		}
-		return new UTranslate(0, -result.getExtreme() * (size - 1) / 2.0);
 	}
 
 	public Worm mute(Worm original) {

@@ -111,7 +111,7 @@ public final class GroupPngMakerActivity {
 				skinParam, new InnerGroupHierarchy(), diagram.getColorMapper(), diagram.getEntityFactory(), false,
 				DotMode.NORMAL, diagram.getNamespaceSeparator(), diagram.getPragma());
 
-		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData, diagram.getEntityFactory(),
+		final DotDataImageBuilder svek2 = new DotDataImageBuilder(dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma());
 
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
@@ -119,7 +119,7 @@ public final class GroupPngMakerActivity {
 			final HtmlColor borderColor = getColor(ColorParam.activityBorder, stereo);
 			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 					ColorParam.background, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
-			return new InnerActivity(svek2.createFile(null, new String[0]), borderColor, backColor, skinParam.shadowing());
+			return new InnerActivity(svek2.buildImage(null, new String[0]), borderColor, backColor, skinParam.shadowing());
 		}
 
 		throw new UnsupportedOperationException(group.getGroupType().toString());

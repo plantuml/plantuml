@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20096 $
+ * Revision $Revision: 20128 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -128,12 +129,24 @@ public class SvgGraphics {
 			gRoot = simpleElement("g");
 			strokeWidth = "" + scale;
 			final Random rnd = new Random();
-			this.filterUid = "b" + Integer.toString(Math.abs(rnd.nextInt()), 36);
-			this.shadowId = "f" + Integer.toString(Math.abs(rnd.nextInt()), 36);
+			this.filterUid = "b" + getRandomString(rnd);
+			this.shadowId = "f" + getRandomString(rnd);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			throw new IllegalStateException(e);
 		}
+	}
+
+	private static String getRandomString(final Random rnd) {
+		String result = Integer.toString(Math.abs(rnd.nextInt()), 36);
+		while (result.length() < 6) {
+			result = "0" + result;
+		}
+		return result;
+	}
+
+	public static void main(String[] args) {
+		System.err.println(getRandomString(new Random()));
 	}
 
 	private Element pendingBackground;
@@ -733,6 +746,11 @@ public class SvgGraphics {
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+
+	public void addComment(String comment) {
+		final Comment commentElement = document.createComment(comment);
+		getG().appendChild(commentElement);
 	}
 
 }

@@ -138,10 +138,12 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 		boolean hasOut = false;
 		for (Ftile tmp : list) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionIn(tmp, x, arrowColor, getTextBlock(tmp.getInLinkRendering())));
+			conns.add(new ConnectionIn(tmp, x, tmp.getInLinkRendering().getRainbow(arrowColor), getTextBlock(tmp
+					.getInLinkRendering())));
 			final boolean hasOutTmp = tmp.calculateDimension(getStringBounder()).hasPointOut();
 			if (hasOutTmp) {
-				conns.add(new ConnectionOut(tmp, x, arrowColor, height1, getTextBlock(tmp.getOutLinkRendering())));
+				conns.add(new ConnectionOut(tmp, x, tmp.getOutLinkRendering().getRainbow(arrowColor), height1,
+						getTextBlock(tmp.getOutLinkRendering())));
 				hasOut = true;
 			}
 			x += dim.getWidth();

@@ -27,23 +27,18 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 20172 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram.dot;
+package net.sourceforge.plantuml.braille;
 
-import java.io.File;
-import java.io.OutputStream;
+import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UShape;
 
-public interface Graphviz {
+public class DriverNoneBraille implements UDriver<BrailleGrid> {
 
-	ProcessState createFile3(OutputStream os);
-
-	File getDotExe();
-
-	String dotVersion();
-
-	ExeState getExeState();
+	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid object) {
+	}
 
 }

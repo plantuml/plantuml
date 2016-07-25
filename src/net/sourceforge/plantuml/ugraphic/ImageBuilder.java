@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -96,8 +97,7 @@ public class ImageBuilder {
 	private UDrawable udrawable;
 
 	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HtmlColor mybackcolor, String metadata,
-			String warningOrError, double margin1, double margin2, Animation animation,
-			boolean useHandwritten) {
+			String warningOrError, double margin1, double margin2, Animation animation, boolean useHandwritten) {
 		this.colorMapper = colorMapper;
 		this.dpiFactor = dpiFactor;
 		this.mybackcolor = mybackcolor;
@@ -242,8 +242,8 @@ public class ImageBuilder {
 		return im;
 	}
 
-	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, final Dimension2D dim,
-			Animation animationArg, double dx, double dy) {
+	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, final Dimension2D dim, Animation animationArg,
+			double dx, double dy) {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
@@ -262,6 +262,8 @@ public class ImageBuilder {
 			return new UGraphicTikz(colorMapper, true);
 		case LATEX_NO_PREAMBLE:
 			return new UGraphicTikz(colorMapper, false);
+		case BRAILLE_PNG:
+			return new UGraphicBraille(colorMapper, fileFormat);
 		default:
 			throw new UnsupportedOperationException(fileFormat.toString());
 		}

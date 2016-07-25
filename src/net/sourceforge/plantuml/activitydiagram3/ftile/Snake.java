@@ -135,8 +135,11 @@ public class Snake implements UShape {
 		final int colorArrowSeparationSpace = color.getColorArrowSeparationSpace();
 		final double move = 2 + colorArrowSeparationSpace;
 		final WormMutation mutation = WormMutation.create(worm, move);
-		ug = ug.apply(mutation.getGlobalTranslate(colors.size()));
-		Worm current = worm;
+		final double globalMove = -1.0 * (colors.size() - 1) / 2.0;
+		Worm current = worm.moveFirstPoint(mutation.getFirst().multiplyBy(globalMove));
+		if (mutation.size() > 2) {
+			current = current.moveLastPoint(mutation.getLast().multiplyBy(globalMove));
+		}
 		for (int i = 0; i < colors.size(); i++) {
 			double stroke = 1.5;
 			if (colorArrowSeparationSpace == 0) {
@@ -149,34 +152,9 @@ public class Snake implements UShape {
 		drawInternalLabel(ug.apply(textTranslate));
 	}
 
-	// private void drawRainbowOld(UGraphic ug) {
-	// final HtmlColorRainbow rainbow = (HtmlColorRainbow) color;
-	// final List<HtmlColor> colors = rainbow.getColors();
-	// final int colorArrowSeparationSpace = rainbow.getColorArrowSeparationSpace();
-	// final double move = 2 + colorArrowSeparationSpace;
-	// ug = ug.apply(new UTranslate(-move * (colors.size() - 1) / 2.0, 0));
-	// double dx = -move;
-	// for (int i = 0; i < colors.size(); i++) {
-	// dx += move;
-	// double stroke = 1.5;
-	// if (colorArrowSeparationSpace == 0) {
-	// stroke = i == colors.size() - 1 ? 2.0 : 3.0;
-	// }
-	// worm.drawInternalOneColor(ug.apply(new UTranslate(dx, 0)), colors.get(i), stroke, emphasizeDirection,
-	// endDecoration);
-	// }
-	// drawInternalLabel(ug.apply(new UTranslate(dx, 0)));
-	// }
-
 	private void drawInternalLabel(UGraphic ug) {
 		if (textBlock != null) {
 			final Point2D position = getTextBlockPosition(ug.getStringBounder());
-			// final double max = getMaxX(ug.getStringBounder());
-			// ug.apply(new UChangeBackColor(HtmlColorUtils.LIGHT_GRAY))
-			// .apply(new UTranslate(position.getX(), position.getY()))
-			// .draw(new URectangle(textBlock.calculateDimension(ug.getStringBounder())));
-			// ug.apply(new UChangeBackColor(HtmlColorUtils.RED)).apply(new UTranslate(0, position.getY() + 10))
-			// .draw(new URectangle(max, 10));
 			textBlock.drawU(ug.apply(new UTranslate(position)));
 		}
 	}
@@ -240,7 +218,7 @@ public class Snake implements UShape {
 		// return null;
 		// }
 		if (same(this.getLast(), other.getFirst())) {
-			final UPolygon oneOf = endDecoration == null ? other.endDecoration : endDecoration;
+			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;
 			final Snake result = new Snake(color, oneOf);
 			result.emphasizeDirection = emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection;
 			result.worm.addAll(this.worm.merge(other.worm));

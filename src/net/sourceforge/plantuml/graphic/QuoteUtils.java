@@ -179,11 +179,11 @@ public class QuoteUtils {
 					"Daylight, I must wait for the sunrise. I must think of a new life. And I mustn't give in.", //
 					"If I cannot bring you comfort then at least I bring you hope", //
 					"We all must learn from small misfortune, count the blessings that are real", //
-					"Prepare Three Sealed Envelopes...",
-					"You know that thing you just did? Don't do that"
-			// Well I never, was there ever, A cat so clever, as magical Mr Mistoffelees
-			// Do you like your morning tea weak or strong ?
-			// It took me a long time to understand that if you want to do this job well you have to stay detached.
+					"Prepare Three Sealed Envelopes...", //
+					"You know that thing you just did? Don't do that", //
+					"It took me a long time to understand that if you want to do this job well you have to stay detached.", //
+					"Do you like your morning tea weak or strong ?", //
+					"Winter is coming" //
 			);
 
 	private QuoteUtils() {

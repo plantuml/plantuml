@@ -80,23 +80,23 @@ public class DotStringFactory implements Moveable {
 
 	private final StringBounder stringBounder;
 
-	public DotStringFactory(ColorSequence colorSequence, StringBounder stringBounder, DotData dotData) {
+	public DotStringFactory(StringBounder stringBounder, DotData dotData) {
 		this.skinParam = dotData.getSkinParam();
 		this.umlDiagramType = dotData.getUmlDiagramType();
 		this.dotMode = dotData.getDotMode();
 
-		this.colorSequence = colorSequence;
+		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
 		this.root = new Cluster(colorSequence, skinParam, dotData.getRootGroup());
 		this.current = root;
 	}
 
-	public DotStringFactory(ColorSequence colorSequence, StringBounder stringBounder, CucaDiagram diagram) {
+	public DotStringFactory(StringBounder stringBounder, CucaDiagram diagram) {
 		this.skinParam = diagram.getSkinParam();
 		this.umlDiagramType = diagram.getUmlDiagramType();
 		this.dotMode = DotMode.NORMAL;
 
-		this.colorSequence = colorSequence;
+		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
 		this.root = new Cluster(colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
 		this.current = root;

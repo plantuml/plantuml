@@ -254,5 +254,4 @@ public class GroupRoot implements IGroup {
 	public void setRemoved(boolean removed) {
 		throw new UnsupportedOperationException();
 	}
-
 }

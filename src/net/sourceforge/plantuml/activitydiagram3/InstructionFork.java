@@ -122,7 +122,8 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	public Swimlane getSwimlaneOut() {
-		return getLastList().getSwimlaneOut();
+		return forks.get(0).getSwimlaneOut();
+		//return getLastList().getSwimlaneOut();
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {

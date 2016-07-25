@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek2;
+import net.sourceforge.plantuml.svek.DotDataImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -160,7 +160,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 	}
 
 	private IEntityImage computeImage(final ILeaf leaf) {
-		final IEntityImage image = CucaDiagramFileMakerSvek2.createEntityImageBlock(leaf, diagram.getSkinParam(),
+		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
 				false, diagram, null, null, null);
 		return image;
 	}

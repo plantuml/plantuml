@@ -126,10 +126,11 @@ class FtileIfAndStop extends AbstractFtile {
 		// final TextBlock tb2 = Display.create(branch2.getLabelPositive(), fcArrow, HorizontalAlignment.LEFT,
 		// ftileFactory);
 
-		final Sheet sheet = new CreoleParser(fcTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
-				.createSheet(labelTest);
+		final Sheet sheet = new CreoleParser(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+				skinParam, CreoleMode.FULL).createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
-		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tileNonStop.getThickness());
+		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1),
+				tileNonStop.getThickness());
 
 		final Ftile diamond1;
 		if (conditionStyle == ConditionStyle.INSIDE) {

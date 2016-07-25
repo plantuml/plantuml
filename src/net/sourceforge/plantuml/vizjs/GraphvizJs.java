@@ -41,6 +41,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
+import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
@@ -111,8 +112,8 @@ public class GraphvizJs implements Graphviz {
 		return "VizJs";
 	}
 
-	public boolean illegalDotExe() {
-		return false;
+	public ExeState getExeState() {
+		return ExeState.OK;
 	}
 
 	public static GraphvizVersion getGraphvizVersion(final boolean modeSafe) {

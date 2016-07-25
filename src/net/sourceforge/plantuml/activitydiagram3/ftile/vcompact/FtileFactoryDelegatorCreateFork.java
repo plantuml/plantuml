@@ -94,8 +94,8 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 		double x = 0;
 		for (Ftile tmp : list) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionIn(black, tmp, x, arrowColor));
-			conns.add(new ConnectionOut(tmp, black, x, arrowColor, height1));
+			conns.add(new ConnectionIn(black, tmp, x, tmp.getInLinkRendering().getRainbow(arrowColor)));
+			conns.add(new ConnectionOut(tmp, black, x, tmp.getOutLinkRendering().getRainbow(arrowColor), height1));
 			x += dim.getWidth();
 		}
 

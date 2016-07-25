@@ -34,6 +34,8 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -49,11 +51,12 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBlock implements IEntityImage {
+public final class ConcurrentStateImage extends AbstractTextBlock implements IEntityImage {
 
-	private final List<IEntityImage> inners;
+	private final List<IEntityImage> inners = new ArrayList<IEntityImage>();
 	private final Separator separator;
 	private final ISkinParam skinParam;
+	private final HtmlColor backColor;
 
 	static enum Separator {
 		VERTICAL, HORIZONTAL;
@@ -101,14 +104,16 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		return new Rose().getHtmlColor(skinParam, colorParam);
 	}
 
-	public CucaDiagramFileMakerSvek2InternalImage(List<IEntityImage> inners, char concurrentSeparator,
-			ISkinParam skinParam) {
+	public ConcurrentStateImage(Collection<IEntityImage> images, char concurrentSeparator, ISkinParam skinParam,
+			HtmlColor backColor) {
 		this.separator = Separator.fromChar(concurrentSeparator);
 		this.skinParam = skinParam;
-		this.inners = inners;
+		this.backColor = skinParam.getBackgroundColor();
+		this.inners.addAll(images);
 	}
 
 	public void drawU(UGraphic ug) {
+		System.err.println("drawing " + inners.size());
 		final HtmlColor dotColor = getColor(ColorParam.stateBorder);
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
@@ -135,7 +140,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	}
 
 	public HtmlColor getBackcolor() {
-		return skinParam.getBackgroundColor();
+		return backColor;
 	}
 
 	public boolean isHidden() {

@@ -116,8 +116,8 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 
-		final Sheet sheet = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL).createSheet(note
-				.getDisplay());
+		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+				skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
 		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), this, new UStroke(1));
 		opale = new Opale(borderColor, noteBackgroundColor, text, skinParam.shadowing(), withLink);
 

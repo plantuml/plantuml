@@ -63,6 +63,10 @@ public enum VisibilityModifier {
 	private final ColorParam foregroundParam;
 	private final ColorParam backgroundParam;
 
+	public static String regexForVisibilityCharacter() {
+		return "[-#+~]";
+	}
+
 	private VisibilityModifier(ColorParam foreground, ColorParam background) {
 		this.foregroundParam = foreground;
 		this.backgroundParam = background;
@@ -83,7 +87,7 @@ public enum VisibilityModifier {
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return new Dimension2DDouble(size + 1, size + 1);
 			}
-			
+
 			@Override
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
 				return null;

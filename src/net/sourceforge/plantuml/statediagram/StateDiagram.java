@@ -28,7 +28,7 @@
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19886 $
+ * Revision $Revision: 20161 $
  *
  */
 package net.sourceforge.plantuml.statediagram;
@@ -165,7 +165,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 	public final boolean isHideEmptyDescriptionForState() {
 		return hideEmptyDescription;
 	}
-	
+
 	@Override
 	public String checkFinalError() {
 		for (Link link : this.getLinks()) {
@@ -179,7 +179,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		}
 		return super.checkFinalError();
 	}
-	
+
 	private static boolean isCompatible(IGroup parent1, IGroup parent2) {
 		if (parent1 == null && parent2 == null) {
 			return true;
@@ -202,8 +202,5 @@ public class StateDiagram extends AbstractEntityDiagram {
 		return null;
 
 	}
-
-
-
 
 }

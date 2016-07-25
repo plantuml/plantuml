@@ -147,11 +147,11 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	public Swimlane getSwimlaneIn() {
-		return parent.getSwimlaneOut();
+		return parent.getSwimlaneIn();
 	}
 
 	public Swimlane getSwimlaneOut() {
-		return getSwimlaneIn();
+		return parent.getSwimlaneOut();
 	}
 
 	public Instruction getLast() {

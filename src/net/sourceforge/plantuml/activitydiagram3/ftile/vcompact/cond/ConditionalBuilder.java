@@ -153,8 +153,8 @@ public class ConditionalBuilder {
 		final TextBlock tb1 = getLabelBranch1();
 		final TextBlock tb2 = getLabelBranch2();
 
-		final Sheet sheet = new CreoleParser(fontTest, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
-				.createSheet(labelTest);
+		final Sheet sheet = new CreoleParser(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
+				skinParam, CreoleMode.FULL).createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
@@ -172,14 +172,14 @@ public class ConditionalBuilder {
 	}
 
 	private TextBlock getLabelBranch2() {
-		final TextBlock tb2 = branch2.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
-				CreoleMode.SIMPLE_LINE);
+		final TextBlock tb2 = branch2.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT,
+				ftileFactory.skinParam(), CreoleMode.SIMPLE_LINE);
 		return tb2;
 	}
 
 	private TextBlock getLabelBranch1() {
-		final TextBlock tb1 = branch1.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
-				CreoleMode.SIMPLE_LINE);
+		final TextBlock tb1 = branch1.getLabelPositive().create(fontArrow, HorizontalAlignment.LEFT,
+				ftileFactory.skinParam(), CreoleMode.SIMPLE_LINE);
 		return tb1;
 	}
 

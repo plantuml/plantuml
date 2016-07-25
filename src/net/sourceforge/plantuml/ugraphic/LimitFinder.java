@@ -121,6 +121,7 @@ public class LimitFinder implements UGraphic {
 			drawDotPath(x, y, (DotPath) shape);
 		} else if (shape instanceof UImage) {
 			drawImage(x, y, (UImage) shape);
+		} else if (shape instanceof UComment) {
 		} else if (shape instanceof UEmpty) {
 			drawEmpty(x, y, (UEmpty) shape);
 		} else if (shape instanceof TextBlock) {

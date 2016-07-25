@@ -27,23 +27,44 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 20172 $
+ *
+ * Revision $Revision: 6170 $
  *
  */
-package net.sourceforge.plantuml.cucadiagram.dot;
+package net.sourceforge.plantuml.braille;
 
-import java.io.File;
-import java.io.OutputStream;
+public class Coords {
 
-public interface Graphviz {
+	private final int x;
+	private final int y;
 
-	ProcessState createFile3(OutputStream os);
+	public Coords(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-	File getDotExe();
+	@Override
+	public boolean equals(Object obj) {
+		final Coords other = (Coords) obj;
+		return this.x == other.x && this.y == other.y;
+	}
 
-	String dotVersion();
+	@Override
+	public int hashCode() {
+		return x + y * 8192;
+	}
 
-	ExeState getExeState();
+	@Override
+	public String toString() {
+		return "( " + x + " ; " + y + " )";
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
 
 }

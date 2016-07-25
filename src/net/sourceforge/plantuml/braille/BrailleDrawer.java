@@ -27,39 +27,45 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
- * Revision $Revision: 5079 $
+ *
+ * Revision $Revision: 6170 $
  *
  */
-package net.sourceforge.plantuml.hector2.graphic;
+package net.sourceforge.plantuml.braille;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.hector2.layering.Layer;
-import net.sourceforge.plantuml.svek.DotDataImageBuilder;
-import net.sourceforge.plantuml.svek.IEntityImage;
+public class BrailleDrawer implements UDrawable {
 
-public class Foo1 {
+	private final BrailleGrid grid;
+	private final double step = 9;
+	private final double spotSize = 5;
 
-	public static Dimension2D getMaxCellDimension(StringBounder stringBounder, Layer layer, CucaDiagram diagram) {
-		Dimension2D result = new Dimension2DDouble(0, 0);
-		for (IEntity ent : layer.entities()) {
-			final IEntityImage image = computeImage((ILeaf) ent, diagram);
-			final Dimension2D dim = image.calculateDimension(stringBounder);
-			result = Dimension2DDouble.max(result, dim);
-		}
-		return result;
+	public BrailleDrawer(BrailleGrid grid) {
+		this.grid = grid;
 	}
 
-	private static IEntityImage computeImage(final ILeaf leaf, CucaDiagram diagram) {
-		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null);
-		return image;
+	public void drawU(UGraphic ug) {
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(HtmlColorUtils.BLACK));
+		for (int x = grid.getMinX(); x <= grid.getMaxX(); x++) {
+			for (int y = grid.getMinY(); y <= grid.getMaxY(); y++) {
+				if (grid.getState(x, y)) {
+					drawCircle(ug, x, y);
+				}
+			}
+		}
+	}
+
+	private void drawCircle(UGraphic ug, int x, int y) {
+		final double cx = x * step;
+		final double cy = y * step;
+		ug.apply(new UTranslate(cx, cy)).draw(new UEllipse(spotSize, spotSize));
 	}
 
 }

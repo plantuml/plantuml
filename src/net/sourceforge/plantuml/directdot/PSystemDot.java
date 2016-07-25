@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
@@ -65,10 +66,11 @@ public class PSystemDot extends AbstractPSystem {
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final Graphviz graphviz = GraphvizUtils
-				.create(null, data, StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
-		if (graphviz.illegalDotExe()) {
-			final TextBlock result = GraphicStrings.createDefault(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
+		final Graphviz graphviz = GraphvizUtils.create(null, data,
+				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
+		if (graphviz.getExeState() != ExeState.OK) {
+			final TextBlock result = GraphicStrings.createDefault(
+					Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
 			UGraphicUtils.writeImage(os, null, fileFormat, new ColorMapperIdentity(), HtmlColorUtils.WHITE, result);
 			return new ImageDataSimple();
 		}
