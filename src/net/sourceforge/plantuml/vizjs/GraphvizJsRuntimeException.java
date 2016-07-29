@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.vizjs;
 public class GraphvizJsRuntimeException extends RuntimeException {
 
 	public GraphvizJsRuntimeException(Exception e) {
-		// TODO Auto-generated constructor stub
+		super(e);
 	}
 
 }
