@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 18280 $
  *
  */
 package net.sourceforge.plantuml.jdot;
@@ -116,7 +113,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
-	private final StringBounder stringBounder = TextBlockUtils.getDummyStringBounder();
+	private final StringBounder stringBounder;
 	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<ILeaf, Agnode_s>();
 	private final Map<Link, Agedge_s> edges = new LinkedHashMap<Link, Agedge_s>();
 	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<IGroup, Agraph_s>();
@@ -170,8 +167,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	}
 
-	public CucaDiagramFileMakerJDot(CucaDiagram diagram) {
+	public CucaDiagramFileMakerJDot(CucaDiagram diagram, StringBounder stringBounder) {
 		this.diagram = diagram;
+		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
 
 		printGroups(diagram.getRootGroup());
@@ -434,7 +432,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 					diagram.getAnimation(), diagram.getSkinParam().handwritten());
 
 			imageBuilder.setUDrawable(new Drawing(null));
-			final Dimension2D dim = imageBuilder.getFinalDimension();
+			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);
 
 			imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 
@@ -484,7 +482,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
 		final TextBlock label = link.getLabel().create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
-		if (TextBlockUtils.isEmpty(label)) {
+		if (TextBlockUtils.isEmpty(label, stringBounder)) {
 			return label;
 		}
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
@@ -528,7 +526,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		// + (length - 1) + " ");
 
 		final TextBlock label = getLabel(link);
-		if (TextBlockUtils.isEmpty(label) == false) {
+		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {
 			final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),

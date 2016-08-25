@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
@@ -55,10 +52,6 @@ public class Branch {
 	private LinkRendering inlinkRendering = LinkRendering.none();
 
 	private Ftile ftile;
-
-	public boolean isOnlySingleStop() {
-		return list.isOnlySingleStop();
-	}
 
 	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color) {
 		if (labelPositive == null) {
@@ -134,6 +127,10 @@ public class Branch {
 
 	public Instruction getLast() {
 		return list.getLast();
+	}
+
+	public boolean isOnlySingleStop() {
+		return list.isOnlySingleStop();
 	}
 
 }

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -47,10 +44,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.EnsureVisible;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.posimo.DotPath;
@@ -65,6 +62,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPixel;
@@ -146,6 +144,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		registerDriver(UPixel.class, new DriverPixelG2d());
 		registerDriver(UPolygon.class, new DriverPolygonG2d(dpiFactor, this));
 		registerDriver(UEllipse.class, new DriverEllipseG2d(dpiFactor, this));
+		registerDriver(UImageSvg.class, new DriverImageG2d(this));
 		registerDriver(UImage.class, new DriverImageG2d(this));
 		registerDriver(DotPath.class, new DriverDotPathG2d(this));
 		registerDriver(UPath.class, new DriverPathG2d(dpiFactor));
@@ -153,10 +152,10 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	}
 
 	public StringBounder getStringBounder() {
-		if (hasAffineTransform) {
-			return TextBlockUtils.getDummyStringBounder();
-		}
-		return StringBounderUtils.asStringBounder();
+//		if (hasAffineTransform) {
+//			return TextBlockUtils.getDummyStringBounder();
+//		}
+		return FileFormat.PNG.getDefaultStringBounder();
 	}
 
 	@Override

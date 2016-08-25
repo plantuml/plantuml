@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -43,7 +40,6 @@ import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
@@ -115,9 +111,9 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		return height;
 	}
 
-	public void appendShape(StringBuilder sb) {
+	public void appendShape(StringBuilder sb, StringBounder stringBounder) {
 		if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
-			appendLabelHtmlSpecialForLink(sb);
+			appendLabelHtmlSpecialForLink(sb, stringBounder);
 			return;
 		}
 		if (type == ShapeType.RECTANGLE && shield > 0) {
@@ -175,8 +171,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append("</TABLE>");
 	}
 
-	private void appendLabelHtmlSpecialForLink(StringBuilder sb) {
-		final Ports ports = ((WithPorts) this.image).getPorts(StringBounderUtils.asStringBounder());
+	private void appendLabelHtmlSpecialForLink(StringBuilder sb, StringBounder stringBounder) {
+		final Ports ports = ((WithPorts) this.image).getPorts(stringBounder);
 
 		sb.append(uid);
 		sb.append(" [");

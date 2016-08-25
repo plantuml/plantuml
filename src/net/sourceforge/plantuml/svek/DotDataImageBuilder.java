@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -81,7 +78,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -123,17 +119,15 @@ public final class DotDataImageBuilder {
 	private final Pragma pragma;
 	private Map<Code, Double> maxX;
 
-	static private final StringBounder stringBounder;
+	private final StringBounder stringBounder;
 
-	static {
-		stringBounder = StringBounderUtils.asStringBounder();
-	}
-
-	public DotDataImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma) {
+	public DotDataImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
+			StringBounder stringBounder) {
 		this.dotData = dotData;
 		this.entityFactory = entityFactory;
 		this.source = source;
 		this.pragma = pragma;
+		this.stringBounder = stringBounder;
 	}
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {

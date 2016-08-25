@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -484,9 +481,9 @@ public class Cluster implements Moveable {
 		return false;
 	}
 
-	public void printCluster1(StringBuilder sb, Collection<Line> lines) {
+	public void printCluster1(StringBuilder sb, Collection<Line> lines, StringBounder stringBounder) {
 		for (Shape sh : getShapesOrderedTop(lines)) {
-			sh.appendShape(sb);
+			sh.appendShape(sb, stringBounder);
 		}
 	}
 
@@ -532,7 +529,7 @@ public class Cluster implements Moveable {
 			}
 			sb.append("}");
 			for (IShapePseudo sh : entries) {
-				sh.appendShape(sb);
+				sh.appendShape(sb, stringBounder);
 			}
 		}
 		final List<Shape> exits = getShapesEntryExit(EntityPosition.getOutputs());
@@ -543,7 +540,7 @@ public class Cluster implements Moveable {
 			}
 			sb.append("}");
 			for (Shape sh : exits) {
-				sh.appendShape(sb);
+				sh.appendShape(sb, stringBounder);
 			}
 		}
 	}
@@ -554,7 +551,7 @@ public class Cluster implements Moveable {
 
 		boolean added = false;
 		for (Shape sh : getShapesOrderedWithoutTop(lines)) {
-			sh.appendShape(sb);
+			sh.appendShape(sb, stringBounder);
 			added = true;
 		}
 
@@ -755,7 +752,7 @@ public class Cluster implements Moveable {
 			SvekUtils.println(sb);
 		}
 		SvekUtils.println(sb);
-		printCluster1(sb, lines);
+		printCluster1(sb, lines, stringBounder);
 		final boolean added = printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 		if (hasEntryOrExitPoint && added == false) {
 			final String empty = "empty" + color;

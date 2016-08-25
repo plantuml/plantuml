@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -57,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
@@ -69,6 +67,7 @@ public final class GroupPngMakerState {
 
 	private final CucaDiagram diagram;
 	private final IGroup group;
+	private final StringBounder stringBounder;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
@@ -85,8 +84,9 @@ public final class GroupPngMakerState {
 
 	}
 
-	public GroupPngMakerState(CucaDiagram diagram, IGroup group) {
+	public GroupPngMakerState(CucaDiagram diagram, IGroup group, StringBounder stringBounder) {
 		this.diagram = diagram;
+		this.stringBounder = stringBounder;
 		this.group = group;
 		if (group.isGroup() == false) {
 			throw new IllegalArgumentException();
@@ -121,7 +121,7 @@ public final class GroupPngMakerState {
 				diagram.getPragma());
 
 		final DotDataImageBuilder svek2 = new DotDataImageBuilder(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma());
+				diagram.getSource(), diagram.getPragma(), stringBounder);
 		
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE) {
 			// return new InnerStateConcurrent(svek2.createFile());

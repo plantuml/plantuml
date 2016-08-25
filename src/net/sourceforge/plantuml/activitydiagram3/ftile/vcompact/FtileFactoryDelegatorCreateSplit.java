@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
@@ -52,6 +49,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -302,7 +300,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 			}
 
 			final Snake s = new Snake(arrowColor);
-			s.goUnmergeable();
+			s.goUnmergeable(MergeStrategy.NONE);
 			s.addPoint(minX, y);
 			s.addPoint(maxX, y);
 			ug.draw(s);
@@ -349,7 +347,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 
 			final Snake s = new Snake(arrowColor);
 			// final Snake s = new Snake(HtmlColorUtils.GREEN);
-			s.goUnmergeable();
+			s.goUnmergeable(MergeStrategy.LIMITED);
 			s.addPoint(minX, y);
 			s.addPoint(maxX, y);
 			ug.draw(s);
@@ -405,7 +403,7 @@ public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
 			}
 			final Snake s = new Snake(arrowColor, Arrows.asToDown());
 			s.setLabel(text);
-			s.goUnmergeable();
+			s.goUnmergeable(MergeStrategy.NONE);
 			s.addPoint(geo.getLeft(), geo.getOutY());
 			s.addPoint(geo.getLeft(), height);
 			ug.draw(s);

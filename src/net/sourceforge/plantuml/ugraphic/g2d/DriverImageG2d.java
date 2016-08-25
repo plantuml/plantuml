@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -39,6 +36,7 @@ import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
@@ -51,6 +49,9 @@ public class DriverImageG2d implements UDriver<Graphics2D> {
 	}
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+		if (ushape instanceof UImageSvg) {
+			return;
+		}
 		final UImage shape = (UImage) ushape;
 		visible.ensureVisible(x, y);
 		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());

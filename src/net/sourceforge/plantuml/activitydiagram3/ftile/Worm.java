@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
@@ -253,18 +250,18 @@ public class Worm implements Iterable<Point2D.Double> {
 		return points.get(points.size() - 1);
 	}
 
-	public Worm merge(Worm other) {
+	public Worm merge(Worm other, MergeStrategy merge) {
 		if (Snake.same(this.getLast(), other.getFirst()) == false) {
 			throw new IllegalArgumentException();
 		}
 		final Worm result = new Worm();
 		result.points.addAll(this.points);
 		result.points.addAll(other.points);
-		result.mergeMe();
+		result.mergeMe(merge);
 		return result;
 	}
 
-	private void mergeMe() {
+	private void mergeMe(MergeStrategy merge) {
 		boolean change = false;
 		do {
 			change = false;
@@ -277,6 +274,9 @@ public class Worm implements Iterable<Point2D.Double> {
 			change = change || removePattern5();
 			change = change || removePattern6();
 			change = change || removePattern7();
+			if (merge == MergeStrategy.FULL) {
+				change = change || removePattern8();
+			}
 		} while (change);
 	}
 
@@ -411,6 +411,23 @@ public class Worm implements Iterable<Point2D.Double> {
 		for (int i = 0; i < points.size() - 2; i++) {
 			if (isForwardAndBackwardAt(i)) {
 				points.remove(i + 1);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean removePattern8() {
+		for (int i = 0; i < points.size() - 4; i++) {
+			final List<Direction> patternAt = getPatternAt(i);
+			if (Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)
+					|| Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.DOWN)
+							.equals(patternAt)) {
+				final Point2D.Double newPoint = new Point2D.Double(points.get(i + 3).x, points.get(i + 1).y);
+				points.remove(i + 3);
+				points.remove(i + 2);
+				points.remove(i + 1);
+				points.add(i + 1, newPoint);
 				return true;
 			}
 		}

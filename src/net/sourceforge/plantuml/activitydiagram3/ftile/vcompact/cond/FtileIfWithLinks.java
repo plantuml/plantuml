@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
@@ -49,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -115,7 +113,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		}
 
 		private Point2D getP1(StringBounder stringBounder) {
-			final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 			final double diamondWidth = dimDiamond1.getWidth();
 			final double x;
 			if (getFtile2() == tile1) {
@@ -125,8 +123,9 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			} else {
 				throw new IllegalStateException();
 			}
+			final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
 			return getTranslateDiamond1(stringBounder)
-					.getTranslated(new Point2D.Double(x, dimDiamond1.getHeight() / 2));
+					.getTranslated(new Point2D.Double(x, dimDiamond1.getInY() + half));
 		}
 
 		private Point2D getP2(final StringBounder stringBounder) {
@@ -165,6 +164,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			snake.addPoint(p1);
 			snake.addPoint(p2.getX(), p1.getY());
 			snake.addPoint(p2);
+			snake.goUnmergeable(MergeStrategy.LIMITED);
 			ug.draw(snake);
 
 		}
@@ -258,11 +258,13 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				snake.addPoint(mp1a.getX(), middle);
 				snake.addPoint(mp2bc.getX(), middle);
 				snake.addPoint(mp2bc);
+				snake.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(snake);
 				final Snake small = new Snake(myArrowColor, arrow);
 				small.addPoint(mp2bc);
 				small.addPoint(mp2bc.getX(), mp2b.getY());
 				small.addPoint(mp2b);
+				small.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(small);
 			} else {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
@@ -272,11 +274,13 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), mp2bb.getY());
 				snake.addPoint(mp2bb);
+				snake.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(snake);
 				final Snake small = new Snake(myArrowColor, arrow);
 				small.addPoint(mp2bb);
 				small.addPoint(mp2bb.getX(), mp2b.getY());
 				small.addPoint(mp2b);
+				small.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(small);
 
 			}
@@ -348,6 +352,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			snake.addPoint(x1, y2);
 			snake.addPoint(mp2b);
 			snake.addPoint(x2, dimTotal.getHeight());
+			snake.goUnmergeable(MergeStrategy.LIMITED);
 
 			ug.draw(snake);
 		}
@@ -368,18 +373,17 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		final List<Connection> conns = new ArrayList<Connection>();
 		conns.add(new ConnectionHorizontalThenVertical(tile1, branch1));
 		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));
-		if (tile1.calculateDimension(stringBounder).hasPointOut()
-				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
+		final boolean hasPointOut1 = tile1.calculateDimension(stringBounder).hasPointOut();
+		final boolean hasPointOut2 = tile2.calculateDimension(stringBounder).hasPointOut();
+		if (hasPointOut1 && hasPointOut2) {
 			conns.add(new ConnectionVerticalThenHorizontal(tile1, branch1.getInlinkRenderingColorAndStyle(), branch1
 					.isEmpty()));
 			conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(), branch2
 					.isEmpty()));
-		} else if (tile1.calculateDimension(stringBounder).hasPointOut()
-				&& tile2.calculateDimension(stringBounder).hasPointOut() == false) {
+		} else if (hasPointOut1 && hasPointOut2 == false) {
 			conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
 					branch1.isEmpty()));
-		} else if (tile1.calculateDimension(stringBounder).hasPointOut() == false
-				&& tile2.calculateDimension(stringBounder).hasPointOut()) {
+		} else if (hasPointOut1 == false && hasPointOut2) {
 			conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
 					branch2.isEmpty()));
 		}

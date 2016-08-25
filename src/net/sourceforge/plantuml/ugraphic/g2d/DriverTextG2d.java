@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 13834 $
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -43,12 +40,12 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EnsureVisible;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -78,7 +75,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
-		final Dimension2D dimBack = calculateDimension(StringBounderUtils.asStringBounder(), font, shape.getText());
+		final Dimension2D dimBack = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Color extended = mapper.getMappedColor(fontConfiguration.getExtendedColor());
 			if (extended != null) {
@@ -100,14 +97,14 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
-			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(), font, shape.getText());
+			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
 			final int ypos = (int) (y + 2.5);
 			g2d.setStroke(new BasicStroke((float) 1));
 			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);
 			g2d.setStroke(new BasicStroke());
 		}
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
-			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(), font, shape.getText());
+			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
 			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
@@ -119,7 +116,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			}
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final Dimension2D dim = calculateDimension(StringBounderUtils.asStringBounder(), font, shape.getText());
+			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
 			final FontMetrics fm = g2d.getFontMetrics(font.getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			final HtmlColor extended = fontConfiguration.getExtendedColor();

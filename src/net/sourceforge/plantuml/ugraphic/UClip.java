@@ -23,8 +23,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -32,6 +30,7 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class UClip implements UChange {
@@ -56,11 +55,10 @@ public class UClip implements UChange {
 	public UClip translate(double dx, double dy) {
 		return new UClip(x + dx, y + dy, width, height);
 	}
-	
+
 	public UClip translate(UTranslate translate) {
 		return translate(translate.getDx(), translate.getDy());
 	}
-
 
 	public final double getX() {
 		return x;
@@ -76,6 +74,10 @@ public class UClip implements UChange {
 
 	public final double getHeight() {
 		return height;
+	}
+
+	public boolean isInside(Point2D pt) {
+		return isInside(pt.getX(), pt.getY());
 	}
 
 	public boolean isInside(double xp, double yp) {

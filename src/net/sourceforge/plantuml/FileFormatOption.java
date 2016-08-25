@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 5333 $
  *
  */
 package net.sourceforge.plantuml;
@@ -45,6 +42,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -74,6 +72,10 @@ public class FileFormatOption implements Serializable {
 
 	public FileFormatOption(FileFormat fileFormat) {
 		this(fileFormat, null, true, false, "_top", false);
+	}
+
+	public StringBounder getDefaultStringBounder() {
+		return fileFormat.getDefaultStringBounder();
 	}
 
 	public String getSvgLinkTarget() {

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 11025 $
  *
  */
 package net.sourceforge.plantuml.creole;
@@ -52,6 +49,7 @@ import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TileImageSvg;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -92,8 +90,7 @@ public class AtomImg implements Atom {
 				return AtomText.create("(File not found: " + f + ")", fc);
 			}
 			if (f.getName().endsWith(".svg")) {
-				// return new AtomImg(new TileImageSvg(f));
-				throw new UnsupportedOperationException();
+				return new AtomImgSvg(new TileImageSvg(f));
 			}
 			final BufferedImage read = ImageIO.read(f);
 			if (read == null) {

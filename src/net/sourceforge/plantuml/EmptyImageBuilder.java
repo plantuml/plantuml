@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19109 $
  *
  */
 package net.sourceforge.plantuml;
@@ -47,20 +44,19 @@ public class EmptyImageBuilder {
 
 	private final BufferedImage im;
 	private final Graphics2D g2d;
-	static final private int LIMIT = GraphvizUtils.getenvImageLimit();
-
+	
 	public EmptyImageBuilder(double width, double height, Color background) {
 		this((int) width, (int) height, background);
 	}
 
 	public EmptyImageBuilder(int width, int height, Color background) {
-		if (width > LIMIT) {
+		if (width > GraphvizUtils.getenvImageLimit()) {
 			Log.info("Width too large " + width);
-			width = LIMIT;
+			width = GraphvizUtils.getenvImageLimit();
 		}
-		if (height > LIMIT) {
+		if (height > GraphvizUtils.getenvImageLimit()) {
 			Log.info("Height too large " + height);
-			height = LIMIT;
+			height = GraphvizUtils.getenvImageLimit();
 		}
 		Log.info("Creating image " + width + "x" + height);
 		im = new BufferedImage(width, height, background == null ? BufferedImage.TYPE_INT_ARGB

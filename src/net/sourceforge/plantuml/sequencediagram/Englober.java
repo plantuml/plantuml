@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4836 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram;
@@ -40,7 +37,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.teoz.LivingSpace;
@@ -62,13 +58,13 @@ public class Englober {
 	final private Real core2;
 
 	@Deprecated
-	public Englober(ParticipantEnglober participantEnglober, Participant first, ISkinParam skinParam, Skin skin) {
-		this(participantEnglober, first, convertFunctionToBeRemoved(skinParam, skin));
+	public Englober(ParticipantEnglober participantEnglober, Participant first, ISkinParam skinParam, Skin skin,
+			StringBounder stringBounder) {
+		this(participantEnglober, first, convertFunctionToBeRemoved(skinParam, skin, stringBounder));
 	}
 
-	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Skin skin) {
-		final TileArguments result = new TileArguments(TextBlockUtils.getDummyStringBounder(), null, skin, skinParam,
-				null);
+	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Skin skin, StringBounder stringBounder) {
+		final TileArguments result = new TileArguments(stringBounder, null, skin, skinParam, null);
 		return result;
 	}
 
@@ -207,6 +203,5 @@ public class Englober {
 	public Real getMaxX(StringBounder stringBounder) {
 		return getX2().addFixed(10);
 	}
-
 
 }

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10930 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -183,7 +180,14 @@ public class QuoteUtils {
 					"You know that thing you just did? Don't do that", //
 					"It took me a long time to understand that if you want to do this job well you have to stay detached.", //
 					"Do you like your morning tea weak or strong ?", //
-					"Winter is coming" //
+					"Winter is coming", //
+					"What fools these mortals be!", //
+					"Something wicked this way comes.", //
+					"I think I get it, what was it? Poker Night? Bachelor Party?", // 
+					"It's alright to be scared. Remember, there is no courage without fear.", //
+					"Through readiness and discipline we are masters of our fate.", //
+					"With great power comes great responsibility", //
+					"If a machine can learn the value of human life, maybe we can too ?" //
 			);
 
 	private QuoteUtils() {

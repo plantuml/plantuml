@@ -23,8 +23,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -39,6 +37,7 @@ import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsGraphicsMacroAndText;
 import net.sourceforge.plantuml.eps.EpsStrategy;
@@ -65,7 +64,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private final EpsStrategy strategy;
 
 	public DriverTextEps(ClipContainer clipContainer, EpsStrategy strategy) {
-		this.stringBounder = TextBlockUtils.getDummyStringBounder();
+		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		this.clipContainer = clipContainer;
 		this.fontRenderContext = TextBlockUtils.getFontRenderContext();
 		this.strategy = strategy;

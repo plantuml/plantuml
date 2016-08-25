@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
@@ -53,20 +50,16 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	private final List<Instruction> all = new ArrayList<Instruction>();
 	private final Swimlane defaultSwimlane;
 
-	public boolean isOnlySingleStop() {
-		if (all.size() == 1) {
-			final Instruction last = getLast();
-			return last instanceof InstructionStop;
-		}
-		return false;
-	}
-
 	public InstructionList() {
 		this(null);
 	}
 
 	public boolean isEmpty() {
 		return all.isEmpty();
+	}
+
+	public boolean isOnlySingleStop() {
+		return all.size() == 1 && getLast() instanceof InstructionStop;
 	}
 
 	public InstructionList(Swimlane defaultSwimlane) {

@@ -23,20 +23,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
+
+import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface IShapePseudo {
 
 	String getUid();
 
-	void appendShape(StringBuilder sb);
+	void appendShape(StringBuilder sb, StringBounder stringBounder);
 
 }

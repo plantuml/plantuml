@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
@@ -57,7 +54,7 @@ public class Snake implements UShape {
 	private final UPolygon endDecoration;
 	private final Rainbow color;
 	private TextBlock textBlock;
-	private boolean mergeable = true;
+	private MergeStrategy mergeable = MergeStrategy.FULL;
 	private Direction emphasizeDirection;
 
 	public Snake transformX(CompressionTransform compressionTransform) {
@@ -206,11 +203,12 @@ public class Snake implements UShape {
 		return pt1.distance(pt2) < 0.001;
 	}
 
-	public Snake merge(Snake other) {
-		if (mergeable == false || other.mergeable == false) {
+	public Snake merge(Snake other, StringBounder stringBounder) {
+		final MergeStrategy strategy = this.mergeable.max(other.mergeable);
+		if (strategy == MergeStrategy.NONE) {
 			return null;
 		}
-		if (TextBlockUtils.isEmpty(other.textBlock) == false) {
+		if (TextBlockUtils.isEmpty(other.textBlock, stringBounder) == false) {
 			return null;
 			// System.err.println("merge other.textBlock="+other.textBlock+" "+other.textBlock.calculateDimension(TextBlockUtils.getDummyStringBounder()));
 		}
@@ -221,17 +219,18 @@ public class Snake implements UShape {
 			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;
 			final Snake result = new Snake(color, oneOf);
 			result.emphasizeDirection = emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection;
-			result.worm.addAll(this.worm.merge(other.worm));
+			result.worm.addAll(this.worm.merge(other.worm, strategy));
+			result.mergeable = strategy;
 			return result;
 		}
 		if (same(this.getFirst(), other.getLast())) {
-			return other.merge(this);
+			return other.merge(this, stringBounder);
 		}
 		return null;
 	}
 
-	public void goUnmergeable() {
-		this.mergeable = false;
+	public void goUnmergeable(MergeStrategy strategy) {
+		this.mergeable = strategy;
 	}
 
 	public void emphasizeDirection(Direction direction) {

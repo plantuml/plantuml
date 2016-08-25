@@ -23,18 +23,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6170 $
  *
  */
 package net.sourceforge.plantuml.braille;
 
+import java.awt.geom.CubicCurve2D;
+import java.awt.geom.Point2D;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import net.sourceforge.plantuml.posimo.DotPath;
 
 public class BrailleGrid {
 
@@ -53,6 +55,10 @@ public class BrailleGrid {
 	public boolean getState(int x, int y) {
 		final Coords coords = new Coords(x, y);
 		return on.contains(coords);
+	}
+
+	private void setStateDouble(double x, double y, boolean state) {
+		setState(toInt(x), toInt(y), state);
 	}
 
 	public void setState(int x, int y, boolean state) {
@@ -110,7 +116,7 @@ public class BrailleGrid {
 		}
 	}
 
-	private int toInt(double value) {
+	public int toInt(double value) {
 		return (int) Math.round(value / quanta);
 	}
 
@@ -123,5 +129,51 @@ public class BrailleGrid {
 			System.err.println("warning line");
 		}
 
+	}
+
+	public double getQuanta() {
+		return quanta;
+	}
+
+	public void drawDotPath(double x, double y, DotPath shape) {
+		for (CubicCurve2D.Double bez : shape.getBeziers()) {
+			drawCubic(x, y, bez);
+
+		}
+	}
+
+	private void drawCubic(double x, double y, CubicCurve2D.Double bez) {
+		drawPointInternal(x, y, bez.getP1());
+		drawPointInternal(x, y, bez.getP2());
+		if (bez.getP1().distance(bez.getP2()) > quanta) {
+			final CubicCurve2D.Double part1 = new CubicCurve2D.Double();
+			final CubicCurve2D.Double part2 = new CubicCurve2D.Double();
+			bez.subdivide(part1, part2);
+			drawCubic(x, y, part1);
+			drawCubic(x, y, part2);
+		}
+	}
+
+	private void drawPointInternal(double x, double y, Point2D pt) {
+		setStateDouble(x + pt.getX(), y + pt.getY(), true);
+	}
+
+	public void drawPolygon(List<Point2D> points) {
+		for (int i = 0; i < points.size() - 1; i++) {
+			drawLineInternal(points.get(i), points.get(i + 1));
+		}
+		drawLineInternal(points.get(points.size() - 1), points.get(0));
+
+	}
+
+	private void drawLineInternal(Point2D a, Point2D b) {
+		drawPointInternal(0, 0, a);
+		drawPointInternal(0, 0, b);
+		if (a.distance(b) > quanta) {
+			final Point2D middle = new Point2D.Double((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);
+			drawLineInternal(a, middle);
+			drawLineInternal(middle, b);
+
+		}
 	}
 }

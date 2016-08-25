@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20149 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -325,8 +322,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		// final CucaDiagramFileMaker maker = OptionFlags.USE_HECTOR ? new CucaDiagramFileMakerHectorC1(this)
 		// : new CucaDiagramFileMakerSvek(this);
-		final CucaDiagramFileMaker maker = this.isUseJDot() ? new CucaDiagramFileMakerJDot(this)
-				: new CucaDiagramFileMakerSvek(this);
+		final CucaDiagramFileMaker maker = this.isUseJDot() ? new CucaDiagramFileMakerJDot(this,
+				fileFormat.getDefaultStringBounder()) : new CucaDiagramFileMakerSvek(this);
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
 
 		if (result == null) {

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19267 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -96,15 +93,15 @@ public class TextBlockUtils {
 	}
 
 	private static final Graphics2D gg;
-	private static final StringBounder dummyStringBounder;
+//	private static final StringBounder dummyStringBounder;
 
 	static {
 		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		gg = imDummy.createGraphics();
-		dummyStringBounder = StringBounderUtils.asStringBounder();
+//		dummyStringBounder = StringBounderUtils.asStringBounder();
 	}
 
-	public static boolean isEmpty(TextBlock text) {
+	public static boolean isEmpty(TextBlock text, StringBounder dummyStringBounder) {
 		if (text == null) {
 			return true;
 		}
@@ -112,21 +109,21 @@ public class TextBlockUtils {
 		return dim.getHeight() == 0 && dim.getWidth() == 0;
 	}
 
-	public static StringBounder getDummyStringBounder() {
-		return dummyStringBounder;
-	}
+//	public static StringBounder getDummyStringBounder() {
+//		return dummyStringBounder;
+//	}
 
 	public static FontRenderContext getFontRenderContext() {
 		return gg.getFontRenderContext();
 	}
 
-	public static MinMax getMinMax(TextBlock tb) {
-		return getMinMax(tb, dummyStringBounder);
-	}
+//	public static MinMax getMinMax(TextBlock tb) {
+//		return getMinMax(tb, dummyStringBounder);
+//	}
 
-	public static Dimension2D getDimension(TextBlock tb) {
-		return tb.calculateDimension(dummyStringBounder);
-	}
+//	public static Dimension2D getDimension(TextBlock tb) {
+//		return tb.calculateDimension(dummyStringBounder);
+//	}
 
 	public static LineMetrics getLineMetrics(UFont font, String text) {
 		return font.getLineMetrics(gg, text);

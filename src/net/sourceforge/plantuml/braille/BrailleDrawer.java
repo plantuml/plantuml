@@ -23,22 +23,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 6170 $
  *
  */
 package net.sourceforge.plantuml.braille;
 
+import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class BrailleDrawer implements UDrawable {
@@ -52,6 +51,15 @@ public class BrailleDrawer implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
+		ug = ug.apply(new UChangeColor(new HtmlColorSetSimple().getColorIfValid("#F0F0F0")));
+		for (int x = grid.getMinX(); x <= grid.getMaxX(); x++) {
+			ug.apply(new UTranslate(x * step + spotSize + 1, 0)).draw(
+					new ULine(0, (grid.getMaxY() - grid.getMinY()) * step));
+		}
+		for (int y = grid.getMinY(); y <= grid.getMaxY(); y++) {
+			ug.apply(new UTranslate(0, y * step + spotSize + 1)).draw(
+					new ULine((grid.getMaxX() - grid.getMinX()) * step, 0));
+		}
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UChangeBackColor(HtmlColorUtils.BLACK));
 		for (int x = grid.getMinX(); x <= grid.getMaxX(); x++) {
 			for (int y = grid.getMinY(); y <= grid.getMaxY(); y++) {

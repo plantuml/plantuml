@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 4041 $
  *
  */
 package net.sourceforge.plantuml.donors;
@@ -58,7 +55,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "UDfTaq5osp0CHVSu1TUQv12AbRgLxIHZf-bCTh24MBHfGYKff_BPkkl52hcLIPahOGY0_mDFkSd-7tBmGe6SocrWgx62LyhYuICiEOREGpwMuXRcBbvH3nlQeWyQhNhYna9kQtPgpXJED7n-V4Z6c8uMbfWyP0CKUWoqWJosvXDikYYXXxdEfiSobAFApiCcKDkGLJFcLlmLuplaON6yAMK7CpRQgZLtdg3iRkwpFOkHCMWrh1BLU4n3UIetz0jjBUESDLgwxj3rudHzjMrty9Ig3sTuDlea1OMk3gByUgCjFFfhQvk8oEW4nVceW-lL4Xkk4SfXwEyDIliaBoCJroNdqCkOB0R94tsYg_mddWuJLxQUX9TABOsCb3sxeC_mDLxN32jTDMJK0shJfmxCEHNZ_Qsqaj3UbrZzxCYhejiwbDMQQF-Dzu6gHYqSUeoITYJ49Wly742J5BNWaqwvkP3pFVhN2Ek4vU69YS-zLBS9PNmO1lN03YsQzawzKq1kFQp5BxfQBVImQVXYs0tZN_tvRSo5WSY7ILWLkfPNkXoEmnyWQAQEV0BCCAWN7DbPwudyt6YrGQpblt8xKZ_8xiZTgLN--csJH-upjZ2doV-Kpi5MmizHlOc7GeXUn4n7mzhbJreImL-1InMx";
+	public static final String DONORS = "UDfTKyjosp0ClEChUDQa7w5OYLlvaOoTfZEvmH9YqQ88bPIKoj_MMt-iK5gPj7aYXdZiBfQfIVuVSl1C7JcLsewjnW9UA0c76rXp29s7T2x50onTUA8HzdH0tscqQikLXTIMxDIIgJlJT7r_bumv7IsiCHfaEyZq76W3QMZD0-px0664fKwkZsN8PvIzXtr7RKLMBPXRuPVDSyZ3ghafPGSBDjgg7VUU8EzltfCJ2v4vQ3Li8jJOnA6CIWtzGbkAd8jAIzSZkb6OxYwqxH6sCVhk34z63rAGwQ8Mv9SNRU71NrhR24H20sJdHdTkL6kik4J89z7VAfJsKLv29gnBJZsAJ1OxoHDyWYl_1vxgArQsbD0LeiaZ7jnOyuUljJGoKlRaEds6ho6xPDZeeYAZxb6RCMPWpZ4Oxs-XvOJsIux5pvwyolg3Grcj2VHV-THHKQcLGuy1uP74iT42FoQZIOfQyQ1ZttmwvtlWhn5saPUd4J7jv2JLRUGohYUXxjcXHTFUgJVga5iFE-6BhbGhFMqQ7WsxIVxDdz_6V7eW-CD4NXLthI_kSZYBFvcWkcRa8yDCGZtZx9sTleAV6gtsYANyAtSazOFiaToTsgGlt_Pfy7t25fPqzPzY7MmX_cdKgt38nD6haEbeMhlyf3KHR4CDDV0mn9zaGFWBXv0VcW00";
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
 		final GraphicStrings result = getGraphicStrings();

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 19636 $
  *
  */
 package net.sourceforge.plantuml.ant;
@@ -300,6 +297,9 @@ public class PlantUmlTask extends Task {
 		}
 		if ("eps".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.EPS);
+		}
+		if ("braille".equalsIgnoreCase(s)) {
+			option.setFileFormat(FileFormat.BRAILLE_PNG);
 		}
 		if ("pdf".equalsIgnoreCase(s)) {
 			option.setFileFormat(FileFormat.PDF);

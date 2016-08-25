@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 19978 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -205,7 +202,7 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberTitleWidth3(StringBounder stringBounder) {
-		for (Englober pe : drawableSet.getExistingParticipantEnglober()) {
+		for (Englober pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
 					pe.getParticipantEnglober());
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())

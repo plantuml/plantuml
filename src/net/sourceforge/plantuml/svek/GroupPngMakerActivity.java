@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6711 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -51,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -60,6 +58,7 @@ public final class GroupPngMakerActivity {
 
 	private final CucaDiagram diagram;
 	private final IGroup group;
+	private final StringBounder stringBounder;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
@@ -76,9 +75,10 @@ public final class GroupPngMakerActivity {
 
 	}
 
-	public GroupPngMakerActivity(CucaDiagram diagram, IGroup group) {
+	public GroupPngMakerActivity(CucaDiagram diagram, IGroup group, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.group = group;
+		this.stringBounder = stringBounder;
 	}
 
 	private List<Link> getPureInnerLinks() {
@@ -112,14 +112,15 @@ public final class GroupPngMakerActivity {
 				DotMode.NORMAL, diagram.getNamespaceSeparator(), diagram.getPragma());
 
 		final DotDataImageBuilder svek2 = new DotDataImageBuilder(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma());
+				diagram.getSource(), diagram.getPragma(), stringBounder);
 
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
 			final Stereotype stereo = group.getStereotype();
 			final HtmlColor borderColor = getColor(ColorParam.activityBorder, stereo);
 			final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 					ColorParam.background, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
-			return new InnerActivity(svek2.buildImage(null, new String[0]), borderColor, backColor, skinParam.shadowing());
+			return new InnerActivity(svek2.buildImage(null, new String[0]), borderColor, backColor,
+					skinParam.shadowing());
 		}
 
 		throw new UnsupportedOperationException(group.getGroupType().toString());

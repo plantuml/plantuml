@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
@@ -107,8 +104,8 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		return new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
 	}
 
-	private FtileFactory getFtileFactory() {
-		FtileFactory factory = new VCompactFactory(skinParam, TextBlockUtils.getDummyStringBounder());
+	private FtileFactory getFtileFactory(StringBounder stringBounder) {
+		FtileFactory factory = new VCompactFactory(skinParam, stringBounder);
 		factory = new FtileFactoryDelegatorAddUrl(factory);
 		factory = new FtileFactoryDelegatorAssembly(factory);
 		factory = new FtileFactoryDelegatorIf(factory, pragma);
@@ -177,7 +174,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	static private final double separationMargin = 10;
 
 	public void drawU(UGraphic ug) {
-		final FtileFactory factory = getFtileFactory();
+		final FtileFactory factory = getFtileFactory(ug.getStringBounder());
 		TextBlock full = root.createFtile(factory);
 
 		ug = new UGraphicForSnake(ug);
@@ -314,7 +311,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	}
 
 	private CollisionDetector getCollisionDetector(UGraphic ug, final UTranslate titleHeightTranslate) {
-		final FtileFactory factory = getFtileFactory();
+		final FtileFactory factory = getFtileFactory(ug.getStringBounder());
 		final TextBlock full = root.createFtile(factory);
 		ug = new UGraphicForSnake(ug);
 

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20128 $
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -308,6 +305,9 @@ public class SvgGraphics {
 		pendingLink2.add(0, (Element) document.createElement("a"));
 		pendingLink2.get(0).setAttribute("target", target);
 		pendingLink2.get(0).setAttribute("xlink:href", url);
+		pendingLink2.get(0).setAttribute("xlink:type", "simple");
+		pendingLink2.get(0).setAttribute("xlink:actuate", "onRequest");
+		pendingLink2.get(0).setAttribute("xlink:show", "new");
 		if (title == null) {
 			pendingLink2.get(0).setAttribute("xlink:title", url);
 		} else {
@@ -477,8 +477,8 @@ public class SvgGraphics {
 		filter.setAttribute("y", "0");
 		filter.setAttribute("width", "1");
 		filter.setAttribute("height", "1");
-		addFilter(filter, "feFlood", "flood-color", color);
-		addFilter(filter, "feComposite", "in", "SourceGraphic");
+		addFilter(filter, "feFlood", "flood-color", color, "result", "flood");
+		addFilter(filter, "feComposite", "in", "SourceGraphic", "in2", "flood", "operator", "over");
 		defs.appendChild(filter);
 		return id;
 	}
@@ -501,13 +501,9 @@ public class SvgGraphics {
 
 		// // Sets the standalone property in the first line of
 		// // the output file.
-		transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
-		//
-		// Properties proprietes = new Properties();
-		// proprietes.put("standalone", "yes");
-		// transformer.setOutputProperties(proprietes);
-		//
-		// transformer.setParameter(OutputKeys.STANDALONE, "yes");
+		transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+		// transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "SVG 1.1");
+		// transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 
 		return transformer;
 	}
@@ -547,6 +543,10 @@ public class SvgGraphics {
 		root.setAttribute("width", format(maxX) + "px");
 		root.setAttribute("height", format(maxY) + "px");
 		root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
+		root.setAttribute("zoomAndPan", "magnify");
+		root.setAttribute("preserveAspectRatio", "none");
+		root.setAttribute("contentScriptType", "application/ecmascript");
+		root.setAttribute("contentStyleType", "text/css");
 
 		if (pendingBackground != null) {
 			pendingBackground.setAttribute("width", format(maxX));

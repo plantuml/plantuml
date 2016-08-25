@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 20196 $
  *
  */
 package net.sourceforge.plantuml.version;
@@ -39,7 +36,7 @@ import java.util.Date;
 public class Version {
 
 	public static int version() {
-		return 8046;
+		return 8047;
 	}
 
 	public static String versionString() {
@@ -71,7 +68,7 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1469468610162L;
+		return 1472140770579L;
 	}
 
 	public static String compileTimeString() {

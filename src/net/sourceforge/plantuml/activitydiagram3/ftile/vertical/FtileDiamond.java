@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 5183 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
@@ -119,15 +116,17 @@ public class FtileDiamond extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 
+		final double suppY1 = north.calculateDimension(ug.getStringBounder()).getHeight();
+		ug = ug.apply(new UTranslate(0, suppY1));
 		ug.apply(new UChangeColor(borderColor)).apply(getThickness()).apply(new UChangeBackColor(backColor))
 				.draw(Diamond.asPolygon(skinParam().shadowing()));
-		final Dimension2D dimNorth = north.calculateDimension(ug.getStringBounder());
-		north.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, -dimNorth.getHeight()
-				- Diamond.diamondHalfSize)));
+		// final Dimension2D dimNorth = north.calculateDimension(ug.getStringBounder());
+		north.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, -suppY1)));
 
-		final Dimension2D dimSouth = south.calculateDimension(ug.getStringBounder());
-		south.drawU(ug.apply(new UTranslate(-(dimSouth.getWidth() - 2 * Diamond.diamondHalfSize) / 2,
-				2 * Diamond.diamondHalfSize)));
+		// final Dimension2D dimSouth = south.calculateDimension(ug.getStringBounder());
+		south.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, 2 * Diamond.diamondHalfSize)));
+		// south.drawU(ug.apply(new UTranslate(-(dimSouth.getWidth() - 2 * Diamond.diamondHalfSize) / 2,
+		// 2 * Diamond.diamondHalfSize)));
 
 		final Dimension2D dimWeat1 = west1.calculateDimension(ug.getStringBounder());
 		west1.drawU(ug.apply(new UTranslate(-dimWeat1.getWidth(), -dimWeat1.getHeight() + Diamond.diamondHalfSize)));
@@ -138,8 +137,9 @@ public class FtileDiamond extends AbstractFtile {
 	}
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = new Dimension2DDouble(Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2);
-		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
+		final double suppY1 = north.calculateDimension(stringBounder).getHeight();
+		final Dimension2D dim = new Dimension2DDouble(Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2 + suppY1);
+		return new FtileGeometry(dim, dim.getWidth() / 2, suppY1, dim.getHeight());
 	}
 
 	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -202,7 +199,7 @@ public class DotStringFactory implements Moveable {
 
 		manageMinMaxCluster(sb);
 
-		root.printCluster1(sb, bibliotekon.allLines());
+		root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
 		for (Line line : bibliotekon.lines0()) {
 			line.appendLine(getGraphvizVersion(), sb);
 		}

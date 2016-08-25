@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 6710 $
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -44,16 +41,19 @@ import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.GroupPngMakerState;
 import net.sourceforge.plantuml.svek.IEntityImage;
 
 public final class CucaDiagramSimplifierState {
 
 	private final CucaDiagram diagram;
+	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings) throws IOException,
-			InterruptedException {
+	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
+			throws IOException, InterruptedException {
 		this.diagram = diagram;
+		this.stringBounder = stringBounder;
 		boolean changed;
 		do {
 			changed = false;
@@ -107,7 +107,7 @@ public final class CucaDiagramSimplifierState {
 	}
 
 	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
-		final GroupPngMakerState maker = new GroupPngMakerState(diagram, g);
+		final GroupPngMakerState maker = new GroupPngMakerState(diagram, g, stringBounder);
 		return maker.getImage();
 	}
 

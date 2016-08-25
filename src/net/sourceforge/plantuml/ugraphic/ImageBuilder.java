@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 13805 $
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -70,6 +67,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
@@ -116,16 +114,16 @@ public class ImageBuilder {
 	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, OutputStream os) throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.MJPEG) {
-			return writeImageMjpeg(os);
+			return writeImageMjpeg(os, fileFormat.getDefaultStringBounder());
 		} else if (fileFormat == FileFormat.ANIMATED_GIF) {
-			return writeImageAnimatedGif(os);
+			return writeImageAnimatedGif(os, fileFormat.getDefaultStringBounder());
 		}
 		return writeImageInternal(fileFormatOption, os, animation);
 	}
 
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os, Animation animationArg)
 			throws IOException {
-		Dimension2D dim = getFinalDimension();
+		Dimension2D dim = getFinalDimension(fileFormatOption.getDefaultStringBounder());
 		double dx = 0;
 		double dy = 0;
 		if (animationArg != null) {
@@ -154,8 +152,8 @@ public class ImageBuilder {
 		return new ImageDataSimple(dim);
 	}
 
-	public Dimension2D getFinalDimension() {
-		final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
+	public Dimension2D getFinalDimension(StringBounder stringBounder) {
+		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
 		Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2, limitFinder.getMaxY()
 				+ 1 + margin1 + margin2);
@@ -173,9 +171,9 @@ public class ImageBuilder {
 		}
 	}
 
-	private ImageData writeImageMjpeg(OutputStream os) throws IOException {
+	private ImageData writeImageMjpeg(OutputStream os, StringBounder stringBounder) throws IOException {
 
-		final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
+		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
 		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2,
 				limitFinder.getMaxY() + 1 + margin1 + margin2);
@@ -204,9 +202,9 @@ public class ImageBuilder {
 
 	}
 
-	private ImageData writeImageAnimatedGif(OutputStream os) throws IOException {
+	private ImageData writeImageAnimatedGif(OutputStream os, StringBounder stringBounder) throws IOException {
 
-		final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
+		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
 		final Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2,
 				limitFinder.getMaxY() + 1 + margin1 + margin2);

@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10930 $
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -103,9 +100,9 @@ public class DateEventUtils {
 		final String name = portrait.getName();
 		final String quote = portrait.getQuote();
 		final String age = "" + portrait.getAge() + " years old";
-		final UFont font = new UFont("SansSerif", Font.BOLD, 12);
+		final UFont font12 = new UFont("SansSerif", Font.BOLD, 12);
 		TextBlock comment = Display.create(name, age, quote).create(
-				new FontConfiguration(font, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT,
+				new FontConfiguration(font12, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 		comment = TextBlockUtils.withMinWidth(TextBlockUtils.withMargin(comment, 4, 4), 800, HorizontalAlignment.LEFT);
 
@@ -129,7 +126,26 @@ public class DateEventUtils {
 		};
 		final TextBlock bottom = TextBlockUtils.mergeTB(bottom0,
 				TextBlockUtils.mergeLR(bottom1, comment, VerticalAlignment.CENTER), HorizontalAlignment.LEFT);
-		return TextBlockUtils.mergeTB(textBlock, bottom, HorizontalAlignment.LEFT);
+		final TextBlock mergeTB = TextBlockUtils.mergeTB(textBlock, bottom, HorizontalAlignment.LEFT);
+
+		final String arabic1 = "<size:16>\u0625\u0646 \u0627\u0644\u0625\u0631\u0647\u0627\u0628\u064A\u064A\u0646 \u0628\u0627\u0633\u0645 \u0627\u0644\u0625\u0633\u0644\u0627\u0645 \u0644\u064A\u0633\u0648\u0627 \u0645\u0633\u0644\u0645\u064A\u0646\u060C \u0648\u0644\u0627 \u064A\u0631\u0628\u0637\u0647\u0645 \u0628\u0627\u0644\u0625\u0633\u0644\u0627\u0645 \u0625\u0644\u0627 \u0627\u0644\u062F\u0648\u0627\u0641\u0639 \u0627\u0644\u062A\u064A \u064A\u0631\u0643\u0628\u0648\u0646 \u0639\u0644\u064A\u0647\u0627 \u0644\u062A\u0628\u0631\u064A\u0631 \u062C\u0631\u0627\u0626\u0645\u0647\u0645 \u0648\u062D\u0645\u0627\u0642\u0627\u062A\u0647\u0645.";
+		final String arabic2 = "<size:16>\u0641\u0647\u0645 \u0642\u0648\u0645 \u0636\u0627\u0644\u0648\u0646\u060C \u0645\u0635\u064A\u0631\u0647\u0645 \u062C\u0647\u0646\u0645 \u062E\u0627\u0644\u062F\u064A\u0646 \u0641\u064A\u0647\u0627 \u0623\u0628\u062F\u0627.";
+		final String english1 = "<size:10>Those who engage in terrorism, in the name of Islam, are not Muslims.";
+		final String english2 = "<size:10>Their only link to Islam is the pretexts they use to justify their crimes and their folly.";
+		final String english3 = "<size:10>They have strayed from the right path, and their fate is to dwell forever in hell.";
+		final TextBlock arabic = Display
+				.create(" ",
+						arabic1,
+						arabic2,
+						"<size:16>\u0635\u0627\u062D\u0628 \u0627\u0644\u062C\u0644\u0627\u0644\u0629 \u0627\u0644\u0645\u0644\u0643 \u0645\u062D\u0645\u062F \u0627\u0644\u0633\u0627\u062F\u0633 \u0623\u0645\u064A\u0631 \u0627\u0644\u0645\u0624\u0645\u0646\u064A\u0646 \u0646\u0635\u0631\u0647 \u0627\u0644\u0644\u0647")
+				.create(new FontConfiguration(font12, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.RIGHT,
+						new SpriteContainerEmpty());
+		final TextBlock english = Display.create(english1, english2, english3,
+				"<size:10>-- His Majesty the King Mohammed the Sixth, Commander of the Faithful").create(
+				new FontConfiguration(font12, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT,
+				new SpriteContainerEmpty());
+		return TextBlockUtils.mergeTB(mergeTB, TextBlockUtils.mergeTB(arabic, english, HorizontalAlignment.LEFT),
+				HorizontalAlignment.LEFT);
 	}
 
 	private static TextBlock addCharlie(TextBlock textBlock) {

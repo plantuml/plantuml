@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 4236 $
  * 
  */
 package net.sourceforge.plantuml.svek;
@@ -481,7 +478,7 @@ public class Line implements Moveable, Hideable {
 
 		if (projectionCluster != null) {
 			// System.err.println("Line::solveLine1 projectionCluster=" + projectionCluster.getClusterPosition());
-			projectionCluster.manageEntryExitPoint(TextBlockUtils.getDummyStringBounder());
+			projectionCluster.manageEntryExitPoint(stringBounder);
 			// System.err.println("Line::solveLine2 projectionCluster=" + projectionCluster.getClusterPosition());
 			// if (lhead != null)
 			// System.err.println("Line::solveLine ltail=" + lhead.getClusterPosition());

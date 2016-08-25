@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 9786 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3;
@@ -163,7 +160,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = new TextBlockRecentred(result);
 		final ISkinParam skinParam = getSkinParam();
 		result = new AnnotatedWorker(this, skinParam).addAdd(result);
-		final Dimension2D dim = TextBlockUtils.getMinMax(result).getDimension();
+		final Dimension2D dim = TextBlockUtils.getMinMax(result, fileFormatOption.getDefaultStringBounder())
+				.getDimension();
 		final double margin = 10;
 		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
 

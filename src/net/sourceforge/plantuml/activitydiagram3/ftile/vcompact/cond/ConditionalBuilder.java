@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
- * Revision $Revision: 8475 $
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
@@ -44,6 +41,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileIfDown;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -104,10 +102,44 @@ public class ConditionalBuilder {
 			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
+//		if (isEmptyOrOnlySingleStop(branch2) && isEmptyOrOnlySingleStop(branch1) == false) {
+//			return builder.createDown(builder.getLabelBranch1(), builder.getLabelBranch2());
+//		}
+//		if (branch1.isEmpty() && branch2.isOnlySingleStop()) {
+//			return builder.createDown(builder.getLabelBranch1(), builder.getLabelBranch2());
+//		}
+//		if (isEmptyOrOnlySingleStop(branch1) && isEmptyOrOnlySingleStop(branch2) == false) {
+//			return builder.createDown(builder.getLabelBranch2(), builder.getLabelBranch1());
+//		}
+//		if (branch2.isEmpty() && branch1.isOnlySingleStop()) {
+//			return builder.createDown(builder.getLabelBranch2(), builder.getLabelBranch1());
+//		}
 		return builder.createWithLinks();
 		// return builder.createWithDiamonds();
 		// return builder.createNude();
+	}
 
+	private static boolean isEmptyOrOnlySingleStop(Branch branch) {
+		return branch.isEmpty() || branch.isOnlySingleStop();
+	}
+
+	private Ftile createDown(TextBlock tb1, TextBlock tb2) {
+		final Ftile diamond1 = getDiamond1(false, tb1, tb2);
+		final Ftile diamond2 = getDiamond2();
+		if (branch2.isOnlySingleStop()) {
+			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10),
+					arrowColor, ftileFactory, branch2.getFtile());
+		}
+		if (branch1.isOnlySingleStop()) {
+			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
+					arrowColor, ftileFactory, branch1.getFtile());
+		}
+		if (branch1.isEmpty()) {
+			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
+					arrowColor, ftileFactory, null);
+		}
+		return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10), arrowColor,
+				ftileFactory, null);
 	}
 
 	private Ftile createNude() {
@@ -116,7 +148,7 @@ public class ConditionalBuilder {
 	}
 
 	private Ftile createWithDiamonds() {
-		final Ftile diamond1 = getDiamond1();
+		final Ftile diamond1 = getDiamond1(true);
 		final Ftile diamond2 = getDiamond2();
 		final FtileIfWithDiamonds ftile = new FtileIfWithDiamonds(diamond1, tile1, tile2, diamond2, swimlane,
 				stringBounder);
@@ -131,7 +163,7 @@ public class ConditionalBuilder {
 	}
 
 	private Ftile createWithLinks() {
-		final Ftile diamond1 = getDiamond1();
+		final Ftile diamond1 = getDiamond1(true);
 		final Ftile diamond2 = getDiamond2();
 		final Ftile tmp1 = FtileUtils.addHorizontalMargin(tile1, 10);
 		final Ftile tmp2 = FtileUtils.addHorizontalMargin(tile2, 10);
@@ -148,10 +180,12 @@ public class ConditionalBuilder {
 		return result;
 	}
 
-	private Ftile getDiamond1() {
+	private Ftile getDiamond1(boolean eastWest) {
+		return getDiamond1(eastWest, getLabelBranch1(), getLabelBranch2());
+	}
+
+	private Ftile getDiamond1(boolean eastWest, TextBlock tb1, TextBlock tb2) {
 		final Display labelTest = branch1.getLabelTest();
-		final TextBlock tb1 = getLabelBranch1();
-		final TextBlock tb2 = getLabelBranch2();
 
 		final Sheet sheet = new CreoleParser(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(labelTest);
@@ -160,11 +194,21 @@ public class ConditionalBuilder {
 
 		final Ftile diamond1;
 		if (conditionStyle == ConditionStyle.INSIDE) {
-			diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
-					.withWestAndEast(tb1, tb2);
+			if (eastWest) {
+				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+						.withWestAndEast(tb1, tb2);
+			} else {
+				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+						.withSouth(tb1).withEast(tb2);
+			}
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
-					.withWestAndEast(tb1, tb2);
+			if (eastWest) {
+				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
+						.withWestAndEast(tb1, tb2);
+			} else {
+				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
+						.withSouth(tb1).withEast(tb2);
+			}
 		} else {
 			throw new IllegalStateException();
 		}

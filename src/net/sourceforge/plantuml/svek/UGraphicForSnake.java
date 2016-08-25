@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 10266 $
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -81,7 +78,7 @@ public class UGraphicForSnake extends UGraphicDelegator {
 //			}
 			final Snake s1 = snake.move(dx, dy);
 			final Snake s2 = newItem.snake.move(newItem.dx, newItem.dy);
-			final Snake merge = s1.merge(s2);
+			final Snake merge = s1.merge(s2, ug.getStringBounder());
 			if (merge == null) {
 				return null;
 			}

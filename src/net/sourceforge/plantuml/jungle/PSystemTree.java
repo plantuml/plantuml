@@ -23,8 +23,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  *
@@ -44,7 +42,6 @@ import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UDrawableUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -66,7 +63,7 @@ public class PSystemTree extends AbstractPSystem {
 				5, 5, null, false);
 		if (rendering == Rendering.NEEDLE) {
 			final UDrawable tmp = Needle.getNeedle(root, 200, 0, 60);
-			final LimitFinder limitFinder = new LimitFinder(TextBlockUtils.getDummyStringBounder(), true);
+			final LimitFinder limitFinder = new LimitFinder(fileFormat.getDefaultStringBounder(), true);
 			tmp.drawU(limitFinder);
 			final double minY = limitFinder.getMinY();
 			builder.setUDrawable(UDrawableUtils.move(tmp, 0, -minY));

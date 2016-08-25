@@ -23,12 +23,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
  * 
- * Revision $Revision: 9591 $
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
@@ -76,6 +73,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final Skin skin;
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram sequenceDiagram, Skin skin, FileFormatOption fileFormatOption) {
+		this.stringBounder = fileFormatOption.getDefaultStringBounder();
 		this.diagram = sequenceDiagram;
 		this.fileFormatOption = fileFormatOption;
 		this.skin = skin;
@@ -105,7 +103,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private Englobers englobers;
-	private final StringBounder stringBounder = TextBlockUtils.getDummyStringBounder();
+	private final StringBounder stringBounder;
 
 	private final TextBlock footer;
 	private final TextBlock header;
