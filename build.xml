@@ -1,28 +1,18 @@
-<!--
-	========================================================================
-	PlantUML : a free UML diagram generator
-	========================================================================
-	(C) Copyright 2009-2013, Arnaud Roques
-	
-	Project Info:  http://plantuml.sourceforge.net
-	 
-	This file is part of PlantUML.
-		
-	Original Author:  Arnaud Roques
-	Script Author: Ilya V. Paramonov
-	
--->
+<!-- ======================================================================== 
+	PlantUML : a free UML diagram generator ======================================================================== 
+	(C) Copyright 2009-2013, Arnaud Roques Project Info: http://plantuml.sourceforge.net 
+	This file is part of PlantUML. Original Author: Arnaud Roques Script Author: 
+	Ilya V. Paramonov -->
 <project name="PlantUML" default="dist" basedir=".">
 	<description>
-        PlantUML Build File
-    </description>
+		PlantUML Build File
+	</description>
 
 	<target name="compile">
 		<delete dir="build" />
 		<mkdir dir="build" />
 		<javac target="1.6" srcdir="src" destdir="build" />
-		<copy file="src/net/sourceforge/plantuml/version/logo.png"
-			todir="build/net/sourceforge/plantuml/version" />
+		<copy file="src/net/sourceforge/plantuml/version/logo.png" todir="build/net/sourceforge/plantuml/version" />
 		<copy file="src/net/sourceforge/plantuml/version/favicon.png"
 			todir="build/net/sourceforge/plantuml/version" />
 		<copy todir="build/net/sourceforge/plantuml/version">

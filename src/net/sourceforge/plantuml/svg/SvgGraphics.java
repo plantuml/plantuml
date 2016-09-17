@@ -89,13 +89,14 @@ public class SvgGraphics {
     private String filterId;
     public static String keyClass;
     public static ArrayList<String> currentComponents = new ArrayList<String>();
+    public static boolean componentCallBack = false;
 
     private String fill = "black";
     private String stroke = "black";
     private String strokeWidth;
     private String strokeDasharray = null;
     private final String backcolor;
-
+    private static String SPECIAL_CHARACTERS = "/*?#"; // And others
     private int maxX = 10;
     private int maxY = 10;
 
@@ -364,7 +365,7 @@ public class SvgGraphics {
     }
 
     private static String getStyleInternal(String color, String strokeWidth, String strokeDasharray) {
-        final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: " + strokeWidth + ";");
+        final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: 2.0" + ";");
         if (strokeDasharray != null) {
             style.append(" stroke-dasharray: " + strokeDasharray + ";");
         }
@@ -411,6 +412,8 @@ public class SvgGraphics {
             elt.setAttribute("y", format(y));
             if (keyClass != null && keyClass.equals(text)) {
                 elt.setAttribute("fill", "#0fb6f2");
+            } else if (SPECIAL_CHARACTERS.indexOf(text.trim().charAt(0)) >= 0) {
+                elt.setAttribute("fill", "#22df80");
             } else {
                 elt.setAttribute("fill", fill);
             }
@@ -449,11 +452,13 @@ public class SvgGraphics {
             }
 
             if (currentComponents.contains(text)) {
-                elt.setAttribute("class", "snippetCandidate");
+                if (componentCallBack) {
+                    elt.setAttribute("class", "interactiveComponent");
+                    elt.setAttribute("onclick", "classElementCallBack('" + text + "')");
+                }
                 elt.setAttribute("id", text);
                 elt.setTextContent(text.substring(text.lastIndexOf(".") + 1));
-                elt.setAttribute("textLength", String.valueOf(text.substring(text.lastIndexOf(".") + 1).length()));
-                elt.setAttribute("onclick", "displayComponentInfoPopup('" + text + "')");
+                // elt.setAttribute("textLength", String.valueOf(text.substring(text.lastIndexOf(".") + 1).length()));
                 textLength = text.substring(text.lastIndexOf(".") + 1).length();
                 elt.setAttribute("x", format(x + (text.lastIndexOf(".") * 2)));
             } else {
