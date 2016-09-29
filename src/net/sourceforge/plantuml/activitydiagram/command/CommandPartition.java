@@ -30,35 +30,63 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
-public class CommandPartition extends SingleLineCommand<ActivityDiagram> {
+public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 
 	public CommandPartition() {
-		super("(?i)^partition[%s]+([%g][^%g]+[%g]|\\S+)[%s]*(#[0-9a-fA-F]{6}|#?\\w+)?[%s]*\\{?$");
+		super(getRegexConcat());
+	}
+
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(//
+				new RegexLeaf("^"), //
+				new RegexLeaf("partition"), //
+				new RegexLeaf("[%s]+"), //
+				new RegexLeaf("NAME", "([%g][^%g]+[%g]|\\S+)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexOr(//
+						color().getRegex(), //
+						new RegexLeaf("LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
+				new RegexLeaf("[%s]*\\{?$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, List<String> arg) {
-		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(0)));
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, RegexResult arg) {
+		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0)));
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(code), GroupType.PACKAGE,
 				currentPackage);
-		final String color = arg.get(1);
-		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
+
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		if (colors.isEmpty() == false) {
+			p.setColors(colors);
 		}
+
+		// final String color = arg.get("COLOR", 0);
+		// if (color != null) {
+		// p.setSpecificColorTOBEREMOVED(ColorType.BACK,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
+		// }
 		return CommandExecutionResult.ok();
 	}
 

@@ -55,13 +55,14 @@ public class Stereotype implements CharSequence, Hideable {
 	private final static Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
 			+ ")[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
 
-	private final String label;
-	private final HtmlColor htmlColor;
-	private final char character;
-	private final String sprite;
 	private final double radius;
 	private final UFont circledFont;
 	private final boolean automaticPackageStyle;
+
+	private String label;
+	private HtmlColor htmlColor;
+	private char character;
+	private String sprite;
 
 	public Stereotype(String label, double radius, UFont circledFont, IHtmlColorSet htmlColorSet) {
 		this(label, radius, circledFont, true, htmlColorSet);
@@ -78,34 +79,41 @@ public class Stereotype implements CharSequence, Hideable {
 		this.automaticPackageStyle = automaticPackageStyle;
 		this.radius = radius;
 		this.circledFont = circledFont;
-		final Matcher2 mCircleChar = circleChar.matcher(label);
-		final Matcher2 mCircleSprite = circleSprite.matcher(label);
-		if (mCircleSprite.find()) {
-			if (StringUtils.isNotEmpty(mCircleSprite.group(3))) {
-				this.label = "<<" + mCircleSprite.group(3) + ">>";
-			} else {
-				this.label = null;
+
+		final StringBuilder tmpLabel = new StringBuilder();
+
+		final List<String> list = cutLabels(label, false);
+		for (String local : list) {
+			final Matcher2 mCircleChar = circleChar.matcher(local);
+			final Matcher2 mCircleSprite = circleSprite.matcher(local);
+			if (mCircleSprite.find()) {
+				if (StringUtils.isNotEmpty(mCircleSprite.group(3))) {
+					local = "<<" + mCircleSprite.group(3) + ">>";
+				} else {
+					local = null;
+				}
+				final String colName = mCircleSprite.group(2);
+				final HtmlColor col = htmlColorSet.getColorIfValid(colName);
+				this.htmlColor = col == null ? HtmlColorUtils.BLACK : col;
+				this.sprite = mCircleSprite.group(1);
+				this.character = '\0';
+			} else if (mCircleChar.find()) {
+				if (StringUtils.isNotEmpty(mCircleChar.group(3))) {
+					local = "<<" + mCircleChar.group(3) + ">>";
+				} else {
+					local = null;
+				}
+				final String colName = mCircleChar.group(2);
+				this.htmlColor = htmlColorSet.getColorIfValid(colName);
+				this.character = mCircleChar.group(1).charAt(0);
+				this.sprite = null;
 			}
-			final String colName = mCircleSprite.group(2);
-			final HtmlColor col = htmlColorSet.getColorIfValid(colName);
-			this.htmlColor = col == null ? HtmlColorUtils.BLACK : col;
-			this.sprite = mCircleSprite.group(1);
-			this.character = '\0';
-		} else if (mCircleChar.find()) {
-			if (StringUtils.isNotEmpty(mCircleChar.group(3))) {
-				this.label = "<<" + mCircleChar.group(3) + ">>";
-			} else {
-				this.label = null;
+			if (local != null) {
+				tmpLabel.append(local);
 			}
-			final String colName = mCircleChar.group(2);
-			this.htmlColor = htmlColorSet.getColorIfValid(colName);
-			this.character = mCircleChar.group(1).charAt(0);
-			this.sprite = null;
-		} else {
-			this.label = label;
-			this.character = '\0';
-			this.htmlColor = null;
-			this.sprite = null;
+		}
+		if (tmpLabel.length() > 0) {
+			this.label = tmpLabel.toString();
 		}
 	}
 
@@ -141,17 +149,6 @@ public class Stereotype implements CharSequence, Hideable {
 
 	public boolean isWithOOSymbol() {
 		return "<<O-O>>".equalsIgnoreCase(label);
-	}
-
-	public String getLabel(boolean withGuillement) {
-		assert label == null || label.length() > 0;
-		if (isWithOOSymbol()) {
-			return null;
-		}
-		if (withGuillement) {
-			return StringUtils.manageGuillemet(label);
-		}
-		return label;
 	}
 
 	public List<String> getMultipleLabels() {
@@ -201,13 +198,29 @@ public class Stereotype implements CharSequence, Hideable {
 		return circledFont;
 	}
 
-	public List<String> getLabels(boolean useGuillemet) {
-		if (getLabel(false) == null) {
+	public String getLabel(boolean withGuillement) {
+		assert label == null || label.length() > 0;
+		if (isWithOOSymbol()) {
 			return null;
 		}
+		if (withGuillement) {
+			return StringUtils.manageGuillemet(label);
+		}
+		return label;
+	}
+
+	public List<String> getLabels(boolean useGuillemet) {
+		final String labelLocal = getLabel(false);
+		if (labelLocal == null) {
+			return null;
+		}
+		return cutLabels(labelLocal, useGuillemet);
+	}
+
+	private static List<String> cutLabels(final String label, boolean useGuillemet) {
 		final List<String> result = new ArrayList<String>();
 		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
-		final Matcher2 m = p.matcher(getLabel(false));
+		final Matcher2 m = p.matcher(label);
 		while (m.find()) {
 			if (useGuillemet) {
 				result.add(StringUtils.manageGuillemetStrict(m.group()));

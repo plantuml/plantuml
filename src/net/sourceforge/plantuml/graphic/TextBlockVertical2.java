@@ -94,8 +94,9 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 		final Ports result = new Ports();
 		for (TextBlock block : blocks) {
 			final Dimension2D dimb = block.calculateDimension(stringBounder);
+			final Ports tmp = ((WithPorts) block).getPorts(stringBounder).translateY(y);
+			result.addThis(tmp);
 			y += dimb.getHeight();
-			result.addThis(((WithPorts) block).getPorts(stringBounder));
 		}
 		return result;
 	}

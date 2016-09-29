@@ -68,6 +68,10 @@ public class ColorParser {
 		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(" + COLORS_REGEXP + ")?"), mainType);
 	}
 
+	public static ColorParser mandatoryColor(ColorType mainType) {
+		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(" + COLORS_REGEXP + ")"), mainType);
+	}
+
 	public static ColorParser simpleColor(String optPrefix, ColorType mainType) {
 		return new ColorParser("COLOR", new RegexLeaf("COLOR", "(?:" + optPrefix + " (" + COLORS_REGEXP + "))?"),
 				mainType);

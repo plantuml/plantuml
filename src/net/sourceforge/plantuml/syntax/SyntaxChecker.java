@@ -93,6 +93,7 @@ public class SyntaxChecker {
 			final PSystemError sys = (PSystemError) system;
 			result.setErrorLinePosition(sys.getHigherErrorPosition());
 			result.setLineLocation(sys.getLineLocation());
+			result.setSystemError(sys);
 			for (ErrorUml er : sys.getErrorsUml()) {
 				result.addErrorText(er.getError());
 			}

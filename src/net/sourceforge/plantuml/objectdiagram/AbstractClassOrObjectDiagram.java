@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
@@ -157,8 +158,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 				removeLink(existingLink);
 			}
 
-			final IEntity entity1real = existingLink.isInverted() ? existingLink.getEntity2() : existingLink.getEntity1();
-			final IEntity entity2real = existingLink.isInverted() ? existingLink.getEntity1() : existingLink.getEntity2();
+			final IEntity entity1real = existingLink.isInverted() ? existingLink.getEntity2() : existingLink
+					.getEntity1();
+			final IEntity entity2real = existingLink.isInverted() ? existingLink.getEntity1() : existingLink
+					.getEntity2();
 
 			entity1ToPoint = new Link(entity1real, point, existingLink.getType().getPart2(), existingLink.getLabel(),
 					existingLink.getLength(), existingLink.getQualifier1(), null, existingLink.getLabeldistance(),
@@ -167,8 +170,6 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			pointToEntity2 = new Link(point, entity2real, existingLink.getType().getPart1(), Display.NULL,
 					existingLink.getLength(), null, existingLink.getQualifier2(), existingLink.getLabeldistance(),
 					existingLink.getLabelangle());
-			addLink(entity1ToPoint);
-			addLink(pointToEntity2);
 
 			int length = 1;
 			if (existingLink.getLength() == 1 && entity1 != entity2) {
@@ -177,6 +178,14 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			if (existingLink.getLength() == 2 && entity1 == entity2) {
 				length = 2;
 			}
+			if (length == 1) {
+				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.NORMAL);
+			} else {
+				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.HALF_PRINTED_FULL);
+				pointToEntity2.addNoteFrom(existingLink, NoteLinkStrategy.HALF_NOT_PRINTED);
+			}
+			addLink(entity1ToPoint);
+			addLink(pointToEntity2);
 
 			if (mode == 1) {
 				pointToAssocied = new Link(point, associed, linkType, label, length);

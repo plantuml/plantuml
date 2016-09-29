@@ -54,15 +54,17 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final ProcessingOptions processingOptions = new ProcessingOptions();
 	private final boolean dropShadows;
 	private final String data;
+	private final float scale;
 
-	public PSystemDitaa(String data, boolean performSeparationOfCommonEdges, boolean dropShadows) {
+	public PSystemDitaa(String data, boolean performSeparationOfCommonEdges, boolean dropShadows, float scale) {
 		this.data = data;
 		this.dropShadows = dropShadows;
 		this.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
+		this.scale = scale;
 	}
 
 	PSystemDitaa add(String line) {
-		return new PSystemDitaa(data + line + "\n", processingOptions.performSeparationOfCommonEdges(), dropShadows);
+		return new PSystemDitaa(data + line + "\n", processingOptions.performSeparationOfCommonEdges(), dropShadows, scale);
 	}
 
 	public DiagramDescription getDescription() {
@@ -76,6 +78,7 @@ public class PSystemDitaa extends AbstractPSystem {
 		}
 		// ditaa can only export png so file format is mostly ignored
 		final ConversionOptions options = new ConversionOptions();
+		options.renderingOptions.setScale(scale);
 		options.setDropShadows(dropShadows);
 		final TextGrid grid = new TextGrid();
 		grid.initialiseWithText(data, null);

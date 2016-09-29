@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.png.PngTitler;
 import net.sourceforge.plantuml.real.Real;
@@ -60,10 +60,9 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class SequenceDiagramFileMakerTeoz implements FileMaker {
@@ -118,43 +117,61 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final LivingSpaces livingSpaces = new LivingSpaces();
 	private final double heightEnglober1;
 	private final double heightEnglober2;
+	
+	private double oneOf(double a, double b) {
+		if (a == 1) {
+			return b;
+		}
+		return a;
+	}
+
 
 	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		final UTranslate min1translate = new UTranslate(-min1.getCurrentValue(), 0);
 		final double dpiFactor = diagram.getDpiFactor(fileFormatOption, dimTotal);
-		final UGraphic2 ug2 = (UGraphic2) fileFormatOption.createUGraphic(getSkinParam().getColorMapper(), dpiFactor,
-				dimTotal, getSkinParam().getBackgroundColor(), false).apply(min1translate);
 
-		UGraphic ug = getSkinParam().handwritten() ? new UGraphicHandwritten(ug2) : ug2;
-		englobers.drawEnglobers(goDownForEnglobers(ug), main.calculateDimension(stringBounder).getHeight()
-				+ this.heightEnglober1 + this.heightEnglober2 / 2, new SimpleContext2D(true));
+		final double scale = 1;
+		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
-		ug = goDown(ug, header);
+		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), oneOf(scale,
+				dpiFactor), diagram.getSkinParam().getBackgroundColor(), metadata, null, 3, 10, diagram.getAnimation(),
+				diagram.getSkinParam().handwritten());
+		
+		imageBuilder.setUDrawable(new UDrawable() {
+			
+			public void drawU(UGraphic ug) {
+				ug = ug.apply(min1translate);
+				englobers.drawEnglobers(goDownForEnglobers(ug), main.calculateDimension(stringBounder).getHeight()
+						+ heightEnglober1 + heightEnglober2 / 2, new SimpleContext2D(true));
 
-		printAligned(ug, HorizontalAlignment.CENTER, title);
-		ug = goDown(ug, title);
+				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
+				ug = goDown(ug, header);
+		
+				printAligned(ug, HorizontalAlignment.CENTER, title);
+				ug = goDown(ug, title);
+		
+				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
+					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
+					ug = goDown(ug, legend);
+				}
+		
+				ug = ug.apply(new UTranslate(0, heightEnglober1));
+				printAligned(ug, HorizontalAlignment.CENTER, main);
+				ug = goDown(ug, main);
+				ug = ug.apply(new UTranslate(0, heightEnglober2));
+		
+				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
+					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
+					ug = goDown(ug, legend);
+				}
+		
+				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
+		
+				
+			}
+		});
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 
-		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
-			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
-			ug = goDown(ug, legend);
-		}
-
-		ug = ug.apply(new UTranslate(0, this.heightEnglober1));
-		printAligned(ug, HorizontalAlignment.CENTER, main);
-		ug = goDown(ug, main);
-		ug = ug.apply(new UTranslate(0, this.heightEnglober2));
-
-		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
-			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
-			ug = goDown(ug, legend);
-		}
-
-		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
-
-		ug2.writeImageTOBEMOVED(os, isWithMetadata ? diagram.getMetadata() : null, diagram.getDpi(fileFormatOption));
-
-		return new ImageDataSimple(dimTotal);
 	}
 
 	private UGraphic goDownForEnglobers(UGraphic ug) {

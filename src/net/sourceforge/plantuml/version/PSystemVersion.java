@@ -50,6 +50,7 @@ import javax.imageio.ImageIO;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
@@ -150,11 +151,13 @@ public class PSystemVersion extends AbstractPSystem {
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		strings.add(" ");
 		final Properties p = System.getProperties();
-		strings.add(p.getProperty("java.runtime.name"));
-		strings.add(p.getProperty("java.vm.name"));
-		strings.add(p.getProperty("java.runtime.version"));
-		strings.add(p.getProperty("os.name"));
-		strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
+		for (String name : OptionPrint.interestingProperties()) {
+			strings.add(p.getProperty(name));
+		}
+		for (String v : OptionPrint.interestingValues()) {
+			strings.add(v);
+		}
+
 		return new PSystemVersion(true, strings);
 	}
 

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -78,13 +79,16 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 	private final Rainbow arrowColor;
 
-	private FtileIfLongHorizontal(List<Ftile> diamonds, List<Ftile> tiles, Ftile tile2, Rainbow arrowColor) {
+	private FtileIfLongHorizontal(List<Ftile> diamonds, List<Double> inlabelSizes, List<Ftile> tiles, Ftile tile2,
+			Rainbow arrowColor) {
 		super(tiles.get(0).skinParam());
 		if (diamonds.size() != tiles.size()) {
 			throw new IllegalArgumentException();
 		}
 		for (int i = 0; i < diamonds.size(); i++) {
-			couples.add(new FtileAssemblySimple(diamonds.get(i), tiles.get(i)));
+			final Ftile diamond = diamonds.get(i);
+			final FtileAssemblySimple tmp = new FtileAssemblySimple(diamond, tiles.get(i));
+			couples.add(FtileUtils.addHorizontalMargin(tmp, inlabelSizes.get(i), 0));
 		}
 		this.tile2 = tile2;
 		this.diamonds = new ArrayList<Ftile>(diamonds);
@@ -145,11 +149,24 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		final Ftile tile2 = new FtileMinWidth(branch2.getFtile(), 30);
 
 		List<Ftile> diamonds = new ArrayList<Ftile>();
+		List<Double> inlabelSizes = new ArrayList<Double>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
-			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
-			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), backColor, borderColor, swimlane,
-					tbTest);
+			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT,
+					ftileFactory.skinParam());
+			final TextBlock tbTest = branch.getLabelTest().create(fc, HorizontalAlignment.LEFT,
+					ftileFactory.skinParam());
+			final HtmlColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
+
+			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
+					swimlane, tbTest);
+			TextBlock tbInlabel = null;
+			if (Display.isNull(branch.getInlabel())) {
+				inlabelSizes.add(0.0);
+			} else {
+				tbInlabel = branch.getInlabel().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+				inlabelSizes.add(tbInlabel.calculateDimension(ftileFactory.getStringBounder()).getWidth());
+				diamond = diamond.withWest(tbInlabel);
+			}
 			diamond = diamond.withNorth(tb1);
 			diamonds.add(diamond);
 		}
@@ -160,7 +177,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 		diamonds = alignDiamonds(diamonds, ftileFactory.getStringBounder());
 
-		final FtileIfLongHorizontal result = new FtileIfLongHorizontal(diamonds, tiles, tile2, arrowColor);
+		final FtileIfLongHorizontal result = new FtileIfLongHorizontal(diamonds, inlabelSizes, tiles, tile2, arrowColor);
 		final List<Connection> conns = new ArrayList<Connection>();
 
 		for (int i = 0; i < thens.size(); i++) {

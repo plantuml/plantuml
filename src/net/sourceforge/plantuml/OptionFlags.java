@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class OptionFlags {
 
@@ -46,6 +47,10 @@ public class OptionFlags {
 	// static public final boolean TRACE_DOT = false;
 
 	static public boolean ALLOW_INCLUDE = true;
+	
+	static public void setMaxPixel(int max) {
+		ImageBuilder.setMaxPixel(max);
+	}
 
 	static public final boolean USE_HECTOR = false;
 	static public boolean ADD_NICE_FOR_DOT = false;

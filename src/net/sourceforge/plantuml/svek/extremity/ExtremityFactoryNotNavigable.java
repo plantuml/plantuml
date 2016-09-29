@@ -25,21 +25,26 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.svek.extremity;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import java.awt.geom.Point2D;
 
-public interface LineConfigurable {
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 
-	public Colors getColors(ISkinParam skinParam);
-	
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
+public class ExtremityFactoryNotNavigable extends AbstractExtremityFactory implements ExtremityFactory {
 
+	@Override
+	public UDrawable createUDrawable(Point2D p0, double angle) {
+		return new ExtremityNotNavigable(p0, angle - Math.PI / 2);
+	}
 
+	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2) {
+		final double ortho = atan2(p0, p2);
+		return new ExtremityNotNavigable(p1, ortho);
+	}
 
 }

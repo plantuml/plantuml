@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -46,7 +47,6 @@ class USymbolFrame extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.FRAME;
 	}
-
 
 	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing) {
 		final URectangle shape = new URectangle(width, height);
@@ -74,7 +74,7 @@ class USymbolFrame extends USymbol {
 		polygon.lineTo(textWidth - cornersize, textHeight);
 
 		polygon.lineTo(0, textHeight);
-		ug.draw(polygon);
+		ug.apply(new UChangeBackColor(null)).draw(polygon);
 
 	}
 
@@ -89,7 +89,8 @@ class USymbolFrame extends USymbol {
 		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -133,11 +134,10 @@ class USymbolFrame extends USymbol {
 			}
 		};
 	}
-	
+
 	@Override
 	public boolean manageHorizontalLine() {
 		return true;
 	}
-
 
 }

@@ -28,18 +28,22 @@
  * 
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import java.awt.geom.Dimension2D;
 
-public interface LineConfigurable {
+import net.sourceforge.plantuml.Dimension2DDouble;
 
-	public Colors getColors(ISkinParam skinParam);
-	
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
+public enum NoteLinkStrategy {
+	NORMAL, HALF_PRINTED_FULL, HALF_NOT_PRINTED;
 
-
-
+	public Dimension2D computeDimension(double width, double height) {
+		if (this == HALF_PRINTED_FULL) {
+			return new Dimension2DDouble(width / 2, height);
+		}
+		if (this == HALF_NOT_PRINTED) {
+			return new Dimension2DDouble(0, 0);
+		}
+		return new Dimension2DDouble(width, height);
+	}
 }

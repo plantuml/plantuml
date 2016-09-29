@@ -35,6 +35,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -51,6 +52,11 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraph
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UPath shape = (UPath) ushape;
+
+		final UClip clip = clipContainer.getClip();
+		if (clip != null && clip.isInside(x, y, shape) == false) {
+			return;
+		}
 
 		final String color = StringUtils.getAsSvg(mapper, param.getColor());
 		if (shape.isOpenIconic()) {

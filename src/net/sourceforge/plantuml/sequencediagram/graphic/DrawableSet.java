@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class DrawableSet {
 
@@ -265,6 +266,8 @@ public class DrawableSet {
 	}
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
+		// http://plantuml.sourceforge.net/qa/?qa=4826/lifelines-broken-for-txt-seq-diagrams-when-create-is-used
+		final boolean isTxt = ug instanceof UGraphicTxt;
 		for (LivingParticipantBox box : getAllLivingParticipantBox()) {
 			final double create = box.getCreate();
 			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());
@@ -275,7 +278,11 @@ public class DrawableSet {
 					continue;
 				}
 				if (create >= page.getNewpage1() && create < page.getNewpage2()) {
-					start += create - page.getNewpage1() + 2 * box.magicMargin(ug.getStringBounder());
+					if (isTxt) {
+						start = (int) create;
+					} else {
+						start += create - page.getNewpage1() + 2 * box.magicMargin(ug.getStringBounder());
+					}
 				}
 			}
 			final double myDelta = page.getNewpage1() - page.getHeaderHeight();

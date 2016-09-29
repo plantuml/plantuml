@@ -31,7 +31,10 @@
 package net.sourceforge.plantuml;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -94,6 +97,7 @@ public class Run {
 			return;
 		}
 
+		forceOpenJdkResourceLoad();
 		boolean error = false;
 		boolean forceQuit = false;
 		if (option.isPattern()) {
@@ -146,6 +150,15 @@ public class Run {
 		if (forceQuit && OptionFlags.getInstance().isSystemExit()) {
 			System.exit(0);
 		}
+	}
+
+	public static void forceOpenJdkResourceLoad() {
+		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+		final Graphics2D gg = imDummy.createGraphics();
+		final String text = "Alice";
+		final Font font = new Font("SansSerif", Font.PLAIN, 12);
+		final FontMetrics fm = gg.getFontMetrics(font);
+		final Rectangle2D rect = fm.getStringBounds(text, gg);
 	}
 
 	private static void encodeSprite(List<String> result) throws IOException {

@@ -52,9 +52,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
+public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPorts {
 
 	private TextBlock area2;
 	private final FontConfiguration titleConfig;
@@ -206,6 +208,14 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock {
 		}
 		s = StringUtils.trin(s.substring(2, s.length() - 2));
 		return Display.getWithNewlines(s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);
+	}
+
+	public Ports getPorts(StringBounder stringBounder) {
+		final TextBlock area = getArea(stringBounder);
+		if (area instanceof WithPorts) {
+			return ((WithPorts) area).getPorts(stringBounder);
+		}
+		return new Ports();
 	}
 
 	public void drawU(UGraphic ug) {

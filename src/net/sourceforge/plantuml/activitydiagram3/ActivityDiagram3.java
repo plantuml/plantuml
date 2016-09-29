@@ -259,9 +259,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 		setCurrent(instructionIf);
 	}
 
-	public CommandExecutionResult elseIf(Display test, Display whenThen, HtmlColor color) {
+	public CommandExecutionResult elseIf(Display inlabel, Display test, Display whenThen, HtmlColor color) {
 		if (current() instanceof InstructionIf) {
-			final boolean ok = ((InstructionIf) current()).elseIf(test, whenThen, nextLinkRenderer(), color);
+			final boolean ok = ((InstructionIf) current()).elseIf(inlabel, test, whenThen, nextLinkRenderer(), color);
 			if (ok == false) {
 				return CommandExecutionResult.error("You cannot put an elseIf here");
 			}

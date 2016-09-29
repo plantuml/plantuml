@@ -69,6 +69,7 @@ public class Link implements Hideable, Removeable {
 	private Display note;
 	private Position notePosition;
 	private Colors noteColors;
+	private NoteLinkStrategy noteLinkStrategy;
 
 	private boolean invis = false;
 	private double weight = 1.0;
@@ -328,6 +329,10 @@ public class Link implements Hideable, Removeable {
 		return note;
 	}
 
+	public final NoteLinkStrategy getNoteLinkStrategy() {
+		return noteLinkStrategy;
+	}
+
 	public final Colors getNoteColors() {
 		return noteColors;
 	}
@@ -340,13 +345,15 @@ public class Link implements Hideable, Removeable {
 		this.note = note;
 		this.notePosition = position;
 		this.noteColors = colors;
+		this.noteLinkStrategy = NoteLinkStrategy.NORMAL;
 	}
 
-	// public final void addNote(String n, Position position, Colors colors) {
-	// this.note = Display.getWithNewlines(n);
-	// this.notePosition = position;
-	// this.noteColors = colors;
-	// }
+	public final void addNoteFrom(Link other, NoteLinkStrategy strategy) {
+		this.note = other.note;
+		this.notePosition = other.notePosition;
+		this.noteColors = other.noteColors;
+		this.noteLinkStrategy = strategy;
+	}
 
 	public boolean isAutoLinkOfAGroup() {
 		if (getEntity1().isGroup() == false) {

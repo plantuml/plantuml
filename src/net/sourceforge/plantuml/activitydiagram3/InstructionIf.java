@@ -71,7 +71,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			throw new IllegalArgumentException();
 		}
 		this.swimlane = swimlane;
-		this.thens.add(new Branch(swimlane, whenThen, labelTest, color));
+		this.thens.add(new Branch(swimlane, whenThen, labelTest, color, Display.NULL));
 		this.current = this.thens.get(0);
 	}
 
@@ -84,7 +84,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branch.updateFtile(factory);
 		}
 		if (elseBranch == null) {
-			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null);
+			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null, Display.NULL);
 		}
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
@@ -103,17 +103,18 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			return false;
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
-		this.elseBranch = new Branch(swimlane, whenElse, Display.NULL, null);
+		this.elseBranch = new Branch(swimlane, whenElse, Display.NULL, null, Display.NULL);
 		this.current = elseBranch;
 		return true;
 	}
 
-	public boolean elseIf(Display test, Display whenThen, LinkRendering nextLinkRenderer, HtmlColor color) {
+	public boolean elseIf(Display inlabel, Display test, Display whenThen, LinkRendering nextLinkRenderer,
+			HtmlColor color) {
 		if (elseBranch != null) {
 			return false;
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
-		this.current = new Branch(swimlane, whenThen, test, color);
+		this.current = new Branch(swimlane, whenThen, test, color, inlabel);
 		this.thens.add(current);
 		return true;
 
@@ -122,7 +123,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	public void endif(LinkRendering nextLinkRenderer) {
 		endifCalled = true;
 		if (elseBranch == null) {
-			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null);
+			this.elseBranch = new Branch(swimlane, Display.NULL, Display.NULL, null, Display.NULL);
 		}
 		this.current.setInlinkRendering(nextLinkRenderer);
 	}

@@ -69,7 +69,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		final boolean italic = entity.getEntityType() == LeafType.ABSTRACT_CLASS
 				|| entity.getEntityType() == LeafType.INTERFACE;
 
-		final HtmlColor color = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS, getStereo());
+		// final HtmlColor color = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS, getStereo());
 		final Stereotype stereotype = entity.getStereotype();
 		final String generic = entity.getGeneric();
 		FontConfiguration fontConfigurationName = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
@@ -142,7 +142,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		}
 		if (entity.getEntityType() == LeafType.ANNOTATION) {
 			return new CircledCharacter('@', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeABackground, stereotype), classBorder,
+					getSkinParam(), ColorParam.stereotypeNBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
 		if (entity.getEntityType() == LeafType.ABSTRACT_CLASS) {

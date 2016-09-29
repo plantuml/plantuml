@@ -49,6 +49,9 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				ColorParser.exp4(), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("INLABEL", "(?:\\((.+?)\\))?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("else[%s]*if"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("TEST", "\\((.*?)\\)"), //
@@ -66,7 +69,10 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 			test = null;
 		}
 
-		return diagram.elseIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color);
+		final String inlabel = arg.get("INLABEL", 0);
+
+		return diagram.elseIf(Display.getWithNewlines(inlabel), Display.getWithNewlines(test),
+				Display.getWithNewlines(arg.get("WHEN", 0)), color);
 	}
 
 }

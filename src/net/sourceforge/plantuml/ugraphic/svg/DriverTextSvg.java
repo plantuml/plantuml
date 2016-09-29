@@ -34,6 +34,8 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
@@ -81,12 +83,6 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 			textDecoration = "line-through";
 		}
 
-		String backColor = null;
-		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-			backColor = StringUtils.getAsHtml(mapper.getMappedColor(fontConfiguration.getExtendedColor()));
-		}
-
-		svg.setFillColor(StringUtils.getAsHtml(mapper.getMappedColor(fontConfiguration.getColor())));
 		String text = shape.getText();
 		if (text.startsWith(" ")) {
 			final double space = stringBounder.calculateDimension(font, " ").getWidth();
@@ -97,7 +93,28 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 		}
 		text = StringUtils.trin(text);
 		final Dimension2D dim = stringBounder.calculateDimension(font, text);
+
+		String backColor = null;
+		final double width = dim.getWidth();
+		final double height = dim.getHeight();
+		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
+			final HtmlColor back = fontConfiguration.getExtendedColor();
+			if (back instanceof HtmlColorGradient) {
+				final HtmlColorGradient gr = (HtmlColorGradient) back;
+				final String id = svg.createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
+						StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+				svg.setFillColor("url(#" + id + ")");
+				svg.setStrokeColor(null);
+				final double deltaPatch = 2;
+				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0);
+
+			} else {
+				backColor = StringUtils.getAsHtml(mapper.getMappedColor(back));
+			}
+		}
+
+		svg.setFillColor(StringUtils.getAsHtml(mapper.getMappedColor(fontConfiguration.getColor())));
 		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
-				dim.getWidth(), fontConfiguration.getAttributes(), backColor);
+				width, fontConfiguration.getAttributes(), backColor);
 	}
 }

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCircle;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCircleConnect;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryCircleCross;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryDiamond;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryNotNavigable;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryParenthesis;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryPlus;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactorySquarre;
@@ -46,7 +47,8 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 
 public enum LinkDecor {
 
-	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3),
+	NONE(2, false, 0), EXTENDS(30, false, 2), COMPOSITION(15, true, 1.3), AGREGATION(15, false, 1.3), NOT_NAVIGABLE(1,
+			false, 0.1),
 
 	ARROW(10, true, 0.5), ARROW_TRIANGLE(10, true, 0.8), ARROW_AND_CIRCLE(10, false, 0.5),
 
@@ -88,6 +90,8 @@ public enum LinkDecor {
 			return new ExtremityFactoryArrow();
 		} else if (this == LinkDecor.ARROW_AND_CIRCLE) {
 			return new ExtremityFactoryArrowAndCircle();
+		} else if (this == LinkDecor.NOT_NAVIGABLE) {
+			return new ExtremityFactoryNotNavigable();
 		} else if (this == LinkDecor.AGREGATION) {
 			return new ExtremityFactoryDiamond(false, backgroundColor);
 		} else if (this == LinkDecor.COMPOSITION) {

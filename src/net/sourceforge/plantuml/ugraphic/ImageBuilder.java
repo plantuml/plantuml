@@ -42,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -68,7 +69,6 @@ import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.ugraphic.crossing.UGraphicCrossing;
@@ -121,6 +121,23 @@ public class ImageBuilder {
 		return writeImageInternal(fileFormatOption, os, animation);
 	}
 
+	private static Semaphore SEMAPHORE;
+	private static int MAX_PRICE = 0;
+
+	public static void setMaxPixel(int max) {
+		MAX_PRICE = max;
+		SEMAPHORE = new Semaphore(MAX_PRICE, true);
+	}
+
+	private int getPrice(FileFormatOption fileFormatOption, Dimension2D dim) {
+		if (fileFormatOption.getFileFormat() != FileFormat.PNG) {
+			return 0;
+		}
+		final int price = Math.min(MAX_PRICE, ((int) (dim.getHeight() * dpiFactor))
+				* ((int) (dim.getWidth() * dpiFactor)));
+		return price;
+	}
+
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os, Animation animationArg)
 			throws IOException {
 		Dimension2D dim = getFinalDimension(fileFormatOption.getDefaultStringBounder());
@@ -134,22 +151,38 @@ public class ImageBuilder {
 			dy = -minmax.getMinY();
 		}
 
-		final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
-		final UGraphic ugDecored = handwritten(ug.apply(new UTranslate(margin1, margin1)));
-		udrawable.drawU(ugDecored);
-		ugDecored.flushUg();
-		ug.writeImageTOBEMOVED(os, metadata, 96);
-		os.flush();
+		int price = 0;
+		if (SEMAPHORE != null) {
+			price = getPrice(fileFormatOption, dim);
+			try {
+				SEMAPHORE.acquire(price);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				throw new IOException(e);
+			}
+		}
+		try {
+			final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
+			final UGraphic ugDecored = handwritten(ug.apply(new UTranslate(margin1, margin1)));
+			udrawable.drawU(ugDecored);
+			ugDecored.flushUg();
+			ug.writeImageTOBEMOVED(os, metadata, 96);
+			os.flush();
 
-		if (ug instanceof UGraphicG2d) {
-			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
-			if (urls.size() > 0) {
-				final CMapData cmap = CMapData.cmapString(urls, dpiFactor);
-				return new ImageDataComplex(dim, cmap, warningOrError);
+			if (ug instanceof UGraphicG2d) {
+				final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
+				if (urls.size() > 0) {
+					final CMapData cmap = CMapData.cmapString(urls, dpiFactor);
+					return new ImageDataComplex(dim, cmap, warningOrError);
+				}
+			}
+			return new ImageDataSimple(dim);
+		} finally {
+			if (SEMAPHORE != null) {
+				SEMAPHORE.release(price);
 			}
 		}
 
-		return new ImageDataSimple(dim);
 	}
 
 	public Dimension2D getFinalDimension(StringBounder stringBounder) {

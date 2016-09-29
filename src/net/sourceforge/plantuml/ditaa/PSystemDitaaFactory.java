@@ -29,6 +29,9 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 
@@ -54,10 +57,11 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (startLine != null && (startLine.contains("-S") || startLine.contains("--no-shadows"))) {
 			dropShadows = false;
 		}
+		final float scale = extractScale(startLine);
 		if (getDiagramType() == DiagramType.UML) {
 			return null;
 		} else if (getDiagramType() == DiagramType.DITAA) {
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows);
+			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
 		} else {
 			throw new IllegalStateException(getDiagramType().name());
 		}
@@ -74,7 +78,8 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			if (line.contains("-S") || line.contains("--no-shadows")) {
 				dropShadows = false;
 			}
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows);
+			final float scale = extractScale(line);
+			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
 		}
 		if (system == null) {
 			return null;
@@ -82,4 +87,16 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		return system.add(line);
 	}
 
+	private float extractScale(String line) {
+		if (line == null) {
+			return 1;
+		}
+		final Pattern p = Pattern.compile("scale=([\\d.]+)");
+		final Matcher m = p.matcher(line);
+		if (m.find()) {
+			final String number = m.group(1);
+			return Float.parseFloat(number);
+		}
+		return 1;
+	}
 }

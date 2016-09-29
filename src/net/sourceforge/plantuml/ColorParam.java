@@ -59,6 +59,7 @@ public enum ColorParam {
 	classBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
 	classBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	stereotypeCBackground(HtmlColorUtils.COL_ADD1B2),
+	stereotypeNBackground(HtmlColorUtils.COL_E3664A),
 	stereotypeABackground(HtmlColorUtils.COL_A9DCDF),
 	stereotypeIBackground(HtmlColorUtils.COL_B4A7E5),
 	stereotypeEBackground(HtmlColorUtils.COL_EB937F),

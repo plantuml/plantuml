@@ -35,6 +35,7 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -94,6 +96,7 @@ public class Line implements Moveable, Hideable {
 	private final TextBlock startTailText;
 	private final TextBlock endHeadText;
 	private final TextBlock labelText;
+	private boolean divideLabelWidthByTwo = false;
 
 	private final int lineColor;
 	private final int noteLabelColor;
@@ -266,6 +269,10 @@ public class Line implements Moveable, Hideable {
 			noteOnly = null;
 		} else {
 			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColors(), skinParam);
+			if (link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_NOT_PRINTED
+					|| link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_PRINTED_FULL) {
+				divideLabelWidthByTwo = true;
+			}
 		}
 
 		if (labelOnly != null && noteOnly != null) {
@@ -347,7 +354,8 @@ public class Line implements Moveable, Hideable {
 			} else {
 				sb.append("label=<");
 			}
-			appendTable(sb, labelText.calculateDimension(stringBounder), noteLabelColor, graphvizVersion);
+			appendTable(sb, eventuallyDivideByTwo(labelText.calculateDimension(stringBounder)), noteLabelColor,
+					graphvizVersion);
 			sb.append(">");
 			// sb.append(",labelfloat=true");
 		}
@@ -382,6 +390,13 @@ public class Line implements Moveable, Hideable {
 
 		sb.append("];");
 		SvekUtils.println(sb);
+	}
+
+	private Dimension2D eventuallyDivideByTwo(Dimension2D dim) {
+		if (divideLabelWidthByTwo) {
+			return new Dimension2DDouble(dim.getWidth() / 2, dim.getHeight());
+		}
+		return dim;
 	}
 
 	public String rankSame() {
@@ -662,7 +677,8 @@ public class Line implements Moveable, Hideable {
 			// System.err.println("Line::draw EXTREMITY2");
 			this.extremity1.drawU(ug.apply(new UTranslate(x, y)));
 		}
-		if (this.labelText != null && this.labelXY != null) {
+		if (this.labelText != null && this.labelXY != null
+				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED) {
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX(), y
 					+ this.labelXY.getPosition().getY())));
 		}

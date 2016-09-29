@@ -32,6 +32,12 @@ package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
@@ -94,7 +100,8 @@ public class OptionPrint {
 		System.out.println("    -testdot\t\tTo test the installation of graphviz");
 		System.out.println("    -graphvizdot \"exe\"\tTo specify dot executable");
 		System.out.println("    -p[ipe]\t\tTo use stdin for PlantUML source and stdout for PNG/SVG/EPS generation");
-		System.out.println("    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
+		System.out
+				.println("    -encodesprite 4|8|16[z] \"file\"\tTo encode a sprite at gray level (z for compression) from an image");
 		System.out.println("    -computeurl|-encodeurl\tTo compute the encoded URL of a PlantUML source file");
 		System.out.println("    -decodeurl\t\tTo retrieve the PlantUML source from an encoded URL");
 		System.out.println("    -syntax\t\tTo report any syntax error from standard input without generating images");
@@ -130,14 +137,15 @@ public class OptionPrint {
 	}
 
 	public static void printVersion() throws InterruptedException {
-		System.out
-				.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
+		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
 		System.out.println("(" + License.getCurrent() + " source distribution)");
 		final Properties p = System.getProperties();
-		System.out.println(p.getProperty("java.runtime.name"));
-		System.out.println(p.getProperty("java.vm.name"));
-		System.out.println(p.getProperty("java.runtime.version"));
-		System.out.println(p.getProperty("os.name"));
+		for (String name : interestingProperties()) {
+			System.out.println(p.getProperty(name));
+		}
+		for (String v : interestingValues()) {
+			System.out.println(v);
+		}
 		System.out.println();
 		for (String s : GraphvizUtils.getTestDotStrings(false)) {
 			System.out.println(s);
@@ -145,9 +153,32 @@ public class OptionPrint {
 		exit();
 	}
 
+	public static Collection<String> interestingProperties() {
+		return Arrays.asList("java.runtime.name", "java.vm.name", "java.runtime.version", "os.name", "file.encoding");
+	}
+
+	public static Collection<String> interestingValues() {
+		final List<String> strings = new ArrayList<String>();
+		strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
+		final long freeMemory = Runtime.getRuntime().freeMemory();
+		final long maxMemory = Runtime.getRuntime().maxMemory();
+		final long totalMemory = Runtime.getRuntime().totalMemory();
+		final long usedMemory = totalMemory - freeMemory;
+		final int threadActiveCount = Thread.activeCount();
+		strings.add("Max Memory: " + format(maxMemory));
+		strings.add("Total Memory: " + format(totalMemory));
+		strings.add("Free Memory: " + format(freeMemory));
+		strings.add("Used Memory: " + format(usedMemory));
+		strings.add("Thread Active Count: " + threadActiveCount);
+		return Collections.unmodifiableCollection(strings);
+	}
+
+	private static String format(final long value) {
+		return String.format(Locale.US, "%,d", value);
+	}
+
 	public static void checkVersion() throws InterruptedException {
-		System.out
-				.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
+		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
 		System.out.println();
 		final int lastversion = PSystemVersion.extractDownloadableVersion(null, null);
 		if (lastversion == -1) {
@@ -172,8 +203,7 @@ public class OptionPrint {
 
 	public static void printAbout() throws InterruptedException {
 		// Duplicate in PSystemVersion
-		System.out
-				.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
+		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
 		System.out.println();
 		System.out.println("Original idea: Arnaud Roques");
 		System.out.println("Word Macro: Alain Bertucat & Matthieu Sabatier");

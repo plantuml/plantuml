@@ -64,14 +64,15 @@ public enum FontStyle {
 			return "\\<[wW](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 		}
 		if (this == BACKCOLOR) {
-			return "\\<[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
+			// return "\\<[bB][aA][cC][kK](?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
+			return "\\<[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\>";
 		}
 		if (this == STRIKE) {
 			return "\\<(?:s|S|strike|STRIKE|del|DEL)(?::(#[0-9a-fA-F]{6}|\\w+))?\\>";
 		}
 		return null;
 	}
-	
+
 	public boolean canHaveExtendedColor() {
 		if (this == UNDERLINE) {
 			return true;
@@ -87,7 +88,6 @@ public enum FontStyle {
 		}
 		return false;
 	}
-
 
 	public String getCreoleSyntax() {
 		if (this == ITALIC) {
@@ -153,6 +153,5 @@ public enum FontStyle {
 		}
 		throw new IllegalArgumentException(line);
 	}
-
 
 }

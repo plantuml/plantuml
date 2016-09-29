@@ -40,6 +40,11 @@ public class Ports {
 	public void addThis(Ports other) {
 		all.putAll(other.all);
 	}
+	
+	@Override
+	public String toString() {
+		return all.toString();
+	}
 
 	public Ports translateY(double deltaY) {
 		final Ports result = new Ports();

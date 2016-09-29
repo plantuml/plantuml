@@ -49,6 +49,11 @@ public class PositionedNote {
 		this.colors = colors;
 	}
 
+	@Override
+	public String toString() {
+		return "type=" + type + " notePosition=" + notePosition + " " + display;
+	}
+
 	public PositionedNote(Display note, NotePosition position, NoteType type) {
 		this(note, position, type, null);
 	}

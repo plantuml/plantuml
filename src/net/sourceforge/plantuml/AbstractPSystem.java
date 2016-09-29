@@ -56,14 +56,10 @@ public abstract class AbstractPSystem implements Diagram {
 		toAppend.append("(" + Version.compileTimeString() + ")\n");
 		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
 		final Properties p = System.getProperties();
-		toAppend.append(p.getProperty("java.runtime.name"));
-		toAppend.append('\n');
-		toAppend.append(p.getProperty("java.vm.name"));
-		toAppend.append('\n');
-		toAppend.append(p.getProperty("java.runtime.version"));
-		toAppend.append('\n');
-		toAppend.append(p.getProperty("os.name"));
-
+		for (String name : OptionPrint.interestingProperties()) {
+			toAppend.append(p.getProperty(name));
+			toAppend.append('\n');
+		}
 		return toAppend.toString();
 	}
 
@@ -96,11 +92,10 @@ public abstract class AbstractPSystem implements Diagram {
 	public String getWarningOrError() {
 		return null;
 	}
-	
+
 	public String checkFinalError() {
 		return null;
 	}
-
 
 	public void makeDiagramReady() {
 	}

@@ -74,7 +74,7 @@ public class FtileIfDown extends AbstractFtile {
 	}
 
 	public Swimlane getSwimlaneOut() {
-		if (optionalStop==null) {
+		if (optionalStop == null) {
 			return getSwimlaneIn();
 		}
 		return thenBlock.getSwimlaneOut();
@@ -89,8 +89,9 @@ public class FtileIfDown extends AbstractFtile {
 	}
 
 	public static Ftile create(Ftile diamond1, Ftile diamond2, Swimlane swimlane, Ftile thenBlock, Rainbow arrowColor,
-			FtileFactory ftileFactory, Ftile optionalStop) {
+			FtileFactory ftileFactory, Ftile optionalStop, Rainbow elseColor) {
 
+		elseColor = elseColor.withDefault(arrowColor);
 		final FtileIfDown result = new FtileIfDown(thenBlock, diamond1, optionalStop == null ? diamond2
 				: new FtileEmpty(ftileFactory.skinParam()), optionalStop);
 
@@ -99,12 +100,12 @@ public class FtileIfDown extends AbstractFtile {
 		final boolean hasPointOut1 = thenBlock.calculateDimension(ftileFactory.getStringBounder()).hasPointOut();
 		if (optionalStop == null) {
 			if (hasPointOut1) {
-				conns.add(result.new ConnectionElse(thenBlock.getInLinkRendering().getRainbow(arrowColor)));
+				conns.add(result.new ConnectionElse(elseColor));
 			} else {
-				conns.add(result.new ConnectionElseNoDiamond(thenBlock.getInLinkRendering().getRainbow(arrowColor)));
+				conns.add(result.new ConnectionElseNoDiamond(elseColor));
 			}
 		}
-		conns.add(result.new ConnectionOut(arrowColor));
+		conns.add(result.new ConnectionOut(thenBlock.getOutLinkRendering().getRainbow(arrowColor)));
 		return FtileUtils.addConnection(result, conns);
 	}
 

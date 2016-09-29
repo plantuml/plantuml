@@ -78,6 +78,12 @@ public class FtileMarged extends AbstractFtile {
 				orig.getInY(), orig.getOutY());
 	}
 
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		UTranslate result = tile.getTranslateFor(child, stringBounder);
+		result = result.compose(new UTranslate(margin1, 0));
+		return result;
+	}
+
 	public void drawU(UGraphic ug) {
 		ug.apply(new UTranslate(margin1, 0)).draw(tile);
 	}

@@ -51,15 +51,15 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 		if (notes.size() == 0) {
 			throw new IllegalArgumentException();
 		}
-		if (notes.size() > 1) {
-			throw new IllegalArgumentException();
-		}
+		// if (notes.size() > 1) {
+		// throw new IllegalArgumentException();
+		// }
 		ISkinParam skinParam = skinParam();
-		final PositionedNote note = notes.iterator().next();
-		if (note.getColors() != null) {
-			skinParam = note.getColors().mute(skinParam);
-		}
 		if (ftile == null) {
+			final PositionedNote note = notes.iterator().next();
+			if (note.getColors() != null) {
+				skinParam = note.getColors().mute(skinParam);
+			}
 			return new FtileNoteAlone(skinParam.shadowing(), note.getDisplay(), skinParam,
 					note.getType() == NoteType.NOTE, swimlane);
 		}

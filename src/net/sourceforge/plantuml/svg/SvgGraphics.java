@@ -98,6 +98,7 @@ public class SvgGraphics {
 	private final double scale;
 	private final String filterUid;
 	private final String shadowId;
+	private final String gradientId;
 
 	final protected void ensureVisible(double x, double y) {
 		if (x > maxX) {
@@ -128,6 +129,7 @@ public class SvgGraphics {
 			final Random rnd = new Random();
 			this.filterUid = "b" + getRandomString(rnd);
 			this.shadowId = "f" + getRandomString(rnd);
+			this.gradientId = "g" + getRandomString(rnd);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			throw new IllegalStateException(e);
@@ -252,7 +254,7 @@ public class SvgGraphics {
 				elt.setAttribute("x2", "100%");
 				elt.setAttribute("y2", "100%");
 			}
-			id = "gr" + gradients.size();
+			id = gradientId + gradients.size();
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
 

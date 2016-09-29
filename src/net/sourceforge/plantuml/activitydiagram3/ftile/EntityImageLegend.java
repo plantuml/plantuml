@@ -36,6 +36,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -49,25 +50,28 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageLegend extends AbstractTextBlock implements TextBlock {
 
 	private final int cornersize = 10;
-	private final HtmlColor noteBackgroundColor;
-	private final HtmlColor borderColor;
+	private final HtmlColor legendBackgroundColor;
+	private final HtmlColor legendColor;
 	private final int marginX = 6;
 	private final int marginY = 5;
 	private final boolean withShadow;
+	private final ISkinParam skinParam;
 
 	private final TextBlock textBlock;
 
 	private EntityImageLegend(Display note, ISkinParam skinParam) {
 		this.withShadow = false;
 		final Rose rose = new Rose();
+		this.skinParam = skinParam;
 
-		noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.legendBackground);
-		borderColor = rose.getHtmlColor(skinParam, ColorParam.legendBorder);
+		legendBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.legendBackground);
+		legendColor = rose.getHtmlColor(skinParam, ColorParam.legendBorder);
 
 		this.textBlock = note.create(new FontConfiguration(skinParam, FontParam.LEGEND, null),
 				HorizontalAlignment.LEFT, skinParam);
@@ -97,13 +101,22 @@ public class EntityImageLegend extends AbstractTextBlock implements TextBlock {
 		return new Dimension2DDouble(width + 1, height + 1);
 	}
 
+	private UGraphic applyStroke(UGraphic ug) {
+		final UStroke stroke = skinParam.getThickness(LineParam.legendBorder, null);
+		if (stroke == null) {
+			return ug;
+		}
+		return ug.apply(stroke);
+	}
+
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final UPolygon polygon = getPolygonNormal(stringBounder);
 		if (withShadow) {
 			polygon.setDeltaShadow(4);
 		}
-		ug = ug.apply(new UChangeBackColor(noteBackgroundColor)).apply(new UChangeColor(borderColor));
+		ug = ug.apply(new UChangeBackColor(legendBackgroundColor)).apply(new UChangeColor(legendColor));
+		ug = applyStroke(ug);
 		ug.draw(polygon);
 		textBlock.drawU(ug.apply(new UTranslate(marginX, marginY)));
 	}

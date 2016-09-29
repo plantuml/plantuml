@@ -405,7 +405,7 @@ public final class DotDataImageBuilder {
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, HtmlColorUtils.BLACK),
 						portionShower);
 			}
-			return new EntityImageEmptyPackage(leaf, skinParam);
+			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
 		}
 		if (leaf.getEntityType() == LeafType.ASSOCIATION) {
 			return new EntityImageAssociation(leaf, skinParam);

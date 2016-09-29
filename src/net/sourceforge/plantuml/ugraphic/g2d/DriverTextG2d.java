@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Dimension2D;
@@ -45,6 +46,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -76,13 +78,22 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 
 		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
 		final Dimension2D dimBack = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
+		final HtmlColor extended = fontConfiguration.getExtendedColor();
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
-			final Color extended = mapper.getMappedColor(fontConfiguration.getExtendedColor());
-			if (extended != null) {
-				g2d.setColor(extended);
-				g2d.setBackground(extended);
-				g2d.fill(new Rectangle2D.Double(x, y - dimBack.getHeight() + 1.5, dimBack.getWidth(), dimBack
-						.getHeight()));
+			final Rectangle2D.Double area = new Rectangle2D.Double(x, y - dimBack.getHeight() + 1.5,
+					dimBack.getWidth(), dimBack.getHeight());
+			if (extended instanceof HtmlColorGradient) {
+				final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, dimBack.getWidth(),
+						dimBack.getHeight(), extended);
+				g2d.setPaint(paint);
+				g2d.fill(area);
+			} else {
+				final Color backColor = mapper.getMappedColor(extended);
+				if (backColor != null) {
+					g2d.setColor(backColor);
+					g2d.setBackground(backColor);
+					g2d.fill(area);
+				}
 			}
 		}
 		visible.ensureVisible(x, y - dimBack.getHeight() + 1.5);
@@ -93,7 +104,6 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		g2d.drawString(shape.getText(), (float) x, (float) y);
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
@@ -106,7 +116,6 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
@@ -119,7 +128,6 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
 			final FontMetrics fm = g2d.getFontMetrics(font.getFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
-			final HtmlColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}

@@ -38,7 +38,10 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -61,20 +64,34 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	final private HtmlColor specificBackColor;
 	final private ISkinParam skinParam;
 	final private Stereotype stereotype;
+	final TextBlock stereoBlock;
 
-	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.skinParam = skinParam;
 		this.specificBackColor = entity.getColors(skinParam).getColor(ColorType.BACK);
 		this.stereotype = entity.getStereotype();
-		this.desc = entity.getDisplay().create(
-				new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype),
+		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype),
 				HorizontalAlignment.CENTER, skinParam);
+
+		if (stereotype == null || stereotype.getLabel(false) == null
+				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+			stereoBlock = TextBlockUtils.empty(0, 0);
+		} else {
+			stereoBlock = TextBlockUtils.withMargin(
+					Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
+							new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
+							HorizontalAlignment.CENTER, skinParam), 1, 0);
+		}
+
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = desc.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(dim, MARGIN * 2, MARGIN * 2 + dim.getHeight() * 2);
+		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
+		Dimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT).calculateDimension(
+				stringBounder);
+		dim = Dimension2DDouble.atLeast(dim, 0, 2 * dimDesc.getHeight());
+		return Dimension2DDouble.delta(dim, MARGIN * 2, MARGIN * 2);
 	}
 
 	private UStroke getStroke() {
@@ -95,10 +112,11 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final HtmlColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype);
 
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
-				TextBlockUtils.empty(0, 0), 0, 0, widthTotal, heightTotal, getStroke());
+				stereoBlock, 0, 0, widthTotal, heightTotal, getStroke());
 
-		decoration.drawU(ug, back,
-				SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()), getSkinParam().shadowing());
+		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
+				getSkinParam().shadowing());
+
 	}
 
 	public ShapeType getShapeType() {

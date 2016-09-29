@@ -61,6 +61,10 @@ public class Colors {
 		return new Colors();
 	}
 
+	public boolean isEmpty() {
+		return map.isEmpty();
+	}
+
 	private Colors copy() {
 		final Colors result = new Colors();
 		result.map.putAll(this.map);

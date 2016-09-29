@@ -150,4 +150,8 @@ public class UClip implements UChange {
 		return yp;
 	}
 
+	public boolean isInside(double x, double y, UPath shape) {
+		return isInside(x + shape.getMinX(), y + shape.getMinY()) && isInside(x + shape.getMaxX(), y + shape.getMaxY());
+	}
+
 }

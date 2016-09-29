@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.webp.Portrait;
 
 public class PSystemMemorial extends AbstractPSystem {
 
+	public static final String PARIS = "A thought for those who died in Paris the 13th November 2015.";
 	private Portrait portrait;
 
 	PSystemMemorial(Portrait portrait) {
@@ -78,9 +79,7 @@ public class PSystemMemorial extends AbstractPSystem {
 				final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK,
 						true);
 
-				final TextBlock top = DateEventUtils.getComment(
-						Arrays.asList("A thought for those who died in Paris the 13th November 2015."),
-						HtmlColorUtils.BLACK);
+				final TextBlock top = DateEventUtils.getComment(Arrays.asList(PARIS), HtmlColorUtils.BLACK);
 
 				final TextBlock tb = Display.create(name, age, quote).create(fc, HorizontalAlignment.LEFT,
 						new SpriteContainerEmpty());

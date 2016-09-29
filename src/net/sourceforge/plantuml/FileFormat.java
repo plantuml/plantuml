@@ -78,8 +78,8 @@ public enum FileFormat {
 		return "." + StringUtils.goLowerCase(name());
 	}
 
-	final static BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-	final static Graphics2D gg = imDummy.createGraphics();
+	final static private BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
+	final static private Graphics2D gg = imDummy.createGraphics();
 
 	public StringBounder getDefaultStringBounder() {
 		if (this == BRAILLE_PNG) {
@@ -96,11 +96,8 @@ public enum FileFormat {
 		}
 		return new StringBounder() {
 			public Dimension2D calculateDimension(UFont font, String text) {
-				// Log.info("FileFormat::calculateDimension text="+text);
 				final FontMetrics fm = gg.getFontMetrics(font.getFont());
-				// Log.info("FileFormat::calculateDimension fm="+fm);
 				final Rectangle2D rect = fm.getStringBounds(text, gg);
-				// Log.info("FileFormat::calculateDimension rect="+rect);
 				return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
 			}
 		};
@@ -142,10 +139,6 @@ public enum FileFormat {
 		}
 		final File dir = pngFile.getParentFile();
 		return new File(dir, computeFilename(pngFile.getName(), i));
-		// String name = pngFile.getName();
-		// name = name.replaceAll("\\" + getFileSuffix() + "$", "_" + String.format("%03d", i) + getFileSuffix());
-		// return new File(dir, name);
-
 	}
 
 	public String computeFilename(String name, int i) {
@@ -154,5 +147,4 @@ public enum FileFormat {
 		}
 		return name.replaceAll("\\" + getFileSuffix() + "$", "_" + String.format("%03d", i) + getFileSuffix());
 	}
-
 }

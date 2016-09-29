@@ -216,6 +216,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
+		fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
+
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
 			return exportDiagramInternalPdf(os, index);
 		}

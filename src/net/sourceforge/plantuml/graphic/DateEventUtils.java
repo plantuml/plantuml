@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.eggs.PSystemMemorial;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -106,8 +107,7 @@ public class DateEventUtils {
 				new SpriteContainerEmpty());
 		comment = TextBlockUtils.withMinWidth(TextBlockUtils.withMargin(comment, 4, 4), 800, HorizontalAlignment.LEFT);
 
-		final TextBlock bottom0 = getComment(
-				Arrays.asList("A thought for those who died in Paris the 13th November 2015."), color);
+		final TextBlock bottom0 = getComment(Arrays.asList(PSystemMemorial.PARIS), color);
 		final TextBlock bottom1 = new AbstractTextBlock() {
 			private double margin = 10;
 
@@ -127,7 +127,11 @@ public class DateEventUtils {
 		final TextBlock bottom = TextBlockUtils.mergeTB(bottom0,
 				TextBlockUtils.mergeLR(bottom1, comment, VerticalAlignment.CENTER), HorizontalAlignment.LEFT);
 		final TextBlock mergeTB = TextBlockUtils.mergeTB(textBlock, bottom, HorizontalAlignment.LEFT);
+		return addMajesty(mergeTB, color);
+	}
 
+	public static TextBlock addMajesty(TextBlock block, HtmlColor color) {
+		final UFont font12 = new UFont("SansSerif", Font.BOLD, 12);
 		final String arabic1 = "<size:16>\u0625\u0646 \u0627\u0644\u0625\u0631\u0647\u0627\u0628\u064A\u064A\u0646 \u0628\u0627\u0633\u0645 \u0627\u0644\u0625\u0633\u0644\u0627\u0645 \u0644\u064A\u0633\u0648\u0627 \u0645\u0633\u0644\u0645\u064A\u0646\u060C \u0648\u0644\u0627 \u064A\u0631\u0628\u0637\u0647\u0645 \u0628\u0627\u0644\u0625\u0633\u0644\u0627\u0645 \u0625\u0644\u0627 \u0627\u0644\u062F\u0648\u0627\u0641\u0639 \u0627\u0644\u062A\u064A \u064A\u0631\u0643\u0628\u0648\u0646 \u0639\u0644\u064A\u0647\u0627 \u0644\u062A\u0628\u0631\u064A\u0631 \u062C\u0631\u0627\u0626\u0645\u0647\u0645 \u0648\u062D\u0645\u0627\u0642\u0627\u062A\u0647\u0645.";
 		final String arabic2 = "<size:16>\u0641\u0647\u0645 \u0642\u0648\u0645 \u0636\u0627\u0644\u0648\u0646\u060C \u0645\u0635\u064A\u0631\u0647\u0645 \u062C\u0647\u0646\u0645 \u062E\u0627\u0644\u062F\u064A\u0646 \u0641\u064A\u0647\u0627 \u0623\u0628\u062F\u0627.";
 		final String english1 = "<size:10>Those who engage in terrorism, in the name of Islam, are not Muslims.";
@@ -144,7 +148,7 @@ public class DateEventUtils {
 				"<size:10>-- His Majesty the King Mohammed the Sixth, Commander of the Faithful").create(
 				new FontConfiguration(font12, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
-		return TextBlockUtils.mergeTB(mergeTB, TextBlockUtils.mergeTB(arabic, english, HorizontalAlignment.LEFT),
+		return TextBlockUtils.mergeTB(block, TextBlockUtils.mergeTB(arabic, english, HorizontalAlignment.LEFT),
 				HorizontalAlignment.LEFT);
 	}
 

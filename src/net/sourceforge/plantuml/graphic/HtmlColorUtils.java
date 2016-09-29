@@ -58,6 +58,7 @@ public class HtmlColorUtils {
 	public static final HtmlColor COL_FBFB77;
 	public static final HtmlColor COL_ADD1B2;
 	public static final HtmlColor COL_A9DCDF;
+	public static final HtmlColor COL_E3664A;
 	public static final HtmlColor COL_EB937F;
 	public static final HtmlColor COL_B4A7E5;
 	public static final HtmlColor COL_527BC6;
@@ -96,6 +97,7 @@ public class HtmlColorUtils {
 		COL_FBFB77 = set.getColorIfValid("#FBFB77");
 		COL_ADD1B2 = set.getColorIfValid("#ADD1B2");
 		COL_A9DCDF = set.getColorIfValid("#A9DCDF");
+		COL_E3664A = set.getColorIfValid("#E3664A");
 		COL_EB937F = set.getColorIfValid("#EB937F");
 		COL_B4A7E5 = set.getColorIfValid("#B4A7E5");
 		COL_527BC6 = set.getColorIfValid("#527BC6");

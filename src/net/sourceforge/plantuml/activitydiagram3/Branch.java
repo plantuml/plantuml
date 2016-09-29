@@ -48,18 +48,23 @@ public class Branch {
 	private final InstructionList list;
 	private final Display labelTest;
 	private final Display labelPositive;
+	private final Display inlabel;
 	private final HtmlColor color;
 	private LinkRendering inlinkRendering = LinkRendering.none();
 
 	private Ftile ftile;
 
-	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color) {
+	public Branch(Swimlane swimlane, Display labelPositive, Display labelTest, HtmlColor color, Display inlabel) {
 		if (labelPositive == null) {
 			throw new IllegalArgumentException();
 		}
 		if (labelTest == null) {
 			throw new IllegalArgumentException();
 		}
+		if (inlabel == null) {
+			throw new IllegalArgumentException();
+		}
+		this.inlabel = inlabel;
 		this.list = new InstructionList(swimlane);
 		this.labelTest = labelTest;
 		this.labelPositive = labelPositive;
@@ -107,6 +112,10 @@ public class Branch {
 
 	public final Rainbow getInlinkRenderingColorAndStyle() {
 		return inlinkRendering == null ? null : inlinkRendering.getRainbow();
+	}
+
+	public Display getInlabel() {
+		return inlabel;
 	}
 
 	public final Ftile getFtile() {
