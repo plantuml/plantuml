@@ -54,6 +54,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
@@ -63,9 +66,6 @@ import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class SvgGraphics {
 
@@ -82,25 +82,26 @@ public class SvgGraphics {
     // http://www.w3schools.com/svg/svg_feoffset.asp
     // http://www.adobe.com/svg/demos/samples.html
 
-    final private Document document;
-    final private Element root;
-    final private Element defs;
-    final private Element gRoot;
-    private String filterId;
-    public static String keyClass;
-    public static ArrayList<String> currentComponents = new ArrayList<String>();
-    public static boolean componentCallBack = false;
+    final private Document          document;
+    final private Element           root;
+    final private Element           defs;
+    final private Element           gRoot;
+    private String                  filterId;
+    public static String            keyClass;
+    public static ArrayList<String> displayComponentsUniqueNames  = new ArrayList<String>();
+    public static ArrayList<String> displayComponentsDisplayNames = new ArrayList<String>();
+    public static boolean           componentCallBack             = false;
 
-    private String fill = "black";
-    private String stroke = "black";
-    private String strokeWidth;
-    private String strokeDasharray = null;
-    private final String backcolor;
-    private static String SPECIAL_CHARACTERS = "/*?#"; // And others
-    private int maxX = 10;
-    private int maxY = 10;
+    private String                  fill                          = "black";
+    private String                  stroke                        = "black";
+    private String                  strokeWidth;
+    private String                  strokeDasharray               = null;
+    private final String            backcolor;                                              // And
+                                                                                            // others
+    private int                     maxX                          = 10;
+    private int                     maxY                          = 10;
 
-    private final double scale;
+    private final double            scale;
 
     final protected void ensureVisible(double x, double y) {
         if (x > maxX) {
@@ -311,7 +312,8 @@ public class SvgGraphics {
         return pendingLink2.get(0);
     }
 
-    public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow) {
+    public void svgRectangle(double x, double y, double width, double height, double rx, double ry,
+            double deltaShadow) {
         if (height <= 0 || width <= 0) {
             throw new IllegalArgumentException();
         }
@@ -408,12 +410,14 @@ public class SvgGraphics {
             // required for web-kit based browsers
             elt.setAttribute("text-rendering", "geometricPrecision");
 
-            elt.setAttribute("x", format(x));
+            elt.setAttribute("x", format(x + 5));
             elt.setAttribute("y", format(y));
             if (keyClass != null && keyClass.equals(text)) {
-                elt.setAttribute("fill", "#0fb6f2");
-            } else if (SPECIAL_CHARACTERS.indexOf(text.trim().charAt(0)) >= 0) {
                 elt.setAttribute("fill", "#22df80");
+                elt.setAttribute("text-decoration", "underline");
+            } else if (text.startsWith("$%")) {
+                text = text.replace("$%", "").trim();
+                elt.setAttribute("fill", "#f97d7d");
             } else {
                 elt.setAttribute("fill", fill);
             }
@@ -451,24 +455,27 @@ public class SvgGraphics {
                 getG().appendChild(elt2);
             }
 
-            if (currentComponents.contains(text)) {
-                if (componentCallBack) {
-                    elt.setAttribute("class", "interactiveComponent");
-                    elt.setAttribute("onclick", "classElementCallBack('" + text + "')");
+            if (componentCallBack) {
+                for (int i = 0; i < displayComponentsDisplayNames.size(); i++) {
+                    if (text.equals(displayComponentsUniqueNames.get(i)) || (text.contains("(") && text.contains(")")
+                            && text.contains(":") && text.startsWith(displayComponentsDisplayNames.get(i)))) {
+                        if (text.equals(displayComponentsUniqueNames.get(i))) {
+                            text = displayComponentsDisplayNames.get(i);
+                        }
+                        elt.setAttribute("onclick",
+                                "classElementCallBack('" + displayComponentsUniqueNames.get(i) + "')");
+                        elt.setAttribute("class", "interactiveComponent");
+                        elt.setAttribute("id", displayComponentsUniqueNames.get(i));
+                    }
                 }
-                elt.setAttribute("id", text);
-                elt.setTextContent(text.substring(text.lastIndexOf(".") + 1));
-                // elt.setAttribute("textLength", String.valueOf(text.substring(text.lastIndexOf(".") + 1).length()));
-                textLength = text.substring(text.lastIndexOf(".") + 1).length();
-                elt.setAttribute("x", format(x + (text.lastIndexOf(".") * 2)));
-            } else {
-                elt.setTextContent(text);
             }
+
+            elt.setTextContent(text);
+            textLength = text.length();
             getG().appendChild(elt);
         }
-        ensureVisible(x, y);
-        ensureVisible(x + textLength, y);
 
+        ensureVisible(x, y);
     }
 
     private final Map<String, String> filterBackColor = new HashMap<String, String>();
@@ -737,8 +744,8 @@ public class SvgGraphics {
                 addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", "" + (2 * scale));
                 addFilter(filter, "feColorMatrix", "type", "matrix", "in", "blurOut", "result", "blurOut2", "values",
                         "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
-                addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy", ""
-                        + (4 * scale));
+                addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy",
+                        "" + (4 * scale));
                 addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
                 // defs.appendChild(filter);
 
