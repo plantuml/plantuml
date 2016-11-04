@@ -42,7 +42,7 @@ class TextBlockHorizontal extends AbstractTextBlock implements TextBlock {
 	private final TextBlock b2;
 	private final VerticalAlignment alignment;
 
-	public TextBlockHorizontal(TextBlock b1, TextBlock b2, VerticalAlignment alignment) {
+	TextBlockHorizontal(TextBlock b1, TextBlock b2, VerticalAlignment alignment) {
 		this.b1 = b1;
 		this.b2 = b2;
 		this.alignment = alignment;

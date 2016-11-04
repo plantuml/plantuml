@@ -37,8 +37,8 @@ import java.util.zip.Inflater;
 
 public class CompressionZlib implements Compression {
 
-	// private static final int COMPRESSION_LEVEL = 9;
-	private static final int COMPRESSION_LEVEL = 1;
+	private static final int COMPRESSION_LEVEL = 9;
+	// private static final int COMPRESSION_LEVEL = 1;
 
 	public byte[] compress(byte[] in) {
 		if (in.length == 0) {

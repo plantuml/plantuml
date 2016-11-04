@@ -35,7 +35,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -49,15 +48,16 @@ import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
-public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
+public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
 	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
 			EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
 
-	public CommandHideShow() {
+	public CommandHideShowByGender() {
 		super(getRegexConcat());
 	}
 
@@ -66,7 +66,7 @@ public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
 				new RegexLeaf("COMMAND", "(hide|show)"), //
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("GENDER",
-						"(?:(class|interface|enum|annotation|abstract|[\\p{L}0-9_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
+						"(?:(class|object|interface|enum|annotation|abstract|[\\p{L}0-9_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
 				new RegexLeaf("EMPTY", "(?:(empty)[%s]+)?"), //
 				new RegexLeaf("PORTION", "(members?|attributes?|fields?|methods?|circle\\w*|stereotypes?)"), //
 				new RegexLeaf("$"));
@@ -87,8 +87,8 @@ public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, RegexResult arg) {
-		if (classDiagram instanceof ClassDiagram) {
-			return executeClassDiagram((ClassDiagram) classDiagram, arg);
+		if (classDiagram instanceof AbstractClassOrObjectDiagram) {
+			return executeClassDiagram((AbstractClassOrObjectDiagram) classDiagram, arg);
 		}
 		if (classDiagram instanceof DescriptionDiagram) {
 			return executeDescriptionDiagram((DescriptionDiagram) classDiagram, arg);
@@ -105,6 +105,8 @@ public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.all();
 		} else if (arg1.equalsIgnoreCase("class")) {
 			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);
+		} else if (arg1.equalsIgnoreCase("object")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.OBJECT);
 		} else if (arg1.equalsIgnoreCase("interface")) {
 			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);
 		} else if (arg1.equalsIgnoreCase("enum")) {
@@ -124,7 +126,7 @@ public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeClassDiagram(ClassDiagram classDiagram, RegexResult arg) {
+	private CommandExecutionResult executeClassDiagram(AbstractClassOrObjectDiagram classDiagram, RegexResult arg) {
 
 		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
 
@@ -134,6 +136,8 @@ public class CommandHideShow extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.all();
 		} else if (arg1.equalsIgnoreCase("class")) {
 			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);
+		} else if (arg1.equalsIgnoreCase("object")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.OBJECT);
 		} else if (arg1.equalsIgnoreCase("interface")) {
 			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);
 		} else if (arg1.equalsIgnoreCase("enum")) {

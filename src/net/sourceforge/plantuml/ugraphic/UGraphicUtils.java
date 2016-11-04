@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -51,14 +50,14 @@ import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
 public abstract class UGraphicUtils {
 
-	public static UDrawable translate(final UDrawable d, final double dx, final double dy) {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				d.drawU(ug.apply(new UTranslate(dx, dy)));
-			}
-		};
-
-	}
+	// public static UDrawable translate(final UDrawable d, final double dx, final double dy) {
+	// return new UDrawable() {
+	// public void drawU(UGraphic ug) {
+	// d.drawU(ug.apply(new UTranslate(dx, dy)));
+	// }
+	// };
+	//
+	// }
 
 	public static void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption,
 			ColorMapper colorMapper, HtmlColor background, TextBlock image) throws IOException {

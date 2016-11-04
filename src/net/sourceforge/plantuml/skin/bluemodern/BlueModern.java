@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.skin.rose.ComponentRoseDestroy;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseGroupingElse;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseGroupingSpace;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseReference;
-import net.sourceforge.plantuml.skin.rose.ComponentRoseTitle;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
@@ -146,10 +145,10 @@ public class BlueModern implements Skin {
 		if (type == ComponentType.GROUPING_SPACE) {
 			return new ComponentRoseGroupingSpace(7);
 		}
-		if (type == ComponentType.TITLE) {
-			return new ComponentRoseTitle(bigFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
-					hyperlinkColor, param.getTabSize()), stringsToDisplay, param);
-		}
+		// if (type == ComponentType.TITLE) {
+		// return new ComponentRoseTitle(bigFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
+		// hyperlinkColor, param.getTabSize()), stringsToDisplay, param);
+		// }
 		if (type == ComponentType.REFERENCE) {
 			return new ComponentRoseReference(normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
 					hyperlinkColor, param.getTabSize()), new SymbolContext(blue1, borderGroupColor).withStroke(Rose
@@ -164,15 +163,15 @@ public class BlueModern implements Skin {
 			return new ComponentBlueModernDivider(normalFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
 					hyperlinkColor, param.getTabSize()), blue2, blue1, HtmlColorUtils.BLACK, stringsToDisplay, param);
 		}
-		if (type == ComponentType.SIGNATURE) {
-			return new ComponentRoseTitle(smallFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
-					hyperlinkColor, param.getTabSize()), Display.create("This skin was created ", "in April 2009."),
-					param);
-		}
+		// if (type == ComponentType.SIGNATURE) {
+		// return new ComponentRoseTitle(smallFont.toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
+		// hyperlinkColor, param.getTabSize()), Display.create("This skin was created ", "in April 2009."),
+		// param);
+		// }
 		if (type == ComponentType.ENGLOBER) {
-			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, param.getFont(
-					null, false, FontParam.SEQUENCE_BOX).toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink,
-					hyperlinkColor, param.getTabSize()), param);
+			return new ComponentBlueModernEnglober(blue1, blue3, stringsToDisplay, param.getFont(null, false,
+					FontParam.SEQUENCE_BOX).toFont2(HtmlColorUtils.BLACK, useUnderlineForHyperlink, hyperlinkColor,
+					param.getTabSize()), param);
 		}
 
 		return null;

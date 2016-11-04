@@ -77,7 +77,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.lineConfig = entity;
-		this.roundCorner = getSkinParam().getRoundCorner();
+		this.roundCorner = getSkinParam().getRoundCorner("");
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);

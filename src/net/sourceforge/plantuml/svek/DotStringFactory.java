@@ -201,14 +201,14 @@ public class DotStringFactory implements Moveable {
 
 		root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
 		for (Line line : bibliotekon.lines0()) {
-			line.appendLine(getGraphvizVersion(), sb);
+			line.appendLine(getGraphvizVersion(), sb, dotMode);
 		}
 		root.fillRankMin(rankMin);
 		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(), umlDiagramType);
 		printMinRanking(sb);
 
 		for (Line line : bibliotekon.lines1()) {
-			line.appendLine(getGraphvizVersion(), sb);
+			line.appendLine(getGraphvizVersion(), sb, dotMode);
 		}
 		SvekUtils.println(sb);
 		sb.append("}");

@@ -28,42 +28,49 @@
  * 
  *
  */
-package net.sourceforge.plantuml.skin.rose;
+package net.sourceforge.plantuml.ugraphic.sprite;
 
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import java.awt.geom.Dimension2D;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.skin.AbstractTextualComponent;
-import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
-public class ComponentRoseTitle extends AbstractTextualComponent {
+public class SpriteSvg implements Sprite {
 
-	private final int outMargin = 5;
+	private final UImageSvg img;
 
-	public ComponentRoseTitle(FontConfiguration font, Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
-				spriteContainer, 0, false, null, null);
+	public SpriteSvg(String svg) {
+		this.img = new UImageSvg(svg);
 	}
 
-	@Override
-	protected void drawInternalU(UGraphic ug, Area area) {
-		final TextBlock textBlock = getTextBlock();
-		textBlock.drawU(ug.apply(new UTranslate(outMargin + getMarginX1(), getMarginY())));
+	public SpriteSvg(File svgFile) throws IOException {
+		this(FileUtils.readSvg(svgFile));
 	}
 
-	@Override
-	public double getPreferredHeight(StringBounder stringBounder) {
-		return getTextHeight(stringBounder);
+	public SpriteSvg(InputStream is) throws IOException {
+		this(FileUtils.readSvg(is));
 	}
 
-	@Override
-	public double getPreferredWidth(StringBounder stringBounder) {
-		return getTextWidth(stringBounder) + outMargin * 2;
+	public TextBlock asTextBlock(final HtmlColor color, final double scale) {
+		return new AbstractTextBlock() {
+
+			public void drawU(UGraphic ug) {
+				ug.draw(img);
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
+			}
+		};
 	}
 
 }

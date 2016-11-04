@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.TextBlockVertical2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class Bodier {
@@ -166,14 +166,19 @@ public class Bodier {
 			}
 			return null;
 		}
-		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam, stereotype);
+		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
+				stereotype);
 		if (type == LeafType.OBJECT) {
+			if (showFields == false) {
+				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
+			}
 			return fields.asBlockMemberImpl();
 		}
 		if (type.isLikeClass() == false) {
 			throw new UnsupportedOperationException();
 		}
-		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam, stereotype);
+		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
+				stereotype);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {
@@ -184,7 +189,7 @@ public class Bodier {
 
 		final TextBlock bb1 = fields.asBlockMemberImpl();
 		final TextBlock bb2 = methods.asBlockMemberImpl();
-		return new TextBlockVertical2(bb1, bb2, HorizontalAlignment.LEFT);
+		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);
 	}
 
 }

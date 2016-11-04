@@ -159,4 +159,9 @@ public class FtileDiamondInside extends AbstractFtile {
 		// return dimDiamonAlone.incHeight(northHeight).addMarginX(dimWest.getWidth(), dimEast.getWidth());
 	}
 
+	public double getEastLabelWidth(StringBounder stringBounder) {
+		final Dimension2D dimEast = east.calculateDimension(stringBounder);
+		return dimEast.getWidth();
+	}
+
 }

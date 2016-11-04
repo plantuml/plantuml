@@ -146,4 +146,9 @@ public class FtileDiamond extends AbstractFtile {
 		return withWest(tb1).withEast(tb2);
 	}
 
+	public double getEastLabelWidth(StringBounder stringBounder) {
+		final Dimension2D dimEast = east1.calculateDimension(stringBounder);
+		return dimEast.getWidth();
+	}
+
 }

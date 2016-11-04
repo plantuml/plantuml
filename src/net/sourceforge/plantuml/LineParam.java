@@ -45,7 +45,9 @@ public enum LineParam {
 	partitionBorder,
 	packageBorder,
 	swimlaneBorder,
-	activityBorder;
+	activityBorder,
+	titleBorder,
+	diagramBorder;
 //	sequenceBoxBorder(0.1);
 	
 }

@@ -116,9 +116,9 @@ public class Link implements Hideable, Removeable {
 			this.label = Display.NULL;
 		} else if (doWeHaveToRemoveUrlAtStart(label)) {
 			this.url = label.initUrl();
-			this.label = label.removeHeadingUrl(url);
+			this.label = label.removeHeadingUrl(url).manageGuillemet();
 		} else {
-			this.label = label;
+			this.label = label.manageGuillemet();
 		}
 		this.length = length;
 		this.qualifier1 = qualifier1;

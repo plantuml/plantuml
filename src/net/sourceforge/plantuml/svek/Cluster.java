@@ -555,7 +555,7 @@ public class Cluster implements Moveable {
 			added = true;
 		}
 
-		if (dotMode != DotMode.NO_LEFT_RIGHT) {
+		if (dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
 			appendRankSame(sb, lines);
 		}
 

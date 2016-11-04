@@ -28,40 +28,53 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import java.awt.Color;
 
-public class InstructionEnd extends MonoSwimable implements Instruction {
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
-	private final LinkRendering inlinkRendering;
+public class SplitParam {
 
-	public InstructionEnd(Swimlane swimlane, LinkRendering inlinkRendering) {
-		super(swimlane);
-		this.inlinkRendering = inlinkRendering;
-		if (inlinkRendering == null) {
-			throw new IllegalArgumentException();
+	private final HtmlColor borderColor;
+	private final HtmlColor externalColor;
+	private final int externalMargin;
+
+	public SplitParam() {
+		this(null, null, 0);
+	}
+
+	public SplitParam(HtmlColor borderColor, HtmlColor externalColor, int externalMargin) {
+		if (borderColor != null && externalMargin == 0) {
+			externalMargin = 1;
 		}
+		this.borderColor = borderColor;
+		this.externalColor = externalColor;
+		this.externalMargin = externalMargin;
 	}
 
-	public Ftile createFtile(FtileFactory factory) {
-		Ftile result = factory.end(getSwimlaneIn());
-		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
-		return result;
+	public boolean isSet() {
+		return externalMargin > 0;
 	}
 
-	public void add(Instruction other) {
-		throw new UnsupportedOperationException();
+	public int getExternalMargin() {
+		return externalMargin;
 	}
 
-	final public boolean kill() {
-		return false;
+	public Color getBorderColor() {
+		if (borderColor == null) {
+			return null;
+		}
+		return ((HtmlColorSimple) borderColor).getColor999();
 	}
 
-	public LinkRendering getInLinkRendering() {
-		return inlinkRendering;
+	public Color getExternalColor() {
+		if (externalColor == null) {
+			return null;
+		}
+		return ((HtmlColorSimple) externalColor).getColor999();
 	}
 
 }

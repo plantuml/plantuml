@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Reference;
@@ -90,16 +91,17 @@ public class TileBuilder {
 				result = new CommunicationTile(livingSpace1, livingSpace2, msg, skin, skinParam);
 				reverse = ((CommunicationTile) result).isReverse(stringBounder);
 			}
-			if (msg.getNote() != null) {
-				final NotePosition notePosition = msg.getNotePosition();
+			for (NoteOnMessage noteOnMessage : msg.getNoteOnMessages()) {
+				final NotePosition notePosition = noteOnMessage.getNotePosition();
 				if (notePosition == NotePosition.LEFT) {
 					result = new CommunicationTileNoteLeft((TileWithUpdateStairs) result, msg, skin, skinParam,
-							reverse ? livingSpace2 : livingSpace1);
+							reverse ? livingSpace2 : livingSpace1, noteOnMessage);
 				} else if (notePosition == NotePosition.RIGHT && msg.isSelfMessage()) {
-					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam);
+					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,
+							noteOnMessage);
 				} else if (notePosition == NotePosition.RIGHT) {
 					result = new CommunicationTileNoteRight((TileWithUpdateStairs) result, msg, skin, skinParam,
-							reverse ? livingSpace1 : livingSpace2);
+							reverse ? livingSpace1 : livingSpace2, noteOnMessage);
 				}
 			}
 			tiles.add(result);
@@ -108,14 +110,14 @@ public class TileBuilder {
 			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
 			Tile result = null;
 			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments);
-			if (exo.getNote() != null) {
-				final NotePosition notePosition = exo.getNotePosition();
+			for (NoteOnMessage noteOnMessage : exo.getNoteOnMessages()) {
+				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getNotePosition();
 				if (notePosition == NotePosition.LEFT) {
 					result = new CommunicationTileNoteLeft((TileWithUpdateStairs) result, exo, skin, skinParam,
-							livingSpace1);
+							livingSpace1, noteOnMessage);
 				} else if (notePosition == NotePosition.RIGHT) {
 					result = new CommunicationTileNoteRight((TileWithUpdateStairs) result, exo, skin, skinParam,
-							livingSpace1);
+							livingSpace1, noteOnMessage);
 				}
 			}
 			tiles.add(result);

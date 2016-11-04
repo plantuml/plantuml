@@ -34,6 +34,7 @@ import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
@@ -42,6 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -56,8 +58,6 @@ import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
-import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -70,6 +70,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final SequenceDiagram diagram;
 	private final FileFormatOption fileFormatOption;
 	private final Skin skin;
+	private final AnnotatedWorker annotatedWorker;
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram sequenceDiagram, Skin skin, FileFormatOption fileFormatOption) {
 		this.stringBounder = fileFormatOption.getDefaultStringBounder();
@@ -78,12 +79,14 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.skin = skin;
 		this.footer = getFooterOrHeader(FontParam.FOOTER);
 		this.header = getFooterOrHeader(FontParam.HEADER);
+		this.annotatedWorker = new AnnotatedWorker(sequenceDiagram, sequenceDiagram.getSkinParam());
 
 		this.main = new MainTileAdapter(createMainTile());
 		this.min1 = ((MainTileAdapter) main).getMinX(stringBounder);
 
 		this.title = getTitle();
 		this.legend = getLegend();
+		this.caption = annotatedWorker.getCaption();
 
 		this.heightEnglober1 = englobers.getOffsetForEnglobers(stringBounder);
 		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;
@@ -111,20 +114,20 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private final TextBlock title;
 	private final TextBlock legend;
+	private final TextBlock caption;
 	private final Dimension2D dimTotal;
 	private final Real min1;
 
 	private final LivingSpaces livingSpaces = new LivingSpaces();
 	private final double heightEnglober1;
 	private final double heightEnglober2;
-	
+
 	private double oneOf(double a, double b) {
 		if (a == 1) {
 			return b;
 		}
 		return a;
 	}
-
 
 	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		final UTranslate min1translate = new UTranslate(-min1.getCurrentValue(), 0);
@@ -133,12 +136,11 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final double scale = 1;
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), oneOf(scale,
-				dpiFactor), diagram.getSkinParam().getBackgroundColor(), metadata, null, 3, 10, diagram.getAnimation(),
-				diagram.getSkinParam().handwritten());
-		
+		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), oneOf(scale, dpiFactor), metadata,
+				null, 3, 10, diagram.getAnimation());
+
 		imageBuilder.setUDrawable(new UDrawable() {
-			
+
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(min1translate);
 				englobers.drawEnglobers(goDownForEnglobers(ug), main.calculateDimension(stringBounder).getHeight()
@@ -146,28 +148,29 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);
 				ug = goDown(ug, header);
-		
+
 				printAligned(ug, HorizontalAlignment.CENTER, title);
 				ug = goDown(ug, title);
-		
+
 				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {
 					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
 					ug = goDown(ug, legend);
 				}
-		
+
 				ug = ug.apply(new UTranslate(0, heightEnglober1));
 				printAligned(ug, HorizontalAlignment.CENTER, main);
 				ug = goDown(ug, main);
 				ug = ug.apply(new UTranslate(0, heightEnglober2));
-		
+
+				printAligned(ug, HorizontalAlignment.CENTER, caption);
+				
 				if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {
 					printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);
 					ug = goDown(ug, legend);
 				}
-		
+
 				printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
-		
-				
+
 			}
 		});
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
@@ -228,9 +231,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (DisplayPositionned.isNull(diagram.getTitle())) {
 			return new ComponentAdapter(null);
 		}
-		final Component compTitle = skin.createComponent(ComponentType.TITLE, null, getSkinParam(), diagram.getTitle()
-				.getDisplay());
-		return new ComponentAdapter(compTitle);
+		final TextBlock compTitle = TextBlockUtils.title(new FontConfiguration(getSkinParam(),
+				FontParam.SEQUENCE_TITLE, null), diagram.getTitle().getDisplay(), getSkinParam());
+		return TextBlockUtils.withMargin(compTitle, 7, 7);
 	}
 
 	private TextBlock getLegend() {

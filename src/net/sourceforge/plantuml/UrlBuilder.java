@@ -52,7 +52,7 @@ public class UrlBuilder {
 	}
 
 	private static final String URL_PATTERN_OLD = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{((?:[^{}]|\\{[^{}]*\\})+)\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";
-	private static final String URL_PATTERN = "\\[\\[([%g][^%g]+[%g])?([\\w\\W]*)\\]\\]";
+	private static final String URL_PATTERN = "\\[\\[([%g][^%g]+[%g])?([\\w\\W]*?)\\]\\]";
 
 	private static final String URL_PATTERN_BAD = "\\[\\[([%g][^%g]+[%g]|[^{}%s\\]\\[]*)(?:[%s]*\\{" + "(" + levelN(3)
 			+ ")" + "\\})?(?:[%s]*([^\\]\\[]+))?\\]\\]";

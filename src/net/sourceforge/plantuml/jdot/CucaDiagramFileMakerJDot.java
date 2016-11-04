@@ -427,9 +427,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			final double scale = 1;
 
-			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale, null,
-					fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, 0, 10,
-					diagram.getAnimation(), diagram.getSkinParam().handwritten());
+			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(),
+					scale, fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, 0,
+					10, diagram.getAnimation());
 
 			imageBuilder.setUDrawable(new Drawing(null));
 			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);

@@ -216,7 +216,8 @@ public class PSystemUtils {
 
 		if (fileFormat.getFileFormat() == FileFormat.PNG) {
 			result = new PngSplitter(suggestedFile, system.getHorizontalPages(), system.getVerticalPages(),
-					system.getMetadata(), system.getDpi(fileFormat), fileFormat.isWithMetadata()).getFiles();
+					system.getMetadata(), system.getDpi(fileFormat), fileFormat.isWithMetadata(), system.getSkinParam()
+							.getSplitParam()).getFiles();
 		}
 		return result;
 

@@ -37,6 +37,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -61,7 +62,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param);
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection);
 
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
 
@@ -95,7 +96,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public double getRanksep();
 
-	public double getRoundCorner();
+	public double getRoundCorner(String param);
 
 	public double maxMessageSize();
 
@@ -126,6 +127,8 @@ public interface ISkinParam extends ISkinSimple {
 	public int maxAsciiMessageLength();
 	
 	public int colorArrowSeparationSpace();
+	
+	public SplitParam getSplitParam();
 
 
 }

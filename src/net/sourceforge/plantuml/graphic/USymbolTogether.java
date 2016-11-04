@@ -44,7 +44,7 @@ class USymbolTogether extends USymbol {
 
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final SymbolContext symbolContext) {
-		throw new UnsupportedOperationException();
+		return TextBlockUtils.empty(10, 10);
 	}
 
 	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,

@@ -48,7 +48,8 @@ import net.sourceforge.plantuml.utils.StartUtils;
 public class Preprocessor implements ReadLine {
 
 	private static final String ID = "[A-Za-z_][A-Za-z_0-9]*";
-	private static final String ARG = "(?:\\(" + ID + "(?:," + ID + ")*?\\))?";
+	private static final String ID_ARG = "\\s*[A-Za-z_][A-Za-z_0-9]*\\s*(?:=\\s*(?:\"[^\"]*\"|'[^']*')\\s*)?";
+	private static final String ARG = "(?:\\(" + ID_ARG + "(?:," + ID_ARG + ")*?\\))?";
 	private static final Pattern2 definePattern = MyPattern.cmpile("^[%s]*!define[%s]+(" + ID + ARG + ")"
 			+ "(?:[%s]+(.*))?$");
 	private static final Pattern2 undefPattern = MyPattern.cmpile("^[%s]*!undef[%s]+(" + ID + ")$");

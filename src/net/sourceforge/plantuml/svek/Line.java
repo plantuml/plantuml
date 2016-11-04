@@ -317,7 +317,7 @@ public class Line implements Moveable, Hideable {
 		return link.getLinkArrow();
 	}
 
-	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb) {
+	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {
 		// sb.append(endUid);
@@ -349,7 +349,7 @@ public class Line implements Moveable, Hideable {
 		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
 		if (labelText != null) {
 			sb.append(",");
-			if (graphvizVersion.modeSafe()) {
+			if (graphvizVersion.modeSafe() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
 				sb.append("xlabel=<");
 			} else {
 				sb.append("label=<");
@@ -682,11 +682,11 @@ public class Line implements Moveable, Hideable {
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX(), y
 					+ this.labelXY.getPosition().getY())));
 		}
-		if (this.startTailText != null) {
+		if (this.startTailText != null && this.startTailLabelXY != null && this.startTailLabelXY.getPosition() != null) {
 			this.startTailText.drawU(ug.apply(new UTranslate(x + this.startTailLabelXY.getPosition().getX(), y
 					+ this.startTailLabelXY.getPosition().getY())));
 		}
-		if (this.endHeadText != null) {
+		if (this.endHeadText != null && this.endHeadLabelXY != null && this.endHeadLabelXY.getPosition() != null) {
 			this.endHeadText.drawU(ug.apply(new UTranslate(x + this.endHeadLabelXY.getPosition().getX(), y
 					+ this.endHeadLabelXY.getPosition().getY())));
 		}

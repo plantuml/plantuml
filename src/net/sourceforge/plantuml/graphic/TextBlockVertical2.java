@@ -46,7 +46,7 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	private final List<TextBlock> blocks = new ArrayList<TextBlock>();
 	private final HorizontalAlignment horizontalAlignment;
 
-	public TextBlockVertical2(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
+	TextBlockVertical2(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
 		this.blocks.add(b1);
 		this.blocks.add(b2);
 		this.horizontalAlignment = horizontalAlignment;

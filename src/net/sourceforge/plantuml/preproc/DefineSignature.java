@@ -28,39 +28,50 @@
  * 
  *
  */
-package net.sourceforge.plantuml.skin;
+package net.sourceforge.plantuml.preproc;
 
-public enum ComponentType {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
-	ARROW,
+public class DefineSignature {
 
-	ACTOR_HEAD, ACTOR_TAIL,
-	
-	BOUNDARY_HEAD, BOUNDARY_TAIL,
-	CONTROL_HEAD, CONTROL_TAIL,
-	ENTITY_HEAD, ENTITY_TAIL,
-	DATABASE_HEAD, DATABASE_TAIL,
-	COLLECTIONS_HEAD, COLLECTIONS_TAIL,
+	private final String key;
+	private final String fctName;
+	private final Variables vars = new Variables();
 
-	//
-	ALIVE_BOX_CLOSE_CLOSE, ALIVE_BOX_CLOSE_OPEN, ALIVE_BOX_OPEN_CLOSE, ALIVE_BOX_OPEN_OPEN,
+	public DefineSignature(String key) {
+		this.key = key;
 
-	DELAY_TEXT, DESTROY,
+		final StringTokenizer st = new StringTokenizer(key, "(),");
+		this.fctName = st.nextToken().trim();
 
-	DELAY_LINE, PARTICIPANT_LINE, CONTINUE_LINE,
-
-	//
-	GROUPING_ELSE, GROUPING_HEADER, GROUPING_SPACE,
-	//
-	NEWPAGE, NOTE, NOTE_HEXAGONAL, NOTE_BOX, DIVIDER, REFERENCE, ENGLOBER,
-
-	//
-	PARTICIPANT_HEAD, PARTICIPANT_TAIL
-
-	//
-	/*TITLE, SIGNATURE*/;
-
-	public boolean isArrow() {
-		return this == ARROW;
+		while (st.hasMoreTokens()) {
+			final String var1 = st.nextToken().trim();
+			this.vars.add(new DefineVariable(var1));
+		}
 	}
+
+	public boolean isMethod() {
+		return key.contains("(");
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public List<Variables> getVariationVariables() {
+		final List<Variables> result = new ArrayList<Variables>();
+		final int count = vars.countDefaultValue();
+		for (int i = 0; i <= count; i++) {
+			result.add(vars.removeSomeDefaultValues(i));
+		}
+		return Collections.unmodifiableList(result);
+	}
+
+	public String getFonctionName() {
+		return fctName;
+	}
+
 }

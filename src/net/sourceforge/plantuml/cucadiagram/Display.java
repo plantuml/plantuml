@@ -75,10 +75,6 @@ public class Display implements Iterable<CharSequence> {
 	private final boolean isNull;
 	private final CreoleMode defaultCreoleMode;
 
-	// public void setDefaultCreoleMode(CreoleMode defaultCreoleMode) {
-	// this.defaultCreoleMode = defaultCreoleMode;
-	// }
-
 	public Display removeUrlHiddenNewLineUrl() {
 		final String full = UrlBuilder.purgeUrl(asStringWithHiddenNewLine());
 		return new Display(StringUtils.splitHiddenNewLine(full), this.naturalHorizontalAlignment, this.isNull,
@@ -188,6 +184,19 @@ public class Display implements Iterable<CharSequence> {
 			result.add(s);
 		}
 		return result;
+	}
+
+	public Display manageGuillemet() {
+		final List<CharSequence> result = new ArrayList<CharSequence>();
+		for (CharSequence line : display) {
+			final String withGuillement = StringUtils.manageGuillemet(line.toString());
+			if (withGuillement.equals(line.toString())) {
+				result.add(line);
+			} else {
+				result.add(withGuillement);
+			}
+		}
+		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}
 
 	public Display underlined() {

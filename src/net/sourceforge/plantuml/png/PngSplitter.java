@@ -30,6 +30,7 @@
  */
 package net.sourceforge.plantuml.png;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +43,8 @@ import javax.imageio.ImageIO;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.SplitParam;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 
 public class PngSplitter {
 
@@ -53,12 +56,12 @@ public class PngSplitter {
 		final int y = Integer.parseInt(args[2]);
 		final File cp = new File(f.getParent(), f.getName().replaceAll("\\.png$", "_000.png"));
 		FileUtils.copyToFile(f, cp);
-		new PngSplitter(cp, x, y, "", 96, false);
+		new PngSplitter(cp, x, y, "", 96, false, new SplitParam());
 
 	}
 
 	public PngSplitter(File pngFile, int horizontalPages, int verticalPages, String source, int dpi,
-			boolean isWithMetadata) throws IOException {
+			boolean isWithMetadata, SplitParam splitParam) throws IOException {
 		if (horizontalPages == 1 && verticalPages == 1) {
 			this.files.add(pngFile);
 			return;
@@ -66,18 +69,18 @@ public class PngSplitter {
 
 		Log.info("Splitting " + horizontalPages + " x " + verticalPages);
 		final File full = new File(pngFile.getParentFile(), pngFile.getName() + ".tmp");
-		Thread.yield();
+		// Thread.yield();
 		full.delete();
-		Thread.yield();
+		// Thread.yield();
 		final boolean ok = pngFile.renameTo(full);
-		Thread.yield();
+		// Thread.yield();
 		if (ok == false) {
 			throw new IOException("Cannot rename");
 		}
 
-		Thread.yield();
+		// Thread.yield();
 		final BufferedImage im = ImageIO.read(full);
-		Thread.yield();
+		// Thread.yield();
 		final PngSegment horizontalSegment = new PngSegment(im.getWidth(), horizontalPages);
 		final PngSegment verticalSegment = new PngSegment(im.getHeight(), verticalPages);
 
@@ -86,11 +89,33 @@ public class PngSplitter {
 			for (int j = 0; j < verticalPages; j++) {
 				final File f = FileFormat.PNG.computeFilename(pngFile, x++);
 				this.files.add(f);
-				final BufferedImage imPiece = im.getSubimage(horizontalSegment.getStart(i),
-						verticalSegment.getStart(j), horizontalSegment.getLen(i), verticalSegment.getLen(j));
-				Thread.yield();
-				PngIO.write(imPiece, f, isWithMetadata ? source : null, dpi);
-				Thread.yield();
+				final int width = horizontalSegment.getLen(i);
+				final int height = verticalSegment.getLen(j);
+				BufferedImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,
+						height);
+				if (splitParam.isSet()) {
+					BufferedImage withMargin = new BufferedImage(width + 2 * splitParam.getExternalMargin(), height + 2
+							* splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);
+					final Graphics2D g2d = withMargin.createGraphics();
+					if (splitParam.getExternalColor() != null) {
+						g2d.setColor(splitParam.getExternalColor());
+						g2d.fillRect(0, 0, withMargin.getWidth(), withMargin.getHeight());
+					}
+					g2d.drawImage(piece, splitParam.getExternalMargin(), splitParam.getExternalMargin(), null);
+
+					if (splitParam.getBorderColor() != null) {
+						g2d.setColor(splitParam.getBorderColor());
+						g2d.drawRect(splitParam.getExternalMargin() - 1, splitParam.getExternalMargin() - 1,
+								piece.getWidth() + 1, piece.getHeight() + 1);
+					}
+
+					piece = withMargin;
+
+					g2d.dispose();
+				}
+				// Thread.yield();
+				PngIO.write(piece, f, isWithMetadata ? source : null, dpi);
+				// Thread.yield();
 			}
 		}
 

@@ -210,8 +210,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			final RowLayout rawLayout = getRawLayout(i);
 			fullLayout.addRowLayout(rawLayout);
 		}
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam().getColorMapper(), 1, HtmlColorUtils.WHITE,
-				null, null, 0, 10, null, getSkinParam().handwritten());
+		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), 1, null, null, 0, 10, null);
 		imageBuilder.setUDrawable(fullLayout);
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 	}
@@ -229,7 +228,6 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	private TextBlock getEntityImageClass(ILeaf entity) {
 		return new EntityImageClass(null, entity, getSkinParam(), this);
 	}
-
 
 	@Override
 	public String checkFinalError() {

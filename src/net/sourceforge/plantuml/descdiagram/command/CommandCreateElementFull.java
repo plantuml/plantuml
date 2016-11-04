@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor|folder|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface";
+	public static final String ALL_TYPES = "artifact|actor|folder|file|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -143,6 +143,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		} else if (symbol.equalsIgnoreCase("folder")) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.FOLDER;
+		} else if (symbol.equalsIgnoreCase("file")) {
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.FILE;
 		} else if (symbol.equalsIgnoreCase("package")) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.PACKAGE;

@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
 final public class SuggestEngine {
 
-	private static final int LIMIT = 500;
+	private static final int LIMIT = 120;
 
 	private final UmlDiagramFactory systemFactory;
 

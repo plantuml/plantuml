@@ -165,9 +165,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final double margin = 10;
 		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
 
-		final ImageBuilder imageBuilder = new ImageBuilder(skinParam.getColorMapper(), dpiFactor, getSkinParam()
-				.getBackgroundColor(), fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(),
-				margin, margin, getAnimation(), getSkinParam().handwritten());
+		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor, fileFormatOption.isWithMetadata() ? getMetadata()
+						: null, getWarningOrError(), margin, margin, getAnimation());
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);

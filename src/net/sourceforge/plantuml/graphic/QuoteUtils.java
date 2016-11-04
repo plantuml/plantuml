@@ -35,7 +35,7 @@ import java.util.List;
 
 public class QuoteUtils {
 
-	private static final List<String> quotes = Arrays
+	static final List<String> quotes = Arrays
 			.asList(//
 			"He's dead, Jim.", //
 					"By Grabthar's hammer, by the sons of Worvan, you shall be avenged.", //
@@ -154,7 +154,7 @@ public class QuoteUtils {
 					"In space no one can hear you scream", //
 					"I can't lie to you about your chances, but... you have my sympathies.", //
 					"There is an explanation for this, you know.", //
-					"Bishop: I'm afraid I have some bad news.", //
+					"I'm afraid I have some bad news.", //
 					"Do me a favour. Disconnect me. I could be reworked, but I'll never be top of the line again.", //
 					"Take it easy, don't push the little button on the joystick!", //
 					"I'm a very private person.", //
@@ -164,7 +164,7 @@ public class QuoteUtils {
 					"United we stand", //
 					"We shall never surrender", //
 					"Absolute honesty isn't always the most diplomatic nor the safest form of communication with emotional beings.", //
-					"Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... ", //
+					// "Humor: seventy-five percent. [Confirmed] Self destruct sequence in T minus 10, 9... ", //
 					"It's... complicated.", //
 					"Do not open until 1985", //
 					"I still mess up but I'll just start again", //
@@ -183,11 +183,19 @@ public class QuoteUtils {
 					"Winter is coming", //
 					"What fools these mortals be!", //
 					"Something wicked this way comes.", //
-					"I think I get it, what was it? Poker Night? Bachelor Party?", // 
+					"I think I get it, what was it? Poker Night? Bachelor Party?", //
 					"It's alright to be scared. Remember, there is no courage without fear.", //
 					"Through readiness and discipline we are masters of our fate.", //
 					"With great power comes great responsibility", //
-					"If a machine can learn the value of human life, maybe we can too ?" //
+					"If a machine can learn the value of human life, maybe we can too ?", //
+					"Only going forward 'cause we can't find reverse.", //
+					"We're not gonna sit in silence, we're not gonna live with fear", //
+					"Bon, dans dix minutes je nous considere comme definitivement perdus.", //
+					"Ca sera surement bien quand ca sera fini.", //
+					"It's the last piece of the puzzle but you just can't make it fit", //
+					"Doctor says you're cured but you still feel the pain", //
+					"Is artificial intelligence the exact opposite of natural stupidity ?", //
+					"Forcement, ca depend, ca depasse..." //
 			);
 
 	private QuoteUtils() {

@@ -33,11 +33,11 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -52,32 +52,28 @@ public class CommunicationTileSelfNoteRight implements TileWithUpdateStairs {
 	private final Message message;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final Display notes;
+	private final NoteOnMessage noteOnMessage;
 
-	// private final NotePosition notePosition;
-	// private final LivingSpace livingSpace;
-	
 	public Event getEvent() {
 		return message;
 	}
 
-
-	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Skin skin, ISkinParam skinParam) {
+	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Skin skin, ISkinParam skinParam,
+			NoteOnMessage noteOnMessage) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.notes = message.getNote();
-		// this.notePosition = message.getNotePosition();
+		this.noteOnMessage = noteOnMessage;
 	}
-	
+
 	public void updateStairs(StringBounder stringBounder, double y) {
 		tile.updateStairs(stringBounder, y);
 	}
 
-
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null, message.getSkinParamNoteBackcolored(skinParam), notes);
+		final Component comp = skin.createComponent(ComponentType.NOTE, null,
+				noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
 		return comp;
 	}
 

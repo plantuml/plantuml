@@ -33,11 +33,11 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -52,22 +52,20 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWith
 	private final AbstractMessage message;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final Display notes;
-	// private final NotePosition notePosition;
 	private final LivingSpace livingSpace;
+	private final NoteOnMessage noteOnMessage;
 
 	public Event getEvent() {
 		return message;
 	}
 
 	public CommunicationTileNoteLeft(TileWithUpdateStairs tile, AbstractMessage message, Skin skin,
-			ISkinParam skinParam, LivingSpace livingSpace) {
+			ISkinParam skinParam, LivingSpace livingSpace, NoteOnMessage noteOnMessage) {
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.notes = message.getNote();
-		// this.notePosition = message.getNotePosition();
+		this.noteOnMessage = noteOnMessage;
 		this.livingSpace = livingSpace;
 	}
 
@@ -77,7 +75,7 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWith
 
 	private Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponent(ComponentType.NOTE, null,
-				message.getSkinParamNoteBackcolored(skinParam), notes);
+				noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
 		return comp;
 	}
 

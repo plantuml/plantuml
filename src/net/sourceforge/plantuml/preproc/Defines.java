@@ -30,35 +30,24 @@
  */
 package net.sourceforge.plantuml.preproc;
 
+import gen.lib.pack.pack__c;
+
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Defines {
 
-	private final Map<String, String> values = new LinkedHashMap<String, String>();
-	private final Map<String, String> savedState = new LinkedHashMap<String, String>();
+	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
+	private final Map<String, Define> savedState = new LinkedHashMap<String, Define>();
 
 	public void define(String name, List<String> value) {
-		values.put(name, addLineReturn(value));
-	}
-
-	private String addLineReturn(List<String> value) {
-		if (value == null) {
-			return null;
-		}
-		final StringBuilder sb = new StringBuilder();
-		for (final Iterator<String> it = value.iterator(); it.hasNext();) {
-			sb.append(it.next());
-			if (it.hasNext()) {
-				sb.append('\n');
-			}
-		}
-		return sb.toString();
+		values.put(name, new Define(name, value));
 	}
 
 	public boolean isDefine(String name) {
@@ -75,41 +64,33 @@ public class Defines {
 	}
 
 	public List<String> applyDefines(String line) {
-		for (Map.Entry<String, String> ent : values.entrySet()) {
-			final String key = ent.getKey();
-			if (ent.getValue() == null) {
-				continue;
-			}
-			final String value = Matcher.quoteReplacement(ent.getValue());
-			if (key.contains("(")) {
-				line = applyMethod(line, key, value);
-			} else {
-				final String regex = "\\b" + key + "\\b";
-				line = line.replaceAll(regex, value);
-			}
+		line = manageDate(line);
+		for (Map.Entry<String, Define> ent : values.entrySet()) {
+			final Define def = ent.getValue();
+			line = def.apply(line);
 		}
 		return Arrays.asList(line.split("\n"));
 	}
 
-	private String applyMethod(String line, final String key, final String value) {
-		final StringTokenizer st = new StringTokenizer(key, "(),");
-		final String fctName = st.nextToken();
-		String newValue = value;
-		final StringBuilder regex = new StringBuilder("\\b" + fctName + "\\(");
-		int i = 1;
+	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";
+	private final static Pattern datePattern = Pattern.compile(DATE);
 
-		while (st.hasMoreTokens()) {
-			regex.append("(?:(?:\\s*\"([^\"]*)\"\\s*)|(?:\\s*'([^']*)'\\s*)|\\s*" + "((?:\\([^()]*\\)|[^,])*?)" + ")");
-			final String var1 = st.nextToken();
-			final String var2 = "(##" + var1 + "\\b)|(\\b" + var1 + "##)|(\\b" + var1 + "\\b)";
-			newValue = newValue.replaceAll(var2, "\\$" + i + "\\$" + (i + 1) + "\\$" + (i + 2));
-			i += 3;
-			if (st.hasMoreTokens()) {
-				regex.append(",");
+	private String manageDate(String line) {
+		final Matcher m = datePattern.matcher(line);
+		if (m.find()) {
+			final String format = m.group(2);
+			String replace;
+			if (format == null) {
+				replace = new Date().toString();
+			} else {
+				try {
+					replace = new SimpleDateFormat(format).format(new Date());
+				} catch (Exception e) {
+					replace = "(BAD DATE PATTERN:" + format + ")";
+				}
 			}
+			line = line.replaceAll(DATE, replace);
 		}
-		regex.append("\\)");
-		line = line.replaceAll(regex.toString(), newValue);
 		return line;
 	}
 

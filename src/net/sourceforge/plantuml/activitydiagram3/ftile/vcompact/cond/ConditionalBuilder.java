@@ -102,18 +102,18 @@ public class ConditionalBuilder {
 			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
-//		if (isEmptyOrOnlySingleStop(branch2) && isEmptyOrOnlySingleStop(branch1) == false) {
-//			return builder.createDown(builder.branch1, builder.branch2);
-//		}
-//		if (branch1.isEmpty() && branch2.isOnlySingleStop()) {
-//			return builder.createDown(builder.branch1, builder.branch2);
-//		}
-//		if (isEmptyOrOnlySingleStop(branch1) && isEmptyOrOnlySingleStop(branch2) == false) {
-//			return builder.createDown(builder.branch2, builder.branch1);
-//		}
-//		if (branch2.isEmpty() && branch1.isOnlySingleStop()) {
-//			return builder.createDown(builder.branch2, builder.branch1);
-//		}
+		if (isEmptyOrOnlySingleStop(branch2) && isEmptyOrOnlySingleStop(branch1) == false) {
+			return builder.createDown(builder.branch1, builder.branch2);
+		}
+		if (branch1.isEmpty() && branch2.isOnlySingleStop()) {
+			return builder.createDown(builder.branch1, builder.branch2);
+		}
+		if (isEmptyOrOnlySingleStop(branch1) && isEmptyOrOnlySingleStop(branch2) == false) {
+			return builder.createDown(builder.branch2, builder.branch1);
+		}
+		if (branch2.isEmpty() && branch1.isOnlySingleStop()) {
+			return builder.createDown(builder.branch2, builder.branch1);
+		}
 		return builder.createWithLinks();
 		// return builder.createWithDiamonds();
 		// return builder.createNude();

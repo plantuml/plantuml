@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -358,6 +359,7 @@ public class SkinParam implements ISkinParam {
 		result.add("Nodesep");
 		result.add("Ranksep");
 		result.add("RoundCorner");
+		result.add("TitleBorderRoundCorner");
 		result.add("MaxMessageSize");
 		result.add("Style");
 		result.add("SequenceParticipant");
@@ -412,7 +414,7 @@ public class SkinParam implements ISkinParam {
 		return DotSplines.SPLINES;
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection) {
 		final String value;
 		switch (param) {
 		case SEQUENCE_MESSAGE_ALIGN:
@@ -423,6 +425,22 @@ public class SkinParam implements ISkinParam {
 			break;
 		default:
 			value = getValue(param.name());
+		}
+		if ("direction".equalsIgnoreCase(value)) {
+			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
+				return HorizontalAlignment.LEFT;
+			}
+			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+				return HorizontalAlignment.RIGHT;
+			}
+		}
+		if ("reversedirection".equalsIgnoreCase(value)) {
+			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
+				return HorizontalAlignment.RIGHT;
+			}
+			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
+				return HorizontalAlignment.LEFT;
+			}
 		}
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
 		if (result == null) {
@@ -576,8 +594,8 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public double getRoundCorner() {
-		final String value = getValue("roundcorner");
+	public double getRoundCorner(String param) {
+		final String value = getValue(param + "roundcorner");
 		if (value != null && value.matches("\\d+")) {
 			return Double.parseDouble(value);
 		}
@@ -758,6 +776,20 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		return 0;
+	}
+
+	public SplitParam getSplitParam() {
+		final String border = getValue("pageBorderColor");
+		final String external = getValue("pageExternalColor");
+
+		final String marginString = getValue("pageMargin");
+		int margin = 0;
+		if (marginString != null && marginString.matches("\\d+")) {
+			margin = Integer.parseInt(marginString);
+		}
+
+		return new SplitParam(getIHtmlColorSet().getColorIfValid(border), getIHtmlColorSet().getColorIfValid(external),
+				margin);
 	}
 
 }

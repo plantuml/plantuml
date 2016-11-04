@@ -28,39 +28,34 @@
  * 
  *
  */
-package net.sourceforge.plantuml.skin;
+package net.sourceforge.plantuml.graphic;
 
-public enum ComponentType {
+import java.awt.geom.Dimension2D;
 
-	ARROW,
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-	ACTOR_HEAD, ACTOR_TAIL,
-	
-	BOUNDARY_HEAD, BOUNDARY_TAIL,
-	CONTROL_HEAD, CONTROL_TAIL,
-	ENTITY_HEAD, ENTITY_TAIL,
-	DATABASE_HEAD, DATABASE_TAIL,
-	COLLECTIONS_HEAD, COLLECTIONS_TAIL,
+class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
 
-	//
-	ALIVE_BOX_CLOSE_CLOSE, ALIVE_BOX_CLOSE_OPEN, ALIVE_BOX_OPEN_CLOSE, ALIVE_BOX_OPEN_OPEN,
+	private final TextBlock textBlock;
+	private final HtmlColor color;
 
-	DELAY_TEXT, DESTROY,
+	public SimpleTextBlockBordered(TextBlock textBlock, HtmlColor color) {
+		this.textBlock = textBlock;
+		this.color = color;
+	}
 
-	DELAY_LINE, PARTICIPANT_LINE, CONTINUE_LINE,
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
+		return Dimension2DDouble.delta(dim, 1, 1);
+	}
 
-	//
-	GROUPING_ELSE, GROUPING_HEADER, GROUPING_SPACE,
-	//
-	NEWPAGE, NOTE, NOTE_HEXAGONAL, NOTE_BOX, DIVIDER, REFERENCE, ENGLOBER,
-
-	//
-	PARTICIPANT_HEAD, PARTICIPANT_TAIL
-
-	//
-	/*TITLE, SIGNATURE*/;
-
-	public boolean isArrow() {
-		return this == ARROW;
+	public void drawU(UGraphic ug) {
+		final Dimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
+		textBlock.drawU(ug.apply(new UTranslate(1, 1)));
+		ug.apply(new UChangeColor(color)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
 	}
 }

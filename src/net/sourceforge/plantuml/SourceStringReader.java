@@ -129,6 +129,26 @@ public class SourceStringReader {
 
 	}
 
+	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
+		if (blocks.size() == 0) {
+			return null;
+		}
+		for (BlockUml b : blocks) {
+			final Diagram system = b.getDiagram();
+			final int nbInSystem = system.getNbImages();
+			if (numImage < nbInSystem) {
+				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);
+				if (imageData.containsCMapData()) {
+					return imageData.getCMapData("plantuml");
+				}
+				return null;
+			}
+			numImage -= nbInSystem;
+		}
+		return null;
+
+	}
+
 	private void noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
 		final GraphicStrings error = GraphicStrings.createDefault(Arrays.asList("No @startuml found"),
 				fileFormatOption.isUseRedForError());

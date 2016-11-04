@@ -116,7 +116,7 @@ public class Run {
 				}
 			}
 			new MainWindow2(option, dir);
-		} else if (option.isPipe() || option.isSyntax()) {
+		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
 			managePipe(option);
 			forceQuit = true;
 		} else if (option.isFailfast2()) {
@@ -283,6 +283,9 @@ public class Run {
 				ps.println("OTHER");
 				ps.println(system.getDescription());
 			}
+		} else if (option.isPipeMap()) {
+			final String result = sourceStringReader.getCMapData(0, option.getFileFormatOption());
+			ps.println(result);
 		} else if (option.isPipe()) {
 			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
 			if ("(error)".equalsIgnoreCase(result)) {

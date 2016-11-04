@@ -39,13 +39,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -58,10 +58,7 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -143,16 +140,18 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final Page page = pages.get(index);
 		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), page.getHeight());
 
-		final Component compTitle;
+		final TextBlock compTitle;
 		final TextBlock caption = new AnnotatedWorker(diagram, diagram.getSkinParam()).getCaption();
 		area.setCaptionArea(caption.calculateDimension(stringBounder));
 
 		if (Display.isNull(page.getTitle())) {
 			compTitle = null;
 		} else {
-			compTitle = drawableSet.getSkin().createComponent(ComponentType.TITLE, null, drawableSet.getSkinParam(),
-					page.getTitle());
-			area.setTitleArea(compTitle.getPreferredWidth(stringBounder), compTitle.getPreferredHeight(stringBounder));
+			compTitle = TextBlockUtils.withMargin(TextBlockUtils.title(new FontConfiguration(
+					drawableSet.getSkinParam(), FontParam.SEQUENCE_TITLE, null), page.getTitle(), drawableSet
+					.getSkinParam()), 7, 7);
+			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);
+			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
 		}
 		area.initFooter(getPngTitler(FontParam.FOOTER), stringBounder);
 		area.initHeader(getPngTitler(FontParam.HEADER), stringBounder);
@@ -174,9 +173,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 		final String metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), oneOf(scale,
-				dpiFactor), diagram.getSkinParam().getBackgroundColor(), metadata, null, 3, 10, diagram.getAnimation(),
-				diagram.getSkinParam().handwritten());
+		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), oneOf(scale, dpiFactor), metadata, null, 3,
+				10, diagram.getAnimation());
 
 		imageBuilder.setUDrawable(new UDrawable() {
 			public void drawU(UGraphic ug) {
@@ -192,11 +190,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				double legendYdelta = 0;
 				if (compTitle != null) {
 					final StringBounder stringBounder = ug.getStringBounder();
-					final double h = compTitle.getPreferredHeight(stringBounder);
+					final double h = compTitle.calculateDimension(stringBounder).getHeight();
 					legendYdelta += h;
-					final double w = compTitle.getPreferredWidth(stringBounder);
-					compTitle.drawU(ug.apply(new UTranslate(area.getTitleX(), area.getTitleY())), new Area(
-							new Dimension2DDouble(w, h)), new SimpleContext2D(false));
+					compTitle.drawU(ug.apply(new UTranslate(area.getTitleX(), area.getTitleY())));
 				}
 				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));
 

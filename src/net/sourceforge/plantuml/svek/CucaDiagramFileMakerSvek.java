@@ -74,7 +74,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 				diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
 				diagram.getColorMapper(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
 				dotMode, diagram.getNamespaceSeparator(), diagram.getPragma());
-		return new DotDataImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(), stringBounder);
+		return new DotDataImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
+				stringBounder);
 
 	}
 
@@ -87,7 +88,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		}
 
 		// System.err.println("FOO11 type=" + os.getClass());
-		DotDataImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL, fileFormatOption.getDefaultStringBounder());
+		DotDataImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL,
+				fileFormatOption.getDefaultStringBounder());
 		BaseFile basefile = null;
 		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream) {
 			basefile = ((NamedOutputStream) os).getBasefile();
@@ -96,7 +98,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 		TextBlockBackcolored result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		if (result instanceof GraphvizCrash) {
-			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT, fileFormatOption.getDefaultStringBounder());
+			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL,
+					fileFormatOption.getDefaultStringBounder());
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
 		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
@@ -109,9 +112,9 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		final Dimension2D dim = result.calculateDimension(fileFormatOption.getDefaultStringBounder());
 		final double scale = getScale(fileFormatOption, dim);
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale,
-				result.getBackcolor(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
-				warningOrError, 0, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
+		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(),
+				scale, fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError, 0,
+				10, diagram.getAnimation(), result.getBackcolor());
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 

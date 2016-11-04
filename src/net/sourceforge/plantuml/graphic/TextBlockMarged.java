@@ -47,7 +47,7 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	private final double y1;
 	private final double y2;
 
-	public TextBlockMarged(TextBlock textBlock, double x1, double x2, double y1, double y2) {
+	TextBlockMarged(TextBlock textBlock, double x1, double x2, double y1, double y2) {
 		this.textBlock = textBlock;
 		this.x1 = x1;
 		this.x2 = x2;

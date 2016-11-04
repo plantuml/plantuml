@@ -33,29 +33,79 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-class TextBlockBordered extends AbstractTextBlock implements TextBlock {
+public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
+
+	private final double cornersize;
+	private final HtmlColor backgroundColor;
+	private final HtmlColor borderColor;
+	private final int marginX = 6;
+	private final int marginY = 5;
+	private final UStroke stroke;
+	private final boolean withShadow;
 
 	private final TextBlock textBlock;
-	private final HtmlColor color;
 
-	public TextBlockBordered(TextBlock textBlock, HtmlColor color) {
+	TextBlockBordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor, HtmlColor backgroundColor,
+			double cornersize) {
+		this.cornersize = cornersize;
 		this.textBlock = textBlock;
-		this.color = color;
+		this.withShadow = false;
+		this.stroke = stroke;
+		this.borderColor = borderColor;
+		this.backgroundColor = backgroundColor;
+	}
+
+	private double getTextHeight(StringBounder stringBounder) {
+		final Dimension2D size = textBlock.calculateDimension(stringBounder);
+		return size.getHeight() + 2 * marginY;
+	}
+
+	private double getPureTextWidth(StringBounder stringBounder) {
+		final Dimension2D size = textBlock.calculateDimension(stringBounder);
+		return size.getWidth();
+	}
+
+	private double getTextWidth(StringBounder stringBounder) {
+		return getPureTextWidth(stringBounder) + 2 * marginX;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(dim, 1, 1);
+		final double height = getTextHeight(stringBounder);
+		final double width = getTextWidth(stringBounder);
+		return new Dimension2DDouble(width + 1, height + 1);
+	}
+
+	private UGraphic applyStroke(UGraphic ug) {
+		if (stroke == null) {
+			return ug;
+		}
+		return ug.apply(stroke);
 	}
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
-		textBlock.drawU(ug.apply(new UTranslate(1, 1)));
-		ug.apply(new UChangeColor(color)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
+		final StringBounder stringBounder = ug.getStringBounder();
+		final Shadowable polygon = getPolygonNormal(stringBounder);
+		if (withShadow) {
+			polygon.setDeltaShadow(4);
+		}
+		ug = ug.apply(new UChangeBackColor(backgroundColor)).apply(new UChangeColor(borderColor));
+		ug = applyStroke(ug);
+		ug.draw(polygon);
+		textBlock.drawU(ug.apply(new UTranslate(marginX, marginY)));
 	}
+
+	private Shadowable getPolygonNormal(final StringBounder stringBounder) {
+		final double height = getTextHeight(stringBounder);
+		final double width = getTextWidth(stringBounder);
+		return new URectangle(width, height, cornersize, cornersize);
+	}
+
 }

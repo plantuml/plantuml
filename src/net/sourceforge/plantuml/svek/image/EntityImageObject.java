@@ -42,7 +42,9 @@ import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -76,15 +78,16 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageObject(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageObject(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
-		this.roundCorner = skinParam.getRoundCorner();
+		this.roundCorner = skinParam.getRoundCorner("");
 		this.name = TextBlockUtils.withMargin(
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
-		if (stereotype == null || stereotype.getLabel(false) == null) {
+		if (stereotype == null || stereotype.getLabel(false) == null
+				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			this.stereo = null;
 		} else {
 			this.stereo = Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
@@ -92,10 +95,14 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 					HorizontalAlignment.CENTER, skinParam);
 		}
 
+		// final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
+		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
+
 		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
-			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, true, entity.getStereotype());
+			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, showFields,
+					entity.getStereotype());
 		}
 		this.url = entity.getUrl99();
 

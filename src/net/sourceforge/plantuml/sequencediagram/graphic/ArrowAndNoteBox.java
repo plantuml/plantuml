@@ -30,6 +30,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -39,24 +42,26 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 class ArrowAndNoteBox extends Arrow implements InGroupable {
 
 	private final Arrow arrow;
-	private final NoteBox noteBox;
+	private final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 
-	public ArrowAndNoteBox(StringBounder stringBounder, Arrow arrow, NoteBox noteBox) {
+	public ArrowAndNoteBox(StringBounder stringBounder, Arrow arrow, List<NoteBox> noteBoxes) {
 		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());
 		this.arrow = arrow;
-		this.noteBox = noteBox;
+		this.noteBoxes.addAll(noteBoxes);
 
-		final double arrowHeight = arrow.getPreferredHeight(stringBounder);
-		final double noteHeight = noteBox.getPreferredHeight(stringBounder);
-		final double myHeight = getPreferredHeight(stringBounder);
+		for (NoteBox noteBox : noteBoxes) {
+			final double arrowHeight = arrow.getPreferredHeight(stringBounder);
+			final double noteHeight = noteBox.getPreferredHeight(stringBounder);
+			final double myHeight = getPreferredHeight(stringBounder);
 
-		final double diffHeightArrow = myHeight - arrowHeight;
-		final double diffHeightNote = myHeight - noteHeight;
-		if (diffHeightArrow > 0) {
-			arrow.pushToDown(diffHeightArrow / 2);
-		}
-		if (diffHeightNote > 0) {
-			noteBox.pushToDown(diffHeightNote / 2);
+			final double diffHeightArrow = myHeight - arrowHeight;
+			final double diffHeightNote = myHeight - noteHeight;
+			if (diffHeightArrow > 0) {
+				arrow.pushToDown(diffHeightArrow / 2);
+			}
+			if (diffHeightNote > 0) {
+				noteBox.pushToDown(diffHeightNote / 2);
+			}
 		}
 	}
 
@@ -74,21 +79,30 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		arrow.drawU(ug, maxX, context);
-		noteBox.drawU(ug, maxX, context);
+		for (NoteBox noteBox : noteBoxes) {
+			noteBox.drawU(ug, maxX, context);
+		}
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return Math.max(arrow.getPreferredHeight(stringBounder), noteBox.getPreferredHeight(stringBounder));
+		double result = arrow.getPreferredHeight(stringBounder);
+		for (NoteBox noteBox : noteBoxes) {
+			result = Math.max(result, noteBox.getPreferredHeight(stringBounder));
+		}
+		return result;
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		double w = arrow.getPreferredWidth(stringBounder);
 		w = Math.max(w, arrow.getActualWidth(stringBounder));
-		double result = w + noteBox.getPreferredWidth(stringBounder);
-		if (noteBox.getNotePosition() == NotePosition.RIGHT) {
-			result += noteBox.getRightShift(arrow.getStartingY());
+		double result = w;
+		for (NoteBox noteBox : noteBoxes) {
+			result += noteBox.getPreferredWidth(stringBounder);
+			if (noteBox.getNotePosition() == NotePosition.RIGHT) {
+				result += noteBox.getRightShift(arrow.getStartingY());
+			}
 		}
 		return result;
 	}
@@ -100,7 +114,11 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-		return Math.min(arrow.getStartingX(stringBounder), noteBox.getStartingX(stringBounder));
+		double result = arrow.getStartingX(stringBounder);
+		for (NoteBox noteBox : noteBoxes) {
+			result = Math.min(result, noteBox.getStartingX(stringBounder));
+		}
+		return result;
 	}
 
 	@Override

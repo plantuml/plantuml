@@ -42,7 +42,7 @@ class TextBlockMinWidth extends AbstractTextBlock  implements TextBlock {
 	private final double minWidth;
 	private final HorizontalAlignment horizontalAlignment;
 
-	public TextBlockMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
+	TextBlockMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
 		this.textBlock = textBlock;
 		this.minWidth = minWidth;
 		this.horizontalAlignment = horizontalAlignment;

@@ -386,7 +386,7 @@ public final class DotDataImageBuilder {
 		// return new EntityImageCircleInterface(leaf, skinParam);
 		// }
 		if (leaf.getEntityType() == LeafType.OBJECT) {
-			return new EntityImageObject(leaf, skinParam);
+			return new EntityImageObject(leaf, skinParam, portionShower);
 		}
 		if (leaf.getEntityType() == LeafType.SYNCHRO_BAR || leaf.getEntityType() == LeafType.STATE_FORK_JOIN) {
 			return new EntityImageSynchroBar(leaf, skinParam);

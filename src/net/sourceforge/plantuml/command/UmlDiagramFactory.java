@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.classdiagram.command.CommandHideShow;
-import net.sourceforge.plantuml.classdiagram.command.CommandHideShow3;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -290,8 +290,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(new CommandSpriteFile());
 
-		cmds.add(new CommandHideShow3());
-		cmds.add(new CommandHideShow());
+		cmds.add(new CommandHideShowByVisibility());
+		cmds.add(new CommandHideShowByGender());
 
 	}
 

@@ -159,6 +159,7 @@ public class OptionPrint {
 
 	public static Collection<String> interestingValues() {
 		final List<String> strings = new ArrayList<String>();
+		strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());
 		strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
 		final long freeMemory = Runtime.getRuntime().freeMemory();
 		final long maxMemory = Runtime.getRuntime().maxMemory();

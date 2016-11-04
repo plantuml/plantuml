@@ -30,12 +30,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -68,10 +72,11 @@ class Step1Message extends Step1Abstract {
 					getLivingParticipantBox1(), getLivingParticipantBox2(), message.getUrl(), compAliveBox);
 		}
 
-		if (message.getNote() != null) {
-			final ISkinParam skinParam = message.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
-			setNote(drawingSet.getSkin().createComponent(message.getNoteStyle().getNoteComponentType(), null,
-					skinParam, message.getNote()));
+		final List<NoteOnMessage> noteOnMessages = message.getNoteOnMessages();
+		for (NoteOnMessage noteOnMessage : noteOnMessages) {
+			final ISkinParam skinParam = noteOnMessage.getSkinParamNoteBackcolored(drawingSet.getSkinParam());
+			addNote(drawingSet.getSkin().createComponent(noteOnMessage.getNoteStyle().getNoteComponentType(), null,
+					skinParam, noteOnMessage.getDisplay()));
 		}
 
 	}
@@ -156,15 +161,23 @@ class Step1Message extends Step1Abstract {
 		if (getMessage().isCreate()) {
 			return createArrowCreate();
 		}
-		if (getMessage().getNote() != null && isSelfMessage()) {
+		if (getMessage().getNoteOnMessages().size() > 0 && isSelfMessage()) {
 			final MessageSelfArrow messageSelfArrow = createMessageSelfArrow();
-			final NoteBox noteBox = createNoteBox(getStringBounder(), messageSelfArrow, getNote(), getMessage()
-					.getNotePosition(), getMessage().getUrlNote());
-			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBox);
-		} else if (getMessage().getNote() != null) {
-			final NoteBox noteBox = createNoteBox(getStringBounder(), messageArrow, getNote(), getMessage()
-					.getNotePosition(), getMessage().getUrlNote());
-			return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBox);
+			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+			for (int i = 0; i < getNotes().size(); i++) {
+				final Component note = getNotes().get(i);
+				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));
+			}
+			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBoxes);
+		} else if (getMessage().getNoteOnMessages().size() > 0) {
+			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+			for (int i = 0; i < getNotes().size(); i++) {
+				final Component note = getNotes().get(i);
+				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
+			}
+			return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);
 		} else if (isSelfMessage()) {
 			return createMessageSelfArrow();
 		} else {
@@ -203,13 +216,18 @@ class Step1Message extends Step1Abstract {
 			throw new IllegalStateException();
 		}
 		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2());
-		if (getMessage().getNote() != null) {
-			final NoteBox noteBox = createNoteBox(getStringBounder(), result, getNote(),
-					getMessage().getNotePosition(), getMessage().getUrlNote());
-			if (getMessage().getNotePosition() == NotePosition.RIGHT) {
-				noteBox.pushToRight(getParticipantBox2().getPreferredWidth(getStringBounder()) / 2);
+		if (getMessage().getNoteOnMessages().size() > 0) {
+			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+			for (int i = 0; i < getNotes().size(); i++) {
+				final Component note = getNotes().get(i);
+				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
+				final NoteBox noteBox = createNoteBox(getStringBounder(), result, note, noteOnMessage);
+				if (noteOnMessage.getNotePosition() == NotePosition.RIGHT) {
+					noteBox.pushToRight(getParticipantBox2().getPreferredWidth(getStringBounder()) / 2);
+				}
+				noteBoxes.add(noteBox);
 			}
-			result = new ArrowAndNoteBox(getStringBounder(), result, noteBox);
+			result = new ArrowAndNoteBox(getStringBounder(), result, noteBoxes);
 		}
 		getLivingParticipantBox2().create(
 				getFreeY().getFreeY(getParticipantRange()) + result.getPreferredHeight(getStringBounder()) / 2);

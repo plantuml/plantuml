@@ -174,7 +174,7 @@ public class DateEventUtils {
 				new FontConfiguration(font, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 		comment = TextBlockUtils.withMargin(comment, 4, 4);
-		comment = new TextBlockBordered(comment, color);
+		comment = new SimpleTextBlockBordered(comment, color);
 		comment = TextBlockUtils.withMargin(comment, 10, 10);
 		return comment;
 	}

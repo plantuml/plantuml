@@ -31,32 +31,42 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
-import java.io.File;
-import java.io.IOException;
+import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImageSvg;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class TileImageSvg extends AbstractTextBlock implements TextBlock {
+public class TextBlockTitle implements TextBlock {
 
-	private final UImageSvg svg;
+	private final double outMargin = 2;
 
-	public TileImageSvg(File svgFile) throws IOException {
-		this.svg = createSvg(svgFile);
+	private final TextBlock textBlock;
+
+	TextBlockTitle(FontConfiguration font, Display stringsToDisplay, ISkinSimple spriteContainer) {
+		if (stringsToDisplay.size() == 1 && stringsToDisplay.get(0).length() == 0) {
+			throw new IllegalArgumentException();
+		}
+		textBlock = stringsToDisplay.create(font, HorizontalAlignment.CENTER, spriteContainer, 0, CreoleMode.FULL,
+				null, null);
 	}
 
-	private UImageSvg createSvg(File svgFile) throws IOException {
-		return new UImageSvg(FileUtils.readSvg(svgFile));
+	public final void drawU(UGraphic ug) {
+		textBlock.drawU(ug.apply(new UTranslate(outMargin, 0)));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(svg.getWidth(), svg.getHeight());
+		final Dimension2D textDim = textBlock.calculateDimension(stringBounder);
+		final double width = textDim.getWidth() + outMargin * 2;
+		final double height = textDim.getHeight();
+		return new Dimension2DDouble(width, height);
 	}
 
-	public void drawU(UGraphic ug) {
-		ug.draw(svg);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		return null;
 	}
 
 }

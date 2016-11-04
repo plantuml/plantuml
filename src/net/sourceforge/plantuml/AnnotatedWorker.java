@@ -93,17 +93,15 @@ public class AnnotatedWorker {
 	}
 
 	private TextBlock addTitle(TextBlock original) {
-		if (DisplayPositionned.isNull(annotated.getTitle())) {
+		final DisplayPositionned title = annotated.getTitle();
+		if (DisplayPositionned.isNull(title)) {
 			return original;
 		}
-		final TextBlock text = annotated
-				.getTitle()
-				.getDisplay()
-				.create(new FontConfiguration(getSkinParam(), FontParam.TITLE, null), HorizontalAlignment.CENTER,
-						getSkinParam());
+		ISkinParam skinParam = getSkinParam();
+		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.TITLE, null);
 
-		return DecorateEntityImage.addTop(original, text, HorizontalAlignment.CENTER);
-		// return new DecorateTextBlock(original, text, HorizontalAlignment.CENTER);
+		final TextBlock block = TextBlockUtils.title(fontConfiguration, title.getDisplay(), skinParam);
+		return DecorateEntityImage.addTop(original, block, HorizontalAlignment.CENTER);
 	}
 
 	private TextBlock addHeaderAndFooter(TextBlock original) {
@@ -121,9 +119,6 @@ public class AnnotatedWorker {
 				.create(new FontConfiguration(getSkinParam(), FontParam.HEADER, null),
 						annotated.getHeader().getHorizontalAlignment(), getSkinParam());
 
-		// return new DecorateTextBlock(original, textHeader, annotated.getHeader().getHorizontalAlignment(),
-		// textFooter,
-		// annotated.getFooter().getHorizontalAlignment());
 		return new DecorateEntityImage(original, textHeader, annotated.getHeader().getHorizontalAlignment(),
 				textFooter, annotated.getFooter().getHorizontalAlignment());
 	}

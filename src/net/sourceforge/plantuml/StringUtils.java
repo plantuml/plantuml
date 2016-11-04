@@ -414,7 +414,7 @@ public class StringUtils {
 	}
 
 	public static String manageGuillemet(String st) {
-		return st.replaceAll("\\<\\<\\s?([^<>]+?)\\s?\\>\\>", "\u00AB$1\u00BB");
+		return st.replaceAll("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>", "\u00AB$1\u00BB");
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {

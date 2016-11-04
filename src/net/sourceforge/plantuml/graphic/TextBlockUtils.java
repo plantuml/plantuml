@@ -40,27 +40,57 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class TextBlockUtils {
+
+	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HtmlColor borderColor,
+			HtmlColor backgroundColor, double cornersize) {
+		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize);
+	}
+
+	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
+		UStroke stroke = skinParam.getThickness(LineParam.titleBorder, null);
+		final Rose rose = new Rose();
+		HtmlColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);
+		final HtmlColor backgroundColor = rose.getHtmlColor(skinParam, ColorParam.titleBackground);
+		final TextBlockTitle result = new TextBlockTitle(font, stringsToDisplay, skinParam);
+		if (stroke == null && borderColor == null) {
+			return result;
+		}
+		if (stroke == null) {
+			stroke = new UStroke(1.5);
+		}
+		if (borderColor == null) {
+			borderColor = HtmlColorUtils.BLACK;
+		}
+		final double corner = skinParam.getRoundCorner("titleBorder");
+		return withMargin(bordered(result, stroke, borderColor, backgroundColor, corner), 2, 2);
+	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
 		return new TextBlockMarged(textBlock, marginX, marginX, marginY, marginY);
 	}
 
-	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
-		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);
-	}
-
 	public static TextBlock withMargin(TextBlock textBlock, double marginX1, double marginX2, double marginY1,
 			double marginY2) {
 		return new TextBlockMarged(textBlock, marginX1, marginX2, marginY1, marginY2);
+	}
+
+	public static TextBlock withMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {
+		return new TextBlockMinWidth(textBlock, minWidth, horizontalAlignment);
 	}
 
 	public static TextBlock empty(final double width, final double height) {

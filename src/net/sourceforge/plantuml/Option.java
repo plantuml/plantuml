@@ -56,6 +56,7 @@ public class Option {
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
 	private boolean pipe = false;
+	private boolean pipeMap = false;
 	private boolean syntax = false;
 	private boolean checkOnly = false;
 	private boolean failfast = false;
@@ -193,6 +194,8 @@ public class Option {
 				OptionFlags.getInstance().setVerbose(true);
 			} else if (s.equalsIgnoreCase("-pipe") || s.equalsIgnoreCase("-p")) {
 				pipe = true;
+			} else if (s.equalsIgnoreCase("-pipemap")) {
+				pipeMap = true;
 			} else if (s.equalsIgnoreCase("-pattern")) {
 				pattern = true;
 			} else if (s.equalsIgnoreCase("-syntax")) {
@@ -360,6 +363,10 @@ public class Option {
 
 	public final boolean isPipe() {
 		return pipe;
+	}
+
+	public final boolean isPipeMap() {
+		return pipeMap;
 	}
 
 	public final boolean isSyntax() {

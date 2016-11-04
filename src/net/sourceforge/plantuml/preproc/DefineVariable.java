@@ -28,39 +28,39 @@
  * 
  *
  */
-package net.sourceforge.plantuml.skin;
+package net.sourceforge.plantuml.preproc;
 
-public enum ComponentType {
+public class DefineVariable {
 
-	ARROW,
+	private final String name;
+	private final String defaultValue;
 
-	ACTOR_HEAD, ACTOR_TAIL,
-	
-	BOUNDARY_HEAD, BOUNDARY_TAIL,
-	CONTROL_HEAD, CONTROL_TAIL,
-	ENTITY_HEAD, ENTITY_TAIL,
-	DATABASE_HEAD, DATABASE_TAIL,
-	COLLECTIONS_HEAD, COLLECTIONS_TAIL,
-
-	//
-	ALIVE_BOX_CLOSE_CLOSE, ALIVE_BOX_CLOSE_OPEN, ALIVE_BOX_OPEN_CLOSE, ALIVE_BOX_OPEN_OPEN,
-
-	DELAY_TEXT, DESTROY,
-
-	DELAY_LINE, PARTICIPANT_LINE, CONTINUE_LINE,
-
-	//
-	GROUPING_ELSE, GROUPING_HEADER, GROUPING_SPACE,
-	//
-	NEWPAGE, NOTE, NOTE_HEXAGONAL, NOTE_BOX, DIVIDER, REFERENCE, ENGLOBER,
-
-	//
-	PARTICIPANT_HEAD, PARTICIPANT_TAIL
-
-	//
-	/*TITLE, SIGNATURE*/;
-
-	public boolean isArrow() {
-		return this == ARROW;
+	public DefineVariable(String name) {
+		name = name.trim();
+		final int idx = name.indexOf('=');
+		if (idx == -1) {
+			this.name = name;
+			this.defaultValue = null;
+		} else {
+			this.name = name.substring(0, idx).trim();
+			final String right = name.substring(idx + 1).trim();
+			this.defaultValue = right.substring(1, right.length() - 1);
+		}
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public DefineVariable removeDefault() {
+		if (defaultValue == null) {
+			throw new IllegalStateException();
+		}
+		return new DefineVariable(name);
+	}
+
 }

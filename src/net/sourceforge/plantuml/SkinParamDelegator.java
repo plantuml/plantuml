@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -97,8 +98,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getDotExecutable();
 	}
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param) {
-		return skinParam.getHorizontalAlignment(param);
+	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection) {
+		return skinParam.getHorizontalAlignment(param, arrowDirection);
 	}
 
 	public ColorMapper getColorMapper() {
@@ -141,8 +142,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getRanksep();
 	}
 
-	public double getRoundCorner() {
-		return skinParam.getRoundCorner();
+	public double getRoundCorner(String param) {
+		return skinParam.getRoundCorner(param);
 	}
 
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
@@ -235,6 +236,10 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public int colorArrowSeparationSpace() {
 		return skinParam.colorArrowSeparationSpace();
+	}
+
+	public SplitParam getSplitParam() {
+		return skinParam.getSplitParam();
 	}
 
 }

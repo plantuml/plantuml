@@ -89,6 +89,11 @@ public enum ColorParam {
 	legendBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
 	legendBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	
+	titleBackground(null, true, ColorType.BACK),
+	titleBorder(null, ColorType.LINE),
+
+	diagramBorder(null, ColorType.LINE),
+	
 	actorBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	actorBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	participantBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
@@ -118,6 +123,8 @@ public enum ColorParam {
 	databaseBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	folderBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
 	folderBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	fileBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	fileBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	frameBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
 	frameBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	nodeBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),

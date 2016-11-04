@@ -45,14 +45,14 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public class CommandHideShow3 extends SingleLineCommand2<UmlDiagram> {
+public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> {
 
 	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
 			EntityPortion.METHOD);
 	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
 
-	public CommandHideShow3() {
+	public CommandHideShowByVisibility() {
 		super(getRegexConcat());
 	}
 

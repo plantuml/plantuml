@@ -68,6 +68,9 @@ public class SkinParameter {
 	public static final SkinParameter FOLDER = new SkinParameter("FOLDER", ColorParam.folderBackground,
 			ColorParam.folderBorder, FontParam.FOLDER, FontParam.FOLDER_STEREOTYPE);
 
+	public static final SkinParameter FILE = new SkinParameter("FILE", ColorParam.fileBackground,
+			ColorParam.fileBorder, FontParam.FILE, FontParam.FILE_STEREOTYPE);
+
 	public static final SkinParameter PACKAGE = new SkinParameter("PACKAGE", ColorParam.packageBackground,
 			ColorParam.packageBorder, FontParam.FOLDER, FontParam.FOLDER_STEREOTYPE);
 

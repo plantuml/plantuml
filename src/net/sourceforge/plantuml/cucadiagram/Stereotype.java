@@ -154,7 +154,7 @@ public class Stereotype implements CharSequence, Hideable {
 	public List<String> getMultipleLabels() {
 		final List<String> result = new ArrayList<String>();
 		if (label != null) {
-			final Pattern p = Pattern.compile("\\<\\<\\s?([^<>]+?)\\s?\\>\\>");
+			final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
 			final Matcher m = p.matcher(label);
 			while (m.find()) {
 				result.add(m.group(1));
