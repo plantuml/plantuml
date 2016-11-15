@@ -1,3 +1,5 @@
 language: java
+script: 
+         - mvn clean package assembly:single
 after_success:
          - mvn deploy --settings settings.xml
