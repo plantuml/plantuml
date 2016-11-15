@@ -19,7 +19,7 @@
 
 	<groupId>net.sourceforge.plantuml</groupId>
 	<artifactId>plantuml</artifactId>
-	<version>8025-SNAPSHOT</version>
+	<version>802</version>
 	<packaging>jar</packaging>
 
 	<name>PlantUML</name>
@@ -91,17 +91,7 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<appendAssemblyId>false</appendAssemblyId>
-				</configuration>
-			</plugin>
+			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
@@ -110,31 +100,6 @@
 					<target>1.5</target>
 					<debug>false</debug>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<additionalparam>${javadoc.opts}</additionalparam>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
