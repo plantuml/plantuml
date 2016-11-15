@@ -40,7 +40,13 @@
 		<artifactId>oss-parent</artifactId>
 		<version>5</version>
 	</parent>
-
+<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>ip-172-31-24-68-releases</name>
+        <url>http://ec2-35-163-141-233.us-west-2.compute.amazonaws.com/artifactory/clarpse_v2</url>
+    </repository>
+</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
