@@ -21,8 +21,8 @@
             <enabled>false</enabled>
           </snapshots>
           <id>central</id>
-          <name>clarpse_v2</name>
-          <url>http://ec2-35-163-141-233.us-west-2.compute.amazonaws.com/artifactory/clarpse_v2</url>
+          <name>libs-release</name>
+          <url>http://ec2-35-163-144-148.us-west-2.compute.amazonaws.com/artifactory/libs-release</url>
         </repository>
       </repositories>
       <pluginRepositories>
