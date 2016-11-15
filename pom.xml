@@ -35,11 +35,6 @@
     </description>
 	<url>http://plantuml.sourceforge.net</url>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>5</version>
-	</parent>
 <distributionManagement>
      <repository>
         <id>central</id>
