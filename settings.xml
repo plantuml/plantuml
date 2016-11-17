@@ -22,7 +22,7 @@
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url>http://ec2-35-163-144-148.us-west-2.compute.amazonaws.com/artifactory/libs-release</url>
+          <url>http://ec2-35-163-144-148.us-west-2.compute.amazonaws.com/artifactory/libs-release</url> 
         </repository>
       </repositories>
       <id>artifactory</id>

@@ -35,11 +35,6 @@
     </description>
 	<url>http://plantuml.sourceforge.net</url>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>5</version>
-	</parent>
 <distributionManagement>
      <repository>
         <id>central</id>
@@ -69,25 +64,7 @@
 		</license>
 	</licenses>
 
-	<scm>
-		<connection>scm:svn:svn://svn.code.sf.net/p/plantuml/code/trunk</connection>
-		<developerConnection>scm:svn:https://svn.code.sf.net/p/plantuml/code/trunk</developerConnection>
-		<url>svn://svn.code.sf.net/p/plantuml/code/trunk</url>
-	</scm>
-
-	<issueManagement>
-		<system>Sourceforge</system>
-		<url>http://sourceforge.net/tracker/?group_id=259736</url>
-	</issueManagement>
-
-	<developers>
-		<developer>
-			<id>arnaud.roques</id>
-			<name>Arnaud Roques</name>
-			<email>plantuml@gmail.com</email>
-		</developer>
-	</developers>
-
+	
 	<profiles>
 		<profile>
 			<id>doclint-java8-disable</id>
@@ -114,6 +91,7 @@
 			</resource>
 		</resources>
 		<plugins>
+			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
@@ -122,31 +100,6 @@
 					<target>1.5</target>
 					<debug>false</debug>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<additionalparam>${javadoc.opts}</additionalparam>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
