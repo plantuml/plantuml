@@ -40,9 +40,7 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -51,11 +49,13 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
+	private final double margin = 5;
+
 	private final HtmlColor background;
 
 	private final UFont font;
 
-	private final HtmlColor green;
+	private final HtmlColor maincolor;
 
 	private final HtmlColor hyperlinkColor = HtmlColorUtils.BLUE;
 
@@ -67,54 +67,71 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final GraphicPosition position;
 
-	private final UAntiAliasing antiAliasing;
+	private int maxLine = 0;
 
-	private final ColorMapper colorMapper = new ColorMapperIdentity();
-
-	public static GraphicStrings createDefault(List<String> strings, boolean useRed) {
+	public static IEntityImage createForError(List<String> strings, boolean useRed) {
 		if (useRed) {
 			return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorUtils.BLACK,
-					HtmlColorUtils.RED_LIGHT, UAntiAliasing.ANTI_ALIASING_ON);
+					HtmlColorUtils.RED_LIGHT, null, null);
 		}
 		return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorSet.getInstance()
-				.getColorIfValid("#33FF02"), HtmlColorUtils.BLACK, UAntiAliasing.ANTI_ALIASING_ON);
+				.getColorIfValid("#33FF02"), HtmlColorUtils.BLACK, null, null);
 	}
 
-	public GraphicStrings(List<String> strings, UFont font, HtmlColor green, HtmlColor background,
-			UAntiAliasing antiAliasing) {
-		this(strings, font, green, background, antiAliasing, null, null);
+	public static TextBlockBackcolored createGreenOnBlackMonospaced(List<String> strings) {
+		return new GraphicStrings(strings, monospaced14(), HtmlColorUtils.GREEN, HtmlColorUtils.BLACK, null, null);
 	}
 
-	public GraphicStrings(List<String> strings, UFont font, HtmlColor green, HtmlColor background,
-			UAntiAliasing antiAliasing, BufferedImage image, GraphicPosition position) {
+	public static TextBlockBackcolored createBlackOnWhite(List<String> strings) {
+		return new GraphicStrings(strings, sansSerif12(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, null, null);
+	}
+
+	public static TextBlockBackcolored createBlackOnWhiteMonospaced(List<String> strings) {
+		return new GraphicStrings(strings, monospaced14(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, null, null);
+	}
+
+	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
+			GraphicPosition position, int maxLine) {
+		final GraphicStrings result = new GraphicStrings(strings, sansSerif12(), HtmlColorUtils.BLACK,
+				HtmlColorUtils.WHITE, image, position);
+		result.maxLine = maxLine;
+		return result;
+	}
+
+	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
+			GraphicPosition position) {
+		return new GraphicStrings(strings, sansSerif12(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, image, position);
+	}
+
+	private static UFont sansSerif12() {
+		return new UFont("SansSerif", Font.PLAIN, 12);
+	}
+
+	private static UFont monospaced14() {
+		return new UFont("Monospaced", Font.PLAIN, 14);
+	}
+
+	private GraphicStrings(List<String> strings, UFont font, HtmlColor maincolor, HtmlColor background,
+			BufferedImage image, GraphicPosition position) {
 		this.strings = strings;
 		this.font = font;
-		this.green = green;
+		this.maincolor = maincolor;
 		this.background = background;
 		this.image = image;
 		this.position = position;
-		this.antiAliasing = antiAliasing;
 	}
-
-	private double minWidth;
-
-	public void setMinWidth(double minWidth) {
-		this.minWidth = minWidth;
-	}
-
-	private int maxLine = 0;
 
 	private TextBlock getTextBlock() {
 		TextBlock result = null;
 		if (maxLine == 0) {
 			result = Display.create(strings).create(
-					new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink),
+					new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		} else {
 			for (int i = 0; i < strings.size(); i += maxLine) {
 				final int n = Math.min(i + maxLine, strings.size());
 				final TextBlock textBlock1 = Display.create(strings.subList(i, n)).create(
-						new FontConfiguration(font, green, hyperlinkColor, useUnderlineForHyperlink),
+						new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
 						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 				if (result == null) {
 					result = textBlock1;
@@ -124,13 +141,14 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 				}
 			}
 		}
-		result = DateEventUtils.addEvent(result, green);
+		// result = DateEventUtils.addEvent(result, green);
 		return result;
 	}
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D size = calculateDimension(ug.getStringBounder());
-		getTextBlock().drawU(ug.apply(new UChangeColor(green)));
+		ug = ug.apply(new UTranslate(margin, margin));
+		final Dimension2D size = calculateDimensionInternal(ug.getStringBounder());
+		getTextBlock().drawU(ug.apply(new UChangeColor(maincolor)));
 
 		if (image != null) {
 			if (position == GraphicPosition.BOTTOM) {
@@ -146,10 +164,11 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		return Dimension2DDouble.delta(calculateDimensionInternal(stringBounder), 2 * margin);
+	}
+
+	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
 		Dimension2D dim = getTextBlock().calculateDimension(stringBounder);
-		if (dim.getWidth() < minWidth) {
-			dim = new Dimension2DDouble(minWidth, dim.getHeight());
-		}
 		if (image != null) {
 			if (position == GraphicPosition.BOTTOM) {
 				dim = new Dimension2DDouble(dim.getWidth(), dim.getHeight() + image.getHeight());
@@ -176,10 +195,6 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	public boolean isHidden() {
 		return false;
-	}
-
-	public final void setMaxLine(int maxLine) {
-		this.maxLine = maxLine;
 	}
 
 }

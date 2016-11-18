@@ -370,4 +370,8 @@ public class PlantUmlTask extends Task {
 		OptionFlags.getInstance().setOverwrite(flag);
 	}
 
+	public void setFileSeparator(String s) {
+		OptionFlags.getInstance().setFileSeparator(s);
+	}
+
 }

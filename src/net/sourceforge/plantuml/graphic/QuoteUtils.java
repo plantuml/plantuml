@@ -97,7 +97,7 @@ public class QuoteUtils {
 					"Luke, I am your father.", //
 					"Blood, Sweat and Tears", //
 					"Houston, we have a problem.", //
-					"Boot failure, press any key to continue", //
+					"Keyboard failure, press any key to continue", //
 					"Big mistake!", //
 					"How many UML designers does it take to change a lightbulb ?", //
 					"Do you like movies about gladiators ?", //

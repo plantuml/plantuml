@@ -193,6 +193,7 @@ public class MemberImpl implements Member {
 	}
 
 	public static boolean isMethod(String s) {
+		s = UrlBuilder.purgeUrl(s);
 		if (s.contains("{method}")) {
 			return true;
 		}

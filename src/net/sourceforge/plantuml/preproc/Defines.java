@@ -30,8 +30,6 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import gen.lib.pack.pack__c;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;

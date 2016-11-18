@@ -78,7 +78,8 @@ public enum VisibilityModifier {
 		};
 	}
 
-	public TextBlock getUBlock(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor) {
+	public TextBlock getUBlock(final int size, final HtmlColor foregroundColor, final HtmlColor backgoundColor,
+			final boolean withInvisibleRectanble) {
 		return new AbstractTextBlock() {
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -91,6 +92,9 @@ public enum VisibilityModifier {
 			}
 
 			public void drawU(UGraphic ug) {
+				if (withInvisibleRectanble) {
+					ug.apply(new UChangeColor(null)).draw(new URectangle(size * 2, size));
+				}
 				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
 		};

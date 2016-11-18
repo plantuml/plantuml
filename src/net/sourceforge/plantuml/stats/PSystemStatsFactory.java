@@ -27,46 +27,26 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.turing;
+package net.sourceforge.plantuml.stats;
 
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.core.DiagramType;
+import java.io.IOException;
 
-public class PSystemTuringFactory extends PSystemBasicFactory<PSystemTuring> {
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
-	private StringBuilder prg;
-	private StringBuilder input;
-	
-	public PSystemTuringFactory() {
-		super(DiagramType.TURING);
-	}
-
-	public PSystemTuring init(String startLine) {
-		prg = null;
-		input = null;
-		if ("@startturing".equalsIgnoreCase(startLine)) {
-			prg = new StringBuilder();
-		}
-		return null;
-	}
+public class PSystemStatsFactory extends PSystemSingleLineFactory {
 
 	@Override
-	public PSystemTuring executeLine(PSystemTuring system, String line) {
-		if (prg == null) {
-			return null;
-		}
-		if (input == null) {
-			if (line.length() == 0) {
-				input = new StringBuilder();
-			} else {
-				prg.append(line);
-				prg.append('\n');
+	protected AbstractPSystem executeLine(String line) {
+		try {
+			if (line.matches("(?i)^stats\\s*$")) {
+				return PSystemStats.create();
 			}
-		} else {
-			input.append(line);
-			input.append('\n');
+		} catch (IOException e) {
+			Log.error("Error " + e);
 		}
-		return new PSystemTuring(prg.toString(), input == null ? "" : input.toString());
+		return null;
 	}
 
 }

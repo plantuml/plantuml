@@ -369,9 +369,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(colorMapper);
 		case LATEX:
-			return new UGraphicTikz(colorMapper, true);
+			return new UGraphicTikz(colorMapper, dpiFactor, true);
 		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(colorMapper, false);
+			return new UGraphicTikz(colorMapper, dpiFactor, false);
 		case BRAILLE_PNG:
 			return new UGraphicBraille(colorMapper, fileFormat);
 		default:

@@ -411,6 +411,8 @@ public class SvgGraphics {
 			String textBackColor) {
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("text");
+			// required for web-kit based browsers
+			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
 			elt.setAttribute("y", format(y));
 			elt.setAttribute("fill", fill);

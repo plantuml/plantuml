@@ -33,7 +33,7 @@ package net.sourceforge.plantuml.core;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
-	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, TURING, FLOW, CREOLE, JUNGLE, CUTE, UNKNOWN;
+	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
@@ -58,9 +58,6 @@ public enum DiagramType {
 		if (StartUtils.startsWithSymbolAnd("startsalt", s)) {
 			return SALT;
 		}
-		if (StartUtils.startsWithSymbolAnd("startturing", s)) {
-			return TURING;
-		}
 		if (StartUtils.startsWithSymbolAnd("startflow", s)) {
 			return FLOW;
 		}
@@ -72,6 +69,9 @@ public enum DiagramType {
 		}
 		if (StartUtils.startsWithSymbolAnd("startcute", s)) {
 			return CUTE;
+		}
+		if (StartUtils.startsWithSymbolAnd("startmath", s)) {
+			return MATH;
 		}
 		return UNKNOWN;
 	}

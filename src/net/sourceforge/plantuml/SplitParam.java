@@ -34,7 +34,6 @@ import java.awt.Color;
 
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 
 public class SplitParam {
 

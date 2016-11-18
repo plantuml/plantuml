@@ -259,7 +259,7 @@ class FtileRepeat extends AbstractFtile {
 		}
 
 		public void drawU(UGraphic ug) {
-			throw new UnsupportedOperationException();
+			// throw new UnsupportedOperationException();
 		}
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {

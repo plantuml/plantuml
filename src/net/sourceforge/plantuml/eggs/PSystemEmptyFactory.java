@@ -30,20 +30,22 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
-import net.sourceforge.plantuml.webp.Portrait;
-import net.sourceforge.plantuml.webp.Portraits;
+import net.sourceforge.plantuml.api.PSystemFactory;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
-public class PSystemMemorialFactory extends PSystemSingleLineFactory {
+public class PSystemEmptyFactory implements PSystemFactory {
 
-	@Override
-	protected AbstractPSystem executeLine(String line) {
-		final Portrait portrait = Portraits.getOne(line);
-		if (portrait != null) {
-			return new PSystemMemorial(portrait);
+	public Diagram createSystem(UmlSource source) {
+		if (source.getTotalLineCount() == 2) {
+			return new PSystemEmpty();
 		}
 		return null;
+	}
+
+	public DiagramType getDiagramType() {
+		return DiagramType.UML;
 	}
 
 }

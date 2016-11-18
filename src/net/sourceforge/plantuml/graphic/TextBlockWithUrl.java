@@ -28,45 +28,44 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.graphic;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible, UGraphic2 {
+public class TextBlockWithUrl implements TextBlock {
 
-	@Override
-	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicNull(this);
+	private final TextBlock block;
+	private final Url url;
+
+	public static TextBlock withUrl(TextBlock block, Url url) {
+		if (url == null) {
+			return block;
+		}
+		return new TextBlockWithUrl(block, url);
+
 	}
 
-	private UGraphicNull(UGraphicNull other) {
-		super(other);
+	private TextBlockWithUrl(TextBlock block, Url url) {
+		this.block = block;
+		this.url = url;
 	}
 
-	public UGraphicNull() {
-		super(new ColorMapperIdentity(), "foo");
+	public void drawU(UGraphic ug) {
+		ug.startUrl(url);
+		block.drawU(ug);
+		ug.closeAction();
 	}
 
-	public StringBounder getStringBounder() {
-		return FileFormat.PNG.getDefaultStringBounder();
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		return block.calculateDimension(stringBounder);
 	}
 
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
-	}
-
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-	}
-
-	public void ensureVisible(double x, double y) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+		return block.getInnerPosition(member, stringBounder);
 	}
 
 }

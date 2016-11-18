@@ -30,7 +30,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.sprite;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -42,23 +41,21 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemListInternalSprites extends AbstractPSystem {
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final GraphicStrings result = getGraphicStrings();
+		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
-	private GraphicStrings getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() throws IOException {
 		final List<String> lines = new ArrayList<String>();
 		lines.add("<b>List Current Sprits");
 		lines.add("<i>Credit to");
@@ -75,11 +72,7 @@ public class PSystemListInternalSprites extends AbstractPSystem {
 			}
 		}
 
-		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		final GraphicStrings graphicStrings = new GraphicStrings(lines, font, HtmlColorUtils.BLACK,
-				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON);
-		graphicStrings.setMaxLine(35);
-		return graphicStrings;
+		return GraphicStrings.createBlackOnWhite(lines, null, null, 35);
 	}
 
 	public DiagramDescription getDescription() {

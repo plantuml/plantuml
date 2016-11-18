@@ -47,7 +47,7 @@ public class OptionFlags {
 	// static public final boolean TRACE_DOT = false;
 
 	static public boolean ALLOW_INCLUDE = true;
-	
+
 	static public void setMaxPixel(int max) {
 		ImageBuilder.setMaxPixel(max);
 	}
@@ -63,6 +63,7 @@ public class OptionFlags {
 	static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
 	static public final boolean OMEGA_CROSSING = false;
+
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
 
 	// static public final boolean USE_JDOT = false;
@@ -111,6 +112,7 @@ public class OptionFlags {
 	// private boolean failOnError;
 	private boolean encodesprite;
 	private boolean overwrite;
+	private String fileSeparator = "_";
 	private File logData;
 
 	private OptionFlags() {
@@ -289,6 +291,14 @@ public class OptionFlags {
 
 	public final void setOverwrite(boolean overwrite) {
 		this.overwrite = overwrite;
+	}
+
+	public String getFileSeparator() {
+		return fileSeparator;
+	}
+
+	public void setFileSeparator(String fileSeparator) {
+		this.fileSeparator = fileSeparator;
 	}
 
 }

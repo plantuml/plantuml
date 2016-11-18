@@ -34,7 +34,6 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngTitler;
 import net.sourceforge.plantuml.utils.MathUtils;
 

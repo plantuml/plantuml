@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
@@ -150,7 +151,7 @@ public class SourceStringReader {
 	}
 
 	private void noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		final GraphicStrings error = GraphicStrings.createDefault(Arrays.asList("No @startuml found"),
+		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml found"),
 				fileFormatOption.isUseRedForError());
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(), null,
 				null, 0, 0, null, false);

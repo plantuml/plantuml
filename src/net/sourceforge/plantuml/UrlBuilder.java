@@ -142,7 +142,7 @@ public class UrlBuilder {
 		final Pattern2 p = MyPattern.cmpile("[%s]*" + URL_PATTERN + "[%s]*");
 		final Matcher2 m = p.matcher(label);
 		if (m.find() == false) {
-			throw new IllegalStateException();
+			return label;
 		}
 		final String url = m.group(0);
 		final int x = label.indexOf(url);

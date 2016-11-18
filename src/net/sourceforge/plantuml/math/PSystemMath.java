@@ -28,45 +28,35 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.math;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
+import net.sourceforge.plantuml.core.ImageData;
 
-public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible, UGraphic2 {
+public class PSystemMath extends AbstractPSystem {
 
-	@Override
-	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicNull(this);
+	private String math = "";
+
+	public PSystemMath() {
 	}
 
-	private UGraphicNull(UGraphicNull other) {
-		super(other);
+	public DiagramDescription getDescription() {
+		return new DiagramDescriptionImpl("(Math)", getClass());
 	}
 
-	public UGraphicNull() {
-		super(new ColorMapperIdentity(), "foo");
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+		AsciiMathSafe asciiMath = new AsciiMathSafe(math);
+		return asciiMath.export(os, fileFormat);
 	}
 
-	public StringBounder getStringBounder() {
-		return FileFormat.PNG.getDefaultStringBounder();
-	}
-
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
-	}
-
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-	}
-
-	public void ensureVisible(double x, double y) {
+	public void doCommandLine(String line) {
+		this.math = line;
 	}
 
 }

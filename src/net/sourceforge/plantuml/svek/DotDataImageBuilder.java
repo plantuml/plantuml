@@ -257,7 +257,7 @@ public final class DotDataImageBuilder {
 		msg.add(" ");
 		msg.add("java -jar plantuml.jar -testdot");
 		msg.add(" ");
-		return GraphicStrings.createDefault(msg, false);
+		return GraphicStrings.createForError(msg, false);
 	}
 
 	private void printEntities(DotStringFactory dotStringFactory, Collection<ILeaf> entities2) {

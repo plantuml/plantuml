@@ -2,7 +2,7 @@
 	========================================================================
 	PlantUML : a free UML diagram generator
 	========================================================================
-	(C) Copyright 2009-2013, Arnaud Roques
+	(C) Copyright 2009-2017, Arnaud Roques
 	
 	Project Info:  http://plantuml.sourceforge.net
 	 
@@ -51,6 +51,11 @@
 				<include name="*.png" />
 			</fileset>
 		</copy>
+		<copy todir="build/net/sourceforge/plantuml/math">
+			<fileset dir="src/net/sourceforge/plantuml/math">
+				<include name="*.js" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="dist" depends="compile">
@@ -60,7 +65,7 @@
 			<manifest>
 				<attribute name="Main-Class" value="net.sourceforge.plantuml.Run" />
 				<attribute name="SplashScreen-Image" value="net/sourceforge/plantuml/version/logo.png" />
-				<attribute name="Class-Path" value="batik-all-1.7.jar fop.jar vizjs.jar j2v8_win32_x86_64-3.1.6.jar j2v8_linux_x86_64-3.1.6.jar j2v8_macosx_x86_64-3.1.6.jar" />
+				<attribute name="Class-Path" value="batik-all-1.7.jar commons-io-1.3.1.jar commons-logging-1.1.1.jar jeuclid-core-3.1.9.jar xmlgraphics-commons-1.3.1.jar fop.jar vizjs.jar j2v8_win32_x86_64-3.1.6.jar j2v8_linux_x86_64-3.1.6.jar j2v8_macosx_x86_64-3.1.6.jar" />
 			</manifest>
 		</jar>
 		<delete dir="build" />

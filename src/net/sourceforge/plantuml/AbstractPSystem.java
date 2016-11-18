@@ -30,8 +30,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.util.Properties;
-
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -55,9 +53,8 @@ public abstract class AbstractPSystem implements Diagram {
 		toAppend.append(Version.versionString());
 		toAppend.append("(" + Version.compileTimeString() + ")\n");
 		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
-		final Properties p = System.getProperties();
 		for (String name : OptionPrint.interestingProperties()) {
-			toAppend.append(p.getProperty(name));
+			toAppend.append(name);
 			toAppend.append('\n');
 		}
 		return toAppend.toString();

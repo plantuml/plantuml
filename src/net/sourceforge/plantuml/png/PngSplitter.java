@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SplitParam;
-import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 
 public class PngSplitter {
 

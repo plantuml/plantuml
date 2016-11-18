@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
@@ -139,9 +141,8 @@ public class OptionPrint {
 	public static void printVersion() throws InterruptedException {
 		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
 		System.out.println("(" + License.getCurrent() + " source distribution)");
-		final Properties p = System.getProperties();
-		for (String name : interestingProperties()) {
-			System.out.println(p.getProperty(name));
+		for (String v : interestingProperties()) {
+			System.out.println(v);
 		}
 		for (String v : interestingValues()) {
 			System.out.println(v);
@@ -154,11 +155,20 @@ public class OptionPrint {
 	}
 
 	public static Collection<String> interestingProperties() {
-		return Arrays.asList("java.runtime.name", "java.vm.name", "java.runtime.version", "os.name", "file.encoding");
+		final Properties p = System.getProperties();
+		final List<String> all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM",
+				"java.runtime.version", "Java Version", "os.name", "Operating System", "os.version", "OS Version",
+				"file.encoding", "Default Encoding", "user.language", "Language", "user.country", "Country");
+		final List<String> result = new ArrayList<String>();
+		for (int i = 0; i < all.size(); i += 2) {
+			result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));
+		}
+		return result;
 	}
 
 	public static Collection<String> interestingValues() {
 		final List<String> strings = new ArrayList<String>();
+		strings.add("Machine: " + getHostName());
 		strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());
 		strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
 		final long freeMemory = Runtime.getRuntime().freeMemory();
@@ -172,6 +182,30 @@ public class OptionPrint {
 		strings.add("Used Memory: " + format(usedMemory));
 		strings.add("Thread Active Count: " + threadActiveCount);
 		return Collections.unmodifiableCollection(strings);
+	}
+
+	private static String hostname;
+
+	public static synchronized String getHostName() {
+		if (hostname == null) {
+			hostname = getHostNameSlow();
+		}
+		return hostname;
+	}
+
+	private static String getHostNameSlow() {
+		try {
+			final InetAddress addr = InetAddress.getLocalHost();
+			return addr.getHostName();
+		} catch (Throwable e) {
+			final Map<String, String> env = System.getenv();
+			if (env.containsKey("COMPUTERNAME")) {
+				return env.get("COMPUTERNAME");
+			} else if (env.containsKey("HOSTNAME")) {
+				return env.get("HOSTNAME");
+			}
+		}
+		return "Unknown Computer";
 	}
 
 	private static String format(final long value) {

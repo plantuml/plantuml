@@ -59,7 +59,8 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public boolean isOnlySingleStop() {
-		return all.size() == 1 && getLast() instanceof InstructionStop;
+		return all.size() == 1 && getLast() instanceof InstructionStop
+				&& ((InstructionStop) getLast()).hasNotes() == false;
 	}
 
 	public InstructionList(Swimlane defaultSwimlane) {
@@ -126,15 +127,25 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public Swimlane getSwimlaneIn() {
-		if (getSwimlanes().size() == 0) {
-			return null;
-		}
-		return all.get(0).getSwimlaneIn();
+		return defaultSwimlane;
+//		final Set<Swimlane> swimlanes = getSwimlanes();
+//		if (swimlanes.size() == 0) {
+//			return null;
+//		}
+//		if (swimlanes.size() == 1) {
+//			return swimlanes.iterator().next();
+//		}
+//		System.err.println("foo1="+getClass());
+//		return all.get(0).getSwimlaneIn();
 	}
 
 	public Swimlane getSwimlaneOut() {
-		if (getSwimlanes().size() == 0) {
+		final Set<Swimlane> swimlanes = getSwimlanes();
+		if (swimlanes.size() == 0) {
 			return null;
+		}
+		if (swimlanes.size() == 1) {
+			return swimlanes.iterator().next();
 		}
 		return getLast().getSwimlaneOut();
 	}

@@ -30,7 +30,6 @@
  */
 package net.sourceforge.plantuml.oregon;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -43,11 +42,9 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemOregon extends AbstractPSystem {
 
@@ -94,17 +91,15 @@ public class PSystemOregon extends AbstractPSystem {
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final GraphicStrings result = getGraphicStrings();
+		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
-	private GraphicStrings getGraphicStrings() throws IOException {
-		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
-		return new GraphicStrings(getScreen().getLines(), font, HtmlColorUtils.GREEN, HtmlColorUtils.BLACK,
-				UAntiAliasing.ANTI_ALIASING_OFF);
+	private TextBlockBackcolored getGraphicStrings() throws IOException {
+		return GraphicStrings.createGreenOnBlackMonospaced(getScreen().getLines());
 	}
 
 	public DiagramDescription getDescription() {

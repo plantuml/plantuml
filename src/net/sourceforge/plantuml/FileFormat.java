@@ -122,7 +122,8 @@ public enum FileFormat {
 		if (cpt == 0) {
 			return changeName(fileName, getFileSuffix());
 		}
-		return changeName(fileName, "_" + String.format("%03d", cpt) + getFileSuffix());
+		return changeName(fileName, OptionFlags.getInstance().getFileSeparator() + String.format("%03d", cpt)
+				+ getFileSuffix());
 	}
 
 	private String changeName(String fileName, String replacement) {
@@ -145,6 +146,7 @@ public enum FileFormat {
 		if (i == 0) {
 			return name;
 		}
-		return name.replaceAll("\\" + getFileSuffix() + "$", "_" + String.format("%03d", i) + getFileSuffix());
+		return name.replaceAll("\\" + getFileSuffix() + "$",
+				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", i) + getFileSuffix());
 	}
 }

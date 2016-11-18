@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
+import net.sourceforge.plantuml.graphic.TextBlockWithUrl;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.Ports;
@@ -184,7 +185,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 
 	}
 
-	private TextBlock getUBlock(final VisibilityModifier modifier) {
+	private TextBlock getUBlock(final VisibilityModifier modifier, Url url) {
 		if (modifier == null) {
 			return new AbstractTextBlock() {
 
@@ -200,8 +201,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 				modifier.getBackground());
 		final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
-		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back);
-		return uBlock;
+		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back, url != null);
+		return TextBlockWithUrl.withUrl(uBlock, url);
 	}
 
 	public TextBlock asTextBlock(final double widthToUse) {
@@ -232,7 +233,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			for (Member att : members) {
 				final TextBlock bloc = createTextBlock(att);
 				final VisibilityModifier modifier = att.getVisibilityModifier();
-				group.add(getUBlock(modifier));
+				group.add(getUBlock(modifier, att.getUrl()));
 				group.add(bloc);
 			}
 		} else {

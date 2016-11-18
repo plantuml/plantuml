@@ -62,4 +62,8 @@ public class WithNote {
 		return Collections.unmodifiableCollection(notes);
 	}
 
+	public boolean hasNotes() {
+		return notes.size() > 0;
+	}
+
 }

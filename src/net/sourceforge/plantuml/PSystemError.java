@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
@@ -108,7 +109,7 @@ public class PSystemError extends AbstractPSystem {
 
 		}
 		final boolean useRed = fileFormat.isUseRedForError();
-		final GraphicStrings result = GraphicStrings.createDefault(getHtmlStrings(useRed), useRed);
+		final TextBlockBackcolored result = GraphicStrings.createForError(getHtmlStrings(useRed), useRed);
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);

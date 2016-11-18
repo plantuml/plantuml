@@ -64,8 +64,8 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	}
 
-	public UGraphicTikz(ColorMapper colorMapper, boolean withPreamble) {
-		this(colorMapper, new TikzGraphics(withPreamble));
+	public UGraphicTikz(ColorMapper colorMapper, double scale, boolean withPreamble) {
+		this(colorMapper, new TikzGraphics(scale, withPreamble));
 
 	}
 

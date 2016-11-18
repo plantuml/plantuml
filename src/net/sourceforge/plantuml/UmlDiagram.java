@@ -70,9 +70,9 @@ import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
@@ -244,7 +244,12 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
 			String metadata, String flash, List<String> strings) throws IOException {
-		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
+
+		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
+			exportDiagramErrorText(os, exception, strings);
+			return;
+		}
+
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
@@ -256,8 +261,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			GraphvizCrash.addDecodeHint(strings);
 		}
 
-		final GraphicStrings graphicStrings = new GraphicStrings(strings, font, HtmlColorUtils.BLACK,
-				HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON, IconLoader.getRandom(),
+		final TextBlockBackcolored graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 
 		if (im == null) {
@@ -273,6 +277,18 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			});
 		}
 		imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+	}
+
+	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
+		final PrintWriter pw = new PrintWriter(os);
+		exception.printStackTrace(pw);
+		pw.println();
+		pw.println();
+		for (String s : strings) {
+			s = s.replaceAll("\\</?\\w+?\\>", "");
+			pw.println(s);
+		}
+		pw.flush();
 	}
 
 	public String getFlashData() {

@@ -28,45 +28,29 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.math;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.StringBounder;
+public class PSystemMathFactory extends PSystemBasicFactory<PSystemMath> {
 
-public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible, UGraphic2 {
+	public PSystemMathFactory(DiagramType type) {
+		super(type);
+	}
+
+	public PSystemMath init(String startLine) {
+		if (getDiagramType() == DiagramType.MATH) {
+			return new PSystemMath();
+		}
+
+		return null;
+	}
 
 	@Override
-	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicNull(this);
-	}
-
-	private UGraphicNull(UGraphicNull other) {
-		super(other);
-	}
-
-	public UGraphicNull() {
-		super(new ColorMapperIdentity(), "foo");
-	}
-
-	public StringBounder getStringBounder() {
-		return FileFormat.PNG.getDefaultStringBounder();
-	}
-
-	public void startUrl(Url url) {
-	}
-
-	public void closeAction() {
-	}
-
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-	}
-
-	public void ensureVisible(double x, double y) {
+	public PSystemMath executeLine(PSystemMath system, String line) {
+		system.doCommandLine(line);
+		return system;
 	}
 
 }

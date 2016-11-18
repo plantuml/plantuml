@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.version.PSystemVersion;
@@ -279,7 +280,7 @@ class ImageWindow2 extends JFrame {
 			}
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
-			final GraphicStrings error = GraphicStrings.createDefault(Arrays.asList(msg), false);
+			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(),
 					null, null, 0, 0, null, false);
 			imageBuilder.setUDrawable(error);

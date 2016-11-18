@@ -33,6 +33,8 @@ package net.sourceforge.plantuml.asciiart;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -40,41 +42,32 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
-public class ComponentTextLine extends AbstractComponentText {
+public class ComponentTextDelay extends AbstractComponentText {
 
-	private static final int MAGIC_NUMBER = -3;
-	private char using;
+	private final Display stringsToDisplay;
 
-	public ComponentTextLine(ComponentType type, FileFormat fileFormat) {
-		if (fileFormat == FileFormat.UTXT) {
-			using = '\u2502';
-		} else {
-			using = '|';
-		}
-		if (type == ComponentType.DELAY_LINE) {
-			using = '.';
-		}
+	public ComponentTextDelay(ComponentType type, Display stringsToDisplay, FileFormat fileFormat) {
+		this.stringsToDisplay = stringsToDisplay;
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
-		final int height = (int) dimensionToUse.getHeight();
-		charArea.drawVLine(using, (width - 1) / 2, MAGIC_NUMBER, height);
-//		if (using == '.') {
-//			charArea.drawVLine(using, (width - 1) / 2, -3, height);
-//		} else {
-//			charArea.drawVLine(using, (width - 1) / 2, 0, height);
-//		}
+		final int textWidth = StringUtils.getWidth(stringsToDisplay);
+
+		final int textPos = (width - textWidth) / 2;
+		final String desc = stringsToDisplay.get(0).toString();
+
+		charArea.drawStringLR(desc, textPos, 0);
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return 0;
+		return StringUtils.getHeight(stringsToDisplay) + 1;
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return 3;
+		return StringUtils.getWidth(stringsToDisplay) + 2;
 	}
 
 }

@@ -63,6 +63,10 @@ public class QBlock {
 		return new QBlock(changed);
 	}
 
+	public byte[] getData() {
+		return big.toByteArray();
+	}
+
 	@Override
 	public String toString() {
 		return big.toByteArray().length + " " + big.toString();

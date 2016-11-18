@@ -86,7 +86,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 			final HtmlColor back = rose.getHtmlColor(skinParam, modifier.getBackground());
 			final HtmlColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
 
-			final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back);
+			final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back, false);
 			name = TextBlockUtils.mergeLR(uBlock, name, VerticalAlignment.CENTER);
 			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
 		}

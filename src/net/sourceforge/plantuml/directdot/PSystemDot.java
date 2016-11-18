@@ -67,7 +67,7 @@ public class PSystemDot extends AbstractPSystem {
 		final Graphviz graphviz = GraphvizUtils.create(null, data,
 				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));
 		if (graphviz.getExeState() != ExeState.OK) {
-			final TextBlock result = GraphicStrings.createDefault(
+			final TextBlock result = GraphicStrings.createForError(
 					Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
 			UGraphicUtils.writeImage(os, null, fileFormat, new ColorMapperIdentity(), HtmlColorUtils.WHITE, result);
 			return new ImageDataSimple();
@@ -78,7 +78,7 @@ public class PSystemDot extends AbstractPSystem {
 			throw new IllegalStateException("Timeout1 " + state);
 		}
 		if (counter.getLength() == 0) {
-			final TextBlock result = GraphicStrings.createDefault(Arrays.asList("Graphivz has crashed"), false);
+			final TextBlock result = GraphicStrings.createForError(Arrays.asList("Graphivz has crashed"), false);
 			UGraphicUtils.writeImage(os, null, fileFormat, new ColorMapperIdentity(), HtmlColorUtils.WHITE, result);
 		}
 

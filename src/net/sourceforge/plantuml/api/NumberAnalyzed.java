@@ -23,18 +23,61 @@
  */
 package net.sourceforge.plantuml.api;
 
+import java.util.prefs.Preferences;
+
 public class NumberAnalyzed implements INumberAnalyzed {
 
-	private int nb;
-	private int sum;
-	private int min;
-	private int max;
+	private long nb;
+	private long sum;
+	private long min;
+	private long max;
+	private final String name;
 
-	public NumberAnalyzed() {
-
+	public NumberAnalyzed(String name) {
+		this.name = name;
 	}
 
-	private NumberAnalyzed(int nb, int sum, int min, int max) {
+	public NumberAnalyzed() {
+		this("");
+	}
+
+	public void save(Preferences prefs) {
+		if (name.length() == 0) {
+			throw new UnsupportedOperationException();
+		}
+		prefs.putLong(name + ".nb", nb);
+		prefs.putLong(name + ".sum", sum);
+		prefs.putLong(name + ".min", min);
+		prefs.putLong(name + ".max", max);
+	}
+
+	public static NumberAnalyzed load(String name, Preferences prefs) {
+		final long nb = prefs.getLong(name + ".nb", 0);
+		if (nb == 0) {
+			return null;
+		}
+		final long sum = prefs.getLong(name + ".sum", 0);
+		if (sum == 0) {
+			return null;
+		}
+		final long min = prefs.getLong(name + ".min", 0);
+		if (min == 0) {
+			return null;
+		}
+		final long max = prefs.getLong(name + ".max", 0);
+		if (max == 0) {
+			return null;
+		}
+		return new NumberAnalyzed(name, nb, sum, min, max);
+	}
+
+	@Override
+	public synchronized String toString() {
+		return "sum=" + sum + " nb=" + nb + " min=" + min + " max=" + max + " mean=" + getMean();
+	}
+
+	private NumberAnalyzed(String name, long nb, long sum, long min, long max) {
+		this(name);
 		this.nb = nb;
 		this.sum = sum;
 		this.min = min;
@@ -42,11 +85,11 @@ public class NumberAnalyzed implements INumberAnalyzed {
 	}
 
 	public synchronized INumberAnalyzed getCopyImmutable() {
-		final NumberAnalyzed copy = new NumberAnalyzed(nb, sum, min, max);
+		final NumberAnalyzed copy = new NumberAnalyzed(name, nb, sum, min, max);
 		return copy;
 	}
 
-	public synchronized void addValue(int v) {
+	public synchronized void addValue(long v) {
 		nb++;
 		if (nb == 1) {
 			sum = v;
@@ -63,27 +106,40 @@ public class NumberAnalyzed implements INumberAnalyzed {
 		}
 	}
 
-	synchronized public final int getNb() {
+	public synchronized void add(NumberAnalyzed other) {
+		synchronized (other) {
+			this.sum += other.sum;
+			this.nb += other.nb;
+			this.min = Math.min(this.min, other.min);
+			this.max = Math.max(this.max, other.max);
+		}
+	}
+
+	synchronized public final long getNb() {
 		return nb;
 	}
 
-	synchronized public final int getSum() {
+	synchronized public final long getSum() {
 		return sum;
 	}
 
-	synchronized public final int getMin() {
+	synchronized public final long getMin() {
 		return min;
 	}
 
-	synchronized public final int getMax() {
+	synchronized public final long getMax() {
 		return max;
 	}
 
-	synchronized public final int getMean() {
+	synchronized public final long getMean() {
 		if (nb == 0) {
 			return 0;
 		}
 		return sum / nb;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

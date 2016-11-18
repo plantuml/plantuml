@@ -30,7 +30,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -43,11 +42,9 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemEgg extends AbstractPSystem {
 
@@ -61,16 +58,15 @@ public class PSystemEgg extends AbstractPSystem {
 	}
 
 	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final GraphicStrings result = getGraphicStrings();
+		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
-	private GraphicStrings getGraphicStrings() throws IOException {
-		final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		return new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, UAntiAliasing.ANTI_ALIASING_ON);
+	private TextBlockBackcolored getGraphicStrings() throws IOException {
+		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
 	public DiagramDescription getDescription() {
