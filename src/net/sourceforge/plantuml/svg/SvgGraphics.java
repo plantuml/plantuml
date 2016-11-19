@@ -408,13 +408,14 @@ public class SvgGraphics {
       // required for web-kit based browsers
       elt.setAttribute("text-rendering", "geometricPrecision");
 
-      elt.setAttribute("x", format(x + 5));
+      elt.setAttribute("x", format(x));
       elt.setAttribute("y", format(y));
       if (keyClass != null && keyClass.equals(text)) {
-        elt.setAttribute("fill", "#22df80");
+        elt.setAttribute("fill", "#1ba1e2");
         elt.setAttribute("text-decoration", "underline");
       } else if (text.startsWith("$%")) {
         text = text.replace("$%", "");
+        elt.setAttribute("textLength", format(textLength));
         elt.setAttribute("fill", "#f97d7d");
       } else {
         elt.setAttribute("fill", fill);
@@ -455,9 +456,9 @@ public class SvgGraphics {
 
       if (componentCallBack) {
         for (int i = 0; i < displayComponentsDisplayNames.size(); i++) {
-          if (text.equals(displayComponentsUniqueNames.get(i))
-              || (text.contains("(") && text.contains(")") && text.contains(":")
-                  && text.startsWith(displayComponentsDisplayNames.get(i)))) {
+
+          // if the text represents a class name.
+          if (text.equals(displayComponentsUniqueNames.get(i))) {
             if (text.equals(displayComponentsUniqueNames.get(i))) {
               text = displayComponentsDisplayNames.get(i);
             }
@@ -465,12 +466,25 @@ public class SvgGraphics {
                 "classElementCallBack('" + displayComponentsUniqueNames.get(i) + "')");
             elt.setAttribute("class", "interactiveComponent");
             elt.setAttribute("id", displayComponentsUniqueNames.get(i));
+            // note we do not set the text length!
+          }
+          // if the text represents a method in the diagram
+          if (text.contains("(") && text.contains(")") && text.contains(":")
+              && text.startsWith(displayComponentsDisplayNames.get(i))) {
+            if (text.equals(displayComponentsUniqueNames.get(i))) {
+              text = displayComponentsDisplayNames.get(i);
+            }
+            elt.setAttribute("onclick",
+                "classElementCallBack('" + displayComponentsUniqueNames.get(i) + "')");
+            elt.setAttribute("class", "interactiveComponent");
+            elt.setAttribute("id", displayComponentsUniqueNames.get(i));
+            // note in this case, we set the text length!!!!!
+            elt.setAttribute("textLength", format(textLength));
           }
         }
       }
 
       elt.setTextContent(text);
-      textLength = text.length();
       getG().appendChild(elt);
     }
 
