@@ -109,8 +109,10 @@ public class OptionFlags {
 	private boolean checkDotError;
 	private boolean printFonts;
 	private boolean useSuggestEngine;
-	// private boolean failOnError;
 	private boolean encodesprite;
+	private boolean dumpHtmlStats;
+	private boolean dumpStats;
+	private boolean loopStats;
 	private boolean overwrite;
 	private String fileSeparator = "_";
 	private File logData;
@@ -122,14 +124,6 @@ public class OptionFlags {
 	public static OptionFlags getInstance() {
 		return singleton;
 	}
-
-	// public synchronized final boolean isKeepTmpFiles() {
-	// return keepTmpFiles;
-	// }
-	//
-	// public synchronized final void setKeepTmpFiles(boolean keepTmpFiles) {
-	// this.keepTmpFiles = keepTmpFiles;
-	// }
 
 	public final boolean isVerbose() {
 		return verbose;
@@ -225,17 +219,6 @@ public class OptionFlags {
 		}
 	}
 
-	// public static void logErrorFile(final PSystemError systemError, PrintStream ps) {
-	// ps.println(systemError.getDescription());
-	// for (CharSequence t : systemError.getTitle()) {
-	// ps.println(t);
-	// }
-	// systemError.print(ps);
-	// for (String s : systemError.getSuggest()) {
-	// ps.println(s);
-	// }
-	// }
-
 	public final void setLogData(File logData) {
 		this.logData = logData;
 		logData.delete();
@@ -269,14 +252,6 @@ public class OptionFlags {
 		this.useSuggestEngine = useSuggestEngine;
 	}
 
-	// public final boolean isFailOnError() {
-	// return failOnError;
-	// }
-	//
-	// public final void setFailOnError(boolean failOnError) {
-	// this.failOnError = failOnError;
-	// }
-
 	public final boolean isEncodesprite() {
 		return encodesprite;
 	}
@@ -293,12 +268,36 @@ public class OptionFlags {
 		this.overwrite = overwrite;
 	}
 
-	public String getFileSeparator() {
+	public final String getFileSeparator() {
 		return fileSeparator;
 	}
 
-	public void setFileSeparator(String fileSeparator) {
+	public final void setFileSeparator(String fileSeparator) {
 		this.fileSeparator = fileSeparator;
+	}
+
+	public final boolean isDumpHtmlStats() {
+		return dumpHtmlStats;
+	}
+
+	public final void setDumpHtmlStats(boolean value) {
+		this.dumpHtmlStats = value;
+	}
+
+	public final boolean isDumpStats() {
+		return dumpStats;
+	}
+
+	public final void setDumpStats(boolean dumpStats) {
+		this.dumpStats = dumpStats;
+	}
+
+	public final boolean isLoopStats() {
+		return loopStats;
+	}
+
+	public final void setLoopStats(boolean loopStats) {
+		this.loopStats = loopStats;
 	}
 
 }

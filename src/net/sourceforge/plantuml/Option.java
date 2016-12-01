@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.stats.StatsUtils;
 
 public class Option {
 
@@ -249,6 +250,20 @@ public class Option {
 				OptionFlags.getInstance().setUseSuggestEngine(false);
 			} else if (s.equalsIgnoreCase("-printfonts")) {
 				OptionFlags.getInstance().setPrintFonts(true);
+			} else if (s.equalsIgnoreCase("-dumphtmlstats")) {
+				OptionFlags.getInstance().setDumpHtmlStats(true);
+			} else if (s.equalsIgnoreCase("-dumpstats")) {
+				OptionFlags.getInstance().setDumpStats(true);
+			} else if (s.equalsIgnoreCase("-loopstats")) {
+				OptionFlags.getInstance().setLoopStats(true);
+			} else if (s.equalsIgnoreCase("-htmlstats")) {
+				StatsUtils.setHtmlStats(true);
+			} else if (s.equalsIgnoreCase("-xmlstats")) {
+				StatsUtils.setXmlStats(true);
+			} else if (s.equalsIgnoreCase("-realtimestats")) {
+				StatsUtils.setRealTimeStats(true);
+			} else if (s.equalsIgnoreCase("-useseparatorminus")) {
+				OptionFlags.getInstance().setFileSeparator("-");
 			} else if (StringUtils.goLowerCase(s).startsWith("-ftp")) {
 				final int x = s.indexOf(':');
 				if (x == -1) {

@@ -138,7 +138,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	}
 	
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 

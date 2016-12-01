@@ -111,8 +111,12 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 		getGraphicObject().createVsd(os);
 	}
 
-	public boolean isSpecialTxt() {
-		return true;
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		if ("SPECIALTXT".equalsIgnoreCase(propertyName)) {
+			return true;
+		}
+		return false;
 	}
 
 }

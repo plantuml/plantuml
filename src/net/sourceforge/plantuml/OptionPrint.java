@@ -119,6 +119,9 @@ public class OptionPrint {
 		System.out.println("    -author[s]\t\tTo print information about PlantUML authors");
 		System.out.println("    -overwrite\t\tTo allow to overwrite read only files");
 		System.out.println("    -printfonts\t\tTo print fonts available on your system");
+		System.out.println("    -htmlstats\t\tTo output general statistics in file plantuml-stats.html");
+		System.out.println("    -xmlstats\t\tTo output general statistics in file plantuml-stats.xml");
+		System.out.println("    -realtimestats\tTo generate statistics on the fly rather than at the end");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();
@@ -156,9 +159,12 @@ public class OptionPrint {
 
 	public static Collection<String> interestingProperties() {
 		final Properties p = System.getProperties();
-		final List<String> all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM",
-				"java.runtime.version", "Java Version", "os.name", "Operating System", "os.version", "OS Version",
-				"file.encoding", "Default Encoding", "user.language", "Language", "user.country", "Country");
+		final List<String> all = withIp() ? Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM",
+				"java.runtime.version", "Java Version", "os.name", "Operating System", "file.encoding",
+				"Default Encoding", "user.language", "Language", "user.country", "Country") : Arrays.asList(
+				"java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "java.runtime.version", "Java Version",
+				"os.name", "Operating System", "os.version", "OS Version", "file.encoding", "Default Encoding",
+				"user.language", "Language", "user.country", "Country");
 		final List<String> result = new ArrayList<String>();
 		for (int i = 0; i < all.size(); i += 2) {
 			result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));
@@ -168,7 +174,9 @@ public class OptionPrint {
 
 	public static Collection<String> interestingValues() {
 		final List<String> strings = new ArrayList<String>();
-		strings.add("Machine: " + getHostName());
+		if (withIp() == false) {
+			strings.add("Machine: " + getHostName());
+		}
 		strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());
 		strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
 		final long freeMemory = Runtime.getRuntime().freeMemory();
@@ -182,6 +190,10 @@ public class OptionPrint {
 		strings.add("Used Memory: " + format(usedMemory));
 		strings.add("Thread Active Count: " + threadActiveCount);
 		return Collections.unmodifiableCollection(strings);
+	}
+
+	private static boolean withIp() {
+		return getHostName().startsWith("ip-");
 	}
 
 	private static String hostname;

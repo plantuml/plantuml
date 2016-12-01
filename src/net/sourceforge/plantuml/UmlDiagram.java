@@ -30,7 +30,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Font;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
@@ -73,7 +72,6 @@ import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -213,7 +211,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		this.hideUnlinkedData = hideUnlinkedData;
 	}
 
-	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());

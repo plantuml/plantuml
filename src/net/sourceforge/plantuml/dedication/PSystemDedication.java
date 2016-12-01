@@ -56,7 +56,9 @@ public class PSystemDedication extends AbstractPSystem {
 		this.keepLetter = keepLetter;
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(new UDrawable() {

@@ -30,16 +30,21 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
@@ -109,5 +114,18 @@ public abstract class AbstractPSystem implements Diagram {
 	public boolean hasUrl() {
 		return false;
 	}
+
+	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		final long now = System.currentTimeMillis();
+		try {
+			return exportDiagramNow(os, index, fileFormatOption);
+		} finally {
+			StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(), fileFormatOption.getFileFormat());
+		}
+	}
+
+	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException;
 
 }

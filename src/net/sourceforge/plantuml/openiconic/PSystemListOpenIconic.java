@@ -43,23 +43,29 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.donors.PSystemDonors;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockHorizontal;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemListOpenIconic extends AbstractPSystem {
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
-		final TextBlockBackcolored result = getGraphicStrings();
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
+		final UDrawable result = getGraphicStrings();
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private UDrawable getGraphicStrings() throws IOException {
 		final List<String> lines = new ArrayList<String>();
 		lines.add("<b>List Open Iconic");
 		lines.add("<i>Credit to");
@@ -73,8 +79,8 @@ public class PSystemListOpenIconic extends AbstractPSystem {
 			lines.add("<&" + s + "> " + s);
 		}
 		br.close();
-
-		return GraphicStrings.createBlackOnWhite(lines, null, null, 35);
+		final List<TextBlock> cols = PSystemDonors.getCols(lines, 7, 0);
+		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);
 	}
 
 	private InputStream getRessourceAllTxt() {

@@ -41,23 +41,21 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 
 public class PSystemPath extends AbstractPSystem {
-	
+
 	private final GraphicsPath path;
 
 	public PSystemPath(String s) {
 		this.path = new GraphicsPath(new ColorMapperIdentity(), s);
 	}
 
-
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		return path.writeImage(os);
 	}
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("(Path)", getClass());
 	}
-
-
-
 
 }

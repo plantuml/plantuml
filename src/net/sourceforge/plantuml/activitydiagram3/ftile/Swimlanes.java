@@ -81,6 +81,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
@@ -272,7 +273,50 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		cross.flushUg();
 	}
 
+	private void computeDrawingWidths(UGraphic ug, TextBlock full) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		for (Swimlane swimlane : swimlanes) {
+			final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
+			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(new UGraphicForSnake(
+					limitFinder), swimlane);
+			full.drawU(interceptor);
+			interceptor.flushUg();
+			final MinMax minMax = limitFinder.getMinMax();
+			swimlane.setMinMax(minMax);
+		}
+	}
+
 	private void computeSize(UGraphic ug, TextBlock full) {
+		computeDrawingWidths(ug, full);
+		double x1 = 0;
+		final StringBounder stringBounder = ug.getStringBounder();
+		double swimlaneWidth = skinParam.swimlaneWidth();
+
+		if (swimlaneWidth == -1) {
+			for (Swimlane swimlane : swimlanes) {
+				final MinMax minMax = swimlane.getMinMax();
+				swimlaneWidth = Math.max(swimlaneWidth, minMax.getWidth());
+			}
+
+		}
+		for (Swimlane swimlane : swimlanes) {
+			final MinMax minMax = swimlane.getMinMax();
+
+			final double drawingWidth = minMax.getWidth() + 2 * separationMargin;
+			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
+					skinParam);
+			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
+			final double totalWidth = MathUtils.max(swimlaneWidth, drawingWidth, titleWidth + 2 * separationMargin);
+
+			final UTranslate translate = new UTranslate(x1 - minMax.getMinX() + separationMargin
+					+ (totalWidth - drawingWidth) / 2.0, 0);
+			swimlane.setTranslateAndWidth(translate, totalWidth);
+
+			x1 += totalWidth;
+		}
+	}
+
+	private void computeSizeOld(UGraphic ug, TextBlock full) {
 		double x1 = 0;
 		final StringBounder stringBounder = ug.getStringBounder();
 		for (Swimlane swimlane : swimlanes) {

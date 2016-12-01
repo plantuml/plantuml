@@ -438,6 +438,8 @@ public enum License {
 		text.add("");
 		text.add("Icons provided by OpenIconic :  https://useiconic.com/open");
 		text.add("Archimate sprites provided by Archi :  http://www.archimatetool.com");
+		text.add("ASCIIMathML (c) Peter Jipsen http://www.chapman.edu/~jipsen");
+		text.add("ASCIIMathML (c) David Lippman http://www.pierce.ctc.edu/dlippman");
 		text.add("");
 		return text;
 	}

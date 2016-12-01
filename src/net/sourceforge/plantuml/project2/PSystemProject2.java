@@ -67,14 +67,17 @@ public class PSystemProject2 extends AbstractPSystem {
 		return new DiagramDescriptionImpl("(Project)", getClass());
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormatOption) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption)
+			throws IOException {
 		final GanttDiagram2 diagram = new GanttDiagram2(project);
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final BufferedImage im = createImage(diagram);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false, 1.0, fileFormatOption.getSvgLinkTarget());
+			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false, 1.0,
+					fileFormatOption.getSvgLinkTarget());
 			diagram.draw(svg, 0, 0);
 			svg.createXml(os);
 		} else if (fileFormat == FileFormat.EPS) {

@@ -99,7 +99,9 @@ public class PSystemError extends AbstractPSystem {
 		return "red";
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();

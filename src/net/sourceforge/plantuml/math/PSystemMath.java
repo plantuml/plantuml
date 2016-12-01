@@ -30,6 +30,7 @@
  */
 package net.sourceforge.plantuml.math;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -50,9 +51,11 @@ public class PSystemMath extends AbstractPSystem {
 		return new DiagramDescriptionImpl("(Math)", getClass());
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		AsciiMathSafe asciiMath = new AsciiMathSafe(math);
-		return asciiMath.export(os, fileFormat);
+		return asciiMath.export(os, fileFormat, Color.BLACK, Color.WHITE);
 	}
 
 	public void doCommandLine(String line) {

@@ -156,9 +156,9 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createSplit(all);
 	}
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor) {
-		return factory.createGroup(list, name, backColor, titleColor, headerNote, borderColor);
+		return factory.createGroup(list, name, backColor, titleColor, note, borderColor);
 	}
 
 	public StringBounder getStringBounder() {

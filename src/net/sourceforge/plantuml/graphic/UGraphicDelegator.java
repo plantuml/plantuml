@@ -40,8 +40,8 @@ public abstract class UGraphicDelegator implements UGraphic {
 
 	final private UGraphic ug;
 	
-	public final boolean isSpecialTxt() {
-		return ug.isSpecialTxt();
+	public final boolean matchesProperty(String propertyName) {
+		return ug.matchesProperty(propertyName);
 	}
 
 

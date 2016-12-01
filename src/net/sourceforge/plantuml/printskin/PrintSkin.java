@@ -91,7 +91,9 @@ class PrintSkin extends AbstractPSystem {
 	//
 	// }
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormatOption) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption)
+			throws IOException {
 		final BufferedImage im = createImage();
 		final ImageData imageData = new ImageDataSimple(im.getWidth(), (int) maxYpos);
 		PngIO.write(im.getSubimage(0, 0, imageData.getWidth(), imageData.getHeight()), os, 96);

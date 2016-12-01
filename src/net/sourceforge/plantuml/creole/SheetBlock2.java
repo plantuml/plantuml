@@ -61,7 +61,7 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 
 	public void drawU(UGraphic ug) {
 		if (stencil != null) {
-			ug = new UGraphicStencil(ug, stencil, defaultStroke);
+			ug = UGraphicStencil.create(ug, stencil, defaultStroke);
 		}
 		block.drawU(ug);
 	}

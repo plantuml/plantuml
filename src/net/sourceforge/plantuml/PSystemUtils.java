@@ -47,30 +47,24 @@ import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.stats.StatsUtils;
 
 public class PSystemUtils {
 
 	public static List<File> exportDiagrams(Diagram system, File suggestedFile, FileFormatOption fileFormatOption)
 			throws IOException {
-		final long now = System.currentTimeMillis();
-		try {
-			if (system instanceof NewpagedDiagram) {
-				return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);
-			}
-			if (system instanceof SequenceDiagram) {
-				return exportDiagramsSequence((SequenceDiagram) system, suggestedFile, fileFormatOption);
-			}
-			if (system instanceof CucaDiagram) {
-				return exportDiagramsCuca((CucaDiagram) system, suggestedFile, fileFormatOption);
-			}
-			if (system instanceof ActivityDiagram3) {
-				return exportDiagramsActivityDiagram3((ActivityDiagram3) system, suggestedFile, fileFormatOption);
-			}
-			return exportDiagramsDefault(system, suggestedFile, fileFormatOption);
-		} finally {
-			StatsUtils.onceMoreGenerate(System.currentTimeMillis() - now, system.getClass(), fileFormatOption.getFileFormat());
+		if (system instanceof NewpagedDiagram) {
+			return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);
 		}
+		if (system instanceof SequenceDiagram) {
+			return exportDiagramsSequence((SequenceDiagram) system, suggestedFile, fileFormatOption);
+		}
+		if (system instanceof CucaDiagram) {
+			return exportDiagramsCuca((CucaDiagram) system, suggestedFile, fileFormatOption);
+		}
+		if (system instanceof ActivityDiagram3) {
+			return exportDiagramsActivityDiagram3((ActivityDiagram3) system, suggestedFile, fileFormatOption);
+		}
+		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);
 	}
 
 	private static List<File> exportDiagramsNewpaged(NewpagedDiagram system, File suggestedFile,

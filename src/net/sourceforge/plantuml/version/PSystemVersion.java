@@ -129,7 +129,9 @@ public class PSystemVersion extends AbstractPSystem {
 		return transparentIcon;
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image,
 				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),

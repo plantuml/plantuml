@@ -161,7 +161,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		header.drawU(ug, dimTotal.getWidth(), dimHeader.getHeight());
 
 		if (body != null) {
-			final UGraphic ug2 = new UGraphicStencil(ug, this, stroke);
+			final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);
 			final UTranslate translate = new UTranslate(0, dimHeader.getHeight());
 			body.drawU(ug2.apply(translate));
 		}

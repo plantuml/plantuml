@@ -30,51 +30,70 @@
  */
 package net.sourceforge.plantuml.stats;
 
-import java.util.List;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.api.NumberAnalyzed;
+import net.sourceforge.plantuml.stats.api.StatsColumn;
+import net.sourceforge.plantuml.stats.api.StatsLine;
+import net.sourceforge.plantuml.stats.api.StatsTable;
 
 public class FormatCounter {
 
-	private ConcurrentMap<FileFormat, AtomicLong> data = new ConcurrentHashMap<FileFormat, AtomicLong>();
+	private ConcurrentMap<FileFormat, NumberAnalyzed> data = new ConcurrentHashMap<FileFormat, NumberAnalyzed>();
 
-	public FormatCounter() {
+	public FormatCounter(String prefix) {
 		for (FileFormat format : FileFormat.values()) {
-			data.put(format, new AtomicLong());
+			final String key = prefix + format.name();
+			data.put(format, new NumberAnalyzed(key));
 		}
 
 	}
 
 	public void plusOne(FileFormat fileFormat, long duration) {
-		final AtomicLong n = data.get(fileFormat);
-		n.addAndGet(1);
+		final NumberAnalyzed n = data.get(fileFormat);
+		n.addValue(duration);
 	}
 
-	public void printTable(List<String> strings) {
-		Stats.addLine(strings, false, "Format", "#");
-		long total = 0;
-		for (Map.Entry<FileFormat, AtomicLong> ent : data.entrySet()) {
-			final long value = ent.getValue().get();
-			Stats.addLine(strings, false, ent.getKey().name(), value);
-			total += value;
-		}
-		Stats.addLine(strings, true, "Total", total);
+	private StatsLine createLine(String name, NumberAnalyzed n) {
+		final Map<StatsColumn, Object> result = new EnumMap<StatsColumn, Object>(StatsColumn.class);
+		result.put(StatsColumn.FORMAT, name);
+		result.put(StatsColumn.GENERATED_COUNT, n.getNb());
+		result.put(StatsColumn.GENERATED_MEAN_TIME, n.getMean());
+		result.put(StatsColumn.GENERATED_STANDARD_DEVIATION, n.getStandardDeviation());
+		result.put(StatsColumn.GENERATED_MAX_TIME, n.getMax());
+		return new StatsLineImpl(result);
+	}
 
+	public StatsTable getStatsTable(String name) {
+		final StatsTableImpl result = new StatsTableImpl(name);
+		final NumberAnalyzed total = new NumberAnalyzed();
+		for (Map.Entry<FileFormat, NumberAnalyzed> ent : data.entrySet()) {
+			final NumberAnalyzed n = ent.getValue();
+			if (n.getNb() > 0) {
+				result.addLine(createLine(ent.getKey().name(), n));
+				total.add(n);
+			}
+		}
+		result.addLine(createLine("Total", total));
+		return result;
 	}
 
 	public void reload(String prefix, Preferences prefs) throws BackingStoreException {
 		for (String key : prefs.keys()) {
 			if (key.startsWith(prefix)) {
 				try {
-					final FileFormat format = FileFormat.valueOf(key.substring(prefix.length()));
-					final long value = prefs.getLong(key, 0);
-					data.put(format, new AtomicLong(value));
+					final String name = removeDotSaved(key);
+					final NumberAnalyzed value = NumberAnalyzed.load(name, prefs);
+					if (value != null) {
+						final FileFormat format = FileFormat.valueOf(name.substring(prefix.length()));
+						data.put(format, value);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,9 +101,12 @@ public class FormatCounter {
 		}
 	}
 
-	public void save(String prefix, Preferences prefs, FileFormat fileFormat) {
-		final String key = prefix + fileFormat.name();
-		prefs.putLong(key, data.get(fileFormat).get());
+	static String removeDotSaved(String key) {
+		return key.substring(0, key.length() - ".saved".length());
+	}
+
+	public void save(Preferences prefs, FileFormat fileFormat) {
+		data.get(fileFormat).save(prefs);
 	}
 
 }

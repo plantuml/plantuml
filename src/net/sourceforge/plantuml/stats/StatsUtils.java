@@ -30,146 +30,186 @@
  */
 package net.sourceforge.plantuml.stats;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.core.Diagram;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.stats.api.Stats;
 
 public class StatsUtils {
 
-	public static void onceMoreParse(long duration, Class<? extends Diagram> type) {
-	}
+	final static Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);
 
-	public static void onceMoreGenerate(long duration, Class<? extends Diagram> type, FileFormat fileFormat) {
-	}
+	static ParsedGenerated fullEver;
+
+	static ConcurrentMap<String, ParsedGenerated> byTypeEver = new ConcurrentHashMap<String, ParsedGenerated>();
+	static ConcurrentMap<String, ParsedGenerated> byTypeCurrent = new ConcurrentHashMap<String, ParsedGenerated>();
+
+	static FormatCounter formatCounterCurrent = new FormatCounter("currentformat.");
+	static FormatCounter formatCounterEver = new FormatCounter("format.");
+
+	static HistoricalData historicalData;
+
+	static boolean xmlStats = false;
+	static boolean htmlStats = false;
+	static boolean realTimeStats = false;
 
 	public static Stats getStats() {
+		return new StatsImpl(byTypeEver, byTypeCurrent, formatCounterCurrent, formatCounterEver, historicalData,
+				fullEver);
+	}
+
+	private final static int VERSION = 14;
+
+	static {
+		if (prefs.getInt("VERSION", 0) != VERSION) {
+			try {
+				prefs.clear();
+			} catch (BackingStoreException e1) {
+				e1.printStackTrace();
+			}
+			prefs.putInt("VERSION", VERSION);
+		}
+		reloadNow();
+
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				endingHook();
+			}
+		});
+	}
+
+	public static void reloadNow() {
+		try {
+			prefs.sync();
+			fullEver = ParsedGenerated.loadDated(prefs, "full");
+			historicalData = new HistoricalData(prefs);
+			reload();
+			formatCounterEver.reload("format.", prefs);
+		} catch (BackingStoreException e) {
+			Log.error("Error reloading stats " + e);
+			byTypeEver.clear();
+		}
+	}
+
+	private static void reload() throws BackingStoreException {
+		for (String key : prefs.keys()) {
+			if (key.startsWith("type.") && key.endsWith(".p.saved")) {
+				final String name = removeDotPSaved(key);
+				final ParsedGenerated p = ParsedGenerated.loadDated(prefs, name);
+				if (p != null) {
+					byTypeEver.put(name.substring("type.".length()), p);
+				}
+			}
+		}
+	}
+
+	static String removeDotPSaved(String key) {
+		return key.substring(0, key.length() - ".p.saved".length());
+	}
+
+	private static void endingHook() {
+		try {
+			final Stats stats = getStatsLazzy();
+			if (xmlStats) {
+				xmlOutput(stats);
+			}
+			if (htmlStats) {
+				htmlOutput(stats);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	static Stats getStatsLazzy() {
+		if (xmlStats || htmlStats) {
+			return getStats();
+		}
 		return null;
 	}
 
-	// final private static Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);
-	//
-	// private static long firstEverStartingTime;
-	// private static long lastStartingTime;
-	// private static final long currentStartingTime;
-	// private static final long jvmCounting;
-	//
-	// private static ConcurrentMap<String, NumberAnalyzed> parsingEver = new ConcurrentHashMap<String,
-	// NumberAnalyzed>();
-	// private static ConcurrentMap<String, NumberAnalyzed> generatingEver = new ConcurrentHashMap<String,
-	// NumberAnalyzed>();
-	// private static ConcurrentMap<String, NumberAnalyzed> parsingCurrent = new ConcurrentHashMap<String,
-	// NumberAnalyzed>();
-	// private static ConcurrentMap<String, NumberAnalyzed> generatingCurrent = new ConcurrentHashMap<String,
-	// NumberAnalyzed>();
-	//
-	// private static FormatCounter formatCounterCurrent = new FormatCounter();
-	// private static FormatCounter formatCounterEver = new FormatCounter();
-	//
-	// public static void onceMoreParse(long duration, Class<? extends Diagram> type) {
-	// getNumber("parse.", type, parsingCurrent).addValue(duration);
-	// final NumberAnalyzed n1 = getNumber("parse.", type, parsingEver);
-	// n1.addValue(duration);
-	// n1.save(prefs);
-	// }
-	//
-	// public static void onceMoreGenerate(long duration, Class<? extends Diagram> type, FileFormat fileFormat) {
-	// getNumber("generate.", type, generatingCurrent).addValue(duration);
-	// final NumberAnalyzed n1 = getNumber("generate.", type, generatingEver);
-	// n1.addValue(duration);
-	// formatCounterCurrent.plusOne(fileFormat, duration);
-	// formatCounterEver.plusOne(fileFormat, duration);
-	// formatCounterEver.save("format.", prefs, fileFormat);
-	// n1.save(prefs);
-	// }
-	//
-	// public static Stats getStats() {
-	// return new Stats(firstEverStartingTime, lastStartingTime, currentStartingTime, jvmCounting, parsingEver,
-	// generatingEver, parsingCurrent, generatingCurrent, formatCounterCurrent, formatCounterEver);
-	// }
-	//
-	// private static NumberAnalyzed getNumber(String prefix, Class<? extends Diagram> type,
-	// ConcurrentMap<String, NumberAnalyzed> map) {
-	// final String name = name(type);
-	// NumberAnalyzed n = map.get(name);
-	// if (n == null) {
-	// map.putIfAbsent(name, new NumberAnalyzed(prefix + name));
-	// n = map.get(name);
-	// }
-	// return n;
-	// }
-	//
-	// private static String name(Class<? extends Diagram> type) {
-	// if (type == PSystemError.class) {
-	// return "Error";
-	// }
-	// if (type == ActivityDiagram3.class) {
-	// return "ActivityDiagramBeta";
-	// }
-	// if (type == PSystemSalt.class) {
-	// return "Salt";
-	// }
-	// if (type == PSystemSudoku.class) {
-	// return "Sudoku";
-	// }
-	// if (type == PSystemDot.class) {
-	// return "Dot";
-	// }
-	// if (type == PSystemEmpty.class) {
-	// return "Welcome";
-	// }
-	// if (type == PSystemDitaa.class) {
-	// return "Ditaa";
-	// }
-	// if (type == PSystemJcckit.class) {
-	// return "Jcckit";
-	// }
-	// final String name = type.getSimpleName();
-	// if (name.endsWith("Diagram")) {
-	// return name;
-	// }
-	// // return "Other " + name;
-	// return "Other";
-	// }
-	//
-	// static {
-	// // try {
-	// // prefs.clear();
-	// // } catch (BackingStoreException e1) {
-	// // e1.printStackTrace();
-	// // }
-	// currentStartingTime = System.currentTimeMillis();
-	// firstEverStartingTime = prefs.getLong("firstEverStartingTime", 0);
-	// if (firstEverStartingTime == 0) {
-	// firstEverStartingTime = currentStartingTime;
-	// prefs.putLong("firstEverStartingTime", firstEverStartingTime);
-	// }
-	// lastStartingTime = prefs.getLong("lastStartingTime", 0);
-	// if (lastStartingTime == 0) {
-	// lastStartingTime = currentStartingTime;
-	// }
-	// prefs.putLong("lastStartingTime", currentStartingTime);
-	// jvmCounting = prefs.getLong("JVMcounting", 0) + 1;
-	// prefs.putLong("JVMcounting", jvmCounting);
-	// try {
-	// reload("parse.", parsingEver);
-	// reload("generate.", generatingEver);
-	// formatCounterEver.reload("format.", prefs);
-	// } catch (BackingStoreException e) {
-	// Log.error("Error reloading stats " + e);
-	// parsingEver.clear();
-	// generatingEver.clear();
-	// }
-	// }
-	//
-	// private static void reload(final String tree, Map<String, NumberAnalyzed> data) throws BackingStoreException {
-	// for (String key : prefs.keys()) {
-	// if (key.startsWith(tree) && key.endsWith(".nb")) {
-	// final String name = key.substring(0, key.length() - 3);
-	// final NumberAnalyzed numberAnalyzed = NumberAnalyzed.load(name, prefs);
-	// if (numberAnalyzed != null) {
-	// data.put(name.substring(tree.length()), numberAnalyzed);
-	// }
-	// }
-	// }
-	// }
+	static void htmlOutput(Stats stats) throws FileNotFoundException {
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter("plantuml-stats.html");
+			pw.print(new HtmlConverter(stats).toHtml());
+		} finally {
+			if (pw != null) {
+				pw.close();
+			}
+		}
+	}
 
+	static void xmlOutput(Stats stats) throws FileNotFoundException, TransformerException,
+			ParserConfigurationException, IOException {
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream("plantuml-stats.xml");
+			new XmlConverter(stats).createXml(os);
+		} finally {
+			if (os != null) {
+				os.close();
+			}
+		}
+	}
+
+	public static void setXmlStats(boolean value) {
+		xmlStats = value;
+	}
+
+	public static void setHtmlStats(boolean value) {
+		htmlStats = value;
+	}
+
+	public static void setRealTimeStats(boolean value) {
+		realTimeStats = value;
+	}
+
+	public static void outHtml() throws FileNotFoundException {
+		htmlOutput(getStats());
+	}
+
+	public static void dumpStats() {
+		new TextConverter(getStats()).printMe(System.out);
+	}
+
+	public static void loopStats() throws InterruptedException {
+		int linesUsed = 0;
+		while (true) {
+			StatsUtils.reloadNow();
+			clearScreen(System.out, linesUsed);
+			final TextConverter textConverter = new TextConverter(getStats());
+			textConverter.printMe(System.out);
+			linesUsed = textConverter.getLinesUsed();
+			Thread.sleep(3000L);
+		}
+
+	}
+
+	private static void clearScreen(PrintStream ps, int linesUsed) {
+		if (linesUsed == 0) {
+			return;
+		}
+		if (File.separatorChar == '/') {
+			System.out.println(String.format("\033[%dA", linesUsed + 1)); // Move up
+		} else {
+			for (int i = 0; i < 20; i++) {
+				ps.println();
+			}
+		}
+	}
 }

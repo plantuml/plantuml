@@ -109,7 +109,7 @@ public class USymbolFolder extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
-				ug = new UGraphicStencil(ug, getRectangleStencil(dim), new UStroke());
+				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
 				final Dimension2D dimName = name.calculateDimension(ug.getStringBounder());
 				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.isShadowing());

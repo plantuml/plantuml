@@ -114,8 +114,12 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		getGraphicObject().createData(os);
 	}
 
-	public boolean isSpecialTxt() {
-		return true;
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		if ("SPECIALTXT".equalsIgnoreCase(propertyName)) {
+			return true;
+		}
+		return false;
 	}
 
 }

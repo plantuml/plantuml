@@ -37,7 +37,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class TextLimitFinder implements UGraphic {
 
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 

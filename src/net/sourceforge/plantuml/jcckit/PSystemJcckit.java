@@ -60,7 +60,9 @@ public class PSystemJcckit extends AbstractPSystem {
 		prop = new PropertiesBasedConfigData(p);
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		// Sets up a Graphics2DPlotCanvas

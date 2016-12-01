@@ -67,8 +67,6 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final GraphicPosition position;
 
-	private int maxLine = 0;
-
 	public static IEntityImage createForError(List<String> strings, boolean useRed) {
 		if (useRed) {
 			return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorUtils.BLACK,
@@ -88,14 +86,6 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	public static TextBlockBackcolored createBlackOnWhiteMonospaced(List<String> strings) {
 		return new GraphicStrings(strings, monospaced14(), HtmlColorUtils.BLACK, HtmlColorUtils.WHITE, null, null);
-	}
-
-	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
-			GraphicPosition position, int maxLine) {
-		final GraphicStrings result = new GraphicStrings(strings, sansSerif12(), HtmlColorUtils.BLACK,
-				HtmlColorUtils.WHITE, image, position);
-		result.maxLine = maxLine;
-		return result;
 	}
 
 	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
@@ -123,24 +113,9 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private TextBlock getTextBlock() {
 		TextBlock result = null;
-		if (maxLine == 0) {
-			result = Display.create(strings).create(
-					new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
-					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		} else {
-			for (int i = 0; i < strings.size(); i += maxLine) {
-				final int n = Math.min(i + maxLine, strings.size());
-				final TextBlock textBlock1 = Display.create(strings.subList(i, n)).create(
-						new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
-						HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-				if (result == null) {
-					result = textBlock1;
-				} else {
-					result = TextBlockUtils.withMargin(result, 0, 10, 0, 0);
-					result = TextBlockUtils.mergeLR(result, textBlock1, VerticalAlignment.TOP);
-				}
-			}
-		}
+		result = Display.create(strings).create(
+				new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		// result = DateEventUtils.addEvent(result, green);
 		return result;
 	}

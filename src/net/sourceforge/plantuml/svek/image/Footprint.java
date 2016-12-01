@@ -72,7 +72,7 @@ public class Footprint {
 			this.translate = translate;
 		}
 
-		public boolean isSpecialTxt() {
+		public boolean matchesProperty(String propertyName) {
 			return false;
 		}
 

@@ -64,6 +64,7 @@ public class Splitter {
 	static final String htmlTag;
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";
+	public static final String mathPattern = "\\<math\\>(.+?)\\</math\\>";
 
 	private static final Pattern2 tagOrText;
 
@@ -99,8 +100,8 @@ public class Splitter {
 		sb.append('|');
 		sb.append(fontFamilyPattern);
 		sb.append('|');
-		sb.append(spritePattern);
-		sb.append('|');
+		// sb.append(spritePattern);
+		// sb.append('|');
 		sb.append(linkPattern);
 		sb.append('|');
 		sb.append(svgAttributePattern);

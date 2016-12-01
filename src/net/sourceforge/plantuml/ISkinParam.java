@@ -79,7 +79,7 @@ public interface ISkinParam extends ISkinSimple {
 	public String getDotExecutable();
 
 	public boolean shadowing();
-	
+
 	public boolean shadowingForNote(Stereotype stereotype);
 
 	public boolean shadowing2(SkinParameter skinParameter);
@@ -121,14 +121,15 @@ public interface ISkinParam extends ISkinSimple {
 	public boolean handwritten();
 
 	public String getSvgLinkTarget();
-	
+
 	public int getTabSize();
-	
+
 	public int maxAsciiMessageLength();
-	
+
 	public int colorArrowSeparationSpace();
-	
+
 	public SplitParam getSplitParam();
 
+	public int swimlaneWidth();
 
 }

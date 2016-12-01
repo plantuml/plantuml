@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -39,6 +40,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -105,5 +107,10 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 	protected final Ftile getFtileDelegated() {
 		return ftile;
 	}
+	
+	public List<WeldingPoint> getWeldingPoints() {
+		return ftile.getWeldingPoints();
+	}
+
 
 }

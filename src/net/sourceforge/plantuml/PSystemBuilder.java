@@ -71,8 +71,7 @@ import net.sourceforge.plantuml.project2.PSystemProjectFactory2;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
-import net.sourceforge.plantuml.stats.PSystemStatsFactory;
-import net.sourceforge.plantuml.stats.StatsUtils;
+import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.ugraphic.sprite.PSystemListInternalSpritesFactory;
 import net.sourceforge.plantuml.version.License;
@@ -111,7 +110,7 @@ public class PSystemBuilder {
 			return err;
 		} finally {
 			if (result != null) {
-				StatsUtils.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
+				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
 		}
 
@@ -150,7 +149,7 @@ public class PSystemBuilder {
 			factories.add(new PSystemSudokuFactory());
 		}
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
-		factories.add(new PSystemStatsFactory());
+		// factories.add(new PSystemStatsFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemAppleTwoFactory());

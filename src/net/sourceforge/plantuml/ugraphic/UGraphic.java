@@ -51,5 +51,5 @@ public interface UGraphic {
 
 	public void flushUg();
 
-	public boolean isSpecialTxt();
+	public boolean matchesProperty(String propertyName);
 }

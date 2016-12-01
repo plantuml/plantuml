@@ -212,7 +212,7 @@ public class CollisionDetector implements UGraphic {
 		this.context.manageSnakes = manageSnakes;
 	}
 
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 

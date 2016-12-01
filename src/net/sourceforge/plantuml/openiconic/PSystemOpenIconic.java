@@ -52,22 +52,24 @@ public class PSystemOpenIconic extends AbstractPSystem {
 		this.factor = factor;
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final OpenIcon icon = OpenIcon.retrieve(iconName);
 		// final Dimension2D dim = new Dimension2DDouble(100, 100);
 
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0,
-				null, null, null, 5, 5, null, false);
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 5, 5,
+				null, false);
 		imageBuilder.setUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 
-//		UGraphic2 ug = fileFormat.createUGraphic(dim);
-//		ug = (UGraphic2) ug.apply(new UTranslate(10, 10));
-//		// ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
-//		// ug.draw(new URectangle(7, 6));
-//		icon.asTextBlock(HtmlColorUtils.BLACK, factor).drawU(ug);
-//		ug.writeImageTOBEMOVED(os, null, 96);
-//		return new ImageDataSimple(dim);
+		// UGraphic2 ug = fileFormat.createUGraphic(dim);
+		// ug = (UGraphic2) ug.apply(new UTranslate(10, 10));
+		// // ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		// // ug.draw(new URectangle(7, 6));
+		// icon.asTextBlock(HtmlColorUtils.BLACK, factor).drawU(ug);
+		// ug.writeImageTOBEMOVED(os, null, 96);
+		// return new ImageDataSimple(dim);
 	}
 
 	// private GraphicStrings getGraphicStrings() throws IOException {

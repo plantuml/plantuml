@@ -136,6 +136,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 		current().add(new InstructionStop(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
 	}
 
+	public void breakInstruction() {
+		manageSwimlaneStrategy();
+		current().add(new InstructionBreak(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
+	}
+
 	public void end() {
 		manageSwimlaneStrategy();
 		current().add(new InstructionEnd(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
@@ -165,8 +170,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final double margin = 10;
 		final double dpiFactor = getDpiFactor(fileFormatOption, Dimension2DDouble.delta(dim, 2 * margin, 0));
 
-		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor, fileFormatOption.isWithMetadata() ? getMetadata()
-						: null, getWarningOrError(), margin, margin, getAnimation());
+		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), dpiFactor,
+				fileFormatOption.isWithMetadata() ? getMetadata() : null, getWarningOrError(), margin, margin,
+				getAnimation());
 		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);

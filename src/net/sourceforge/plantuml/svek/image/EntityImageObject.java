@@ -151,7 +151,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		header.add(name);
 		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());
 
-		final UGraphic ug2 = new UGraphicStencil(ug, this, stroke);
+		final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);
 		fields.drawU(ug2.apply(new UTranslate(0, dimTitle.getHeight())));
 
 		if (url != null) {

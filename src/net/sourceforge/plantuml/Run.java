@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
+import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.swing.MainWindow2;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
@@ -73,6 +74,18 @@ public class Run {
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
 		final long start = System.currentTimeMillis();
 		final Option option = new Option(argsArray);
+		if (OptionFlags.getInstance().isDumpStats()) {
+			StatsUtils.dumpStats();
+			return;
+		}
+		if (OptionFlags.getInstance().isLoopStats()) {
+			StatsUtils.loopStats();
+			return;
+		}
+		if (OptionFlags.getInstance().isDumpHtmlStats()) {
+			StatsUtils.outHtml();
+			return;
+		}
 		if (OptionFlags.getInstance().isEncodesprite()) {
 			encodeSprite(option.getResult());
 			return;

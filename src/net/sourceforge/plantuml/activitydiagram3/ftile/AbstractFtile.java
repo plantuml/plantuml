@@ -32,6 +32,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
@@ -85,6 +86,10 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 			thickness = new UStroke(1.5);
 		}
 		return thickness;
+	}
+
+	public List<WeldingPoint> getWeldingPoints() {
+		return Collections.emptyList();
 	}
 
 }

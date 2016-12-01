@@ -39,9 +39,9 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class IfManager implements ReadLine {
 
-	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+([A-Za-z_][A-Za-z_0-9]*)$");
-	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else$");
-	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif$");
+	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+(.+)$");
+	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else[%s]*$");
+	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif[%s]*$");
 
 	private final Defines defines;
 	private final ReadLine source;
@@ -53,7 +53,7 @@ class IfManager implements ReadLine {
 		this.source = source;
 	}
 
-	final public CharSequence2	 readLine() throws IOException {
+	final public CharSequence2 readLine() throws IOException {
 		if (child != null) {
 			final CharSequence2 s = child.readLine();
 			if (s != null) {
@@ -82,15 +82,9 @@ class IfManager implements ReadLine {
 			} else {
 				child = new IfManagerNegatif(source, defines);
 			}
-			// child = new IfManager(source, defines, ok ? IfPart.IF :
-			// IfPart.SKIP);
 			return this.readLine();
 		}
 
-		// m = endifPattern.matcher(s);
-		// if (m.find()) {
-		// return null;
-		// }
 		return s;
 	}
 

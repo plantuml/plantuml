@@ -58,7 +58,9 @@ public class PSystemTree extends AbstractPSystem {
 		return new DiagramDescriptionImpl("(Tree)", getClass());
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null, null,
 				5, 5, null, false);
 		if (rendering == Rendering.NEEDLE) {

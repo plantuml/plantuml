@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.stats.StatsUtils;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -372,6 +373,21 @@ public class PlantUmlTask extends Task {
 
 	public void setFileSeparator(String s) {
 		OptionFlags.getInstance().setFileSeparator(s);
+	}
+
+	public void setHtmlStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		StatsUtils.setHtmlStats(flag);
+	}
+
+	public void setXmlStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		StatsUtils.setXmlStats(flag);
+	}
+
+	public void setRealTimeStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		StatsUtils.setRealTimeStats(flag);
 	}
 
 }

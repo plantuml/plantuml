@@ -242,4 +242,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getSplitParam();
 	}
 
+	public int swimlaneWidth() {
+		return skinParam.swimlaneWidth();
+	}
+
 }

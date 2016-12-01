@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -54,5 +55,7 @@ public interface Ftile extends Swimable, TextBlock {
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder);
 
 	public Collection<Connection> getInnerConnections();
+
+	public List<WeldingPoint> getWeldingPoints();
 
 }

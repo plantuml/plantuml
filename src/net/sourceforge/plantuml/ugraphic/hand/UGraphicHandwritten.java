@@ -129,8 +129,8 @@ public class UGraphicHandwritten implements UGraphic {
 		ug.flushUg();
 	}
 
-	public boolean isSpecialTxt() {
-		return false;
+	public boolean matchesProperty(String propertyName) {
+		return ug.matchesProperty(propertyName);
 	}
 
 }

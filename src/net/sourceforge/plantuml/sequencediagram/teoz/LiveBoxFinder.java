@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LiveBoxFinder implements UGraphic {
 
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 

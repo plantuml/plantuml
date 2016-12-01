@@ -792,4 +792,15 @@ public class SkinParam implements ISkinParam {
 				margin);
 	}
 
+	public int swimlaneWidth() {
+		final String value = getValue("swimlanewidth");
+		if ("same".equalsIgnoreCase(value)) {
+			return -1;
+		}
+		if (value != null && value.matches("\\d+")) {
+			return Integer.parseInt(value);
+		}
+		return 0;
+	}
+
 }

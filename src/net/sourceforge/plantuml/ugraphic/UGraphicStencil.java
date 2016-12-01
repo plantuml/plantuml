@@ -37,7 +37,12 @@ public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
 	private final Stencil stencil;
 	private final UStroke defaultStroke;
 
-	public UGraphicStencil(UGraphic ug, Stencil stencil, UStroke defaultStroke) {
+	public static UGraphic create(UGraphic ug, Stencil stencil, UStroke defaultStroke) {
+		return new UGraphicStencil(ug, stencil, defaultStroke);
+	}
+	
+	
+	private UGraphicStencil(UGraphic ug, Stencil stencil, UStroke defaultStroke) {
 		super(ug);
 		this.stencil = stencil;
 		this.defaultStroke = defaultStroke;
@@ -55,4 +60,5 @@ public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
 		// ud.drawU(ug.apply(translate));
 		// line.drawLine(ug.apply(translate), startingX, endingX, 0, defaultStroke);
 	}
+
 }

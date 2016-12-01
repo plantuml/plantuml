@@ -51,7 +51,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	private final LinkRendering linkRendering;
 
 	private final Display test;
-	private Display headerNote = Display.NULL;
+	private PositionedNote note = null;
 
 	public InstructionGroup(Instruction parent, Display test, HtmlColor backColor, HtmlColor titleColor,
 			Swimlane swimlane, HtmlColor borderColor, LinkRendering linkRendering) {
@@ -69,7 +69,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, headerNote, borderColor);
+		return factory.createGroup(list.createFtile(factory), test, backColor, titleColor, note, borderColor);
 	}
 
 	public Instruction getParent() {
@@ -86,7 +86,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
 		if (list.isEmpty()) {
-			this.headerNote = note;
+			this.note = new PositionedNote(note, position, type, colors);
 			return true;
 		}
 		return list.addNote(note, position, type, colors);

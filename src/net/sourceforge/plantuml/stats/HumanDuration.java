@@ -1,0 +1,64 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2017, Arnaud Roques
+ *
+ * Project Info:  http://plantuml.com
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.stats;
+
+class HumanDuration {
+
+	private final long duration;
+
+	public HumanDuration(long duration) {
+		this.duration = duration;
+	}
+
+	@Override
+	public String toString() {
+		long time = duration;
+		final long ms = time % 1000L;
+		time = time / 1000;
+		final long sec = time % 60;
+		time = time / 60;
+		final long min = time % 60;
+		time = time / 60;
+		final long hour = time % 24;
+		final long day = time / 24;
+		if (day > 0) {
+			return String.format("%dd %02dh%02dm%02ds", day, hour, min, sec, ms);
+		}
+		if (hour > 0) {
+			return String.format("%dh%02dm%02ds", hour, min, sec, ms);
+		}
+		if (min > 0) {
+			return String.format("%dm%02ds", min, sec, ms);
+		}
+		return String.format("%ds", sec, ms);
+	}
+
+}

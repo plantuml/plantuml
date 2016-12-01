@@ -80,7 +80,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 				new RegexConcat(
 						//
-						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[#\\[<*+^]|[<\\[]\\|)?"), //
+						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[#\\[<*+^}]|[<\\[]\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1",
 								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
@@ -89,7 +89,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("ARROW_STYLE2",
 								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
-						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[#\\]>*+^]|\\|[>\\]])?")), //
+						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[#\\]>*+^{]|\\|[>\\]])?")), //
 
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"),
@@ -415,6 +415,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("<|".equals(s)) {
 			return LinkDecor.EXTENDS;
 		}
+		if ("}".equals(s)) {
+			return LinkDecor.CROWFOOT;
+		}
 		if ("<".equals(s)) {
 			return LinkDecor.ARROW;
 		}
@@ -449,6 +452,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 		if (">".equals(s)) {
 			return LinkDecor.ARROW;
+		}
+		if ("{".equals(s)) {
+			return LinkDecor.CROWFOOT;
 		}
 		if ("^".equals(s)) {
 			return LinkDecor.EXTENDS;

@@ -76,7 +76,9 @@ public class PSystemSalt extends AbstractPSystem {
 		data.add(s);
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final Element salt = SaltUtils.createElement(data);
 
 		final Dimension2D size = salt.getPreferredDimension(fileFormat.getDefaultStringBounder(), 0, 0);

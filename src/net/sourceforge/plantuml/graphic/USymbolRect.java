@@ -34,7 +34,9 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolRect extends USymbol {
@@ -75,6 +77,7 @@ class USymbolRect extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
 				final Margin margin = getMargin();
@@ -117,6 +120,11 @@ class USymbolRect extends USymbol {
 				return new Dimension2DDouble(width, height);
 			}
 		};
+	}
+
+	@Override
+	public boolean manageHorizontalLine() {
+		return true;
 	}
 
 }

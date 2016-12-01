@@ -64,14 +64,17 @@ public class PSystemDitaa extends AbstractPSystem {
 	}
 
 	PSystemDitaa add(String line) {
-		return new PSystemDitaa(data + line + "\n", processingOptions.performSeparationOfCommonEdges(), dropShadows, scale);
+		return new PSystemDitaa(data + line + "\n", processingOptions.performSeparationOfCommonEdges(), dropShadows,
+				scale);
 	}
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("(Ditaa)", getClass());
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT) {
 			os.write(getSource().getPlainString().getBytes());
 			return new ImageDataSimple();

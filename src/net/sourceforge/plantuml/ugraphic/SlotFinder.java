@@ -35,7 +35,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class SlotFinder implements UGraphic {
 	
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 

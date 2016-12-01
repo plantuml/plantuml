@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.posimo.DotPath;
 
 public class LimitFinder implements UGraphic {
 
-	public boolean isSpecialTxt() {
+	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
 

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -104,18 +105,33 @@ public class AtomTable implements Atom {
 						.apply(new UTranslate(x1, y1)).draw(new URectangle(x2 - x1, y2 - y1));
 			}
 			for (int j = 0; j < getNbCols(); j++) {
+				if (j >= line.cells.size()) {
+					continue;
+				}
 				final Atom cell = line.cells.get(j);
+				HorizontalAlignment align = HorizontalAlignment.LEFT;
+				if (cell instanceof SheetBlock1) {
+					align = ((SheetBlock1) cell).getCellAlignment();
+				}
 				final HtmlColor cellBackColor = line.cellsBackColor.get(j);
+				final double x1 = getStartingX(j);
+				final double x2 = getStartingX(j + 1);
+				final double cellWidth = x2 - x1;
 				if (cellBackColor != null) {
 					final double y1 = getStartingY(i);
 					final double y2 = getStartingY(i + 1);
-					final double x1 = getStartingX(j);
-					final double x2 = getStartingX(j + 1);
 					ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(cellBackColor))
 							.apply(new UTranslate(x1, y1)).draw(new URectangle(x2 - x1, y2 - y1));
 				}
 				final Position pos = positions.get(cell);
-				cell.drawU(ug.apply(pos.getTranslate()));
+				final Dimension2D dimCell = cell.calculateDimension(ug.getStringBounder());
+				final double dx;
+				if (align == HorizontalAlignment.RIGHT) {
+					dx = cellWidth - dimCell.getWidth();
+				} else {
+					dx = 0;
+				}
+				cell.drawU(ug.apply(pos.getTranslate().compose(new UTranslate(dx, 0))));
 			}
 		}
 		ug = ug.apply(new UChangeColor(lineColor));

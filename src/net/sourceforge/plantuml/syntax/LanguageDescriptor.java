@@ -142,6 +142,9 @@ public class LanguageDescriptor {
 		preproc.add("!ifdef");
 		preproc.add("!endif");
 		preproc.add("!ifndef");
+		preproc.add("!else");
+		preproc.add("!definelong");
+		preproc.add("!enddefinelong");
 	}
 
 	public void print(PrintStream ps) {

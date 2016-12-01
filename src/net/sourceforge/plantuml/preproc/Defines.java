@@ -39,7 +39,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Defines {
+import net.sourceforge.plantuml.Log;
+
+public class Defines implements Truth {
 
 	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
 	private final Map<String, Define> savedState = new LinkedHashMap<String, Define>();
@@ -48,7 +50,17 @@ public class Defines {
 		values.put(name, new Define(name, value));
 	}
 
-	public boolean isDefine(String name) {
+	public boolean isDefine(String expression) {
+		try {
+			final EvalBoolean eval = new EvalBoolean(expression, this);
+			return eval.eval();
+		} catch (IllegalArgumentException e) {
+			Log.info("Error in " + expression);
+			return false;
+		}
+	}
+
+	public boolean isTrue(String name) {
 		for (String key : values.keySet()) {
 			if (key.equals(name) || key.startsWith(name + "(")) {
 				return true;

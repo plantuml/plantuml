@@ -63,7 +63,9 @@ public class PSystemCreole extends AbstractPSystem {
 		lines.add(line);
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final Display display = Display.create(lines);
 		final UFont font = new UFont("Serif", Font.PLAIN, 14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);

@@ -54,7 +54,9 @@ public class PSystemCharlie extends AbstractPSystem {
 		image = PSystemVersion.getCharlieImage();
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.BLACK,
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(new UDrawable() {

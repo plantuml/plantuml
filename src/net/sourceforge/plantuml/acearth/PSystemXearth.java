@@ -73,8 +73,10 @@ public class PSystemXearth extends AbstractPSystem {
 		this.config = config;
 		this.markers = markers;
 	}
-	
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final ACearth earth = new ACearth(markers);
 		final ConfigurationACearth conf = earth.getConf();
 		conf.setInt("imageWidth", width);
@@ -102,7 +104,6 @@ public class PSystemXearth extends AbstractPSystem {
 		return new ImageDataSimple(width, height);
 	}
 
-
 	private Date extractGmt(String s) {
 		final SimpleDateFormat timeFormat;
 		if (s.matches("\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}")) {
@@ -124,6 +125,5 @@ public class PSystemXearth extends AbstractPSystem {
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("(XEarth)", getClass());
 	}
-
 
 }

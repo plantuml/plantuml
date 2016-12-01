@@ -30,19 +30,25 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
@@ -53,6 +59,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 	@Override
 	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
 			HtmlColor color, LinkRendering backRepeatLinkRendering) {
+
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
 		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
@@ -66,7 +73,21 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final FontConfiguration fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
 		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
 
-		return FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, repeat, test, yes, out, borderColor,
-				backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond, fcArrow);
+		Ftile result = FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, repeat, test, yes, out,
+				borderColor, backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond,
+				fcArrow);
+
+		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
+		if (weldingPoints.size() > 0) {
+			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane);
+			result = assembly(result, diamondBreak);
+
+			final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(0);
+			System.err.println("break=" + ftileBreak);
+			final UTranslate pos = repeat.getTranslateFor(ftileBreak, getStringBounder());
+			System.err.println("pos=" + pos);
+
+		}
+		return result;
 	}
 }

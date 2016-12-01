@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
+import net.sourceforge.plantuml.creole.SheetBlock2;
+import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -57,10 +59,11 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class FtileWithNotes extends AbstractFtile /* implements Stencil */{
+public class FtileWithNotes extends AbstractFtile {
 
 	private final Ftile tile;
 
@@ -83,9 +86,6 @@ public class FtileWithNotes extends AbstractFtile /* implements Stencil */{
 
 	public FtileWithNotes(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam) {
 		super(tile.skinParam());
-		// if (note.getColors() != null) {
-		// skinParam = note.getColors().mute(skinParam);
-		// }
 		this.tile = tile;
 
 		final Rose rose = new Rose();
@@ -99,20 +99,30 @@ public class FtileWithNotes extends AbstractFtile /* implements Stencil */{
 			final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
 			final SheetBlock1 sheet1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
+			final SheetBlock2 sheet2 = new SheetBlock2(sheet1, new Stencil() {
+				// -6 and 15 value comes from Opale: this is very ugly!
+				public double getStartingX(StringBounder stringBounder, double y) {
+					return -6;
+				}
 
-			final TextBlock opale = TextBlockUtils.withMargin(new Opale(borderColor, noteBackgroundColor, sheet1,
-					skinParam.shadowing(), false), 10, 10);
+				public double getEndingX(StringBounder stringBounder, double y) {
+					return sheet1.getEndingX(stringBounder, y) + 15;
+				}
+			}, new UStroke());
+
+			final Opale opale = new Opale(borderColor, noteBackgroundColor, sheet2, skinParam.shadowing(), false);
+			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);
 			if (note.getNotePosition() == NotePosition.LEFT) {
 				if (left == null) {
-					left = opale;
+					left = opaleMarged;
 				} else {
-					left = TextBlockUtils.mergeTB(left, opale, HorizontalAlignment.CENTER);
+					left = TextBlockUtils.mergeTB(left, opaleMarged, HorizontalAlignment.CENTER);
 				}
 			} else {
 				if (right == null) {
-					right = opale;
+					right = opaleMarged;
 				} else {
-					right = TextBlockUtils.mergeTB(right, opale, HorizontalAlignment.CENTER);
+					right = TextBlockUtils.mergeTB(right, opaleMarged, HorizontalAlignment.CENTER);
 				}
 			}
 		}
@@ -175,13 +185,5 @@ public class FtileWithNotes extends AbstractFtile /* implements Stencil */{
 		final double height = MathUtils.max(dimLeft.getHeight(), dimRight.getHeight(), dimTile.getHeight());
 		return new Dimension2DDouble(dimTile.getWidth() + dimLeft.getWidth() + dimRight.getWidth(), height);
 	}
-
-	// public double getStartingX(StringBounder stringBounder, double y) {
-	// return -opale.getMarginX1();
-	// }
-	//
-	// public double getEndingX(StringBounder stringBounder, double y) {
-	// return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();
-	// }
 
 }

@@ -36,6 +36,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Swimlane implements SpecificBackcolorable {
@@ -98,4 +99,14 @@ public class Swimlane implements SpecificBackcolorable {
 		this.colors = colors;
 	}
 
+	private MinMax minMax;
+
+	public void setMinMax(MinMax minMax) {
+		this.minMax = minMax;
+
+	}
+
+	public MinMax getMinMax() {
+		return minMax;
+	}
 }

@@ -36,6 +36,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -70,6 +71,11 @@ public class Branch {
 		this.labelPositive = labelPositive;
 		this.color = color;
 	}
+	
+	public Collection<WeldingPoint> getWeldingPoints() {
+		return ftile.getWeldingPoints();
+	}
+
 
 	public void add(Instruction ins) {
 		list.add(ins);

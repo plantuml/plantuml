@@ -49,11 +49,13 @@ public class PSystemStats extends AbstractPSystem {
 	private final List<String> strings = new ArrayList<String>();
 
 	PSystemStats() throws IOException {
-		final Stats stats = StatsUtils.getStats();
-		stats.printMe(strings);
+		final StatsImpl stats = (StatsImpl) StatsUtils.getStats();
+		strings.addAll(new CreoleConverter(stats).toCreole());
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);

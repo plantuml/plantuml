@@ -37,9 +37,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -75,9 +77,11 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		if (all.size() == 0) {
 			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
 		}
+		final List<WeldingPoint> breaks = new ArrayList<WeldingPoint>();
 		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn());
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
+			breaks.addAll(cur.getWeldingPoints());
 			if (ins.getInLinkRendering().isNone() == false) {
 				cur = factory.decorateIn(cur, ins.getInLinkRendering());
 			}
@@ -91,6 +95,10 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		if (outlinkRendering != null) {
 			result = factory.decorateOut(result, outlinkRendering);
 		}
+		if (breaks.size() > 0) {
+			result = new FtileDecorateWelding(result, breaks);
+		}
+
 		// if (killed) {
 		// result = new FtileKilled(result);
 		// }
@@ -128,15 +136,15 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public Swimlane getSwimlaneIn() {
 		return defaultSwimlane;
-//		final Set<Swimlane> swimlanes = getSwimlanes();
-//		if (swimlanes.size() == 0) {
-//			return null;
-//		}
-//		if (swimlanes.size() == 1) {
-//			return swimlanes.iterator().next();
-//		}
-//		System.err.println("foo1="+getClass());
-//		return all.get(0).getSwimlaneIn();
+		// final Set<Swimlane> swimlanes = getSwimlanes();
+		// if (swimlanes.size() == 0) {
+		// return null;
+		// }
+		// if (swimlanes.size() == 1) {
+		// return swimlanes.iterator().next();
+		// }
+		// System.err.println("foo1="+getClass());
+		// return all.get(0).getSwimlaneIn();
 	}
 
 	public Swimlane getSwimlaneOut() {

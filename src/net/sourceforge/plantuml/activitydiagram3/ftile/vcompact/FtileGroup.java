@@ -68,10 +68,8 @@ public class FtileGroup extends AbstractFtile {
 	private final Ftile inner;
 	private final TextBlock name;
 	private final TextBlock headerNote;
-	// private final HtmlColor arrowColor;
 	private final HtmlColor borderColor;
 	private final HtmlColor backColor;
-	// private final HtmlColor titleColor;
 	private final UStroke stroke;
 
 	public FtileGroup(Ftile inner, Display title, Display displayNote, HtmlColor arrowColor, HtmlColor backColor,
@@ -79,8 +77,6 @@ public class FtileGroup extends AbstractFtile {
 		super(inner.skinParam());
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
-		// this.arrowColor = arrowColor;
-		// this.titleColor = titleColor;
 		this.borderColor = backColor == null ? HtmlColorUtils.BLACK : borderColor;
 		final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
 

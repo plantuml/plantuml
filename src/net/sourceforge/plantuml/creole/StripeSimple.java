@@ -30,6 +30,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +40,11 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.ImgValign;
+import net.sourceforge.plantuml.math.AsciiMathSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.utils.CharHidder;
@@ -48,6 +53,15 @@ public class StripeSimple implements Stripe {
 
 	final private List<Atom> atoms = new ArrayList<Atom>();
 	final private List<Command> commands = new ArrayList<Command>();
+	private HorizontalAlignment align = HorizontalAlignment.LEFT;
+
+	public void setCellAlignment(HorizontalAlignment align) {
+		this.align = align;
+	}
+
+	public HorizontalAlignment getCellAlignment() {
+		return align;
+	}
 
 	private FontConfiguration fontConfiguration;
 
@@ -90,6 +104,7 @@ public class StripeSimple implements Stripe {
 		this.commands.add(CommandCreoleExposantChange.create(FontPosition.INDICE));
 		this.commands.add(CommandCreoleImg.create());
 		this.commands.add(CommandCreoleOpenIcon.create());
+		this.commands.add(CommandCreoleMath.create());
 		this.commands.add(CommandCreoleSprite.create());
 		this.commands.add(CommandCreoleSpace.create());
 		this.commands.add(CommandCreoleFontFamilyChange.create());
@@ -158,6 +173,10 @@ public class StripeSimple implements Stripe {
 		if (openIcon != null) {
 			atoms.add(new AtomOpenIcon(openIcon, fontConfiguration));
 		}
+	}
+
+	public void addMath(AsciiMathSafe math) {
+		atoms.add(new AtomMath(math, fontConfiguration.getColor()));
 	}
 
 	private void modifyStripe(String line) {

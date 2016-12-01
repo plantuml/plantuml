@@ -80,7 +80,7 @@ public interface FtileFactory {
 
 	public Ftile createSplit(List<Ftile> all);
 
-	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, Display headerNote,
+	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor);
 
 }

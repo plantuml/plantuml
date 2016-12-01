@@ -167,7 +167,7 @@ public class AtomText implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (ug.isSpecialTxt()) {
+		if (ug.matchesProperty("SPECIALTXT")) {
 			ug.draw(this);
 			return;
 		}

@@ -38,8 +38,10 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -90,6 +92,14 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
 		if (getPositionedNotes().size() > 0) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
+		}
+		final List<WeldingPoint> weldingPoints = new ArrayList<WeldingPoint>();
+		for (Branch branch : thens) {
+			weldingPoints.addAll(branch.getWeldingPoints());
+		}
+		weldingPoints.addAll(elseBranch.getWeldingPoints());
+		if (weldingPoints.size() > 0) {
+			result = new FtileDecorateWelding(result, weldingPoints);
 		}
 		return result;
 	}

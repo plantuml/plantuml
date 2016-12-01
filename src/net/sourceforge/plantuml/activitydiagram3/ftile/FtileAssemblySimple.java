@@ -31,9 +31,11 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -137,6 +139,12 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
 	public UStroke getThickness() {
 		return tile1.getThickness();
+	}
+
+	public List<WeldingPoint> getWeldingPoints() {
+		final List<WeldingPoint> result = new ArrayList<WeldingPoint>(tile1.getWeldingPoints());
+		result.addAll(tile2.getWeldingPoints());
+		return Collections.unmodifiableList(result);
 	}
 
 }

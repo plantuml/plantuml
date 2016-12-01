@@ -72,7 +72,9 @@ public class PSystemEmpty extends AbstractPSystem {
 		strings.add(" ");
 	}
 
-	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
@@ -82,8 +84,8 @@ public class PSystemEmpty extends AbstractPSystem {
 	}
 
 	private TextBlockBackcolored getGraphicStrings() throws IOException {
-		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(),
-				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
+		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings,
+				PSystemVersion.getPlantumlImage(), GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
 		return result;
 	}
 
