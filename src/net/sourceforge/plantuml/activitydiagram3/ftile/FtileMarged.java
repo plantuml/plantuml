@@ -30,6 +30,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -48,6 +50,12 @@ public class FtileMarged extends AbstractFtile {
 		this.tile = tile;
 		this.margin1 = margin1;
 		this.margin2 = margin2;
+	}
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.singleton(tile);
+		// return tile.getMyChildren();
 	}
 
 	@Override
@@ -79,13 +87,20 @@ public class FtileMarged extends AbstractFtile {
 	}
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		if (child == tile) {
+			return getTranslate();
+		}
 		UTranslate result = tile.getTranslateFor(child, stringBounder);
-		result = result.compose(new UTranslate(margin1, 0));
+		result = result.compose(getTranslate());
 		return result;
 	}
 
+	private UTranslate getTranslate() {
+		return new UTranslate(margin1, 0);
+	}
+
 	public void drawU(UGraphic ug) {
-		ug.apply(new UTranslate(margin1, 0)).draw(tile);
+		ug.apply(getTranslate()).draw(tile);
 	}
 
 }

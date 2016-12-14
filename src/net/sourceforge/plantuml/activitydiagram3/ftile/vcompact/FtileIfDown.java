@@ -33,6 +33,8 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +67,14 @@ public class FtileIfDown extends AbstractFtile {
 	private final Ftile diamond1;
 	private final Ftile diamond2;
 	private final Ftile optionalStop;
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		if (optionalStop == null) {
+			return Arrays.asList(thenBlock, diamond1, diamond2);
+		}
+		return Arrays.asList(thenBlock, diamond1, diamond2, optionalStop);
+	}
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<Swimlane>(thenBlock.getSwimlanes());
@@ -331,7 +341,8 @@ public class FtileIfDown extends AbstractFtile {
 		final FtileGeometry geoThen = thenBlock.calculateDimension(stringBounder);
 		final FtileGeometry geoDiamond2 = diamond2.calculateDimension(stringBounder);
 		final FtileGeometry geo = geoDiamond1.appendBottom(geoThen).appendBottom(geoDiamond2);
-		final double height = geo.getHeight() + 4 * Diamond.diamondHalfSize;
+		final double height = geo.getHeight() + 3 * Diamond.diamondHalfSize
+				+ Math.max(Diamond.diamondHalfSize * 1, getSouthLabelHeight(stringBounder));
 		double width = geo.getWidth() + Diamond.diamondHalfSize;
 		if (optionalStop != null) {
 			width += optionalStop.calculateDimension(stringBounder).getWidth() + getAdditionalWidth(stringBounder);
@@ -345,6 +356,16 @@ public class FtileIfDown extends AbstractFtile {
 		final double val1 = getEastLabelWidth(stringBounder);
 		final double stopWidth = dimStop.getWidth();
 		return Math.max(stopWidth, val1 + stopWidth / 2);
+	}
+
+	private double getSouthLabelHeight(StringBounder stringBounder) {
+		if (diamond1 instanceof FtileDiamondInside) {
+			return ((FtileDiamondInside) diamond1).getSouthLabelHeight(stringBounder);
+		}
+		if (diamond1 instanceof FtileDiamond) {
+			return ((FtileDiamond) diamond1).getSouthLabelHeight(stringBounder);
+		}
+		return 0;
 	}
 
 	private double getEastLabelWidth(StringBounder stringBounder) {

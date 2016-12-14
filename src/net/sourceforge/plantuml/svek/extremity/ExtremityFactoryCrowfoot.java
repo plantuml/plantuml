@@ -34,11 +34,12 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
+import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryCrowfoot extends AbstractExtremityFactory implements ExtremityFactory {
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2) {
+	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
 		final double ortho = atan2(p0, p2);
-		return new ExtremityCrowfoot(p1, ortho);
+		return new ExtremityCrowfoot(p1, ortho, side);
 	}
 }

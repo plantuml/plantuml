@@ -145,7 +145,7 @@ public final class GroupPngMakerState {
 			attribute = new TextBlockEmpty();
 		} else {
 			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-					group.getStereotype());
+					group.getStereotype(), null);
 		}
 
 		final Stereotype stereotype = group.getStereotype();

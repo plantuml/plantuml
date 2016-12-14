@@ -30,6 +30,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -67,9 +69,9 @@ public interface ILeaf extends IEntity {
 
 	public Neighborhood getNeighborhood();
 
-	public boolean hasPort();
+	public Collection<String> getPortShortNames();
 
-	public void setHasPort(boolean hasPort);
+	public void addPortShortName(String portShortName);
 
 	public void setVisibilityModifier(VisibilityModifier visibility);
 

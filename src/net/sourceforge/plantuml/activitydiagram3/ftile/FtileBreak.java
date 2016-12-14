@@ -30,6 +30,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,6 +41,16 @@ public class FtileBreak extends FtileEmpty implements WeldingPoint {
 
 	public FtileBreak(ISkinParam skinParam, Swimlane swimlane) {
 		super(skinParam, swimlane);
+	}
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public String toString() {
+		return "FtileBreak";
 	}
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {

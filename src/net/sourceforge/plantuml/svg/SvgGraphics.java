@@ -489,14 +489,14 @@ public class SvgGraphics {
 
 	private Transformer getTransformer() throws TransformerException {
 		// Get a TransformerFactory object.
-		final TransformerFactory xformFactory = TransformerFactory.newInstance();
-		// try {
-		// final Class<?> factoryClass = Class
-		// .forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
-		// xformFactory = (TransformerFactory) factoryClass.newInstance();
-		// } catch (Exception e) {
-		// xformFactory = TransformerFactory.newInstance();
-		// }
+		TransformerFactory xformFactory = null;
+		try {
+			final Class<?> factoryClass = Class
+					.forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+			xformFactory = (TransformerFactory) factoryClass.newInstance();
+		} catch (Exception e) {
+			xformFactory = TransformerFactory.newInstance();
+		}
 		Log.info("TransformerFactory=" + xformFactory.getClass());
 
 		// Get an XSL Transformer object.

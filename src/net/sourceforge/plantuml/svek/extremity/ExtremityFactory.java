@@ -33,11 +33,12 @@ package net.sourceforge.plantuml.svek.extremity;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svek.Side;
 
 public interface ExtremityFactory {
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2);
+	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side);
 	
-	public UDrawable createUDrawable(Point2D p0, double angle);
+	public UDrawable createUDrawable(Point2D p0, double angle, Side side);
 
 }

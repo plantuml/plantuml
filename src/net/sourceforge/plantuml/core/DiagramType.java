@@ -33,7 +33,7 @@ package net.sourceforge.plantuml.core;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
-	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, UNKNOWN;
+	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
@@ -72,6 +72,9 @@ public enum DiagramType {
 		}
 		if (StartUtils.startsWithSymbolAnd("startmath", s)) {
 			return MATH;
+		}
+		if (StartUtils.startsWithSymbolAnd("startlatex", s)) {
+			return LATEX;
 		}
 		return UNKNOWN;
 	}

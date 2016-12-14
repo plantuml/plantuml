@@ -93,7 +93,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 		// visibility="public" isSpecification="false" isRoot="false"
 		// isLeaf="false" isAbstract="false">
 		final Element model = document.createElement("UML:Model");
-		model.setAttribute("xmi.id", "model1");
+		model.setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(diagram));
 		model.setAttribute("name", "PlantUML "+Version.versionString());
 		content.appendChild(model);
 
@@ -146,7 +146,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", "model1");
+		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
 		if (Display.isNull(link.getLabel()) == false) {
 			association.setAttribute("name", forXMI(link.getLabel()));
 		}
@@ -205,7 +205,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
-		cla.setAttribute("namespace", "model1");
+		cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
 
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);

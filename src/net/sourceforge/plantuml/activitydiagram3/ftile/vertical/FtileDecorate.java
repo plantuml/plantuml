@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -80,10 +81,6 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 		return ftile.getInnerConnections();
 	}
 
-	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		return ftile.getTranslateFor(child, stringBounder);
-	}
-
 	public Set<Swimlane> getSwimlanes() {
 		return ftile.getSwimlanes();
 	}
@@ -107,10 +104,23 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 	protected final Ftile getFtileDelegated() {
 		return ftile;
 	}
-	
+
 	public List<WeldingPoint> getWeldingPoints() {
 		return ftile.getWeldingPoints();
 	}
 
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		if (child == ftile) {
+			return new UTranslate();
+		}
+		return ftile.getTranslateFor(child, stringBounder);
+	}
+
+	public Collection<Ftile> getMyChildren() {
+		if (this == ftile) {
+			throw new IllegalStateException();
+		}
+		return Collections.singleton(ftile);
+	}
 
 }

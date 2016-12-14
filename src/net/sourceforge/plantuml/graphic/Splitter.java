@@ -65,6 +65,7 @@ public class Splitter {
 
 	static final String linkPattern = "\\[\\[([^\\[\\]]+)\\]\\]";
 	public static final String mathPattern = "\\<math\\>(.+?)\\</math\\>";
+	public static final String latexPattern = "\\<latex\\>(.+?)\\</latex\\>";
 
 	private static final Pattern2 tagOrText;
 
@@ -72,9 +73,6 @@ public class Splitter {
 		final StringBuilder sb = new StringBuilder("(?i)");
 
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
-			if (style == FontStyle.PLAIN) {
-				continue;
-			}
 			sb.append(style.getActivationPattern());
 			sb.append('|');
 			sb.append(style.getDeactivationPattern());

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class Snake implements UShape {
 
 	private final Worm worm = new Worm();
-	private final UPolygon endDecoration;
+	private UPolygon endDecoration;
 	private final Rainbow color;
 	private TextBlock textBlock;
 	private MergeStrategy mergeable = MergeStrategy.FULL;
@@ -68,6 +68,10 @@ public class Snake implements UShape {
 			result.addPoint(x, y);
 		}
 		return result;
+	}
+
+	public void removeEndDecoration() {
+		this.endDecoration = null;
 	}
 
 	public Snake(Rainbow color, UPolygon endDecoration) {
@@ -173,6 +177,10 @@ public class Snake implements UShape {
 		final Point2D pt1 = worm.get(0);
 		final Point2D pt2 = worm.get(1);
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
+		// if (worm.getDirectionsCode().startsWith("LD")) {
+		// final double y = pt1.getY() - dim.getHeight();
+		// return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) - dim.getWidth(), y);
+		// }
 		final double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
 		return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) + 4, y);
 	}
@@ -208,16 +216,16 @@ public class Snake implements UShape {
 		if (strategy == MergeStrategy.NONE) {
 			return null;
 		}
-		if (TextBlockUtils.isEmpty(other.textBlock, stringBounder) == false) {
-			return null;
+		final boolean emptyOther = TextBlockUtils.isEmpty(other.textBlock, stringBounder);
+		// final boolean emptyThis = TextBlockUtils.isEmpty(this.textBlock, stringBounder);
+		if (emptyOther == false /* || emptyThis == false */) {
 			// System.err.println("merge other.textBlock="+other.textBlock+" "+other.textBlock.calculateDimension(TextBlockUtils.getDummyStringBounder()));
+			return null;
 		}
-		// if (other.textBlock != null) {
-		// return null;
-		// }
 		if (same(this.getLast(), other.getFirst())) {
 			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;
 			final Snake result = new Snake(color, oneOf);
+			// result.textBlock = oneOf(this.textBlock, other.textBlock, stringBounder);
 			result.emphasizeDirection = emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection;
 			result.worm.addAll(this.worm.merge(other.worm, strategy));
 			result.mergeable = strategy;
@@ -227,6 +235,16 @@ public class Snake implements UShape {
 			return other.merge(this, stringBounder);
 		}
 		return null;
+	}
+
+	public boolean touches(Snake other) {
+		if (other.mergeable != MergeStrategy.FULL) {
+			return false;
+		}
+		if (other.worm.isPureHorizontal()) {
+			return false;
+		}
+		return same(this.getLast(), other.getFirst());
 	}
 
 	public void goUnmergeable(MergeStrategy strategy) {

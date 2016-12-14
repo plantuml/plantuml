@@ -32,6 +32,8 @@ package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
 public class SkinParameter {
 
@@ -77,6 +79,9 @@ public class SkinParameter {
 	public static final SkinParameter CARD = new SkinParameter("CARD", ColorParam.rectangleBackground,
 			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
 
+	public static final SkinParameter RECTANGLE = new SkinParameter("RECTANGLE", ColorParam.rectangleBackground,
+			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
+
 	public static final SkinParameter ACTOR = new SkinParameter("ACTOR", ColorParam.actorBackground,
 			ColorParam.actorBorder, FontParam.ACTOR, FontParam.ACTOR_STEREOTYPE);
 
@@ -106,7 +111,7 @@ public class SkinParameter {
 		this.fontParam = fontParam;
 		this.fontParamStereotype = fontParamStereotype;
 	}
-	
+
 	public String getUpperCaseName() {
 		return name;
 	}
@@ -125,6 +130,10 @@ public class SkinParameter {
 
 	public FontParam getFontParamStereotype() {
 		return fontParamStereotype;
+	}
+
+	public double getRoundCorner(ISkinParam skinParam, Stereotype stereotype) {
+		return skinParam.getRoundCorner(name.toLowerCase(), stereotype);
 	}
 
 }

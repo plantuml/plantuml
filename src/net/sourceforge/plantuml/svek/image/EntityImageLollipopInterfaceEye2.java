@@ -77,7 +77,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		}
 
 		this.desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam, HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, false);
+				stereotype, symbol.manageHorizontalLine(), false, false, entity);
 
 		this.url = entity.getUrl99();
 

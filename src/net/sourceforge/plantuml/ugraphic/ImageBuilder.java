@@ -134,7 +134,7 @@ public class ImageBuilder {
 		final Rose rose = new Rose();
 		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.diagramBorder);
 		this.borderStroke = skinParam.getThickness(LineParam.diagramBorder, null);
-		this.borderCorner = skinParam.getRoundCorner("diagramBorder");
+		this.borderCorner = skinParam.getRoundCorner("diagramBorder", null);
 		if (borderStroke == null && borderColor != null) {
 			this.borderStroke = new UStroke();
 		}

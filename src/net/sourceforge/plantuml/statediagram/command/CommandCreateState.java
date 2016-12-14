@@ -133,7 +133,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		final String addFields = arg.get("ADDFIELD", 0);
 		if (addFields != null) {
-			ent.getBodier().addFieldOrMethod(addFields);
+			ent.getBodier().addFieldOrMethod(addFields, ent);
 		}
 		return CommandExecutionResult.ok();
 	}

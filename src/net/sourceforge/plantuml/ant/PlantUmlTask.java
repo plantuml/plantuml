@@ -390,4 +390,9 @@ public class PlantUmlTask extends Task {
 		StatsUtils.setRealTimeStats(flag);
 	}
 
+	public void setEnableStats(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		OptionFlags.getInstance().setEnableStats(flag);
+	}
+
 }

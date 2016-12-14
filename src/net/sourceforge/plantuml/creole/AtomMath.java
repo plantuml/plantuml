@@ -38,25 +38,28 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.math.AsciiMathSafe;
+import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AtomMath implements Atom {
 
-	private final double scale = 1;
-	private final AsciiMathSafe math;
+	private final double scale;
+	private final ScientificEquationSafe math;
 	private final HtmlColor foreground;
+	private final HtmlColor background;
 
-	public AtomMath(AsciiMathSafe math, HtmlColor foreground) {
+	public AtomMath(ScientificEquationSafe math, HtmlColor foreground, HtmlColor background, double scale) {
 		this.math = math;
 		this.foreground = foreground;
+		this.background = background;
+		this.scale = scale;
 	}
 
 	private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
-		final BufferedImage image = math.getImage(Color.BLACK, Color.WHITE);
-		return new Dimension2DDouble(image.getWidth() * scale, image.getHeight() * scale);
+		final BufferedImage image = math.getImage(scale, Color.BLACK, Color.WHITE);
+		return new Dimension2DDouble(image.getWidth(), image.getHeight());
 	}
 
 	private Dimension2D dim;
@@ -74,13 +77,13 @@ public class AtomMath implements Atom {
 
 	public void drawU(UGraphic ug) {
 		final boolean isSvg = ug.matchesProperty("SVG");
-		final Color back = getColor(ug.getParam().getBackcolor(), Color.WHITE);
+		final Color back = getColor(background == null ? ug.getParam().getBackcolor() : background, Color.WHITE);
 		final Color fore = getColor(foreground, Color.BLACK);
 		if (isSvg) {
 			final String svg = math.getSvg(fore, back);
 			ug.draw(new UImageSvg(svg));
 		} else {
-			ug.draw(new UImage(math.getImage(fore, back), scale));
+			ug.draw(new UImage(math.getImage(scale, fore, back)));
 		}
 	}
 

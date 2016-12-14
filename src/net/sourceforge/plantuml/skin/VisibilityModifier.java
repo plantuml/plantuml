@@ -239,4 +239,20 @@ public enum VisibilityModifier {
 		return backgroundParam;
 	}
 
+	public String getXmiVisibility() {
+		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD) {
+			return "public";
+		}
+		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD) {
+			return "private";
+		}
+		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD) {
+			return "protected";
+		}
+		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD) {
+			return "package";
+		}
+		throw new IllegalStateException();
+	}
+
 }

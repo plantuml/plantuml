@@ -38,6 +38,7 @@ import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
@@ -50,6 +51,10 @@ public final class CucaDiagramXmiMaker {
 	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
 		this.diagram = diagram;
 		this.fileFormat = fileFormat;
+	}
+
+	public static String getModel(UmlDiagram classDiagram) {
+		return "model1";
 	}
 
 	public void createFiles(OutputStream fos) throws IOException {

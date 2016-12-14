@@ -77,7 +77,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	}
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("" + getClass());
 	}
 
 	public final UStroke getThickness() {
@@ -90,6 +90,11 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
 	public List<WeldingPoint> getWeldingPoints() {
 		return Collections.emptyList();
+	}
+
+	public Collection<Ftile> getMyChildren() {
+		throw new UnsupportedOperationException("" + getClass());
+		// return Collections.emptyList();
 	}
 
 }

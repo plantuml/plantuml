@@ -440,13 +440,13 @@ public class Line implements Moveable, Hideable {
 	}
 
 	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, Point2D center, double angle,
-			Cluster cluster) {
+			Cluster cluster, Shape shapeContact) {
 		final ExtremityFactory extremityFactory = decor.getExtremityFactory(backgroundColor);
 
 		if (cluster != null) {
 			if (extremityFactory != null) {
 				// System.err.println("angle=" + angle * 180 / Math.PI);
-				return extremityFactory.createUDrawable(center, angle);
+				return extremityFactory.createUDrawable(center, angle, null);
 			}
 			return null;
 		}
@@ -456,7 +456,11 @@ public class Line implements Moveable, Hideable {
 			final Point2D p0 = points.get(0);
 			final Point2D p1 = points.get(1);
 			final Point2D p2 = points.get(2);
-			return extremityFactory.createUDrawable(p0, p1, p2);
+			Side side = null;
+			if (shapeContact != null) {
+				side = shapeContact.getClusterPosition().getClosestSide(p1);
+			}
+			return extremityFactory.createUDrawable(p0, p1, p2, side);
 		} else if (decor != LinkDecor.NONE) {
 			final UShape sh = new UPolygon(pointListIterator.next());
 			return new UDrawable() {
@@ -506,9 +510,9 @@ public class Line implements Moveable, Hideable {
 
 		final LinkType linkType = link.getType();
 		this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
-				dotPath.getStartAngle() + Math.PI, ltail);
+				dotPath.getStartAngle() + Math.PI, ltail, bibliotekon.getShape(link.getEntity1()));
 		this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
-				dotPath.getEndAngle(), lhead);
+				dotPath.getEndAngle(), lhead, bibliotekon.getShape(link.getEntity2()));
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			final Point2D p1 = ((Extremity) extremity1).somePoint();
 			final Point2D p2 = ((Extremity) extremity2).somePoint();
@@ -521,9 +525,9 @@ public class Line implements Moveable, Hideable {
 				if (dist1start > dist1end && dist2end > dist2start) {
 					pointListIterator = new PointListIterator(svg.substring(end), fullHeight);
 					this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
-							dotPath.getEndAngle(), lhead);
+							dotPath.getEndAngle(), lhead, bibliotekon.getShape(link.getEntity2()));
 					this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
-							dotPath.getStartAngle() + Math.PI, ltail);
+							dotPath.getStartAngle() + Math.PI, ltail, bibliotekon.getShape(link.getEntity1()));
 				}
 			}
 
@@ -660,22 +664,24 @@ public class Line implements Moveable, Hideable {
 		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));
 
 		if (this.extremity2 != null) {
+			UGraphic ug2 = ug;
 			if (linkType.getDecor1().isFill()) {
-				ug = ug.apply(new UChangeBackColor(color));
+				ug2 = ug2.apply(new UChangeBackColor(color));
 			} else {
-				ug = ug.apply(new UChangeBackColor(null));
+				ug2 = ug2.apply(new UChangeBackColor(null));
 			}
 			// System.err.println("Line::draw EXTREMITY1");
-			this.extremity2.drawU(ug.apply(new UTranslate(x, y)));
+			this.extremity2.drawU(ug2.apply(new UTranslate(x, y)));
 		}
 		if (this.extremity1 != null) {
+			UGraphic ug2 = ug;
 			if (linkType.getDecor2().isFill()) {
-				ug = ug.apply(new UChangeBackColor(color));
+				ug2 = ug2.apply(new UChangeBackColor(color));
 			} else {
-				ug = ug.apply(new UChangeBackColor(null));
+				ug2 = ug2.apply(new UChangeBackColor(null));
 			}
 			// System.err.println("Line::draw EXTREMITY2");
-			this.extremity1.drawU(ug.apply(new UTranslate(x, y)));
+			this.extremity1.drawU(ug2.apply(new UTranslate(x, y)));
 		}
 		if (this.labelText != null && this.labelXY != null
 				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED) {

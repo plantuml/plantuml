@@ -86,4 +86,8 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		return new HtmlColorSetSimple();
 	}
 
+	public int getDpi() {
+		return 96;
+	}
+
 }

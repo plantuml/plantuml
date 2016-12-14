@@ -54,6 +54,10 @@ public class Worm implements Iterable<Point2D.Double> {
 
 	private final List<Point2D.Double> points = new ArrayList<Point2D.Double>();
 
+	public boolean isPureHorizontal() {
+		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();
+	}
+
 	public void drawInternalOneColor(UGraphic ug, HtmlColorAndStyle color, double stroke, Direction emphasizeDirection,
 			UPolygon endDecoration) {
 		final HtmlColor color2 = color.getColor();

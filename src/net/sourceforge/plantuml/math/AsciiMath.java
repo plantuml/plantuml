@@ -31,7 +31,6 @@
 package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -43,14 +42,14 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.swing.Icon;
 
-public class AsciiMath {
+public class AsciiMath implements ScientificEquation {
 
 	private static final String ASCIIMATH_PARSER_JS_LOCATION = "/net/sourceforge/plantuml/math/";
 
 	private static String JAVASCRIPT_CODE;
 
+	private final LatexBuilder builder;
 	private final String tex;
 
 	static {
@@ -75,47 +74,27 @@ public class AsciiMath {
 		final ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
 		engine.eval(JAVASCRIPT_CODE);
 		final Invocable inv = (Invocable) engine;
-		tex = (String) inv.invokeFunction("plantuml", form);
+		this.tex = (String) inv.invokeFunction("plantuml", form);
+		this.builder = new LatexBuilder(tex);
 	}
-
-	private Dimension2D dimension;
 
 	public Dimension2D getDimension() {
-		return dimension;
-	}
-
-	private Icon buildIcon(Color foregroundColor) throws ClassNotFoundException, NoSuchMethodException,
-			SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
-		return new TeXIconBuilder(tex, foregroundColor).getIcon();
+		return builder.getDimension();
 	}
 
 	public String getSvg(Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, InstantiationException, IOException {
-		final Icon icon = buildIcon(foregroundColor);
-		final ConverterSvg converterSvg = new ConverterSvg(icon);
-		final String svg = converterSvg.getSvg(true, backgroundColor);
-		dimension = converterSvg.getDimension();
-		return svg;
+		return builder.getSvg(foregroundColor, backgroundColor);
 	}
 
-	public BufferedImage getImage(Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
-			NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
-		final Icon icon = buildIcon(foregroundColor);
-		final BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		final Graphics2D g2 = image.createGraphics();
-		if (backgroundColor != null) {
-			g2.setColor(backgroundColor);
-			g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
-		}
-		icon.paintIcon(null, g2, 0, 0);
-		return image;
+	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		return builder.getImage(scale, foregroundColor, backgroundColor);
 	}
 
-	public String getLatex() {
+	public String getSource() {
 		return tex;
 	}
 

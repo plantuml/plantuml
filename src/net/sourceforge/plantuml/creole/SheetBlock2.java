@@ -54,6 +54,11 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return block.toString();
+	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return block.calculateDimension(stringBounder);

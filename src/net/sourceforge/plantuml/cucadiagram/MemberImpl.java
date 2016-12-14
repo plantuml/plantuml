@@ -125,7 +125,7 @@ public class MemberImpl implements Member {
 		return display;
 	}
 
-	public String getDisplayWithVisibilityChar() {
+	private String getDisplayWithVisibilityChar() {
 		if (isPrivate()) {
 			return "-" + display;
 		}
@@ -202,14 +202,4 @@ public class MemberImpl implements Member {
 		}
 		return s.contains("(") || s.contains(")");
 	}
-
-	public String getPort() {
-		final Pattern2 pattern = MyPattern.cmpile("([\\p{L}0-9_.]+)");
-		final Matcher2 matcher = pattern.matcher(display);
-		if (matcher.find() == false) {
-			return null;
-		}
-		return matcher.group(1);
-	}
-
 }

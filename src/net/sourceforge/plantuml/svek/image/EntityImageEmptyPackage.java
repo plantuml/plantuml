@@ -110,12 +110,13 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double heightTotal = dimTotal.getHeight();
 
 		final HtmlColor back = Cluster.getBackColor(specificBackColor, skinParam, stereotype);
+		final double roundCorner = 0;
 
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().getPackageStyle(), null, desc,
 				stereoBlock, 0, 0, widthTotal, heightTotal, getStroke());
 
 		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
-				getSkinParam().shadowing());
+				getSkinParam().shadowing(), roundCorner);
 
 	}
 

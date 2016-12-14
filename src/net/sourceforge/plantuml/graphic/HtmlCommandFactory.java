@@ -49,9 +49,6 @@ class HtmlCommandFactory {
 		final StringBuilder sbRemoveStyle = new StringBuilder();
 
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
-			if (style == FontStyle.PLAIN) {
-				continue;
-			}
 			if (sbAddStyle.length() > 0) {
 				sbAddStyle.append('|');
 				sbRemoveStyle.append('|');

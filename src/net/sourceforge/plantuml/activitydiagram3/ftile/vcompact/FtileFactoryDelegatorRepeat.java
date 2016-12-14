@@ -30,15 +30,22 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Genealogy;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
@@ -48,6 +55,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
@@ -57,8 +65,8 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 	}
 
 	@Override
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
-			HtmlColor color, LinkRendering backRepeatLinkRendering) {
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, final Ftile repeat, Display test, Display yes,
+			Display out, HtmlColor color, LinkRendering backRepeatLinkRendering) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
@@ -79,13 +87,37 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
+			// printAllChild(repeat);
+
 			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane);
 			result = assembly(result, diamondBreak);
+			final Genealogy genealogy = new Genealogy(result);
 
 			final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(0);
-			System.err.println("break=" + ftileBreak);
-			final UTranslate pos = repeat.getTranslateFor(ftileBreak, getStringBounder());
-			System.err.println("pos=" + pos);
+
+			result = FtileUtils.addConnection(result, new Connection() {
+				public void drawU(UGraphic ug) {
+					final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
+					final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
+					final Dimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
+
+					final Snake snake = new Snake(arrowColor, Arrows.asToRight());
+					snake.addPoint(tr1.getDx(), tr1.getDy());
+					snake.addPoint(0, tr1.getDy());
+					snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);
+					snake.addPoint(tr2.getDx(), tr2.getDy() + dimDiamond.getHeight() / 2);
+					ug.draw(snake);
+				}
+
+				public Ftile getFtile1() {
+					return ftileBreak;
+				}
+
+				public Ftile getFtile2() {
+					return diamondBreak;
+				}
+
+			});
 
 		}
 		return result;

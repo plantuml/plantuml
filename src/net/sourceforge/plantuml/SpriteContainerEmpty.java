@@ -66,4 +66,8 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 		return new HtmlColorSetSimple();
 	}
 
+	public int getDpi() {
+		return 96;
+	}
+
 }

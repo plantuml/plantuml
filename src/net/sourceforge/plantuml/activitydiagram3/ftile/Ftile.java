@@ -54,6 +54,8 @@ public interface Ftile extends Swimable, TextBlock {
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder);
 
+	public Collection<Ftile> getMyChildren();
+
 	public Collection<Connection> getInnerConnections();
 
 	public List<WeldingPoint> getWeldingPoints();

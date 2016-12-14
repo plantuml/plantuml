@@ -82,7 +82,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final TextBlock desc = (entity.getDisplay().equals(codeDisplay) && symbol instanceof USymbolFolder)
 				|| entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(entity.getDisplay(),
 				symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER, stereotype,
-				symbol.manageHorizontalLine(), false, false);
+				symbol.manageHorizontalLine(), false, false, entity);
 
 		this.url = entity.getUrl99();
 
@@ -92,8 +92,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 		// backcolor = HtmlColorUtils.BLUE;
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), getStereo());
-		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5)).withShadow(
-				getSkinParam().shadowing2(symbol.getSkinParameter()));
+		final double roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
+		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5))
+				.withShadow(getSkinParam().shadowing2(symbol.getSkinParameter())).withRoundCorner(roundCorner);
 
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
@@ -109,7 +110,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 
 		name = new BodyEnhanced(codeDisplay, symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER,
-				stereotype, symbol.manageHorizontalLine(), false, false);
+				stereotype, symbol.manageHorizontalLine(), false, false, entity);
 
 		asSmall = symbol.asSmall(name, desc, stereo, ctx);
 	}

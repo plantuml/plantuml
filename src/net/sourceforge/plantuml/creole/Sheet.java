@@ -44,6 +44,11 @@ public class Sheet implements Iterable<Stripe> {
 	public Sheet(HorizontalAlignment horizontalAlignment) {
 		this.horizontalAlignment = horizontalAlignment;
 	}
+	
+	@Override
+	public String toString() {
+		return stripes.toString();
+	}
 
 	public void add(Stripe stripe) {
 		stripes.add(stripe);

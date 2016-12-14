@@ -32,6 +32,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -145,6 +146,10 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		final List<WeldingPoint> result = new ArrayList<WeldingPoint>(tile1.getWeldingPoints());
 		result.addAll(tile2.getWeldingPoints());
 		return Collections.unmodifiableList(result);
+	}
+
+	public Collection<Ftile> getMyChildren() {
+		return Arrays.asList(tile1, tile2);
 	}
 
 }

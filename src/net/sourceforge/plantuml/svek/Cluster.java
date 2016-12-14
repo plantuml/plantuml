@@ -342,9 +342,12 @@ public class Cluster implements Moveable {
 
 			if (ztitle != null || zstereo != null) {
 				final HtmlColor back = getBackColor(getBackColor(umlDiagramType), skinParam2, group.getStereotype());
+				final double roundCorner = group.getUSymbol() == null ? 0 : group.getUSymbol().getSkinParameter()
+						.getRoundCorner(skinParam, stereotype);
+
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
 						minX, minY, maxX, maxY, getStroke(skinParam2, group.getStereotype()));
-				decoration.drawU(ug, back, borderColor, skinParam2.shadowing());
+				decoration.drawU(ug, back, borderColor, skinParam2.shadowing(), roundCorner);
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
@@ -459,7 +462,8 @@ public class Cluster implements Moveable {
 		if (members.size() == 0) {
 			attribute = new TextBlockEmpty();
 		} else {
-			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, skinParam, group.getStereotype());
+			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, skinParam, group.getStereotype(),
+					null);
 		}
 		return attribute;
 	}

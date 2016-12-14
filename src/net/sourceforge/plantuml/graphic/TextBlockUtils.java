@@ -76,7 +76,7 @@ public class TextBlockUtils {
 		if (borderColor == null) {
 			borderColor = HtmlColorUtils.BLACK;
 		}
-		final double corner = skinParam.getRoundCorner("titleBorder");
+		final double corner = skinParam.getRoundCorner("titleBorder", null);
 		return withMargin(bordered(result, stroke, borderColor, backgroundColor, corner), 2, 2);
 	}
 

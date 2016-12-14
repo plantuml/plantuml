@@ -62,6 +62,11 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		this.maxWidth = maxWidth;
 		this.padding = padding;
 	}
+	
+	@Override
+	public String toString() {
+		return sheet.toString();
+	}
 
 	public HorizontalAlignment getCellAlignment() {
 		if (stripes.size() != 1) {

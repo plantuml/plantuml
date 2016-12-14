@@ -53,7 +53,7 @@ public class CommandAddMethod extends SingleLineCommand<ClassDiagram> {
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field.charAt(0))) {
 			system.setVisibilityModifierPresent(true);
 		}
-		entity.getBodier().addFieldOrMethod(field);
+		entity.getBodier().addFieldOrMethod(field, entity);
 		return CommandExecutionResult.ok();
 	}
 }

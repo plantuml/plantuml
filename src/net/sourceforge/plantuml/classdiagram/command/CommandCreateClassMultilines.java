@@ -135,7 +135,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
 					diagram.setVisibilityModifierPresent(true);
 				}
-				entity.getBodier().addFieldOrMethod(s.toString());
+				entity.getBodier().addFieldOrMethod(s.toString(), entity);
 			}
 			if (url != null) {
 				entity.addUrl(url);

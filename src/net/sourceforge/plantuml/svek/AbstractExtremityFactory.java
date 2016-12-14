@@ -37,7 +37,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 
 public abstract class AbstractExtremityFactory implements ExtremityFactory {
 
-	public UDrawable createUDrawable(Point2D p0, double angle) {
+	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 

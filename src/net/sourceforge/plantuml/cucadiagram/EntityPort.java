@@ -66,7 +66,7 @@ public class EntityPort {
 		return this.uid.equals(other.uid);
 	}
 
-	public String getPortName() {
+	private String getPortName() {
 		return portName;
 	}
 

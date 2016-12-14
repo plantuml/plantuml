@@ -72,8 +72,6 @@ public interface ISkinParam extends ISkinSimple {
 
 	public ColorMapper getColorMapper();
 
-	public int getDpi();
-
 	public DotSplines getDotSplines();
 
 	public String getDotExecutable();
@@ -96,7 +94,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public double getRanksep();
 
-	public double getRoundCorner(String param);
+	public double getRoundCorner(String param, Stereotype stereotype);
 
 	public double maxMessageSize();
 

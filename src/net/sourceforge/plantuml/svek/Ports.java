@@ -40,7 +40,7 @@ public class Ports {
 	public void addThis(Ports other) {
 		all.putAll(other.all);
 	}
-	
+
 	@Override
 	public String toString() {
 		return all.toString();
@@ -55,6 +55,9 @@ public class Ports {
 	}
 
 	public void add(String portName, double position, double height) {
+		if (portName == null) {
+			throw new IllegalArgumentException();
+		}
 		all.put(portName, new PortGeometry(position, height));
 	}
 

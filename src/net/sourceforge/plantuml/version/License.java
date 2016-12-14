@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.OptionFlags;
+
 public enum License {
 
 	GPL, GPLV2, LGPL, APACHE, EPL, MIT, BSD;
@@ -434,6 +436,11 @@ public enum License {
 			addLgpl(text);
 		} else {
 			throw new IllegalStateException();
+		}
+		if (OptionFlags.getInstance().isEnableStats()) {
+			text.add("");
+			text.add("This version of PlantUML records general local statistics about usage.");
+			text.add("(more info on http://plantuml.com/statistics-report)");
 		}
 		text.add("");
 		text.add("Icons provided by OpenIconic :  https://useiconic.com/open");

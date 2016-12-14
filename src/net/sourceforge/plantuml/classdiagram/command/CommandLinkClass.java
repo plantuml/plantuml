@@ -61,6 +61,9 @@ import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
+	private static final String SINGLE = "[.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*";
+	private static final String COUPLE = "\\([%s]*(" + SINGLE + ")[%s]*,[%s]*(" + SINGLE + ")[%s]*\\)";
+
 	public CommandLinkClass(UmlDiagramType umlDiagramType) {
 		super(getRegexConcat(umlDiagramType));
 	}
@@ -68,12 +71,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
 		return new RegexConcat(
 				new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
-				new RegexOr(
-				//
+				new RegexOr( //
 						new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-								+ getClassIdentifier()),
-						new RegexLeaf("COUPLE1",
-								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
+								+ getClassIdentifier()),//
+						new RegexLeaf("COUPLE1", COUPLE)),
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
 				new RegexLeaf("[%s]*"), //
@@ -92,13 +93,11 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[#\\]>*+^{]|\\|[>\\]])?")), //
 
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"),
-				new RegexLeaf("[%s]*"), //
-				new RegexOr(
+				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"), new RegexLeaf("[%s]*"), //
+				new RegexOr( //
 						new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-								+ getClassIdentifier()),
-						new RegexLeaf("COUPLE2",
-								"\\([%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*,[%s]*(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*)[%s]*\\)")),
+								+ getClassIdentifier()), //
+						new RegexLeaf("COUPLE2", COUPLE)), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
 				new RegexLeaf("[%s]*"), //
@@ -149,7 +148,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 		ent1 = ent1.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
 		ent2 = ent2.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
-		if (diagram.isGroup(ent1) && diagram.isGroup(ent2)) {
+		if (isGroupButNotTheCurrentGroup(diagram, ent1) && isGroupButNotTheCurrentGroup(diagram, ent2)) {
 			return executePackageLink(diagram, arg);
 		}
 
@@ -168,7 +167,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String type1 = arg.get("ENT1", 0);
 		final LeafType typeIfObject1 = getTypeIfObject(type1);
 
-		final IEntity cl1 = diagram.isGroup(ent1) ? diagram.getGroup(Code.of(StringUtils
+		final IEntity cl1 = isGroupButNotTheCurrentGroup(diagram, ent1) ? diagram.getGroup(Code.of(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 1), "\""))) : diagram.getOrCreateLeaf(
 				ent1, typeIfObject1, null);
 
@@ -178,7 +177,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			typeIfObject2 = LeafType.OBJECT;
 		}
 
-		final IEntity cl2 = diagram.isGroup(ent2) ? diagram.getGroup(Code.of(StringUtils
+		final IEntity cl2 = isGroupButNotTheCurrentGroup(diagram, ent2) ? diagram.getGroup(Code.of(StringUtils
 				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 1), "\""))) : diagram.getOrCreateLeaf(
 				ent2, typeIfObject2, null);
 
@@ -279,6 +278,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		addLink(diagram, link, arg.get("HEADER", 0));
 
 		return CommandExecutionResult.ok();
+	}
+
+	private boolean isGroupButNotTheCurrentGroup(AbstractClassOrObjectDiagram diagram, Code code) {
+		if (diagram.getCurrentGroup().getCode().equals(code)) {
+			return false;
+		}
+		return diagram.isGroup(code);
 	}
 
 	private Code removeMemberPart(AbstractClassOrObjectDiagram diagram, Code code) {

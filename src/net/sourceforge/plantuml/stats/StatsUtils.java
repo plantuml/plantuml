@@ -39,6 +39,9 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -74,6 +77,18 @@ public class StatsUtils {
 	private final static int VERSION = 14;
 
 	static {
+		try {
+			// Logger.getLogger("java.util.prefs").setLevel(Level.OFF);
+			Logger.getLogger("java.util.prefs").setFilter(new Filter() {
+				public boolean isLoggable(LogRecord record) {
+					final String message = record.getMessage();
+					System.err.println("SPECIAL TRACE FOR PLANTUML: " + message);
+					return false;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (prefs.getInt("VERSION", 0) != VERSION) {
 			try {
 				prefs.clear();

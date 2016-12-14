@@ -545,10 +545,10 @@ public class Link implements Hideable, Removeable {
 		this.port1 = port1;
 		this.port2 = port2;
 		if (port1 != null) {
-			((ILeaf) cl1).setHasPort(true);
+			((ILeaf) cl1).addPortShortName(port1);
 		}
 		if (port2 != null) {
-			((ILeaf) cl2).setHasPort(true);
+			((ILeaf) cl2).addPortShortName(port2);
 		}
 	}
 

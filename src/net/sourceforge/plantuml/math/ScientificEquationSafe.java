@@ -50,18 +50,33 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
-public class AsciiMathSafe {
+public class ScientificEquationSafe {
 
-	private AsciiMath math;
-	private final String form;
+	private final ScientificEquation equation;
+	private final String formula;
 
-	public AsciiMathSafe(String form) {
-		this.form = form;
+	private ScientificEquationSafe(String formula, ScientificEquation equation) {
+		this.formula = formula;
+		this.equation = equation;
+	}
+
+	public static ScientificEquationSafe fromAsciiMath(String formula) {
 		try {
-			this.math = new AsciiMath(form);
+			return new ScientificEquationSafe(formula, new AsciiMath(formula));
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.info("Error parsing " + form);
+			Log.info("Error parsing " + formula);
+			return new ScientificEquationSafe(formula, null);
+		}
+	}
+
+	public static ScientificEquationSafe fromLatex(String formula) {
+		try {
+			return new ScientificEquationSafe(formula, new LatexBuilder(formula));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.info("Error parsing " + formula);
+			return new ScientificEquationSafe(formula, null);
 		}
 	}
 
@@ -70,8 +85,8 @@ public class AsciiMathSafe {
 	public String getSvg(Color foregroundColor, Color backgroundColor) {
 
 		try {
-			final String svg = math.getSvg(foregroundColor, backgroundColor);
-			dimSvg = new ImageDataSimple(math.getDimension());
+			final String svg = equation.getSvg(foregroundColor, backgroundColor);
+			dimSvg = new ImageDataSimple(equation.getDimension());
 			return svg;
 		} catch (Exception e) {
 			printTrace(e);
@@ -86,9 +101,9 @@ public class AsciiMathSafe {
 		}
 	}
 
-	public BufferedImage getImage(Color foregroundColor, Color backgroundColor) {
+	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor) {
 		try {
-			return math.getImage(foregroundColor, backgroundColor);
+			return equation.getImage(scale, foregroundColor, backgroundColor);
 		} catch (Exception e) {
 			printTrace(e);
 			final ImageBuilder imageBuilder = getRollback();
@@ -103,25 +118,25 @@ public class AsciiMathSafe {
 	}
 
 	private void printTrace(Exception e) {
-		System.err.println("Form=" + form);
-		if (math != null) {
-			System.err.println("Latex=" + math.getLatex());
+		System.err.println("formula=" + formula);
+		if (formula != null) {
+			System.err.println("Latex=" + equation.getSource());
 		}
 		e.printStackTrace();
 	}
 
 	private ImageBuilder getRollback() {
-		final TextBlock block = GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(form));
+		final TextBlock block = GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 0, 0,
 				null, false);
 		imageBuilder.setUDrawable(block);
 		return imageBuilder;
 	}
 
-	public ImageData export(OutputStream os, FileFormatOption fileFormat, Color foregroundColor, Color backgroundColor)
+	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, Color foregroundColor, Color backgroundColor)
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.PNG) {
-			final BufferedImage image = getImage(foregroundColor, backgroundColor);
+			final BufferedImage image = getImage(scale, foregroundColor, backgroundColor);
 			ImageIO.write(image, "png", os);
 			return new ImageDataSimple(image.getWidth(), image.getHeight());
 		}

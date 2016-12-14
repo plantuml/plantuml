@@ -245,7 +245,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-						g.getStereotype());
+						g.getStereotype(), null);
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();

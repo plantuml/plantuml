@@ -474,7 +474,7 @@ public final class DotDataImageBuilder {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),
-						g.getStereotype());
+						g.getStereotype(), null);
 			}
 			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();

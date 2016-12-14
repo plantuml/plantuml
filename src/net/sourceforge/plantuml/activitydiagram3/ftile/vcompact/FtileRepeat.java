@@ -33,6 +33,8 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -73,6 +75,11 @@ class FtileRepeat extends AbstractFtile {
 	private final Ftile diamond1;
 	private final Ftile diamond2;
 	private final TextBlock tbTest;
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Arrays.asList(repeat, diamond1, diamond2);
+	}
 
 	private FtileRepeat(Ftile repeat, Ftile diamond1, Ftile diamond2, TextBlock tbTest) {
 		super(repeat.skinParam());

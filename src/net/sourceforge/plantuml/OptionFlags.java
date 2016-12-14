@@ -65,7 +65,6 @@ public class OptionFlags {
 	static public final boolean OMEGA_CROSSING = false;
 
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
-
 	// static public final boolean USE_JDOT = false;
 
 	public void reset() {
@@ -114,6 +113,7 @@ public class OptionFlags {
 	private boolean dumpStats;
 	private boolean loopStats;
 	private boolean overwrite;
+	private boolean enableStats = defaultForStats();
 	private String fileSeparator = "_";
 	private File logData;
 
@@ -298,6 +298,22 @@ public class OptionFlags {
 
 	public final void setLoopStats(boolean loopStats) {
 		this.loopStats = loopStats;
+	}
+
+	private static boolean defaultForStats() {
+		return isTrue(System.getProperty("PLANTUML_STATS")) || isTrue(System.getenv("PLANTUML_STATS"));
+	}
+
+	private static boolean isTrue(final String value) {
+		return "on".equalsIgnoreCase(value) || "true".equalsIgnoreCase(value) || "on".equalsIgnoreCase(value);
+	}
+
+	public boolean isEnableStats() {
+		return enableStats;
+	}
+
+	public void setEnableStats(boolean enableStats) {
+		this.enableStats = enableStats;
 	}
 
 }

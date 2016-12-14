@@ -161,23 +161,37 @@ public class PSystemVersion extends AbstractPSystem {
 
 	public static PSystemVersion createShowAuthors() {
 		// Duplicate in OptionPrint
-		final List<String> strings = new ArrayList<String>();
-		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
-		strings.add("(" + License.getCurrent() + " source distribution)");
-		strings.add(" ");
-		strings.add("<u>Original idea</u>: Arnaud Roques");
-		strings.add("<u>Word Macro</u>: Alain Bertucat & Matthieu Sabatier");
-		strings.add("<u>Word Add-in</u>: Adriaan van den Brand");
-		strings.add("<u>J2V8 & viz.js integration</u>: Andreas Studer");
-		strings.add("<u>Eclipse Plugin</u>: Claude Durif & Anne Pecoil");
-		strings.add("<u>Servlet & XWiki</u>: Maxime Sinclair");
-		strings.add("<u>Site design</u>: Raphael Cotisson");
-		strings.add("<u>Logo</u>: Benjamin Croizet");
-
-		strings.add(" ");
-		strings.add("http://plantuml.com");
-		strings.add(" ");
+		final List<String> strings = getAuthorsStrings(true);
 		return new PSystemVersion(true, strings);
+	}
+
+	public static List<String> getAuthorsStrings(boolean withTag) {
+		final List<String> strings = new ArrayList<String>();
+		add(strings, "<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")",
+				withTag);
+		add(strings, "(" + License.getCurrent() + " source distribution)", withTag);
+		add(strings, " ", withTag);
+		add(strings, "<u>Original idea</u>: Arnaud Roques", withTag);
+		add(strings, "<u>Word Macro</u>: Alain Bertucat & Matthieu Sabatier", withTag);
+		add(strings, "<u>Word Add-in</u>: Adriaan van den Brand", withTag);
+		add(strings, "<u>J2V8 & viz.js integration</u>: Andreas Studer", withTag);
+		add(strings, "<u>Eclipse Plugin</u>: Claude Durif & Anne Pecoil", withTag);
+		add(strings, "<u>Servlet & XWiki</u>: Maxime Sinclair", withTag);
+		add(strings, "<u>Site design</u>: Raphael Cotisson", withTag);
+		add(strings, "<u>Logo</u>: Benjamin Croizet", withTag);
+
+		add(strings, " ", withTag);
+		add(strings, "http://plantuml.com", withTag);
+		add(strings, " ", withTag);
+		return strings;
+	}
+
+	private static void add(List<String> result, String s, boolean withTag) {
+		if (withTag == false) {
+			s = s.replaceAll("\\</?\\w+\\>", "");
+		}
+		result.add(s);
+
 	}
 
 	public static PSystemVersion createCheckVersions(String host, String port) {

@@ -52,6 +52,7 @@ public class Bodier {
 	private List<Member> methodsToDisplay;
 	private List<Member> fieldsToDisplay;
 	private final boolean manageModifier;
+	private ILeaf leaf;
 
 	public void muteClassToObject() {
 		methodsToDisplay = null;
@@ -65,11 +66,20 @@ public class Bodier {
 		this.manageModifier = type == null ? false : type.manageModifier();
 	}
 
-	public void addFieldOrMethod(String s) {
+	public void addFieldOrMethod(String s, IEntity leaf) {
+		if (leaf == null) {
+			throw new IllegalArgumentException();
+		}
 		// Empty cache
 		methodsToDisplay = null;
 		fieldsToDisplay = null;
 		rawBody.add(s);
+		if (leaf instanceof ILeaf) {
+			if (this.leaf != null && this.leaf != leaf) {
+				throw new IllegalArgumentException();
+			}
+			this.leaf = (ILeaf) leaf;
+		}
 	}
 
 	private boolean isBodyEnhanced() {
@@ -162,12 +172,12 @@ public class Bodier {
 			final boolean showFields, Stereotype stereotype) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
-				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier, stereotype);
+				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier, stereotype, leaf);
 			}
 			return null;
 		}
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
-				stereotype);
+				stereotype, leaf);
 		if (type == LeafType.OBJECT) {
 			if (showFields == false) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
@@ -178,7 +188,7 @@ public class Bodier {
 			throw new UnsupportedOperationException();
 		}
 		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
-				stereotype);
+				stereotype, leaf);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {

@@ -195,7 +195,14 @@ public class QuoteUtils {
 					"It's the last piece of the puzzle but you just can't make it fit", //
 					"Doctor says you're cured but you still feel the pain", //
 					"Is artificial intelligence the exact opposite of natural stupidity ?", //
-					"Forcement, ca depend, ca depasse..." //
+					"Forcement, ca depend, ca depasse...", //
+					"There's been a pattern of insubordinate behavior recently.", //
+					"No. We are not an effective team.", //
+					"Our job is not to remember... remember?", //
+					"This is mission control. How are you all doing this lovely morning?", //
+					"If you could see your whole life laid out in front of you, would you change things?", //
+					"Is this a non-zero-sum game?", //
+					"Now that's a proper introduction." //
 			);
 
 	private QuoteUtils() {

@@ -82,7 +82,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
-		this.roundCorner = skinParam.getRoundCorner("");
+		this.roundCorner = skinParam.getRoundCorner("", null);
 		this.name = TextBlockUtils.withMargin(
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);

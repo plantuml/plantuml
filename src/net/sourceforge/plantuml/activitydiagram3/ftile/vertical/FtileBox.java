@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -42,6 +43,7 @@ import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -147,6 +149,10 @@ public class FtileBox extends AbstractFtile {
 		final Dimension2D dim = tb.calculateDimension(stringBounder);
 		return new FtileGeometry(Dimension2DDouble.delta(dim, 2 * MARGIN, 2 * MARGIN), dim.getWidth() / 2 + MARGIN, 0,
 				dim.getHeight() + 2 * MARGIN);
+	}
+
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
 	}
 
 }

@@ -30,6 +30,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +45,11 @@ public class FtileEmpty extends AbstractFtile {
 	private final double height;
 	private final Swimlane swimlaneIn;
 	private final Swimlane swimlaneOut;
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
+	}
 
 	public FtileEmpty(ISkinParam skinParam, double width, double height) {
 		this(skinParam, width, height, null, null);

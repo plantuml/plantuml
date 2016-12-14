@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.svek.extremity;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.svek.Side;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -41,15 +42,17 @@ class ExtremityCrowfoot extends Extremity {
 
 	private final Point2D contact;
 	private double angle;
+	private final Side side;
 
 	@Override
 	public Point2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityCrowfoot(Point2D p1, double angle) {
+	public ExtremityCrowfoot(Point2D p1, double angle, Side side) {
 		this.contact = new Point2D.Double(p1.getX(), p1.getY());
 		this.angle = manageround(angle + Math.PI / 2);
+		this.side = side;
 	}
 
 	public void drawU(UGraphic ug) {
@@ -63,6 +66,15 @@ class ExtremityCrowfoot extends Extremity {
 		rotate.transform(left, left);
 		rotate.transform(base, base);
 		rotate.transform(right, right);
+
+		if (side == Side.WEST || side == Side.EAST) {
+			left.setLocation(middle.getX(), left.getY());
+			right.setLocation(middle.getX(), right.getY());
+		}
+		if (side == Side.SOUTH || side == Side.NORTH) {
+			left.setLocation(left.getX(), middle.getY());
+			right.setLocation(right.getX(), middle.getY());
+		}
 
 		drawLine(ug, contact.getX(), contact.getY(), base, left);
 		drawLine(ug, contact.getX(), contact.getY(), base, right);

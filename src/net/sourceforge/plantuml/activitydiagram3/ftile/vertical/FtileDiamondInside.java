@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -60,6 +61,11 @@ public class FtileDiamondInside extends AbstractFtile {
 	private final TextBlock east;
 	private final TextBlock north;
 	private final TextBlock south;
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
+	}
 
 	public FtileDiamondInside(ISkinParam skinParam, HtmlColor backColor, HtmlColor borderColor, Swimlane swimlane,
 			TextBlock label) {
@@ -162,6 +168,11 @@ public class FtileDiamondInside extends AbstractFtile {
 	public double getEastLabelWidth(StringBounder stringBounder) {
 		final Dimension2D dimEast = east.calculateDimension(stringBounder);
 		return dimEast.getWidth();
+	}
+
+	public double getSouthLabelHeight(StringBounder stringBounder) {
+		final Dimension2D dimSouth = south.calculateDimension(stringBounder);
+		return dimSouth.getHeight();
 	}
 
 }

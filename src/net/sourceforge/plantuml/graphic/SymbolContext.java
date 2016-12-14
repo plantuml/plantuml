@@ -42,14 +42,16 @@ public class SymbolContext {
 	private final UStroke stroke;
 	private final boolean shadowing;
 	private final double deltaShadow;
+	private final double roundCorner;
 
 	private SymbolContext(HtmlColor backColor, HtmlColor foreColor, UStroke stroke, boolean shadowing,
-			double deltaShadow) {
+			double deltaShadow, double roundCorner) {
 		this.backColor = backColor;
 		this.foreColor = foreColor;
 		this.stroke = stroke;
 		this.shadowing = shadowing;
 		this.deltaShadow = deltaShadow;
+		this.roundCorner = roundCorner;
 		// if (backColor instanceof HtmlColorTransparent) {
 		// throw new UnsupportedOperationException();
 		// }
@@ -73,23 +75,27 @@ public class SymbolContext {
 	}
 
 	public SymbolContext(HtmlColor backColor, HtmlColor foreColor) {
-		this(backColor, foreColor, new UStroke(), false, 0);
+		this(backColor, foreColor, new UStroke(), false, 0, 0);
 	}
 
 	public SymbolContext withShadow(boolean newShadow) {
-		return new SymbolContext(backColor, foreColor, stroke, newShadow, deltaShadow);
+		return new SymbolContext(backColor, foreColor, stroke, newShadow, deltaShadow, roundCorner);
 	}
 
 	public SymbolContext withDeltaShadow(double deltaShadow) {
-		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow);
+		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner);
 	}
 
 	public SymbolContext withStroke(UStroke newStroke) {
-		return new SymbolContext(backColor, foreColor, newStroke, shadowing, deltaShadow);
+		return new SymbolContext(backColor, foreColor, newStroke, shadowing, deltaShadow, roundCorner);
 	}
 
 	public SymbolContext withBackColor(HtmlColor backColor) {
-		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow);
+		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner);
+	}
+
+	public SymbolContext withRoundCorner(double roundCorner) {
+		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner);
 	}
 
 	public HtmlColor getBackColor() {
@@ -110,6 +116,10 @@ public class SymbolContext {
 
 	public double getDeltaShadow() {
 		return deltaShadow;
+	}
+
+	public double getRoundCorner() {
+		return roundCorner;
 	}
 
 }

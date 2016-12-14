@@ -256,6 +256,10 @@ public class Option {
 				OptionFlags.getInstance().setDumpStats(true);
 			} else if (s.equalsIgnoreCase("-loopstats")) {
 				OptionFlags.getInstance().setLoopStats(true);
+			} else if (s.equalsIgnoreCase("-enablestats")) {
+				OptionFlags.getInstance().setEnableStats(true);
+			} else if (s.equalsIgnoreCase("-disablestats")) {
+				OptionFlags.getInstance().setEnableStats(false);
 			} else if (s.equalsIgnoreCase("-htmlstats")) {
 				StatsUtils.setHtmlStats(true);
 			} else if (s.equalsIgnoreCase("-xmlstats")) {

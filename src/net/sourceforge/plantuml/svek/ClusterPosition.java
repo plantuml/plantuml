@@ -184,4 +184,28 @@ public class ClusterPosition {
 		return false;
 	}
 
+	public Side getClosestSide(Point2D pt) {
+		final double distNorth = Math.abs(minY - pt.getY());
+		final double distSouth = Math.abs(maxY - pt.getY());
+		final double distWest = Math.abs(minX - pt.getX());
+		final double distEast = Math.abs(maxX - pt.getX());
+		if (isSmallerThan(distNorth, distWest, distEast, distSouth)) {
+			return Side.NORTH;
+		}
+		if (isSmallerThan(distSouth, distNorth, distWest, distEast)) {
+			return Side.SOUTH;
+		}
+		if (isSmallerThan(distEast, distNorth, distWest, distSouth)) {
+			return Side.EAST;
+		}
+		if (isSmallerThan(distWest, distNorth, distEast, distSouth)) {
+			return Side.WEST;
+		}
+		return null;
+	}
+
+	private boolean isSmallerThan(double value, double a, double b, double c) {
+		return value <= a && value <= b && value <= c;
+	}
+
 }

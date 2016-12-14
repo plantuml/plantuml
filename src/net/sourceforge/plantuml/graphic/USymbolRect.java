@@ -59,8 +59,8 @@ class USymbolRect extends USymbol {
 		return skinParameter;
 	}
 
-	private void drawRect(UGraphic ug, double width, double height, boolean shadowing) {
-		final URectangle shape = new URectangle(width, height);
+	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner) {
+		final URectangle shape = new URectangle(width, height, roundCorner, roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
@@ -79,7 +79,8 @@ class USymbolRect extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereotypeAlignement);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -99,7 +100,8 @@ class USymbolRect extends USymbol {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereoX;
 				final double posStereoY;

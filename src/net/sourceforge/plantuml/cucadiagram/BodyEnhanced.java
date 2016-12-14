@@ -70,9 +70,10 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final List<Url> urls = new ArrayList<Url>();
 	private final boolean manageUrl;
 	private final Stereotype stereotype;
+	private final ILeaf entity;
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
-			Stereotype stereotype) {
+			Stereotype stereotype, ILeaf entity) {
 		this.rawBody = new ArrayList<String>(rawBody);
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
@@ -84,10 +85,12 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.align = HorizontalAlignment.LEFT;
 		this.manageHorizontalLine = true;
 		this.manageModifier = manageModifier;
+		this.entity = entity;
 	}
 
 	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
-			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, boolean manageUrl) {
+			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, boolean manageUrl, ILeaf entity) {
+		this.entity = entity;
 		this.manageUrl = manageUrl;
 		this.stereotype = stereotype;
 		this.rawBody = new ArrayList<String>();
@@ -136,14 +139,14 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {
 				blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-						stereotype), separator, title));
+						stereotype, entity), separator, title));
 				separator = s.charAt(0);
 				title = getTitle(s, skinParam);
 				members = new ArrayList<Member>();
 			} else if (CreoleParser.isTreeStart(s)) {
 				if (members.size() > 0) {
 					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
-							stereotype), separator, title));
+							stereotype, entity), separator, title));
 				}
 				members = new ArrayList<Member>();
 				final List<String> allTree = buildAllTree(s, it);
@@ -158,7 +161,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 				}
 			}
 		}
-		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype),
+		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype, entity),
 				separator, title));
 
 		if (blocks.size() == 1) {

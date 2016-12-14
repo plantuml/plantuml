@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jungle.PSystemTreeFactory;
 import net.sourceforge.plantuml.logo.PSystemLogoFactory;
+import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
@@ -109,7 +110,7 @@ public class PSystemBuilder {
 			result = err;
 			return err;
 		} finally {
-			if (result != null) {
+			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
 		}
@@ -149,6 +150,7 @@ public class PSystemBuilder {
 			factories.add(new PSystemSudokuFactory());
 		}
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
+		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		// factories.add(new PSystemStatsFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());

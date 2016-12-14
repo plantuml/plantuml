@@ -31,6 +31,8 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.awt.geom.Dimension2D;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -50,6 +52,11 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		super(tile1, tile2, in);
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
+	}
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Arrays.asList(diamond1, diamond2, tile1, tile2);
 	}
 
 	public int getYdelta1a(StringBounder stringBounder) {

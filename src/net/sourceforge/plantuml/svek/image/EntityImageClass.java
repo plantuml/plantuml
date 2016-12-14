@@ -77,7 +77,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.lineConfig = entity;
-		this.roundCorner = getSkinParam().getRoundCorner("");
+		this.roundCorner = getSkinParam().getRoundCorner("", null);
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
@@ -184,7 +184,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((ILeaf) getEntity()).hasPort()) {
+		if (((ILeaf) getEntity()).getPortShortNames().size() > 0) {
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 		}
 		return ShapeType.RECTANGLE;

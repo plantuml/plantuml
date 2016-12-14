@@ -102,22 +102,22 @@ public class Rose implements Skin {
 		}
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
-					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(""), newFontForStereotype,
+					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
 					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false);
 		}
 		if (type == ComponentType.PARTICIPANT_TAIL) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
-					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(""), newFontForStereotype,
+					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
 					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false);
 		}
 		if (type == ComponentType.COLLECTIONS_HEAD) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
-					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(""), newFontForStereotype,
+					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
 					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true);
 		}
 		if (type == ComponentType.COLLECTIONS_TAIL) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
-					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner(""), newFontForStereotype,
+					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
 					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {

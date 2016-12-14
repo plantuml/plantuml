@@ -54,8 +54,8 @@ public class PSystemMath extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		AsciiMathSafe asciiMath = new AsciiMathSafe(math);
-		return asciiMath.export(os, fileFormat, Color.BLACK, Color.WHITE);
+		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromAsciiMath(math);
+		return asciiMath.export(os, fileFormat, 1, Color.BLACK, Color.WHITE);
 	}
 
 	public void doCommandLine(String line) {

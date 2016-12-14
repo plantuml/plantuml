@@ -43,5 +43,7 @@ public interface ISkinSimple extends SpriteContainer {
 	public int getTabSize();
 	
 	public IHtmlColorSet getIHtmlColorSet();
+	
+	public int getDpi();
 
 }

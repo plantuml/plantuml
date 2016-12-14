@@ -119,9 +119,12 @@ public class OptionPrint {
 		System.out.println("    -author[s]\t\tTo print information about PlantUML authors");
 		System.out.println("    -overwrite\t\tTo allow to overwrite read only files");
 		System.out.println("    -printfonts\t\tTo print fonts available on your system");
+		System.out.println("    -enablestats\tTo enable statistics computation");
+		System.out.println("    -disablestats\tTo disable statistics computation (default)");
 		System.out.println("    -htmlstats\t\tTo output general statistics in file plantuml-stats.html");
 		System.out.println("    -xmlstats\t\tTo output general statistics in file plantuml-stats.xml");
 		System.out.println("    -realtimestats\tTo generate statistics on the fly rather than at the end");
+		System.out.println("    -loopstats\t\tTo continuously print statistics about usage");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();
@@ -249,19 +252,10 @@ public class OptionPrint {
 	}
 
 	public static void printAbout() throws InterruptedException {
-		// Duplicate in PSystemVersion
-		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
-		System.out.println();
-		System.out.println("Original idea: Arnaud Roques");
-		System.out.println("Word Macro: Alain Bertucat & Matthieu Sabatier");
-		System.out.println("Word Add-in: Adriaan van den Brand");
-		System.out.println("Eclipse Plugin: Claude Durif & Anne Pecoil");
-		System.out.println("Servlet & XWiki: Maxime Sinclair");
-		System.out.println("Site design: Raphael Cotisson");
-		System.out.println("Logo: Benjamin Croizet");
-		System.out.println();
-		System.out.println("http://plantuml.sourceforge.net");
-		exit();
+		for (String s : PSystemVersion.getAuthorsStrings(false)) {
+			System.out.println(s);
+		}
+		OptionPrint.exit();
 	}
 
 	public static void printLanguage() throws InterruptedException {

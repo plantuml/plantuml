@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.cucadiagram.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// Other
 	private boolean nearDecoration = false;
-	private boolean hasPort = false;
+	private final Collection<String> portShortNames = new HashSet<String>();
 	private int xposition;
 	private IEntityImage svekImage;
 
@@ -579,13 +580,13 @@ final class EntityImpl implements ILeaf, IGroup {
 	// colors = colors.addSpecificLineStroke(specificLineStroke);
 	// }
 
-	public boolean hasPort() {
+	public Collection<String> getPortShortNames() {
 		checkNotGroup();
-		return hasPort;
+		return Collections.unmodifiableCollection(portShortNames);
 	}
 
-	public void setHasPort(boolean hasPort) {
-		this.hasPort = hasPort;
+	public void addPortShortName(String portShortName) {
+		portShortNames.add(portShortName);
 	}
 
 	private VisibilityModifier visibility;

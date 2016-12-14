@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -83,6 +84,11 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 
 	public Swimlane getSwimlaneOut() {
 		return tile.getSwimlaneOut();
+	}
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.singleton(tile);
 	}
 
 	public static Ftile create(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam, boolean withLink) {

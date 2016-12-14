@@ -121,7 +121,10 @@ public abstract class AbstractPSystem implements Diagram {
 		try {
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
-			StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(), fileFormatOption.getFileFormat());
+			if (OptionFlags.getInstance().isEnableStats()) {
+				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
+						fileFormatOption.getFileFormat());
+			}
 		}
 	}
 

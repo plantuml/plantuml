@@ -30,6 +30,8 @@
  */
 package net.sourceforge.plantuml;
 
+import h.stack;
+
 import java.awt.Font;
 import java.util.Collection;
 import java.util.Collections;
@@ -594,8 +596,12 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public double getRoundCorner(String param) {
-		final String value = getValue(param + "roundcorner");
+	public double getRoundCorner(String param, Stereotype stereotype) {
+		String key = param + "roundcorner";
+		if (stereotype != null) {
+			key += stereotype.getLabel(false);
+		}
+		final String value = getValue(key);
 		if (value != null && value.matches("\\d+")) {
 			return Double.parseDouble(value);
 		}

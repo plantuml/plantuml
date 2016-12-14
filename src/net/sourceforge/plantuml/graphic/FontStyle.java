@@ -41,6 +41,9 @@ public enum FontStyle {
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
 
 	public UFont mutateFont(UFont font) {
+		if (this == PLAIN) {
+			return font.deriveStyle(Font.PLAIN);
+		}
 		if (this == ITALIC) {
 			return font.deriveStyle(font.getStyle() | Font.ITALIC);
 		}
@@ -51,6 +54,9 @@ public enum FontStyle {
 	}
 
 	public String getActivationPattern() {
+		if (this == PLAIN) {
+			return "\\<[pP][lL][aA][iI][nN]\\>";
+		}
 		if (this == ITALIC) {
 			return "\\<[iI]\\>";
 		}
@@ -121,6 +127,9 @@ public enum FontStyle {
 	}
 
 	public String getDeactivationPattern() {
+		if (this == PLAIN) {
+			return "\\</[pP][lL][aA][iI][nN]\\>";
+		}
 		if (this == ITALIC) {
 			return "\\</[iI]\\>";
 		}
@@ -144,9 +153,6 @@ public enum FontStyle {
 
 	public static FontStyle getStyle(String line) {
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
-			if (style == FontStyle.PLAIN) {
-				continue;
-			}
 			if (line.matches(style.getActivationPattern()) || line.matches(style.getDeactivationPattern())) {
 				return style;
 			}

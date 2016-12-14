@@ -31,6 +31,8 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.awt.geom.Dimension2D;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,6 +56,11 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		this.tile1 = tile1;
 		this.tile2 = tile2;
 		this.in = in;
+	}
+	
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Arrays.asList(tile1, tile2);
 	}
 
 	public boolean hasTwoBranches(StringBounder stringBounder) {
