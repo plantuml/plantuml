@@ -36,12 +36,21 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class ColorMapperMonochrome implements ColorMapper {
 
+	private final boolean reverse;
+
+	public ColorMapperMonochrome(boolean reverse) {
+		this.reverse = reverse;
+	}
+
 	public Color getMappedColor(HtmlColor htmlColor) {
 		if (htmlColor == null) {
 			return null;
 		}
 		final Color color = new ColorMapperIdentity().getMappedColor(htmlColor);
-		final int grayScale = (int) (color.getRed() * .3 + color.getGreen() * .59 + color.getBlue() * .11);
+		int grayScale = (int) (color.getRed() * .3 + color.getGreen() * .59 + color.getBlue() * .11);
+		if (reverse) {
+			grayScale = 255 - grayScale;
+		}
 		return new Color(grayScale, grayScale, grayScale);
 	}
 }

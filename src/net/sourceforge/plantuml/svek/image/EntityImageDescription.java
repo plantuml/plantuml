@@ -91,9 +91,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBack(), getStereo());
 		}
 		// backcolor = HtmlColorUtils.BLUE;
-		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), getStereo());
+		assert getStereo() == stereotype;
+		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), stereotype);
 		final double roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
-		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5))
+		final UStroke stroke = symbol.getSkinParameter().getStroke(getSkinParam(), stereotype);
+		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke)
 				.withShadow(getSkinParam().shadowing2(symbol.getSkinParameter())).withRoundCorner(roundCorner);
 
 		TextBlock stereo = TextBlockUtils.empty(0, 0);

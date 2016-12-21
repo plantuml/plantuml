@@ -33,7 +33,9 @@ package net.sourceforge.plantuml.graphic;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class SkinParameter {
 
@@ -134,6 +136,17 @@ public class SkinParameter {
 
 	public double getRoundCorner(ISkinParam skinParam, Stereotype stereotype) {
 		return skinParam.getRoundCorner(name.toLowerCase(), stereotype);
+	}
+
+	public UStroke getStroke(ISkinParam skinParam, Stereotype stereotype) {
+		UStroke result = null;
+		if (name.equals("RECTANGLE")) {
+			result = skinParam.getThickness(LineParam.rectangleBorder, stereotype);
+		}
+		if (result == null) {
+			result = new UStroke(1.5);
+		}
+		return result;
 	}
 
 }

@@ -37,6 +37,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
@@ -72,7 +73,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		} else {
 			strings.add("An error has occured : " + exception);
 		}
-		final String quote = QuoteUtils.getSomeQuote();
+		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);
 		strings.add(" ");
 		return strings;

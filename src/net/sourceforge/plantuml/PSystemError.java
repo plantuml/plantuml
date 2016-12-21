@@ -29,6 +29,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -44,10 +45,17 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.eggs.PSystemEmpty;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class PSystemError extends AbstractPSystem {
@@ -112,9 +120,28 @@ public class PSystemError extends AbstractPSystem {
 		}
 		final boolean useRed = fileFormat.isUseRedForError();
 		final TextBlockBackcolored result = GraphicStrings.createForError(getHtmlStrings(useRed), useRed);
+
+		final UDrawable udrawable;
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
-		imageBuilder.setUDrawable(result);
+		if (getSource().getTotalLineCount() < 4) {
+			final TextBlockBackcolored welcome = new PSystemEmpty(false).getGraphicStrings();
+			udrawable = new UDrawable() {
+				public void drawU(UGraphic ug) {
+					final Dimension2D dim1 = welcome.calculateDimension(ug.getStringBounder());
+					final Dimension2D dim2 = result.calculateDimension(ug.getStringBounder());
+					final URectangle frame = new URectangle(Math.max(dim1.getWidth(), dim2.getWidth()),
+							dim1.getHeight());
+					ug.apply(new UChangeBackColor(welcome.getBackcolor())).apply(new UTranslate(1, 1)).draw(frame);
+					welcome.drawU(ug);
+					ug = ug.apply(new UTranslate(0, dim1.getHeight()));
+					result.drawU(ug);
+				}
+			};
+		} else {
+			udrawable = result;
+		}
+		imageBuilder.setUDrawable(udrawable);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
 	}
 

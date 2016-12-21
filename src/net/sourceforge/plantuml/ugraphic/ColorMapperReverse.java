@@ -25,30 +25,33 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
  * 
+ *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.ugraphic;
 
+import java.awt.Color;
 
-public enum LineParam {
-//	sequenceBoundaryBorder,
-	sequenceActorBorder,
-	sequenceDividerBorder,
-//	sequenceGroupBorder(0.1),
-//	sequenceReferenceBorder(0.1),
-	sequenceLifeLineBorder,
-	sequenceParticipantBorder, noteBorder, sequenceGroupBorder, sequenceReferenceBorder,
-	legendBorder,
-	sequenceArrow,
-	classBorder, objectBorder,
-	partitionBorder,
-	packageBorder,
-	swimlaneBorder,
-	activityBorder,
-	titleBorder,
-	diagramBorder,
-	rectangleBorder;
-//	sequenceBoxBorder(0.1);
-	
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
+
+public class ColorMapperReverse implements ColorMapper {
+
+	private final ColorOrder order;
+
+	public ColorMapperReverse(ColorOrder order) {
+		this.order = order;
+	}
+
+	public Color getMappedColor(HtmlColor color) {
+		if (color == null) {
+			return null;
+		}
+		return getReverse(((HtmlColorSimple) color).getColor999());
+	}
+
+	private Color getReverse(Color color) {
+		return order.getReverse(color);
+	}
+
 }

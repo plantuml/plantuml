@@ -61,6 +61,8 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
+import net.sourceforge.plantuml.ugraphic.ColorMapperReverse;
+import net.sourceforge.plantuml.ugraphic.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
@@ -331,10 +333,6 @@ public class SkinParam implements ISkinParam {
 		return 10;
 	}
 
-	private boolean isMonochrome() {
-		return "true".equals(getValue("monochrome"));
-	}
-
 	public static Collection<String> getPossibleValues() {
 		final Set<String> result = new TreeSet<String>();
 		result.add("Monochrome");
@@ -472,10 +470,22 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public ColorMapper getColorMapper() {
-		if (isMonochrome()) {
-			return new ColorMapperMonochrome();
+		final String monochrome = getValue("monochrome");
+		if ("true".equals(monochrome)) {
+			return new ColorMapperMonochrome(false);
 		}
-		return new ColorMapperIdentity();
+		if ("reverse".equals(monochrome)) {
+			return new ColorMapperMonochrome(true);
+		}
+		final String value = getValue("reversecolor");
+		if (value == null) {
+			return new ColorMapperIdentity();
+		}
+		final ColorOrder order = ColorOrder.fromString(value);
+		if (order == null) {
+			return new ColorMapperIdentity();
+		}
+		return new ColorMapperReverse(order);
 	}
 
 	public boolean shadowing() {

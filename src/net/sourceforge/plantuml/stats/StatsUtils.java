@@ -97,7 +97,10 @@ public class StatsUtils {
 			}
 			prefs.putInt("VERSION", VERSION);
 		}
-		reloadNow();
+		restoreNow();
+		if (historicalData != null) {
+			historicalData.reset();
+		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
@@ -107,7 +110,7 @@ public class StatsUtils {
 		});
 	}
 
-	public static void reloadNow() {
+	private static void restoreNow() {
 		try {
 			prefs.sync();
 			fullEver = ParsedGenerated.loadDated(prefs, "full");
@@ -205,7 +208,7 @@ public class StatsUtils {
 	public static void loopStats() throws InterruptedException {
 		int linesUsed = 0;
 		while (true) {
-			StatsUtils.reloadNow();
+			restoreNow();
 			clearScreen(System.out, linesUsed);
 			final TextConverter textConverter = new TextConverter(getStats());
 			textConverter.printMe(System.out);

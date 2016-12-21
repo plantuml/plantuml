@@ -90,7 +90,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 			// printAllChild(repeat);
 
 			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane);
-			result = assembly(result, diamondBreak);
+			result = assembly(FtileUtils.addHorizontalMargin(result, 10, 0), diamondBreak);
 			final Genealogy genealogy = new Genealogy(result);
 
 			final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(0);

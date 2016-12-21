@@ -28,24 +28,46 @@
  * 
  *
  */
-package net.sourceforge.plantuml.eggs;
+package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.api.PSystemFactory;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
+import java.awt.Color;
 
-public class PSystemEmptyFactory implements PSystemFactory {
+public enum ColorOrder {
+	RGB, RBG, GRB, GBR, BRG, BGR;
 
-	public Diagram createSystem(UmlSource source) {
-		if (source.getTotalLineCount() == 2) {
-			return new PSystemEmpty(true);
+	public Color getColor(Color color) {
+		if (this == RGB) {
+			return new Color(color.getRed(), color.getGreen(), color.getBlue());
 		}
-		return null;
+		if (this == RBG) {
+			return new Color(color.getRed(), color.getBlue(), color.getGreen());
+		}
+		if (this == GRB) {
+			return new Color(color.getGreen(), color.getRed(), color.getBlue());
+		}
+		if (this == GBR) {
+			return new Color(color.getGreen(), color.getBlue(), color.getRed());
+		}
+		if (this == BRG) {
+			return new Color(color.getBlue(), color.getRed(), color.getGreen());
+		}
+		if (this == BGR) {
+			return new Color(color.getBlue(), color.getGreen(), color.getRed());
+		}
+		throw new IllegalStateException();
 	}
 
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
+	public Color getReverse(Color color) {
+		color = this.getColor(color);
+		return new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());
+	}
+
+	public static ColorOrder fromString(String order) {
+		try {
+			return ColorOrder.valueOf(order.toUpperCase());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

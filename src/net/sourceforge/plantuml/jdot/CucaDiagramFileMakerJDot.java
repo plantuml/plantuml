@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
@@ -542,7 +543,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		exception.printStackTrace();
 		final List<String> strings = new ArrayList<String>();
 		strings.add("An error has occured : " + exception);
-		final String quote = QuoteUtils.getSomeQuote();
+		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);
 		strings.add(" ");
 		GraphvizCrash.addProperties(strings);
