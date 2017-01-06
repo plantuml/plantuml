@@ -540,7 +540,7 @@ public class EpsGraphics {
 		if (x == 0) {
 			return "0";
 		}
-		String s = String.format(Locale.US, "%1.4f", x);
+		String s = String.format(Locale.US, "%1.0f", x);
 		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
 		if (s.endsWith(".")) {
 			s = s.substring(0, s.length() - 1);
