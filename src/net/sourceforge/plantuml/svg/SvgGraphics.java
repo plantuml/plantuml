@@ -462,22 +462,22 @@ public class SvgGraphics {
 						elt.setAttribute("class", "interactiveComponent");
 						elt.setAttribute("id", displayComponents.get(i).uniqueName());
 						elt.setAttribute("fill", displayComponents.get(i).color());
-						// note we do not set the text length!
-					}
-					// if the text represents a method in the diagram
-					else if (text.contains("(") && text.contains(")") && text.contains(":")
-							&& text.startsWith(displayComponents.get(i).uniqueName())) {
+					} else if (text.contains("(") && text.contains(")") && text.contains(":")
+							&& text.substring(0, text.indexOf(" :")).equals(displayComponents.get(i).uniqueName())) {
 						// method component type
 						elt.setAttribute("onclick",
 								"classElementCallBack('" + displayComponents.get(i).uniqueName() + "')");
 						elt.setAttribute("class", "interactiveComponent");
 						elt.setAttribute("id", displayComponents.get(i).uniqueName());
 						elt.setAttribute("fill", displayComponents.get(i).color());
-						text = text.replace(displayComponents.get(i).uniqueName(), displayComponents.get(i).displayName());
-					} else if (text.contains(":") && text.startsWith(displayComponents.get(i).uniqueName())
+						text = text.replace(displayComponents.get(i).uniqueName(),
+								displayComponents.get(i).displayName());
+					} else if (text.contains(":")
+							&& text.substring(0, text.indexOf(" :")).trim().equals(displayComponents.get(i).uniqueName())
 							&& displayComponents.get(i).type().equals("variable")) {
 						// variable component type
-						text = text.replace(displayComponents.get(i).uniqueName(), displayComponents.get(i).displayName());
+						text = text.replace(displayComponents.get(i).uniqueName(),
+								displayComponents.get(i).displayName());
 						elt.setAttribute("id", displayComponents.get(i).uniqueName());
 						elt.setAttribute("fill", displayComponents.get(i).color());
 					}
