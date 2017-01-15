@@ -19,7 +19,7 @@
 
 	<groupId>net.sourceforge.plantuml</groupId>
 	<artifactId>plantuml</artifactId>
-	<version>8028</version>
+	<version>8029</version>
 	<packaging>jar</packaging>
 
 	<name>PlantUML</name>

@@ -66,720 +66,716 @@ import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 public class SvgGraphics {
 
-	// http://tutorials.jenkov.com/svg/index.html
-	// http://www.svgbasics.com/
-	// http://apike.ca/prog_svg_text.html
-	// http://www.w3.org/TR/SVG11/shapes.html
-	// http://en.wikipedia.org/wiki/Scalable_Vector_Graphics
-
-	// Animation:
-	// http://srufaculty.sru.edu/david.dailey/svg/
-	// Shadow:
-	// http://www.svgbasics.com/filters3.html
-	// http://www.w3schools.com/svg/svg_feoffset.asp
-	// http://www.adobe.com/svg/demos/samples.html
-
-	final private Document document;
-	final private Element root;
-	final private Element defs;
-	final private Element gRoot;
-	private String filterId;
-	public static String keyClass;
-	public static List<ComponentDisplayInfo> displayComponents = new ArrayList<ComponentDisplayInfo>();
-	public static boolean componentCallBack = false;
-
-	private String fill = "black";
-	private String stroke = "black";
-	private String strokeWidth;
-	private String strokeDasharray = null;
-	private final String backcolor; // And
-									// others
-	private int maxX = 10;
-	private int maxY = 10;
-
-	private final double scale;
-
-	final protected void ensureVisible(double x, double y) {
-		if (x > maxX) {
-			maxX = (int) (x + 1);
-		}
-		if (y > maxY) {
-			maxY = (int) (y + 1);
-		}
-	}
-
-	public SvgGraphics(double scale) {
-		this(null, scale);
-	}
-
-	public SvgGraphics(String backcolor, double scale) {
-		try {
-			this.scale = scale;
-			document = getDocument();
-			this.backcolor = backcolor;
-
-			root = getRootNode();
-
-			// Create a node named defs, which will be the parent
-			// for a pair of linear gradient definitions.
-			defs = simpleElement("defs");
-			gRoot = simpleElement("g");
-			strokeWidth = "" + scale;
-			filterId = String.valueOf(Math.random() * 1000);
-		} catch (final ParserConfigurationException e) {
-			e.printStackTrace();
-			throw new IllegalStateException(e);
-		}
-	}
-
-	private Element pendingBackground;
-
-	public void paintBackcolorGradient(ColorMapper mapper, HtmlColorGradient gr) {
-		final String id = createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
-				StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
-		setFillColor("url(#" + id + ")");
-		setStrokeColor(null);
-		pendingBackground = createRectangleInternal(0, 0, 0, 0);
-		getG().appendChild(pendingBackground);
-	}
-
-	// This method returns a reference to a simple XML
-	// element node that has no attributes.
-	private Element simpleElement(String type) {
-		final Element theElement = document.createElement(type);
-		root.appendChild(theElement);
-		return theElement;
-	}
-
-	private Document getDocument() throws ParserConfigurationException {
-		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-		final DocumentBuilder builder = factory.newDocumentBuilder();
-		final Document document = builder.newDocument();
-		document.setXmlStandalone(true);
-		return document;
-	}
-
-	// This method returns a reference to a root node that
-	// has already been appended to the document.
-	private Element getRootNode() {
-		// Create the root node named svg and append it to
-		// the document.
-		final Element svg = document.createElement("svg");
-		document.appendChild(svg);
-
-		// Set some attributes on the root node that are
-		// required for proper rendering. Note that the
-		// approach used here is somewhat different from the
-		// approach used in the earlier program named Svg01,
-		// particularly with regard to the style.
-		svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-		svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-		svg.setAttribute("version", "1.1");
-
-		return svg;
-	}
-
-	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
-		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = document.createElement("ellipse");
-			elt.setAttribute("cx", format(x));
-			elt.setAttribute("cy", format(y));
-			elt.setAttribute("rx", format(xRadius));
-			elt.setAttribute("ry", format(yRadius));
-			elt.setAttribute("fill", fill);
-			elt.setAttribute("style", getStyle());
-			if (deltaShadow > 0) {
-				// elt.setAttribute("filter", "url(#" + filterId + ")");
-			}
-			getG().appendChild(elt);
-		}
-		ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);
-	}
-
-	public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
-		if (hidden == false) {
-			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
-					+ format(x2) + " " + format(y2);
-			final Element elt = document.createElement("path");
-			elt.setAttribute("d", path);
-			elt.setAttribute("fill", fill);
-			elt.setAttribute("style", getStyle());
-			getG().appendChild(elt);
-		}
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
-	}
-
-	private final Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
-
-	public String createSvgGradient(String color1, String color2, char policy) {
-		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
-		String id = gradients.get(key);
-		if (id == null) {
-			final Element elt = document.createElement("linearGradient");
-			if (policy == '|') {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "50%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "50%");
-			} else if (policy == '\\') {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "100%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "0%");
-			} else if (policy == '-') {
-				elt.setAttribute("x1", "50%");
-				elt.setAttribute("y1", "0%");
-				elt.setAttribute("x2", "50%");
-				elt.setAttribute("y2", "100%");
-			} else {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "0%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "100%");
-			}
-			id = "gr" + gradients.size();
-			gradients.put(key, id);
-			elt.setAttribute("id", id);
-
-			final Element stop1 = document.createElement("stop");
-			stop1.setAttribute("stop-color", color1);
-			stop1.setAttribute("offset", "0%");
-			final Element stop2 = document.createElement("stop");
-			stop2.setAttribute("stop-color", color2);
-			stop2.setAttribute("offset", "100%");
-
-			elt.appendChild(stop1);
-			elt.appendChild(stop2);
-			defs.appendChild(elt);
-		}
-		return id;
-	}
-
-	public final void setFillColor(String fill) {
-		this.fill = fill == null ? "none" : fill;
-	}
-
-	public final void setStrokeColor(String stroke) {
-		this.stroke = stroke == null ? "none" : stroke;
-	}
-
-	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
-		this.strokeWidth = "" + (scale * strokeWidth);
-		this.strokeDasharray = strokeDasharray;
-	}
-
-	public void closeLink() {
-		if (pendingLink2.size() > 0) {
-			final Element element = pendingLink2.get(0);
-			pendingLink2.remove(0);
-			getG().appendChild(element);
-		}
-	}
-
-	private final List<Element> pendingLink2 = new ArrayList<Element>();
-
-	public void openLink(String url, String title, String target) {
-		if (url == null) {
-			throw new IllegalArgumentException();
-		}
-
-		if (pendingLink2.size() > 0) {
-			closeLink();
-		}
-
-		pendingLink2.add(0, document.createElement("a"));
-		pendingLink2.get(0).setAttribute("target", target);
-		pendingLink2.get(0).setAttribute("xlink:href", url);
-		if (title == null) {
-			pendingLink2.get(0).setAttribute("xlink:title", url);
-		} else {
-			title = title.replaceAll("\\\\n", "\n");
-			pendingLink2.get(0).setAttribute("xlink:title", title);
-		}
-	}
-
-	public final Element getG() {
-		if (pendingLink2.size() == 0) {
-			return gRoot;
-		}
-		return pendingLink2.get(0);
-	}
-
-	public void svgRectangle(double x, double y, double width, double height, double rx, double ry,
-			double deltaShadow) {
-		if (height <= 0 || width <= 0) {
-			throw new IllegalArgumentException();
-		}
-		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = createRectangleInternal(x, y, width, height);
-			if (deltaShadow > 0) {
-				// elt.setAttribute("filter", "url(#" + filterId + ")");
-			}
-			if (rx > 0 && ry > 0) {
-				elt.setAttribute("rx", format(rx));
-				elt.setAttribute("ry", format(ry));
-			}
-
-			getG().appendChild(elt);
-		}
-		ensureVisible(x + width + 2 * deltaShadow, y + height + 2 * deltaShadow);
-	}
-
-	private Element createRectangleInternal(double x, double y, double width, double height) {
-		final Element elt = document.createElement("rect");
-		elt.setAttribute("x", format(x));
-		elt.setAttribute("y", format(y));
-		elt.setAttribute("width", format(width));
-		elt.setAttribute("height", format(height));
-		elt.setAttribute("fill", fill);
-		elt.setAttribute("style", getStyle());
-		return elt;
-	}
-
-	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
-		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = document.createElement("line");
-			elt.setAttribute("x1", format(x1));
-			elt.setAttribute("y1", format(y1));
-			elt.setAttribute("x2", format(x2));
-			elt.setAttribute("y2", format(y2));
-			elt.setAttribute("style", getStyle());
-			if (deltaShadow > 0) {
-				// elt.setAttribute("filter", "url(#" + filterId + ")");
-			}
-			getG().appendChild(elt);
-		}
-		ensureVisible(x1 + 2 * deltaShadow, y1 + 2 * deltaShadow);
-		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
-	}
-
-	private String getStyle() {
-		return getStyleInternal(stroke, strokeWidth, strokeDasharray);
-	}
-
-	private static String getStyleInternal(String color, String strokeWidth, String strokeDasharray) {
-		final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: 2.0" + ";");
-		if (strokeDasharray != null) {
-			style.append(" stroke-dasharray: " + strokeDasharray + ";");
-		}
-		return style.toString();
-	}
-
-	public void svgPolygon(double deltaShadow, double... points) {
-		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = document.createElement("polygon");
-			final StringBuilder sb = new StringBuilder();
-			for (final double coord : points) {
-				if (sb.length() > 0) {
-					sb.append(",");
-				}
-				sb.append(format(coord));
-			}
-			elt.setAttribute("points", sb.toString());
-			elt.setAttribute("fill", fill);
-			elt.setAttribute("style", getStyle());
-			if (deltaShadow > 0) {
-				// elt.setAttribute("filter", "url(#" + filterId + ")");
-			}
-			getG().appendChild(elt);
-		}
-
-		for (int i = 0; i < points.length; i += 2) {
-			ensureVisible(points[i] + 2 * deltaShadow, points[i + 1] + 2 * deltaShadow);
-		}
-
-	}
-
-	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
-			String textBackColor) {
-
-		if (hidden == false) {
-			final Element elt = document.createElement("text");
-
-			// required for web-kit based browsers
-			elt.setAttribute("text-rendering", "geometricPrecision");
-			if (keyClass != null && keyClass.equals(text)) {
-				elt.setAttribute("fill", "#1ba1e2");
-				elt.setAttribute("text-decoration", "underline");
-			} else if (text.startsWith("greenify")) {
-				text = text.replace("greenify", "");
-				elt.setAttribute("fill", "#22df80");
-			} else if (text.startsWith("redify")) {
-				text = text.replace("redify", "");
-				elt.setAttribute("fill", "#f97d7d");
-			} else {
-				elt.setAttribute("fill", fill);
-			}
-			elt.setAttribute("font-size", format(fontSize));
-			// elt.setAttribute("text-anchor", "middle");
-			elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
-			if (fontWeight != null) {
-				elt.setAttribute("font-weight", fontWeight);
-			}
-			if (fontStyle != null) {
-				elt.setAttribute("font-style", fontStyle);
-			}
-			if (textDecoration != null) {
-				elt.setAttribute("text-decoration", textDecoration);
-			}
-			if (fontFamily != null) {
-				elt.setAttribute("font-family", fontFamily);
-			}
-			if (textBackColor != null) {
-				final String backFilterId = getFilterBackColor(textBackColor);
-				// elt.setAttribute("filter", "url(#" + backFilterId + ")");
-			}
-			for (final Map.Entry<String, String> ent : attributes.entrySet()) {
-				elt.setAttribute(ent.getKey(), ent.getValue());
-			}
-
-			if (textDecoration != null && textDecoration.contains("underline")) {
-				final double delta = 2;
-				final Element elt2 = document.createElement("line");
-				elt2.setAttribute("x1", format(x));
-				elt2.setAttribute("y1", format(y + delta));
-				elt2.setAttribute("x2", format(x));
-				elt2.setAttribute("y2", format(y + delta));
-				elt2.setAttribute("style", getStyleInternal(fill, "1.0", null));
-				getG().appendChild(elt2);
-			}
-
-			if (componentCallBack) {
-				for (int i = 0; i < displayComponents.size(); i++) {
-					if (text.equals(displayComponents.get(i).uniqueName())
-							&& displayComponents.get(i).type().equals("base")) {
-						// class component type
-						text = displayComponents.get(i).displayName();
-						elt.setAttribute("onclick",
-								"classElementCallBack('" + displayComponents.get(i).uniqueName() + "')");
-						elt.setAttribute("class", "interactiveComponent");
-						elt.setAttribute("id", displayComponents.get(i).uniqueName());
-						elt.setAttribute("fill", displayComponents.get(i).color());
-					} else if (text.contains("(") && text.contains(")") && text.contains(":")
-							&& text.substring(0, text.indexOf(" :")).equals(displayComponents.get(i).uniqueName())) {
-						// method component type
-						elt.setAttribute("onclick",
-								"classElementCallBack('" + displayComponents.get(i).uniqueName() + "')");
-						elt.setAttribute("class", "interactiveComponent");
-						elt.setAttribute("id", displayComponents.get(i).uniqueName());
-						elt.setAttribute("fill", displayComponents.get(i).color());
-						text = text.replace(displayComponents.get(i).uniqueName(),
-								displayComponents.get(i).displayName());
-					} else if (text.contains(":")
-							&& text.substring(0, text.indexOf(" :")).trim().equals(displayComponents.get(i).uniqueName())
-							&& displayComponents.get(i).type().equals("variable")) {
-						// variable component type
-						text = text.replace(displayComponents.get(i).uniqueName(),
-								displayComponents.get(i).displayName());
-						elt.setAttribute("id", displayComponents.get(i).uniqueName());
-						elt.setAttribute("fill", displayComponents.get(i).color());
-					}
-				}
-			}
-			elt.setTextContent(text);
-			elt.setAttribute("x", format(x));
-			elt.setAttribute("y", format(y));
-			getG().appendChild(elt);
-		}
-
-		ensureVisible(x, y);
-	}
-
-	private final Map<String, String> filterBackColor = new HashMap<String, String>();
-
-	private String getIdFilterBackColor(String color) {
-		String result = filterBackColor.get(color);
-		if (result == null) {
-			result = "b" + filterBackColor.size();
-			filterBackColor.put(color, result);
-		}
-		return result;
-	}
-
-	private String getFilterBackColor(String color) {
-		String id = filterBackColor.get(color);
-		if (id != null) {
-			return id;
-		}
-		id = getIdFilterBackColor(color);
-		final Element filter = document.createElement("filter");
-		filter.setAttribute("id", id);
-		filter.setAttribute("x", "0");
-		filter.setAttribute("y", "0");
-		filter.setAttribute("width", "1");
-		filter.setAttribute("height", "1");
-		addFilter(filter, "feFlood", "flood-color", color);
-		addFilter(filter, "feComposite", "in", "SourceGraphic");
-		// defs.appendChild(filter);
-		return id;
-	}
-
-	private Transformer getTransformer() throws TransformerException {
-		// Get a TransformerFactory object.
-		final TransformerFactory xformFactory = TransformerFactory.newInstance();
-		// try {
-		// final Class<?> factoryClass = Class
-		// .forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
-		// xformFactory = (TransformerFactory) factoryClass.newInstance();
-		// } catch (Exception e) {
-		// xformFactory = TransformerFactory.newInstance();
-		// }
-		Log.info("TransformerFactory=" + xformFactory.getClass());
-
-		// Get an XSL Transformer object.
-		final Transformer transformer = xformFactory.newTransformer();
-		Log.info("Transformer=" + transformer.getClass());
-
-		// // Sets the standalone property in the first line of
-		// // the output file.
-		transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
-		//
-		// Properties proprietes = new Properties();
-		// proprietes.put("standalone", "yes");
-		// transformer.setOutputProperties(proprietes);
-		//
-		// transformer.setParameter(OutputKeys.STANDALONE, "yes");
-
-		return transformer;
-	}
-
-	public void createXml(OutputStream os) throws TransformerException, IOException {
-		if (images.size() == 0) {
-			createXmlInternal(os);
-			return;
-		}
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		createXmlInternal(baos);
-		String s = new String(baos.toByteArray());
-		for (final Map.Entry<String, String> ent : images.entrySet()) {
-			final String k = "\\<" + ent.getKey() + "/\\>";
-			s = s.replaceAll(k, ent.getValue());
-		}
-		os.write(s.getBytes());
-	}
-
-	private void createXmlInternal(OutputStream os) throws TransformerException {
-		// // Add lines
-		// for (Line l : lines) {
-		// l.drawNow();
-		// }
-
-		// Get a DOMSource object that represents the
-		// Document object
-		final DOMSource source = new DOMSource(document);
-
-		final int maxXscaled = (int) (maxX * scale);
-		final int maxYscaled = (int) (maxY * scale);
-		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
-		if (backcolor != null) {
-			style += "background:" + backcolor + ";";
-		}
-		root.setAttribute("style", style);
-		root.setAttribute("width", format(maxX) + "px");
-		root.setAttribute("height", format(maxY) + "px");
-		root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
-
-		if (pendingBackground != null) {
-			pendingBackground.setAttribute("width", format(maxX));
-			pendingBackground.setAttribute("height", format(maxY));
-
-		}
-
-		// Get a StreamResult object that points to the
-		// screen. Then transform the DOM sending XML to
-		// the screen.
-		final StreamResult scrResult = new StreamResult(os);
-		getTransformer().transform(source, scrResult);
-	}
-
-	public void svgPath(double x, double y, UPath path, double deltaShadow) {
-		manageShadow(deltaShadow);
-		ensureVisible(x, y);
-		final StringBuilder sb = new StringBuilder();
-		for (final USegment seg : path) {
-			final USegmentType type = seg.getSegmentType();
-			final double coord[] = seg.getCoord();
-			if (type == USegmentType.SEG_MOVETO) {
-				sb.append("M" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_LINETO) {
-				sb.append("L" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_QUADTO) {
-				sb.append("Q" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_CUBICTO) {
-				sb.append("C" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
-				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_ARCTO) {
-				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + ","
-						+ format(coord[3]) + " " + format(coord[4]) + "," + format(coord[5] + x) + ","
-						+ format(coord[6] + y) + " ");
-				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_CLOSE) {
-				// Nothing
-			} else {
-				Log.println("unknown " + seg);
-			}
-
-		}
-		if (hidden == false) {
-			final Element elt = document.createElement("path");
-			elt.setAttribute("d", sb.toString());
-			elt.setAttribute("style", getStyle());
-			elt.setAttribute("fill", fill);
-			if (deltaShadow > 0) {
-				// elt.setAttribute("filter", "url(#" + filterId + ")");
-			}
-			getG().appendChild(elt);
-		}
-	}
-
-	private StringBuilder currentPath = null;
-
-	public void newpath() {
-		currentPath = new StringBuilder();
-
-	}
-
-	public void moveto(double x, double y) {
-		currentPath.append("M" + format(x) + "," + format(y) + " ");
-		ensureVisible(x, y);
-	}
-
-	public void lineto(double x, double y) {
-		currentPath.append("L" + format(x) + "," + format(y) + " ");
-		ensureVisible(x, y);
-	}
-
-	public void closepath() {
-		currentPath.append("Z ");
-
-	}
-
-	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3)
-				+ "," + format(y3) + " ");
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
-		ensureVisible(x3, y3);
-
-	}
-
-	public void quadto(double x1, double y1, double x2, double y2) {
-		currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
-	}
-
-	private String format(double x) {
-		return EpsGraphics.format(x * scale);
-	}
-
-	public void fill(int windingRule) {
-		if (hidden == false) {
-			final Element elt = document.createElement("path");
-			elt.setAttribute("d", currentPath.toString());
-			// elt elt.setAttribute("style", getStyle());
-			getG().appendChild(elt);
-		}
-		currentPath = null;
-
-	}
-
-	public void svgImage(BufferedImage image, double x, double y) throws IOException {
-		if (hidden == false) {
-			final Element elt = document.createElement("image");
-			elt.setAttribute("width", format(image.getWidth()));
-			elt.setAttribute("height", format(image.getHeight()));
-			elt.setAttribute("x", format(x));
-			elt.setAttribute("y", format(y));
-			final String s = toBase64(image);
-			elt.setAttribute("xlink:href", "data:image/png;base64," + s);
-			getG().appendChild(elt);
-		}
-		ensureVisible(x, y);
-		ensureVisible(x + image.getWidth(), y + image.getHeight());
-	}
-
-	private final Map<String, String> images = new HashMap<String, String>();
-
-	public void svgImage(String svg, double x, double y) {
-		if (svg.startsWith("<svg>") == false) {
-			throw new IllegalArgumentException();
-		}
-		if (hidden == false) {
-			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
-			svg = pos + svg.substring(5);
-			// System.err.println("svg=" + svg);
-			// System.err.println("x=" + x);
-			// System.err.println("y=" + y);
-			final String key = "imagesvginlined" + images.size();
-			final Element elt = document.createElement(key);
-			getG().appendChild(elt);
-			images.put(key, svg);
-		}
-		ensureVisible(x, y);
-	}
-
-	private String toBase64(BufferedImage image) throws IOException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", baos);
-		final byte data[] = baos.toByteArray();
-		return new String(Base64Coder.encode(data));
-	}
-
-	// Shadow
-
-	private boolean withShadow = false;
-
-	private void manageShadow(double deltaShadow) {
-		if (deltaShadow != 0) {
-			if (withShadow == false) {
-				// <filter id="f1" x="0" y="0" width="120%" height="120%">
-				final Element filter = document.createElement("filter");
-				filter.setAttribute("id", filterId);
-				filter.setAttribute("x", "-1");
-				filter.setAttribute("y", "-1");
-				filter.setAttribute("width", "300%");
-				filter.setAttribute("height", "300%");
-				addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", "" + (2 * scale));
-				addFilter(filter, "feColorMatrix", "type", "matrix", "in", "blurOut", "result", "blurOut2", "values",
-						"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
-				addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy",
-						"" + (4 * scale));
-				addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
-				// defs.appendChild(filter);
-
-			}
-			withShadow = true;
-		}
-	}
-
-	private void addFilter(Element filter, String name, String... data) {
-		final Element elt = document.createElement(name);
-		for (int i = 0; i < data.length; i += 2) {
-			elt.setAttribute(data[i], data[i + 1]);
-		}
-		filter.appendChild(elt);
-	}
-
-	private boolean hidden;
-
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
-	}
+    // http://tutorials.jenkov.com/svg/index.html
+    // http://www.svgbasics.com/
+    // http://apike.ca/prog_svg_text.html
+    // http://www.w3.org/TR/SVG11/shapes.html
+    // http://en.wikipedia.org/wiki/Scalable_Vector_Graphics
+
+    // Animation:
+    // http://srufaculty.sru.edu/david.dailey/svg/
+    // Shadow:
+    // http://www.svgbasics.com/filters3.html
+    // http://www.w3schools.com/svg/svg_feoffset.asp
+    // http://www.adobe.com/svg/demos/samples.html
+
+    final private Document document;
+    final private Element root;
+    final private Element defs;
+    final private Element gRoot;
+    private String filterId;
+    public static String keyClass;
+    public static List<ComponentDisplayInfo> displayComponents = new ArrayList<ComponentDisplayInfo>();
+    public static boolean componentCallBack = false;
+
+    private String fill = "black";
+    private String stroke = "black";
+    private String strokeWidth;
+    private String strokeDasharray = null;
+    private final String backcolor; // And
+                                    // others
+    private int maxX = 10;
+    private int maxY = 10;
+
+    private final double scale;
+
+    final protected void ensureVisible(double x, double y) {
+        if (x > maxX) {
+            maxX = (int) (x + 1);
+        }
+        if (y > maxY) {
+            maxY = (int) (y + 1);
+        }
+    }
+
+    public SvgGraphics(double scale) {
+        this(null, scale);
+    }
+
+    public SvgGraphics(String backcolor, double scale) {
+        try {
+            this.scale = scale;
+            document = getDocument();
+            this.backcolor = backcolor;
+
+            root = getRootNode();
+
+            // Create a node named defs, which will be the parent
+            // for a pair of linear gradient definitions.
+            defs = simpleElement("defs");
+            gRoot = simpleElement("g");
+            strokeWidth = "" + scale;
+            filterId = String.valueOf(Math.random() * 1000);
+        } catch (final ParserConfigurationException e) {
+            e.printStackTrace();
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private Element pendingBackground;
+
+    public void paintBackcolorGradient(ColorMapper mapper, HtmlColorGradient gr) {
+        final String id = createSvgGradient(StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor1())),
+                StringUtils.getAsHtml(mapper.getMappedColor(gr.getColor2())), gr.getPolicy());
+        setFillColor("url(#" + id + ")");
+        setStrokeColor(null);
+        pendingBackground = createRectangleInternal(0, 0, 0, 0);
+        getG().appendChild(pendingBackground);
+    }
+
+    // This method returns a reference to a simple XML
+    // element node that has no attributes.
+    private Element simpleElement(String type) {
+        final Element theElement = document.createElement(type);
+        root.appendChild(theElement);
+        return theElement;
+    }
+
+    private Document getDocument() throws ParserConfigurationException {
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        final DocumentBuilder builder = factory.newDocumentBuilder();
+        final Document document = builder.newDocument();
+        document.setXmlStandalone(true);
+        return document;
+    }
+
+    // This method returns a reference to a root node that
+    // has already been appended to the document.
+    private Element getRootNode() {
+        // Create the root node named svg and append it to
+        // the document.
+        final Element svg = document.createElement("svg");
+        document.appendChild(svg);
+
+        // Set some attributes on the root node that are
+        // required for proper rendering. Note that the
+        // approach used here is somewhat different from the
+        // approach used in the earlier program named Svg01,
+        // particularly with regard to the style.
+        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+        svg.setAttribute("version", "1.1");
+
+        return svg;
+    }
+
+    public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
+        manageShadow(deltaShadow);
+        if (hidden == false) {
+            final Element elt = document.createElement("ellipse");
+            elt.setAttribute("cx", format(x));
+            elt.setAttribute("cy", format(y));
+            elt.setAttribute("rx", format(xRadius));
+            elt.setAttribute("ry", format(yRadius));
+            elt.setAttribute("fill", fill);
+            elt.setAttribute("style", getStyle());
+            if (deltaShadow > 0) {
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
+            }
+            getG().appendChild(elt);
+        }
+        ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);
+    }
+
+    public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
+        if (hidden == false) {
+            final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
+                    + format(x2) + " " + format(y2);
+            final Element elt = document.createElement("path");
+            elt.setAttribute("d", path);
+            elt.setAttribute("fill", fill);
+            elt.setAttribute("style", getStyle());
+            getG().appendChild(elt);
+        }
+        ensureVisible(x1, y1);
+        ensureVisible(x2, y2);
+    }
+
+    private final Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
+
+    public String createSvgGradient(String color1, String color2, char policy) {
+        final List<Object> key = Arrays.asList((Object) color1, color2, policy);
+        String id = gradients.get(key);
+        if (id == null) {
+            final Element elt = document.createElement("linearGradient");
+            if (policy == '|') {
+                elt.setAttribute("x1", "0%");
+                elt.setAttribute("y1", "50%");
+                elt.setAttribute("x2", "100%");
+                elt.setAttribute("y2", "50%");
+            } else if (policy == '\\') {
+                elt.setAttribute("x1", "0%");
+                elt.setAttribute("y1", "100%");
+                elt.setAttribute("x2", "100%");
+                elt.setAttribute("y2", "0%");
+            } else if (policy == '-') {
+                elt.setAttribute("x1", "50%");
+                elt.setAttribute("y1", "0%");
+                elt.setAttribute("x2", "50%");
+                elt.setAttribute("y2", "100%");
+            } else {
+                elt.setAttribute("x1", "0%");
+                elt.setAttribute("y1", "0%");
+                elt.setAttribute("x2", "100%");
+                elt.setAttribute("y2", "100%");
+            }
+            id = "gr" + gradients.size();
+            gradients.put(key, id);
+            elt.setAttribute("id", id);
+
+            final Element stop1 = document.createElement("stop");
+            stop1.setAttribute("stop-color", color1);
+            stop1.setAttribute("offset", "0%");
+            final Element stop2 = document.createElement("stop");
+            stop2.setAttribute("stop-color", color2);
+            stop2.setAttribute("offset", "100%");
+
+            elt.appendChild(stop1);
+            elt.appendChild(stop2);
+            defs.appendChild(elt);
+        }
+        return id;
+    }
+
+    public final void setFillColor(String fill) {
+        this.fill = fill == null ? "none" : fill;
+    }
+
+    public final void setStrokeColor(String stroke) {
+        this.stroke = stroke == null ? "none" : stroke;
+    }
+
+    public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
+        this.strokeWidth = "" + (scale * strokeWidth);
+        this.strokeDasharray = strokeDasharray;
+    }
+
+    public void closeLink() {
+        if (pendingLink2.size() > 0) {
+            final Element element = pendingLink2.get(0);
+            pendingLink2.remove(0);
+            getG().appendChild(element);
+        }
+    }
+
+    private final List<Element> pendingLink2 = new ArrayList<Element>();
+
+    public void openLink(String url, String title, String target) {
+        if (url == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (pendingLink2.size() > 0) {
+            closeLink();
+        }
+
+        pendingLink2.add(0, document.createElement("a"));
+        pendingLink2.get(0).setAttribute("target", target);
+        pendingLink2.get(0).setAttribute("xlink:href", url);
+        if (title == null) {
+            pendingLink2.get(0).setAttribute("xlink:title", url);
+        } else {
+            title = title.replaceAll("\\\\n", "\n");
+            pendingLink2.get(0).setAttribute("xlink:title", title);
+        }
+    }
+
+    public final Element getG() {
+        if (pendingLink2.size() == 0) {
+            return gRoot;
+        }
+        return pendingLink2.get(0);
+    }
+
+    public void svgRectangle(double x, double y, double width, double height, double rx, double ry,
+            double deltaShadow) {
+        if (height <= 0 || width <= 0) {
+            throw new IllegalArgumentException();
+        }
+        manageShadow(deltaShadow);
+        if (hidden == false) {
+            final Element elt = createRectangleInternal(x, y, width, height);
+            if (deltaShadow > 0) {
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
+            }
+            if (rx > 0 && ry > 0) {
+                elt.setAttribute("rx", format(rx));
+                elt.setAttribute("ry", format(ry));
+            }
+
+            getG().appendChild(elt);
+        }
+        ensureVisible(x + width + 2 * deltaShadow, y + height + 2 * deltaShadow);
+    }
+
+    private Element createRectangleInternal(double x, double y, double width, double height) {
+        final Element elt = document.createElement("rect");
+        elt.setAttribute("x", format(x));
+        elt.setAttribute("y", format(y));
+        elt.setAttribute("width", format(width));
+        elt.setAttribute("height", format(height));
+        elt.setAttribute("fill", fill);
+        elt.setAttribute("style", getStyle());
+        return elt;
+    }
+
+    public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
+        manageShadow(deltaShadow);
+        if (hidden == false) {
+            final Element elt = document.createElement("line");
+            elt.setAttribute("x1", format(x1));
+            elt.setAttribute("y1", format(y1));
+            elt.setAttribute("x2", format(x2));
+            elt.setAttribute("y2", format(y2));
+            elt.setAttribute("style", getStyle());
+            if (deltaShadow > 0) {
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
+            }
+            getG().appendChild(elt);
+        }
+        ensureVisible(x1 + 2 * deltaShadow, y1 + 2 * deltaShadow);
+        ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
+    }
+
+    private String getStyle() {
+        return getStyleInternal(stroke, strokeWidth, strokeDasharray);
+    }
+
+    private static String getStyleInternal(String color, String strokeWidth, String strokeDasharray) {
+        final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: 2.0" + ";");
+        if (strokeDasharray != null) {
+            style.append(" stroke-dasharray: " + strokeDasharray + ";");
+        }
+        return style.toString();
+    }
+
+    public void svgPolygon(double deltaShadow, double... points) {
+        manageShadow(deltaShadow);
+        if (hidden == false) {
+            final Element elt = document.createElement("polygon");
+            final StringBuilder sb = new StringBuilder();
+            for (final double coord : points) {
+                if (sb.length() > 0) {
+                    sb.append(",");
+                }
+                sb.append(format(coord));
+            }
+            elt.setAttribute("points", sb.toString());
+            elt.setAttribute("fill", fill);
+            elt.setAttribute("style", getStyle());
+            if (deltaShadow > 0) {
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
+            }
+            getG().appendChild(elt);
+        }
+
+        for (int i = 0; i < points.length; i += 2) {
+            ensureVisible(points[i] + 2 * deltaShadow, points[i + 1] + 2 * deltaShadow);
+        }
+
+    }
+
+    public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
+            String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
+            String textBackColor) {
+
+        if (hidden == false) {
+            final Element elt = document.createElement("text");
+
+            // required for web-kit based browsers
+            elt.setAttribute("text-rendering", "geometricPrecision");
+            if (keyClass != null && keyClass.equals(text)) {
+                elt.setAttribute("fill", "#1ba1e2");
+                elt.setAttribute("text-decoration", "underline");
+            } else if (text.startsWith("greenify")) {
+                text = text.replace("greenify", "");
+                elt.setAttribute("fill", "#22df80");
+            } else if (text.startsWith("redify")) {
+                text = text.replace("redify", "");
+                elt.setAttribute("fill", "#f97d7d");
+            } else {
+                elt.setAttribute("fill", fill);
+            }
+            elt.setAttribute("font-size", format(fontSize));
+            // elt.setAttribute("text-anchor", "middle");
+            elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
+            if (fontWeight != null) {
+                elt.setAttribute("font-weight", fontWeight);
+            }
+            if (fontStyle != null) {
+                elt.setAttribute("font-style", fontStyle);
+            }
+            if (textDecoration != null) {
+                elt.setAttribute("text-decoration", textDecoration);
+            }
+            if (fontFamily != null) {
+                elt.setAttribute("font-family", fontFamily);
+            }
+            if (textBackColor != null) {
+                final String backFilterId = getFilterBackColor(textBackColor);
+                // elt.setAttribute("filter", "url(#" + backFilterId + ")");
+            }
+            for (final Map.Entry<String, String> ent : attributes.entrySet()) {
+                elt.setAttribute(ent.getKey(), ent.getValue());
+            }
+
+            if (textDecoration != null && textDecoration.contains("underline")) {
+                final double delta = 2;
+                final Element elt2 = document.createElement("line");
+                elt2.setAttribute("x1", format(x));
+                elt2.setAttribute("y1", format(y + delta));
+                elt2.setAttribute("x2", format(x));
+                elt2.setAttribute("y2", format(y + delta));
+                elt2.setAttribute("style", getStyleInternal(fill, "1.0", null));
+                getG().appendChild(elt2);
+            }
+
+            for (int i = 0; i < displayComponents.size(); i++) {
+                if (text.equals(displayComponents.get(i).uniqueName())
+                        && displayComponents.get(i).type().equals("base")) {
+                    // class component type
+                    text = displayComponents.get(i).displayName();
+                    elt.setAttribute("onclick", "componentCallBack('" + displayComponents.get(i).uniqueName() + "')");
+                    elt.setAttribute("class", "interactiveComponent");
+                    elt.setAttribute("id", displayComponents.get(i).uniqueName());
+                    elt.setAttribute("fill", displayComponents.get(i).color());
+                } else if (text.contains("$")
+                        && Integer.valueOf(text.substring(0, text.indexOf("$"))) == displayComponents.get(i)
+                                .uniqueName().hashCode()) {
+                    // method component type
+                    elt.setAttribute("onclick", "componentCallBack('" + displayComponents.get(i).uniqueName() + "')");
+                    elt.setAttribute("class", "interactiveComponent");
+                    elt.setAttribute("id", displayComponents.get(i).uniqueName());
+                    elt.setAttribute("fill", displayComponents.get(i).color());
+                    text = text.replace(text.substring(0, text.lastIndexOf(" :")),
+                            displayComponents.get(i).displayName());
+                } else if ((!text.contains(":") && text.equals(displayComponents.get(i).uniqueName())
+                        || (text.contains(":") && text.substring(0, text.indexOf(" :")).trim()
+                                .equals(displayComponents.get(i).uniqueName())))) {
+                    // variable component type
+                    text = text.replace(displayComponents.get(i).uniqueName(), displayComponents.get(i).displayName());
+                    elt.setAttribute("id", displayComponents.get(i).uniqueName());
+                    elt.setAttribute("fill", displayComponents.get(i).color());
+                }
+            }
+            elt.setTextContent(text);
+            elt.setAttribute("x", format(x));
+            elt.setAttribute("y", format(y));
+            getG().appendChild(elt);
+        }
+
+        ensureVisible(x, y);
+    }
+
+    private final Map<String, String> filterBackColor = new HashMap<String, String>();
+
+    private String getIdFilterBackColor(String color) {
+        String result = filterBackColor.get(color);
+        if (result == null) {
+            result = "b" + filterBackColor.size();
+            filterBackColor.put(color, result);
+        }
+        return result;
+    }
+
+    private String getFilterBackColor(String color) {
+        String id = filterBackColor.get(color);
+        if (id != null) {
+            return id;
+        }
+        id = getIdFilterBackColor(color);
+        final Element filter = document.createElement("filter");
+        filter.setAttribute("id", id);
+        filter.setAttribute("x", "0");
+        filter.setAttribute("y", "0");
+        filter.setAttribute("width", "1");
+        filter.setAttribute("height", "1");
+        addFilter(filter, "feFlood", "flood-color", color);
+        addFilter(filter, "feComposite", "in", "SourceGraphic");
+        // defs.appendChild(filter);
+        return id;
+    }
+
+    private Transformer getTransformer() throws TransformerException {
+        // Get a TransformerFactory object.
+        final TransformerFactory xformFactory = TransformerFactory.newInstance();
+        // try {
+        // final Class<?> factoryClass = Class
+        // .forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+        // xformFactory = (TransformerFactory) factoryClass.newInstance();
+        // } catch (Exception e) {
+        // xformFactory = TransformerFactory.newInstance();
+        // }
+        Log.info("TransformerFactory=" + xformFactory.getClass());
+
+        // Get an XSL Transformer object.
+        final Transformer transformer = xformFactory.newTransformer();
+        Log.info("Transformer=" + transformer.getClass());
+
+        // // Sets the standalone property in the first line of
+        // // the output file.
+        transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+        //
+        // Properties proprietes = new Properties();
+        // proprietes.put("standalone", "yes");
+        // transformer.setOutputProperties(proprietes);
+        //
+        // transformer.setParameter(OutputKeys.STANDALONE, "yes");
+
+        return transformer;
+    }
+
+    public void createXml(OutputStream os) throws TransformerException, IOException {
+        if (images.size() == 0) {
+            createXmlInternal(os);
+            return;
+        }
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        createXmlInternal(baos);
+        String s = new String(baos.toByteArray());
+        for (final Map.Entry<String, String> ent : images.entrySet()) {
+            final String k = "\\<" + ent.getKey() + "/\\>";
+            s = s.replaceAll(k, ent.getValue());
+        }
+        os.write(s.getBytes());
+    }
+
+    private void createXmlInternal(OutputStream os) throws TransformerException {
+        // // Add lines
+        // for (Line l : lines) {
+        // l.drawNow();
+        // }
+
+        // Get a DOMSource object that represents the
+        // Document object
+        final DOMSource source = new DOMSource(document);
+
+        final int maxXscaled = (int) (maxX * scale);
+        final int maxYscaled = (int) (maxY * scale);
+        String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
+        if (backcolor != null) {
+            style += "background:" + backcolor + ";";
+        }
+        root.setAttribute("style", style);
+        root.setAttribute("width", format(maxX) + "px");
+        root.setAttribute("height", format(maxY) + "px");
+        root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
+
+        if (pendingBackground != null) {
+            pendingBackground.setAttribute("width", format(maxX));
+            pendingBackground.setAttribute("height", format(maxY));
+
+        }
+
+        // Get a StreamResult object that points to the
+        // screen. Then transform the DOM sending XML to
+        // the screen.
+        final StreamResult scrResult = new StreamResult(os);
+        getTransformer().transform(source, scrResult);
+    }
+
+    public void svgPath(double x, double y, UPath path, double deltaShadow) {
+        manageShadow(deltaShadow);
+        ensureVisible(x, y);
+        final StringBuilder sb = new StringBuilder();
+        for (final USegment seg : path) {
+            final USegmentType type = seg.getSegmentType();
+            final double coord[] = seg.getCoord();
+            if (type == USegmentType.SEG_MOVETO) {
+                sb.append("M" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
+                ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+            } else if (type == USegmentType.SEG_LINETO) {
+                sb.append("L" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
+                ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+            } else if (type == USegmentType.SEG_QUADTO) {
+                sb.append("Q" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
+                        + format(coord[3] + y) + " ");
+                ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
+            } else if (type == USegmentType.SEG_CUBICTO) {
+                sb.append("C" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
+                        + format(coord[3] + y) + " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
+                ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
+                ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
+            } else if (type == USegmentType.SEG_ARCTO) {
+                sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + ","
+                        + format(coord[3]) + " " + format(coord[4]) + "," + format(coord[5] + x) + ","
+                        + format(coord[6] + y) + " ");
+                ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
+            } else if (type == USegmentType.SEG_CLOSE) {
+                // Nothing
+            } else {
+                Log.println("unknown " + seg);
+            }
+
+        }
+        if (hidden == false) {
+            final Element elt = document.createElement("path");
+            elt.setAttribute("d", sb.toString());
+            elt.setAttribute("style", getStyle());
+            elt.setAttribute("fill", fill);
+            if (deltaShadow > 0) {
+                // elt.setAttribute("filter", "url(#" + filterId + ")");
+            }
+            getG().appendChild(elt);
+        }
+    }
+
+    private StringBuilder currentPath = null;
+
+    public void newpath() {
+        currentPath = new StringBuilder();
+
+    }
+
+    public void moveto(double x, double y) {
+        currentPath.append("M" + format(x) + "," + format(y) + " ");
+        ensureVisible(x, y);
+    }
+
+    public void lineto(double x, double y) {
+        currentPath.append("L" + format(x) + "," + format(y) + " ");
+        ensureVisible(x, y);
+    }
+
+    public void closepath() {
+        currentPath.append("Z ");
+
+    }
+
+    public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
+        currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3)
+                + "," + format(y3) + " ");
+        ensureVisible(x1, y1);
+        ensureVisible(x2, y2);
+        ensureVisible(x3, y3);
+
+    }
+
+    public void quadto(double x1, double y1, double x2, double y2) {
+        currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
+        ensureVisible(x1, y1);
+        ensureVisible(x2, y2);
+    }
+
+    private String format(double x) {
+        return EpsGraphics.format(x * scale);
+    }
+
+    public void fill(int windingRule) {
+        if (hidden == false) {
+            final Element elt = document.createElement("path");
+            elt.setAttribute("d", currentPath.toString());
+            // elt elt.setAttribute("style", getStyle());
+            getG().appendChild(elt);
+        }
+        currentPath = null;
+
+    }
+
+    public void svgImage(BufferedImage image, double x, double y) throws IOException {
+        if (hidden == false) {
+            final Element elt = document.createElement("image");
+            elt.setAttribute("width", format(image.getWidth()));
+            elt.setAttribute("height", format(image.getHeight()));
+            elt.setAttribute("x", format(x));
+            elt.setAttribute("y", format(y));
+            final String s = toBase64(image);
+            elt.setAttribute("xlink:href", "data:image/png;base64," + s);
+            getG().appendChild(elt);
+        }
+        ensureVisible(x, y);
+        ensureVisible(x + image.getWidth(), y + image.getHeight());
+    }
+
+    private final Map<String, String> images = new HashMap<String, String>();
+
+    public void svgImage(String svg, double x, double y) {
+        if (svg.startsWith("<svg>") == false) {
+            throw new IllegalArgumentException();
+        }
+        if (hidden == false) {
+            final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
+            svg = pos + svg.substring(5);
+            // System.err.println("svg=" + svg);
+            // System.err.println("x=" + x);
+            // System.err.println("y=" + y);
+            final String key = "imagesvginlined" + images.size();
+            final Element elt = document.createElement(key);
+            getG().appendChild(elt);
+            images.put(key, svg);
+        }
+        ensureVisible(x, y);
+    }
+
+    private String toBase64(BufferedImage image) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", baos);
+        final byte data[] = baos.toByteArray();
+        return new String(Base64Coder.encode(data));
+    }
+
+    // Shadow
+
+    private boolean withShadow = false;
+
+    private void manageShadow(double deltaShadow) {
+        if (deltaShadow != 0) {
+            if (withShadow == false) {
+                // <filter id="f1" x="0" y="0" width="120%" height="120%">
+                final Element filter = document.createElement("filter");
+                filter.setAttribute("id", filterId);
+                filter.setAttribute("x", "-1");
+                filter.setAttribute("y", "-1");
+                filter.setAttribute("width", "300%");
+                filter.setAttribute("height", "300%");
+                addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", "" + (2 * scale));
+                addFilter(filter, "feColorMatrix", "type", "matrix", "in", "blurOut", "result", "blurOut2", "values",
+                        "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
+                addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", "" + (4 * scale), "dy",
+                        "" + (4 * scale));
+                addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
+                // defs.appendChild(filter);
+
+            }
+            withShadow = true;
+        }
+    }
+
+    private void addFilter(Element filter, String name, String... data) {
+        final Element elt = document.createElement(name);
+        for (int i = 0; i < data.length; i += 2) {
+            elt.setAttribute(data[i], data[i + 1]);
+        }
+        filter.appendChild(elt);
+    }
+
+    private boolean hidden;
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
 
 }
