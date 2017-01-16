@@ -5,7 +5,7 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -27,7 +27,7 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  * Revision $Revision: 6711 $
  *
  */
@@ -39,9 +39,13 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.svg.ComponentDisplayInfo;
 
 public interface CucaDiagramFileMaker {
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException;
+    public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+            throws IOException;
+
+    ImageData createFile(List<ComponentDisplayInfo> displayComponents, OutputStream os, List<String> dotStrings,
+            FileFormatOption fileFormatOption) throws IOException;
 }

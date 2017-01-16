@@ -5,7 +5,7 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -27,7 +27,7 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  * Revision $Revision: 6711 $
  *
  */
@@ -43,7 +43,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek2;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svg.ComponentDisplayInfo;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -64,117 +64,126 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class CucaDiagramFileMakerHector2 implements CucaDiagramFileMaker {
 
-	private final CucaDiagram diagram;
-	private SkeletonConfiguration configuration;
+    private final CucaDiagram diagram;
+    private SkeletonConfiguration configuration;
 
-	private double singleWidth;
-	private double singleHeight;
-	private double nodeMargin = 40;
+    private double singleWidth;
+    private double singleHeight;
+    private double nodeMargin = 40;
 
-	public CucaDiagramFileMakerHector2(CucaDiagram diagram) {
-		this.diagram = diagram;
-	}
+    public CucaDiagramFileMakerHector2(CucaDiagram diagram) {
+        this.diagram = diagram;
+    }
 
-	final private Map<Pin, IEntityImage> images = new LinkedHashMap<Pin, IEntityImage>();
+    final private Map<Pin, IEntityImage> images = new LinkedHashMap<Pin, IEntityImage>();
 
-	final private Map<Link, PinLink> links = new LinkedHashMap<Link, PinLink>();
+    final private Map<Link, PinLink> links = new LinkedHashMap<Link, PinLink>();
 
-	private double getX(Pin pin) {
-		return singleWidth * configuration.getCol(pin);
-	}
+    private double getX(Pin pin) {
+        return singleWidth * configuration.getCol(pin);
+    }
 
-	private double getY(Pin pin) {
-		return singleHeight * pin.getRow();
-	}
+    private double getY(Pin pin) {
+        return singleHeight * pin.getRow();
+    }
 
-	private double getCenterX(Pin pin) {
-		return singleWidth * configuration.getCol(pin) + singleWidth / 2.0;
-	}
+    private double getCenterX(Pin pin) {
+        return singleWidth * configuration.getCol(pin) + singleWidth / 2.0;
+    }
 
-	private double getCenterY(Pin pin) {
-		return singleHeight * pin.getRow() + singleHeight / 2.0;
-	}
+    private double getCenterY(Pin pin) {
+        return singleHeight * pin.getRow() + singleHeight / 2.0;
+    }
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-		final PinFactory pinFactory = new PinFactory();
-		final SkeletonBuilder skeletonBuilder = new SkeletonBuilder();
-		for (Link link : diagram.getLinks()) {
-			final PinLink pinLink = pinFactory.createPinLink(link);
-			links.put(link, pinLink);
-			skeletonBuilder.add(pinLink);
-		}
+    @Override
+    public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+            throws IOException {
+        final PinFactory pinFactory = new PinFactory();
+        final SkeletonBuilder skeletonBuilder = new SkeletonBuilder();
+        for (Link link : diagram.getLinks()) {
+            final PinLink pinLink = pinFactory.createPinLink(link);
+            links.put(link, pinLink);
+            skeletonBuilder.add(pinLink);
+        }
 
-		final Skeleton skeleton = skeletonBuilder.createSkeletons().get(0);
-		this.configuration = SkeletonConfiguration.getDefault(skeleton);
+        final Skeleton skeleton = skeletonBuilder.createSkeletons().get(0);
+        this.configuration = SkeletonConfiguration.getDefault(skeleton);
 
-		this.singleWidth = 0;
-		this.singleHeight = 0;
+        this.singleWidth = 0;
+        this.singleHeight = 0;
 
-		for (Pin pin : skeleton.getPins()) {
-			final ILeaf leaf = (ILeaf) pin.getUserData();
-			final IEntityImage image = computeImage(leaf);
-			final Dimension2D dim = TextBlockUtils.getDimension(image);
-			if (dim.getWidth() > singleWidth) {
-				singleWidth = dim.getWidth();
-			}
-			if (dim.getHeight() > singleHeight) {
-				singleHeight = dim.getHeight();
-			}
-			images.put(pin, image);
-		}
-		singleHeight += nodeMargin;
-		singleWidth += nodeMargin;
+        for (Pin pin : skeleton.getPins()) {
+            final ILeaf leaf = (ILeaf) pin.getUserData();
+            final IEntityImage image = computeImage(leaf);
+            final Dimension2D dim = TextBlockUtils.getDimension(image);
+            if (dim.getWidth() > singleWidth) {
+                singleWidth = dim.getWidth();
+            }
+            if (dim.getHeight() > singleHeight) {
+                singleHeight = dim.getHeight();
+            }
+            images.put(pin, image);
+        }
+        singleHeight += nodeMargin;
+        singleWidth += nodeMargin;
 
-		MinMax minMax = MinMax.getEmpty(false);
-		for (Pin pin : skeleton.getPins()) {
-			minMax = minMax.addPoint(getX(pin), getY(pin));
-			minMax = minMax.addPoint(getX(pin) + singleWidth, getY(pin) + singleHeight);
-		}
+        MinMax minMax = MinMax.getEmpty(false);
+        for (Pin pin : skeleton.getPins()) {
+            minMax = minMax.addPoint(getX(pin), getY(pin));
+            minMax = minMax.addPoint(getX(pin) + singleWidth, getY(pin) + singleHeight);
+        }
 
-		final double borderMargin = 10;
+        final double borderMargin = 10;
 
-		final Dimension2D dimTotal = new Dimension2DDouble(2 * borderMargin + minMax.getMaxX(), 2 * borderMargin
-				+ minMax.getMaxY());
-		UGraphic2 ug = null;//fileFormatOption.createUGraphic(diagram.getColorMapper(), diagram.getDpiFactor(fileFormatOption),
-				// dimTotal, null, false);
-		ug = (UGraphic2) ug.apply(new UTranslate(borderMargin, borderMargin));
+        final Dimension2D dimTotal = new Dimension2DDouble(2 * borderMargin + minMax.getMaxX(),
+                2 * borderMargin + minMax.getMaxY());
+        UGraphic2 ug = null;// fileFormatOption.createUGraphic(diagram.getColorMapper(),
+                            // diagram.getDpiFactor(fileFormatOption),
+        // dimTotal, null, false);
+        ug = (UGraphic2) ug.apply(new UTranslate(borderMargin, borderMargin));
 
-		for (PinLink pinLink : skeleton.getPinLinks()) {
-			drawPinLink(ug, pinLink);
-		}
+        for (PinLink pinLink : skeleton.getPinLinks()) {
+            drawPinLink(ug, pinLink);
+        }
 
-		for (Map.Entry<Pin, IEntityImage> ent : images.entrySet()) {
-			final Pin pin = ent.getKey();
-			final IEntityImage im = ent.getValue();
-			final double x = getX(pin);
-			final double y = getY(pin);
-			final Dimension2D dimImage = im.calculateDimension(ug.getStringBounder());
-			im.drawU(ug.apply(new UTranslate(x + (singleWidth - dimImage.getWidth()) / 2, y
-					+ (singleHeight - dimImage.getHeight()) / 2)));
-		}
+        for (Map.Entry<Pin, IEntityImage> ent : images.entrySet()) {
+            final Pin pin = ent.getKey();
+            final IEntityImage im = ent.getValue();
+            final double x = getX(pin);
+            final double y = getY(pin);
+            final Dimension2D dimImage = im.calculateDimension(ug.getStringBounder());
+            im.drawU(ug.apply(new UTranslate(x + (singleWidth - dimImage.getWidth()) / 2,
+                    y + (singleHeight - dimImage.getHeight()) / 2)));
+        }
 
-//		ug.writeImageTOBEMOVED(os, null, diagram.getDpi(fileFormatOption));
-//		return new ImageDataSimple(dimTotal);
-		throw new UnsupportedOperationException();
-	}
+        // ug.writeImageTOBEMOVED(os, null, diagram.getDpi(fileFormatOption));
+        // return new ImageDataSimple(dimTotal);
+        throw new UnsupportedOperationException();
+    }
 
-	private void drawPinLink(UGraphic ug, PinLink pinLink) {
-		final Rose rose = new Rose();
-		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.classArrow);
-		ug = ug.apply(new UChangeColor(color)).apply(new UStroke(1.5));
-		final double x1 = getCenterX(pinLink.getPin1());
-		final double y1 = getCenterY(pinLink.getPin1());
-		final double x2 = getCenterX(pinLink.getPin2());
-		final double y2 = getCenterY(pinLink.getPin2());
-		ug = ug.apply(new UTranslate(x1, y1));
-		ug.draw(new ULine(x2 - x1, y2 - y1));
+    private void drawPinLink(UGraphic ug, PinLink pinLink) {
+        final Rose rose = new Rose();
+        final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.classArrow);
+        ug = ug.apply(new UChangeColor(color)).apply(new UStroke(1.5));
+        final double x1 = getCenterX(pinLink.getPin1());
+        final double y1 = getCenterY(pinLink.getPin1());
+        final double x2 = getCenterX(pinLink.getPin2());
+        final double y2 = getCenterY(pinLink.getPin2());
+        ug = ug.apply(new UTranslate(x1, y1));
+        ug.draw(new ULine(x2 - x1, y2 - y1));
 
-	}
+    }
 
-	private IEntityImage computeImage(final ILeaf leaf) {
-		final IEntityImage image = CucaDiagramFileMakerSvek2.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null);
-		return image;
-	}
+    private IEntityImage computeImage(final ILeaf leaf) {
+        final IEntityImage image = CucaDiagramFileMakerSvek2.createEntityImageBlock(leaf, diagram.getSkinParam(), false,
+                diagram, null, null, null);
+        return image;
+    }
+
+    @Override
+    public ImageData createFile(List<ComponentDisplayInfo> displayComponents, OutputStream os, List<String> dotStrings,
+            FileFormatOption fileFormatOption) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

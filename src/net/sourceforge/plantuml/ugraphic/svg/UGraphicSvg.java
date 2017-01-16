@@ -5,7 +5,7 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.xml.transform.TransformerException;
 
@@ -41,6 +42,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.svg.ComponentDisplayInfo;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
@@ -59,116 +61,125 @@ import net.sourceforge.plantuml.ugraphic.UText;
 
 public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer, UGraphic2 {
 
-	private final StringBounder stringBounder;
-	private final boolean textAsPath2;
-	private final String target;
+    private final StringBounder stringBounder;
+    private final boolean textAsPath2;
+    private final String target;
 
-	@Override
-	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicSvg(this);
-	}
+    @Override
+    protected AbstractCommonUGraphic copyUGraphic() {
+        return new UGraphicSvg(this);
+    }
 
-	private UGraphicSvg(UGraphicSvg other) {
-		super(other);
-		this.stringBounder = other.stringBounder;
-		this.textAsPath2 = other.textAsPath2;
-		this.target = other.target;
-		register();
-	}
+    private UGraphicSvg(UGraphicSvg other) {
+        super(other);
+        this.stringBounder = other.stringBounder;
+        this.textAsPath2 = other.textAsPath2;
+        this.target = other.target;
+        register();
+    }
 
-	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String linkTarget) {
-		this(colorMapper, new SvgGraphics(backcolor, scale), textAsPath, linkTarget);
-	}
+    public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String linkTarget) {
+        this(colorMapper, new SvgGraphics(backcolor, scale), textAsPath, linkTarget);
+    }
 
-	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget) {
-		this(colorMapper, new SvgGraphics(scale), textAsPath, linkTarget);
-	}
+    public UGraphicSvg(List<ComponentDisplayInfo> displayComponents, ColorMapper colorMapper, String backcolor,
+            boolean textAsPath, double scale, String linkTarget) {
+        this(colorMapper, new SvgGraphics(displayComponents, backcolor, scale), textAsPath, linkTarget);
+    }
 
-	public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String linkTarget) {
-		this(mapper, new SvgGraphics(scale), textAsPath, linkTarget);
+    public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget) {
+        this(colorMapper, new SvgGraphics(scale), textAsPath, linkTarget);
+    }
 
-		final SvgGraphics svg = getGraphicObject();
-		svg.paintBackcolorGradient(mapper, gr);
-	}
+    public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String linkTarget) {
+        this(mapper, new SvgGraphics(scale), textAsPath, linkTarget);
 
-	@Override
-	protected boolean manageHiddenAutomatically() {
-		return false;
-	}
+        final SvgGraphics svg = getGraphicObject();
+        svg.paintBackcolorGradient(mapper, gr);
+    }
 
-	@Override
-	protected void beforeDraw() {
-		getGraphicObject().setHidden(getParam().isHidden());
-	}
+    @Override
+    protected boolean manageHiddenAutomatically() {
+        return false;
+    }
 
-	@Override
-	protected void afterDraw() {
-		getGraphicObject().setHidden(false);
-	}
+    @Override
+    protected void beforeDraw() {
+        getGraphicObject().setHidden(getParam().isHidden());
+    }
 
-	private UGraphicSvg(ColorMapper colorMapper, SvgGraphics svg, boolean textAsPath, String linkTarget) {
-		super(colorMapper, svg);
-		this.stringBounder = TextBlockUtils.getDummyStringBounder();
-		this.textAsPath2 = textAsPath;
-		this.target = linkTarget;
-		register();
-	}
+    @Override
+    protected void afterDraw() {
+        getGraphicObject().setHidden(false);
+    }
 
-	private void register() {
-		registerDriver(URectangle.class, new DriverRectangleSvg(this));
-		if (textAsPath2) {
-			registerDriver(UText.class, new DriverTextAsPathSvg(TextBlockUtils.getFontRenderContext(), this));
-		} else {
-			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
-		}
-		registerDriver(ULine.class, new DriverLineSvg(this));
-		registerDriver(UPolygon.class, new DriverPolygonSvg(this));
-		registerDriver(UEllipse.class, new DriverEllipseSvg(this));
-		registerDriver(UImage.class, new DriverImagePng(this));
-		registerDriver(UImageSvg.class, new DriverImageSvgSvg());
-		registerDriver(UPath.class, new DriverPathSvg(this));
-		registerDriver(DotPath.class, new DriverDotPathSvg());
-		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg());
-	}
+    private UGraphicSvg(ColorMapper colorMapper, SvgGraphics svg, boolean textAsPath, String linkTarget) {
+        super(colorMapper, svg);
+        this.stringBounder = TextBlockUtils.getDummyStringBounder();
+        this.textAsPath2 = textAsPath;
+        this.target = linkTarget;
+        register();
+    }
 
-	public SvgGraphics getSvgGraphics() {
-		return this.getGraphicObject();
-	}
+    private void register() {
+        registerDriver(URectangle.class, new DriverRectangleSvg(this));
+        if (textAsPath2) {
+            registerDriver(UText.class, new DriverTextAsPathSvg(TextBlockUtils.getFontRenderContext(), this));
+        } else {
+            registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
+        }
+        registerDriver(ULine.class, new DriverLineSvg(this));
+        registerDriver(UPolygon.class, new DriverPolygonSvg(this));
+        registerDriver(UEllipse.class, new DriverEllipseSvg(this));
+        registerDriver(UImage.class, new DriverImagePng(this));
+        registerDriver(UImageSvg.class, new DriverImageSvgSvg());
+        registerDriver(UPath.class, new DriverPathSvg(this));
+        registerDriver(DotPath.class, new DriverDotPathSvg());
+        registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg());
+    }
 
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
+    public SvgGraphics getSvgGraphics() {
+        return this.getGraphicObject();
+    }
 
-	public void createXml(OutputStream os) throws IOException {
-		try {
-			getGraphicObject().createXml(os);
-		} catch (TransformerException e) {
-			throw new IOException(e.toString());
-		}
-	}
+    @Override
+    public StringBounder getStringBounder() {
+        return stringBounder;
+    }
 
-	public void startUrl(Url url) {
-		getGraphicObject().openLink(url.getUrl(), url.getTooltip(), target);
-	}
+    public void createXml(OutputStream os) throws IOException {
+        try {
+            getGraphicObject().createXml(os);
+        } catch (TransformerException e) {
+            throw new IOException(e.toString());
+        }
+    }
 
-	public void closeAction() {
-		getGraphicObject().closeLink();
-	}
+    @Override
+    public void startUrl(Url url) {
+        getGraphicObject().openLink(url.getUrl(), url.getTooltip(), target);
+    }
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		createXml(os);
-	}
+    @Override
+    public void closeAction() {
+        getGraphicObject().closeLink();
+    }
 
-	// @Override
-	// public String startHiddenGroup() {
-	// getGraphicObject().startHiddenGroup();
-	// return null;
-	// }
-	//
-	// @Override
-	// public String closeHiddenGroup() {
-	// getGraphicObject().closeHiddenGroup();
-	// return null;
-	// }
+    @Override
+    public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+        createXml(os);
+    }
+
+    // @Override
+    // public String startHiddenGroup() {
+    // getGraphicObject().startHiddenGroup();
+    // return null;
+    // }
+    //
+    // @Override
+    // public String closeHiddenGroup() {
+    // getGraphicObject().closeHiddenGroup();
+    // return null;
+    // }
 
 }

@@ -5,6 +5,14 @@
 <dependency>
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>8026</version>
+    <version>8030</version>
 </dependency>
+
+<repositories>
+	<repository>
+		<id>central</id>
+		<name>ip-172-31-28-11-releases</name>
+		<url>http://ec2-35-163-144-148.us-west-2.compute.amazonaws.com/artifactory/libs-release</url>
+	</repository>
+</repositories>
 ```

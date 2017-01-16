@@ -85,7 +85,7 @@ public class SvgGraphics {
     final private Element gRoot;
     private String filterId;
     public static String keyClass;
-    public static List<ComponentDisplayInfo> displayComponents = new ArrayList<ComponentDisplayInfo>();
+    private List<ComponentDisplayInfo> displayComponents = new ArrayList<ComponentDisplayInfo>();
     public static boolean componentCallBack = false;
 
     private String fill = "black";
@@ -115,6 +115,27 @@ public class SvgGraphics {
     public SvgGraphics(String backcolor, double scale) {
         try {
             this.scale = scale;
+            document = getDocument();
+            this.backcolor = backcolor;
+
+            root = getRootNode();
+
+            // Create a node named defs, which will be the parent
+            // for a pair of linear gradient definitions.
+            defs = simpleElement("defs");
+            gRoot = simpleElement("g");
+            strokeWidth = "" + scale;
+            filterId = String.valueOf(Math.random() * 1000);
+        } catch (final ParserConfigurationException e) {
+            e.printStackTrace();
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public SvgGraphics(List<ComponentDisplayInfo> displayComponents, String backcolor, double scale) {
+        try {
+            this.scale = scale;
+            this.displayComponents = displayComponents;
             document = getDocument();
             this.backcolor = backcolor;
 

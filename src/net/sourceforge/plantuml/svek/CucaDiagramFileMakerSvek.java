@@ -5,7 +5,7 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.sourceforge.net
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -27,7 +27,7 @@
  * in the United States and other countries.]
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  * Revision $Revision: 6711 $
  *
  */
@@ -57,129 +57,175 @@ import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.StringBounderUtils;
+import net.sourceforge.plantuml.svg.ComponentDisplayInfo;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
-	private final CucaDiagram diagram;
+    private final CucaDiagram diagram;
 
-	static private final StringBounder stringBounder;
+    static private final StringBounder stringBounder;
 
-	static {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
-		stringBounder = StringBounderUtils.asStringBounder(builder.getGraphics2D());
-	}
+    static {
+        final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, Color.WHITE);
+        stringBounder = StringBounderUtils.asStringBounder(builder.getGraphics2D());
+    }
 
-	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
-		this.diagram = diagram;
-	}
+    public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
+        this.diagram = diagram;
+    }
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-		try {
-			return createFileInternal(os, dotStrings, fileFormatOption);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			throw new IOException(e);
-		}
-	}
+    @Override
+    public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+            throws IOException {
+        try {
+            return createFileInternal(os, dotStrings, fileFormatOption);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new IOException(e);
+        }
+    }
 
-	private CucaDiagramFileMakerSvek2 buildCucaDiagramFileMakerSvek2(DotMode dotMode) {
-		final DotData dotData = new DotData(diagram.getEntityFactory().getRootGroup(), getOrderedLinks(),
-				diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
-				diagram.getColorMapper(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
-				dotMode, diagram.getNamespaceSeparator(), diagram.getPragma());
-		final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma());
-		return svek2;
+    @Override
+    public ImageData createFile(List<ComponentDisplayInfo> displayComponents, OutputStream os, List<String> dotStrings,
+            FileFormatOption fileFormatOption) throws IOException {
+        try {
+            return createFileInternal(displayComponents, os, dotStrings, fileFormatOption);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new IOException(e);
+        }
+    }
 
-	}
+    private CucaDiagramFileMakerSvek2 buildCucaDiagramFileMakerSvek2(DotMode dotMode) {
+        final DotData dotData = new DotData(diagram.getEntityFactory().getRootGroup(), getOrderedLinks(),
+                diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
+                diagram.getColorMapper(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(), dotMode,
+                diagram.getNamespaceSeparator(), diagram.getPragma());
+        final CucaDiagramFileMakerSvek2 svek2 = new CucaDiagramFileMakerSvek2(dotData, diagram.getEntityFactory(),
+                diagram.getSource(), diagram.getPragma());
+        return svek2;
 
-	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			new CucaDiagramSimplifierActivity(diagram, dotStrings);
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
-			new CucaDiagramSimplifierState(diagram, dotStrings);
-		}
+    }
 
-		CucaDiagramFileMakerSvek2 svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NORMAL);
-		TextBlockBackcolored result = svek2.createFile(diagram.getDotStringSkek());
-		if (result instanceof GraphvizCrash) {
-			svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
-			result = svek2.createFile(diagram.getDotStringSkek());
-		}
-		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
+    private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+            throws IOException, InterruptedException {
+        if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+            new CucaDiagramSimplifierActivity(diagram, dotStrings);
+        } else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
+            new CucaDiagramSimplifierState(diagram, dotStrings);
+        }
 
-		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
-		if (widthwarning != null && widthwarning.matches("\\d+")) {
-			this.warningOrError = svek2.getBibliotekon().getWarningOrError(Integer.parseInt(widthwarning));
-		} else {
-			this.warningOrError = null;
-		}
-		final Dimension2D dim = result.calculateDimension(stringBounder);
-		final double scale = getScale(fileFormatOption, dim);
+        CucaDiagramFileMakerSvek2 svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NORMAL);
+        TextBlockBackcolored result = svek2.createFile(diagram.getDotStringSkek());
+        if (result instanceof GraphvizCrash) {
+            svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
+            result = svek2.createFile(diagram.getDotStringSkek());
+        }
+        result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale,
-				result.getBackcolor(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
-				warningOrError, 0, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
-		imageBuilder.addUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+        final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
+        if (widthwarning != null && widthwarning.matches("\\d+")) {
+            this.warningOrError = svek2.getBibliotekon().getWarningOrError(Integer.parseInt(widthwarning));
+        } else {
+            this.warningOrError = null;
+        }
+        final Dimension2D dim = result.calculateDimension(stringBounder);
+        final double scale = getScale(fileFormatOption, dim);
 
-	}
+        final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale,
+                result.getBackcolor(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError,
+                0, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
+        imageBuilder.addUDrawable(result);
+        return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 
-	private List<Link> getOrderedLinks() {
-		final List<Link> result = new ArrayList<Link>();
-		for (Link l : diagram.getLinks()) {
-			addLinkNew(result, l);
-		}
-		return result;
-	}
+    }
 
-	private void addLinkNew(List<Link> result, Link link) {
-		for (int i = 0; i < result.size(); i++) {
-			final Link other = result.get(i);
-			if (other.sameConnections(link)) {
-				while (i < result.size() && result.get(i).sameConnections(link)) {
-					i++;
-				}
-				if (i == result.size()) {
-					result.add(link);
-				} else {
-					result.add(i, link);
-				}
-				return;
-			}
-		}
-		result.add(link);
-	}
+    private ImageData createFileInternal(List<ComponentDisplayInfo> displayComponents, OutputStream os,
+            List<String> dotStrings, FileFormatOption fileFormatOption) throws IOException, InterruptedException {
+        if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+            new CucaDiagramSimplifierActivity(diagram, dotStrings);
+        } else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
+            new CucaDiagramSimplifierState(diagram, dotStrings);
+        }
 
-	private String warningOrError;
+        CucaDiagramFileMakerSvek2 svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NORMAL);
+        TextBlockBackcolored result = svek2.createFile(diagram.getDotStringSkek());
+        if (result instanceof GraphvizCrash) {
+            svek2 = buildCucaDiagramFileMakerSvek2(DotMode.NO_LEFT_RIGHT);
+            result = svek2.createFile(diagram.getDotStringSkek());
+        }
+        result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
 
-	private String getWarningOrError() {
-		return warningOrError;
-	}
+        final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
+        if (widthwarning != null && widthwarning.matches("\\d+")) {
+            this.warningOrError = svek2.getBibliotekon().getWarningOrError(Integer.parseInt(widthwarning));
+        } else {
+            this.warningOrError = null;
+        }
+        final Dimension2D dim = result.calculateDimension(stringBounder);
+        final double scale = getScale(fileFormatOption, dim);
 
-	private final UFont getFont(FontParam fontParam) {
-		final ISkinParam skinParam = diagram.getSkinParam();
-		return skinParam.getFont(null, false, fontParam);
-	}
+        final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam().getColorMapper(), scale,
+                result.getBackcolor(), fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError,
+                0, 10, diagram.getAnimation(), diagram.getSkinParam().handwritten());
+        imageBuilder.addUDrawable(result);
+        return imageBuilder.writeImageTOBEMOVED(displayComponents, fileFormatOption, os);
 
-	private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereo) {
-		final ISkinParam skinParam = diagram.getSkinParam();
-		return skinParam.getFontHtmlColor(stereo, fontParam);
-	}
+    }
 
-	private double getScale(FileFormatOption fileFormatOption, final Dimension2D dim) {
-		final double scale;
-		final Scale diagScale = diagram.getScale();
-		if (diagScale == null) {
-			scale = diagram.getDpiFactor(fileFormatOption);
-		} else {
-			scale = diagScale.getScale(dim.getWidth(), dim.getHeight());
-		}
-		return scale;
-	}
+    private List<Link> getOrderedLinks() {
+        final List<Link> result = new ArrayList<Link>();
+        for (Link l : diagram.getLinks()) {
+            addLinkNew(result, l);
+        }
+        return result;
+    }
+
+    private void addLinkNew(List<Link> result, Link link) {
+        for (int i = 0; i < result.size(); i++) {
+            final Link other = result.get(i);
+            if (other.sameConnections(link)) {
+                while (i < result.size() && result.get(i).sameConnections(link)) {
+                    i++;
+                }
+                if (i == result.size()) {
+                    result.add(link);
+                } else {
+                    result.add(i, link);
+                }
+                return;
+            }
+        }
+        result.add(link);
+    }
+
+    private String warningOrError;
+
+    private String getWarningOrError() {
+        return warningOrError;
+    }
+
+    private final UFont getFont(FontParam fontParam) {
+        final ISkinParam skinParam = diagram.getSkinParam();
+        return skinParam.getFont(null, false, fontParam);
+    }
+
+    private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereo) {
+        final ISkinParam skinParam = diagram.getSkinParam();
+        return skinParam.getFontHtmlColor(stereo, fontParam);
+    }
+
+    private double getScale(FileFormatOption fileFormatOption, final Dimension2D dim) {
+        final double scale;
+        final Scale diagScale = diagram.getScale();
+        if (diagScale == null) {
+            scale = diagram.getDpiFactor(fileFormatOption);
+        } else {
+            scale = diagScale.getScale(dim.getWidth(), dim.getHeight());
+        }
+        return scale;
+    }
 
 }
