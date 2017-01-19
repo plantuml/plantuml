@@ -119,7 +119,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	private static String optionalKeywords(UmlDiagramType type) {
 		if (type == UmlDiagramType.CLASS) {
-			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object)";
+			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object|entity)";
 		}
 		if (type == UmlDiagramType.OBJECT) {
 			return "(object)";

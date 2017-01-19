@@ -138,6 +138,9 @@ public class MemberImpl implements Member {
 		if (isProtected()) {
 			return "#" + display;
 		}
+		if (isIEMandatory()) {
+			return "*" + display;
+		}		
 		return display;
 	}
 
@@ -178,6 +181,10 @@ public class MemberImpl implements Member {
 	private boolean isPackagePrivate() {
 		return visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_FIELD
 				|| visibilityModifier == VisibilityModifier.PACKAGE_PRIVATE_METHOD;
+	}
+
+	private boolean isIEMandatory() {
+		return visibilityModifier == VisibilityModifier.IE_MANDATORY;
 	}
 
 	public final VisibilityModifier getVisibilityModifier() {

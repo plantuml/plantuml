@@ -165,6 +165,11 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 					getSkinParam(), ColorParam.stereotypeEBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
+		if (entity.getEntityType() == LeafType.ENTITY) {
+			return new CircledCharacter('E', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
+					getSkinParam(), ColorParam.stereotypeCBackground, stereotype), classBorder,
+					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
+		}
 		assert false;
 		return null;
 	}
