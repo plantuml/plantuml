@@ -36,10 +36,10 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 
 
 public enum ColorParam {
-	background(HtmlColorUtils.WHITE, ColorType.BACK),
+	background(HtmlColorUtils.WHITE, true, ColorType.BACK),
 	hyperlink(HtmlColorUtils.BLUE),
 	
-	activityBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	activityBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	activityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	activityStart(HtmlColorUtils.BLACK),
 	activityEnd(HtmlColorUtils.BLACK),
@@ -48,15 +48,15 @@ public enum ColorParam {
 	swimlaneBorder(HtmlColorUtils.BLACK),
 	
 	usecaseBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	usecaseBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	usecaseBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	usecaseArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 
-	objectBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	objectBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	objectBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	objectArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	
-	classHeaderBackground(null, ColorType.BACK),
-	classBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	classHeaderBackground(null, true, ColorType.BACK),
+	classBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	classBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	stereotypeCBackground(HtmlColorUtils.COL_ADD1B2),
 	stereotypeNBackground(HtmlColorUtils.COL_E3664A),
@@ -65,19 +65,19 @@ public enum ColorParam {
 	stereotypeEBackground(HtmlColorUtils.COL_EB937F),
 	classArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 		
-	packageBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	packageBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	packageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 
-	partitionBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	partitionBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	partitionBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 
-	componentBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	componentBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	componentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	interfaceBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	interfaceBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	interfaceBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	componentArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 
-	stateBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	stateBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	stateBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	stateArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	stateStart(HtmlColorUtils.BLACK),
@@ -113,35 +113,35 @@ public enum ColorParam {
 	sequenceBoxBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	sequenceBoxBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
 	
-	artifactBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	artifactBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	artifactBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	cloudBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	cloudBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	cloudBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	queueBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	queueBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	queueBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	databaseBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	databaseBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	databaseBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	folderBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	folderBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	folderBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	fileBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	fileBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	fileBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	frameBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	frameBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	frameBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	nodeBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	nodeBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	nodeBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	rectangleBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	rectangleBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	rectangleBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	agentBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	agentBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	agentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	storageBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	storageBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	storageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
-	boundaryBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	boundaryBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	boundaryBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	collectionsBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	collectionsBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	collectionsBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	controlBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	controlBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	controlBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	entityBackground(HtmlColorUtils.MY_YELLOW, ColorType.BACK),
+	entityBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	entityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 
 	
@@ -152,8 +152,9 @@ public enum ColorParam {
 	iconProtected(HtmlColorUtils.COL_B38D22),
 	iconProtectedBackground(HtmlColorUtils.COL_FFFF44),
 	iconPublic(HtmlColorUtils.COL_038048),
-	iconPublicBackground(HtmlColorUtils.COL_84BE84);
-	
+	iconPublicBackground(HtmlColorUtils.COL_84BE84),
+	iconIEMandatory(HtmlColorUtils.BLACK);
+
 	private final boolean isBackground;
 	private final HtmlColor defaultValue;
 	private final ColorType colorType;
@@ -178,6 +179,10 @@ public enum ColorParam {
 		this.isBackground = isBackground;
 		this.defaultValue = defaultValue;
 		this.colorType = colorType;
+		if (colorType == ColorType.BACK && isBackground == false) {
+			System.err.println(this);
+			throw new IllegalStateException();
+		}
 	}
 
 	protected boolean isBackground() {

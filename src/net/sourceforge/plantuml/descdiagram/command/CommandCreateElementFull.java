@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor|folder|file|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface";
+	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|node|frame|cloud|database|queue|storage|agent|usecase|component|boundary|control|entity|interface";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -137,68 +137,15 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		if (symbol == null) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.ACTOR;
-		} else if (symbol.equalsIgnoreCase("artifact")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ARTIFACT;
-		} else if (symbol.equalsIgnoreCase("folder")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FOLDER;
-		} else if (symbol.equalsIgnoreCase("file")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FILE;
-		} else if (symbol.equalsIgnoreCase("package")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.PACKAGE;
-		} else if (symbol.equalsIgnoreCase("rectangle")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.RECTANGLE;
-		} else if (symbol.equalsIgnoreCase("node")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.NODE;
-		} else if (symbol.equalsIgnoreCase("frame")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FRAME;
-		} else if (symbol.equalsIgnoreCase("cloud")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.CLOUD;
-		} else if (symbol.equalsIgnoreCase("database")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.DATABASE;
-		} else if (symbol.equalsIgnoreCase("queue")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.QUEUE;
-		} else if (symbol.equalsIgnoreCase("storage")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.STORAGE;
-		} else if (symbol.equalsIgnoreCase("agent")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.AGENT;
-		} else if (symbol.equalsIgnoreCase("actor")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ACTOR;
-		} else if (symbol.equalsIgnoreCase("component")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = diagram.getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
-		} else if (symbol.equalsIgnoreCase("boundary")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.BOUNDARY;
-		} else if (symbol.equalsIgnoreCase("control")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.CONTROL;
-		} else if (symbol.equalsIgnoreCase("entity")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ENTITY_DOMAIN;
-		} else if (symbol.equalsIgnoreCase("interface")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.INTERFACE;
-		} else if (symbol.equalsIgnoreCase("()")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.INTERFACE;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
 		} else {
-			throw new IllegalStateException();
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.getFoo1(symbol, diagram.getSkinParam().useUml2ForComponent());
+			if (usymbol == null) {
+				throw new IllegalStateException();
+			}
 		}
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));

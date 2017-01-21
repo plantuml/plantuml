@@ -36,70 +36,75 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileAssemblySimple;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
+public class ParallelBuilderFork extends ParallelFtilesBuilder {
 
-	private final double spaceArroundBlackBar = 20;
-	private final double barHeight = 6;
-	private final double xMargin = 14;
+	private final String label;
 
-	private final Rose rose = new Rose();
-
-	public FtileFactoryDelegatorCreateFork(FtileFactory factory) {
-		super(factory);
+	public ParallelBuilderFork(ISkinParam skinParam, StringBounder stringBounder,
+			final List<Ftile> list, Ftile inner, Swimlane swimlane, String label) {
+		super(skinParam, stringBounder, list, inner, swimlane);
+		this.label = label;
 	}
 
 	@Override
-	public Ftile createFork(Swimlane swimlane, List<Ftile> all) {
-		final HtmlColor colorBar = rose.getHtmlColor(skinParam(), ColorParam.activityBar);
-		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
-
-		final Dimension2D dimSuper = super.createFork(swimlane, all).calculateDimension(getStringBounder());
-		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
-
-		final List<Ftile> list = new ArrayList<Ftile>();
-		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
-		}
-
-		Ftile inner = super.createFork(swimlane, list);
-
+	protected Ftile doStep1() {
+		Ftile result = getMiddle();
 		final List<Connection> conns = new ArrayList<Connection>();
-
-		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, list.get(0).getSwimlaneIn());
+		final Ftile black = new FtileBlackBlock(skinParam(), getRose()
+				.getHtmlColor(skinParam(), ColorParam.activityBar), getList().get(0).getSwimlaneIn());
 		double x = 0;
-		for (Ftile tmp : list) {
+		for (Ftile tmp : getList()) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionIn(black, tmp, x, tmp.getInLinkRendering().getRainbow(arrowColor)));
-			conns.add(new ConnectionOut(tmp, black, x, tmp.getOutLinkRendering().getRainbow(arrowColor), height1));
+			conns.add(new ConnectionIn(black, tmp, x, tmp.getInLinkRendering().getRainbow(
+					HtmlColorAndStyle.build(skinParam()))));
 			x += dim.getWidth();
 		}
 
-		inner = FtileUtils.addConnection(inner, conns);
-		((FtileBlackBlock) black).setDimenstion(inner.calculateDimension(getStringBounder()).getWidth(), barHeight);
-		final Ftile tmp1 = new FtileAssemblySimple(black, inner);
-		return new FtileAssemblySimple(tmp1, black);
+		result = FtileUtils.addConnection(result, conns);
+		((FtileBlackBlock) black).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(), barHeight);
+
+		return new FtileAssemblySimple(black, result);
+	}
+
+	@Override
+	protected Ftile doStep2(Ftile result) {
+		final Ftile out = new FtileBlackBlock(skinParam(), getRose().getHtmlColor(skinParam(), ColorParam.activityBar),
+				getList().get(0).getSwimlaneIn());
+		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(), barHeight);
+		if (label != null) {
+			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(label)));
+		}
+		result = new FtileAssemblySimple(result, out);
+		final List<Connection> conns = new ArrayList<Connection>();
+		double x = 0;
+		for (Ftile tmp : getList()) {
+			final UTranslate translate0 = new UTranslate(0, barHeight);
+			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
+			conns.add(new ConnectionOut(translate0, tmp, out, x, tmp.getOutLinkRendering().getRainbow(
+					HtmlColorAndStyle.build(skinParam())), getHeightOfMiddle()));
+			x += dim.getWidth();
+		}
+		result = FtileUtils.addConnection(result, conns);
+		return result;
 	}
 
 	class ConnectionIn extends AbstractConnection implements ConnectionTranslatable {
@@ -154,10 +159,13 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 		private final Rainbow arrowColor;
 		private final double height;
 		private final Display label;
+		private final UTranslate translate0;
 
-		public ConnectionOut(Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor, double height) {
+		public ConnectionOut(UTranslate translate0, Ftile ftile1, Ftile ftile2, double x, Rainbow arrowColor,
+				double height) {
 			super(ftile1, ftile2);
-			label = ftile1.getOutLinkRendering().getDisplay();
+			this.translate0 = translate0;
+			this.label = ftile1.getOutLinkRendering().getDisplay();
 			this.x = x;
 			this.arrowColor = arrowColor;
 			this.height = height;
@@ -173,8 +181,10 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}
-			snake.addPoint(geo.getLeft(), geo.getOutY());
-			snake.addPoint(geo.getLeft(), height);
+			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
+			final Point2D p2 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), height));
+			snake.addPoint(p1);
+			snake.addPoint(p2);
 			ug.draw(snake);
 		}
 
@@ -184,8 +194,8 @@ public class FtileFactoryDelegatorCreateFork extends FtileFactoryDelegator {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Point2D p1 = new Point2D.Double(geo.getLeft(), geo.getOutY());
-			final Point2D p2 = new Point2D.Double(geo.getLeft(), height);
+			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
+			final Point2D p2 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), height));
 
 			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {

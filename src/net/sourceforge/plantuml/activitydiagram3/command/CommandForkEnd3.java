@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -46,13 +47,18 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 	static RegexConcat getRegexConcat() {
 		return new RegexConcat(//
 				new RegexLeaf("^"), //
-				new RegexLeaf("(end[%s]?fork|fork[%s]?end)"), //
+				new RegexLeaf("STYLE", "(end[%s]?fork|fork[%s]?end|end[%s]?merge)"), //
+				new RegexLeaf("\\s*"), //
+				new RegexLeaf("LABEL", "(\\{.+\\})?"), //
 				new RegexLeaf(";?$"));
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
-		return diagram.endFork();
+		final String style = arg.get("STYLE", 0);
+		final ForkStyle forkStyle = style.contains("merge") ? ForkStyle.MERGE : ForkStyle.FORK;
+		final String label = arg.get("LABEL", 0);
+		return diagram.endFork(forkStyle, label);
 	}
 
 }

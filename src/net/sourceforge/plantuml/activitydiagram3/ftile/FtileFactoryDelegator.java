@@ -37,6 +37,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -72,6 +73,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	protected final TextBlock getTextBlock(Display display) {
+		// DUP3945
 		if (Display.isNull(display)) {
 			return null;
 		}
@@ -148,12 +150,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
 	}
 
-	public Ftile createFork(Swimlane swimlane, List<Ftile> all) {
-		return factory.createFork(swimlane, all);
-	}
-
-	public Ftile createSplit(List<Ftile> all) {
-		return factory.createSplit(all);
+	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
+		return factory.createParallel(swimlane, all, style, label);
 	}
 
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,

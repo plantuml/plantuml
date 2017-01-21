@@ -58,7 +58,7 @@ public class LanguageDescriptor {
 		type.add("object");
 		type.add("artifact");
 		type.add("folder");
-		type.add("rect");
+		type.add("rectangle");
 		type.add("node");
 		type.add("frame");
 		type.add("cloud");
@@ -69,9 +69,16 @@ public class LanguageDescriptor {
 		type.add("control");
 		type.add("entity");
 		type.add("card");
+		type.add("file");
+		type.add("package");
+		type.add("queue");
 
 		keyword.add("@startuml");
 		keyword.add("@enduml");
+		keyword.add("@startdot");
+		keyword.add("@enddot");
+		keyword.add("@startsalt");
+		keyword.add("@endsalt");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");
@@ -137,6 +144,7 @@ public class LanguageDescriptor {
 		keyword.add("kill");
 
 		preproc.add("!include");
+		preproc.add("!pragma");
 		preproc.add("!define");
 		preproc.add("!undef");
 		preproc.add("!ifdef");

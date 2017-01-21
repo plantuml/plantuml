@@ -115,6 +115,9 @@ public class SkinParameter {
 	}
 
 	public String getUpperCaseName() {
+		if (name.endsWith("1") || name.endsWith("2")) {
+			return name.substring(0, name.length() - 1);
+		}
 		return name;
 	}
 

@@ -38,7 +38,6 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.InstructionList;
@@ -46,9 +45,8 @@ import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddUrl;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAssembly;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateFork;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateGroup;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateSplit;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile;
@@ -59,7 +57,6 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -67,10 +64,8 @@ import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
-import net.sourceforge.plantuml.ugraphic.CompressionTransform;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.SlotFinderX;
 import net.sourceforge.plantuml.ugraphic.SlotSet;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -112,8 +107,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		factory = new FtileFactoryDelegatorIf(factory, pragma);
 		factory = new FtileFactoryDelegatorWhile(factory);
 		factory = new FtileFactoryDelegatorRepeat(factory);
-		factory = new FtileFactoryDelegatorCreateFork(factory);
-		factory = new FtileFactoryDelegatorCreateSplit(factory);
+		factory = new FtileFactoryDelegatorCreateParallel(factory);
 		factory = new FtileFactoryDelegatorAddNote(factory);
 		factory = new FtileFactoryDelegatorCreateGroup(factory);
 		return factory;
@@ -188,43 +182,43 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 			return;
 		}
 
-		if (OptionFlags.SWI2) {
-
-			final SlotFinderX slotFinder = new SlotFinderX(ug.getStringBounder());
-			drawWhenSwimlanes(slotFinder, full);
-			final SlotSet slotX = slotFinder.getXSlotSet().reverse();
-			//
-			// // final SlotSet ysSlotSet = slotFinder.getYSlotSet().reverse().smaller(5.0);
-			//
-			System.err.println("slotX=" + slotX);
-
-			printDebug(ug, slotX, HtmlColorUtils.GRAY, full);
-
-			double x2 = 0;
-			double y2 = 0;
-			final double stepy = 40;
-			int i = 0;
-			final SlotSet deconnectedSwimlanes = new SlotSet();
-			for (Swimlane swimlane : swimlanes) {
-				final UGraphic ug2 = ug.apply(new UChangeColor(HtmlColorUtils.GREEN)).apply(
-						new UChangeBackColor(HtmlColorUtils.GREEN));
-				final double totalWidth = swimlane.getTotalWidth();
-				final SlotSet slot2 = slotX.filter(x2 + separationMargin, x2 + totalWidth - separationMargin);
-				deconnectedSwimlanes.addAll(slot2);
-				// ug2.apply(new UTranslate(x2, y2)).draw(new URectangle(totalWidth, stepy));
-				x2 += totalWidth;
-				y2 += stepy;
-				i++;
-			}
-			// printDebug(ug, deconnectedSwimlanes, HtmlColorUtils.GRAY, full);
-
-			//
-			final CompressionTransform compressionTransform = new CompressionTransform(deconnectedSwimlanes);
-			// ug = new UGraphicCompress2(ug, compressionTransform);
-			drawWhenSwimlanes(ug, full);
-		} else {
-			drawWhenSwimlanes(ug, full);
-		}
+		// if (OptionFlags.SWI2) {
+		//
+		// final SlotFinderX slotFinder = new SlotFinderX(ug.getStringBounder());
+		// drawWhenSwimlanes(slotFinder, full);
+		// final SlotSet slotX = slotFinder.getXSlotSet().reverse();
+		// //
+		// // // final SlotSet ysSlotSet = slotFinder.getYSlotSet().reverse().smaller(5.0);
+		// //
+		// System.err.println("slotX=" + slotX);
+		//
+		// printDebug(ug, slotX, HtmlColorUtils.GRAY, full);
+		//
+		// double x2 = 0;
+		// double y2 = 0;
+		// final double stepy = 40;
+		// int i = 0;
+		// final SlotSet deconnectedSwimlanes = new SlotSet();
+		// for (Swimlane swimlane : swimlanes) {
+		// final UGraphic ug2 = ug.apply(new UChangeColor(HtmlColorUtils.GREEN)).apply(
+		// new UChangeBackColor(HtmlColorUtils.GREEN));
+		// final double totalWidth = swimlane.getTotalWidth();
+		// final SlotSet slot2 = slotX.filter(x2 + separationMargin, x2 + totalWidth - separationMargin);
+		// deconnectedSwimlanes.addAll(slot2);
+		// // ug2.apply(new UTranslate(x2, y2)).draw(new URectangle(totalWidth, stepy));
+		// x2 += totalWidth;
+		// y2 += stepy;
+		// i++;
+		// }
+		// // printDebug(ug, deconnectedSwimlanes, HtmlColorUtils.GRAY, full);
+		//
+		// //
+		// final CompressionTransform compressionTransform = new CompressionTransform(deconnectedSwimlanes);
+		// // ug = new UGraphicCompress2(ug, compressionTransform);
+		// drawWhenSwimlanes(ug, full);
+		// } else {
+		drawWhenSwimlanes(ug, full);
+		// }
 		// getCollisionDetector(ug, titleHeightTranslate).drawDebug(ug);
 	}
 
@@ -252,13 +246,13 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 						+ titleHeightTranslate.getDy()));
 			}
 
-			if (OptionFlags.SWI2 == false) {
-				final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(),
-						HorizontalAlignment.LEFT, skinParam);
-				final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
-				final double posTitle = x2 + (swimlane.getTotalWidth() - titleWidth) / 2;
-				swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
-			}
+			// if (OptionFlags.SWI2 == false) {
+			final TextBlock swTitle = swimlane.getDisplay().create(getFontConfiguration(), HorizontalAlignment.LEFT,
+					skinParam);
+			final double titleWidth = swTitle.calculateDimension(stringBounder).getWidth();
+			final double posTitle = x2 + (swimlane.getTotalWidth() - titleWidth) / 2;
+			swTitle.drawU(ug.apply(new UTranslate(posTitle, 0)));
+			// }
 
 			drawSeparation(ug.apply(new UTranslate(x2, 0)), dimensionFull.getHeight() + titleHeightTranslate.getDy());
 

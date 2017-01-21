@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -66,7 +67,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 	private static RegexConcat getRegexConcat(Mode mode) {
 
-		String regex = "(?:(actor|usecase|component)[%s]+)";
+		// String regex = "(?:(actor|usecase|component)[%s]+)";
+		String regex = "(?:(state|" + CommandCreateElementFull.ALL_TYPES + ")[%s]+)";
 		if (mode == Mode.WITH_MIX_PREFIX) {
 			regex = "mix_" + regex;
 		}
@@ -130,62 +132,18 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		if (symbol == null) {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbol.ACTOR;
-		} else if (symbol.equalsIgnoreCase("artifact")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ARTIFACT;
-		} else if (symbol.equalsIgnoreCase("folder")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FOLDER;
-		} else if (symbol.equalsIgnoreCase("package")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.PACKAGE;
-		} else if (symbol.equalsIgnoreCase("rectangle")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.RECTANGLE;
-		} else if (symbol.equalsIgnoreCase("node")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.NODE;
-		} else if (symbol.equalsIgnoreCase("frame")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.FRAME;
-		} else if (symbol.equalsIgnoreCase("cloud")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.CLOUD;
-		} else if (symbol.equalsIgnoreCase("database")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.DATABASE;
-		} else if (symbol.equalsIgnoreCase("storage")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.STORAGE;
-		} else if (symbol.equalsIgnoreCase("agent")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.AGENT;
-		} else if (symbol.equalsIgnoreCase("actor")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ACTOR;
-		} else if (symbol.equalsIgnoreCase("component")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = diagram.getSkinParam().useUml2ForComponent() ? USymbol.COMPONENT2 : USymbol.COMPONENT1;
-		} else if (symbol.equalsIgnoreCase("boundary")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.BOUNDARY;
-		} else if (symbol.equalsIgnoreCase("control")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.CONTROL;
-		} else if (symbol.equalsIgnoreCase("entity")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.ENTITY_DOMAIN;
-		} else if (symbol.equalsIgnoreCase("interface")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.INTERFACE;
-		} else if (symbol.equalsIgnoreCase("()")) {
-			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.INTERFACE;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("state")) {
+			type = LeafType.STATE;
+			usymbol = null;
 		} else {
-			throw new IllegalStateException();
+			type = LeafType.DESCRIPTION;
+			usymbol = USymbol.getFoo1(symbol, diagram.getSkinParam().useUml2ForComponent());
+			if (usymbol == null) {
+				throw new IllegalStateException();
+			}
 		}
 
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw));
@@ -211,7 +169,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			entity.addUrl(url);
 		}
 
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		return CommandExecutionResult.ok();
 	}
 

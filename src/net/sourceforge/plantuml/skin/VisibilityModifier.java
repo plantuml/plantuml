@@ -55,13 +55,15 @@ public enum VisibilityModifier {
 	PRIVATE_METHOD(ColorParam.iconPrivate, ColorParam.iconPrivateBackground), PROTECTED_METHOD(
 			ColorParam.iconProtected, ColorParam.iconProtectedBackground), PACKAGE_PRIVATE_METHOD(
 			ColorParam.iconPackage, ColorParam.iconPackageBackground), PUBLIC_METHOD(ColorParam.iconPublic,
-			ColorParam.iconPublicBackground);
+			ColorParam.iconPublicBackground),
+
+	IE_MANDATORY(ColorParam.iconIEMandatory, ColorParam.iconIEMandatory);
 
 	private final ColorParam foregroundParam;
 	private final ColorParam backgroundParam;
 
 	public static String regexForVisibilityCharacter() {
-		return "[-#+~]";
+		return "[-#+~*]";
 	}
 
 	private VisibilityModifier(ColorParam foreground, ColorParam background) {
@@ -137,6 +139,10 @@ public enum VisibilityModifier {
 			drawCircle(ug, true, size, x, y);
 			break;
 
+		case IE_MANDATORY:
+			drawCircle(ug, true, size, x, y);
+			break;			
+			
 		default:
 			throw new IllegalStateException();
 		}
@@ -189,6 +195,9 @@ public enum VisibilityModifier {
 		if (c == '~') {
 			return true;
 		}
+		if (c == '*') {
+			return true;
+		}
 		return false;
 	}
 
@@ -212,6 +221,9 @@ public enum VisibilityModifier {
 		if (c == '~') {
 			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;
 		}
+		if (c == '*') {
+			return VisibilityModifier.IE_MANDATORY;
+		}		
 		return null;
 	}
 
@@ -228,6 +240,9 @@ public enum VisibilityModifier {
 		if (c == '~') {
 			return VisibilityModifier.PACKAGE_PRIVATE_METHOD;
 		}
+		if (c == '*') {
+			return VisibilityModifier.IE_MANDATORY;
+		}		
 		return null;
 	}
 

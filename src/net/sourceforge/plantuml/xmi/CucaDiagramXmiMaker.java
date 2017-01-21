@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public final class CucaDiagramXmiMaker {
@@ -62,6 +63,8 @@ public final class CucaDiagramXmiMaker {
 			final IXmiClassDiagram xmi;
 			if (diagram instanceof StateDiagram) {
 				xmi = new XmiStateDiagram((StateDiagram) diagram);
+			} else if (diagram instanceof DescriptionDiagram) {
+				xmi = new XmiDescriptionDiagram((DescriptionDiagram) diagram);
 			} else if (fileFormat == FileFormat.XMI_STANDARD) {
 				xmi = new XmiClassDiagramStandard((ClassDiagram) diagram);
 			} else if (fileFormat == FileFormat.XMI_ARGO) {

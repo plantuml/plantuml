@@ -54,6 +54,11 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 		this(skinParam, backColorElement, backColorGeneral, false);
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " " + backColorElement + " " + backColorGeneral;
+	}
+
 	public SkinParamBackcolored(ISkinParam skinParam, HtmlColor backColorElement, HtmlColor backColorGeneral,
 			boolean forceClickage) {
 		super(skinParam);

@@ -50,6 +50,8 @@ public class InstructionFork extends WithNote implements Instruction {
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 	private final ISkinParam skinParam;
+	private ForkStyle style = ForkStyle.FORK;
+	private String label;
 	boolean finished = false;
 
 	public InstructionFork(Instruction parent, LinkRendering inlinkRendering, ISkinParam skinParam) {
@@ -75,7 +77,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		for (InstructionList list : forks) {
 			all.add(list.createFtile(factory));
 		}
-		Ftile result = factory.createFork(getSwimlaneIn(), all);
+		Ftile result = factory.createParallel(getSwimlaneIn(), all, style, label);
 		if (getPositionedNotes().size() > 0) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
@@ -120,7 +122,7 @@ public class InstructionFork extends WithNote implements Instruction {
 
 	public Swimlane getSwimlaneOut() {
 		return forks.get(0).getSwimlaneOut();
-		//return getLastList().getSwimlaneOut();
+		// return getLastList().getSwimlaneOut();
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {
@@ -131,6 +133,11 @@ public class InstructionFork extends WithNote implements Instruction {
 			return;
 		}
 		getLastList().setOutRendering(nextLinkRenderer);
+	}
+
+	public void setStyle(ForkStyle style, String label) {
+		this.style = style;
+		this.label = label;
 	}
 
 }

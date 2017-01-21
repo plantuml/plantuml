@@ -218,9 +218,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find fork");
 	}
 
-	public CommandExecutionResult endFork() {
+	public CommandExecutionResult endFork(ForkStyle forkStyle, String label) {
 		if (current() instanceof InstructionFork) {
 			final InstructionFork currentFork = (InstructionFork) current();
+			currentFork.setStyle(forkStyle, label);
 			currentFork.manageOutRendering(nextLinkRenderer(), true);
 			setNextLinkRendererInternal(LinkRendering.none());
 			setCurrent(currentFork.getParent());

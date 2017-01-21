@@ -70,7 +70,7 @@ public class InstructionSplit implements Instruction {
 		for (InstructionList list : splits) {
 			all.add(list.createFtile(factory));
 		}
-		return factory.createSplit(all);
+		return factory.createParallel(getSwimlaneIn(), all, ForkStyle.SPLIT, null);
 	}
 
 	public Instruction getParent() {

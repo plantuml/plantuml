@@ -32,219 +32,78 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixed;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileFactoryDelegatorCreateSplit extends FtileFactoryDelegator {
+public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 
-	private final double spaceArroundBlackBar = 20;
-	private final double barHeight = 6;
-	private final double xMargin = 14;
-
-	private final Rose rose = new Rose();
-
-	public FtileFactoryDelegatorCreateSplit(FtileFactory factory) {
-		super(factory);
-	}
-
-	static private boolean isSimpleSwimlanes(List<Ftile> all) {
-		final Set<Swimlane> already = new HashSet<Swimlane>();
-		for (Ftile ftile : all) {
-			final Set<Swimlane> currents = ftile.getSwimlanes();
-			if (currents.size() != 1) {
-				return false;
-			}
-			assert currents.size() == 1;
-			final Swimlane current = currents.iterator().next();
-			if (already.contains(current)) {
-				return false;
-			}
-			already.add(current);
-		}
-		return already.size() > 1;
-	}
-
-	static private boolean isSeveralSwimlanes(List<Ftile> all) {
-		final Set<Swimlane> already = new HashSet<Swimlane>();
-		for (Ftile ftile : all) {
-			final Set<Swimlane> currents = ftile.getSwimlanes();
-			if (currents.size() > 1) {
-				return true;
-			}
-			assert currents.size() == 0 || currents.size() == 1;
-			if (currents.size() == 1) {
-				final Swimlane current = currents.iterator().next();
-				already.add(current);
-			}
-		}
-		return already.size() > 1;
+	public ParallelBuilderSplit(ISkinParam skinParam, StringBounder stringBounder,
+			final List<Ftile> list, Ftile inner, Swimlane swimlane) {
+		super(skinParam, stringBounder, list, inner, swimlane);
 	}
 
 	@Override
-	public Ftile createSplit(List<Ftile> all) {
-		// OptionFlags.SWI2
-		// if (all != null)
-		// return severalSwimlanes(all);
-		// // if (isSimpleSwimlanes(all)) {
-		// return simpleSwimlanes(all);
-		// // return severalSwimlanes(all);
-		// // } else if (isSeveralSwimlanes(all)) {
-		// // return severalSwimlanes(all);
-		// }
-		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
-
-		final Dimension2D dimSuper = super.createSplit(all).calculateDimension(getStringBounder());
-		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
-
-		final List<Ftile> list = new ArrayList<Ftile>();
-		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
-		}
-
-		Ftile inner = super.createSplit(list);
-
+	protected Ftile doStep1() {
+		Ftile result = getMiddle();
 		final List<Connection> conns = new ArrayList<Connection>();
 
-		double x = 0;
-		boolean hasOut = false;
-		for (Ftile tmp : list) {
+		double x1 = 0;
+		for (Ftile tmp : getList()) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			conns.add(new ConnectionIn(tmp, x, tmp.getInLinkRendering().getRainbow(arrowColor), getTextBlock(tmp
-					.getInLinkRendering())));
-			final boolean hasOutTmp = tmp.calculateDimension(getStringBounder()).hasPointOut();
-			if (hasOutTmp) {
-				conns.add(new ConnectionOut(tmp, x, tmp.getOutLinkRendering().getRainbow(arrowColor), height1,
-						getTextBlock(tmp.getOutLinkRendering())));
-				hasOut = true;
-			}
-			x += dim.getWidth();
+			conns.add(new ConnectionIn(tmp, x1, tmp.getInLinkRendering().getRainbow(
+					HtmlColorAndStyle.build(skinParam())), getTextBlock(tmp.getInLinkRendering())));
+			x1 += dim.getWidth();
 		}
-		final double totalWidth = inner.calculateDimension(getStringBounder()).getWidth();
-		conns.add(new ConnectionHline2(inner, OptionFlags.SWI2 ? HtmlColorAndStyle.fromColor(HtmlColorUtils.BLUE)
-				: arrowColor, 0, list, totalWidth));
-		if (hasOut) {
-			conns.add(new ConnectionHline2(inner, OptionFlags.SWI2 ? HtmlColorAndStyle.fromColor(HtmlColorUtils.GREEN)
-					: arrowColor, height1, list, totalWidth));
-		}
-
-		inner = FtileUtils.addConnection(inner, conns);
-		if (hasOut == false) {
-			inner = new FtileKilled(inner);
-		}
-		return inner;
+		final double totalWidth1 = result.calculateDimension(getStringBounder()).getWidth();
+		conns.add(new ConnectionHline2(result, HtmlColorAndStyle.build(skinParam()), 0, getList(), totalWidth1));
+		result = FtileUtils.addConnection(result, conns);
+		return result;
 	}
 
-	// private Ftile severalSwimlanes(List<Ftile> all) {
-	// final HtmlColor arrowColor = rose.getHtmlColor(getSkinParam(), ColorParam.activityArrow);
-	// final Dimension2D dimSuper = new FtileForkInner1(all).calculateDimension(getStringBounder());
-	// final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
-	// final List<Ftile> list = new ArrayList<Ftile>();
-	// for (Ftile tmp : all) {
-	// list.add(new FtileHeightFixed(new FtileMarged(tmp, xMargin), height1));
-	// // list.add(new FtileMarged(tmp, xMargin));
-	// // list.add(tmp);
-	// }
-	//
-	// Ftile inner = new FtileForkInner1(list);
-	// final List<Connection> conns = new ArrayList<Connection>();
-	// boolean hasOut = false;
-	// for (Ftile tmp : list) {
-	// // final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-	// final UTranslate translateFor = inner.getTranslateFor(tmp, getStringBounder());
-	// if (translateFor == null) {
-	// continue;
-	// }
-	// final double x = translateFor.getDx();
-	// conns.add(new ConnectionIn(tmp, x, arrowColor));
-	// final boolean hasOutTmp = tmp.calculateDimension(getStringBounder()).hasPointOut();
-	// if (hasOutTmp) {
-	// conns.add(new ConnectionOut(tmp, x, arrowColor, height1));
-	// hasOut = true;
-	// }
-	// // x += dim.getWidth();
-	// }
-	// final double totalWidth = inner.calculateDimension(getStringBounder()).getWidth();
-	// conns.add(new ConnectionHline2(inner, arrowColor, 0, list, totalWidth));
-	// if (hasOut) {
-	// conns.add(new ConnectionHline2(inner, arrowColor, height1, list, totalWidth));
-	// }
-	// inner = FtileUtils.addConnection(inner, conns);
-	//
-	// return inner;
-	// }
-
-	private TextBlock getTextBlock(LinkRendering linkRendering) {
-		// DUP1433
-		final Display display = linkRendering.getDisplay();
-		return getTextBlock(display);
-	}
-
-	private Ftile simpleSwimlanes(List<Ftile> all) {
-		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
-
-		final Dimension2D dimSuper = new FtileSplit1(all).calculateDimension(getStringBounder());
-		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
-
-		final List<Ftile> list = new ArrayList<Ftile>();
-		for (Ftile tmp : all) {
-			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
-		}
-
-		Ftile inner = new FtileSplit1(list);
-
-		final List<Connection> conns = new ArrayList<Connection>();
-
+	@Override
+	protected Ftile doStep2(Ftile result) {
+		final List<Connection> conns2 = new ArrayList<Connection>();
+		double x2 = 0;
 		boolean hasOut = false;
-		for (Ftile tmp : list) {
-			// final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			final double x = inner.getTranslateFor(tmp, getStringBounder()).getDx();
-			conns.add(new ConnectionIn(tmp, x, arrowColor, null));
+		for (Ftile tmp : getList()) {
+			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final boolean hasOutTmp = tmp.calculateDimension(getStringBounder()).hasPointOut();
 			if (hasOutTmp) {
-				conns.add(new ConnectionOut(tmp, x, arrowColor, height1, null));
+				conns2.add(new ConnectionOut(tmp, x2, tmp.getOutLinkRendering().getRainbow(
+						HtmlColorAndStyle.build(skinParam())), getHeightOfMiddle(), getTextBlock(tmp
+						.getOutLinkRendering())));
 				hasOut = true;
 			}
-			// x += dim.getWidth();
+			x2 += dim.getWidth();
 		}
-		final double totalWidth = inner.calculateDimension(getStringBounder()).getWidth();
-		conns.add(new ConnectionHline3(inner, arrowColor, 0, list, totalWidth));
-		if (hasOut) {
-			conns.add(new ConnectionHline3(inner, arrowColor, height1, list, totalWidth));
-		}
-		//
-		inner = FtileUtils.addConnection(inner, conns);
-		if (hasOut == false) {
-			inner = new FtileKilled(inner);
-		}
-		return inner;
 
+		if (hasOut) {
+			final double totalWidth2 = result.calculateDimension(getStringBounder()).getWidth();
+			conns2.add(new ConnectionHline2(result, HtmlColorAndStyle.build(skinParam()), getHeightOfMiddle(),
+					getList(), totalWidth2));
+			result = FtileUtils.addConnection(result, conns2);
+		} else {
+			result = new FtileKilled(result);
+		}
+		return result;
 	}
 
 	static class ConnectionHline2 extends AbstractConnection {

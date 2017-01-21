@@ -103,8 +103,12 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			ug.startUrl(url);
 		}
 
-		ug = ug.apply(stroke).apply(
-				new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBorder, getStereo())));
+		ug = ug.apply(stroke);
+		HtmlColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
+		if (linecolor == null) {
+			linecolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBorder, getStereo());
+		}
+		ug = ug.apply(new UChangeColor(linecolor));
 		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBackground, getStereo());

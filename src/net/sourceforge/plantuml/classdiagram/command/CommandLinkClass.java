@@ -81,7 +81,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 				new RegexConcat(
 						//
-						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[#\\[<*+^}]|[<\\[]\\|)?"), //
+						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[#\\[<*+^}]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1",
 								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
@@ -90,7 +90,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("ARROW_STYLE2",
 								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
-						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[#\\]>*+^{]|\\|[>\\]])?")), //
+						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[#\\]>*+^\\{]|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
 
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("SECOND_LABEL", "(?:[%g]([^%g]+)[%g])?"), new RegexLeaf("[%s]*"), //
@@ -119,7 +119,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	private static String optionalKeywords(UmlDiagramType type) {
 		if (type == UmlDiagramType.CLASS) {
-			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object)";
+			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|object|entity)";
 		}
 		if (type == UmlDiagramType.OBJECT) {
 			return "(object)";
@@ -424,6 +424,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if ("}".equals(s)) {
 			return LinkDecor.CROWFOOT;
 		}
+		if ("}o".equals(s)) {
+			return LinkDecor.CIRCLE_CROWFOOT;
+		}
+		if ("}|".equals(s)) {
+			return LinkDecor.LINE_CROWFOOT;
+		}
+		if ("|o".equals(s)) {
+			return LinkDecor.CIRCLE_LINE;
+		}
+		if ("||".equals(s)) {
+			return LinkDecor.DOUBLE_LINE;
+		}
 		if ("<".equals(s)) {
 			return LinkDecor.ARROW;
 		}
@@ -461,6 +473,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 		if ("{".equals(s)) {
 			return LinkDecor.CROWFOOT;
+		}
+		if ("o{".equals(s)) {
+			return LinkDecor.CIRCLE_CROWFOOT;
+		}
+		if ("|{".equals(s)) {
+			return LinkDecor.LINE_CROWFOOT;
+		}
+		if ("o|".equals(s)) {
+			return LinkDecor.CIRCLE_LINE;
+		}
+		if ("||".equals(s)) {
+			return LinkDecor.DOUBLE_LINE;
 		}
 		if ("^".equals(s)) {
 			return LinkDecor.EXTENDS;
