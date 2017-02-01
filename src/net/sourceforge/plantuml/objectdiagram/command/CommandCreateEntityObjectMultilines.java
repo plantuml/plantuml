@@ -84,7 +84,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		lines = lines.subExtract(1, 1);
 		for (CharSequence s : lines) {
 			assert s.length() > 0;
-			if (VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
+			if (VisibilityModifier.isVisibilityCharacter(s)) {
 				diagram.setVisibilityModifierPresent(true);
 			}
 			entity.getBodier().addFieldOrMethod(s.toString(), entity);

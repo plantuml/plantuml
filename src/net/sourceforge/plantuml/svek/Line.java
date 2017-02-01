@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.posimo.PositionableUtils;
 import net.sourceforge.plantuml.svek.SvekUtils.PointListIterator;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
+import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -447,6 +448,9 @@ public class Line implements Moveable, Hideable {
 			if (extremityFactory != null) {
 				// System.err.println("angle=" + angle * 180 / Math.PI);
 				return extremityFactory.createUDrawable(center, angle, null);
+			}
+			if (decor == LinkDecor.EXTENDS) {
+				return new ExtremityFactoryExtends(backgroundColor).createUDrawable(center, angle, null);
 			}
 			return null;
 		}

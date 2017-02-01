@@ -38,6 +38,10 @@ import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryTriangle extends AbstractExtremityFactory implements ExtremityFactory {
 
+	@Override
+	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
+		return new ExtremityTriangle(p0, angle - Math.PI / 2, false);
+	}
 
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
 		final double ortho = atan2(p0, p2);

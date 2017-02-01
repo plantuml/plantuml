@@ -68,12 +68,13 @@ import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.postit.PostIdDiagramFactory;
 import net.sourceforge.plantuml.printskin.PrintSkinFactory;
-import net.sourceforge.plantuml.project2.PSystemProjectFactory2;
+import net.sourceforge.plantuml.project3.GanttDiagramFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.ugraphic.sprite.PSystemListInternalSpritesFactory;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
@@ -163,11 +164,12 @@ public class PSystemBuilder {
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
-		factories.add(new PSystemProjectFactory2());
+		factories.add(new GanttDiagramFactory());
 		factories.add(new FlowDiagramFactory());
 		factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		factories.add(new PSystemCuteFactory(DiagramType.CUTE));
 		factories.add(new PSystemDedicationFactory());
+		factories.add(new TimingDiagramFactory());
 		return factories;
 	}
 

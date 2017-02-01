@@ -80,7 +80,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
+				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
 				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class|entity)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
@@ -132,7 +132,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				lines = lines.subExtract(1, 0);
 			}
 			for (CharSequence s : lines) {
-				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s.charAt(0))) {
+				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s)) {
 					diagram.setVisibilityModifierPresent(true);
 				}
 				entity.getBodier().addFieldOrMethod(s.toString(), entity);
@@ -179,7 +179,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final String visibilityString = arg.get("VISIBILITY", 0);
 		VisibilityModifier visibilityModifier = null;
 		if (visibilityString != null) {
-			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString.charAt(0), false);
+			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + "FOO", false);
 		}
 
 		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");

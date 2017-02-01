@@ -75,7 +75,7 @@ public enum ColorParam {
 	componentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	interfaceBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	interfaceBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	componentArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	arrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 
 	stateBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	stateBorder(HtmlColorUtils.MY_RED, ColorType.LINE),

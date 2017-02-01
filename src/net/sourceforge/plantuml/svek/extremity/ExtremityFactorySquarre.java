@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactorySquarre extends AbstractExtremityFactory implements ExtremityFactory {
 
+	@Override
 	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
 		return new ExtremitySquarre(p0);
 		}

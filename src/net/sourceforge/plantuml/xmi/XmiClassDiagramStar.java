@@ -51,6 +51,9 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements IXmi
 			// continue;
 			// }
 			final Element cla = createEntityNode(ent);
+			if (cla == null) {
+				continue;
+			}
 			ownedElement.appendChild(cla);
 			done.add(ent);
 		}

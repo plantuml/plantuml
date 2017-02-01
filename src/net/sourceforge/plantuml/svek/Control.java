@@ -69,12 +69,12 @@ public class Control extends AbstractTextBlock implements TextBlock {
 		ug = ug.apply(new UChangeBackColor(symbolContext.getForeColor()));
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(0, 0);
-		final int xAile = 6;
-		final int yOuverture = 5;
-		polygon.addPoint(xAile, -yOuverture);
+		final int xWing = 6;
+		final int yAperture = 5;
+		polygon.addPoint(xWing, -yAperture);
 		final int xContact = 4;
 		polygon.addPoint(xContact, 0);
-		polygon.addPoint(xAile, yOuverture);
+		polygon.addPoint(xWing, yAperture);
 		polygon.addPoint(0, 0);
 		
 		ug.apply(new UTranslate(x + radius - xContact, y)).draw(polygon);

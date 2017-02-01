@@ -96,9 +96,9 @@ public class MemberImpl implements Member {
 				displayClean = " ";
 			}
 
-			if (VisibilityModifier.isVisibilityCharacter(displayClean.charAt(0))) {
+			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {
 				visibilityModifier = VisibilityModifier
-						.getVisibilityModifier(displayClean.charAt(0), isMethod == false);
+						.getVisibilityModifier(displayClean, isMethod == false);
 				this.display = StringUtils.trin(StringUtils.manageGuillemet(displayClean.substring(1)));
 			} else {
 				this.display = StringUtils.manageGuillemet(displayClean);

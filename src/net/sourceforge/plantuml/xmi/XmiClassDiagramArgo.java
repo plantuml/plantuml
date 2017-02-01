@@ -49,6 +49,9 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements IXmi
 				continue;
 			}
 			final Element cla = createEntityNode(ent);
+			if (cla == null) {
+				continue;
+			}
 			ownedElement.appendChild(cla);
 			done.add(ent);
 		}
@@ -62,11 +65,11 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements IXmi
 
 	private void addLink(Link link) {
 		final String assId = "ass" + UniqueSequence.getValue();
-//		if ((link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS)
-//				&& fileFormat == FileFormat.XMI_STAR) {
-//			addExtension(link, assId);
-//			return;
-//		}
+		// if ((link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS)
+		// && fileFormat == FileFormat.XMI_STAR) {
+		// addExtension(link, assId);
+		// return;
+		// }
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
 		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
@@ -84,20 +87,24 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements IXmi
 		}
 		final Element endparticipant1 = document.createElement("UML:AssociationEnd.participant");
 		// if (fileFormat == FileFormat.XMI_ARGO) {
-			if (done.contains(link.getEntity1())) {
-				endparticipant1.appendChild(createEntityNodeRef(link.getEntity1()));
-			} else {
-				endparticipant1.appendChild(createEntityNode(link.getEntity1()));
-				done.add(link.getEntity1());
+		if (done.contains(link.getEntity1())) {
+			endparticipant1.appendChild(createEntityNodeRef(link.getEntity1()));
+		} else {
+			final Element element = createEntityNode(link.getEntity1());
+			if (element == null) {
+				return;
 			}
-//		} else if (fileFormat == FileFormat.XMI_STAR) {
-//			if (link.getType().getDecor2() == LinkDecor.COMPOSITION) {
-//				end1.setAttribute("aggregation", "composite");
-//			}
-//			if (link.getType().getDecor2() == LinkDecor.AGREGATION) {
-//				end1.setAttribute("aggregation", "aggregate");
-//			}
-//		}
+			endparticipant1.appendChild(element);
+			done.add(link.getEntity1());
+		}
+		// } else if (fileFormat == FileFormat.XMI_STAR) {
+		// if (link.getType().getDecor2() == LinkDecor.COMPOSITION) {
+		// end1.setAttribute("aggregation", "composite");
+		// }
+		// if (link.getType().getDecor2() == LinkDecor.AGREGATION) {
+		// end1.setAttribute("aggregation", "aggregate");
+		// }
+		// }
 		end1.appendChild(endparticipant1);
 		connection.appendChild(end1);
 
@@ -110,12 +117,16 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements IXmi
 		}
 		final Element endparticipant2 = document.createElement("UML:AssociationEnd.participant");
 		// if (fileFormat == FileFormat.XMI_ARGO) {
-			if (done.contains(link.getEntity2())) {
-				endparticipant2.appendChild(createEntityNodeRef(link.getEntity2()));
-			} else {
-				endparticipant2.appendChild(createEntityNode(link.getEntity2()));
-				done.add(link.getEntity2());
+		if (done.contains(link.getEntity2())) {
+			endparticipant2.appendChild(createEntityNodeRef(link.getEntity2()));
+		} else {
+			final Element element = createEntityNode(link.getEntity2());
+			if (element == null) {
+				return;
 			}
+			endparticipant2.appendChild(element);
+			done.add(link.getEntity2());
+		}
 		// } else if (fileFormat == FileFormat.XMI_STAR) {
 		// if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {
 		// end2.setAttribute("aggregation", "composite");

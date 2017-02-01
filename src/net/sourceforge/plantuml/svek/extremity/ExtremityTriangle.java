@@ -53,10 +53,10 @@ class ExtremityTriangle extends Extremity {
 		this.contact = new Point2D.Double(p1.getX(), p1.getY());
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
-		final int xAile = 8;
-		final int yOuverture = 3;
-		polygon.addPoint(-xAile, -yOuverture);
-		polygon.addPoint(-xAile, yOuverture);
+		final int xWing = 8;
+		final int yAperture = 3;
+		polygon.addPoint(-xWing, -yAperture);
+		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
 		polygon = polygon.translate(p1.getX(), p1.getY());

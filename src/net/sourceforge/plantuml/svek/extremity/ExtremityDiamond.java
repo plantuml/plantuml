@@ -55,11 +55,11 @@ class ExtremityDiamond extends Extremity {
 		this.contact = new Point2D.Double(p1.getX(), p1.getY());
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
-		final int xAile = 6;
-		final int yOuverture = 4;
-		polygon.addPoint(-xAile, -yOuverture);
-		polygon.addPoint(-xAile * 2, 0);
-		polygon.addPoint(-xAile, yOuverture);
+		final int xWing = 6;
+		final int yAperture = 4;
+		polygon.addPoint(-xWing, -yAperture);
+		polygon.addPoint(-xWing * 2, 0);
+		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
 		polygon = polygon.translate(p1.getX(), p1.getY());

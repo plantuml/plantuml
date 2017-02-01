@@ -57,12 +57,12 @@ class ExtremityArrowAndCircle extends Extremity {
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 		this.dest = new Point2D.Double(p1.getX(), p1.getY());
-		final int xAile = 9;
-		final int yOuverture = 4;
-		polygon.addPoint(-xAile, -yOuverture);
+		final int xWing = 9;
+		final int yAperture = 4;
+		polygon.addPoint(-xWing, -yAperture);
 		final int xContact = 5;
 		polygon.addPoint(-xContact, 0);
-		polygon.addPoint(-xAile, yOuverture);
+		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
 		polygon = polygon.translate(p1.getX() + radius * Math.sin(angle), p1.getY() - radius * Math.cos(angle));

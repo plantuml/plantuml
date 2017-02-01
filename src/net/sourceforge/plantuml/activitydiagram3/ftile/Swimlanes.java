@@ -45,8 +45,8 @@ import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddUrl;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAssembly;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateGroup;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile;
@@ -108,6 +108,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		factory = new FtileFactoryDelegatorWhile(factory);
 		factory = new FtileFactoryDelegatorRepeat(factory);
 		factory = new FtileFactoryDelegatorCreateParallel(factory);
+		// factory = new FtileFactoryDelegatorCreateParallelAddingMargin(new FtileFactoryDelegatorCreateParallel1(factory));
 		factory = new FtileFactoryDelegatorAddNote(factory);
 		factory = new FtileFactoryDelegatorCreateGroup(factory);
 		return factory;

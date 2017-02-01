@@ -62,8 +62,8 @@ public enum VisibilityModifier {
 	private final ColorParam foregroundParam;
 	private final ColorParam backgroundParam;
 
-	public static String regexForVisibilityCharacter() {
-		return "[-#+~*]";
+	public static String regexForVisibilityCharacterInClassName() {
+		return "[-#+~]";
 	}
 
 	private VisibilityModifier(ColorParam foreground, ColorParam background) {
@@ -141,8 +141,8 @@ public enum VisibilityModifier {
 
 		case IE_MANDATORY:
 			drawCircle(ug, true, size, x, y);
-			break;			
-			
+			break;
+
 		default:
 			throw new IllegalStateException();
 		}
@@ -182,7 +182,14 @@ public enum VisibilityModifier {
 		ug.apply(new UTranslate(x + 1, y)).draw(poly);
 	}
 
-	public static boolean isVisibilityCharacter(char c) {
+	public static boolean isVisibilityCharacter(CharSequence s) {
+		if (s.length() <= 2) {
+			return false;
+		}
+		final char c = s.charAt(0);
+		if (s.charAt(1) == c) {
+			return false;
+		}
 		if (c == '-') {
 			return true;
 		}
@@ -201,7 +208,14 @@ public enum VisibilityModifier {
 		return false;
 	}
 
-	public static VisibilityModifier getVisibilityModifier(char c, boolean isField) {
+	public static VisibilityModifier getVisibilityModifier(CharSequence s, boolean isField) {
+		if (s.length() <= 2) {
+			return null;
+		}
+		final char c = s.charAt(0);
+		if (s.charAt(1) == c) {
+			return null;
+		}
 		if (isField) {
 			return getVisibilityModifierForField(c);
 		}
@@ -223,7 +237,7 @@ public enum VisibilityModifier {
 		}
 		if (c == '*') {
 			return VisibilityModifier.IE_MANDATORY;
-		}		
+		}
 		return null;
 	}
 
@@ -242,7 +256,7 @@ public enum VisibilityModifier {
 		}
 		if (c == '*') {
 			return VisibilityModifier.IE_MANDATORY;
-		}		
+		}
 		return null;
 	}
 

@@ -140,6 +140,9 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 		// isAbstract="false" participant="UMLAssociationEnd.11"
 		// isActive="false">
 		final Element cla = document.createElement("UML:Class");
+		if (entity.getEntityType() == LeafType.NOTE) {
+			return null;
+		}
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());

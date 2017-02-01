@@ -81,6 +81,12 @@ public class Arrows {
 		if (direction == Direction.DOWN) {
 			return asToDown();
 		}
+		if (direction == Direction.LEFT) {
+			return asToLeft();
+		}
+		if (direction == Direction.RIGHT) {
+			return asToRight();
+		}
 		throw new IllegalArgumentException();
 	}
 

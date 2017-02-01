@@ -56,14 +56,14 @@ class ExtremityCircleCrowfoot extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		final int xAile = 8;
-		final int yOuverture = 6;
+		final int xWing = 8;
+		final int yAperture = 6;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
 		Point2D middle = new Point2D.Double(0, 0);
-		Point2D left = new Point2D.Double(0, -yOuverture);
-		Point2D base = new Point2D.Double(-xAile, 0);
-		Point2D right = new Point2D.Double(0, yOuverture);
-		Point2D circleBase = new Point2D.Double(-xAile-radius-2, 0);
+		Point2D left = new Point2D.Double(0, -yAperture);
+		Point2D base = new Point2D.Double(-xWing, 0);
+		Point2D right = new Point2D.Double(0, yAperture);
+		Point2D circleBase = new Point2D.Double(-xWing-radius-2, 0);
 		rotate.transform(left, left);
 		rotate.transform(base, base);
 		rotate.transform(right, right);

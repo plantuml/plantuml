@@ -430,6 +430,10 @@ public class SvgGraphics {
 				elt.setAttribute("text-decoration", textDecoration);
 			}
 			if (fontFamily != null) {
+				// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
+				if ("monospaced".equalsIgnoreCase(fontFamily)) {
+					fontFamily = "monospace";
+				}
 				elt.setAttribute("font-family", fontFamily);
 			}
 			if (textBackColor != null) {

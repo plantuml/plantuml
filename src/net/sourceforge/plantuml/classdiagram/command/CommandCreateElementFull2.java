@@ -76,7 +76,12 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 				new RegexLeaf("SYMBOL", regex), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
-						new RegexLeaf("CODE1", CODE_WITH_QUOTE) //
+						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexConcat(//
+								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+								new RegexLeaf("STEREOTYPE2", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
+								new RegexLeaf("[%s]*as[%s]+"), //
+								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 				), //
 				new RegexLeaf("STEREOTYPE", "(?:[%s]*(\\<\\<.+\\>\\>))?"), //
 				new RegexLeaf("[%s]*"), //
@@ -86,13 +91,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 				new RegexLeaf("$"));
 	}
 
-	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
-	private static final String CODE = "(" + CODE_CORE + ")";
-	private static final String CODE_WITH_QUOTE = "(" + CODE_CORE + "|[%g][^%g]+[%g])";
 
-	private static final String DISPLAY_CORE = "[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
-	private static final String DISPLAY = "(" + DISPLAY_CORE + ")";
-	private static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {

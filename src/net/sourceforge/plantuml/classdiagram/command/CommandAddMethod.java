@@ -50,7 +50,7 @@ public class CommandAddMethod extends SingleLineCommand<ClassDiagram> {
 		final IEntity entity = system.getOrCreateLeaf(Code.of(arg.get(0)), null, null);
 
 		final String field = arg.get(1);
-		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field.charAt(0))) {
+		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {
 			system.setVisibilityModifierPresent(true);
 		}
 		entity.getBodier().addFieldOrMethod(field, entity);

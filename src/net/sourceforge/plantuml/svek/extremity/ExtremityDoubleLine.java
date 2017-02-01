@@ -54,15 +54,15 @@ class ExtremityDoubleLine extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		final int xAile = 4;
+		final int xWing = 4;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
-		Point2D firstLineTop = new Point2D.Double(-xAile, -lineHeight);
-		Point2D firstLineBottom = new Point2D.Double(-xAile, lineHeight);
-		Point2D secondLineTop = new Point2D.Double(-xAile - 3, -lineHeight);
-		Point2D secondLineBottom = new Point2D.Double(-xAile - 3, lineHeight);
+		Point2D firstLineTop = new Point2D.Double(-xWing, -lineHeight);
+		Point2D firstLineBottom = new Point2D.Double(-xWing, lineHeight);
+		Point2D secondLineTop = new Point2D.Double(-xWing - 3, -lineHeight);
+		Point2D secondLineBottom = new Point2D.Double(-xWing - 3, lineHeight);
 
 		Point2D middle = new Point2D.Double(0, 0);
-		Point2D base = new Point2D.Double(-xAile - 4, 0);
+		Point2D base = new Point2D.Double(-xWing - 4, 0);
 
 		rotate.transform(middle, middle);
 		rotate.transform(base, base);

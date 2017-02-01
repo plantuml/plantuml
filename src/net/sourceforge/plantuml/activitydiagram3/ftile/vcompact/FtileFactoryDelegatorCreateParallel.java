@@ -51,11 +51,14 @@ public class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 		super(factory);
 	}
 
+	private Ftile allOverlapped(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
+		return new FtileForkInnerOverlapped(all);
+	}
+
 	@Override
 	public Ftile createParallel(Swimlane swimlane, List<Ftile> all, ForkStyle style, String label) {
 
-		final Dimension2D dimSuper = super.createParallel(swimlane, all, style, label).calculateDimension(
-				getStringBounder());
+		final Dimension2D dimSuper = super.createParallel(swimlane, all, style, label).calculateDimension(getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
 
 		final List<Ftile> list = new ArrayList<Ftile>();

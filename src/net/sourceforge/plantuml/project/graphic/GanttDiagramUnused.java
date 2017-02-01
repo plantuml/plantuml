@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GanttDiagram {
+public class GanttDiagramUnused {
 
 	private final Project project;
 	private final TimeScale timeScale;
 	private final ItemHeader itemHeader;
 
-	public GanttDiagram(Project project) {
+	public GanttDiagramUnused(Project project) {
 		this.project = project;
 		this.timeScale = new TimeScale(project);
 		this.itemHeader = new ItemHeader(project);

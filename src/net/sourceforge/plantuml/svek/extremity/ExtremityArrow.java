@@ -71,12 +71,12 @@ class ExtremityArrow extends Extremity {
 
 	private int buildPolygon() {
 		polygon.addPoint(0, 0);
-		final int xAile = 9;
-		final int yOuverture = 4;
-		polygon.addPoint(-xAile, -yOuverture);
+		final int xWing = 9;
+		final int yAperture = 4;
+		polygon.addPoint(-xWing, -yAperture);
 		final int xContact = 5;
 		polygon.addPoint(-xContact, 0);
-		polygon.addPoint(-xAile, yOuverture);
+		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		return xContact;
 	}

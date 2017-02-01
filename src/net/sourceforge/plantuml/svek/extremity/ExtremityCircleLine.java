@@ -56,14 +56,14 @@ class ExtremityCircleLine extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		final int xAile = 4;
+		final int xWing = 4;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
 		Point2D middle = new Point2D.Double(0, 0);
-		Point2D base = new Point2D.Double(-xAile-radius-3, 0);
-		Point2D circleBase = new Point2D.Double(-xAile-radius-3, 0);
+		Point2D base = new Point2D.Double(-xWing-radius-3, 0);
+		Point2D circleBase = new Point2D.Double(-xWing-radius-3, 0);
 
-		Point2D lineTop = new Point2D.Double(-xAile, -lineHeight);
-		Point2D lineBottom = new Point2D.Double(-xAile, lineHeight);
+		Point2D lineTop = new Point2D.Double(-xWing, -lineHeight);
+		Point2D lineBottom = new Point2D.Double(-xWing, lineHeight);
 
 		rotate.transform(lineTop, lineTop);
 		rotate.transform(lineBottom, lineBottom);

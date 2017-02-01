@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.png.PngIO;
-import net.sourceforge.plantuml.project.graphic.GanttDiagram;
+import net.sourceforge.plantuml.project.graphic.GanttDiagramUnused;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
@@ -71,7 +71,7 @@ public class PSystemProject extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption)
 			throws IOException {
-		final GanttDiagram diagram = new GanttDiagram(project);
+		final GanttDiagramUnused diagram = new GanttDiagramUnused(project);
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
 			final BufferedImage im = createImage(diagram);
@@ -95,7 +95,7 @@ public class PSystemProject extends AbstractPSystem {
 		return new ImageDataSimple();
 	}
 
-	private BufferedImage createImage(GanttDiagram diagram) {
+	private BufferedImage createImage(GanttDiagramUnused diagram) {
 		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, background);
 		Graphics2D g2d = builder.getGraphics2D();
 		UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
