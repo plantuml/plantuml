@@ -31,6 +31,8 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -56,8 +58,10 @@ public class Player implements TextBlock, TimeProjected {
 	private final TimingStyle type;
 	private final ISkinParam skinParam;
 	private final TimingRuler ruler;
+	private String initialState;
 
 	private final Set<ChangeState> changes = new TreeSet<ChangeState>();
+	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 
 	public Player(String code, String full, TimingStyle type, ISkinParam skinParam, TimingRuler ruler) {
 		this.code = code;
@@ -78,8 +82,20 @@ public class Player implements TextBlock, TimeProjected {
 		drawLine(ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UStroke(1.0)), -TimingDiagram.marginX1,
 				dimTitle.getHeight() + 1, dimTitle.getWidth() + 1, dimTitle.getHeight() + 1,
 				dimTitle.getWidth() + 1 + 10, 0);
+	}
 
-		getTimeDrawing().drawU(ug.apply(getTranslateForTimeDrawing(ug.getStringBounder())));
+	public void drawContent(UGraphic ug) {
+		ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder()));
+		getTimeDrawing().drawU(ug);
+	}
+
+	public void drawWidthHeader(UGraphic ug) {
+		ug = ug.apply(getTranslateForTimeDrawing(ug.getStringBounder()));
+		getTimeDrawing().getWidthHeader(ug.getStringBounder()).drawU(ug);
+	}
+
+	public double getGetWidthHeader(StringBounder stringBounder) {
+		return getTimeDrawing().getWidthHeader(stringBounder).calculateDimension(stringBounder).getWidth();
 	}
 
 	private void drawLine(UGraphic ug, double... coord) {
@@ -102,17 +118,30 @@ public class Player implements TextBlock, TimeProjected {
 		return full.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
+	private TimeDrawing cached;
+
 	private TimeDrawing getTimeDrawing() {
+		if (cached == null) {
+			cached = computeTimeDrawing();
+		}
+		return cached;
+	}
+
+	private TimeDrawing computeTimeDrawing() {
 		final TimeDrawing result;
-		if (type == TimingStyle.ROBUST) {
+		if (type == TimingStyle.CONCISE) {
 			result = new Ribbon(ruler, skinParam);
-		} else if (type == TimingStyle.CONCISE) {
+		} else if (type == TimingStyle.ROBUST) {
 			result = new Histogram(ruler, skinParam);
 		} else {
 			throw new IllegalStateException();
 		}
+		result.setInitialState(initialState);
 		for (ChangeState change : changes) {
 			result.addChange(change);
+		}
+		for (TimeConstraint constraint : constraints) {
+			result.addConstraint(constraint);
 		}
 		return result;
 	}
@@ -132,8 +161,12 @@ public class Player implements TextBlock, TimeProjected {
 		return null;
 	}
 
-	public void setState(TimeTick now, String state) {
-		this.changes.add(new ChangeState(now, state));
+	public void setState(TimeTick now, String state, String comment) {
+		if (now == null) {
+			this.initialState = state;
+		} else {
+			this.changes.add(new ChangeState(now, state, comment));
+		}
 
 	}
 
@@ -141,6 +174,10 @@ public class Player implements TextBlock, TimeProjected {
 		final IntricatedPoint point = getTimeDrawing().getTimeProjection(stringBounder, tick);
 		final UTranslate translation = getTranslateForTimeDrawing(stringBounder);
 		return point.translated(translation);
+	}
+
+	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
+		this.constraints.add(new TimeConstraint(tick1, tick2, message));
 	}
 
 }

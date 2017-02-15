@@ -59,6 +59,7 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
 	private final TimingRuler ruler = new TimingRuler(getSkinParam());
 	private TimeTick now;
+	private Player lastPlayer;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("(Timing Diagram)", getClass());
@@ -94,27 +95,41 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	private final double marginX2 = 5;
 
 	private void drawInternal(UGraphic ug) {
-		final UTranslate lastTranslate = getUTranslateForPlayer(null, ug.getStringBounder());
-		final double totalWith = ruler.getWidth() + marginX1 + marginX2;
+		final StringBounder stringBounder = ug.getStringBounder();
+		final UTranslate lastTranslate = getUTranslateForPlayer(null, stringBounder);
+		final double withBeforeRuler = getWithBeforeRuler(stringBounder);
+		final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;
+
 		final ULine border = new ULine(0, lastTranslate.getDy());
 		final UStroke borderStroke = new UStroke(1.7);
 		ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke).draw(border);
 		ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke).apply(new UTranslate(totalWith, 0))
 				.draw(border);
-		// ug.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(new UStroke(2.0)).draw(border);
 
 		ug = ug.apply(new UTranslate(marginX1, 0));
 
 		for (Player player : players.values()) {
-			final UGraphic playerUg = ug.apply(getUTranslateForPlayer(player, ug.getStringBounder()));
+			final UGraphic playerUg = ug.apply(getUTranslateForPlayer(player, stringBounder));
 			player.drawU(playerUg);
+			player.drawContent(playerUg.apply(new UTranslate(withBeforeRuler, 0)));
+			player.drawWidthHeader(playerUg);
 			playerUg.apply(new UChangeColor(HtmlColorUtils.BLACK)).apply(borderStroke)
 					.apply(new UTranslate(-marginX1, 0)).draw(new ULine(totalWith, 0));
 		}
+		ug = ug.apply(new UTranslate(withBeforeRuler, 0));
 		ruler.draw(ug.apply(lastTranslate));
 		for (TimeMessage timeMessage : messages) {
 			drawMessages(ug, timeMessage);
 		}
+	}
+
+	private double getWithBeforeRuler(StringBounder stringBounder) {
+		double width = 0;
+		for (Player player : players.values()) {
+			width = Math.max(width, player.getGetWidthHeader(stringBounder));
+
+		}
+		return width;
 	}
 
 	private void drawMessages(UGraphic ug, TimeMessage message) {
@@ -149,7 +164,9 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	}
 
 	public void createLifeLine(String code, String full, TimingStyle type) {
-		players.put(code, new Player(code, full, type, getSkinParam(), ruler));
+		final Player player = new Player(code, full, type, getSkinParam(), ruler);
+		players.put(code, player);
+		lastPlayer = player;
 	}
 
 	public void createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
@@ -163,15 +180,27 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		ruler.addTime(time);
 	}
 
+	public void updateNow(TimeTick time) {
+		this.now = time;
+	}
+
 	public Player getPlayer(String code) {
 		return players.get(code);
 	}
 
 	public TimeTick getNow() {
-//		if (now == null) {
-//			 throw new IllegalStateException();
-//		}
+		// if (now == null) {
+		// throw new IllegalStateException();
+		// }
 		return now;
+	}
+
+	public void setLastPlayer(Player player) {
+		this.lastPlayer = player;
+	}
+
+	public Player getLastPlayer() {
+		return lastPlayer;
 	}
 
 }

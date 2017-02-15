@@ -81,7 +81,7 @@ public class BlockUml {
 		this.data = new ArrayList<CharSequence2>(strings);
 	}
 
-	public String getFileOrDirname() {
+	public String getFileOrDirname(FileFormat defaultFileFormat) {
 		if (OptionFlags.getInstance().isWord()) {
 			return null;
 		}
@@ -103,6 +103,9 @@ public class BlockUml {
 		}
 		if (result.startsWith("file://")) {
 			result = result.substring("file://".length());
+		}
+		if (result.contains(".") == false) {
+			result = result + defaultFileFormat.getFileSuffix();
 		}
 		return result;
 	}

@@ -30,32 +30,34 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-public class ChangeState implements Comparable<ChangeState> {
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-	private final TimeTick when;
-	private final String state;
-	private final String comment;
+public class CommandAtPlayer extends SingleLineCommand2<TimingDiagram> {
 
-	public ChangeState(TimeTick when, String state, String comment) {
-		this.when = when;
-		this.state = state;
-		this.comment = comment;
+	public CommandAtPlayer() {
+		super(getRegexConcat());
 	}
 
-	public int compareTo(ChangeState other) {
-		return this.when.compareTo(other.when);
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("@"), //
+				new RegexLeaf("PLAYER", CommandTimeMessage.PLAYER_CODE), //
+				new RegexLeaf("[%s]*$"));
 	}
 
-	public final TimeTick getWhen() {
-		return when;
-	}
-
-	public final String getState() {
-		return state;
-	}
-
-	public String getComment() {
-		return comment;
+	@Override
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+		final String code = arg.get("PLAYER", 0);
+		final Player player = diagram.getPlayer(code);
+		if (player == null) {
+			return CommandExecutionResult.error("No such participant " + code);
+		}
+		diagram.setLastPlayer(player);
+		return CommandExecutionResult.ok();
 	}
 
 }

@@ -55,7 +55,7 @@ public class HtmlColorAndStyle {
 	}
 
 	public static Rainbow build(ISkinParam skinParam) {
-		return fromColor(rose.getHtmlColor(skinParam, ColorParam.activityArrow));
+		return fromColor(rose.getHtmlColor(skinParam, ColorParam.arrow));
 	}
 
 	private HtmlColorAndStyle(HtmlColor color) {

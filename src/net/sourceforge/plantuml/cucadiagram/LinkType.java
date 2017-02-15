@@ -164,14 +164,17 @@ public class LinkType {
 			sb.append("arrowtail=empty");
 			sb.append(",arrowhead=none");
 			sb.append(",dir=back");
-		} else if (isEmpty1 == false && isEmpty2) {
-			sb.append("arrowtail=none");
-			sb.append(",arrowhead=empty");
+			// } else if (isEmpty1 == false && isEmpty2) {
+			// sb.append("arrowtail=none");
+			// sb.append(",arrowhead=empty");
 		}
 
 		final double arrowsize = Math.max(decor1.getArrowSize(), decor2.getArrowSize());
 		if (arrowsize > 0) {
-			sb.append(",arrowsize=" + arrowsize);
+			if (sb.length() > 0) {
+				sb.append(",");
+			}
+			sb.append("arrowsize=" + arrowsize);
 		}
 		return sb.toString();
 	}

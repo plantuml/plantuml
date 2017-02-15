@@ -52,7 +52,7 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("^"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("while"), //
-				new RegexLeaf("TEST", "[%s]*\\((.+?)\\)"), //
+				new RegexLeaf("TEST", "[%s]*\\((.*?)\\)"), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf("[%s]*(is|equals?)[%s]*"), //
 						new RegexLeaf("YES", "\\((.+?)\\)"))), //

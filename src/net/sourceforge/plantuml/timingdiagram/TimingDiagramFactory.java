@@ -51,9 +51,12 @@ public class TimingDiagramFactory extends UmlDiagramFactory {
 		addCommonCommands(cmds);
 
 		cmds.add(new CommandLifeLine());
-		cmds.add(new CommandChangeState());
+		cmds.add(new CommandChangeState1());
+		cmds.add(new CommandChangeState2());
 		cmds.add(new CommandAtTime());
+		cmds.add(new CommandAtPlayer());
 		cmds.add(new CommandTimeMessage());
+		cmds.add(new CommandConstraint());
 
 		return cmds;
 	}

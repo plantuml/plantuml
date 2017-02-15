@@ -94,6 +94,10 @@ public class SymbolContext {
 		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner);
 	}
 
+	public SymbolContext withForeColor(HtmlColor foreColor) {
+		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner);
+	}
+
 	public SymbolContext withRoundCorner(double roundCorner) {
 		return new SymbolContext(backColor, foreColor, stroke, shadowing, deltaShadow, roundCorner);
 	}

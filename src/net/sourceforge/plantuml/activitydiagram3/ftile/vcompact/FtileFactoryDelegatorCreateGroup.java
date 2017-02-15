@@ -52,7 +52,7 @@ public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HtmlColor backColor, HtmlColor titleColor, PositionedNote note,
 			HtmlColor borderColor) {
-		final HtmlColor arrowColor = rose.getHtmlColor(skinParam(), ColorParam.activityArrow);
+		final HtmlColor arrowColor = rose.getHtmlColor(skinParam(), ColorParam.arrow);
 		Ftile result = new FtileGroup(list, name, null, arrowColor, backColor, titleColor, skinParam(), borderColor);
 		if (note != null) {
 			result = new FtileWithNotes(result, Collections.singleton(note), skinParam());

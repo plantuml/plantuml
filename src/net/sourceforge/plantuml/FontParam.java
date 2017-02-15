@@ -42,8 +42,9 @@ interface FontParamConstant {
 public enum FontParam {
 	ACTIVITY(12, Font.PLAIN), //
 	ACTIVITY_DIAMOND(11, Font.PLAIN), //
-	ACTIVITY_ARROW(11, Font.PLAIN), //
-	GENERIC_ARROW(13, Font.PLAIN), //
+	// ACTIVITY_ARROW(11, Font.PLAIN), //
+	// GENERIC_ARROW(13, Font.PLAIN), //
+	ARROW(13, Font.PLAIN), //
 	CIRCLED_CHARACTER(17, Font.BOLD, FontParamConstant.COLOR, "Monospaced"), //
 	OBJECT_ATTRIBUTE(10, Font.PLAIN), //
 	OBJECT(12, Font.PLAIN), //
@@ -73,7 +74,7 @@ public enum FontParam {
 	NODE(14, Font.PLAIN), //
 	DATABASE(14, Font.PLAIN), //
 	QUEUE(14, Font.PLAIN), //
-	SEQUENCE_ARROW(13, Font.PLAIN), //
+	// SEQUENCE_ARROW(13, Font.PLAIN), //
 	SEQUENCE_BOX(13, Font.BOLD), //
 	SEQUENCE_DIVIDER(13, Font.BOLD), //
 	SEQUENCE_REFERENCE(13, Font.PLAIN), //
@@ -110,7 +111,6 @@ public enum FontParam {
 	SEQUENCE_STEREOTYPE(14, Font.ITALIC), //
 	PARTITION(14, Font.PLAIN); //
 
-
 	private final int defaultSize;
 	private final int fontStyle;
 	private final String defaultColor;
@@ -128,6 +128,9 @@ public enum FontParam {
 	}
 
 	public final int getDefaultSize(ISkinParam skinParam) {
+		if (this == ARROW && skinParam.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+			return 11;
+		}
 		if (this == CLASS_ATTRIBUTE) {
 			return 11;
 		}

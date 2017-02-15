@@ -44,16 +44,16 @@ public enum ColorParam {
 	activityStart(HtmlColorUtils.BLACK),
 	activityEnd(HtmlColorUtils.BLACK),
 	activityBar(HtmlColorUtils.BLACK),
-	activityArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	// activityArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	swimlaneBorder(HtmlColorUtils.BLACK),
 	
 	usecaseBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	usecaseBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
-	usecaseArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	// usecaseArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 
 	objectBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	objectBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	objectArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	// objectArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	
 	classHeaderBackground(null, true, ColorType.BACK),
 	classBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
@@ -63,7 +63,7 @@ public enum ColorParam {
 	stereotypeABackground(HtmlColorUtils.COL_A9DCDF),
 	stereotypeIBackground(HtmlColorUtils.COL_B4A7E5),
 	stereotypeEBackground(HtmlColorUtils.COL_EB937F),
-	classArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	// classArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 		
 	packageBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	packageBorder(HtmlColorUtils.BLACK, ColorType.LINE),
@@ -79,7 +79,7 @@ public enum ColorParam {
 
 	stateBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	stateBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
-	stateArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
+	// stateArrow(HtmlColorUtils.MY_RED, ColorType.ARROW),
 	stateStart(HtmlColorUtils.BLACK),
 	stateEnd(HtmlColorUtils.BLACK),
 
@@ -109,7 +109,7 @@ public enum ColorParam {
 	sequenceLifeLineBackground(HtmlColorUtils.WHITE, true, ColorType.BACK),
 	sequenceLifeLineBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	sequenceNewpageSeparator(HtmlColorUtils.BLACK, ColorType.LINE),
-	sequenceArrow(HtmlColorUtils.MY_RED),
+	// sequenceArrow(HtmlColorUtils.MY_RED),
 	sequenceBoxBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	sequenceBoxBackground(HtmlColorUtils.COL_DDDDDD, true, ColorType.BACK),
 	

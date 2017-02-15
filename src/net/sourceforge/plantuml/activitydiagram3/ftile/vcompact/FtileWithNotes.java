@@ -162,8 +162,8 @@ public class FtileWithNotes extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.apply(getTranslateForLeft(stringBounder)).draw(left);
-		ug.apply(getTranslateForRight(stringBounder)).draw(right);
+		left.drawU(ug.apply(getTranslateForLeft(stringBounder)));
+		right.drawU(ug.apply(getTranslateForRight(stringBounder)));
 		ug.apply(getTranslate(stringBounder)).draw(tile);
 	}
 

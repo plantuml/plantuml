@@ -36,23 +36,20 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
+public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 
-	public static final String PLAYER_CODE = "([\\p{L}_][\\p{L}0-9_.]*)";
-
-	public CommandTimeMessage() {
+	public CommandConstraint() {
 		super(getRegexConcat());
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("PART1", PLAYER_CODE), //
-				TimeTickBuilder.optionalExpressionAtWithArobase("TIME1"), //
+				new RegexLeaf("PART1", "(" + CommandTimeMessage.PLAYER_CODE + ")?"), //
+				TimeTickBuilder.expressionAtWithArobase("TIME1"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("ARROW", "(-+)\\>"), //
+				new RegexLeaf("ARROW", "\\<(-+)\\>"), //
 				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("PART2", PLAYER_CODE), //
-				TimeTickBuilder.optionalExpressionAtWithArobase("TIME2"), //
+				TimeTickBuilder.expressionAtWithArobase("TIME2"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
 				new RegexLeaf("[%s]*$"));
@@ -60,11 +57,20 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
-		final Player player1 = diagram.getPlayer(arg.get("PART1", 0));
-		final Player player2 = diagram.getPlayer(arg.get("PART2", 0));
+		final String part1 = arg.get("PART1", 0);
+		final Player player1;
+		if (part1 == null) {
+			player1 = diagram.getLastPlayer();
+			if (player1 == null) {
+				return CommandExecutionResult.error("You have to provide a participant");
+			}
+		} else {
+			player1 = diagram.getPlayer(part1);
+		}
 		final TimeTick tick1 = TimeTickBuilder.parseTimeTick("TIME1", arg, diagram);
+		diagram.updateNow(tick1);
 		final TimeTick tick2 = TimeTickBuilder.parseTimeTick("TIME2", arg, diagram);
-		diagram.createTimeMessage(player1, tick1, player2, tick2, arg.get("MESSAGE", 0));
+		player1.createConstraint(tick1, tick2, arg.get("MESSAGE", 0));
 		return CommandExecutionResult.ok();
 	}
 

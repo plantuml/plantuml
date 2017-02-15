@@ -246,4 +246,12 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.swimlaneWidth();
 	}
 
+	public UmlDiagramType getUmlDiagramType() {
+		return skinParam.getUmlDiagramType();
+	}
+
+	public HtmlColor getHoverPathColor() {
+		return skinParam.getHoverPathColor();
+	}
+
 }

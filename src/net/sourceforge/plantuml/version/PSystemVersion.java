@@ -175,7 +175,8 @@ public class PSystemVersion extends AbstractPSystem {
 		add(strings, "<u>Word Macro</u>: Alain Bertucat & Matthieu Sabatier", withTag);
 		add(strings, "<u>Word Add-in</u>: Adriaan van den Brand", withTag);
 		add(strings, "<u>J2V8 & viz.js integration</u>: Andreas Studer", withTag);
-		add(strings, "<u>Eclipse Plugin</u>: Claude Durif & Anne Pecoil", withTag);
+		add(strings, "<u>Official Eclipse Plugin</u>: Hallvard Tr\u00E6tteberg", withTag);
+		add(strings, "<u>Original Eclipse Plugin</u>: Claude Durif & Anne Pecoil", withTag);
 		add(strings, "<u>Servlet & XWiki</u>: Maxime Sinclair", withTag);
 		add(strings, "<u>Site design</u>: Raphael Cotisson", withTag);
 		add(strings, "<u>Logo</u>: Benjamin Croizet", withTag);

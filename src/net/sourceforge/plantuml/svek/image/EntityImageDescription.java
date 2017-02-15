@@ -81,7 +81,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final Display codeDisplay = Display.getWithNewlines(entity.getCode());
 		final TextBlock desc = (entity.getDisplay().equals(codeDisplay) && symbol instanceof USymbolFolder)
 				|| entity.getDisplay().isWhite() ? TextBlockUtils.empty(0, 0) : new BodyEnhanced(entity.getDisplay(),
-				symbol.getFontParam(), getSkinParam(), HorizontalAlignment.CENTER, stereotype,
+				symbol.getFontParam(), getSkinParam(), HorizontalAlignment.LEFT, stereotype,
 				symbol.manageHorizontalLine(), false, false, entity);
 
 		this.url = entity.getUrl99();

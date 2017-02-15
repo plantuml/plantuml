@@ -69,7 +69,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 				ColorParam.activityBackground) : branch0.getColor();
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
-		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		// .changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 		if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
@@ -79,7 +79,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 					conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
 		}
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
-				: FontParam.ACTIVITY_ARROW;
+				: FontParam.ARROW;
 		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null)
 				.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
 

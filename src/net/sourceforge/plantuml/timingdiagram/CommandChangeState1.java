@@ -36,17 +36,18 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class CommandChangeState extends SingleLineCommand2<TimingDiagram> {
+public class CommandChangeState1 extends SingleLineCommand2<TimingDiagram> {
 
-	public CommandChangeState() {
+	public CommandChangeState1() {
 		super(getRegexConcat());
 	}
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
 				new RegexLeaf("[%s]*is[%s]*"), //
-				new RegexLeaf("STATE", "(.*?)"), //
+				new RegexLeaf("STATE", "([^:]*?)"), //
+				new RegexLeaf("COMMENT", "(?:[%s]*:[%s]*(.*?))?"), //
 				new RegexLeaf("[%s]*$"));
 	}
 
@@ -57,8 +58,9 @@ public class CommandChangeState extends SingleLineCommand2<TimingDiagram> {
 		if (player == null) {
 			return CommandExecutionResult.error("Unkown \"" + code + "\"");
 		}
+		final String comment = arg.get("COMMENT", 0);
 		final TimeTick now = diagram.getNow();
-		player.setState(now, arg.get("STATE", 0));
+		player.setState(now, arg.get("STATE", 0), comment);
 		return CommandExecutionResult.ok();
 	}
 

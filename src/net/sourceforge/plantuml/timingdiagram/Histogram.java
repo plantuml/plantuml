@@ -31,11 +31,14 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -43,22 +46,25 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Histogram implements TimeDrawing {
 
 	private final List<ChangeState> changes = new ArrayList<ChangeState>();
+	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 
 	private List<String> allStates = new ArrayList<String>();
 	private final double stepHeight = 20;
 
 	private final ISkinParam skinParam;
 	private final TimingRuler ruler;
+	private String initialState;
 
 	public Histogram(TimingRuler ruler, ISkinParam skinParam) {
 		this.ruler = ruler;
@@ -69,30 +75,29 @@ public class Histogram implements TimeDrawing {
 		final double x = ruler.getPosInPixel(tick);
 		final List<String> states = getStatesAt(tick);
 		if (states.size() == 1) {
-			final int num = getStateNumFor(states.get(0));
-			return new IntricatedPoint(new Point2D.Double(x, num * stepHeight), new Point2D.Double(x, num * stepHeight));
+			final double y = getStateYFor(states.get(0));
+			return new IntricatedPoint(new Point2D.Double(x, y), new Point2D.Double(x, y));
 		}
 		assert states.size() == 2;
-		final int num1 = getStateNumFor(states.get(0));
-		final int num2 = getStateNumFor(states.get(1));
-		assert num1 != num2;
-		return new IntricatedPoint(new Point2D.Double(x, num1 * stepHeight), new Point2D.Double(x, num2 * stepHeight));
-		// if (isTransition(tick)) {
-		// return new IntricatedPoint(new Point2D.Double(x, state * stepHeight), new Point2D.Double(x, state
-		// * stepHeight + stepHeight));
-		// }
-		// return new IntricatedPoint(new Point2D.Double(x, state * stepHeight), new Point2D.Double(x, state *
-		// stepHeight));
+		final double y1 = getStateYFor(states.get(0));
+		final double y2 = getStateYFor(states.get(1));
+		assert y1 != y2;
+		return new IntricatedPoint(new Point2D.Double(x, y1), new Point2D.Double(x, y2));
 	}
 
-	private int getStateNumFor(String state) {
-		// final String state = getStateAt(tick);
-		return allStates.size() - 1 - allStates.indexOf(state);
+	private double getStateYFor(String state) {
+		return (allStates.size() - 1 - allStates.indexOf(state)) * stepHeight;
 	}
 
 	private List<String> getStatesAt(TimeTick tick) {
 		for (int i = 0; i < changes.size(); i++) {
 			if (changes.get(i).getWhen().compareTo(tick) == 0) {
+				if (i == 0 && initialState == null) {
+					return Arrays.asList(changes.get(i).getState());
+				}
+				if (i == 0 && initialState != null) {
+					return Arrays.asList(initialState, changes.get(i).getState());
+				}
 				return Arrays.asList(changes.get(i - 1).getState(), changes.get(i).getState());
 			}
 			if (changes.get(i).getWhen().compareTo(tick) > 0) {
@@ -120,20 +125,31 @@ public class Histogram implements TimeDrawing {
 		return -stepHeight * allStates.indexOf(state);
 	}
 
+	private SymbolContext getContext() {
+		return new SymbolContext(HtmlColorUtils.COL_D7E0F2, HtmlColorUtils.COL_038048).withStroke(new UStroke(1.5));
+	}
+
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.COL_038048)).apply(new UStroke(1.5));
-		final UTranslate deltaY = new UTranslate(0, stepHeight * (allStates.size() - 1));
-		// System.err.println("changes=" + changes);
+		ug = getContext().apply(ug);
+		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
+		if (initialState != null) {
+			drawHLine(ug, getInitialPoint(), getInitialWidth());
+		}
 		for (int i = 0; i < changes.size() - 1; i++) {
 			final Point2D pt = getPoint(i);
 			final Point2D pt2 = getPoint(i + 1);
 			final double len = pt2.getX() - pt.getX();
-			ug.apply(new UTranslate(pt).compose(deltaY)).draw(new ULine(len, 0));
+			drawHLine(ug, pt, len);
 		}
 		final Point2D pt = getPoint(changes.size() - 1);
 		final double len = ruler.getWidth() - pt.getX();
-		ug.apply(new UTranslate(pt).compose(deltaY)).draw(new ULine(len, 0));
+		drawHLine(ug, pt, len);
 
+		if (initialState != null) {
+			final Point2D before = getInitialPoint();
+			final Point2D current = getPoint(0);
+			ug.apply(new UTranslate(current).compose(deltaY)).draw(new ULine(0, before.getY() - current.getY()));
+		}
 		for (int i = 1; i < changes.size(); i++) {
 			final Point2D before = getPoint(i - 1);
 			final Point2D current = getPoint(i);
@@ -142,24 +158,106 @@ public class Histogram implements TimeDrawing {
 
 		for (int i = 0; i < changes.size(); i++) {
 			final Point2D ptLabel = getPoint(i);
-			final TextBlock label = getStateTextBlock(changes.get(i).getState());
+			final String comment = changes.get(i).getComment();
+			if (comment == null) {
+				continue;
+			}
+			final TextBlock label = getTextBlock(comment);
 			final Dimension2D dim = label.calculateDimension(ug.getStringBounder());
 			label.drawU(ug.apply(new UTranslate(ptLabel).compose(deltaY).compose(new UTranslate(2, -dim.getHeight()))));
 		}
 
+		for (TimeConstraint constraint : constraints) {
+			final String state1 = last(getStatesAt(constraint.getTick1()));
+			final String state2 = getStatesAt(constraint.getTick2()).get(0);
+			final double y1 = getStateYFor(state1);
+			final double y2 = getStateYFor(state2);
+			constraint.drawU(ug.apply(new UTranslate(0, y1 - stepHeight / 2)), ruler, skinParam);
+		}
+
+	}
+
+	private static String last(List<String> list) {
+		return list.get(list.size() - 1);
+	}
+
+	private Double getInitialPoint() {
+		return new Point2D.Double(-getInitialWidth(), yOfState(initialState));
+	}
+
+	private void drawHLine(UGraphic ug, final Point2D pt, final double len) {
+		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
+		final UTranslate pos = new UTranslate(pt).compose(deltaY);
+		ug = ug.apply(pos);
+		final SymbolContext context = getContext();
+		final double height = -pt.getY();
+		if (height > 0) {
+			context.withForeColor(context.getBackColor()).apply(ug).draw(new URectangle(len, height));
+		}
+		ug.draw(new ULine(len, 0));
+	}
+
+	private double getFullDeltaY() {
+		return stepHeight * (allStates.size() - 1);
 	}
 
 	private FontConfiguration getFontConfiguration() {
 		return new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 	}
 
-	private TextBlock getStateTextBlock(String state) {
-		final Display display = Display.getWithNewlines(state);
+	private TextBlock getTextBlock(String value) {
+		final Display display = Display.getWithNewlines(value);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	public double getHeight() {
 		return stepHeight * allStates.size() + 10;
+	}
+
+	public TextBlock getWidthHeader(StringBounder stringBounder) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				for (String state : allStates) {
+					final TextBlock label = getTextBlock(state);
+					final Dimension2D dim = label.calculateDimension(ug.getStringBounder());
+					label.drawU(ug.apply(new UTranslate(0, getFullDeltaY() + yOfState(state) - dim.getHeight())));
+				}
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				double width = 0;
+				for (String state : allStates) {
+					final TextBlock label = getTextBlock(state);
+					final Dimension2D dim = label.calculateDimension(stringBounder);
+					width = Math.max(width, dim.getWidth());
+				}
+				if (initialState != null) {
+					width += getInitialWidth();
+				}
+				return new Dimension2DDouble(width, getFullDeltaY());
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+				return null;
+			}
+
+		};
+	}
+
+	public void setInitialState(String initialState) {
+		this.initialState = initialState;
+		if (initialState != null) {
+			allStates.add(initialState);
+		}
+	}
+
+	private double getInitialWidth() {
+		return stepHeight * 2;
+	}
+
+	public void addConstraint(TimeConstraint constraint) {
+		this.constraints.add(constraint);
 	}
 
 }

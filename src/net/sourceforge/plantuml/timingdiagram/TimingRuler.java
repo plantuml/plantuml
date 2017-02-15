@@ -106,6 +106,9 @@ public class TimingRuler {
 	}
 
 	private TimeTick getMax() {
+		if (times.size() == 0) {
+			throw new IllegalStateException("Empty list!");
+		}
 		return times.get(times.size() - 1);
 	}
 

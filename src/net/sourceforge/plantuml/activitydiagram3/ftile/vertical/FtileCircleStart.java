@@ -30,11 +30,13 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -55,6 +57,11 @@ public class FtileCircleStart extends AbstractFtile {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
+	}
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		return Collections.emptyList();
 	}
 
 	public Set<Swimlane> getSwimlanes() {

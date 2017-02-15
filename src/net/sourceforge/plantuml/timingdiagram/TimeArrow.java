@@ -94,9 +94,10 @@ public class TimeArrow implements UDrawable {
 		return new TimeArrow(translate.getTranslated(start), translate.getTranslated(end), label, spriteContainer);
 	}
 
-	private Point2D onCircle(double alpha, double radius) {
-		final double x = end.getX() - Math.sin(alpha) * radius;
-		final double y = end.getY() - Math.cos(alpha) * radius;
+	public static Point2D onCircle(Point2D pt, double alpha) {
+		final double radius = 8;
+		final double x = pt.getX() - Math.sin(alpha) * radius;
+		final double y = pt.getY() - Math.cos(alpha) * radius;
 		return new Point2D.Double(x, y);
 	}
 
@@ -107,13 +108,13 @@ public class TimeArrow implements UDrawable {
 
 	public void drawU(UGraphic ug) {
 		final double angle = getAngle();
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UStroke(1.5));
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLUE)).apply(new UStroke());
 		final ULine line = new ULine(end.getX() - start.getX(), end.getY() - start.getY());
 		ug.apply(new UTranslate(start)).draw(line);
 
 		final double delta = 20.0 * Math.PI / 180.0;
-		final Point2D pt1 = onCircle(angle + delta, 8);
-		final Point2D pt2 = onCircle(angle - delta, 8);
+		final Point2D pt1 = onCircle(end, angle + delta);
+		final Point2D pt2 = onCircle(end, angle - delta);
 
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(pt1.getX(), pt1.getY());

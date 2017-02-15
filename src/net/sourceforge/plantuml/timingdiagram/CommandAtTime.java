@@ -44,7 +44,7 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
-				TimeTickBuilder.expressionAt("TIME"), //
+				TimeTickBuilder.expressionAtWithArobase("TIME"), //
 				new RegexLeaf("[%s]*$"));
 	}
 

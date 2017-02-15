@@ -68,7 +68,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 
 	public static SheetBlock1 getTextBlock(final Display display) {
 		final Rose rose = new Rose();
-		final SkinParam skinParam = new SkinParam();
+		final SkinParam skinParam = SkinParam.create(null);
 		final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
 		final UFont fontNote = skinParam.getFont(null, false, FontParam.NOTE);
 

@@ -30,8 +30,6 @@
  */
 package net.sourceforge.plantuml;
 
-import h.stack;
-
 import java.awt.Font;
 import java.util.Collection;
 import java.util.Collections;
@@ -76,6 +74,7 @@ public class SkinParam implements ISkinParam {
 	private final Map<String, String> params = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 	private String dotExecutable;
+	private final UmlDiagramType type;
 
 	public String getDotExecutable() {
 		return dotExecutable;
@@ -89,8 +88,16 @@ public class SkinParam implements ISkinParam {
 		params.put(cleanForKey(key), StringUtils.trin(value));
 	}
 
-	public static SkinParam noShadowing() {
-		final SkinParam result = new SkinParam();
+	private SkinParam(UmlDiagramType type) {
+		this.type = type;
+	}
+
+	public static SkinParam create(UmlDiagramType type) {
+		return new SkinParam(type);
+	}
+
+	public static SkinParam noShadowing(UmlDiagramType type) {
+		final SkinParam result = new SkinParam(type);
 		result.setParam("shadowing", "false");
 		return result;
 	}
@@ -101,16 +108,17 @@ public class SkinParam implements ISkinParam {
 		// key = replaceSmart(key, "partition", "package");
 		key = replaceSmart(key, "sequenceparticipant", "participant");
 		key = replaceSmart(key, "sequenceactor", "actor");
-		if (key.contains("arrow")) {
-			key = key.replaceAll("activityarrow|objectarrow|classarrow|componentarrow|statearrow|usecasearrow",
-					"genericarrow");
-		}
-		// // key = key.replaceAll("activityarrow", "genericarrow");
-		// // key = key.replaceAll("objectarrow", "genericarrow");
-		// // key = key.replaceAll("classarrow", "genericarrow");
-		// // key = key.replaceAll("componentarrow", "genericarrow");
-		// // key = key.replaceAll("statearrow", "genericarrow");
-		// // key = key.replaceAll("usecasearrow", "genericarrow");
+		// if (key.contains("arrow")) {
+		// key = key.replaceAll("activityarrow|objectarrow|classarrow|componentarrow|statearrow|usecasearrow",
+		// "genericarrow");
+		// }
+		key = key.replaceAll("activityarrow", "arrow");
+		key = key.replaceAll("objectarrow", "arrow");
+		key = key.replaceAll("classarrow", "arrow");
+		key = key.replaceAll("componentarrow", "arrow");
+		key = key.replaceAll("statearrow", "arrow");
+		key = key.replaceAll("usecasearrow", "arrow");
+		key = key.replaceAll("sequencearrow", "arrow");
 		final Matcher2 m = stereoPattern.matcher(key);
 		if (m.find()) {
 			final String s = m.group(1);
@@ -817,6 +825,18 @@ public class SkinParam implements ISkinParam {
 			return Integer.parseInt(value);
 		}
 		return 0;
+	}
+
+	public UmlDiagramType getUmlDiagramType() {
+		return type;
+	}
+
+	public HtmlColor getHoverPathColor() {
+		final String value = getValue("pathhovercolor");
+		if (value == null) {
+			return null;
+		}
+		return getIHtmlColorSet().getColorIfValid(value, false);
 	}
 
 }

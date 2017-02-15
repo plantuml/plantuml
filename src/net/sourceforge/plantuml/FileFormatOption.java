@@ -49,9 +49,10 @@ public class FileFormatOption implements Serializable {
 	private final boolean withMetadata;
 	private final boolean useRedForError;
 	private final String svgLinkTarget;
+	private final String hoverColor;
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true, false, "_top", false);
+		this(fileFormat, null, true, false, "_top", false, null);
 	}
 
 	public StringBounder getDefaultStringBounder() {
@@ -67,11 +68,12 @@ public class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, false, false, "_top", false);
+		this(fileFormat, null, false, false, "_top", false, null);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError,
-			String svgLinkTarget, boolean debugsvek) {
+			String svgLinkTarget, boolean debugsvek, String hoverColor) {
+		this.hoverColor = hoverColor;
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
 		this.withMetadata = withMetadata;
@@ -81,11 +83,15 @@ public class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption withUseRedForError() {
-		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget, debugsvek);
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget, debugsvek, hoverColor);
 	}
 
-	public FileFormatOption withSvgLinkTarget(String target) {
-		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, target, debugsvek);
+	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor);
+	}
+
+	public FileFormatOption withHoverColor(String hoverColor) {
+		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor);
 	}
 
 	@Override
@@ -113,6 +119,10 @@ public class FileFormatOption implements Serializable {
 
 	public boolean isDebugSvek() {
 		return debugsvek;
+	}
+
+	public final String getHoverColor() {
+		return hoverColor;
 	}
 
 }

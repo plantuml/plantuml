@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -95,7 +96,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private Scale scale;
 	private Animation animation;
 
-	private final SkinParam skinParam = new SkinParam();
+	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
 
 	final public void setTitle(DisplayPositionned title) {
 		this.title = title;
@@ -215,7 +216,12 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
+		final HtmlColor hover = getSkinParam().getHoverPathColor();
 		fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
+		if (hover != null) {
+			fileFormatOption = fileFormatOption.withHoverColor(StringUtils.getAsHtml(getSkinParam().getColorMapper()
+					.getMappedColor(hover)));
+		}
 
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF) {
 			return exportDiagramInternalPdf(os, index);

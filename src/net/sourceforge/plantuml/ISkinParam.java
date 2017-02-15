@@ -129,5 +129,10 @@ public interface ISkinParam extends ISkinSimple {
 	public SplitParam getSplitParam();
 
 	public int swimlaneWidth();
+	
+	public UmlDiagramType getUmlDiagramType();
+	
+	public HtmlColor getHoverPathColor();
+
 
 }

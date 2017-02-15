@@ -150,7 +150,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 		final double y2 = getY(pinLink.getPin2());
 
 		final Rose rose = new Rose();
-		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.classArrow);
+		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.arrow);
 		final List<Box2D> b = new ArrayList<Box2D>();
 		final SmartConnection connection = new SmartConnection(x1, y1, x2, y2, b);
 		connection.draw(ug, color);

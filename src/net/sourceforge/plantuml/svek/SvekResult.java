@@ -89,15 +89,15 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 
 	private ColorParam getArrowColorParam() {
 		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return ColorParam.classArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return ColorParam.objectArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return ColorParam.usecaseArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return ColorParam.activityArrow;
+			return ColorParam.arrow;
 		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return ColorParam.stateArrow;
+			return ColorParam.arrow;
 		}
 		throw new IllegalStateException();
 	}

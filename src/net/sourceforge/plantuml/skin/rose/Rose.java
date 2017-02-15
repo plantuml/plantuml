@@ -86,17 +86,17 @@ public class Rose implements Skin {
 			// final FontConfiguration fc = new FontConfiguration(fontArrow, HtmlColorUtils.BLACK);
 			// stringsToDisplay = DisplayUtils.breakLines(stringsToDisplay, fc, param, param.maxMessageSize());
 			// }
-			final HtmlColor sequenceArrow = config.getColor() == null ? getHtmlColor(param, ColorParam.sequenceArrow)
+			final HtmlColor sequenceArrow = config.getColor() == null ? getHtmlColor(param, ColorParam.arrow)
 					: config.getColor();
 			if (config.getArrowDirection() == ArrowDirection.SELF) {
-				return new ComponentRoseSelfArrow(sequenceArrow, getUFont2(param, FontParam.SEQUENCE_ARROW),
+				return new ComponentRoseSelfArrow(sequenceArrow, getUFont2(param, FontParam.ARROW),
 						stringsToDisplay, config, param, param.maxMessageSize(), param.strictUmlStyle() == false);
 			}
 			final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
 					AlignParam.SEQUENCE_MESSAGE_ALIGN, config.getArrowDirection());
 			final HorizontalAlignment textHorizontalAlignment = param.getHorizontalAlignment(
 					AlignParam.SEQUENCE_MESSAGETEXT_ALIGN, config.getArrowDirection());
-			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.SEQUENCE_ARROW), stringsToDisplay,
+			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay,
 					config, messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
 					param.strictUmlStyle() == false);
 		}

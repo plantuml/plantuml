@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -109,11 +110,11 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(double scale) {
-		this(null, scale);
+	public SvgGraphics(double scale, String hover) {
+		this(null, scale, hover);
 	}
 
-	public SvgGraphics(String backcolor, double scale) {
+	public SvgGraphics(String backcolor, double scale, String hover) {
 		try {
 			this.scale = scale;
 			this.document = getDocument();
@@ -130,10 +131,21 @@ public class SvgGraphics {
 			this.filterUid = "b" + getRandomString(rnd);
 			this.shadowId = "f" + getRandomString(rnd);
 			this.gradientId = "g" + getRandomString(rnd);
+			if (hover != null) {
+				defs.appendChild(getPathHover(hover));
+			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			throw new IllegalStateException(e);
 		}
+	}
+
+	private Element getPathHover(String hover) {
+		final Element style = simpleElement("style");
+		final CDATASection cdata = document.createCDATASection("path:hover { stroke: " + hover + " !important;}");
+		style.setAttribute("type", "text/css");
+		style.appendChild(cdata);
+		return style;
 	}
 
 	private static String getRandomString(final Random rnd) {

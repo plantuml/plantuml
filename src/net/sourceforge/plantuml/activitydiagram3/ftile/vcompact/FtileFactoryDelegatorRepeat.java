@@ -78,7 +78,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();
 
 		final FontConfiguration fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
-		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 
 		Ftile result = FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, repeat, test, yes, out,
 				borderColor, backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(), fcDiamond,

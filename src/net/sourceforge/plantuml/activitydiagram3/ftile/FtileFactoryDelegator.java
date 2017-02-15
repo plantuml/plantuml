@@ -77,7 +77,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		if (Display.isNull(display)) {
 			return null;
 		}
-		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 

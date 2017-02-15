@@ -199,7 +199,11 @@ public class QuoteUtils {
 					"Vf guvf n aba-mreb-fhz tnzr?", "Abj gung'f n cebcre vagebqhpgvba.",
 					"Rirelguvat unf punatrq naq vg jba'g fgbc punatvat nalgvzr fbba.",
 					"Jung znxrf lbh qvssrerag znxrf lbh qnatrebhf", "Qviretrapr vf rkgerzryl qnatrebhf",
-					"V'z Qviretrag. Naq V pna'g or pbagebyyrq", "Znl gur bqqf or rire va lbhe snibe");
+					"V'z Qviretrag. Naq V pna'g or pbagebyyrq", "Znl gur bqqf or rire va lbhe snibe",
+					"Ab WninFpevcg senzrjbexf jrer perngrq qhevat gur jevgvat bs guvf zrffntr.",
+					"P'rfg cerffr-cherr dhv g'nf vagreebtr ?",
+					"Ybbx, nygreangvir snpgf ner abg snpgf. Gurl'er snyfrubbqf",
+					"Guvf vf abg n penfu, guvf vf zber bs na nygreangvir erfhyg.");
 
 	private QuoteUtils() {
 	}

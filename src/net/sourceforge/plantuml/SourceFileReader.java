@@ -164,7 +164,7 @@ public class SourceFileReader implements ISourceFileReader {
 		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
-			String newName = blockUml.getFileOrDirname();
+			String newName = blockUml.getFileOrDirname(fileFormatOption.getFileFormat());
 			Log.info("name from block=" + newName);
 			File suggested = null;
 			if (newName != null) {

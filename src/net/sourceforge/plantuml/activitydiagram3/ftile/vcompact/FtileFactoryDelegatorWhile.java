@@ -60,14 +60,14 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE ? FontParam.ACTIVITY_DIAMOND
-				: FontParam.ACTIVITY_ARROW;
+				: FontParam.ARROW;
 		final FontConfiguration fcTest = new FontConfiguration(skinParam(), testParam, null);
 
 		final LinkRendering endInlinkRendering = whileBlock.getOutLinkRendering();
 		final Rainbow endInlinkColor = endInlinkRendering == null || endInlinkRendering.getRainbow().size() == 0 ? arrowColor
 				: endInlinkRendering.getRainbow();
 
-		final FontConfiguration fontArrow = new FontConfiguration(skinParam(), FontParam.ACTIVITY_ARROW, null);
+		final FontConfiguration fontArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 
 		return FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
 				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest);

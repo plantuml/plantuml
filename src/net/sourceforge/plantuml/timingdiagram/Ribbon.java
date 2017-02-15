@@ -41,20 +41,22 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Ribbon implements TimeDrawing {
 
 	private final List<ChangeState> changes = new ArrayList<ChangeState>();
+	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
 
 	private final double delta = 12;
 	private final ISkinParam skinParam;
 	private final TimingRuler ruler;
+	private String initialState;
 
 	public Ribbon(TimingRuler ruler, ISkinParam skinParam) {
 		this.ruler = ruler;
@@ -63,7 +65,7 @@ public class Ribbon implements TimeDrawing {
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		final double y = delta * 0.5;
+		final double y = delta * 0.5 + getHeightForConstraints();
 		for (ChangeState change : changes) {
 			if (change.getWhen().compareTo(tick) == 0) {
 				return new IntricatedPoint(new Point2D.Double(x, y), new Point2D.Double(x, y));
@@ -84,59 +86,110 @@ public class Ribbon implements TimeDrawing {
 		return new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 	}
 
-	private TextBlock getStateTextBlock(ChangeState state) {
-		final Display display = Display.getWithNewlines(state.getState());
+	private TextBlock getTextBlock(String value) {
+		final Display display = Display.getWithNewlines(value);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UTranslate(0, 0.5 * delta));
 
-		// System.err.println("changes=" + changes);
+		UGraphic ugDown = ug.apply(new UTranslate(0, getHeightForConstraints()));
+
+		final TextBlock inital;
+		final StringBounder stringBounder = ugDown.getStringBounder();
+		if (initialState == null) {
+			inital = null;
+		} else {
+			inital = getTextBlock(initialState);
+			drawPentaA(ugDown.apply(new UTranslate(-getInitialWidth(stringBounder), -delta / 2)),
+					getInitialWidth(stringBounder));
+		}
+
 		for (int i = 0; i < changes.size() - 1; i++) {
 			final double a = getPosInPixel(changes.get(i));
 			final double b = getPosInPixel(changes.get(i + 1));
 			assert b > a;
-			draw1(ug.apply(new UTranslate(a, 0)), b - a, true);
-			draw2(ug.apply(new UTranslate(a, 0)), b - a, true);
+			drawHexa(ugDown.apply(new UTranslate(a, -delta / 2)), b - a);
 		}
 		final double a = getPosInPixel(changes.get(changes.size() - 1));
-		draw1(ug.apply(new UTranslate(a, 0)), ruler.getWidth() - a, false);
-		draw2(ug.apply(new UTranslate(a, 0)), ruler.getWidth() - a, false);
+		drawPentaB(ugDown.apply(new UTranslate(a, -delta / 2)), ruler.getWidth() - a);
 
+		ugDown = ugDown.apply(new UTranslate(0, delta / 2));
+
+		if (inital != null) {
+			final Dimension2D dimInital = inital.calculateDimension(stringBounder);
+			inital.drawU(ugDown.apply(new UTranslate(-getDelta() - dimInital.getWidth(), -dimInital.getHeight() / 2)));
+		}
 		for (ChangeState change : changes) {
-			final TextBlock state = getStateTextBlock(change);
-			final Dimension2D dim = state.calculateDimension(ug.getStringBounder());
+			final TextBlock state = getTextBlock(change.getState());
+			final Dimension2D dim = state.calculateDimension(stringBounder);
 			final double x = ruler.getPosInPixel(change.getWhen());
-			state.drawU(ug.apply(new UTranslate(x + getDelta(), -dim.getHeight() / 2)));
+			state.drawU(ugDown.apply(new UTranslate(x + getDelta(), -dim.getHeight() / 2)));
+			final String commentString = change.getComment();
+			if (commentString != null) {
+				final TextBlock comment = getTextBlock(commentString);
+				final Dimension2D dimComment = comment.calculateDimension(stringBounder);
+				comment.drawU(ugDown.apply(new UTranslate(x + getDelta(), -delta - dimComment.getHeight())));
+			}
+		}
+
+		for (TimeConstraint constraint : constraints) {
+			constraint.drawU(ug.apply(new UTranslate(0, 15)), ruler, skinParam);
 		}
 
 	}
 
-	private void draw1(UGraphic ug, double len, boolean withEnd) {
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.COL_038048)).apply(new UStroke(1.5));
-		ug.draw(new ULine(delta, delta));
-		ug.apply(new UTranslate(delta, delta)).draw(new ULine(len - 2 * delta, 0));
-		if (withEnd) {
-			ug.apply(new UTranslate(len - delta, delta)).draw(new ULine(delta, -delta));
-		}
+	private double getInitialWidth(final StringBounder stringBounder) {
+		return getTextBlock(initialState).calculateDimension(stringBounder).getWidth() + 2 * delta;
 	}
 
-	private void draw2(UGraphic ug, double len, boolean withEnd) {
-		ug = ug.apply(new UChangeColor(HtmlColorUtils.COL_038048)).apply(new UStroke(1.5));
-		ug.draw(new ULine(delta, -delta));
-		ug.apply(new UTranslate(delta, -delta)).draw(new ULine(len - 2 * delta, 0));
-		if (withEnd) {
-			ug.apply(new UTranslate(len - delta, -delta)).draw(new ULine(delta, delta));
+	private SymbolContext getContext() {
+		return new SymbolContext(HtmlColorUtils.COL_D7E0F2, HtmlColorUtils.COL_038048).withStroke(new UStroke(1.5));
+	}
+
+	private void drawHexa(UGraphic ug, double len) {
+		final HexaShape shape = HexaShape.create(len, 2 * delta, getContext());
+		shape.drawU(ug);
+	}
+
+	private void drawPentaB(UGraphic ug, double len) {
+		final PentaBShape shape = PentaBShape.create(len, 2 * delta, getContext());
+		shape.drawU(ug);
+	}
+
+	private void drawPentaA(UGraphic ug, double len) {
+		final PentaAShape shape = PentaAShape.create(len, 2 * delta, getContext());
+		shape.drawU(ug);
+	}
+
+	private double getHeightForConstraints() {
+		if (constraints.size() == 0) {
+			return 0;
 		}
+		return 30;
 	}
 
 	public double getHeight() {
-		return 3 * delta;
+		return 3 * delta + getHeightForConstraints();
 	}
 
 	public double getDelta() {
 		return delta;
+	}
+
+	public TextBlock getWidthHeader(StringBounder stringBounder) {
+		if (initialState != null) {
+			return TextBlockUtils.empty(getInitialWidth(stringBounder), 2 * delta);
+		}
+		return TextBlockUtils.empty(0, 0);
+	}
+
+	public void setInitialState(String initialState) {
+		this.initialState = initialState;
+	}
+
+	public void addConstraint(TimeConstraint constraint) {
+		this.constraints.add(constraint);
 	}
 
 }

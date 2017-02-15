@@ -143,7 +143,7 @@ public final class DotDataImageBuilder {
 			}
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.GENERIC_ARROW, null);
+				final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
 
 				final Line line = new Line(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
 						labelFont, dotStringFactory.getBibliotekon(), dotData.getPragma());

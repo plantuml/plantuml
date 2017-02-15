@@ -124,7 +124,7 @@ class PrintSkin extends AbstractPSystem {
 	private void printComponent(ComponentType type) {
 		println(type.name());
 		final Component comp = skin.createComponent(type, ArrowConfiguration.withDirectionNormal(),
-				SkinParam.noShadowing(), Display.create(toPrint));
+				SkinParam.noShadowing(null), Display.create(toPrint));
 		if (comp == null) {
 			println("null");
 			return;
