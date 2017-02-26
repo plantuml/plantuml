@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -49,7 +50,7 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final SymbolContext symbolContext;
 
 	public ComponentRoseEnglober(SymbolContext symbolContext, Display strings, FontConfiguration font, ISkinSimple spriteContainer) {
-		super(strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, false, null, null);
 		this.symbolContext = symbolContext;
 	}
 

@@ -203,7 +203,8 @@ public class QuoteUtils {
 					"Ab WninFpevcg senzrjbexf jrer perngrq qhevat gur jevgvat bs guvf zrffntr.",
 					"P'rfg cerffr-cherr dhv g'nf vagreebtr ?",
 					"Ybbx, nygreangvir snpgf ner abg snpgf. Gurl'er snyfrubbqf",
-					"Guvf vf abg n penfu, guvf vf zber bs na nygreangvir erfhyg.");
+					"Guvf vf abg n penfu, guvf vf zber bs na nygreangvir erfhyg.",
+					"Lbh yrnearq gb cebtenz va SBEGENA qvqa'g lbh?");
 
 	private QuoteUtils() {
 	}

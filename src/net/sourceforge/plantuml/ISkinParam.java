@@ -96,7 +96,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public double getRoundCorner(String param, Stereotype stereotype);
 
-	public double maxMessageSize();
+	public LineBreakStrategy maxMessageSize();
 
 	public boolean strictUmlStyle();
 
@@ -129,10 +129,11 @@ public interface ISkinParam extends ISkinSimple {
 	public SplitParam getSplitParam();
 
 	public int swimlaneWidth();
-	
+
 	public UmlDiagramType getUmlDiagramType();
-	
+
 	public HtmlColor getHoverPathColor();
 
+	public double getPadding(PaddingParam param);
 
 }

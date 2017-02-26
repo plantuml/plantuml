@@ -35,6 +35,7 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,8 +51,8 @@ public class TextBlockTitle implements TextBlock {
 		if (stringsToDisplay.size() == 1 && stringsToDisplay.get(0).length() == 0) {
 			throw new IllegalArgumentException();
 		}
-		textBlock = stringsToDisplay.create(font, HorizontalAlignment.CENTER, spriteContainer, 0, CreoleMode.FULL,
-				null, null);
+		textBlock = stringsToDisplay.create(font, HorizontalAlignment.CENTER, spriteContainer, LineBreakStrategy.NONE,
+				CreoleMode.FULL, null, null);
 	}
 
 	public final void drawU(UGraphic ug) {

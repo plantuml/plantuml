@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -57,8 +58,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	public ComponentRoseGroupingElse(HtmlColor groupBorder, FontConfiguration smallFont, CharSequence comment,
 			ISkinSimple spriteContainer, HtmlColor backgroundColor) {
-		super(comment == null ? null : "[" + comment + "]", smallFont, HorizontalAlignment.LEFT, 5, 5, 1,
-				spriteContainer, 0, null, null);
+		super(LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont, HorizontalAlignment.LEFT, 5, 5,
+				1, spriteContainer, null, null);
 		this.groupBorder = groupBorder;
 		this.backgroundColor = backgroundColor;
 		// this.stroke = stroke;

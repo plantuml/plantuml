@@ -40,6 +40,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
@@ -125,7 +126,7 @@ class FtileIfAndStop extends AbstractFtile {
 
 		final Sheet sheet = new CreoleParser(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(labelTest);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1),
 				tileNonStop.getThickness());
 

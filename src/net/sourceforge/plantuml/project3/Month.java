@@ -30,33 +30,52 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.StringUtils;
 
-public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPattern {
+public enum Month {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix,
-				"(?:at|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+	JANUARY(31), FEBRUARY(28), MARCH(31), APRIL(30), MAY(31), JUNE(30), //
+	JULY(31), AUGUST(31), SEPTEMBER(30), OCTOBER(31), NOVEMBER(30), DECEMBER(31);
+
+	private final int daysPerMonth;
+
+	private Month(int daysPerMonth) {
+		this.daysPerMonth = daysPerMonth;
 	}
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		final String code = arg.get("COMPLEMENT" + suffix, 2);
-		final String position = arg.get("COMPLEMENT" + suffix, 3);
-		final Task task = system.getExistingTask(code);
-		if (task == null) {
-			throw new IllegalStateException();
-		}
-		final String days = arg.get("COMPLEMENT" + suffix, 0);
-		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(position));
-		if (days != null) {
-			int delta = Integer.parseInt(days);
-			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, 1))) {
-				delta = -delta;
+	static public String getRegexString() {
+		final StringBuilder sb = new StringBuilder();
+		for (Month month : Month.values()) {
+			if (sb.length() > 0) {
+				sb.append("|");
 			}
-			result = result.withDelta(delta);
+			sb.append(month.name().substring(0, 3) + "[a-z]*");
 		}
-		return result;
+		return sb.toString();
+	}
+
+	public static Month fromString(String value) {
+		value = StringUtils.goUpperCase(value).substring(0, 3);
+		for (Month m : Month.values()) {
+			if (m.name().startsWith(value)) {
+				return m;
+			}
+		}
+		throw new IllegalArgumentException();
+	}
+
+	public final int getDaysPerMonth(int year) {
+		if (this == FEBRUARY && year % 4 == 0) {
+			return 29;
+		}
+		return daysPerMonth;
+	}
+
+	public Month next() {
+		return Month.values()[(this.ordinal() + 1) % 12];
+	}
+
+	public int m() {
+		return 3 + (ordinal() + 10) % 12;
 	}
 }

@@ -35,6 +35,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -100,25 +101,26 @@ public class Rose implements Skin {
 					config, messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
 					param.strictUmlStyle() == false);
 		}
+		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
-					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false);
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false, padding);
 		}
 		if (type == ComponentType.PARTICIPANT_TAIL) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
-					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false);
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), false, padding);
 		}
 		if (type == ComponentType.COLLECTIONS_HEAD) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
-					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true);
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true, padding);
 		}
 		if (type == ComponentType.COLLECTIONS_TAIL) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, param.getRoundCorner("", null), newFontForStereotype,
-					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true);
+					getFontColor(param, FontParam.SEQUENCE_STEREOTYPE), param.minClassWidth(), true, padding);
 		}
 		if (type == ComponentType.PARTICIPANT_LINE) {
 			final HtmlColor borderColor = getHtmlColor(param, ColorParam.sequenceLifeLineBorder);

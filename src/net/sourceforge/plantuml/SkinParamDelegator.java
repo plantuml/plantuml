@@ -150,7 +150,7 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getThickness(param, stereotype);
 	}
 
-	public double maxMessageSize() {
+	public LineBreakStrategy maxMessageSize() {
 		return skinParam.maxMessageSize();
 	}
 
@@ -252,6 +252,10 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public HtmlColor getHoverPathColor() {
 		return skinParam.getHoverPathColor();
+	}
+
+	public double getPadding(PaddingParam param) {
+		return skinParam.getPadding(param);
 	}
 
 }

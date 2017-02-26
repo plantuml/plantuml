@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
@@ -119,7 +120,7 @@ public class FtileBox extends AbstractFtile {
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(label);
-		this.tb = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), new MyStencil(), new UStroke(1));
+		this.tb = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), new MyStencil(), new UStroke(1));
 		this.print = label.toString();
 	}
 

@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
@@ -227,7 +228,8 @@ public class AtomText implements Atom {
 		return x;
 	}
 
-	public List<AtomText> getSplitted(StringBounder stringBounder, double maxWidth) {
+	public List<AtomText> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
+		final double maxWidth = maxWidthAsString.getMathWidth();
 		final List<AtomText> result = new ArrayList<AtomText>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();

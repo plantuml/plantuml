@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -51,8 +52,8 @@ public class ComponentBlueModernActor extends AbstractTextualComponent {
 
 	public ComponentBlueModernActor(HtmlColor backgroundColor, HtmlColor foregroundColor, FontConfiguration font,
 			Display stringsToDisplay, boolean head, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
-				spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3,
+				0, spriteContainer, false, null, null);
 		this.head = head;
 		stickman = new StickMan(backgroundColor, foregroundColor);
 	}

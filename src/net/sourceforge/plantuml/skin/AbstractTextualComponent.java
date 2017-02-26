@@ -34,6 +34,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -58,16 +59,16 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final UFont font;
 	private final HtmlColor fontColor;
 
-	public AbstractTextualComponent(CharSequence label, FontConfiguration font,
-			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
-			ISkinSimple spriteContainer, double maxMessageSize, UFont fontForStereotype,
+	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, CharSequence label,
+			FontConfiguration font, HorizontalAlignment horizontalAlignment, int marginX1, int marginX2,
+			int marginY, ISkinSimple spriteContainer, UFont fontForStereotype,
 			HtmlColor htmlColorForStereotype) {
-		this(Display.getWithNewlines(label == null ? "" : label.toString()), font, horizontalAlignment, marginX1,
-				marginX2, marginY, spriteContainer, maxMessageSize, false, fontForStereotype, htmlColorForStereotype);
+		this(maxMessageSize, Display.getWithNewlines(label == null ? "" : label.toString()), font, horizontalAlignment,
+				marginX1, marginX2, marginY, spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 	}
 
-	public AbstractTextualComponent(Display strings, FontConfiguration font, HorizontalAlignment horizontalAlignment,
-			int marginX1, int marginX2, int marginY, ISkinSimple spriteContainer, double maxMessageSize,
+	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, Display strings, FontConfiguration font,
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY, ISkinSimple spriteContainer,
 			boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this.font = font.getFont();
 		this.fontColor = font.getColor();

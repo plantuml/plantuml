@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -55,7 +56,7 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 
 	public ComponentRoseNote(SymbolContext symbolContext, FontConfiguration font, Display strings, double paddingX, double paddingY,
 			ISkinSimple spriteContainer) {
-		super(strings, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, 0, true, null, null);
+		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.LEFT, 6, 15, 5, spriteContainer, true, null, null);
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.symbolContext = symbolContext;

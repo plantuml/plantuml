@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.bluemodern;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -47,8 +48,8 @@ public class ComponentBlueModernDelayText extends AbstractTextualComponent {
 
 	public ComponentBlueModernDelayText(FontConfiguration font, Display stringsToDisplay,
 			ISkinSimple spriteContainer) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4, 4,
-				spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 4, 4,
+				4, spriteContainer, false, null, null);
 	}
 
 	@Override

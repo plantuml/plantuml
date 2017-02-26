@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -50,8 +51,8 @@ public class ComponentBlueModernParticipant extends AbstractTextualComponent {
 
 	public ComponentBlueModernParticipant(HtmlColor blue1, HtmlColor blue2, FontConfiguration font,
 			Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7,
-				spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7,
+				7, spriteContainer, false, null, null);
 		this.blue1 = blue1;
 		this.blue2 = blue2;
 	}

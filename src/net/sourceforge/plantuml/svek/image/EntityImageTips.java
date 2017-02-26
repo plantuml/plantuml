@@ -37,6 +37,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.command.Position;
@@ -122,6 +123,7 @@ public class EntityImageTips extends AbstractEntityImage {
 		final Point2D positionOther = shapeOther.getPosition();
 		bibliotekon.getShape(getEntity());
 		final Position position = getPosition();
+		Direction direction = position.reverseDirection();
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
@@ -133,14 +135,17 @@ public class EntityImageTips extends AbstractEntityImage {
 			final Dimension2D dim = opale.calculateDimension(stringBounder);
 			final Point2D pp1 = new Point2D.Double(0, dim.getHeight() / 2);
 			double x = positionOther.getX() - positionMe.getX();
-			if (position == Position.RIGHT) {
+			if (direction == Direction.RIGHT && x < 0) {
+				direction = direction.getInv();
+			}
+			if (direction == Direction.LEFT) {
 				x += memberPosition.getMaxX();
 			} else {
 				x += 4;
 			}
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
 			final Point2D pp2 = new Point2D.Double(x, y);
-			opale.setOpale(position.reverseDirection(), pp1, pp2);
+			opale.setOpale(direction, pp1, pp2);
 			opale.drawU(ug);
 			ug = ug.apply(new UTranslate(0, dim.getHeight() + ySpacing));
 			height += dim.getHeight();

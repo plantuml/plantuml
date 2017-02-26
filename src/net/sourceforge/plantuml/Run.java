@@ -130,7 +130,7 @@ public class Run {
 			}
 			new MainWindow2(option, dir);
 		} else if (option.isPipe() || option.isPipeMap() || option.isSyntax()) {
-			managePipe(option);
+			error = managePipe(option);
 			forceQuit = true;
 		} else if (option.isFailfast2()) {
 			final long start2 = System.currentTimeMillis();
@@ -256,7 +256,7 @@ public class Run {
 		}
 	}
 
-	private static void managePipe(Option option) throws IOException {
+	private static boolean managePipe(Option option) throws IOException {
 		final String charset = option.getCharset();
 		final BufferedReader br;
 		if (charset == null) {
@@ -264,10 +264,11 @@ public class Run {
 		} else {
 			br = new BufferedReader(new InputStreamReader(System.in, charset));
 		}
-		managePipe(option, br, System.out);
+		return managePipe(option, br, System.out);
 	}
 
-	public static void managePipe(Option option, final BufferedReader br, final PrintStream ps) throws IOException {
+	static public boolean managePipe(Option option, final BufferedReader br, final PrintStream ps) throws IOException {
+		boolean error = false;
 		final StringBuilder sb = new StringBuilder();
 		String s = null;
 		while ((s = br.readLine()) != null) {
@@ -286,6 +287,7 @@ public class Run {
 				ps.println(((UmlDiagram) system).getUmlDiagramType().name());
 				ps.println(system.getDescription());
 			} else if (system instanceof PSystemError) {
+				error = true;
 				ps.println("ERROR");
 				final PSystemError sys = (PSystemError) system;
 				ps.println(sys.getHigherErrorPosition());
@@ -302,6 +304,7 @@ public class Run {
 		} else if (option.isPipe()) {
 			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
 			if ("(error)".equalsIgnoreCase(result)) {
+				error = true;
 				System.err.println("ERROR");
 				final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
 				final PSystemError sys = (PSystemError) system;
@@ -311,6 +314,7 @@ public class Run {
 				}
 			}
 		}
+		return error;
 	}
 
 	private static boolean manageAllFiles(Option option) throws IOException, InterruptedException {

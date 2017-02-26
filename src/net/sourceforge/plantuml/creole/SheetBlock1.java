@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -54,13 +55,16 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private Map<Stripe, Double> widths;
 	private Map<Atom, Position> positions;
 	private MinMax minMax;
-	private final double maxWidth;
+	private final LineBreakStrategy maxWidth;
 	private final double padding;
 
-	public SheetBlock1(Sheet sheet, double maxWidth, double padding) {
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
 		this.sheet = sheet;
 		this.maxWidth = maxWidth;
 		this.padding = padding;
+		if (maxWidth == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	@Override

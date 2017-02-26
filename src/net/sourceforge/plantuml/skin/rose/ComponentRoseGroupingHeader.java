@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -62,7 +63,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	public ComponentRoseGroupingHeader(HtmlColor background, SymbolContext symbolContext, FontConfiguration bigFont,
 			FontConfiguration smallFont2, Display strings, ISkinSimple spriteContainer) {
-		super(strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, 0, null, null);
+		super(LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer, null, null);
 		this.symbolContext = symbolContext;
 		this.background = background;
 		if (strings.size() == 1 || strings.get(1) == null) {

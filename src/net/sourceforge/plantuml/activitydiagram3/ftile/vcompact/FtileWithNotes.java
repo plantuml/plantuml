@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -98,7 +99,7 @@ public class FtileWithNotes extends AbstractFtile {
 		for (PositionedNote note : notes) {
 			final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
-			final SheetBlock1 sheet1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
+			final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 			final SheetBlock2 sheet2 = new SheetBlock2(sheet1, new Stencil() {
 				// -6 and 15 value comes from Opale: this is very ugly!
 				public double getStartingX(StringBounder stringBounder, double y) {

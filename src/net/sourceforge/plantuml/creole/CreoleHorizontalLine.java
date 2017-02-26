@@ -34,6 +34,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -77,7 +78,7 @@ public class CreoleHorizontalLine implements Atom {
 		}
 		final CreoleParser parser = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL);
 		final Sheet sheet = parser.createSheet(Display.getWithNewlines(line));
-		final TextBlock tb = new SheetBlock1(sheet, 0, skinParam.getPadding());
+		final TextBlock tb = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		return tb;
 	}
 

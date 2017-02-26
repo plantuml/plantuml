@@ -37,6 +37,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -66,8 +67,9 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 			cluster.drawU(ug, new UStroke(1.5), dotData.getUmlDiagramType(), dotData.getSkinParam());
 		}
 
-		final HtmlColor color = rose.getHtmlColor(dotData.getSkinParam(), getArrowColorParam(), null);
-		
+		final HtmlColor color = HtmlColorUtils.noGradient(rose.getHtmlColor(dotData.getSkinParam(),
+				getArrowColorParam(), null));
+
 		for (Shape shape : dotStringFactory.getBibliotekon().allShapes()) {
 			final double minX = shape.getMinX();
 			final double minY = shape.getMinY();

@@ -34,6 +34,7 @@ import java.awt.geom.Dimension2D;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
@@ -76,7 +77,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 
 		final Sheet sheet9 = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(display);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, 0, 0);
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, LineBreakStrategy.NONE, 0);
 		return sheetBlock1;
 	}
 

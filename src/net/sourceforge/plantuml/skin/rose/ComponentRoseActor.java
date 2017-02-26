@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -54,7 +55,7 @@ public class ComponentRoseActor extends AbstractTextualComponent {
 
 	public ComponentRoseActor(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay, boolean head,
 			ISkinSimple spriteContainer, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, 0, false,
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0, spriteContainer, false,
 				fontForStereotype, htmlColorForStereotype);
 		this.head = head;
 		this.stickman = new StickMan(biColor);

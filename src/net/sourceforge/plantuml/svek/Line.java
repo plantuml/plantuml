@@ -249,7 +249,7 @@ public class Line implements Moveable, Hideable {
 			final double marginLabel = startUid.equalsId(endUid) ? 6 : 1;
 			final TextBlock label = TextBlockUtils.withMargin(
 					link.getLabel().create(labelFont, skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
-							skinParam), marginLabel, marginLabel);
+							skinParam, skinParam.maxMessageSize()), marginLabel, marginLabel);
 			if (getLinkArrow() == LinkArrow.NONE) {
 				labelOnly = label;
 			} else {

@@ -60,6 +60,9 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb = verbPattern.getVerb(system, arg);
 		final Complement complement = complementPattern.getComplement(system, arg, "0");
+		if (complement == null) {
+			throw new IllegalStateException();
+		}
 		return verb.execute(subject, complement);
 	}
 

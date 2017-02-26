@@ -35,6 +35,7 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class DriverRectangleTikz implements UDriver<TikzGraphics> {
 
@@ -43,11 +44,16 @@ public class DriverRectangleTikz implements UDriver<TikzGraphics> {
 
 		final double width = rect.getWidth();
 		final double height = rect.getHeight();
+		final double r = MathUtils.min(rect.getRx(), rect.getRy(), width / 2, height / 2);
+
 		tikz.setFillColor(mapper.getMappedColor(param.getBackcolor()));
 		tikz.setStrokeColor(mapper.getMappedColor(param.getColor()));
 		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());
-		tikz.rectangle(x, y, width, height);
-
+		if (r == 0) {
+			tikz.rectangle(x, y, width, height);
+		} else {
+			tikz.rectangleRound(x, y, width, height, r);
+		}
 	}
 
 }

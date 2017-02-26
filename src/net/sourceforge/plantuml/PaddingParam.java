@@ -25,37 +25,17 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.project3;
+package net.sourceforge.plantuml;
 
-import java.util.Arrays;
-import java.util.Collection;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+public enum PaddingParam {
+	PARTICIPANT, BOX;
 
-public class SubjectTask implements SubjectPattern {
-
-	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern> asList(new VerbLasts(), new VerbStarts(), new VerbHappens(), new VerbEnds(),
-				new VerbIsColored());
-	}
-
-	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?");
-	}
-
-	public Subject getSubject(GanttDiagram project, RegexResult arg) {
-		final String s = arg.get("SUBJECT", 0);
-		final String shortName = arg.get("SUBJECT", 1);
-		final Task result = project.getOrCreateTask(s, shortName);
-		if (result == null) {
-			throw new IllegalStateException();
-		}
-		return result;
+	public String getSkinName() {
+		return StringUtils.goLowerCase(name()) + "Padding";
 	}
 
 }

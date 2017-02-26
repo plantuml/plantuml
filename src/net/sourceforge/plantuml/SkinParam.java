@@ -641,12 +641,8 @@ public class SkinParam implements ISkinParam {
 		return null;
 	}
 
-	public double maxMessageSize() {
-		final String value = getValue("maxmessagesize");
-		if (value != null && value.matches("-?\\d+")) {
-			return Double.parseDouble(value);
-		}
-		return 0;
+	public LineBreakStrategy maxMessageSize() {
+		return new LineBreakStrategy(getValue("maxmessagesize"));
 	}
 
 	public boolean strictUmlStyle() {
@@ -724,14 +720,6 @@ public class SkinParam implements ISkinParam {
 			return false;
 		}
 		return true;
-	}
-
-	public double getPadding() {
-		final String value = getValue("padding");
-		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
-			return Double.parseDouble(value);
-		}
-		return 0;
 	}
 
 	public int groupInheritance() {
@@ -837,6 +825,22 @@ public class SkinParam implements ISkinParam {
 			return null;
 		}
 		return getIHtmlColorSet().getColorIfValid(value, false);
+	}
+
+	public double getPadding() {
+		final String value = getValue("padding");
+		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
+	}
+
+	public double getPadding(PaddingParam param) {
+		final String value = getValue(param.getSkinName());
+		if (value != null && value.matches("\\d+(\\.\\d+)?")) {
+			return Double.parseDouble(value);
+		}
+		return 0;
 	}
 
 }

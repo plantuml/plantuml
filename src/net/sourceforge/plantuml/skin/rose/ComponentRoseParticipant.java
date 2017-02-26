@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -57,12 +58,14 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final UStroke stroke;
 	private final double minWidth;
 	private final boolean collections;
+	private final double padding;
 
 	public ComponentRoseParticipant(SymbolContext biColor, FontConfiguration font, Display stringsToDisplay,
 			ISkinSimple spriteContainer, double roundCorner, UFont fontForStereotype, HtmlColor htmlColorForStereotype,
-			double minWidth, boolean collections) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7, spriteContainer, 0, false,
+			double minWidth, boolean collections, double padding) {
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 7, 7, 7, spriteContainer, false,
 				fontForStereotype, htmlColorForStereotype);
+		this.padding = padding;
 		this.minWidth = minWidth;
 		this.collections = collections;
 		this.back = biColor.getBackColor();
@@ -75,6 +78,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
+		ug = ug.apply(new UTranslate(padding, 0));
 		ug = ug.apply(new UChangeBackColor(back)).apply(new UChangeColor(foregroundColor));
 		ug = ug.apply(stroke);
 		final URectangle rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder), roundCorner,
@@ -104,7 +108,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return getTextWidth(stringBounder) + deltaShadow + getDeltaCollection();
+		return getTextWidth(stringBounder) + deltaShadow + getDeltaCollection() + 2 * padding;
 	}
 
 	@Override

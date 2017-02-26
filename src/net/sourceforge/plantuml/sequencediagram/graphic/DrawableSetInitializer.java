@@ -36,6 +36,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -191,8 +192,9 @@ class DrawableSetInitializer {
 			}
 		}
 
+		takeParticipantEngloberPadding(stringBounder);
 		constraintSet.takeConstraintIntoAccount(stringBounder);
-		takeParticipantEngloberTitleWidth3(stringBounder);
+		takeParticipantEngloberTitleWidth(stringBounder);
 
 		prepareMissingSpace(stringBounder);
 
@@ -201,7 +203,22 @@ class DrawableSetInitializer {
 		return drawableSet;
 	}
 
-	private void takeParticipantEngloberTitleWidth3(StringBounder stringBounder) {
+	private void takeParticipantEngloberPadding(StringBounder stringBounder) {
+		final double padding = drawableSet.getSkinParam().getPadding(PaddingParam.BOX);
+		if (padding == 0) {
+			return;
+		}
+		for (Englober pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())
+					.getParticipantBox();
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())
+					.getParticipantBox();
+			constraintSet.pushToLeftParticipantBox(padding, first, true);
+			constraintSet.pushToLeftParticipantBox(padding, last, false);
+		}
+	}
+
+	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
 		for (Englober pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder,
 					pe.getParticipantEnglober());

@@ -80,7 +80,7 @@ public class PSystemVersion extends AbstractPSystem {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	public static BufferedImage getCharlieImage() {
@@ -92,7 +92,7 @@ public class PSystemVersion extends AbstractPSystem {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	public static BufferedImage getPlantumlSmallIcon() {
@@ -104,7 +104,7 @@ public class PSystemVersion extends AbstractPSystem {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	private static BufferedImage transparentIcon;
@@ -115,7 +115,7 @@ public class PSystemVersion extends AbstractPSystem {
 		}
 		final BufferedImage ico = getPlantumlSmallIcon();
 		if (ico == null) {
-			return null;
+			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 		}
 		transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);
 		for (int i = 0; i < ico.getWidth(); i++) {

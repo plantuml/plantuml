@@ -36,32 +36,37 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class Fission {
 
 	private final Stripe stripe;
-	private final double maxWidth;
+	private final LineBreakStrategy maxWidth;
 
-	public Fission(Stripe stripe, double maxWidth) {
+	public Fission(Stripe stripe, LineBreakStrategy maxWidth) {
 		this.stripe = stripe;
 		this.maxWidth = maxWidth;
+		if (maxWidth == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public List<Stripe> getSplitted(StringBounder stringBounder) {
-		if (maxWidth == 0) {
+		final double valueMaxWidth = maxWidth.getMathWidth();
+		if (valueMaxWidth == 0) {
 			return Arrays.asList(stripe);
 		}
 		final List<Stripe> result = new ArrayList<Stripe>();
 		StripeSimple current = new StripeSimple();
-		for (Atom a1 : stripe.getAtoms()) {
-			for (Atom atom : getSplitted(stringBounder, a1)) {
-				final double width = atom.calculateDimension(stringBounder).getWidth();
-				if (current.totalWidth + width > maxWidth) {
+		for (Atom atom : stripe.getAtoms()) {
+			for (Atom atomSplitted : getSplitted(stringBounder, atom)) {
+				final double width = atomSplitted.calculateDimension(stringBounder).getWidth();
+				if (current.totalWidth + width > valueMaxWidth) {
 					result.add(current);
 					current = new StripeSimple();
 				}
-				current.addAtom(atom, width);
+				current.addAtom(atomSplitted, width);
 			}
 		}
 		if (current.totalWidth > 0) {

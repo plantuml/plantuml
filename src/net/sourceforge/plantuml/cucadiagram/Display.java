@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.StringUtils;
@@ -371,12 +372,21 @@ public class Display implements Iterable<CharSequence> {
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode modeSimpleLine) {
-		return create(fontConfiguration, horizontalAlignment, spriteContainer, 0, modeSimpleLine, null, null);
+		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, modeSimpleLine, null, null);
 	}
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, double maxMessageSize, CreoleMode modeSimpleLine, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
+		return create(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, defaultCreoleMode, null,
+				null);
+	}
+
+	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode modeSimpleLine,
+			UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+		if (maxMessageSize == null) {
+			throw new IllegalArgumentException();
+		}
 		if (getNaturalHorizontalAlignment() != null) {
 			horizontalAlignment = getNaturalHorizontalAlignment();
 		}
@@ -398,7 +408,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, double maxMessageSize, CreoleMode modeSimpleLine) {
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode modeSimpleLine) {
 		final Sheet sheet = new CreoleParser(fontConfiguration, horizontalAlignment, spriteContainer, modeSimpleLine)
 				.createSheet(this);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, spriteContainer == null ? 0
@@ -407,7 +417,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	private TextBlock createMessageNumber(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, double maxMessageSize) {
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
 		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,
 				maxMessageSize, CreoleMode.FULL);
 		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);

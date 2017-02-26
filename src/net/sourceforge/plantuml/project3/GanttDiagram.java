@@ -36,6 +36,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.IHtmlColorSet;
@@ -63,10 +63,16 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GanttDiagram extends AbstractPSystem {
+public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
+	private final Map<String, Task> byShortName = new HashMap<String, Task>();
 	private final List<GanttConstraint> constraints = new ArrayList<GanttConstraint>();
+	private final IHtmlColorSet colorSet = new HtmlColorSetSimple();
+	private GCalendar calendar;
+
+	private Instant min;
+	private Instant max;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescriptionImpl("(Project)", getClass());
@@ -91,7 +97,6 @@ public class GanttDiagram extends AbstractPSystem {
 	}
 
 	private void sortTasks() {
-		System.err.println("SORTING TASKS!");
 		final TaskCodeSimpleOrder order = getCanonicalOrder(1);
 		final List<Task> list = new ArrayList<Task>(tasks.values());
 		Collections.sort(list, new Comparator<Task>() {
@@ -108,8 +113,10 @@ public class GanttDiagram extends AbstractPSystem {
 	private UDrawable getUDrawable() {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
+				initMinMax();
 				final TimeScale timeScale = new TimeScale();
-				drawInternal(ug, timeScale);
+				drawTimeHeader(ug, timeScale);
+				drawTasks(ug, timeScale);
 				drawConstraints(ug, timeScale);
 			}
 		};
@@ -122,42 +129,66 @@ public class GanttDiagram extends AbstractPSystem {
 
 	}
 
-	private void drawInternal(final UGraphic ug, TimeScale timeScale) {
+	private void drawTimeHeader(final UGraphic ug, TimeScale timeScale) {
 
-		// System.err.println("==============");
-		// for (Task task : tasks.values()) {
-		// System.err.println("task=" + task + " " + ((TaskImpl) task).debug());
-		// }
-		// System.err.println("==============");
+		final double yTotal = initTaskDraws(timeScale);
 
-		Instant min = tasks.values().iterator().next().getStart();
-		Instant max = tasks.values().iterator().next().getEnd();
-		for (Task task : tasks.values()) {
-			final Instant start = task.getStart();
-			final Instant end = task.getEnd();
-			if (min.compareTo(start) > 0) {
-				min = start;
-			}
-			if (max.compareTo(end) < 0) {
-				max = end;
-			}
-		}
-
-		final double header = 16;
-		double y = header;
-		for (Task task : tasks.values()) {
-			final TaskDraw draw = new TaskDraw(task, timeScale, y);
-			task.setTaskDraw(draw);
-			y += draw.getHeight();
-		}
-
-		ULine vbar = new ULine(0, y);
 		final double xmin = timeScale.getPixel(min);
 		final double xmax = timeScale.getPixel(max.increment());
 		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).draw(new ULine(xmax - xmin, 0));
-		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(0, header - 3))
+		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(0, getHeaderHeight() - 3))
 				.draw(new ULine(xmax - xmin, 0));
+		if (calendar == null) {
+			drawSimpleDayCounter(ug, timeScale, yTotal);
+		} else {
+			drawCalendar(ug, timeScale, yTotal);
+		}
 
+	}
+
+	private void drawCalendar(final UGraphic ug, TimeScale timeScale, final double yTotal) {
+		final int magic = 12;
+		final ULine vbar = new ULine(0, yTotal - magic);
+		Month lastMonth = null;
+		for (Instant i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
+			final DayAsDate day = calendar.toDayAsDate((InstantDay) i);
+			final String d1 = "" + day.getDayOfMonth();
+			final TextBlock num = Display.getWithNewlines(d1).create(getFontConfiguration(), HorizontalAlignment.LEFT,
+					new SpriteContainerEmpty());
+			final double x1 = timeScale.getPixel(i);
+			final double x2 = timeScale.getPixel(i.increment());
+			if (i.compareTo(max.increment()) < 0) {
+				final TextBlock weekDay = Display.getWithNewlines(day.getDayOfWeek().shortName()).create(
+						getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+
+				drawCenter(ug.apply(new UTranslate(0, magic * 2)), num, x1, x2);
+				drawCenter(ug.apply(new UTranslate(0, magic)), weekDay, x1, x2);
+				if (lastMonth != day.getMonth()) {
+					final TextBlock month = Display.getWithNewlines(day.getMonth().name()).create(
+							getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+					month.drawU(ug.apply(new UTranslate(x1, 0)));
+				}
+				lastMonth = day.getMonth();
+			}
+			ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(x1, magic)).draw(vbar);
+		}
+	}
+
+	private double getHeaderHeight() {
+		if (calendar != null) {
+			return 40;
+		}
+		return 16;
+	}
+
+	private void drawCenter(final UGraphic ug, final TextBlock text, final double x1, final double x2) {
+		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
+		final double delta = (x2 - x1) - width;
+		text.drawU(ug.apply(new UTranslate(x1 + delta / 2, 0)));
+	}
+
+	private void drawSimpleDayCounter(final UGraphic ug, TimeScale timeScale, final double yTotal) {
+		final ULine vbar = new ULine(0, yTotal);
 		for (Instant i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
 			final TextBlock num = Display.getWithNewlines(i.toShortString()).create(getFontConfiguration(),
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
@@ -170,14 +201,40 @@ public class GanttDiagram extends AbstractPSystem {
 			}
 			ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(x1, 0)).draw(vbar);
 		}
+	}
 
+	private double initTaskDraws(TimeScale timeScale) {
+		double y = getHeaderHeight();
+		for (Task task : tasks.values()) {
+			final TaskDraw draw = new TaskDraw(task, timeScale, y);
+			task.setTaskDraw(draw);
+			y += draw.getHeight();
+		}
+		return y;
+	}
+
+	private void initMinMax() {
+		min = tasks.values().iterator().next().getStart();
+		max = tasks.values().iterator().next().getEnd();
+		for (Task task : tasks.values()) {
+			final Instant start = task.getStart();
+			final Instant end = task.getEnd();
+			if (min.compareTo(start) > 0) {
+				min = start;
+			}
+			if (max.compareTo(end) < 0) {
+				max = end;
+			}
+		}
+	}
+
+	private void drawTasks(final UGraphic ug, TimeScale timeScale) {
 		for (Task task : tasks.values()) {
 			final TaskDraw draw = task.getTaskDraw();
 			draw.drawU(ug.apply(new UTranslate(0, draw.getY())));
 			draw.getTitle().drawU(
 					ug.apply(new UTranslate(timeScale.getPixel(task.getStart().increment()), draw.getY())));
 		}
-
 	}
 
 	private FontConfiguration getFontConfiguration() {
@@ -185,11 +242,38 @@ public class GanttDiagram extends AbstractPSystem {
 		return new FontConfiguration(font, HtmlColorUtils.LIGHT_GRAY, HtmlColorUtils.LIGHT_GRAY, false);
 	}
 
-	public Task getTask(TaskCode code) {
-		Task result = tasks.get(code);
+	public Task getExistingTask(String id) {
+		if (id == null) {
+			throw new IllegalArgumentException();
+		}
+		Task result = byShortName.get(id);
+		if (result != null) {
+			return result;
+		}
+		final TaskCode code = new TaskCode(id);
+		return tasks.get(code);
+	}
+
+	public Task getOrCreateTask(String codeOrShortName, String shortName) {
+		if (codeOrShortName == null) {
+			throw new IllegalArgumentException();
+		}
+		Task result = shortName == null ? null : byShortName.get(shortName);
+		if (result != null) {
+			return result;
+		}
+		result = byShortName.get(codeOrShortName);
+		if (result != null) {
+			return result;
+		}
+		final TaskCode code = new TaskCode(codeOrShortName);
+		result = tasks.get(code);
 		if (result == null) {
 			result = new TaskImpl(code);
 			tasks.put(code, result);
+			if (byShortName != null) {
+				byShortName.put(shortName, result);
+			}
 		}
 		return result;
 	}
@@ -216,10 +300,12 @@ public class GanttDiagram extends AbstractPSystem {
 		constraints.add(constraint);
 	}
 
-	private final IHtmlColorSet colorSet = new HtmlColorSetSimple();
-
 	public IHtmlColorSet getIHtmlColorSet() {
 		return colorSet;
+	}
+
+	public void setStartingDate(DayAsDate start) {
+		this.calendar = new GCalendarSimple(start);
 	}
 
 }

@@ -288,6 +288,62 @@ public class TikzGraphics {
 		cmd.add(sb.toString());
 	}
 
+	private void round(double r, double[] points) {
+		final StringBuilder sb = new StringBuilder("\\draw[");
+		if (color != null) {
+			sb.append("color=" + getColorName(color) + ",");
+		}
+		if (fillcolor != null) {
+			sb.append("fill=" + getColorName(fillcolor) + ",");
+		}
+		sb.append("line width=" + thickness + "pt]");
+		sb.append(" ");
+		int i = 0;
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" arc (180:270:" + format(r) + "pt) -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" arc (270:360:" + format(r) + "pt) -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" arc (0:90:" + format(r) + "pt) -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" arc (90:180:" + format(r) + "pt) -- ");
+		sb.append(couple(points[i++], points[i++]));
+		sb.append(" -- ");
+		sb.append("cycle;");
+		cmd.add(sb.toString());
+	}
+
+	public void rectangleRound(double x, double y, double width, double height, double r) {
+		double[] points = new double[8 * 2];
+		points[0] = x;
+		points[1] = y + r;
+		points[2] = x + r;
+		points[3] = y;
+
+		points[4] = x + width - r;
+		points[5] = y;
+		points[6] = x + width;
+		points[7] = y + r;
+
+		points[8] = x + width;
+		points[9] = y + height - r;
+		points[10] = x + width - r;
+		points[11] = y + height;
+
+		points[12] = x + r;
+		points[13] = y + height;
+		points[14] = x;
+		points[15] = y + height - r;
+
+		round(r, points);
+	}
+
 	public void upath(double x, double y, UPath path) {
 		final StringBuilder sb = new StringBuilder("\\draw[color=" + getColorName(color) + ",line width=" + thickness
 				+ "pt] ");

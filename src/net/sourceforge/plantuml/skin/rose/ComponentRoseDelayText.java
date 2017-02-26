@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.rose;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -46,8 +47,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class ComponentRoseDelayText extends AbstractTextualComponent {
 
 	public ComponentRoseDelayText(FontConfiguration font, Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, font, HorizontalAlignment.CENTER, 0, 0, 4,
-				spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 0, 0,
+				4, spriteContainer, false, null, null);
 	}
 
 	@Override

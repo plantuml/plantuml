@@ -35,6 +35,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.CreoleParser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -68,7 +69,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 		final Sheet sheet = new CreoleParser(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(note);
-		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, 0, skinParam.getPadding()), this,
+		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding()), this,
 				new UStroke(1));
 		this.opale = new Opale(borderColor, noteBackgroundColor, sheetBlock2, skinParam.shadowing(), false);
 

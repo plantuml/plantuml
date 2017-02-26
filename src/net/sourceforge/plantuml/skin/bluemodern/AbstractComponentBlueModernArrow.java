@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.skin.bluemodern;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -50,8 +51,8 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 	private final HtmlColor foregroundColor;
 
 	public AbstractComponentBlueModernArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer) {
-		super(stringsToDisplay, font, HorizontalAlignment.LEFT, 17, 17, 2,
-				spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.LEFT, 17, 17,
+				2, spriteContainer, false, null, null);
 		this.arrowConfiguration = arrowConfiguration;
 		this.foregroundColor = foregroundColor;
 	}

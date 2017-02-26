@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.skin.bluemodern;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -54,7 +55,7 @@ public class ComponentBlueModernEnglober extends AbstractTextualComponent {
 
 	public ComponentBlueModernEnglober(HtmlColor borderColor, HtmlColor backColor, Display strings,
 			FontConfiguration font, ISkinSimple spriteContainer) {
-		super(strings, font, HorizontalAlignment.CENTER, 4, 4, 1, spriteContainer, 0, false,
+		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 4, 4, 1, spriteContainer, false,
 				null, null);
 		this.borderColor = borderColor;
 		this.backColor = backColor;

@@ -33,6 +33,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -193,7 +194,7 @@ public class ConditionalBuilder {
 
 		final Sheet sheet = new CreoleParser(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(labelTest);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, 0, skinParam.getPadding());
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
 		final Ftile diamond1;

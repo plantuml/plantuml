@@ -31,6 +31,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -51,7 +52,7 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 
 	public ComponentRoseNoteHexagonal(SymbolContext symbolContext, FontConfiguration font, Display strings,
 			ISkinSimple spriteContainer) {
-		super(strings, font, HorizontalAlignment.LEFT, 12, 12, 4, spriteContainer, 0, false, null, null);
+		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.LEFT, 12, 12, 4, spriteContainer, false, null, null);
 		this.symbolContext = symbolContext;
 	}
 

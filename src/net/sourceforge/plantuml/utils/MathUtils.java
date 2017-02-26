@@ -48,6 +48,22 @@ public class MathUtils {
 		return max(max(a, b, c), max(d, e));
 	}
 
+	public static double min(double a, double b) {
+		return Math.min(a, b);
+	}
+
+	public static double min(double a, double b, double c) {
+		return min(min(a, b), c);
+	}
+
+	public static double min(double a, double b, double c, double d) {
+		return min(min(a, b), min(c, d));
+	}
+
+	public static double min(double a, double b, double c, double d, double e) {
+		return min(min(a, b, c), min(d, e));
+	}
+
 	public static double limitation(double v, double min, double max) {
 		if (min >= max) {
 			// assert false : "min="+min+" max="+max+" v="+v;

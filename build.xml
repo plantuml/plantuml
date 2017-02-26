@@ -64,7 +64,6 @@
 		<jar jarfile="plantuml.jar" basedir="build">
 			<manifest>
 				<attribute name="Main-Class" value="net.sourceforge.plantuml.Run" />
-				<attribute name="SplashScreen-Image" value="net/sourceforge/plantuml/version/logo.png" />
 				<attribute name="Class-Path" value="batik-all-1.7.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar jlm_greek.jar vizjs.jar j2v8_win32_x86_64-3.1.6.jar j2v8_linux_x86_64-3.1.6.jar j2v8_macosx_x86_64-3.1.6.jar" />
 			</manifest>
 		</jar>

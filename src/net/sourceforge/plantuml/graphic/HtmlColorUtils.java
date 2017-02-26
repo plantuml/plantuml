@@ -30,7 +30,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-
 public class HtmlColorUtils {
 
 	public static final HtmlColor BLACK;
@@ -66,7 +65,6 @@ public class HtmlColorUtils {
 	public static final HtmlColor COL_D7E0F2;
 	public static final HtmlColor COL_989898;
 	public static final HtmlColor COL_BBBBBB;
-	
 
 	static {
 
@@ -106,6 +104,13 @@ public class HtmlColorUtils {
 		COL_989898 = set.getColorIfValid("#989898");
 		COL_BBBBBB = set.getColorIfValid("#BBBBBB");
 
+	}
+
+	public static HtmlColor noGradient(HtmlColor color) {
+		if (color instanceof HtmlColorGradient) {
+			return ((HtmlColorGradient) color).getColor1();
+		}
+		return color;
 	}
 
 }

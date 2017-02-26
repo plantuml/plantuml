@@ -30,33 +30,20 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+public class GCalendarSimple implements GCalendar {
 
-public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPattern {
+	private final DayAsDate start;
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix,
-				"(?:at|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+	public GCalendarSimple(DayAsDate start) {
+		this.start = start;
 	}
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		final String code = arg.get("COMPLEMENT" + suffix, 2);
-		final String position = arg.get("COMPLEMENT" + suffix, 3);
-		final Task task = system.getExistingTask(code);
-		if (task == null) {
-			throw new IllegalStateException();
-		}
-		final String days = arg.get("COMPLEMENT" + suffix, 0);
-		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(position));
-		if (days != null) {
-			int delta = Integer.parseInt(days);
-			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, 1))) {
-				delta = -delta;
-			}
-			result = result.withDelta(delta);
+	public DayAsDate toDayAsDate(InstantDay day) {
+		DayAsDate result = start;
+		for (int i = 0; i < day.getNumDay(); i++) {
+			result = result.next();
 		}
 		return result;
 	}
+
 }

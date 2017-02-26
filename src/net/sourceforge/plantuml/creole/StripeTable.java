@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -69,7 +70,7 @@ public class StripeTable implements Stripe {
 		for (StripeSimple cell : cells) {
 			sheet.add(cell);
 		}
-		return new SheetBlock1(sheet, 0, padding);
+		return new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 	}
 
 	private HtmlColor getBackColor(String line) {

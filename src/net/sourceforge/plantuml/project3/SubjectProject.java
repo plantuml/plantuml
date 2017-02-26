@@ -30,33 +30,25 @@
  */
 package net.sourceforge.plantuml.project3;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPattern {
+public class SubjectProject implements SubjectPattern {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix,
-				"(?:at|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+	public Collection<VerbPattern> getVerbs() {
+		return Arrays.<VerbPattern> asList(new VerbProjectStarts());
 	}
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix) {
-		final String code = arg.get("COMPLEMENT" + suffix, 2);
-		final String position = arg.get("COMPLEMENT" + suffix, 3);
-		final Task task = system.getExistingTask(code);
-		if (task == null) {
-			throw new IllegalStateException();
-		}
-		final String days = arg.get("COMPLEMENT" + suffix, 0);
-		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(position));
-		if (days != null) {
-			int delta = Integer.parseInt(days);
-			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, 1))) {
-				delta = -delta;
-			}
-			result = result.withDelta(delta);
-		}
-		return result;
+	public IRegex toRegex() {
+		return new RegexLeaf("SUBJECT", "project");
 	}
+
+	public Subject getSubject(GanttDiagram project, RegexResult arg) {
+		return project;
+	}
+
 }

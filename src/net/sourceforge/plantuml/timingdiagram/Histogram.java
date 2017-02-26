@@ -189,11 +189,11 @@ public class Histogram implements TimeDrawing {
 		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
 		final UTranslate pos = new UTranslate(pt).compose(deltaY);
 		ug = ug.apply(pos);
-		final SymbolContext context = getContext();
-		final double height = -pt.getY();
-		if (height > 0) {
-			context.withForeColor(context.getBackColor()).apply(ug).draw(new URectangle(len, height));
-		}
+		// final SymbolContext context = getContext();
+		// final double height = -pt.getY();
+		// if (height > 0) {
+		// context.withForeColor(context.getBackColor()).apply(ug).draw(new URectangle(len, height));
+		// }
 		ug.draw(new ULine(len, 0));
 	}
 

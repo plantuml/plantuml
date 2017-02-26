@@ -38,6 +38,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
@@ -71,7 +72,7 @@ public class PSystemCreole extends AbstractPSystem {
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
 		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.FULL)
 				.createSheet(display);
-		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, 0, 0);
+		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 0, 0, null,
 				false);

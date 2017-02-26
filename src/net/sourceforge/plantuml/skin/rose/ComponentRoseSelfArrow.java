@@ -34,6 +34,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -59,7 +60,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	private final boolean niceArrow;
 
 	public ComponentRoseSelfArrow(HtmlColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, double maxMessageSize, boolean niceArrow) {
+			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, boolean niceArrow) {
 		super(foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer, HorizontalAlignment.LEFT,
 				maxMessageSize);
 		this.niceArrow = niceArrow;
