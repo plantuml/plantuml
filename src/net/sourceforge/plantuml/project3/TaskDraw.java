@@ -74,7 +74,7 @@ public class TaskDraw implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		final double start = timeScale.getPixel(task.getStart());
+		final double start = timeScale.getStartingPosition(task.getStart());
 		final UShape rect = getShape();
 
 		ug = applyColors(ug);
@@ -97,8 +97,8 @@ public class TaskDraw implements UDrawable {
 		}
 		final Instant instantStart = task.getStart();
 		final Instant instantEnd = task.getEnd();
-		final double start = timeScale.getPixel(instantStart);
-		final double end = timeScale.getPixel(instantEnd.increment());
+		final double start = timeScale.getStartingPosition(instantStart);
+		final double end = timeScale.getStartingPosition(instantEnd.increment());
 		return new URectangle(end - start - 2 * margin, getHeight() - 2 * margin, 8, 8);
 	}
 

@@ -150,25 +150,6 @@ public class ParticipantBox implements Pushable {
 		// ug.translate(-outMargin, 0);
 	}
 
-	public void drawLineUTOBEREMOVED_4243(UGraphic ug, double startingY, double endingY, boolean showTail, double myDelta) {
-		throw new UnsupportedOperationException();
-//		ug = ug.apply(new UTranslate(startingX, 0));
-//		if (delays.size() > 0) {
-//			final StringBounder stringBounder = ug.getStringBounder();
-//			for (GraphicalDelayText delay : delays) {
-//				if (delay.getStartingY() - myDelta >= startingY) {
-//					drawLine(ug, startingY, delay.getStartingY() - myDelta, line);
-//					drawLine(ug, delay.getStartingY() - myDelta, delay.getEndingY(stringBounder) - myDelta, delayLine);
-//					startingY = delay.getEndingY(stringBounder) - myDelta;
-//				}
-//			}
-//			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta > startingY) {
-//				startingY = delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta;
-//			}
-//		}
-//		drawLine(ug, startingY, endingY, line);
-	}
-
 	public void drawLineU22(UGraphic ug, double startingY, final double endingY, boolean showTail, double myDelta) {
 		ug = ug.apply(new UTranslate(startingX, 0));
 		if (delays.size() > 0) {

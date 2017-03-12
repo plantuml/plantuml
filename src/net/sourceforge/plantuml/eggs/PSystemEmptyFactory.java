@@ -34,12 +34,13 @@ import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.graphic.GraphicPosition;
 
 public class PSystemEmptyFactory implements PSystemFactory {
 
 	public Diagram createSystem(UmlSource source) {
 		if (source.getTotalLineCount() == 2) {
-			return new PSystemEmpty(true);
+			return new PSystemEmpty(GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
 		}
 		return null;
 	}

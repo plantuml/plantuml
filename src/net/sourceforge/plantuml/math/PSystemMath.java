@@ -37,7 +37,6 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
 public class PSystemMath extends AbstractPSystem {
@@ -48,7 +47,7 @@ public class PSystemMath extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Math)", getClass());
+		return new DiagramDescription("(Math)");
 	}
 
 	@Override

@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class PSystemUtils {
 
-	public static List<File> exportDiagrams(Diagram system, File suggestedFile, FileFormatOption fileFormatOption)
-			throws IOException {
+	public static List<FileImageData> exportDiagrams(Diagram system, File suggestedFile,
+			FileFormatOption fileFormatOption) throws IOException {
 		if (system instanceof NewpagedDiagram) {
 			return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);
 		}
@@ -67,9 +67,9 @@ public class PSystemUtils {
 		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);
 	}
 
-	private static List<File> exportDiagramsNewpaged(NewpagedDiagram system, File suggestedFile,
+	private static List<FileImageData> exportDiagramsNewpaged(NewpagedDiagram system, File suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
-		final List<File> result = new ArrayList<File>();
+		final List<FileImageData> result = new ArrayList<FileImageData>();
 		final int nbImages = system.getNbImages();
 		for (int i = 0; i < nbImages; i++) {
 
@@ -78,9 +78,9 @@ public class PSystemUtils {
 				return result;
 			}
 			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
-			// ImageData cmap = null;
+			ImageData cmap = null;
 			try {
-				/* cmap = */system.exportDiagram(fos, i, fileFormat);
+				system.exportDiagram(fos, i, fileFormat);
 			} finally {
 				fos.close();
 			}
@@ -88,7 +88,7 @@ public class PSystemUtils {
 			// system.exportCmap(suggestedFile, cmap);
 			// }
 			Log.info("File size : " + f.length());
-			result.add(f);
+			result.add(new FileImageData(f, cmap));
 		}
 		return result;
 	}
@@ -108,40 +108,42 @@ public class PSystemUtils {
 		return true;
 	}
 
-	static private List<File> exportDiagramsDefault(Diagram system, File suggestedFile, FileFormatOption fileFormat)
-			throws IOException {
+	static private List<FileImageData> exportDiagramsDefault(Diagram system, File suggestedFile,
+			FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
 		OutputStream os = null;
+		ImageData imageData = null;
 		try {
 			if (canFileBeWritten(suggestedFile) == false) {
 				return Collections.emptyList();
 			}
 			os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
 			// system.exportDiagram(os, null, 0, fileFormat);
-			system.exportDiagram(os, 0, fileFormat);
+			imageData = system.exportDiagram(os, 0, fileFormat);
 		} finally {
 			if (os != null) {
 				os.close();
 			}
 		}
-		return Arrays.asList(suggestedFile);
+		return Arrays.asList(new FileImageData(suggestedFile, imageData));
 	}
 
-	static private List<File> exportDiagramsActivityDiagram3(ActivityDiagram3 system, File suggestedFile,
+	static private List<FileImageData> exportDiagramsActivityDiagram3(ActivityDiagram3 system, File suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
 		OutputStream os = null;
 		ImageData cmap = null;
+		ImageData imageData = null;
 		try {
 			if (canFileBeWritten(suggestedFile) == false) {
 				return Collections.emptyList();
 			}
 			os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
-			cmap = system.exportDiagram(os, 0, fileFormat);
+			imageData = cmap = system.exportDiagram(os, 0, fileFormat);
 		} finally {
 			if (os != null) {
 				os.close();
@@ -150,12 +152,12 @@ public class PSystemUtils {
 		if (cmap != null && cmap.containsCMapData()) {
 			system.exportCmap(suggestedFile, cmap);
 		}
-		return Arrays.asList(suggestedFile);
+		return Arrays.asList(new FileImageData(suggestedFile, imageData));
 	}
 
-	private static List<File> exportDiagramsSequence(SequenceDiagram system, File suggestedFile,
+	private static List<FileImageData> exportDiagramsSequence(SequenceDiagram system, File suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
-		final List<File> result = new ArrayList<File>();
+		final List<FileImageData> result = new ArrayList<FileImageData>();
 		final int nbImages = system.getNbImages();
 		for (int i = 0; i < nbImages; i++) {
 
@@ -174,13 +176,13 @@ public class PSystemUtils {
 				system.exportCmap(suggestedFile, cmap);
 			}
 			Log.info("File size : " + f.length());
-			result.add(f);
+			result.add(new FileImageData(f, cmap));
 		}
 		return result;
 	}
 
-	static private List<File> exportDiagramsCuca(CucaDiagram system, File suggestedFile, FileFormatOption fileFormat)
-			throws IOException {
+	static private List<FileImageData> exportDiagramsCuca(CucaDiagram system, File suggestedFile,
+			FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.exists() && suggestedFile.isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
@@ -215,11 +217,15 @@ public class PSystemUtils {
 					system.getMetadata(), system.getDpi(fileFormat), fileFormat.isWithMetadata(), system.getSkinParam()
 							.getSplitParam()).getFiles();
 		}
-		return result;
+		final List<FileImageData> result2 = new ArrayList<FileImageData>();
+		for (File f : result) {
+			result2.add(new FileImageData(f, cmap));
+		}
+		return result2;
 
 	}
 
-	private static List<File> createFilesHtml(CucaDiagram system, File suggestedFile) throws IOException {
+	private static List<FileImageData> createFilesHtml(CucaDiagram system, File suggestedFile) throws IOException {
 		final String name = suggestedFile.getName();
 		final int idx = name.lastIndexOf('.');
 		final File dir = new File(suggestedFile.getParentFile(), name.substring(0, idx));

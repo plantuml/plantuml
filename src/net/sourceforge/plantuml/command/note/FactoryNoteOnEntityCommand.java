@@ -78,6 +78,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$") //
@@ -96,6 +97,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				new RegexLeaf("$") //
 		);
@@ -129,15 +131,11 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
-
+				
 				Url url = null;
-				if (lines.size() > 0) {
-					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
-							ModeUrl.STRICT);
-					url = urlBuilder.getUrl(lines.getFirst499().toString());
-				}
-				if (url != null) {
-					lines = lines.subExtract(1, 0);
+				if (line0.get("URL", 0) != null) {
+					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
 				return executeInternal(line0, system, url, lines);

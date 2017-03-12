@@ -30,13 +30,16 @@
  */
 package net.sourceforge.plantuml;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {
 
@@ -123,6 +126,33 @@ public class BlockUml {
 
 	public final List<CharSequence2> getData() {
 		return data;
+	}
+
+	private String internalEtag() {
+		try {
+			final AsciiEncoder coder = new AsciiEncoder();
+			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
+			for (CharSequence s : data) {
+				msgDigest.update(s.toString().getBytes("UTF-8"));
+			}
+			final byte[] digest = msgDigest.digest();
+			return coder.encode(digest);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "NOETAG";
+		}
+	}
+
+	public String etag() {
+		final StringBuilder result = new StringBuilder();
+		result.append(Integer.toString(Version.version(), 36));
+		result.append(Integer.toString(Version.beta(), 36));
+		result.append(internalEtag());
+		return result.toString();
+	}
+
+	public long lastModified() {
+		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;
 	}
 
 }

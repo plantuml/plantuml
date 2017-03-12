@@ -57,13 +57,16 @@ public class ComponentTextDelay extends AbstractComponentText {
 		final int textWidth = StringUtils.getWidth(stringsToDisplay);
 
 		final int textPos = (width - textWidth) / 2;
+		if (stringsToDisplay.isWhite()) {
+			return;
+		}
 		final String desc = stringsToDisplay.get(0).toString();
 
-		charArea.drawStringLR(desc, textPos, 0);
+		charArea.drawStringLR(desc, textPos, 1);
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return StringUtils.getHeight(stringsToDisplay) + 1;
+		return StringUtils.getHeight(stringsToDisplay) + 4;
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {

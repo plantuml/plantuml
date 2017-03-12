@@ -121,16 +121,16 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		}
 		if (lines.size() > 1) {
 			lines = lines.subExtract(1, 1);
-			final Url url;
-			if (lines.size() > 0) {
-				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-				url = urlBuilder.getUrl(lines.getFirst499().toString());
-			} else {
-				url = null;
-			}
-			if (url != null) {
-				lines = lines.subExtract(1, 0);
-			}
+			final Url url = null;
+//			if (lines.size() > 0) {
+//				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+//				url = urlBuilder.getUrl(lines.getFirst499().toString());
+//			} else {
+//				url = null;
+//			}
+//			if (url != null) {
+//				lines = lines.subExtract(1, 0);
+//			}
 			for (CharSequence s : lines) {
 				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s)) {
 					diagram.setVisibilityModifierPresent(true);
@@ -191,7 +191,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final ILeaf result;
 		if (diagram.leafExist(code)) {
 			result = diagram.getOrCreateLeaf(code, null, null);
-			result.muteToType(type, null);
+			if (result.muteToType(type, null) == false) {
+				return null;
+			}
 		} else {
 			result = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
 		}

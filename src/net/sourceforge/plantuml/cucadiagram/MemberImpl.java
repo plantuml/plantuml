@@ -49,56 +49,37 @@ public class MemberImpl implements Member {
 
 	private final VisibilityModifier visibilityModifier;
 
-	public MemberImpl(String tmpDisplay, boolean isMethod, boolean manageModifier, boolean manageUrl) {
+	public MemberImpl(String tmpDisplay, boolean isMethod, boolean manageModifier) {
 		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
 		if (manageModifier) {
-			this.hasUrl = new UrlBuilder(null, ModeUrl.ANYWHERE).getUrl(tmpDisplay) != null;
-			final Pattern2 pstart = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")([^\\[\\]]+)$");
-			final Matcher2 mstart = pstart.matcher(tmpDisplay);
-
-			if (mstart.matches()) {
-				if (mstart.groupCount() != 4) {
-					throw new IllegalStateException();
-				}
-				final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
-				this.url = urlBuilder.getUrl(mstart.group(1));
-				this.url.setMember(true);
-				tmpDisplay = /* mstart.group(1).trim() + */StringUtils.trin(mstart.group(mstart.groupCount()));
+			final Pattern2 finalUrl = MyPattern.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
+			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
+			if (matcher.matches() == false) {
+				throw new IllegalStateException();
+			}
+			tmpDisplay = matcher.group(1);
+			final String urlString = matcher.group(2);
+			if (urlString == null) {
+				this.url = null;
 			} else {
-				final Pattern2 pend = MyPattern.cmpile("^((?:[^\\[\\]]|\\[[^\\[\\]]*\\])+)(" + UrlBuilder.getRegexp()
-						+ ")$");
-				final Matcher2 mend = pend.matcher(tmpDisplay);
-
-				if (mend.matches()) {
-					if (mend.groupCount() != 4) {
-						throw new IllegalStateException();
-					}
-					final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_END);
-					this.url = urlBuilder.getUrl(mend.group(2));
-					this.url.setMember(true);
-					tmpDisplay = StringUtils.trin(mend.group(1));
-				} else {
-					this.url = null;
-				}
+				this.url = new UrlBuilder(null, ModeUrl.STRICT).getUrl(urlString);
 			}
 		} else {
 			this.url = null;
-			this.hasUrl = false;
 		}
-
+		this.hasUrl = this.url != null;
 		final String lower = StringUtils.goLowerCase(tmpDisplay);
 
 		if (manageModifier) {
 			this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 			this.abstractModifier = lower.contains("{abstract}");
-			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "");
+			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "").trim();
 			if (displayClean.length() == 0) {
 				displayClean = " ";
 			}
 
 			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {
-				visibilityModifier = VisibilityModifier
-						.getVisibilityModifier(displayClean, isMethod == false);
+				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);
 				this.display = StringUtils.trin(StringUtils.manageGuillemet(displayClean.substring(1)));
 			} else {
 				this.display = StringUtils.manageGuillemet(displayClean);
@@ -140,7 +121,7 @@ public class MemberImpl implements Member {
 		}
 		if (isIEMandatory()) {
 			return "*" + display;
-		}		
+		}
 		return display;
 	}
 
@@ -200,7 +181,7 @@ public class MemberImpl implements Member {
 	}
 
 	public static boolean isMethod(String s) {
-		s = UrlBuilder.purgeUrl(s);
+		// s = UrlBuilder.purgeUrl(s);
 		if (s.contains("{method}")) {
 			return true;
 		}

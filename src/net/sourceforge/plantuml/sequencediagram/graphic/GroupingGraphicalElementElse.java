@@ -60,7 +60,7 @@ public class GroupingGraphicalElementElse extends GroupingGraphicalElement imple
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double x1 = getInGroupableList().getMinX(stringBounder);
-		final double x2 = getInGroupableList().getMaxX(stringBounder);
+		final double x2 = getInGroupableList().getMaxX(stringBounder) - getInGroupableList().getHack2();
 		ug = ug.apply(new UTranslate(x1, getStartingY()));
 
 		final double height = afterY.getNow() - getStartingY();

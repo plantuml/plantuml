@@ -74,7 +74,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 
 		final TextBlock tmp = new BodyEnhanced(entity.getDisplay(), FontParam.USECASE, skinParam,
-				HorizontalAlignment.CENTER, stereotype, true, false, false, entity);
+				HorizontalAlignment.CENTER, stereotype, true, false, entity);
 
 		if (stereotype == null || stereotype.getLabel(false) == null) {
 			this.desc = tmp;

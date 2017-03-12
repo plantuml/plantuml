@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -59,12 +60,13 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class EntityImageEmptyPackage extends AbstractEntityImage {
 
-	final private TextBlock desc;
-	final private static int MARGIN = 10;
-	final private HtmlColor specificBackColor;
-	final private ISkinParam skinParam;
-	final private Stereotype stereotype;
-	final TextBlock stereoBlock;
+	private final TextBlock desc;
+	private final static int MARGIN = 10;
+	private final HtmlColor specificBackColor;
+	private final ISkinParam skinParam;
+	private final Stereotype stereotype;
+	private final TextBlock stereoBlock;
+	private final Url url;
 
 	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
@@ -73,6 +75,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		this.stereotype = entity.getStereotype();
 		this.desc = entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype),
 				HorizontalAlignment.CENTER, skinParam);
+		this.url = entity.getUrl99();
 
 		if (stereotype == null || stereotype.getLabel(false) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
@@ -103,6 +106,10 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
+		if (url != null) {
+			ug.startUrl(url);
+		}
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
@@ -117,6 +124,10 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 		decoration.drawU(ug, back, SkinParamUtils.getColor(getSkinParam(), ColorParam.packageBorder, getStereo()),
 				getSkinParam().shadowing(), roundCorner);
+
+		if (url != null) {
+			ug.closeAction();
+		}
 
 	}
 

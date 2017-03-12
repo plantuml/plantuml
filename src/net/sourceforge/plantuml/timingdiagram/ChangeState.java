@@ -30,16 +30,25 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+
 public class ChangeState implements Comparable<ChangeState> {
 
 	private final TimeTick when;
 	private final String state;
 	private final String comment;
+	private final Colors colors;
 
-	public ChangeState(TimeTick when, String state, String comment) {
+	public ChangeState(TimeTick when, String state, String comment, Colors colors) {
 		this.when = when;
 		this.state = state;
 		this.comment = comment;
+		this.colors = colors;
 	}
 
 	public int compareTo(ChangeState other) {
@@ -56,6 +65,28 @@ public class ChangeState implements Comparable<ChangeState> {
 
 	public String getComment() {
 		return comment;
+	}
+
+	private final HtmlColor getBackColor() {
+		if (colors == null || colors.getColor(ColorType.BACK) == null) {
+			return HtmlColorUtils.COL_D7E0F2;
+		}
+		return colors.getColor(ColorType.BACK);
+	}
+
+	private final HtmlColor getLineColor() {
+		if (colors == null || colors.getColor(ColorType.LINE) == null) {
+			return HtmlColorUtils.COL_038048;
+		}
+		return colors.getColor(ColorType.LINE);
+	}
+
+	public SymbolContext getContext() {
+		return new SymbolContext(getBackColor(), getLineColor()).withStroke(new UStroke(1.5));
+	}
+
+	public final boolean isHidden() {
+		return state.length() == 0;
 	}
 
 }

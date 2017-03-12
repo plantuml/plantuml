@@ -440,6 +440,9 @@ public final class DotDataImageBuilder {
 				final USymbol symbol = g.getUSymbol();
 				folder.setUSymbol(symbol);
 				folder.setStereotype(g.getStereotype());
+				if (g.getUrl99() != null) {
+					folder.addUrl(g.getUrl99());
+				}
 				if (g.getColors(dotData.getSkinParam()).getColor(ColorType.BACK) == null) {
 					final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
 					final HtmlColor c1 = dotData.getSkinParam().getHtmlColor(param, g.getStereotype(), false);

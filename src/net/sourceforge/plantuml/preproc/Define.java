@@ -58,6 +58,11 @@ public class Define {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return signature.toString();
+	}
+
 	public String apply(String line) {
 		if (definition == null) {
 			return line;

@@ -59,10 +59,10 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 	protected CommandExecutionResult executeArg(GanttDiagram system, RegexResult arg) {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb = verbPattern.getVerb(system, arg);
-		final Complement complement = complementPattern.getComplement(system, arg, "0");
-		if (complement == null) {
-			throw new IllegalStateException();
-		}
+		final Complement complement = complementPattern.getComplement(system, arg, "0").get();
+		// if (complement == null) {
+		// throw new IllegalStateException();
+		// }
 		return verb.execute(subject, complement);
 	}
 

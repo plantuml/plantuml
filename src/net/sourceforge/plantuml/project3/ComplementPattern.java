@@ -35,7 +35,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public interface ComplementPattern {
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix);
+	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix);
 
 	public IRegex toRegex(String suffix);
 

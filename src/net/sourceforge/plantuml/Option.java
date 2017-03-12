@@ -65,6 +65,8 @@ public class Option {
 	private boolean pattern = false;
 	private boolean duration = false;
 	private boolean debugsvek = false;
+	private boolean splash = false;
+	private boolean textProgressBar = false;
 	private int nbThreads = 0;
 	private int ftpPort = -1;
 
@@ -268,6 +270,10 @@ public class Option {
 				StatsUtils.setRealTimeStats(true);
 			} else if (s.equalsIgnoreCase("-useseparatorminus")) {
 				OptionFlags.getInstance().setFileSeparator("-");
+			} else if (s.equalsIgnoreCase("-splash")) {
+				splash = true;
+			} else if (s.equalsIgnoreCase("-progress")) {
+				textProgressBar = true;
 			} else if (StringUtils.goLowerCase(s).startsWith("-ftp")) {
 				final int x = s.indexOf(':');
 				if (x == -1) {
@@ -454,6 +460,18 @@ public class Option {
 
 	boolean isDebugSvek() {
 		return debugsvek;
+	}
+
+	public final boolean isSplash() {
+		return splash;
+	}
+
+	public final void setSplash(boolean splash) {
+		this.splash = splash;
+	}
+
+	public final boolean isTextProgressBar() {
+		return textProgressBar;
 	}
 
 }

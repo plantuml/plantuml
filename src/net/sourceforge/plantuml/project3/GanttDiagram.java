@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -75,7 +74,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	private Instant max;
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Project)", getClass());
+		return new DiagramDescription("(Project)");
 	}
 
 	@Override
@@ -114,12 +113,17 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
 				initMinMax();
-				final TimeScale timeScale = new TimeScale();
+				final TimeScale timeScale = getTimeScale();
 				drawTimeHeader(ug, timeScale);
 				drawTasks(ug, timeScale);
 				drawConstraints(ug, timeScale);
 			}
 		};
+	}
+
+	private TimeScale getTimeScale() {
+		return new TimeScaleBasic();
+		// return new TimeScaleWithoutWeekEnd(calendar);
 	}
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
@@ -133,8 +137,8 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 		final double yTotal = initTaskDraws(timeScale);
 
-		final double xmin = timeScale.getPixel(min);
-		final double xmax = timeScale.getPixel(max.increment());
+		final double xmin = timeScale.getStartingPosition(min);
+		final double xmax = timeScale.getStartingPosition(max.increment());
 		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).draw(new ULine(xmax - xmin, 0));
 		ug.apply(new UChangeColor(HtmlColorUtils.LIGHT_GRAY)).apply(new UTranslate(0, getHeaderHeight() - 3))
 				.draw(new ULine(xmax - xmin, 0));
@@ -155,8 +159,8 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 			final String d1 = "" + day.getDayOfMonth();
 			final TextBlock num = Display.getWithNewlines(d1).create(getFontConfiguration(), HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
-			final double x1 = timeScale.getPixel(i);
-			final double x2 = timeScale.getPixel(i.increment());
+			final double x1 = timeScale.getStartingPosition(i);
+			final double x2 = timeScale.getStartingPosition(i.increment());
 			if (i.compareTo(max.increment()) < 0) {
 				final TextBlock weekDay = Display.getWithNewlines(day.getDayOfWeek().shortName()).create(
 						getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
@@ -184,6 +188,9 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	private void drawCenter(final UGraphic ug, final TextBlock text, final double x1, final double x2) {
 		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
 		final double delta = (x2 - x1) - width;
+		if (delta < 0) {
+			return;
+		}
 		text.drawU(ug.apply(new UTranslate(x1 + delta / 2, 0)));
 	}
 
@@ -192,8 +199,8 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 		for (Instant i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
 			final TextBlock num = Display.getWithNewlines(i.toShortString()).create(getFontConfiguration(),
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-			final double x1 = timeScale.getPixel(i);
-			final double x2 = timeScale.getPixel(i.increment());
+			final double x1 = timeScale.getStartingPosition(i);
+			final double x2 = timeScale.getStartingPosition(i.increment());
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
 			if (i.compareTo(max.increment()) < 0) {
@@ -233,7 +240,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 			final TaskDraw draw = task.getTaskDraw();
 			draw.drawU(ug.apply(new UTranslate(0, draw.getY())));
 			draw.getTitle().drawU(
-					ug.apply(new UTranslate(timeScale.getPixel(task.getStart().increment()), draw.getY())));
+					ug.apply(new UTranslate(timeScale.getStartingPosition(task.getStart().increment()), draw.getY())));
 		}
 	}
 

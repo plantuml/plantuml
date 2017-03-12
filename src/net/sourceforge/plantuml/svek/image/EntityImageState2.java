@@ -38,7 +38,6 @@ import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -89,7 +88,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
 		final TextBlock desc = new BodyEnhanced(entity.getDisplay(), symbol.getFontParam(), skinParam,
-				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, false, entity);
+				HorizontalAlignment.CENTER, stereotype, symbol.manageHorizontalLine(), false, entity);
 
 		asSmall = symbol.asSmall(null, desc, stereo, ctx);
 

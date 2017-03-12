@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
 import org.stathissideris.ascii2image.core.ConversionOptions;
@@ -69,7 +68,7 @@ public class PSystemDitaa extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Ditaa)", getClass());
+		return new DiagramDescription("(Ditaa)");
 	}
 
 	@Override

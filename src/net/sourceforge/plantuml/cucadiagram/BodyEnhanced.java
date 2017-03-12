@@ -68,7 +68,6 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final boolean manageHorizontalLine;
 	private final boolean manageModifier;
 	private final List<Url> urls = new ArrayList<Url>();
-	private final boolean manageUrl;
 	private final Stereotype stereotype;
 	private final ILeaf entity;
 
@@ -78,7 +77,6 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
-		this.manageUrl = true;
 
 		this.titleConfig = new FontConfiguration(skinParam, fontParam, stereotype);
 		this.lineFirst = true;
@@ -89,9 +87,8 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
-			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, boolean manageUrl, ILeaf entity) {
+			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity) {
 		this.entity = entity;
-		this.manageUrl = manageUrl;
 		this.stereotype = stereotype;
 		this.rawBody = new ArrayList<String>();
 		for (CharSequence s : display) {
@@ -154,7 +151,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 						skinParam, CreoleMode.FULL);
 				blocks.add(bloc);
 			} else {
-				final Member m = new MemberImpl(s, MemberImpl.isMethod(s), manageModifier, manageUrl);
+				final Member m = new MemberImpl(s, MemberImpl.isMethod(s), manageModifier);
 				members.add(m);
 				if (m.getUrl() != null) {
 					urls.add(m.getUrl());

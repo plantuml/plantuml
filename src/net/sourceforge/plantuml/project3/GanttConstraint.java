@@ -30,7 +30,6 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.UDrawable;
 
 public class GanttConstraint implements Complement {

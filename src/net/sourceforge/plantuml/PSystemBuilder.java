@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
+import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemEmptyFactory;
 import net.sourceforge.plantuml.eggs.PSystemLostFactory;
@@ -121,6 +122,7 @@ public class PSystemBuilder {
 	private List<PSystemFactory> getAllFactories() {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
 		factories.add(new PSystemEmptyFactory());
+		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());

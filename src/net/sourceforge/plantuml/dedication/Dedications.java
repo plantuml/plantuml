@@ -44,6 +44,7 @@ public class Dedications {
 
 	static {
 		addNormal("Write your own dedication!", "dedication");
+		addNormal("linux_china", "linux_china");
 		addCrypted("0", "pOhci6rKgPXw32AeYXhOpSY0suoauHq5VUSwFqHLHsLYgSO6WaJ7BW5vtHBAoU6ePbcW7d8Flx99MWjPSKQTDm00");
 	}
 

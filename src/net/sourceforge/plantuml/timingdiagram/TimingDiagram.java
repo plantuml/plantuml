@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -62,7 +61,7 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 	private Player lastPlayer;
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Timing Diagram)", getClass());
+		return new DiagramDescription("(Timing Diagram)");
 	}
 
 	@Override

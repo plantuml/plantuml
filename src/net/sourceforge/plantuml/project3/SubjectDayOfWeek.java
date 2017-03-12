@@ -25,46 +25,31 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.core;
+package net.sourceforge.plantuml.project3;
 
-public class DiagramDescriptionImpl implements DiagramDescription {
+import java.util.Arrays;
+import java.util.Collection;
 
-	private final String description;
-	private final String cmapData;
-	private final Class clazz;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-	public DiagramDescriptionImpl(String description, Class clazz) {
-		this(description, clazz, null);
+public class SubjectDayOfWeek implements SubjectPattern {
+
+	public Collection<VerbPattern> getVerbs() {
+		return Arrays.<VerbPattern> asList(new VerbAre());
 	}
 
-	private DiagramDescriptionImpl(String description, Class clazz, String cmapData) {
-		this.description = description;
-		this.cmapData = cmapData;
-		this.clazz = clazz;
+	public IRegex toRegex() {
+		return new RegexLeaf("SUBJECT", "(" + DayOfWeek.getRegexString() + ")");
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public String getType() {
-		return clazz.getSimpleName();
-	}
-
-	public String getCmapData() {
-		return cmapData;
-	}
-
-	public DiagramDescription withCMapData(String cmapData) {
-		return new DiagramDescriptionImpl(this.description, this.clazz, cmapData);
-	}
-
-	@Override
-	public String toString() {
-		return description;
+	public Subject getSubject(GanttDiagram project, RegexResult arg) {
+		final String s = arg.get("SUBJECT", 0);
+		return DayOfWeek.fromString(s);
 	}
 
 }

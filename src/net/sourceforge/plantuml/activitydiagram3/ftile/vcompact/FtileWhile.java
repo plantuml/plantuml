@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
@@ -73,6 +74,7 @@ class FtileWhile extends AbstractFtile {
 
 	private final Ftile whileBlock;
 	private final Ftile diamond1;
+	private final Ftile specialOut;
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<Swimlane>(whileBlock.getSwimlanes());
@@ -88,16 +90,17 @@ class FtileWhile extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	private FtileWhile(Ftile whileBlock, Ftile diamond1) {
+	private FtileWhile(Ftile whileBlock, Ftile diamond1, Ftile specialOut) {
 		super(whileBlock.skinParam());
 		this.whileBlock = whileBlock;
 		this.diamond1 = diamond1;
+		this.specialOut = specialOut;
 	}
 
 	public static Ftile create(Swimlane swimlane, Ftile whileBlock, Display test, HtmlColor borderColor,
 			HtmlColor backColor, Rainbow arrowColor, Display yes, Display out2, Rainbow endInlinkColor,
 			LinkRendering afterEndwhile, FontConfiguration fontArrow, FtileFactory ftileFactory,
-			ConditionStyle conditionStyle, FontConfiguration fcTest) {
+			ConditionStyle conditionStyle, FontConfiguration fcTest, Instruction specialOut) {
 
 		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 		final TextBlock testTb = test.create(fcTest,
@@ -118,7 +121,9 @@ class FtileWhile extends AbstractFtile {
 			throw new IllegalStateException();
 		}
 
-		final FtileWhile result = new FtileWhile(whileBlock, diamond1);
+		final Ftile special = specialOut == null ? null : specialOut.createFtile(ftileFactory);
+
+		final FtileWhile result = new FtileWhile(whileBlock, diamond1, special);
 		Rainbow afterEndwhileColor = arrowColor;
 		if (afterEndwhile != null && afterEndwhile.getRainbow() != null && afterEndwhile.getRainbow().size() != 0) {
 			afterEndwhileColor = afterEndwhile.getRainbow();
@@ -135,7 +140,11 @@ class FtileWhile extends AbstractFtile {
 			conns.add(result.new ConnectionIn(whileBlock.getInLinkRendering().getRainbow(arrowColor)));
 			conns.add(result.new ConnectionBack(endInlinkColor, back));
 		}
-		conns.add(result.new ConnectionOut(afterEndwhileColor));
+		if (specialOut == null) {
+			conns.add(result.new ConnectionOut(afterEndwhileColor));
+		} else {
+			conns.add(result.new ConnectionOutSpecial(afterEndwhileColor));
+		}
 		return FtileUtils.addConnection(result, conns);
 	}
 
@@ -390,10 +399,54 @@ class FtileWhile extends AbstractFtile {
 		}
 	}
 
+	class ConnectionOutSpecial extends AbstractConnection {
+		private final Rainbow afterEndwhileColor;
+
+		public ConnectionOutSpecial(Rainbow afterEndwhileColor) {
+			super(diamond1, specialOut);
+			this.afterEndwhileColor = afterEndwhileColor;
+		}
+
+		private Point2D getP1(final StringBounder stringBounder) {
+			return getTranslateDiamond1(stringBounder).getTranslated(new Point2D.Double(0, 0));
+		}
+
+		private Point2D getP2(final StringBounder stringBounder) {
+			return getTranslateForSpecial(stringBounder).getTranslated(
+					specialOut.calculateDimension(stringBounder).getPointIn());
+		}
+
+		public void drawU(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+
+			final Snake snake = new Snake(afterEndwhileColor, Arrows.asToDown());
+
+			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+			final Point2D p1 = getP1(stringBounder);
+			final Point2D p2 = getP2(stringBounder);
+
+			final double x1 = p1.getX();
+			final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
+			final double y1 = p1.getY() + dimDiamond1.getInY() + half;
+			final double x2 = p2.getX();
+			final double y2 = p2.getY();
+
+			snake.addPoint(x1, y1);
+			snake.addPoint(x2, y1);
+			snake.addPoint(x2, y2);
+
+			ug.draw(snake);
+
+		}
+	}
+
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug.apply(getTranslateForWhile(stringBounder)).draw(whileBlock);
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);
+		if (specialOut != null) {
+			ug.apply(getTranslateForSpecial(stringBounder)).draw(specialOut);
+		}
 	}
 
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
@@ -407,9 +460,16 @@ class FtileWhile extends AbstractFtile {
 		final FtileGeometry geo = geoDiamond1.appendBottom(geoWhile);
 		final double height = geo.getHeight() + 4 * Diamond.diamondHalfSize;
 		final double dx = 2 * Diamond.diamondHalfSize;
-		return new FtileGeometry(geo.getWidth() + dx + Diamond.diamondHalfSize, height, geo.getLeft() + dx,
-				geoDiamond1.getInY(), height);
+		return new FtileGeometry(xDeltaBecauseSpecial(stringBounder) + geo.getWidth() + dx + Diamond.diamondHalfSize,
+				height, xDeltaBecauseSpecial(stringBounder) + geo.getLeft() + dx, geoDiamond1.getInY(), height);
 
+	}
+
+	private double xDeltaBecauseSpecial(StringBounder stringBounder) {
+		if (specialOut == null) {
+			return 0;
+		}
+		return specialOut.calculateDimension(stringBounder).getWidth();
 	}
 
 	@Override
@@ -443,6 +503,14 @@ class FtileWhile extends AbstractFtile {
 
 		final double y1 = 0;
 		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();
+		return new UTranslate(x1, y1);
+	}
+
+	private UTranslate getTranslateForSpecial(StringBounder stringBounder) {
+		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
+		final double y1 = Math.max(3 * half, 4 * Diamond.diamondHalfSize);
+		final double x1 = getTranslateForWhile(stringBounder).getDx() - xDeltaBecauseSpecial(stringBounder);
 		return new UTranslate(x1, y1);
 	}
 

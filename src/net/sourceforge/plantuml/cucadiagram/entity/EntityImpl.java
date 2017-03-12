@@ -155,7 +155,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		return leafType;
 	}
 
-	public void muteToType(LeafType newType, USymbol newSymbol) {
+	public boolean muteToType(LeafType newType, USymbol newSymbol) {
 		checkNotGroup();
 		if (newType == null) {
 			throw new IllegalArgumentException();
@@ -163,11 +163,13 @@ final class EntityImpl implements ILeaf, IGroup {
 		if (leafType != LeafType.STILL_UNKNOWN) {
 			if (leafType != LeafType.ANNOTATION && leafType != LeafType.ABSTRACT_CLASS && leafType != LeafType.CLASS
 					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE) {
-				throw new IllegalArgumentException("type=" + leafType);
+				return false;
+				// throw new IllegalArgumentException("type=" + leafType);
 			}
 			if (newType != LeafType.ANNOTATION && newType != LeafType.ABSTRACT_CLASS && newType != LeafType.CLASS
 					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE && newType != LeafType.OBJECT) {
-				throw new IllegalArgumentException("newtype=" + newType);
+				return false;
+				// throw new IllegalArgumentException("newtype=" + newType);
 			}
 		}
 		if (leafType == LeafType.CLASS && newType == LeafType.OBJECT) {
@@ -175,6 +177,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		}
 		this.leafType = newType;
 		this.symbol = newSymbol;
+		return true;
 	}
 
 	public Code getCode() {

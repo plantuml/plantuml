@@ -32,6 +32,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -52,10 +53,10 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
-			LinkRendering afterEndwhile, HtmlColor color) {
+			LinkRendering afterEndwhile, HtmlColor color, Instruction specialOut) {
 		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(),
-				ColorParam.activityBackground) : color;
+		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityBackground)
+				: color;
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
@@ -70,7 +71,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 		final FontConfiguration fontArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 
 		return FtileWhile.create(swimlane, whileBlock, test, borderColor, backColor, arrowColor, yes, out,
-				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest);
+				endInlinkColor, afterEndwhile, fontArrow, getFactory(), conditionStyle, fcTest, specialOut);
 	}
 
 }

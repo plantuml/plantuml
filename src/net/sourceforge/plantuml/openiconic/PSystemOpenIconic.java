@@ -36,7 +36,6 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -80,7 +79,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 	// }
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Open iconic)", getClass());
+		return new DiagramDescription("(Open iconic)");
 	}
 
 }

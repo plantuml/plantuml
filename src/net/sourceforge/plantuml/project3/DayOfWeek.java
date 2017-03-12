@@ -32,9 +32,30 @@ package net.sourceforge.plantuml.project3;
 
 import net.sourceforge.plantuml.StringUtils;
 
-public enum DayOfWeek {
+public enum DayOfWeek implements Subject {
 
 	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+
+	static public String getRegexString() {
+		final StringBuilder sb = new StringBuilder();
+		for (DayOfWeek day : DayOfWeek.values()) {
+			if (sb.length() > 0) {
+				sb.append("|");
+			}
+			sb.append(day.name().substring(0, 3) + "[a-z]*");
+		}
+		return sb.toString();
+	}
+
+	public static DayOfWeek fromString(String value) {
+		value = StringUtils.goUpperCase(value).substring(0, 3);
+		for (DayOfWeek day : DayOfWeek.values()) {
+			if (day.name().startsWith(value)) {
+				return day;
+			}
+		}
+		throw new IllegalArgumentException();
+	}
 
 	public DayOfWeek next() {
 		return DayOfWeek.values()[(ordinal() + 1) % 7];

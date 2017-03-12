@@ -112,7 +112,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			result.setUSymbol(symbol);
 		}
 		if (result.getEntityType() == LeafType.CLASS && type == LeafType.OBJECT) {
-			result.muteToType(type, symbol);
+			if (result.muteToType(type, symbol) == false) {
+				return null;
+			}
 		}
 		this.lastEntity = result;
 		return result;

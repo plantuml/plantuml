@@ -245,10 +245,10 @@ public class DrawableSet {
 
 		final UGraphic ugTranslated = clipAndTranslate2(delta, width, page, ug);
 		final SimpleContext2D context = new SimpleContext2D(true);
+		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
 		this.drawPlaygroundU(ugTranslated, context);
 		// ug = ugOrig;
 
-		this.drawEnglobers(ug, height - MARGIN_FOR_ENGLOBERS1, context);
 
 		this.drawLineU22(ug, showTail, page);
 		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);

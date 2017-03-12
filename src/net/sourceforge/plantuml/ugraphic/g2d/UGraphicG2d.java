@@ -152,9 +152,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	}
 
 	public StringBounder getStringBounder() {
-//		if (hasAffineTransform) {
-//			return TextBlockUtils.getDummyStringBounder();
-//		}
+		// if (hasAffineTransform) {
+		// return TextBlockUtils.getDummyStringBounder();
+		// }
 		return FileFormat.PNG.getDefaultStringBounder();
 	}
 
@@ -180,6 +180,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	}
 
 	public void startUrl(Url url) {
+		if (url == null) {
+			throw new IllegalArgumentException();
+		}
 		urls.add(url);
 		allUrls.add(url);
 	}

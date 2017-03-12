@@ -59,7 +59,7 @@ public interface ILeaf extends IEntity {
 
 	public String getGeneric();
 
-	public void muteToType(LeafType newType, USymbol newSymbol);
+	public boolean muteToType(LeafType newType, USymbol newSymbol);
 
 	public void setGeneric(String generic);
 

@@ -30,13 +30,10 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public class TimeScale {
+public interface TimeScale {
 
-	private final double scale = 16.0;
+	public double getStartingPosition(Instant instant);
 
-	public double getPixel(Instant instant) {
-		final int day = ((InstantDay) instant).getNumDay();
-		return day * scale;
-	}
+	public double getWidth(Instant instant);
 
 }

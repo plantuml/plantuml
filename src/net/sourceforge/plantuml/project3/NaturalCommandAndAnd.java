@@ -71,19 +71,19 @@ public class NaturalCommandAndAnd extends SingleLineCommand2<GanttDiagram> {
 	protected CommandExecutionResult executeArg(GanttDiagram system, RegexResult arg) {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb1 = verbPattern1.getVerb(system, arg);
-		final Complement complement1 = complementPattern1.getComplement(system, arg, "1");
+		final Complement complement1 = complementPattern1.getComplement(system, arg, "1").get();
 		final CommandExecutionResult result1 = verb1.execute(subject, complement1);
 		if (result1.isOk() == false) {
 			return result1;
 		}
 		final Verb verb2 = verbPattern2.getVerb(system, arg);
-		final Complement complement2 = complementPattern2.getComplement(system, arg, "2");
+		final Complement complement2 = complementPattern2.getComplement(system, arg, "2").get();
 		final CommandExecutionResult result2 = verb2.execute(subject, complement2);
 		if (result2.isOk() == false) {
 			return result2;
 		}
 		final Verb verb3 = verbPattern3.getVerb(system, arg);
-		final Complement complement3 = complementPattern3.getComplement(system, arg, "3");
+		final Complement complement3 = complementPattern3.getComplement(system, arg, "3").get();
 		return verb3.execute(subject, complement3);
 	}
 

@@ -204,11 +204,12 @@ public class SourceFileReader implements ISourceFileReader {
 				return Collections.singletonList(image);
 			}
 
-			final List<File> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption);
+			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption);
 			OptionFlags.getInstance().logData(file, system);
 
-			for (File f : exportDiagrams) {
+			for (FileImageData fdata : exportDiagrams) {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
+				final File f = fdata.getFile();
 				if (OptionFlags.getInstance().isWord()) {
 					final String warnOrError = system.getWarningOrError();
 					if (warnOrError != null) {

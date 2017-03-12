@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -57,7 +58,7 @@ public final class CucaDiagramHtmlMaker {
 		this.dir = dir;
 	}
 
-	public List<File> create() throws IOException {
+	public List<FileImageData> create() throws IOException {
 		dir.mkdirs();
 		if (dir.exists() == false) {
 			throw new IOException("Cannot create " + dir);
@@ -71,7 +72,7 @@ public final class CucaDiagramHtmlMaker {
 		printAllType(pw, LeafType.ABSTRACT_CLASS);
 		printAllType(pw, LeafType.CLASS);
 		htmlClose(pw);
-		return Arrays.asList(dir);
+		return Arrays.asList(new FileImageData(dir, null));
 	}
 
 	private void printAllType(final PrintWriter pw, LeafType type) throws IOException {

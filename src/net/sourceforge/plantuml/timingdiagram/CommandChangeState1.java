@@ -32,11 +32,18 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandChangeState1 extends SingleLineCommand2<TimingDiagram> {
+
+	private static final String STATE_CODE = "([\\p{L}0-9_][\\p{L}0-9_.]*)";
 
 	public CommandChangeState1() {
 		super(getRegexConcat());
@@ -46,9 +53,24 @@ public class CommandChangeState1 extends SingleLineCommand2<TimingDiagram> {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
 				new RegexLeaf("[%s]*is[%s]*"), //
-				new RegexLeaf("STATE", "([^:]*?)"), //
+				getStateOrHidden(), //
+				new RegexLeaf("[%s]*"), //
+				color().getRegex(), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("COMMENT", "(?:[%s]*:[%s]*(.*?))?"), //
 				new RegexLeaf("[%s]*$"));
+	}
+
+	static IRegex getStateOrHidden() {
+		return new RegexOr(//
+				new RegexLeaf("STATE", STATE_CODE), //
+				new RegexLeaf("\\{[^\\}]*?\\}"), //
+				new RegexLeaf("[^:\\w]*?") //
+		);
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -60,7 +82,8 @@ public class CommandChangeState1 extends SingleLineCommand2<TimingDiagram> {
 		}
 		final String comment = arg.get("COMMENT", 0);
 		final TimeTick now = diagram.getNow();
-		player.setState(now, arg.get("STATE", 0), comment);
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		player.setState(now, arg.get("STATE", 0), comment, colors);
 		return CommandExecutionResult.ok();
 	}
 

@@ -36,7 +36,7 @@ import java.util.Date;
 public class Version {
 
 	public static int version() {
-		return 8057;
+		return 8058;
 	}
 
 	public static String versionString() {
@@ -54,7 +54,7 @@ public class Version {
 		return sb.toString();
 	}
 
-	private static int beta() {
+	public static int beta() {
 		final int beta = 0;
 		return beta;
 	}
@@ -68,7 +68,7 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1488106743921L;
+		return 1489318411026L;
 	}
 
 	public static String compileTimeString() {

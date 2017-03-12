@@ -41,6 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,6 +75,7 @@ public class Run {
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
 		final long start = System.currentTimeMillis();
 		final Option option = new Option(argsArray);
+		ProgressBar.setEnable(option.isTextProgressBar());
 		if (OptionFlags.getInstance().isDumpStats()) {
 			StatsUtils.dumpStats();
 			return;
@@ -133,6 +135,9 @@ public class Run {
 			error = managePipe(option);
 			forceQuit = true;
 		} else if (option.isFailfast2()) {
+			if (option.isSplash()) {
+				Splash.createSplash();
+			}
 			final long start2 = System.currentTimeMillis();
 			option.setCheckOnly(true);
 			error = manageAllFiles(option);
@@ -146,6 +151,9 @@ public class Run {
 			}
 			forceQuit = true;
 		} else {
+			if (option.isSplash()) {
+				Splash.createSplash();
+			}
 			error = manageAllFiles(option);
 			forceQuit = true;
 		}
@@ -337,11 +345,12 @@ public class Run {
 	}
 
 	private static boolean processArgs(Option option) throws IOException, InterruptedException {
-		if (option.isDecodeurl() == false && option.getNbThreads() > 0 && option.isCheckOnly() == false
+		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
 				&& OptionFlags.getInstance().isMetadata() == false) {
 			return multithread(option);
 		}
 		boolean errorGlobal = false;
+		final List<File> files = new ArrayList<File>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
@@ -350,19 +359,22 @@ public class Run {
 				System.out.println("@enduml");
 			} else {
 				final FileGroup group = new FileGroup(s, option.getExcludes(), option);
-				for (File f : group.getFiles()) {
-					try {
-						final boolean error = manageFileInternal(f, option);
-						if (error) {
-							errorGlobal = true;
-						}
-						if (error && option.isFailfastOrFailfast2()) {
-							return true;
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+				incTotal(group.getFiles().size());
+				files.addAll(group.getFiles());
+			}
+		}
+		for (File f : files) {
+			try {
+				final boolean error = manageFileInternal(f, option);
+				if (error) {
+					errorGlobal = true;
 				}
+				incDone(error);
+				if (error && option.isFailfastOrFailfast2()) {
+					return true;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		return errorGlobal;
@@ -375,6 +387,7 @@ public class Run {
 		for (String s : option.getResult()) {
 			final FileGroup group = new FileGroup(s, option.getExcludes(), option);
 			for (final File f : group.getFiles()) {
+				incTotal(1);
 				executor.submit(new Runnable() {
 					public void run() {
 						if (errors.get() && option.isFailfastOrFailfast2()) {
@@ -390,6 +403,7 @@ public class Run {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
+						incDone(errors.get());
 					}
 				});
 			}
@@ -397,6 +411,16 @@ public class Run {
 		executor.shutdown();
 		executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
 		return errors.get();
+	}
+
+	private static void incDone(boolean error) {
+		Splash.incDone(error);
+		ProgressBar.incDone(error);
+	}
+
+	private static void incTotal(int nb) {
+		Splash.incTotal(nb);
+		ProgressBar.incTotal(nb);
 	}
 
 	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {

@@ -117,12 +117,9 @@ public final class FactoryNoteOnLinkCommand implements SingleMultiFactoryCommand
 			position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));
 		}
 		Url url = null;
-		if (note.size() > 0) {
+		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-			url = urlBuilder.getUrl(note.getFirst499().toString());
-		}
-		if (url != null) {
-			note = note.subExtract(1, 0);
+			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		link.addNote(note.toDisplay(), position, colors);

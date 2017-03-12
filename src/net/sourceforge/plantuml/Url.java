@@ -55,21 +55,20 @@ public class Url implements EnsureVisible {
 		} else {
 			this.tooltip = StringUtils.manageNewLine(tooltip);
 		}
-		if (label == null) {
+		if (label == null || label.length() == 0) {
 			this.label = url;
 		} else {
 			this.label = label;
 		}
 	}
-	
+
 	public static boolean isLatex(String pendingUrl) {
 		return pendingUrl.startsWith("latex://");
 	}
-	
+
 	public boolean isLatex() {
 		return isLatex(url);
 	}
-
 
 	public final String getUrl() {
 		return url;
@@ -90,7 +89,7 @@ public class Url implements EnsureVisible {
 
 	public String getCoords(double scale) {
 		if (DotMaker2.isJunit() && visible.getCoords(1.0).contains("0,0,0,0")) {
-			throw new IllegalStateException();
+			throw new IllegalStateException(toString());
 		}
 		return visible.getCoords(scale);
 	}

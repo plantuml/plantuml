@@ -65,14 +65,20 @@ public class NaturalCommandAnd extends SingleLineCommand2<GanttDiagram> {
 	protected CommandExecutionResult executeArg(GanttDiagram system, RegexResult arg) {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb1 = verbPattern1.getVerb(system, arg);
-		final Complement complement1 = complementPattern1.getComplement(system, arg, "1");
-		final CommandExecutionResult result1 = verb1.execute(subject, complement1);
+		final Failable<Complement> complement1 = complementPattern1.getComplement(system, arg, "1");
+		if (complement1.isFail()) {
+			return CommandExecutionResult.error(complement1.getError());
+		}
+		final CommandExecutionResult result1 = verb1.execute(subject, complement1.get());
 		if (result1.isOk() == false) {
 			return result1;
 		}
 		final Verb verb2 = verbPattern2.getVerb(system, arg);
-		final Complement complement2 = complementPattern2.getComplement(system, arg, "2");
-		return verb2.execute(subject, complement2);
+		final Failable<Complement> complement2 = complementPattern2.getComplement(system, arg, "2");
+		if (complement2.isFail()) {
+			return CommandExecutionResult.error(complement2.getError());
+		}
+		return verb2.execute(subject, complement2.get());
 	}
 
 	public static Command create(SubjectPattern subject, VerbPattern verb1, ComplementPattern complement1,

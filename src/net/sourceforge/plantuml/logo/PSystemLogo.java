@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -86,7 +85,7 @@ public class PSystemLogo extends AbstractPSystem {
 	// }
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Logo)", getClass());
+		return new DiagramDescription("(Logo)");
 	}
 
 	public void doCommandLine(String line) {

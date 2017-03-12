@@ -190,9 +190,9 @@ public class InGroupableList implements InGroupable {
 		final double max = getMaxXInternal(stringBounder);
 		assert max - min >= 0;
 		if (max - min < minWidth) {
-			return min + minWidth;
+			return min + minWidth + hack2;
 		}
-		return max;
+		return max + hack2;
 	}
 
 	private final double getMaxXInternal(StringBounder stringBounder) {
@@ -210,6 +210,16 @@ public class InGroupableList implements InGroupable {
 			m += MARGIN5;
 		}
 		return m;
+	}
+
+	private double hack2;
+
+	public void changeHack2(double hack2) {
+		this.hack2 += hack2;
+	}
+
+	public double getHack2() {
+		return hack2;
 	}
 
 }

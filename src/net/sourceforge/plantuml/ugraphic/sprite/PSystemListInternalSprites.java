@@ -38,7 +38,6 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.donors.PSystemDonors;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
@@ -82,7 +81,7 @@ public class PSystemListInternalSprites extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Sprites)", getClass());
+		return new DiagramDescription("(Sprites)");
 	}
 
 }

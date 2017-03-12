@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -133,7 +132,33 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void stop() {
 		manageSwimlaneStrategy();
-		current().add(new InstructionStop(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
+		final InstructionStop ins = new InstructionStop(swinlanes.getCurrentSwimlane(), nextLinkRenderer());
+		if (manageSpecialStopEndAfterEndWhile(ins)) {
+			return;
+		}
+		current().add(ins);
+	}
+
+	public void end() {
+		manageSwimlaneStrategy();
+		final InstructionEnd ins = new InstructionEnd(swinlanes.getCurrentSwimlane(), nextLinkRenderer());
+		if (manageSpecialStopEndAfterEndWhile(ins)) {
+			return;
+		}
+		current().add(ins);
+	}
+
+	private boolean manageSpecialStopEndAfterEndWhile(Instruction special) {
+		if (current() instanceof InstructionList == false) {
+			return false;
+		}
+		final InstructionList current = (InstructionList) current();
+		final Instruction last = current.getLast();
+		if (last instanceof InstructionWhile == false) {
+			return false;
+		}
+		((InstructionWhile) last).setSpecial(special);
+		return true;
 	}
 
 	public void breakInstruction() {
@@ -141,13 +166,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		current().add(new InstructionBreak(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
 	}
 
-	public void end() {
-		manageSwimlaneStrategy();
-		current().add(new InstructionEnd(swinlanes.getCurrentSwimlane(), nextLinkRenderer()));
-	}
-
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("activity3", getClass());
+		return new DiagramDescription("activity3");
 	}
 
 	@Override
@@ -189,16 +209,6 @@ public class ActivityDiagram3 extends UmlDiagram {
 		}
 		return dpiFactor;
 	}
-
-	// private final UFont getFont(FontParam fontParam) {
-	// final ISkinParam skinParam = getSkinParam();
-	// return skinParam.getFont(null, false, fontParam);
-	// }
-	//
-	// private final HtmlColor getFontColor(FontParam fontParam, Stereotype stereotype2) {
-	// final ISkinParam skinParam = getSkinParam();
-	// return skinParam.getFontHtmlColor(stereotype2, fontParam);
-	// }
 
 	public void fork() {
 		final InstructionFork instructionFork = new InstructionFork(current(), nextLinkRenderer(), getSkinParam());

@@ -110,7 +110,7 @@ public class Bodier {
 				if (s.length() == 0 && methodsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new MemberImpl(s, true, manageModifier, true);
+				final Member m = new MemberImpl(s, true, manageModifier);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					methodsToDisplay.add(m);
 				}
@@ -138,7 +138,7 @@ public class Bodier {
 				if (s.length() == 0 && fieldsToDisplay.size() == 0) {
 					continue;
 				}
-				final Member m = new MemberImpl(s, false, manageModifier, true);
+				final Member m = new MemberImpl(s, false, manageModifier);
 				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
 					fieldsToDisplay.add(m);
 				}

@@ -109,7 +109,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final ILeaf entity;
 		if (diagram.leafExist(code)) {
 			entity = diagram.getOrCreateLeaf(code, type, null);
-			entity.muteToType(type, null);
+			if (entity.muteToType(type, null) == false) {
+				return CommandExecutionResult.error("Bad name");
+			}
 		} else {
 			entity = diagram.createLeaf(code, Display.getWithNewlines(display), type, null);
 		}

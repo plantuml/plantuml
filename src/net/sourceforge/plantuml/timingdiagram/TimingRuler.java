@@ -130,4 +130,8 @@ public class TimingRuler {
 		return getPosInPixel(when.getTime());
 	}
 
+	public double getMaxPosInPixel() {
+		return getPosInPixel(getMax());
+	}
+
 }

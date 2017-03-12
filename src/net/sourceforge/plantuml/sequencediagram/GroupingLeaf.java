@@ -30,7 +30,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
 final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
@@ -84,7 +88,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	public Url getUrl() {
 		return null;
 	}
-	
+
 	public boolean hasUrl() {
 		return false;
 	}
@@ -92,8 +96,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	@Override
 	public boolean isParallel() {
 		return start.isParallel();
-	}	
-	
+	}
+
 	private double posYendLevel;
 
 	public void setPosYendLevel(double posYendLevel) {
@@ -107,6 +111,19 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	public boolean addLifeEvent(LifeEvent lifeEvent) {
 		lifeEvent.setLinkedToGroupingEnd(true);
 		return true;
+	}
+
+	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+
+	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
+		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {
+			throw new IllegalArgumentException();
+		}
+		this.noteOnMessages.add(new NoteOnMessage(strings, notePosition, noteStyle, backcolor, url));
+	}
+	
+	public final List<NoteOnMessage> getNoteOnMessages() {
+		return noteOnMessages;
 	}
 
 

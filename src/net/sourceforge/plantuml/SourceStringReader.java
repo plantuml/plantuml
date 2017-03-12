@@ -42,7 +42,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -189,12 +188,10 @@ public class SourceStringReader {
 			final Diagram system = b.getDiagram();
 			final int nbInSystem = system.getNbImages();
 			if (numImage < nbInSystem) {
-				// final CMapData cmap = new CMapData();
-				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
-				if (imageData.containsCMapData()) {
-					return ((DiagramDescriptionImpl) system.getDescription()).withCMapData(imageData
-							.getCMapData("plantuml"));
-				}
+				// final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
+				// if (imageData.containsCMapData()) {
+				// return system.getDescription().withCMapData(imageData.getCMapData("plantuml"));
+				// }
 				return system.getDescription();
 			}
 			numImage -= nbInSystem;

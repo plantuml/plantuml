@@ -36,7 +36,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
@@ -54,7 +53,7 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 	}
 
 	final public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(" + getLeafssize() + " entities)", getClass());
+		return new DiagramDescription("(" + getLeafssize() + " entities)");
 	}
 
 }

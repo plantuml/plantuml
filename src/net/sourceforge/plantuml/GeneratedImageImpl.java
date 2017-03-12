@@ -86,4 +86,7 @@ public class GeneratedImageImpl implements GeneratedImage {
 		return this2.pngFile.equals(this.pngFile) && this2.description.equals(this.description);
 	}
 
+	public BlockUml getBlockUml() {
+		return blockUml;
+	}
 }

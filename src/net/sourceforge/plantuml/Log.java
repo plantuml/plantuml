@@ -40,11 +40,13 @@ public abstract class Log {
 
 	public synchronized static void info(String s) {
 		if (OptionFlags.getInstance().isVerbose()) {
+			ProgressBar.clear();
 			System.out.println(format(s));
 		}
 	}
 
 	public synchronized static void error(String s) {
+		ProgressBar.clear();
 		System.err.println(s);
 	}
 

@@ -71,6 +71,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 				new RegexLeaf("[%s]+of[%s]+"), partialPattern, //
 				new RegexLeaf("[%s]*"), //
 				ColorParser.exp1(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf(withBracket ? "[%s]*\\{" : "[%s]*"), //
 				new RegexLeaf("$") //
 		);
@@ -99,13 +100,9 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 				lines = lines.removeEmptyColumns();
 
 				Url url = null;
-				if (lines.size() > 0) {
-					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
-							ModeUrl.STRICT);
-					url = urlBuilder.getUrl(lines.getFirst499().toString());
-				}
-				if (url != null) {
-					lines = lines.subExtract(1, 0);
+				if (line0.get("URL", 0) != null) {
+					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
 				return executeInternal(line0, system, url, lines);

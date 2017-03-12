@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
@@ -402,6 +403,13 @@ class DrawableSetInitializer {
 			// MODIF42
 			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
 		} else if (m.getType() == GroupingType.END) {
+			final List<Component> notes = new ArrayList<Component>();
+			for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
+				final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
+				final Component note = drawableSet.getSkin().createComponent(
+						noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
+				notes.add(note);
+			}
 			if (m.isParallel()) {
 				freeY2 = ((FrontierStack) freeY2).closeBar();
 			}
@@ -409,6 +417,7 @@ class DrawableSetInitializer {
 					.getEvent(m.getGroupingStart());
 			if (groupingHeaderStart != null) {
 				groupingHeaderStart.setEndY(freeY2.getFreeY(range));
+				groupingHeaderStart.addNotes(stringBounder, notes);
 			}
 			element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
 					inGroupableStack.getTopGroupingStructure(), m.isParallel());

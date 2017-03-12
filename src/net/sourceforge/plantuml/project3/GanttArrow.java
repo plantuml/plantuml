@@ -119,8 +119,8 @@ public class GanttArrow implements UDrawable {
 	}
 
 	private double getX(TaskInstant when, Direction direction) {
-		final double x1 = timeScale.getPixel(when.getInstantTheorical());
-		final double x2 = timeScale.getPixel(when.getInstantTheorical().increment());
+		final double x1 = timeScale.getStartingPosition(when.getInstantTheorical());
+		final double x2 = timeScale.getStartingPosition(when.getInstantTheorical().increment());
 		if (direction == Direction.LEFT) {
 			return x1;
 		}

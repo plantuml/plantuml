@@ -43,21 +43,21 @@ public class InstantDay implements Instant {
 		return "(day +" + numDay + ")";
 	}
 
-	public Instant add(Duration duration) {
+	public InstantDay add(Duration duration) {
 		final int nbdays = ((DurationDay) duration).getDays();
 		return new InstantDay(numDay + nbdays);
 	}
 
-	public Instant sub(Duration duration) {
+	public InstantDay sub(Duration duration) {
 		final int nbdays = ((DurationDay) duration).getDays();
 		return new InstantDay(numDay - nbdays);
 	}
 
-	public Instant increment() {
+	public InstantDay increment() {
 		return new InstantDay(numDay + 1);
 	}
 
-	public Instant decrement() {
+	public InstantDay decrement() {
 		return new InstantDay(numDay - 1);
 	}
 

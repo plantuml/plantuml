@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
+import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
@@ -59,6 +60,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("$"));
 	}
 
@@ -68,6 +70,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				new RegexLeaf("[%s]+"), //
 				new RegexLeaf("POSITION", "(right|left)[%s]*"), //
 				ColorParser.exp1(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
@@ -105,21 +108,20 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 	private CommandExecutionResult executeInternal(SequenceDiagram system, final RegexResult line0, BlocLines lines) {
 		final EventWithDeactivate m = system.getLastEventWithDeactivate();
-		if (m instanceof AbstractMessage) {
+		if (m instanceof AbstractMessage || m instanceof GroupingLeaf) {
 			final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
-			final Url url;
-			if (lines.size() > 0) {
+			Url url = null;
+			if (line0.get("URL", 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-				url = urlBuilder.getUrl(lines.getFirst499().toString());
-			} else {
-				url = null;
-			}
-			if (url != null) {
-				lines = lines.subExtract(1, 0);
+				url = urlBuilder.getUrl(line0.get("URL", 0));
 			}
 
 			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
-			((AbstractMessage) m).setNote(lines.toDisplay(), position, style, line0.get("COLOR", 0), url);
+			if (m instanceof AbstractMessage) {
+				((AbstractMessage) m).setNote(lines.toDisplay(), position, style, line0.get("COLOR", 0), url);
+			} else {
+				((GroupingLeaf) m).setNote(lines.toDisplay(), position, style, line0.get("COLOR", 0), url);
+			}
 		}
 
 		return CommandExecutionResult.ok();

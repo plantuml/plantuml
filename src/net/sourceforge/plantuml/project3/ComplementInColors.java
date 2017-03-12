@@ -41,11 +41,11 @@ public class ComplementInColors implements ComplementPattern {
 		return new RegexLeaf("COMPLEMENT" + suffix, "in[%s+](#?\\w+)(?:/(#?\\w+))?");
 	}
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
 		final HtmlColor col1 = system.getIHtmlColorSet().getColorIfValid(color1);
 		final HtmlColor col2 = system.getIHtmlColorSet().getColorIfValid(color2);
-		return new ComplementColors(col1, col2);
+		return Failable.<Complement> ok(new ComplementColors(col1, col2));
 	}
 }

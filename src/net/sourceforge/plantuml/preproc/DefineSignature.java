@@ -53,6 +53,11 @@ public class DefineSignature {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return key + "/" + fctName + "/" + vars;
+	}
+
 	public boolean isMethod() {
 		return key.contains("(");
 	}

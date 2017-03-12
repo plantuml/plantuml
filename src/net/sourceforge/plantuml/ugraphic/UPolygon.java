@@ -63,6 +63,10 @@ public class UPolygon extends AbstractShadowable {
 		manageMinMax(x, y);
 	}
 
+	public void addPoint(Point2D point) {
+		addPoint(point.getX(), point.getY());
+	}
+
 	private void manageMinMax(double x, double y) {
 		minmax = minmax.addPoint(x, y);
 	}

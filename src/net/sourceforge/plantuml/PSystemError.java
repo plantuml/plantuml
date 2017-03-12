@@ -42,17 +42,16 @@ import java.util.List;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.eggs.PSystemEmpty;
+import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -125,7 +124,7 @@ public class PSystemError extends AbstractPSystem {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		if (getSource().getTotalLineCount() < 4) {
-			final TextBlockBackcolored welcome = new PSystemEmpty(false).getGraphicStrings();
+			final TextBlockBackcolored welcome = new PSystemEmpty(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
 			udrawable = new UDrawable() {
 				public void drawU(UGraphic ug) {
 					final Dimension2D dim1 = welcome.calculateDimension(ug.getStringBounder());
@@ -334,7 +333,7 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Error)", getClass());
+		return new DiagramDescription("(Error)");
 	}
 
 	public final int getHigherErrorPosition() {

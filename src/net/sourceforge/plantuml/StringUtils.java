@@ -347,6 +347,23 @@ public class StringUtils {
 		return true;
 	}
 
+	public static int getPragmaRevision(String uml) {
+		uml = uml.toLowerCase();
+		final String header = "@startuml\n!pragma revision ";
+		if (uml.startsWith(header) == false) {
+			return -1;
+		}
+		int x1 = header.length();
+		int x2 = x1;
+		while (x2 < uml.length() && Character.isDigit(uml.charAt(x2))) {
+			x2++;
+		}
+		if (x1 == x2) {
+			return -1;
+		}
+		return Integer.parseInt(uml.substring(x1, x2));
+	}
+
 	public static List<String> splitComma(String s) {
 		s = trin(s);
 		// if (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*") == false) {
@@ -432,14 +449,13 @@ public class StringUtils {
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {
-		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4})\\>");
+		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4,5})\\>");
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer();
 		while (matcher.find()) {
 			final String num = matcher.group(1);
 			final int value = Integer.parseInt(num, 16);
-			final char c = (char) value;
-			matcher.appendReplacement(result, "" + c);
+			matcher.appendReplacement(result, new String(Character.toChars(value)));
 		}
 		matcher.appendTail(result);
 		return result.toString();

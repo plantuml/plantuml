@@ -46,17 +46,21 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	private final ArrowConfiguration arrowConfiguration;
 	private final Set<LifeEventType> lifeEventsType = EnumSet.noneOf(LifeEventType.class);
 
-	private final Url url;
+	private Url url;
 	private final String messageNumber;
 	private boolean parallel = false;
 
 	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
 
 	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
-		this.url = label.initUrl();
-		this.label = label.removeHeadingUrl(url);
+		this.url = null;
+		this.label = label;
 		this.arrowConfiguration = arrowConfiguration;
 		this.messageNumber = messageNumber;
+	}
+	
+	public final void setUrl(Url url) {
+		this.url = url;
 	}
 
 	public void goParallel() {

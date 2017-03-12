@@ -125,6 +125,8 @@ public class OptionPrint {
 		System.out.println("    -xmlstats\t\tTo output general statistics in file plantuml-stats.xml");
 		System.out.println("    -realtimestats\tTo generate statistics on the fly rather than at the end");
 		System.out.println("    -loopstats\t\tTo continuously print statistics about usage");
+		System.out.println("    -splash\t\tTo display a splash screen with some progress bar");
+		System.out.println("    -progress\t\tTo display a textual progress bar in console");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();

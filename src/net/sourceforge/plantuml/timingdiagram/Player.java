@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -161,11 +162,14 @@ public class Player implements TextBlock, TimeProjected {
 		return null;
 	}
 
-	public void setState(TimeTick now, String state, String comment) {
+	public void setState(TimeTick now, String state, String comment, Colors color) {
 		if (now == null) {
 			this.initialState = state;
 		} else {
-			this.changes.add(new ChangeState(now, state, comment));
+			if (state == null) {
+				state = "";
+			}
+			this.changes.add(new ChangeState(now, state, comment, color));
 		}
 
 	}

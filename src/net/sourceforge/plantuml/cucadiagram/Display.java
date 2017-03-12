@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -76,11 +75,11 @@ public class Display implements Iterable<CharSequence> {
 	private final boolean isNull;
 	private final CreoleMode defaultCreoleMode;
 
-	public Display removeUrlHiddenNewLineUrl() {
-		final String full = UrlBuilder.purgeUrl(asStringWithHiddenNewLine());
-		return new Display(StringUtils.splitHiddenNewLine(full), this.naturalHorizontalAlignment, this.isNull,
-				this.defaultCreoleMode);
-	}
+//	public Display removeUrlHiddenNewLineUrl() {
+//		final String full = UrlBuilder.purgeUrl(asStringWithHiddenNewLine());
+//		return new Display(StringUtils.splitHiddenNewLine(full), this.naturalHorizontalAlignment, this.isNull,
+//				this.defaultCreoleMode);
+//	}
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
@@ -296,26 +295,26 @@ public class Display implements Iterable<CharSequence> {
 		return Collections.unmodifiableList(result);
 	}
 
-	public Url initUrl() {
-		if (this.size() == 0) {
-			return null;
-		}
-		final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
-		return urlBuilder.getUrl(StringUtils.trin(this.get(0).toString()));
-	}
+//	public Url initUrl() {
+//		if (this.size() == 0) {
+//			return null;
+//		}
+//		final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.AT_START);
+//		return urlBuilder.getUrl(StringUtils.trin(this.get(0).toString()));
+//	}
 
-	public Display removeHeadingUrl(Url url) {
-		if (url == null) {
-			return this;
-		}
-		final Display result = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
-		result.display.add(UrlBuilder.purgeUrl(this.get(0).toString()));
-		result.display.addAll(this.subList(1, this.size()).display);
-		if (result.isWhite() && url.getLabel() != null) {
-			return Display.getWithNewlines(url.getLabel());
-		}
-		return result;
-	}
+//	public Display removeHeadingUrl(Url url) {
+//		if (url == null) {
+//			return this;
+//		}
+//		final Display result = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
+//		result.display.add(UrlBuilder.purgeUrl(this.get(0).toString()));
+//		result.display.addAll(this.subList(1, this.size()).display);
+//		if (result.isWhite() && url.getLabel() != null) {
+//			return Display.getWithNewlines(url.getLabel());
+//		}
+//		return result;
+//	}
 
 	public boolean hasUrl() {
 		final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.ANYWHERE);

@@ -33,7 +33,9 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -94,6 +96,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?$"));
 	}
@@ -166,7 +169,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (arg.get("MESSAGE", 0) == null) {
 			labels = Display.create("");
 		} else {
-			final String message = UrlBuilder.multilineTooltip(arg.get("MESSAGE", 0));
+			// final String message = UrlBuilder.multilineTooltip(arg.get("MESSAGE", 0));
+			final String message = arg.get("MESSAGE", 0);
 			labels = Display.getWithNewlines(message);
 		}
 
@@ -207,6 +211,12 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		}
 
 		final Message msg = new Message(p1, p2, labels, config, diagram.getNextMessageNumber());
+		if (arg.get("URL", 0) != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
+			msg.setUrl(urlLink);
+		}
+
 		final boolean parallel = arg.get("PARALLEL", 0) != null;
 		if (parallel) {
 			msg.goParallel();

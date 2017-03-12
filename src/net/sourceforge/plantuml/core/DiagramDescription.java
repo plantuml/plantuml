@@ -30,12 +30,21 @@
  */
 package net.sourceforge.plantuml.core;
 
-public interface DiagramDescription {
+public class DiagramDescription {
 
-	String getDescription();
+	private final String description;
 
-	String getCmapData();
+	public DiagramDescription(String description) {
+		this.description = description;
+	}
 
-	public String getType();
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public String toString() {
+		return description;
+	}
 
 }

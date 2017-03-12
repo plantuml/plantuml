@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
+import net.sourceforge.plantuml.Splash;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.stats.StatsUtils;
@@ -95,6 +96,10 @@ public class PlantUmlTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 
+		if (option.isSplash()) {
+			Splash.createSplash();
+		}
+
 		this.log("Starting PlantUML");
 
 		try {
@@ -113,6 +118,9 @@ public class PlantUmlTask extends Task {
 			if (executorService != null) {
 				executorService.shutdown();
 				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+				if (option.isSplash()) {
+					Splash.disposeSplash();
+				}
 			}
 			this.log("Nb images generated: " + nbFiles.get());
 		} catch (IOException e) {
@@ -187,6 +195,7 @@ public class PlantUmlTask extends Task {
 			return doFile(f, sourceFileReader);
 		}
 
+		Splash.incTotal(1);
 		executorService.submit(new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return doFile(f, sourceFileReader);
@@ -209,6 +218,7 @@ public class PlantUmlTask extends Task {
 				error = true;
 			}
 		}
+		Splash.incDone(error);
 		if (error) {
 			myLog("Error: " + f.getCanonicalPath());
 		}
@@ -393,6 +403,11 @@ public class PlantUmlTask extends Task {
 	public void setEnableStats(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
 		OptionFlags.getInstance().setEnableStats(flag);
+	}
+
+	public void setSplash(String s) {
+		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+		option.setSplash(flag);
 	}
 
 }

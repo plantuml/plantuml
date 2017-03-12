@@ -41,12 +41,12 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 				"(?:at|(\\d+)[%s]+days?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
 	}
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		final String code = arg.get("COMPLEMENT" + suffix, 2);
 		final String position = arg.get("COMPLEMENT" + suffix, 3);
 		final Task task = system.getExistingTask(code);
 		if (task == null) {
-			throw new IllegalStateException();
+			return Failable.<Complement> error("No such task " + code);
 		}
 		final String days = arg.get("COMPLEMENT" + suffix, 0);
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(position));
@@ -57,6 +57,6 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 			}
 			result = result.withDelta(delta);
 		}
-		return result;
+		return Failable.<Complement> ok(result);
 	}
 }

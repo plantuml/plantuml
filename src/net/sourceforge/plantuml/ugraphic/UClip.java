@@ -111,6 +111,13 @@ public class UClip implements UChange {
 			return line;
 		}
 		if (isInside(line.x1, line.y1) == false && isInside(line.x2, line.y2) == false) {
+			if (line.x1 == line.x2) {
+				final double newy1 = getClippedY(line.y1);
+				final double newy2 = getClippedY(line.y2);
+				if (newy1 != newy2) {
+					return new Line2D.Double(line.x1, newy1, line.x2, newy2);
+				}
+			}
 			return null;
 		}
 		if (line.x1 != line.x2 && line.y1 != line.y2) {

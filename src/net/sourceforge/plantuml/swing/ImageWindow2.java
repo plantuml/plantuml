@@ -87,10 +87,13 @@ class ImageWindow2 extends JFrame {
 	private final JButton copy = new JButton("Copy");
 	private final JButton previous = new JButton("Previous");
 	private final JCheckBox zoomFitButt = new JCheckBox("Zoom fit");
+	private final JButton zoomMore = new JButton("+");
+	private final JButton zoomLess = new JButton("-");
 	private final MainWindow2 main;
 
 	private final ListModel listModel;
 	private int index;
+	private int zoomFactor = 0;
 
 	private enum SizeMode {
 		FULL_SIZE, ZOOM_FIT
@@ -113,6 +116,8 @@ class ImageWindow2 extends JFrame {
 		north.add(copy);
 		north.add(next);
 		north.add(zoomFitButt);
+		north.add(zoomMore);
+		north.add(zoomLess);
 		copy.setFocusable(false);
 		copy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -137,6 +142,20 @@ class ImageWindow2 extends JFrame {
 				zoomFit();
 			}
 		});
+		zoomMore.setFocusable(false);
+		zoomMore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				zoomFactor++;
+				refreshImage(false);
+			}
+		});
+		zoomLess.setFocusable(false);
+		zoomLess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				zoomFactor--;
+				refreshImage(false);
+			}
+		});
 
 		scrollPane = new JScrollPane(buildScrollablePicture());
 		getContentPane().add(north, BorderLayout.NORTH);
@@ -152,7 +171,6 @@ class ImageWindow2 extends JFrame {
 				main.closing(ImageWindow2.this);
 			}
 		});
-
 
 		this.addComponentListener(new java.awt.event.ComponentAdapter() {
 			public void componentResized(java.awt.event.ComponentEvent e) {
@@ -230,6 +248,7 @@ class ImageWindow2 extends JFrame {
 	private void zoomFit() {
 		final boolean selected = zoomFitButt.isSelected();
 		prefs.putBoolean(KEY_ZOOM_FIT, selected);
+		zoomFactor = 0;
 		if (selected) {
 			sizeMode = SizeMode.ZOOM_FIT;
 		} else {
@@ -272,11 +291,11 @@ class ImageWindow2 extends JFrame {
 				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
 				final Dimension newImgDim = ImageHelper
 						.getScaledDimension(imageDim, scrollPane.getViewport().getSize());
-				final RenderingHints hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION,
-						RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-				hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				image = ImageHelper.getScaledInstance(image, newImgDim, hints, true);
+				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), true);
+			} else if (zoomFactor != 0) {
+				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
+				final Dimension newImgDim = ImageHelper.getScaledDimension(imageDim, getZoom());
+				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);
 			}
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
@@ -295,7 +314,7 @@ class ImageWindow2 extends JFrame {
 		}
 		final ImageIcon imageIcon = new ImageIcon(image, simpleLine2.toString());
 		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);
-		
+
 		scrollablePicture.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				super.mousePressed(me);
@@ -304,20 +323,35 @@ class ImageWindow2 extends JFrame {
 			}
 		});
 		scrollablePicture.addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseDragged(MouseEvent me) {
-                super.mouseDragged(me);
-                final int diffX = me.getX() - startX;
-                final int diffY = me.getY() - startY;
+			public void mouseDragged(MouseEvent me) {
+				super.mouseDragged(me);
+				final int diffX = me.getX() - startX;
+				final int diffY = me.getY() - startY;
 
 				final JScrollBar hbar = scrollPane.getHorizontalScrollBar();
 				hbar.setValue(hbar.getValue() - diffX);
 				final JScrollBar vbar = scrollPane.getVerticalScrollBar();
 				vbar.setValue(vbar.getValue() - diffY);
-            }
-        });
+			}
+		});
 
-		
 		return scrollablePicture;
+	}
+
+	private RenderingHints getHints() {
+		final RenderingHints hints = new RenderingHints(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		return hints;
+	}
+
+	private double getZoom() {
+		// if (zoomFactor <= -10) {
+		// return 0.05;
+		// }
+		// return 1.0 + zoomFactor / 10.0;
+		return Math.pow(1.1, zoomFactor);
 	}
 
 	private void copy() {

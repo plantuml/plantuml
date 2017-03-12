@@ -286,6 +286,11 @@ public enum License {
 		text.add("");
 		text.add("Project Info:  http://plantuml.com");
 		text.add("");
+		text.add("If you like this project or if you find it useful, you can support us at:");
+		text.add("");
+		text.add("http://plantuml.com/patreon (only 1$ per month!)");
+		text.add("http://plantuml.com/paypal");
+		text.add("");
 		return text;
 	}
 
@@ -298,6 +303,11 @@ public enum License {
 		h.add(" * (C) Copyright 2009-2017, Arnaud Roques");
 		h.add(" *");
 		h.add(" * Project Info:  http://plantuml.com");
+		h.add(" * ");
+		h.add(" * If you like this project or if you find it useful, you can support us at:");
+		h.add(" * ");
+		h.add(" * http://plantuml.com/patreon (only 1$ per month!)");
+		h.add(" * http://plantuml.com/paypal");
 		h.add(" * ");
 		h.add(" * This file is part of PlantUML.");
 		h.add(" *");

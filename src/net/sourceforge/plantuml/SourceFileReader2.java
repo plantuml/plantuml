@@ -90,9 +90,9 @@ public class SourceFileReader2 implements ISourceFileReader {
 			final Diagram system = blockUml.getDiagram();
 			OptionFlags.getInstance().logData(file, system);
 
-			for (File f : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
+			for (FileImageData fdata : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml);
+				final GeneratedImage generatedImage = new GeneratedImageImpl(fdata.getFile(), desc, blockUml);
 				result.add(generatedImage);
 			}
 

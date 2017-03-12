@@ -32,8 +32,8 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
 
+import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;

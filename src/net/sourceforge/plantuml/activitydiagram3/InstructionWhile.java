@@ -61,6 +61,8 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	private final Swimlane swimlane;
 	private final ISkinParam skinParam;
 
+	private Instruction specialOut;
+
 	public void overwriteYes(Display yes) {
 		this.yes = yes;
 	}
@@ -91,11 +93,11 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
-		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color);
+		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut);
 		if (getPositionedNotes().size() > 0) {
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
 		}
-		if (killed) {
+		if (killed || specialOut != null) {
 			return new FtileKilled(tmp);
 		}
 		return tmp;
@@ -153,6 +155,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	public Instruction getLast() {
 		return repeatList.getLast();
+	}
+
+	public void setSpecial(Instruction special) {
+		this.specialOut = special;
 	}
 
 }

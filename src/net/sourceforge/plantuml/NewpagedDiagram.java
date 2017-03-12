@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
 public class NewpagedDiagram extends AbstractPSystem {
@@ -114,7 +113,7 @@ public class NewpagedDiagram extends AbstractPSystem {
 			}
 			sb.append(d.getDescription());
 		}
-		return new DiagramDescriptionImpl(sb.toString(), getClass());
+		return new DiagramDescription(sb.toString());
 	}
 
 	public String getWarningOrError() {

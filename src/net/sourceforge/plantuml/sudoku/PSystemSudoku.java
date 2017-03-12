@@ -36,7 +36,6 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 
 public class PSystemSudoku extends AbstractPSystem {
@@ -50,7 +49,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Sudoku)", getClass());
+		return new DiagramDescription("(Sudoku)");
 	}
 
 	public PSystemSudoku(Long seed) {

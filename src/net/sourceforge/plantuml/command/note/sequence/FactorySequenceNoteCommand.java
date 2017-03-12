@@ -33,6 +33,9 @@ package net.sourceforge.plantuml.command.note.sequence;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -66,6 +69,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("$"));
 	}
 
@@ -80,6 +84,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				new RegexLeaf("POSITION", "(right|left|over)[%s]+"), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])[%s]*"), //
 				color().getRegex(), //
+				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*:[%s]*"), //
 				new RegexLeaf("NOTE", "(.*)"), //
 				new RegexLeaf("$"));
@@ -137,6 +142,11 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			}
 			note.setColors(colors);
 			note.setStyle(NoteStyle.getNoteStyle(arg.get("STYLE", 0)));
+			if (arg.get("URL", 0) != null) {
+				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+				final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
+				note.setUrl(urlLink);
+			}
 			diagram.addNote(note, tryMerge);
 		}
 		return CommandExecutionResult.ok();

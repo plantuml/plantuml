@@ -40,8 +40,8 @@ public class ComplementSeveralDays implements ComplementPattern {
 		return new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+days?");
 	}
 
-	public Complement getComplement(GanttDiagram system, RegexResult arg, String suffix) {
+	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		final String days = arg.get("COMPLEMENT" + suffix, 0);
-		return new DurationDay(Integer.parseInt(days));
+		return Failable.<Complement> ok(new DurationDay(Integer.parseInt(days)));
 	}
 }

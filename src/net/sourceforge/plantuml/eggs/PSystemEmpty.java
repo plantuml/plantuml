@@ -38,7 +38,6 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.DiagramDescriptionImpl;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
@@ -50,10 +49,10 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 public class PSystemEmpty extends AbstractPSystem {
 
 	private final List<String> strings = new ArrayList<String>();
-	private final boolean withLogo;
+	private final GraphicPosition position;
 
-	public PSystemEmpty(boolean withLogo) {
-		this.withLogo = withLogo;
+	public PSystemEmpty(GraphicPosition position) {
+		this.position = position;
 		strings.add("<b>Welcome to PlantUML!");
 		strings.add(" ");
 		strings.add("If you use this software, you accept its license.");
@@ -68,7 +67,7 @@ public class PSystemEmpty extends AbstractPSystem {
 		strings.add("\"\"class Example\"\"");
 		strings.add(" ");
 		strings.add("You will find more information about PlantUML syntax on <u>http://plantuml.com</u>");
-		if (withLogo) {
+		if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
 			strings.add(" ");
 			strings.add(" ");
 			strings.add(" ");
@@ -88,15 +87,14 @@ public class PSystemEmpty extends AbstractPSystem {
 	}
 
 	public TextBlockBackcolored getGraphicStrings() throws IOException {
-		if (withLogo) {
-			return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(),
-					GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
+		if (position != null) {
+			return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(), position);
 		}
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescriptionImpl("(Empty)", getClass());
+		return new DiagramDescription("(Empty)");
 	}
 
 }

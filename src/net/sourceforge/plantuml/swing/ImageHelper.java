@@ -166,4 +166,8 @@ public class ImageHelper {
 
 		return new Dimension(newWidth, newHeight);
 	}
+
+	public static Dimension getScaledDimension(Dimension dim, double zoom) {
+		return new Dimension((int) (dim.getWidth() * zoom), (int) (dim.getHeight() * zoom));
+	}
 }

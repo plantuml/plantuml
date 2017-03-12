@@ -241,7 +241,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return new ImageDataSimple();
 	}
 
-	public void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
 			String graphvizVersion) throws IOException {
 		exportDiagramError(os, exception, fileFormat, getMetadata(), getFlashData(),
 				getFailureText1(exception, graphvizVersion));

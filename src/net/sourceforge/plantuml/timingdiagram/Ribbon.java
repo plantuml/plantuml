@@ -39,13 +39,10 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Ribbon implements TimeDrawing {
@@ -102,17 +99,17 @@ public class Ribbon implements TimeDrawing {
 		} else {
 			inital = getTextBlock(initialState);
 			drawPentaA(ugDown.apply(new UTranslate(-getInitialWidth(stringBounder), -delta / 2)),
-					getInitialWidth(stringBounder));
+					getInitialWidth(stringBounder), changes.get(0));
 		}
 
 		for (int i = 0; i < changes.size() - 1; i++) {
 			final double a = getPosInPixel(changes.get(i));
 			final double b = getPosInPixel(changes.get(i + 1));
 			assert b > a;
-			drawHexa(ugDown.apply(new UTranslate(a, -delta / 2)), b - a);
+			drawHexa(ugDown.apply(new UTranslate(a, -delta / 2)), b - a, changes.get(i));
 		}
 		final double a = getPosInPixel(changes.get(changes.size() - 1));
-		drawPentaB(ugDown.apply(new UTranslate(a, -delta / 2)), ruler.getWidth() - a);
+		drawPentaB(ugDown.apply(new UTranslate(a, -delta / 2)), ruler.getWidth() - a, changes.get(changes.size() - 1));
 
 		ugDown = ugDown.apply(new UTranslate(0, delta / 2));
 
@@ -120,11 +117,21 @@ public class Ribbon implements TimeDrawing {
 			final Dimension2D dimInital = inital.calculateDimension(stringBounder);
 			inital.drawU(ugDown.apply(new UTranslate(-getDelta() - dimInital.getWidth(), -dimInital.getHeight() / 2)));
 		}
-		for (ChangeState change : changes) {
-			final TextBlock state = getTextBlock(change.getState());
-			final Dimension2D dim = state.calculateDimension(stringBounder);
+		for (int i = 0; i < changes.size(); i++) {
+			final ChangeState change = changes.get(i);
 			final double x = ruler.getPosInPixel(change.getWhen());
-			state.drawU(ugDown.apply(new UTranslate(x + getDelta(), -dim.getHeight() / 2)));
+			if (change.isHidden() == false) {
+				final TextBlock state = getTextBlock(change.getState());
+				final Dimension2D dim = state.calculateDimension(stringBounder);
+				final double xtext;
+				if (i == changes.size() - 1) {
+					xtext = x + getDelta();
+				} else {
+					final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());
+					xtext = (x + x2) / 2 - dim.getWidth() / 2;
+				}
+				state.drawU(ugDown.apply(new UTranslate(xtext, -dim.getHeight() / 2)));
+			}
 			final String commentString = change.getComment();
 			if (commentString != null) {
 				final TextBlock comment = getTextBlock(commentString);
@@ -143,22 +150,18 @@ public class Ribbon implements TimeDrawing {
 		return getTextBlock(initialState).calculateDimension(stringBounder).getWidth() + 2 * delta;
 	}
 
-	private SymbolContext getContext() {
-		return new SymbolContext(HtmlColorUtils.COL_D7E0F2, HtmlColorUtils.COL_038048).withStroke(new UStroke(1.5));
-	}
-
-	private void drawHexa(UGraphic ug, double len) {
-		final HexaShape shape = HexaShape.create(len, 2 * delta, getContext());
+	private void drawHexa(UGraphic ug, double len, ChangeState change) {
+		final HexaShape shape = HexaShape.create(len, 2 * delta, change.getContext());
 		shape.drawU(ug);
 	}
 
-	private void drawPentaB(UGraphic ug, double len) {
-		final PentaBShape shape = PentaBShape.create(len, 2 * delta, getContext());
+	private void drawPentaB(UGraphic ug, double len, ChangeState change) {
+		final PentaBShape shape = PentaBShape.create(len, 2 * delta, change.getContext());
 		shape.drawU(ug);
 	}
 
-	private void drawPentaA(UGraphic ug, double len) {
-		final PentaAShape shape = PentaAShape.create(len, 2 * delta, getContext());
+	private void drawPentaA(UGraphic ug, double len, ChangeState change) {
+		final PentaAShape shape = PentaAShape.create(len, 2 * delta, change.getContext());
 		shape.drawU(ug);
 	}
 
