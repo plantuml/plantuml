@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -144,11 +149,7 @@ public class BlockUml {
 	}
 
 	public String etag() {
-		final StringBuilder result = new StringBuilder();
-		result.append(Integer.toString(Version.version(), 36));
-		result.append(Integer.toString(Version.beta(), 36));
-		result.append(internalEtag());
-		return result.toString();
+		return Version.etag() + internalEtag();
 	}
 
 	public long lastModified() {

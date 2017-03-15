@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
@@ -215,7 +221,8 @@ class Step1Message extends Step1Abstract {
 		if (messageArrow == null) {
 			throw new IllegalStateException();
 		}
-		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2());
+		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2(), getDrawingSet()
+				.getSkinParam().getPadding(PaddingParam.PARTICIPANT));
 		if (getMessage().getNoteOnMessages().size() > 0) {
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -209,8 +214,20 @@ public class QuoteUtils {
 					"Guvf oht vf n srngher nf qrfpevorq ol gur znexrgvat qrcnegzrag.",
 					"Abg rirelobql haqrefgnaqf gur uhzbe bs cebtenzzref.",
 					"Vs lbh yvir na beqvanel yvsr, nyy lbh'yy unir ner beqvanel fgbevrf.",
-					"Pbzr jvgu zr vs lbh jnag gb yvir", "Gh y'nf gebhir bh pryhv-yn ?"
-			);
+					"Pbzr jvgu zr vs lbh jnag gb yvir", "Gh y'nf gebhir bh pryhv-yn ?",
+					"Qb lbh ernyyl guvax lbh unir n punapr ntnvafg hf, Ze. Pbjobl?",
+					"Nggragvba, jubrire lbh ner, guvf punaary vf erfreirq sbe rzretrapl pnyyf bayl.",
+					"Qbrf vg fbhaq yvxr V'z beqrevat n cvmmn? ", "Jr'er tbaan arrq fbzr zber SOV thlf, V thrff.",
+					"Trg ernql sbe ehfu ubhe",
+					"V unir gb jnea lbh, V'ir urneq eryngvbafuvcf onfrq ba vagrafr rkcrevraprf arire jbex.",
+					"Nalguvat ryfr ohg gur onfrzrag gung'yy xrrc guvf ryringbe sebz snyyvat?",
+					"Vf guvf grfgvat jurgure V'z n ercyvpnag be n yrfovna, Ze. Qrpxneq? ",
+					"V'ir qbar... dhrfgvbanoyr guvatf", "Jbhyq lbh... yvxr gb or hctenqrq?",
+					"Snhg erpbaanvger... p'rfg qh oehgny!",
+					"Fv ba oevpbynvg cyhf fbhirag, ba nhenvg zbvaf yn grgr nhk orgvfrf.",
+					"Wr invf yhv snver har beqbaanapr, rg har frirer...",
+					"Znvf vy pbaanvg cnf Enbhy, pr zrp! vy in nibve ha erirvy cravoyr.",
+					"W'nv ibhyh rger qvcybzngr n pnhfr qr ibhf gbhf, rivgre dhr yr fnat pbhyr.");
 
 	private QuoteUtils() {
 	}

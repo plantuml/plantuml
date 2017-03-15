@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -76,12 +81,6 @@ class MessageArrow extends Arrow {
 		return getParticipantAt(stringBounder, NotePosition.LEFT)
 				.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getPos2();
 	}
-	
-	private double getRightEndInternalOld(StringBounder stringBounder) {
-		return getParticipantAt(stringBounder, NotePosition.RIGHT).getLiveThicknessAt(stringBounder,
-				getArrowYStartLevel(stringBounder)).getSegment().getPos1();
-	}
-
 
 	private double getRightEndInternal(StringBounder stringBounder) {
 		final Segment segment = getParticipantAt(stringBounder, NotePosition.RIGHT).getLiveThicknessAt(stringBounder,

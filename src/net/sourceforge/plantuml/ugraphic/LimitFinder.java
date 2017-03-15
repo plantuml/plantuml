@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -162,7 +167,7 @@ public class LimitFinder implements UGraphic {
 
 	private void drawRectangle(double x, double y, URectangle shape) {
 		addPoint(x, y);
-		addPoint(x + shape.getWidth(), y + shape.getHeight());
+		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
 	}
 
 	private void drawDotPath(double x, double y, DotPath shape) {
@@ -173,17 +178,17 @@ public class LimitFinder implements UGraphic {
 
 	private void drawImage(double x, double y, UImage shape) {
 		addPoint(x, y);
-		addPoint(x + shape.getWidth(), y + shape.getHeight());
+		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
 	}
 
 	private void drawImageSvg(double x, double y, UImageSvg shape) {
 		addPoint(x, y);
-		addPoint(x + shape.getWidth(), y + shape.getHeight());
+		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
 	}
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
 		addPoint(x, y);
-		addPoint(x + shape.getWidth(), y + shape.getHeight());
+		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
 	}
 
 	private void drawText(double x, double y, UText text) {

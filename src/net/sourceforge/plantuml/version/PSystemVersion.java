@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -85,6 +90,18 @@ public class PSystemVersion extends AbstractPSystem {
 	public static BufferedImage getCharlieImage() {
 		try {
 			final InputStream is = PSystemVersion.class.getResourceAsStream("charlie.png");
+			final BufferedImage image = ImageIO.read(is);
+			is.close();
+			return image;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+	}
+
+	public static BufferedImage getTime() {
+		try {
+			final InputStream is = PSystemVersion.class.getResourceAsStream("time00.png");
 			final BufferedImage image = ImageIO.read(is);
 			is.close();
 			return image;

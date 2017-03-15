@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -37,8 +42,12 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svek.WithPorts;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
@@ -71,8 +80,18 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	public void drawU(UGraphic ug) {
 		double y = 0;
 		final Dimension2D dimtotal = calculateDimension(ug.getStringBounder());
+		// if (backColor != null) {
+		// ug.apply(new UChangeColor(backColor)).apply(new UChangeBackColor(backColor)).draw(new URectangle(dimtotal));
+		// }
 		for (TextBlock block : blocks) {
 			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
+			if (block instanceof TextBlockBackcolored) {
+				final HtmlColor back = ((TextBlockBackcolored) block).getBackcolor();
+				if (back != null) {
+					ug.apply(new UTranslate(0, y)).apply(new UChangeColor(back)).apply(new UChangeBackColor(back))
+							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
+				}
+			}
 			if (horizontalAlignment == HorizontalAlignment.LEFT) {
 				block.drawU(ug.apply(new UTranslate(0, y)));
 			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -28,25 +33,32 @@
  * 
  *
  */
-package net.sourceforge.plantuml.eggs;
+package net.sourceforge.plantuml.preproc;
 
-import net.sourceforge.plantuml.api.PSystemFactory;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.graphic.GraphicPosition;
+import net.sourceforge.plantuml.CharSequence2;
 
-public class PSystemEmptyFactory implements PSystemFactory {
+public class ReadLineSimple implements ReadLine {
 
-	public Diagram createSystem(UmlSource source) {
-		if (source.getTotalLineCount() == 2) {
-			return new PSystemEmpty(GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
-		}
-		return null;
+	private final CharSequence2 data;
+	private final String error;
+	private int current = 0;
+
+	public ReadLineSimple(CharSequence2 s2, String error) {
+		this.data = s2;
+		this.error = error;
 	}
 
-	public DiagramType getDiagramType() {
-		return DiagramType.UML;
+	public void close() {
+	}
+
+	public CharSequence2 readLine() {
+		if (current > 0) {
+			return null;
+		}
+		current++;
+		// return new CharSequence2Impl(line, null);
+		// return CharSequence2Impl.errorPreprocessor(data, error);
+		return data.withErrorPreprocessor(error);
 	}
 
 }

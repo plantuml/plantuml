@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
@@ -53,7 +59,7 @@ import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
 import net.sourceforge.plantuml.eggs.PSystemEggFactory;
-import net.sourceforge.plantuml.eggs.PSystemEmptyFactory;
+import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.eggs.PSystemLostFactory;
 import net.sourceforge.plantuml.eggs.PSystemPathFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
@@ -88,14 +94,25 @@ public class PSystemBuilder {
 	final public Diagram createPSystem(final List<CharSequence2> strings2) {
 
 		final long now = System.currentTimeMillis();
+
 		Diagram result = null;
 		try {
-			final List<PSystemFactory> factories = getAllFactories();
 			final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).toString2());
-
 			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML);
+
+			int cpt = 0;
+			for (CharSequence2 s : strings2) {
+				if (s.getPreprocessorError() != null) {
+					final ErrorUml singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), cpt,
+							s.getLocation());
+					return new PSystemError(umlSource, singleError, Collections.<String> emptyList());
+				}
+				cpt++;
+			}
+
 			final DiagramType diagramType = umlSource.getDiagramType();
 			final List<PSystemError> errors = new ArrayList<PSystemError>();
+			final List<PSystemFactory> factories = getAllFactories();
 			for (PSystemFactory systemFactory : factories) {
 				if (diagramType != systemFactory.getDiagramType()) {
 					continue;
@@ -121,7 +138,7 @@ public class PSystemBuilder {
 
 	private List<PSystemFactory> getAllFactories() {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
-		factories.add(new PSystemEmptyFactory());
+		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());

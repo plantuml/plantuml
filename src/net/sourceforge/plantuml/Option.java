@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -188,6 +193,8 @@ public class Option {
 					continue;
 				}
 				initConfig(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
+			} else if (s.startsWith("-I")) {
+				initInclude(s.substring(2));
 			} else if (s.equalsIgnoreCase("-computeurl") || s.equalsIgnoreCase("-encodeurl")) {
 				this.computeurl = true;
 			} else if (s.startsWith("-x")) {
@@ -294,10 +301,10 @@ public class Option {
 		return ftpPort;
 	}
 
-	public void initConfig(String filename) throws IOException {
+	private void addInConfig(final FileReader source) throws IOException {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(filename));
+			br = new BufferedReader(source);
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				config.add(s);
@@ -306,6 +313,21 @@ public class Option {
 			if (br != null) {
 				br.close();
 			}
+		}
+	}
+
+	public void initConfig(String filename) throws IOException {
+		addInConfig(new FileReader(filename));
+	}
+
+	private void initInclude(String filename) throws IOException {
+		if (filename.contains("*")) {
+			final FileGroup group = new FileGroup(filename, Collections.<String> emptyList(), null);
+			for (File f : group.getFiles()) {
+				addInConfig(new FileReader(f));
+			}
+		} else {
+			addInConfig(new FileReader(filename));
 		}
 	}
 

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -60,21 +65,8 @@ public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {
 		this.drawChar('\u2518', x + width - 1, y + height - 1);
 	}
 
-	public void drawStickMan(int x, int y) {
-		this.drawStringLR(",-.", x, y++);
-		this.drawStringLR("`-'", x, y++);
-		this.drawStringLR("/|\\", x, y++);
-		this.drawStringLR(" | ", x, y++);
-		this.drawStringLR("/ \\", x, y++);
-	}
-
-	public void drawStickManUnicode(int x, int y) {
-		this.drawStringLR("\u250c\u2500\u2510", x, y++);
-		this.drawStringLR("\u2551\"\u2502", x, y++);
-		this.drawStringLR("\u2514\u252c\u2518", x, y++);
-		this.drawStringLR("\u250c\u253c\u2510", x, y++);
-		this.drawStringLR(" \u2502 ", x, y++);
-		this.drawStringLR("\u250c\u2534\u2510", x, y++);
+	public void drawShape(AsciiShape shape, int x, int y) {
+		shape.draw(this, x, y);
 	}
 
 	public void drawStringsLR(Collection<? extends CharSequence> strings, int x, int y) {

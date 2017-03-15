@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -46,12 +51,12 @@ import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class PSystemEmpty extends AbstractPSystem {
+public class PSystemWelcome extends AbstractPSystem {
 
 	private final List<String> strings = new ArrayList<String>();
 	private final GraphicPosition position;
 
-	public PSystemEmpty(GraphicPosition position) {
+	public PSystemWelcome(GraphicPosition position) {
 		this.position = position;
 		strings.add("<b>Welcome to PlantUML!");
 		strings.add(" ");

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -47,50 +52,51 @@ public class ComponentTextActor extends AbstractComponentText {
 	private final ComponentType type;
 	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
+	private final AsciiShape shape;
 
-	public ComponentTextActor(ComponentType type, Display stringsToDisplay, FileFormat fileFormat) {
+	public ComponentTextActor(ComponentType type, Display stringsToDisplay, FileFormat fileFormat, AsciiShape shape) {
 		this.type = type;
 		this.stringsToDisplay = stringsToDisplay;
 		this.fileFormat = fileFormat;
+		this.shape = shape;
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
-		// final int textWidth = StringUtils.getWidth(stringsToDisplay);
 		final int height = (int) dimensionToUse.getHeight();
 		charArea.fillRect(' ', 0, 0, width, height);
 
 		final int xman = width / 2 - 1;
 		if (type == ComponentType.ACTOR_HEAD) {
-			charArea.drawStringsLR(stringsToDisplay.as(), 1, getStickManHeight());
+			charArea.drawStringsLR(stringsToDisplay.as(), 1, getHeight());
 			if (fileFormat == FileFormat.UTXT) {
-				charArea.drawStickManUnicode(xman, 0);
+				charArea.drawShape(AsciiShape.STICKMAN_UNICODE, xman, 0);
 			} else {
-				charArea.drawStickMan(xman, 0);
+				charArea.drawShape(AsciiShape.STICKMAN, xman, 0);
 			}
 		} else if (type == ComponentType.ACTOR_TAIL) {
 			charArea.drawStringsLR(stringsToDisplay.as(), 1, 0);
 			if (fileFormat == FileFormat.UTXT) {
-				charArea.drawStickManUnicode(xman, 1);
+				charArea.drawShape(AsciiShape.STICKMAN_UNICODE, xman, 1);
 			} else {
-				charArea.drawStickMan(xman, 1);
+				charArea.drawShape(AsciiShape.STICKMAN, xman, 1);
 			}
 		} else {
 			assert false;
 		}
 	}
 
-	private int getStickManHeight() {
+	private int getHeight() {
 		if (fileFormat == FileFormat.UTXT) {
-			return UmlCharArea.STICKMAN_UNICODE_HEIGHT;
+			return AsciiShape.STICKMAN_UNICODE.getHeight();
 		}
-		return UmlCharArea.STICKMAN_HEIGHT;
+		return AsciiShape.STICKMAN.getHeight();
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return StringUtils.getHeight(stringsToDisplay) + getStickManHeight();
+		return StringUtils.getHeight(stringsToDisplay) + getHeight();
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -89,7 +94,12 @@ public class OptionPrint {
 		System.out.println("    -DVAR1=value\tTo set a preprocessing variable as if '!define VAR1 value' were used");
 		System.out.println("    -Sparam1=value\tTo set a skin parameter as if 'skinparam param1 value' were used");
 		System.out.println("    -r[ecurse]\t\trecurse through directories");
-		System.out.println("    -config \"file\"\tTo read the provided config file before each diagram");
+		// System.out.println("    -config \"file\"\tTo read the provided config file before each diagram");
+		final char separator = File.separatorChar;
+		System.out.println("    -I" + separator + "path" + separator + "to" + separator
+				+ "file\tTo include file as if '!include file' were used");
+		System.out.println("    -I" + separator + "path" + separator + "to" + separator
+				+ "*.puml\tTo include files with pattern");
 		System.out.println("    -charset xxx\tTo use a specific charset (default is " + charset + ")");
 		System.out.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
 		System.out.println("    -metadata\t\tTo retrieve PlantUML sources from PNG images");

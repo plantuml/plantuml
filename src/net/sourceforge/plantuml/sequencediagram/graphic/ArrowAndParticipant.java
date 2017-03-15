@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -42,11 +47,12 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	private final Arrow arrow;
 	private final ParticipantBox participantBox;
 
-	public ArrowAndParticipant(StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox) {
+	public ArrowAndParticipant(StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox,
+			double paddingParticipant) {
 		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());
 		this.arrow = arrow;
 		this.participantBox = participantBox;
-		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2);
+		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - paddingParticipant);
 	}
 
 	@Override

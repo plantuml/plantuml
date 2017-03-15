@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -36,7 +41,7 @@ import java.util.Date;
 public class Version {
 
 	public static int version() {
-		return 8058;
+		return 8059;
 	}
 
 	public static String versionString() {
@@ -59,6 +64,10 @@ public class Version {
 		return beta;
 	}
 
+	public static String etag() {
+		return Integer.toString(version(), 36) + Integer.toString(beta(), 36);
+	}
+
 	private static String int2shortString(int v) {
 		return Integer.toString(v % 36, 36);
 	}
@@ -68,7 +77,7 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1489318411026L;
+		return 1489599427097L;
 	}
 
 	public static String compileTimeString() {

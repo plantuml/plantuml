@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -64,7 +69,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 		final HtmlColor backColorElement = diagram.getSkinParam().getIHtmlColorSet()
 				.getColorIfValid(arg.get("COLORS", 0));
 		final HtmlColor backColorGeneral = diagram.getSkinParam().getIHtmlColorSet()
-				.getColorIfValid(arg.get("COLORS", 1));
+				.getColorIfValid(arg.get("COLORS", 1), true);
 		String comment = arg.get("COMMENT", 0);
 		final GroupingType groupingType = GroupingType.getType(type);
 		if ("group".equals(type)) {

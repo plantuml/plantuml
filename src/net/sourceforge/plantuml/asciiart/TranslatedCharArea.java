@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -64,16 +69,10 @@ public class TranslatedCharArea implements UmlCharArea {
 	}
 
 
-
-	public void drawStickMan(int x, int y) {
-		charArea.drawStickMan(x + dx, y + dy);
+	public void drawShape(AsciiShape shape, int x, int y) {
+		charArea.drawShape(shape, x + dx, y + dy);
 	}
 	
-	public void drawStickManUnicode(int x, int y) {
-		charArea.drawStickManUnicode(x + dx, y + dy);
-	}
-
-
 	public void drawChar(char c, int x, int y) {
 		charArea.drawChar(c, x + dx, y + dy);
 	}

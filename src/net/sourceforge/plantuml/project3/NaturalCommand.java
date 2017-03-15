@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -59,11 +64,11 @@ public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
 	protected CommandExecutionResult executeArg(GanttDiagram system, RegexResult arg) {
 		final Subject subject = subjectPattern.getSubject(system, arg);
 		final Verb verb = verbPattern.getVerb(system, arg);
-		final Complement complement = complementPattern.getComplement(system, arg, "0").get();
-		// if (complement == null) {
-		// throw new IllegalStateException();
-		// }
-		return verb.execute(subject, complement);
+		final Failable<Complement> complement = complementPattern.getComplement(system, arg, "0");
+		if (complement.isFail()) {
+			return CommandExecutionResult.error(complement.getError());
+		}
+		return verb.execute(subject, complement.get());
 	}
 
 	public static Command create(SubjectPattern subject, VerbPattern verb, ComplementPattern complement) {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -101,7 +106,7 @@ public class Preprocessor implements ReadLine {
 			ignoreDefineDuringSeveralLines = result.size() - 2;
 			source.insert(result.subList(1, result.size() - 1), s.getLocation());
 		}
-		return new CharSequence2Impl(result.get(0), s.getLocation());
+		return new CharSequence2Impl(result.get(0), s.getLocation(), s.getPreprocessorError());
 	}
 
 	private int ignoreDefineDuringSeveralLines = 0;

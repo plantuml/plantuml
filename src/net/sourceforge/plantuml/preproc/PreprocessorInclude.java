@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -46,9 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
-import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.FileSystem;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
@@ -132,21 +135,21 @@ class PreprocessorInclude implements ReadLine {
 			assert included == null;
 			final Matcher2 m1 = includePattern.matcher(s);
 			if (m1.find()) {
-				return manageFileInclude(m1, s.getLocation(), false);
+				return manageFileInclude(s, m1, false);
 			}
 			final Matcher2 m2 = includeManyPattern.matcher(s);
 			if (m2.find()) {
-				return manageFileInclude(m2, s.getLocation(), true);
+				return manageFileInclude(s, m2, true);
 			}
 		}
 		final Matcher2 mUrl = includeURLPattern.matcher(s);
-		if (mUrl.find()) {
-			return manageUrlInclude(mUrl, s.getLocation());
+		if (s.getPreprocessorError() == null && mUrl.find()) {
+			return manageUrlInclude(s, mUrl);
 		}
 		return s;
 	}
 
-	private CharSequence2 manageUrlInclude(Matcher2 m, LineLocation lineLocation) throws IOException {
+	private CharSequence2 manageUrlInclude(CharSequence2 s, Matcher2 m) throws IOException {
 		String urlString = m.group(1);
 		urlString = defines.applyDefines(urlString).get(0);
 		//
@@ -158,15 +161,15 @@ class PreprocessorInclude implements ReadLine {
 		}
 		try {
 			final URL url = new URL(urlString);
-			included = new PreprocessorInclude(getReaderInclude(url, suf, lineLocation), defines, charset, null,
-					filesUsedCurrent, filesUsedGlobal);
+			included = new PreprocessorInclude(getReaderInclude(s, url, suf), defines, charset, null, filesUsedCurrent,
+					filesUsedGlobal);
 		} catch (MalformedURLException e) {
-			return CharSequence2Impl.errorPreprocessor("Cannot include url " + urlString, lineLocation);
+			return s.withErrorPreprocessor("Cannot include url " + urlString);
 		}
 		return this.readLine();
 	}
 
-	private CharSequence2 manageFileInclude(Matcher2 matcher, LineLocation lineLocation, boolean allowMany) throws IOException {
+	private CharSequence2 manageFileInclude(CharSequence2 s, Matcher2 matcher, boolean allowMany) throws IOException {
 		String fileName = matcher.group(1);
 		fileName = defines.applyDefines(fileName).get(0);
 		final int idx = fileName.lastIndexOf('!');
@@ -177,16 +180,16 @@ class PreprocessorInclude implements ReadLine {
 		}
 		final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
 		final FileWithSuffix f2 = new FileWithSuffix(f, suf);
-		if (f.exists() == false) {
-			return CharSequence2Impl.errorPreprocessor("Cannot include " + f.getAbsolutePath(), lineLocation);
+		if (f.exists() == false || f.isDirectory()) {
+			return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
 		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
 			// return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
 			return this.readLine();
 		} else {
 			filesUsedCurrent.add(f2);
 			filesUsedGlobal.add(f2);
-			included = new PreprocessorInclude(getReaderInclude(f, suf, lineLocation), defines, charset,
-					f.getParentFile(), filesUsedCurrent, filesUsedGlobal);
+			included = new PreprocessorInclude(getReaderInclude(s, f, suf), defines, charset, f.getParentFile(),
+					filesUsedCurrent, filesUsedGlobal);
 		}
 		return this.readLine();
 	}
@@ -220,29 +223,40 @@ class PreprocessorInclude implements ReadLine {
 		return null;
 	}
 
-	private ReadLine getReaderInclude(final File f, String suf, LineLocation parent) throws IOException {
-		if (StartDiagramExtractReader.containsStartDiagram(f, charset)) {
-			return new StartDiagramExtractReader(f, suf, charset);
+	private ReadLine getReaderInclude(CharSequence2 s, final File f, String suf) {
+		try {
+			if (StartDiagramExtractReader.containsStartDiagram(s, f, charset)) {
+				return new StartDiagramExtractReader(s, f, suf, charset);
+			}
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new ReadLineReader(new FileReader(f), f.getAbsolutePath(), s.getLocation());
+			}
+			Log.info("Using charset " + charset);
+			return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(),
+					s.getLocation());
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
 		}
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new ReadLineReader(new FileReader(f), f.getAbsolutePath(), parent);
-		}
-		Log.info("Using charset " + charset);
-		return new ReadLineReader(new InputStreamReader(new FileInputStream(f), charset), f.getAbsolutePath(), parent);
+
 	}
 
-	private ReadLine getReaderInclude(final URL url, String suf, LineLocation parent) throws IOException {
-		if (StartDiagramExtractReader.containsStartDiagram(url, charset)) {
-			return new StartDiagramExtractReader(url, suf, charset);
+	private ReadLine getReaderInclude(CharSequence2 s, final URL url, String suf) {
+		try {
+			if (StartDiagramExtractReader.containsStartDiagram(s, url, charset)) {
+				return new StartDiagramExtractReader(s, url, suf, charset);
+			}
+			final InputStream is = url.openStream();
+			if (charset == null) {
+				Log.info("Using default charset");
+				return new ReadLineReader(new InputStreamReader(is), url.toString(), s.getLocation());
+			}
+			Log.info("Using charset " + charset);
+			return new ReadLineReader(new InputStreamReader(is, charset), url.toString(), s.getLocation());
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
 		}
-		final InputStream is = url.openStream();
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new ReadLineReader(new InputStreamReader(is), url.toString(), parent);
-		}
-		Log.info("Using charset " + charset);
-		return new ReadLineReader(new InputStreamReader(is, charset), url.toString(), parent);
+
 	}
 
 	public int getLineNumber() {

@@ -6,6 +6,11 @@
  *
  * Project Info:  http://plantuml.com
  * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -29,7 +34,9 @@
  */
 package net.sourceforge.plantuml;
 
+import java.awt.Color;
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -44,18 +51,23 @@ import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.eggs.PSystemEmpty;
+import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemError extends AbstractPSystem {
 
@@ -120,28 +132,62 @@ public class PSystemError extends AbstractPSystem {
 		final boolean useRed = fileFormat.isUseRedForError();
 		final TextBlockBackcolored result = GraphicStrings.createForError(getHtmlStrings(useRed), useRed);
 
-		final UDrawable udrawable;
+		TextBlock udrawable;
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
-		if (getSource().getTotalLineCount() < 4) {
-			final TextBlockBackcolored welcome = new PSystemEmpty(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
-			udrawable = new UDrawable() {
-				public void drawU(UGraphic ug) {
-					final Dimension2D dim1 = welcome.calculateDimension(ug.getStringBounder());
-					final Dimension2D dim2 = result.calculateDimension(ug.getStringBounder());
-					final URectangle frame = new URectangle(Math.max(dim1.getWidth(), dim2.getWidth()),
-							dim1.getHeight());
-					ug.apply(new UChangeBackColor(welcome.getBackcolor())).apply(new UTranslate(1, 1)).draw(frame);
-					welcome.drawU(ug);
-					ug = ug.apply(new UTranslate(0, dim1.getHeight()));
-					result.drawU(ug);
-				}
-			};
+		if (getSource().getTotalLineCount() < 5) {
+			udrawable = addWelcome(result);
 		} else {
 			udrawable = result;
 		}
+		// final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+		// if (min == 0) {
+		// udrawable = addMessage(udrawable);
+		// }
 		imageBuilder.setUDrawable(udrawable);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+	}
+
+	private TextBlockBackcolored getWelcome() throws IOException {
+		return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
+	}
+
+	private TextBlock addWelcome(final TextBlockBackcolored result) throws IOException {
+		final TextBlockBackcolored welcome = getWelcome();
+		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
+	}
+
+	private TextBlock addMessage(final TextBlock source) throws IOException {
+		final TextBlock message = getMessage();
+		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
+		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
+		return result;
+	}
+
+	private TextBlockBackcolored getMessage() {
+		final UImage message = new UImage(PSystemVersion.getTime());
+		final HtmlColor backImage = new HtmlColorSimple(new Color(message.getImage().getRGB(0, 0)), false);
+		final double imWidth = message.getWidth();
+		final double imHeight = message.getHeight();
+		return new TextBlockBackcolored() {
+
+			public void drawU(UGraphic ug) {
+				ug.apply(new UTranslate(1, 1)).draw(message);
+			}
+
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+				return null;
+			}
+
+			public Dimension2D calculateDimension(StringBounder stringBounder) {
+				return new Dimension2DDouble(imWidth + 1, imHeight + 1);
+			}
+
+			public HtmlColor getBackcolor() {
+				return backImage;
+			}
+		};
+
 	}
 
 	private List<String> getTextStrings() {
@@ -252,10 +298,6 @@ public class PSystemError extends AbstractPSystem {
 		if (StringUtils.isNotEmpty(err)) {
 			htmlStrings.add("<w:" + getRed(useRed) + ">" + err + "</w>");
 		}
-		// final StringBuilder underscore = new StringBuilder();
-		// for (int i = 0; i < errorLine.length(); i++) {
-		// underscore.append("^");
-		// }
 		final Collection<String> textErrors = new LinkedHashSet<String>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());
@@ -316,9 +358,6 @@ public class PSystemError extends AbstractPSystem {
 				max = error.getPosition();
 			}
 		}
-		// if (max == Integer.MIN_VALUE) {
-		// throw new IllegalStateException();
-		// }
 		return max;
 	}
 
