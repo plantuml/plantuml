@@ -182,6 +182,15 @@ public class Option {
 				} else if (nb.matches("\\d+")) {
 					this.nbThreads = Integer.parseInt(nb);
 				}
+            } else if (s.equalsIgnoreCase("-timeout")) {
+                i++;
+                if (i == arg.length) {
+                    continue;
+                }
+                final String timeSeconds = arg[i];
+                if (timeSeconds.matches("\\d+")) {
+                    OptionFlags.getInstance().setTimeoutMs(Integer.parseInt(timeSeconds) * 1000L);
+                }
 			} else if (s.equalsIgnoreCase("-failfast")) {
 				this.failfast = true;
 			} else if (s.equalsIgnoreCase("-failfast2")) {
@@ -451,7 +460,7 @@ public class Option {
 		this.nbThreads = nb;
 	}
 
-	public static int defaultNbThreads() {
+    public static int defaultNbThreads() {
 		return Runtime.getRuntime().availableProcessors();
 	}
 

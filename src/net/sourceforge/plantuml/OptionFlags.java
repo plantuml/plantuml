@@ -120,6 +120,7 @@ public class OptionFlags {
 	private boolean overwrite;
 	private boolean enableStats = defaultForStats();
 	private String fileSeparator = "_";
+	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes
 	private File logData;
 
 	private OptionFlags() {
@@ -281,7 +282,15 @@ public class OptionFlags {
 		this.fileSeparator = fileSeparator;
 	}
 
-	public final boolean isDumpHtmlStats() {
+    public final long getTimeoutMs() {
+        return timeoutMs;
+    }
+
+    public final void setTimeoutMs(long timeoutMs) {
+        this.timeoutMs = timeoutMs;
+    }
+
+    public final boolean isDumpHtmlStats() {
 		return dumpHtmlStats;
 	}
 
