@@ -41,11 +41,8 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -61,12 +58,10 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
-import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtils;
@@ -271,63 +266,7 @@ public class Run {
 
 	private static boolean managePipe(Option option) throws IOException {
 		final String charset = option.getCharset();
-		final BufferedReader br;
-		if (charset == null) {
-			br = new BufferedReader(new InputStreamReader(System.in));
-		} else {
-			br = new BufferedReader(new InputStreamReader(System.in, charset));
-		}
-		return managePipe(option, br, System.out);
-	}
-
-	static public boolean managePipe(Option option, final BufferedReader br, final PrintStream ps) throws IOException {
-		boolean error = false;
-		final StringBuilder sb = new StringBuilder();
-		String s = null;
-		while ((s = br.readLine()) != null) {
-			sb.append(s);
-			sb.append("\n");
-		}
-		String source = sb.toString();
-		if (source.contains("@startuml") == false) {
-			source = "@startuml\n" + source + "\n@enduml";
-		}
-		final SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), source, option.getConfig());
-
-		if (option.isSyntax()) {
-			final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
-			if (system instanceof UmlDiagram) {
-				ps.println(((UmlDiagram) system).getUmlDiagramType().name());
-				ps.println(system.getDescription());
-			} else if (system instanceof PSystemError) {
-				error = true;
-				ps.println("ERROR");
-				final PSystemError sys = (PSystemError) system;
-				ps.println(sys.getHigherErrorPosition());
-				for (ErrorUml er : sys.getErrorsUml()) {
-					ps.println(er.getError());
-				}
-			} else {
-				ps.println("OTHER");
-				ps.println(system.getDescription());
-			}
-		} else if (option.isPipeMap()) {
-			final String result = sourceStringReader.getCMapData(0, option.getFileFormatOption());
-			ps.println(result);
-		} else if (option.isPipe()) {
-			final String result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
-			if ("(error)".equalsIgnoreCase(result)) {
-				error = true;
-				System.err.println("ERROR");
-				final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
-				final PSystemError sys = (PSystemError) system;
-				System.err.println(sys.getHigherErrorPosition());
-				for (ErrorUml er : sys.getErrorsUml()) {
-					System.err.println(er.getError());
-				}
-			}
-		}
-		return error;
+		return new Pipe(option, System.out, System.in, charset).managePipe();
 	}
 
 	private static boolean manageAllFiles(Option option) throws IOException, InterruptedException {

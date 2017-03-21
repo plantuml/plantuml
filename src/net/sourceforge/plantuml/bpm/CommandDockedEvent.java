@@ -30,11 +30,37 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+
+public class CommandDockedEvent extends SingleLineCommand2<BpmDiagram> {
+
+	public CommandDockedEvent() {
+		super(getRegexConcat());
+	}
+
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf(":"), //
+				new RegexLeaf("LABEL", "(.*)"), //
+				new RegexLeaf("STYLE", ";"), //
+				new RegexLeaf("$"));
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(BpmDiagram diagram, RegexResult arg) {
+
+		final String label = arg.get("LABEL", 0);
+		final BpmEvent event = new BpmEventAdd(new BpmElement(null, BpmElementType.DOCKED_EVENT, label));
+		return diagram.addEvent(event);
+	}
+
 }

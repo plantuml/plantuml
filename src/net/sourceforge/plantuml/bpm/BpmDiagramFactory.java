@@ -33,8 +33,35 @@
  * 
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.UmlDiagramFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+
+public class BpmDiagramFactory extends UmlDiagramFactory {
+
+	public BpmDiagramFactory(DiagramType type) {
+		super(DiagramType.BPM);
+	}
+
+	@Override
+	protected List<Command> createCommands() {
+		final List<Command> result = new ArrayList<Command>();
+		result.add(new CommandDockedEvent());
+		result.add(new CommandMerge());
+		result.add(new CommandResume());
+		result.add(new CommandGoto());
+		return result;
+	}
+
+	@Override
+	public AbstractPSystem createEmptyDiagram() {
+		return new BpmDiagram();
+	}
+
 }

@@ -38,13 +38,16 @@ package net.sourceforge.plantuml.core;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
-	UML, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, UNKNOWN;
+	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
 		// if (s.startsWith("@startuml2")) {
 		// return UML2;
 		// }
+		if (StartUtils.startsWithSymbolAnd("startbpm", s)) {
+			return BPM;
+		}
 		if (StartUtils.startsWithSymbolAnd("startuml", s)) {
 			return UML;
 		}

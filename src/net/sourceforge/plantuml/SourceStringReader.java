@@ -92,26 +92,27 @@ public class SourceStringReader {
 		}
 	}
 
-	public String generateImage(OutputStream os) throws IOException {
+	public DiagramDescription generateImage(OutputStream os) throws IOException {
 		return generateImage(os, 0);
 	}
 
-	public String generateImage(File f) throws IOException {
+	public DiagramDescription generateImage(File f) throws IOException {
 		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-		final String result = generateImage(os, 0);
+		final DiagramDescription result = generateImage(os, 0);
 		os.close();
 		return result;
 	}
 
-	public String generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+	public DiagramDescription generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
 		return generateImage(os, 0, fileFormatOption);
 	}
 
-	public String generateImage(OutputStream os, int numImage) throws IOException {
+	public DiagramDescription generateImage(OutputStream os, int numImage) throws IOException {
 		return generateImage(os, numImage, new FileFormatOption(FileFormat.PNG));
 	}
 
-	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
+	public DiagramDescription generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
+			throws IOException {
 		if (blocks.size() == 0) {
 			noStartumlFound(os, fileFormatOption);
 			return null;
@@ -122,10 +123,10 @@ public class SourceStringReader {
 			if (numImage < nbInSystem) {
 				// final CMapData cmap = new CMapData();
 				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
-				if (imageData.containsCMapData()) {
-					return system.getDescription().getDescription() + "\n" + imageData.getCMapData("plantuml");
-				}
-				return system.getDescription().getDescription();
+				// if (imageData.containsCMapData()) {
+				// return system.getDescription().getDescription() + "\n" + imageData.getCMapData("plantuml");
+				// }
+				return system.getDescription();
 			}
 			numImage -= nbInSystem;
 		}
@@ -163,30 +164,28 @@ public class SourceStringReader {
 		imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
 	}
 
-	public DiagramDescription generateDiagramDescription(OutputStream os) throws IOException {
-		return generateDiagramDescription(os, 0);
+	public DiagramDescription generateDiagramDescription() {
+		return generateDiagramDescription(0);
 	}
 
-	public DiagramDescription generateDiagramDescription(File f) throws IOException {
-		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-		final DiagramDescription result = generateDiagramDescription(os, 0);
-		os.close();
-		return result;
+	// public DiagramDescription generateDiagramDescription(File f) throws IOException {
+	// final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+	// final DiagramDescription result = generateDiagramDescription(os, 0);
+	// os.close();
+	// return result;
+	// }
+
+	public DiagramDescription generateDiagramDescription(FileFormatOption fileFormatOption) {
+		return generateDiagramDescription(0, fileFormatOption);
 	}
 
-	public DiagramDescription generateDiagramDescription(OutputStream os, FileFormatOption fileFormatOption)
-			throws IOException {
-		return generateDiagramDescription(os, 0, fileFormatOption);
+	public DiagramDescription generateDiagramDescription(int numImage) {
+		return generateDiagramDescription(numImage, new FileFormatOption(FileFormat.PNG));
 	}
 
-	public DiagramDescription generateDiagramDescription(OutputStream os, int numImage) throws IOException {
-		return generateDiagramDescription(os, numImage, new FileFormatOption(FileFormat.PNG));
-	}
-
-	public DiagramDescription generateDiagramDescription(OutputStream os, int numImage,
-			FileFormatOption fileFormatOption) throws IOException {
+	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
 		if (blocks.size() == 0) {
-			noStartumlFound(os, fileFormatOption);
+			// noStartumlFound(os, fileFormatOption);
 			return null;
 		}
 		for (BlockUml b : blocks) {

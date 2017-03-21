@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
@@ -80,6 +81,7 @@ public class FtpConnexion {
 	public synchronized Collection<String> getFiles() {
 		final List<String> result = new ArrayList<String>(incoming.keySet());
 		result.addAll(outgoing.keySet());
+		result.addAll(futureOutgoing);
 		return Collections.unmodifiableCollection(result);
 	}
 
@@ -96,6 +98,16 @@ public class FtpConnexion {
 		return false;
 	}
 
+	public synchronized boolean doesExist(String fileName) {
+		if (incoming.containsKey(fileName)) {
+			return true;
+		}
+		if (outgoing.containsKey(fileName)) {
+			return true;
+		}
+		return false;
+	}
+
 	public synchronized byte[] getData(String fileName) throws InterruptedException {
 		if (fileName.startsWith("/")) {
 			throw new IllegalArgumentException();
@@ -104,16 +116,19 @@ public class FtpConnexion {
 		if (data != null) {
 			return data.getBytes();
 		}
-		do {
-			if (willExist(fileName) == false) {
-				return null;
-			}
-			final byte data2[] = outgoing.get(fileName);
-			if (data2 != null) {
-				return data2;
-			}
-			Thread.sleep(200L);
-		} while (true);
+		// do {
+		// if (willExist(fileName) == false) {
+		// return null;
+		// }
+		final byte data2[] = outgoing.get(fileName);
+		if (data2 == null) {
+			return new byte[1];
+		}
+		// if (data2 != null) {
+		return data2;
+		// }
+		// Thread.sleep(200L);
+		// } while (true);
 	}
 
 	public synchronized int getSize(String fileName) {
@@ -141,8 +156,11 @@ public class FtpConnexion {
 			final SourceStringReader sourceStringReader = new SourceStringReader(incoming.get(fileName));
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			final FileFormat format = getFileFormat();
-			final DiagramDescription desc = sourceStringReader.generateDiagramDescription(baos, new FileFormatOption(
-					format));
+			final DiagramDescription desc = sourceStringReader.generateDiagramDescription(new FileFormatOption(format));
+			final List<BlockUml> blocks = sourceStringReader.getBlocks();
+			if (blocks.size() > 0) {
+				blocks.get(0).getDiagram().exportDiagram(baos, 0, new FileFormatOption(format));
+			}
 			final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + ".err";
 			synchronized (this) {
 				outgoing.remove(pngFileName);

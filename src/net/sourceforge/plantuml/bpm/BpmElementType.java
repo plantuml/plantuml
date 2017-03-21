@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+public enum BpmElementType {
+
+	START, END, MERGE, DOCKED_EVENT
+
 }

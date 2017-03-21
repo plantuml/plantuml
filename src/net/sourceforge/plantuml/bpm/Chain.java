@@ -30,11 +30,20 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+import java.util.Comparator;
+import java.util.List;
+
+public interface Chain<O> extends Comparator<O> {
+
+	public Navigator<O> navigator(O data);
+
+	public boolean contains(O data);
+
+	public List<O> toList();
+
 }

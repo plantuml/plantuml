@@ -41,14 +41,19 @@ import java.util.Date;
 public class Version {
 
 	public static int version() {
-		return 8059;
+		return 201708;
 	}
 
 	public static String versionString() {
 		if (beta() != 0) {
-			return "" + (version() + 1) + "beta" + beta();
+			return dotted(version() + 1) + "beta" + beta();
 		}
-		return "" + version();
+		return dotted(version());
+	}
+
+	private static String dotted(int nb) {
+		final String s = "" + nb;
+		return s.substring(0, 4) + "." + s.substring(4);
 	}
 
 	public static String versionString(int size) {
@@ -65,19 +70,15 @@ public class Version {
 	}
 
 	public static String etag() {
-		return Integer.toString(version(), 36) + Integer.toString(beta(), 36);
-	}
-
-	private static String int2shortString(int v) {
-		return Integer.toString(v % 36, 36);
+		return Integer.toString(version() - 201670, 36) + Integer.toString(beta(), 36);
 	}
 
 	public static String turningId() {
-		return int2shortString(version()) + int2shortString(beta());
+		return etag();
 	}
 
 	public static long compileTime() {
-		return 1489599427097L;
+		return 1490118065248L;
 	}
 
 	public static String compileTimeString() {

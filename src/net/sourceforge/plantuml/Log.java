@@ -46,7 +46,7 @@ public abstract class Log {
 	public synchronized static void info(String s) {
 		if (OptionFlags.getInstance().isVerbose()) {
 			ProgressBar.clear();
-			System.out.println(format(s));
+			System.err.println(format(s));
 		}
 	}
 

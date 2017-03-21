@@ -30,11 +30,41 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+public class Coord {
+
+	private final Row row;
+	private final Line line;
+
+	public Coord(Row row, Line line) {
+		if (line == null || row == null) {
+			throw new IllegalArgumentException();
+		}
+		this.line = line;
+		this.row = row;
+	}
+
+	public final Row getRow() {
+		return row;
+	}
+
+	public final Line getLine() {
+		return line;
+	}
+
+	@Override
+	public int hashCode() {
+		return row.hashCode() + line.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final Coord other = (Coord) obj;
+		return this.row == other.row && this.line == other.line;
+	}
+
 }

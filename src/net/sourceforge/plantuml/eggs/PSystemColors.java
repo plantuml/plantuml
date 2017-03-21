@@ -103,10 +103,10 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (paletteCentralColor == null) {
-			drawFull(ug);
-		} else {
+		if (colors.getColorIfValid(paletteCentralColor) instanceof HtmlColorSimple) {
 			drawPalette(ug);
+		} else {
+			drawFull(ug);
 		}
 	}
 

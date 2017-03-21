@@ -30,11 +30,19 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+public class BpmEventAdd implements BpmEvent {
+
+	private final BpmElement element;
+
+	public BpmEventAdd(BpmElement element) {
+		this.element = element;
+	}
+
+	public final BpmElement getElement() {
+		return element;
+	}
 }

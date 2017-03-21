@@ -85,7 +85,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			this.desc = tmp;
 		} else {
 			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().useGuillemet()))
-					.create(new FontConfiguration(getSkinParam(), FontParam.ACTOR_STEREOTYPE, stereotype),
+					.create(new FontConfiguration(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
 							HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}

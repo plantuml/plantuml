@@ -82,7 +82,12 @@ public class AtomMath implements Atom {
 
 	public void drawU(UGraphic ug) {
 		final boolean isSvg = ug.matchesProperty("SVG");
-		final Color back = getColor(background == null ? ug.getParam().getBackcolor() : background, Color.WHITE);
+		final Color back;
+		if (isSvg && background == null) {
+			back = null;
+		} else {
+			back = getColor(background == null ? ug.getParam().getBackcolor() : background, Color.WHITE);
+		}
 		final Color fore = getColor(foreground, Color.BLACK);
 		if (isSvg) {
 			final String svg = math.getSvg(fore, back);

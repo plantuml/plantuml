@@ -106,7 +106,7 @@ public class FtpServer {
 		System.out.println("Server Started...");
 		System.out.println("Waiting for connections...");
 		System.out.println(" ");
-		new FtpServer(24242, FileFormat.SVG).go();
+		new FtpServer(4242, FileFormat.PNG).go();
 	}
 
 	public void processImage(final FtpConnexion connexion, final String name) {

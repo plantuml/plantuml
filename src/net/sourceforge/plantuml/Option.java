@@ -62,6 +62,7 @@ public class Option {
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
 	private boolean pipe = false;
+	private String pipeDelimitor;
 	private boolean pipeMap = false;
 	private boolean syntax = false;
 	private boolean checkOnly = false;
@@ -204,6 +205,12 @@ public class Option {
 				OptionFlags.getInstance().setVerbose(true);
 			} else if (s.equalsIgnoreCase("-pipe") || s.equalsIgnoreCase("-p")) {
 				pipe = true;
+			} else if (s.equalsIgnoreCase("-pipedelimitor")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				pipeDelimitor = arg[i];
 			} else if (s.equalsIgnoreCase("-pipemap")) {
 				pipeMap = true;
 			} else if (s.equalsIgnoreCase("-pattern")) {
@@ -494,6 +501,10 @@ public class Option {
 
 	public final boolean isTextProgressBar() {
 		return textProgressBar;
+	}
+
+	public String getPipeDelimitor() {
+		return pipeDelimitor;
 	}
 
 }

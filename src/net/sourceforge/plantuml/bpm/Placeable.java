@@ -30,11 +30,23 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+
+public interface Placeable {
+
+	public Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
+
+	public TextBlock toTextBlock(ISkinParam skinParam);
+
+	public String getId();
+
 }

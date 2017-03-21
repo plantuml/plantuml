@@ -30,11 +30,29 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.bpm;
 
-public enum UmlDiagramType {
-	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM
+public class Cell {
+
+	private Placeable data;
+
+	public final Placeable getData() {
+		return data;
+	}
+
+	public final void setData(Placeable data) {
+		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		if (data == null) {
+			return super.toString();
+		}
+		return super.toString() + " " + data;
+	}
+
 }
