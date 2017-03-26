@@ -24,7 +24,7 @@ import jcckit.graphic.ClippingRectangle;
 import jcckit.util.ConfigParameters;
 
 /**
- * An abstract canvas containg a single {@link Plot}. The canvas is specified
+ * An abstract canvas containing a single {@link Plot}. The canvas is specified
  * by a {@link ClippingRectangle}, called <em>paper</em>. A horizontal and
  * vertical {@link Anchor} determine the position of the paper on the actual
  * device.
@@ -127,7 +127,7 @@ public class PlotCanvas implements PlotListener {
 	}
 
 	/**
-	 * Handles the spcified event. Here nothing is done. But subclass may
+	 * Handles the specified event. Here nothing is done. But subclass may
 	 * override this method.
 	 */
 	public void plotChanged(PlotEvent event) {

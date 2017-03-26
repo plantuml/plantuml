@@ -70,7 +70,7 @@ import java.util.Arrays;
  * <code>GeneralPath</code>. Elliptical arc is implemented using an <code>Arc2D</code> in double precision.
  * 
  * <p>
- * <b>Warning</b> : An elliptical arc may be composed of several path segments. For futher details, see the SVG
+ * <b>Warning</b> : An elliptical arc may be composed of several path segments. For further details, see the SVG
  * Appendix&nbsp;F.6
  * 
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
@@ -417,7 +417,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 						// Change MOVETO to LINETO.
 						type = PathIterator.SEG_LINETO;
 					} else {
-						// Redundent segment (move to current loc) drop it...
+						// Redundant segment (move to current loc) drop it...
 						if (pi.isDone()) {
 							break; // Nothing interesting
 						}

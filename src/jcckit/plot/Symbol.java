@@ -21,7 +21,7 @@ package jcckit.plot;
 import jcckit.graphic.GraphicalElement;
 
 /**
- * Immutable class holding the graphical represention of the symbol and
+ * Immutable class holding the graphical representation of the symbol and
  * two {@link Hint Hints}.
  * 
  * @author Franz-Josef Elmer

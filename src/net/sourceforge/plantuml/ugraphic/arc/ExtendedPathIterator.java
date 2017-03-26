@@ -101,7 +101,7 @@ public interface ExtendedPathIterator {
 
 	/**
 	 * The segment type constant for an elliptical arc. This consists of Seven values [rx, ry, angle, largeArcFlag,
-	 * sweepFlag, x, y]. rx, ry are the radious of the ellipse. angle is angle of the x axis of the ellipse.
+	 * sweepFlag, x, y]. rx, ry are the radius of the ellipse. angle is angle of the x axis of the ellipse.
 	 * largeArcFlag is zero if the smaller of the two arcs are to be used. sweepFlag is zero if the 'left' branch is
 	 * taken one otherwise. x and y are the destination for the ellipse.
 	 */

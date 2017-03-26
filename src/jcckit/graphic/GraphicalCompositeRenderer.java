@@ -29,7 +29,7 @@ package jcckit.graphic;
 public interface GraphicalCompositeRenderer extends Renderer {
   /**
    *  Starts rendering of the specified composite before its
-   *  elements are rendererd. Implementations of this method
+   *  elements are rendered. Implementations of this method
    *  usually obtain the {@link ClippingShape} from
    *  <tt>composite</tt>.
    */

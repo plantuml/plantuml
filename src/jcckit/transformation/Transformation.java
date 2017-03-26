@@ -31,14 +31,14 @@ public interface Transformation {
   /**
    * Transforms a {@link DataPoint} into a {@link GraphPoint}.
    * @param point A point in data coordinates.
-   * @return <tt>point</tt> tranformed into device-independent coordinates..
+   * @return <tt>point</tt> transformed into device-independent coordinates..
    */
   public GraphPoint transformToGraph(DataPoint point);
 
   /**
    * Transforms a {@link GraphPoint} into a {@link DataPoint}.
    *  @param point A point in device-independent coordinates..
-   *  @return <tt>point</tt> tranformed into data coordinates.
+   *  @return <tt>point</tt> transformed into data coordinates.
    */
   public DataPoint transformToData(GraphPoint point);
 }

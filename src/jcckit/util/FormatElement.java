@@ -106,14 +106,14 @@ class FormatElement {
   /**
    *  Format a number in accordance of the format string
    *  given at the initialisation of this instance.
-   *  @param buffer Buffer to which the formated output will be appended.
-   *  @param number Number to be formated.
+   *  @param buffer Buffer to which the formatted output will be appended.
+   *  @param number Number to be formatted.
    */
   public void form(StringBuffer buffer, long number) {
     if (_descriptorType == FLOAT_DESCRIPTOR) {
       form(buffer, (double) number);
     } else {
-      // Format absolut value in the right base
+      // Format absolute value in the right base
       buffer.append(form(number < 0,
                          Long.toString(Math.abs(number),
                                 _descriptor == 'o' ? 8
@@ -125,8 +125,8 @@ class FormatElement {
   /**
    *  Format a number in accordance of the format string
    *  given at the initialisation of this instance.
-   *  @param buffer Buffer to which the formated output will be appended.
-   *  @param number Number to be formated.
+   *  @param buffer Buffer to which the formatted output will be appended.
+   *  @param number Number to be formatted.
    */
   public void form(StringBuffer buffer, double number) {
     if (_descriptorType == INT_DESCRIPTOR) {
@@ -218,7 +218,7 @@ class FormatElement {
 
   /** Format floating point number. */
   private String formF(double number) {
-    // Format absolut value
+    // Format absolute value
     double multiplier = number < 0 ? - _tenToPrecision : _tenToPrecision;
     String digits 
         = Long.toString((long) Math.floor(number * multiplier + 0.5));

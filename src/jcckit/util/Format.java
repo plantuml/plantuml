@@ -77,11 +77,11 @@ public class Format implements TicLabelFormat {
    *            format of logarithmic format depending on the size of
    *            the mantissa.</td></tr>
    *  </table>
-   *  The characters between '%' and the decriptor are optional.
+   *  The characters between '%' and the descriptor are optional.
    *  They can be grouped into
    *  <ul><li>modifier<br>
    *          it is
-   *          <ul><li>'-' if the formated result should be flushed left
+   *          <ul><li>'-' if the formatted result should be flushed left
    *              <li>'+' if the sign should be always appear
    *              <li>'0' if the leading space should be filled with zeros
    *          </ul>
@@ -149,8 +149,8 @@ public class Format implements TicLabelFormat {
    * If there are more than one format elements the
    * additional format elements will be ignored and only the static parts
    * are taken.
-   * @param number Number to be formated.
-   * @return Formated number.
+   * @param number Number to be formatted.
+   * @return Formatted number.
    */
   public String form(long number) {
     StringBuffer result = new StringBuffer();
@@ -167,8 +167,8 @@ public class Format implements TicLabelFormat {
    * If there are more than one format elements the
    * additional format elements will be ignored and only the static parts
    * are taken.
-   * @param number Number to be formated.
-   * @return Formated number.
+   * @param number Number to be formatted.
+   * @return Formatted number.
    */
   public String form(double number) {
     StringBuffer result = new StringBuffer();
@@ -192,8 +192,8 @@ public class Format implements TicLabelFormat {
    * will be ignored. If there are less numbers than format elements the
    * additional format elements will be ignored and only the static parts
    * are taken.
-   * @param numbers Numbers to be formated.
-   * @return Formated numbers.
+   * @param numbers Numbers to be formatted.
+   * @return Formatted numbers.
    */
   public String form(double[] numbers) {
     StringBuffer result = new StringBuffer();

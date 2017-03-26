@@ -72,12 +72,12 @@ public class Graphics2DRenderer implements GraphicalCompositeRenderer, PolygonRe
 	private Graphics2D _graphics;
 
 	/**
-	 * Initializes this instance. During renderering the current transformation
+	 * Initializes this instance. During rendering the current transformation
 	 * will be leaved unchanged. But the current Clip may be cleared.
 	 * 
 	 * @param graphics
 	 *            Graphics2D context into which the
-	 *            {@link BasicGraphicalElement BaiscGraphicalElements} are
+	 *            {@link BasicGraphicalElement BasicGraphicalElements} are
 	 *            painted.
 	 * @return this instance.
 	 */

@@ -48,7 +48,7 @@ public interface CoordinateSystem {
 
   /**
    *  Returns the transformation between data coordinates and
-   *  device-independent graphcial coordinates. Different invocations
+   *  device-independent graphical coordinates. Different invocations
    *  of this method may return different transformations.
    */
   public Transformation getTransformation();

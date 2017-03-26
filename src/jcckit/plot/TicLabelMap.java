@@ -30,7 +30,7 @@ import jcckit.util.TicLabelFormat;
  * The map description is a list
  * of conditions separated by ';'. The conditions are tested from left to
  * right until a condition is fulfilled for the tic value. If no condition
- * is fullfilled a '?' will be returned.
+ * is fulfilled a '?' will be returned.
  * <p>
  * A condition description has one of the following forms:
  * <pre><tt><i>&lt;label&gt;</i></tt></pre>
@@ -38,11 +38,11 @@ import jcckit.util.TicLabelFormat;
  * <pre><tt><i>&lt;number1&gt;</i>:<i>&lt;number2&gt;</i>=<i>&lt;label&gt;</i></tt></pre>
  * <p>
  * The first type of condition is always fulfilled. It will return
- * <tt><i>&lt;label&gt;</i></tt>. This is a kind of else condtion
+ * <tt><i>&lt;label&gt;</i></tt>. This is a kind of else condition
  * which is put at the end of the condition list.
  * <p>
  * The second form maps a particular number onto a label. In order to be
- * equal with the sepcified number the tic value should not deviate more
+ * equal with the specified number the tic value should not deviate more
  * than 1 ppm (part per millions) from <tt><i>&lt;number&gt;</i>.
  * <p>
  * The third form maps an interval onto a label. The condition reads
