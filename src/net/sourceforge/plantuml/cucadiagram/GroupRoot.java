@@ -172,7 +172,7 @@ public class GroupRoot implements IGroup {
 
 	}
 
-	public void overideImage(IEntityImage img, LeafType state) {
+	public void overrideImage(IEntityImage img, LeafType state) {
 		throw new UnsupportedOperationException();
 	}
 

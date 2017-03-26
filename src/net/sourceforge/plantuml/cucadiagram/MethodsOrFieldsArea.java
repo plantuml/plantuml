@@ -137,7 +137,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		double y = 0;
 		final Election election = new Election();
 		for (Member m : members) {
-			election.addCandidat(m.getDisplay(false), m);
+			election.addCandidate(m.getDisplay(false), m);
 		}
 		final Map<Member, String> memberWithPort = election.getAllElected(leaf.getPortShortNames());
 		for (Member m : members) {

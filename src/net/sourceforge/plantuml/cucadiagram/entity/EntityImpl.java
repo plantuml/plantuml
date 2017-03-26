@@ -417,7 +417,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// ---- other
 
-	public void overideImage(IEntityImage img, LeafType leafType) {
+	public void overrideImage(IEntityImage img, LeafType leafType) {
 		checkGroup();
 		this.svekImage = img;
 		this.url = null;

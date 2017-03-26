@@ -190,7 +190,7 @@ public class OregonBasicGame implements BasicGame {
 				if (c < 11 + 2 * rnd()) {
 					c1 = 1;
 				}
-				printb("Cold weather... Brrrrrrr! ... You " + (c1 == 1 ? "dont't " : "")
+				printb("Cold weather... Brrrrrrr! ... You " + (c1 == 1 ? "don't " : "")
 						+ "have enough clothing to keep warm.");
 				if (c1 == 1) {
 					dealWithIllness2880(j);
@@ -811,19 +811,19 @@ public class OregonBasicGame implements BasicGame {
 			c = skb.inputInt(screen);
 			if (c <= 24) {
 				print("Your family is going to be mighty cold in.");
-				print("the montains.");
+				print("the mountains.");
 				print("Better spend a bit more.");
 				continue;
 			}
 			if (a + f + b + c > 345) {
-				print("That leaves nothing for medecine.");
+				print("That leaves nothing for medicine.");
 				continue;
 			}
 			break;
 		} while (true);
 		do {
 			print();
-			screen.print("How much for medecine, bandage, repair parts, etc. ?");
+			screen.print("How much for medicine, bandage, repair parts, etc. ?");
 			r = skb.inputInt(screen);
 			if (r <= 5) {
 				print("That's not at all wise.");

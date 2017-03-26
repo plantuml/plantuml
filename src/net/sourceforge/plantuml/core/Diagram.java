@@ -54,7 +54,7 @@ public interface Diagram {
 	 * @param os
 	 *            where to write the image
 	 * @param num
-	 *            useually 0 (index of the image to be exported for this diagram).
+	 *            usually 0 (index of the image to be exported for this diagram).
 	 * @param fileFormat
 	 *            file format to use
 	 * 

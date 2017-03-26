@@ -61,7 +61,7 @@ public class OpenIcon {
 	private final String id;
 
 	public static OpenIcon retrieve(String name) {
-		final InputStream is = getRessource(name);
+		final InputStream is = getResource(name);
 		if (is == null) {
 			return null;
 		}
@@ -74,10 +74,10 @@ public class OpenIcon {
 	}
 
 	OpenIcon(String name) throws IOException {
-		this(getRessource(name), name);
+		this(getResource(name), name);
 	}
 
-	private static InputStream getRessource(String name) {
+	private static InputStream getResource(String name) {
 		// System.err.println("OPENING " + name);
 		return DummyIcon.class.getResourceAsStream(name + ".svg");
 	}

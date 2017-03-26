@@ -72,7 +72,7 @@ public final class CucaDiagramSimplifierActivity {
 					// }
 
 					final IEntityImage img = computeImage(g);
-					g.overideImage(img, LeafType.ACTIVITY);
+					g.overrideImage(img, LeafType.ACTIVITY);
 
 					changed = true;
 				}

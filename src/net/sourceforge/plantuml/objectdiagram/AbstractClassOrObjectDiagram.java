@@ -91,14 +91,14 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return result;
 	}
 
-	private final List<Association> assocations = new ArrayList<Association>();
+	private final List<Association> associations = new ArrayList<Association>();
 
 	public boolean associationClass(int mode, Code clName1, Code clName2, IEntity associed, LinkType linkType,
 			Display label) {
 		final IEntity entity1 = getOrCreateLeaf(clName1, null, null);
 		final IEntity entity2 = getOrCreateLeaf(clName2, null, null);
 		final List<Association> same = new ArrayList<Association>();
-		for (Association existing : assocations) {
+		for (Association existing : associations) {
 			if (existing.sameCouple(entity1, entity2)) {
 				same.add(existing);
 			}
@@ -109,14 +109,14 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			final Association association = new Association(mode, entity1, entity2, associed);
 			association.createNew(mode, linkType, label);
 
-			this.assocations.add(association);
+			this.associations.add(association);
 			return true;
 		}
 		assert same.size() == 1;
 		final Association association = same.get(0).createSecondAssociation(mode, associed, label);
 		association.createInSecond(linkType, label);
 
-		this.assocations.add(association);
+		this.associations.add(association);
 		return true;
 	}
 
