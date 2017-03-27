@@ -59,7 +59,7 @@ public class SunPositionCalculator
 
   /**
    * <p>Calculate the position of the mean sun: where the sun would
-   * be if the earth's orbit were circular instead of ellipictal.
+   * be if the earth's orbit were circular instead of elliptical.
    *
    * <p>Verified.
    *

@@ -7,7 +7,7 @@ import com.ctreber.aclib.sort.CTSort;
 import com.ctreber.aclib.sort.QuickSort;
 
 /**
- * <p>For each line, the scanbuffer (= a raster divice) records the points hit
+ * <p>For each line, the scanbuffer (= a raster device) records the points hit
  * I.e., line 5 (y=5) contains the values 2, 6, 40, and 46 (these line have
  * been crossed). The values always come as pairs because we're dealing with
  * polygons, which have a left and a right side which consists of a line.
@@ -62,7 +62,7 @@ class ScanBuf
       // Round lYFrom (but .5 is handled oddly)
       // 1.5001 - 2.5 -> 1.0001 - 2.0 -> 2
       lYFrom = (int)Math.ceil(pYFrom - 0.5);
-      // Round lYTo, substract 1
+      // Round lYTo, subtract 1
       // 1.5 - 2.4999 -> 1.0 - 1.9999 -> 1
       lYTo = (int)Math.floor(pYTo - 0.5);
 
@@ -145,7 +145,7 @@ class ScanBuf
       CTSort lSort = new QuickSort();
       lSort.sort(lScanLine);
 
-      // The length will be divisible by 2 because we render closed polyons,
+      // The length will be divisible by 2 because we render closed polygons,
       // so every generateScanBits line is crossed twice (left and right edge of polygon,
       // no intersections allowed!).
       for(int n = 0; n < lScanLine.length; n += 2)
@@ -153,7 +153,7 @@ class ScanBuf
         // Round lLineFrom (but .5 is handled oddly)
         // 1.5001 - 2.5 -> 1.0001 - 2.0 -> 2
         int lXLo = (int)Math.ceil(lScanLine[n].doubleValue() - 0.5);
-        // Round lLineTo, substract 1
+        // Round lLineTo, subtract 1
         // 1.5 - 2.4999 -> 1.0 - 1.9999 -> 1
         int lXHi = (int)Math.floor(lScanLine[n + 1].doubleValue() - 0.5);
 

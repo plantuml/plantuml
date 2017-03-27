@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 /**
  * This is a TextGrid (usually 3x3) that contains the equivalent of a
- * 2D reqular expression (which uses custom syntax to make things more
+ * 2D regular expression (which uses custom syntax to make things more
  * visual, but standard syntax is also possible).
  * 
  * The custom syntax is:

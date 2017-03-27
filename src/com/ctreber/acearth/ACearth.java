@@ -45,7 +45,7 @@ import com.ctreber.aclib.sort.QuickSort;
  * 
  * <p>
  * I wanted to extend the program, but not in C. So I created this Java version,
- * and found the process quite <strike>painfull</strike> interesting. The
+ * and found the process quite <strike>painful</strike> interesting. The
  * biggest effort went into resolving references between C files and
  * eliminatiing pointers.
  * 

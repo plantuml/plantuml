@@ -38,7 +38,7 @@ public class ConfigurationParser {
 
 	private static final boolean DEBUG = false;
 	
-	private static final String INLCUDE_TAG_NAME = "include";
+	private static final String INCLUDE_TAG_NAME = "include";
 	private static final String SHAPE_TAG_NAME = "shape";
 	private static final String SHAPE_GROUP_TAG_NAME = "shapes";
 	
@@ -127,7 +127,7 @@ public class ConfigurationParser {
 				}
 				
 			}
-			if(qName.equals(INLCUDE_TAG_NAME)){
+			if(qName.equals(INCLUDE_TAG_NAME)){
 				if(attributes.getLength() == 1){
 					File includedFile = new File(attributes.getValue(0).trim());
 					

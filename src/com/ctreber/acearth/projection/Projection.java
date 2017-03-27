@@ -101,8 +101,8 @@ abstract public class Projection
    * between x and z.
    *
    * <p>Why? The way we choose our global coordinate system, longitude circles
-   * (latidude variable) always have the same size while the size of
-   * latidude circles (longitude variable) depends on the latitude.
+   * (latitude variable) always have the same size while the size of
+   * latitude circles (longitude variable) depends on the latitude.
    *
    * @param pPoint
    * @return

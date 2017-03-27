@@ -105,7 +105,7 @@ public class Coordinate {
 	/**
 	 * <p>
 	 * Warp coordinates exceeding valid values. Happens when latitudes and
-	 * longitudes are added or substracted.
+	 * longitudes are added or subtracted.
 	 */
 	public void wrap() {
 		if (fLat > 90) {

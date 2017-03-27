@@ -33,7 +33,7 @@ import com.ctreber.acearth.util.Polygon;
  * 
  */
 public class MapDataReader {
-	/** Point value scale (devide value by this number). */
+	/** Point value scale (divide value by this number). */
 	private static final double MAP_DATA_SCALE = 30000.0;
 
 	private static List fData;

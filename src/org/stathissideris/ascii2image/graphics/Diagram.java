@@ -67,7 +67,7 @@ public class Diagram {
 	 *   <li>Remove obsolete boundaries. Obsolete boundaries are the ones that are
 	 *       the sum of their parts when plotted as filled shapes. (see method
 	 *       removeObsoleteShapes())</li>
-	 *   <li>Seperate the found boundary sets to open, closed or mixed
+	 *   <li>Separate the found boundary sets to open, closed or mixed
 	 *       (See CellSet class on how its done).</li>
 	 *   <li>Are there any closed boundaries?
 	 *        <ul>
@@ -81,7 +81,7 @@ public class Diagram {
 	 *           an intersection.</li>
 	 *        </ul>
 	 *   </li>
-	 *   <li>If we had to eliminate any mixed shapes, we seperate the found
+	 *   <li>If we had to eliminate any mixed shapes, we separate the found
 	 *   boundary sets again to open, closed or mixed.</li>
 	 * </ol>
 	 * 
@@ -95,7 +95,7 @@ public class Diagram {
 	 *   see methods connectEndsToAnchors() and moveEndsToCellEdges() of
 	 *   DiagramShape.</li>
 	 *   <li>Assign color codes to closed shapes.</li>
-	 *   <li>Assing extended markup tags to closed shapes.</p>
+	 *   <li>Assign extended markup tags to closed shapes.</p>
 	 *   <li>Create arrowheads.</p>
 	 *   <li>Create point markers.</p>
 	 * </ol>

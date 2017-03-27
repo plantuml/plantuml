@@ -406,7 +406,7 @@ public class TextGrid {
 
 
 	/**
-	 * Replace all occurences of c1 with c2
+	 * Replace all occurrences of c1 with c2
 	 * 
 	 * @param c1
 	 * @param c2
