@@ -45,4 +45,5 @@ public class BpmEventAdd implements BpmEvent {
 	public final BpmElement getElement() {
 		return element;
 	}
+
 }

@@ -462,6 +462,9 @@ public class Line implements Moveable, Hideable {
 
 		if (extremityFactory != null) {
 			final List<Point2D.Double> points = pointListIterator.next();
+			if (points.size() == 0) {
+				return null;
+			}
 			final Point2D p0 = points.get(0);
 			final Point2D p1 = points.get(1);
 			final Point2D p2 = points.get(2);

@@ -77,8 +77,4 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 		return ShapeType.CIRCLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

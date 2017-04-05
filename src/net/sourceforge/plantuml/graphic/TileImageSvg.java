@@ -41,6 +41,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
@@ -53,7 +54,7 @@ public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 	}
 
 	private UImageSvg createSvg(File svgFile) throws IOException {
-		return new UImageSvg(FileUtils.readSvg(svgFile));
+		return new UImageSvg(new SvgString(FileUtils.readSvg(svgFile), 1));
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

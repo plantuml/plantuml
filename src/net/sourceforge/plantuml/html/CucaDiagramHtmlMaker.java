@@ -84,7 +84,7 @@ public final class CucaDiagramHtmlMaker {
 		if (hasSome(type)) {
 			pw.println("<h2>" + type.toHtml() + "</h2>");
 			for (final IEntity ent : diagram.getLeafsvalues()) {
-				if (ent.getEntityType() != type) {
+				if (ent.getLeafType() != type) {
 					continue;
 				}
 				export(ent);
@@ -106,7 +106,7 @@ public final class CucaDiagramHtmlMaker {
 
 	private boolean hasSome(final LeafType type) {
 		for (IEntity ent : diagram.getLeafsvalues()) {
-			if (ent.getEntityType() == type) {
+			if (ent.getLeafType() == type) {
 				return true;
 			}
 		}
@@ -118,7 +118,7 @@ public final class CucaDiagramHtmlMaker {
 		final PrintWriter pw = new PrintWriter(f);
 		pw.println("<html>");
 		pw.println("<title>" + StringUtils.unicodeForHtml(entity.getCode().getFullName()) + "</title>");
-		pw.println("<h2>" + entity.getEntityType().toHtml() + "</h2>");
+		pw.println("<h2>" + entity.getLeafType().toHtml() + "</h2>");
 		for (CharSequence s : entity.getDisplay()) {
 			pw.println(StringUtils.unicodeForHtml(s.toString()));
 			pw.println("<br>");
@@ -209,8 +209,8 @@ public final class CucaDiagramHtmlMaker {
 			if (link.contains(ent) == false) {
 				continue;
 			}
-			if (link.getEntity1().getEntityType() == LeafType.NOTE
-					|| link.getEntity2().getEntityType() == LeafType.NOTE) {
+			if (link.getEntity1().getLeafType() == LeafType.NOTE
+					|| link.getEntity2().getLeafType() == LeafType.NOTE) {
 				result.add(link.getOther(ent));
 			}
 		}
@@ -223,8 +223,8 @@ public final class CucaDiagramHtmlMaker {
 			if (link.contains(ent) == false) {
 				continue;
 			}
-			if (link.getEntity1().getEntityType() == LeafType.NOTE
-					|| link.getEntity2().getEntityType() == LeafType.NOTE) {
+			if (link.getEntity1().getLeafType() == LeafType.NOTE
+					|| link.getEntity2().getLeafType() == LeafType.NOTE) {
 				continue;
 			}
 			result.add(link);

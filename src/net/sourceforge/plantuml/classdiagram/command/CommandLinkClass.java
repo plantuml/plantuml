@@ -443,7 +443,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return LinkDecor.COMPOSITION;
 		}
 		if ("#".equals(s)) {
-			return LinkDecor.SQUARRE;
+			return LinkDecor.SQUARE;
 		}
 		if (")".equals(s)) {
 			return LinkDecor.PARENTHESIS;
@@ -493,7 +493,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return LinkDecor.COMPOSITION;
 		}
 		if ("#".equals(s)) {
-			return LinkDecor.SQUARRE;
+			return LinkDecor.SQUARE;
 		}
 		if ("(".equals(s)) {
 			return LinkDecor.PARENTHESIS;

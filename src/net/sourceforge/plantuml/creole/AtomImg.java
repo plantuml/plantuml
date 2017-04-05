@@ -71,7 +71,7 @@ public class AtomImg implements Atom {
 	}
 
 	public static Atom create(String src, final ImgValign valign, final int vspace, final double scale) {
-		final UFont font = new UFont("Monospaced", Font.PLAIN, 14);
+		final UFont font = UFont.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
 		if (src.startsWith(DATA_IMAGE_PNG_BASE64)) {

@@ -52,18 +52,20 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.utils.StartUtils;
 
-final public class BlockUmlBuilder {
+public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
 	private Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
 	private final UncommentReadLine reader2;
+	private final Defines defines;
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader, File newCurrentDir,
 			String desc) throws IOException {
 		Preprocessor includer = null;
+		this.defines = defines;
 		try {
 			reader2 = new UncommentReadLine(new ReadLineReader(reader, desc));
-			includer = new Preprocessor(reader2, charset, defines, newCurrentDir);
+			includer = new Preprocessor(reader2, charset, defines, newCurrentDir, this);
 			init(includer, config);
 		} finally {
 			if (includer != null) {
@@ -107,7 +109,7 @@ final public class BlockUmlBuilder {
 			}
 			if (StartUtils.isArobaseEndDiagram(s) && current2 != null) {
 				current2.addAll(1, convert(config, s.getLocation()));
-				blocks.add(new BlockUml(current2, startLine));
+				blocks.add(new BlockUml(current2, startLine, defines.cloneMe()));
 				current2 = null;
 				reader2.setPaused(false);
 			}
@@ -130,10 +132,14 @@ final public class BlockUmlBuilder {
 		return Collections.unmodifiableSet(usedFiles);
 	}
 
-	/*
-	 * private List<String> getStrings(Reader reader) throws IOException { final List<String> result = new
-	 * ArrayList<String>(); Preprocessor includer = null; try { includer = new Preprocessor(reader, defines); String s =
-	 * null; while ((s = includer.readLine()) != null) { result.add(s); } } finally { if (includer != null) {
-	 * includer.close(); } } return Collections.unmodifiableList(result); }
-	 */
+	public List<? extends CharSequence> getDefinition(String name) {
+		for (BlockUml block : blocks) {
+			if (block.isStartDef(name)) {
+				this.defines.importFrom(block.getLocalDefines());
+				return block.getDefinition();
+			}
+		}
+		return Collections.emptyList();
+	}
+
 }

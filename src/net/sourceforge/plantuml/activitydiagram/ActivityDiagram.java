@@ -69,7 +69,7 @@ public class ActivityDiagram extends CucaDiagram {
 		final IEntity result;
 		if (leafExist(code)) {
 			result = getOrCreateLeafDefault(code, type, null);
-			if (result.getEntityType() != type) {
+			if (result.getLeafType() != type) {
 				// throw new IllegalArgumentException("Already known: " + code + " " + result.getType() + " " + type);
 				return null;
 			}
@@ -100,11 +100,11 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	private void updateLasts(final IEntity result) {
-		if (result.getEntityType() == LeafType.NOTE) {
+		if (result.getLeafType() == LeafType.NOTE) {
 			return;
 		}
 		this.lastEntityConsulted = result;
-		if (result.getEntityType() == LeafType.BRANCH) {
+		if (result.getLeafType() == LeafType.BRANCH) {
 			lastEntityBrancheConsulted = result;
 		}
 	}

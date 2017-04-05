@@ -71,8 +71,8 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-		final Rectangle2D parent = textBlock.getInnerPosition(member, stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final Rectangle2D parent = textBlock.getInnerPosition(member, stringBounder, strategy);
 		if (parent == null) {
 			return null;
 		}

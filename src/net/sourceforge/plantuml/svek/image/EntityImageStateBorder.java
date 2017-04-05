@@ -130,8 +130,4 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 		return entityPosition.getShapeType();
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

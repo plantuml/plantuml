@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -154,7 +155,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return null;
 	}
 

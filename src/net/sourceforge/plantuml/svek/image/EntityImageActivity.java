@@ -151,8 +151,4 @@ public class EntityImageActivity extends AbstractEntityImage {
 		return ShapeType.ROUND_RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

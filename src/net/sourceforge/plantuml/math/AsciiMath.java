@@ -48,6 +48,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import net.sourceforge.plantuml.SvgString;
+
 public class AsciiMath implements ScientificEquation {
 
 	private static final String ASCIIMATH_PARSER_JS_LOCATION = "/net/sourceforge/plantuml/math/";
@@ -87,10 +89,10 @@ public class AsciiMath implements ScientificEquation {
 		return builder.getDimension();
 	}
 
-	public String getSvg(Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
+	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, InstantiationException, IOException {
-		return builder.getSvg(foregroundColor, backgroundColor);
+		return builder.getSvg(scale, foregroundColor, backgroundColor);
 	}
 
 	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)

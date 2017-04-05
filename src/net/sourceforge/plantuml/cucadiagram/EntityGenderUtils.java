@@ -40,7 +40,7 @@ public class EntityGenderUtils {
 	static public EntityGender byEntityType(final LeafType type) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getEntityType() == type;
+				return test.getLeafType() == type;
 			}
 		};
 	}

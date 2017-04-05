@@ -175,7 +175,7 @@ public class FontConfiguration {
 	}
 
 	public FontConfiguration changeSize(float size) {
-		return new FontConfiguration(styles, motherFont, motherColor, currentFont.deriveSize(size), currentColor,
+		return new FontConfiguration(styles, motherFont, motherColor, currentFont.withSize(size), currentColor,
 				extendedColor, fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink,
 				tabSize);
 	}

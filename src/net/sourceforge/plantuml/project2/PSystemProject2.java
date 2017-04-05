@@ -81,9 +81,9 @@ public class PSystemProject2 extends AbstractPSystem {
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
 			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false, 1.0,
-					fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor());
+					fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor(), fileFormatOption.getRandom());
 			diagram.draw(svg, 0, 0);
-			svg.createXml(os);
+			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
 		} else if (fileFormat == FileFormat.EPS) {
 			final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 			diagram.draw(eps, 0, 0);

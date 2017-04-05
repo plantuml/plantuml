@@ -107,7 +107,7 @@ public class TimeArrow implements UDrawable {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		final UFont font = UFont.serif(14);
 		return new FontConfiguration(font, HtmlColorUtils.BLUE, HtmlColorUtils.BLUE, false);
 	}
 

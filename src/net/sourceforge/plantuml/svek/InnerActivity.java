@@ -90,8 +90,8 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 		return ShapeType.ROUND_RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public boolean isHidden() {

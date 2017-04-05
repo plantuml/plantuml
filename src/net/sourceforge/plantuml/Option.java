@@ -46,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.api.ApiWarning;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -64,6 +65,7 @@ public class Option {
 	private boolean pipe = false;
 	private String pipeDelimitor;
 	private boolean pipeMap = false;
+	private boolean pipeNoStdErr = false;
 	private boolean syntax = false;
 	private boolean checkOnly = false;
 	private boolean failfast = false;
@@ -84,14 +86,16 @@ public class Option {
 	public Option() {
 	}
 
-	private FileFormat fileFormat = FileFormat.PNG;
+	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
 
-	public FileFormat getFileFormat() {
-		return fileFormat;
+	@Deprecated
+	@ApiWarning(willBeRemoved = "in next major release")
+	final public void setFileFormat(FileFormat fileFormat) {
+		setFileFormatOption(new FileFormatOption(fileFormat));
 	}
 
-	public void setFileFormat(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	final public void setFileFormatOption(FileFormatOption newFormat) {
+		this.fileFormatOption = newFormat;
 	}
 
 	public Option(String... arg) throws InterruptedException, IOException {
@@ -101,39 +105,41 @@ public class Option {
 		for (int i = 0; i < arg.length; i++) {
 			String s = arg[i];
 			if (s.equalsIgnoreCase("-tsvg") || s.equalsIgnoreCase("-svg")) {
-				setFileFormat(FileFormat.SVG);
+				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
+			} else if (s.equalsIgnoreCase("-tsvg:nornd") || s.equalsIgnoreCase("-svg:nornd")) {
+				setFileFormatOption(new FileFormatOption(FileFormat.SVG).withFixedRandom());
 			} else if (s.equalsIgnoreCase("-thtml") || s.equalsIgnoreCase("-html")) {
-				setFileFormat(FileFormat.HTML);
+				setFileFormatOption(new FileFormatOption(FileFormat.HTML));
 			} else if (s.equalsIgnoreCase("-tscxml") || s.equalsIgnoreCase("-scxml")) {
-				setFileFormat(FileFormat.SCXML);
+				setFileFormatOption(new FileFormatOption(FileFormat.SCXML));
 			} else if (s.equalsIgnoreCase("-txmi") || s.equalsIgnoreCase("-xmi")) {
-				setFileFormat(FileFormat.XMI_STANDARD);
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));
 			} else if (s.equalsIgnoreCase("-txmi:argo") || s.equalsIgnoreCase("-xmi:argo")) {
-				setFileFormat(FileFormat.XMI_ARGO);
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
 			} else if (s.equalsIgnoreCase("-txmi:star") || s.equalsIgnoreCase("-xmi:star")) {
-				setFileFormat(FileFormat.XMI_STAR);
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 			} else if (s.equalsIgnoreCase("-teps") || s.equalsIgnoreCase("-eps")) {
-				setFileFormat(FileFormat.EPS);
+				setFileFormatOption(new FileFormatOption(FileFormat.EPS));
 			} else if (s.equalsIgnoreCase("-teps:text") || s.equalsIgnoreCase("-eps:text")) {
-				setFileFormat(FileFormat.EPS_TEXT);
+				setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));
 			} else if (s.equalsIgnoreCase("-ttxt") || s.equalsIgnoreCase("-txt")) {
-				setFileFormat(FileFormat.ATXT);
+				setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
 			} else if (s.equalsIgnoreCase("-tutxt") || s.equalsIgnoreCase("-utxt")) {
-				setFileFormat(FileFormat.UTXT);
+				setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
 			} else if (s.equalsIgnoreCase("-braille") || s.equalsIgnoreCase("-tbraille")) {
-				setFileFormat(FileFormat.BRAILLE_PNG);
+				setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));
 			} else if (s.equalsIgnoreCase("-png") || s.equalsIgnoreCase("-tpng")) {
-				setFileFormat(FileFormat.PNG);
+				setFileFormatOption(new FileFormatOption(FileFormat.PNG));
 			} else if (s.equalsIgnoreCase("-vdx") || s.equalsIgnoreCase("-tvdx")) {
-				setFileFormat(FileFormat.VDX);
+				setFileFormatOption(new FileFormatOption(FileFormat.VDX));
 			} else if (s.equalsIgnoreCase("-latex") || s.equalsIgnoreCase("-tlatex")) {
-				setFileFormat(FileFormat.LATEX);
+				setFileFormatOption(new FileFormatOption(FileFormat.LATEX));
 			} else if (s.equalsIgnoreCase("-latex:nopreamble") || s.equalsIgnoreCase("-tlatex:nopreamble")) {
-				setFileFormat(FileFormat.LATEX_NO_PREAMBLE);
+				setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
 			} else if (s.equalsIgnoreCase("-base64") || s.equalsIgnoreCase("-tbase64")) {
-				setFileFormat(FileFormat.BASE64);
+				setFileFormatOption(new FileFormatOption(FileFormat.BASE64));
 			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
-				setFileFormat(FileFormat.PDF);
+				setFileFormatOption(new FileFormatOption(FileFormat.PDF));
 			} else if (s.equalsIgnoreCase("-overwrite")) {
 				OptionFlags.getInstance().setOverwrite(true);
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {
@@ -182,6 +188,15 @@ public class Option {
 				} else if (nb.matches("\\d+")) {
 					this.nbThreads = Integer.parseInt(nb);
 				}
+			} else if (s.equalsIgnoreCase("-timeout")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				final String timeSeconds = arg[i];
+				if (timeSeconds.matches("\\d+")) {
+					OptionFlags.getInstance().setTimeoutMs(Integer.parseInt(timeSeconds) * 1000L);
+				}
 			} else if (s.equalsIgnoreCase("-failfast")) {
 				this.failfast = true;
 			} else if (s.equalsIgnoreCase("-failfast2")) {
@@ -213,6 +228,8 @@ public class Option {
 				pipeDelimitor = arg[i];
 			} else if (s.equalsIgnoreCase("-pipemap")) {
 				pipeMap = true;
+			} else if (s.equalsIgnoreCase("-pipenostderr")) {
+				pipeNoStdErr = true;
 			} else if (s.equalsIgnoreCase("-pattern")) {
 				pattern = true;
 			} else if (s.equalsIgnoreCase("-syntax")) {
@@ -377,8 +394,8 @@ public class Option {
 		return Collections.unmodifiableList(excludes);
 	}
 
-	public Defines getDefaultDefines() {
-		final Defines result = new Defines();
+	public Defines getDefaultDefines(File f) {
+		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines.entrySet()) {
 			result.define(ent.getKey(), Arrays.asList(ent.getValue()));
 
@@ -432,7 +449,7 @@ public class Option {
 	}
 
 	public FileFormatOption getFileFormatOption() {
-		final FileFormatOption fileFormatOption = new FileFormatOption(getFileFormat());
+		// final FileFormatOption fileFormatOption = new FileFormatOption(getFileFormat());
 		if (debugsvek) {
 			fileFormatOption.setDebugSvek(true);
 		}
@@ -505,6 +522,10 @@ public class Option {
 
 	public String getPipeDelimitor() {
 		return pipeDelimitor;
+	}
+
+	public final boolean isPipeNoStdErr() {
+		return pipeNoStdErr;
 	}
 
 }

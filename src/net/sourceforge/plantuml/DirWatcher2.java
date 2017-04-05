@@ -82,7 +82,7 @@ public class DirWatcher2 {
 				final FileWatcher watcher = modifieds.get(f);
 
 				if (watcher == null || watcher.hasChanged()) {
-					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f,
+					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,
 							option.getOutputDir(), option.getConfig(), option.getCharset(),
 							option.getFileFormatOption());
 					modifieds.put(f, new FileWatcher(Collections.singleton(f)));

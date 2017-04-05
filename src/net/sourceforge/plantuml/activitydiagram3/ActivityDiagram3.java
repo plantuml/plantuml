@@ -315,10 +315,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find if");
 	}
 
-	public void startRepeat(HtmlColor color) {
+	public void startRepeat(HtmlColor color, Display label) {
 		manageSwimlaneStrategy();
 		final InstructionRepeat instructionRepeat = new InstructionRepeat(swinlanes.getCurrentSwimlane(), current(),
-				nextLinkRenderer(), color);
+				nextLinkRenderer(), color, label);
 		current().add(instructionRepeat);
 		setCurrent(instructionRepeat);
 		setNextLinkRendererInternal(LinkRendering.none());
@@ -334,6 +334,20 @@ public class ActivityDiagram3 extends UmlDiagram {
 			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back);
 			setCurrent(instructionRepeat.getParent());
 			this.setNextLinkRendererInternal(LinkRendering.none());
+			return CommandExecutionResult.ok();
+		}
+		return CommandExecutionResult.error("Cannot find repeat");
+
+	}
+
+	public CommandExecutionResult backwardWhile(Display label) {
+		manageSwimlaneStrategy();
+		if (current() instanceof InstructionRepeat) {
+			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
+//			final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
+			instructionRepeat.setBackward(label);
+//			setCurrent(instructionRepeat.getParent());
+//			this.setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Cannot find repeat");

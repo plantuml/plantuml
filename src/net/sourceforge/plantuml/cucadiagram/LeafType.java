@@ -41,7 +41,7 @@ public enum LeafType {
 
 	EMPTY_PACKAGE,
 
-	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP, NOTE, TIPS, OBJECT, ASSOCIATION, ENUM,
+	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, LOLLIPOP, NOTE, TIPS, OBJECT, ASSOCIATION, ENUM, CIRCLE,
 	
 	USECASE, 
 
@@ -57,12 +57,12 @@ public enum LeafType {
 
 	STILL_UNKNOWN;
 
-	public static LeafType getLeafType(String arg0) {
-		arg0 = StringUtils.goUpperCase(arg0);
-		if (arg0.startsWith("ABSTRACT")) {
+	public static LeafType getLeafType(String type) {
+		type = StringUtils.goUpperCase(type);
+		if (type.startsWith("ABSTRACT")) {
 			return LeafType.ABSTRACT_CLASS;
 		}
-		return LeafType.valueOf(arg0);
+		return LeafType.valueOf(type);
 	}
 
 	public boolean isLikeClass() {

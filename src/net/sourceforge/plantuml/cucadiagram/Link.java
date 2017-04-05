@@ -374,7 +374,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean containsType(LeafType type) {
-		if (getEntity1().getEntityType() == type || getEntity2().getEntityType() == type) {
+		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type) {
 			return true;
 		}
 		return false;

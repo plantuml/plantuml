@@ -62,7 +62,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 
 	private double minX;
 	private double minY;
-	private final int shield;
+	private final Margins shield;
 
 	private final EntityPosition entityPosition;
 	private final IEntityImage image;
@@ -89,7 +89,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public Shape(IEntityImage image, ShapeType type, double width, double height, ColorSequence colorSequence,
-			boolean top, int shield, EntityPosition entityPosition) {
+			boolean top, Margins shield, EntityPosition entityPosition) {
 		this.entityPosition = entityPosition;
 		this.image = image;
 		this.top = top;
@@ -99,7 +99,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
 		this.shield = shield;
-		if (shield > 0 && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+		if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -121,7 +121,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 			appendLabelHtmlSpecialForLink(sb, stringBounder);
 			return;
 		}
-		if (type == ShapeType.RECTANGLE && shield > 0) {
+		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
 			appendHtml(sb);
 			return;
 		}
@@ -157,20 +157,20 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 		sb.append("<TR>");
 		appendTd(sb);
-		appendTd(sb, shield, shield);
+		appendTd(sb, 1, shield.getY1());
 		appendTd(sb);
 		sb.append("</TR>");
 		sb.append("<TR>");
-		appendTd(sb, shield, shield);
+		appendTd(sb, shield.getX1(), 1);
 		sb.append("<TD BGCOLOR=\"" + StringUtils.getAsHtml(color) + "\"");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + getHeight() + "\"");
 		sb.append(" PORT=\"h\">");
 		sb.append("</TD>");
-		appendTd(sb, shield, shield);
+		appendTd(sb, shield.getX2(), 1);
 		sb.append("</TR>");
 		sb.append("<TR>");
 		appendTd(sb);
-		appendTd(sb, shield, shield);
+		appendTd(sb, 1, shield.getY2());
 		appendTd(sb);
 		sb.append("</TR>");
 		sb.append("</TABLE>");
@@ -217,7 +217,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append("</TR>");
 	}
 
-	private void appendTd(StringBuilder sb, int w, int h) {
+	private void appendTd(StringBuilder sb, double w, double h) {
 		sb.append("<TD");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\"");
 		sb.append(">");
@@ -230,7 +230,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	}
 
 	private void appendShapeInternal(StringBuilder sb) {
-		if (type == ShapeType.RECTANGLE && shield > 0) {
+		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
 			throw new UnsupportedOperationException();
 		} else if (type == ShapeType.RECTANGLE || type == ShapeType.FOLDER) {
 			sb.append("shape=rect");
@@ -289,7 +289,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public boolean isShielded() {
-		return shield > 0;
+		return shield.isZero() == false;
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {

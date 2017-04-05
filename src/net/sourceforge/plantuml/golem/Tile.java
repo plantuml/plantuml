@@ -62,7 +62,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 	private static double SIZE = 40;
 	private final int num;
 
-	private final UFont numberFont = new UFont("Monospaced", Font.PLAIN, 11);
+	private final UFont numberFont = UFont.monospaced(11);
 	private final FontConfiguration fc = FontConfiguration.blackBlueTrue(numberFont);
 	private final Map<TileGeometry, TileArea> geometries;
 

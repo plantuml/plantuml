@@ -103,10 +103,6 @@ public class EntityImageState2 extends AbstractEntityImage {
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return asSmall.calculateDimension(stringBounder);
 	}

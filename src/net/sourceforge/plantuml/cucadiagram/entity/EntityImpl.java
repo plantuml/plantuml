@@ -156,7 +156,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.parentContainer = container;
 	}
 
-	public LeafType getEntityType() {
+	public LeafType getLeafType() {
 		return leafType;
 	}
 
@@ -417,7 +417,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// ---- other
 
-	public void overideImage(IEntityImage img, LeafType leafType) {
+	public void overrideImage(IEntityImage img, LeafType leafType) {
 		checkGroup();
 		this.svekImage = img;
 		this.url = null;
@@ -462,6 +462,9 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public USymbol getUSymbol() {
+		if (getLeafType() == LeafType.CIRCLE) {
+			return USymbol.INTERFACE;
+		}
 		if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
 			return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
 		}

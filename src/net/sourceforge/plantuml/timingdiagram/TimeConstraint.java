@@ -81,7 +81,7 @@ public class TimeConstraint {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		final UFont font = UFont.serif(14);
 		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLUE, false);
 	}
 

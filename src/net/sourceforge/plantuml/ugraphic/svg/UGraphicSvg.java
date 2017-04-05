@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Random;
 
 import javax.xml.transform.TransformerException;
 
@@ -81,16 +82,19 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		register();
 	}
 
-	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String linkTarget, String hover) {
-		this(colorMapper, new SvgGraphics(backcolor, scale, hover), textAsPath, linkTarget);
+	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String linkTarget,
+			String hover, Random rnd) {
+		this(colorMapper, new SvgGraphics(backcolor, scale, hover, rnd), textAsPath, linkTarget);
 	}
 
-	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget, String hover) {
-		this(colorMapper, new SvgGraphics(scale, hover), textAsPath, linkTarget);
+	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget, String hover,
+			Random rnd) {
+		this(colorMapper, new SvgGraphics(scale, hover, rnd), textAsPath, linkTarget);
 	}
 
-	public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String linkTarget, String hover) {
-		this(mapper, new SvgGraphics(scale, hover), textAsPath, linkTarget);
+	public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String linkTarget,
+			String hover, Random rnd) {
+		this(mapper, new SvgGraphics(scale, hover, rnd), textAsPath, linkTarget);
 
 		final SvgGraphics svg = getGraphicObject();
 		svg.paintBackcolorGradient(mapper, gr);
@@ -144,8 +148,11 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		return stringBounder;
 	}
 
-	public void createXml(OutputStream os) throws IOException {
+	public void createXml(OutputStream os, String metadata) throws IOException {
 		try {
+			if (metadata != null) {
+				getGraphicObject().addComment("\n" + metadata);
+			}
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {
 			throw new IOException(e.toString());
@@ -161,7 +168,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		createXml(os);
+		createXml(os, metadata);
 	}
 
 	@Override

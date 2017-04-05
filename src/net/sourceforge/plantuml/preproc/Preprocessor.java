@@ -44,6 +44,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
+import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -65,10 +66,11 @@ public class Preprocessor implements ReadLine {
 	private final PreprocessorInclude rawSource;
 	private final ReadLineInsertable source;
 
-	public Preprocessor(ReadLine reader, String charset, Defines defines, File newCurrentDir) {
+	public Preprocessor(ReadLine reader, String charset, Defines defines, File newCurrentDir,
+			DefinitionsContainer definitionsContainer) {
 		this.defines = defines;
 		this.defines.saveState();
-		this.rawSource = new PreprocessorInclude(reader, defines, charset, newCurrentDir);
+		this.rawSource = new PreprocessorInclude(reader, defines, charset, newCurrentDir, definitionsContainer);
 		this.source = new ReadLineInsertable(new IfManager(rawSource, defines));
 	}
 

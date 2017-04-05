@@ -141,9 +141,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.assembly(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Ftile repeat, Display test, Display yes, Display out,
-			HtmlColor color, LinkRendering backRepeatLinkRendering) {
-		return factory.repeat(swimlane, swimlaneOut, repeat, test, yes, out, color, backRepeatLinkRendering);
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test, Display yes,
+			Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward) {
+		return factory.repeat(swimlane, swimlaneOut, startLabel, repeat, test, yes, out, color, backRepeatLinkRendering,
+				backward);
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,

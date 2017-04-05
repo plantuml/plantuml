@@ -63,7 +63,7 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 			strategy = TableStrategy.fromChar(textT.charAt(1));
 		}
 
-		final UFont font = new UFont("Default", Font.PLAIN, 12);
+		final UFont font = UFont.byDefault(12);
 		final ElementTree result = new ElementTree(font, getDictionary(), strategy);
 
 		boolean takeMe = true;

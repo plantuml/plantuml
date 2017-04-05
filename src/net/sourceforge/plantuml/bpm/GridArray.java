@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.bpm;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
@@ -51,34 +49,35 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GridArray implements UDrawable {
 
-	private final int rows;
 	private final int lines;
+	private final int cols;
 	private final Placeable data[][];
 	private final ISkinParam skinParam;
-	private final List<BpmEdge> edges = new ArrayList<BpmEdge>();
 
-	public GridArray(ISkinParam skinParam, int rows, int lines) {
+	// private final List<GridEdge> edges = new ArrayList<GridEdge>();
+
+	public GridArray(ISkinParam skinParam, int lines, int cols) {
 		this.skinParam = skinParam;
-		this.rows = rows;
 		this.lines = lines;
-		this.data = new Placeable[rows][lines];
+		this.cols = cols;
+		this.data = new Placeable[lines][cols];
 	}
 
 	@Override
 	public String toString() {
-		return "" + lines + "x" + rows;
+		return "" + lines + "x" + cols;
 	}
 
-	public void setData(int r, int l, Placeable element) {
-		data[r][l] = element;
+	public void setData(int l, int c, Placeable element) {
+		data[l][c] = element;
 	}
 
-	public Placeable getData(int r, int l) {
-		return data[r][l];
+	public Placeable getData(int l, int c) {
+		return data[l][c];
 	}
 
 	public final int getRows() {
-		return rows;
+		return cols;
 	}
 
 	public final int getLines() {
@@ -87,8 +86,8 @@ public class GridArray implements UDrawable {
 
 	private double getHeightOfLine(StringBounder stringBounder, int line) {
 		double height = 0;
-		for (int i = 0; i < rows; i++) {
-			final Placeable cell = data[i][line];
+		for (int i = 0; i < cols; i++) {
+			final Placeable cell = data[line][i];
 			if (cell == null) {
 				continue;
 			}
@@ -97,10 +96,10 @@ public class GridArray implements UDrawable {
 		return height;
 	}
 
-	private double getWidthOfRow(StringBounder stringBounder, int row) {
+	private double getWidthOfCol(StringBounder stringBounder, int col) {
 		double width = 0;
 		for (int i = 0; i < lines; i++) {
-			final Placeable cell = data[row][i];
+			final Placeable cell = data[i][col];
 			if (cell == null) {
 				continue;
 			}
@@ -115,31 +114,57 @@ public class GridArray implements UDrawable {
 		// printMe();
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		for (BpmEdge edge : edges) {
-			// System.err.println("Drawing " + edge);
-			final int from[] = getCoord(edge.getFrom());
-			final int to[] = getCoord(edge.getTo());
-			final Point2D pt1 = getCenterOf(stringBounder, from[0], from[1]);
-			final Point2D pt2 = getCenterOf(stringBounder, to[0], to[1]);
-			drawArrow(ug, pt1, pt2);
-		}
+
+		// for (GridEdge edge : edges) {
+		// // System.err.println("Drawing " + edge);
+		// final int from[] = getCoord(edge.getFrom());
+		// final int to[] = getCoord(edge.getTo());
+		// final Point2D pt1 = getCenterOf(stringBounder, from[0], from[1]);
+		// final Point2D pt2 = getCenterOf(stringBounder, to[0], to[1]);
+		// drawArrow(ug, pt1, pt2);
+		// }
+
 		double dy = 0;
+		drawInternalGrid(ug);
 		for (int l = 0; l < lines; l++) {
 			double dx = 0;
 			final double heightOfLine = getHeightOfLine(stringBounder, l);
-			for (int r = 0; r < rows; r++) {
-				final double widthOfRow = getWidthOfRow(stringBounder, r);
-				final Placeable cell = data[r][l];
+			for (int r = 0; r < cols; r++) {
+				final double widthOfCol = getWidthOfCol(stringBounder, r);
+				final Placeable cell = data[l][r];
 				if (cell != null) {
 					final Dimension2D dim = cell.getDimension(stringBounder, skinParam);
 
 					cell.toTextBlock(skinParam).drawU(
-							ug.apply(new UTranslate(dx + (widthOfRow - dim.getWidth()) / 2, dy
-									+ (heightOfLine - dim.getHeight()) / 2)));
+							ug.apply(new UTranslate(dx + (widthOfCol + margin - dim.getWidth()) / 2, dy
+									+ (heightOfLine + margin - dim.getHeight()) / 2)));
 				}
-				dx += widthOfRow + margin;
+				dx += widthOfCol + margin;
 			}
 			dy += heightOfLine + margin;
+		}
+
+	}
+
+	private void drawInternalGrid(UGraphic ug) {
+		double heightMax = 0;
+		for (int l = 0; l < lines; l++) {
+			heightMax += getHeightOfLine(ug.getStringBounder(), l) + margin;
+		}
+		double widthMax = 0;
+		for (int c = 0; c < cols; c++) {
+			widthMax += getWidthOfCol(ug.getStringBounder(), c) + margin;
+		}
+		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
+		double y = 0;
+		for (int l = 0; l < lines; l++) {
+			ug.apply(new UTranslate(0, y)).draw(new ULine(widthMax, 0));
+			y += getHeightOfLine(ug.getStringBounder(), l) + margin;
+		}
+		double x = 0;
+		for (int c = 0; c < cols; c++) {
+			ug.apply(new UTranslate(x, 0)).draw(new ULine(0, heightMax));
+			x += getWidthOfCol(ug.getStringBounder(), c) + margin;
 		}
 
 	}
@@ -150,13 +175,13 @@ public class GridArray implements UDrawable {
 		ug.apply(new UTranslate(pt1)).draw(line);
 	}
 
-	private Point2D getCenterOf(StringBounder stringBounder, int r, int l) {
-		double x = getWidthOfRow(stringBounder, r) / 2;
-		for (int i = 0; i < r; i++) {
-			final double widthOfRow = getWidthOfRow(stringBounder, i);
-			x += widthOfRow + margin;
+	private Point2D getCenterOf(StringBounder stringBounder, int c, int l) {
+		double x = getWidthOfCol(stringBounder, c) / 2 + margin / 2;
+		for (int i = 0; i < c; i++) {
+			final double widthOfCol = getWidthOfCol(stringBounder, i);
+			x += widthOfCol + margin;
 		}
-		double y = getHeightOfLine(stringBounder, l) / 2;
+		double y = getHeightOfLine(stringBounder, l) / 2 + margin / 2;
 		for (int i = 0; i < l; i++) {
 			final double heightOfLine = getHeightOfLine(stringBounder, i);
 			y += heightOfLine + margin;
@@ -164,12 +189,12 @@ public class GridArray implements UDrawable {
 		return new Point2D.Double(x, y);
 	}
 
-	private int[] getCoord(Placeable element) {
+	private int[] getCoord(Cell someCell) {
 		for (int l = 0; l < lines; l++) {
-			for (int r = 0; r < rows; r++) {
-				final Placeable cell = data[r][l];
-				if (cell == element) {
-					return new int[] { r, l };
+			for (int c = 0; c < cols; c++) {
+				final Placeable cell = data[l][c];
+				if (cell == someCell.getData()) {
+					return new int[] { c, l };
 				}
 			}
 		}
@@ -178,8 +203,8 @@ public class GridArray implements UDrawable {
 
 	private void printMe() {
 		for (int l = 0; l < lines; l++) {
-			for (int r = 0; r < rows; r++) {
-				final Placeable cell = data[r][l];
+			for (int c = 0; c < cols; c++) {
+				final Placeable cell = data[l][c];
 				System.err.print(cell);
 				System.err.print("  ;  ");
 			}
@@ -187,8 +212,8 @@ public class GridArray implements UDrawable {
 		}
 	}
 
-	public void addEdges(List<BpmEdge> edges) {
-		this.edges.addAll(edges);
-	}
+	// void addEdgesInternal(List<GridEdge> edges) {
+	// this.edges.addAll(edges);
+	// }
 
 }

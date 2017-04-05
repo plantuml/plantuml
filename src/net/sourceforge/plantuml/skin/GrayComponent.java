@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 
 class GrayComponent extends AbstractComponent {
 
-	private static final UFont NORMAL = new UFont("SansSerif", Font.PLAIN, 7);
+	private static final UFont NORMAL = UFont.sansSerif(7);
 
 	private final ComponentType type;
 

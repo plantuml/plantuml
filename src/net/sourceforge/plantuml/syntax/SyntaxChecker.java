@@ -77,7 +77,7 @@ public class SyntaxChecker {
 			result.setSuggest(Arrays.asList("Did you mean:", "@enduml"));
 			return result;
 		}
-		final SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), source,
+		final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
 				Collections.<String> emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
@@ -111,7 +111,7 @@ public class SyntaxChecker {
 
 	public static SyntaxResult checkSyntaxFair(String source) {
 		final SyntaxResult result = new SyntaxResult();
-		final SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), source,
+		final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
 				Collections.<String> emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();

@@ -80,8 +80,4 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

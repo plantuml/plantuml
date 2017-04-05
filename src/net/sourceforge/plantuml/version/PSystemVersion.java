@@ -52,13 +52,18 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.OptionPrint;
+import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.preproc.Preprocessor;
+import net.sourceforge.plantuml.preproc.PreprocessorInclude;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -161,6 +166,12 @@ public class PSystemVersion extends AbstractPSystem {
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		strings.add("Loaded from " + Version.getJarPath());
+		if (OptionFlags.getInstance().isWord()) {
+			strings.add("Word Mode");
+			strings.add("Command Line: " + Run.getCommandLine());
+			strings.add("Current Dir: " + FileSystem.getInstance().getCurrentDir().getAbsolutePath());
+			strings.add("plantuml.include.path: " + PreprocessorInclude.getenv("plantuml.include.path"));
+		}
 		strings.add(" ");
 
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));

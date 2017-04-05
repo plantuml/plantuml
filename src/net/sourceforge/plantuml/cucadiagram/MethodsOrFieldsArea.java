@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
@@ -137,7 +138,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		double y = 0;
 		final Election election = new Election();
 		for (Member m : members) {
-			election.addCandidat(m.getDisplay(false), m);
+			election.addCandidate(m.getDisplay(false), m);
 		}
 		final Map<Member, String> memberWithPort = election.getAllElected(leaf.getPortShortNames());
 		for (Member m : members) {
@@ -196,8 +197,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		}
 
 		@Override
-		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-			return bloc.getInnerPosition(member, stringBounder);
+		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			return bloc.getInnerPosition(member, stringBounder, strategy);
 		}
 
 	}
@@ -236,7 +237,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		final ULayoutGroup group = getLayout(stringBounder);
 		final Dimension2D dim = calculateDimension(stringBounder);
 		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);

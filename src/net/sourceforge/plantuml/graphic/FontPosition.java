@@ -58,7 +58,7 @@ public enum FontPosition {
 		if (size < 2) {
 			size = 2;
 		}
-		return font.deriveSize((float) size);
+		return font.withSize((float) size);
 	}
 
 	public String getHtmlTag() {

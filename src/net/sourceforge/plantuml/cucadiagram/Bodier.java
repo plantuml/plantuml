@@ -207,4 +207,8 @@ public class Bodier {
 		return TextBlockUtils.mergeTB(bb1, bb2, HorizontalAlignment.LEFT);
 	}
 
+	public List<String> getRawBody() {
+		return Collections.unmodifiableList(rawBody);
+	}
+
 }

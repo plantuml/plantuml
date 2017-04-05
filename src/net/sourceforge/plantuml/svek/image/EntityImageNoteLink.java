@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -72,7 +73,6 @@ public class EntityImageNoteLink extends AbstractTextBlock implements IEntityIma
 		comp.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));
 	}
 
-
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
 	}
@@ -81,8 +81,8 @@ public class EntityImageNoteLink extends AbstractTextBlock implements IEntityIma
 		return null;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public boolean isHidden() {

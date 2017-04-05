@@ -46,6 +46,38 @@ public class ChainImpl<O> implements Chain<O> {
 	private final List<O> negative = new ArrayList<O>();
 	private int currentVersion;
 
+	public boolean remove(O data) {
+		updateStructuralVersion();
+		boolean result = positive.remove(data);
+		if (result == false) {
+			result = negative.remove(data);
+		}
+		return result;
+	}
+
+	public int compare(O a, O b) {
+		if (a.equals(b)) {
+			return 0;
+		}
+		for (int i = negative.size() - 1; i >= 0; i--) {
+			if (a.equals(negative.get(i))) {
+				return -1;
+			}
+			if (b.equals(negative.get(i))) {
+				return 1;
+			}
+		}
+		for (O cur : positive) {
+			if (a.equals(cur)) {
+				return -1;
+			}
+			if (b.equals(cur)) {
+				return 1;
+			}
+		}
+		throw new UnsupportedOperationException();
+	}
+
 	public List<O> toList() {
 		final List<O> result = new ArrayList<O>();
 		for (O element : negative) {
@@ -205,10 +237,6 @@ public class ChainImpl<O> implements Chain<O> {
 			version = updateStructuralVersion();
 			insertInternal(position + 1, data);
 		}
-	}
-
-	public int compare(O a, O b) {
-		throw new UnsupportedOperationException();
 	}
 
 }

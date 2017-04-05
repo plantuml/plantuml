@@ -149,8 +149,8 @@ public final class ConcurrentStateImage extends AbstractTextBlock implements IEn
 		return false;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public ShapeType getShapeType() {

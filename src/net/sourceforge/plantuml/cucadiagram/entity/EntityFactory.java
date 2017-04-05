@@ -74,7 +74,7 @@ public class EntityFactory {
 	}
 
 	public boolean isHidden(ILeaf leaf) {
-		if (hiddenTypes.contains(leaf.getEntityType())) {
+		if (hiddenTypes.contains(leaf.getLeafType())) {
 			return true;
 		}
 		final Stereotype stereotype = leaf.getStereotype();

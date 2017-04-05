@@ -46,4 +46,6 @@ public interface Chain<O> extends Comparator<O> {
 
 	public List<O> toList();
 
+	public boolean remove(O data);
+
 }

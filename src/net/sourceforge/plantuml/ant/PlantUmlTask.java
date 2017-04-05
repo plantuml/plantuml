@@ -47,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.OptionFlags;
@@ -190,8 +191,8 @@ public class PlantUmlTask extends Task {
 		if (OptionFlags.getInstance().isVerbose()) {
 			this.log("Processing " + f.getAbsolutePath());
 		}
-		final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
-				option.getConfig(), option.getCharset(), option.getFileFormatOption());
+		final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+				option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
 
 		if (option.isCheckOnly()) {
 			return sourceFileReader.hasError();
@@ -300,43 +301,43 @@ public class PlantUmlTask extends Task {
 
 	public void setFormat(String s) {
 		if ("scxml".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.SCXML);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.SCXML));
 		}
 		if ("xmi".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.XMI_STANDARD);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STANDARD));
 		}
 		if ("xmi:argo".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.XMI_ARGO);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
 		}
 		if ("xmi:start".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.XMI_STAR);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 		}
 		if ("eps".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.EPS);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS));
 		}
 		if ("braille".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.BRAILLE_PNG);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.BRAILLE_PNG));
 		}
 		if ("pdf".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.PDF);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.PDF));
 		}
 		if ("latex".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.LATEX);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX));
 		}
 		if ("latex:nopreamble".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.LATEX_NO_PREAMBLE);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
 		}
 		if ("eps:text".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.EPS_TEXT);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));
 		}
 		if ("svg".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.SVG);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));
 		}
 		if ("txt".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.ATXT);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
 		}
 		if ("utxt".equalsIgnoreCase(s)) {
-			option.setFileFormat(FileFormat.UTXT);
+			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
 		}
 	}
 

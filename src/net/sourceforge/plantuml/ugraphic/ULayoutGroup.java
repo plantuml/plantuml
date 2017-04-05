@@ -38,7 +38,10 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
@@ -64,9 +67,19 @@ public class ULayoutGroup {
 	}
 
 	public Rectangle2D getInnerPosition(String member, double width, double height, StringBounder stringBounder) {
-		for (Map.Entry<TextBlock, Point2D> ent : placementStrategy.getPositions(width, height).entrySet()) {
+		final Set<Entry<TextBlock, Point2D>> all = placementStrategy.getPositions(width, height).entrySet();
+		Rectangle2D result = tryOne(all, member, stringBounder, InnerStrategy.STRICT);
+		if (result == null) {
+			result = tryOne(all, member, stringBounder, InnerStrategy.LAZZY);
+		}
+		return result;
+	}
+
+	private Rectangle2D tryOne(final Set<Entry<TextBlock, Point2D>> all, String member, StringBounder stringBounder,
+			InnerStrategy mode) {
+		for (Map.Entry<TextBlock, Point2D> ent : all) {
 			final TextBlock block = ent.getKey();
-			final Rectangle2D result = block.getInnerPosition(member, stringBounder);
+			final Rectangle2D result = block.getInnerPosition(member, stringBounder, mode);
 			if (result != null) {
 				final UTranslate translate = new UTranslate(ent.getValue());
 				return translate.apply(result);

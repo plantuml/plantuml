@@ -54,7 +54,7 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public void setUSymbol(USymbol symbol);
 
-	public LeafType getEntityType();
+	public LeafType getLeafType();
 
 	public Display getDisplay();
 

@@ -52,7 +52,7 @@ public class SecureCoder {
 		for (int i = 0; i < m.length; i++) {
 			final int enc = m[i];
 			dec[enc] = i;
-			for (int n : MagicTable.getNeighboors(enc)) {
+			for (int n : MagicTable.getNeighbours(enc)) {
 				if (dec[n] != -1) {
 					throw new IllegalStateException();
 				}

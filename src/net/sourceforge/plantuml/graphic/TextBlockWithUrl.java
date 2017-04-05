@@ -69,8 +69,8 @@ public class TextBlockWithUrl implements TextBlock {
 		return block.calculateDimension(stringBounder);
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-		return block.getInnerPosition(member, stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		return block.getInnerPosition(member, stringBounder, strategy);
 	}
 
 }

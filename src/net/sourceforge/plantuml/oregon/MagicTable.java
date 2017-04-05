@@ -50,61 +50,61 @@ public class MagicTable {
 
 	private final Oc number[] = new Oc[10000];
 
-	private static ArrayList<int[]> neighboors;
+	private static ArrayList<int[]> neighbours;
 
 	static {
-		neighboors = new ArrayList<int[]>();
+		neighbours = new ArrayList<int[]>();
 		for (int i = 0; i < 10000; i++) {
-			neighboors.add(null);
+			neighbours.add(null);
 		}
 	}
 
-	public static int[] getNeighboors(final int nb) {
-		if (neighboors.get(nb) == null) {
-			neighboors.set(nb, getNeighboorsSlow(nb));
+	public static int[] getNeighbours(final int nb) {
+		if (neighbours.get(nb) == null) {
+			neighbours.set(nb, getNeighboursSlow(nb));
 		}
-		return neighboors.get(nb);
+		return neighbours.get(nb);
 	}
 
-	public static int[] getNeighboorsSlow(final int nb) {
+	public static int[] getNeighboursSlow(final int nb) {
 		final int result[] = new int[36];
 
 		final int v1 = nb % 10;
 		int root = nb - v1;
 		int cpt = 0;
 		for (int i = 0; i < 10; i++) {
-			final int candidat = root + i;
-			if (candidat == nb) {
+			final int candidate = root + i;
+			if (candidate == nb) {
 				continue;
 			}
-			result[cpt++] = candidat;
+			result[cpt++] = candidate;
 		}
 		final int v2 = (nb / 10) % 10;
 		root = nb - v2 * 10;
 		for (int i = 0; i < 10; i++) {
-			final int candidat = root + i * 10;
-			if (candidat == nb) {
+			final int candidate = root + i * 10;
+			if (candidate == nb) {
 				continue;
 			}
-			result[cpt++] = candidat;
+			result[cpt++] = candidate;
 		}
 		final int v3 = (nb / 100) % 10;
 		root = nb - v3 * 100;
 		for (int i = 0; i < 10; i++) {
-			final int candidat = root + i * 100;
-			if (candidat == nb) {
+			final int candidate = root + i * 100;
+			if (candidate == nb) {
 				continue;
 			}
-			result[cpt++] = candidat;
+			result[cpt++] = candidate;
 		}
 		final int v4 = nb / 1000;
 		root = nb - v4 * 1000;
 		for (int i = 0; i < 10; i++) {
-			final int candidat = root + i * 1000;
-			if (candidat == nb) {
+			final int candidate = root + i * 1000;
+			if (candidate == nb) {
 				continue;
 			}
-			result[cpt++] = candidat;
+			result[cpt++] = candidate;
 		}
 		return result;
 	}
@@ -133,7 +133,7 @@ public class MagicTable {
 		if (number[nb] != null) {
 			return false;
 		}
-		for (int near : getNeighboors(nb)) {
+		for (int near : getNeighbours(nb)) {
 			if (number[near] != null) {
 				return false;
 			}
@@ -146,7 +146,7 @@ public class MagicTable {
 			throw new IllegalArgumentException();
 		}
 		number[nb] = Oc.USED;
-		for (int near : getNeighboors(nb)) {
+		for (int near : getNeighbours(nb)) {
 			number[near] = Oc.NEAR;
 		}
 	}
@@ -175,11 +175,11 @@ public class MagicTable {
 	public static int size(Random rnd, MagicTable mt) {
 		int i = 0;
 		while (true) {
-			final int candidat = mt.getRandomFree(rnd);
-			if (candidat == -1) {
+			final int candidate = mt.getRandomFree(rnd);
+			if (candidate == -1) {
 				break;
 			}
-			mt.burnNumber(candidat);
+			mt.burnNumber(candidate);
 			i++;
 		}
 		return i;

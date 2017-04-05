@@ -60,7 +60,7 @@ public class ElementFactoryButton implements ElementFactory {
 		}
 		final Terminated<String> next = dataSource.next();
 		final String text = next.getElement();
-		final UFont font = new UFont("Default", Font.PLAIN, 12);
+		final UFont font = UFont.byDefault(12);
 		return new Terminated<Element>(new ElementButton(text.substring(1, text.length() - 1), font, spriteContainer),
 				next.getTerminator());
 	}

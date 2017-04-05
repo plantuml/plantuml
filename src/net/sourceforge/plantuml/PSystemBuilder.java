@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.PSystemCreoleFactory;
 import net.sourceforge.plantuml.cute.PSystemCuteFactory;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
+import net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
@@ -171,6 +172,7 @@ public class PSystemBuilder {
 			factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
+		factories.add(new PSystemDefinitionFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		// factories.add(new PSystemStatsFactory());

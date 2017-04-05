@@ -89,7 +89,7 @@ public class ScxmlStateDiagramStandard {
 
 	private String getInitial() {
 		for (final IEntity ent : diagram.getLeafsvalues()) {
-			if (ent.getEntityType() == LeafType.CIRCLE_START) {
+			if (ent.getLeafType() == LeafType.CIRCLE_START) {
 				return getId(ent);
 			}
 		}

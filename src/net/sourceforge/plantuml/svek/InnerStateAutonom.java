@@ -139,8 +139,8 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		return ShapeType.ROUND_RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public boolean isHidden() {

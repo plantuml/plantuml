@@ -73,9 +73,9 @@ public abstract class UGraphicUtils {
 		} else if (fileFormat == FileFormat.SVG) {
 			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
 					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
-					fileFormatOption.getHoverColor());
+					fileFormatOption.getHoverColor(), fileFormatOption.getRandom());
 			image.drawU(svg);
-			svg.createXml(os);
+			svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);
 		} else if (fileFormat == FileFormat.EPS) {
 			final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 			image.drawU(ug);

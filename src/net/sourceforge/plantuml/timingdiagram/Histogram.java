@@ -50,9 +50,11 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -242,14 +244,14 @@ public class Histogram implements TimeDrawing {
 				return new Dimension2DDouble(width, getFullDeltaY());
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 
 		};
 	}
 
-	public void setInitialState(String initialState) {
+	public void setInitialState(String initialState, Colors initialColors) {
 		this.initialState = initialState;
 		if (initialState != null) {
 			allStates.add(initialState);

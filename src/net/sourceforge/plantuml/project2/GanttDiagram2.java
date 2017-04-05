@@ -60,7 +60,7 @@ public class GanttDiagram2 {
 		this.project = project;
 	}
 
-	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
+	private final UFont font = UFont.serif(9);
 	private final FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(font);
 
 	public void draw(UGraphic ug, double x, double y) {

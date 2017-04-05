@@ -78,7 +78,7 @@ public class ConverterSvg {
 
 	private Dimension dimension;
 
-	public String getSvg(boolean fontAsShapes, Color backgroundColor) throws ClassNotFoundException,
+	public String getSvg(double scale, boolean fontAsShapes, Color backgroundColor) throws ClassNotFoundException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, InstantiationException, IOException {
 		// DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();

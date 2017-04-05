@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -109,7 +110,7 @@ class AtomEmbededSystem implements Atom {
 	// }
 	//
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final BlockUml blockUml = new BlockUml(lines2, 0);
+		final BlockUml blockUml = new BlockUml(lines2, 0, Defines.createEmpty());
 		return blockUml.getDiagram();
 	}
 	

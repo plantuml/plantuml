@@ -30,29 +30,31 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.applet;
+package net.sourceforge.plantuml.definition;
 
-import java.applet.Applet;
-import java.awt.Graphics;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 
-import net.sourceforge.plantuml.version.Version;
+public class PSystemDefinitionFactory extends PSystemBasicFactory<PSystemDefinition> {
 
-public class VersionApplet extends Applet {
+	public PSystemDefinitionFactory() {
+		super(DiagramType.DEFINITION);
+	}
 
-	@Override
-	public void init() {
-		super.init();
+	public PSystemDefinition init(String startLine) {
+		if (getDiagramType() == DiagramType.DEFINITION) {
+			return new PSystemDefinition(startLine);
+		}
+		return null;
 	}
 
 	@Override
-	public void start() {
-		super.start();
+	public PSystemDefinition executeLine(PSystemDefinition system, String line) {
+		system.doCommandLine(line);
+		return system;
 	}
 
-	@Override
-	public void paint(Graphics g) {
-		g.drawString(Version.versionString(), 0, 10);
-	}
 }

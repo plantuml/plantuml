@@ -59,6 +59,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
@@ -115,11 +116,11 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(double scale, String hover) {
-		this(null, scale, hover);
+	public SvgGraphics(double scale, String hover, Random rnd) {
+		this(null, scale, hover, rnd);
 	}
 
-	public SvgGraphics(String backcolor, double scale, String hover) {
+	public SvgGraphics(String backcolor, double scale, String hover, Random rnd) {
 		try {
 			this.scale = scale;
 			this.document = getDocument();
@@ -132,7 +133,7 @@ public class SvgGraphics {
 			defs = simpleElement("defs");
 			gRoot = simpleElement("g");
 			strokeWidth = "" + scale;
-			final Random rnd = new Random();
+			// final Random rnd = new Random();
 			this.filterUid = "b" + getRandomString(rnd);
 			this.shadowId = "f" + getRandomString(rnd);
 			this.gradientId = "g" + getRandomString(rnd);
@@ -707,22 +708,28 @@ public class SvgGraphics {
 
 	private final Map<String, String> images = new HashMap<String, String>();
 
-	public void svgImage(String svg, double x, double y) {
-		if (svg.startsWith("<svg>") == false) {
-			throw new IllegalArgumentException();
-		}
+	public void svgImage(SvgString image, double x, double y) {
 		if (hidden == false) {
+			String svg = manageScale(image);
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
-			// System.err.println("svg=" + svg);
-			// System.err.println("x=" + x);
-			// System.err.println("y=" + y);
 			final String key = "imagesvginlined" + images.size();
 			final Element elt = (Element) document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
 		}
 		ensureVisible(x, y);
+		ensureVisible(x + image.getData("width"), y + image.getData("height"));
+	}
+
+	private String manageScale(SvgString svg) {
+		final double svgScale = svg.getScale();
+		if (svgScale * scale == 1) {
+			return svg.getSvg();
+		}
+		final String s1 = "\\<g\\b";
+		final String s2 = "<g transform=\"scale(" + format(svgScale) + "," + format(svgScale) + ")\" ";
+		return svg.getSvg().replaceFirst(s1, s2);
 	}
 
 	private String toBase64(BufferedImage image) throws IOException {

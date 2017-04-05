@@ -117,7 +117,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandImport());
 
 		final FactoryTipOnEntityCommand factoryTipOnEntityCommand = new FactoryTipOnEntityCommand(new RegexLeaf(
-				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([^%s]+)"));
+				"ENTITY", "(" + CommandCreateClass.CODE_NO_DOTDOT + "|[%g][^%g]+[%g])::([%g][^%g]+[%g]|[^%s]+)"));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(false));
 

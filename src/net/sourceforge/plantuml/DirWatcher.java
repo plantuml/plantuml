@@ -78,8 +78,8 @@ public class DirWatcher {
 			final FileWatcher watcher = modifieds.get(f);
 
 			if (watcher == null || watcher.hasChanged()) {
-				final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
-						option.getConfig(), option.getCharset(), option.getFileFormatOption());
+				final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+						option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
 				final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
 				files.add(f);
 				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
@@ -106,8 +106,8 @@ public class DirWatcher {
 			final FileWatcher watcher = modifieds.get(f);
 
 			if (watcher == null || watcher.hasChanged()) {
-				final SourceFileReader sourceFileReader = new SourceFileReader(new Defines(), f, option.getOutputDir(),
-						option.getConfig(), option.getCharset(), option.getFileFormatOption());
+				final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+						option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
 				if (sourceFileReader.hasError()) {
 					return f;
 				}

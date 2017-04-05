@@ -71,6 +71,9 @@ public class BpmElement implements Placeable {
 
 	@Override
 	public String toString() {
+		if (id == null) {
+			return type.toString() + "(" + display + ")";
+		}
 		return type.toString() + "(" + id + ")";
 	}
 
@@ -92,10 +95,10 @@ public class BpmElement implements Placeable {
 			return new FtileDiamond(skinParam, backColor, borderColor, null);
 		}
 		if (type == BpmElementType.DOCKED_EVENT) {
-			final UFont font = new UFont("Serif", Font.PLAIN, 14);
+			final UFont font = UFont.serif(14);
 			return new FtileBox(skinParam, display, font, null, BoxStyle.PLAIN);
 		}
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		final UFont font = UFont.serif(14);
 		final FontConfiguration fc = new FontConfiguration(font, HtmlColorUtils.RED, HtmlColorUtils.RED, false);
 		if (Display.isNull(display)) {
 			return Display.getWithNewlines(type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);

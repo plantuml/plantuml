@@ -37,19 +37,24 @@ package net.sourceforge.plantuml.bpm;
 
 public class Coord {
 
-	private final Row row;
 	private final Line line;
+	private final Col col;
 
-	public Coord(Row row, Line line) {
+	public Coord(Line line, Col row) {
 		if (line == null || row == null) {
 			throw new IllegalArgumentException();
 		}
 		this.line = line;
-		this.row = row;
+		this.col = row;
 	}
 
-	public final Row getRow() {
-		return row;
+	public final Col getCol() {
+		return col;
+	}
+
+	@Override
+	public String toString() {
+		return "line=" + line + " col=" + col;
 	}
 
 	public final Line getLine() {
@@ -58,13 +63,13 @@ public class Coord {
 
 	@Override
 	public int hashCode() {
-		return row.hashCode() + line.hashCode();
+		return line.hashCode() + col.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		final Coord other = (Coord) obj;
-		return this.row == other.row && this.line == other.line;
+		return this.line == other.line && this.col == other.col;
 	}
 
 }

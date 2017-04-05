@@ -70,18 +70,19 @@ public class SourceFileReader implements ISourceFileReader {
 	}
 
 	public SourceFileReader(File file, File outputDirectory, String charset) throws IOException {
-		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), charset, new FileFormatOption(
-				FileFormat.PNG));
+		this(Defines.createWithFileName(file), file, outputDirectory, Collections.<String> emptyList(), charset,
+				new FileFormatOption(FileFormat.PNG));
 	}
 
 	public SourceFileReader(final File file, File outputDirectory) throws IOException {
-		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, new FileFormatOption(
-				FileFormat.PNG));
+		this(Defines.createWithFileName(file), file, outputDirectory, Collections.<String> emptyList(), null,
+				new FileFormatOption(FileFormat.PNG));
 	}
 
 	public SourceFileReader(final File file, File outputDirectory, FileFormatOption fileFormatOption)
 			throws IOException {
-		this(new Defines(), file, outputDirectory, Collections.<String> emptyList(), null, fileFormatOption);
+		this(Defines.createWithFileName(file), file, outputDirectory, Collections.<String> emptyList(), null,
+				fileFormatOption);
 	}
 
 	public SourceFileReader(Defines defines, final File file, File outputDirectory, List<String> config,
@@ -210,6 +211,9 @@ public class SourceFileReader implements ISourceFileReader {
 			}
 
 			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption);
+			if (exportDiagrams.size() > 1) {
+				cpt += exportDiagrams.size() - 1;
+			}
 			OptionFlags.getInstance().logData(file, system);
 
 			for (FileImageData fdata : exportDiagrams) {

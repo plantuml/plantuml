@@ -52,10 +52,12 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.WithPorts;
@@ -72,7 +74,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock body;
-	final private int shield;
+	final private Margins shield;
 	final private EntityImageClassHeader2 header;
 	final private Url url;
 	final private double roundCorner;
@@ -83,7 +85,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.lineConfig = entity;
 		this.roundCorner = getSkinParam().getRoundCorner("", null);
-		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? 16 : 0;
+		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? Margins.uniform(16)
+				: Margins.NONE;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields,
@@ -107,8 +110,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-		final Rectangle2D result = body.getInnerPosition(member, stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final Rectangle2D result = body.getInnerPosition(member, stringBounder, strategy);
 		if (result == null) {
 			return result;
 		}
@@ -195,7 +198,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
+	@Override
+	public Margins getShield(StringBounder stringBounder) {
 		return shield;
 	}
 

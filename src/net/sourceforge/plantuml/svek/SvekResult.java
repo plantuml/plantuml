@@ -121,8 +121,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {

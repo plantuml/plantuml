@@ -59,7 +59,8 @@ public class CommandDockedEvent extends SingleLineCommand2<BpmDiagram> {
 	protected CommandExecutionResult executeArg(BpmDiagram diagram, RegexResult arg) {
 
 		final String label = arg.get("LABEL", 0);
-		final BpmEvent event = new BpmEventAdd(new BpmElement(null, BpmElementType.DOCKED_EVENT, label));
+		final BpmElement element = new BpmElement(null, BpmElementType.DOCKED_EVENT, label);
+		final BpmEvent event = new BpmEventAdd(element);
 		return diagram.addEvent(event);
 	}
 

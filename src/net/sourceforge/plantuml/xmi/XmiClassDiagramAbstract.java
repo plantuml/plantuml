@@ -145,7 +145,7 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 		// isAbstract="false" participant="UMLAssociationEnd.11"
 		// isActive="false">
 		final Element cla = document.createElement("UML:Class");
-		if (entity.getEntityType() == LeafType.NOTE) {
+		if (entity.getLeafType() == LeafType.NOTE) {
 			return null;
 		}
 
@@ -158,7 +158,7 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 			cla.setAttribute("namespace", parentCode.getFullName());
 		}
 
-		final LeafType type = entity.getEntityType();
+		final LeafType type = entity.getLeafType();
 		if (type == LeafType.ABSTRACT_CLASS) {
 			cla.setAttribute("isAbstract", "true");
 		} else if (type == LeafType.INTERFACE) {

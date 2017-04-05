@@ -130,8 +130,4 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		return ShapeType.CIRCLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

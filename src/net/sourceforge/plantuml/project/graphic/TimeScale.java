@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class TimeScale {
 
-	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
+	private final UFont font = UFont.serif(9);
 	private final Project project;
 	private final FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(font);
 

@@ -51,12 +51,12 @@ abstract class AbstractEntityImage {
 	private final IEntity entity;
 
 	final private HtmlColor red = HtmlColorUtils.MY_RED;
-	
+
 	final private HtmlColor yellow = HtmlColorUtils.MY_YELLOW;
 	private final HtmlColor yellowNote = HtmlColorUtils.COL_FBFB77;
 
-	final private UFont font14 = new UFont("SansSerif", Font.PLAIN, 14);
-	final private UFont font17 = new UFont("Courier", Font.BOLD, 17);
+	final private UFont font14 = UFont.sansSerif(14);
+	final private UFont font17 = UFont.courier(17).bold();
 	final private HtmlColor green = HtmlColorUtils.COL_ADD1B2;
 	final private HtmlColor violet = HtmlColorUtils.COL_B4A7E5;
 	final private HtmlColor blue = HtmlColorUtils.COL_A9DCDF;

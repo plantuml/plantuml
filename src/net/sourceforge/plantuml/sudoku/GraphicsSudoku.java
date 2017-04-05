@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sudoku;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -66,8 +65,8 @@ import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 public class GraphicsSudoku {
 
 	private final ISudoku sudoku;
-	private final UFont numberFont = new UFont("SansSerif", Font.BOLD, 20);
-	private final UFont font = new UFont("SansSerif", Font.PLAIN, 11);
+	private final UFont numberFont = UFont.sansSerif(20).bold();
+	private final UFont font = UFont.sansSerif(11);
 
 	public GraphicsSudoku(ISudoku sudoku) {
 		this.sudoku = sudoku;

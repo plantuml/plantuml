@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.StringBounder;
 
 public abstract class AbstractEntityImage extends AbstractTextBlock implements IEntityImage {
 
@@ -73,6 +74,10 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 
 	protected final Stereotype getStereo() {
 		return entity.getStereotype();
+	}
+
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 }

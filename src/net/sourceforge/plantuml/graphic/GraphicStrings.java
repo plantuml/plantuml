@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -74,11 +75,11 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	public static IEntityImage createForError(List<String> strings, boolean useRed) {
 		if (useRed) {
-			return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorUtils.BLACK,
+			return new GraphicStrings(strings, UFont.sansSerif(14).bold(), HtmlColorUtils.BLACK,
 					HtmlColorUtils.RED_LIGHT, null, null);
 		}
-		return new GraphicStrings(strings, new UFont("SansSerif", Font.BOLD, 14), HtmlColorSet.getInstance()
-				.getColorIfValid("#33FF02"), HtmlColorUtils.BLACK, null, null);
+		return new GraphicStrings(strings, UFont.sansSerif(14).bold(), HtmlColorSet.getInstance().getColorIfValid(
+				"#33FF02"), HtmlColorUtils.BLACK, null, null);
 	}
 
 	public static TextBlockBackcolored createGreenOnBlackMonospaced(List<String> strings) {
@@ -99,11 +100,11 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	}
 
 	private static UFont sansSerif12() {
-		return new UFont("SansSerif", Font.PLAIN, 12);
+		return UFont.sansSerif(12);
 	}
 
 	private static UFont monospaced14() {
-		return new UFont("Monospaced", Font.PLAIN, 14);
+		return UFont.monospaced(14);
 	}
 
 	private GraphicStrings(List<String> strings, UFont font, HtmlColor maincolor, HtmlColor background,
@@ -169,8 +170,8 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		return background;
 	}
 
-	public int getShield() {
-		return 0;
+	public Margins getShield(StringBounder stringBounder) {
+		return Margins.NONE;
 	}
 
 	public boolean isHidden() {

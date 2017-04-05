@@ -46,11 +46,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
+import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
@@ -60,8 +62,9 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
 
-class PreprocessorInclude implements ReadLine {
+public class PreprocessorInclude implements ReadLine {
 
+	private static final Pattern2 includeDefPattern = MyPattern.cmpile("^[%s]*!includedef[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
@@ -69,6 +72,7 @@ class PreprocessorInclude implements ReadLine {
 	private final ReadLine reader2;
 	private final String charset;
 	private final Defines defines;
+	private final DefinitionsContainer definitionsContainer;
 
 	private int numLine = 0;
 
@@ -78,8 +82,10 @@ class PreprocessorInclude implements ReadLine {
 	private final Set<FileWithSuffix> filesUsedCurrent;
 	private final Set<FileWithSuffix> filesUsedGlobal;
 
-	public PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir) {
-		this(reader, defines, charset, newCurrentDir, new HashSet<FileWithSuffix>(), new HashSet<FileWithSuffix>());
+	public PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir,
+			DefinitionsContainer definitionsContainer) {
+		this(reader, defines, charset, newCurrentDir, new HashSet<FileWithSuffix>(), new HashSet<FileWithSuffix>(),
+				definitionsContainer);
 	}
 
 	public Set<FileWithSuffix> getFilesUsedGlobal() {
@@ -87,10 +93,12 @@ class PreprocessorInclude implements ReadLine {
 	}
 
 	private PreprocessorInclude(ReadLine reader, Defines defines, String charset, File newCurrentDir,
-			Set<FileWithSuffix> filesUsedCurrent, Set<FileWithSuffix> filesUsedGlobal) {
+			Set<FileWithSuffix> filesUsedCurrent, Set<FileWithSuffix> filesUsedGlobal,
+			DefinitionsContainer definitionsContainer) {
 		this.defines = defines;
 		this.charset = charset;
 		this.reader2 = reader;
+		this.definitionsContainer = definitionsContainer;
 		this.filesUsedCurrent = filesUsedCurrent;
 		this.filesUsedGlobal = filesUsedGlobal;
 		if (newCurrentDir == null) {
@@ -141,6 +149,10 @@ class PreprocessorInclude implements ReadLine {
 			if (m2.find()) {
 				return manageFileInclude(s, m2, true);
 			}
+			final Matcher2 m3 = includeDefPattern.matcher(s);
+			if (m3.find()) {
+				return manageDefinitionInclude(s, m3);
+			}
 		}
 		final Matcher2 mUrl = includeURLPattern.matcher(s);
 		if (s.getPreprocessorError() == null && mUrl.find()) {
@@ -162,10 +174,18 @@ class PreprocessorInclude implements ReadLine {
 		try {
 			final URL url = new URL(urlString);
 			included = new PreprocessorInclude(getReaderInclude(s, url, suf), defines, charset, null, filesUsedCurrent,
-					filesUsedGlobal);
+					filesUsedGlobal, definitionsContainer);
 		} catch (MalformedURLException e) {
 			return s.withErrorPreprocessor("Cannot include url " + urlString);
 		}
+		return this.readLine();
+	}
+
+	private CharSequence2 manageDefinitionInclude(CharSequence2 s, Matcher2 matcher) throws IOException {
+		final String definitionName = matcher.group(1);
+		final List<? extends CharSequence> definition = definitionsContainer.getDefinition(definitionName);
+		included = new PreprocessorInclude(new ReadLineList(definition, s.getLocation()), defines, charset, null,
+				filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		return this.readLine();
 	}
 
@@ -189,7 +209,7 @@ class PreprocessorInclude implements ReadLine {
 			filesUsedCurrent.add(f2);
 			filesUsedGlobal.add(f2);
 			included = new PreprocessorInclude(getReaderInclude(s, f, suf), defines, charset, f.getParentFile(),
-					filesUsedCurrent, filesUsedGlobal);
+					filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		}
 		return this.readLine();
 	}
@@ -211,7 +231,7 @@ class PreprocessorInclude implements ReadLine {
 		return s;
 	}
 
-	private static String getenv(String var) {
+	public static String getenv(String var) {
 		final String env = System.getProperty(var);
 		if (StringUtils.isNotEmpty(env)) {
 			return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env);

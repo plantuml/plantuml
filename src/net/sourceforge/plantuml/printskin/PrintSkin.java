@@ -76,7 +76,7 @@ import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 class PrintSkin extends AbstractPSystem {
 
-	private static final UFont FONT1 = new UFont("SansSerif", Font.PLAIN, 10);
+	private static final UFont FONT1 = UFont.sansSerif(10);
 
 	final private Skin skin;
 	final private List<String> toPrint;

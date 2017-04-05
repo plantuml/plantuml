@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -99,8 +100,10 @@ public class LiveBoxFinder implements UGraphic {
 			((GroupingTile) shape).drawU(this);
 		} else if (shape instanceof TileWithUpdateStairs) {
 			((TileWithUpdateStairs) shape).updateStairs(stringBounder, y);
+		} else if (shape instanceof NotesTile) {
+			// Nothing ?
 		} else if (shape instanceof Tile) {
-			System.err.println("OtherTile " + shape);
+			Log.error("OtherTile " + shape);
 		} else {
 			throw new UnsupportedOperationException(shape.getClass().getName());
 		}

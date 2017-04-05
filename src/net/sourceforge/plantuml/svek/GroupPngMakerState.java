@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.Member;
-import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -63,6 +61,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
+import net.sourceforge.plantuml.graphic.TextBlockWidthAdapter;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -127,7 +126,7 @@ public final class GroupPngMakerState {
 
 		final DotDataImageBuilder svek2 = new DotDataImageBuilder(dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma(), stringBounder);
-		
+
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE) {
 			// return new InnerStateConcurrent(svek2.createFile());
 			return svek2.buildImage(null, new String[0]);
@@ -144,13 +143,18 @@ public final class GroupPngMakerState {
 		final Stereotype stereo = group.getStereotype();
 		final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 				ColorParam.stateBackground, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
-		final List<Member> members = ((IEntity) group).getBodier().getFieldsToDisplay();
+		final List<String> details = ((IEntity) group).getBodier().getRawBody();
 		final TextBlockWidth attribute;
-		if (members.size() == 0) {
+		if (details.size() == 0) {
 			attribute = new TextBlockEmpty();
 		} else {
-			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-					group.getStereotype(), null);
+			final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE,
+					null);
+			final TextBlock tmp = Display.create(details)
+					.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+			attribute = new TextBlockWidthAdapter(tmp, 0);
+			// attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
+			// group.getStereotype(), null);
 		}
 
 		final Stereotype stereotype = group.getStereotype();
@@ -183,7 +187,7 @@ public final class GroupPngMakerState {
 			if (leaf instanceof IGroup == false) {
 				return false;
 			}
-			if (((IGroup) leaf).getEntityType() != LeafType.STATE_CONCURRENT) {
+			if (((IGroup) leaf).getLeafType() != LeafType.STATE_CONCURRENT) {
 				return false;
 			}
 		}

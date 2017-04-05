@@ -35,9 +35,14 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Cell {
 
 	private Placeable data;
+	private final List<Cell> destinations = new ArrayList<Cell>();
 
 	public final Placeable getData() {
 		return data;
@@ -53,6 +58,14 @@ public class Cell {
 			return super.toString();
 		}
 		return super.toString() + " " + data;
+	}
+
+	public void addConnectionTo(Cell other) {
+		this.destinations.add(other);
+	}
+
+	public List<Cell> getDestinations() {
+		return Collections.unmodifiableList(destinations);
 	}
 
 }

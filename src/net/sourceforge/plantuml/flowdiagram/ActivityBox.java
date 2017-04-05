@@ -71,7 +71,7 @@ public class ActivityBox extends AbstractTextBlock {
 		this.tile = tile;
 		this.id = id;
 		this.label = label;
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		final UFont font = UFont.serif(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 		tb = Display.create(label).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}

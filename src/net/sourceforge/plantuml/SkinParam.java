@@ -189,7 +189,8 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return null;
 		}
-		final boolean acceptTransparent = param == ColorParam.background;
+		final boolean acceptTransparent = param == ColorParam.background
+				|| param == ColorParam.sequenceGroupBodyBackground;
 		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
 	}
 

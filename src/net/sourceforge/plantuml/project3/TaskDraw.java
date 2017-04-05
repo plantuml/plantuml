@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -74,7 +72,7 @@ public class TaskDraw implements UDrawable {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = new UFont("Serif", Font.PLAIN, 11);
+		final UFont font = UFont.serif(11);
 		return new FontConfiguration(font, HtmlColorUtils.BLACK, HtmlColorUtils.BLACK, false);
 	}
 

@@ -59,11 +59,11 @@ public class SourceStringReader {
 	final private List<BlockUml> blocks;
 
 	public SourceStringReader(String source) {
-		this(new Defines(), source, Collections.<String> emptyList());
+		this(Defines.createEmpty(), source, Collections.<String> emptyList());
 	}
 
 	public SourceStringReader(String source, String charset) {
-		this(new Defines(), source, "UTF-8", Collections.<String> emptyList());
+		this(Defines.createEmpty(), source, "UTF-8", Collections.<String> emptyList());
 	}
 
 	public SourceStringReader(Defines defines, String source, List<String> config) {
@@ -71,7 +71,7 @@ public class SourceStringReader {
 	}
 
 	public SourceStringReader(String source, File newCurrentDir) {
-		this(new Defines(), source, "UTF-8", Collections.<String> emptyList(), newCurrentDir);
+		this(Defines.createEmpty(), source, "UTF-8", Collections.<String> emptyList(), newCurrentDir);
 	}
 
 	public SourceStringReader(Defines defines, String source, String charset, List<String> config) {

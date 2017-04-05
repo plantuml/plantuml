@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -125,6 +126,7 @@ public class Player implements TextBlock, TimeProjected {
 	}
 
 	private TimeDrawing cached;
+	private Colors initialColors;
 
 	private TimeDrawing getTimeDrawing() {
 		if (cached == null) {
@@ -142,7 +144,7 @@ public class Player implements TextBlock, TimeProjected {
 		} else {
 			throw new IllegalStateException();
 		}
-		result.setInitialState(initialState);
+		result.setInitialState(initialState, initialColors);
 		for (ChangeState change : changes) {
 			result.addChange(change);
 		}
@@ -163,16 +165,17 @@ public class Player implements TextBlock, TimeProjected {
 		return getTimeDrawing().getHeight();
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return null;
 	}
 
 	public void setState(TimeTick now, String state, String comment, Colors color) {
 		if (now == null) {
 			this.initialState = state;
+			this.initialColors = color;
 		} else {
 			if (state == null) {
-				state = "";
+				throw new IllegalArgumentException();
 			}
 			this.changes.add(new ChangeState(now, state, comment, color));
 		}

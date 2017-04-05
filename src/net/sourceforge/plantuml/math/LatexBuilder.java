@@ -44,6 +44,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
+import net.sourceforge.plantuml.SvgString;
+
 public class LatexBuilder implements ScientificEquation {
 
 	private final String tex;
@@ -64,14 +66,14 @@ public class LatexBuilder implements ScientificEquation {
 		return new TeXIconBuilder(tex, foregroundColor).getIcon();
 	}
 
-	public String getSvg(Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
+	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, InstantiationException, IOException {
 		final Icon icon = buildIcon(foregroundColor);
 		final ConverterSvg converterSvg = new ConverterSvg(icon);
-		final String svg = converterSvg.getSvg(true, backgroundColor);
+		final String svg = converterSvg.getSvg(scale, true, backgroundColor);
 		dimension = converterSvg.getDimension();
-		return svg;
+		return new SvgString(svg, scale);
 	}
 
 	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)

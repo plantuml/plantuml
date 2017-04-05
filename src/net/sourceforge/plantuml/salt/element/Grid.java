@@ -35,12 +35,18 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
+import java.awt.geom.Dimension2D;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.salt.Cell;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Grid {
@@ -48,15 +54,18 @@ public class Grid {
 	private final double[] rowsStart;
 	private final double[] colsStart;
 	private final TableStrategy strategy;
+	private final TextBlock title;
 
 	private final Set<Segment> horizontals = new HashSet<Segment>();
 	private final Set<Segment> verticals = new HashSet<Segment>();
 
-	public Grid(double[] rowsStart, double[] colsStart, TableStrategy strategy) {
+	public Grid(double[] rowsStart, double[] colsStart, TableStrategy strategy, TextBlock title) {
+		this.title = title;
 		this.rowsStart = rowsStart;
 		this.colsStart = colsStart;
 		this.strategy = strategy;
-		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_ALL) {
+		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE
+				|| strategy == TableStrategy.DRAW_ALL) {
 			addOutside();
 		}
 	}
@@ -90,14 +99,22 @@ public class Grid {
 			final double height = rowsStart[row1 + 1] - rowsStart[row1];
 			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(new ULine(0, height));
 		}
+
+		final Dimension2D dim = title.calculateDimension(ug.getStringBounder());
+
+		if (dim.getWidth() > 0 && dim.getHeight() > 0) {
+			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));
+			ug2.apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UChangeColor(HtmlColorUtils.WHITE))
+					.draw(new URectangle(dim));
+			title.drawU(ug2);
+		}
+
 	}
 
 	public void addCell(Cell cell) {
 
-		if (strategy == TableStrategy.DRAW_NONE) {
-			return;
-		}
-		if (strategy == TableStrategy.DRAW_OUTSIDE) {
+		if (strategy == TableStrategy.DRAW_NONE || strategy == TableStrategy.DRAW_OUTSIDE
+				|| strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE) {
 			return;
 		}
 

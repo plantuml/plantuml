@@ -310,7 +310,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder), ent.getEntityPosition());
 		dotStringFactory.addShape(shape);
 		getBibliotekon().putShape(ent, shape);
 	}
@@ -568,7 +568,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder), ent.getEntityPosition());
 		// dotStringFactory.addShape(shape);
 		getBibliotekon().putShape(ent, shape);
 	}

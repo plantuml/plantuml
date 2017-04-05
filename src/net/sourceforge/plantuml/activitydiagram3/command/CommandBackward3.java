@@ -30,55 +30,38 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.timingdiagram;
+package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
-public class CommandChangeState2 extends SingleLineCommand2<TimingDiagram> {
+public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public CommandChangeState2() {
+	public CommandBackward3() {
 		super(getRegexConcat());
 	}
 
-	private static RegexConcat getRegexConcat() {
+	static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("backward"), //
 				new RegexLeaf("[%s]*"), //
-				TimeTickBuilder.expressionAtWithoutArobase("TIME"), //
-				new RegexLeaf("[%s]*is[%s]*"), //
-				CommandChangeState1.getStateOrHidden(), //
-				new RegexLeaf("[%s]*"), //
-				color().getRegex(), //
-				new RegexLeaf("[%s]*"), //
-				new RegexLeaf("COMMENT", "(?:[%s]*:[%s]*(.*?))?"), //
-				new RegexLeaf("[%s]*$"));
-	}
-
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
+				new RegexLeaf(":"), //
+				new RegexLeaf("LABEL", "(.*)"), //
+				new RegexLeaf(";$"));
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
-		final Player player = diagram.getLastPlayer();
-		if (player == null) {
-			return CommandExecutionResult.error("Missing @ line before this");
-		}
-		final TimeTick tick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
-		final String comment = arg.get("COMMENT", 0);
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		player.setState(tick, arg.get("STATE", 0), comment, colors);
-		diagram.addTime(tick);
-		return CommandExecutionResult.ok();
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
+		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
+		return diagram.backwardWhile(label);
 	}
 
 }

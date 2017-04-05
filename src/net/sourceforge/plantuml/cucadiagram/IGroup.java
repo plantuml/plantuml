@@ -61,7 +61,7 @@ public interface IGroup extends IEntity {
 
 	public PackageStyle getPackageStyle();
 
-	public void overideImage(IEntityImage img, LeafType state);
+	public void overrideImage(IEntityImage img, LeafType state);
 
 	public SingleStrategy getSingleStrategy();
 

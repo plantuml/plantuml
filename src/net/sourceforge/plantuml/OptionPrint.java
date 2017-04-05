@@ -126,6 +126,8 @@ public class OptionPrint {
 		System.out.println("    -duration\t\tTo print the duration of complete diagrams processing");
 		System.out.println("    -nbthread N\t\tTo use (N) threads for processing");
 		System.out.println("    -nbthread auto\tTo use " + Option.defaultNbThreads() + " threads for processing");
+		System.out
+				.println("    -timeout N\t\tProcessing timeout in (N) seconds. Defaults to 15 minutes (900 seconds).");
 		System.out.println("    -author[s]\t\tTo print information about PlantUML authors");
 		System.out.println("    -overwrite\t\tTo allow to overwrite read only files");
 		System.out.println("    -printfonts\t\tTo print fonts available on your system");

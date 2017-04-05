@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
@@ -163,6 +164,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		}
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
+		if (existsWithBadType(diagram, code, type, usymbol)) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		final IEntity entity = diagram.getOrCreateLeaf(code, type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
@@ -190,6 +194,20 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
 		return CommandExecutionResult.ok();
+	}
+
+	public static boolean existsWithBadType(DescriptionDiagram diagram, final Code code, LeafType type, USymbol usymbol) {
+		if (diagram.leafExist(code) == false) {
+			return false;
+		}
+		final ILeaf other = diagram.getLeafsget(code);
+		if (other.getLeafType() != type) {
+			return true;
+		}
+		if (other.getUSymbol() != usymbol) {
+			return true;
+		}
+		return false;
 	}
 
 	private char getCharEncoding(final String codeRaw) {

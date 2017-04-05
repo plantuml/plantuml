@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
@@ -192,4 +194,16 @@ final public class UmlSource {
 		return Display.empty();
 	}
 
+	public boolean isStartDef() {
+		return source.get(0).startsWith("@startdef");
+	}
+
+	public String getId() {
+		final Pattern p = Pattern.compile("id=([\\w]+)\\b");
+		final Matcher m = p.matcher(source.get(0));
+		if (m.find()) {
+			return m.group(1);
+		}
+		return null;
+	}
 }

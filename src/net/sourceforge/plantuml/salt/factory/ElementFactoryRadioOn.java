@@ -63,7 +63,7 @@ public class ElementFactoryRadioOn implements ElementFactory {
 		}
 		final Terminated<String> next = dataSource.next();
 		final String text = next.getElement();
-		final UFont font = new UFont("Default", Font.PLAIN, 12);
+		final UFont font = UFont.byDefault(12);
 		return new Terminated<Element>(new ElementRadioCheckbox(extracted(text), font, true, true, spriteContainer),
 				next.getTerminator());
 	}

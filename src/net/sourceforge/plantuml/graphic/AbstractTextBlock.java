@@ -39,7 +39,7 @@ import java.awt.geom.Rectangle2D;
 
 public abstract class AbstractTextBlock implements TextBlock {
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException("member=" + member + " " + getClass().toString());
 	}
 }

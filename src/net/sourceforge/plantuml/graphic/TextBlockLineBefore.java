@@ -87,8 +87,8 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-		return textBlock.getInnerPosition(member, stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		return textBlock.getInnerPosition(member, stringBounder, strategy);
 	}
 
 	public Ports getPorts(StringBounder stringBounder) {

@@ -66,7 +66,7 @@ public final class CucaDiagramSimplifierState {
 			for (IGroup g : groups) {
 				if (diagram.isAutarkic(g)) {
 					final IEntityImage img = computeImage(g);
-					g.overideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
+					g.overrideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
 							: LeafType.STATE);
 
 					changed = true;

@@ -116,7 +116,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			result = createLeafInternal(code, Display.getWithNewlines(code), type, getCurrentGroup(), symbol);
 			result.setUSymbol(symbol);
 		}
-		if (result.getEntityType() == LeafType.CLASS && type == LeafType.OBJECT) {
+		if (result.getLeafType() == LeafType.CLASS && type == LeafType.OBJECT) {
 			if (result.muteToType(type, symbol) == false) {
 				return null;
 			}
@@ -285,6 +285,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		final String aspect = getPragma().getValue("aspect");
 		if (aspect != null) {
 			result.add("aspect=" + aspect + ";");
+		}
+		final String ratio = getPragma().getValue("ratio");
+		if (ratio != null) {
+			result.add("ratio=" + ratio + ";");
 		}
 		return result.toArray(new String[result.size()]);
 	}
@@ -547,8 +551,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		final List<Link> links = getLinks();
 		for (int i = links.size() - 1; i >= 0; i--) {
 			final Link link = links.get(i);
-			if (link.getEntity1().getEntityType() != LeafType.NOTE
-					&& link.getEntity2().getEntityType() != LeafType.NOTE) {
+			if (link.getEntity1().getLeafType() != LeafType.NOTE && link.getEntity2().getLeafType() != LeafType.NOTE) {
 				return link;
 			}
 		}

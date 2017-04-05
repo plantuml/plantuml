@@ -153,7 +153,7 @@ public class DateEventUtils {
 //	}
 //
 //	public static TextBlock getComment(final List<String> asList, HtmlColor color) {
-//		final UFont font = new UFont("SansSerif", Font.BOLD, 14);
+//		final UFont font = UFont.sansSerif(14).bold();
 //		TextBlock comment = Display.create(asList).create(
 //				new FontConfiguration(font, color, HtmlColorUtils.BLUE, true), HorizontalAlignment.LEFT,
 //				new SpriteContainerEmpty());

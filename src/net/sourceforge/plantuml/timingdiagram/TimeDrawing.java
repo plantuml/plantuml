@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
 public interface TimeDrawing extends TimeProjected, UDrawable {
 
@@ -46,7 +47,7 @@ public interface TimeDrawing extends TimeProjected, UDrawable {
 
 	public TextBlock getWidthHeader(StringBounder stringBounder);
 
-	public void setInitialState(String initialState);
+	public void setInitialState(String initialState, Colors initialColors);
 
 	public void addConstraint(TimeConstraint constraint);
 

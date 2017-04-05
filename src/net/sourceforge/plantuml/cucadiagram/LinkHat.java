@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 
 public enum LinkHat {
 
-	NONE /*, SQUARRE, CIRCLE, CIRCLE_CONNECT;
+	NONE /*, SQUARE, CIRCLE, CIRCLE_CONNECT;
 
 	public ExtremityFactory getExtremityFactory() {
 		if (this == LinkHat.CIRCLE) {

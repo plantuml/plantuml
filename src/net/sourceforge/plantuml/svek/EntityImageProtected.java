@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -53,7 +54,7 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	private final Bibliotekon bibliotekon;
 	private final Neighborhood neighborhood;
 	
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -90,8 +91,8 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 		return orig.getShapeType();
 	}
 
-	public int getShield() {
-		return orig.getShield();
+	public Margins getShield(StringBounder stringBounder) {
+		return orig.getShield(stringBounder);
 	}
 
 }

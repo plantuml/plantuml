@@ -74,6 +74,7 @@ public class Run {
 
 	public static void main(String[] argsArray) throws IOException, InterruptedException {
 		final long start = System.currentTimeMillis();
+		saveCommandLine(argsArray);
 		final Option option = new Option(argsArray);
 		ProgressBar.setEnable(option.isTextProgressBar());
 		if (OptionFlags.getInstance().isDumpStats()) {
@@ -173,6 +174,21 @@ public class Run {
 		}
 	}
 
+	private static String commandLine = "";
+
+	public static final String getCommandLine() {
+		return commandLine;
+	}
+
+	private static void saveCommandLine(String[] argsArray) {
+		final StringBuilder sb = new StringBuilder();
+		for (String s : argsArray) {
+			sb.append(s);
+			sb.append(" ");
+		}
+		commandLine = sb.toString();
+	}
+
 	public static void forceOpenJdkResourceLoad() {
 		final BufferedImage imDummy = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		final Graphics2D gg = imDummy.createGraphics();
@@ -228,7 +244,7 @@ public class Run {
 	private static void goFtp(Option option) throws IOException {
 		final int ftpPort = option.getFtpPort();
 		System.err.println("ftpPort=" + ftpPort);
-		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormat());
+		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());
 		ftpServer.go();
 	}
 
@@ -379,10 +395,10 @@ public class Run {
 		}
 		final ISourceFileReader sourceFileReader;
 		if (option.getOutputFile() == null) {
-			sourceFileReader = new SourceFileReader(option.getDefaultDefines(), f, option.getOutputDir(),
+			sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, option.getOutputDir(),
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		} else {
-			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(), f, option.getOutputFile(),
+			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(f), f, option.getOutputFile(),
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
 		if (option.isComputeurl()) {
@@ -413,5 +429,6 @@ public class Run {
 		}
 		return result;
 	}
+
 
 }

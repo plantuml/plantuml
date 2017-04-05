@@ -50,7 +50,7 @@ public class Area implements Elastic {
 	private final String title;
 	private final char id;
 
-	private Dimension2D minimunDimension;
+	private Dimension2D minimumDimension;
 
 	private final List<PostIt> postIts = new ArrayList<PostIt>();
 
@@ -67,12 +67,12 @@ public class Area implements Elastic {
 		return title;
 	}
 
-	public Dimension2D getMinimunDimension() {
-		return minimunDimension;
+	public Dimension2D getMinimumDimension() {
+		return minimumDimension;
 	}
 
-	public void setMinimunDimension(Dimension2D minimunDimension) {
-		this.minimunDimension = minimunDimension;
+	public void setMinimunDimension(Dimension2D minimumDimension) {
+		this.minimumDimension = minimumDimension;
 	}
 
 	public Dimension2D getDimension() {

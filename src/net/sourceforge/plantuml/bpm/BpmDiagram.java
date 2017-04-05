@@ -36,7 +36,9 @@ package net.sourceforge.plantuml.bpm;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
@@ -52,9 +54,9 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class BpmDiagram extends UmlDiagram {
 
 	private final BpmElement start = new BpmElement(null, BpmElementType.START);
-	private BpmElement last = start;
 
 	private List<BpmEvent> events = new ArrayList<BpmEvent>();
+	private Deque<BpmBranch> branches = new ArrayDeque<BpmBranch>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Bpm Diagram)");
@@ -80,10 +82,21 @@ public class BpmDiagram extends UmlDiagram {
 
 	private UDrawable getUDrawable() {
 		final Grid grid = createGrid();
+		cleanGrid(grid);
 		final GridArray gridArray = grid.toArray(SkinParam.create(getUmlDiagramType()));
-		gridArray.addEdges(edges);
+		// gridArray.addEdges(edges);
 		System.err.println("gridArray=" + gridArray);
 		return gridArray;
+	}
+
+	private void cleanGrid(Grid grid) {
+		// while (true) {
+		// final boolean v1 = new CleanerEmptyLine().clean(grid);
+		// final boolean v2 = new CleanerInterleavingLines().clean(grid);
+		// if (v1 == false && v2 == false) {
+		// return;
+		// }
+		// }
 	}
 
 	public CommandExecutionResult addEvent(BpmEvent event) {
@@ -92,57 +105,89 @@ public class BpmDiagram extends UmlDiagram {
 	}
 
 	private Coord current;
-	private final List<BpmEdge> edges = new ArrayList<BpmEdge>();
+	private Cell last;
 
 	private Grid createGrid() {
 		final Grid grid = new Grid();
 		this.current = grid.getRoot();
-		this.edges.clear();
+		// this.edges.clear();
+		last = grid.getCell(current);
 		grid.getCell(current).setData(start);
 
 		for (BpmEvent event : events) {
 			if (event instanceof BpmEventAdd) {
-				addInGrid(grid, ((BpmEventAdd) event).getElement());
+				final BpmEventAdd tmp = (BpmEventAdd) event;
+				addInGrid(grid, tmp.getElement());
 			} else if (event instanceof BpmEventResume) {
 				final String idDestination = ((BpmEventResume) event).getId();
 				current = grid.getById(idDestination);
-				last = (BpmElement) grid.getCell(current).getData();
+				last = grid.getCell(current);
 				if (last == null) {
 					throw new IllegalStateException();
 				}
 				final Navigator<Line> nav = grid.linesOf(current);
 				final Line newLine = new Line();
 				nav.insertAfter(newLine);
-				final Row row = current.getRow();
-				current = new Coord(row, newLine);
+				final Col row = current.getCol();
+				current = new Coord(newLine, row);
 			} else if (event instanceof BpmEventGoto) {
-				final String idDestination = ((BpmEventGoto) event).getId();
-				edges.add(new BpmEdge(last, (BpmElement) grid.getCell(grid.getById(idDestination)).getData()));
+				final BpmEventGoto tmp = (BpmEventGoto) event;
+				final String idDestination = tmp.getId();
 				current = grid.getById(idDestination);
-				last = (BpmElement) grid.getCell(current).getData();
+				final Cell src = last;
+				last = grid.getCell(current);
 				if (last == null) {
 					throw new IllegalStateException();
 				}
 				final Navigator<Line> nav = grid.linesOf(current);
 				final Line newLine = new Line();
 				nav.insertAfter(newLine);
-				final Row row = current.getRow();
-				current = new Coord(row, newLine);
+				final Col row = current.getCol();
+				current = new Coord(newLine, row);
+				src.addConnectionTo(last);
 			} else {
 				throw new IllegalStateException();
 			}
 		}
+		grid.addConnections();
+		// for (GridEdge edge : edges) {
+		// System.err.println("EDGE=" + edge.getEdgeDirection());
+		// edge.addLineIn(grid);
+		// }
+		// grid.addEdge(edges);
 		return grid;
 	}
 
 	private void addInGrid(Grid grid, BpmElement element) {
-		final Navigator<Row> nav = grid.rowsOf(current);
-		final Row newRow = new Row();
+		final Navigator<Col> nav = grid.colsOf(current);
+		final Col newRow = new Col();
 		nav.insertAfter(newRow);
-		current = new Coord(newRow, current.getLine());
+		current = new Coord(current.getLine(), newRow);
 		grid.getCell(current).setData(element);
-		edges.add(new BpmEdge(last, element));
-		last = element;
+		last.addConnectionTo(grid.getCell(current));
+		last = grid.getCell(current);
 
+	}
+
+	public CommandExecutionResult newBranch() {
+		final BpmBranch branch = new BpmBranch(events.size());
+		branches.addLast(branch);
+		return addEvent(new BpmEventAdd(branch.getEntryElement()));
+	}
+
+	public CommandExecutionResult elseBranch() {
+		final BpmBranch branch = branches.getLast();
+		final int counter = branch.incAndGetCounter();
+		if (counter == 2) {
+			addEvent(new BpmEventAdd(branch.getElseElement()));
+			return addEvent(branch.getResumeEntryEvent());
+		}
+		addEvent(branch.getGoToEndEvent());
+		return addEvent(branch.getResumeEntryEvent());
+	}
+
+	public CommandExecutionResult endBranch() {
+		final BpmBranch branch = branches.removeLast();
+		return addEvent(branch.getGoToEndEvent());
 	}
 }

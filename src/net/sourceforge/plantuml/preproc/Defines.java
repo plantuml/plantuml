@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.preproc;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -45,11 +46,48 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.api.ApiWarning;
 
 public class Defines implements Truth {
 
+	private final Map<String, String> environment = new LinkedHashMap<String, String>();
 	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
 	private final Map<String, Define> savedState = new LinkedHashMap<String, Define>();
+
+	@Deprecated
+	@ApiWarning(willBeRemoved = "in next major release")
+	public Defines() {
+	}
+
+	@Override
+	public String toString() {
+		return values.keySet().toString();
+	}
+
+	public static Defines createEmpty() {
+		return new Defines();
+	}
+
+	public void importFrom(Defines other) {
+		this.environment.putAll(other.environment);
+		this.values.putAll(other.values);
+	}
+
+	public Defines cloneMe() {
+		final Defines result = new Defines();
+		result.importFrom(this);
+		return result;
+	}
+
+	public static Defines createWithFileName(File file) {
+		if (file == null) {
+			throw new IllegalArgumentException();
+		}
+		final Defines result = createEmpty();
+		result.environment.put("filename", file.getName());
+		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
+		return result;
+	}
 
 	public void define(String name, List<String> value) {
 		values.put(name, new Define(name, value));
@@ -80,11 +118,20 @@ public class Defines implements Truth {
 
 	public List<String> applyDefines(String line) {
 		line = manageDate(line);
+		line = manageEnvironment(line);
 		for (Map.Entry<String, Define> ent : values.entrySet()) {
 			final Define def = ent.getValue();
 			line = def.apply(line);
 		}
 		return Arrays.asList(line.split("\n"));
+	}
+
+	private String manageEnvironment(String line) {
+		for (Map.Entry<String, String> ent : environment.entrySet()) {
+			final String key = Pattern.quote("%" + ent.getKey() + "%");
+			line = line.replaceAll(key, ent.getValue());
+		}
+		return line;
 	}
 
 	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";

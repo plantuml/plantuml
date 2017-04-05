@@ -61,7 +61,7 @@ public class TimeHeaderMonth extends AbstractTextBlock implements TextBlock {
 	private final TimeLine timeline;
 	private final double dayWidth;
 
-	private final UFont font = new UFont("Serif", Font.PLAIN, 9);
+	private final UFont font = UFont.serif(9);
 	private final FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(font);
 
 	public TimeHeaderMonth(Day start, Day end, TimeLine timeline, double dayWidth) {

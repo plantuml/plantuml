@@ -83,8 +83,4 @@ public class EntityImageAssociation extends AbstractEntityImage {
 		return ShapeType.DIAMOND;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

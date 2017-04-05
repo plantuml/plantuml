@@ -176,7 +176,7 @@ public final class LinkHtmlPrinter {
 	}
 
 	static String urlOf(IEntity ent) {
-		if (ent.getEntityType() == LeafType.NOTE) {
+		if (ent.getLeafType() == LeafType.NOTE) {
 			throw new IllegalArgumentException();
 		}
 		if (ent.getCode().getFullName().matches("[-\\w_ .]+")) {

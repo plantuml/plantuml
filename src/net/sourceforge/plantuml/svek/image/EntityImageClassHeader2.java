@@ -71,8 +71,8 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 	public EntityImageClassHeader2(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 
-		final boolean italic = entity.getEntityType() == LeafType.ABSTRACT_CLASS
-				|| entity.getEntityType() == LeafType.INTERFACE;
+		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS
+				|| entity.getLeafType() == LeafType.INTERFACE;
 
 		// final HtmlColor color = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS, getStereo());
 		final Stereotype stereotype = entity.getStereotype();
@@ -145,32 +145,32 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 					stereotype.getHtmlColor(), classBorder, SkinParamUtils.getFontColor(getSkinParam(),
 							FontParam.CIRCLED_CHARACTER, null));
 		}
-		if (entity.getEntityType() == LeafType.ANNOTATION) {
+		if (entity.getLeafType() == LeafType.ANNOTATION) {
 			return new CircledCharacter('@', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
 					getSkinParam(), ColorParam.stereotypeNBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
-		if (entity.getEntityType() == LeafType.ABSTRACT_CLASS) {
+		if (entity.getLeafType() == LeafType.ABSTRACT_CLASS) {
 			return new CircledCharacter('A', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
 					getSkinParam(), ColorParam.stereotypeABackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
-		if (entity.getEntityType() == LeafType.CLASS) {
+		if (entity.getLeafType() == LeafType.CLASS) {
 			return new CircledCharacter('C', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
 					getSkinParam(), ColorParam.stereotypeCBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
-		if (entity.getEntityType() == LeafType.INTERFACE) {
+		if (entity.getLeafType() == LeafType.INTERFACE) {
 			return new CircledCharacter('I', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
 					getSkinParam(), ColorParam.stereotypeIBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
-		if (entity.getEntityType() == LeafType.ENUM) {
+		if (entity.getLeafType() == LeafType.ENUM) {
 			return new CircledCharacter('E', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
 					getSkinParam(), ColorParam.stereotypeEBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
 		}
-		if (entity.getEntityType() == LeafType.ENTITY) {
+		if (entity.getLeafType() == LeafType.ENTITY) {
 			return new CircledCharacter('E', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
 					getSkinParam(), ColorParam.stereotypeCBackground, stereotype), classBorder,
 					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
@@ -193,10 +193,6 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
-	}
-
-	public int getShield() {
-		return 0;
 	}
 
 }

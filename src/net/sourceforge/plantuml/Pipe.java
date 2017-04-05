@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.core.Diagram;
@@ -61,6 +62,7 @@ public class Pipe {
 
 	public boolean managePipe() throws IOException {
 		boolean error = false;
+		final boolean noStdErr = option.isPipeNoStdErr();
 
 		do {
 			final String source = readOneDiagram();
@@ -68,7 +70,7 @@ public class Pipe {
 				ps.flush();
 				return error;
 			}
-			final SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), source,
+			final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
 					option.getConfig());
 
 			if (option.isSyntax()) {
@@ -78,12 +80,7 @@ public class Pipe {
 					ps.println(system.getDescription());
 				} else if (system instanceof PSystemError) {
 					error = true;
-					ps.println("ERROR");
-					final PSystemError sys = (PSystemError) system;
-					ps.println(sys.getHigherErrorPosition());
-					for (ErrorUml er : sys.getErrorsUml()) {
-						ps.println(er.getError());
-					}
+					printErrorText(ps, (PSystemError) system);
 				} else {
 					ps.println("OTHER");
 					ps.println(system.getDescription());
@@ -92,24 +89,39 @@ public class Pipe {
 				final String result = sourceStringReader.getCMapData(0, option.getFileFormatOption());
 				ps.println(result);
 			} else {
-				final DiagramDescription result = sourceStringReader.generateImage(ps, 0, option.getFileFormatOption());
-				if (option.getPipeDelimitor() != null) {
-					ps.println(option.getPipeDelimitor());
-				}
+				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
+				final DiagramDescription result = sourceStringReader.generateImage(os, 0, option.getFileFormatOption());
 				if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
 					error = true;
-					System.err.println("ERROR");
-					final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
-					final PSystemError sys = (PSystemError) system;
-					System.err.println(sys.getHigherErrorPosition());
-					for (ErrorUml er : sys.getErrorsUml()) {
-						System.err.println(er.getError());
-					}
+					manageErrors(noStdErr ? ps : System.err, sourceStringReader);
+				} else if (noStdErr) {
+					final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
+					baos.close();
+					ps.write(baos.toByteArray());
+				}
+				if (option.getPipeDelimitor() != null) {
+					ps.println(option.getPipeDelimitor());
 				}
 			}
 			ps.flush();
 		} while (closed == false);
 		return error;
+	}
+
+	private void manageErrors(final PrintStream output, final SourceStringReader sourceStringReader) {
+		// if (option.getPipeDelimitor() != null) {
+		// output.println(option.getPipeDelimitor());
+		// }
+		printErrorText(output, (PSystemError) sourceStringReader.getBlocks().get(0).getDiagram());
+	}
+
+	private void printErrorText(final PrintStream output, final PSystemError sys) {
+		output.println("ERROR");
+		output.println(sys.getHigherErrorPosition());
+		for (ErrorUml er : sys.getErrorsUml()) {
+			output.println(er.getError());
+		}
+		output.flush();
 	}
 
 	private boolean isFinished(String s) {
@@ -150,7 +162,7 @@ public class Pipe {
 				}
 				break;
 			}
-			if (read != '\r') {
+			if (read != '\r' && read != '\n') {
 				baos.write(read);
 			}
 			if (read == '\n') {

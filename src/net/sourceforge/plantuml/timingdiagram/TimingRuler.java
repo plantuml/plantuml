@@ -35,8 +35,8 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TimingRuler {
 
-	private final List<TimeTick> times = new ArrayList<TimeTick>();
+	private final SortedSet<TimeTick> times = new TreeSet<TimeTick>();
 	private int highestCommonFactor = -1;
 	private final ISkinParam skinParam;
 
@@ -62,16 +62,17 @@ public class TimingRuler {
 	}
 
 	public void addTime(TimeTick time) {
-		times.add(time);
-		int tick = time.getTime();
-		if (tick > 0) {
-			if (highestCommonFactor == -1) {
-				highestCommonFactor = time.getTime();
-			} else {
-				highestCommonFactor = computeHighestCommonFactor(highestCommonFactor, time.getTime());
+		final boolean added = times.add(time);
+		if (added) {
+			int tick = time.getTime();
+			if (tick > 0) {
+				if (highestCommonFactor == -1) {
+					highestCommonFactor = time.getTime();
+				} else {
+					highestCommonFactor = computeHighestCommonFactor(highestCommonFactor, time.getTime());
+				}
 			}
 		}
-		// System.err.println("highestCommonFactor=" + highestCommonFactor);
 	}
 
 	private FontConfiguration getFontConfiguration() {
@@ -114,7 +115,7 @@ public class TimingRuler {
 		if (times.size() == 0) {
 			throw new IllegalStateException("Empty list!");
 		}
-		return times.get(times.size() - 1);
+		return times.last();
 	}
 
 	private static int computeHighestCommonFactor(int a, int b) {

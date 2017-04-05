@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import net.sourceforge.plantuml.Hideable;
+import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface IEntityImage extends Hideable, TextBlockBackcolored {
 
@@ -45,6 +46,6 @@ public interface IEntityImage extends Hideable, TextBlockBackcolored {
 
 	ShapeType getShapeType();
 
-	int getShield();
+	Margins getShield(StringBounder stringBounder);
 
 }

@@ -31,33 +31,12 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
 package net.sourceforge.plantuml.bpm;
 
-public class BpmEdge {
+public interface GridCleaner {
 
-	private final BpmElement from;
-	private final BpmElement to;
-
-	public BpmEdge(BpmElement from, BpmElement to) {
-		if (from == null || to == null) {
-			throw new IllegalArgumentException();
-		}
-		this.from = from;
-		this.to = to;
-	}
-
-	public final BpmElement getFrom() {
-		return from;
-	}
-
-	public final BpmElement getTo() {
-		return to;
-	}
-
-	@Override
-	public String toString() {
-		return from.toString() + "-->" + to.toString();
-	}
+	public boolean clean(Grid grid);
 
 }

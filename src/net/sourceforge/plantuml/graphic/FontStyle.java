@@ -47,13 +47,13 @@ public enum FontStyle {
 
 	public UFont mutateFont(UFont font) {
 		if (this == PLAIN) {
-			return font.deriveStyle(Font.PLAIN);
+			return font.withStyle(Font.PLAIN);
 		}
 		if (this == ITALIC) {
-			return font.deriveStyle(font.getStyle() | Font.ITALIC);
+			return font.withStyle(font.getStyle() | Font.ITALIC);
 		}
 		if (this == BOLD) {
-			return font.deriveStyle(font.getStyle() | Font.BOLD);
+			return font.withStyle(font.getStyle() | Font.BOLD);
 		}
 		return font;
 	}

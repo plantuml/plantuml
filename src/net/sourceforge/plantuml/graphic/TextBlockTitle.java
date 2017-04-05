@@ -71,7 +71,7 @@ public class TextBlockTitle implements TextBlock {
 		return new Dimension2DDouble(width, height);
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return null;
 	}
 

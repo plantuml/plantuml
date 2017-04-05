@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.salt.element;
 
 public enum TableStrategy {
-	DRAW_NONE(' '), DRAW_OUTSIDE('+'), DRAW_HORIZONTAL('-'), DRAW_VERTICAL('!'), DRAW_ALL('#');
+	DRAW_NONE(' '), DRAW_OUTSIDE('+'), DRAW_OUTSIDE_WITH_TITLE('^'), DRAW_HORIZONTAL('-'), DRAW_VERTICAL('!'), DRAW_ALL('#');
 
 	private final char c;
 

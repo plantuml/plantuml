@@ -111,8 +111,4 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

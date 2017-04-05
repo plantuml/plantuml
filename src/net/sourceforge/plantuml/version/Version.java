@@ -41,7 +41,7 @@ import java.util.Date;
 public class Version {
 
 	public static int version() {
-		return 201708;
+		return 201709;
 	}
 
 	public static String versionString() {
@@ -78,7 +78,7 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1490118065248L;
+		return 1491408431708L;
 	}
 
 	public static String compileTimeString() {

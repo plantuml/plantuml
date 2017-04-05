@@ -61,7 +61,7 @@ public class PostIt {
 	private final String id;
 	private final Display text;
 
-	private Dimension2D minimunDimension;
+	private Dimension2D minimumDimension;
 
 	public PostIt(String id, Display text) {
 		this.id = id;
@@ -76,23 +76,23 @@ public class PostIt {
 		return text;
 	}
 
-	public Dimension2D getMinimunDimension() {
-		return minimunDimension;
+	public Dimension2D getMinimumDimension() {
+		return minimumDimension;
 	}
 
-	public void setMinimunDimension(Dimension2D minimunDimension) {
-		this.minimunDimension = minimunDimension;
+	public void setMinimumDimension(Dimension2D minimumDimension) {
+		this.minimumDimension = minimumDimension;
 	}
 
 	public Dimension2D getDimension(StringBounder stringBounder) {
 		double width = getComponent().getPreferredWidth(stringBounder);
 		double height = getComponent().getPreferredHeight(stringBounder);
 
-		if (minimunDimension != null && width < minimunDimension.getWidth()) {
-			width = minimunDimension.getWidth();
+		if (minimumDimension != null && width < minimumDimension.getWidth()) {
+			width = minimumDimension.getWidth();
 		}
-		if (minimunDimension != null && height < minimunDimension.getHeight()) {
-			height = minimunDimension.getHeight();
+		if (minimumDimension != null && height < minimumDimension.getHeight()) {
+			height = minimumDimension.getHeight();
 		}
 
 		return new Dimension2DDouble(width, height);

@@ -250,7 +250,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = new UFont("Serif", Font.PLAIN, 10);
+		final UFont font = UFont.serif(10);
 		return new FontConfiguration(font, HtmlColorUtils.LIGHT_GRAY, HtmlColorUtils.LIGHT_GRAY, false);
 	}
 

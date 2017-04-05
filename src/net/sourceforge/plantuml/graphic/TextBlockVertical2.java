@@ -121,11 +121,11 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		double y = 0;
 		for (TextBlock block : blocks) {
 			final Dimension2D dimb = block.calculateDimension(stringBounder);
-			final Rectangle2D result = block.getInnerPosition(member, stringBounder);
+			final Rectangle2D result = block.getInnerPosition(member, stringBounder, strategy);
 			if (result != null) {
 				return new UTranslate(0, y).apply(result);
 			}

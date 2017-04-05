@@ -100,8 +100,4 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		return ShapeType.CIRCLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 }

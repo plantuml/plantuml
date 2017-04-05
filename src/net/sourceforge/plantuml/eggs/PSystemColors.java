@@ -159,7 +159,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 		ug = ug.apply(new UTranslate(centerHexa(i, j)));
 		ug.draw(hexa);
 
-		final UFont font = new UFont("SansSerif", Font.BOLD, 14);
+		final UFont font = UFont.sansSerif(14).bold();
 
 		TextBlock tt = getTextName(font, colorName, color);
 		Dimension2D dimText = tt.calculateDimension(ug.getStringBounder());
@@ -246,7 +246,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	}
 
 	private void drawFull(UGraphic ug) {
-		final UFont font = new UFont("SansSerif", Font.BOLD, 14);
+		final UFont font = UFont.sansSerif(14).bold();
 
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
 		int i = 0;

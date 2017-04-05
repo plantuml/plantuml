@@ -276,6 +276,9 @@ public class StringUtils {
 	}
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
+		if (s == null) {
+			return s;
+		}
 		return eventuallyRemoveStartingAndEndingDoubleQuote(s, "\"([:");
 	}
 

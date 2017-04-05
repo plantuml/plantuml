@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandActivityLegacy1;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandActivityLong3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandArrow3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandArrowLong3;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandBackward3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandBreak;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElse3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf2;
@@ -112,6 +113,7 @@ public class ActivityDiagramFactory3 extends UmlDiagramFactory {
 		cmds.add(new CommandRepeat3());
 		cmds.add(new CommandRepeatWhile3());
 		cmds.add(new CommandRepeatWhile3Multilines());
+		cmds.add(new CommandBackward3());
 		cmds.add(new CommandWhile3());
 		cmds.add(new CommandWhileEnd3());
 		cmds.add(new CommandFork3());

@@ -132,10 +132,6 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		return ShapeType.OVAL;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 	static class MyUGraphicEllipse extends AbstractUGraphicHorizontalLine {
 
 		private final double startingX;

@@ -58,7 +58,16 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 	}
 
 	final public DiagramDescription getDescription() {
-		return new DiagramDescription("(" + getLeafssize() + " entities)");
+		final StringBuilder result = new StringBuilder("(" + getLeafssize() + " entities");
+		final String id = getSource().getId();
+		if (id == null) {
+			result.append(")");
+		} else {
+			result.append(", ");
+			result.append(id);
+			result.append(")");
+		}
+		return new DiagramDescription(result.toString());
 	}
 
 }

@@ -72,7 +72,7 @@ public class PSystemCreole extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		final Display display = Display.create(lines);
-		final UFont font = new UFont("Serif", Font.PLAIN, 14);
+		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
 		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.FULL)
 				.createSheet(display);

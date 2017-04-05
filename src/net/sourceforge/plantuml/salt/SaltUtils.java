@@ -67,14 +67,14 @@ public class SaltUtils {
 
 		final Collection<AbstractElementFactoryComplex> cpx = new ArrayList<AbstractElementFactoryComplex>();
 
-		final Dictionary dictionnary = new Dictionary();
+		final Dictionary dictionary = new Dictionary();
 
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
-		cpx.add(new ElementFactoryPyramid(source, dictionnary));
-		cpx.add(new ElementFactoryBorder(source, dictionnary));
+		cpx.add(new ElementFactoryPyramid(source, dictionary));
+		cpx.add(new ElementFactoryBorder(source, dictionary));
 
 		for (AbstractElementFactoryComplex f : cpx) {
-			addSimpleFactory(f, source, dictionnary);
+			addSimpleFactory(f, source, dictionary);
 		}
 		for (AbstractElementFactoryComplex f1 : cpx) {
 			for (AbstractElementFactoryComplex f2 : cpx) {
@@ -95,21 +95,21 @@ public class SaltUtils {
 	}
 
 	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
-			Dictionary dictionnary) {
-		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryTree(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryTab(source, dictionnary));
+			Dictionary dictionary) {
+		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryLine(source));
-		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryButton(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryImage(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionnary));
-		cpxFactory.addFactory(new ElementFactoryText(source, dictionnary));
+		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));
+		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));
 	}
 
 }

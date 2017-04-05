@@ -42,12 +42,11 @@ import java.io.OutputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.api.MyRunnable;
 import net.sourceforge.plantuml.api.TimeoutExecutor;
 
 public class ProcessRunner {
-	// http://steveliles.github.io/invoking_processes_from_java.html
-	public static long TIMEOUT = 15 * 60 * 1000L;
 
 	private final String[] cmd;
 
@@ -72,7 +71,9 @@ public class ProcessRunner {
 		this.state = ProcessState.RUNNING();
 		final MainThread mainThread = new MainThread(cmd, dir, redirection, in);
 		try {
-			final boolean done = new TimeoutExecutor(TIMEOUT).executeNow(mainThread);
+			// http://steveliles.github.io/invoking_processes_from_java.html
+			final long timeoutMs = OptionFlags.getInstance().getTimeoutMs();
+			final boolean done = new TimeoutExecutor(timeoutMs).executeNow(mainThread);
 		} finally {
 			changeState.lock();
 			try {
@@ -216,7 +217,7 @@ public class ProcessRunner {
 		}
 
 		public String getString() {
-			if (sb==null) {
+			if (sb == null) {
 				return "";
 			}
 			return sb.toString();

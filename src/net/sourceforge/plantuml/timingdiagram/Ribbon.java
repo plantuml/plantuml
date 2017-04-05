@@ -44,9 +44,13 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -59,6 +63,7 @@ public class Ribbon implements TimeDrawing {
 	private final ISkinParam skinParam;
 	private final TimingRuler ruler;
 	private String initialState;
+	private Colors initialColors;
 
 	public Ribbon(TimingRuler ruler, ISkinParam skinParam) {
 		this.ruler = ruler;
@@ -103,18 +108,26 @@ public class Ribbon implements TimeDrawing {
 			inital = null;
 		} else {
 			inital = getTextBlock(initialState);
+			final double a = getPosInPixel(changes.get(0));
 			drawPentaA(ugDown.apply(new UTranslate(-getInitialWidth(stringBounder), -delta / 2)),
-					getInitialWidth(stringBounder), changes.get(0));
+					getInitialWidth(stringBounder) + a, changes.get(0));
 		}
 
 		for (int i = 0; i < changes.size() - 1; i++) {
 			final double a = getPosInPixel(changes.get(i));
 			final double b = getPosInPixel(changes.get(i + 1));
 			assert b > a;
-			drawHexa(ugDown.apply(new UTranslate(a, -delta / 2)), b - a, changes.get(i));
+			if (changes.get(i).isCompletelyHidden() == false) {
+				drawHexa(ugDown.apply(new UTranslate(a, -delta / 2)), b - a, changes.get(i));
+			}
 		}
-		final double a = getPosInPixel(changes.get(changes.size() - 1));
-		drawPentaB(ugDown.apply(new UTranslate(a, -delta / 2)), ruler.getWidth() - a, changes.get(changes.size() - 1));
+		if (changes.size() >= 1) {
+			final ChangeState last = changes.get(changes.size() - 1);
+			final double a = getPosInPixel(last);
+			if (last.isCompletelyHidden() == false) {
+				drawPentaB(ugDown.apply(new UTranslate(a, -delta / 2)), ruler.getWidth() - a, last);
+			}
+		}
 
 		ugDown = ugDown.apply(new UTranslate(0, delta / 2));
 
@@ -125,7 +138,7 @@ public class Ribbon implements TimeDrawing {
 		for (int i = 0; i < changes.size(); i++) {
 			final ChangeState change = changes.get(i);
 			final double x = ruler.getPosInPixel(change.getWhen());
-			if (change.isHidden() == false) {
+			if (change.isBlank() == false && change.isCompletelyHidden() == false) {
 				final TextBlock state = getTextBlock(change.getState());
 				final Dimension2D dim = state.calculateDimension(stringBounder);
 				final double xtext;
@@ -166,7 +179,12 @@ public class Ribbon implements TimeDrawing {
 	}
 
 	private void drawPentaA(UGraphic ug, double len, ChangeState change) {
-		final PentaAShape shape = PentaAShape.create(len, 2 * delta, change.getContext());
+		SymbolContext context = change.getContext();
+		final HtmlColor back = initialColors.getColor(ColorType.BACK);
+		if (back != null) {
+			context = context.withBackColor(back);
+		}
+		final PentaAShape shape = PentaAShape.create(len, 2 * delta, context);
 		shape.drawU(ug);
 	}
 
@@ -192,8 +210,9 @@ public class Ribbon implements TimeDrawing {
 		return TextBlockUtils.empty(0, 0);
 	}
 
-	public void setInitialState(String initialState) {
+	public void setInitialState(String initialState, Colors initialColors) {
 		this.initialState = initialState;
+		this.initialColors = initialColors;
 	}
 
 	public void addConstraint(TimeConstraint constraint) {

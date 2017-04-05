@@ -141,6 +141,9 @@ public class CommandCreateElementMultilines extends CommandMultilines2<Descripti
 
 		final String stereotype = line0.get("STEREO", 0);
 
+		if (CommandCreateElementFull.existsWithBadType(diagram, code, type, usymbol)) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		final ILeaf result = diagram.createLeaf(code, display, type, usymbol);
 		result.setUSymbol(usymbol);
 		if (stereotype != null) {

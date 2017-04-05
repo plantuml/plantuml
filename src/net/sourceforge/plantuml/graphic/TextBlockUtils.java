@@ -165,13 +165,14 @@ public class TextBlockUtils {
 				return bloc.calculateDimension(stringBounder);
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
-				if (display.startsWith(member)) {
+			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+				if (strategy.check(display, member)) {
 					final Dimension2D dim = calculateDimension(stringBounder);
 					return new Rectangle2D.Double(0, 0, dim.getWidth(), dim.getHeight());
 				}
 				return null;
 			}
+
 		};
 	}
 

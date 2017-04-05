@@ -106,7 +106,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	private boolean isUsecase() {
 		for (ILeaf leaf : getLeafsvalues()) {
-			final LeafType type = leaf.getEntityType();
+			final LeafType type = leaf.getLeafType();
 			final USymbol usymbol = leaf.getUSymbol();
 			if (type == LeafType.USECASE || usymbol == USymbol.ACTOR) {
 				return true;
@@ -121,7 +121,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		final LeafType defaultType = isUsecase() ? LeafType.DESCRIPTION : LeafType.DESCRIPTION;
 		final USymbol defaultSymbol = isUsecase() ? USymbol.ACTOR : USymbol.INTERFACE;
 		for (ILeaf leaf : getLeafsvalues()) {
-			if (leaf.getEntityType() == LeafType.STILL_UNKNOWN) {
+			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN) {
 				leaf.muteToType(defaultType, defaultSymbol);
 			}
 		}

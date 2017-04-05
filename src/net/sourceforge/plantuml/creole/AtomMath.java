@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -90,7 +91,7 @@ public class AtomMath implements Atom {
 		}
 		final Color fore = getColor(foreground, Color.BLACK);
 		if (isSvg) {
-			final String svg = math.getSvg(fore, back);
+			final SvgString svg = math.getSvg(scale, fore, back);
 			ug.draw(new UImageSvg(svg));
 		} else {
 			ug.draw(new UImage(math.getImage(scale, fore, back)));

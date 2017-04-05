@@ -41,6 +41,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -79,9 +80,14 @@ public class SvekUtils {
 		}
 
 		public List<Point2D.Double> next() {
-			final List<Point2D.Double> result = extractPointsList(text, pos, yDelta);
-			pos = text.indexOf(pointsString, pos) + pointsString.length() + 1;
-			return result;
+			try {
+				final List<Point2D.Double> result = extractPointsList(text, pos, yDelta);
+				pos = text.indexOf(pointsString, pos) + pointsString.length() + 1;
+				return result;
+			} catch (StringIndexOutOfBoundsException e) {
+				Log.error("Error " + e);
+				return Collections.emptyList();
+			}
 		}
 
 		public void remove() {

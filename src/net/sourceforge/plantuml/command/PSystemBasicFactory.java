@@ -78,7 +78,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 			}
 			first = false;
 			if (StartUtils.isArobaseEndDiagram(s)) {
-				if (source.getTotalLineCount() == 2) {
+				if (source.getTotalLineCount() == 2 && source.isStartDef() == false) {
 					return buildEmptyError(source, s.getLocation());
 				}
 				if (system != null) {

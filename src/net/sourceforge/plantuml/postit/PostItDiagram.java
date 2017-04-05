@@ -80,7 +80,7 @@ public class PostItDiagram extends UmlDiagram {
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, this.getDpi(fileFormatOption));
 		} else if (ug instanceof UGraphicSvg) {
 			final UGraphicSvg svg = (UGraphicSvg) ug;
-			svg.createXml(os);
+			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
 		} else if (ug instanceof UGraphicEps) {
 			final UGraphicEps eps = (UGraphicEps) ug;
 			os.write(eps.getEPSCode().getBytes());

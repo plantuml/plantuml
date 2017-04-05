@@ -106,7 +106,8 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 
 				Url url = null;
 				if (line0.get("URL", 0) != null) {
-					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
+							ModeUrl.STRICT);
 					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
@@ -121,7 +122,7 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 		final String pos = line0.get("POSITION", 0);
 
 		final Code code = Code.of(line0.get("ENTITY", 0));
-		final String member = line0.get("ENTITY", 1);
+		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
 		if (code == null) {
 			return CommandExecutionResult.error("Nothing to note to");
 		}
@@ -143,33 +144,6 @@ public final class FactoryTipOnEntityCommand implements SingleMultiFactoryComman
 			diagram.addLink(link);
 		}
 		tips.putTip(member, lines.toDisplay());
-
-		// final IEntity note = diagram.createLeaf(UniqueSequence.getCode("GMN"), Display.create(s), LeafType.NOTE,
-		// null);
-		// note.setSpecificBackcolor(diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0)));
-		// if (url != null) {
-		// note.addUrl(url);
-		// }
-		//
-		// final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
-		// diagram.getSkinParam().getRankdir());
-		// final Link link;
-		//
-		// final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();
-		// if (position == Position.RIGHT) {
-		// link = new Link(cl1, note, type, null, 1);
-		// link.setHorizontalSolitary(true);
-		// } else if (position == Position.LEFT) {
-		// link = new Link(note, cl1, type, null, 1);
-		// link.setHorizontalSolitary(true);
-		// } else if (position == Position.BOTTOM) {
-		// link = new Link(cl1, note, type, null, 2);
-		// } else if (position == Position.TOP) {
-		// link = new Link(note, cl1, type, null, 2);
-		// } else {
-		// throw new IllegalArgumentException();
-		// }
-		// diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
 

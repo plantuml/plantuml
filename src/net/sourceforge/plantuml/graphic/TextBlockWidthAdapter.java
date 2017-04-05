@@ -39,26 +39,26 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class TextBlockWidthAdapter extends AbstractTextBlock implements TextBlock {
+public class TextBlockWidthAdapter implements TextBlockWidth {
 
-	private final TextBlockWidth textBlockWidth;
+	private final TextBlock textBlock;
 	private final double width;
 
-	// public final void setWidth(double width) {
-	// this.width = width;
-	// }
-
-	public TextBlockWidthAdapter(TextBlockWidth textBlockWidth, double widthToUse) {
-		this.textBlockWidth = textBlockWidth;
+	public TextBlockWidthAdapter(TextBlock textBlock, double widthToUse) {
+		this.textBlock = textBlock;
 		this.width = widthToUse;
 	}
 
 	public void drawU(UGraphic ug) {
-		textBlockWidth.asTextBlock(width).drawU(ug);
+		textBlock.drawU(ug);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return textBlockWidth.calculateDimension(stringBounder);
+		return textBlock.calculateDimension(stringBounder);
+	}
+
+	public TextBlock asTextBlock(double widthToUse) {
+		return textBlock;
 	}
 
 }

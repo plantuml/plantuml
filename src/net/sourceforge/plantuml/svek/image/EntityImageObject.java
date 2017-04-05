@@ -202,10 +202,6 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 	public double getStartingX(StringBounder stringBounder, double y) {
 		return 0;
 	}

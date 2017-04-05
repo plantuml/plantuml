@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.golem.TileArea;
 import net.sourceforge.plantuml.golem.TileGeometry;
 import net.sourceforge.plantuml.golem.TilesField;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
@@ -79,7 +80,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<Tile, ActivityBox>();
 	private Tile lastTile;
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder) {
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException();
 	}
 

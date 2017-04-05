@@ -41,17 +41,19 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import net.sourceforge.plantuml.SvgString;
+
 public interface ScientificEquation {
 
 	public Dimension2D getDimension();
 
-	public String getSvg(Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
+	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, InstantiationException, IOException;
 
-	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
-			NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException;
+	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException;
 
 	public String getSource();
 

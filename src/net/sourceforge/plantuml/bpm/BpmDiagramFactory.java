@@ -56,6 +56,9 @@ public class BpmDiagramFactory extends UmlDiagramFactory {
 		result.add(new CommandMerge());
 		result.add(new CommandResume());
 		result.add(new CommandGoto());
+		result.add(new CommandNewBranch());
+		result.add(new CommandElseBranch());
+		result.add(new CommandEndBranch());
 		return result;
 	}
 

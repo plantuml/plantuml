@@ -44,7 +44,7 @@ public interface TextBlock extends UDrawable, UShape {
 
 	public Dimension2D calculateDimension(StringBounder stringBounder);
 	
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder);
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
 
 
 }

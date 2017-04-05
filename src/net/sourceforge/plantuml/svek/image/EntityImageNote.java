@@ -283,10 +283,6 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return ShapeType.RECTANGLE;
 	}
 
-	public int getShield() {
-		return 0;
-	}
-
 	private Line opaleLine;
 	private Shape shape;
 	private Shape other;

@@ -109,7 +109,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (head1.equals("(0")) {
 			d1 = LinkDecor.CIRCLE_CONNECT;
 		} else if (head1.equals("#")) {
-			d1 = LinkDecor.SQUARRE;
+			d1 = LinkDecor.SQUARE;
 		} else if (head1.equals("0")) {
 			d1 = LinkDecor.CIRCLE;
 		} else if (head1.equals("(")) {
@@ -133,7 +133,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (head2.equals("0)")) {
 			d2 = LinkDecor.CIRCLE_CONNECT;
 		} else if (head2.equals("#")) {
-			d2 = LinkDecor.SQUARRE;
+			d2 = LinkDecor.SQUARE;
 		} else if (head2.equals("0")) {
 			d2 = LinkDecor.CIRCLE;
 		} else if (head2.equals(")")) {
