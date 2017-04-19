@@ -33,48 +33,49 @@
  *
  *
  */
-package net.sourceforge.plantuml.bpm;
+package net.sourceforge.plantuml;
 
-public final class Navigators {
+import java.io.File;
 
-	private Navigators() {
+public class SuggestedFile {
 
-	}
+	private final FileFormat fileFormat;
+	private final int initialCpt;
+	private final File outputFile;
 
-	public static <O> Navigator<O> iterate(final Chain<O> orig, final O from, final O to) {
-		if (orig.compare(from, to) <= 0) {
-			return orig.navigator(from);
+	private SuggestedFile(File outputFile, FileFormat fileFormat, int initialCpt) {
+		if (outputFile.getName().endsWith(fileFormat.getFileSuffix())) {
+			throw new IllegalArgumentException();
 		}
-		return reverse(orig.navigator(from));
+		this.outputFile = outputFile;
+		this.fileFormat = fileFormat;
+		this.initialCpt = initialCpt;
+
 	}
 
-	public static <O> Navigator<O> reverse(final Navigator<O> orig) {
-		return new Navigator<O>() {
+	public static SuggestedFile fromOutputFile(File outputFile, FileFormat fileFormat) {
+		return fromOutputFile(outputFile, fileFormat, 0);
+	}
 
-			public O next() {
-				return orig.previous();
-			}
+	public File getParentFile() {
+		return outputFile.getParentFile();
+	}
 
-			public O previous() {
-				return orig.next();
-			}
+	public String getName() {
+		return outputFile.getName();
+	}
 
-			public O get() {
-				return orig.get();
-			}
+	public File getFile(int cpt) {
+		final String newName = fileFormat.changeName(outputFile.getName(), initialCpt + cpt);
+		return new File(outputFile.getParentFile(), newName);
+	}
 
-			public void set(O data) {
-				orig.set(data);
-			}
+	public static SuggestedFile fromOutputFile(File outputFile, FileFormat fileFormat, int initialCpt) {
+		return new SuggestedFile(outputFile, fileFormat, initialCpt);
+	}
 
-			public void insertBefore(O data) {
-				throw new UnsupportedOperationException();
-			}
-
-			public void insertAfter(O data) {
-				throw new UnsupportedOperationException();
-			}
-		};
+	public File getTmpFile() {
+		return new File(getParentFile(), getName() + ".tmp");
 	}
 
 }

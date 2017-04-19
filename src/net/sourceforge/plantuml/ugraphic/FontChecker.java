@@ -157,7 +157,7 @@ public class FontChecker {
 	}
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
-		final SvgGraphics svg = new SvgGraphics(1.0, null, new Random());
+		final SvgGraphics svg = new SvgGraphics(1.0, null, 42);
 		svg.setStrokeColor("black");
 		svg.svgImage(getBufferedImage(c), 0, 0);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -183,7 +183,7 @@ public class FontChecker {
 			}
 		});
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), os);
+		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, os);
 		os.close();
 		return ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 	}

@@ -83,7 +83,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final double dpiFactor = 1;
 		final double margin = 10;
@@ -97,7 +97,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 				false);
 		imageBuilder.setUDrawable(getUDrawable());
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
 
 	private void sortTasks() {

@@ -306,7 +306,7 @@ public class Run {
 
 	private static boolean processArgs(Option option) throws IOException, InterruptedException {
 		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
-				&& OptionFlags.getInstance().isMetadata() == false) {
+				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
 			return multithread(option);
 		}
 		boolean errorGlobal = false;
@@ -384,7 +384,7 @@ public class Run {
 	}
 
 	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
-		if (OptionFlags.getInstance().isMetadata()) {
+		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
 			System.out.println(f);
 			// new Metadata().readAndDisplayMetadata(f);

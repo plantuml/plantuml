@@ -97,7 +97,7 @@ public class NewpagedDiagram extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
 	}

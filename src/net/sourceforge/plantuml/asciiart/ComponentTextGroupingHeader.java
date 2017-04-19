@@ -53,8 +53,7 @@ public class ComponentTextGroupingHeader extends AbstractComponentText {
 	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
 
-	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay,
-			FileFormat fileFormat) {
+	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay, FileFormat fileFormat) {
 		this.type = type;
 		this.stringsToDisplay = stringsToDisplay;
 		this.fileFormat = fileFormat;
@@ -92,7 +91,7 @@ public class ComponentTextGroupingHeader extends AbstractComponentText {
 			charArea.drawHLine('~', height - 1, 1, width - 1);
 		}
 
-		if (stringsToDisplay.size() > 1) {
+		if (stringsToDisplay.size() > 1 && stringsToDisplay.get(1) != null) {
 			final String comment = stringsToDisplay.get(1).toString();
 			charArea.drawStringLR(comment, text.length() + 7, 1);
 

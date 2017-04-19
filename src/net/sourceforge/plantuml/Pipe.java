@@ -90,7 +90,7 @@ public class Pipe {
 				ps.println(result);
 			} else {
 				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
-				final DiagramDescription result = sourceStringReader.generateImage(os, 0, option.getFileFormatOption());
+				final DiagramDescription result = sourceStringReader.outputImage(os, 0, option.getFileFormatOption());
 				if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
 					error = true;
 					manageErrors(noStdErr ? ps : System.err, sourceStringReader);

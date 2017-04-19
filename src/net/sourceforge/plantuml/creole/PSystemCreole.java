@@ -69,7 +69,7 @@ public class PSystemCreole extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);
@@ -81,7 +81,7 @@ public class PSystemCreole extends AbstractPSystem {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 0, 0, null,
 				false);
 		builder.setUDrawable(sheetBlock);
-		return builder.writeImageTOBEMOVED(fileFormat, os);
+		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
 		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1, dim, null, false);

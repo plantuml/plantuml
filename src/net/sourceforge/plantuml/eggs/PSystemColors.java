@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.IOException;
@@ -90,12 +89,12 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(this);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public DiagramDescription getDescription() {

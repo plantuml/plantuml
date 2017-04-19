@@ -63,7 +63,7 @@ public class PSystemTree extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null, null,
 				5, 5, null, false);
@@ -76,7 +76,7 @@ public class PSystemTree extends AbstractPSystem {
 		} else {
 			builder.setUDrawable(new GTileOneLevelFactory().createGTile(root));
 		}
-		return builder.writeImageTOBEMOVED(fileFormat, os);
+		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public CommandExecutionResult addParagraph(int level, String label) {

@@ -79,7 +79,7 @@ public class PSystemXearth extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ACearth earth = new ACearth(markers);
 		final ConfigurationACearth conf = earth.getConf();

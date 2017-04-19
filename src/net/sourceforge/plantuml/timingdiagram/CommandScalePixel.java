@@ -30,51 +30,40 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.bpm;
+package net.sourceforge.plantuml.timingdiagram;
 
-public final class Navigators {
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-	private Navigators() {
+public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 
+	public CommandScalePixel() {
+		super(getRegexConcat());
 	}
 
-	public static <O> Navigator<O> iterate(final Chain<O> orig, final O from, final O to) {
-		if (orig.compare(from, to) <= 0) {
-			return orig.navigator(from);
-		}
-		return reverse(orig.navigator(from));
+	private static RegexConcat getRegexConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("scale"), //
+				new RegexLeaf("[%s]+"), //
+				new RegexLeaf("TICK", "(\\d+)"), //
+				new RegexLeaf("[%s]+as[%s]+"), //
+				new RegexLeaf("PIXEL", "(\\d+)"), //
+				new RegexLeaf("[%s]+pixels?"), //
+				new RegexLeaf("[%s]*$"));
 	}
 
-	public static <O> Navigator<O> reverse(final Navigator<O> orig) {
-		return new Navigator<O>() {
-
-			public O next() {
-				return orig.previous();
-			}
-
-			public O previous() {
-				return orig.next();
-			}
-
-			public O get() {
-				return orig.get();
-			}
-
-			public void set(O data) {
-				orig.set(data);
-			}
-
-			public void insertBefore(O data) {
-				throw new UnsupportedOperationException();
-			}
-
-			public void insertAfter(O data) {
-				throw new UnsupportedOperationException();
-			}
-		};
+	@Override
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+		final long tick = Long.parseLong(arg.get("TICK", 0));
+		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
+		diagram.scaleInPixels(tick, pixel);
+		return CommandExecutionResult.ok();
 	}
 
 }

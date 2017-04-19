@@ -33,48 +33,34 @@
  *
  *
  */
-package net.sourceforge.plantuml.bpm;
+package net.sourceforge.plantuml.asciiart;
 
-public final class Navigators {
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
-	private Navigators() {
+public class ComponentTextDestroy extends AbstractComponentText {
 
+	public ComponentTextDestroy() {
 	}
 
-	public static <O> Navigator<O> iterate(final Chain<O> orig, final O from, final O to) {
-		if (orig.compare(from, to) <= 0) {
-			return orig.navigator(from);
-		}
-		return reverse(orig.navigator(from));
+	public void drawU(UGraphic ug, Area area, Context2D context) {
+		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
+		charArea.drawStringLR("/", 2, 0);
+		charArea.drawStringLR("\\", 0, 0);
+		charArea.drawStringLR("X", 1, 1);
+		charArea.drawStringLR("\\", 2, 2);
+		charArea.drawStringLR("/", 0, 2);
 	}
 
-	public static <O> Navigator<O> reverse(final Navigator<O> orig) {
-		return new Navigator<O>() {
+	public double getPreferredHeight(StringBounder stringBounder) {
+		return 5;
+	}
 
-			public O next() {
-				return orig.previous();
-			}
-
-			public O previous() {
-				return orig.next();
-			}
-
-			public O get() {
-				return orig.get();
-			}
-
-			public void set(O data) {
-				orig.set(data);
-			}
-
-			public void insertBefore(O data) {
-				throw new UnsupportedOperationException();
-			}
-
-			public void insertAfter(O data) {
-				throw new UnsupportedOperationException();
-			}
-		};
+	public double getPreferredWidth(StringBounder stringBounder) {
+		return 3;
 	}
 
 }

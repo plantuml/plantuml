@@ -57,12 +57,14 @@ public class PSystemLost extends AbstractPSystem {
 		strings.add("Thank you for choosing Oceanic Airlines.");
 	}
 
-	@Override final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+	@Override
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	private TextBlockBackcolored getGraphicStrings() throws IOException {

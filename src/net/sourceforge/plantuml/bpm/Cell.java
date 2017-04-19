@@ -42,7 +42,7 @@ import java.util.List;
 public class Cell {
 
 	private Placeable data;
-	private final List<Cell> destinations = new ArrayList<Cell>();
+	private final List<Placeable> destinations = new ArrayList<Placeable>();
 
 	public final Placeable getData() {
 		return data;
@@ -60,11 +60,15 @@ public class Cell {
 		return super.toString() + " " + data;
 	}
 
-	public void addConnectionTo(Cell other) {
+	public void addConnectionTo2(Placeable other) {
+		// Should be an assert
+		if (other instanceof BpmElement == false) {
+			throw new IllegalArgumentException();
+		}
 		this.destinations.add(other);
 	}
 
-	public List<Cell> getDestinations() {
+	public List<Placeable> getDestinations2() {
 		return Collections.unmodifiableList(destinations);
 	}
 

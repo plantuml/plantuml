@@ -84,7 +84,7 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 				getAnimation());
 		imageBuilder.setUDrawable(getUDrawable());
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
 	}
 
 	private UDrawable getUDrawable() {
@@ -205,6 +205,10 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 
 	public Player getLastPlayer() {
 		return lastPlayer;
+	}
+
+	public void scaleInPixels(long tick, long pixel) {
+		ruler.scaleInPixels(tick, pixel);
 	}
 
 }

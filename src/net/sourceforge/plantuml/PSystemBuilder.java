@@ -105,6 +105,7 @@ public class PSystemBuilder {
 			int cpt = 0;
 			for (CharSequence2 s : strings2) {
 				if (s.getPreprocessorError() != null) {
+					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), cpt,
 							s.getLocation());
 					return new PSystemError(umlSource, singleError, Collections.<String> emptyList());

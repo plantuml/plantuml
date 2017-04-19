@@ -169,6 +169,15 @@ public class Grid {
 		throw new IllegalArgumentException();
 	}
 
+	private Coord getCoord(Placeable placeable) {
+		for (Map.Entry<Coord, Cell> ent : cells.entrySet()) {
+			if (ent.getValue().getData() == placeable) {
+				return ent.getKey();
+			}
+		}
+		throw new IllegalArgumentException();
+	}
+
 	public final Navigator<Line> linesOf(Coord coord) {
 		return lines.navigator(coord.getLine());
 	}
@@ -191,11 +200,14 @@ public class Grid {
 		final GridArray result = new GridArray(skinParam, lines.size(), cols.size());
 		for (Map.Entry<Coord, Cell> ent : cells.entrySet()) {
 			final int l = lines.indexOf(ent.getKey().getLine());
-			final int r = cols.indexOf(ent.getKey().getCol());
-			if (r == -1 || l == -1) {
-				throw new IllegalStateException();
+			final int c = cols.indexOf(ent.getKey().getCol());
+			if (c == -1) {
+				throw new IllegalStateException("col=" + ent.getKey().getCol());
 			}
-			result.setData(l, r, ent.getValue().getData());
+			if (l == -1) {
+				throw new IllegalStateException("line=" + ent.getKey().getLine());
+			}
+			result.setData(l, c, ent.getValue().getData());
 		}
 		return result;
 	}
@@ -244,7 +256,21 @@ public class Grid {
 	}
 
 	public void removeLine(Line line) {
+		System.err.println("REMOVING " + line);
 		assert usedColsOf(line).isEmpty();
+		for (final Iterator<Map.Entry<Coord, Cell>> it = cells.entrySet().iterator(); it.hasNext();) {
+			final Map.Entry<Coord, Cell> ent = it.next();
+			if (ent.getKey().getLine() != line) {
+				continue;
+			}
+			final Cell cell = ent.getValue();
+			if (cell == null || cell.getData() == null) {
+				it.remove();
+			} else {
+				throw new IllegalStateException();
+			}
+		}
+
 		final boolean done = lines.remove(line);
 		if (done == false) {
 			throw new IllegalArgumentException();
@@ -255,36 +281,36 @@ public class Grid {
 	// this.edges.addAll(other);
 	// }
 
-	public void mergeLines(Line source, Line dest) {
-		final Map<Coord, Cell> supp = new HashMap<Coord, Cell>();
-
-		for (Iterator<Map.Entry<Coord, Cell>> it = cells.entrySet().iterator(); it.hasNext();) {
-			final Map.Entry<Coord, Cell> ent = it.next();
-			final Cell cell = ent.getValue();
-			if (cell == null || cell.getData() == null) {
-				continue;
-			}
-			if (ent.getKey().getLine() == source) {
-				supp.put(new Coord(dest, ent.getKey().getCol()), cell);
-				it.remove();
-			}
-		}
-		cells.putAll(supp);
-		removeLine(source);
-	}
+	// public void mergeLines(Line line1, Line line2) {
+	// final Map<Coord, Cell> supp = new HashMap<Coord, Cell>();
+	//
+	// for (Iterator<Map.Entry<Coord, Cell>> it = cells.entrySet().iterator(); it.hasNext();) {
+	// final Map.Entry<Coord, Cell> ent = it.next();
+	// final Cell cell = ent.getValue();
+	// if (cell == null || cell.getData() == null) {
+	// continue;
+	// }
+	// if (ent.getKey().getLine() == source) {
+	// supp.put(new Coord(dest, ent.getKey().getCol()), cell);
+	// it.remove();
+	// }
+	// }
+	// cells.putAll(supp);
+	// removeLine(source);
+	// }
 
 	public void addConnections() {
 		for (Map.Entry<Coord, Cell> ent : new HashMap<Coord, Cell>(cells).entrySet()) {
-			final List<Cell> dests = ent.getValue().getDestinations();
+			final List<Placeable> dests2 = ent.getValue().getDestinations2();
 			final Coord src = ent.getKey();
-			for (int i = 0; i < dests.size(); i++) {
-				final Coord dest = getCoord(dests.get(i));
+			for (int i = 0; i < dests2.size(); i++) {
+				final Coord dest = getCoord(dests2.get(i));
 				final boolean startHorizontal = i == 0;
 				if (startHorizontal) {
-					System.err.println("DrawingHorizontal " + ent.getValue() + " --> " + dests.get(i) + " " + i);
+					// System.err.println("DrawingHorizontal " + ent.getValue() + " --> " + dests.get(i) + " " + i);
 					drawHorizontal(src, dest);
 				} else {
-					// drawVertical(src, dest);
+					drawVertical(src, dest);
 				}
 			}
 		}
@@ -295,15 +321,25 @@ public class Grid {
 				.getLine();) {
 			final Line cur = itLine.next();
 			if (cur != dest.getLine()) {
-				Cell tmp = getCell(cur, src.getCol());
-				addPuzzle(tmp, "NS");
+				addPuzzle(cur, src.getCol(), "NS");
 			}
 		}
 		for (Navigator<Col> itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest.getCol();) {
 			final Col cur = itCol.next();
 			if (cur != dest.getCol()) {
-				Cell tmp = getCell(dest.getLine(), cur);
-				addPuzzle(tmp, "EW");
+				addPuzzle(dest.getLine(), cur, "EW");
+			}
+		}
+		if (src.getLine() != dest.getLine() && src.getCol() != dest.getCol()) {
+			if (lines.compare(dest.getLine(), src.getLine()) > 0) {
+				addPuzzle(dest.getLine(), src.getCol(), "N");
+			} else {
+				addPuzzle(dest.getLine(), src.getCol(), "S");
+			}
+			if (cols.compare(dest.getCol(), src.getCol()) > 0) {
+				addPuzzle(dest.getLine(), src.getCol(), "E");
+			} else {
+				addPuzzle(dest.getLine(), src.getCol(), "W");
 			}
 		}
 
@@ -313,29 +349,38 @@ public class Grid {
 		for (Navigator<Col> itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest.getCol();) {
 			final Col cur = itCol.next();
 			if (cur != dest.getCol()) {
-				Cell tmp = getCell(src.getLine(), cur);
-				addPuzzle(tmp, "EW");
+				addPuzzle(src.getLine(), cur, "EW");
 			}
 		}
-		System.err.println("src=" + src + " " + getCell(src));
-		System.err.println("dest=" + dest + " " + getCell(dest));
 		for (Navigator<Line> itLine = Navigators.iterate(lines, src.getLine(), dest.getLine()); itLine.get() != dest
 				.getLine();) {
 			final Line cur = itLine.next();
 			if (cur != dest.getLine()) {
-				Cell tmp = getCell(cur, src.getCol());
-				addPuzzle(tmp, "NS");
+				addPuzzle(cur, dest.getCol(), "NS");
+			}
+		}
+		if (src.getLine() != dest.getLine() && src.getCol() != dest.getCol()) {
+			if (cols.compare(dest.getCol(), src.getCol()) > 0) {
+				addPuzzle(src.getLine(), dest.getCol(), "W");
+			} else {
+				addPuzzle(src.getLine(), dest.getCol(), "E");
+			}
+			if (lines.compare(dest.getLine(), src.getLine()) > 0) {
+				addPuzzle(src.getLine(), dest.getCol(), "S");
+			} else {
+				addPuzzle(src.getLine(), dest.getCol(), "N");
 			}
 		}
 	}
 
-	private void addPuzzle(Cell tmp, String direction) {
+	private void addPuzzle(Line line, Col col, String direction) {
+		final Cell cell = getCell(line, col);
 		ConnectorPuzzle after = ConnectorPuzzle.get(direction);
-		final ConnectorPuzzle before = (ConnectorPuzzle) tmp.getData();
+		final ConnectorPuzzle before = (ConnectorPuzzle) cell.getData();
 		if (before != null) {
 			after = after.append(before);
 		}
-		tmp.setData(after);
+		cell.setData(after);
 	}
 
 }

@@ -103,6 +103,7 @@ public class OptionPrint {
 		System.out.println("    -charset xxx\tTo use a specific charset (default is " + charset + ")");
 		System.out.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
 		System.out.println("    -metadata\t\tTo retrieve PlantUML sources from PNG images");
+		System.out.println("    -nometadata\t\tTo NOT export metadata in PNG/SVG generated files");
 		System.out.println("    -version\t\tTo display information about PlantUML and Java versions");
 		System.out.println("    -checkversion\tTo check if a newer version is available for download");
 		System.out.println("    -v[erbose]\t\tTo have log information");

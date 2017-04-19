@@ -319,7 +319,7 @@ public class StringUtils {
 	public static int getWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
-			if (result < s.length()) {
+			if (s != null && result < s.length()) {
 				result = s.length();
 			}
 		}

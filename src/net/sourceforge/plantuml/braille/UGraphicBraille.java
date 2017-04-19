@@ -131,7 +131,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 				metadata, null, 0, 0, null, false);
 		imageBuilder.setUDrawable(new BrailleDrawer(getGraphicObject()));
 
-		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), os);
+		imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, os);
 
 	}
 }

@@ -35,6 +35,9 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Dimension2D;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -43,7 +46,9 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -52,10 +57,36 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class TimingRuler {
 
 	private final SortedSet<TimeTick> times = new TreeSet<TimeTick>();
-	private int highestCommonFactor = -1;
+	private long highestCommonFactor = -1;
 	private final ISkinParam skinParam;
 
-	private final double tickIntervalInPixels = 50;
+	private long tickIntervalInPixels = 50;
+	private long tickUnitary;
+
+	public void scaleInPixels(long tick, long pixel) {
+		this.tickIntervalInPixels = pixel;
+		this.tickUnitary = tick;
+	}
+
+	private long tickUnitary() {
+		if (tickUnitary == 0) {
+			return highestCommonFactor;
+		}
+		return tickUnitary;
+
+	}
+
+	private int getNbTick() {
+		return (int) (1 + getMax().getTime().longValue() / tickUnitary());
+	}
+
+	public double getWidth() {
+		return getPosInPixel(new BigDecimal((getNbTick()) * tickUnitary()));
+	}
+
+	private double getPosInPixel(double time) {
+		return time / tickUnitary() * tickIntervalInPixels;
+	}
 
 	public TimingRuler(ISkinParam skinParam) {
 		this.skinParam = skinParam;
@@ -64,12 +95,12 @@ public class TimingRuler {
 	public void addTime(TimeTick time) {
 		final boolean added = times.add(time);
 		if (added) {
-			int tick = time.getTime();
+			long tick = time.getTime().longValue();
 			if (tick > 0) {
 				if (highestCommonFactor == -1) {
-					highestCommonFactor = time.getTime();
+					highestCommonFactor = time.getTime().longValue();
 				} else {
-					highestCommonFactor = computeHighestCommonFactor(highestCommonFactor, time.getTime());
+					highestCommonFactor = computeHighestCommonFactor(highestCommonFactor, time.getTime().longValue());
 				}
 			}
 		}
@@ -79,36 +110,43 @@ public class TimingRuler {
 		return new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
 	}
 
-	private TextBlock getTimeTextBlock(TimeTick time) {
-		final Display display = Display.getWithNewlines("" + time.getTime());
+	private TextBlock getTimeTextBlock(long time) {
+		final Display display = Display.getWithNewlines("" + time);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	public void draw(UGraphic ug) {
-		ug = ug.apply(new UStroke(2.0));
-		final int nb = getNbTick();
-		// System.err.println("nb=" + nb);
+		ug = ug.apply(new UStroke(2.0)).apply(new UChangeColor(HtmlColorUtils.BLACK));
 		final double tickHeight = 5;
 		final ULine line = new ULine(0, tickHeight);
+		final int nb = getNbTick();
 		for (int i = 0; i <= nb; i++) {
 			ug.apply(new UTranslate(tickIntervalInPixels * i, 0)).draw(line);
 		}
 		ug.draw(new ULine(nb * tickIntervalInPixels, 0));
 
-		for (TimeTick tick : times) {
-			final TextBlock text = getTimeTextBlock(tick);
+		for (long round : roundValues()) {
+			final TextBlock text = getTimeTextBlock(round);
 			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
-			text.drawU(ug.apply(new UTranslate(getPosInPixel(tick) - dim.getWidth() / 2, tickHeight + 1)));
+			text.drawU(ug.apply(new UTranslate(getPosInPixel(round) - dim.getWidth() / 2, tickHeight + 1)));
 		}
-
 	}
 
-	private int getNbTick() {
-		return 1 + getMax().getTime() / highestCommonFactor;
-	}
-
-	public double getWidth() {
-		return getPosInPixel((getNbTick()) * highestCommonFactor);
+	private Collection<Long> roundValues() {
+		final Set<Long> result = new TreeSet<Long>();
+		if (tickUnitary == 0) {
+			for (TimeTick tick : times) {
+				final long round = tick.getTime().longValue();
+				result.add(round);
+			}
+		} else {
+			final int nb = getNbTick();
+			for (int i = 0; i <= nb; i++) {
+				final long round = tickUnitary * i;
+				result.add(round);
+			}
+		}
+		return result;
 	}
 
 	private TimeTick getMax() {
@@ -118,8 +156,8 @@ public class TimingRuler {
 		return times.last();
 	}
 
-	private static int computeHighestCommonFactor(int a, int b) {
-		int r = a;
+	private static long computeHighestCommonFactor(long a, long b) {
+		long r = a;
 		while (r != 0) {
 			r = a % b;
 			a = b;
@@ -128,15 +166,15 @@ public class TimingRuler {
 		return (Math.abs(a));
 	}
 
-	public final double getPosInPixel(int time) {
-		return 1.0 * time / highestCommonFactor * tickIntervalInPixels;
+	public final double getPosInPixel(BigDecimal time) {
+		return getPosInPixel(time.doubleValue());
 	}
 
-	public double getPosInPixel(TimeTick when) {
+	public final double getPosInPixel(TimeTick when) {
 		return getPosInPixel(when.getTime());
 	}
 
-	public double getMaxPosInPixel() {
+	public final double getMaxPosInPixel() {
 		return getPosInPixel(getMax());
 	}
 

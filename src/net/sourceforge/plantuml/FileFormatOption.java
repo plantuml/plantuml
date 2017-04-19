@@ -37,7 +37,6 @@ package net.sourceforge.plantuml;
 
 import java.awt.geom.AffineTransform;
 import java.io.Serializable;
-import java.util.Random;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -52,14 +51,13 @@ public class FileFormatOption implements Serializable {
 
 	private final FileFormat fileFormat;
 	private final AffineTransform affineTransform;
-	private final boolean withMetadata;
+	private boolean withMetadata;
 	private final boolean useRedForError;
 	private final String svgLinkTarget;
 	private final String hoverColor;
-	private final Random rnd;
 
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, null, true, false, "_top", false, null, new Random());
+		this(fileFormat, null, true, false, "_top", false, null);
 	}
 
 	public StringBounder getDefaultStringBounder() {
@@ -74,16 +72,12 @@ public class FileFormatOption implements Serializable {
 		return withMetadata;
 	}
 
-	public final Random getRandom() {
-		return rnd;
-	}
-
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, null, false, false, "_top", false, null, new Random());
+		this(fileFormat, null, false, false, "_top", false, null);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, AffineTransform at, boolean withMetadata, boolean useRedForError,
-			String svgLinkTarget, boolean debugsvek, String hoverColor, Random rnd) {
+			String svgLinkTarget, boolean debugsvek, String hoverColor) {
 		this.hoverColor = hoverColor;
 		this.fileFormat = fileFormat;
 		this.affineTransform = at;
@@ -91,27 +85,21 @@ public class FileFormatOption implements Serializable {
 		this.useRedForError = useRedForError;
 		this.svgLinkTarget = svgLinkTarget;
 		this.debugsvek = debugsvek;
-		this.rnd = rnd;
 	}
 
 	public FileFormatOption withUseRedForError() {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, true, svgLinkTarget, debugsvek,
-				hoverColor, rnd);
+				hoverColor);
 	}
 
 	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget,
-				debugsvek, hoverColor, rnd);
+				debugsvek, hoverColor);
 	}
 
 	public FileFormatOption withHoverColor(String hoverColor) {
 		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget,
-				debugsvek, hoverColor, rnd);
-	}
-
-	public FileFormatOption withFixedRandom() {
-		return new FileFormatOption(fileFormat, affineTransform, withMetadata, useRedForError, svgLinkTarget,
-				debugsvek, hoverColor, new Random(42));
+				debugsvek, hoverColor);
 	}
 
 	@Override
@@ -143,6 +131,10 @@ public class FileFormatOption implements Serializable {
 
 	public final String getHoverColor() {
 		return hoverColor;
+	}
+
+	public void hideMetadata() {
+		this.withMetadata = false;
 	}
 
 }

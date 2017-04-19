@@ -77,6 +77,7 @@ public class Option {
 	private boolean textProgressBar = false;
 	private int nbThreads = 0;
 	private int ftpPort = -1;
+	private boolean hideMetadata = false;
 
 	private File outputDir = null;
 	private File outputFile = null;
@@ -107,7 +108,7 @@ public class Option {
 			if (s.equalsIgnoreCase("-tsvg") || s.equalsIgnoreCase("-svg")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
 			} else if (s.equalsIgnoreCase("-tsvg:nornd") || s.equalsIgnoreCase("-svg:nornd")) {
-				setFileFormatOption(new FileFormatOption(FileFormat.SVG).withFixedRandom());
+				setFileFormatOption(new FileFormatOption(FileFormat.SVG));
 			} else if (s.equalsIgnoreCase("-thtml") || s.equalsIgnoreCase("-html")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.HTML));
 			} else if (s.equalsIgnoreCase("-tscxml") || s.equalsIgnoreCase("-scxml")) {
@@ -242,7 +243,7 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-keepfiles") || s.equalsIgnoreCase("-keepfile")) {
 				System.err.println("-keepfiles option has been removed. Please consider -debugsvek instead");
 			} else if (s.equalsIgnoreCase("-metadata")) {
-				OptionFlags.getInstance().setMetadata(true);
+				OptionFlags.getInstance().setExtractFromMetadata(true);
 			} else if (s.equalsIgnoreCase("-logdata")) {
 				i++;
 				if (i == arg.length) {
@@ -305,6 +306,8 @@ public class Option {
 				splash = true;
 			} else if (s.equalsIgnoreCase("-progress")) {
 				textProgressBar = true;
+			} else if (s.equalsIgnoreCase("-nometadata")) {
+				hideMetadata = true;
 			} else if (StringUtils.goLowerCase(s).startsWith("-ftp")) {
 				final int x = s.indexOf(':');
 				if (x == -1) {
@@ -449,9 +452,11 @@ public class Option {
 	}
 
 	public FileFormatOption getFileFormatOption() {
-		// final FileFormatOption fileFormatOption = new FileFormatOption(getFileFormat());
 		if (debugsvek) {
 			fileFormatOption.setDebugSvek(true);
+		}
+		if (hideMetadata) {
+			fileFormatOption.hideMetadata();
 		}
 		return fileFormatOption;
 	}

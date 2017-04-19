@@ -83,18 +83,18 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String linkTarget,
-			String hover, Random rnd) {
-		this(colorMapper, new SvgGraphics(backcolor, scale, hover, rnd), textAsPath, linkTarget);
+			String hover, long seed) {
+		this(colorMapper, new SvgGraphics(backcolor, scale, hover, seed), textAsPath, linkTarget);
 	}
 
 	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget, String hover,
-			Random rnd) {
-		this(colorMapper, new SvgGraphics(scale, hover, rnd), textAsPath, linkTarget);
+			long seed) {
+		this(colorMapper, new SvgGraphics(scale, hover, seed), textAsPath, linkTarget);
 	}
 
 	public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String linkTarget,
-			String hover, Random rnd) {
-		this(mapper, new SvgGraphics(scale, hover, rnd), textAsPath, linkTarget);
+			String hover, long seed) {
+		this(mapper, new SvgGraphics(scale, hover, seed), textAsPath, linkTarget);
 
 		final SvgGraphics svg = getGraphicObject();
 		svg.paintBackcolorGradient(mapper, gr);

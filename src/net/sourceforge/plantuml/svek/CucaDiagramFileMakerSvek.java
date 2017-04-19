@@ -117,11 +117,11 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		final Dimension2D dim = result.calculateDimension(fileFormatOption.getDefaultStringBounder());
 		final double scale = getScale(fileFormatOption, dim);
 
-		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(),
-				scale, fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError, 0,
-				10, diagram.getAnimation(), result.getBackcolor());
+		final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), scale,
+				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError, 0, 10,
+				diagram.getAnimation(), result.getBackcolor());
 		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 
 	}
 

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.LongCode;
 import net.sourceforge.plantuml.cucadiagram.Member;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -156,6 +157,17 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 			cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
 		} else {
 			cla.setAttribute("namespace", parentCode.getFullName());
+		}
+
+		final Stereotype stereotype = entity.getStereotype();
+		if (stereotype != null) {
+			final Element stereo = document.createElement("UML:ModelElement.stereotype");
+			for (String s : stereotype.getMultipleLabels()) {
+				final Element name = document.createElement("UML:Stereotype");
+				name.setAttribute("name", s);
+				stereo.appendChild(name);
+			}
+			cla.appendChild(stereo);
 		}
 
 		final LeafType type = entity.getLeafType();

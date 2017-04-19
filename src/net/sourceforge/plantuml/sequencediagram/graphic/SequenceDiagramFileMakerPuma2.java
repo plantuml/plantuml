@@ -231,7 +231,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 			}
 		});
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 	}
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug) {

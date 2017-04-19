@@ -53,6 +53,16 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class BpmDiagram extends UmlDiagram {
 
+	private void cleanGrid(Grid grid) {
+		while (true) {
+			final boolean v1 = new CleanerEmptyLine().clean(grid);
+			final boolean v2 = new CleanerInterleavingLines().clean(grid);
+			if (v1 == false && v2 == false) {
+				return;
+			}
+		}
+	}
+
 	private final BpmElement start = new BpmElement(null, BpmElementType.START);
 
 	private List<BpmEvent> events = new ArrayList<BpmEvent>();
@@ -77,7 +87,7 @@ public class BpmDiagram extends UmlDiagram {
 				getAnimation());
 		imageBuilder.setUDrawable(getUDrawable());
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
 	}
 
 	private UDrawable getUDrawable() {
@@ -87,16 +97,6 @@ public class BpmDiagram extends UmlDiagram {
 		// gridArray.addEdges(edges);
 		System.err.println("gridArray=" + gridArray);
 		return gridArray;
-	}
-
-	private void cleanGrid(Grid grid) {
-		// while (true) {
-		// final boolean v1 = new CleanerEmptyLine().clean(grid);
-		// final boolean v2 = new CleanerInterleavingLines().clean(grid);
-		// if (v1 == false && v2 == false) {
-		// return;
-		// }
-		// }
 	}
 
 	public CommandExecutionResult addEvent(BpmEvent event) {
@@ -144,7 +144,7 @@ public class BpmDiagram extends UmlDiagram {
 				nav.insertAfter(newLine);
 				final Col row = current.getCol();
 				current = new Coord(newLine, row);
-				src.addConnectionTo(last);
+				src.addConnectionTo2(last.getData());
 			} else {
 				throw new IllegalStateException();
 			}
@@ -164,7 +164,7 @@ public class BpmDiagram extends UmlDiagram {
 		nav.insertAfter(newRow);
 		current = new Coord(current.getLine(), newRow);
 		grid.getCell(current).setData(element);
-		last.addConnectionTo(grid.getCell(current));
+		last.addConnectionTo2(grid.getCell(current).getData());
 		last = grid.getCell(current);
 
 	}

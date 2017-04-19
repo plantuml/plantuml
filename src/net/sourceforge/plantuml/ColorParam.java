@@ -44,6 +44,8 @@ public enum ColorParam {
 	background(HtmlColorUtils.WHITE, true, ColorType.BACK),
 	hyperlink(HtmlColorUtils.BLUE),
 	
+	activityDiamondBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
+	activityDiamondBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	activityBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	activityBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	activityStart(HtmlColorUtils.BLACK),

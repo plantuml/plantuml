@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
  * So the diagram does not have to be a UML one.
  * 
  * @author Arnaud Roques
- *
+ * 
  */
 final public class UmlSource {
 
@@ -132,6 +132,17 @@ final public class UmlSource {
 			sb.append('\n');
 		}
 		return sb.toString();
+	}
+
+	public long seed() {
+		long h = 1125899906842597L; // prime
+		final String string = getPlainString();
+		final int len = string.length();
+
+		for (int i = 0; i < len; i++) {
+			h = 31 * h + string.charAt(i);
+		}
+		return h;
 	}
 
 	/**

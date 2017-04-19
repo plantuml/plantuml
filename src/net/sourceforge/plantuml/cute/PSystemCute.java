@@ -84,11 +84,11 @@ public class PSystemCute extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 10, 10, null,
 				false);
 		builder.setUDrawable(root);
-		return builder.writeImageTOBEMOVED(fileFormat, os);
+		return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 }

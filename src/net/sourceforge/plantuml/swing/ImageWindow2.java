@@ -310,7 +310,7 @@ class ImageWindow2 extends JFrame {
 			imageBuilder.setUDrawable(error);
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), baos);
+				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, baos);
 				baos.close();
 				image = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
 			} catch (IOException e) {

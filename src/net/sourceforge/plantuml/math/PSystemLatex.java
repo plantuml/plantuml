@@ -56,7 +56,7 @@ public class PSystemLatex extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);
 		return asciiMath.export(os, fileFormat, 1, Color.BLACK, Color.WHITE);

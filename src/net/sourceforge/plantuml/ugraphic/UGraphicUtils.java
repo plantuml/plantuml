@@ -55,16 +55,7 @@ import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
 public abstract class UGraphicUtils {
 
-	// public static UDrawable translate(final UDrawable d, final double dx, final double dy) {
-	// return new UDrawable() {
-	// public void drawU(UGraphic ug) {
-	// d.drawU(ug.apply(new UTranslate(dx, dy)));
-	// }
-	// };
-	//
-	// }
-
-	public static void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption,
+	public static void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption, long seed,
 			ColorMapper colorMapper, HtmlColor background, TextBlock image) throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
@@ -73,7 +64,7 @@ public abstract class UGraphicUtils {
 		} else if (fileFormat == FileFormat.SVG) {
 			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
 					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
-					fileFormatOption.getHoverColor(), fileFormatOption.getRandom());
+					fileFormatOption.getHoverColor(), seed);
 			image.drawU(svg);
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);
 		} else if (fileFormat == FileFormat.EPS) {

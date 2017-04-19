@@ -61,7 +61,7 @@ public class PSystemDedication extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
@@ -73,7 +73,7 @@ public class PSystemDedication extends AbstractPSystem {
 				}
 			}
 		});
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	public DiagramDescription getDescription() {

@@ -216,7 +216,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		}
 		final ImageBuilder imageBuilder = new ImageBuilder(getSkinParam(), 1, null, null, 0, 10, null);
 		imageBuilder.setUDrawable(fullLayout);
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
 	}
 
 	private RowLayout getRawLayout(int raw) {

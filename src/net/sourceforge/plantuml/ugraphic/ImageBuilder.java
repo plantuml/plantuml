@@ -46,7 +46,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 
@@ -162,14 +161,15 @@ public class ImageBuilder {
 		this.udrawable = udrawable;
 	}
 
-	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, OutputStream os) throws IOException {
+	public ImageData writeImageTOBEMOVED(FileFormatOption fileFormatOption, long seed, OutputStream os)
+			throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.MJPEG) {
 			return writeImageMjpeg(os, fileFormat.getDefaultStringBounder());
 		} else if (fileFormat == FileFormat.ANIMATED_GIF) {
 			return writeImageAnimatedGif(os, fileFormat.getDefaultStringBounder());
 		}
-		return writeImageInternal(fileFormatOption, os, animation);
+		return writeImageInternal(fileFormatOption, seed, os, animation);
 	}
 
 	private static Semaphore SEMAPHORE_SMALL;
@@ -204,8 +204,8 @@ public class ImageBuilder {
 		return SEMAPHORE_SMALL;
 	}
 
-	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os, Animation animationArg)
-			throws IOException {
+	private ImageData writeImageInternal(FileFormatOption fileFormatOption, long seed, OutputStream os,
+			Animation animationArg) throws IOException {
 		Dimension2D dim = getFinalDimension(fileFormatOption.getDefaultStringBounder());
 		double dx = 0;
 		double dy = 0;
@@ -228,7 +228,7 @@ public class ImageBuilder {
 			}
 		}
 		try {
-			final UGraphic2 ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy);
+			final UGraphic2 ug = createUGraphic(fileFormatOption, seed, dim, animationArg, dx, dy);
 			UGraphic ug2 = ug;
 			if (externalMargin1 > 0) {
 				ug2 = ug2.apply(new UTranslate(externalMargin1, externalMargin1));
@@ -349,7 +349,7 @@ public class ImageBuilder {
 
 	private Image getAviImage(AffineTransformation affineTransform) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		writeImageInternal(new FileFormatOption(FileFormat.PNG), baos, Animation.singleton(affineTransform));
+		writeImageInternal(new FileFormatOption(FileFormat.PNG), 42, baos, Animation.singleton(affineTransform));
 		baos.close();
 
 		final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
@@ -358,15 +358,15 @@ public class ImageBuilder {
 		return im;
 	}
 
-	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, final Dimension2D dim, Animation animationArg,
-			double dx, double dy) {
+	private UGraphic2 createUGraphic(FileFormatOption fileFormatOption, long seed, final Dimension2D dim,
+			Animation animationArg, double dx, double dy) {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		switch (fileFormat) {
 		case PNG:
 			return createUGraphicPNG(colorMapper, dpiFactor, dim, mybackcolor, animationArg, dx, dy);
 		case SVG:
 			return createUGraphicSVG(colorMapper, dpiFactor, dim, mybackcolor, fileFormatOption.getSvgLinkTarget(),
-					fileFormatOption.getHoverColor(), fileFormatOption.getRandom());
+					fileFormatOption.getHoverColor(), seed);
 		case EPS:
 			return new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -387,20 +387,19 @@ public class ImageBuilder {
 	}
 
 	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
-			String svgLinkTarget, String hover, Random random) {
+			String svgLinkTarget, String hover, long seed) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);
 		}
 		final UGraphicSvg ug;
 		if (mybackcolor instanceof HtmlColorGradient) {
-			ug = new UGraphicSvg(colorMapper, (HtmlColorGradient) mybackcolor, false, scale, svgLinkTarget, hover,
-					random);
+			ug = new UGraphicSvg(colorMapper, (HtmlColorGradient) mybackcolor, false, scale, svgLinkTarget, hover, seed);
 		} else if (backColor == null || backColor.equals(Color.WHITE)) {
-			ug = new UGraphicSvg(colorMapper, false, scale, svgLinkTarget, hover, random);
+			ug = new UGraphicSvg(colorMapper, false, scale, svgLinkTarget, hover, seed);
 		} else {
 			ug = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(backColor), false, scale, svgLinkTarget, hover,
-					random);
+					seed);
 		}
 		return ug;
 

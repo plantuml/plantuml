@@ -45,38 +45,27 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SplitParam;
+import net.sourceforge.plantuml.SuggestedFile;
 
 public class PngSplitter {
 
 	private final List<File> files = new ArrayList<File>();
 
-	public static void main(String[] args) throws IOException {
-		final File f = new File(args[0]);
-		final int x = Integer.parseInt(args[1]);
-		final int y = Integer.parseInt(args[2]);
-		final File cp = new File(f.getParent(), f.getName().replaceAll("\\.png$", "_000.png"));
-		FileUtils.copyToFile(f, cp);
-		new PngSplitter(cp, x, y, "", 96, false, new SplitParam());
-
-	}
-
-	public PngSplitter(File pngFile, int horizontalPages, int verticalPages, String source, int dpi,
+	public PngSplitter(SuggestedFile pngFile, int horizontalPages, int verticalPages, String source, int dpi,
 			boolean isWithMetadata, SplitParam splitParam) throws IOException {
 		if (horizontalPages == 1 && verticalPages == 1) {
-			this.files.add(pngFile);
+			this.files.add(pngFile.getFile(0));
 			return;
 		}
 
 		Log.info("Splitting " + horizontalPages + " x " + verticalPages);
-		final File full = new File(pngFile.getParentFile(), pngFile.getName() + ".tmp");
+		final File full = pngFile.getTmpFile(); // new File(pngFile.getParentFile(), pngFile.getName() + ".tmp");
 		// Thread.yield();
 		full.delete();
 		// Thread.yield();
-		final boolean ok = pngFile.renameTo(full);
+		final boolean ok = pngFile.getFile(0).renameTo(full);
 		// Thread.yield();
 		if (ok == false) {
 			throw new IOException("Cannot rename");
@@ -91,7 +80,7 @@ public class PngSplitter {
 		int x = 0;
 		for (int i = 0; i < horizontalPages; i++) {
 			for (int j = 0; j < verticalPages; j++) {
-				final File f = FileFormat.PNG.computeFilename(pngFile, x++);
+				final File f = pngFile.getFile(x++);
 				this.files.add(f);
 				final int width = horizontalSegment.getLen(i);
 				final int height = verticalSegment.getLen(j);

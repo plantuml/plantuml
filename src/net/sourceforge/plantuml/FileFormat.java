@@ -131,6 +131,14 @@ public enum FileFormat {
 				+ getFileSuffix());
 	}
 
+	private File computeFilename(File pngFile, int i) {
+		if (i == 0) {
+			return pngFile;
+		}
+		final File dir = pngFile.getParentFile();
+		return new File(dir, computeFilenameInternal(pngFile.getName(), i));
+	}
+
 	private String changeName(String fileName, String replacement) {
 		String result = fileName.replaceAll("\\.\\w+$", replacement);
 		if (result.equals(fileName)) {
@@ -139,15 +147,7 @@ public enum FileFormat {
 		return result;
 	}
 
-	public File computeFilename(File pngFile, int i) {
-		if (i == 0) {
-			return pngFile;
-		}
-		final File dir = pngFile.getParentFile();
-		return new File(dir, computeFilename(pngFile.getName(), i));
-	}
-
-	public String computeFilename(String name, int i) {
+	private String computeFilenameInternal(String name, int i) {
 		if (i == 0) {
 			return name;
 		}

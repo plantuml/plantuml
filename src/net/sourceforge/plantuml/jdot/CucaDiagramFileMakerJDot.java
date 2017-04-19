@@ -310,7 +310,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
+				ent.getEntityPosition());
 		dotStringFactory.addShape(shape);
 		getBibliotekon().putShape(ent, shape);
 	}
@@ -433,19 +434,19 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 			final double scale = 1;
 
-			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(),
-					scale, fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, 0,
-					10, diagram.getAnimation());
+			final ImageBuilder imageBuilder = new ImageBuilder(diagram.getSkinParam(), scale,
+					fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, null, 0, 10,
+					diagram.getAnimation());
 
 			imageBuilder.setUDrawable(new Drawing(null));
 			final Dimension2D dim = imageBuilder.getFinalDimension(stringBounder);
 
 			imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 
-			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+			return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
 		} catch (Throwable e) {
-			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.getMetadata(), diagram.getFlashData(),
-					getFailureText3(e));
+			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
+					diagram.getFlashData(), getFailureText3(e));
 			return new ImageDataSimple();
 		} finally {
 			Z.close();
@@ -568,7 +569,8 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
+				ent.getEntityPosition());
 		// dotStringFactory.addShape(shape);
 		getBibliotekon().putShape(ent, shape);
 	}

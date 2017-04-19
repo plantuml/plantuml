@@ -171,7 +171,7 @@ public class FtpConnexion {
 					done = true;
 					if (desc.getDescription().startsWith("(Error)")) {
 						final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();
-						sourceStringReader.generateImage(errBaos, new FileFormatOption(FileFormat.ATXT));
+						sourceStringReader.outputImage(errBaos, new FileFormatOption(FileFormat.ATXT));
 						errBaos.close();
 						outgoing.put(errorFileName, errBaos.toByteArray());
 					}

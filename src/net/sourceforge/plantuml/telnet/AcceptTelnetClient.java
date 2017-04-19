@@ -81,7 +81,7 @@ class AcceptTelnetClient extends Thread {
 			final String uml = runInternal();
 			Log.println("UML=" + uml);
 			final SourceStringReader s = new SourceStringReader(uml);
-			s.generateImage(os, new FileFormatOption(FileFormat.ATXT));
+			s.outputImage(os, new FileFormatOption(FileFormat.ATXT));
 			os.close();
 			br.close();
 		} catch (IOException e) {

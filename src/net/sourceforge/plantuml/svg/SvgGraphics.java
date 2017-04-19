@@ -116,11 +116,11 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(double scale, String hover, Random rnd) {
-		this(null, scale, hover, rnd);
+	public SvgGraphics(double scale, String hover, long seed) {
+		this(null, scale, hover, seed);
 	}
 
-	public SvgGraphics(String backcolor, double scale, String hover, Random rnd) {
+	public SvgGraphics(String backcolor, double scale, String hover, long seed) {
 		try {
 			this.scale = scale;
 			this.document = getDocument();
@@ -133,10 +133,9 @@ public class SvgGraphics {
 			defs = simpleElement("defs");
 			gRoot = simpleElement("g");
 			strokeWidth = "" + scale;
-			// final Random rnd = new Random();
-			this.filterUid = "b" + getRandomString(rnd);
-			this.shadowId = "f" + getRandomString(rnd);
-			this.gradientId = "g" + getRandomString(rnd);
+			this.filterUid = "b" + getSeed(seed);
+			this.shadowId = "f" + getSeed(seed);
+			this.gradientId = "g" + getSeed(seed);
 			if (hover != null) {
 				defs.appendChild(getPathHover(hover));
 			}
@@ -154,16 +153,8 @@ public class SvgGraphics {
 		return style;
 	}
 
-	private static String getRandomString(final Random rnd) {
-		String result = Integer.toString(Math.abs(rnd.nextInt()), 36);
-		while (result.length() < 6) {
-			result = "0" + result;
-		}
-		return result;
-	}
-
-	public static void main(String[] args) {
-		System.err.println(getRandomString(new Random()));
+	private static String getSeed(final long seed) {
+		return Long.toString(Math.abs(seed), 36);
 	}
 
 	private Element pendingBackground;

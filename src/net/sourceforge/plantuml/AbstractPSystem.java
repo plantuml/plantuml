@@ -81,6 +81,13 @@ public abstract class AbstractPSystem implements Diagram {
 		return source;
 	}
 
+	final public long seed() {
+		if (source == null) {
+			return 42;
+		}
+		return getSource().seed();
+	}
+
 	final public void setSource(UmlSource source) {
 		this.source = source;
 	}
@@ -124,7 +131,7 @@ public abstract class AbstractPSystem implements Diagram {
 			throws IOException {
 		final long now = System.currentTimeMillis();
 		try {
-			return exportDiagramNow(os, index, fileFormatOption);
+			return exportDiagramNow(os, index, fileFormatOption, seed());
 		} finally {
 			if (OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
@@ -133,7 +140,7 @@ public abstract class AbstractPSystem implements Diagram {
 		}
 	}
 
-	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException;
+	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption,
+			long seed) throws IOException;
 
 }

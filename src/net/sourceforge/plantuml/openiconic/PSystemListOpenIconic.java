@@ -60,13 +60,13 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class PSystemListOpenIconic extends AbstractPSystem {
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	private UDrawable getGraphicStrings() throws IOException {

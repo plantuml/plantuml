@@ -93,8 +93,8 @@ public class ParallelBuilderMerge extends ParallelFtilesBuilder {
 
 	@Override
 	protected  Ftile doStep2(Ftile result) {
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBackground);
+		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
+		final HtmlColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
 		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlane());
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<Connection>();

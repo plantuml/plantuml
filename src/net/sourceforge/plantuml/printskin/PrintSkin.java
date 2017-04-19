@@ -96,7 +96,7 @@ class PrintSkin extends AbstractPSystem {
 	// }
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final BufferedImage im = createImage();
 		final ImageData imageData = new ImageDataSimple(im.getWidth(), (int) maxYpos);

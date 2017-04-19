@@ -170,24 +170,28 @@ public class SourceFileReader implements ISourceFileReader {
 		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
-			String newName = blockUml.getFileOrDirname(fileFormatOption.getFileFormat());
-			Log.info("name from block=" + newName);
-			File suggested = null;
+			final String newName = blockUml.getFileOrDirname();
+			SuggestedFile suggested = null;
 			if (newName != null) {
+				Log.info("name from block=" + newName);
 				final File dir = getDirIfDirectory(newName);
 				if (dir == null) {
 					Log.info(newName + " is not taken as a directory");
-					suggested = new File(outputDirectory, newName);
+					suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
+							fileFormatOption.getFileFormat(), cpt++);
 				} else {
 					Log.info("We are going to create files in directory " + dir);
-					newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
-					suggested = new File(dir, newName);
+					// newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
+					// suggested = new File(dir, newName);
+					suggested = SuggestedFile.fromOutputFile(new File(dir, file.getName()),
+							fileFormatOption.getFileFormat(), cpt++);
 				}
 				Log.info("We are going to put data in " + suggested);
 			}
 			if (suggested == null) {
-				newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
-				suggested = new File(outputDirectory, newName);
+				// newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
+				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
+						fileFormatOption.getFileFormat(), cpt++);
 			}
 			suggested.getParentFile().mkdirs();
 
@@ -195,11 +199,11 @@ public class SourceFileReader implements ISourceFileReader {
 			try {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
-				final GeneratedImage image = new GeneratedImageImpl(suggested, "Crash Error", blockUml);
+				final GeneratedImage image = new GeneratedImageImpl(suggested.getFile(0), "Crash Error", blockUml);
 				OutputStream os = null;
 				try {
-					os = new BufferedOutputStream(new FileOutputStream(suggested));
-					UmlDiagram.exportDiagramError(os, t, fileFormatOption, null, blockUml.getFlashData(),
+					os = new BufferedOutputStream(new FileOutputStream(suggested.getFile(0)));
+					UmlDiagram.exportDiagramError(os, t, fileFormatOption, 42, null, blockUml.getFlashData(),
 							UmlDiagram.getFailureText2(t));
 				} finally {
 					if (os != null) {

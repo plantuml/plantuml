@@ -218,7 +218,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 
 		final HtmlColor hover = getSkinParam().getHoverPathColor();
@@ -238,21 +238,21 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			return imageData;
 		} catch (UnparsableGraphvizException e) {
 			e.printStackTrace();
-			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
+			exportDiagramError(os, e.getCause(), fileFormatOption, seed, e.getGraphvizVersion());
 		} catch (Exception e) {
 			e.printStackTrace();
-			exportDiagramError(os, e, fileFormatOption, null);
+			exportDiagramError(os, e, fileFormatOption, seed, null);
 		}
 		return new ImageDataSimple();
 	}
 
-	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String graphvizVersion) throws IOException {
-		exportDiagramError(os, exception, fileFormat, getMetadata(), getFlashData(),
+		exportDiagramError(os, exception, fileFormat, seed, getMetadata(), getFlashData(),
 				getFailureText1(exception, graphvizVersion));
 	}
 
-	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
+	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String metadata, String flash, List<String> strings) throws IOException {
 
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
@@ -286,7 +286,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 				}
 			});
 		}
-		imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
@@ -376,8 +376,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException;
 
-	final protected void exportCmap(File suggestedFile, final ImageData cmapdata) throws FileNotFoundException {
-		final String name = changeName(suggestedFile.getAbsolutePath());
+	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
+			throws FileNotFoundException {
+		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());
 		final File cmapFile = new File(name);
 		PrintWriter pw = null;
 		try {

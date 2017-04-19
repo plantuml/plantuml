@@ -200,7 +200,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 				getAnimation());
 		imageBuilder.setUDrawable(result);
 
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed(), os);
 
 	}
 
@@ -344,10 +344,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-//			final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
+			// final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
 			instructionRepeat.setBackward(label);
-//			setCurrent(instructionRepeat.getParent());
-//			this.setNextLinkRendererInternal(LinkRendering.none());
+			// setCurrent(instructionRepeat.getParent());
+			// this.setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Cannot find repeat");

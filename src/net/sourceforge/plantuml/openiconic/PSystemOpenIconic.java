@@ -57,7 +57,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final OpenIcon icon = OpenIcon.retrieve(iconName);
 		// final Dimension2D dim = new Dimension2DDouble(100, 100);
@@ -65,7 +65,7 @@ public class PSystemOpenIconic extends AbstractPSystem {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 5, 5,
 				null, false);
 		imageBuilder.setUDrawable(icon.asTextBlock(HtmlColorUtils.BLACK, factor));
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 
 		// UGraphic2 ug = fileFormat.createUGraphic(dim);
 		// ug = (UGraphic2) ug.apply(new UTranslate(10, 10));

@@ -90,7 +90,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final File suggested = outputFile;
+			final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
 
 			final Diagram system = blockUml.getDiagram();
 			OptionFlags.getInstance().logData(file, system);

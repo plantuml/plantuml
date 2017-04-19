@@ -119,6 +119,9 @@ public class TextSkin implements Skin {
 		if (type == ComponentType.DELAY_TEXT) {
 			return new ComponentTextDelay(type, stringsToDisplay, fileFormat);
 		}
+		if (type == ComponentType.DESTROY) {
+			return new ComponentTextDestroy();
+		}
 		throw new UnsupportedOperationException(type.toString());
 	}
 

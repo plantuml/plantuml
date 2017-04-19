@@ -35,44 +35,120 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.SortedSet;
-
 public class CleanerInterleavingLines implements GridCleaner {
 
 	public boolean clean(Grid grid) {
+		System.err.println("running CleanerInterleavingLines");
 		boolean result = false;
 		Line previous = null;
+		// int i = 0;
 		for (Line line : grid.lines().toList()) {
+			// System.err.println("--------- LINE i=" + i);
+			// i++;
 			if (previous != null) {
-				final Collection<Col> cols1 = grid.usedColsOf(previous);
-				final Collection<Col> cols2 = grid.usedColsOf(line);
-				if (Collections.disjoint(cols1, cols2)) {
-//					final SortedSet<Col> used1 = grid.colsConnectedTo(previous);
-//					final SortedSet<Col> used2 = grid.colsConnectedTo(line);
-//					if (mergeable(used1, used2)) {
-//						System.err.println("CAN BE MERGE!");
-//						grid.mergeLines(previous, line);
-//						result = true;
-//					}
+				if (mergeable(grid, previous, line)) {
+					System.err.println("MERGEABLE! " + previous + " " + line);
+					mergeLines(grid, previous, line);
+					return true;
 				}
 			}
 			previous = line;
 		}
+		// }
 		return result;
 	}
 
-	private boolean mergeable(SortedSet<Col> used1, SortedSet<Col> used2) {
-		final Comparator<? super Col> s = used1.comparator();
-		assert s == used2.comparator();
-		if (s.compare(used1.last(), used2.first()) <= 0) {
+	private void mergeLines(Grid grid, Line line1, Line line2) {
+		for (Col col : grid.cols().toList()) {
+			final Cell cell1 = grid.getCell(line1, col);
+			final Cell cell2 = grid.getCell(line2, col);
+			cell1.setData(merge(cell1.getData(), cell2.getData()));
+			cell2.setData(null);
+		}
+		grid.removeLine(line2);
+
+	}
+
+	private boolean mergeable(Grid grid, Line line1, Line line2) {
+		// int c = 0;
+		for (Col col : grid.cols().toList()) {
+			// System.err.println("c=" + c);
+			// c++;
+			final Placeable cell1 = grid.getCell(line1, col).getData();
+			final Placeable cell2 = grid.getCell(line2, col).getData();
+			// System.err.println("cells=" + cell1 + " " + cell2 + " " + mergeable(cell1, cell2));
+			if (mergeable(cell1, cell2) == false) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private Placeable merge(Placeable data1, Placeable data2) {
+		if (data1 == null) {
+			return data2;
+		}
+		if (data2 == null) {
+			return data1;
+		}
+		assert data1 != null && data2 != null;
+		if (data1 instanceof BpmElement) {
+			return data1;
+		}
+		if (data2 instanceof BpmElement) {
+			return data2;
+		}
+		assert data1 instanceof ConnectorPuzzle && data2 instanceof ConnectorPuzzle;
+		final ConnectorPuzzle puz1 = (ConnectorPuzzle) data1;
+		final ConnectorPuzzle puz2 = (ConnectorPuzzle) data2;
+		return puz2;
+	}
+
+	private boolean mergeable(Placeable data1, Placeable data2) {
+		if (data1 == null || data2 == null) {
 			return true;
 		}
-		if (s.compare(used2.last(), used1.first()) <= 0) {
+		assert data1 != null && data2 != null;
+		if (data1 instanceof ConnectorPuzzle && data2 instanceof ConnectorPuzzle) {
+			return mergeableCC((ConnectorPuzzle) data1, (ConnectorPuzzle) data2);
+		}
+		if (data1 instanceof ConnectorPuzzle && data2 instanceof BpmElement) {
+			final boolean result = mergeablePuzzleSingle((ConnectorPuzzle) data1);
+			System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
+			return result;
+		}
+		if (data2 instanceof ConnectorPuzzle && data1 instanceof BpmElement) {
+			final boolean result = mergeablePuzzleSingle((ConnectorPuzzle) data2);
+			System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
+			return result;
+		}
+		return false;
+	}
+
+	private boolean mergeablePuzzleSingle(ConnectorPuzzle puz) {
+		if (puz == ConnectorPuzzle.get("NS")) {
+			return true;
+		}
+		if (puz == ConnectorPuzzle.get("NE")) {
+			return true;
+		}
+		if (puz == ConnectorPuzzle.get("NW")) {
 			return true;
 		}
 		return false;
 	}
+
+	private boolean mergeableCC(ConnectorPuzzle puz1, ConnectorPuzzle puz2) {
+		if (puz1 == ConnectorPuzzle.get("NS") && puz2 == ConnectorPuzzle.get("NS")) {
+			return true;
+		}
+		if (puz1 == ConnectorPuzzle.get("NS") && puz2 == ConnectorPuzzle.get("NE")) {
+			return true;
+		}
+		if (puz1 == ConnectorPuzzle.get("NS") && puz2 == ConnectorPuzzle.get("NW")) {
+			return true;
+		}
+		return false;
+	}
+
 }

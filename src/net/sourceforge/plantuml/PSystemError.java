@@ -120,7 +120,7 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
@@ -146,7 +146,7 @@ public class PSystemError extends AbstractPSystem {
 		// udrawable = addMessage(udrawable);
 		// }
 		imageBuilder.setUDrawable(udrawable);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 	}
 
 	private TextBlockBackcolored getWelcome() throws IOException {

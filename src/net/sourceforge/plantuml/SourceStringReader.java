@@ -92,29 +92,58 @@ public class SourceStringReader {
 		}
 	}
 
-	public DiagramDescription generateImage(OutputStream os) throws IOException {
-		return generateImage(os, 0);
+	@Deprecated
+	public String generateImage(OutputStream os) throws IOException {
+		return outputImage(os).getDescription();
 	}
 
-	public DiagramDescription generateImage(File f) throws IOException {
+	public DiagramDescription outputImage(OutputStream os) throws IOException {
+		return outputImage(os, 0);
+	}
+
+	@Deprecated
+	public String generateImage(File f) throws IOException {
+		return outputImage(f).getDescription();
+	}
+
+	public DiagramDescription outputImage(File f) throws IOException {
 		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-		final DiagramDescription result = generateImage(os, 0);
-		os.close();
+		DiagramDescription result = null;
+		try {
+			result = outputImage(os, 0);
+		} finally {
+			os.close();
+		}
 		return result;
 	}
 
-	public DiagramDescription generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		return generateImage(os, 0, fileFormatOption);
+	@Deprecated
+	public String generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+		return outputImage(os, fileFormatOption).getDescription();
 	}
 
-	public DiagramDescription generateImage(OutputStream os, int numImage) throws IOException {
-		return generateImage(os, numImage, new FileFormatOption(FileFormat.PNG));
+	public DiagramDescription outputImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+		return outputImage(os, 0, fileFormatOption);
 	}
 
-	public DiagramDescription generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
+	@Deprecated
+	public String generateImage(OutputStream os, int numImage) throws IOException {
+		return outputImage(os, numImage).getDescription();
+	}
+
+	public DiagramDescription outputImage(OutputStream os, int numImage) throws IOException {
+		return outputImage(os, numImage, new FileFormatOption(FileFormat.PNG));
+	}
+
+	@Deprecated
+	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
+		return outputImage(os, numImage, fileFormatOption).getDescription();
+	}
+
+	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
 		if (blocks.size() == 0) {
-			noStartumlFound(os, fileFormatOption);
+			noStartumlFound(os, fileFormatOption, 42);
 			return null;
 		}
 		for (BlockUml b : blocks) {
@@ -133,6 +162,38 @@ public class SourceStringReader {
 		Log.error("numImage is too big = " + numImage);
 		return null;
 
+	}
+
+	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
+		if (blocks.size() == 0) {
+			return null;
+		}
+		for (BlockUml b : blocks) {
+			final Diagram system = b.getDiagram();
+			final int nbInSystem = system.getNbImages();
+			if (numImage < nbInSystem) {
+				// final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
+				// if (imageData.containsCMapData()) {
+				// return system.getDescription().withCMapData(imageData.getCMapData("plantuml"));
+				// }
+				return system.getDescription();
+			}
+			numImage -= nbInSystem;
+		}
+		Log.error("numImage is too big = " + numImage);
+		return null;
+	}
+
+	public DiagramDescription generateDiagramDescription() {
+		return generateDiagramDescription(0);
+	}
+
+	public DiagramDescription generateDiagramDescription(FileFormatOption fileFormatOption) {
+		return generateDiagramDescription(0, fileFormatOption);
+	}
+
+	public DiagramDescription generateDiagramDescription(int numImage) {
+		return generateDiagramDescription(numImage, new FileFormatOption(FileFormat.PNG));
 	}
 
 	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
@@ -155,54 +216,13 @@ public class SourceStringReader {
 
 	}
 
-	private void noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+	private void noStartumlFound(OutputStream os, FileFormatOption fileFormatOption, long seed) throws IOException {
 		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml found"),
 				fileFormatOption.isUseRedForError());
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, error.getBackcolor(), null,
 				null, 0, 0, null, false);
 		imageBuilder.setUDrawable(error);
-		imageBuilder.writeImageTOBEMOVED(fileFormatOption, os);
-	}
-
-	public DiagramDescription generateDiagramDescription() {
-		return generateDiagramDescription(0);
-	}
-
-	// public DiagramDescription generateDiagramDescription(File f) throws IOException {
-	// final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-	// final DiagramDescription result = generateDiagramDescription(os, 0);
-	// os.close();
-	// return result;
-	// }
-
-	public DiagramDescription generateDiagramDescription(FileFormatOption fileFormatOption) {
-		return generateDiagramDescription(0, fileFormatOption);
-	}
-
-	public DiagramDescription generateDiagramDescription(int numImage) {
-		return generateDiagramDescription(numImage, new FileFormatOption(FileFormat.PNG));
-	}
-
-	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
-		if (blocks.size() == 0) {
-			// noStartumlFound(os, fileFormatOption);
-			return null;
-		}
-		for (BlockUml b : blocks) {
-			final Diagram system = b.getDiagram();
-			final int nbInSystem = system.getNbImages();
-			if (numImage < nbInSystem) {
-				// final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
-				// if (imageData.containsCMapData()) {
-				// return system.getDescription().withCMapData(imageData.getCMapData("plantuml"));
-				// }
-				return system.getDescription();
-			}
-			numImage -= nbInSystem;
-		}
-		Log.error("numImage is too big = " + numImage);
-		return null;
-
+		imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
 
 	public final List<BlockUml> getBlocks() {

@@ -83,7 +83,7 @@ public class OptionFlags {
 	private void reset(boolean exit) {
 		// keepTmpFiles = false;
 		verbose = false;
-		metadata = false;
+		extractFromMetadata = false;
 		word = false;
 		systemExit = exit;
 		GraphvizUtils.setDotExecutable(null);
@@ -105,7 +105,7 @@ public class OptionFlags {
 
 	// private boolean keepTmpFiles;
 	private boolean verbose;
-	private boolean metadata;
+	private boolean extractFromMetadata;
 	private boolean word;
 	private boolean systemExit;
 	private boolean gui;
@@ -139,12 +139,12 @@ public class OptionFlags {
 		this.verbose = verbose;
 	}
 
-	public final boolean isMetadata() {
-		return metadata;
+	public final boolean isExtractFromMetadata() {
+		return extractFromMetadata;
 	}
 
-	public final void setMetadata(boolean metadata) {
-		this.metadata = metadata;
+	public final void setExtractFromMetadata(boolean extractFromMetadata) {
+		this.extractFromMetadata = extractFromMetadata;
 	}
 
 	public final boolean isWord() {

@@ -123,8 +123,10 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
-		UGraphicUtils.writeImage(os, null, fileFormatOption, new ColorMapperIdentity(), HtmlColorUtils.WHITE, this);
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		UGraphicUtils.writeImage(os, null, fileFormatOption, seed(), new ColorMapperIdentity(),
+				HtmlColorUtils.WHITE, this);
 		return new ImageDataSimple();
 	}
 
@@ -144,8 +146,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			final Dimension2D dimBox = box.calculateDimension(stringBounder);
 			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();
 			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();
-			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin
-					* SINGLE_SIZE_Y + deltaY / 2))));
+			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2),
+					(y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
 		}
 		ug = ug.apply(new UChangeColor(HtmlColorUtils.MY_RED));
 		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.MY_RED));

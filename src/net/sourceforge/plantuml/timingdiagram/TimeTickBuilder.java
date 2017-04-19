@@ -34,12 +34,14 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class TimeTickBuilder {
 
-	private static final String WITHOUT_AROBASE = "(\\+?)(\\d+)";
+	private static final String WITHOUT_AROBASE = "(\\+?)(\\d+\\.?\\d*)";
 	private static final String WITH_AROBASE = "@" + WITHOUT_AROBASE;
 
 	public static RegexLeaf expressionAtWithoutArobase(String name) {
@@ -60,9 +62,9 @@ public class TimeTickBuilder {
 			return clock.getNow();
 		}
 		final boolean isRelative = "+".equals(arg.get(name, 0));
-		int value = Integer.parseInt(number);
+		BigDecimal value = new BigDecimal(number);
 		if (isRelative) {
-			value += clock.getNow().getTime();
+			value = clock.getNow().getTime().add(value);
 		}
 		return new TimeTick(value);
 	}

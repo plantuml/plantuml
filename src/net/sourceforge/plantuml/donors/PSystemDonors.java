@@ -64,27 +64,27 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "UDfbL4jksp0GtSyfk1RIGoXsxDI_17QQ0jcDfR75c29TKd8ghOAUeK3NlKABB8eMsVG2oeqwSYkJIWa8"
-			+ "q8Z3uNipxobMqRz55gwf82jYNHWjCO4RYlmoESoC3ws3k3kAQnXRlqKLh6YDhf2enS9a6cAT6Yl6XegQ"
-			+ "sjVDXZEwTDGmm-0YNS1GTe5K4FlIvW2hqaEeO2oZ_j869XtAqi6ge7r6MWoCsJE_ONSFEPZchuuQ2mEZ"
-			+ "f1PBKpg2IVbgFxetJAGBzXBc0MhCmv2lYXLzH9roEmUPvAfRj1KpNPvewoqiGlH53LTA7lZ0K2OxHdxQ"
-			+ "aHektAcq3a14T81XdSl2LcA6cKaH9ctJxpBaya5UHCgFYzUkuZPfB3YFyJ6koL_mjEknqYc7Dk6UZ71j"
-			+ "gvrvS3l9XHGVkxA5hE7IPwS6vZB9I8bpbAeA6QWw1ECSJ0Zrcmac7qfoObYkBV8ibUTxQ-uBIZ8njUZG"
-			+ "GzeIIpIOs4EhB4uHKtEGeL2EKddd2Kk4PI3UzegGPtJFf_U1hCokxSoviQXHxS_47HLezWwMJ11jAgQo"
-			+ "7IsCbB5jl-U_Vobr7BeNX0h4oNAQdUHaiUjsE_MipyZ1DNRoMCeUu5X9iK9CsJfsI-8zwItPCp6FRzwk"
-			+ "OY_jo6WOKyyo8NETi4HoSSkeXopQgS-qr4wMpJ8ZWej3gFm3mi8NeRm36GKqngLaNPGvYP4fgV3zJHoC"
-			+ "miaSkNWrw3fi6yDTo2rhQ2LpRq46n4xUj9r6TdK0Eb8Aci_DKr2-UMf-m23hMRjYuvNhuu_0QlR2fUd1"
-			+ "6PFPR2nLOY5p7jm4__-hB763IimhfzWZpTVcwUMn-TvU9PelpNFpitb--SJF8t_w1XUMQZ55bREpBiDP"
-			+ "jt8brkivgNPJmny9r86N";
+	public static final String DONORS = "UDfbL4jksp0GtSyfk1RIGoXsxDI_17QQ0jcDfR75c29TKd8ghOAUeK3NlKABB8eMsVG2oeqwSYkJIWaO"
+			+ "CCNXp7ipxp5MqRz55gwf82jYNHWjCO4RYlmoESoCtre7SNSLrp2s_eWgMD4QNI5HYuN9DCGwDLQC3HKr"
+			+ "jNyt6uxemb7338D2ke2Xx3PIGUnJcmEiIW-XWh6C-aiRc7GeImUhWlOPQJ4mPi_yXbqTSZ3DNrqr5WP6"
+			+ "IIsMfdG4a_BLUNHlc4YtsKkO1wWn3xTSAbRq4NNAxHnaahDkqLRCT7cYhRUm2D4NDLmfUU0BGvdi6Fdf"
+			+ "H6guSAVKEW0HqG66TIuBMuaPPYP5cBHDlykGqmTn4Ia_BbwxYjkaiU0uniUu9d_1qwx7IgUyjGdtP8Hh"
+			+ "M-tCWzj9JgJusfKjP0sNFZerC9T9HagSerHLo43L8HZdO4Aetqmm-L2I4yDoRP5dgJpVMtDVK9A9gKM7"
+			+ "7jAMMAB1n1vQPN68c9g338LobCexJrWYB0FnjYL2dj4ztzu7iZAxjZFdng96jJyJTrIWsJjOCa6qgPZA"
+			+ "ThGmKiQs_Px__gNKSUXU42eG9yjfTfAJnQxRxTIpFYC7rzZ9OobxW6CbnGenPUlOBOdtfBTapyGyldcx"
+			+ "Yhsq8wDXJ3tBXCnrmXB9nIsZ7h9efpxIKZjPDikC22uEeV8F20kVXF8EP1JG69UITL7c94QcfCBtDt4m"
+			+ "2YTpvEBLeEkmRGnt8RUiePNClGKP43jvqtOQsTK1w4WfQ3utJq7wvgdv0OEiP-sAZLUkZm-1rUo5IzE3"
+			+ "CoQpsLYgn4BcFBW9_l-gB763IimhfzWZpTVcwUMn-TwM4isNvhdvsJo_VEBV8t_w1XUMQZ55bREpBiDP"
+			+ "jt8brkivgVPG1sFZAZ9u5QE87ya-2nRO7yKAYtS0";
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
 		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, os);
+		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
 	private UDrawable getGraphicStrings() throws IOException {

@@ -76,8 +76,8 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
-		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityBorder);
-		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityBackground)
+		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
+		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
 				: color;
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 

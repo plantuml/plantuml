@@ -48,7 +48,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	final private ISudoku sudoku;
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		return new GraphicsSudoku(sudoku).writeImage(os);
 	}

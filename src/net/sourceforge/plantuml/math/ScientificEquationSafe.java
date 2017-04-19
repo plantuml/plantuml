@@ -99,7 +99,7 @@ public class ScientificEquationSafe {
 			final ImageBuilder imageBuilder = getRollback();
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				dimSvg = imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.SVG), baos);
+				dimSvg = imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.SVG), 42, baos);
 			} catch (IOException e1) {
 				return null;
 			}
@@ -115,7 +115,7 @@ public class ScientificEquationSafe {
 			final ImageBuilder imageBuilder = getRollback();
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), baos);
+				imageBuilder.writeImageTOBEMOVED(new FileFormatOption(FileFormat.PNG), 42, baos);
 				return ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
 			} catch (IOException e1) {
 				return null;

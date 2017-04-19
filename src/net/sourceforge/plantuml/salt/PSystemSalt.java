@@ -74,7 +74,7 @@ public class PSystemSalt extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		try {
 			final Element salt = SaltUtils.createElement(data);
@@ -90,10 +90,10 @@ public class PSystemSalt extends AbstractPSystem {
 					salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
 				}
 			});
-			return builder.writeImageTOBEMOVED(fileFormat, os);
+			return builder.writeImageTOBEMOVED(fileFormat, seed, os);
 		} catch (Exception e) {
 			e.printStackTrace();
-			UmlDiagram.exportDiagramError(os, e, fileFormat, getMetadata(), "none", new ArrayList<String>());
+			UmlDiagram.exportDiagramError(os, e, fileFormat, seed, getMetadata(), "none", new ArrayList<String>());
 			return new ImageDataSimple();
 		}
 	}
