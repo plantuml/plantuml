@@ -50,7 +50,11 @@ public class SuggestedFile {
 		this.outputFile = outputFile;
 		this.fileFormat = fileFormat;
 		this.initialCpt = initialCpt;
+	}
 
+	@Override
+	public String toString() {
+		return outputFile.getAbsolutePath() + "[" + initialCpt + "]";
 	}
 
 	public static SuggestedFile fromOutputFile(File outputFile, FileFormat fileFormat) {

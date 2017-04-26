@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+
 public abstract class AbstractConnection implements Connection {
 
 	private final Ftile ftile1;
@@ -56,6 +58,16 @@ public abstract class AbstractConnection implements Connection {
 
 	final public Ftile getFtile2() {
 		return ftile2;
+	}
+
+	final public HorizontalAlignment arrowHorizontalAlignment() {
+		if (ftile1 != null) {
+			return ftile1.arrowHorizontalAlignment();
+		}
+		if (ftile2 != null) {
+			return ftile2.arrowHorizontalAlignment();
+		}
+		return HorizontalAlignment.LEFT;
 	}
 
 }

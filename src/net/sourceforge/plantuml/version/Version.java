@@ -40,8 +40,10 @@ import java.util.Date;
 
 public class Version {
 
+	private static final int MAJOR_SEPARATOR = 1000000;
+
 	public static int version() {
-		return 201711;
+		return 1201712;
 	}
 
 	public static String versionString() {
@@ -52,8 +54,9 @@ public class Version {
 	}
 
 	private static String dotted(int nb) {
-		final String s = "" + nb;
-		return s.substring(0, 4) + "." + s.substring(4);
+		final String minor = "" + nb % MAJOR_SEPARATOR;
+		final String major = "" + nb / MAJOR_SEPARATOR;
+		return major + "." + minor.substring(0, 4) + "." + minor.substring(4);
 	}
 
 	public static String versionString(int size) {
@@ -70,7 +73,7 @@ public class Version {
 	}
 
 	public static String etag() {
-		return Integer.toString(version() - 201670, 36) + Integer.toString(beta(), 36);
+		return Integer.toString(version() % MAJOR_SEPARATOR - 201670, 36) + Integer.toString(beta(), 36);
 	}
 
 	public static String turningId() {
@@ -78,12 +81,12 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1492618739962L;
+		return 1493222796077L;
 	}
 
 	public static String compileTimeString() {
 		if (beta() != 0) {
-			return versionString();
+			return "Unknown compile time";
 		}
 		return new Date(Version.compileTime()).toString();
 	}

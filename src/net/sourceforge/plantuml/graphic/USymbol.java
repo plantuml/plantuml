@@ -74,6 +74,7 @@ public abstract class USymbol {
 	public final static USymbol CONTROL = record("CONTROL", SkinParameter.CONTROL, new USymbolControl(2));
 	public final static USymbol INTERFACE = record("INTERFACE", SkinParameter.INTERFACE, new USymbolInterface());
 	public final static USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
+	public final static USymbol PIPE = record("PIPE", SkinParameter.PIPE, new USymbolPipe());
 	public final static USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
 
 	abstract public SkinParameter getSkinParameter();
@@ -181,7 +182,7 @@ public abstract class USymbol {
 		};
 	}
 
-	public static USymbol getFoo1(String symbol, boolean useUml2ForComponent) {
+	public static USymbol getFromString(String symbol, boolean useUml2ForComponent) {
 		USymbol usymbol = null;
 		if (symbol.equalsIgnoreCase("artifact")) {
 			usymbol = USymbol.ARTIFACT;
@@ -203,6 +204,8 @@ public abstract class USymbol {
 			usymbol = USymbol.DATABASE;
 		} else if (symbol.equalsIgnoreCase("queue")) {
 			usymbol = USymbol.QUEUE;
+		} else if (symbol.equalsIgnoreCase("pipe")) {
+			usymbol = USymbol.PIPE;
 		} else if (symbol.equalsIgnoreCase("storage")) {
 			usymbol = USymbol.STORAGE;
 		} else if (symbol.equalsIgnoreCase("agent")) {

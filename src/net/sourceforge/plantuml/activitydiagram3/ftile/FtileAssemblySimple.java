@@ -47,6 +47,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -155,6 +156,10 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
 	public Collection<Ftile> getMyChildren() {
 		return Arrays.asList(tile1, tile2);
+	}
+
+	public HorizontalAlignment arrowHorizontalAlignment() {
+		return tile1.arrowHorizontalAlignment();
 	}
 
 }

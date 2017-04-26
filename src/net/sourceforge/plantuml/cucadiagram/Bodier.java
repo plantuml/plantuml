@@ -173,11 +173,26 @@ public class Bodier {
 		return true;
 	}
 
+	private List<String> rawBodyWithoutHidden() {
+		if (hides == null || hides.size() == 0) {
+			return rawBody;
+		}
+		final List<String> result = new ArrayList<String>();
+		for (String s : rawBody) {
+			final Member m = new MemberImpl(s, isMethod(s), manageModifier);
+			if (hides.contains(m.getVisibilityModifier()) == false) {
+				result.add(s);
+			}
+
+		}
+		return result;
+	}
+
 	public TextBlock getBody(final FontParam fontParam, final ISkinParam skinParam, final boolean showMethods,
 			final boolean showFields, Stereotype stereotype) {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
-				return new BodyEnhanced(rawBody, fontParam, skinParam, manageModifier, stereotype, leaf);
+				return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf);
 			}
 			return null;
 		}

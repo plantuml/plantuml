@@ -84,6 +84,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
+import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -613,7 +614,8 @@ public class Line implements Moveable, Hideable {
 		if (opale) {
 			return;
 		}
-
+		ug.draw(new UComment("link " + link.getEntity1().getCode().getFullName() + " to "
+				+ link.getEntity2().getCode().getFullName()));
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();
@@ -671,6 +673,7 @@ public class Line implements Moveable, Hideable {
 			}
 		}
 
+		todraw.setComment(link.getEntity1().getCode().getFullName() + "-" + link.getEntity2().getCode().getFullName());
 		ug.apply(new UTranslate(x, y)).draw(todraw);
 
 		ug = ug.apply(new UStroke()).apply(new UChangeColor(color));

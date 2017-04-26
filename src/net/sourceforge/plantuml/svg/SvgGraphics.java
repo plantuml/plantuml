@@ -334,7 +334,8 @@ public class SvgGraphics {
 		return pendingLink2.get(0);
 	}
 
-	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow) {
+	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow,
+			String id) {
 		if (height <= 0 || width <= 0) {
 			throw new IllegalArgumentException();
 		}
@@ -346,7 +347,9 @@ public class SvgGraphics {
 				elt.setAttribute("rx", format(rx));
 				elt.setAttribute("ry", format(ry));
 			}
-
+			if (id != null) {
+				elt.setAttribute("id", id);
+			}
 			getG().appendChild(elt);
 		}
 		ensureVisible(x + width + 2 * deltaShadow, y + height + 2 * deltaShadow);
@@ -619,6 +622,10 @@ public class SvgGraphics {
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
 			elt.setAttribute("fill", fill);
+			final String id = path.getComment();
+			if (id != null) {
+				elt.setAttribute("id", id);
+			}
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}

@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -126,14 +127,14 @@ public final class CucaDiagramTxtMaker {
 		ug.getCharArea().drawHLine('-', y, 1, w - 1);
 		y++;
 		for (Member att : ent.getBodier().getFieldsToDisplay()) {
-			final List<String> disp = StringUtils.getWithNewlines(att.getDisplay(true));
+			final List<String> disp = BackSlash.getWithNewlines(att.getDisplay(true));
 			ug.getCharArea().drawStringsLR(disp, 1, y);
 			y += StringUtils.getHeight(disp);
 		}
 		ug.getCharArea().drawHLine('-', y, 1, w - 1);
 		y++;
 		for (Member att : ent.getBodier().getMethodsToDisplay()) {
-			final List<String> disp = StringUtils.getWithNewlines(att.getDisplay(true));
+			final List<String> disp = BackSlash.getWithNewlines(att.getDisplay(true));
 			ug.getCharArea().drawStringsLR(disp, 1, y);
 			y += StringUtils.getHeight(disp);
 		}

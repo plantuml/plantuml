@@ -84,6 +84,7 @@ public class Defines implements Truth {
 			throw new IllegalArgumentException();
 		}
 		final Defines result = createEmpty();
+		result.environment.put("filedate", new Date(file.lastModified()).toString());
 		result.environment.put("filename", file.getName());
 		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 		return result;

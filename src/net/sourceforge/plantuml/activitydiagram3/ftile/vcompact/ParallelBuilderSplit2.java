@@ -154,7 +154,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}
@@ -169,7 +169,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}
@@ -208,7 +208,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}
@@ -228,7 +228,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
 			final Point2D p2 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), height));
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}

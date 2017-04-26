@@ -143,7 +143,7 @@ public class ParallelBuilderMerge extends ParallelFtilesBuilder {
 			} else if (counter == 1) {
 				endDecoration = Arrows.asToLeft();
 			}
-			final Snake snake = new Snake(arrowColor, endDecoration);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, endDecoration);
 			snake.addPoint(x1, y1);
 			snake.addPoint(x1, y2);
 			snake.addPoint(x2, y2);
@@ -186,7 +186,7 @@ public class ParallelBuilderMerge extends ParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}
@@ -201,7 +201,7 @@ public class ParallelBuilderMerge extends ParallelFtilesBuilder {
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false) {
 				snake.setLabel(getTextBlock(label));
 			}

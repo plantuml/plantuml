@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public enum AlignParam {
 	
+	ARROW_MESSAGE_ALIGN(HorizontalAlignment.LEFT),
 	SEQUENCE_MESSAGE_ALIGN(HorizontalAlignment.LEFT),
 	SEQUENCE_MESSAGETEXT_ALIGN(HorizontalAlignment.LEFT),
 	SEQUENCE_REFERENCE_ALIGN(HorizontalAlignment.CENTER);

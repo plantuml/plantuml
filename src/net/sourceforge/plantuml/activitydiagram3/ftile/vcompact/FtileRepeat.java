@@ -198,7 +198,7 @@ class FtileRepeat extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			snake.setLabel(tbin);
 			snake.addPoint(getP1(stringBounder));
 			snake.addPoint(getP2(stringBounder));
@@ -233,7 +233,7 @@ class FtileRepeat extends AbstractFtile {
 				return;
 			}
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			snake.setLabel(tbout);
 			snake.addPoint(getP1(stringBounder));
 			snake.addPoint(getP2(stringBounder));
@@ -246,7 +246,7 @@ class FtileRepeat extends AbstractFtile {
 			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false) {
 				return;
 			}
-			final Snake snake = new Snake(arrowColor);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor);
 			snake.setLabel(tbout);
 			final Point2D mp1a = translate1.getTranslated(getP1(stringBounder));
 			final Point2D mp2b = translate2.getTranslated(getP2(stringBounder));
@@ -257,7 +257,7 @@ class FtileRepeat extends AbstractFtile {
 			// snake.addPoint(mp2b);
 			ug.draw(snake);
 
-			final Snake small = new Snake(arrowColor, Arrows.asToDown());
+			final Snake small = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			small.addPoint(mp2b.getX(), middle);
 			small.addPoint(mp2b);
 			ug.draw(small);
@@ -288,7 +288,7 @@ class FtileRepeat extends AbstractFtile {
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Snake snake = new Snake(arrowColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
 			snake.emphasizeDirection(Direction.UP);
 			final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
 
@@ -330,7 +330,7 @@ class FtileRepeat extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(arrowColor, null);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, null);
 			snake.setLabel(tbback);
 			final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
 			final Point2D p1 = getP1(stringBounder);
@@ -369,7 +369,7 @@ class FtileRepeat extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToUp());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToUp());
 			snake.setLabel(tbback);
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
@@ -408,7 +408,7 @@ class FtileRepeat extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
 			snake.emphasizeDirection(Direction.UP);
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
@@ -448,7 +448,7 @@ class FtileRepeat extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
 			snake.setLabel(tbback);
 			snake.emphasizeDirection(Direction.UP);
 			final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);

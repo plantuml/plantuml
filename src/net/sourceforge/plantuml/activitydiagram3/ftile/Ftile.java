@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -64,5 +65,7 @@ public interface Ftile extends Swimable, TextBlock {
 	public Collection<Connection> getInnerConnections();
 
 	public List<WeldingPoint> getWeldingPoints();
+	
+	public HorizontalAlignment arrowHorizontalAlignment();
 
 }

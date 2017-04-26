@@ -178,18 +178,15 @@ public class SourceFileReader implements ISourceFileReader {
 				if (dir == null) {
 					Log.info(newName + " is not taken as a directory");
 					suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
-							fileFormatOption.getFileFormat(), cpt++);
+							fileFormatOption.getFileFormat(), 0);
 				} else {
 					Log.info("We are going to create files in directory " + dir);
-					// newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
-					// suggested = new File(dir, newName);
 					suggested = SuggestedFile.fromOutputFile(new File(dir, file.getName()),
-							fileFormatOption.getFileFormat(), cpt++);
+							fileFormatOption.getFileFormat(), 0);
 				}
 				Log.info("We are going to put data in " + suggested);
 			}
 			if (suggested == null) {
-				// newName = fileFormatOption.getFileFormat().changeName(file.getName(), cpt++);
 				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
 						fileFormatOption.getFileFormat(), cpt++);
 			}

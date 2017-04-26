@@ -139,7 +139,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner);
+		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner, getEntity().getCode().getFullName());
 		if (getSkinParam().shadowing()) {
 			rect.setDeltaShadow(4);
 		}

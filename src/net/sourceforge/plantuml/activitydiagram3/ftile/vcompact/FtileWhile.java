@@ -174,7 +174,7 @@ class FtileWhile extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			snake.addPoint(getP1(stringBounder));
 			snake.addPoint(getP2(stringBounder));
 
@@ -185,7 +185,7 @@ class FtileWhile extends AbstractFtile {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 			final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
@@ -228,7 +228,7 @@ class FtileWhile extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(endInlinkColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), endInlinkColor, Arrows.asToLeft());
 			final Dimension2D dimTotal = calculateDimension(stringBounder);
 			final Point2D p1 = getP1(stringBounder);
 			if (p1 == null) {
@@ -264,7 +264,7 @@ class FtileWhile extends AbstractFtile {
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Snake snake = new Snake(endInlinkColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), endInlinkColor, Arrows.asToLeft());
 			final Dimension2D dimTotal = calculateDimension(stringBounder);
 			final Point2D ap1 = getP1(stringBounder);
 			final Point2D ap2 = getP2(stringBounder);
@@ -323,7 +323,7 @@ class FtileWhile extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(endInlinkColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), endInlinkColor, Arrows.asToLeft());
 			final Dimension2D dimTotal = calculateDimension(stringBounder);
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
@@ -373,7 +373,7 @@ class FtileWhile extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(afterEndwhileColor);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), afterEndwhileColor);
 
 			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 			final Point2D p1 = getP1(stringBounder);
@@ -395,7 +395,7 @@ class FtileWhile extends AbstractFtile {
 			// ug = ug.apply(new UChangeColor(afterEndwhileColor)).apply(new UChangeBackColor(afterEndwhileColor));
 			// ug.apply(new UTranslate(Diamond.diamondHalfSize, (y1 + y2) / 2)).draw(Arrows.asToDown());
 
-			final Snake snake2 = new Snake(afterEndwhileColor);
+			final Snake snake2 = new Snake(arrowHorizontalAlignment(), afterEndwhileColor);
 			snake2.addPoint(Diamond.diamondHalfSize, y2);
 			snake2.addPoint(x2, y2);
 			// snake2.goUnmergeable(MergeStrategy.LIMITED);
@@ -424,7 +424,7 @@ class FtileWhile extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = new Snake(afterEndwhileColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), afterEndwhileColor, Arrows.asToDown());
 
 			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 			final Point2D p1 = getP1(stringBounder);

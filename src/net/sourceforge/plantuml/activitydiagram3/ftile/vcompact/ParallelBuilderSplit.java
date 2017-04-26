@@ -163,7 +163,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 				maxX = totalWidth / 2;
 			}
 
-			final Snake s = new Snake(arrowColor);
+			final Snake s = new Snake(arrowHorizontalAlignment(), arrowColor);
 			s.goUnmergeable(MergeStrategy.NONE);
 			s.addPoint(minX, y);
 			s.addPoint(maxX, y);
@@ -209,7 +209,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 			}
 			final Dimension2D dimInner = inner.calculateDimension(stringBounder);
 
-			final Snake s = new Snake(arrowColor);
+			final Snake s = new Snake(arrowHorizontalAlignment(), arrowColor);
 			// final Snake s = new Snake(HtmlColorUtils.GREEN);
 			s.goUnmergeable(MergeStrategy.LIMITED);
 			s.addPoint(minX, y);
@@ -235,7 +235,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile2().calculateDimension(ug.getStringBounder());
 			final double left = geo.getLeft();
-			final Snake s = new Snake(arrowColor, Arrows.asToDown());
+			final Snake s = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			s.setLabel(text);
 			s.addPoint(left, 0);
 			s.addPoint(left, geo.getInY());
@@ -265,7 +265,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 				assert false;
 				return;
 			}
-			final Snake s = new Snake(arrowColor, Arrows.asToDown());
+			final Snake s = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			s.setLabel(text);
 			s.goUnmergeable(MergeStrategy.NONE);
 			s.addPoint(geo.getLeft(), geo.getOutY());

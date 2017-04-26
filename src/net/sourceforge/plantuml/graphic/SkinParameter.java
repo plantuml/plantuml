@@ -62,6 +62,9 @@ public class SkinParameter {
 	public static final SkinParameter QUEUE = new SkinParameter("QUEUE", ColorParam.queueBackground,
 			ColorParam.queueBorder, FontParam.QUEUE, FontParam.QUEUE_STEREOTYPE);
 
+	public static final SkinParameter PIPE = new SkinParameter("PIPE", ColorParam.pipeBackground,
+			ColorParam.pipeBorder, FontParam.PIPE, FontParam.PIPE_STEREOTYPE);
+
 	public static final SkinParameter CLOUD = new SkinParameter("CLOUD", ColorParam.cloudBackground,
 			ColorParam.cloudBorder, FontParam.CLOUD, FontParam.CLOUD_STEREOTYPE);
 

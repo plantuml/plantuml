@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -61,9 +62,10 @@ public class Snake implements UShape {
 	private TextBlock textBlock;
 	private MergeStrategy mergeable = MergeStrategy.FULL;
 	private Direction emphasizeDirection;
+	private final HorizontalAlignment horizontalAlignment;
 
 	public Snake transformX(CompressionTransform compressionTransform) {
-		final Snake result = new Snake(color, endDecoration);
+		final Snake result = new Snake(horizontalAlignment, color, endDecoration);
 		result.textBlock = this.textBlock;
 		result.mergeable = this.mergeable;
 		result.emphasizeDirection = this.emphasizeDirection;
@@ -79,7 +81,7 @@ public class Snake implements UShape {
 		this.endDecoration = null;
 	}
 
-	public Snake(Rainbow color, UPolygon endDecoration) {
+	public Snake(HorizontalAlignment horizontalAlignment, Rainbow color, UPolygon endDecoration) {
 		if (color == null) {
 			throw new IllegalArgumentException();
 		}
@@ -88,10 +90,11 @@ public class Snake implements UShape {
 		}
 		this.endDecoration = endDecoration;
 		this.color = color;
+		this.horizontalAlignment = horizontalAlignment;
 	}
 
-	public Snake(Rainbow color) {
-		this(color, null);
+	public Snake(HorizontalAlignment horizontalAlignment, Rainbow color) {
+		this(horizontalAlignment, color, null);
 	}
 
 	public void setLabel(TextBlock label) {
@@ -99,7 +102,7 @@ public class Snake implements UShape {
 	}
 
 	public Snake move(double dx, double dy) {
-		final Snake result = new Snake(color, endDecoration);
+		final Snake result = new Snake(horizontalAlignment, color, endDecoration);
 		for (Point2D pt : worm) {
 			result.addPoint(pt.getX() + dx, pt.getY() + dy);
 		}
@@ -182,12 +185,20 @@ public class Snake implements UShape {
 		final Point2D pt1 = worm.get(0);
 		final Point2D pt2 = worm.get(1);
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
+		double x = Math.max(pt1.getX(), pt2.getX());
+		if (horizontalAlignment == HorizontalAlignment.CENTER
+				&& (worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD"))) {
+			final Point2D pt3 = worm.get(2);
+			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;
+		} else {
+			x += 4;
+		}
 		// if (worm.getDirectionsCode().startsWith("LD")) {
 		// final double y = pt1.getY() - dim.getHeight();
 		// return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) - dim.getWidth(), y);
 		// }
 		final double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
-		return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) + 4, y);
+		return new Point2D.Double(x, y);
 	}
 
 	public List<Line2D> getHorizontalLines() {
@@ -229,7 +240,7 @@ public class Snake implements UShape {
 		}
 		if (same(this.getLast(), other.getFirst())) {
 			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;
-			final Snake result = new Snake(color, oneOf);
+			final Snake result = new Snake(horizontalAlignment, color, oneOf);
 			// result.textBlock = oneOf(this.textBlock, other.textBlock, stringBounder);
 			result.emphasizeDirection = emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection;
 			result.worm.addAll(this.worm.merge(other.worm, strategy));

@@ -220,7 +220,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final UTranslate tr = getTranslateDiamond(getFtile2(), ug.getStringBounder());
 			final Point2D p2 = tr.getTranslated(getFtile2().calculateDimension(ug.getStringBounder()).getPointIn());
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			final Point2D p1 = calculateDimensionInternal(ug.getStringBounder()).getPointIn();
 
 			snake.addPoint(p1);
@@ -246,7 +246,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
 
-			final Snake snake = new Snake(color, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
 			snake.addPoint(p1);
 			snake.addPoint(p2.getX(), p1.getY());
 			snake.addPoint(p2);
@@ -281,7 +281,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
 
-			final Snake snake = new Snake(color, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
 			snake.addPoint(p1);
 			snake.addPoint(p2);
 			ug.draw(snake);
@@ -317,7 +317,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			final Point2D p2 = getTranslate2(stringBounder).getTranslated(
 					getFtile2().calculateDimension(stringBounder).getPointIn());
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			snake.addPoint(p1);
 			snake.addPoint(p1.getX(), p2.getY() - 15);
 			snake.addPoint(p2.getX(), p2.getY() - 15);
@@ -346,7 +346,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			final Point2D p2 = getTranslateLastDiamond(stringBounder).getTranslated(
 					getFtile2().calculateDimension(stringBounder).getPointIn());
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToDown());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
 			snake.addPoint(p1);
 			snake.addPoint(p1.getX(), p2.getY() - 15);
 			snake.addPoint(p2.getX(), p2.getY() - 15);
@@ -380,7 +380,7 @@ class FtileIfLongVertical extends AbstractFtile {
 
 			final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToLeft());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToLeft());
 			snake.addPoint(p1);
 			snake.addPoint(p1.getX(), p1.getY() + 15);
 			snake.addPoint(dimTotal.getWidth(), p1.getY() + 15);
@@ -411,7 +411,7 @@ class FtileIfLongVertical extends AbstractFtile {
 
 			final Point2D p2 = new Point2D.Double(dimTotal.getWidth(), p1.getY() + 15);
 
-			final Snake snake = new Snake(arrowColor, Arrows.asToRight());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToRight());
 			snake.addPoint(p1);
 			snake.addPoint(p1.getX(), p2.getY());
 			snake.addPoint(p2);

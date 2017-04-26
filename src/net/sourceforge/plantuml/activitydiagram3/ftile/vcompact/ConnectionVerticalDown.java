@@ -75,7 +75,7 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 	}
 
 	private Snake getSimpleSnake() {
-		final Snake snake = new Snake(color, Arrows.asToDown());
+		final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
 		snake.setLabel(textBlock);
 		snake.addPoint(p1);
 		snake.addPoint(p2);
@@ -83,7 +83,7 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 	}
 
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		final Snake snake = new Snake(color, Arrows.asToDown());
+		final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToDown());
 		snake.setLabel(textBlock);
 		final Point2D mp1a = translate1.getTranslated(p1);
 		final Point2D mp2b = translate2.getTranslated(p2);

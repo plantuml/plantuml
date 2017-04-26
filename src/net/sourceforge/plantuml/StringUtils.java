@@ -38,7 +38,6 @@ package net.sourceforge.plantuml;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -58,33 +57,6 @@ public class StringUtils {
 
 	public static String getPlateformDependentAbsolutePath(File file) {
 		return file.getAbsolutePath();
-	}
-
-	public static List<String> getWithNewlines(CharSequence s) {
-		if (s == null) {
-			return null;
-		}
-		final List<String> result = new ArrayList<String>();
-		final StringBuilder current = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() - 1) {
-				final char c2 = s.charAt(i + 1);
-				i++;
-				if (c2 == 'n') {
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
-				}
-			} else {
-				current.append(c);
-			}
-		}
-		result.add(current.toString());
-		return Collections.unmodifiableList(result);
 	}
 
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
@@ -300,10 +272,6 @@ public class StringUtils {
 		return '\u0006';
 	}
 
-	public static char hiddenNewLine() {
-		return '\u0009';
-	}
-
 	public static String hideComparatorCharacters(String s) {
 		s = s.replace('<', hiddenLesserThan());
 		s = s.replace('>', hiddenBiggerThan());
@@ -516,14 +484,6 @@ public class StringUtils {
 			return arg.toString();
 		}
 		return arg.subSequence(i, j + 1).toString();
-	}
-
-	public static List<String> splitHiddenNewLine(String s) {
-		return Arrays.asList(s.split("" + hiddenNewLine()));
-	}
-
-	public static String manageNewLine(String string) {
-		return string.replace(hiddenNewLine(), '\n');
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

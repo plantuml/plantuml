@@ -109,7 +109,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = new Snake(color, usingArrow);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, usingArrow);
 			snake.addPoint(x1, y1);
 			snake.addPoint(x2, y1);
 			snake.addPoint(x2, y2);
@@ -158,14 +158,14 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (originalDirection != newDirection) {
 				final double delta = (originalDirection == Direction.RIGHT ? -1 : 1) * Diamond.diamondHalfSize;
 				final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
-				final Snake small = new Snake(color);
+				final Snake small = new Snake(arrowHorizontalAlignment(), color);
 				small.addPoint(p1);
 				small.addPoint(p1.getX() + delta, p1.getY());
 				small.addPoint(p1.getX() + delta, p1.getY() + dimDiamond1.getHeight() * .75);
 				ug.draw(small);
 				p1 = small.getLast();
 			}
-			final Snake snake = new Snake(color, usingArrow);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, usingArrow);
 			snake.addPoint(p1);
 			snake.addPoint(p2.getX(), p1.getY());
 			snake.addPoint(p2);
@@ -202,7 +202,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final double y2 = p2.getY();
 
 			final UPolygon arrow = x2 > x1 ? Arrows.asToRight() : Arrows.asToLeft();
-			final Snake snake = new Snake(myArrowColor, arrow);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor, arrow);
 			if (branchEmpty) {
 				snake.emphasizeDirection(Direction.DOWN);
 			}
@@ -257,7 +257,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (originalDirection == newDirection) {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
 				final Point2D mp2bc = new Point2D.Double(mp2b.getX() + delta, mp2b.getY());
-				final Snake snake = new Snake(myArrowColor);
+				final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 				final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), middle);
@@ -265,7 +265,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				snake.addPoint(mp2bc);
 				snake.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(snake);
-				final Snake small = new Snake(myArrowColor, arrow);
+				final Snake small = new Snake(arrowHorizontalAlignment(), myArrowColor, arrow);
 				small.addPoint(mp2bc);
 				small.addPoint(mp2bc.getX(), mp2b.getY());
 				small.addPoint(mp2b);
@@ -275,13 +275,13 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Diamond.diamondHalfSize;
 				final Point2D mp2bb = new Point2D.Double(mp2b.getX() + delta, mp2b.getY() - 1.5
 						* Diamond.diamondHalfSize);
-				final Snake snake = new Snake(myArrowColor);
+				final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 				snake.addPoint(mp1a);
 				snake.addPoint(mp1a.getX(), mp2bb.getY());
 				snake.addPoint(mp2bb);
 				snake.goUnmergeable(MergeStrategy.LIMITED);
 				ug.draw(snake);
-				final Snake small = new Snake(myArrowColor, arrow);
+				final Snake small = new Snake(arrowHorizontalAlignment(), myArrowColor, arrow);
 				small.addPoint(mp2bb);
 				small.addPoint(mp2bb.getX(), mp2b.getY());
 				small.addPoint(mp2b);
@@ -320,7 +320,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = new Snake(myArrowColor);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 			if (branchEmpty) {
 				snake.emphasizeDirection(Direction.DOWN);
 			}
@@ -346,7 +346,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 
-			final Snake snake = new Snake(myArrowColor);
+			final Snake snake = new Snake(arrowHorizontalAlignment(), myArrowColor);
 			// snake.emphasizeDirection(Direction.DOWN);
 
 			final double x1 = mp1a.getX();

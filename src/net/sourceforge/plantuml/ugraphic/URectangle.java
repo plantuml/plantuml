@@ -42,27 +42,33 @@ public class URectangle extends AbstractShadowable implements Scalable {
 	private final double height;
 	private final double rx;
 	private final double ry;
+	private final String comment;
 
 	public UShape getScaled(double scale) {
 		if (scale == 1) {
 			return this;
 		}
-		final AbstractShadowable result = new URectangle(width * scale, height * scale, rx * scale, ry * scale);
+		final AbstractShadowable result = new URectangle(width * scale, height * scale, rx * scale, ry * scale, comment);
 		result.setDeltaShadow(this.getDeltaShadow());
 		return result;
 	}
 
 	public URectangle(double width, double height) {
-		this(width, height, 0, 0);
+		this(width, height, 0, 0, null);
 	}
 
 	public URectangle(double width, double height, double rx, double ry) {
+		this(width, height, rx, ry, null);
+	}
+
+	public URectangle(double width, double height, double rx, double ry, String comment) {
 		// if (height == 0) {
 		// throw new IllegalArgumentException();
 		// }
 		if (width == 0) {
 			throw new IllegalArgumentException();
 		}
+		this.comment = comment;
 		this.width = width;
 		this.height = height;
 		this.rx = rx;
@@ -100,6 +106,10 @@ public class URectangle extends AbstractShadowable implements Scalable {
 
 	public MinMax getMinMax() {
 		return MinMax.fromMax(width, height);
+	}
+
+	public final String getComment() {
+		return comment;
 	}
 
 }

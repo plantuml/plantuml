@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.CharSequence2Impl;
 import net.sourceforge.plantuml.EmbededDiagram;
@@ -138,7 +139,7 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c);
 					current.append(c2);
 				}
-			} else if (c == StringUtils.hiddenNewLine()) {
+			} else if (c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);
 			} else {
@@ -220,16 +221,16 @@ public class Display implements Iterable<CharSequence> {
 		return new Display(this, mode);
 	}
 
-	public String asStringWithHiddenNewLine() {
-		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < display.size(); i++) {
-			sb.append(display.get(i));
-			if (i < display.size() - 1) {
-				sb.append(StringUtils.hiddenNewLine());
-			}
-		}
-		return sb.toString();
-	}
+	// private String asStringWithHiddenNewLine() {
+	// final StringBuilder sb = new StringBuilder();
+	// for (int i = 0; i < display.size(); i++) {
+	// sb.append(display.get(i));
+	// if (i < display.size() - 1) {
+	// sb.append(BackSlash.hiddenNewLine());
+	// }
+	// }
+	// return sb.toString();
+	// }
 
 	@Override
 	public String toString() {

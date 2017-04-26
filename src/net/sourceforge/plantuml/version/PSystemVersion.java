@@ -264,7 +264,7 @@ public class PSystemVersion extends AbstractPSystem {
 		}
 
 		try {
-			final URL url = new URL("http://plantuml.com/download.html");
+			final URL url = new URL("http://plantuml.com/download");
 			final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setUseCaches(false);
 			urlConnection.connect();
@@ -283,12 +283,14 @@ public class PSystemVersion extends AbstractPSystem {
 
 	private static int extractVersion(BufferedReader in) throws IOException {
 		String s;
-		final Pattern p = Pattern.compile(".*\\.(\\d{4,5})\\..*");
+		final Pattern p = Pattern.compile(".*\\.([1-9]\\d?)\\.(20\\d\\d)\\.([1-9]?\\d)\\..*");
 		while ((s = in.readLine()) != null) {
 			final Matcher m = p.matcher(s);
 			if (m.matches()) {
-				final String v = m.group(1);
-				return Integer.parseInt(v);
+				final String a = m.group(1);
+				final String b = m.group(2);
+				final String c = m.group(3);
+				return Integer.parseInt(a) * 1000000 + Integer.parseInt(b) * 100 + Integer.parseInt(c);
 			}
 		}
 		return 0;

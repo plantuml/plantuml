@@ -91,6 +91,6 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 				return;
 			}
 		}
-		svg.svgRectangle(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow());
+		svg.svgRectangle(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow(), rect.getComment());
 	}
 }

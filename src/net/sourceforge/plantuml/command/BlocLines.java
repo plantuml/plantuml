@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -67,7 +68,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public static BlocLines getWithNewlines(CharSequence s) {
-		return new BlocLines(StringUtils.getWithNewlines(s));
+		return new BlocLines(BackSlash.getWithNewlines(s));
 	}
 
 	public BlocLines() {
@@ -174,7 +175,7 @@ public class BlocLines implements Iterable<CharSequence> {
 		final StringBuilder sb = new StringBuilder();
 		for (CharSequence line : lines) {
 			sb.append(line);
-			sb.append(StringUtils.hiddenNewLine());
+			sb.append(BackSlash.hiddenNewLine());
 		}
 		return single(sb.substring(0, sb.length() - 1));
 	}

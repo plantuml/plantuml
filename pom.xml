@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>2017.12-SNAPSHOT</version>
+    <version>1.2017.13-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>

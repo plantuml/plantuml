@@ -231,9 +231,8 @@ public class QuoteUtils {
 					"Vtabenapr oevatf punbf, abg xabjyrqtr.", "Yrneavat vf nyjnlf n cnvashy cebprff.",
 					"V'z fbeel, ner lbh sebz gur cnfg ?", "Unir lbh gevrq gheavat vg bss naq ba ntnva ?",
 					"Vs lbh qba'g xabj jurer lbh ner tbvat nal ebnq pna gnxr lbh gurer",
-					"Ortva ng gur ortvaavat, naq tb ba gvyy lbh pbzr gb gur raq: gura fgbc"
-
-			);
+					"Ortva ng gur ortvaavat, naq tb ba gvyy lbh pbzr gb gur raq: gura fgbc",
+					"Xrrc pnyz naq cerff Pgey-Nyg-Qry");
 
 	private QuoteUtils() {
 	}

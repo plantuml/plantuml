@@ -39,10 +39,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.AlignParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -102,4 +104,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 		// return Collections.emptyList();
 	}
 
+	public HorizontalAlignment arrowHorizontalAlignment() {
+		return skinParam.getHorizontalAlignment(AlignParam.ARROW_MESSAGE_ALIGN, null);
+	}
 }

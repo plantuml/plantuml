@@ -225,7 +225,7 @@ class FtileIfAndStop extends AbstractFtile {
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
 
-			final Snake snake = new Snake(color, Arrows.asToRight());
+			final Snake snake = new Snake(arrowHorizontalAlignment(), color, Arrows.asToRight());
 			snake.addPoint(p1);
 			snake.addPoint(p2);
 			ug.draw(snake);

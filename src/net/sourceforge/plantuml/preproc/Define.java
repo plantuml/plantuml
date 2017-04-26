@@ -39,6 +39,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import net.sourceforge.plantuml.BackSlash;
+
 public class Define {
 
 	private final DefineSignature signature;
@@ -78,7 +80,9 @@ public class Define {
 			}
 		} else {
 			final String regex = "\\b" + signature.getKey() + "\\b";
+			line = BackSlash.translateBackSlashes(line);
 			line = line.replaceAll(regex, definitionQuoted);
+			line = BackSlash.untranslateBackSlashes(line);
 		}
 		return line;
 	}

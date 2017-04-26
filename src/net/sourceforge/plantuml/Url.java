@@ -58,7 +58,7 @@ public class Url implements EnsureVisible {
 		if (tooltip == null) {
 			this.tooltip = url;
 		} else {
-			this.tooltip = StringUtils.manageNewLine(tooltip);
+			this.tooltip = BackSlash.manageNewLine(tooltip);
 		}
 		if (label == null || label.length() == 0) {
 			this.label = url;
