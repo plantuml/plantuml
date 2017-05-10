@@ -55,6 +55,14 @@ public class ChainImpl<O> implements Chain<O> {
 		return result;
 	}
 
+	public ChainImpl<O> cloneMe() {
+		final ChainImpl<O> result = new ChainImpl<O>();
+		result.currentVersion = this.currentVersion;
+		result.positive.addAll(this.positive);
+		result.negative.addAll(this.negative);
+		return result;
+	}
+
 	public int compare(O a, O b) {
 		if (a.equals(b)) {
 			return 0;
@@ -91,6 +99,9 @@ public class ChainImpl<O> implements Chain<O> {
 			}
 		}
 		return Collections.unmodifiableList(result);
+	}
+
+	private ChainImpl() {
 	}
 
 	public ChainImpl(O root) {

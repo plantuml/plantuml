@@ -101,7 +101,7 @@ public class Foo2 extends AbstractTextBlock implements TextBlock {
 
 	private IEntityImage computeImage(final ILeaf leaf) {
 		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null);
+				false, diagram, null, null, null, diagram.getLinks());
 		return image;
 	}
 

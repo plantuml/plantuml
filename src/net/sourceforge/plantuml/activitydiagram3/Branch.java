@@ -90,8 +90,8 @@ public class Branch {
 		return list.kill();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		return list.addNote(note, position, type, colors);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		return list.addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {

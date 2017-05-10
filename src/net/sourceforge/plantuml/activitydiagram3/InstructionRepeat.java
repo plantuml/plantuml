@@ -133,8 +133,8 @@ public class InstructionRepeat implements Instruction {
 		return nextLinkRenderer;
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		return repeatList.addNote(note, position, type, colors);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		return repeatList.addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

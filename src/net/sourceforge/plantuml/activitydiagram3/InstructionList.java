@@ -128,11 +128,11 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return all.get(all.size() - 1);
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (getLast() == null) {
-			return super.addNote(note, position, type, colors);
+			return super.addNote(note, position, type, colors, swimlaneNote);
 		}
-		return getLast().addNote(note, position, type, colors);
+		return getLast().addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

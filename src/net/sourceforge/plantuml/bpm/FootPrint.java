@@ -35,30 +35,11 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-public interface ConnectorPuzzle extends Placeable {
+import java.util.HashSet;
+import java.util.Set;
 
-	public static enum Where {
-		NORTH(1), EAST(2), SOUTH(4), WEST(8);
+public class FootPrint {
 
-		private int coding;
-
-		private Where(int coding) {
-			this.coding = coding;
-		}
-
-		String toShortString() {
-			return name().substring(0, 1);
-		}
-
-		int getCoding() {
-			return coding;
-		}
-	}
-
-	public void append(Where where);
-
-	public void remove(Where where);
-
-	public boolean have(Where where);
+	private final Set<Coord> cells = new HashSet<Coord>();
 
 }

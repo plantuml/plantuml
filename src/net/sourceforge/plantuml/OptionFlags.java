@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class OptionFlags {
 
+	private static final OptionFlags singleton = new OptionFlags();
+
 	// static public final boolean PBBACK = false;
 	// static public boolean GRAPHVIZCACHE = false;
 	// static public final boolean TRACE_DOT = false;
@@ -74,10 +76,15 @@ public class OptionFlags {
 
 	public void reset() {
 		reset(false);
+		GraphvizUtils.setDotExecutable(null);
 	}
 
 	public final void setDotExecutable(String dotExecutable) {
 		GraphvizUtils.setDotExecutable(dotExecutable);
+	}
+
+	private OptionFlags() {
+		reset(true);
 	}
 
 	private void reset(boolean exit) {
@@ -86,7 +93,6 @@ public class OptionFlags {
 		extractFromMetadata = false;
 		word = false;
 		systemExit = exit;
-		GraphvizUtils.setDotExecutable(null);
 		gui = false;
 		quiet = false;
 		checkDotError = false;
@@ -100,8 +106,6 @@ public class OptionFlags {
 	public boolean useJavaInsteadOfDot() {
 		return false;
 	}
-
-	private static final OptionFlags singleton = new OptionFlags();
 
 	// private boolean keepTmpFiles;
 	private boolean verbose;
@@ -122,10 +126,6 @@ public class OptionFlags {
 	private String fileSeparator = "_";
 	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes
 	private File logData;
-
-	private OptionFlags() {
-		reset(true);
-	}
 
 	public static OptionFlags getInstance() {
 		return singleton;

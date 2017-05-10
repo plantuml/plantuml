@@ -592,7 +592,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			}
 
 			return DotDataImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
-					diagram, getBibliotekon(), null, diagram.getUmlDiagramType());
+					diagram, getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
 		}
 		return ent.getSvekImage();
 	}

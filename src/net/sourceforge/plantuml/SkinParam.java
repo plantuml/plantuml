@@ -86,6 +86,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public void setDotExecutable(String dotExecutable) {
+		Log.info("Overwritting dot in skinparam " + dotExecutable);
 		this.dotExecutable = dotExecutable;
 	}
 

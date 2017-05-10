@@ -70,7 +70,7 @@ public class LanguageDescriptor {
 		type.add("database");
 		type.add("storage");
 		type.add("agent");
-		type.add("pipe");
+		type.add("stack");
 		type.add("boundary");
 		type.add("control");
 		type.add("entity");

@@ -51,8 +51,8 @@ public class WithNote {
 
 	private final Collection<PositionedNote> notes = new ArrayList<PositionedNote>();
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		this.notes.add(new PositionedNote(note, position, type, colors));
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		this.notes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
 		return true;
 	}
 

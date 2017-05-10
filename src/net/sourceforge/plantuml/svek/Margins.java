@@ -48,6 +48,11 @@ public class Margins {
 		return new Margins(value, value, value, value);
 	}
 
+	@Override
+	public String toString() {
+		return "MARGIN[" + x1 + "," + x2 + "," + y1 + "," + y2 + "]";
+	}
+
 	public Margins(double x1, double x2, double y1, double y2) {
 		this.x1 = x1;
 		this.x2 = x2;

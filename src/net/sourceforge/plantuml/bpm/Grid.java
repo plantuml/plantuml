@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
 
 public class Grid {
 
@@ -57,6 +58,17 @@ public class Grid {
 		this.lines = new ChainImpl<Line>(root.getLine());
 		this.cols = new ChainImpl<Col>(root.getCol());
 		this.cells.put(root, new Cell());
+	}
+
+	private Grid(Grid other) {
+		this.lines = ((ChainImpl<Line>) other.lines).cloneMe();
+		this.cols = ((ChainImpl<Col>) other.cols).cloneMe();
+		this.root = other.root;
+		this.cells.putAll(other.cells);
+	}
+
+	public Grid cloneMe() {
+		return new Grid(this);
 	}
 
 	public Cell getCell(Coord coord) {
@@ -256,7 +268,6 @@ public class Grid {
 	}
 
 	public void removeLine(Line line) {
-		System.err.println("REMOVING " + line);
 		assert usedColsOf(line).isEmpty();
 		for (final Iterator<Map.Entry<Coord, Cell>> it = cells.entrySet().iterator(); it.hasNext();) {
 			final Map.Entry<Coord, Cell> ent = it.next();
@@ -308,15 +319,25 @@ public class Grid {
 				final boolean startHorizontal = i == 0;
 				if (startHorizontal) {
 					// System.err.println("DrawingHorizontal " + ent.getValue() + " --> " + dests.get(i) + " " + i);
-					drawHorizontal(src, dest);
+					drawStartHorizontal(src, dest);
 				} else {
-					drawVertical(src, dest);
+					drawStartVertical(src, dest);
 				}
 			}
 		}
 	}
 
-	private void drawVertical(final Coord src, final Coord dest) {
+	private void drawStartVertical(final Coord src, final Coord dest) {
+		if (src.getLine() == dest.getLine() && src.getCol() == dest.getCol()) {
+			throw new IllegalStateException();
+		}
+		final BpmElement start = (BpmElement) getCell(src).getData();
+		final int compare = lines.compare(src.getLine(), dest.getLine());
+		if (compare == 0) {
+			throw new IllegalStateException();
+		}
+		start.append(compare < 0 ? Where.SOUTH : Where.NORTH);
+
 		for (Navigator<Line> itLine = Navigators.iterate(lines, src.getLine(), dest.getLine()); itLine.get() != dest
 				.getLine();) {
 			final Line cur = itLine.next();
@@ -330,6 +351,10 @@ public class Grid {
 				addPuzzle(dest.getLine(), cur, "EW");
 			}
 		}
+		final BpmElement end = (BpmElement) getCell(dest).getData();
+		if (src.getLine() == dest.getLine()) {
+			end.append(compare < 0 ? Where.NORTH : Where.SOUTH);
+		}
 		if (src.getLine() != dest.getLine() && src.getCol() != dest.getCol()) {
 			if (lines.compare(dest.getLine(), src.getLine()) > 0) {
 				addPuzzle(dest.getLine(), src.getCol(), "N");
@@ -341,11 +366,22 @@ public class Grid {
 			} else {
 				addPuzzle(dest.getLine(), src.getCol(), "W");
 			}
+			end.append(cols.compare(src.getCol(), dest.getCol()) > 0 ? Where.EAST : Where.WEST);
 		}
 
 	}
 
-	private void drawHorizontal(final Coord src, final Coord dest) {
+	private void drawStartHorizontal(final Coord src, final Coord dest) {
+		if (src.getLine() == dest.getLine() && src.getCol() == dest.getCol()) {
+			throw new IllegalStateException();
+		}
+		final BpmElement start = (BpmElement) getCell(src).getData();
+		final int compare = cols.compare(src.getCol(), dest.getCol());
+		if (compare == 0) {
+			throw new IllegalStateException();
+		}
+		start.append(compare < 0 ? Where.EAST : Where.WEST);
+
 		for (Navigator<Col> itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest.getCol();) {
 			final Col cur = itCol.next();
 			if (cur != dest.getCol()) {
@@ -359,6 +395,10 @@ public class Grid {
 				addPuzzle(cur, dest.getCol(), "NS");
 			}
 		}
+		final BpmElement end = (BpmElement) getCell(dest).getData();
+		if (src.getLine() == dest.getLine()) {
+			end.append(compare < 0 ? Where.WEST : Where.EAST);
+		}
 		if (src.getLine() != dest.getLine() && src.getCol() != dest.getCol()) {
 			if (cols.compare(dest.getCol(), src.getCol()) > 0) {
 				addPuzzle(src.getLine(), dest.getCol(), "W");
@@ -370,17 +410,18 @@ public class Grid {
 			} else {
 				addPuzzle(src.getLine(), dest.getCol(), "N");
 			}
+			end.append(lines.compare(src.getLine(), dest.getLine()) > 0 ? Where.SOUTH : Where.NORTH);
 		}
 	}
 
 	private void addPuzzle(Line line, Col col, String direction) {
 		final Cell cell = getCell(line, col);
-		ConnectorPuzzle after = ConnectorPuzzle.get(direction);
-		final ConnectorPuzzle before = (ConnectorPuzzle) cell.getData();
-		if (before != null) {
-			after = after.append(before);
+		ConnectorPuzzleEmpty connector = (ConnectorPuzzleEmpty) cell.getData();
+		if (connector == null) {
+			connector = new ConnectorPuzzleEmpty();
+			cell.setData(connector);
 		}
-		cell.setData(after);
+		connector.append(ConnectorPuzzleEmpty.get(direction));
 	}
 
 }

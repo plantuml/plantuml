@@ -105,8 +105,8 @@ public class InstructionSplit implements Instruction {
 		return inlinkRendering;
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		return getLast().addNote(note, position, type, colors);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		return getLast().addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

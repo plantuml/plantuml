@@ -299,7 +299,7 @@ public final class DotDataImageBuilder {
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,
 					dotStringFactory.getBibliotekon(), dotStringFactory.getGraphvizVersion(),
-					dotData.getUmlDiagramType());
+					dotData.getUmlDiagramType(), dotData.getLinks());
 		}
 		return ent.getSvekImage();
 	}
@@ -322,7 +322,7 @@ public final class DotDataImageBuilder {
 
 	public static IEntityImage createEntityImageBlock(ILeaf leaf, ISkinParam skinParam,
 			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
-			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType) {
+			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
 		if (leaf.isRemoved()) {
 			throw new IllegalStateException();
 		}
@@ -376,7 +376,7 @@ public final class DotDataImageBuilder {
 			return new EntityImageLollipopInterface(leaf, skinParam);
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
-			return new EntityImageDescription(leaf, skinParam, portionShower);
+			return new EntityImageDescription(leaf, skinParam, portionShower, links);
 		}
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
@@ -385,7 +385,7 @@ public final class DotDataImageBuilder {
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
 			} else {
-				return new EntityImageDescription(leaf, skinParam, portionShower);
+				return new EntityImageDescription(leaf, skinParam, portionShower, links);
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE) {
@@ -412,7 +412,7 @@ public final class DotDataImageBuilder {
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
 				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, HtmlColorUtils.BLACK),
-						portionShower);
+						portionShower, links);
 			}
 			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
 		}

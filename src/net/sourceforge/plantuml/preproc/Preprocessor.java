@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.preproc;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 
 public class Preprocessor implements ReadLine {
 
+	private static final String END_DEFINE_LONG = "!enddefinelong";
 	private static final String ID = "[A-Za-z_][A-Za-z_0-9]*";
 	private static final String ID_ARG = "\\s*[A-Za-z_][A-Za-z_0-9]*\\s*(?:=\\s*(?:\"[^\"]*\"|'[^']*')\\s*)?";
 	private static final String ARG = "(?:\\(" + ID_ARG + "(?:," + ID_ARG + ")*?\\))?";
@@ -60,7 +62,7 @@ public class Preprocessor implements ReadLine {
 			+ "(?:[%s]+(.*))?$");
 	private static final Pattern2 undefPattern = MyPattern.cmpile("^[%s]*!undef[%s]+(" + ID + ")$");
 	private static final Pattern2 definelongPattern = MyPattern.cmpile("^[%s]*!definelong[%s]+(" + ID + ARG + ")");
-	private static final Pattern2 enddefinelongPattern = MyPattern.cmpile("^[%s]*!enddefinelong[%s]*$");
+	private static final Pattern2 enddefinelongPattern = MyPattern.cmpile("^[%s]*" + END_DEFINE_LONG + "[%s]*$");
 
 	private final Defines defines;
 	private final PreprocessorInclude rawSource;
@@ -105,8 +107,15 @@ public class Preprocessor implements ReadLine {
 
 		final List<String> result = defines.applyDefines(s.toString2());
 		if (result.size() > 1) {
-			ignoreDefineDuringSeveralLines = result.size() - 2;
-			source.insert(result.subList(1, result.size() - 1), s.getLocation());
+			final String last = result.get(result.size() - 1);
+			final List<String> inserted = result.subList(1, result.size() - 1);
+			assert last.startsWith(END_DEFINE_LONG);
+			ignoreDefineDuringSeveralLines = inserted.size();
+			source.insert(inserted, s.getLocation());
+			if (last.length() > END_DEFINE_LONG.length()) {
+				source.insert(last.substring(END_DEFINE_LONG.length()), s.getLocation());
+				ignoreDefineDuringSeveralLines++;
+			}
 		}
 		return new CharSequence2Impl(result.get(0), s.getLocation(), s.getPreprocessorError());
 	}

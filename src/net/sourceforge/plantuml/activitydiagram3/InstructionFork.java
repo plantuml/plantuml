@@ -106,14 +106,14 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (finished) {
-			return super.addNote(note, position, type, colors);
+			return super.addNote(note, position, type, colors, swimlaneNote);
 		}
 		if (getLastList().getLast() == null) {
-			return getLastList().addNote(note, position, type, colors);
+			return getLastList().addNote(note, position, type, colors, swimlaneNote);
 		}
-		return getLastList().addNote(note, position, type, colors);
+		return getLastList().addNote(note, position, type, colors, swimlaneNote);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

@@ -35,26 +35,24 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
+
 public class CleanerInterleavingLines implements GridCleaner {
 
 	public boolean clean(Grid grid) {
-		System.err.println("running CleanerInterleavingLines");
+		// System.err.println("running CleanerInterleavingLines");
 		boolean result = false;
 		Line previous = null;
-		// int i = 0;
 		for (Line line : grid.lines().toList()) {
-			// System.err.println("--------- LINE i=" + i);
-			// i++;
 			if (previous != null) {
 				if (mergeable(grid, previous, line)) {
-					System.err.println("MERGEABLE! " + previous + " " + line);
+					// System.err.println("MERGEABLE! " + previous + " " + line);
 					mergeLines(grid, previous, line);
 					return true;
 				}
 			}
 			previous = line;
 		}
-		// }
 		return result;
 	}
 
@@ -96,11 +94,16 @@ public class CleanerInterleavingLines implements GridCleaner {
 			return data1;
 		}
 		if (data2 instanceof BpmElement) {
+			final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;
+			if (puz1.checkDirections("SW")) {
+				((BpmElement) data2).remove(Where.NORTH);
+				((BpmElement) data2).append(Where.WEST);
+			}
 			return data2;
 		}
-		assert data1 instanceof ConnectorPuzzle && data2 instanceof ConnectorPuzzle;
-		final ConnectorPuzzle puz1 = (ConnectorPuzzle) data1;
-		final ConnectorPuzzle puz2 = (ConnectorPuzzle) data2;
+		assert data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty;
+		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;
+		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;
 		return puz2;
 	}
 
@@ -109,43 +112,47 @@ public class CleanerInterleavingLines implements GridCleaner {
 			return true;
 		}
 		assert data1 != null && data2 != null;
-		if (data1 instanceof ConnectorPuzzle && data2 instanceof ConnectorPuzzle) {
-			return mergeableCC((ConnectorPuzzle) data1, (ConnectorPuzzle) data2);
+		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty) {
+			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);
 		}
-		if (data1 instanceof ConnectorPuzzle && data2 instanceof BpmElement) {
-			final boolean result = mergeablePuzzleSingle((ConnectorPuzzle) data1);
-			System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
+		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof BpmElement) {
+			final boolean result = mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);
+			// System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
 			return result;
 		}
-		if (data2 instanceof ConnectorPuzzle && data1 instanceof BpmElement) {
-			final boolean result = mergeablePuzzleSingle((ConnectorPuzzle) data2);
-			System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
+		if (data2 instanceof ConnectorPuzzleEmpty && data1 instanceof BpmElement) {
+			final boolean result = mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
+			// System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
 			return result;
 		}
 		return false;
 	}
 
-	private boolean mergeablePuzzleSingle(ConnectorPuzzle puz) {
-		if (puz == ConnectorPuzzle.get("NS")) {
+	private boolean mergeablePuzzleSingle(ConnectorPuzzleEmpty data1, BpmElement data2) {
+		if (data1.checkDirections("NS")) {
 			return true;
 		}
-		if (puz == ConnectorPuzzle.get("NE")) {
-			return true;
-		}
-		if (puz == ConnectorPuzzle.get("NW")) {
+		if (data1.checkDirections("SW")) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean mergeableCC(ConnectorPuzzle puz1, ConnectorPuzzle puz2) {
-		if (puz1 == ConnectorPuzzle.get("NS") && puz2 == ConnectorPuzzle.get("NS")) {
+	private boolean mergeablePuzzleSingle(BpmElement data1, ConnectorPuzzleEmpty data2) {
+		if (data2.checkDirections("NS")) {
 			return true;
 		}
-		if (puz1 == ConnectorPuzzle.get("NS") && puz2 == ConnectorPuzzle.get("NE")) {
+		return false;
+	}
+
+	private boolean mergeableCC(ConnectorPuzzleEmpty puz1, ConnectorPuzzleEmpty puz2) {
+		if (puz1.checkDirections("NS") && puz2.checkDirections("NS")) {
 			return true;
 		}
-		if (puz1 == ConnectorPuzzle.get("NS") && puz2 == ConnectorPuzzle.get("NW")) {
+		if (puz1.checkDirections("NS") && puz2.checkDirections("NE")) {
+			return true;
+		}
+		if (puz1.checkDirections("NS") && puz2.checkDirections("NW")) {
 			return true;
 		}
 		return false;

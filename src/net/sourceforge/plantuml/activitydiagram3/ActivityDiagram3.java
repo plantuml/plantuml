@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -437,7 +438,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		final boolean ok = current().addNote(note, position, type, colors);
+		final boolean ok = current().addNote(note, position, type, colors, swinlanes.getCurrentSwimlane());
 		if (ok == false) {
 			return CommandExecutionResult.error("Cannot add note here");
 		}

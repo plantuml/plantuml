@@ -185,18 +185,15 @@ public class Snake implements UShape {
 		final Point2D pt1 = worm.get(0);
 		final Point2D pt2 = worm.get(1);
 		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		double x = Math.max(pt1.getX(), pt2.getX());
-		if (horizontalAlignment == HorizontalAlignment.CENTER
-				&& (worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD"))) {
+		double x = Math.max(pt1.getX(), pt2.getX()) + 4;
+		final boolean zigzag = worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD");
+		if (horizontalAlignment == HorizontalAlignment.CENTER && zigzag) {
 			final Point2D pt3 = worm.get(2);
 			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;
-		} else {
-			x += 4;
+		} else if (horizontalAlignment == HorizontalAlignment.RIGHT && zigzag) {
+			// final Point2D pt3 = worm.get(2);
+			x = Math.max(pt1.getX(), pt2.getX()) - dim.getWidth() - 4;
 		}
-		// if (worm.getDirectionsCode().startsWith("LD")) {
-		// final double y = pt1.getY() - dim.getHeight();
-		// return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) - dim.getWidth(), y);
-		// }
 		final double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
 		return new Point2D.Double(x, y);
 	}

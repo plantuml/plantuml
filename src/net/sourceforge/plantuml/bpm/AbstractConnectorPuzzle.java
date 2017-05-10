@@ -35,30 +35,34 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-public interface ConnectorPuzzle extends Placeable {
+import java.util.EnumSet;
+import java.util.Set;
 
-	public static enum Where {
-		NORTH(1), EAST(2), SOUTH(4), WEST(8);
+abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {
 
-		private int coding;
+	private final EnumSet<Where> connections = EnumSet.noneOf(Where.class);
 
-		private Where(int coding) {
-			this.coding = coding;
-		}
+	public final boolean have(Where where) {
+		return connections.contains(where);
+	}
 
-		String toShortString() {
-			return name().substring(0, 1);
-		}
+	public final void append(Where where) {
+		this.connections.add(where);
+	}
 
-		int getCoding() {
-			return coding;
+	public final void remove(Where where) {
+		final boolean ok = connections.remove(where);
+		if (ok == false) {
+			throw new IllegalArgumentException();
 		}
 	}
 
-	public void append(Where where);
+	public final void append(ConnectorPuzzle other) {
+		this.connections.addAll(((AbstractConnectorPuzzle) other).connections);
+	}
 
-	public void remove(Where where);
-
-	public boolean have(Where where);
+	protected final Set<Where> connections() {
+		return connections;
+	}
 
 }

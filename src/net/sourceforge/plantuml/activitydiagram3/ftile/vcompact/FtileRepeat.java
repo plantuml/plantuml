@@ -523,9 +523,9 @@ class FtileRepeat extends AbstractFtile {
 		final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
-		final double y = (dimTotal.getHeight() - dimDiamond1.getHeight() - dimDiamond2.getHeight() - dimRepeat
-				.getHeight()) / 2;
-
+		final double space = dimTotal.getHeight() - dimDiamond1.getHeight() - dimDiamond2.getHeight()
+				- dimRepeat.getHeight();
+		final double y = dimDiamond1.getHeight() + space / 2;
 		final double left = getLeft(stringBounder);
 		return new UTranslate(left - repeat.calculateDimension(stringBounder).getLeft(), y);
 

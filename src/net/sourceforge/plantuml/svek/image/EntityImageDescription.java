@@ -37,6 +37,7 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -59,6 +61,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UComment;
@@ -81,9 +84,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private TextBlock stereo;
 
 	private final boolean hideText;
+	private final Collection<Link> links;
 
-	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
+			Collection<Link> links) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
+		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
 		USymbol symbol = getUSymbol(entity);
 		this.shapeType = symbol == USymbol.FOLDER ? ShapeType.FOLDER : ShapeType.RECTANGLE;
@@ -155,7 +161,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		if (hideText) {
+		if (hideText && hasSomeHorizontalLink((ILeaf) getEntity(), links) == false) {
 			final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
 			final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 			final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
@@ -166,10 +172,20 @@ public class EntityImageDescription extends AbstractEntityImage {
 			}
 			final double y = MathUtils.max(1, dimDesc.getHeight(), dimStereo.getHeight());
 			return new Margins(suppX / 2, suppX / 2, y, y);
-
 		}
 		return Margins.NONE;
 	}
+	
+	private boolean hasSomeHorizontalLink(ILeaf leaf, Collection<Link> links) {
+		for (Link link : links) {
+			if (link.getLength() == 1 && link.contains(leaf)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCode().getFullName()));

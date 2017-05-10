@@ -149,11 +149,21 @@ public class NoteTile implements Tile {
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-		return getX(stringBounder);
+		final Real result = getX(stringBounder);
+		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
+			final Real x1 = livingSpace1.getPosB();
+			return RealUtils.min(result, x1);
+		}
+		return result;
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return getX(stringBounder).addFixed(getUsedWidth(stringBounder));
+		final Real result = getX(stringBounder).addFixed(getUsedWidth(stringBounder));
+		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
+			final Real x2 = livingSpace2.getPosD(stringBounder);
+			return RealUtils.max(result, x2);
+		}
+		return result;
 	}
 
 }

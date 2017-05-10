@@ -69,8 +69,12 @@ class ReadLineInsertable implements ReadLine {
 
 	public void insert(List<? extends CharSequence> data, LineLocation location) {
 		for (CharSequence s : data) {
-			inserted.add(new CharSequence2Impl(s, location));
+			insert(s, location);
 		}
+	}
+
+	public void insert(CharSequence s, LineLocation location) {
+		inserted.add(new CharSequence2Impl(s, location));
 	}
 
 }

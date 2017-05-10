@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Skin;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class DividerTile implements Tile {
 
@@ -78,9 +79,10 @@ public class DividerTile implements Tile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Area area = new Area(tileArguments.getBorder2() - origin.getCurrentValue(), dim.getHeight());
+		final Area area = new Area(tileArguments.getBorder2() - tileArguments.getBorder1() - origin.getCurrentValue(),
+				dim.getHeight());
 
-		// ug = ug.apply(new UTranslate(x, 0));
+		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), 0));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 

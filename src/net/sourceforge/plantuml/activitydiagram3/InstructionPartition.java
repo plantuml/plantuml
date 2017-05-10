@@ -86,7 +86,7 @@ public class InstructionPartition implements Instruction {
 		return list.getInLinkRendering();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		throw new UnsupportedOperationException();
 	}
 
