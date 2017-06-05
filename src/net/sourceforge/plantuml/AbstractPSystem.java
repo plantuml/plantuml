@@ -65,7 +65,7 @@ public abstract class AbstractPSystem implements Diagram {
 		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
 		for (String name : OptionPrint.interestingProperties()) {
 			toAppend.append(name);
-			toAppend.append('\n');
+			toAppend.append(BackSlash.CHAR_NEWLINE);
 		}
 		return toAppend.toString();
 	}
@@ -74,7 +74,7 @@ public abstract class AbstractPSystem implements Diagram {
 		if (source == null) {
 			return getVersion();
 		}
-		return source.getPlainString() + "\n" + getVersion();
+		return source.getPlainString() + BackSlash.NEWLINE + getVersion();
 	}
 
 	final public UmlSource getSource() {

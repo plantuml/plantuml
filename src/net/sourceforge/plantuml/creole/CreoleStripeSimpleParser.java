@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -54,6 +55,9 @@ public class CreoleStripeSimpleParser {
 
 	public CreoleStripeSimpleParser(String line, CreoleContext creoleContext, FontConfiguration fontConfiguration,
 			ISkinSimple skinParam, CreoleMode modeSimpleLine) {
+		if (line.contains("" + BackSlash.hiddenNewLine())) {
+			throw new IllegalArgumentException(line);
+		}
 		this.fontConfiguration = fontConfiguration;
 		this.modeSimpleLine = modeSimpleLine;
 		this.skinParam = skinParam;

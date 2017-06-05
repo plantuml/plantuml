@@ -46,9 +46,11 @@ public class Define {
 	private final DefineSignature signature;
 	private final String definition;
 	private final String definitionQuoted;
+	private final boolean emptyParentheses;
 
-	public Define(String key, List<String> lines) {
+	public Define(String key, List<String> lines, boolean emptyParentheses) {
 		this.signature = new DefineSignature(key);
+		this.emptyParentheses = emptyParentheses;
 		if (lines == null) {
 			this.definition = null;
 			this.definitionQuoted = null;
@@ -79,7 +81,7 @@ public class Define {
 				line = vars.applyOn(line, signature.getFonctionName(), definitionQuoted);
 			}
 		} else {
-			final String regex = "\\b" + signature.getKey() + "\\b";
+			final String regex = "\\b" + signature.getKey() + "\\b" + (emptyParentheses ? "(\\(\\))?" : "");
 			line = BackSlash.translateBackSlashes(line);
 			line = line.replaceAll(regex, definitionQuoted);
 			line = BackSlash.untranslateBackSlashes(line);

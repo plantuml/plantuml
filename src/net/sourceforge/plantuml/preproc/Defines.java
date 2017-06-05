@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.api.ApiWarning;
+import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
@@ -57,6 +58,7 @@ public class Defines implements Truth {
 	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")
 	public Defines() {
+		environment.put("PLANTUML_VERSION", "" + Version.versionString());
 	}
 
 	@Override
@@ -90,8 +92,8 @@ public class Defines implements Truth {
 		return result;
 	}
 
-	public void define(String name, List<String> value) {
-		values.put(name, new Define(name, value));
+	public void define(String name, List<String> value, boolean emptyParentheses) {
+		values.put(name, new Define(name, value, emptyParentheses));
 	}
 
 	public boolean isDefine(String expression) {

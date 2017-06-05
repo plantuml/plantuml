@@ -171,7 +171,7 @@ public class BlocLines implements Iterable<CharSequence> {
 		return new BlocLines(copy);
 	}
 
-	public BlocLines concat2() {
+	public BlocLines toSingleLineWithHiddenNewLine() {
 		final StringBuilder sb = new StringBuilder();
 		for (CharSequence line : lines) {
 			sb.append(line);

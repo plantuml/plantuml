@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -81,7 +82,7 @@ public class PSystemProject extends AbstractPSystem {
 			final BufferedImage im = createImage(diagram);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(background), false, 1.0,
+			final UGraphicSvg svg = new UGraphicSvg(new Dimension2DDouble(0, 0), colorMapper, StringUtils.getAsHtml(background), false, 1.0,
 					fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor(), seed());
 			diagram.draw(svg, 0, 0);
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);

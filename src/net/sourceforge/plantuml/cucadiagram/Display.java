@@ -111,16 +111,16 @@ public class Display implements Iterable<CharSequence> {
 		final List<String> result = new ArrayList<String>();
 		final StringBuilder current = new StringBuilder();
 		HorizontalAlignment naturalHorizontalAlignment = null;
-		boolean mathMode = false;
+		boolean rawMode = false;
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
 			final String sub = s.substring(i);
-			if (sub.startsWith("<math>") || sub.startsWith("<latex>")) {
-				mathMode = true;
-			} else if (sub.startsWith("</math>") || sub.startsWith("</latex>")) {
-				mathMode = false;
+			if (sub.startsWith("<math>") || sub.startsWith("<latex>") || sub.startsWith("[[")) {
+				rawMode = true;
+			} else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]")) {
+				rawMode = false;
 			}
-			if (mathMode == false && c == '\\' && i < s.length() - 1) {
+			if (rawMode == false && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {

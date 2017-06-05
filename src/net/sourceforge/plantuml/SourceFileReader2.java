@@ -47,8 +47,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.code.Transcoder;
-import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
@@ -108,17 +106,6 @@ public class SourceFileReader2 implements ISourceFileReader {
 		return Collections.unmodifiableList(result);
 	}
 
-	public List<String> getEncodedUrl() throws IOException {
-		final List<String> result = new ArrayList<String>();
-		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
-		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final String source = blockUml.getDiagram().getSource().getPlainString();
-			final String encoded = transcoder.encode(source);
-			result.add(encoded);
-		}
-		return Collections.unmodifiableList(result);
-	}
-
 	private Reader getReader(String charset) throws FileNotFoundException, UnsupportedEncodingException {
 		if (charset == null) {
 			Log.info("Using default charset");
@@ -134,6 +121,10 @@ public class SourceFileReader2 implements ISourceFileReader {
 
 	public final Set<FileWithSuffix> getIncludedFiles2() {
 		return builder.getIncludedFiles();
+	}
+
+	public List<BlockUml> getBlocks() {
+		return builder.getBlockUmls();
 	}
 
 }

@@ -54,6 +54,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.xml.transform.TransformerException;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -157,7 +158,7 @@ public class FontChecker {
 	}
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
-		final SvgGraphics svg = new SvgGraphics(1.0, null, 42);
+		final SvgGraphics svg = new SvgGraphics(new Dimension2DDouble(0, 0), 1.0, null, 42);
 		svg.setStrokeColor("black");
 		svg.svgImage(getBufferedImage(c), 0, 0);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();

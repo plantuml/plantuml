@@ -82,4 +82,9 @@ public class LineLocationImpl implements LineLocation {
 		return parent;
 	}
 
+	public int compareTo(LineLocation other) {
+		final LineLocationImpl other2 = (LineLocationImpl) other;
+		return this.position - other2.position;
+	}
+
 }

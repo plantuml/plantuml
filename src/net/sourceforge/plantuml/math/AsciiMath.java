@@ -48,6 +48,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.SvgString;
 
 public class AsciiMath implements ScientificEquation {
@@ -67,7 +68,7 @@ public class AsciiMath implements ScientificEquation {
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				sb.append(s);
-				sb.append("\n");
+				sb.append(BackSlash.NEWLINE);
 			}
 			br.close();
 			JAVASCRIPT_CODE = sb.toString();

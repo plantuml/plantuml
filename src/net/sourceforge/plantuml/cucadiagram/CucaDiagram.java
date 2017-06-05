@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
@@ -355,7 +356,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (generalWarningOrError == null) {
 			return warningOrError;
 		}
-		return generalWarningOrError + "\n" + warningOrError;
+		return generalWarningOrError + BackSlash.NEWLINE + warningOrError;
 	}
 
 	private void createFilesTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {

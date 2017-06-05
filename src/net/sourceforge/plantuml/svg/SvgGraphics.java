@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.svg;
 
+import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +45,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -116,15 +116,16 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(double scale, String hover, long seed) {
-		this(null, scale, hover, seed);
+	public SvgGraphics(Dimension2D minDim, double scale, String hover, long seed) {
+		this(minDim, null, scale, hover, seed);
 	}
 
-	public SvgGraphics(String backcolor, double scale, String hover, long seed) {
+	public SvgGraphics(Dimension2D minDim, String backcolor, double scale, String hover, long seed) {
 		try {
 			this.scale = scale;
 			this.document = getDocument();
 			this.backcolor = backcolor;
+			ensureVisible(minDim.getWidth(), minDim.getHeight());
 
 			this.root = getRootNode();
 

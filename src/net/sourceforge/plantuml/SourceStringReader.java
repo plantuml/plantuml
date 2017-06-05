@@ -153,7 +153,7 @@ public class SourceStringReader {
 				// final CMapData cmap = new CMapData();
 				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
 				// if (imageData.containsCMapData()) {
-				// return system.getDescription().getDescription() + "\n" + imageData.getCMapData("plantuml");
+				// return system.getDescription().getDescription() + BackSlash.BS_N + imageData.getCMapData("plantuml");
 				// }
 				return system.getDescription();
 			}

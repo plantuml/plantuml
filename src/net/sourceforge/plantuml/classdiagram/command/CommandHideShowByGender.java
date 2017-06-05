@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
@@ -91,14 +92,23 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, RegexResult arg) {
-		if (classDiagram instanceof AbstractClassOrObjectDiagram) {
-			return executeClassDiagram((AbstractClassOrObjectDiagram) classDiagram, arg);
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, RegexResult arg) {
+		if (diagram instanceof AbstractClassOrObjectDiagram) {
+			return executeClassDiagram((AbstractClassOrObjectDiagram) diagram, arg);
 		}
-		if (classDiagram instanceof DescriptionDiagram) {
-			return executeDescriptionDiagram((DescriptionDiagram) classDiagram, arg);
+		if (diagram instanceof DescriptionDiagram) {
+			return executeDescriptionDiagram((DescriptionDiagram) diagram, arg);
+		}
+		if (diagram instanceof SequenceDiagram) {
+			return executeSequenceDiagram((SequenceDiagram) diagram, arg);
 		}
 		// Just ignored
+		return CommandExecutionResult.ok();
+	}
+
+	private CommandExecutionResult executeSequenceDiagram(SequenceDiagram diagram, RegexResult arg) {
+		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
+		diagram.hideOrShow(portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		return CommandExecutionResult.ok();
 	}
 

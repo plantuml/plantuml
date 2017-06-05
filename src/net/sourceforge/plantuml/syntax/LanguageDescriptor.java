@@ -153,6 +153,7 @@ public class LanguageDescriptor {
 		preproc.add("!pragma");
 		preproc.add("!define");
 		preproc.add("!undef");
+		preproc.add("!if");
 		preproc.add("!ifdef");
 		preproc.add("!endif");
 		preproc.add("!ifndef");

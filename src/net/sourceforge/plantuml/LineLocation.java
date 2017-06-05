@@ -40,7 +40,7 @@ package net.sourceforge.plantuml;
  * The resource maybe a local file or a remote URL.
  *
  */
-public interface LineLocation {
+public interface LineLocation extends Comparable<LineLocation> {
 	
 	/**
 	 * Position of the line, starting at 0.

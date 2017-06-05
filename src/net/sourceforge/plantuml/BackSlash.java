@@ -43,9 +43,18 @@ import java.util.List;
 public class BackSlash {
 
 	private static final char PRIVATE_BLOCK = '\uE000';
+	public static final String BS_BS_N = "\\n";
+	public static final String NEWLINE = "\n";
+	public static final char CHAR_NEWLINE = '\n';
 
 	public static char hiddenNewLine() {
-		return PRIVATE_BLOCK + '\n';
+		return PRIVATE_BLOCK + BackSlash.CHAR_NEWLINE;
+	}
+
+	public static String convertHiddenNewLine(String s) {
+		s = s.replaceAll("(?<!\\\\)\\\\n", "" + hiddenNewLine());
+		s = s.replaceAll("\\\\\\\\n", "\\\\n");
+		return s;
 	}
 
 	public static List<String> splitHiddenNewLine(String s) {
@@ -53,7 +62,7 @@ public class BackSlash {
 	}
 
 	public static String manageNewLine(String string) {
-		return string.replace(hiddenNewLine(), '\n');
+		return string.replace(hiddenNewLine(), BackSlash.CHAR_NEWLINE);
 	}
 
 	public static List<String> getWithNewlines(CharSequence s) {

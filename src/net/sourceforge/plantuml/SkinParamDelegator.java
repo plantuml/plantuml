@@ -263,4 +263,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getPadding(param);
 	}
 
+	public boolean useRankSame() {
+		return skinParam.useRankSame();
+	}
+
 }

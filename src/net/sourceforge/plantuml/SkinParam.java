@@ -850,4 +850,8 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
+	public boolean useRankSame() {
+		return false;
+	}
+
 }

@@ -63,6 +63,20 @@ public class UPolygon extends AbstractShadowable {
 		this.name = name;
 	}
 
+	public Point2D checkMiddleContactForSpecificTriangle(Point2D center) {
+		for (int i = 0; i < all.size() - 1; i++) {
+			final Point2D.Double pt1 = all.get(i);
+			final Point2D.Double pt2 = all.get(i + 1);
+			final Point2D.Double middle = new Point2D.Double((pt1.getX() + pt2.getX()) / 2,
+					(pt1.getY() + pt2.getY()) / 2);
+			final double delta = middle.distance(center);
+			if (delta < 1) {
+				return all.get((i - 1) % all.size());
+			}
+		}
+		return null;
+	}
+
 	public void addPoint(double x, double y) {
 		all.add(new Point2D.Double(x, y));
 		manageMinMax(x, y);
@@ -142,4 +156,5 @@ public class UPolygon extends AbstractShadowable {
 		}
 		return points;
 	}
+
 }

@@ -73,6 +73,7 @@ public class ReadLineReader implements ReadLine {
 			s = s.substring(1);
 		}
 		s = s.replace('\u2013', '-');
+		// s = BackSlash.convertHiddenNewLine(s);
 		// s = s.replace('\u00A0', ' ');
 		// s = s.replace('\u201c', '\"');
 		// s = s.replace('\u201d', '\"');

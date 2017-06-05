@@ -93,24 +93,24 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(final List<CharSequence2> strings2) {
+	final public Diagram createPSystem(final List<CharSequence2> strings2, int startLine) {
 
 		final long now = System.currentTimeMillis();
 
 		Diagram result = null;
 		try {
 			final DiagramType type = DiagramType.getTypeFromArobaseStart(strings2.get(0).toString2());
-			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML);
+			final UmlSource umlSource = new UmlSource(strings2, type == DiagramType.UML, startLine);
 
-			int cpt = 0;
+			// int cpt = 0;
 			for (CharSequence2 s : strings2) {
 				if (s.getPreprocessorError() != null) {
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
-					final ErrorUml singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), cpt,
-							s.getLocation());
-					return new PSystemError(umlSource, singleError, Collections.<String> emptyList());
+					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), /* cpt */
+					s.getLocation());
+					return new PSystemError(umlSource, err, Collections.<String> emptyList());
 				}
-				cpt++;
+				// cpt++;
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();

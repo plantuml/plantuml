@@ -72,20 +72,20 @@ public class UrlBuilder {
 		this.mode = mode;
 	}
 
-	private static String multilineTooltip(String label) {
-		final Pattern2 p = MyPattern.cmpile("(?i)^(" + URL_PATTERN + ")?(.*)$");
-		final Matcher2 m = p.matcher(label);
-		if (m.matches() == false) {
-			return label;
-		}
-		String gr1 = m.group(1);
-		if (gr1 == null) {
-			return label;
-		}
-		final String gr2 = m.group(m.groupCount());
-		gr1 = gr1.replaceAll("\\\\n", "\n");
-		return gr1 + gr2;
-	}
+//	private static String multilineTooltip(String label) {
+//		final Pattern2 p = MyPattern.cmpile("(?i)^(" + URL_PATTERN + ")?(.*)$");
+//		final Matcher2 m = p.matcher(label);
+//		if (m.matches() == false) {
+//			return label;
+//		}
+//		String gr1 = m.group(1);
+//		if (gr1 == null) {
+//			return label;
+//		}
+//		final String gr2 = m.group(m.groupCount());
+//		gr1 = gr1.replaceAll("\\\\n", BackSlash.BS_N);
+//		return gr1 + gr2;
+//	}
 
 	public Url getUrl(String s) {
 		final Pattern2 p;

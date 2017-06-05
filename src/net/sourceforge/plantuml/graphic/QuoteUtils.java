@@ -232,7 +232,9 @@ public class QuoteUtils {
 					"V'z fbeel, ner lbh sebz gur cnfg ?", "Unir lbh gevrq gheavat vg bss naq ba ntnva ?",
 					"Vs lbh qba'g xabj jurer lbh ner tbvat nal ebnq pna gnxr lbh gurer",
 					"Ortva ng gur ortvaavat, naq tb ba gvyy lbh pbzr gb gur raq: gura fgbc",
-					"Xrrc pnyz naq cerff Pgey-Nyg-Qry", "Vs lbh glcr Tbbtyr vagb Tbbtyr, lbh pna oernx gur Vagrearg.");
+					"Xrrc pnyz naq cerff Pgey-Nyg-Qry", "Vs lbh glcr Tbbtyr vagb Tbbtyr, lbh pna oernx gur Vagrearg.",
+					"V unir cneg bs n cyna.", "V'z cerggl fher gur nafjre vf: V nz Tebbg.",
+					"Nalguvat gung pna cbffvoyl tb jebat, qbrf", "Cyhf pn engr, cyhf ba n qr punapr dhr pn znepur");
 
 	private QuoteUtils() {
 	}

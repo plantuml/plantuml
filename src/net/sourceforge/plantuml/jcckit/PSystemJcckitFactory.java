@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
@@ -112,7 +113,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 			return null;
 		}
 		data.append(StringUtils.trin(line));
-		data.append("\n");
+		data.append(BackSlash.NEWLINE);
 		return createSystem();
 	}
 

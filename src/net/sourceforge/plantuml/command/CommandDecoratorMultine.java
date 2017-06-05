@@ -57,7 +57,7 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		if (removeEmptyColumn) {
 			lines = lines.removeEmptyColumns();
 		}
-		lines = lines.concat2();
+		lines = lines.toSingleLineWithHiddenNewLine();
 		return cmd.execute(diagram, lines);
 	}
 
@@ -65,7 +65,7 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		if (cmd.isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		lines = lines.concat2();
+		lines = lines.toSingleLineWithHiddenNewLine();
 		if (cmd.isForbidden(lines.getFirst499())) {
 			return CommandControl.NOT_OK;
 		}

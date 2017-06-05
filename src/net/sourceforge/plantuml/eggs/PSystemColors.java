@@ -47,6 +47,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -176,7 +177,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 			if (Character.isLowerCase(colorName.charAt(i))) {
 				continue;
 			}
-			final String candidat = colorName.substring(0, i) + "\\n" + colorName.substring(i);
+			final String candidat = colorName.substring(0, i) + BackSlash.BS_BS_N + colorName.substring(i);
 			final TextBlock tt = getTextName(font, candidat, (HtmlColorSimple) HtmlColorUtils.BLACK);
 			final double width = tt.calculateDimension(stringBounder).getWidth();
 			if (width < min) {

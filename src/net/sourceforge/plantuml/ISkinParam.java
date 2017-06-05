@@ -140,5 +140,7 @@ public interface ISkinParam extends ISkinSimple {
 	public HtmlColor getHoverPathColor();
 
 	public double getPadding(PaddingParam param);
+	
+	public boolean useRankSame();
 
 }

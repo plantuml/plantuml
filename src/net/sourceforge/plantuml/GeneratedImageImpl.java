@@ -62,7 +62,7 @@ public class GeneratedImageImpl implements GeneratedImage {
 	public int lineErrorRaw() {
 		final Diagram system = blockUml.getDiagram();
 		if (system instanceof PSystemError) {
-			return ((PSystemError) system).getHigherErrorPosition() + blockUml.getStartLine();
+			return ((PSystemError) system).getHigherErrorPosition2().getPosition();
 		}
 		return -1;
 	}

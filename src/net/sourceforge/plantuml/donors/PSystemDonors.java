@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderImpl;
@@ -65,17 +66,17 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 public class PSystemDonors extends AbstractPSystem {
 
 	public static final String DONORS = "UDfbL4jksp0GtSyfk1RIGoXsujI_17QQ0jcDvR75c29Tad8ghuBUe421hdk3eaKMHOjiUW7bHXsvbKcb"
-			+ "10oOudpUctapgKh-7R9mHPwiIBKtMc86rvI4OmeOct2r3jBM5HSmiE69AfZJ0fsNgCNKv1fIlJHM30pv"
-			+ "FJL_LoksQCrHmnYZHDf3NxONgI0DeSqEvcM0KC509jsZ3GnRbAM3kQTjJbhqZDaoltwRXnoCYXUknaBF"
-			+ "AAd5p9IEO5Y-U4_k31DfBri9amWr5l6LKwMAtgDUSZbxkUIeQxGLCvqTQUirJ6FqVW-NIkxOeI-p3IC_"
-			+ "laWDP-uOMaSW4jf1Vrz8Roinnjmi4OPDqMzpvF2HNK8gj8lFfk8oQVHin_WOr_0lUDfqMEabNst6DJd7"
-			+ "XQqsvjvj90TIx7PflTp3HR1U6fZ8B2SbJb6gAcQWzZ4Ovs18g5yDCNjNaXFzSc6HUwa2tnjpvodBnSYY"
-			+ "mm1fJIpHg6FtZRBOH8pCJiP2EKZbJI0i4MQHU9iKCS_aZhstaQpCfgdCgR6eKMrFn2rvD5i7CoQ8TYb6"
-			+ "icajd2jZctfFVlzIwj3q80WLYPFbD3xAoM9RxQRhUPUHWojivJ6J7S2facAEkEJHiMiIRqcloPw8INhz"
-			+ "Ufu6QIT6mu0w8nCprnbBf10tZBhFeXq5IqjDPtbOnaHmjekLlqEOXY1Kj22JYCQWbAoBiY1nRahoeRwP"
-			+ "W_EuCmSkGGrw7vUDuKxbcZKqbqKOGGR4axngAeqyrH7eH2ceFzMFKVZwiVu1lRmpsXKFNhauB0AhUHOk"
-			+ "J0VEWCngPQaIKrbmuuRu_rQPuGgLc5HEyOpKN-h7vuVwUvDAr9_hf_fd_VJyWNyF_EaRd5dQYn6gWYVh"
-			+ "8kvr8rTYlPwIQXvrr3RE8gEjc2Iy9BiiM60tz78f9QNYlT5IyJ0_17GUwe_rrsD961Zy0II4d1O0";
+			+ "10oOud3clPdtcAhato8BL-J9YbHxeoLcS4r9MAQ0iGbRwo1jh-821ZOSKGLpMg3p4hMOcbn3gfV6Ye4X"
+			+ "lwVcxsh54MquQXXZL4XxwCjs8nMa8RNPmRmC42eOoAIxj85XYx9qCFUqpKcBdZ5RvjTlwv23KV7Ygh7G"
+			+ "CqfgCJEb8nYMBywJEyD4sirMmYH2ZKMyvLAfelUebzpENYuvwnfjnKndHzfw3TCOlT_3fP8xlj2NsOQH"
+			+ "7q-aXZDtJAqZ40djeBylfBUL66DkbWZ3fkctENBwA2uX5SR5QrDncpHwZcDyZ6lu5pnjEgpqahSsuvwS"
+			+ "uy9M6tFlDf8JARvsQRtSmqM8NXgOo2md9KvHgYfceFOn6ETWIAXV3J5xLv8J_N9XaMUf0jyRS-SfoyN8"
+			+ "eiC0QKqiqMXYzusoE4ICp4x6GZb8vKqWB15caNYR4Z7Fv8vlRoDPcKtJcLDZKQFQdeXRycYs3cPC4ErI"
+			+ "Z6GpMZXNnZRzdlp-fTHXw44GAX8dosbyb9F5jjlDrFCk8mTNsCfZ9Zk0KoN57779rh5h4cz9hycUY4bw"
+			+ "_NgU1cadHiE0EfQ9cUkC9LA86qRTPz6EGgIbPh9ibZ4HdErYvUyGfY495It89A8nA2NheYn8d9kIVEXl"
+			+ "vk0ydio1Ir23tiTjOxXJkMODpMKHBCY0sCchfjF8hev09qf1_Qb-ZDBNZ_KFwEKTQrTil79nU0YiPYzS"
+			+ "c0wS0PdLob8bfhBWmGtn_rTbXYjKOb8vnHwflzIFpm_rzwQKg3_NJ_NF-kdv0_yU-DCtEBEq5oDK1Jlh"
+			+ "8fvr8rTYlPwIQWvrD3Qk8gDNCKduaUooO87TqCj7AIaLlnij5G_pGqBdeVvOVpssX86nvqAUFuVhdim0";
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
@@ -126,7 +127,7 @@ public class PSystemDonors extends AbstractPSystem {
 		final List<String> lines = new ArrayList<String>();
 		final Transcoder t = new TranscoderImpl();
 		final String s = t.decode(DONORS).replace('*', '.');
-		final StringTokenizer st = new StringTokenizer(s, "\n");
+		final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);
 		while (st.hasMoreTokens()) {
 			lines.add(st.nextToken());
 		}

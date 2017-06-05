@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -564,7 +565,7 @@ public class Cluster implements Moveable {
 			added = true;
 		}
 
-		if (dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
+		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
 			appendRankSame(sb, lines);
 		}
 

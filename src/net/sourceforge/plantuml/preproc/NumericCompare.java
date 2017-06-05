@@ -33,49 +33,36 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.sprite;
+package net.sourceforge.plantuml.preproc;
 
-import java.awt.image.BufferedImage;
-import java.util.List;
+class NumericCompare {
 
-import net.sourceforge.plantuml.BackSlash;
+	private final String operator;
 
-public class SpriteUtils {
-
-	public static final String SPRITE_NAME = "[-\\p{L}0-9_/]+";
-
-	private SpriteUtils() {
+	public NumericCompare(String operator) {
+		this.operator = operator;
 	}
 
-	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor()
-				+ "] {\n");
-		final List<String> result = level.encode(img);
-		for (String s : result) {
-			sb.append(s);
-			sb.append(BackSlash.NEWLINE);
+	public boolean isCompareOk(int value1, int value2) {
+		if (operator.equals("<")) {
+			return value1 < value2;
 		}
-		sb.append("}\n");
-		return sb.toString();
-	}
-
-	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "z] ");
-		final List<String> list = level.encodeZ(img);
-		if (list.size() == 1) {
-			sb.append(list.get(0));
-			sb.append(BackSlash.NEWLINE);
-		} else {
-			sb.append("{\n");
-			for (String s : list) {
-				sb.append(s);
-				sb.append(BackSlash.NEWLINE);
-			}
-			sb.append("}\n");
+		if (operator.equals("<=")) {
+			return value1 <= value2;
 		}
-		return sb.toString();
+		if (operator.equals(">")) {
+			return value1 > value2;
+		}
+		if (operator.equals(">=")) {
+			return value1 >= value2;
+		}
+		if (operator.equals("=") || operator.equals("==")) {
+			return value1 == value2;
+		}
+		if (operator.equals("!=") || operator.equals("<>")) {
+			return value1 != value2;
+		}
+		throw new IllegalStateException();
 	}
 
 }

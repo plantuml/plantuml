@@ -185,7 +185,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(a);
 	// }
 	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(a) +
-	// "\\n"
+	// BackSlash.VV1
 	// + StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(b);
 	// }
 

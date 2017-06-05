@@ -41,8 +41,8 @@ import java.util.List;
 public interface ISourceFileReader {
 
 	public List<GeneratedImage> getGeneratedImages() throws IOException;
-
-	public List<String> getEncodedUrl() throws IOException;
+	
+	public List<BlockUml> getBlocks();
 
 	public boolean hasError();
 	

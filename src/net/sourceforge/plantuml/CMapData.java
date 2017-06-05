@@ -66,14 +66,14 @@ public class CMapData {
 		appendString("\" href=\"");
 		appendString(url.getUrl());
 		appendString("\" title=\"");
-		final String tooltip = url.getTooltip().replaceAll("\\\\n", "\n").replaceAll("&", "&#38;")
+		final String tooltip = url.getTooltip().replaceAll("\\\\n", BackSlash.NEWLINE).replaceAll("&", "&#38;")
 				.replaceAll("\"", "&#34;").replaceAll("\'", "&#39;");
 		appendString(tooltip);
 		appendString("\" alt=\"\" coords=\"");
 		appendString(url.getCoords(scale));
 		appendString("\"/>");
 
-		appendString("\n");
+		appendString(BackSlash.NEWLINE);
 	}
 
 	// private CMapData() {

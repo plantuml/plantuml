@@ -43,6 +43,7 @@ public enum ParticipantType {
 	BOUNDARY(ColorParam.boundaryBackground), //
 	CONTROL(ColorParam.controlBackground), //
 	ENTITY(ColorParam.entityBackground), //
+	QUEUE(ColorParam.queueBackground), //
 	DATABASE(ColorParam.databaseBackground), //
 	COLLECTIONS(ColorParam.collectionsBackground);
 

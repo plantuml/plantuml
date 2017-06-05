@@ -51,6 +51,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.stats.api.Stats;
 import net.sourceforge.plantuml.stats.api.StatsColumn;
 import net.sourceforge.plantuml.stats.api.StatsLine;
@@ -212,7 +213,7 @@ public class XmlConverter {
 		sb.append("<tr bgcolor=#e0e0e0>");
 		for (StatsColumn col : headers) {
 			sb.append("<td><b>");
-			sb.append(col.getTitle().replace("\\n", "<br>"));
+			sb.append(col.getTitle().replace(BackSlash.BS_BS_N, "<br>"));
 			sb.append("</b></td>");
 		}
 		sb.append("</tr>");

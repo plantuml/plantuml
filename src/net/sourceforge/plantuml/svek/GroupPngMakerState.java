@@ -143,19 +143,7 @@ public final class GroupPngMakerState {
 		final Stereotype stereo = group.getStereotype();
 		final HtmlColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null ? getColor(
 				ColorParam.stateBackground, stereo) : group.getColors(skinParam).getColor(ColorType.BACK);
-		final List<String> details = ((IEntity) group).getBodier().getRawBody();
-		final TextBlockWidth attribute;
-		if (details.size() == 0) {
-			attribute = new TextBlockEmpty();
-		} else {
-			final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE,
-					null);
-			final TextBlock tmp = Display.create(details)
-					.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
-			attribute = new TextBlockWidthAdapter(tmp, 0);
-			// attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
-			// group.getStereotype(), null);
-		}
+		final TextBlockWidth attribute = getAttributes(skinParam);
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
@@ -169,6 +157,19 @@ public final class GroupPngMakerState {
 		}
 		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, skinParam.shadowing(),
 				group.getUrl99(), withSymbol, stroke);
+
+	}
+
+	private TextBlockWidth getAttributes(final ISkinParam skinParam) {
+		final List<String> details = ((IEntity) group).getBodier().getRawBody();
+
+		if (details.size() == 0) {
+			return new TextBlockEmpty();
+		}
+		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);
+		final Display display = details.size() == 1 ? Display.getWithNewlines(details.get(0)) : Display.create(details);
+		final TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+		return new TextBlockWidthAdapter(result, 0);
 
 	}
 

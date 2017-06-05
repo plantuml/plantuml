@@ -599,6 +599,9 @@ class DrawableSetInitializer {
 		} else if (p.getType() == ParticipantType.ENTITY) {
 			headType = ComponentType.ENTITY_HEAD;
 			tailType = ComponentType.ENTITY_TAIL;
+		} else if (p.getType() == ParticipantType.QUEUE) {
+			headType = ComponentType.QUEUE_HEAD;
+			tailType = ComponentType.QUEUE_TAIL;
 		} else if (p.getType() == ParticipantType.DATABASE) {
 			headType = ComponentType.DATABASE_HEAD;
 			tailType = ComponentType.DATABASE_TAIL;

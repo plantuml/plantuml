@@ -40,10 +40,12 @@ import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -57,6 +59,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -87,7 +90,7 @@ public class SequenceDiagram extends UmlDiagram {
 	public Participant getOrCreateParticipant(String code, Display display) {
 		Participant result = participants.get(code);
 		if (result == null) {
-			result = new Participant(ParticipantType.PARTICIPANT, code, display);
+			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions);
 			participants.put(code, result);
 			participantEnglobers2.put(result, participantEnglober);
 		}
@@ -108,7 +111,7 @@ public class SequenceDiagram extends UmlDiagram {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(code);
 		}
-		final Participant result = new Participant(type, code, display);
+		final Participant result = new Participant(type, code, display, hiddenPortions);
 		participants.put(code, result);
 		participantEnglobers2.put(result, participantEnglober);
 		return result;
@@ -504,8 +507,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		return dpiFactor;
 	}
-	
-	
+
 	@Override
 	public String checkFinalError() {
 		if (this.isHideUnlinkedData()) {
@@ -514,5 +516,14 @@ public class SequenceDiagram extends UmlDiagram {
 		return super.checkFinalError();
 	}
 
+	private final Set<EntityPortion> hiddenPortions = EnumSet.<EntityPortion> noneOf(EntityPortion.class);
+
+	public void hideOrShow(Set<EntityPortion> portions, boolean show) {
+		if (show) {
+			hiddenPortions.removeAll(portions);
+		} else {
+			hiddenPortions.addAll(portions);
+		}
+	}
 
 }

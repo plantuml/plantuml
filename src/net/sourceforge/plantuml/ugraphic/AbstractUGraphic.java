@@ -40,23 +40,23 @@ import java.util.Map;
 
 public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 
-	private final O g2d;
+	private final O graphic;
 
 	private final Map<Class<? extends UShape>, UDriver<O>> drivers = new HashMap<Class<? extends UShape>, UDriver<O>>();
 
-	public AbstractUGraphic(ColorMapper colorMapper, O g2d) {
+	public AbstractUGraphic(ColorMapper colorMapper, O graphic) {
 		super(colorMapper);
-		this.g2d = g2d;
+		this.graphic = graphic;
 	}
 
 	protected AbstractUGraphic(AbstractUGraphic<O> other) {
 		super(other);
-		this.g2d = other.g2d;
+		this.graphic = other.graphic;
 		// this.drivers.putAll(other.drivers);
 	}
 
 	protected final O getGraphicObject() {
-		return g2d;
+		return graphic;
 	}
 
 	protected boolean manageHiddenAutomatically() {
@@ -86,9 +86,9 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		if (shape instanceof Scalable) {
 			final double scale = getParam().getScale();
 			shape = ((Scalable) shape).getScaled(scale);
-			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
 		} else {
-			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), g2d);
+			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
 		}
 		afterDraw();
 	}

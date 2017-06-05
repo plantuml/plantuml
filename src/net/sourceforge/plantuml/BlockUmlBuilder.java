@@ -108,8 +108,8 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				reader2.setPaused(false);
 			}
 			if (StartUtils.isArobaseEndDiagram(s) && current2 != null) {
-				current2.addAll(1, convert(config, s.getLocation()));
-				blocks.add(new BlockUml(current2, startLine, defines.cloneMe()));
+				current2.addAll(1, convert(config, new LineLocationImpl(null, null).oneLineRead()));
+				blocks.add(new BlockUml(current2, startLine - config.size(), defines.cloneMe()));
 				current2 = null;
 				reader2.setPaused(false);
 			}

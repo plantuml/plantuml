@@ -43,6 +43,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -72,7 +73,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemError extends AbstractPSystem {
 
-	private final int higherErrorPosition;
+	private final LineLocation higherErrorPosition;
 	private final List<ErrorUml> printedErrors;
 	private final List<String> debugLines = new ArrayList<String>();
 
@@ -83,20 +84,20 @@ public class PSystemError extends AbstractPSystem {
 	private PSystemError(UmlSource source, List<ErrorUml> all, List<String> debugLines) {
 		this.setSource(source);
 
-		final int higherErrorPositionExecution = getHigherErrorPosition(ErrorUmlType.EXECUTION_ERROR, all);
-		final int higherErrorPositionSyntax = getHigherErrorPosition(ErrorUmlType.SYNTAX_ERROR, all);
+		final LineLocation execution = getHigherErrorPosition2(ErrorUmlType.EXECUTION_ERROR, all);
+		final LineLocation syntax = getHigherErrorPosition2(ErrorUmlType.SYNTAX_ERROR, all);
 
-		if (higherErrorPositionExecution == Integer.MIN_VALUE && higherErrorPositionSyntax == Integer.MIN_VALUE) {
+		if (execution == null && syntax == null) {
 			throw new IllegalStateException();
 		}
 
-		if (higherErrorPositionExecution >= higherErrorPositionSyntax) {
-			higherErrorPosition = higherErrorPositionExecution;
-			printedErrors = getErrorsAt(higherErrorPositionExecution, ErrorUmlType.EXECUTION_ERROR, all);
+		if (execution != null && (syntax == null || execution.compareTo(syntax) >= 0)) {
+			higherErrorPosition = execution;
+			printedErrors = getErrorsAt2(execution, ErrorUmlType.EXECUTION_ERROR, all);
 		} else {
-			assert higherErrorPositionSyntax > higherErrorPositionExecution;
-			higherErrorPosition = higherErrorPositionSyntax;
-			printedErrors = getErrorsAt(higherErrorPositionSyntax, ErrorUmlType.SYNTAX_ERROR, all);
+			// assert syntax.compareTo(execution) > 0;
+			higherErrorPosition = syntax;
+			printedErrors = getErrorsAt2(syntax, ErrorUmlType.SYNTAX_ERROR, all);
 		}
 
 		if (debugLines != null) {
@@ -141,10 +142,10 @@ public class PSystemError extends AbstractPSystem {
 		} else {
 			udrawable = result;
 		}
-		// final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
-		// if (min == 0) {
-		// udrawable = addMessage(udrawable);
-		// }
+		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
+		if (min == 0) {
+			udrawable = addMessage(udrawable);
+		}
 		imageBuilder.setUDrawable(udrawable);
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 	}
@@ -197,21 +198,24 @@ public class PSystemError extends AbstractPSystem {
 			result.add(" ");
 		}
 
-		final int limit = 4;
-		int start;
-		final int skip = higherErrorPosition - limit + 1;
-		if (skip <= 0) {
-			start = 0;
-		} else {
-			if (skip == 1) {
-				result.add("... (skipping 1 line) ...");
-			} else {
-				result.add("... (skipping " + skip + " lines) ...");
-			}
-			start = higherErrorPosition - limit + 1;
-		}
-		for (int i = start; i < higherErrorPosition; i++) {
-			result.add(getSource().getLine(i));
+		// final int limit = 4;
+		// int start;
+		// final int skip = higherErrorPosition - limit + 1;
+		// if (skip <= 0) {
+		// start = 0;
+		// } else {
+		// if (skip == 1) {
+		// result.add("... (skipping 1 line) ...");
+		// } else {
+		// result.add("... (skipping " + skip + " lines) ...");
+		// }
+		// start = higherErrorPosition - limit + 1;
+		// }
+		// for (int i = start; i < higherErrorPosition; i++) {
+		// result.add(getSource().getLine(i));
+		// }
+		for (String s : getPartialCode()) {
+			result.add(s);
 		}
 		final String errorLine = getSource().getLine(higherErrorPosition);
 		final String err = StringUtils.hideComparatorCharacters(errorLine);
@@ -272,27 +276,54 @@ public class PSystemError extends AbstractPSystem {
 		}
 	}
 
+	private List<String> getPartialCode() {
+		List<String> result = new ArrayList<String>();
+		for (Iterator<CharSequence2> it = getSource().iterator2(); it.hasNext();) {
+			final CharSequence2 s = it.next();
+			if (s.getLocation().compareTo(higherErrorPosition) < 0) {
+				result.add(s.toString());
+			}
+		}
+		final int limit = 4;
+		if (result.size() > limit) {
+			final int skip = result.size() - limit + 1;
+			final String skipMessage;
+			if (skip == 1) {
+				skipMessage = "... (skipping 1 line) ...";
+			} else {
+				skipMessage = "... (skipping " + skip + " lines) ...";
+			}
+			result = new ArrayList<String>(result.subList(skip, result.size()));
+			result.add(0, skipMessage);
+		}
+		return result;
+
+	}
+
 	private List<String> getHtmlStrings(boolean useRed) {
 		final List<String> htmlStrings = new ArrayList<String>(getStack());
 		if (htmlStrings.size() > 0) {
 			htmlStrings.add("----");
 		}
 
-		final int limit = 4;
-		int start;
-		final int skip = higherErrorPosition - limit + 1;
-		if (skip <= 0) {
-			start = 0;
-		} else {
-			if (skip == 1) {
-				htmlStrings.add("... (skipping 1 line) ...");
-			} else {
-				htmlStrings.add("... (skipping " + skip + " lines) ...");
-			}
-			start = higherErrorPosition - limit + 1;
-		}
-		for (int i = start; i < higherErrorPosition; i++) {
-			htmlStrings.add(StringUtils.hideComparatorCharacters(getSource().getLine(i)));
+		// final int limit = 4;
+		// int start;
+		// final int skip = higherErrorPosition - limit + 1;
+		// if (skip <= 0) {
+		// start = 0;
+		// } else {
+		// if (skip == 1) {
+		// htmlStrings.add("... (skipping 1 line) ...");
+		// } else {
+		// htmlStrings.add("... (skipping " + skip + " lines) ...");
+		// }
+		// start = higherErrorPosition - limit + 1;
+		// }
+		// for (int i = start; i < higherErrorPosition; i++) {
+		// htmlStrings.add(StringUtils.hideComparatorCharacters(getSource().getLine(i)));
+		// }
+		for (String s : getPartialCode()) {
+			htmlStrings.add(StringUtils.hideComparatorCharacters(s));
 		}
 		final String errorLine = getSource().getLine(higherErrorPosition);
 		final String err = StringUtils.hideComparatorCharacters(errorLine);
@@ -352,20 +383,40 @@ public class PSystemError extends AbstractPSystem {
 		return result;
 	}
 
-	private int getHigherErrorPosition(ErrorUmlType type, List<ErrorUml> all) {
-		int max = Integer.MIN_VALUE;
+	// private int getHigherErrorPosition(ErrorUmlType type, List<ErrorUml> all) {
+	// int max = Integer.MIN_VALUE;
+	// for (ErrorUml error : getErrors(type, all)) {
+	// if (error.getPosition() > max) {
+	// max = error.getPosition();
+	// }
+	// }
+	// return max;
+	// }
+
+	private LineLocation getHigherErrorPosition2(ErrorUmlType type, List<ErrorUml> all) {
+		LineLocation max = null;
 		for (ErrorUml error : getErrors(type, all)) {
-			if (error.getPosition() > max) {
-				max = error.getPosition();
+			if (max == null || error.getLineLocation().compareTo(max) > 0) {
+				max = error.getLineLocation();
 			}
 		}
 		return max;
 	}
 
-	private List<ErrorUml> getErrorsAt(int position, ErrorUmlType type, List<ErrorUml> all) {
+	// private List<ErrorUml> getErrorsAt(int position, ErrorUmlType type, List<ErrorUml> all) {
+	// final List<ErrorUml> result = new ArrayList<ErrorUml>();
+	// for (ErrorUml error : getErrors(type, all)) {
+	// if (error.getPosition() == position && StringUtils.isNotEmpty(error.getError())) {
+	// result.add(error);
+	// }
+	// }
+	// return result;
+	// }
+
+	private List<ErrorUml> getErrorsAt2(LineLocation position, ErrorUmlType type, List<ErrorUml> all) {
 		final List<ErrorUml> result = new ArrayList<ErrorUml>();
 		for (ErrorUml error : getErrors(type, all)) {
-			if (error.getPosition() == position && StringUtils.isNotEmpty(error.getError())) {
+			if (error.getLineLocation().compareTo(position) == 0 && StringUtils.isNotEmpty(error.getError())) {
 				result.add(error);
 			}
 		}
@@ -376,7 +427,7 @@ public class PSystemError extends AbstractPSystem {
 		return new DiagramDescription("(Error)");
 	}
 
-	public final int getHigherErrorPosition() {
+	public final LineLocation getHigherErrorPosition2() {
 		return higherErrorPosition;
 	}
 
@@ -388,15 +439,15 @@ public class PSystemError extends AbstractPSystem {
 	public String getWarningOrError() {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(getDescription());
-		sb.append('\n');
+		sb.append(BackSlash.CHAR_NEWLINE);
 		for (CharSequence t : getTitle().getDisplay()) {
 			sb.append(t);
-			sb.append('\n');
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
-		sb.append('\n');
+		sb.append(BackSlash.CHAR_NEWLINE);
 		for (String s : getSuggest()) {
 			sb.append(s);
-			sb.append('\n');
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
 	}

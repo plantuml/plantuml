@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -72,8 +73,6 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private Url url;
 
-	static private final UStroke stroke = new UStroke(1.5);
-
 	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
@@ -93,6 +92,15 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	}
 
+	private UStroke getStroke() {
+		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
+
+		if (stroke == null) {
+			stroke = new UStroke(1.5);
+		}
+		return stroke;
+	}
+
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
 	}
@@ -108,7 +116,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			ug.startUrl(url);
 		}
 
-		ug = ug.apply(stroke);
+		ug = ug.apply(getStroke());
 		HtmlColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (linecolor == null) {
 			linecolor = SkinParamUtils.getColor(getSkinParam(), ColorParam.usecaseBorder, getStereo());
@@ -185,6 +193,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
+			final UStroke stroke = new UStroke(1.5);
 			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);
 		}
 

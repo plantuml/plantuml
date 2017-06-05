@@ -34,9 +34,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
+import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Random;
 
 import javax.xml.transform.TransformerException;
 
@@ -82,19 +82,19 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		register();
 	}
 
-	public UGraphicSvg(ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale, String linkTarget,
-			String hover, long seed) {
-		this(colorMapper, new SvgGraphics(backcolor, scale, hover, seed), textAsPath, linkTarget);
+	public UGraphicSvg(Dimension2D minDim, ColorMapper colorMapper, String backcolor, boolean textAsPath, double scale,
+			String linkTarget, String hover, long seed) {
+		this(minDim, colorMapper, new SvgGraphics(minDim, backcolor, scale, hover, seed), textAsPath, linkTarget);
 	}
 
-	public UGraphicSvg(ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget, String hover,
-			long seed) {
-		this(colorMapper, new SvgGraphics(scale, hover, seed), textAsPath, linkTarget);
+	public UGraphicSvg(Dimension2D minDim, ColorMapper colorMapper, boolean textAsPath, double scale,
+			String linkTarget, String hover, long seed) {
+		this(minDim, colorMapper, new SvgGraphics(minDim, scale, hover, seed), textAsPath, linkTarget);
 	}
 
-	public UGraphicSvg(ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale, String linkTarget,
-			String hover, long seed) {
-		this(mapper, new SvgGraphics(scale, hover, seed), textAsPath, linkTarget);
+	public UGraphicSvg(Dimension2D minDim, ColorMapper mapper, HtmlColorGradient gr, boolean textAsPath, double scale,
+			String linkTarget, String hover, long seed) {
+		this(minDim, mapper, new SvgGraphics(minDim, scale, hover, seed), textAsPath, linkTarget);
 
 		final SvgGraphics svg = getGraphicObject();
 		svg.paintBackcolorGradient(mapper, gr);
@@ -115,7 +115,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		getGraphicObject().setHidden(false);
 	}
 
-	private UGraphicSvg(ColorMapper colorMapper, SvgGraphics svg, boolean textAsPath, String linkTarget) {
+	private UGraphicSvg(Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg, boolean textAsPath,
+			String linkTarget) {
 		super(colorMapper, svg);
 		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		this.textAsPath2 = textAsPath;

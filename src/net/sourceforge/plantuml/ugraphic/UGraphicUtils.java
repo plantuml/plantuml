@@ -62,7 +62,8 @@ public abstract class UGraphicUtils {
 			final BufferedImage im = createImage(colorMapper, background, image);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(colorMapper, StringUtils.getAsHtml(colorMapper
+			final Dimension2D size = computeSize(colorMapper, background, image);
+			final UGraphicSvg svg = new UGraphicSvg(size, colorMapper, StringUtils.getAsHtml(colorMapper
 					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
 					fileFormatOption.getHoverColor(), seed);
 			image.drawU(svg);
@@ -81,16 +82,12 @@ public abstract class UGraphicUtils {
 	}
 
 	private static BufferedImage createImage(ColorMapper colorMapper, HtmlColor background, TextBlock image) {
-		EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, colorMapper.getMappedColor(background));
-		Graphics2D g2d = builder.getGraphics2D();
+		final Dimension2D size = computeSize(colorMapper, background, image);
 
-		final UGraphicG2d tmp = new UGraphicG2d(colorMapper, g2d, 1.0);
-		final Dimension2D size = image.calculateDimension(tmp.getStringBounder());
-		g2d.dispose();
-
-		builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(), colorMapper.getMappedColor(background));
+		final EmptyImageBuilder builder = new EmptyImageBuilder(size.getWidth(), size.getHeight(),
+				colorMapper.getMappedColor(background));
 		final BufferedImage im = builder.getBufferedImage();
-		g2d = builder.getGraphics2D();
+		final Graphics2D g2d = builder.getGraphics2D();
 
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, g2d, 1.0);
 		image.drawU(ug);
@@ -98,22 +95,14 @@ public abstract class UGraphicUtils {
 		return im;
 	}
 
-	// public static void writeImage(OutputStream os, UGraphic ug, String metadata, int dpi) throws IOException {
-	// if (ug instanceof UGraphicG2d) {
-	// final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
-	// PngIO.write(im, os, metadata, dpi);
-	// } else if (ug instanceof UGraphicSvg) {
-	// final UGraphicSvg svg = (UGraphicSvg) ug;
-	// svg.createXml(os);
-	// } else if (ug instanceof UGraphicEps) {
-	// final UGraphicEps eps = (UGraphicEps) ug;
-	// os.write(eps.getEPSCode().getBytes());
-	// } else if (ug instanceof UGraphicHtml5) {
-	// final UGraphicHtml5 html5 = (UGraphicHtml5) ug;
-	// os.write(html5.generateHtmlCode().getBytes());
-	// } else {
-	// throw new UnsupportedOperationException();
-	// }
-	// }
+	private static Dimension2D computeSize(ColorMapper colorMapper, HtmlColor background, TextBlock image) {
+		final EmptyImageBuilder builder = new EmptyImageBuilder(10, 10, colorMapper.getMappedColor(background));
+		final Graphics2D g2d = builder.getGraphics2D();
+
+		final UGraphicG2d tmp = new UGraphicG2d(colorMapper, g2d, 1.0);
+		final Dimension2D size = image.calculateDimension(tmp.getStringBounder());
+		g2d.dispose();
+		return size;
+	}
 
 }

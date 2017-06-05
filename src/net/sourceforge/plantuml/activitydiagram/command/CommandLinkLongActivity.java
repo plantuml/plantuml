@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
@@ -128,7 +129,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			urlActivity = extractUrl(diagram, desc0);
 			if (urlActivity == null) {
 				sb.append(desc0);
-				sb.append("\\n");
+				sb.append(BackSlash.BS_BS_N);
 			}
 		}
 		int i = 0;
@@ -142,15 +143,15 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			}
 			sb.append(cs);
 			if (i < lines.size() - 2) {
-				sb.append("\\n");
+				sb.append(BackSlash.BS_BS_N);
 			}
 		}
 
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
 				.toString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
-			if (sb.length() > 0 && sb.toString().endsWith("\\n") == false) {
-				sb.append("\\n");
+			if (sb.length() > 0 && sb.toString().endsWith(BackSlash.BS_BS_N) == false) {
+				sb.append(BackSlash.BS_BS_N);
 			}
 			sb.append(lineLast.get(0));
 		}

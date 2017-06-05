@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
-import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UComment;
@@ -85,10 +84,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	private final boolean hideText;
 	private final Collection<Link> links;
+	private final boolean useRankSame;
 
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
 			Collection<Link> links) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
+		this.useRankSame = skinParam.useRankSame();
 		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
 		USymbol symbol = getUSymbol(entity);
@@ -161,7 +162,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		if (hideText && hasSomeHorizontalLink((ILeaf) getEntity(), links) == false) {
+		if (hideText && (useRankSame == false || hasSomeHorizontalLink((ILeaf) getEntity(), links) == false)) {
 			final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
 			final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 			final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
@@ -175,7 +176,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 		return Margins.NONE;
 	}
-	
+
 	private boolean hasSomeHorizontalLink(ILeaf leaf, Collection<Link> links) {
 		for (Link link : links) {
 			if (link.getLength() == 1 && link.contains(leaf)) {
@@ -184,8 +185,6 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 		return false;
 	}
-
-
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCode().getFullName()));

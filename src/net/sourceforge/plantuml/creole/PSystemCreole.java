@@ -44,6 +44,8 @@ import java.util.List;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -74,7 +76,7 @@ public class PSystemCreole extends AbstractPSystem {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, null, CreoleMode.FULL)
+		final Sheet sheet = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 

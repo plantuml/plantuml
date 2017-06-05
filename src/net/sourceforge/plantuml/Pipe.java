@@ -72,8 +72,11 @@ public class Pipe {
 			}
 			final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
 					option.getConfig());
-
-			if (option.isSyntax()) {
+			if (option.isComputeurl()) {
+				for (BlockUml s : sourceStringReader.getBlocks()) {
+					ps.println(s.getEncodedUrl());
+				}
+			} else if (option.isSyntax()) {
 				final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
 				if (system instanceof UmlDiagram) {
 					ps.println(((UmlDiagram) system).getUmlDiagramType().name());
@@ -117,7 +120,7 @@ public class Pipe {
 
 	private void printErrorText(final PrintStream output, final PSystemError sys) {
 		output.println("ERROR");
-		output.println(sys.getHigherErrorPosition());
+		output.println(sys.getHigherErrorPosition2().getPosition());
 		for (ErrorUml er : sys.getErrorsUml()) {
 			output.println(er.getError());
 		}
@@ -136,7 +139,7 @@ public class Pipe {
 				closed = true;
 			} else {
 				sb.append(s);
-				sb.append("\n");
+				sb.append(BackSlash.NEWLINE);
 			}
 			if (isFinished(s)) {
 				break;

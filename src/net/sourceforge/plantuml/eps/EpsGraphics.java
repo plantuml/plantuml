@@ -41,6 +41,7 @@ import java.awt.image.BufferedImage;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -74,9 +75,9 @@ public class EpsGraphics {
 
 	public EpsGraphics() {
 		header.append("%!PS-Adobe-3.0 EPSF-3.0\n");
-		header.append("%%Creator: PlantUML v" + Version.versionString(15) + "\n");
+		header.append("%%Creator: PlantUML v" + Version.versionString(15) + BackSlash.NEWLINE);
 		header.append("%%Title: noTitle\n");
-		// header.append("%%CreationDate: " + new Date() + "\n");
+		// header.append("%%CreationDate: " + new Date() + BackSlash.BS_N);
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 2 index mul 7 index add", true));
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 3 index mul 7 index add", true));
@@ -123,7 +124,7 @@ public class EpsGraphics {
 	public void close() {
 		checkCloseDone();
 
-		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + "\n");
+		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + BackSlash.NEWLINE);
 		// header.append("%%DocumentData: Clean7Bit\n");
 		// header.append("%%DocumentProcessColors: Black\n");
 		header.append("%%ColorUsage: Color\n");
@@ -554,7 +555,7 @@ public class EpsGraphics {
 		if (checkConsistence && s.indexOf("  ") != -1) {
 			throw new IllegalArgumentException(s);
 		}
-		body.append(s + "\n");
+		body.append(s + BackSlash.NEWLINE);
 	}
 
 	final public void linetoNoMacro(double x1, double y1) {

@@ -33,49 +33,45 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.sprite;
+package net.sourceforge.plantuml.creole;
 
-import java.awt.image.BufferedImage;
+import java.awt.geom.Dimension2D;
 import java.util.List;
 
-import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class SpriteUtils {
+public class AtomTexts implements Atom {
+	private final List<AtomText> all;
 
-	public static final String SPRITE_NAME = "[-\\p{L}0-9_/]+";
-
-	private SpriteUtils() {
+	public AtomTexts(List<AtomText> texts) {
+		this.all = texts;
 	}
 
-	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor()
-				+ "] {\n");
-		final List<String> result = level.encode(img);
-		for (String s : result) {
-			sb.append(s);
-			sb.append(BackSlash.NEWLINE);
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		double width = 0;
+		double height = 0;
+		for (AtomText text : all) {
+			final Dimension2D dim = text.calculateDimension(stringBounder);
+			width = Math.max(width, dim.getWidth());
+			height += dim.getHeight();
 		}
-		sb.append("}\n");
-		return sb.toString();
+		return new Dimension2DDouble(width, height);
 	}
 
-	public static String encodeCompressed(BufferedImage img, String name, SpriteGrayLevel level) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "z] ");
-		final List<String> list = level.encodeZ(img);
-		if (list.size() == 1) {
-			sb.append(list.get(0));
-			sb.append(BackSlash.NEWLINE);
-		} else {
-			sb.append("{\n");
-			for (String s : list) {
-				sb.append(s);
-				sb.append(BackSlash.NEWLINE);
-			}
-			sb.append("}\n");
+	public double getStartingAltitude(StringBounder stringBounder) {
+		return all.get(0).getStartingAltitude(stringBounder);
+	}
+
+	public void drawU(UGraphic ug) {
+		double y = 0;
+		for (AtomText text : all) {
+			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
+			text.drawU(ug.apply(new UTranslate(0, y)));
+			y += dim.getHeight();
 		}
-		return sb.toString();
 	}
 
 }

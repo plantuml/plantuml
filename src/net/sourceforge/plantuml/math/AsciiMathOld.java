@@ -53,6 +53,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
 
 import org.w3c.dom.Document;
@@ -72,7 +73,7 @@ public class AsciiMathOld {
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				sb.append(s);
-				sb.append("\n");
+				sb.append(BackSlash.NEWLINE);
 			}
 			br.close();
 			JAVASCRIPT_CODE = sb.toString();

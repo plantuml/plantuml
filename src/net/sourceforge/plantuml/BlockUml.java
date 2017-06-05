@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
+import net.sourceforge.plantuml.code.Transcoder;
+import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -59,12 +62,19 @@ public class BlockUml {
 		this(convert(strings), 0, Defines.createEmpty());
 	}
 
+	public String getEncodedUrl() throws IOException {
+		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
+		final String source = getDiagram().getSource().getPlainString();
+		final String encoded = transcoder.encode(source);
+		return encoded;
+	}
+
 	public String getFlashData() {
 		final StringBuilder sb = new StringBuilder();
 		for (CharSequence2 line : data) {
 			sb.append(line);
 			sb.append('\r');
-			sb.append('\n');
+			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
 	}
@@ -122,7 +132,7 @@ public class BlockUml {
 
 	public Diagram getDiagram() {
 		if (system == null) {
-			system = new PSystemBuilder().createPSystem(data);
+			system = new PSystemBuilder().createPSystem(data, startLine);
 		}
 		return system;
 	}

@@ -35,12 +35,15 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Set;
+
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -56,8 +59,11 @@ public class Participant implements SpecificBackcolorable {
 	private int initialLife = 0;
 
 	private Stereotype stereotype;
+	private boolean stereotypePositionTop;
+	private final Set<EntityPortion> hiddenPortions;
 
-	public Participant(ParticipantType type, String code, Display display) {
+	public Participant(ParticipantType type, String code, Display display, Set<EntityPortion> hiddenPortions) {
+		this.hiddenPortions = hiddenPortions;
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
@@ -82,10 +88,15 @@ public class Participant implements SpecificBackcolorable {
 	}
 
 	public Display getDisplay(boolean underlined) {
-		if (underlined) {
-			return display.underlined();
+		Display result = underlined ? display.underlined() : display;
+		if (stereotype != null && hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {
+			if (stereotypePositionTop) {
+				result = result.addFirst(stereotype);
+			} else {
+				result = result.add(stereotype);
+			}
 		}
-		return display;
+		return result;
 	}
 
 	public ParticipantType getType() {
@@ -93,9 +104,6 @@ public class Participant implements SpecificBackcolorable {
 	}
 
 	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
-		// if (type == ParticipantType.ACTOR) {
-		// return;
-		// }
 		if (this.stereotype != null) {
 			throw new IllegalStateException();
 		}
@@ -103,11 +111,7 @@ public class Participant implements SpecificBackcolorable {
 			throw new IllegalArgumentException();
 		}
 		this.stereotype = stereotype;
-		if (stereotypePositionTop) {
-			display = display.addFirst(stereotype);
-		} else {
-			display = display.add(stereotype);
-		}
+		this.stereotypePositionTop = stereotypePositionTop;
 	}
 
 	public final int getInitialLife() {

@@ -41,10 +41,13 @@ import net.sourceforge.plantuml.CharSequence2;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.version.Version;
 
 class IfManager implements ReadLine {
 
 	protected static final Pattern2 ifdefPattern = MyPattern.cmpile("^[%s]*!if(n)?def[%s]+(.+)$");
+	protected static final Pattern2 ifcomparePattern = MyPattern
+			.cmpile("^[%s]*!if[%s]+\\%(\\w+)\\%[%s]*(\\<|\\<=|\\>|\\>=|=|==|!=|\\<\\>)[%s]*(\\d+)$");
 	protected static final Pattern2 elsePattern = MyPattern.cmpile("^[%s]*!else[%s]*$");
 	protected static final Pattern2 endifPattern = MyPattern.cmpile("^[%s]*!endif[%s]*$");
 
@@ -76,7 +79,21 @@ class IfManager implements ReadLine {
 			return null;
 		}
 
-		final Matcher2 m = ifdefPattern.matcher(s);
+		Matcher2 m = ifcomparePattern.matcher(s);
+		if (m.find()) {
+			final int value1 = getValue(m.group(1));
+			final String operator = m.group(2);
+			final int value2 = Integer.parseInt(m.group(3));
+			final boolean ok = new NumericCompare(operator).isCompareOk(value1, value2);
+			if (ok) {
+				child = new IfManagerPositif(source, defines);
+			} else {
+				child = new IfManagerNegatif(source, defines);
+			}
+			return this.readLine();
+		}
+
+		m = ifdefPattern.matcher(s);
 		if (m.find()) {
 			boolean ok = defines.isDefine(m.group(2));
 			if (m.group(1) != null) {
@@ -91,6 +108,13 @@ class IfManager implements ReadLine {
 		}
 
 		return s;
+	}
+
+	private int getValue(final String arg) {
+		if (arg.equalsIgnoreCase("PLANTUML_VERSION")) {
+			return Version.versionPatched();
+		}
+		return 0;
 	}
 
 	public void close() throws IOException {

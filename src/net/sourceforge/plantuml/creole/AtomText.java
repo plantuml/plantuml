@@ -42,11 +42,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -80,6 +82,15 @@ public class AtomText implements Atom {
 
 	public static Atom createUrl(Url url, FontConfiguration fontConfiguration) {
 		fontConfiguration = fontConfiguration.hyperlink();
+		final Display display = Display.getWithNewlines(url.getLabel());
+		if (display.size() > 1) {
+			final List<AtomText> all = new ArrayList<AtomText>();
+			for (CharSequence s : display.as()) {
+				all.add(new AtomText(s.toString(), fontConfiguration, url, ZERO, ZERO));
+			}
+			return new AtomTexts(all);
+
+		}
 		return new AtomText(url.getLabel(), fontConfiguration, url, ZERO, ZERO);
 	}
 
@@ -118,6 +129,9 @@ public class AtomText implements Atom {
 	}
 
 	private AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft, DelayedDouble marginRight) {
+		if (text.contains("" + BackSlash.hiddenNewLine())) {
+			throw new IllegalArgumentException(text);
+		}
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
 		// this.text = StringUtils.showComparatorCharacters(StringUtils.manageBackslash(text));

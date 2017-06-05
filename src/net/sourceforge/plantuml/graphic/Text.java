@@ -35,15 +35,17 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.BackSlash;
+
 public class Text implements HtmlCommand {
 
 	private final String text;
 
-	public static final Text NEWLINE = new Text("\\n");
+	public static final Text TEXT_BS_BS_N = new Text(BackSlash.BS_BS_N);
 
 	Text(String text) {
 		this.text = text.replaceAll("\\\\\\[", "[").replaceAll("\\\\\\]", "]");
-		if (text.indexOf('\n') != -1) {
+		if (text.indexOf(BackSlash.CHAR_NEWLINE) != -1) {
 			throw new IllegalArgumentException();
 		}
 		if (text.length() == 0) {
@@ -57,6 +59,6 @@ public class Text implements HtmlCommand {
 	}
 
 	public boolean isNewline() {
-		return text.equals("\\n");
+		return text.equals(BackSlash.BS_BS_N);
 	}
 }

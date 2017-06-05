@@ -41,6 +41,7 @@ import java.io.OutputStream;
 import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -68,7 +69,7 @@ public class PSystemDitaa extends AbstractPSystem {
 	}
 
 	PSystemDitaa add(String line) {
-		return new PSystemDitaa(data + line + "\n", processingOptions.performSeparationOfCommonEdges(), dropShadows,
+		return new PSystemDitaa(data + line + BackSlash.NEWLINE, processingOptions.performSeparationOfCommonEdges(), dropShadows,
 				scale);
 	}
 

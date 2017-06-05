@@ -39,8 +39,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.SourceStringReader;
@@ -54,7 +57,7 @@ public class SyntaxChecker {
 		final StringBuilder sb = new StringBuilder();
 		for (String s : source) {
 			sb.append(s);
-			sb.append("\n");
+			sb.append(BackSlash.NEWLINE);
 		}
 		return checkSyntax(sb.toString());
 	}
@@ -65,14 +68,16 @@ public class SyntaxChecker {
 
 		if (source.startsWith("@startuml\n") == false) {
 			result.setError(true);
-			result.setErrorLinePosition(0);
+			result.setLineLocation(new LineLocationImpl(null, null).oneLineRead());
+			// result.setErrorLinePosition(0);
 			result.addErrorText("No @startuml found");
 			result.setSuggest(Arrays.asList("Did you mean:", "@startuml"));
 			return result;
 		}
 		if (source.endsWith("@enduml\n") == false && source.endsWith("@enduml") == false) {
 			result.setError(true);
-			result.setErrorLinePosition(lastLineNumber(source));
+			result.setLineLocation(lastLineNumber2(source));
+			// result.setErrorLinePosition(lastLineNumber(source));
 			result.addErrorText("No @enduml found");
 			result.setSuggest(Arrays.asList("Did you mean:", "@enduml"));
 			return result;
@@ -83,7 +88,8 @@ public class SyntaxChecker {
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
 		if (blocks.size() == 0) {
 			result.setError(true);
-			result.setErrorLinePosition(lastLineNumber(source));
+			result.setLineLocation(lastLineNumber2(source));
+			// result.setErrorLinePosition(lastLineNumber(source));
 			result.addErrorText("No @enduml found");
 			result.setSuggest(Arrays.asList("Did you mean:", "@enduml"));
 			return result;
@@ -96,7 +102,7 @@ public class SyntaxChecker {
 		} else if (system instanceof PSystemError) {
 			result.setError(true);
 			final PSystemError sys = (PSystemError) system;
-			result.setErrorLinePosition(sys.getHigherErrorPosition());
+			// result.setErrorLinePosition(sys.getHigherErrorPosition());
 			result.setLineLocation(sys.getLineLocation());
 			result.setSystemError(sys);
 			for (ErrorUml er : sys.getErrorsUml()) {
@@ -117,7 +123,7 @@ public class SyntaxChecker {
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
 		if (blocks.size() == 0) {
 			result.setError(true);
-			result.setErrorLinePosition(lastLineNumber(source));
+			result.setLineLocation(lastLineNumber2(source));
 			result.addErrorText("No @enduml found");
 			result.setSuggest(Arrays.asList("Did you mean:", "@enduml"));
 			return result;
@@ -131,7 +137,7 @@ public class SyntaxChecker {
 		} else if (system instanceof PSystemError) {
 			result.setError(true);
 			final PSystemError sys = (PSystemError) system;
-			result.setErrorLinePosition(sys.getHigherErrorPosition());
+			// result.setErrorLinePosition(sys.getHigherErrorPosition());
 			result.setLineLocation(sys.getLineLocation());
 			for (ErrorUml er : sys.getErrorsUml()) {
 				result.addErrorText(er.getError());
@@ -149,6 +155,16 @@ public class SyntaxChecker {
 		for (int i = 0; i < source.length(); i++) {
 			if (source.charAt(i) == '\n') {
 				result++;
+			}
+		}
+		return result;
+	}
+
+	private static LineLocation lastLineNumber2(String source) {
+		LineLocationImpl result = new LineLocationImpl(null, null).oneLineRead();
+		for (int i = 0; i < source.length(); i++) {
+			if (source.charAt(i) == '\n') {
+				result = result.oneLineRead();
 			}
 		}
 		return result;

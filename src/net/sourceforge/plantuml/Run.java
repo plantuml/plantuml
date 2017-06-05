@@ -402,9 +402,8 @@ public class Run {
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
 		if (option.isComputeurl()) {
-			final List<String> urls = sourceFileReader.getEncodedUrl();
-			for (String s : urls) {
-				System.out.println(s);
+			for (BlockUml s : sourceFileReader.getBlocks()) {
+				System.out.println(s.getEncodedUrl());
 			}
 			return false;
 		}
@@ -429,6 +428,5 @@ public class Run {
 		}
 		return result;
 	}
-
 
 }
