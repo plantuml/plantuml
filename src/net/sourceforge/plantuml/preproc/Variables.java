@@ -83,6 +83,7 @@ public class Variables {
 		final StringBuilder regex = new StringBuilder("\\b" + fonctionName + "\\(");
 
 		final List<DefineVariable> variables = all;
+		boolean appended = false;
 		for (int j = 0; j < variables.size(); j++) {
 			final DefineVariable variable = variables.get(j);
 			final String varName = variable.getName();
@@ -93,11 +94,14 @@ public class Variables {
 				final int i = 1 + 3 * j;
 				newValue = newValue.replaceAll(var2, "\\$" + i + "\\$" + (i + 1) + "\\$" + (i + 2));
 				regex.append(",");
+				appended = true;
 			} else {
 				newValue = newValue.replaceAll(var2, Matcher.quoteReplacement(variable.getDefaultValue()));
 			}
 		}
-		regex.setLength(regex.length() - 1);
+		if (appended == true) {
+			regex.setLength(regex.length() - 1);
+		}
 		regex.append("\\)");
 		// System.err.println("regex=" + regex);
 		// System.err.println("newValue=" + newValue);

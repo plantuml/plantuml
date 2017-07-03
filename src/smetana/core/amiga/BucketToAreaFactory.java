@@ -41,7 +41,7 @@ import smetana.core.CType;
 import smetana.core.JUtils;
 import smetana.core.__array_of_double__;
 import smetana.core.__array_of_integer__;
-import smetana.core.__array_of_ptr__;
+import smetana.core.__array_of_ptr_impl__;
 import smetana.core.__array_of_struct__;
 
 public class BucketToAreaFactory {
@@ -102,7 +102,7 @@ public class BucketToAreaFactory {
 		}
 		if (bucket.inlineStruct()) {
 			final Class theClass = bucket.ctype.getTypeClass();
-			return new StarStruct(theClass, parent);
+			return JUtils.create(theClass, parent);
 		}
 		if (bucket.ctype.isArrayOfCString()) {
 			return null;
@@ -145,7 +145,7 @@ public class BucketToAreaFactory {
 			JUtils.LOG("element=" + element);
 			final Class theClass = CType.getClassFrom(element);
 			JUtils.LOG("theClass=" + theClass);
-			return __array_of_ptr__.malloc_empty(arrayLength);
+			return __array_of_ptr_impl__.malloc_empty(arrayLength);
 		}
 		if (bucket.ctype.getType().matches("\\w+ \\w+\\[\\d+\\]")) {
 			// Array of Struct

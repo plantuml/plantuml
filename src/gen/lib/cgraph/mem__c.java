@@ -252,7 +252,7 @@ throw new UnsupportedOperationException();
 
 //1 1cni5q244gsprpvtjsq7gs17m
 // Agmemdisc_t AgMemDisc =     
-/*public static final __struct__<Agmemdisc_s> AgMemDisc = __struct__.from(Agmemdisc_s.class);
+/*public static final __struct__<Agmemdisc_s> AgMemDisc = JUtils.from(Agmemdisc_s.class);
 static {
 	AgMemDisc.setPtr("open", function(mem__c.class, "memopen"));
 	AgMemDisc.setPtr("alloc", function(mem__c.class, "memalloc"));

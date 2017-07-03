@@ -57,8 +57,10 @@ import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import h.Agraph_s;
+import h.ST_Agdesc_s;
 import h._dt_s;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Z;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -203,7 +205,7 @@ public class subg__c {
 public static Agraph_s agfindsubg_by_id(Agraph_s g, int id) {
 ENTERING("11ezyrsjsotjz9b3cyvb4ie8p","agfindsubg_by_id");
 try {
-    final __struct__<Agraph_s> template = __struct__.from(Agraph_s.class);
+    final __struct__<Agraph_s> template = JUtils.from(Agraph_s.class);
     agdtdisc(g, (_dt_s) g.getPtr("g_dict"), Z.z().Ag_subgraph_id_disc.amp());
     AGID(template.amp(), id);
     return (Agraph_s) g.getPtr("g_dict").castTo(_dt_s.class).call("searchf", g.getPtr("g_dict"), template.amp(), 0000004);
@@ -227,7 +229,7 @@ try {
     subg = (Agraph_s) agalloc(g, sizeof(Agraph_s.class));
     subg.setPtr("clos", g.getPtr("clos"));
     subg.setStruct("desc", g.getStruct("desc"));
-    subg.getStruct("desc").setBoolean("maingraph", false);
+    ((ST_Agdesc_s)subg.getStruct("desc")).maingraph = 0;
     subg.setPtr("parent", g);
     subg.setPtr("root", g.getPtr("root"));
     AGID(subg, id);

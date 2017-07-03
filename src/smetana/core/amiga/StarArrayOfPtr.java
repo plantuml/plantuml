@@ -36,6 +36,7 @@
 
 package smetana.core.amiga;
 
+import h.ST_boxf;
 import smetana.core.AllH;
 import smetana.core.UnsupportedC;
 import smetana.core.__array_of_ptr__;
@@ -60,7 +61,7 @@ public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 	}
 
 	public void memcopyFrom(Area source) {
-		throw new UnsupportedOperationException();
+		((StarStruct) array.getInternal(0)).memcopyFrom(source);
 	}
 
 	public final __array_of_ptr__ getInternalArray() {
@@ -143,7 +144,11 @@ public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 	}
 
 	public __struct__ getStruct(String fieldName) {
-		return ((__ptr__) array.getInternal(0)).getStruct(fieldName);
+		__ptr__ TMP = (__ptr__) array.getInternal(0);
+		if (TMP instanceof ST_boxf) {
+			return ((ST_boxf) TMP).getStructInternal(fieldName);
+		}
+		return TMP.getStruct(fieldName);
 	}
 
 	public void setDouble(String fieldName, double data) {

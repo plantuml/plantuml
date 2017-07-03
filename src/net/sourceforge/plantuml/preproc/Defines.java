@@ -88,8 +88,18 @@ public class Defines implements Truth {
 		final Defines result = createEmpty();
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
 		result.environment.put("filename", file.getName());
+		result.environment.put("filenameNoExtension", nameNoExtension(file));
 		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 		return result;
+	}
+
+	private static String nameNoExtension(File file) {
+		final String name = file.getName();
+		final int x = name.lastIndexOf('.');
+		if (x == -1) {
+			return name;
+		}
+		return name.substring(0, x);
 	}
 
 	public void define(String name, List<String> value, boolean emptyParentheses) {

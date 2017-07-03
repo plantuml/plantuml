@@ -78,6 +78,7 @@ public class Option {
 	private int nbThreads = 0;
 	private int ftpPort = -1;
 	private boolean hideMetadata = false;
+	private int imageIndex = 0;
 
 	private File outputDir = null;
 	private File outputFile = null;
@@ -254,6 +255,7 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-word")) {
 				OptionFlags.getInstance().setWord(true);
 				OptionFlags.getInstance().setQuiet(true);
+				this.charset = "UTF-8";
 			} else if (s.equalsIgnoreCase("-quiet")) {
 				OptionFlags.getInstance().setQuiet(true);
 			} else if (s.equalsIgnoreCase("-decodeurl")) {
@@ -308,6 +310,15 @@ public class Option {
 				textProgressBar = true;
 			} else if (s.equalsIgnoreCase("-nometadata")) {
 				hideMetadata = true;
+			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				final String nb = arg[i];
+				if (nb.matches("\\d+")) {
+					this.imageIndex = Integer.parseInt(nb);
+				}
 			} else if (StringUtils.goLowerCase(s).startsWith("-ftp")) {
 				final int x = s.indexOf(':');
 				if (x == -1) {
@@ -531,6 +542,10 @@ public class Option {
 
 	public final boolean isPipeNoStdErr() {
 		return pipeNoStdErr;
+	}
+
+	public final int getImageIndex() {
+		return imageIndex;
 	}
 
 }

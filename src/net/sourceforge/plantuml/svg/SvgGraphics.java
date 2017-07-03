@@ -448,6 +448,10 @@ public class SvgGraphics {
 					fontFamily = "monospace";
 				}
 				elt.setAttribute("font-family", fontFamily);
+
+				if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier")) {
+					text = text.replace(' ', (char) 160);
+				}
 			}
 			if (textBackColor != null) {
 				final String backFilterId = getFilterBackColor(textBackColor);

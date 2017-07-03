@@ -56,6 +56,7 @@ import static smetana.core.Macro.UNSUPPORTED;
 import h.Ppoly_t;
 import h.pointf;
 import h.tna_t;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
@@ -104,8 +105,8 @@ try {
     if (setjmp(jbuf)!=0)
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     /* generate the splines */
-    evs.plus(0).getStruct().____(normv(evs.plus(0).getStruct()));
-    evs.plus(1).getStruct().____(normv(evs.plus(1).getStruct()));
+    evs.plus(0).getStruct().___(normv(evs.plus(0).getStruct()));
+    evs.plus(1).getStruct().___(normv(evs.plus(1).getStruct()));
     Z.z().opl = 0;
     growops(4);
     Z.z().ops_route.plus(Z.z().opl).setStruct(inps.plus(0).getStruct());
@@ -134,8 +135,8 @@ return reallyroutespline_w_(edges, edgen, inps, inpn, ev0.copy(), ev1.copy());
 private static int reallyroutespline_w_(__ptr__ edges, int edgen, __ptr__ inps, int inpn, final __struct__<pointf> ev0, final __struct__<pointf> ev1) {
 ENTERING("13dxqzbgtpl4ubnnvw6ehzzi9","reallyroutespline");
 try {
-    final __struct__<pointf> p1 = __struct__.from(pointf.class), p2 = __struct__.from(pointf.class), cp1 = __struct__.from(pointf.class), cp2 = __struct__.from(pointf.class), p = __struct__.from(pointf.class);
-    final __struct__<pointf> v1 = __struct__.from(pointf.class), v2 = __struct__.from(pointf.class), splitv = __struct__.from(pointf.class), splitv1 = __struct__.from(pointf.class), splitv2 = __struct__.from(pointf.class);
+    final __struct__<pointf> p1 = JUtils.from(pointf.class), p2 = JUtils.from(pointf.class), cp1 = JUtils.from(pointf.class), cp2 = JUtils.from(pointf.class), p = JUtils.from(pointf.class);
+    final __struct__<pointf> v1 = JUtils.from(pointf.class), v2 = JUtils.from(pointf.class), splitv = JUtils.from(pointf.class), splitv1 = JUtils.from(pointf.class), splitv2 = JUtils.from(pointf.class);
     double maxd, d, t;
     int maxi, i, spliti;
     if (Z.z().tnan < inpn) {
@@ -161,8 +162,8 @@ try {
 	return -1;
     if (splinefits(edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)
 	return 0;
-    cp1.____(add(p1, scale(v1, 1 / 3.0)));
-    cp2.____(sub(p2, scale(v2, 1 / 3.0)));
+    cp1.___(add(p1, scale(v1, 1 / 3.0)));
+    cp2.___(sub(p2, scale(v2, 1 / 3.0)));
     for (maxd = -1, maxi = -1, i = 1; i < inpn - 1; i++) {
 	t = Z.z().tnas.plus(i).getDouble("t");
 	p.setDouble("x", B0(t) * p1.getDouble("x") + B1(t) * cp1.getDouble("x") + B2(t) * cp2.getDouble("x") + B3(t) * p2.getDouble("x"));
@@ -171,9 +172,9 @@ try {
 	    {maxd = d; maxi = i;}
     }
     spliti = maxi;
-    splitv1.____(normv(sub(inps.plus(spliti).getStruct(), inps.plus(spliti - 1).getStruct())));
-    splitv2.____(normv(sub(inps.plus(spliti + 1).getStruct(), inps.plus(spliti).getStruct())));
-    splitv.____(normv(add(splitv1, splitv2)));
+    splitv1.___(normv(sub(inps.plus(spliti).getStruct(), inps.plus(spliti - 1).getStruct())));
+    splitv2.___(normv(sub(inps.plus(spliti + 1).getStruct(), inps.plus(spliti).getStruct())));
+    splitv.___(normv(add(splitv1, splitv2)));
     reallyroutespline(edges, edgen, inps, spliti + 1, ev0, splitv);
     reallyroutespline(edges, edgen, inps.plus(spliti), inpn - spliti, splitv,
 		      ev1);
@@ -195,7 +196,7 @@ return mkspline_w_(inps, inpn, tnas, ev0.copy(), ev1.copy(), sp0, sv0, sp1, sv1)
 private static int mkspline_w_(__ptr__ inps, int inpn, __ptr__ tnas, final __struct__<pointf> ev0, final __struct__<pointf> ev1, __ptr__ sp0, __ptr__ sv0, __ptr__ sp1, __ptr__ sv1) {
 ENTERING("29sok6jkfyobf83q130snkhmh","mkspline");
 try {
-    final __struct__<pointf> tmp = __struct__.from(pointf.class);
+    final __struct__<pointf> tmp = JUtils.from(pointf.class);
     double c[][] = new double[2][2];
     double x[] = new double[2];
     double det01, det0X, detX1;
@@ -209,7 +210,7 @@ try {
 	c[0][1] += dot(tnas.plus(i).getStruct().getArrayOfStruct("a").plus(0).getStruct(), tnas.plus(i).getStruct().getArrayOfStruct("a").plus(1).getStruct());
 	c[1][0] = c[0][1];
 	c[1][1] += dot(tnas.plus(i).getStruct().getArrayOfStruct("a").plus(1).getStruct(), tnas.plus(i).getStruct().getArrayOfStruct("a").plus(1).getStruct());
-	tmp.____(sub(inps.plus(i).getStruct(), add(scale(inps.plus(0).getStruct(), B01(tnas.plus(i).getStruct().getDouble("t"))),
+	tmp.___(sub(inps.plus(i).getStruct(), add(scale(inps.plus(0).getStruct(), B01(tnas.plus(i).getStruct().getDouble("t"))),
 			       scale(inps.plus(inpn - 1).getStruct(), B23(tnas.plus(i).getStruct().getDouble("t"))))));
 	x[0] += dot(tnas.plus(i).getStruct().getArrayOfStruct("a").plus(0).getStruct(), tmp);
 	x[1] += dot(tnas.plus(i).getStruct().getArrayOfStruct("a").plus(1).getStruct(), tmp);
@@ -344,7 +345,7 @@ try {
     int rooti, rootn;
     int ei;
     final __array_of_struct__ lps = __array_of_struct__.malloc(pointf.class, 2);
-    final __struct__<pointf> ip = __struct__.from(pointf.class);
+    final __struct__<pointf> ip = JUtils.from(pointf.class);
     double t, ta, tb, tc, td;
     for (ei = 0; ei < edgen; ei++) {
 	lps.plus(0).setStruct(edges.plus(ei).getStruct("a"));

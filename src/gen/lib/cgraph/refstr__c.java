@@ -57,6 +57,7 @@ import h._dt_s;
 import h.refstr_t;
 import smetana.core.ACCESS;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.OFFSET;
 import smetana.core.STARSTAR;
 import smetana.core.Z;
@@ -206,7 +207,7 @@ public class refstr__c {
 
 //1 boyxdmkhstn4i64pqf6sv1mi7
 // static Dtdisc_t Refstrdisc = 
-/*static public final __struct__<_dtdisc_s> Refstrdisc = __struct__.from(_dtdisc_s.class);
+/*static public final __struct__<_dtdisc_s> Refstrdisc = JUtils.from(_dtdisc_s.class);
 static {
 	Refstrdisc.setInt("key", OFFSET.create(refstr_t.class, "s").toInt()); // *s is the third field in refstr_t
 	Refstrdisc.setInt("size", -1);
@@ -282,7 +283,7 @@ throw new UnsupportedOperationException();
 public static refstr_t refsymbind(_dt_s strdict, CString s) {
 ENTERING("9ts4wqhw2xafdv3tlcilneewq","refsymbind");
 try {
-    final __struct__<refstr_t> key = __struct__.from(refstr_t.class);
+    final __struct__<refstr_t> key = JUtils.from(refstr_t.class);
     refstr_t r;
     // key.setPtr("s", s.duplicate());
     key.setPtr("s", s);

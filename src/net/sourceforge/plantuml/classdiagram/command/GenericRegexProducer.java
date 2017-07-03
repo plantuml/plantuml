@@ -38,10 +38,10 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 public class GenericRegexProducer {
 
-	public final static String PATTERN = "[^\\<\\>]" + getGenericRegex(4);
+	public final static String PATTERN = "[^\\<\\>/]" + getGenericRegex(4);
 
 	// \<[^\<\>]([^\<\>]|\<\>)*\>
-	static final private String part1 = "(?:[^\\<\\>]|\\<";
+	static final private String part1 = "(?:[^\\<\\>/]|\\<";
 	static final private String part2 = "\\>)*";
 
 	static String getGenericRegex(int level) {

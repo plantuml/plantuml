@@ -61,6 +61,7 @@ import h._dtmethod_s;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.size_t;
+import smetana.core.amiga.StarStruct;
 
 public class utils__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -251,7 +252,7 @@ throw new UnsupportedOperationException();
 
 //3 48ox0bg1qmasrer8np51uwsyk
 // Dict_t *agdtopen(Agraph_t * g, Dtdisc_t * disc, Dtmethod_t * method) 
-public static _dt_s agdtopen(Agraph_s g, _dtdisc_s disc, _dtmethod_s method) {
+public static _dt_s agdtopen(Agraph_s g, StarStruct disc, _dtmethod_s method) {
 ENTERING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
 try {
     Dtmemory_f memf;

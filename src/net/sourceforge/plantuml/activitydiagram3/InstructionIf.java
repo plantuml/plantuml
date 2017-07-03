@@ -149,7 +149,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 				if (branch.getLast().kill() == false) {
 					return false;
 				}
-				if (elseBranch != null && elseBranch.getLast().kill() == false) {
+				if (elseBranch != null && elseBranch.getLast()!=null && elseBranch.getLast().kill() == false) {
 					return false;
 				}
 				return true;

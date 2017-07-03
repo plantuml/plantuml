@@ -115,6 +115,7 @@ import h.Agraph_s;
 import h.boxf;
 import h.nodequeue;
 import h.pointf;
+import smetana.core.JUtils;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -383,7 +384,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -421,7 +422,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -461,7 +462,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -871,7 +872,7 @@ try {
 	    ED_edge_type(e, type);
 	    u = v;
 	    ED_count(ve, ED_count(ve) - 1);
-	    ve = (Agedge_s) ND_out(aghead(ve)).getArrayOfPtr("list").plus(0).getPtr();
+	    ve = (Agedge_s) ND_out(aghead(ve)).getFromList(0);
 	}
     } else {
 	if (ND_rank(to) - ND_rank(from) == 1) {
@@ -899,7 +900,7 @@ try {
 	    } else
 		e = ve;
 	    while (ND_rank(aghead(e)) != ND_rank(to))
-		e = (Agedge_s) ND_out(aghead(e)).getArrayOfPtr("list").plus(0).getPtr();
+		e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
 	    if (NEQ(aghead(e), to)) {
 		ve = e;
 		e = virtual_edge(agtail(e), to, orig);
@@ -958,12 +959,12 @@ try {
 	    e = AGMKOUT(e);
 	    /* short/flat multi edges */
 	    if (mergeable(prev, e)) {
-UNSUPPORTED("1pv8kbb78w6fs8m3i4x1mrsfv"); // 		if (ND_rank(agtail(e)) == ND_rank(aghead(e)))
-UNSUPPORTED("dzrp230epur5myrngxf86icdl"); // 		    ED_to_virt(e) = prev;
-UNSUPPORTED("7e1uy5mzei37p66t8jp01r3mk"); // 		else
-UNSUPPORTED("80avg8pw0q6u1yek5npatayak"); // 		    ED_to_virt(e) = NULL;
-UNSUPPORTED("2oxl2hzhfzzfn7q7i6phwgkqd"); // 		if (ED_to_virt(prev) == NULL)
-UNSUPPORTED("10wljk1lfxrvhkb8y6bzvxz35"); // 		    continue;	/* internal edge */
+	    	if (ND_rank(agtail(e)) == ND_rank(aghead(e)))
+			    ED_to_virt(e, prev);
+	    	else
+	    		ED_to_virt(e, null);
+ 		if (ED_to_virt(prev) == null)
+ 			continue;	/* internal edge */
 UNSUPPORTED("8d5mw7m9lzlseqbyx8a8mncgs"); // 		merge_chain(subg, e, ED_to_virt(prev), 0);
 UNSUPPORTED("87mmnlsj8quzlzg0vxax15kt2"); // 		safe_other_edge(e);
 UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
@@ -1057,9 +1058,9 @@ try {
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	v = (Agnode_s) GD_rankleader(g).plus(r).getPtr();
 	/* remove the entire chain */
-	while ((e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(0).getPtr())!=null)
+	while ((e = (Agedge_s) ND_out(v).getFromList(0))!=null)
 	    delete_fast_edge(e);
-	while ((e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(0).getPtr())!=null)
+	while ((e = (Agedge_s) ND_in(v).getFromList(0))!=null)
 	    delete_fast_edge(e);
 	delete_fast_node(dot_root(g), v);
 	GD_rankleader(g).plus(r).setPtr(null);
@@ -1079,8 +1080,9 @@ ENTERING("ecrplg8hsyl484f9kxc5xp0go","expand_cluster");
 try {
     /* build internal structure of the cluster */
     class2(subg);
-    GD_comp(subg).setInt("size", 1);
-    GD_comp(subg).getArrayOfPtr("list").plus(0).setPtr(GD_nlist(subg));
+    GD_comp(subg).size = 1;
+    // GD_comp(subg).getArrayOfPtr("list").plus(0).setPtr(GD_nlist(subg));
+    GD_comp(subg).setInList(0, GD_nlist(subg));
     allocate_ranks(subg);
     build_ranks(subg, 0);
     merge_ranks(subg);
@@ -1130,7 +1132,7 @@ UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
 		if ((e = ED_to_virt(orig))!=null) {
 		    while (e!=null && ND_node_type(vn =aghead(e)) == 1) {
 			ND_clust(vn, clust);
-			e = (Agedge_s) ND_out(aghead(e)).getArrayOfPtr("list").plus(0).getPtr();
+			e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
 			/* trouble if concentrators and clusters are mixed */
 		    }
 		}
@@ -1173,7 +1175,7 @@ try {
 	ND_UF_size(rl, ND_UF_size(rl)+1);
 	for (e = agfstout(subg, v); e!=null; e = agnxtout(subg, e)) {
 	    for (r = ND_rank(agtail(e)); r < ND_rank(aghead(e)); r++) {
-		ED_count(ND_out(rl).getArrayOfPtr("list").plus(0).getPtr(), ED_count(ND_out(rl).getArrayOfPtr("list").plus(0).getPtr())+1);
+		ED_count(ND_out(rl).getFromList(0), ED_count(ND_out(rl).getFromList(0))+1);
 	    }
 	}
     }
@@ -1227,7 +1229,7 @@ try {
 	    if ((e = ED_to_virt(orig))!=null) {
 		while (e!=null && (ND_node_type(vn = aghead(e))) == 1) {
 		    ND_clust(vn, null);
-		    e = (Agedge_s) ND_out(aghead(e)).getArrayOfPtr("list").plus(0).getPtr();
+		    e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
 		}
 	    }
 	}
@@ -1264,7 +1266,7 @@ try {
 		while (e!=null && (ND_node_type(vn = aghead(e))) == 1) {
 		    if (ND_clust(vn) == null)
 			ND_clust(vn, g);
-		    e = (Agedge_s) ND_out(aghead(e)).getArrayOfPtr("list").plus(0).getPtr();
+		    e = (Agedge_s) ND_out(aghead(e)).getFromList(0);
 		}
 	    }
 	}

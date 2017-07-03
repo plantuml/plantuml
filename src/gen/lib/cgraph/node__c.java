@@ -72,6 +72,8 @@ import h.Agattr_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsubnode_s;
+import h.ST_Agdesc_s;
+import h.ST_Agtag_s;
 import h._dt_s;
 import h._dtdisc_s;
 import smetana.core.CString;
@@ -215,13 +217,13 @@ public class node__c {
 
 //3 4w89du6uel405pm3vxsr3ayxt
 // Agnode_t *agfindnode_by_id(Agraph_t * g, unsigned long id) 
-//private static __struct__<Agsubnode_s> template = __struct__.from(Agsubnode_s.class);
-//private static __struct__<Agnode_s> dummy = __struct__.from(Agnode_s.class);
+//private static __struct__<Agsubnode_s> template = JUtils.from(Agsubnode_s.class);
+//private static __struct__<Agnode_s> dummy = JUtils.from(Agnode_s.class);
 public static Agnode_s agfindnode_by_id(Agraph_s g, int id) {
 ENTERING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 try {
     Agsubnode_s sn;
-    Z.z().dummy.getStruct("base").getStruct("tag").setInt("id", id);
+    ((ST_Agtag_s)Z.z().dummy.getStruct("base").getStruct("tag")).id = id;
     Z.z().template.setPtr("node", Z.z().dummy.amp());
     sn = (Agsubnode_s) (g.getPtr("n_id").call("searchf", g.getPtr("n_id"), Z.z().template.amp(),0000004));
     return (Agnode_s) (sn!=null ? sn.getPtr("node") : null);
@@ -339,7 +341,7 @@ try {
     AGID(n, id);
     AGSEQ(n, seq);
     n.setPtr("root", agroot(g));
-    if (agroot(g).getStruct("desc").getInt("has_attrs")!=0)
+    if (((ST_Agdesc_s)agroot(g).getStruct("desc")).has_attrs!=0)
 	  agbindrec(n, AgDataRecName, sizeof(Agattr_s.class), false);
     /* nodeattr_init and method_init will be called later, from the
      * subgraph where the node was actually created, but first it has
@@ -396,7 +398,7 @@ LEAVING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 public static void initnode(Agraph_s g, Agnode_s n) {
 ENTERING("85bb9mezhsgtzar3kqz95mq1","initnode");
 try {
-    if (agroot(g).getStruct("desc").getInt("has_attrs")!=0)
+    if (((ST_Agdesc_s)agroot(g).getStruct("desc")).has_attrs!=0)
 	agnodeattr_init(g,n);
     agmethod_init(g, n);
 } finally {
@@ -666,7 +668,7 @@ throw new UnsupportedOperationException();
 
 //1 us7d1n3fefkf0qyr6thv1sai
 // Dtdisc_t Ag_subnode_id_disc = 
-/*public static final __struct__<_dtdisc_s> Ag_subnode_id_disc = __struct__.from(_dtdisc_s.class);
+/*public static final __struct__<_dtdisc_s> Ag_subnode_id_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_subnode_id_disc.setInt("key", 0);
 	Ag_subnode_id_disc.setInt("size", 0);
@@ -681,7 +683,7 @@ static {
 
 //1 3gqjvodjfsv6wz1tk75zy19p9
 // Dtdisc_t Ag_subnode_seq_disc = 
-/*public static final __struct__<_dtdisc_s> Ag_subnode_seq_disc = __struct__.from(_dtdisc_s.class);
+/*public static final __struct__<_dtdisc_s> Ag_subnode_seq_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_subnode_seq_disc.setInt("key", 0);
 	Ag_subnode_seq_disc.setInt("size", 0);

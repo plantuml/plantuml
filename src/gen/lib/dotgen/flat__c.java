@@ -96,6 +96,7 @@ import h.Agraph_s;
 import h.boxf;
 import h.pointf;
 import h.rank_t;
+import smetana.core.JUtils;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -364,7 +365,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -402,7 +403,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -442,7 +443,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -801,9 +802,9 @@ try {
     Agedge_s f;
     if (ND_node_type(v) == 1) {
 	ord = ND_order(v);
-	if (ND_in(v).getInt("size") == 0) {	/* flat */
-	    assert(ND_out(v).getInt("size") == 2);
-	    findlr((Agnode_s) aghead(ND_out(v).getArrayOfPtr("list").plus(0).getPtr()), (Agnode_s) aghead(ND_out(v).getArrayOfPtr("list").plus(1).getPtr()), l,
+	if (ND_in(v).size == 0) {	/* flat */
+	    assert(ND_out(v).size == 2);
+	    findlr((Agnode_s) aghead(ND_out(v).getFromList(0)), (Agnode_s) aghead(ND_out(v).getFromList(1)), l,
 		   r);
 	    /* the other flat edge could be to the left or right */
 	    if (r[0] <= lpos[0])
@@ -822,7 +823,7 @@ try {
 	} else {		/* forward */
 	    boolean onleft, onright;
 	    onleft = onright = false;
-	    for (i = 0; (f = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	    for (i = 0; (f = (Agedge_s) ND_out(v).getFromList(i))!=null; i++) {
 		if (ND_order(aghead(f)) <= lpos[0]) {
 		    onleft = NOT(false);
 		    continue;
@@ -893,7 +894,7 @@ try {
     Agraph_s g;
     Agnode_s n, vn;
     Agedge_s ve;
-    final __struct__<pointf> dimen = __struct__.from(pointf.class);
+    final __struct__<pointf> dimen = JUtils.from(pointf.class);
     if (ED_label(e) == null)
 	return;
     g = dot_root(agtail(e));
@@ -907,7 +908,7 @@ try {
 	ypos = (int)(ND_coord(n).getDouble("y") + GD_rank(g).plus(r).getDouble("ht2") + GD_ranksep(g));
     }
     vn = make_vn_slot(g, r - 1, place);
-    dimen.____(ED_label(e).getStruct("dimen"));
+    dimen.___(ED_label(e).getStruct("dimen"));
     if (GD_flip(g)!=0) {
 	double f = dimen.getDouble("x");
 	dimen.setDouble("x", dimen.getDouble("y"));
@@ -1022,20 +1023,20 @@ try {
     Agedge_s e;
     int found = 0;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	if (ND_flat_out(n).getPtr("list")!=null) {
-	    for (j = 0; (e = (Agedge_s) ND_flat_out(n).getArrayOfPtr("list").plus(j).getPtr())!=null; j++) {
+	if (ND_flat_out(n).listNotNull()) {
+	    for (j = 0; (e = (Agedge_s) ND_flat_out(n).getFromList(j))!=null; j++) {
 		checkFlatAdjacent (e);
 	    }
 	}
-	for (j = 0; j < ND_other(n).getInt("size"); j++) {
-	    e = (Agedge_s) ND_other(n).getArrayOfPtr("list").plus(j).getPtr();
+	for (j = 0; j < ND_other(n).size; j++) {
+	    e = (Agedge_s) ND_other(n).getFromList(j);
 	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))
 		checkFlatAdjacent (e);
 	}
     }
     if ((GD_rank(g).plus(0).getPtr("flat")!=null) || (GD_n_cluster(g) > 0)) {
 	for (i = 0; (n = (Agnode_s) GD_rank(g).plus(0).getArrayOfPtr("v").plus(i).getPtr())!=null; i++) {
-	    for (j = 0; (e = (Agedge_s) ND_flat_in(n).getArrayOfPtr("list").plus(j).getPtr())!=null; j++) {
+	    for (j = 0; (e = (Agedge_s) ND_flat_in(n).getFromList(j))!=null; j++) {
 		if ((ED_label(e)!=null) && N(ED_adjacent(e))) {
 		    abomination(g);
 		    found = 1;
@@ -1049,8 +1050,8 @@ try {
     rec_save_vlists(g);
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
           /* if n is the tail of any flat edge, one will be in flat_out */
-	if (ND_flat_out(n).getPtr("list")!=null) {
-	    for (i = 0; (e = (Agedge_s) ND_flat_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	if (ND_flat_out(n).listNotNull()) {
+	    for (i = 0; (e = (Agedge_s) ND_flat_out(n).getFromList(i))!=null; i++) {
 		if (ED_label(e)!=null) {
 		    if (ED_adjacent(e)!=0) {
 			if (GD_flip(g)!=0) ED_dist(e, ED_label(e).getStruct("dimen").getDouble("y"));
@@ -1063,9 +1064,9 @@ try {
 		}
 	    }
 		/* look for other flat edges with labels */
-	    for (j = 0; j < ND_other(n).getInt("size"); j++) {
+	    for (j = 0; j < ND_other(n).size; j++) {
 		Agedge_s le;
-		e = (Agedge_s) ND_other(n).getArrayOfPtr("list").plus(j).getPtr();
+		e = (Agedge_s) ND_other(n).getFromList(j);
 		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;
 		if (EQ(agtail(e), aghead(e))) continue; /* skip loops */
 		le = e;

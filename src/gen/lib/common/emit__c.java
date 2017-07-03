@@ -56,6 +56,7 @@ import h.boxf;
 import h.pointf;
 import h.xdot;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.__array_of_struct__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
@@ -325,7 +326,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -363,7 +364,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -403,7 +404,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;

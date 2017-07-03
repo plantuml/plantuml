@@ -59,6 +59,7 @@ import h.Ppoly_t;
 import h.pointf;
 import h.pointnlink_t;
 import h.triangle_t;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
@@ -98,7 +99,7 @@ private static jmp_buf jbuf = new jmp_buf();
 
 //1 cc2hmcygbtg3adbwgkunssdhx
 // static deque_t dq
-//private final static __struct__<deque_t> dq = __struct__.from(deque_t.class);
+//private final static __struct__<deque_t> dq = JUtils.from(deque_t.class);
 
 //1 3k2f2er3efsrl0210su710vf
 // static Ppoint_t *ops
@@ -117,7 +118,7 @@ ENTERING("2gub5b19vo2qexn56nw23wage","Pshortestpath");
 try {
     int pi, minpi;
     double minx;
-    final __struct__<pointf> p1 = __struct__.from(pointf.class), p2 = __struct__.from(pointf.class), p3 = __struct__.from(pointf.class);
+    final __struct__<pointf> p1 = JUtils.from(pointf.class), p2 = JUtils.from(pointf.class), p3 = JUtils.from(pointf.class);
     int trii, trij, ftrii, ltrii;
     int ei;
     final __array_of_struct__  epnls = __array_of_struct__.malloc(pointnlink_t.class, 2);
@@ -572,7 +573,7 @@ LEAVING("22a9ajg9t8ovqsigk3tyu3rkd","intersects");
 public static boolean between(__ptr__ pap, __ptr__ pbp, __ptr__ pcp) {
 ENTERING("uh5n18rzyevtb4cwpni70qpc","between");
 try {
-    final __struct__<pointf> p1 = __struct__.from(pointf.class), p2 = __struct__.from(pointf.class);
+    final __struct__<pointf> p1 = JUtils.from(pointf.class), p2 = JUtils.from(pointf.class);
     p1.setDouble("x", pbp.getDouble("x") - pap.getDouble("x"));
     p1.setDouble("y", pbp.getDouble("y") - pap.getDouble("y"));
     p2.setDouble("x", pcp.getDouble("x") - pap.getDouble("x"));

@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|node|frame|cloud|database|queue|stack|storage|agent|usecase|component|boundary|control|entity|interface";
+	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|node|frame|cloud|database|queue|stack|storage|agent|usecase|component|boundary|control|entity|interface|circle";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -70,6 +70,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	private static RegexConcat getRegexConcat() {
 		return new RegexConcat(new RegexLeaf("^"), //
 				new RegexLeaf("SYMBOL", "(?:(" + ALL_TYPES + "|\\(\\))[%s]+)?"), //
+				color2().getRegex(), //
 				new RegexLeaf("[%s]*"), //
 				new RegexOr(//
 						new RegexLeaf("CODE1", CODE_WITH_QUOTE), //
@@ -101,13 +102,17 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
+	private static ColorParser color2() {
+		return ColorParser.simpleColor(ColorType.BACK, "COLOR2");
+	}
+
 	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
 	public static final String CODE = "(" + CODE_CORE + ")";
 	public static final String CODE_WITH_QUOTE = "(" + CODE_CORE + "|[%g][^%g]+[%g])";
 
 	private static final String DISPLAY_CORE = "[%g][^%g]+[%g]|:[^:]+:|\\([^()]+\\)|\\[[^\\[\\]]+\\]";
 	public static final String DISPLAY = "(" + DISPLAY_CORE + ")";
-	private static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
+	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {
@@ -145,6 +150,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			usymbol = USymbol.ACTOR;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
+			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("circle")) {
+			type = LeafType.CIRCLE;
 			usymbol = null;
 		} else {
 			type = LeafType.DESCRIPTION;

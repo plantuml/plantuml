@@ -63,7 +63,6 @@ public class Pipe {
 	public boolean managePipe() throws IOException {
 		boolean error = false;
 		final boolean noStdErr = option.isPipeNoStdErr();
-
 		do {
 			final String source = readOneDiagram();
 			if (source == null) {
@@ -93,7 +92,7 @@ public class Pipe {
 				ps.println(result);
 			} else {
 				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
-				final DiagramDescription result = sourceStringReader.outputImage(os, 0, option.getFileFormatOption());
+				final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(), option.getFileFormatOption());
 				if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
 					error = true;
 					manageErrors(noStdErr ? ps : System.err, sourceStringReader);

@@ -81,6 +81,7 @@ import h.Agedge_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsym_s;
+import h.ST_boxf;
 import h.bezier;
 import h.boxf;
 import h.label_params_t;
@@ -88,6 +89,7 @@ import h.object_t;
 import h.pointf;
 import h.textlabel_t;
 import h.xlabel_t;
+import smetana.core.JUtils;
 import smetana.core.Z;
 import smetana.core.__struct__;
 
@@ -356,7 +358,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -394,7 +396,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -434,7 +436,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -739,7 +741,7 @@ throw new UnsupportedOperationException();
 
 //1 ejooa1m5uoq0ue852wtuerpy
 // static pointf Offset
-//private final static __struct__<pointf> Offset = __struct__.from(pointf.class);
+//private final static __struct__<pointf> Offset = JUtils.from(pointf.class);
 
 
 
@@ -752,7 +754,7 @@ return map_point_w_(p.copy()).copy();
 private static __struct__<pointf> map_point_w_(final __struct__<pointf> p) {
 ENTERING("dajapw16wus3rwimkrk5ihi2b","map_point");
 try {
-    p.____(ccwrotatepf(p, Z.z().Rankdir * 90));
+    p.___(ccwrotatepf(p, Z.z().Rankdir * 90));
     p.setDouble("x", p.getDouble("x") - Z.z().Offset.getDouble("x"));
     p.setDouble("y", p.getDouble("y") - Z.z().Offset.getDouble("y"));
     return p;
@@ -770,7 +772,7 @@ public static void map_edge(Agedge_s e) {
 ENTERING("bvq3vvonvotn47mfe5zsvchie","map_edge");
 try {
     int j, k;
-    final __struct__<bezier> bz = __struct__.from(bezier.class);
+    final __struct__<bezier> bz = JUtils.from(bezier.class);
     if (ED_spl(e) == null) {
 	if ((Z.z().Concentrate == false) && (ED_edge_type(e) != 6))
 	    System.err.println("lost %s %s edge\n"+ agnameof(agtail(e))+
@@ -778,18 +780,18 @@ try {
 	return;
     }
     for (j = 0; j < ED_spl(e).getInt("size"); j++) {
-	bz.____(ED_spl(e).getArrayOfPtr("list").plus(j).getStruct());
+	bz.___(ED_spl(e).getArrayOfPtr("list").plus(j).getStruct());
 	for (k = 0; k < bz.getInt("size"); k++) {
 	    bz.getArrayOfPtr("list").plus(k).setStruct(map_point(bz.getArrayOfPtr("list").plus(k).getStruct()));
 	}
 	if (bz.getBoolean("sflag"))
 UNSUPPORTED("7894dgzvk2um2w1a5ph2r0bcc"); // 	    ED_spl(e)->list[j].sp = map_point(ED_spl(e)->list[j].sp);
 	if (bz.getBoolean("eflag")) {
-	    ED_spl(e).getArrayOfPtr("list").plus(j).getStruct("ep").____(map_point(ED_spl(e).getArrayOfPtr("list").plus(j).getStruct("ep")));
+	    ED_spl(e).getArrayOfPtr("list").plus(j).getStruct("ep").___(map_point(ED_spl(e).getArrayOfPtr("list").plus(j).getStruct("ep")));
     }
     }
     if (ED_label(e)!=null)
-	ED_label(e).getStruct("pos").____(map_point(ED_label(e).getStruct("pos")));
+	ED_label(e).getStruct("pos").___(map_point(ED_label(e).getStruct("pos")));
     if (ED_xlabel(e)!=null)
 UNSUPPORTED("al3tnq9zjjqeq1ll7qdxyu3ja"); // 	ED_xlabel(e)->pos = map_point(ED_xlabel(e)->pos);
     /* vladimir */
@@ -811,16 +813,16 @@ public static void translate_bb(Agraph_s g, int rankdir) {
 ENTERING("a3hf82rxsojxbunj6p8a6bkse","translate_bb");
 try {
     int c;
-    final __struct__<boxf> bb = __struct__.from(boxf.class), new_bb = __struct__.from(boxf.class);
-    bb.____(GD_bb(g));
+    final ST_boxf bb = new ST_boxf(), new_bb = new ST_boxf();
+    bb.___(GD_bb(g));
     if (rankdir == 1 || rankdir == 2) {
 UNSUPPORTED("d4wrtj0h7lkb0e0vernd9czq9"); // 	new_bb.LL = map_point(pointfof(bb.LL.x, bb.UR.y));
 UNSUPPORTED("crysiae5zxc69cj3v2ygfs8xn"); // 	new_bb.UR = map_point(pointfof(bb.UR.x, bb.LL.y));
     } else {
-	new_bb.getStruct("LL").____(map_point(pointfof(bb.getStruct("LL").getDouble("x"), bb.getStruct("LL").getDouble("y"))));
-	new_bb.getStruct("UR").____(map_point(pointfof(bb.getStruct("UR").getDouble("x"), bb.getStruct("UR").getDouble("y"))));
+	new_bb.LL.___(map_point(pointfof(bb.LL.x, bb.LL.y)));
+	new_bb.UR.___(map_point(pointfof(bb.UR.x, bb.UR.y)));
     }
-    GD_bb(g).____(new_bb);
+    GD_bb(g).___(new_bb);
     if (GD_label(g)!=null) {
 	GD_label(g).setStruct("pos", map_point(GD_label(g).getStruct("pos")));
     }
@@ -847,7 +849,7 @@ try {
     for (v = agfstnode(g); v!=null; v = agnxtnode(g, v)) {
 	if (Z.z().Rankdir!=0)
 UNSUPPORTED("e0j848r4j1j7sojfht5gwikvi"); // 	    gv_nodesize(v, 0);
-	ND_coord(v).____(map_point(ND_coord(v)));
+	ND_coord(v).___(map_point(ND_coord(v)));
 	if (ND_xlabel(v)!=null)
 UNSUPPORTED("3fy0l7w2v24hzrvlpstpknwl7"); // 	    ND_xlabel(v)->pos = map_point(ND_xlabel(v)->pos);
 	if (Z.z().State == 1)
@@ -1157,10 +1159,10 @@ try {
     int n_elbls = 0;		/* # of unset edge labels or xlabels */
     int n_set_lbls = 0;		/* # of set xlabels and edge labels */
     int n_clbls = 0;		/* # of set cluster labels */
-    final __struct__<boxf> bb = __struct__.from(boxf.class);
-    final __struct__<pointf> ur = __struct__.from(pointf.class);
+    final __struct__<boxf> bb = JUtils.from(boxf.class);
+    final __struct__<pointf> ur = JUtils.from(pointf.class);
     textlabel_t lp;
-    final __struct__<label_params_t> params = __struct__.from(label_params_t.class);
+    final __struct__<label_params_t> params = JUtils.from(label_params_t.class);
     object_t objs;
     xlabel_t lbls;
     object_t objp;
@@ -1344,7 +1346,7 @@ public static void gv_postprocess(Agraph_s g, int allowTranslation) {
 ENTERING("8fc0zxg8y7hec3n4evx3jw6cq","gv_postprocess");
 try {
     double diff;
-    final __struct__<pointf> dimen = __struct__.from(pointf.class);
+    final __struct__<pointf> dimen = JUtils.from(pointf.class);
     Z.z().Rankdir = GD_rankdir(g);
     Z.z().Flip = GD_flip(g)!=0;
     /* Handle cluster labels */
@@ -1395,7 +1397,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     if (allowTranslation!=0) {
 	switch (Z.z().Rankdir) {
 	case 0:
-	    Z.z().Offset.____(GD_bb(g).getStruct("LL"));
+	    Z.z().Offset.___(GD_bb(g).LL);
 	    break;
 	case 1:
 UNSUPPORTED("5t3j9lrc86kd5ouaqgzvz3qcm"); // 	    Offset = pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x);
@@ -1483,11 +1485,11 @@ public static void place_graph_label(Agraph_s g) {
 ENTERING("72zw1alhd5vd0g6mhum507rvx","place_graph_label");
 try {
     int c;
-    final __struct__<pointf> p = __struct__.from(pointf.class), d = __struct__.from(pointf.class);
+    final __struct__<pointf> p = JUtils.from(pointf.class), d = JUtils.from(pointf.class);
     if (NEQ(g, agroot(g)) && (GD_label(g)!=null) && N(GD_label(g).getInt("set"))) {
 	if ((GD_label_pos(g) & 1)!=0) {
-	    d.____(GD_border(g).plus(2).getStruct());
-	    p.setDouble("y", GD_bb(g).getStruct("UR").getDouble("y") - d.getDouble("y") / 2);
+	    d.___(GD_border(g).plus(2).getStruct());
+	    p.setDouble("y", GD_bb(g).UR.y - d.getDouble("y") / 2);
 	} else {
 UNSUPPORTED("1w38no4welthbwa0i10hei16b"); // 	    d = GD_border(g)[0];
 UNSUPPORTED("2xa4n9ca16xpf1kahaycmkl4r"); // 	    p.y = GD_bb(g).LL.y + d.y / 2;
@@ -1497,7 +1499,7 @@ UNSUPPORTED("cgv3bcg9c274cdwxi1y0sja3p"); // 	    p.x = GD_bb(g).UR.x - d.x / 2;
 	} else if ((GD_label_pos(g) & 2)!=0) {
 UNSUPPORTED("7ictv9eqmjvxjii5lqlyw8nu"); // 	    p.x = GD_bb(g).LL.x + d.x / 2;
 	} else {
-	    p.setDouble("x", (GD_bb(g).getStruct("LL").getDouble("x") + GD_bb(g).getStruct("UR").getDouble("x")) / 2);
+	    p.setDouble("x", (GD_bb(g).LL.x + GD_bb(g).UR.x) / 2);
 	}
 	GD_label(g).setStruct("pos", p);
 	GD_label(g).setBoolean("set", NOT(false));

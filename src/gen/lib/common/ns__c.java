@@ -95,6 +95,7 @@ import h.boxf;
 import h.nodequeue;
 import h.pointf;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
@@ -366,7 +367,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -404,7 +405,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -444,7 +445,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -764,11 +765,11 @@ private static jmp_buf jbuf = new jmp_buf();
 
 //1 3t9aql1n1eclyvy7p2nwyacor
 // static nlist_t Tree_node
-//private static final __struct__<nlist_t> Tree_node = __struct__.from(nlist_t.class);
+//private static final __struct__<nlist_t> Tree_node = JUtils.from(nlist_t.class);
 
 //1 11b7xeg0x1f09v305mxwvgbhs
 // static elist Tree_edge
-//private static final __struct__<elist> Tree_edge = __struct__.from(elist.class);
+//private static final __struct__<elist> Tree_edge = JUtils.from(elist.class);
 
 
 
@@ -782,39 +783,39 @@ try {
 UNSUPPORTED("cq4nqjjxvb0dtdfy4c7pwpqai"); // 	agerr(AGERR, "add_tree_edge: missing tree edge\n");
 UNSUPPORTED("6fzmgjpkhmnx0a2cnt0q0rceg"); // 	longjmp (jbuf, 1);
     }
-    ED_tree_index(e, Z.z().Tree_edge.getInt("size"));
+    ED_tree_index(e, Z.z().Tree_edge.size);
     
-    Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().Tree_edge.getInt("size")).setPtr(e);
-    Z.z().Tree_edge.setInt("size", 1+ Z.z().Tree_edge.getInt("size"));
+    Z.z().Tree_edge.setInList(Z.z().Tree_edge.size, e);
+    Z.z().Tree_edge.size = 1+ Z.z().Tree_edge.size;
         
     if (ND_mark(agtail(e)) == 0) {
-	Z.z().Tree_node.getArrayOfPtr("list").plus(Z.z().Tree_node.getInt("size")).setPtr(agtail(e));
-    Z.z().Tree_node.setInt("size", 1+ Z.z().Tree_node.getInt("size"));
+    Z.z().Tree_node.setInList(Z.z().Tree_node.size, agtail(e));
+    Z.z().Tree_node.size = 1+ Z.z().Tree_node.size;
 	}
 	
     if (ND_mark(aghead(e)) == 0) {
-	Z.z().Tree_node.getArrayOfPtr("list").plus(Z.z().Tree_node.getInt("size")).setPtr(aghead(e));
-    Z.z().Tree_node.setInt("size", 1+ Z.z().Tree_node.getInt("size"));
+	Z.z().Tree_node.setInList(Z.z().Tree_node.size, aghead(e));
+    Z.z().Tree_node.size =  1+ Z.z().Tree_node.size;
 	}
     n = agtail(e);
     ND_mark(n, 1);
     
-    ND_tree_out(n).getArrayOfPtr("list").plus(ND_tree_out(n).getInt("size")).setPtr(e);
-    ND_tree_out(n).setInt("size", 1+ND_tree_out(n).getInt("size"));
-    ND_tree_out(n).getArrayOfPtr("list").plus(ND_tree_out(n).getInt("size")).setPtr(null);
+    ND_tree_out(n).setInList(ND_tree_out(n).size, e);
+    ND_tree_out(n).size = 1+ND_tree_out(n).size;
+    ND_tree_out(n).setInList(ND_tree_out(n).size, null);
     
-    if (ND_out(n).getArrayOfPtr("list").plus(ND_tree_out(n).getInt("size") - 1).getPtr() == null) {
+    if (ND_out(n).getFromList(ND_tree_out(n).size - 1) == null) {
 UNSUPPORTED("9src34zgmgy8yvdzfs1ozlh0w"); // 	agerr(AGERR, "add_tree_edge: empty outedge list\n");
 UNSUPPORTED("6fzmgjpkhmnx0a2cnt0q0rceg"); // 	longjmp (jbuf, 1);
     }
     n = aghead(e);
     ND_mark(n, 1);
     
-    ND_tree_in(n).getArrayOfPtr("list").plus(ND_tree_in(n).getInt("size")).setPtr(e);
-    ND_tree_in(n).setInt("size", 1+ND_tree_in(n).getInt("size"));
-    ND_tree_in(n).getArrayOfPtr("list").plus(ND_tree_in(n).getInt("size")).setPtr(null);
+    ND_tree_in(n).setInList(ND_tree_in(n).size, e);
+    ND_tree_in(n).size = 1+ND_tree_in(n).size;
+    ND_tree_in(n).setInList(ND_tree_in(n).size, null);
 
-    if (ND_in(n).getArrayOfPtr("list").plus(ND_tree_in(n).getInt("size") - 1).getPtr() == null) {
+    if (ND_in(n).getFromList(ND_tree_in(n).size - 1) == null) {
 UNSUPPORTED("f0uri98pv606g2qjpy9k385cy"); // 	agerr(AGERR, "add_tree_edge: empty inedge list\n");
 UNSUPPORTED("6fzmgjpkhmnx0a2cnt0q0rceg"); // 	longjmp (jbuf, 1);
     }
@@ -834,32 +835,32 @@ try {
     int i, j;
     Agnode_s n;
     ED_tree_index(f, ED_tree_index(e));
-    Z.z().Tree_edge.getArrayOfPtr("list").plus(ED_tree_index(e)).setPtr(f);
+    Z.z().Tree_edge.setInList(ED_tree_index(e), f);
     ED_tree_index(e, -1);
     n = agtail(e);
-    ND_tree_out(n).setInt("size", ND_tree_out(n).getInt("size") -1);
-    i = ND_tree_out(n).getInt("size");
+    ND_tree_out(n).size = ND_tree_out(n).size -1;
+    i = ND_tree_out(n).size;
     for (j = 0; j <= i; j++)
-	if (EQ(ND_tree_out(n).getArrayOfPtr("list").plus(j).getPtr(), e))
+	if (EQ(ND_tree_out(n).getFromList(j), e))
 	    break;
-    ND_tree_out(n).getArrayOfPtr("list").plus(j).setPtr(ND_tree_out(n).getArrayOfPtr("list").plus(i).getPtr());
-    ND_tree_out(n).getArrayOfPtr("list").plus(i).setPtr(null);
+    ND_tree_out(n).setInList(j, ND_tree_out(n).getFromList(i));
+    ND_tree_out(n).setInList(i, null);
     n = aghead(e);
-    ND_tree_in(n).setInt("size", ND_tree_in(n).getInt("size") -1);
-    i = ND_tree_in(n).getInt("size");
+    ND_tree_in(n).size = ND_tree_in(n).size -1;
+    i = ND_tree_in(n).size;
     for (j = 0; j <= i; j++)
-	if (EQ(ND_tree_in(n).getArrayOfPtr("list").plus(j).getPtr(), e))
+	if (EQ(ND_tree_in(n).getFromList(j), e))
 	    break;
-    ND_tree_in(n).getArrayOfPtr("list").plus(j).setPtr(ND_tree_in(n).getArrayOfPtr("list").plus(i).getPtr());
-    ND_tree_in(n).getArrayOfPtr("list").plus(i).setPtr(null);
+    ND_tree_in(n).setInList(j, ND_tree_in(n).getFromList(i));
+    ND_tree_in(n).setInList(i, null);
     n = agtail(f);
-    ND_tree_out(n).getArrayOfPtr("list").plus(ND_tree_out(n).getInt("size")).setPtr(f);
-    ND_tree_out(n).setInt("size", ND_tree_out(n).getInt("size") +1);
-    ND_tree_out(n).getArrayOfPtr("list").plus(ND_tree_out(n).getInt("size")).setPtr(null);
+    ND_tree_out(n).setInList(ND_tree_out(n).size, f);
+    ND_tree_out(n).size = ND_tree_out(n).size +1;
+    ND_tree_out(n).setInList(ND_tree_out(n).size, null);
     n = aghead(f);
-    ND_tree_in(n).getArrayOfPtr("list").plus(ND_tree_in(n).getInt("size")).setPtr(f);
-    ND_tree_in(n).setInt("size", ND_tree_in(n).getInt("size") +1);
-    ND_tree_in(n).getArrayOfPtr("list").plus(ND_tree_in(n).getInt("size")).setPtr(null);
+    ND_tree_in(n).setInList(ND_tree_in(n).size, f);
+    ND_tree_in(n).size = ND_tree_in(n).size +1;
+    ND_tree_in(n).setInList(ND_tree_in(n).size, null);
 } finally {
 LEAVING("9b7b78pmafynmvffztrqnlxtn","exchange_tree_edges");
 }
@@ -886,9 +887,9 @@ try {
     while ((v = dequeue(Q))!=null) {
 	ND_rank(v, 0);
 	ctr++;
-	for (i = 0; (e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+	for (i = 0; (e = (Agedge_s) ND_in(v).getFromList(i))!=null; i++)
 	    ND_rank(v, MAX(ND_rank(v), ND_rank(agtail(e)) + ED_minlen(e)));
-	for (i = 0; (e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	for (i = 0; (e = (Agedge_s) ND_out(v).getFromList(i))!=null; i++) {
 	    ND_priority(aghead(e), ND_priority(aghead(e)) -1 );
 	    if ((ND_priority(aghead(e))) <= 0)
 		enqueue(Q, aghead(e));
@@ -938,13 +939,13 @@ try {
     Agedge_s f, rv = null;
     int j, cnt = 0;
     j = Z.z().S_i;
-    while (Z.z().S_i < Z.z().Tree_edge.getInt("size")) {
-	if (ED_cutvalue(f = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr()) < 0) {
+    while (Z.z().S_i < Z.z().Tree_edge.size) {
+	if (ED_cutvalue(f = (Agedge_s) Z.z().Tree_edge.getFromList(Z.z().S_i)) < 0) {
 	    if (rv!=null) {
 		if (ED_cutvalue(rv) > ED_cutvalue(f))
 		    rv = f;
 	    } else
-		rv = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr();
+		rv = (Agedge_s) Z.z().Tree_edge.getFromList(Z.z().S_i);
 	    if (++cnt >= Z.z().Search_size)
 		return rv;
 	}
@@ -953,12 +954,12 @@ try {
     if (j > 0) {
 	Z.z().S_i = 0;
 	while (Z.z().S_i < j) {
-	    if (ED_cutvalue(f = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr()) < 0) {
+	    if (ED_cutvalue(f = (Agedge_s) Z.z().Tree_edge.getFromList(Z.z().S_i)) < 0) {
 		if (rv!=null) {
 		    if (ED_cutvalue(rv) > ED_cutvalue(f))
 			rv = f;
 		} else
-		    rv = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(Z.z().S_i).getPtr();
+		    rv = (Agedge_s) Z.z().Tree_edge.getFromList(Z.z().S_i);
 		if (++cnt >= Z.z().Search_size)
 		    return rv;
 	    }
@@ -989,7 +990,7 @@ ENTERING("10lkpr4y40luvy2idlozfiva3","dfs_enter_outedge");
 try {
     int i, slack;
     Agedge_s e;
-    for (i = 0; (e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (e = (Agedge_s) ND_out(v).getFromList(i))!=null; i++) {
 	if (TREE_EDGE(e) == false) {
 	    if (N(SEQ(Z.z().Low, ND_lim(aghead(e)), Z.z().Lim))) {
 		slack = SLACK(e);
@@ -1001,7 +1002,7 @@ try {
 	} else if (ND_lim(aghead(e)) < ND_lim(v))
 	    dfs_enter_outedge(aghead(e));
     }
-    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null && (Z.z().Slack > 0); i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getFromList(i))!=null && (Z.z().Slack > 0); i++)
 	if (ND_lim(agtail(e)) < ND_lim(v))
 	    dfs_enter_outedge(agtail(e));
 } finally {
@@ -1019,7 +1020,7 @@ ENTERING("2z9nii6380p8qlql8nznzgvof","dfs_enter_inedge");
 try {
     int i, slack;
     Agedge_s e;
-    for (i = 0; (e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (e = (Agedge_s) ND_in(v).getFromList(i))!=null; i++) {
 	if (TREE_EDGE(e) == false) {
 	    if (N(SEQ(Z.z().Low, ND_lim(agtail(e)), Z.z().Lim))) {
 		slack = SLACK(e);
@@ -1031,7 +1032,7 @@ try {
 	} else if (ND_lim(agtail(e)) < ND_lim(v))
 	    dfs_enter_inedge(agtail(e));
     }
-    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null && (Z.z().Slack > 0); i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getFromList(i))!=null && (Z.z().Slack > 0); i++)
 	if (ND_lim(aghead(e)) < ND_lim(v))
 	    dfs_enter_inedge(aghead(e));
 } finally {
@@ -1081,17 +1082,17 @@ ENTERING("1gvyafmercq92v3lg6gb33cbt","treesearch");
 try {
     int i;
     Agedge_s e;
-    for (i = 0; (e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (e = (Agedge_s) ND_out(v).getFromList(i))!=null; i++) {
 	if ((ND_mark(aghead(e)) == 0) && (SLACK(e) == 0)) {
 	    add_tree_edge(e);
-	    if ((Z.z().Tree_edge.getInt("size") == Z.z().N_nodes - 1) || treesearch(aghead(e)))
+	    if ((Z.z().Tree_edge.size == Z.z().N_nodes - 1) || treesearch(aghead(e)))
 		return NOT(0);
 	}
     }
-    for (i = 0; (e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (e = (Agedge_s) ND_in(v).getFromList(i))!=null; i++) {
 	if ((ND_mark(agtail(e)) == 0) && (SLACK(e) == 0)) {
 	    add_tree_edge(e);
-	    if ((Z.z().Tree_edge.getInt("size") == Z.z().N_nodes - 1) || treesearch(agtail(e)))
+	    if ((Z.z().Tree_edge.size == Z.z().N_nodes - 1) || treesearch(agtail(e)))
 		return NOT(0);
 	}
     }
@@ -1113,18 +1114,18 @@ try {
     Agnode_s n;
     for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
 	ND_mark(n, 0);
-	ND_tree_in(n).getArrayOfPtr("list").plus(0).setPtr(null);
-	ND_tree_out(n).getArrayOfPtr("list").plus(0).setPtr(null);
-	ND_tree_in(n).setInt("size", 0);
-	ND_tree_out(n).setInt("size", 0);
+	ND_tree_in(n).setInList(0, null);
+	ND_tree_out(n).setInList(0, null);
+	ND_tree_in(n).size = 0;
+	ND_tree_out(n).size = 0;
     }
-    for (i = 0; i < Z.z().Tree_edge.getInt("size"); i++)
-	ED_tree_index(Z.z().Tree_edge.getArrayOfPtr("list").plus(i).getPtr(), -1);
-    Z.z().Tree_node.setInt("size", 0);
-    Z.z().Tree_edge.setInt("size", 0);
-    for (n = GD_nlist(Z.z().G_ns); n!=null && (Z.z().Tree_edge.getInt("size") == 0); n = ND_next(n))
+    for (i = 0; i < Z.z().Tree_edge.size; i++)
+	ED_tree_index(Z.z().Tree_edge.getFromList(i), -1);
+    Z.z().Tree_node.size = 0;
+    Z.z().Tree_edge.size = 0;
+    for (n = GD_nlist(Z.z().G_ns); n!=null && (Z.z().Tree_edge.size == 0); n = ND_next(n))
 	treesearch(n);
-    return Z.z().Tree_node.getInt("size");
+    return Z.z().Tree_node.size;
 } finally {
 LEAVING("c98bj1u8j43cdezeczn33mec0","tight_tree");
 }
@@ -1161,7 +1162,7 @@ try {
     while (tight_tree() < Z.z().N_nodes) {
 	e = null;
 	for (n = GD_nlist(Z.z().G_ns); n!=null; n = ND_next(n)) {
-	    for (i = 0; (f = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	    for (i = 0; (f = (Agedge_s) ND_out(n).getFromList(i))!=null; i++) {
 		if ((TREE_EDGE(f) == false) && incident(f)!=null && ((e == null)
 							       || (SLACK(f)
 								   <
@@ -1175,8 +1176,8 @@ try {
 	    if (delta!=0) {
 		if (EQ(incident(e), aghead(e)))
 		    delta = -delta;
-		for (i = 0; i < Z.z().Tree_node.getInt("size"); i++)
-		    ND_rank(Z.z().Tree_node.getArrayOfPtr("list").plus(i).getPtr(), ND_rank(Z.z().Tree_node.getArrayOfPtr("list").plus(i).getPtr()) + delta);
+		for (i = 0; i < Z.z().Tree_node.size; i++)
+		    ND_rank(Z.z().Tree_node.getFromList(i), ND_rank(Z.z().Tree_node.getFromList(i)) + delta);
 	    }
 	} else {
 	    return 1;
@@ -1231,10 +1232,10 @@ try {
     int i;
     Agedge_s e;
     ND_rank(v, ND_rank(v) - delta);
-    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getFromList(i))!=null; i++)
 	if (NEQ(e, ND_par(v)))
 	    rerank(aghead(e), delta);
-    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getFromList(i))!=null; i++)
 	if (NEQ(e, ND_par(v)))
 	    rerank(agtail(e), delta);
 } finally {
@@ -1256,11 +1257,11 @@ try {
     /* "for (v = in nodes in tail side of e) do ND_rank(v) -= delta;" */
     if (delta > 0) {
 	int s;
-	s = ND_tree_in(agtail(e)).getInt("size") + ND_tree_out(agtail(e)).getInt("size");
+	s = ND_tree_in(agtail(e)).size + ND_tree_out(agtail(e)).size;
 	if (s == 1)
 	    rerank(agtail(e), delta);
 	else {
-	    s = ND_tree_in(aghead(e)).getInt("size") + ND_tree_out(aghead(e)).getInt("size");
+	    s = ND_tree_in(aghead(e)).size + ND_tree_out(aghead(e)).size;
 	    if (s == 1)
 		rerank(aghead(e), -delta);
 	    else {
@@ -1343,8 +1344,8 @@ ENTERING("9gx8p7md3v3mzp640xdjj814a","LR_balance");
 try {
     int i, delta;
     Agedge_s e, f;
-    for (i = 0; i < Z.z().Tree_edge.getInt("size"); i++) {
-	e = (Agedge_s) Z.z().Tree_edge.getArrayOfPtr("list").plus(i).getPtr();
+    for (i = 0; i < Z.z().Tree_edge.size; i++) {
+	e = (Agedge_s) Z.z().Tree_edge.getFromList(i);
 	if (ED_cutvalue(e) == 0) {
 	    f = enter_edge(e);
 	    if (f == null)
@@ -1391,11 +1392,11 @@ try {
 	inweight = outweight = 0;
 	low = 0;
 	high = Z.z().Maxrank;
-	for (i = 0; (e = (Agedge_s) ND_in(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	for (i = 0; (e = (Agedge_s) ND_in(n).getFromList(i))!=null; i++) {
 	    inweight += ED_weight(e);
 	    low = MAX(low, ND_rank(agtail(e)) + ED_minlen(e));
 	}
-	for (i = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	for (i = 0; (e = (Agedge_s) ND_out(n).getFromList(i))!=null; i++) {
 	    outweight += ED_weight(e);
 	    high = MIN(high, ND_rank(aghead(e)) - ED_minlen(e));
 	}
@@ -1436,17 +1437,18 @@ try {
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	ND_mark(n, 0);
 	Z.z().N_nodes++;
-	for (i = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+	for (i = 0; (e = (Agedge_s) ND_out(n).getFromList(i))!=null; i++)
 	    Z.z().N_edges++;
     }
-    Z.z().Tree_node.setPtr("list", ALLOC_empty(Z.z().N_nodes, Z.z().Tree_node.getPtr("list"), Agnode_s.class));
-    Z.z().Tree_node.setInt("size", 0);
-    Z.z().Tree_edge.setPtr("list", ALLOC_empty(Z.z().N_nodes, Z.z().Tree_edge.getPtr("list"), Agedge_s.class));
-    Z.z().Tree_edge.setInt("size", 0);
+    Z.z().Tree_node.reallocEmpty(Z.z().N_nodes, Agnode_s.class);
+    Z.z().Tree_node.size =  0;
+    // Z.z().Tree_edge.setPtr("list", ALLOC_empty(Z.z().N_nodes, Z.z().Tree_edge.getPtr("list"), Agedge_s.class));
+    Z.z().Tree_edge.realloc(Z.z().N_nodes);
+    Z.z().Tree_edge.size = 0;
     feasible = 1;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	ND_priority(n, 0);
-	for (i = 0; (e = (Agedge_s) ND_in(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	for (i = 0; (e = (Agedge_s) ND_in(n).getFromList(i))!=null; i++) {
 	    ND_priority(n, 1+ND_priority(n));
 	    ED_cutvalue(e, 0);
 	    ED_tree_index(e, -1);
@@ -1454,11 +1456,13 @@ try {
 		&& (ND_rank(aghead(e)) - ND_rank(agtail(e)) < ED_minlen(e)))
 		feasible = 0;
 	}
-	ND_tree_in(n).setPtr("list", zmalloc(sizeof(Agedge_s.class, i+1)));;
-	ND_tree_in(n).setInt("size", 0);
-	for (i = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++);
-	ND_tree_out(n).setPtr("list", zmalloc(sizeof(Agedge_s.class, i+1)));
-	ND_tree_out(n).setInt("size", 0);
+	// ND_tree_in(n).setPtr("list", zmalloc(sizeof(Agedge_s.class, i+1)));;
+	ND_tree_in(n).mallocEmpty(Agedge_s.class, i+1);
+	ND_tree_in(n).size = 0;
+	for (i = 0; (e = (Agedge_s) ND_out(n).getFromList(i))!=null; i++);
+	// ND_tree_out(n).setPtr("list", zmalloc(sizeof(Agedge_s.class, i+1)));
+	ND_tree_out(n).mallocEmpty(Agedge_s.class, i+1);
+	ND_tree_out(n).size = 0;
     }
     return feasible;
 } finally {
@@ -1606,9 +1610,9 @@ try {
 	dir = -1;
     }
     sum = 0;
-    for (i = 0; (e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_out(v).getFromList(i))!=null; i++)
 	sum += x_val(e, v, dir);
-    for (i = 0; (e = (Agedge_s) ND_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_in(v).getFromList(i))!=null; i++)
 	sum += x_val(e, v, dir);
     ED_cutvalue(f, sum);
 } finally {
@@ -1672,10 +1676,10 @@ ENTERING("ah65iqmwa5j0qwotm6amhijlg","dfs_cutval");
 try {
     int i;
     Agedge_s e;
-    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getFromList(i))!=null; i++)
 	if (NEQ(e, par))
 	    dfs_cutval(aghead(e), e);
-    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getFromList(i))!=null; i++)
 	if (NEQ(e, par))
 	    dfs_cutval(agtail(e), e);
     if (par!=null)
@@ -1698,10 +1702,10 @@ try {
     lim = low;
     ND_par(v, par);
     ND_low(v, low);
-    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_out(v).getFromList(i))!=null; i++)
 	if (NEQ(e, par))
 	    lim = dfs_range(aghead(e), e, lim);
-    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    for (i = 0; (e = (Agedge_s) ND_tree_in(v).getFromList(i))!=null; i++)
 	if (NEQ(e, par))
 	    lim = dfs_range(agtail(e), e, lim);
     ND_lim(v, lim);

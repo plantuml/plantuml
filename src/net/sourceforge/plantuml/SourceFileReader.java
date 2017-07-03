@@ -199,7 +199,7 @@ public class SourceFileReader implements ISourceFileReader {
 				try {
 					os = new BufferedOutputStream(new FileOutputStream(suggested.getFile(0)));
 					UmlDiagram.exportDiagramError(os, t, fileFormatOption, 42, null, blockUml.getFlashData(),
-							UmlDiagram.getFailureText2(t));
+							UmlDiagram.getFailureText2(t, blockUml.getFlashData()));
 				} finally {
 					if (os != null) {
 						os.close();
@@ -263,6 +263,5 @@ public class SourceFileReader implements ISourceFileReader {
 	public final Set<FileWithSuffix> getIncludedFiles() {
 		return builder.getIncludedFiles();
 	}
-
 
 }

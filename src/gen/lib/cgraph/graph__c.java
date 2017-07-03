@@ -76,6 +76,7 @@ import h.Agmemdisc_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsubnode_s;
+import h.ST_Agdesc_s;
 import h._dt_s;
 import h._dtdisc_s;
 import h._dtlink_s;
@@ -268,7 +269,7 @@ try {
     	AGTYPE(g, AGRAPH);
 		g.setPtr("clos", clos);
 		g.setStruct("desc", desc);
-		g.getStruct("desc").setInt("maingraph", ASINT((N(0))));
+		((ST_Agdesc_s)g.getStruct("desc")).maingraph = ASINT((N(0)));
 		g.setPtr("root", g);
 		g.getPtr("clos").getStruct("state").setPtr("id", (__ptr__) g.getPtr("clos").getStruct("disc").getPtr("id").call("open", g, arg_disc));
 		 if (agmapnametoid(g, AGRAPH, name, gid, (N(0)))!=0)
@@ -301,7 +302,7 @@ try {
 	AGSEQ(g, agnextseq(par, AGRAPH));
   	par.getPtr("g_dict").call("searchf", par.getPtr("g_dict"),g,0000001);
     }				/* else AGSEQ=0 */
-    if (N(par) || par.getStruct("desc").getBoolean("has_attrs"))
+    if (N(par) || ((ST_Agdesc_s)par.getStruct("desc")).has_attrs!=0)
 	agraphattr_init(g);
     agmethod_init(g, g);
     return g;
@@ -445,7 +446,7 @@ throw new UnsupportedOperationException();
 public static boolean agisdirected(Agraph_s g) {
 ENTERING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 try {
-    return g.getStruct("desc").getBoolean("directed");
+    return ((ST_Agdesc_s)g.getStruct("desc")).directed!=0;
 } finally {
 LEAVING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 }
@@ -473,7 +474,7 @@ LEAVING("8thgds4eioot64flko26m8ns0","agisundirected");
 public static boolean agisstrict(Agraph_s g) {
 ENTERING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 try {
-    return g.getStruct("desc").getBoolean("strict");
+    return ((ST_Agdesc_s)g.getStruct("desc")).strict!=0;
 } finally {
 LEAVING("9qgdebmdfrcfjm394bg59a7y5","agisstrict");
 }
@@ -616,7 +617,7 @@ throw new UnsupportedOperationException();
 
 //1 cqgilvgau98cgaulohsii8vx4
 // Dtdisc_t Ag_subgraph_id_disc = 
-/*static final public __struct__<_dtdisc_s> Ag_subgraph_id_disc = __struct__.from(_dtdisc_s.class);
+/*static final public __struct__<_dtdisc_s> Ag_subgraph_id_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_subgraph_id_disc.setInt("key", 0);
 	Ag_subgraph_id_disc.setInt("size", 0);
@@ -631,7 +632,7 @@ static {
 
 //1 98aldesvg4i0qxoidbuanebv7
 // Agdesc_t Agdirected = 
-/*static final public __struct__<Agdesc_s> Agdirected = __struct__.from(Agdesc_s.class);
+/*static final public __struct__<Agdesc_s> Agdirected = JUtils.from(Agdesc_s.class);
 static {
 	Agdirected.setInt("directed", 1);
 	Agdirected.setInt("strict", 0);

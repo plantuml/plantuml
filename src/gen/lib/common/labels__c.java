@@ -77,12 +77,14 @@ import h.Agobj_s;
 import h.Agraph_s;
 import h.Agraphinfo_t;
 import h.GVC_s;
+import h.ST_pointf;
+import h.ST_port;
 import h.boxf;
 import h.pointf;
-import h.port;
 import h.textlabel_t;
 import h.textspan_t;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
@@ -353,7 +355,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -391,7 +393,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -431,7 +433,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -730,11 +732,11 @@ throw new UnsupportedOperationException();
 
 //3 4wkeqik2dt7ecr64ej6ltbnvb
 // static void storeline(GVC_t *gvc, textlabel_t *lp, char *line, char terminator) 
-//private static __struct__<textfont_t> tf = __struct__.from(textfont_t.class);
+//private static __struct__<textfont_t> tf = JUtils.from(textfont_t.class);
 public static void storeline(GVC_s gvc, textlabel_t lp, CString line, char terminator) {
 ENTERING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 try {
-    final __struct__<pointf> size = __struct__.from(pointf.class);
+    final __struct__<pointf> size = JUtils.from(pointf.class);
     __ptr__ span = null;
     int oldsz = lp.getInt("u.txt.nspans") + 1;
     lp.setPtr("u.txt.span", ZALLOC(oldsz + 1, lp.getPtr("u.txt.span"), textspan_t.class, oldsz));
@@ -745,22 +747,22 @@ try {
 	Z.z().tf.setPtr("name", lp.getPtr("fontname"));
 	Z.z().tf.setDouble("size", lp.getDouble("fontsize"));
 	// WE CHEAT
-	size.setDouble("x", 0.0);
-	size.setDouble("y", (int)(lp.getDouble("fontsize") * 1.20));
+	((ST_pointf) size).x = 0.0;
+	((ST_pointf) size).y = (int)(lp.getDouble("fontsize") * 1.20);
 	hackInitDimensionFromLabel(size, line.getContent());
-	span.getStruct("size").setDouble("y", (int)size.getDouble("y"));
+	((ST_pointf) span.getStruct("size")).y = (int)size.getDouble("y");
     }
     else {
 	System.err.println("YOU SHOULD NOT SEE THAT");
-	size.setDouble("x", 0.0);
-	size.setDouble("y", (int)(lp.getDouble("fontsize") * 1.20));
+	((ST_pointf) size).x = 0.0;
+	((ST_pointf) size).y = (int)(lp.getDouble("fontsize") * 1.20);
 	span.getStruct("size").setDouble("y", (int)(lp.getDouble("fontsize") * 1.20));
     }
     lp.setInt("u.txt.nspans", lp.getInt("u.txt.nspans") + 1);
     /* width = max line width */
-    lp.getStruct("dimen").setDouble("x", MAX(lp.getStruct("dimen").getDouble("x"), size.getDouble("x")));
+    ((ST_pointf) lp.getStruct("dimen")).x = MAX(lp.getStruct("dimen").getDouble("x"), size.getDouble("x"));
     /* accumulate height */
-    lp.getStruct("dimen").setDouble("y", lp.getStruct("dimen").getDouble("y") + size.getDouble("y"));
+    ((ST_pointf) lp.getStruct("dimen")).y = lp.getStruct("dimen").getDouble("y") + size.getDouble("y");
 } finally {
 LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 }
@@ -777,8 +779,8 @@ try {
     char c;
     CString p, line, lineptr, str = lp.getCString("text");
     char bytee = 0x00;
-    lp.getStruct("dimen").setDouble("x", 0.0);
-    lp.getStruct("dimen").setDouble("y", 0.0);
+    ((ST_pointf) lp.getStruct("dimen")).x = 0.0;
+    ((ST_pointf) lp.getStruct("dimen")).y = 0.0;
     if (str.charAt(0) == '\0')
 	return;
     line = lineptr = null;
@@ -1043,7 +1045,7 @@ try {
     int newlen = 0;
     int isEdge = 0;
     textlabel_t tl;
-    final __struct__<port> pt = __struct__.from(port.class);
+    final ST_port pt = new ST_port();
     /* prepare substitution strings */
     switch (agobjkind(obj)) {
 	case AGRAPH:
@@ -1072,13 +1074,13 @@ try {
 	    g_len = strlen(g_str);
 	    t_str = agnameof(agtail((obj.castTo(Agedge_s.class))));
 	    t_len = strlen(t_str);
-	    pt.____(ED_tail_port(obj.castTo(Agedge_s.class)));
-	    if ((tp_str = pt.getCString("name"))!=null)
+	    pt.___(ED_tail_port(obj.castTo(Agedge_s.class)));
+	    if ((tp_str = pt.name)!=null)
 	        tp_len = strlen(tp_str);
 	    h_str = agnameof(aghead((obj.castTo(Agedge_s.class))));
 	    h_len = strlen(h_str);
-	    pt.____(ED_head_port(obj.castTo(Agedge_s.class)));
-	    if ((hp_str = pt.getCString("name"))!=null)
+	    pt.___(ED_head_port(obj.castTo(Agedge_s.class)));
+	    if ((hp_str = pt.name)!=null)
 		hp_len = strlen(hp_str);
 	    h_len = strlen(h_str);
 	    tl = ED_label(obj.castTo(Agedge_s.class));

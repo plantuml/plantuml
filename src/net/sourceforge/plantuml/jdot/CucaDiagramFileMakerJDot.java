@@ -48,6 +48,7 @@ import h.Agnodeinfo_t;
 import h.Agraph_s;
 import h.Agraphinfo_t;
 import h.GVC_s;
+import h.ST_boxf;
 import h.boxf;
 
 import java.awt.geom.Dimension2D;
@@ -186,11 +187,11 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	public void drawGroup(UGraphic ug, YMirror ymirror, IGroup group, Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
 		final __ptr__ data = Macro.AGDATA(gr).castTo(Agraphinfo_t.class);
-		final __struct__<boxf> bb = data.getStruct("bb");
-		final double llx = bb.getStruct("LL").getDouble("x");
-		double lly = bb.getStruct("LL").getDouble("y");
-		final double urx = bb.getStruct("UR").getDouble("x");
-		double ury = bb.getStruct("UR").getDouble("y");
+		final ST_boxf bb = (ST_boxf) data.getStruct("bb");
+		final double llx = bb.LL.x;
+		double lly = bb.LL.y;
+		final double urx = bb.UR.x;
+		double ury = bb.UR.y;
 		if (ymirror != null) {
 			final double tmpUry = ury;
 			ury = ymirror.getMirrored(lly);
@@ -293,6 +294,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private void exportEntity(Agraph_s g, ILeaf leaf) {
 		final Shape shape = dotStringFactory.getBibliotekon().getShape(leaf);
+		// System.err.println("exportEntity " + leaf);
 		final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
 		agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
 		final String width = "" + (shape.getWidth() / 72);
@@ -521,6 +523,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			return null;
 		}
 		final Agedge_s e = agedge(g, n, m, null, true);
+		// System.err.println("createEdge " + link);
 		agsafeset(e, new CString("arrowtail"), new CString("none"), new CString(""));
 		agsafeset(e, new CString("arrowhead"), new CString("none"), new CString(""));
 

@@ -40,6 +40,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.StringUtils;
@@ -63,15 +64,17 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private final TextBlockBackcolored graphicStrings;
 	private final BufferedImage flashCode;
+	private final String text;
 
 	public GraphvizCrash(String text) {
+		this.text = text;
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		flashCode = utils.exportFlashcode(text);
+		this.flashCode = utils.exportFlashcode(text);
 		this.graphicStrings = GraphicStrings.createBlackOnWhite(init(), IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}
 
-	public static List<String> anErrorHasOccured(Throwable exception) {
+	public static List<String> anErrorHasOccured(Throwable exception, String text) {
 		final List<String> strings = new ArrayList<String>();
 		if (exception == null) {
 			strings.add("An error has occured!");
@@ -81,7 +84,19 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);
 		strings.add(" ");
+		strings.add("Diagram size: " + lines(text) + " lines / " + text.length() + " characters.");
+		strings.add(" ");
 		return strings;
+	}
+
+	private static int lines(String text) {
+		int result = 0;
+		for (int i = 0; i < text.length(); i++) {
+			if (text.charAt(i) == BackSlash.CHAR_NEWLINE) {
+				result++;
+			}
+		}
+		return result;
 	}
 
 	public static void checkOldVersionWarning(final List<String> strings) {
@@ -111,7 +126,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	private List<String> init() {
-		final List<String> strings = anErrorHasOccured(null);
+		final List<String> strings = anErrorHasOccured(null, text);
 		strings.add("For some reason, dot/Graphviz has crashed.");
 		strings.add("This has been generated with PlantUML (" + Version.versionString() + ").");
 		checkOldVersionWarning(strings);

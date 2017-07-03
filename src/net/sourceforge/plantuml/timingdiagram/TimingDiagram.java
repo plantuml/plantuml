@@ -146,6 +146,10 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 		final IntricatedPoint pt1 = player1.getTimeProjection(ug.getStringBounder(), message.getTick1());
 		final IntricatedPoint pt2 = player2.getTimeProjection(ug.getStringBounder(), message.getTick2());
 
+		if (pt1 == null || pt2 == null) {
+			return;
+		}
+
 		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),
 				message.getLabel(), getSkinParam());
 		timeArrow.drawU(ug);

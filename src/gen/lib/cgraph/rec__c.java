@@ -67,6 +67,8 @@ import h.Agedge_s;
 import h.Agobj_s;
 import h.Agraph_s;
 import h.Agrec_s;
+import h.ST_Agdesc_s;
+import h.ST_Agtag_s;
 import smetana.core.CString;
 import smetana.core.__ptr__;
 import smetana.core.size_t;
@@ -213,11 +215,11 @@ ENTERING("62z9z5vraa2as0c9t108j9xaf","set_data");
 try {
     Agedge_s e;
     obj.setPtr("data", data);
-    obj.getStruct("tag").setInt("mtflock", mtflock);
+    ((ST_Agtag_s)obj.getStruct("tag")).mtflock = mtflock;
     if ((AGTYPE(obj) == AGINEDGE) || (AGTYPE(obj) == AGOUTEDGE)) {
 	e = (Agedge_s) agopp(obj.castTo(Agedge_s.class));
 	AGDATA(e, data);
-	e.getStruct("base").getStruct("tag").setInt("mtflock", mtflock);
+	((ST_Agtag_s)e.getStruct("base").getStruct("tag")).mtflock = mtflock;
     }
 } finally {
 LEAVING("62z9z5vraa2as0c9t108j9xaf","set_data");
@@ -246,11 +248,11 @@ try {
 	}
     }
     if (d!=null) {
-	if (hdr.getStruct("tag").getBoolean("mtflock")) {
+	if (((ST_Agtag_s)hdr.getStruct("tag")).mtflock!=0) {
 	    if (mtf && NEQ(hdr.getPtr("data"), d))
 		System.err.println("move to front lock inconsistency");
 	} else {
-	    if (NEQ(d, first) || (mtf != hdr.getStruct("tag").getBoolean("mtflock")))
+	    if (NEQ(d, first) || (mtf != ((((ST_Agtag_s)hdr.getStruct("tag")).mtflock)!=0)))
 		set_data(hdr, d, ASINT(mtf));	/* Always optimize */
 	}
     }
@@ -282,7 +284,7 @@ try {
 	    firstrec.setPtr("next", newrec);
 	}
     }
-    if (NOT(obj.getStruct("tag").getInt("mtflock")))
+    if (NOT(((ST_Agtag_s)obj.getStruct("tag")).mtflock))
 	set_data(obj, newrec, (0));
 } finally {
 LEAVING("7sk4k5ipm2jnd244556g1kr6","objputrec");
@@ -307,7 +309,7 @@ try {
 	rec = (Agrec_s) ((__ptr__)agalloc(g, recsize)).castTo(Agrec_s.class);
     // rec = (Agrec_s) Memory.malloc(Agrec_s.class);
 	rec.setPtr("name", agstrdup(g, recname));
-	switch (obj.getStruct("tag").getInt("objtype")) {
+	switch (((ST_Agtag_s)obj.getStruct("tag")).objtype) {
 	case AGRAPH:
 	    objputrec(g, obj, rec);
 	    break;

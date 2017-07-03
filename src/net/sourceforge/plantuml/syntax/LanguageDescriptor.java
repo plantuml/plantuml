@@ -78,6 +78,7 @@ public class LanguageDescriptor {
 		type.add("file");
 		type.add("package");
 		type.add("queue");
+		type.add("archimate");
 
 		keyword.add("@startuml");
 		keyword.add("@enduml");

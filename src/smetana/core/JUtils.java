@@ -36,17 +36,42 @@
 
 package smetana.core;
 
+import h.Agdesc_s;
 import h.Agedge_s;
 import h.Agedgeinfo_t;
+import h.Agiddisc_s;
+import h.Agmemdisc_s;
+import h.Agtag_s;
+import h.ST_Agdesc_s;
+import h.ST_Agiddisc_s;
+import h.ST_Agmemdisc_s;
+import h.ST_Agtag_s;
+import h.ST_arrowname_t;
+import h.ST_arrowtype_t;
+import h.ST_boxf;
+import h.ST_dtdisc_s;
+import h.ST_dtmethod_s;
+import h.ST_elist;
+import h.ST_nlist_t;
+import h.ST_pointf;
+import h.ST_port;
+import h._dtdisc_s;
+import h._dtmethod_s;
+import h.arrowname_t;
+import h.arrowtype_t;
 import h.bezier;
 import h.boxf;
+import h.elist;
+import h.nlist_t;
 import h.pointf;
+import h.port;
 import h.splines;
 import smetana.core.amiga.StarArrayOfInteger;
 import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarArrayOfStruct;
 import smetana.core.amiga.StarStar;
 import smetana.core.amiga.StarStruct;
+import smetana.core.amiga.StarStructImpl;
 
 // http://docs.oracle.com/javase/specs/jls/se5.0/html/expressions.html#15.7.4
 // http://www.jbox.dk/sanos/source/lib/string.c.html
@@ -245,12 +270,12 @@ public class JUtils {
 			}
 			return EQ(o1b, o2b);
 		}
-		if (o1 instanceof StarArrayOfStruct && o2 instanceof StarArrayOfStruct) { 
+		if (o1 instanceof StarArrayOfStruct && o2 instanceof StarArrayOfStruct) {
 			StarArrayOfStruct oo1 = (StarArrayOfStruct) o1;
 			StarArrayOfStruct oo2 = (StarArrayOfStruct) o2;
 			return oo1.isSameThan(oo2);
 		}
-		if (o1 instanceof StarArrayOfPtr && o2 instanceof StarArrayOfStruct) { 
+		if (o1 instanceof StarArrayOfPtr && o2 instanceof StarArrayOfStruct) {
 			StarArrayOfPtr oo1 = (StarArrayOfPtr) o1;
 			StarArrayOfStruct oo2 = (StarArrayOfStruct) o2;
 			__struct__ s1 = oo1.getStruct();
@@ -359,6 +384,92 @@ public class JUtils {
 		sb.append(point.getDouble("y"));
 		sb.append(")");
 		return sb.toString();
+	}
+
+	public static <C extends __ptr__> __struct__<C> from(Class<C> theClass) {
+		if (theClass == _dtmethod_s.class) {
+			return new ST_dtmethod_s();
+		}
+		if (theClass == _dtdisc_s.class) {
+			return new ST_dtdisc_s();
+		}
+		if (theClass == Agdesc_s.class) {
+			return new ST_Agdesc_s();
+		}
+		if (theClass == Agtag_s.class) {
+			return new ST_Agtag_s();
+		}
+		if (theClass == Agiddisc_s.class) {
+			return new ST_Agiddisc_s();
+		}
+		if (theClass == Agmemdisc_s.class) {
+			return new ST_Agmemdisc_s();
+		}
+		if (theClass == nlist_t.class) {
+			return new ST_nlist_t();
+		}
+		if (theClass == arrowname_t.class) {
+			return new ST_arrowname_t();
+		}
+		if (theClass == arrowtype_t.class) {
+			return new ST_arrowtype_t();
+		}
+		if (theClass == elist.class) {
+			return new ST_elist();
+		}
+		if (theClass == pointf.class) {
+			return new ST_pointf();
+		}
+		if (theClass == boxf.class) {
+			return new ST_boxf();
+		}
+		if (theClass == port.class) {
+			return new ST_port();
+		}
+		return new __struct_impl__<C>(theClass);
+	}
+
+	public static StarStruct create(Class theClass, StarStruct parent) {
+		if (theClass == _dtmethod_s.class) {
+			throw new IllegalArgumentException(theClass.toString());
+		}
+		if (theClass == _dtdisc_s.class) {
+			return new ST_dtdisc_s(parent);
+		}
+		if (theClass == Agdesc_s.class) {
+			return new ST_Agdesc_s(parent);
+		}
+		if (theClass == Agtag_s.class) {
+			return new ST_Agtag_s(parent);
+		}
+		if (theClass == Agiddisc_s.class) {
+			throw new IllegalArgumentException(theClass.toString());
+		}
+		if (theClass == Agmemdisc_s.class) {
+			throw new IllegalArgumentException(theClass.toString());
+		}
+		if (theClass == nlist_t.class) {
+			return new ST_nlist_t(parent);
+		}
+		if (theClass == arrowname_t.class) {
+			throw new IllegalArgumentException(theClass.toString());
+		}
+		if (theClass == arrowtype_t.class) {
+			throw new IllegalArgumentException(theClass.toString());
+		}
+		if (theClass == elist.class) {
+			return new ST_elist(parent);
+		}
+		if (theClass == pointf.class) {
+			return new ST_pointf(parent);
+		}
+		if (theClass == boxf.class) {
+			return new ST_boxf(parent);
+		}
+		if (theClass == port.class) {
+			return new ST_port(parent);
+		}
+		return new StarStructImpl(theClass, parent);
 	}
 
 }

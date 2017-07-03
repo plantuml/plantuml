@@ -184,6 +184,9 @@ public class Player implements TextBlock, TimeProjected {
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final IntricatedPoint point = getTimeDrawing().getTimeProjection(stringBounder, tick);
+		if (point == null) {
+			return null;
+		}
 		final UTranslate translation = getTranslateForTimeDrawing(stringBounder);
 		return point.translated(translation);
 	}

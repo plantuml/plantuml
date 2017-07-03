@@ -95,9 +95,11 @@ import h.Agnode_s;
 import h.Agnodeinfo_t;
 import h.Agraph_s;
 import h.Agrec_s;
+import h.ST_elist;
 import h.boxf;
 import h.elist;
 import h.pointf;
+import smetana.core.JUtils;
 import smetana.core.__struct__;
 
 public class fastgr__c {
@@ -365,7 +367,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -403,7 +405,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -443,7 +445,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -742,22 +744,22 @@ throw new UnsupportedOperationException();
 
 //3 econbrl314rr46qnvvw5e32j7
 // static edge_t *ffe(node_t * u, elist uL, node_t * v, elist vL) 
-public static Agedge_s ffe(Agnode_s u, final __struct__<elist> uL, Agnode_s v, final __struct__<elist> vL) {
+public static Agedge_s ffe(Agnode_s u, final ST_elist uL, Agnode_s v, final ST_elist vL) {
 // WARNING!! STRUCT
 return ffe_w_(u, uL.copy(), v, vL.copy());
 }
-private static Agedge_s ffe_w_(Agnode_s u, final __struct__<elist> uL, Agnode_s v, final __struct__<elist> vL) {
+private static Agedge_s ffe_w_(Agnode_s u, final ST_elist uL, Agnode_s v, final ST_elist vL) {
 ENTERING("econbrl314rr46qnvvw5e32j7","ffe");
 try {
     int i;
     Agedge_s e = null;
-    if ((uL.getInt("size") > 0) && (vL.getInt("size") > 0)) {
-	if (uL.getInt("size") < vL.getInt("size")) {
-	    for (i = 0; (e = (Agedge_s) uL.getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+    if ((uL.size > 0) && (vL.size > 0)) {
+	if (uL.size < vL.size) {
+	    for (i = 0; (e = (Agedge_s) uL.getFromList(i))!=null; i++)
 		if (EQ(aghead(e), v))
 		    break;
 	} else {
-	    for (i = 0; (e = (Agedge_s) vL.getArrayOfPtr("list").plus(i).getPtr())!=null; i++)
+	    for (i = 0; (e = (Agedge_s) vL.getFromList(i))!=null; i++)
 		if (EQ(agtail(e), u))
 		    break;
 	}

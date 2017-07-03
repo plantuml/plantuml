@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
+	public static final String DISPLAY_WITH_GENERIC = "[%g](.+?)(?:\\<(" + GenericRegexProducer.PATTERN + ")\\>)?[%g]";
 	public static final String CODE = "[^%s{}%g<>]+";
 	public static final String CODE_NO_DOTDOT = "[^%s{}%g<>:]+";
 
@@ -76,13 +77,13 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|circle)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "[%g](.+)[%g]"), //
+								new RegexLeaf("DISPLAY1", DISPLAY_WITH_GENERIC), //
 								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CODE + ")"), //
 								new RegexLeaf("[%s]+as[%s]+"), // //
-								new RegexLeaf("DISPLAY2", "[%g](.+)[%g]")), //
+								new RegexLeaf("DISPLAY2", DISPLAY_WITH_GENERIC)), //
 						new RegexLeaf("CODE3", "(" + CODE + ")"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
@@ -108,9 +109,10 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(arg.get("TYPE", 0)));
 		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
+		final String genericOption = arg.getLazzy("DISPLAY", 1);
+		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
-		final String generic = arg.get("GENERIC", 0);
 		final ILeaf entity;
 		if (diagram.leafExist(code)) {
 			entity = diagram.getOrCreateLeaf(code, type, null);

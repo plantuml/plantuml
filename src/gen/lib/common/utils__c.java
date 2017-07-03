@@ -94,6 +94,8 @@ import h.Agedge_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsym_s;
+import h.ST_boxf;
+import h.ST_port;
 import h.boxf;
 import h.fontinfo;
 import h.nodequeue;
@@ -103,6 +105,7 @@ import h.shape_kind;
 import h.textlabel_t;
 import smetana.core.CFunction;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
@@ -374,7 +377,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -412,7 +415,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -452,7 +455,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -1537,14 +1540,14 @@ LEAVING("bgnk1zwht9rwx6thmly98iofb","noClip");
 
 //3 9vnr1bc7p533acazoxbhbfmx3
 // static port chkPort (port (*pf)(node_t*, char*, char*), node_t* n, char* s) 
-public static __struct__<port> chkPort(CFunction pf, Agnode_s n, CString s) {
+public static ST_port chkPort(CFunction pf, Agnode_s n, CString s) {
 // WARNING!! STRUCT
 return chkPort_w_(pf, n, s).copy();
 }
-private static __struct__<port> chkPort_w_(CFunction pf, Agnode_s n, CString s) {
+private static ST_port chkPort_w_(CFunction pf, Agnode_s n, CString s) {
 ENTERING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
 try {
-    final __struct__<port> pt = __struct__.from(port.class);
+    final ST_port pt = new ST_port();
 	CString cp=null;
 	if(s!=null)
 		cp= strchr(s,':');
@@ -1555,8 +1558,8 @@ UNSUPPORTED("971i954brvgqb35cftazlqhon"); // 	*cp = ':';
 UNSUPPORTED("2o9oidtrr5gspl1dh6vnz7mlz"); // 	pt.name = cp+1;
     }
     else
-	pt.____((__struct__<port>) pf.exe(n, s, null));
-	pt.setPtr("name", s);
+	pt.___((__struct__<port>) pf.exe(n, s, null));
+	pt.name = s;
     return pt;
 } finally {
 LEAVING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
@@ -1573,8 +1576,8 @@ ENTERING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 try {
     CString str;
     int r = 0;
-    final __struct__<fontinfo> fi = __struct__.from(fontinfo.class);
-    final __struct__<fontinfo> lfi = __struct__.from(fontinfo.class);
+    final __struct__<fontinfo> fi = JUtils.from(fontinfo.class);
+    final __struct__<fontinfo> lfi = JUtils.from(fontinfo.class);
     Agraph_s sg = agraphof(agtail(e));
     fi.setPtr("fontname", null);
     lfi.setPtr("fontname", null);
@@ -1643,16 +1646,16 @@ LEAVING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 
 //3 3mkqvtbyq9j8ktzil6t7vakg5
 // static boxf addLabelBB(boxf bb, textlabel_t * lp, boolean flipxy) 
-public static __struct__<boxf> addLabelBB(final __struct__<boxf> bb, textlabel_t lp, boolean flipxy) {
+public static __struct__<boxf> addLabelBB(final ST_boxf bb, textlabel_t lp, boolean flipxy) {
 // WARNING!! STRUCT
 return addLabelBB_w_(bb.copy(), lp, flipxy).copy();
 }
-private static __struct__<boxf> addLabelBB_w_(final __struct__<boxf> bb, textlabel_t lp, boolean flipxy) {
+private static __struct__<boxf> addLabelBB_w_(final ST_boxf bb, textlabel_t lp, boolean flipxy) {
 ENTERING("3mkqvtbyq9j8ktzil6t7vakg5","addLabelBB");
 try {
     double width, height;
-    final __struct__<pointf> p = __struct__.from(pointf.class);
-    p.____(lp.getStruct("pos"));
+    final __struct__<pointf> p = JUtils.from(pointf.class);
+    p.___(lp.getStruct("pos"));
     double min, max;
     if (flipxy) {
 	height = lp.getStruct("dimen").getDouble("x");
@@ -1664,16 +1667,16 @@ try {
     }
     min = p.getDouble("x") - width / 2.;
     max = p.getDouble("x") + width / 2.;
-    if (min < bb.getStruct("LL").getDouble("x"))
-	bb.getStruct("LL").setDouble("x", min);
-    if (max > bb.getStruct("UR").getDouble("x"))
-	bb.getStruct("UR").setDouble("x", max);
+    if (min < bb.LL.x)
+	bb.LL.x = min;
+    if (max > bb.UR.x)
+	bb.UR.x = max;
     min = p.getDouble("y") - height / 2.;
     max = p.getDouble("y") + height / 2.;
-    if (min < bb.getStruct("LL").getDouble("y"))
-	bb.getStruct("LL").setDouble("y", min);
-    if (max > bb.getStruct("UR").getDouble("y"))
-	bb.getStruct("UR").setDouble("y", max);
+    if (min < bb.LL.y)
+	bb.LL.y = min;
+    if (max > bb.UR.y)
+	bb.UR.y = max;
     return bb;
 } finally {
 LEAVING("3mkqvtbyq9j8ktzil6t7vakg5","addLabelBB");
@@ -1714,7 +1717,7 @@ throw new UnsupportedOperationException();
 public static void updateBB(Agraph_s g, textlabel_t lp) {
 ENTERING("bz7kjecium6a7xa39qfobwwnc","updateBB");
 try {
-    GD_bb(g).____(addLabelBB(GD_bb(g), lp, GD_flip(g)!=0));
+    GD_bb(g).___(addLabelBB(GD_bb(g), lp, GD_flip(g)!=0));
 } finally {
 LEAVING("bz7kjecium6a7xa39qfobwwnc","updateBB");
 }

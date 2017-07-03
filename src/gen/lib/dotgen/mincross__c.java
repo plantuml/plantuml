@@ -137,6 +137,7 @@ import h.nodequeue;
 import h.pointf;
 import h.rank_t;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_ptr__;
@@ -408,7 +409,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -446,7 +447,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -486,7 +487,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -863,7 +864,7 @@ try {
     int c, nc;
     CString s;
     init_mincross(g);
-    for (nc = c = 0; c < GD_comp(g).getInt("size"); c++) {
+    for (nc = c = 0; c < GD_comp(g).size; c++) {
 	init_mccomp(g, c);
 	nc += mincross_(g, 0, 2, doBalance);
     }
@@ -928,7 +929,8 @@ public static void init_mccomp(Agraph_s g, int c) {
 ENTERING("49vw7fkn99wbojtfksugvuruh","init_mccomp");
 try {
     int r;
-    GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(c).getPtr());
+    // GD_nlist(g, GD_comp(g).getFromListt(c).getPtr());
+    GD_nlist(g, GD_comp(g).getFromList(c));
     if (c > 0) {
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	    GD_rank(g).plus(r).setPtr("v", GD_rank(g).plus(r).getPtr("v").plus(GD_rank(g).plus(r).getInt("n")));
@@ -1164,10 +1166,10 @@ try {
     __array_of_ptr__ e1;
     __array_of_ptr__ e2;
     int inv, cross = 0, t;
-    for (e2 = ND_in(w).getArrayOfPtr("list"); e2.getPtr()!=null; e2=e2.plus(1)) {
+    for (e2 = ND_in(w).getTheArray(); e2.getPtr()!=null; e2=e2.plus(1)) {
 	int cnt = ED_xpenalty(e2.getPtr());		
 	inv = ND_order((agtail(e2.getPtr())));
-	for (e1 = ND_in(v).getArrayOfPtr("list"); e1.getPtr()!=null; e1=e1.plus(1)) {
+	for (e1 = ND_in(v).getTheArray(); e1.getPtr()!=null; e1=e1.plus(1)) {
 	    t = ND_order(agtail(e1.getPtr())) - inv;
 	    if ((t > 0)
 		|| ((t == 0)
@@ -1191,10 +1193,10 @@ ENTERING("b7mf74np8ewrgzwd5u0o8fqod","out_cross");
 try {
     __array_of_ptr__ e1, e2;
     int inv, cross = 0, t;
-    for (e2 = ND_out(w).getArrayOfPtr("list"); e2.getPtr()!=null; e2=e2.plus(1)) {
+    for (e2 = ND_out(w).getTheArray(); e2.getPtr()!=null; e2=e2.plus(1)) {
 	int cnt = ED_xpenalty((Agedge_s)e2.getPtr());
 	inv = ND_order(aghead(e2.getPtr()));
-	for (e1 = ND_out(v).getArrayOfPtr("list"); e1.getPtr()!=null; e1=e1.plus(1)) {
+	for (e1 = ND_out(v).getTheArray(); e1.getPtr()!=null; e1=e1.plus(1)) {
 	    t = ND_order(aghead(e1.getPtr())) - inv;
 	    if ((t > 0)
 		|| ((t == 0)
@@ -1532,7 +1534,7 @@ ENTERING("8uyqc48j0oul206l3np85wj9p","save_best");
 try {
     Agnode_s n;
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
-	(ND_coord(n)).setDouble("x", ND_order(n));
+    (ND_coord(n)).x = ND_order(n);
 } finally {
 LEAVING("8uyqc48j0oul206l3np85wj9p","save_best");
 }
@@ -1548,11 +1550,11 @@ ENTERING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 try {
     int c;
     Agnode_s u, v;
-    if (GD_comp(g).getInt("size") <= 1)
+    if (GD_comp(g).size <= 1)
 	return;
     u = null;
-    for (c = 0; c < GD_comp(g).getInt("size"); c++) {
-	v = (Agnode_s) GD_comp(g).getArrayOfPtr("list").plus(c).getPtr();
+    for (c = 0; c < GD_comp(g).size; c++) {
+    	v = (Agnode_s) GD_comp(g).getFromList(c);
 	if (u!=null)
 	    ND_next(u, v);
 	ND_prev(v, u);
@@ -1561,8 +1563,8 @@ try {
 	}
 	u = v;
     }
-    GD_comp(g).setInt("size", 1);
-    GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(0).getPtr());
+    GD_comp(g).size = 1;
+    GD_nlist(g, GD_comp(g).getFromList(0));
     GD_minrank(g, Z.z().GlobalMinRank);
     GD_maxrank(g, Z.z().GlobalMaxRank);
 } finally {
@@ -1631,8 +1633,8 @@ try {
 	for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
 	    v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
 	    ND_order(v, i);
-	    if (ND_flat_out(v).getPtr("list")!=null) {
-		for (j = 0; (e = (Agedge_s) ND_flat_out(v).getArrayOfPtr("list").plus(j).getPtr())!=null; j++)
+	    if (ND_flat_out(v).listNotNull()) {
+		for (j = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++)
 		    if (ED_edge_type(e) == 4) {
 			delete_flat_edge(e);
 			Memory.free(e.getPtr("base.data"));
@@ -1697,8 +1699,8 @@ public static boolean is_a_vnode_of_an_edge_of(Agraph_s g, Agnode_s v) {
 ENTERING("9f8atyi1unmleplge3rijdt4s","is_a_vnode_of_an_edge_of");
 try {
     if ((ND_node_type(v) == 1)
-	&& (ND_in(v).getInt("size") == 1) && (ND_out(v).getInt("size") == 1)) {
-	Agedge_s e = (Agedge_s) ND_out(v).getArrayOfPtr("list").plus(0).getPtr();
+	&& (ND_in(v).size == 1) && (ND_out(v).size == 1)) {
+	Agedge_s e = (Agedge_s) ND_out(v).getFromList(0);
 	while (ED_edge_type(e) != 0)
 	    e = ED_to_orig(e);
 	if (agcontains(g, e))
@@ -1920,10 +1922,11 @@ ENTERING("6fprrp93vmz0jn3l4ro0iropp","flat_rev");
 try {
     int j;
     Agedge_s rev;
-    if (N(ND_flat_out(aghead(e)).getArrayOfPtr("list")))
+    if (ND_flat_out(aghead(e)).listNotNull()==false)
+    // if (N(ND_flat_out(aghead(e)).getArrayOfPtr("list")))
 	rev = null;
     else
-	for (j = 0; (rev = (Agedge_s) ND_flat_out(aghead(e)).getArrayOfPtr("list").plus(j).getPtr())!=null; j++)
+	for (j = 0; (rev = (Agedge_s) ND_flat_out(aghead(e)).getFromList(j))!=null; j++)
 	    if (EQ(aghead(rev), agtail(e)))
 		break;
     if (rev!=null) {
@@ -1963,8 +1966,8 @@ try {
     ND_mark(v, NOT(false));
     ND_onstack(v, NOT(false));
     hascl = (GD_n_cluster(dot_root(g)) > 0);
-    if (ND_flat_out(v).getArrayOfPtr("list")!=null)
-	for (i = 0; (e = (Agedge_s) ND_flat_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    if (ND_flat_out(v).listNotNull())
+	for (i = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(i))!=null; i++) {
 	    if (hascl
 		&& NOT(agcontains(g, agtail(e)) && agcontains(g, aghead(e))))
 		continue;
@@ -2010,7 +2013,7 @@ try {
 	    ND_mark(v, 0);
 	    ND_onstack(v, 0);
 	    ND_low(v, i);
-	    if ((ND_flat_out(v).getInt("size") > 0) && (flat == 0)) {
+	    if ((ND_flat_out(v).size > 0) && (flat == 0)) {
 		GD_rank(g).plus(r).setPtr("flat",
 		    new_matrix(GD_rank(g).plus(r).getInt("n"), GD_rank(g).plus(r).getInt("n")));
 		flat = 1;
@@ -2131,7 +2134,7 @@ try {
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++)
 	GD_rank(g).plus(i).setInt("n", 0);
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	otheredges = ((pass == 0) ? ND_in(n).getPtr("list") : ND_out(n).getPtr("list"));
+	otheredges = ((pass == 0) ? ND_in(n).getTheList() : ND_out(n).getTheList());
 	if (otheredges.plus(0).getPtr() != null)
 	    continue;
 	if ((ND_mark(n)) == 0) {
@@ -2179,16 +2182,16 @@ try {
     int i;
     Agedge_s e;
     if (pass == 0) {
-	for (i = 0; i < ND_out(n0).getInt("size"); i++) {
-	    e = (Agedge_s) ND_out(n0).getArrayOfPtr("list").plus(i).getPtr();
+	for (i = 0; i < ND_out(n0).size; i++) {
+	    e = (Agedge_s) ND_out(n0).getFromList(i);
 	    if (((ND_mark(aghead(e)))) == 0) {
 		ND_mark(aghead(e), 1);
 		enqueue(q, aghead(e));
 	    }
 	}
     } else {
-	for (i = 0; i < ND_in(n0).getInt("size"); i++) {
-	    e = (Agedge_s) ND_in(n0).getArrayOfPtr("list").plus(i).getPtr();
+	for (i = 0; i < ND_in(n0).size; i++) {
+	    e = (Agedge_s) ND_in(n0).getFromList(i);
 	    if (((ND_mark(agtail(e)))) == 0) {
 		ND_mark(agtail(e), 1);
 		enqueue(q, agtail(e));
@@ -2228,8 +2231,8 @@ try {
     Agedge_s e;
     int i, cnt = 0;
     ND_mark(v, NOT(false));
-    if (ND_flat_out(v).getInt("size") > 0) {
-	for (i = 0; (e = (Agedge_s) ND_flat_out(v).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    if (ND_flat_out(v).size > 0) {
+	for (i = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(i))!=null; i++) {
 	    if (N(constraining_flat_edge(g,v,e))) continue;
 	    if ((ND_mark(aghead(e))) == 0)
 		cnt += postorder(g, aghead(e), list.plus(cnt), r);
@@ -2270,12 +2273,12 @@ try {
 	    if (GD_flip(g)!=0) v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
 	    else v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(GD_rank(g).plus(r).getInt("n") - i - 1).getPtr();
 	    local_in_cnt = local_out_cnt = 0;
-	    for (j = 0; j < ND_flat_in(v).getInt("size"); j++) {
-		flat_e = (Agedge_s) ND_flat_in(v).getArrayOfPtr("list").plus(j).getPtr();
+	    for (j = 0; j < ND_flat_in(v).size; j++) {
+		flat_e = (Agedge_s) ND_flat_in(v).getFromList(j);
 		if (constraining_flat_edge(g,v,flat_e)) local_in_cnt++;
 	    }
-	    for (j = 0; j < ND_flat_out(v).getInt("size"); j++) {
-		flat_e = (Agedge_s) ND_flat_out(v).getArrayOfPtr("list").plus(j).getPtr();
+	    for (j = 0; j < ND_flat_out(v).size; j++) {
+		flat_e = (Agedge_s) ND_flat_out(v).getFromList(j);
 		if (constraining_flat_edge(g,v,flat_e)) local_out_cnt++;
 	    }
 	    if ((local_in_cnt == 0) && (local_out_cnt == 0))
@@ -2308,8 +2311,8 @@ try {
 	    /* nonconstraint flat edges must be made LR */
 	    for (i = 0; i < GD_rank(g).plus(r).getInt("n"); i++) {
 		v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(i).getPtr();
-		if (ND_flat_out(v).getArrayOfPtr("list")!=null) {
-		    for (j = 0; (e = (Agedge_s) ND_flat_out(v).getArrayOfPtr("list").plus(j).getPtr())!=null; j++) {
+		if (ND_flat_out(v).listNotNull()) {
+		    for (j = 0; (e = (Agedge_s) ND_flat_out(v).getFromList(j))!=null; j++) {
 			if ( ((GD_flip(g) == 0) && (ND_order(aghead(e)) < ND_order(agtail(e)))) ||
 				 ( (GD_flip(g)!=0) && (ND_order(aghead(e)) > ND_order(agtail(e)) ))) {
 			    assert(constraining_flat_edge(g,v,e) == false);
@@ -2506,12 +2509,12 @@ try {
     for (top = 0; top < GD_rank(g).plus(r).getInt("n"); top++) {
 	Agedge_s e;
 	if (max > 0) {
-	    for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	    for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
 		for (k = ND_order(aghead(e)) + 1; k <= max; k++)
 		    cross += Z.z().Count.plus(k).getInt() * ED_xpenalty(e);
 	    }
 	}
-	for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	for (i = 0; (e = (Agedge_s) ND_out(rtop.plus(top).getPtr()).getFromList(i))!=null; i++) {
 	    int inv = ND_order(aghead(e));
 	    if (inv > max)
 		max = inv;
@@ -2587,8 +2590,8 @@ try {
     Agedge_s e;
     __ptr__ fl;
     Agnode_s nn;
-    if (ND_flat_in(n).getInt("size") > 0) {
-	fl = ND_flat_in(n).getPtr("list");
+    if (ND_flat_in(n).size > 0) {
+	fl = ND_flat_in(n).getTheList();
 	nn = agtail(fl.plus(0).getPtr());
 	for (i = 1; (e = (Agedge_s) fl.plus(i).getPtr())!=null; i++)
 	    if (ND_order(agtail(e)) > ND_order(nn))
@@ -2597,8 +2600,8 @@ try {
 	    ND_mval(n, ND_mval(nn) + 1);
 	    return false;
 	}
-    } else if (ND_flat_out(n).getInt("size") > 0) {
-	fl = ND_flat_out(n).getPtr("list");
+    } else if (ND_flat_out(n).size > 0) {
+	fl = ND_flat_out(n).getTheList();
 	nn = aghead(fl.plus(0).getPtr());
 	for (i = 1; (e = (Agedge_s) fl.plus(i).getPtr())!=null; i++)
 	    if (ND_order(aghead(e)) < ND_order(nn))
@@ -2634,11 +2637,11 @@ try {
 	n = (Agnode_s) v.plus(i).getPtr();
 	j = 0;
 	if (r1 > r0)
-	    for (j0 = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(j0).getPtr())!=null; j0++) {
+	    for (j0 = 0; (e = (Agedge_s) ND_out(n).getFromList(j0))!=null; j0++) {
 		if (ED_xpenalty(e) > 0)
 		    list.plus(j++).setInt((256 * ND_order(aghead(e)) + (ED_head_port(e)).getInt("order")));
 	} else
-	    for (j0 = 0; (e = (Agedge_s) ND_in(n).getArrayOfPtr("list").plus(j0).getPtr())!=null; j0++) {
+	    for (j0 = 0; (e = (Agedge_s) ND_in(n).getFromList(j0))!=null; j0++) {
 		if (ED_xpenalty(e) > 0)
 		    list.plus(j++).setInt((256 * ND_order(agtail(e)) + (ED_tail_port(e)).getInt("order")));
 	    }
@@ -2676,7 +2679,7 @@ try {
     }
     for (i = 0; i < GD_rank(g).plus(r0).getInt("n"); i++) {
 	n = (Agnode_s) v.plus(i).getPtr();
-	if ((ND_out(n).getInt("size") == 0) && (ND_in(n).getInt("size") == 0))
+	if ((ND_out(n).size == 0) && (ND_in(n).size == 0))
 	    hasfixed |= flat_mval(n);
     }
     return hasfixed;

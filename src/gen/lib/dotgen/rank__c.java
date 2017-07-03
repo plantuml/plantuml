@@ -111,6 +111,7 @@ import h.elist;
 import h.point;
 import h.pointf;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__struct__;
@@ -380,7 +381,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -418,7 +419,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -458,7 +459,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -780,8 +781,8 @@ try {
     Agnode_s n;
     Agedge_s e, f;
     int c;
-    for (c = 0; c < GD_comp(g).getInt("size"); c++) {
-	GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(c).getPtr());
+    for (c = 0; c < GD_comp(g).size; c++) {
+    	GD_nlist(g, GD_comp(g).getFromList(c));
 	for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	    renewlist(ND_in(n).amp());
 	    renewlist(ND_out(n).amp());
@@ -814,9 +815,8 @@ try {
 	    ED_to_virt(e, null);
 	}
     }
-    Memory.free(GD_comp(g).getPtr("list"));
-    GD_comp(g).setPtr("list", null);
-    GD_comp(g).setInt("size", 0);
+    GD_comp(g).resetList();
+    GD_comp(g).size = 0;
 } finally {
 LEAVING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
 }
@@ -1130,7 +1130,7 @@ ENTERING("3bcr1748gqnu8ogb73jeja7ly","minmax_edges");
 try {
     Agnode_s n;
     Agedge_s e;
-    final __struct__<point>  slen = __struct__.from(point.class);
+    final __struct__<point>  slen = JUtils.from(point.class);
     slen.setInt("x", 0);
     slen.setInt("y", 0);
     if ((GD_maxset(g) == null) && (GD_minset(g) == null))
@@ -1211,8 +1211,9 @@ try {
     CString s;
     if ((s = agget(g, new CString("nslimit1")))!=null)
 UNSUPPORTED("9tp2zk1tsr4ce9rwsr0is9u3o"); // 	maxiter = atof(s) * agnnodes(g);
-    for (c = 0; c < GD_comp(g).getInt("size"); c++) {
-	GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(c).getPtr());
+    for (c = 0; c < GD_comp(g).size; c++) {
+    	//GD_nlist(g, GD_comp(g).getArrayOfPtr("list").plus(c).getPtr());
+    	GD_nlist(g, GD_comp(g).getFromList(c));
 	rank(g, (GD_n_cluster(g) == 0 ? 1 : 0), maxiter);	/* TB balance */
     }
 } finally {
@@ -1273,7 +1274,7 @@ LEAVING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
 public static void dot1_rank(Agraph_s g, aspect_t asp) {
 ENTERING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 try {
-    final __struct__<point> p = __struct__.from(point.class);
+    final __struct__<point> p = JUtils.from(point.class);
     edgelabel_ranks(g);
     if (asp!=null) {
 UNSUPPORTED("kh7e20nqwuserrnpf3zpvuyl"); // 	init_UF_size(g);
@@ -1282,7 +1283,7 @@ UNSUPPORTED("d88j5oswhz0d3yvd4wlvxohmu"); // 	initEdgeTypes(g);
     collapse_sets(g,g);
     /*collapse_leaves(g); */
     class1_(g);
-    p.____(minmax_edges(g));
+    p.___(minmax_edges(g));
     decompose(g, 0);
     if (asp!=null && ((GD_comp(g).getInt("size") > 1)||(GD_n_cluster(g) > 0))) {
 UNSUPPORTED("evcjt85irnaa02v8cam07i009"); // 	asp->badGraph = 1;

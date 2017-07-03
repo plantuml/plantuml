@@ -138,12 +138,14 @@ import h.Agedgeinfo_t;
 import h.Agedgepair_s;
 import h.Agnode_s;
 import h.Agraph_s;
+import h.ST_pointf;
 import h.aspect_t;
 import h.boxf;
 import h.point;
 import h.pointf;
 import h.ratio_t;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__ptr__;
@@ -414,7 +416,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -452,7 +454,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -492,7 +494,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -827,8 +829,8 @@ try {
         tp = null;
 	for (i = 0; i < rp.getPtr().getInt("n"); i++) {
 	    tp = (Agnode_s) rp.getPtr().getArrayOfPtr("v").plus(i).getPtr();
-	    if (ND_save_out(tp).getPtr("list")!=null) {
-        	for (j = 0; (e = (Agedge_s) ND_save_out(tp).getArrayOfPtr("list").plus(j).getPtr())!=null; j++) {
+	    if (ND_save_out(tp).listNotNull()) {
+        	for (j = 0; (e = (Agedge_s) ND_save_out(tp).getFromList(j))!=null; j++) {
 		    if ((ND_rank(aghead(e)) > r) || (ND_rank(agtail(e)) > r)) {
 			found = 1;
 			break;
@@ -836,8 +838,8 @@ try {
         	}
 		if (found!=0) break;
 	    }
-	    if (ND_save_in(tp).getPtr("list")!=null) {
-        	for (j = 0; (e = (Agedge_s) ND_save_in(tp).getArrayOfPtr("list").plus(j).getPtr())!=null; j++) {
+	    if (ND_save_in(tp).listNotNull()) {
+        	for (j = 0; (e = (Agedge_s) ND_save_in(tp).getFromList(j))!=null; j++) {
 		    if ((ND_rank(agtail(e)) > r) || (ND_rank(aghead(e)) > r)) {
 			found = 1;
 			break;
@@ -924,7 +926,7 @@ try {
     Agedge_s e;
     if (EQ(u, v))
 	return NOT(false);
-    for (i = 0; (e = (Agedge_s) ND_out(u).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (e = (Agedge_s) ND_out(u).getFromList(i))!=null; i++) {
 	if (go(aghead(e), v))
 	    return NOT(false);
     }
@@ -989,8 +991,8 @@ try {
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	ND_save_in(n, ND_in(n));
 	ND_save_out(n, ND_out(n));
-	for (i = 0; ND_out(n).getArrayOfPtr("list").plus(i).getPtr()!=null; i++);
-	for (j = 0; ND_in(n).getArrayOfPtr("list").plus(j).getPtr()!=null; j++);
+	for (i = 0; ND_out(n).getFromList(i)!=null; i++);
+	for (j = 0; ND_in(n).getFromList(j)!=null; j++);
 	n_in = i + j;
 	alloc_elist(n_in + 3, ND_in(n), Agnode_s.class);
 	alloc_elist(3, ND_out(n), Agnode_s.class);
@@ -1034,7 +1036,7 @@ try {
 	for (j = 0; j < rank.plus(i).getInt("n"); j++) {
 	    u = (Agnode_s) rank.plus(i).getArrayOfPtr("v").plus(j).getPtr();
 	    ND_mval(u, ND_rw(u));	/* keep it somewhere safe */
-	    if (ND_other(u).getInt("size") > 0) {	/* compute self size */
+	    if (ND_other(u).size > 0) {	/* compute self size */
 		/* FIX: dot assumes all self-edges go to the right. This
                  * is no longer true, though makeSelfEdge still attempts to
                  * put as many as reasonable on the right. The dot code
@@ -1044,7 +1046,7 @@ try {
                  * positioning but may also affect interrank spacing.
                  */
 		sw = 0;
-		for (k = 0; (e = (Agedge_s) ND_other(u).getArrayOfPtr("list").plus(k).getPtr())!=null; k++) {
+		for (k = 0; (e = (Agedge_s) ND_other(u).getFromList(k))!=null; k++) {
 		    if (EQ(agtail(e), aghead(e))) {
 			sw += selfRightSpace (e);
 		    }
@@ -1060,8 +1062,8 @@ try {
 	    }
 	    /* constraints from labels of flat edges on previous rank */
 	    if ((e = (Agedge_s) ND_alg(u))!=null) {
-		e0 = (Agedge_s) ND_save_out(u).getArrayOfPtr("list").plus(0).getPtr();
-		e1 = (Agedge_s) ND_save_out(u).getArrayOfPtr("list").plus(1).getPtr();
+		e0 = (Agedge_s) ND_save_out(u).getFromList(0);
+		e1 = (Agedge_s) ND_save_out(u).getFromList(1);
 		if (ND_order(aghead(e0)) > ND_order(aghead(e1))) {
 		    ff = e0;
 		    e0 = e1;
@@ -1080,8 +1082,8 @@ try {
 			ED_weight(e));
 	    }
 	    /* position flat edge endpoints */
-	    for (k = 0; k < ND_flat_out(u).getInt("size"); k++) {
-		e = (Agedge_s) ND_flat_out(u).getArrayOfPtr("list").plus(k).getPtr();
+	    for (k = 0; k < ND_flat_out(u).size; k++) {
+		e = (Agedge_s) ND_flat_out(u).getFromList(k);
 		if (ND_order(agtail(e)) < ND_order(aghead(e))) {
 		    t0 = agtail(e);
 		    h0 = aghead(e);
@@ -1131,11 +1133,11 @@ try {
     Agnode_s n, sn;
     Agedge_s e;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	if (ND_save_out(n).getPtr("list")!=null)
-	    for (i = 0; (e = (Agedge_s) ND_save_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	if (ND_save_out(n).listNotNull())
+	    for (i = 0; (e = (Agedge_s) ND_save_out(n).getFromList(i))!=null; i++) {
 		sn = virtual_node(g);
 		ND_node_type(sn, 2);
-		m0 = (int)(ED_head_port(e).getStruct("p").getDouble("x") - ED_tail_port(e).getStruct("p").getDouble("x"));
+		m0 = (int)(ED_head_port(e).p.x - ED_tail_port(e).p.x);
 		if (m0 > 0)
 		    m1 = 0;
 		else {
@@ -1189,7 +1191,7 @@ try {
     Agedge_s e;
     if (ND_node_type(v) != 1)
 	return false;
-    for (e = (Agedge_s) ND_save_out(v).getArrayOfPtr("list").plus(0).getPtr(); ED_to_orig(e)!=null; e = ED_to_orig(e));
+    for (e = (Agedge_s) ND_save_out(v).getFromList(0); ED_to_orig(e)!=null; e = ED_to_orig(e));
     if (agcontains(g, agtail(e)))
 	return false;
     if (agcontains(g, aghead(e)))
@@ -1392,7 +1394,7 @@ try {
     Agnode_s n, nnext, nprev;
     Agedge_s e;
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
-	for (i = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	for (i = 0; (e = (Agedge_s) ND_out(n).getFromList(i))!=null; i++) {
 	    Memory.free(e.getStruct("base").getPtr("data"));
 	    Memory.free(e);
 	}
@@ -1435,7 +1437,7 @@ try {
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
 	for (j = 0; j < rank.plus(i).getInt("n"); j++) {
 	    v = (Agnode_s) rank.plus(i).getArrayOfPtr("v").plus(j).getPtr();
-	    ND_coord(v).setDouble("x", ND_rank(v));
+	    ND_coord(v).x = ND_rank(v);
 	    ND_rank(v, i);
 	}
     }
@@ -1604,8 +1606,8 @@ try {
 	    /* assumes symmetry, ht1 = ht2 */
 	    ht2 = ND_ht(n) / 2;
 	    /* have to look for high self-edge labels, too */
-	    if (ND_other(n).getPtr("list")!=null)
-		for (j = 0; (e = (Agedge_s) ND_other(n).getArrayOfPtr("list").plus(j).getPtr())!=null; j++) {
+	    if (ND_other(n).listNotNull())
+		for (j = 0; (e = (Agedge_s) ND_other(n).getFromList(j))!=null; j++) {
 		    if (EQ(agtail(e), aghead(e))) {
 			if (ED_label(e)!=null)
 			    ht2 = MAX(ht2, ED_label(e).getStruct("dimen").getDouble("y") / 2);
@@ -1672,7 +1674,7 @@ UNSUPPORTED("e6dfx5uesysjaefb0djyfp7f"); // 		    (ND_coord(rank[r + 1].v[0])).y
     }
     /* copy ycoord assignment from leftmost nodes to others */
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
-	ND_coord(n).setDouble("y", (ND_coord(rank.plus(ND_rank(n)).getArrayOfPtr("v").plus(0).getPtr())).getDouble("y"));
+    ND_coord(n).y = ND_coord(rank.plus(ND_rank(n)).getArrayOfPtr("v").plus(0).getPtr()).getDouble("y");
 } finally {
 LEAVING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 }
@@ -1682,18 +1684,18 @@ LEAVING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 
 
 //3 9ay2xnnmh407i32pfokujfda5
-// static void dot_compute_bb(graph_t * g, graph_t * root) 
+//static void dot_compute_bb(graph_t * g, graph_t * root) 
 public static void dot_compute_bb(Agraph_s g, Agraph_s root) {
 ENTERING("9ay2xnnmh407i32pfokujfda5","dot_compute_bb");
 try {
-    int r, c;
-    double x, offset;
-    Agnode_s v;
-    final __struct__<pointf> LL = __struct__.from(pointf.class);
-    final __struct__<pointf> UR = __struct__.from(pointf.class);
-    if (EQ(g, dot_root(g))) {
-	LL.setDouble("x", INT_MAX);
-	UR.setDouble("x", -((double)INT_MAX));
+ int r, c;
+ double x, offset;
+ Agnode_s v;
+ final ST_pointf LL = new ST_pointf();
+ final ST_pointf UR = new ST_pointf();
+ if (EQ(g, dot_root(g))) {
+	LL.x = INT_MAX;
+	UR.x = -((double)INT_MAX);
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	    int rnkn = GD_rank(g).plus(r).getInt("n");
 	    if (rnkn == 0)
@@ -1712,27 +1714,28 @@ try {
 	    for (c = rnkn-2; ND_node_type(v) != 0; c--)
 		v = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(c).getPtr();
 	    x = ND_coord(v).getDouble("x") + ND_rw(v);
-	    UR.setDouble("x", MAX(UR.getDouble("x"), x));
+	    UR.x = MAX(UR.getDouble("x"), x);
 	}
 	offset = 8;
 	for (c = 1; c <= GD_n_cluster(g); c++) {
-	    x = (double)(GD_bb(GD_clust(g).plus(c)).getStruct("LL").getDouble("x") - offset);
-	    LL.setDouble("x", MIN(LL.getDouble("x"), x));
-	    x = (double)(GD_bb(GD_clust(g).plus(c)).getStruct("UR").getDouble("x") + offset);
-	    UR.setDouble("x", MAX(UR.getDouble("x"), x));
+	    x = (double)(GD_bb(GD_clust(g).plus(c)).LL.x - offset);
+	    LL.x = MIN(LL.getDouble("x"), x);
+	    x = (double)(GD_bb(GD_clust(g).plus(c)).UR.x + offset);
+	    UR.x = MAX(UR.getDouble("x"), x);
 	}
-    } else {
-	LL.setDouble("x", (double)(ND_rank(GD_ln(g))));
-	UR.setDouble("x", (double)(ND_rank(GD_rn(g))));
-    }
-    LL.setDouble("y", ND_coord(GD_rank(root).plus(GD_maxrank(g)).getArrayOfPtr("v").plus(0).getPtr()).getDouble("y") - GD_ht1(g));
-    UR.setDouble("y", ND_coord(GD_rank(root).plus(GD_minrank(g)).getArrayOfPtr("v").plus(0).getPtr()).getDouble("y") + GD_ht2(g));
-    GD_bb(g).setStruct("LL", LL);
-    GD_bb(g).setStruct("UR", UR);
+ } else {
+	LL.x = (double)(ND_rank(GD_ln(g)));
+	UR.x = (double)(ND_rank(GD_rn(g)));
+ }
+ LL.y = ND_coord(GD_rank(root).plus(GD_maxrank(g)).getArrayOfPtr("v").plus(0).getPtr()).getDouble("y") - GD_ht1(g);
+ UR.y = ND_coord(GD_rank(root).plus(GD_minrank(g)).getArrayOfPtr("v").plus(0).getPtr()).getDouble("y") + GD_ht2(g);
+ GD_bb(g).setStruct("LL", LL);
+ GD_bb(g).setStruct("UR", UR);
 } finally {
 LEAVING("9ay2xnnmh407i32pfokujfda5","dot_compute_bb");
 }
 }
+
 
 
 
@@ -2017,13 +2020,13 @@ throw new UnsupportedOperationException();
 public static boolean ports_eq(Agedge_s e, Agedge_s f) {
 ENTERING("alpljm8o6nsam95ly6leelnbp","ports_eq");
 try {
-    return ((ED_head_port(e).getBoolean("defined") == ED_head_port(f).getBoolean("defined"))
-	    && (((ED_head_port(e).getStruct("p").getDouble("x") == ED_head_port(f).getStruct("p").getDouble("x")) &&
-		 (ED_head_port(e).getStruct("p").getDouble("y") == ED_head_port(f).getStruct("p").getDouble("y")))
-		|| (ED_head_port(e).getBoolean("defined") == false))
-	    && (((ED_tail_port(e).getStruct("p").getDouble("x") == ED_tail_port(f).getStruct("p").getDouble("x")) &&
-		 (ED_tail_port(e).getStruct("p").getDouble("y") == ED_tail_port(f).getStruct("p").getDouble("y")))
-		|| (ED_tail_port(e).getBoolean("defined") == false))
+    return ((ED_head_port(e).defined == ED_head_port(f).defined)
+	    && (((ED_head_port(e).p.x == ED_head_port(f).p.x) &&
+		 (ED_head_port(e).p.y == ED_head_port(f).p.y))
+		|| (ED_head_port(e).defined == 0))
+	    && (((ED_tail_port(e).p.x == ED_tail_port(f).p.x) &&
+		 (ED_tail_port(e).p.y == ED_tail_port(f).p.y))
+		|| (ED_tail_port(e).defined == 0))
 	);
 } finally {
 LEAVING("alpljm8o6nsam95ly6leelnbp","ports_eq");
@@ -2047,8 +2050,8 @@ try {
 	    do_leaves(g, ND_inleaf(n));
 	if (ND_outleaf(n)!=null)
 	    do_leaves(g, ND_outleaf(n));
-	if (ND_other(n).getPtr("list")!=null)
-	    for (i = 0; (e = (Agedge_s) ND_other(n).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+	if (ND_other(n).listNotNull())
+	    for (i = 0; (e = (Agedge_s) ND_other(n).getFromList(i))!=null; i++) {
 		if ((d = ND_rank(aghead(e)) - ND_rank(aghead(e))) == 0)
 		    continue;
 		f = ED_to_orig(e);

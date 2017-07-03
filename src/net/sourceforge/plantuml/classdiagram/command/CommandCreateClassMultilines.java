@@ -89,13 +89,13 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("TYPE", "(interface|enum|abstract[%s]+class|abstract|class|entity)[%s]+"), //
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("DISPLAY1", "[%g](.+)[%g]"), //
+								new RegexLeaf("DISPLAY1", CommandCreateClass.DISPLAY_WITH_GENERIC), //
 								new RegexLeaf("[%s]+as[%s]+"), //
 								new RegexLeaf("CODE1", "(" + CommandCreateClass.CODE + ")")), //
 						new RegexConcat(//
 								new RegexLeaf("CODE2", "(" + CommandCreateClass.CODE + ")"), //
 								new RegexLeaf("[%s]+as[%s]+"), // //
-								new RegexLeaf("DISPLAY2", "[%g](.+)[%g]")), //
+								new RegexLeaf("DISPLAY2", CommandCreateClass.DISPLAY_WITH_GENERIC)), //
 						new RegexLeaf("CODE3", "(" + CommandCreateClass.CODE + ")"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				new RegexLeaf("GENERIC", "(?:[%s]*\\<(" + GenericRegexProducer.PATTERN + ")\\>)?"), //
@@ -189,9 +189,10 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final Code code = Code.of(arg.getLazzy("CODE", 0)).eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
+		final String genericOption = arg.getLazzy("DISPLAY", 1);
+		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
-		final String generic = arg.get("GENERIC", 0);
 
 		final ILeaf result;
 		if (diagram.leafExist(code)) {

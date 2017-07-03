@@ -91,6 +91,9 @@ import h.Agnode_s;
 import h.Agnodeinfo_t;
 import h.Agobj_s;
 import h.Agraphinfo_t;
+import h.ST_boxf;
+import h.ST_pointf;
+import h.ST_port;
 import h.boxf;
 import h.inside_t;
 import h.point;
@@ -101,10 +104,13 @@ import h.shape_desc;
 import h.shape_kind;
 import smetana.core.CFunctionImpl;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
+import smetana.core.__c__fields;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
+import smetana.core.amiga.StarArrayOfPtr;
 
 public class shapes__c {
 //1 2digov3edok6d5srhgtlmrycs
@@ -371,7 +377,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -409,7 +415,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -449,7 +455,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -746,7 +752,7 @@ throw new UnsupportedOperationException();
 
 //1 8h06z4a8bluhfqji3ysnlr3q8
 // static port Center = 
-/*private final static __struct__<port> Center = __struct__.from(port.class);
+/*private final static __struct__<port> Center = JUtils.from(port.class);
 static {
 Center.getStruct("p").setDouble("x", 0);
 Center.getStruct("p").setDouble("y", 0);
@@ -774,7 +780,7 @@ Center.setInt("side", 0);
 
 //1 606ee1uued1p0d2o7h96efu9d
 // static polygon_t p_ellipse = 
-/*public static final __struct__<polygon_t> p_ellipse = __struct__.from(polygon_t.class);
+/*public static final __struct__<polygon_t> p_ellipse = JUtils.from(polygon_t.class);
 static {
 p_ellipse.setInt("regular", 0);
 p_ellipse.setInt("peripheries", 1);
@@ -798,7 +804,7 @@ p_ellipse.setDouble("skew", 0.);
 
 //1 bw9fxu2ppyosdc0fayd10ik29
 // static polygon_t p_box = 
-/*public final static __struct__<polygon_t> p_box = __struct__.from(polygon_t.class);
+/*public final static __struct__<polygon_t> p_box = JUtils.from(polygon_t.class);
 static {
 p_box.setInt("regular", 0);
 p_box.setInt("peripheries", 1);
@@ -994,7 +1000,7 @@ p_box.setDouble("skew", 0.);
 
 //1 dkgul6r2xulzqk2twms3pswmy
 // static shape_functions poly_fns = 
-/*public final static __struct__<shape_functions> poly_fns =  __struct__.from(shape_functions.class);
+/*public final static __struct__<shape_functions> poly_fns =  JUtils.from(shape_functions.class);
 static {
 poly_fns.setPtr("initfn", function(shapes__c.class, "poly_init"));
 poly_fns.setPtr("freefn", function(shapes__c.class, "poly_free"));
@@ -2569,9 +2575,9 @@ throw new UnsupportedOperationException();
 public static void poly_init(Agnode_s n) {
 ENTERING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 try {
-    final __struct__<pointf> dimen = __struct__.from(pointf.class), min_bb = __struct__.from(pointf.class), bb = __struct__.from(pointf.class);
-    final __struct__<point> imagesize = __struct__.from(point.class);
-    final __struct__<pointf> P = __struct__.from(pointf.class), Q = __struct__.from(pointf.class), R = __struct__.from(pointf.class);
+    final __struct__<pointf> dimen = JUtils.from(pointf.class), min_bb = JUtils.from(pointf.class), bb = JUtils.from(pointf.class);
+    final __struct__<point> imagesize = JUtils.from(point.class);
+    final __struct__<pointf> P = JUtils.from(pointf.class), Q = JUtils.from(pointf.class), R = JUtils.from(pointf.class);
     __ptr__ vertices = null;
     CString p, sfile, fxd;
     double temp, alpha, beta, gamma;
@@ -2616,7 +2622,7 @@ UNSUPPORTED("cp83hdn3dp0a7rp9bauc3bgki"); // 	sides = late_int(n, N_sides, 4, 0)
 UNSUPPORTED("abmuc3vqirf3i48480fj0k14g"); // 	distortion = late_double(n, N_distortion, 0.0, -100.0);
     }
     /* get label dimensions */
-    dimen.____(ND_label(n).getStruct("dimen"));
+    dimen.___(ND_label(n).getStruct("dimen"));
     /* minimal whitespace around label */
     if (ROUND(abs(dimen.getDouble("x")))!=0 || ROUND(abs(dimen.getDouble("y")))!=0) {
     	/* padding */
@@ -2637,8 +2643,8 @@ UNSUPPORTED("afk9bpom7x393euamnvwwkx6b"); // 	    } else
 UNSUPPORTED("87bdwkkwbzyswxnepdd9bj8mb"); // 		{((dimen).x += 4*4); ((dimen).y += 2*4);};
 	} else
 	    {
-	    dimen.setDouble("x", dimen.getDouble("x") + 4*4);
-	    dimen.setDouble("y", dimen.getDouble("y") + 2*4);
+		((ST_pointf) dimen).x = dimen.getDouble("x") + 4*4;
+		((ST_pointf) dimen).y = dimen.getDouble("y") + 2*4;
 	    };
     }
     spacex = dimen.getDouble("x") - ND_label(n).getStruct("dimen").getDouble("x");
@@ -2683,8 +2689,8 @@ UNSUPPORTED("1x57knvrmlciu7odfroo3paso"); // 	    imagesize.y += 2;
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     /* initialize node bb to labelsize */
-    bb.setDouble("x", ((dimen.getDouble("x"))>(imagesize.getInt("x"))?(dimen.getDouble("x")):(imagesize.getInt("x"))));
-    bb.setDouble("y", ((dimen.getDouble("y"))>(imagesize.getInt("y"))?(dimen.getDouble("y")):(imagesize.getInt("y"))));
+    ((ST_pointf) bb).x = ((dimen.getDouble("x"))>(imagesize.getInt("x"))?(dimen.getDouble("x")):(imagesize.getInt("x")));
+    ((ST_pointf) bb).y = ((dimen.getDouble("y"))>(imagesize.getInt("y"))?(dimen.getDouble("y")):(imagesize.getInt("y")));
     /* I don't know how to distort or skew ellipses in postscript */
     /* Convert request to a polygon with a large number of sides */
     if ((sides <= 2) && ((distortion != 0.) || (skew != 0.))) {
@@ -2727,7 +2733,7 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	}
     }
     /* at this point, bb is the minimum size of node that can hold the label */
-    min_bb.____(bb);
+    min_bb.___(bb);
     /* increase node size to width/height if needed */
     fxd = late_string(n, Z.z().N_fixed, new CString("false"));
     if ((fxd.charAt(0) == 's') && (N(strcmp(fxd,new CString("shape"))))) {
@@ -2745,9 +2751,9 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	bb.setDouble("y", height);
     } else {
 	width = MAX(width, bb.getDouble("x"));
-	bb.setDouble("x", width);
+	((ST_pointf) bb).x = width;
 	height = MAX(height, bb.getDouble("y"));
-	bb.setDouble("y", height);
+	((ST_pointf) bb).y = height;
     }
     /* If regular, make dimensions the same.
      * Need this to guarantee final node size is regular.
@@ -2755,13 +2761,13 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     if (regular) {
     width = MAX(bb.getDouble("x"), bb.getDouble("y"));
     height = width;
-    bb.setDouble("x", width);
-    bb.setDouble("y", width);
+    ((ST_pointf) bb).x = width;
+    ((ST_pointf) bb).y = width;
     }
     /* Compute space available for label.  Provides the justification borders */
     if (N(mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))))) {
 	if (isBox) {
-	    ND_label(n).getStruct("space").setDouble("x", MAX(dimen.getDouble("x"),bb.getDouble("x")) - spacex);
+		((ST_pointf) ND_label(n).getStruct("space")).x = MAX(dimen.getDouble("x"),bb.getDouble("x")) - spacex;
 	}
 	else if (dimen.getDouble("y") < bb.getDouble("y")) {
 	    temp = bb.getDouble("x") * sqrt(1.0 - SQR(dimen.getDouble("y")) / SQR(bb.getDouble("y")));
@@ -2776,7 +2782,7 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	temp = bb.getDouble("y") - min_bb.getDouble("y");
 	if (dimen.getDouble("y") < imagesize.getInt("y"))
 	    temp += imagesize.getInt("y") - dimen.getDouble("y");
-	ND_label(n).getStruct("space").setDouble("y", dimen.getDouble("y") + temp);
+	((ST_pointf) ND_label(n).getStruct("space")).y = dimen.getDouble("y") + temp;
     }
     outp = peripheries;
     if (peripheries < 1)
@@ -2831,41 +2837,41 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    gskew = skew / 2.;
 	    angle = (sectorangle - M_PI) / 2.;
 	    sinx = sin(angle); cosx = cos(angle);
-	    R.setDouble("x", .5 * cosx);
-	    R.setDouble("y", .5 * sinx);
+	    ((ST_pointf) R).x = .5 * cosx;
+	    ((ST_pointf) R).y = .5 * sinx;
 	    xmax = ymax = 0.;
 	    angle += (M_PI - sectorangle) / 2.;
 	    for (i = 0; i < sides; i++) {
 	    /*next regular vertex */
 		angle += sectorangle;
 	    sinx = sin(angle); cosx = cos(angle);
-		R.setDouble("x", R.getDouble("x") + sidelength * cosx);
-		R.setDouble("y", R.getDouble("y") + sidelength * sinx);
+	    ((ST_pointf) R).x = R.getDouble("x") + sidelength * cosx;
+	    ((ST_pointf) R).y = R.getDouble("y") + sidelength * sinx;
 	    /*distort and skew */
-		P.setDouble("x", R.getDouble("x") * (skewdist + R.getDouble("y") * gdistortion) + R.getDouble("y") * gskew);
-		P.setDouble("y", R.getDouble("y"));
+	    ((ST_pointf) P).x = R.getDouble("x") * (skewdist + R.getDouble("y") * gdistortion) + R.getDouble("y") * gskew;
+	    ((ST_pointf) P).y = R.getDouble("y");
 	    /*orient P.x,P.y */
 		alpha = RADIANS(orientation) + atan2(P.getDouble("y"), P.getDouble("x"));
 	    sinx = sin(alpha); cosx = cos(alpha);
-		P.setDouble("y", hypot(P.getDouble("x"), P.getDouble("y")));
-		P.setDouble("x", P.getDouble("y"));
-		P.setDouble("x", P.getDouble("x") * cosx);
-		P.setDouble("y", P.getDouble("y") * sinx);
+	    ((ST_pointf) P).y = hypot(P.getDouble("x"), P.getDouble("y"));
+	    ((ST_pointf) P).x = P.getDouble("y");
+	    ((ST_pointf) P).x = P.getDouble("x") * cosx;
+	    ((ST_pointf) P).y = P.getDouble("y") * sinx;
 	    /*scale for label */
-		P.setDouble("x", P.getDouble("x") * bb.getDouble("x"));
-		P.setDouble("y", P.getDouble("y") * bb.getDouble("y"));
+	    ((ST_pointf) P).x = P.getDouble("x") * bb.getDouble("x");
+	    ((ST_pointf) P).y = P.getDouble("y") * bb.getDouble("y");
 	    /*find max for bounding box */
 		xmax = MAX(fabs(P.getDouble("x")), xmax);
 		ymax = MAX(fabs(P.getDouble("y")), ymax);
 	    /* store result in array of points */
 		vertices.plus(i).setStruct(P);
 		if (isBox) { /* enforce exact symmetry of box */
-		    vertices.plus(1).setDouble("x", -P.getDouble("x"));
-		    vertices.plus(1).setDouble("y", P.getDouble("y"));
-		    vertices.plus(2).setDouble("x", -P.getDouble("x"));
-		    vertices.plus(2).setDouble("y", -P.getDouble("y"));
-		    vertices.plus(3).setDouble("x", P.getDouble("x"));
-		    vertices.plus(3).setDouble("y", -P.getDouble("y"));
+			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(1)).getInternalArray().getInternal(0)))).x = -P.getDouble("x");
+			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(1)).getInternalArray().getInternal(0)))).y = P.getDouble("y");
+			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(2)).getInternalArray().getInternal(0)))).x = -P.getDouble("x");
+			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(2)).getInternalArray().getInternal(0)))).y = -P.getDouble("y");
+			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(3)).getInternalArray().getInternal(0)))).x = P.getDouble("x");
+			((ST_pointf)((__c__fields)(((StarArrayOfPtr) vertices.plus(3)).getInternalArray().getInternal(0)))).y = -P.getDouble("y");
 		    break;
 		}
 	    }
@@ -2873,14 +2879,14 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	/* apply minimum dimensions */
 	xmax *= 2.;
 	ymax *= 2.;
-	bb.setDouble("x", MAX(width, xmax));
-	bb.setDouble("y", MAX(height, ymax));
+	((ST_pointf) bb).x = MAX(width, xmax);
+	((ST_pointf) bb).y = MAX(height, ymax);
 	scalex = bb.getDouble("x") / xmax;
 	scaley = bb.getDouble("y") / ymax;
 	for (i = 0; i < sides; i++) {
 	    P.____(vertices.plus(i));
-	    P.setDouble("x", P.getDouble("x") * scalex);
-	    P.setDouble("y", P.getDouble("y") * scaley);
+	    ((ST_pointf) P).x = P.getDouble("x") * scalex;
+	    ((ST_pointf) P).y = P.getDouble("y") * scaley;
 	    vertices.plus(i).setStruct(P);
 	}
 	if (peripheries > 1) {
@@ -2964,7 +2970,7 @@ throw new UnsupportedOperationException();
 //static Agnode_s lastn;	/* last node argument */
 //static polygon_t poly;
 //static int last, outp, sides;
-//static final __struct__<pointf> O = __struct__.from(pointf.class); /* point (0,0) */
+//static final __struct__<pointf> O = JUtils.from(pointf.class); /* point (0,0) */
 //static pointf vertex;
 //static double xsize, ysize, scalex, scaley, box_URx, box_URy;
 public static boolean poly_inside(inside_t inside_context, final __struct__<pointf> p) {
@@ -2976,14 +2982,14 @@ ENTERING("570t4xovyyfqipaikkf63crmk","poly_inside");
 try {
     int i, i1, j;
     boolean s;
-    final __struct__<pointf> P = __struct__.from(pointf.class), Q = __struct__.from(pointf.class), R = __struct__.from(pointf.class);
+    final ST_pointf P = new ST_pointf(), Q = new ST_pointf(), R = new ST_pointf();
     __ptr__ bp = inside_context.getPtr("s.bp");
     __ptr__ n = inside_context.getPtr("s.n");
-    P.____(ccwrotatepf(p, 90 * GD_rankdir(agraphof(n))));
+    P.___(ccwrotatepf(p, 90 * GD_rankdir(agraphof(n))));
     /* Quick test if port rectangle is target */
     if (bp!=null) {
-	final __struct__<boxf> bbox = __struct__.from(boxf.class);
-	bbox.____(bp.getStruct());
+	final ST_boxf bbox = new ST_boxf();
+	bbox.___(bp.getStruct());
 	return INSIDE(P, bbox);
     }
     if (NEQ(n, Z.z().lastn)) {
@@ -3042,8 +3048,8 @@ UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
     /* use fast test in case we are converging on a segment */
     i = Z.z().last % Z.z().sides;		/* in case last left over from larger polygon */
     i1 = (i + 1) % Z.z().sides;
-    Q.____(Z.z().vertex.plus(i + Z.z().outp).getStruct());
-    R.____(Z.z().vertex.plus(i1 + Z.z().outp).getStruct());
+    Q.___(Z.z().vertex.plus(i + Z.z().outp).getStruct());
+    R.___(Z.z().vertex.plus(i1 + Z.z().outp).getStruct());
     if (N(same_side(P, Z.z().O, Q, R)))   /* false if outside the segment's face */
 	return false;
     /* else inside the segment face... */
@@ -3430,7 +3436,7 @@ return poly_port_w_(n, portname, compass).copy();
 private static __struct__<port> poly_port_w_(Agnode_s n, CString portname, CString compass) {
 ENTERING("5k2b9gfpwm2tj3zmzniuz9azt","poly_port");
 try {
-    final __struct__<port> rv= __struct__.from(port.class);
+    final __struct__<port> rv= JUtils.from(port.class);
     boxf bp;
     int sides;			/* bitmap of which sides the port lies along */
     if (portname.charAt(0) == '\0')
@@ -4890,11 +4896,11 @@ throw new UnsupportedOperationException();
 
 //3 ckbg1dyu9jzx7g0c9dbriez7r
 // port resolvePort(node_t * n, node_t * other, port * oldport) 
-public static __struct__<port> resolvePort(Agnode_s n, Agnode_s other, port oldport) {
+public static ST_port resolvePort(Agnode_s n, Agnode_s other, port oldport) {
 // WARNING!! STRUCT
 return resolvePort_w_(n, other, oldport).copy();
 }
-private static __struct__<port> resolvePort_w_(Agnode_s n, Agnode_s other, port oldport) {
+private static ST_port resolvePort_w_(Agnode_s n, Agnode_s other, port oldport) {
 ENTERING("ckbg1dyu9jzx7g0c9dbriez7r","resolvePort");
 try {
  UNSUPPORTED("1aa44pvk8su341rug2x5h5h9o"); // port resolvePort(node_t * n, node_t * other, port * oldport)

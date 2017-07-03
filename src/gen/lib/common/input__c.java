@@ -93,6 +93,7 @@ import h.fontname_kind;
 import h.layout_t;
 import h.pointf;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Z;
 import smetana.core.__struct__;
 
@@ -361,7 +362,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -399,7 +400,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -439,7 +440,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -1562,7 +1563,7 @@ try {
     /* it would be nice to allow multiple graph labels in the future */
     if ((str = agget(sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
 	char pos_flag=0;
-	final __struct__<pointf> dimen = __struct__.from(pointf.class);
+	final __struct__<pointf> dimen = JUtils.from(pointf.class);
 	GD_has_labels(sg.getPtr("root"), GD_has_labels(sg.getPtr("root")) | (1 << 3));
 	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
 	    late_double(sg, (agattr(sg,AGRAPH,new CString("fontsize"),null)),
@@ -1596,7 +1597,7 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	    return;
 	/* Set border information for cluster labels to allow space
 	 */
-	dimen.____(GD_label(sg).getStruct("dimen"));
+	dimen.___(GD_label(sg).getStruct("dimen"));
 	dimen.setDouble("x", dimen.getDouble("x") + 4*4);
 	dimen.setDouble("y", dimen.getDouble("y") + 2*4);
 	if (N(GD_flip(agroot(sg)))) {

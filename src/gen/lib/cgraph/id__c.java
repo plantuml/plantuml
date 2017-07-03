@@ -321,7 +321,7 @@ LEAVING("5bjqo0ihl0x25vaspoiehmwzk","idregister");
 
 //1 cxrk51474ugltvklkcvp3v2ly
 // Agiddisc_t AgIdDisc = 
-/*public final static __struct__<Agiddisc_s> AgIdDisc = __struct__.from(Agiddisc_s.class);
+/*public final static __struct__<Agiddisc_s> AgIdDisc = JUtils.from(Agiddisc_s.class);
 static {
 	AgIdDisc.setPtr("open", function(id__c.class, "idopen"));
 	AgIdDisc.setPtr("map", function(id__c.class, "idmap"));

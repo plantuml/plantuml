@@ -129,15 +129,17 @@ import h.Agedgepair_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Ppoly_t;
+import h.ST_boxf;
+import h.ST_port;
 import h.attr_state_t;
 import h.bezier;
 import h.boxf;
 import h.path;
 import h.pathend_t;
 import h.pointf;
-import h.port;
 import h.spline_info_t;
 import h.splines;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
@@ -409,7 +411,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -440,18 +442,18 @@ throw new UnsupportedOperationException();
 
 //3 1vvsta5i8of59frav6uymguav
 // static inline boxf boxfof(double llx, double lly, double urx, double ury) 
-public static __struct__<boxf> boxfof(double llx, double lly, double urx, double ury) {
+public static ST_boxf boxfof(double llx, double lly, double urx, double ury) {
 // WARNING!! STRUCT
 return boxfof_w_(llx, lly, urx, ury).copy();
 }
-private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
+private static ST_boxf boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
-    b.getStruct("LL").setDouble("x", llx);
-    b.getStruct("LL").setDouble("y", lly);
-    b.getStruct("UR").setDouble("x", urx);
-    b.getStruct("UR").setDouble("y", ury);
+    final ST_boxf b = new ST_boxf();
+    b.LL.x = llx;
+    b.LL.y = lly;
+    b.UR.x = urx;
+    b.UR.y = ury;
     return b;
 } finally {
 LEAVING("1vvsta5i8of59frav6uymguav","boxfof");
@@ -487,7 +489,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -813,7 +815,7 @@ public static boolean spline_merge(Agnode_s n) {
 ENTERING("ddeny5ht7w8b16ztj5zt840ld","spline_merge");
 try {
     return ((ND_node_type(n) == 1)
-	    && ((ND_in(n).getInt("size") > 1) || (ND_out(n).getInt("size") > 1)));
+	    && ((ND_in(n).size > 1) || (ND_out(n).size > 1)));
 } finally {
 LEAVING("ddeny5ht7w8b16ztj5zt840ld","spline_merge");
 }
@@ -844,7 +846,7 @@ LEAVING("36ofw2qfqlh5ci8gc8cfkqgg3","swap_ends_p");
 
 //1 300wnvw9sndobgke752j9u139
 // static splineInfo sinfo = 
-/*static final __struct__<splineInfo> sinfo = __struct__.from(splineInfo.class);
+/*static final __struct__<splineInfo> sinfo = JUtils.from(splineInfo.class);
 static {
 	sinfo.setPtr("swapEnds", function(dotsplines__c.class, "swap_ends_p"));
 	sinfo.setPtr("splineMerge", function(dotsplines__c.class, "spline_merge"));
@@ -855,21 +857,21 @@ static {
 
 //3 3krohso3quojiv4fveh1en7o6
 // int portcmp(port p0, port p1) 
-public static int portcmp(final __struct__<port> p0, final __struct__<port> p1) {
+public static int portcmp(final ST_port p0, final ST_port p1) {
 // WARNING!! STRUCT
 return portcmp_w_(p0.copy(), p1.copy());
 }
-private static int portcmp_w_(final __struct__<port> p0, final __struct__<port> p1) {
+private static int portcmp_w_(final ST_port p0, final ST_port p1) {
 ENTERING("3krohso3quojiv4fveh1en7o6","portcmp");
 try {
     int rv;
-    if (p1.getBoolean("defined") == false)
-	return (p0.getBoolean("defined") ? 1 : 0);
-    if (p0.getBoolean("defined") == false)
+    if (p1.defined == 0)
+	return (p0.defined!=0 ? 1 : 0);
+    if (p0.defined == 0)
 	return -1;
-    rv = (int) (p0.getStruct("p").getDouble("x") - p1.getStruct("p").getDouble("x"));
+    rv = (int) (p0.p.x - p1.p.x);
     if (rv == 0)
-	rv = (int) (p0.getStruct("p").getDouble("y") - p1.getStruct("p").getDouble("y"));
+	rv = (int) (p0.p.y - p1.p.y);
     return rv;
 } finally {
 LEAVING("3krohso3quojiv4fveh1en7o6","portcmp");
@@ -893,7 +895,7 @@ try {
     lp = list;
     olp = old.getArrayOfPtr("list").plus(sz - 1).asPtr();
     for (i = 0; i < sz; i++) {	/* reverse list of points */
-	lp.getStruct().____(olp.getStruct());
+	lp.getStruct().___(olp.getStruct());
 	lp=lp.plus(1);
 	olp=olp.plus(-1);
     }
@@ -1024,12 +1026,12 @@ ENTERING("6agx6m2qof9lg57co232lwakj","_dot_splines");
 try {
     int i, j, k, n_nodes, n_edges, ind, cnt;
     Agnode_s n;
-    final __struct__<Agedgeinfo_t> fwdedgeai = __struct__.from(Agedgeinfo_t.class), fwdedgebi = __struct__.from(Agedgeinfo_t.class);
-    final __struct__<Agedgepair_s> fwdedgea = __struct__.from(Agedgepair_s.class), fwdedgeb = __struct__.from(Agedgepair_s.class);
+    final __struct__<Agedgeinfo_t> fwdedgeai = JUtils.from(Agedgeinfo_t.class), fwdedgebi = JUtils.from(Agedgeinfo_t.class);
+    final __struct__<Agedgepair_s> fwdedgea = JUtils.from(Agedgepair_s.class), fwdedgeb = JUtils.from(Agedgepair_s.class);
     Agedge_s e, e0, e1, ea, eb, le0, le1;
     __ptr__ edges;
     path P;
-    final __struct__<spline_info_t> sd = __struct__.from(spline_info_t.class);
+    final __struct__<spline_info_t> sd = JUtils.from(spline_info_t.class);
     int et = (GD_flags(g) & (7 << 1));
     fwdedgea.getStruct("out").getStruct("base").setPtr("data", fwdedgeai.amp());
     fwdedgeb.getStruct("out").getStruct("base").setPtr("data", fwdedgebi.amp());
@@ -1079,7 +1081,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if ((ND_node_type(n) != 0) &&
 		((Boolean)Z.z().sinfo.call("splineMerge", n) == false))
 		continue;
-	    for (k = 0; (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(k).getPtr())!=null; k++) {
+	    for (k = 0; (e = (Agedge_s) ND_out(n).getFromList(k))!=null; k++) {
 		if ((ED_edge_type(e) == 4)
 		    || (ED_edge_type(e) == 6))
 		    continue;
@@ -1088,14 +1090,14 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		if (n_edges % 128 == 0)
 		    edges = ALLOC_empty (n_edges + 128, edges, Agedge_s.class);
 	    }
-	    if (ND_flat_out(n).getPtr("list")!=null)
-		for (k = 0; (e = (Agedge_s) ND_flat_out(n).getArrayOfPtr("list").plus(k).getPtr())!=null; k++) {
+	    if (ND_flat_out(n).listNotNull())
+		for (k = 0; (e = (Agedge_s) ND_flat_out(n).getFromList(k))!=null; k++) {
 		    setflags(e, 2, 0, 128);
 			edges.plus(n_edges++).setPtr(e);
 		    if (n_edges % 128 == 0)
 			edges = ALLOC_empty (n_edges + 128, edges, Agedge_s.class);
 		}
-	    if (ND_other(n).getPtr("list")!=null) {
+	    if (ND_other(n).listNotNull()) {
 		/* In position, each node has its rw stored in mval and,
                  * if a node is part of a loop, rw may be increased to
                  * reflect the loops and associated labels. We restore
@@ -1106,7 +1108,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		    ND_rw(n, ND_mval(n));
 		    ND_mval(n, tmp);
 		}
-		for (k = 0; (e = (Agedge_s) ND_other(n).getArrayOfPtr("list").plus(k).getPtr())!=null; k++) {
+		for (k = 0; (e = (Agedge_s) ND_other(n).getFromList(k))!=null; k++) {
 		    setflags(e, 0, 0, 128);
 			edges.plus(n_edges++).setPtr(e);
 		    if (n_edges % 128 == 0)
@@ -1141,7 +1143,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
  	boolean havePorts;
 	ind = i;
 	le0 = getmainedge((e0 = (Agedge_s) edges.plus(i++).getPtr()));
-	if (ED_tail_port(e0).getBoolean("defined") || ED_head_port(e0).getBoolean("defined")) {
+	if (ED_tail_port(e0).defined!=0 || ED_head_port(e0).defined!=0) {
 	    havePorts = NOT(false);
 	    ea = e0;
 	} else {
@@ -1156,7 +1158,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if (NEQ(le0, (le1 = getmainedge((e1 = (Agedge_s) edges.plus(i).getPtr())))))
 		break;
 	    if (ED_adjacent(e0)!=0) continue; /* all flat adjacent edges at once */
-	    if (ED_tail_port(e1).getBoolean("defined") || ED_head_port(e1).getBoolean("defined")) {
+	    if (ED_tail_port(e1).defined!=0 || ED_head_port(e1).defined!=0) {
 		if (N(havePorts)) break;
 		else
 		    eb = e1;
@@ -1280,14 +1282,14 @@ LEAVING("5n306wbdfjbfnimdo9lg6jjaa","dot_splines");
 public static void place_vnlabel(Agnode_s n) {
 ENTERING("8jja9ukzsq8tlb9yy7uzavg91","place_vnlabel");
 try {
-    final __struct__<pointf> dimen = __struct__.from(pointf.class);
+    final __struct__<pointf> dimen = JUtils.from(pointf.class);
     double width;
     Agedge_s e;
-    if (ND_in(n).getInt("size") == 0)
+    if (ND_in(n).size == 0)
 	return;			/* skip flat edge labels here */
-    for (e = (Agedge_s) ND_out(n).getArrayOfPtr("list").plus(0).getPtr(); ED_edge_type(e) != 0;
+    for (e = (Agedge_s) ND_out(n).getFromList(0); ED_edge_type(e) != 0;
 	 e = ED_to_orig(e));
-    dimen.____(ED_label(e).getStruct("dimen"));
+    dimen.___(ED_label(e).getStruct("dimen"));
     width = GD_flip(agraphof(n))!=0 ? dimen.getDouble("y") : dimen.getDouble("x");
     ED_label(e).getStruct("pos").setDouble("x", ND_coord(n).getDouble("x") + width / 2.0);
     ED_label(e).getStruct("pos").setDouble("y", ND_coord(n).getDouble("y"));
@@ -1310,7 +1312,7 @@ try {
 	f1 = hint1;
     else {
 	if (EQ(agtail(e), aghead(e)))
-	    if (ED_tail_port(e).getBoolean("defined") || ED_head_port(e).getBoolean("defined"))
+	    if (ED_tail_port(e).defined!=0 || ED_head_port(e).defined!=0)
 		f1 = 4;
 	    else
 		f1 = 8;
@@ -1343,8 +1345,8 @@ LEAVING("598jn37hjkm7j0kcg2nmdvlwq","setflags");
 public static int edgecmp(__ptr__ ptr0, __ptr__ ptr1) {
 ENTERING("1nf1s6wkn35ptjn884ii56fh","edgecmp");
 try {
-    final __struct__<Agedgeinfo_t> fwdedgeai = __struct__.from(Agedgeinfo_t.class), fwdedgebi = __struct__.from(Agedgeinfo_t.class);
-    final __struct__<Agedgepair_s> fwdedgea = __struct__.from(Agedgepair_s.class), fwdedgeb = __struct__.from(Agedgepair_s.class);
+    final __struct__<Agedgeinfo_t> fwdedgeai = JUtils.from(Agedgeinfo_t.class), fwdedgebi = JUtils.from(Agedgeinfo_t.class);
+    final __struct__<Agedgepair_s> fwdedgea = JUtils.from(Agedgepair_s.class), fwdedgeb = JUtils.from(Agedgepair_s.class);
     Agedge_s e0, e1, ea, eb, le0, le1;
     int et0, et1, v0, v1, rv;
     double t0, t1;
@@ -1373,12 +1375,12 @@ try {
     /* This provides a cheap test for edges having the same set of endpoints.  */
     if (AGSEQ(le0) != AGSEQ(le1))
 	return (AGSEQ(le0) - AGSEQ(le1));
-    ea = (ED_tail_port(e0).getBoolean("defined") || ED_head_port(e0).getBoolean("defined")) ? e0 : le0;
+    ea = (ED_tail_port(e0).defined!=0 || ED_head_port(e0).defined!=0) ? e0 : le0;
     if ((ED_tree_index(ea) & 32)!=0) {
 	MAKEFWDEDGE(fwdedgea.getStruct("out").amp(), ea);
 	ea = fwdedgea.getStruct("out").amp();
     }
-    eb = (ED_tail_port(e1).getBoolean("defined") || ED_head_port(e1).getBoolean("defined")) ? e1 : le1;
+    eb = (ED_tail_port(e1).defined!=0 || ED_head_port(e1).defined!=0) ? e1 : le1;
     if ((ED_tree_index(eb) & 32)!=0) {
 	MAKEFWDEDGE(fwdedgeb.getStruct("out").amp(), eb);
 	eb = fwdedgeb.getStruct("out").amp();
@@ -1676,13 +1678,13 @@ public static int edgelblcmpfn(__ptr__ ptr0, __ptr__ ptr1) {
 ENTERING("bmsa24i3avg14po4sp17yh89k","edgelblcmpfn");
 try {
     Agedge_s e0, e1;
-    final __struct__<pointf> sz0 = __struct__.from(pointf.class), sz1 = __struct__.from(pointf.class);
+    final __struct__<pointf> sz0 = JUtils.from(pointf.class), sz1 = JUtils.from(pointf.class);
     e0 = (Agedge_s) ptr0.getPtr();
     e1 = (Agedge_s) ptr1.getPtr();
     if (ED_label(e0)!=null) {
 	if (ED_label(e1)!=null) {
-	    sz0.____(ED_label(e0).getStruct("dimen"));
-	    sz1.____(ED_label(e1).getStruct("dimen"));
+	    sz0.___(ED_label(e0).getStruct("dimen"));
+	    sz1.___(ED_label(e1).getStruct("dimen"));
 	    if (sz0.getDouble("x") > sz1.getDouble("x")) return -1;
 	    else if (sz0.getDouble("x") < sz1.getDouble("x")) return 1;
 	    else if (sz0.getDouble("y") > sz1.getDouble("y")) return -1;
@@ -1711,11 +1713,11 @@ public static void makeSimpleFlatLabels(Agnode_s tn, Agnode_s hn, __ptr__ edges,
 ENTERING("3xmylrnypvoqrj2yrxnomsj5k","makeSimpleFlatLabels");
 try {
     pointf ps;
-    final __struct__<Ppoly_t> poly = __struct__.from(Ppoly_t.class);
+    final __struct__<Ppoly_t> poly = JUtils.from(Ppoly_t.class);
     int pn[] = new int[1];
 	Agedge_s e = (Agedge_s) edges.plus(ind).getPtr();
     final __array_of_struct__ points = __array_of_struct__.malloc(pointf.class, 10);
-    final __struct__<pointf> tp = __struct__.from(pointf.class), hp = __struct__.from(pointf.class);
+    final __struct__<pointf> tp = JUtils.from(pointf.class), hp = JUtils.from(pointf.class);
     int i, pointn;
     double leftend, rightend, ctrx=0, ctry=0, miny, maxy;
     double uminx=0, umaxx=0;
@@ -1728,8 +1730,8 @@ try {
     cnt,
     sizeof(earray.plus(0)),
     function(dotsplines__c.class, "edgelblcmpfn"));
-    tp.____(add_pointf(ND_coord(tn), ED_tail_port(e).getStruct("p")));
-    hp.____(add_pointf(ND_coord(hn), ED_head_port(e).getStruct("p")));
+    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).getStruct("p")));
+    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).getStruct("p")));
     leftend = tp.getDouble("x")+ND_rw(tn);
     rightend = hp.getDouble("x")-ND_lw(hn);
     ctrx = (leftend + rightend)/2.0;
@@ -1864,11 +1866,11 @@ ENTERING("8kqyzk43ovc2sq6jegua6ytp","makeSimpleFlat");
 try {
     Agedge_s e = (Agedge_s) edges.plus(ind).getPtr();
     final __array_of_struct__ points = __array_of_struct__.malloc(pointf.class, 10);
-    final __struct__<pointf> tp = __struct__.from(pointf.class), hp = __struct__.from(pointf.class);
+    final __struct__<pointf> tp = JUtils.from(pointf.class), hp = JUtils.from(pointf.class);
     int i, pointn;
     double stepy, dy;
-    tp.____(add_pointf(ND_coord(tn), ED_tail_port(e).getStruct("p")));
-    hp.____(add_pointf(ND_coord(hn), ED_head_port(e).getStruct("p")));
+    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).getStruct("p")));
+    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).getStruct("p")));
     stepy = (cnt > 1) ? ND_ht(tn) / (double)(cnt - 1) : 0.;
     dy = tp.getDouble("y") - ((cnt > 1) ? ND_ht(tn) / 2. : 0.);
     for (i = 0; i < cnt; i++) {
@@ -1917,14 +1919,14 @@ try {
     Agnode_s auxt, auxh;
     Agedge_s auxe;
     int     i, j, midx, midy, leftx, rightx;
-    final __struct__<pointf> del = __struct__.from(pointf.class);
+    final __struct__<pointf> del = JUtils.from(pointf.class);
     Agedge_s hvye = null;
     attr_state_t attrs;
     tn = agtail(e0); hn = aghead(e0);
     for (i = 0; i < cnt; i++) {
 	e = (Agedge_s) edges.plus(ind + i).getPtr();
 	if (ED_label(e)!=null) labels++;
-	if (ED_tail_port(e).getBoolean("defined") || ED_head_port(e).getBoolean("defined")) ports = 1;
+	if (ED_tail_port(e).defined!=0 || ED_head_port(e).defined!=0) ports = 1;
     }
     if (ports == 0) {
 	/* flat edges without ports and labels can go straight left to right */
@@ -2051,16 +2053,16 @@ LEAVING("bhnjospwghq4plid12757c928","make_flat_adj_edges");
 public static void makeFlatEnd(Agraph_s g, spline_info_t sp, path P, Agnode_s n, Agedge_s e, pathend_t endp, boolean isBegin) {
 ENTERING("fybar4mljnmkh3kure5k1eod","makeFlatEnd");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
-    b.____(maximal_bbox(g, sp, n, null, e));
+    final ST_boxf b = new ST_boxf();
+    b.___(maximal_bbox(g, sp, n, null, e));
     endp.setStruct("nb", b);
     endp.setInt("sidemask", 1<<2);
     if (isBegin) beginpath(P, e, 2, endp, false);
     else endpath(P, e, 2, endp, false);
-    b.getStruct("UR").setDouble("y", endp.getArrayOfStruct("boxes").plus(endp.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y"));
-    b.getStruct("LL").setDouble("y", endp.getArrayOfStruct("boxes").plus(endp.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("y"));
-    b.____(makeregularend(b, (1<<2), ND_coord(n).getDouble("y") + GD_rank(g).plus(ND_rank(n)).getDouble("ht2")));
-    if (b.getStruct("LL").getDouble("x") < b.getStruct("UR").getDouble("x") && b.getStruct("LL").getDouble("y") < b.getStruct("UR").getDouble("y"))
+    b.UR.y = ((ST_boxf)endp.getArrayOfStruct("boxes").plus(endp.getInt("boxn") - 1).getStruct()).UR.y;
+    b.LL.y = ((ST_boxf)endp.getArrayOfStruct("boxes").plus(endp.getInt("boxn") - 1).getStruct()).LL.y;
+    b.___(makeregularend((ST_boxf) b, (1<<2), ND_coord(n).getDouble("y") + GD_rank(g).plus(ND_rank(n)).getDouble("ht2")));
+    if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 UNSUPPORTED("cmjm4y40vf7wklmgz0ae4k36v"); // 	endp->boxes[endp->boxn++] = b;
 } finally {
 LEAVING("fybar4mljnmkh3kure5k1eod","makeFlatEnd");
@@ -2102,8 +2104,8 @@ ENTERING("w8ptjibydq995d2lexg85mku","make_flat_labeled_edge");
 try {
     Agnode_s tn, hn, ln;
     pointf ps = null;
-    final __struct__<pathend_t> tend = __struct__.from(pathend_t.class), hend = __struct__.from(pathend_t.class);
-    final __struct__<boxf> lb = __struct__.from(boxf.class);
+    final __struct__<pathend_t> tend = JUtils.from(pathend_t.class), hend = JUtils.from(pathend_t.class);
+    final ST_boxf lb = new ST_boxf();
     int boxn, i, ydelta;
     int pn[] = new int[1];
     Agedge_s f;
@@ -2127,34 +2129,34 @@ UNSUPPORTED("68ojpcos92c96bc0i5ag1yb6v"); // 	ps = points;
 UNSUPPORTED("1uunj4jbr2uhiqxwor6rzmr3j"); // 	pn = 7;
     }
     else {
-	lb.getStruct("LL").setDouble("x", ND_coord(ln).getDouble("x") - ND_lw(ln));
-	lb.getStruct("UR").setDouble("x", ND_coord(ln).getDouble("x") + ND_rw(ln));
-	lb.getStruct("UR").setDouble("y", ND_coord(ln).getDouble("y") + ND_ht(ln)/2);
+	lb.LL.x = ND_coord(ln).getDouble("x") - ND_lw(ln);
+	lb.UR.x = ND_coord(ln).getDouble("x") + ND_rw(ln);
+	lb.UR.y = ND_coord(ln).getDouble("y") + ND_ht(ln)/2;
 	ydelta = (int)(ND_coord(ln).getDouble("y") - GD_rank(g).plus(ND_rank(tn)).getDouble("ht1") -
 		ND_coord(tn).getDouble("y") + GD_rank(g).plus(ND_rank(tn)).getDouble("ht2"));
 	ydelta = (int)(ydelta / 6.);
-	lb.getStruct("LL").setDouble("y", lb.getStruct("UR").getDouble("y") - MAX(5.,ydelta)); 
+	lb.LL.y = lb.UR.y - MAX(5.,ydelta); 
 	boxn = 0;
 	makeFlatEnd (g, sp, P, tn, e, tend.amp(), NOT(false));
 	makeFlatEnd (g, sp, P, hn, e, hend.amp(), false);
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", lb.getStruct("LL").getDouble("x"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("LL").getDouble("y"));
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.x = ((ST_boxf)tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct()).LL.x; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y = ((ST_boxf)tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct()).UR.y; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.x = lb.LL.x;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.y = lb.LL.y;
 	boxn++;
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", lb.getStruct("LL").getDouble("y"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("UR").getDouble("y"));
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.x = ((ST_boxf)tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct()).LL.x; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y = lb.LL.y;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.x = ((ST_boxf)hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct()).UR.x;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.y = lb.UR.y;
 	boxn++;
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", lb.getStruct("UR").getDouble("x"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", lb.getStruct("LL").getDouble("y"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.x = lb.UR.x;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.y = lb.LL.y;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y = ((ST_boxf)hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct()).UR.y; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.x = ((ST_boxf)hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct()).UR.x;
 	boxn++;
-	for (i = 0; i < tend.getInt("boxn"); i++) add_box(P, tend.getArrayOfStruct("boxes").plus(i).getStruct());
-	for (i = 0; i < boxn; i++) add_box(P, Z.z().boxes.plus(i).getStruct());
-	for (i = hend.getInt("boxn") - 1; i >= 0; i--) add_box(P, hend.getArrayOfStruct("boxes").plus(i).getStruct());
+	for (i = 0; i < tend.getInt("boxn"); i++) add_box(P, (ST_boxf)tend.getArrayOfStruct("boxes").plus(i).getStruct());
+	for (i = 0; i < boxn; i++) add_box(P, (ST_boxf)Z.z().boxes.plus(i).getStruct());
+	for (i = hend.getInt("boxn") - 1; i >= 0; i--) add_box(P, (ST_boxf)hend.getArrayOfStruct("boxes").plus(i).getStruct());
 	if (et == (5 << 1)) ps = routesplines(P, pn);
 	else ps = routepolylines(P, pn);
 	if (pn[0] == 0) return;
@@ -2243,15 +2245,15 @@ public static void make_flat_edge(Agraph_s g, spline_info_t sp, path P, __ptr__ 
 ENTERING("6yr3jfkljl5w0z6dv354ryx63","make_flat_edge");
 try {
     Agnode_s tn, hn;
-    final __struct__<Agedgeinfo_t> fwdedgei = __struct__.from(Agedgeinfo_t.class);
-    final __struct__<Agedgepair_s> fwdedge = __struct__.from(Agedgepair_s.class);
+    final __struct__<Agedgeinfo_t> fwdedgei = JUtils.from(Agedgeinfo_t.class);
+    final __struct__<Agedgepair_s> fwdedge = JUtils.from(Agedgepair_s.class);
     Agedge_s e;
     int j, i, r, isAdjacent;
     double stepx, stepy, vspace;
     int tside, hside;
     int pn[] = new int[] {0};
     pointf ps;
-    final __struct__<pathend_t> tend = __struct__.from(pathend_t.class), hend = __struct__.from(pathend_t.class);
+    final __struct__<pathend_t> tend = JUtils.from(pathend_t.class), hend = JUtils.from(pathend_t.class);
     fwdedge.getStruct("out").getStruct("base").setPtr("data", fwdedgei.amp());
     /* Get sample edge; normalize to go from left to right */
     e = (Agedge_s) edges.plus(ind).getPtr();
@@ -2309,29 +2311,29 @@ try {
     makeFlatEnd (g, sp, P, hn, e, hend.amp(), false);
     for (i = 0; i < cnt; i++) {
 	int boxn;
-	final __struct__<boxf> b = __struct__.from(boxf.class);
+	final ST_boxf b = new ST_boxf();
 	e = (Agedge_s) edges.plus(ind + i).getPtr();
 	boxn = 0;
-	b.____(tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct());
- 	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", b.getStruct("LL").getDouble("x")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", b.getStruct("UR").getDouble("y")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", b.getStruct("UR").getDouble("x") + (i + 1) * stepx);
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", b.getStruct("UR").getDouble("y") + (i + 1) * stepy);
+	b.___(tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct());
+ 	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.x = b.LL.x; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y = b.UR.y; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.x = b.UR.x + (i + 1) * stepx;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.y = b.UR.y + (i + 1) * stepy;
 	boxn++;
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("x")); 
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", Z.z().boxes.plus(boxn-1).getStruct().getStruct("UR").getDouble("y"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("x"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", Z.z().boxes.plus(boxn).getStruct().getStruct("LL").getDouble("y") + stepy);
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.x = ((ST_boxf)(tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct())).LL.x; 
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y = ((ST_boxf)Z.z().boxes.plus(boxn-1).getStruct()).UR.y;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.x = ((ST_boxf)(hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct())).UR.x;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.y = ((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y + stepy;
 	boxn++;
-	b.____(hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct());
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("x", b.getStruct("UR").getDouble("x"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("y", b.getStruct("UR").getDouble("y"));
-	Z.z().boxes.plus(boxn).getStruct().getStruct("LL").setDouble("x", b.getStruct("LL").getDouble("x") - (i + 1) * stepx);
-	Z.z().boxes.plus(boxn).getStruct().getStruct("UR").setDouble("y", Z.z().boxes.plus(boxn-1).getStruct().getStruct("LL").getDouble("y"));
+	b.___(hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct());
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.x = b.UR.x;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.y = b.UR.y;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).LL.x = b.LL.x - (i + 1) * stepx;
+	((ST_boxf)Z.z().boxes.plus(boxn).getStruct()).UR.y = ((ST_boxf)Z.z().boxes.plus(boxn-1).getStruct()).LL.y;
 	boxn++;
-	for (j = 0; j < tend.getInt("boxn"); j++) add_box(P, tend.getArrayOfStruct("boxes").plus(j).getStruct());
-	for (j = 0; j < boxn; j++) add_box(P, Z.z().boxes.plus(j).getStruct());
-	for (j = hend.getInt("boxn") - 1; j >= 0; j--) add_box(P, hend.getArrayOfStruct("boxes").plus(j).getStruct());
+	for (j = 0; j < tend.getInt("boxn"); j++) add_box(P, (ST_boxf)tend.getArrayOfStruct("boxes").plus(j).getStruct());
+	for (j = 0; j < boxn; j++) add_box(P, (ST_boxf)Z.z().boxes.plus(j).getStruct());
+	for (j = hend.getInt("boxn") - 1; j >= 0; j--) add_box(P, (ST_boxf)hend.getArrayOfStruct("boxes").plus(j).getStruct());
 	if (et == (5 << 1)) ps = (pointf) routesplines(P, pn);
 	else ps = (pointf) routepolylines(P, pn);
 	if (pn[0] == 0)
@@ -2448,12 +2450,12 @@ public static void make_regular_edge(Agraph_s g, spline_info_t sp, path P, __ptr
 ENTERING("30wfq1dby4t07hft9io52nq6z","make_regular_edge");
 try {
     Agnode_s tn, hn = null;
-    final __struct__<Agedgeinfo_t> fwdedgeai = __struct__.from(Agedgeinfo_t.class), fwdedgebi = __struct__.from(Agedgeinfo_t.class), fwdedgei = __struct__.from(Agedgeinfo_t.class);
-    final __struct__<Agedgepair_s> fwdedgea = __struct__.from(Agedgepair_s.class), fwdedgeb = __struct__.from(Agedgepair_s.class), fwdedge = __struct__.from(Agedgepair_s.class);
+    final __struct__<Agedgeinfo_t> fwdedgeai = JUtils.from(Agedgeinfo_t.class), fwdedgebi = JUtils.from(Agedgeinfo_t.class), fwdedgei = JUtils.from(Agedgeinfo_t.class);
+    final __struct__<Agedgepair_s> fwdedgea = JUtils.from(Agedgepair_s.class), fwdedgeb = JUtils.from(Agedgepair_s.class), fwdedge = JUtils.from(Agedgepair_s.class);
     Agedge_s e, fe, le, segfirst;
     pointf ps = null;
-    final __struct__<pathend_t> tend = __struct__.from(pathend_t.class), hend = __struct__.from(pathend_t.class);
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<pathend_t> tend = JUtils.from(pathend_t.class), hend = JUtils.from(pathend_t.class);
+    final ST_boxf b = new ST_boxf();
     int boxn, sl, si, i, j, dx, hackflag, longedge;
     boolean smode;
     int pn[] = new int[] {0};
@@ -2511,16 +2513,16 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	segfirst = e;
 	tn = agtail(e);
 	hn = aghead(e);
-	b.____(maximal_bbox(g, sp, tn, null, e));
-	tend.getStruct("nb").____(b);
+	b.___(maximal_bbox(g, sp, tn, null, e));
+	tend.getStruct("nb").___(b);
 	beginpath(P, e, 1, tend.amp(), spline_merge(tn));
-	b.getStruct("UR").setDouble("y", 
-	  tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y"));
-	b.getStruct("LL").setDouble("y", 
-	  tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("y"));
-	b.____(makeregularend(b, (1<<0),
+	b.UR.y = 
+	  ((ST_boxf)tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct()).UR.y;
+	b.LL.y = 
+			((ST_boxf)tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct()).LL.y;
+	b.___(makeregularend(b, (1<<0),
 	    	   ND_coord(tn).getDouble("y") - GD_rank(g).plus(ND_rank(tn)).getDouble("ht1")));
-	if (b.getStruct("LL").getDouble("x") < b.getStruct("UR").getDouble("x") && b.getStruct("LL").getDouble("y") < b.getStruct("UR").getDouble("y"))
+	if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 	{
 	    tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn")).setStruct(b);
 	    tend.setInt("boxn", tend.getInt("boxn") + 1);
@@ -2538,17 +2540,17 @@ UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
 	    }
 	    if (N(smode) || si > 0) {
 	        si--;
-	        Z.z().boxes.plus(boxn++).setStruct( maximal_bbox(g, sp, hn, e, (Agedge_s) ND_out(hn).getArrayOfPtr("list").plus(0).getPtr()));
-	        e = (Agedge_s) ND_out(hn).getArrayOfPtr("list").plus(0).getPtr();
+	        Z.z().boxes.plus(boxn++).setStruct( maximal_bbox(g, sp, hn, e, (Agedge_s) ND_out(hn).getFromList(0)));
+	        e = (Agedge_s) ND_out(hn).getFromList(0);
 	        tn = agtail(e);
 	        hn = aghead(e);
 	        continue;
 	    }
-	    hend.setStruct("nb", maximal_bbox(g, sp, hn, e, (Agedge_s) ND_out(hn).getArrayOfPtr("list").plus(0).getPtr()));
+	    hend.setStruct("nb", maximal_bbox(g, sp, hn, e, (Agedge_s) ND_out(hn).getFromList(0)));
 	    endpath(P, e, 1, hend.amp(), spline_merge(aghead(e)));
-	    b.____(makeregularend(hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct(), (1<<2),
+	    b.___(makeregularend((ST_boxf) hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct(), (1<<2),
 	    	       ND_coord(hn).getDouble("y") + GD_rank(g).plus(ND_rank(hn)).getDouble("ht2")));
-	    if (b.getStruct("LL").getDouble("x") < b.getStruct("UR").getDouble("x") && b.getStruct("LL").getDouble("y") < b.getStruct("UR").getDouble("y"))
+	    if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 UNSUPPORTED("1crhubfzekx1qi2ti9ajqsfoc"); // 	        hend.boxes[hend.boxn++] = b;
 	    P.getStruct("end").setDouble("theta", M_PI / 2);
 	    P.getStruct("end").setBoolean("constrained", NOT(false));
@@ -2574,31 +2576,31 @@ UNSUPPORTED("8kbxhk7qirj3tr7hn1ukwar3h"); // 		pointfs = RALLOC(numpts, pointfs,
 	    for (i = 0; i < pn[0]; i++) {
 		Z.z().pointfs.plus(pointn[0]++).setStruct(ps.plus(i).getStruct());
 	    }
-	    e = straight_path((Agedge_s)ND_out(hn).getArrayOfPtr("list").plus(0).getPtr(), sl, Z.z().pointfs, pointn);
+	    e = straight_path((Agedge_s)ND_out(hn).getFromList(0), sl, Z.z().pointfs, pointn);
 	    recover_slack(segfirst, P);
 	    segfirst = e;
 	    tn = agtail(e);
 	    hn = aghead(e);
 	    boxn = 0;
-	    tend.setStruct("nb", maximal_bbox(g, sp, tn, (Agedge_s) ND_in(tn).getArrayOfPtr("list").plus(0).getPtr(), e));
+	    tend.setStruct("nb", maximal_bbox(g, sp, tn, (Agedge_s) ND_in(tn).getFromList(0), e));
 	    beginpath(P, e, 1, tend.amp(), spline_merge(tn));
-	    b.____(makeregularend(tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct(), (1<<0),
+	    b.___(makeregularend((ST_boxf) tend.getArrayOfStruct("boxes").plus(tend.getInt("boxn") - 1).getStruct(), (1<<0),
 	    	       ND_coord(tn).getDouble("y") - GD_rank(g).plus(ND_rank(tn)).getDouble("ht1")));
-	    if (b.getStruct("LL").getDouble("x") < b.getStruct("UR").getDouble("x") && b.getStruct("LL").getDouble("y") < b.getStruct("UR").getDouble("y"))
+	    if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 UNSUPPORTED("cjx6tldge3otk1pk6ks1pkn2w"); // 	        tend.boxes[tend.boxn++] = b;
 	    P.getStruct("start").setDouble("theta", -M_PI / 2);
 	    P.getStruct("start").setBoolean("constrained", NOT(false));
 	    smode = false;
 	}
 	Z.z().boxes.plus(boxn++).setStruct(rank_box(sp, g, ND_rank(tn)));
-	b.____(maximal_bbox(g, sp, hn, e, null));
-	hend.getStruct("nb").____(b);
+	b.___(maximal_bbox(g, sp, hn, e, null));
+	hend.getStruct("nb").___(b);
 	endpath(P, hackflag!=0 ? fwdedgeb.getStruct("out").amp() : e, 1, hend.amp(), spline_merge(aghead(e)));
-	b.getStruct("UR").setDouble("y", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("UR").getDouble("y"));
-	b.getStruct("LL").setDouble("y", hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct().getStruct("LL").getDouble("y"));
-	b.____(makeregularend(b, (1<<2),
+	b.UR.y = ((ST_boxf)hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct()).UR.y;
+	b.LL.y = ((ST_boxf)hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn") - 1).getStruct()).LL.y;
+	b.___(makeregularend(b, (1<<2),
 	    	   ND_coord(hn).getDouble("y") + GD_rank(g).plus(ND_rank(hn)).getDouble("ht2")));
-	if (b.getStruct("LL").getDouble("x") < b.getStruct("UR").getDouble("x") && b.getStruct("LL").getDouble("y") < b.getStruct("UR").getDouble("y"))
+	if (b.LL.x < b.UR.x && b.LL.y < b.UR.y)
 	    {
 	    hend.getArrayOfStruct("boxes").plus(hend.getInt("boxn")).setStruct(b);
 	    hend.setInt("boxn", hend.getInt("boxn")+1);
@@ -2702,13 +2704,13 @@ try {
        	pn = spl.getArrayOfPtr("list").plus(spl.getInt("size") - 1).getPtr().getInt("size");
     }
     for (i = 0; i < tendp.getInt("boxn"); i++)
-	add_box(P, tendp.getArrayOfStruct("boxes").plus(i).getStruct());
+	add_box(P, (ST_boxf)tendp.getArrayOfStruct("boxes").plus(i).getStruct());
     fb = P.getInt("nbox") + 1;
     lb = fb + boxn - 3;
     for (i = 0; i < boxn; i++)
-	add_box(P, boxes.plus(i).getStruct());
+	add_box(P, (ST_boxf)boxes.plus(i).getStruct());
     for (i = hendp.getInt("boxn") - 1; i >= 0; i--)
-	add_box(P, hendp.getArrayOfStruct("boxes").plus(i).getStruct());
+	add_box(P, (ST_boxf)hendp.getArrayOfStruct("boxes").plus(i).getStruct());
     adjustregularpath(P, fb, lb);
 } finally {
 LEAVING("va61hggynvb6z6j34w7otmab","completeregularpath");
@@ -2720,20 +2722,20 @@ LEAVING("va61hggynvb6z6j34w7otmab","completeregularpath");
 
 //3 3wwhczhpkcnflwr1l9wcga7tq
 // static boxf makeregularend(boxf b, int side, double y) 
-public static __struct__<boxf> makeregularend(final __struct__<boxf> b, int side, double y) {
+public static __struct__<boxf> makeregularend(final ST_boxf b, int side, double y) {
 // WARNING!! STRUCT
 return makeregularend_w_(b.copy(), side, y).copy();
 }
-private static __struct__<boxf> makeregularend_w_(final __struct__<boxf> b, int side, double y) {
+private static __struct__<boxf> makeregularend_w_(final ST_boxf b, int side, double y) {
 ENTERING("3wwhczhpkcnflwr1l9wcga7tq","makeregularend");
 try {
-    final __struct__<boxf> newb = __struct__.from(boxf.class);
+    final __struct__<boxf> newb = JUtils.from(boxf.class);
     switch (side) {
     case (1<<0):
-	newb.____(boxfof(b.getStruct("LL").getDouble("x"), y, b.getStruct("UR").getDouble("x"), b.getStruct("LL").getDouble("y")));
+	newb.___(boxfof(b.LL.x, y, b.UR.x, b.LL.y));
 	break;
     case (1<<2):
-	newb.____(boxfof(b.getStruct("LL").getDouble("x"), b.getStruct("UR").getDouble("y"), b.getStruct("UR").getDouble("x"), y));
+	newb.___(boxfof(b.LL.x, b.UR.y, b.UR.x, y));
 	break;
     }
     return newb;
@@ -2793,25 +2795,25 @@ LEAVING("88xrlzjovkxcnay9b2y5zyiid","adjustregularpath");
 
 //3 bajn5vx0isu427n6dh131b985
 // static boxf rank_box(spline_info_t* sp, graph_t * g, int r) 
-public static __struct__<boxf> rank_box(spline_info_t sp, Agraph_s g, int r) {
+public static ST_boxf rank_box(spline_info_t sp, Agraph_s g, int r) {
 // WARNING!! STRUCT
 return rank_box_w_(sp, g, r).copy();
 }
-private static __struct__<boxf> rank_box_w_(spline_info_t sp, Agraph_s g, int r) {
+private static ST_boxf rank_box_w_(spline_info_t sp, Agraph_s g, int r) {
 ENTERING("bajn5vx0isu427n6dh131b985","rank_box");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final ST_boxf b = new ST_boxf();
     Agnode_s /* *right0, *right1, */  left0, left1;
-    b.____(sp.getPtr("Rank_box").plus(r).getStruct());
-    if (b.getStruct("LL").getDouble("x") == b.getStruct("UR").getDouble("x")) {
+    b.___(sp.getPtr("Rank_box").plus(r).getStruct());
+    if (b.LL.x == b.UR.x) {
 	left0 = (Agnode_s) GD_rank(g).plus(r).getArrayOfPtr("v").plus(0).getPtr();
 	/* right0 = GD_rank(g)[r].v[GD_rank(g)[r].n - 1]; */
 	left1 = (Agnode_s) GD_rank(g).plus(r + 1).getArrayOfPtr("v").plus(0).getPtr();
 	/* right1 = GD_rank(g)[r + 1].v[GD_rank(g)[r + 1].n - 1]; */
-	b.getStruct("LL").setDouble("x", sp.getInt("LeftBound"));
-	b.getStruct("LL").setDouble("y", ND_coord(left1).getDouble("y") + GD_rank(g).plus(r + 1).getDouble("ht2"));
-	b.getStruct("UR").setDouble("x", sp.getInt("RightBound"));
-	b.getStruct("UR").setDouble("y", ND_coord(left0).getDouble("y") - GD_rank(g).plus(r).getDouble("ht1"));
+	b.LL.x = sp.getInt("LeftBound");
+	b.LL.y = ND_coord(left1).getDouble("y") + GD_rank(g).plus(r + 1).getDouble("ht2");
+	b.UR.x = sp.getInt("RightBound");
+	b.UR.y = ND_coord(left0).getDouble("y") - GD_rank(g).plus(r).getDouble("ht1");
 	sp.getPtr("Rank_box").plus(r).setStruct(b);
     }
     return b;
@@ -2832,10 +2834,10 @@ try {
     Agnode_s v;
     v = n;
     while (true) {
-	v = (Agnode_s) aghead(ND_out(v).getArrayOfPtr("list").plus(0).getPtr());
+	v = (Agnode_s) aghead(ND_out(v).getFromList(0));
 	if (ND_node_type(v) != 1)
 	    break;
-	if ((ND_out(v).getInt("size") != 1) || (ND_in(v).getInt("size") != 1))
+	if ((ND_out(v).size != 1) || (ND_in(v).size != 1))
 	    break;
 	if (ND_coord(v).getDouble("x") != ND_coord(n).getDouble("x"))
 	    break;
@@ -2858,7 +2860,7 @@ try {
     int n = np[0];
     Agedge_s f = e;
     while ((cnt--)!=0)
-	f = (Agedge_s) ND_out(aghead(f)).getArrayOfPtr("list").plus(0).getPtr();
+	f = (Agedge_s) ND_out(aghead(f)).getFromList(0);
     plist.plus(np[0]++).setStruct(plist.plus(n - 1).getStruct());
     plist.plus(np[0]++).setStruct(plist.plus(n - 1).getStruct());
     plist.plus(np[0]).setStruct(ND_coord(agtail(f)));  /* will be overwritten by next spline */
@@ -2881,7 +2883,7 @@ try {
     b = 0;			/* skip first rank box */
     for (vn = aghead(e);
 	 ND_node_type(vn) == 1 && N(((Boolean)Z.z().sinfo.call("splineMerge", vn)).booleanValue());
-	 vn = aghead(ND_out(vn).getArrayOfPtr("list").plus(0).getPtr())) {
+	 vn = aghead(ND_out(vn).getFromList(0))) {
 	while ((b < p.getInt("nbox")) && (p.getPtr("boxes").plus(b).getStruct("LL").getDouble("y") > ND_coord(vn).getDouble("y")))
 	    b++;
 	if (b >= p.getInt("nbox"))
@@ -2927,7 +2929,7 @@ ENTERING("9t0v5wicmjuc3ij9hko6iawle","top_bound");
 try {
     Agedge_s f, ans = null;
     int i;
-    for (i = 0; (f = (Agedge_s) ND_out(agtail(e)).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (f = (Agedge_s) ND_out(agtail(e)).getFromList(i))!=null; i++) {
 	if (side * (ND_order(aghead(f)) - ND_order(aghead(e))) <= 0)
 	    continue;
 	if ((ED_spl(f) == null)
@@ -2953,7 +2955,7 @@ ENTERING("9fsg0uiyhtrayd4mimmc0i25e","bot_bound");
 try {
     Agedge_s f, ans = null;
     int i;
-    for (i = 0; (f = (Agedge_s) ND_in(aghead(e)).getArrayOfPtr("list").plus(i).getPtr())!=null; i++) {
+    for (i = 0; (f = (Agedge_s) ND_in(aghead(e)).getFromList(i))!=null; i++) {
 	if (side * (ND_order(agtail(f)) - ND_order(agtail(e))) <= 0)
 	    continue;
 	if ((ED_spl(f) == null)
@@ -2977,8 +2979,8 @@ LEAVING("9fsg0uiyhtrayd4mimmc0i25e","bot_bound");
 public static boolean cl_vninside(Agraph_s cl, Agnode_s n) {
 ENTERING("65uvkv1mextaah5m997ibe3qs","cl_vninside");
 try {
-    return (BETWEEN(GD_bb(cl).getStruct("LL").getDouble("x"), (double)(ND_coord(n).getDouble("x")), GD_bb(cl).getStruct("UR").getDouble("x")) &&
-	    BETWEEN(GD_bb(cl).getStruct("LL").getDouble("y"), (double)(ND_coord(n).getDouble("y")), GD_bb(cl).getStruct("UR").getDouble("y")));
+    return (BETWEEN(GD_bb(cl).LL.x, (double)(ND_coord(n).getDouble("x")), GD_bb(cl).UR.x) &&
+	    BETWEEN(GD_bb(cl).LL.y, (double)(ND_coord(n).getDouble("y")), GD_bb(cl).UR.y));
 } finally {
 LEAVING("65uvkv1mextaah5m997ibe3qs","cl_vninside");
 }
@@ -2998,7 +3000,7 @@ try {
     if (ND_node_type(n) == 0)
 	tcl = hcl = ND_clust(n);
     else {
-	orig = ED_to_orig(ND_out(n).getArrayOfPtr("list").plus(0).getPtr());
+	orig = ED_to_orig(ND_out(n).getFromList(0));
 	tcl = ND_clust(agtail(orig));
 	hcl = ND_clust(aghead(orig));
     }
@@ -3007,7 +3009,7 @@ try {
 	if (cl!=null && NEQ(cl, tcl) && NEQ(cl, hcl))
 	    rv = cl;
     } else {
-	orig = ED_to_orig(ND_out(adj).getArrayOfPtr("list").plus(0).getPtr());
+	orig = ED_to_orig(ND_out(adj).getFromList(0));
 	cl = ( EQ(ND_clust(agtail(orig)), g) ? null:ND_clust(agtail(orig)));
 	if (cl!=null && NEQ(cl, tcl) && NEQ(cl, hcl) && cl_vninside(cl, adj))
 	    rv = cl;
@@ -3038,13 +3040,13 @@ try {
     double b, nb;
     Agraph_s left_cl, right_cl;
     Agnode_s left, right;
-    final __struct__<boxf> rv = __struct__.from(boxf.class);
+    final ST_boxf rv = new ST_boxf();
     left_cl = right_cl = null;
     /* give this node all the available space up to its neighbors */
     b = (double)(ND_coord(vn).getDouble("x") - ND_lw(vn) - 4);
     if ((left = neighbor(g, vn, ie, oe, -1))!=null) {
 	if ((left_cl = cl_bound(g, vn, left))!=null)
-	    nb = GD_bb(left_cl).getStruct("UR").getDouble("x") + (double)(sp.getInt("Splinesep"));
+	    nb = GD_bb(left_cl).UR.x + (double)(sp.getInt("Splinesep"));
 	else {
 	    nb = (double)(ND_coord(left).getDouble("x") + ND_mval(left));
 	    if (ND_node_type(left) == 0)
@@ -3054,9 +3056,9 @@ try {
 	}
 	if (nb < b)
 	    b = nb;
-	rv.getStruct("LL").setDouble("x", ROUND(b));
+	rv.LL.x = ROUND(b);
     } else
-	rv.getStruct("LL").setDouble("x", MIN(ROUND(b), sp.getInt("LeftBound")));
+	rv.LL.x = MIN(ROUND(b), sp.getInt("LeftBound"));
     /* we have to leave room for our own label! */
     if ((ND_node_type(vn) == 1) && (ND_label(vn)!=null))
 	b = (double)(ND_coord(vn).getDouble("x") + 10);
@@ -3064,7 +3066,7 @@ try {
 	b = (double)(ND_coord(vn).getDouble("x") + ND_rw(vn) + 4);
     if ((right = neighbor(g, vn, ie, oe, 1))!=null) {
 	if ((right_cl = cl_bound(g, vn, right))!=null)
-	    nb = GD_bb(right_cl).getStruct("LL").getDouble("x") - (double)(sp.getInt("Splinesep"));
+	    nb = GD_bb(right_cl).LL.x - (double)(sp.getInt("Splinesep"));
 	else {
 	    nb = ND_coord(right).getDouble("x") - ND_lw(right);
 	    if (ND_node_type(right) == 0)
@@ -3074,15 +3076,15 @@ try {
 	}
 	if (nb > b)
 	    b = nb;
-	rv.getStruct("UR").setDouble("x", ROUND(b));
+	rv.UR.x = ROUND(b);
     } else
-	rv.getStruct("UR").setDouble("x", MAX(ROUND(b), sp.getInt("RightBound")));
+	rv.UR.x = MAX(ROUND(b), sp.getInt("RightBound"));
     if ((ND_node_type(vn) == 1) && (ND_label(vn)!=null)) {
-	rv.getStruct("UR").setDouble("x", rv.getStruct("UR").getDouble("x") - ND_rw(vn));
-	if (rv.getStruct("UR").getDouble("x") < rv.getStruct("LL").getDouble("x")) rv.getStruct("UR").setDouble("x", ND_coord(vn).getDouble("x"));
+	rv.UR.x = rv.UR.x - ND_rw(vn);
+	if (rv.UR.x < rv.LL.x) rv.UR.x = ND_coord(vn).getDouble("x");
     }
-    rv.getStruct("LL").setDouble("y", ND_coord(vn).getDouble("y") - GD_rank(g).plus(ND_rank(vn)).getDouble("ht1"));
-    rv.getStruct("UR").setDouble("y", ND_coord(vn).getDouble("y") + GD_rank(g).plus(ND_rank(vn)).getDouble("ht2"));
+    rv.LL.y = ND_coord(vn).getDouble("y") - GD_rank(g).plus(ND_rank(vn)).getDouble("ht1");
+    rv.UR.y = ND_coord(vn).getDouble("y") + GD_rank(g).plus(ND_rank(vn)).getDouble("ht2");
     return rv;
 } finally {
 LEAVING("6qwgl36ugfnduc5x59ohuewv1","maximal_bbox");
@@ -3134,38 +3136,38 @@ try {
     boolean order;
     int cnt;
     order = (ND_order(n0) > ND_order(n1));
-    if ((ND_out(n0).getInt("size") != 1) && (ND_out(n0).getInt("size") != 1))
+    if ((ND_out(n0).size != 1) && (ND_out(n0).size != 1))
 	return false;
     e1 = oe1;
-    if (ND_out(n0).getInt("size") == 1 && e1!=null) {
-	e0 = (Agedge_s) ND_out(n0).getArrayOfPtr("list").plus(0).getPtr();
+    if (ND_out(n0).size == 1 && e1!=null) {
+	e0 = (Agedge_s) ND_out(n0).getFromList(0);
 	for (cnt = 0; cnt < 2; cnt++) {
 	    if (EQ(na = aghead(e0), nb = aghead(e1)))
 		break;
 	    if (order != (ND_order(na) > ND_order(nb)))
 		return NOT(false);
-	    if ((ND_out(na).getInt("size") != 1) || (ND_node_type(na) == 0))
+	    if ((ND_out(na).size != 1) || (ND_node_type(na) == 0))
 		break;
-	    e0 = (Agedge_s) ND_out(na).getArrayOfPtr("list").plus(0).getPtr();
-	    if ((ND_out(nb).getInt("size") != 1) || (ND_node_type(nb) == 0))
+	    e0 = (Agedge_s) ND_out(na).getFromList(0);
+	    if ((ND_out(nb).size != 1) || (ND_node_type(nb) == 0))
 		break;
-	    e1 = (Agedge_s) ND_out(nb).getArrayOfPtr("list").plus(0).getPtr();
+	    e1 = (Agedge_s) ND_out(nb).getFromList(0);
 	}
     }
     e1 = ie1;
-    if (ND_in(n0).getInt("size") == 1 && e1!=null) {
-	e0 = (Agedge_s) ND_in(n0).getArrayOfPtr("list").plus(0).getPtr();
+    if (ND_in(n0).size == 1 && e1!=null) {
+	e0 = (Agedge_s) ND_in(n0).getFromList(0);
 	for (cnt = 0; cnt < 2; cnt++) {
 	    if (EQ(na = agtail(e0), nb = agtail(e1)))
 		break;
 	    if (order != (ND_order(na) > ND_order(nb)))
 		return NOT(false);
-	    if ((ND_in(na).getInt("size") != 1) || (ND_node_type(na) == 0))
+	    if ((ND_in(na).size != 1) || (ND_node_type(na) == 0))
 		break;
-	    e0 = (Agedge_s) ND_in(na).getArrayOfPtr("list").plus(0).getPtr();
-	    if ((ND_in(nb).getInt("size") != 1) || (ND_node_type(nb) == 0))
+	    e0 = (Agedge_s) ND_in(na).getFromList(0);
+	    if ((ND_in(nb).size != 1) || (ND_node_type(nb) == 0))
 		break;
-	    e1 = (Agedge_s) ND_in(nb).getArrayOfPtr("list").plus(0).getPtr();
+	    e1 = (Agedge_s) ND_in(nb).getFromList(0);
 	}
     }
     return false;

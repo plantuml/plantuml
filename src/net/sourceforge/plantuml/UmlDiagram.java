@@ -249,7 +249,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String graphvizVersion) throws IOException {
 		exportDiagramError(os, exception, fileFormat, seed, getMetadata(), getFlashData(),
-				getFailureText1(exception, graphvizVersion));
+				getFailureText1(exception, graphvizVersion, getFlashData()));
 	}
 
 	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
@@ -309,8 +309,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return source.getPlainString();
 	}
 
-	static private List<String> getFailureText1(Throwable exception, String graphvizVersion) {
-		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception);
+	static private List<String> getFailureText1(Throwable exception, String graphvizVersion, String textDiagram) {
+		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
 		strings.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
 		if (exception instanceof EmptySvgException) {
 			strings.add("Because dot/GraphViz returns an empty string.");
@@ -330,8 +330,8 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return strings;
 	}
 
-	public static List<String> getFailureText2(Throwable exception) {
-		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception);
+	public static List<String> getFailureText2(Throwable exception, String textDiagram) {
+		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
 		strings.add("PlantUML (" + Version.versionString() + ") has crashed.");
 		GraphvizCrash.checkOldVersionWarning(strings);
 		strings.add(" ");

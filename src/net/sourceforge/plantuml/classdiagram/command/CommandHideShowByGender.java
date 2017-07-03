@@ -86,7 +86,8 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			return EntityGenderUtils.emptyFields();
 		}
 		if (portion == PORTION_MEMBER) {
-			return EntityGenderUtils.emptyMembers();
+			throw new IllegalArgumentException();
+			// return EntityGenderUtils.emptyMembers();
 		}
 		return EntityGenderUtils.all();
 	}
@@ -169,13 +170,22 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		}
 		if (gender != null) {
 			final boolean empty = arg.get("EMPTY", 0) != null;
-			if (empty == true) {
+			final boolean emptyMembers = empty && portion == PORTION_MEMBER;
+			if (empty == true && emptyMembers == false) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
 			if (EntityUtils.groupRoot(classDiagram.getCurrentGroup()) == false) {
 				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(classDiagram.getCurrentGroup()));
 			}
-			classDiagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+
+			if (emptyMembers) {
+				classDiagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(PORTION_FIELD)), PORTION_FIELD, arg
+						.get("COMMAND", 0).equalsIgnoreCase("show"));
+				classDiagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(PORTION_METHOD)), PORTION_METHOD,
+						arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			} else {
+				classDiagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			}
 		}
 		return CommandExecutionResult.ok();
 	}

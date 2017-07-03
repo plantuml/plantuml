@@ -64,6 +64,7 @@ import h.boxf;
 import h.inside_t;
 import h.pointf;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.MutableDouble;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
@@ -335,7 +336,7 @@ return pointfof_w_(x, y).copy();
 private static __struct__<pointf> pointfof_w_(double x, double y) {
 ENTERING("c1s4k85p1cdfn176o3uryeros","pointfof");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", x);
     r.setDouble("y", y);
     return r;
@@ -373,7 +374,7 @@ return boxfof_w_(llx, lly, urx, ury).copy();
 private static __struct__<boxf> boxfof_w_(double llx, double lly, double urx, double ury) {
 ENTERING("1vvsta5i8of59frav6uymguav","boxfof");
 try {
-    final __struct__<boxf> b = __struct__.from(boxf.class);
+    final __struct__<boxf> b = JUtils.from(boxf.class);
     b.getStruct("LL").setDouble("x", llx);
     b.getStruct("LL").setDouble("y", lly);
     b.getStruct("UR").setDouble("x", urx);
@@ -413,7 +414,7 @@ return add_pointf_w_(p.copy(), q.copy()).copy();
 private static __struct__<pointf> add_pointf_w_(final __struct__<pointf> p, final __struct__<pointf> q) {
 ENTERING("arrsbik9b5tnfcbzsm8gr2chx","add_pointf");
 try {
-    final __struct__<pointf> r = __struct__.from(pointf.class);
+    final __struct__<pointf> r = JUtils.from(pointf.class);
     r.setDouble("x", p.getDouble("x") + q.getDouble("x"));
     r.setDouble("y", p.getDouble("y") + q.getDouble("y"));
     return r;
@@ -735,7 +736,7 @@ static {
 	Arrownames.plus(2).setStruct(create_arrowname_t(null, 0));
 }
 private final static __struct__ create_arrowname_t(String name, int type) {
-	final __struct__<arrowname_t> result = __struct__.from(arrowname_t.class);
+	final __struct__<arrowname_t> result = JUtils.from(arrowname_t.class);
 	result.setCString("name", name==null?null:new CString(name));
 	result.setInt("type", type);
 	return result;
@@ -755,7 +756,7 @@ static {
 	Arrowtypes.plus(8).setStruct(createArrowtypes(0, 0.0, null));
 }
 private final static __struct__ createArrowtypes(int type, double lenfact, CFunction function) {
-	final __struct__<arrowtype_t> result = __struct__.from(arrowtype_t.class);
+	final __struct__<arrowtype_t> result = JUtils.from(arrowtype_t.class);
 	result.setInt("type", type);
 	result.setDouble("lenfact", lenfact);
 	result.setPtr("gen", function);
@@ -932,7 +933,7 @@ LEAVING("7ymcsnwqkr1crisrga0kezh1f","inside");
 public static int arrowEndClip(Agedge_s e, __ptr__ ps, int startp, int endp, bezier spl, int eflag) {
 ENTERING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 try {
-    final __struct__<inside_t> inside_context = __struct__.from(inside_t.class);
+    final __struct__<inside_t> inside_context = JUtils.from(inside_t.class);
     final __array_of_struct__ sp = __array_of_struct__.malloc(pointf.class, 4);
     double elen;
     MutableDouble elen2 = new MutableDouble(0);
@@ -966,34 +967,36 @@ LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 
 //3 q7y4oxn0paexbgynmtg2zmiv
 // int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag) 
-public static Object arrowStartClip(Object... arg) {
-UNSUPPORTED("7yvz6xdsdp7elmx244pl0gazz"); // int arrowStartClip(edge_t* e, pointf * ps, int startp,
-UNSUPPORTED("8k5ruwl8qgfm72sur688h274s"); // 		   int endp, bezier * spl, int sflag)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("114lbsab8twbq15luo36j31q2"); //     inside_t inside_context;
-UNSUPPORTED("96gdnugus7n28odgvctx3xuls"); //     pointf sp[4];
-UNSUPPORTED("7igs7akkknm38zfqq5ws6i8e1"); //     double slen, slen2;
-UNSUPPORTED("hda5ej3tl5f5yl2yv519fh9g"); //     slen = arrow_length(e, sflag);
-UNSUPPORTED("cn1u0njiskbqzm1ytxc60hvhn"); //     slen2 = slen * slen;
-UNSUPPORTED("4wg1jjuy1tzmozuyrpld67lyo"); //     spl->sflag = sflag, spl->sp = ps[startp];
-UNSUPPORTED("3kwfclot4ahgcgki9f7gyz7hp"); //     if (endp > startp && DIST2(ps[startp], ps[startp + 3]) < slen2) {
-UNSUPPORTED("ee4c7giu5c5wj9p89yhrftlm4"); // 	startp += 3;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("58e2ypxz9985jahejomcb3q9c"); //     sp[0] = ps[startp + 3];
-UNSUPPORTED("q6t1k12ql53bpk2kf68hsi5y"); //     sp[1] = ps[startp + 2];
-UNSUPPORTED("76tg0a3uda3p8svf251tnr0yi"); //     sp[2] = ps[startp + 1];
-UNSUPPORTED("agxcxgo6w8v0tipza7n9c05xt"); //     sp[3] = spl->sp;	/* ensure endpoint starts inside */
-UNSUPPORTED("58ncmwp330cx9zr4kpm4xoidb"); //     inside_context.a.p = &sp[3];
-UNSUPPORTED("80bq4dpb1ulq3sd3d5z3lpmub"); //     inside_context.a.r = &slen2;
-UNSUPPORTED("90ahfjp59dwgkcrmlb5p9li27"); //     bezier_clip(&inside_context, inside, sp, 0);
-UNSUPPORTED("7wfhuqxd87aw2hxd3hl4izmjh"); //     ps[startp] = sp[3];
-UNSUPPORTED("3olq3bup4vl7pzvxu3imphze9"); //     ps[startp + 1] = sp[2];
-UNSUPPORTED("dm3yq6cmfbrst02xdf1yqfx3j"); //     ps[startp + 2] = sp[1];
-UNSUPPORTED("49s7487urjz20iy0mbbgjvrjh"); //     ps[startp + 3] = sp[0];
-UNSUPPORTED("4acg3jbqtner5sse4kbl0829m"); //     return startp;
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static int arrowStartClip(Agedge_s e, __ptr__ ps, int startp, int endp, bezier spl, int sflag) {
+ENTERING("q7y4oxn0paexbgynmtg2zmiv","arrowStartClip");
+try {
+    final __struct__<inside_t> inside_context = JUtils.from(inside_t.class);
+    final __array_of_struct__ sp = __array_of_struct__.malloc(pointf.class, 4);
+    double slen;
+    MutableDouble slen2 = new MutableDouble(0);
+    slen = arrow_length(e, sflag);
+    slen2.setValue(slen * slen);
+    spl.setInt("sflag", sflag);
+    spl.setStruct("sp", ps.plus(startp).getStruct());
+    if (endp > startp && DIST2(ps.plus(startp).getPtr(), ps.plus(startp + 3).getPtr()) < slen2.getValue()) {
+    	startp += 3;
+    }
+    sp.plus(0).setStruct(ps.plus(startp+3).getStruct());
+    sp.plus(1).setStruct(ps.plus(startp+2).getStruct());
+    sp.plus(2).setStruct(ps.plus(startp+1).getStruct());
+    sp.plus(3).setStruct(spl.getStruct("sp"));
+    /* ensure endpoint starts inside */
+    inside_context.setPtr("a.p", sp.plus(3).asPtr());
+    inside_context.setPtr("a.r", slen2.amp());
+    bezier_clip(inside_context.amp(), function(arrows__c.class, "inside"), sp, false);
+    ps.plus(startp).setStruct(sp.plus(3).getStruct());
+    ps.plus(startp+1).setStruct(sp.plus(2).getStruct());
+    ps.plus(startp+2).setStruct(sp.plus(1).getStruct());
+    ps.plus(startp+3).setStruct(sp.plus(0).getStruct());
+    return startp;
+} finally {
+LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
+}
 }
 
 

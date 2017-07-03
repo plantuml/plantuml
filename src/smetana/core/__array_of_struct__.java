@@ -43,13 +43,14 @@ import smetana.core.amiga.Area;
 import smetana.core.amiga.BuilderArea;
 import smetana.core.amiga.StarArrayOfStruct;
 import smetana.core.amiga.StarStruct;
+import smetana.core.amiga.StarStructImpl;
 
 public class __array_of_struct__ implements Area {
 
 	private final List<Area> data;
 	private final int currentPos;
 
-	private final int UID = StarStruct.CPT++;
+	private final int UID = StarStructImpl.CPT++;
 
 	public String getUID36() {
 		return Integer.toString(UID, 36);
@@ -91,7 +92,7 @@ public class __array_of_struct__ implements Area {
 	public static __array_of_struct__ malloc(final Class cl, int nb) {
 		return new __array_of_struct__(nb, new BuilderArea() {
 			public Area createArea() {
-				return new __struct__(cl);
+				return JUtils.from(cl);
 			}
 		});
 	}
@@ -156,7 +157,7 @@ public class __array_of_struct__ implements Area {
 
 	public void setStruct(__struct__ value) {
 		final Area area = getInternal(0);
-		((__struct__) area).____(value);
+		((__struct__) area).___(value);
 	}
 
 	public double getDouble(String fieldName) {

@@ -54,7 +54,7 @@ public class size_t_array_of_something implements size_t {
 	}
 
 	public __ptr__ malloc() {
-		return new StarArrayOfPtr(__array_of_ptr__.malloc_allocated(cl, nb));
+		return new StarArrayOfPtr(__array_of_ptr_impl__.malloc_allocated(cl, nb));
 	}
 
 	public size_t negate() {

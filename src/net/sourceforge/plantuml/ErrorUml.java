@@ -80,11 +80,11 @@ public class ErrorUml {
 		return type;
 	}
 
-	private int getPosition() {
+	public final int getPosition() {
 		return lineLocation.getPosition();
 	}
 
-	public LineLocation getLineLocation() {
+	public final LineLocation getLineLocation() {
 		return lineLocation;
 	}
 

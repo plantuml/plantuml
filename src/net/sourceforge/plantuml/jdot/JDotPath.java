@@ -112,11 +112,13 @@ public class JDotPath implements UDrawable {
 		}
 
 		DotPath dotPath = getDotPath(edge);
-		if (ymirror != null) {
+		if (ymirror != null && dotPath != null) {
 			dotPath = ymirror.getMirrored(dotPath);
 		}
 
-		ug.apply(new UChangeColor(color)).draw(dotPath);
+		if (dotPath != null) {
+			ug.apply(new UChangeColor(color)).draw(dotPath);
+		}
 		if (getLabelRectangleTranslate() != null) {
 			label.drawU(ug.apply(getLabelRectangleTranslate()));
 		}
@@ -190,6 +192,10 @@ public class JDotPath implements UDrawable {
 	}
 
 	private DotPath getDotPath(splines splines) {
+		if (splines == null) {
+			System.err.println("ERROR, no splines for getDotPath");
+			return null;
+		}
 		DotPath result = new DotPath();
 		final bezier beziers = (bezier) splines.getPtr("list");
 		final Point2D pt1 = getPoint(splines, 0);

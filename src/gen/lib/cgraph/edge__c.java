@@ -86,11 +86,14 @@ import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsubnode_s;
 import h.Agtag_s;
+import h.ST_Agdesc_s;
+import h.ST_Agtag_s;
 import h._dt_s;
 import h._dtdisc_s;
 import h._dtlink_s;
 import smetana.core.ACCESS;
 import smetana.core.CString;
+import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.STARSTAR;
 import smetana.core.Z;
@@ -232,7 +235,7 @@ public class edge__c {
 
 //1 cee3kc2m61ml4f8le5ueoyrjb
 // static Agtag_t Tag
-//private final static __struct__<Agtag_s> Tag = __struct__.from(Agtag_s.class);
+//private final static __struct__<Agtag_s> Tag = JUtils.from(Agtag_s.class);
 
 
 
@@ -431,7 +434,7 @@ public static Agsubnode_s agsubrep(Agraph_s g, Agnode_s n) {
 ENTERING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 try {
     Agsubnode_s sn;
-    final __struct__<Agsubnode_s> template = __struct__.from(Agsubnode_s.class);
+    final __struct__<Agsubnode_s> template = JUtils.from(Agsubnode_s.class);
 	if (EQ(g, n.getPtr("root"))) sn = (Agsubnode_s) n.getStruct("mainsub").amp();
 	else {
 			template.setPtr("node", n);
@@ -580,7 +583,7 @@ try {
     in.setPtr("node", t);
     out.setPtr("node", h);
     installedge(g, out);
-    if (g.getStruct("desc").getBoolean("has_attrs")) {
+    if (((ST_Agdesc_s)g.getStruct("desc")).has_attrs!=0) {
 	  agbindrec(out, AgDataRecName, sizeof(Agattr_s.class), false);
 	  agedgeattr_init(g, out);
     }
@@ -599,12 +602,12 @@ LEAVING("4rzjui6oo0k009o64bxwgjmvq","newedge");
 public static boolean ok_to_make_edge(Agraph_s g, Agnode_s t, Agnode_s h) {
 ENTERING("1ufxhg5xnmll1pe5339477823","ok_to_make_edge");
 try {
-    final __struct__<Agtag_s> key = __struct__.from(Agtag_s.class);
+    final __struct__<Agtag_s> key = JUtils.from(Agtag_s.class);
     /* protect against self, multi-edges in strict graphs */
     if (agisstrict(g)) {
 	if (g.getPtr("desc").getBoolean("no_loop") && (EQ(t, h))) /* simple graphs */
 	    return false;
-	key.____(Z.z().Tag);
+	key.___(Z.z().Tag);
 	key.setInt("objtype", 0);	/* wild card */
 	if (agfindedge_by_key(g, t, h, key)!=null)
 	    return false;
@@ -659,14 +662,14 @@ try {
     have_id = agmapnametoid(g, AGEDGE, name, id, false);
     if (have_id!=0 || ((name == null) && ((NOT(cflag)) || agisstrict(g)))) {
 	/* probe for pre-existing edge */
-	final __struct__<Agtag_s> key = __struct__.from(Agtag_s.class);
-	key.____(Z.z().Tag);
+	final ST_Agtag_s key = new ST_Agtag_s();
+	key.___(Z.z().Tag);
 	if (have_id!=0) {
-	    key.setInt("id", id[0]);
-	    key.setInt("objtype", AGEDGE);
+	    key.id = id[0];
+	    key.objtype = AGEDGE;
 	} else {
-	    key.setInt("id", 0);
-	    key.setInt("objtype", 0);
+	    key.id = 0;
+	    key.objtype = 0;
 	}
 	/* might already exist locally */
 	e = agfindedge_by_key(g, t, h, key);
@@ -834,7 +837,7 @@ LEAVING("b6jhzc16xvrknu4e7jp6zx0ue","agedgeseqcmpf");
 
 //1 d058zqckpiqls71p4vkuxe87o
 // Dtdisc_t Ag_mainedge_seq_disc = 
-/*static final public __struct__<_dtdisc_s> Ag_mainedge_seq_disc = __struct__.from(_dtdisc_s.class);
+/*static final public __struct__<_dtdisc_s> Ag_mainedge_seq_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_mainedge_seq_disc.setInt("key", 0);
 	Ag_mainedge_seq_disc.setInt("size", 0);
@@ -849,7 +852,7 @@ static {
 
 //1 7n5e8w5zjp9b4oeecyvyl96il
 // Dtdisc_t Ag_subedge_seq_disc = 
-/*static public final __struct__<_dtdisc_s> Ag_subedge_seq_disc = __struct__.from(_dtdisc_s.class);
+/*static public final __struct__<_dtdisc_s> Ag_subedge_seq_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_subedge_seq_disc.setInt("key", 0);
 	Ag_subedge_seq_disc.setInt("size", 0);
@@ -865,7 +868,7 @@ static {
 
 //1 7grv8f2wvpg0db2pn1g7r5abv
 // Dtdisc_t Ag_mainedge_id_disc = 
-/*static final public __struct__<_dtdisc_s> Ag_mainedge_id_disc = __struct__.from(_dtdisc_s.class);
+/*static final public __struct__<_dtdisc_s> Ag_mainedge_id_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_mainedge_id_disc.setInt("key", 0);
 	Ag_mainedge_id_disc.setInt("size", 0);
@@ -880,7 +883,7 @@ static {
 
 //1 9u0ic8u2hrwlmlqalv37s053f
 // Dtdisc_t Ag_subedge_id_disc = 
-/*static public final __struct__<_dtdisc_s> Ag_subedge_id_disc = __struct__.from(_dtdisc_s.class);
+/*static public final __struct__<_dtdisc_s> Ag_subedge_id_disc = JUtils.from(_dtdisc_s.class);
 static {
 	Ag_subedge_id_disc.setInt("key", 0);
 	Ag_subedge_id_disc.setInt("size", 0);

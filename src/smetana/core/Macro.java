@@ -43,11 +43,14 @@ import h.Agnodeinfo_t;
 import h.Agobj_s;
 import h.Agraph_s;
 import h.Agraphinfo_t;
-import h.Agtag_s;
 import h.GVC_s;
-import h.boxf;
+import h.ST_Agtag_s;
+import h.ST_boxf;
+import h.ST_elist;
+import h.ST_nlist_t;
+import h.ST_pointf;
+import h.ST_port;
 import h.elist;
-import h.nlist_t;
 // http://docs.oracle.com/javase/specs/jls/se5.0/html/expressions.html#15.7.4
 // http://www.jbox.dk/sanos/source/lib/string.c.html
 import h.pointf;
@@ -132,35 +135,35 @@ public class Macro {
 	public final static int AGEDGE = AGOUTEDGE;
 
 	// #define AGTAG(obj) (((Agobj_t*)(obj))->tag)
-	public static __struct__<Agtag_s> AGTAG(__ptr__ obj) {
-		return obj.castTo(Agobj_s.class).getStruct("tag");
+	public static ST_Agtag_s AGTAG(__ptr__ obj) {
+		return (ST_Agtag_s) obj.castTo(Agobj_s.class).getStruct("tag");
 	}
 
 	// #define AGTYPE(obj) (AGTAG(obj).objtype)
 	public static int AGTYPE(__ptr__ obj) {
-		return AGTAG(obj).getInt("objtype");
+		return AGTAG(obj).objtype;
 	}
 
 	public static void AGTYPE(__ptr__ obj, int v) {
-		AGTAG(obj).setInt("objtype", v);
+		AGTAG(obj).objtype = v;
 	}
 
 	// #define AGID(obj) (AGTAG(obj).id)
 	public static int AGID(__ptr__ obj) {
-		return AGTAG(obj).getInt("id");
+		return AGTAG(obj).id;
 	}
 
 	public static void AGID(__ptr__ obj, int v) {
-		AGTAG(obj).setInt("id", v);
+		AGTAG(obj).id = v;
 	}
 
 	// #define AGSEQ(obj) (AGTAG(obj).seq)
 	public static int AGSEQ(__ptr__ obj) {
-		return AGTAG(obj).getInt("seq");
+		return AGTAG(obj).seq;
 	}
 
 	public static void AGSEQ(__ptr__ obj, int v) {
-		AGTAG(obj).setInt("seq", v);
+		AGTAG(obj).seq = v;
 	}
 
 	// #define AGATTRWF(obj) (AGTAG(obj).attrwf)
@@ -294,8 +297,8 @@ public class Macro {
 	}
 
 	// #define GD_bb(g) (((Agraphinfo_t*)AGDATA(g))->bb)
-	public static __struct__<boxf> GD_bb(__ptr__ g) {
-		return AGDATA(g).castTo(Agraphinfo_t.class).getStruct("bb");
+	public static ST_boxf GD_bb(__ptr__ g) {
+		return (ST_boxf) AGDATA(g).castTo(Agraphinfo_t.class).getStruct("bb");
 	}
 
 	// #define GD_gvc(g) (((Agraphinfo_t*)AGDATA(g))->gvc)
@@ -338,8 +341,8 @@ public class Macro {
 	}
 
 	// #define GD_comp(g) (((Agraphinfo_t*)AGDATA(g))->comp)
-	public static __struct__<nlist_t> GD_comp(Agraph_s g) {
-		return AGDATA(g).castTo(Agraphinfo_t.class).getStruct("comp");
+	public static ST_nlist_t GD_comp(Agraph_s g) {
+		return (ST_nlist_t) AGDATA(g).castTo(Agraphinfo_t.class).getStruct("comp");
 	}
 
 	// #define GD_exact_ranksep(g) (((Agraphinfo_t*)AGDATA(g))->exact_ranksep)
@@ -654,20 +657,20 @@ public class Macro {
 	}
 
 	// #define ND_coord(n) (((Agnodeinfo_t*)AGDATA(n))->coord)
-	public static __struct__<pointf> ND_coord(__ptr__ n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("coord");
+	public static ST_pointf ND_coord(__ptr__ n) {
+		return (ST_pointf) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("coord");
 	}
 
 	// #define ND_dist(n) (((Agnodeinfo_t*)AGDATA(n))->dist)
 
 	// #define ND_flat_in(n) (((Agnodeinfo_t*)AGDATA(n))->flat_in)
-	public static __struct__<elist> ND_flat_in(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("flat_in");
+	public static ST_elist ND_flat_in(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("flat_in");
 	}
 
 	// #define ND_flat_out(n) (((Agnodeinfo_t*)AGDATA(n))->flat_out)
-	public static __struct__<elist> ND_flat_out(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("flat_out");
+	public static ST_elist ND_flat_out(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("flat_out");
 	}
 
 	// #define ND_gui_state(n) (((Agnodeinfo_t*)AGDATA(n))->gui_state)
@@ -698,8 +701,8 @@ public class Macro {
 	}
 
 	// #define ND_in(n) (((Agnodeinfo_t*)AGDATA(n))->in)
-	public static __struct__<elist> ND_in(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("in");
+	public static ST_elist ND_in(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("in");
 	}
 
 	public static void ND_in(__ptr__ n, __struct__<elist> v) {
@@ -808,13 +811,13 @@ public class Macro {
 	}
 
 	// #define ND_other(n) (((Agnodeinfo_t*)AGDATA(n))->other)
-	public static __struct__<elist> ND_other(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("other");
+	public static ST_elist ND_other(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("other");
 	}
 
 	// #define ND_out(n) (((Agnodeinfo_t*)AGDATA(n))->out)
-	public static __struct__<elist> ND_out(__ptr__ n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("out");
+	public static ST_elist ND_out(__ptr__ n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("out");
 	}
 	public static void ND_out(__ptr__ n, __struct__<elist> v) {
 		AGDATA(n).castTo(Agnodeinfo_t.class).setStruct("out", v);
@@ -876,8 +879,8 @@ public class Macro {
 	}
 
 	// #define ND_save_in(n) (((Agnodeinfo_t*)AGDATA(n))->save_in)
-	public static __struct__<elist> ND_save_in(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("save_in");
+	public static ST_elist ND_save_in(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("save_in");
 	}
 
 	public static void ND_save_in(Agnode_s n, __struct__<elist> v) {
@@ -885,8 +888,8 @@ public class Macro {
 	}
 
 	// #define ND_save_out(n) (((Agnodeinfo_t*)AGDATA(n))->save_out)
-	public static __struct__<elist> ND_save_out(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("save_out");
+	public static ST_elist ND_save_out(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("save_out");
 	}
 	public static void ND_save_out(Agnode_s n, __struct__<elist> v) {
 		AGDATA(n).castTo(Agnodeinfo_t.class).setStruct("save_out", v);
@@ -916,13 +919,13 @@ public class Macro {
 	// #define ND_state(n) (((Agnodeinfo_t*)AGDATA(n))->state)
 	// #define ND_clustnode(n) (((Agnodeinfo_t*)AGDATA(n))->clustnode)
 	// #define ND_tree_in(n) (((Agnodeinfo_t*)AGDATA(n))->tree_in)
-	public static __struct__<elist> ND_tree_in(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("tree_in");
+	public static ST_elist ND_tree_in(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("tree_in");
 	}
 
 	// #define ND_tree_out(n) (((Agnodeinfo_t*)AGDATA(n))->tree_out)
-	public static __struct__<elist> ND_tree_out(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("tree_out");
+	public static ST_elist ND_tree_out(Agnode_s n) {
+		return (ST_elist) AGDATA(n).castTo(Agnodeinfo_t.class).getStruct("tree_out");
 	}
 
 	// #define ND_weight_class(n) (((Agnodeinfo_t*)AGDATA(n))->weight_class)
@@ -986,8 +989,8 @@ public class Macro {
 	}
 
 	// #define ED_head_port(e) (((Agedgeinfo_t*)AGDATA(e))->head_port)
-	public static __struct__<port> ED_head_port(__ptr__ e) {
-		return (__struct__<port>) AGDATA(e).castTo(Agedgeinfo_t.class).getStruct("head_port");
+	public static ST_port ED_head_port(__ptr__ e) {
+		return (ST_port) AGDATA(e).castTo(Agedgeinfo_t.class).getStruct("head_port");
 	}
 	public static void ED_head_port(Agedge_s e, __struct__<port> v) {
 		AGDATA(e).castTo(Agedgeinfo_t.class).setStruct("head_port", v);
@@ -1045,10 +1048,10 @@ public class Macro {
 	}
 
 	// #define ED_tail_port(e) (((Agedgeinfo_t*)AGDATA(e))->tail_port)
-	public static __struct__<port> ED_tail_port(__ptr__ e) {
-		return (__struct__<port>) AGDATA(e).castTo(Agedgeinfo_t.class).getStruct("tail_port");
+	public static ST_port ED_tail_port(__ptr__ e) {
+		return (ST_port) AGDATA(e).castTo(Agedgeinfo_t.class).getStruct("tail_port");
 	}
-	public static void ED_tail_port(Agedge_s e, __struct__<port> v) {
+	public static void ED_tail_port(Agedge_s e, ST_port v) {
 		AGDATA(e).castTo(Agedgeinfo_t.class).setStruct("tail_port", v);
 	}
 
@@ -1165,23 +1168,26 @@ public class Macro {
 
 	// #define elist_append(item,L) do {L.list = ALLOC(L.size + 2,L.list,edge_t*); L.list[L.size++] = item;
 	// L.list[L.size] = NULL;} while(0)
-	public static void elist_append(__ptr__ item, __struct__ L) {
-		L.setPtr("list", ALLOC_empty(L.getInt("size") + 2, L.getPtr("list"), Agedge_s.class));
-		L.getArrayOfPtr("list").plus(L.getInt("size")).setPtr(item);
-		L.setInt("size", 1 + L.getInt("size"));
-		L.getArrayOfPtr("list").plus(L.getInt("size")).setPtr(null);
+	public static void elist_append(__ptr__ item, ST_elist L) {
+//		L.setPtr("list", ALLOC_empty(L.getInt("size") + 2, L.getPtr("list"), Agedge_s.class));
+		L.realloc(L.size + 2);
+		L.setInList(L.size, item);
+		L.size = 1 + L.size;
+		L.setInList(L.size, null);
 	}
 
 	// #define alloc_elist(n,L) do {L.size = 0; L.list = N_NEW(n + 1,edge_t*); } while (0)
-	public static void alloc_elist(int n, __struct__ L, Class cl) {
-		L.setInt("size", 0);
-		L.setPtr("list", (__ptr__) JUtils.sizeof_starstar_empty(cl, n + 1).malloc());
+	public static void alloc_elist(int n, ST_elist L, Class cl) {
+		L.size = 0;
+		L.mallocEmpty(cl, n + 1);
+		// L.setPtr("list", (__ptr__) JUtils.sizeof_starstar_empty(cl, n + 1).malloc());
 	}
 
 	// #define free_list(L) do {if (L.list) free(L.list);} while (0)
-	public static void free_list(__struct__ L) {
-		if (L.getPtr("list") != null)
-			Memory.free(L.getPtr("list"));
+	public static void free_list(ST_elist L) {
+		if (L.listNotNull())
+			L.free();
+			// Memory.free(L.getPtr("list"));
 	}
 
 	public static double ABS(double a) {

@@ -38,6 +38,7 @@ package smetana.core.amiga;
 
 import smetana.core.UnsupportedC;
 import smetana.core.__array_of_ptr__;
+import smetana.core.__array_of_ptr_impl__;
 import smetana.core.__ptr__;
 
 public class StarStar extends UnsupportedC implements Area {
@@ -49,10 +50,7 @@ public class StarStar extends UnsupportedC implements Area {
 	}
 
 	public static StarStar array_of_array_of_something_empty(final Class cl, int nb) {
-		// if (allocated) {
-		// return new StarStar(__array__.malloc(cl, nb));
-		// }
-		return new StarStar(__array_of_ptr__.malloc_empty(nb));
+		return new StarStar(__array_of_ptr_impl__.malloc_empty(nb));
 	}
 
 	public String toString() {
