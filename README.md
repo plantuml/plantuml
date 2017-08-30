@@ -17,7 +17,7 @@ PlantUML is a component that allows to quickly write :
  * [Timing diagram](http://plantuml.com/timing-diagram)
  
 And also:
- * [Activity diagram new syntax (beta)](http://plantuml.com/activity-diagram-beta)
+ * [Activity diagram (legacy syntax)](http://plantuml.com/activity-diagram-legacy)
  * [Archimate diagram](http://plantuml.com/archimate)
  * [Gantt charts](http://plantuml.com/gantt-diagram)
  * [SALT UI mockups](http://plantuml.com/salt)
