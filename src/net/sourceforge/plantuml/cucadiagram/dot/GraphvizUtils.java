@@ -117,7 +117,21 @@ public class GraphvizUtils {
 		return null;
 	}
 
+	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<Integer>();
+
+	public static void removeLocalLimitSize() {
+		limitSize.remove();
+	}
+
+	public static void setLocalImageLimit(int value) {
+		limitSize.set(value);
+	}
+
 	public static int getenvImageLimit() {
+		final Integer local = limitSize.get();
+		if (local != null) {
+			return local;
+		}
 		final String env = System.getProperty("PLANTUML_LIMIT_SIZE");
 		if (StringUtils.isNotEmpty(env) && env.matches("\\d+")) {
 			return Integer.parseInt(env);

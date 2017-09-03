@@ -439,7 +439,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	public void setUseJDot(boolean useJDot) {
 		this.useJDot = useJDot;
 	}
-
+	
 	public boolean isUseJDot() {
 		return useJDot;
 	}

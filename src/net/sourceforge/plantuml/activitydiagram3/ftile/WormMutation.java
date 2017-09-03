@@ -91,7 +91,7 @@ public class WormMutation {
 	public UTranslate getFirst() {
 		return translations.get(0);
 	}
-	
+
 	public int size() {
 		return translations.size();
 	}
@@ -185,6 +185,10 @@ public class WormMutation {
 			result.append(tr.getDx());
 		}
 		return new UTranslate(result.getExtreme() * (size - 1), 0);
+	}
+
+	public boolean isDxNegative() {
+		return translations.get(0).getDx() < 0;
 	}
 
 	public Worm mute(Worm original) {

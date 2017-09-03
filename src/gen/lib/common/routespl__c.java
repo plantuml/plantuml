@@ -80,6 +80,7 @@ import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -765,8 +766,8 @@ private static pointf simpleSplineRoute_w_(final __struct__<pointf> tp, final __
 ENTERING("7ebl6qohcfpf1b9ucih5r9qgp","simpleSplineRoute");
 try {
     final __struct__<Ppoly_t> pl = JUtils.from(Ppoly_t.class), spl = JUtils.from(Ppoly_t.class);
-    final __array_of_struct__ eps = __array_of_struct__.malloc(pointf.class, 2);
-    final __array_of_struct__ evs = __array_of_struct__.malloc(pointf.class, 2);
+    final __array_of_struct__ eps = __array_of_struct_impl__.malloc(pointf.class, 2);
+    final __array_of_struct__ evs = __array_of_struct_impl__.malloc(pointf.class, 2);
     int i;
     eps.plus(0).setDouble("x", tp.getDouble("x"));
     eps.plus(0).setDouble("y", tp.getDouble("y"));
@@ -857,7 +858,7 @@ ENTERING("cu8ssjizw7ileqe9u7tcclq7k","limitBoxes");
 try {
     int bi, si, splinepi;
     double t;
-    final __array_of_struct__ sp = __array_of_struct__.malloc(pointf.class, 4);
+    final __array_of_struct__ sp = __array_of_struct_impl__.malloc(pointf.class, 4);
     int num_div = delta * boxn;
     for (splinepi = 0; splinepi + 3 < pn; splinepi += 3) {
 	for (si = 0; si <= num_div; si++) {
@@ -906,8 +907,8 @@ try {
     final __struct__<Ppoly_t> poly = JUtils.from(Ppoly_t.class);
     final __struct__<Ppoly_t> pl  = JUtils.from(Ppoly_t.class), spl = JUtils.from(Ppoly_t.class);
     int splinepi;
-    final __array_of_struct__ eps = __array_of_struct__.malloc(pointf.class, 2);
-    final __array_of_struct__ evs = __array_of_struct__.malloc(pointf.class, 2);
+    final __array_of_struct__ eps = __array_of_struct_impl__.malloc(pointf.class, 2);
+    final __array_of_struct__ evs = __array_of_struct_impl__.malloc(pointf.class, 2);
     int edgei, prev, next;
     int pi=0, bi;
     __array_of_ptr__ boxes;

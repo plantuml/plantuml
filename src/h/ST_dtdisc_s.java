@@ -45,6 +45,7 @@
  */
 package h;
 
+import h.ST_dtmethod_s.Amp;
 import smetana.core.CFunction;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
@@ -70,8 +71,12 @@ public class ST_dtdisc_s extends UnsupportedStructAndPtr {
 		this(null);
 	}
 
-	class Amp extends UnsupportedStarStruct {
+	@Override
+	public StarStruct amp() {
+		return new Amp(this);
+	}
 
+	public class Amp extends UnsupportedStarStruct {
 		private final ST_dtdisc_s parent;
 
 		public Amp(ST_dtdisc_s me) {
@@ -123,12 +128,6 @@ public class ST_dtdisc_s extends UnsupportedStructAndPtr {
 			}
 			return super.setPtr(fieldName, newData);
 		}
-
-	}
-
-	@Override
-	public StarStruct amp() {
-		return new Amp(this);
 	}
 
 }

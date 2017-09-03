@@ -60,6 +60,7 @@ import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.jmp_buf;
@@ -271,7 +272,7 @@ return splinefits_w_(edges, edgen, pa.copy(), va.copy(), pb.copy(), vb.copy(), i
 private static int splinefits_w_(__ptr__ edges, int edgen, final __struct__<pointf> pa, final __struct__<pointf> va, final __struct__<pointf> pb, final __struct__<pointf> vb, __ptr__ inps, int inpn) {
 ENTERING("987ednrgu5qo9dzhpiox47mhb","splinefits");
 try {
-    final __array_of_struct__ sps = __array_of_struct__.malloc(pointf.class, 4);
+    final __array_of_struct__ sps = __array_of_struct_impl__.malloc(pointf.class, 4);
     double a, b;
     int pi;
     int forceflag;
@@ -344,7 +345,7 @@ try {
     double roots[] = new double[4];
     int rooti, rootn;
     int ei;
-    final __array_of_struct__ lps = __array_of_struct__.malloc(pointf.class, 2);
+    final __array_of_struct__ lps = __array_of_struct_impl__.malloc(pointf.class, 2);
     final __struct__<pointf> ip = JUtils.from(pointf.class);
     double t, ta, tb, tc, td;
     for (ei = 0; ei < edgen; ei++) {

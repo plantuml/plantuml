@@ -99,6 +99,7 @@ import smetana.core.CFunction;
 import smetana.core.JUtils;
 import smetana.core.MutableDouble;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -793,8 +794,8 @@ LEAVING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
 public static void bezier_clip(__ptr__ inside_context, __ptr__ inside, __array_of_struct__ sp, boolean left_inside) {
 ENTERING("q4t1ywnk3wm1vyh5seoj7xye","bezier_clip");
 try {
-    final __array_of_struct__ seg = __array_of_struct__.malloc(pointf.class, 4);
-    final __array_of_struct__ best = __array_of_struct__.malloc(pointf.class, 4);
+    final __array_of_struct__ seg = __array_of_struct_impl__.malloc(pointf.class, 4);
+    final __array_of_struct__ best = __array_of_struct_impl__.malloc(pointf.class, 4);
     final __struct__<pointf> pt = JUtils.from(pointf.class), opt = JUtils.from(pointf.class);
     __ptr__ left, right;
     final MutableDouble low = new MutableDouble(0), high = new MutableDouble(0);
@@ -852,7 +853,7 @@ ENTERING("1fjkj1ydhtlf13pqj5r041orq","shape_clip0");
 try {
     int i;
     double save_real_size;
-    final __array_of_struct__ c = __array_of_struct__.malloc(pointf.class, 4);
+    final __array_of_struct__ c = __array_of_struct_impl__.malloc(pointf.class, 4);
     save_real_size = ND_rw(n);
     for (i = 0; i < 4; i++) {
 	c.plus(i).setDouble("x", curve.plus(i).getDouble("x") - ND_coord(n).getDouble("x"));
@@ -1001,7 +1002,7 @@ try {
 	    break;
    arrow_clip(fe, hn, ps, start, end, newspl, info);
     for (i = start[0]; i < end[0] + 4; ) {
-	final __array_of_struct__ cp = __array_of_struct__.malloc(pointf.class, 4);
+	final __array_of_struct__ cp = __array_of_struct_impl__.malloc(pointf.class, 4);
 	newspl.getArrayOfPtr("list").plus(i - start[0]).setStruct(ps.plus(i).getStruct());
 	cp.plus(0).setStruct(ps.plus(i).getStruct());
 	i++;
@@ -1716,7 +1717,7 @@ try {
     final ST_pointf tp = new ST_pointf(), hp = new ST_pointf(), np = new ST_pointf();
     Agnode_s n;
     Agedge_s e;
-    final __array_of_struct__ points = __array_of_struct__.malloc(pointf.class, 1000);
+    final __array_of_struct__ points = __array_of_struct_impl__.malloc(pointf.class, 1000);
     int pointn;
     e = (Agedge_s) edges.plus(ind).getPtr();
     n = agtail(e);

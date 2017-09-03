@@ -47,11 +47,11 @@ package h;
 
 import smetana.core.CFunction;
 import smetana.core.UnsupportedStarStruct;
-import smetana.core.UnsupportedStruct;
+import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__ptr__;
 import smetana.core.amiga.StarStruct;
 
-public class ST_dtmethod_s extends UnsupportedStruct {
+public class ST_dtmethod_s extends UnsupportedStructAndPtr {
 
 	public CFunction searchf;
 	public int type;
@@ -72,30 +72,33 @@ public class ST_dtmethod_s extends UnsupportedStruct {
 
 	@Override
 	public StarStruct amp() {
-		return new UnsupportedStarStruct() {
-			@Override
-			public int getInt(String fieldName) {
-				if (fieldName.equals("type")) {
-					return type;
-				}
-				return super.getInt(fieldName);
-			}
-
-			@Override
-			public __ptr__ getPtr(String fieldName) {
-				if (fieldName.equals("searchf")) {
-					return searchf;
-				}
-				return super.getPtr(fieldName);
-			}
-
-			@Override
-			public Object call(String fieldName, Object... args) {
-				if (fieldName.equals("searchf")) {
-					return searchf.exe(args);
-				}
-				return super.call(fieldName, args);
-			}
-		};
+		return new Amp();
 	}
+
+	public class Amp extends UnsupportedStarStruct {
+		@Override
+		public int getInt(String fieldName) {
+			if (fieldName.equals("type")) {
+				return type;
+			}
+			return super.getInt(fieldName);
+		}
+
+		@Override
+		public __ptr__ getPtr(String fieldName) {
+			if (fieldName.equals("searchf")) {
+				return searchf;
+			}
+			return super.getPtr(fieldName);
+		}
+
+		@Override
+		public Object call(String fieldName, Object... args) {
+			if (fieldName.equals("searchf")) {
+				return searchf.exe(args);
+			}
+			return super.call(fieldName, args);
+		}
+	}
+
 }

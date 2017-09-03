@@ -74,15 +74,18 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS
 				|| entity.getLeafType() == LeafType.INTERFACE;
 
-		// final HtmlColor color = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS, getStereo());
 		final Stereotype stereotype = entity.getStereotype();
-		final String generic = entity.getGeneric();
+		final boolean displayGenericWithOldFashion = skinParam.displayGenericWithOldFashion();
+		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();
 		FontConfiguration fontConfigurationName = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
 		if (italic) {
 			fontConfigurationName = fontConfigurationName.italic();
 		}
-		TextBlock name = entity.getDisplay().createWithNiceCreoleMode(fontConfigurationName,
-				HorizontalAlignment.CENTER, skinParam);
+		Display display = entity.getDisplay();
+		if (displayGenericWithOldFashion && entity.getGeneric() != null) {
+			display = display.addGeneric(entity.getGeneric());
+		}
+		TextBlock name = display.createWithNiceCreoleMode(fontConfigurationName, HorizontalAlignment.CENTER, skinParam);
 		final VisibilityModifier modifier = entity.getVisibilityModifier();
 		if (modifier == null) {
 			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
@@ -117,7 +120,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 			final HtmlColor classBackground = SkinParamUtils
 					.getColor(getSkinParam(), ColorParam.background, stereotype);
-			// final HtmlColor classBorder = getColor(ColorParam.classBorder, stereotype);
+
 			final HtmlColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
 					stereotype);
 			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);

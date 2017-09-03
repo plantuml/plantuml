@@ -46,10 +46,12 @@
 package h;
 
 import smetana.core.HardcodedStruct;
+import smetana.core.UnsupportedSize_t;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
-import smetana.core.__ptr__;
 import smetana.core.__struct__;
+import smetana.core.size_t;
+import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarStruct;
 
 public class ST_boxf extends UnsupportedStructAndPtr implements HardcodedStruct {
@@ -71,13 +73,23 @@ public class ST_boxf extends UnsupportedStructAndPtr implements HardcodedStruct 
 	// }
 
 	@Override
+	public __struct__ getStruct() {
+		return this;
+	}
+
+	@Override
+	public void setStruct(__struct__ value) {
+		copyDataFrom(value);
+	}
+
+	@Override
 	public __struct__ getStruct(String fieldName) {
-		// if (fieldName.equals("LL")) {
-		// return LL;
-		// }
-		// if (fieldName.equals("UR")) {
-		// return UR;
-		// }
+		if (fieldName.equals("LL")) {
+			return LL;
+		}
+		if (fieldName.equals("UR")) {
+			return UR;
+		}
 		return super.getStruct(fieldName);
 	}
 
@@ -156,6 +168,15 @@ public class ST_boxf extends UnsupportedStructAndPtr implements HardcodedStruct 
 	@Override
 	public StarStruct amp() {
 		return new Amp();
+	}
+
+	public static size_t sizeof(final int nb) {
+		return new UnsupportedSize_t(nb) {
+			@Override
+			public Object malloc() {
+				return new StarArrayOfPtr(new STArray<ST_boxf>(nb, 0, ST_boxf.class));
+			}
+		};
 	}
 
 	// public interface ST_boxf extends __ptr__ {

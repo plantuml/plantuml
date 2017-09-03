@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -93,16 +94,71 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private final List<Association> associations = new ArrayList<Association>();
 
+	public CommandExecutionResult associationClass(Code clName1A, Code clName1B, Code clName2A, Code clName2B,
+			LinkType linkType, Display label) {
+		final IEntity entity1A = getOrCreateLeaf(clName1A, null, null);
+		final IEntity entity1B = getOrCreateLeaf(clName1B, null, null);
+		final IEntity entity2A = getOrCreateLeaf(clName2A, null, null);
+		final IEntity entity2B = getOrCreateLeaf(clName2B, null, null);
+		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
+		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
+		if (same1.size() == 0 && same2.size() == 0) {
+
+			final IEntity point1 = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION,
+					null);
+			final IEntity point2 = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION,
+					null);
+
+			insertPointBetween(entity1A, entity1B, point1);
+			insertPointBetween(entity2A, entity2B, point2);
+
+			final int length = 1;
+			final Link point1ToPoint2 = new Link(point1, point2, linkType, label, length);
+			addLink(point1ToPoint2);
+
+			return CommandExecutionResult.ok();
+		}
+		return CommandExecutionResult.error("Cannot link two associations points");
+	}
+
+	private void insertPointBetween(final IEntity entity1A, final IEntity entity1B, final IEntity point1) {
+		Link existingLink1 = foundLink(entity1A, entity1B);
+		if (existingLink1 == null) {
+			existingLink1 = new Link(entity1A, entity1B, new LinkType(LinkDecor.NONE, LinkDecor.NONE), Display.NULL, 2);
+		} else {
+			removeLink(existingLink1);
+		}
+
+		final IEntity entity1real = existingLink1.isInverted() ? existingLink1.getEntity2() : existingLink1
+				.getEntity1();
+		final IEntity entity2real = existingLink1.isInverted() ? existingLink1.getEntity1() : existingLink1
+				.getEntity2();
+
+		final Link entity1ToPoint = new Link(entity1real, point1, existingLink1.getType().getPart2(),
+				existingLink1.getLabel(), existingLink1.getLength(), existingLink1.getQualifier1(), null,
+				existingLink1.getLabeldistance(), existingLink1.getLabelangle());
+		entity1ToPoint.setLinkArrow(existingLink1.getLinkArrow());
+		final Link pointToEntity2 = new Link(point1, entity2real, existingLink1.getType().getPart1(), Display.NULL,
+				existingLink1.getLength(), null, existingLink1.getQualifier2(), existingLink1.getLabeldistance(),
+				existingLink1.getLabelangle());
+
+		// int length = 1;
+		// if (existingLink.getLength() == 1 && entity1A != entity1B) {
+		// length = 2;
+		// }
+		// if (existingLink.getLength() == 2 && entity1A == entity1B) {
+		// length = 2;
+		// }
+
+		addLink(entity1ToPoint);
+		addLink(pointToEntity2);
+	}
+
 	public boolean associationClass(int mode, Code clName1, Code clName2, IEntity associed, LinkType linkType,
 			Display label) {
 		final IEntity entity1 = getOrCreateLeaf(clName1, null, null);
 		final IEntity entity2 = getOrCreateLeaf(clName2, null, null);
-		final List<Association> same = new ArrayList<Association>();
-		for (Association existing : associations) {
-			if (existing.sameCouple(entity1, entity2)) {
-				same.add(existing);
-			}
-		}
+		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
 		if (same.size() > 1) {
 			return false;
 		} else if (same.size() == 0) {
@@ -118,6 +174,16 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 		this.associations.add(association);
 		return true;
+	}
+
+	private List<Association> getExistingAssociatedPoints(final IEntity entity1, final IEntity entity2) {
+		final List<Association> same = new ArrayList<Association>();
+		for (Association existing : associations) {
+			if (existing.sameCouple(entity1, entity2)) {
+				same.add(existing);
+			}
+		}
+		return same;
 	}
 
 	class Association {

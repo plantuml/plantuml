@@ -36,142 +36,40 @@
 
 package smetana.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import smetana.core.amiga.Area;
-import smetana.core.amiga.BuilderArea;
-import smetana.core.amiga.StarArrayOfStruct;
-import smetana.core.amiga.StarStruct;
-import smetana.core.amiga.StarStructImpl;
 
-public class __array_of_struct__ implements Area {
+public interface __array_of_struct__ extends Area {
 
-	private final List<Area> data;
-	private final int currentPos;
+	public String getUID36();
 
-	private final int UID = StarStructImpl.CPT++;
+	public void swap(int i, int j);
 
-	public String getUID36() {
-		return Integer.toString(UID, 36);
-	}
+	public void realloc(int nb);
 
-	public void swap(int i, int j) {
-		Area e1 = data.get(i);
-		Area e2 = data.get(j);
-		data.set(i, e2);
-		data.set(j, e1);
-	}
+	public __ptr__ asPtr();
 
-	@Override
-	public String toString() {
-		if (data.get(0) != null) {
-			return "__array_of_struct__ " + getUID36() + " " + currentPos + "/" + data.size() + " "
-					+ data.get(0).toString();
-		}
-		return "__array_of_struct__ " + getUID36() + " " + currentPos + "/" + data.size();
-	}
+	public int comparePointerInternal(__array_of_struct__ other);
 
-	public void realloc(int nb) {
-		while (data.size() < nb + currentPos) {
-			data.add(null);
-		}
-	}
+	public __array_of_struct__ move(int delta);
 
-	public __ptr__ asPtr() {
-		return new StarArrayOfStruct(this);
-	}
+	public __array_of_struct__ plus(int delta);
 
-	public int comparePointerInternal(__array_of_struct__ other) {
-		if (this.data != other.data) {
-			throw new IllegalArgumentException();
-		}
-		return this.currentPos - other.currentPos;
-	}
+	public Area getInternal(int idx);
 
-	public static __array_of_struct__ malloc(final Class cl, int nb) {
-		return new __array_of_struct__(nb, new BuilderArea() {
-			public Area createArea() {
-				return JUtils.from(cl);
-			}
-		});
-	}
+	public void setInternalByIndex(int idx, Area value);
 
-	private __array_of_struct__(List<Area> data, int currentPos) {
-		this.data = data;
-		this.currentPos = currentPos;
-		check();
-	}
+	public void memcopyFrom(Area source);
 
-	public __array_of_struct__(int size, BuilderArea builder) {
-		this.data = new ArrayList<Area>();
-		this.currentPos = 0;
-		for (int i = 0; i < size; i++) {
-			final Area tmp = builder.createArea();
-			data.add(tmp);
-		}
-		check();
-	}
+	public __ptr__ getPtr();
 
-	private void check() {
-		if (getUID36().equals("194")) {
-			JUtils.LOG("It's me");
-		}
-	}
+	public __struct__ getStruct();
 
-	public __array_of_struct__ move(int delta) {
-		return new __array_of_struct__(data, currentPos + delta);
-	}
+	public void setStruct(__struct__ value);
 
-	public __array_of_struct__ plus(int delta) {
-		return move(delta);
-	}
+	public double getDouble(String fieldName);
 
-	public Area getInternal(int idx) {
-		return data.get(idx + currentPos);
-	}
+	public void setDouble(String fieldName, double value);
 
-	public void setInternalByIndex(int idx, Area value) {
-		if (value == this) {
-			throw new IllegalArgumentException();
-		}
-		if (value instanceof __array_of_struct__) {
-			throw new IllegalArgumentException();
-		}
-		data.set(idx + currentPos, value);
-	}
-
-	public void memcopyFrom(Area source) {
-		throw new UnsupportedOperationException();
-	}
-
-	//
-
-	public __ptr__ getPtr() {
-		return ((__struct__) getInternal(0)).amp();
-	}
-
-	public __struct__ getStruct() {
-		return (__struct__) getInternal(0);
-	}
-
-	public void setStruct(__struct__ value) {
-		final Area area = getInternal(0);
-		((__struct__) area).___(value);
-	}
-
-	public double getDouble(String fieldName) {
-		final Area tmp1 = getInternal(0);
-		return ((__struct__) tmp1).getDouble(fieldName);
-	}
-
-	public void setDouble(String fieldName, double value) {
-		final Area tmp1 = getInternal(0);
-		((__struct__) tmp1).setDouble(fieldName, value);
-	}
-
-	public __struct__ getStruct(String fieldName) {
-		return ((StarStruct) getInternal(0)).getStruct(fieldName);
-	}
+	public __struct__ getStruct(String fieldName);
 
 }

@@ -60,19 +60,20 @@ public class ST_Agmemdisc_s extends UnsupportedStruct {
 
 	@Override
 	public StarStruct amp() {
-		return new UnsupportedStarStruct() {
+		return new Amp();
+	}
 
-			@Override
-			public Object call(String fieldName, Object... args) {
-				if (fieldName.equals("open")) {
-					return open.exe(args);
-				}
-				if (fieldName.equals("alloc")) {
-					return alloc.exe(args);
-				}
-				return super.call(fieldName, args);
+	public class Amp extends UnsupportedStarStruct {
+		@Override
+		public Object call(String fieldName, Object... args) {
+			if (fieldName.equals("open")) {
+				return open.exe(args);
 			}
-		};
+			if (fieldName.equals("alloc")) {
+				return alloc.exe(args);
+			}
+			return super.call(fieldName, args);
+		}
 	}
 
 	// public static List<String> DEFINITION = Arrays.asList(

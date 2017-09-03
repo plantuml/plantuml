@@ -52,6 +52,11 @@ public class size_t_array_of_something implements size_t {
 	public boolean isZero() {
 		return nb == 0;
 	}
+	
+	public int getInternalNb() {
+		return nb;
+	}
+
 
 	public __ptr__ malloc() {
 		return new StarArrayOfPtr(__array_of_ptr_impl__.malloc_allocated(cl, nb));

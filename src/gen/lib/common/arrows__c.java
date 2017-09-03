@@ -68,6 +68,7 @@ import smetana.core.JUtils;
 import smetana.core.MutableDouble;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -934,7 +935,7 @@ public static int arrowEndClip(Agedge_s e, __ptr__ ps, int startp, int endp, bez
 ENTERING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 try {
     final __struct__<inside_t> inside_context = JUtils.from(inside_t.class);
-    final __array_of_struct__ sp = __array_of_struct__.malloc(pointf.class, 4);
+    final __array_of_struct__ sp = __array_of_struct_impl__.malloc(pointf.class, 4);
     double elen;
     MutableDouble elen2 = new MutableDouble(0);
     elen = arrow_length(e, eflag);
@@ -971,7 +972,7 @@ public static int arrowStartClip(Agedge_s e, __ptr__ ps, int startp, int endp, b
 ENTERING("q7y4oxn0paexbgynmtg2zmiv","arrowStartClip");
 try {
     final __struct__<inside_t> inside_context = JUtils.from(inside_t.class);
-    final __array_of_struct__ sp = __array_of_struct__.malloc(pointf.class, 4);
+    final __array_of_struct__ sp = __array_of_struct_impl__.malloc(pointf.class, 4);
     double slen;
     MutableDouble slen2 = new MutableDouble(0);
     slen = arrow_length(e, sflag);

@@ -36,30 +36,49 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.DottedNumber;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandAutonumber extends SingleLineCommand<SequenceDiagram> {
+public class CommandAutonumber extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandAutonumber() {
-		super("(?i)^autonumber[%s]*(\\d+)?(?:[%s]+(\\d+))?(?:[%s]+[%g]([^%g]+)[%g])?[%s]*$");
+		super(getConcat());
+	}
+
+	private static RegexConcat getConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("autonumber"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("START", "(\\d(?:(?:[^\\p{L}0-9%s]+|\\d+)*\\d)?)?"), //
+				new RegexLeaf("STEP", "(?:[%s]+(\\d+))?"), //
+				new RegexLeaf("FORMAT", "(?:[%s]+[%g]([^%g]+)[%g])?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		int start = 1;
-		if (arg.get(0) != null) {
-			start = Integer.parseInt(arg.get(0));
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+		DottedNumber start = DottedNumber.create("1");
+		final String arg0 = arg.get("START", 0);
+		// System.err.println("arg0=" + arg0);
+		if (arg0 != null) {
+			start = DottedNumber.create(arg0);
 		}
+		// System.err.println("start=" + start);
 		int inc = 1;
-		if (arg.get(1) != null) {
-			inc = Integer.parseInt(arg.get(1));
+		final String arg1 = arg.get("STEP", 0);
+		if (arg1 != null) {
+			inc = Integer.parseInt(arg1);
 		}
 
-		final String df = arg.get(2) == null ? "<b>0</b>" : arg.get(2);
+		final String arg2 = arg.get("FORMAT", 0);
+		final String df = arg2 == null ? "<b>0</b>" : arg2;
 		final DecimalFormat decimalFormat;
 		try {
 			decimalFormat = new DecimalFormat(df);
@@ -67,7 +86,8 @@ public class CommandAutonumber extends SingleLineCommand<SequenceDiagram> {
 			return CommandExecutionResult.error("Error in pattern : " + df);
 		}
 
-		sequenceDiagram.autonumberGo(start, inc, decimalFormat);
+		diagram.autonumberGo(start, inc, decimalFormat);
 		return CommandExecutionResult.ok();
 	}
+
 }

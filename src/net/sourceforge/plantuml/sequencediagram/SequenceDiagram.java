@@ -322,45 +322,30 @@ public class SequenceDiagram extends UmlDiagram {
 		return skin2;
 	}
 
-	private boolean autonumber = false;
-	private int messageNumber;
-	private int incrementMessageNumber;
+	private final AutoNumber autoNumber = new AutoNumber();
 
-	private DecimalFormat decimalFormat;
-
-	public final void autonumberGo(int startingNumber, int increment, DecimalFormat decimalFormat) {
-		this.autonumber = true;
-		this.messageNumber = startingNumber;
-		this.incrementMessageNumber = increment;
-		this.decimalFormat = decimalFormat;
+	public final void autonumberGo(DottedNumber startingNumber, int increment, DecimalFormat decimalFormat) {
+		autoNumber.go(startingNumber, increment, decimalFormat);
 	}
 
 	public final void autonumberStop() {
-		this.autonumber = false;
+		autoNumber.stop();
 	}
 
-	public final void autonumberResume(DecimalFormat decimalFormat) {
-		this.autonumber = true;
-		if (decimalFormat != null) {
-			this.decimalFormat = decimalFormat;
-		}
+	public final AutoNumber getAutoNumber() {
+		return autoNumber;
 	}
 
-	public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
-		this.autonumber = true;
-		this.incrementMessageNumber = increment;
-		if (decimalFormat != null) {
-			this.decimalFormat = decimalFormat;
-		}
-	}
+//	public final void autonumberResume(DecimalFormat decimalFormat) {
+//		autoNumber.resume(decimalFormat);
+//	}
+//
+//	public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
+//		autoNumber.resume(increment, decimalFormat);
+//	}
 
 	public String getNextMessageNumber() {
-		if (autonumber == false) {
-			return null;
-		}
-		final int result = messageNumber;
-		messageNumber += incrementMessageNumber;
-		return decimalFormat.format(result);
+		return autoNumber.getNextMessageNumber();
 	}
 
 	public boolean isShowFootbox() {

@@ -36,6 +36,8 @@
 
 package smetana.core.amiga;
 
+import h.WithParent;
+
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -114,7 +116,7 @@ public class StarStructImpl extends UnsupportedC implements StarStruct {
 		this.theClass = theClass;
 		this.fields = new LinkedHashMap<String, Area>();
 		JUtils.LOG("Creation Struct " + getUID36());
-		if (getUID36().equals("2tg")) {
+		if (getUID36().equals("1tq")) {
 			JUtils.LOG("It's me");
 		}
 		final StructureDefinition structureDefinition = StructureDefinition.from(theClass);
@@ -488,7 +490,15 @@ public class StarStructImpl extends UnsupportedC implements StarStruct {
 				return first2;
 			}
 		}
-		throw new UnsupportedOperationException();
+		if (first instanceof WithParent) {
+			final WithParent first2 = (WithParent) first;
+			JUtils.LOG("first.parent=" + first2.getParent());
+			if (first2.getParent() != this) {
+				throw new IllegalStateException();
+			}
+			return (__ptr__) first2;
+		}
+		throw new UnsupportedOperationException("first=" + first.getClass());
 	}
 
 	public Object addVirtualBytes(int virtualBytes) {

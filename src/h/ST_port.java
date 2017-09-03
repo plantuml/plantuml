@@ -45,8 +45,6 @@
  */
 package h;
 
-import javax.swing.text.html.CSS;
-
 import smetana.core.CString;
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStarStruct;

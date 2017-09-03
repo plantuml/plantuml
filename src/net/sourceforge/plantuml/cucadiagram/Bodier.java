@@ -170,7 +170,7 @@ public class Bodier {
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private List<String> rawBodyWithoutHidden() {

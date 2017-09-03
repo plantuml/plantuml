@@ -47,7 +47,6 @@ package h;
 
 import smetana.core.HardcodedStruct;
 import smetana.core.UnsupportedStarStruct;
-import smetana.core.UnsupportedStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__struct__;
 import smetana.core.amiga.Area;

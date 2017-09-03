@@ -854,4 +854,12 @@ public class SkinParam implements ISkinParam {
 		return false;
 	}
 
+	public boolean displayGenericWithOldFashion() {
+		final String value = getValue("genericDisplay");
+		if ("old".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
 }

@@ -130,27 +130,27 @@ public class UnsupportedStarStruct implements StarStruct {
 	}
 
 	public CString getCString(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __array_of_struct__ getArrayOfStruct(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __array_of_ptr__ getArrayOfPtr(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __array_of_cstring__ getArrayOfCString(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __array_of_integer__ getArrayOfInteger(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __struct__ getStruct(String fieldName) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __ptr__ getPtr(String fieldName) {
@@ -158,15 +158,15 @@ public class UnsupportedStarStruct implements StarStruct {
 	}
 
 	public void setStruct(String fieldName, __struct__ newData) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public void setCString(String fieldName, CString newData) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public __ptr__ setPtr(String fieldName, __ptr__ newData) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(fieldName + " " + getClass().toString());
 	}
 
 	public void memcopyFrom(Area source) {
@@ -190,7 +190,7 @@ public class UnsupportedStarStruct implements StarStruct {
 	}
 
 	public __ptr__ castTo(Class dest) {
-		throw new UnsupportedOperationException(getClass().toString());
+		throw new UnsupportedOperationException(dest + " " + getClass().toString());
 	}
 
 	public Object addVirtualBytes(int virtualBytes) {

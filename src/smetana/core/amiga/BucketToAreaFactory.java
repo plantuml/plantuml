@@ -40,9 +40,9 @@ import smetana.core.Bucket;
 import smetana.core.CType;
 import smetana.core.JUtils;
 import smetana.core.__array_of_double__;
-import smetana.core.__array_of_integer__;
+import smetana.core.__array_of_integer_impl__;
 import smetana.core.__array_of_ptr_impl__;
-import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 
 public class BucketToAreaFactory {
 
@@ -129,11 +129,11 @@ public class BucketToAreaFactory {
 		JUtils.LOG("BucketToAreaFactory:createAreaArray: type=" + bucket.ctype);
 		if (bucket.ctype.getType().matches("char \\w+\\[\\d+\\]")) {
 			// Array of char
-			return __array_of_integer__.mallocInteger(arrayLength);
+			return __array_of_integer_impl__.mallocInteger(arrayLength);
 		}
 		if (bucket.ctype.getType().matches("int \\w+\\[\\d+\\]")) {
 			// Array of int
-			return __array_of_integer__.mallocInteger(arrayLength);
+			return __array_of_integer_impl__.mallocInteger(arrayLength);
 		}
 		if (bucket.ctype.getType().matches("double \\w+\\[\\d+\\]")) {
 			// Array of double
@@ -153,7 +153,7 @@ public class BucketToAreaFactory {
 			JUtils.LOG("element=" + element);
 			final Class theClass = CType.getClassFrom(element);
 			JUtils.LOG("theClass=" + theClass);
-			return __array_of_struct__.malloc(theClass, arrayLength);
+			return __array_of_struct_impl__.malloc(theClass, arrayLength);
 		}
 		throw new UnsupportedOperationException();
 	}

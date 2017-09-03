@@ -119,7 +119,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE,
 				currentPackage);
 		p.setUSymbol(USymbol.getFromString(arg.get("SYMBOL", 0)));
-		final String stereotype = arg.get("STEREOTYPE", 0);
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype, false));
 		}

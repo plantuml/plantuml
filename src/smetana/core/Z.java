@@ -127,13 +127,13 @@ public class Z {
 
 	public Agraph_s Ag_dictop_G;
 
-	public final __array_of_struct__ Arrowsynonyms = __array_of_struct__.malloc(arrowname_t.class, 1);
+	public final __array_of_struct__ Arrowsynonyms = __array_of_struct_impl__.malloc(arrowname_t.class, 1);
 
-	public final __array_of_struct__ Arrownames = __array_of_struct__.malloc(arrowname_t.class, 3);
+	public final __array_of_struct__ Arrownames = __array_of_struct_impl__.malloc(arrowname_t.class, 3);
 
-	public final __array_of_struct__ Arrowmods = __array_of_struct__.malloc(arrowname_t.class, 1);
+	public final __array_of_struct__ Arrowmods = __array_of_struct_impl__.malloc(arrowname_t.class, 1);
 
-	public final __array_of_struct__ Arrowtypes = __array_of_struct__.malloc(arrowtype_t.class, 9);
+	public final __array_of_struct__ Arrowtypes = __array_of_struct_impl__.malloc(arrowtype_t.class, 9);
 
 	public __ptr__ Show_boxes;
 
@@ -204,7 +204,7 @@ public class Z {
 
 	public int edgen;
 
-	public __array_of_struct__ boxes = __array_of_struct__.malloc(boxf.class, 1000);
+	public __array_of_struct__ boxes = __array_of_struct_impl__.malloc(boxf.class, 1000);
 
 	public int MinQuit;
 

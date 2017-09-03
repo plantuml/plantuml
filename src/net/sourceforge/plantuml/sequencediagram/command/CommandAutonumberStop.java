@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 public class CommandAutonumberStop extends SingleLineCommand<SequenceDiagram> {
 
 	public CommandAutonumberStop() {
-		super("(?i)^autonumber[%s]*stop$");
+		super("(?i)^autonumber[%s]+stop[%s]*$");
 	}
 
 	@Override

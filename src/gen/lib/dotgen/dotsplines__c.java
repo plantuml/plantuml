@@ -143,6 +143,7 @@ import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -1716,7 +1717,7 @@ try {
     final __struct__<Ppoly_t> poly = JUtils.from(Ppoly_t.class);
     int pn[] = new int[1];
 	Agedge_s e = (Agedge_s) edges.plus(ind).getPtr();
-    final __array_of_struct__ points = __array_of_struct__.malloc(pointf.class, 10);
+    final __array_of_struct__ points = __array_of_struct_impl__.malloc(pointf.class, 10);
     final __struct__<pointf> tp = JUtils.from(pointf.class), hp = JUtils.from(pointf.class);
     int i, pointn;
     double leftend, rightend, ctrx=0, ctry=0, miny, maxy;
@@ -1865,7 +1866,7 @@ public static void makeSimpleFlat(Agnode_s tn, Agnode_s hn, __ptr__ edges, int i
 ENTERING("8kqyzk43ovc2sq6jegua6ytp","makeSimpleFlat");
 try {
     Agedge_s e = (Agedge_s) edges.plus(ind).getPtr();
-    final __array_of_struct__ points = __array_of_struct__.malloc(pointf.class, 10);
+    final __array_of_struct__ points = __array_of_struct_impl__.malloc(pointf.class, 10);
     final __struct__<pointf> tp = JUtils.from(pointf.class), hp = JUtils.from(pointf.class);
     int i, pointn;
     double stepy, dy;
@@ -2109,7 +2110,7 @@ try {
     int boxn, i, ydelta;
     int pn[] = new int[1];
     Agedge_s f;
-    final __array_of_struct__ points = __array_of_struct__.malloc(pointf.class, 7);
+    final __array_of_struct__ points = __array_of_struct_impl__.malloc(pointf.class, 7);
     tn = agtail(e);
     hn = aghead(e);
     for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));

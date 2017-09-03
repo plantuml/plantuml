@@ -53,12 +53,16 @@ public class size_t_array_of_integer implements size_t {
 		this.nb = nb;
 	}
 
+	public int getInternalNb() {
+		return nb;
+	}
+
 	public boolean isZero() {
 		return nb == 0;
 	}
 
 	public __ptr__ malloc() {
-		return new StarArrayOfInteger(__array_of_integer__.mallocInteger(nb));
+		return new StarArrayOfInteger(__array_of_integer_impl__.mallocInteger(nb));
 	}
 
 	public size_t negate() {

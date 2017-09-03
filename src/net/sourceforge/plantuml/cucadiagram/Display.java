@@ -268,6 +268,17 @@ public class Display implements Iterable<CharSequence> {
 		return result;
 	}
 
+	public Display addGeneric(CharSequence s) {
+		final Display result = new Display(this, this.defaultCreoleMode);
+		final int size = display.size();
+		if (size == 0) {
+			result.display.add("<" + s + ">");
+		} else {
+			result.display.set(size - 1, display.get(size - 1) + "<" + s + ">");
+		}
+		return result;
+	}
+
 	public int size() {
 		if (isNull) {
 			return 0;

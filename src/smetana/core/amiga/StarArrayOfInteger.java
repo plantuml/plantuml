@@ -81,7 +81,6 @@ public class StarArrayOfInteger extends UnsupportedC implements Area, AllH {
 
 	public void swap(int i, int j) {
 		((__array_of_integer__) array).swap(i, j);
-
 	}
 
 }

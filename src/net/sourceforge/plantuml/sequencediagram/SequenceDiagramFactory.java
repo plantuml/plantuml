@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandArrow;
 import net.sourceforge.plantuml.sequencediagram.command.CommandAutoNewpage;
 import net.sourceforge.plantuml.sequencediagram.command.CommandAutoactivate;
 import net.sourceforge.plantuml.sequencediagram.command.CommandAutonumber;
+import net.sourceforge.plantuml.sequencediagram.command.CommandAutonumberIncrement;
 import net.sourceforge.plantuml.sequencediagram.command.CommandAutonumberResume;
 import net.sourceforge.plantuml.sequencediagram.command.CommandAutonumberStop;
 import net.sourceforge.plantuml.sequencediagram.command.CommandBoxEnd;
@@ -129,6 +130,7 @@ public class SequenceDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandAutonumber());
 		cmds.add(new CommandAutonumberStop());
 		cmds.add(new CommandAutonumberResume());
+		cmds.add(new CommandAutonumberIncrement());
 		cmds.add(new CommandAutoactivate());
 		cmds.add(new CommandFootbox());
 		cmds.add(new CommandDelay());

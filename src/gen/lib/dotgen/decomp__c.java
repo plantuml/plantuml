@@ -76,6 +76,7 @@ import h.pointf;
 import smetana.core.JUtils;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__struct__;
 
 public class decomp__c {
@@ -790,7 +791,7 @@ public static void search_component(Agraph_s g, Agnode_s n) {
 ENTERING("c5u5lnfbu0pmlk6vsvyrdj8ep","search_component");
 try {
     int c, i;
-    __array_of_struct__ vec = __array_of_struct__.malloc(elist.class, 4);
+    __array_of_struct__ vec = __array_of_struct_impl__.malloc(elist.class, 4);
     Agnode_s other;
     Agedge_s e;
     add_to_component(n);

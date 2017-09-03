@@ -36,21 +36,35 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandAutonumberResume extends SingleLineCommand<SequenceDiagram> {
+public class CommandAutonumberResume extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandAutonumberResume() {
-		super("(?i)^autonumber[%s]*resume(?:[%s]+(\\d+))?(?:[%s]+[%g]([^%g]+)[%g])?[%s]*$");
+		super(getConcat());
+	}
+
+	private static RegexConcat getConcat() {
+		return new RegexConcat(new RegexLeaf("^"), //
+				new RegexLeaf("autonumber"), //
+				new RegexLeaf("[%s]+"), //
+				new RegexLeaf("resume"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("INC", "(?:[%s]+(\\d+))?"), //
+				new RegexLeaf("DF", "(?:[%s]+[%g]([^%g]+)[%g])?"), //
+				new RegexLeaf("$"));
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		final String df = arg.get(1);
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+		final String df = arg.get("DF", 0);
+
 		DecimalFormat decimalFormat = null;
 		if (df != null) {
 			try {
@@ -60,13 +74,13 @@ public class CommandAutonumberResume extends SingleLineCommand<SequenceDiagram> 
 			}
 		}
 
-		final String inc = arg.get(0);
+		final String inc = arg.get("INC", 0);
 		if (inc == null) {
-			sequenceDiagram.autonumberResume(decimalFormat);
+			diagram.getAutoNumber().resume(decimalFormat);
 		} else {
-			sequenceDiagram.autonumberResume(Integer.parseInt(arg.get(0)), decimalFormat);
+			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);
 		}
-
 		return CommandExecutionResult.ok();
 	}
+
 }

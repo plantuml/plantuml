@@ -267,4 +267,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.useRankSame();
 	}
 
+	public boolean displayGenericWithOldFashion() {
+		return skinParam.displayGenericWithOldFashion();
+	}
+
 }

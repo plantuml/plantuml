@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
@@ -140,10 +141,14 @@ public class Snake implements UShape {
 	}
 
 	private void drawRainbow(UGraphic ug) {
-		final List<HtmlColorAndStyle> colors = color.getColors();
+		List<HtmlColorAndStyle> colors = color.getColors();
 		final int colorArrowSeparationSpace = color.getColorArrowSeparationSpace();
 		final double move = 2 + colorArrowSeparationSpace;
 		final WormMutation mutation = WormMutation.create(worm, move);
+		if (mutation.isDxNegative()) {
+			colors = new ArrayList<HtmlColorAndStyle>(colors);
+			Collections.reverse(colors);
+		}
 		final double globalMove = -1.0 * (colors.size() - 1) / 2.0;
 		Worm current = worm.moveFirstPoint(mutation.getFirst().multiplyBy(globalMove));
 		if (mutation.size() > 2) {

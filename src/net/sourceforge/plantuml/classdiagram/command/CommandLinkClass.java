@@ -144,6 +144,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Code ent1 = Code.of(arg.get("ENT1", 0));
 		Code ent2 = Code.of(arg.get("ENT2", 0));
+		if (ent1 == null && ent2 == null) {
+			return executeArgSpecial3(diagram, arg);
+		}
 
 		if (ent1 == null) {
 			return executeArgSpecial1(diagram, arg);
@@ -350,13 +353,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private CommandExecutionResult executeArgSpecial1(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
-		final Code clName1 = Code.of(arg.get("COUPLE1", 0));
-		final Code clName2 = Code.of(arg.get("COUPLE1", 1));
-		if (diagram.leafExist(clName1) == false) {
-			return CommandExecutionResult.error("No class " + clName1);
+		final Code clName1A = Code.of(arg.get("COUPLE1", 0));
+		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
+		if (diagram.leafExist(clName1A) == false) {
+			return CommandExecutionResult.error("No class " + clName1A);
 		}
-		if (diagram.leafExist(clName2) == false) {
-			return CommandExecutionResult.error("No class " + clName2);
+		if (diagram.leafExist(clName1B) == false) {
+			return CommandExecutionResult.error("No class " + clName1B);
 		}
 
 		final Code ent2 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\""));
@@ -364,25 +367,49 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
-		// final int length = getQueueLength(arg);
-		// final String weight = arg.get("HEADER").get(0);
 
-		final boolean result = diagram.associationClass(1, clName1, clName2, cl2, linkType, label);
+		final boolean result = diagram.associationClass(1, clName1A, clName1B, cl2, linkType, label);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 		}
 
 		return CommandExecutionResult.ok();
 	}
+	
+	private CommandExecutionResult executeArgSpecial3(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+		final Code clName1A = Code.of(arg.get("COUPLE1", 0));
+		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
+		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
+		final Code clName2B = Code.of(arg.get("COUPLE2", 1));
+		if (diagram.leafExist(clName1A) == false) {
+			return CommandExecutionResult.error("No class " + clName1A);
+		}
+		if (diagram.leafExist(clName1B) == false) {
+			return CommandExecutionResult.error("No class " + clName1B);
+		}
+		if (diagram.leafExist(clName2A) == false) {
+			return CommandExecutionResult.error("No class " + clName2A);
+		}
+		if (diagram.leafExist(clName2B) == false) {
+			return CommandExecutionResult.error("No class " + clName2B);
+		}
+
+		final LinkType linkType = getLinkType(arg);
+		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
+		
+		return diagram.associationClass(clName1A, clName1B, clName2A, clName2B, linkType, label);
+	}
+
+
 
 	private CommandExecutionResult executeArgSpecial2(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
-		final Code clName1 = Code.of(arg.get("COUPLE2", 0));
-		final Code clName2 = Code.of(arg.get("COUPLE2", 1));
-		if (diagram.leafExist(clName1) == false) {
-			return CommandExecutionResult.error("No class " + clName1);
+		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
+		final Code clName2B = Code.of(arg.get("COUPLE2", 1));
+		if (diagram.leafExist(clName2A) == false) {
+			return CommandExecutionResult.error("No class " + clName2A);
 		}
-		if (diagram.leafExist(clName2) == false) {
-			return CommandExecutionResult.error("No class " + clName2);
+		if (diagram.leafExist(clName2B) == false) {
+			return CommandExecutionResult.error("No class " + clName2B);
 		}
 
 		final Code ent1 = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\""));
@@ -390,10 +417,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
-		// final int length = getQueueLength(arg);
-		// final String weight = arg.get("HEADER").get(0);
 
-		final boolean result = diagram.associationClass(2, clName1, clName2, cl1, linkType, label);
+		final boolean result = diagram.associationClass(2, clName2A, clName2B, cl1, linkType, label);
 		if (result == false) {
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 		}

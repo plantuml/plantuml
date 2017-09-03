@@ -43,6 +43,7 @@ import smetana.core.__array_of_ptr__;
 import smetana.core.__array_of_struct__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
+import smetana.core.size_t;
 
 public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 
@@ -53,6 +54,10 @@ public class StarArrayOfPtr extends UnsupportedC implements Area, AllH {
 	}
 
 	public void realloc(int nb) {
+		array.realloc(nb);
+	}
+
+	public void realloc(size_t nb) {
 		array.realloc(nb);
 	}
 

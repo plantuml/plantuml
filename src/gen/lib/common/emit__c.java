@@ -58,6 +58,7 @@ import h.xdot;
 import smetana.core.CString;
 import smetana.core.JUtils;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -1444,8 +1445,8 @@ try {
             }
         }
         else { /* else refine the segment */
-		    final __array_of_struct__ left = __array_of_struct__.malloc(pointf.class, 4);
-		    final __array_of_struct__ right = __array_of_struct__.malloc(pointf.class, 4);
+		    final __array_of_struct__ left = __array_of_struct_impl__.malloc(pointf.class, 4);
+		    final __array_of_struct__ right = __array_of_struct_impl__.malloc(pointf.class, 4);
             Bezier (cp, 3, 0.5, left.asPtr(), right.asPtr());
             update_bb_bz(bb, left);
             update_bb_bz(bb, right);

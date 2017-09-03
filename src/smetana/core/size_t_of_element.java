@@ -75,5 +75,10 @@ public class size_t_of_element implements size_t {
 	public boolean isZero() {
 		throw new UnsupportedOperationException();
 	}
+	
+	public int getInternalNb() {
+		throw new UnsupportedOperationException();
+	}
+
 
 }

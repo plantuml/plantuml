@@ -51,5 +51,7 @@ public interface size_t {
 	boolean isStrictNegative();
 	
 	boolean isZero();
+	
+	int getInternalNb();
 
 }

@@ -48,6 +48,8 @@ public interface __array_of_ptr__ extends Area {
 
 	public void realloc(int nb);
 
+	public void realloc(size_t nb);
+
 	public __ptr__ asPtr();
 
 	public int comparePointerInternal(__array_of_ptr__ other);

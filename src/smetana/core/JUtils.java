@@ -36,36 +36,11 @@
 
 package smetana.core;
 
-import h.Agdesc_s;
-import h.Agedge_s;
-import h.Agedgeinfo_t;
-import h.Agiddisc_s;
-import h.Agmemdisc_s;
-import h.Agtag_s;
-import h.ST_Agdesc_s;
-import h.ST_Agiddisc_s;
-import h.ST_Agmemdisc_s;
-import h.ST_Agtag_s;
-import h.ST_arrowname_t;
-import h.ST_arrowtype_t;
-import h.ST_boxf;
-import h.ST_dtdisc_s;
-import h.ST_dtmethod_s;
-import h.ST_elist;
-import h.ST_nlist_t;
-import h.ST_pointf;
-import h.ST_port;
-import h._dtdisc_s;
-import h._dtmethod_s;
-import h.arrowname_t;
-import h.arrowtype_t;
-import h.bezier;
-import h.boxf;
-import h.elist;
-import h.nlist_t;
-import h.pointf;
-import h.port;
-import h.splines;
+import h.*;
+
+import java.util.Set;
+import java.util.TreeSet;
+
 import smetana.core.amiga.StarArrayOfInteger;
 import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarArrayOfStruct;
@@ -96,6 +71,35 @@ public class JUtils {
 	}
 
 	public static size_t sizeof(Class cl, int nb) {
+		if (cl == pointf.class) {
+			return ST_pointf.sizeof(nb);
+		}
+		if (cl == boxf.class) {
+			return ST_boxf.sizeof(nb);
+		}
+		if (cl == pointnlink_t.class) {
+			return ST_pointnlink_t.sizeof(nb);
+		}
+		if (cl == textspan_t.class) {
+			return ST_textspan_t.sizeof(nb);
+		}
+		// if (UmlDiagram.SMETANA_BETA) {
+		if (cl == Agraph_s.class) {
+			return ST_Agraph_s.sizeof(nb);
+		}
+		if (cl == rank_t.class) {
+			return ST_rank_t.sizeof(nb);
+		}
+		if (cl == Agnode_s.class) {
+			return ST_Agnode_s.sizeof(nb);
+		}
+		if (cl == bezier.class) {
+			return ST_bezier.sizeof(nb);
+		}
+		// }
+		if (from(cl) instanceof __struct_impl__ == false) {
+			throw new IllegalArgumentException(cl.getName());
+		}
 		return new size_t_array_of_something(cl, nb);
 	}
 
@@ -104,6 +108,18 @@ public class JUtils {
 	}
 
 	public static size_t sizeof_starstar_empty(Class cl, int nb) {
+		if (cl == Agedge_s.class) {
+			return ST_Agedge_s.sizeof_starstar_empty(nb);
+		}
+		if (cl == Agnode_s.class) {
+			return ST_Agnode_s.sizeof_starstar_empty(nb);
+		}
+		if (cl == pointnlink_t.class) {
+			return ST_pointnlink_t.sizeof_starstar_empty(nb);
+		}
+		if (from(cl) instanceof __struct_impl__ == false) {
+			throw new IllegalArgumentException(cl.getName());
+		}
 		return new size_t_array_of_array_of_something_empty(cl, nb);
 	}
 
@@ -312,6 +328,8 @@ public class JUtils {
 					change = true;
 					if (array instanceof StarArrayOfInteger) {
 						((StarArrayOfInteger) array).swap(i, i + 1);
+					} else if (array instanceof STStarArrayOfPointer) {
+						((STStarArrayOfPointer) array).swap(i, i + 1);
 					} else {
 						((StarStar) array).swap(i, i + 1);
 					}
@@ -426,6 +444,142 @@ public class JUtils {
 		if (theClass == port.class) {
 			return new ST_port();
 		}
+		if (theClass == polygon_t.class) {
+			return new ST_polygon_t();
+		}
+		if (theClass == shape_functions.class) {
+			return new ST_shape_functions();
+		}
+		if (theClass == shape_desc.class) {
+			return new ST_shape_desc();
+		}
+		if (theClass == deque_t.class) {
+			return new ST_deque_t();
+		}
+		if (theClass == pointnlink_t.class) {
+			return new ST_pointnlink_t();
+		}
+		if (theClass == Ppoly_t.class) {
+			return new ST_Ppoly_t();
+		}
+		if (theClass == splineInfo.class) {
+			return new ST_splineInfo();
+		}
+		if (theClass == textfont_t.class) {
+			return new ST_textfont_t();
+		}
+		//
+		// if (UmlDiagram.SMETANA_BETA) {
+		if (theClass == Agsubnode_s.class) {
+			return new ST_Agsubnode_s();
+		}
+		if (theClass == _dtlink_s.class) {
+			return new ST_dtlink_s();
+		}
+		if (theClass == refstr_t.class) {
+			return new ST_refstr_t();
+		}
+		if (theClass == Agsym_s.class) {
+			return new ST_Agsym_s();
+		}
+		if (theClass == Agedge_s.class) {
+			return new ST_Agedge_s();
+		}
+		if (theClass == Agobj_s.class) {
+			return new ST_Agobj_s();
+		}
+		if (theClass == Agrec_s.class) {
+			return new ST_Agrec_s();
+		}
+		if (theClass == Agraph_s.class) {
+			return new ST_Agraph_s();
+		}
+		if (theClass == Agclos_s.class) {
+			return new ST_Agclos_s();
+		}
+		if (theClass == Agdisc_s.class) {
+			return new ST_Agdisc_s();
+		}
+		if (theClass == Agdstate_s.class) {
+			return new ST_Agdstate_s();
+		}
+		if (theClass == Agiodisc_s.class) {
+			return new ST_Agiodisc_s();
+		}
+		if (theClass == _dt_s.class) {
+			return new ST_dt_s();
+		}
+		if (theClass == _dtdata_s.class) {
+			return new ST_dtdata_s();
+		}
+		if (theClass == Agdatadict_s.class) {
+			return new ST_Agdatadict_s();
+		}
+		if (theClass == Agattr_s.class) {
+			return new ST_Agattr_s();
+		}
+		if (theClass == Agcbstack_s.class) {
+			return new ST_Agcbstack_s();
+		}
+		if (theClass == Agnode_s.class) {
+			return new ST_Agnode_s();
+		}
+		if (theClass == Agedgepair_s.class) {
+			return new ST_Agedgepair_s();
+		}
+		if (theClass == Agraphinfo_t.class) {
+			return new ST_Agraphinfo_t();
+		}
+		if (theClass == GVC_s.class) {
+			return new ST_GVC_s();
+		}
+		if (theClass == GVCOMMON_t.class) {
+			return new ST_GVCOMMON_t();
+		}
+		if (theClass == gvlayout_engine_s.class) {
+			return new ST_gvlayout_engine_s();
+		}
+		if (theClass == gvlayout_features_t.class) {
+			return new ST_gvlayout_features_t();
+		}
+		if (theClass == gvplugin_active_layout_t.class) {
+			return new ST_gvplugin_active_layout_t();
+		}
+		if (theClass == gvplugin_installed_t.class) {
+			return new ST_gvplugin_installed_t();
+		}
+		if (theClass == layout_t.class) {
+			return new ST_layout_t();
+		}
+		if (theClass == Agnodeinfo_t.class) {
+			return new ST_Agnodeinfo_t();
+		}
+		if (theClass == textlabel_t.class) {
+			return new ST_textlabel_t();
+		}
+		if (theClass == textspan_t.class) {
+			return new ST_textspan_t();
+		}
+		if (theClass == rank_t.class) {
+			return new ST_rank_t();
+		}
+		if (theClass == adjmatrix_t.class) {
+			return new ST_adjmatrix_t();
+		}
+		if (theClass == Agedgeinfo_t.class) {
+			return new ST_Agedgeinfo_t();
+		}
+		if (theClass == splines.class) {
+			return new ST_splines();
+		}
+		if (theClass == bezier.class) {
+			return new ST_bezier();
+		}
+		if (theClass == _dthold_s.class) {
+			return new ST_dthold_s();
+		}
+		// }
+		notFound(theClass);
 		return new __struct_impl__<C>(theClass);
 	}
 
@@ -469,7 +623,151 @@ public class JUtils {
 		if (theClass == port.class) {
 			return new ST_port(parent);
 		}
+		if (theClass == polygon_t.class) {
+			return new ST_polygon_t(parent);
+		}
+		if (theClass == shape_functions.class) {
+			return new ST_shape_functions(parent);
+		}
+		if (theClass == shape_desc.class) {
+			return new ST_shape_desc(parent);
+		}
+		if (theClass == deque_t.class) {
+			return new ST_deque_t(parent);
+		}
+		if (theClass == pointnlink_t.class) {
+			return new ST_pointnlink_t(parent);
+		}
+		if (theClass == Ppoly_t.class) {
+			return new ST_Ppoly_t(parent);
+		}
+		if (theClass == splineInfo.class) {
+			return new ST_splineInfo(parent);
+		}
+		if (theClass == textfont_t.class) {
+			return new ST_textfont_t(parent);
+		}
+		//
+		// if (UmlDiagram.SMETANA_BETA) {
+		if (theClass == Agsubnode_s.class) {
+			return new ST_Agsubnode_s(parent);
+		}
+		if (theClass == _dtlink_s.class) {
+			return new ST_dtlink_s(parent);
+		}
+		if (theClass == refstr_t.class) {
+			return new ST_refstr_t(parent);
+		}
+		if (theClass == Agsym_s.class) {
+			return new ST_Agsym_s(parent);
+		}
+		if (theClass == Agedge_s.class) {
+			return new ST_Agedge_s(parent);
+		}
+		if (theClass == Agobj_s.class) {
+			return new ST_Agobj_s(parent);
+		}
+		if (theClass == Agrec_s.class) {
+			return new ST_Agrec_s(parent);
+		}
+		if (theClass == Agraph_s.class) {
+			return new ST_Agraph_s(parent);
+		}
+		if (theClass == Agclos_s.class) {
+			return new ST_Agclos_s(parent);
+		}
+		if (theClass == Agdisc_s.class) {
+			return new ST_Agdisc_s(parent);
+		}
+		if (theClass == Agdstate_s.class) {
+			return new ST_Agdstate_s(parent);
+		}
+		if (theClass == _dt_s.class) {
+			return new ST_dt_s(parent);
+		}
+		if (theClass == _dtdata_s.class) {
+			return new ST_dtdata_s(parent);
+		}
+		if (theClass == Agdatadict_s.class) {
+			return new ST_Agdatadict_s(parent);
+		}
+		if (theClass == Agattr_s.class) {
+			return new ST_Agattr_s(parent);
+		}
+		if (theClass == Agcbstack_s.class) {
+			return new ST_Agcbstack_s(parent);
+		}
+		if (theClass == Agnode_s.class) {
+			return new ST_Agnode_s(parent);
+		}
+		if (theClass == Agedgepair_s.class) {
+			return new ST_Agedgepair_s(parent);
+		}
+		if (theClass == Agraphinfo_t.class) {
+			return new ST_Agraphinfo_t(parent);
+		}
+		if (theClass == GVC_s.class) {
+			return new ST_GVC_s(parent);
+		}
+		if (theClass == GVCOMMON_t.class) {
+			return new ST_GVCOMMON_t(parent);
+		}
+		if (theClass == gvlayout_engine_s.class) {
+			throw new UnsupportedOperationException();
+			// return new ST_gvlayout_engine_s(parent);
+		}
+		if (theClass == gvlayout_features_t.class) {
+			throw new UnsupportedOperationException();
+			// return new ST_gvlayout_features_t(parent);
+		}
+		if (theClass == gvplugin_active_layout_t.class) {
+			throw new UnsupportedOperationException();
+			// return new ST_gvplugin_active_layout_t(parent);
+		}
+		if (theClass == gvplugin_installed_t.class) {
+			return new ST_gvplugin_installed_t(parent);
+		}
+		if (theClass == layout_t.class) {
+			return new ST_layout_t(parent);
+		}
+		if (theClass == Agnodeinfo_t.class) {
+			return new ST_Agnodeinfo_t(parent);
+		}
+		if (theClass == textlabel_t.class) {
+			return new ST_textlabel_t(parent);
+		}
+		if (theClass == textspan_t.class) {
+			return new ST_textspan_t(parent);
+		}
+		if (theClass == rank_t.class) {
+			return new ST_rank_t(parent);
+		}
+		if (theClass == adjmatrix_t.class) {
+			return new ST_adjmatrix_t(parent);
+		}
+		if (theClass == Agedgeinfo_t.class) {
+			return new ST_Agedgeinfo_t(parent);
+		}
+		if (theClass == splines.class) {
+			return new ST_splines(parent);
+		}
+		if (theClass == bezier.class) {
+			return new ST_bezier(parent);
+		}
+		if (theClass == _dthold_s.class) {
+			return new ST_dthold_s(parent);
+		}
+
+		// }
+		notFound(theClass);
 		return new StarStructImpl(theClass, parent);
+	}
+
+	private static final Set<String> todo = new TreeSet<String>();
+
+	private static void notFound(Class theClass) {
+//		todo.add(theClass.getName());
+//		System.err.println("todo=" + todo);
 	}
 
 }

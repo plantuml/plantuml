@@ -63,6 +63,7 @@ import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 import smetana.core.jmp_buf;
@@ -121,7 +122,7 @@ try {
     final __struct__<pointf> p1 = JUtils.from(pointf.class), p2 = JUtils.from(pointf.class), p3 = JUtils.from(pointf.class);
     int trii, trij, ftrii, ltrii;
     int ei;
-    final __array_of_struct__  epnls = __array_of_struct__.malloc(pointnlink_t.class, 2);
+    final __array_of_struct__  epnls = __array_of_struct_impl__.malloc(pointnlink_t.class, 2);
     pointnlink_t lpnlp=null, rpnlp=null, pnlp=null;
     triangle_t trip;
     int splitindex;

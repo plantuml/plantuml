@@ -200,6 +200,10 @@ public class UnsupportedArrayOfPtr implements __array_of_ptr__ {
 	public void realloc(int nb) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
+	
+	public void realloc(size_t nb) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
 
 	public __ptr__ asPtr() {
 		throw new UnsupportedOperationException(getClass().toString());
@@ -232,5 +236,6 @@ public class UnsupportedArrayOfPtr implements __array_of_ptr__ {
 	public __array_of_ptr__ plus(int delta) {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
+
 
 }

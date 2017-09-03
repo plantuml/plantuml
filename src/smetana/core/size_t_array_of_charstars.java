@@ -50,9 +50,14 @@ public class size_t_array_of_charstars implements size_t {
 	public boolean isZero() {
 		return size == 0;
 	}
+	
+	public int getInternalNb() {
+		return size;
+	}
+
 
 	public __ptr__ malloc() {
-		return new StarArrayOfCString(__array_of_cstring__.mallocStarChar(size));
+		return new StarArrayOfCString(__array_of_cstring_impl__.mallocStarChar(size));
 		// return new StarArray(__array__.mallocStarChar(size));
 		// return AreaArray.mallocStarChar(size);
 	}

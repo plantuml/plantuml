@@ -50,13 +50,18 @@ public class size_t_array_of_array_of_something_allocated implements size_t {
 	public boolean isZero() {
 		return nb == 0;
 	}
+	
+	public int getInternalNb() {
+		return nb;
+	}
+
 
 	public __ptr__ realloc(Object old) {
 		throw new UnsupportedOperationException();
 	}
 
 	public __array_of_struct__ malloc() {
-		return __array_of_struct__.malloc(cl, nb);
+		return __array_of_struct_impl__.malloc(cl, nb);
 	}
 
 	public size_t negate() {

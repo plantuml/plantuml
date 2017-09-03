@@ -36,119 +36,30 @@
 
 package smetana.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import smetana.core.amiga.Area;
-import smetana.core.amiga.BuilderArea;
-import smetana.core.amiga.StarStructImpl;
 
-public class __array_of_cstring__ implements Area {
+public interface __array_of_cstring__ extends Area {
 
-	private final List<Area> data;
-	private final int currentPos;
+	public String getUID36();
 
-	private final int UID = StarStructImpl.CPT++;
+	public void swap(int i, int j);
 
-	public String getUID36() {
-		return Integer.toString(UID, 36);
-	}
+	public void realloc(int nb);
 
-	public void swap(int i, int j) {
-		Area e1 = data.get(i);
-		Area e2 = data.get(j);
-		data.set(i, e2);
-		data.set(j, e1);
-	}
+	public int comparePointerInternal(__array_of_cstring__ other);
 
-	@Override
-	public String toString() {
-		if (data.get(0) != null) {
-			return "__array__ " + getUID36() + " " + currentPos + "/" + data.size() + " " + data.get(0).toString();
-		}
-		return "__array__ " + getUID36() + " " + currentPos + "/" + data.size();
-	}
+	public __array_of_cstring__ move(int delta);
 
-	public void realloc(int nb) {
-		while (data.size() < nb + currentPos) {
-			data.add(null);
-		}
-	}
+	public __array_of_cstring__ plus(int delta);
 
-	// public __ptr__ asPtr() {
-	// return new StarArray(this);
-	// }
+	public Area getInternal(int idx);
 
-	public int comparePointerInternal(__array_of_cstring__ other) {
-		if (this.data != other.data) {
-			throw new IllegalArgumentException();
-		}
-		return this.currentPos - other.currentPos;
-	}
-	public static __array_of_cstring__ mallocStarChar(int nb) {
-		return new __array_of_cstring__(nb, new BuilderArea() {
-			public Area createArea() {
-				return null;
-			}
-		});
-	}
+	public void setInternalByIndex(int idx, Area value);
 
-	private __array_of_cstring__(List<Area> data, int currentPos) {
-		this.data = data;
-		this.currentPos = currentPos;
-		check();
-	}
+	public void memcopyFrom(Area source);
 
-	private __array_of_cstring__(int size, BuilderArea builder) {
-		this.data = new ArrayList<Area>();
-		this.currentPos = 0;
-		for (int i = 0; i < size; i++) {
-			final Area tmp = builder.createArea();
-			data.add(tmp);
-		}
-		check();
-	}
+	public CString getCString();
 
-	private void check() {
-		if (getUID36().equals("194")) {
-			JUtils.LOG("It's me");
-		}
-	}
-
-	public __array_of_cstring__ move(int delta) {
-		return new __array_of_cstring__(data, currentPos + delta);
-	}
-
-	public __array_of_cstring__ plus(int delta) {
-		return move(delta);
-	}
-
-	public Area getInternal(int idx) {
-		return data.get(idx + currentPos);
-	}
-
-	public void setInternalByIndex(int idx, Area value) {
-		if (value == this) {
-			throw new IllegalArgumentException();
-		}
-		if (value instanceof __array_of_cstring__) {
-			throw new IllegalArgumentException();
-		}
-		data.set(idx + currentPos, value);
-	}
-
-	public void memcopyFrom(Area source) {
-		throw new UnsupportedOperationException();
-	}
-
-	//
-
-	public CString getCString() {
-		return (CString) getInternal(0);
-	}
-
-	public void setCString(CString value) {
-		setInternalByIndex(0, value);
-	}
+	public void setCString(CString value);
 
 }

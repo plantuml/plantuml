@@ -51,6 +51,11 @@ public class size_t_array_of_array_of_something_empty implements size_t {
 	public boolean isZero() {
 		return nb == 0;
 	}
+	
+	public int getInternalNb() {
+		return nb;
+	}
+
 
 	public __ptr__ realloc(Object old) {
 		JUtils.LOG("realloc old1=" + old);

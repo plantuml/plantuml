@@ -46,11 +46,13 @@
 package h;
 
 import smetana.core.HardcodedStruct;
+import smetana.core.UnsupportedSize_t;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.UnsupportedStructAndPtr;
 import smetana.core.__array_of_ptr__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
+import smetana.core.size_t;
 import smetana.core.amiga.Area;
 import smetana.core.amiga.StarArrayOfPtr;
 import smetana.core.amiga.StarArrayOfStruct;
@@ -97,6 +99,12 @@ public class ST_pointf extends UnsupportedStructAndPtr implements HardcodedStruc
 		public void setStruct(__struct__ value) {
 			ST_pointf.this.setStruct(value);
 		}
+
+		@Override
+		public boolean isSameThan(StarStruct other) {
+			ST_pointf.Amp other2 = (Amp) other;
+			return this.getStruct() == other2.getStruct();
+		}
 	}
 
 	@Override
@@ -112,6 +120,11 @@ public class ST_pointf extends UnsupportedStructAndPtr implements HardcodedStruc
 		final ST_pointf other2 = (ST_pointf) value;
 		this.x = other2.x;
 		this.y = other2.y;
+	}
+	
+	@Override
+	public __struct__ getStruct() {
+		return this;
 	}
 
 	@Override
@@ -197,6 +210,27 @@ public class ST_pointf extends UnsupportedStructAndPtr implements HardcodedStruc
 	}
 
 	public ST_pointf(StarStruct parent) {
+	}
+
+	public static size_t sizeof(final int nb) {
+		return new UnsupportedSize_t(nb) {
+			@Override
+			public Object malloc() {
+				return new StarArrayOfPtr(new STArray<ST_pointf>(nb, 0, ST_pointf.class));
+			}
+
+			@Override
+			public int getInternalNb() {
+				return nb;
+			}
+			
+			@Override
+			public Object realloc(Object old) {
+				StarArrayOfPtr old2 = (StarArrayOfPtr) old;
+				old2.realloc(nb);
+				return old2;
+			}
+		};
 	}
 
 	// public interface ST_pointf extends __ptr__ {

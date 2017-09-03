@@ -109,6 +109,7 @@ import smetana.core.JUtils;
 import smetana.core.Memory;
 import smetana.core.Z;
 import smetana.core.__array_of_struct__;
+import smetana.core.__array_of_struct_impl__;
 import smetana.core.__ptr__;
 import smetana.core.__struct__;
 
@@ -1074,12 +1075,12 @@ private static __struct__<pointf> Bezier_w_(__array_of_struct__ V, int degree, d
 ENTERING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 try {
     int i, j;			/* Index variables      */
-    final __array_of_struct__ Vtemp[] = new __array_of_struct__[] { __array_of_struct__.malloc(pointf.class, 5+1),
-    __array_of_struct__.malloc(pointf.class, 5+1),
-    __array_of_struct__.malloc(pointf.class, 5+1),
-    __array_of_struct__.malloc(pointf.class, 5+1),
-    __array_of_struct__.malloc(pointf.class, 5+1),
-    __array_of_struct__.malloc(pointf.class, 5+1) };
+    final __array_of_struct__ Vtemp[] = new __array_of_struct__[] { __array_of_struct_impl__.malloc(pointf.class, 5+1),
+    __array_of_struct_impl__.malloc(pointf.class, 5+1),
+    __array_of_struct_impl__.malloc(pointf.class, 5+1),
+    __array_of_struct_impl__.malloc(pointf.class, 5+1),
+    __array_of_struct_impl__.malloc(pointf.class, 5+1),
+    __array_of_struct_impl__.malloc(pointf.class, 5+1) };
     /* Copy control points  */
     for (j = 0; j <= degree; j++) {
 	Vtemp[0].plus(j).setStruct(V.plus(j).getStruct());

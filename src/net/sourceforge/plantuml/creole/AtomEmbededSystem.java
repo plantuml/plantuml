@@ -50,11 +50,13 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SvgString;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 class AtomEmbededSystem implements Atom {
@@ -83,6 +85,13 @@ class AtomEmbededSystem implements Atom {
 
 	public void drawU(UGraphic ug) {
 		try {
+			final boolean isSvg = ug.matchesProperty("SVG");
+			if (isSvg) {
+				final String imageSvg = getImageSvg();
+				final SvgString svg = new SvgString(imageSvg, 1);
+				ug.draw(new UImageSvg(svg));
+				return;
+			}
 			final BufferedImage im = getImage();
 			final UShape image = new UImage(im);
 			ug.draw(image);
@@ -92,6 +101,14 @@ class AtomEmbededSystem implements Atom {
 			e.printStackTrace();
 		}
 
+	}
+
+	private String getImageSvg() throws IOException, InterruptedException {
+		final Diagram system = getSystem();
+		final ByteArrayOutputStream os = new ByteArrayOutputStream();
+		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
+		os.close();
+		return new String(os.toByteArray());
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
@@ -113,5 +130,5 @@ class AtomEmbededSystem implements Atom {
 		final BlockUml blockUml = new BlockUml(lines2, 0, Defines.createEmpty());
 		return blockUml.getDiagram();
 	}
-	
+
 }

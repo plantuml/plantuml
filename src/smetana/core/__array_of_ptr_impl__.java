@@ -89,6 +89,15 @@ public class __array_of_ptr_impl__ implements __array_of_ptr__ {
 		}
 	}
 
+	public void realloc(size_t nb) {
+		// ((StarArrayOfPtr) old).realloc(((size_t_array_of_something) size).getNb());
+		if (nb instanceof size_t_array_of_something) {
+			this.realloc(((size_t_array_of_something) nb).getNb());
+			return;
+		}
+		throw new UnsupportedOperationException();
+	}
+
 	public __ptr__ asPtr() {
 		return new StarArrayOfPtr(this);
 	}

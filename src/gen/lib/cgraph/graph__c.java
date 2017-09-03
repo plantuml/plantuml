@@ -241,7 +241,8 @@ try {
 		rv.getStruct("disc").setPtr("mem", memdisc);
 		rv.getStruct("state").setPtr("mem", memclosure);
 		rv.getStruct("disc").setPtr("id", ((proto != null && proto.getPtr("id") != null) ? proto.getPtr("id") : Z.z().AgIdDisc.amp()));
-		rv.getStruct("disc").setPtr("io", ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z.z().AgIdDisc.amp()));
+		// Translation bug in next line: should be AgIoDisc and not AgIdDisc
+		// rv.getStruct("disc").setPtr("io", ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z.z().AgIdDisc.amp()));
 		rv.setBoolean("callbacks_enabled", (N(0)));
 		return rv;
 } finally {

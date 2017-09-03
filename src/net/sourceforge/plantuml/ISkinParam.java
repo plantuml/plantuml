@@ -142,5 +142,7 @@ public interface ISkinParam extends ISkinSimple {
 	public double getPadding(PaddingParam param);
 	
 	public boolean useRankSame();
+	
+	public boolean displayGenericWithOldFashion();
 
 }
