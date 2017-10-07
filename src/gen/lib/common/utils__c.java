@@ -68,6 +68,7 @@ import static smetana.core.JUtils.strtol;
 import static smetana.core.JUtils.tolower;
 import static smetana.core.JUtilsDebug.ENTERING;
 import static smetana.core.JUtilsDebug.LEAVING;
+import static smetana.core.Macro.ED_head_label;
 import static smetana.core.Macro.ED_head_port;
 import static smetana.core.Macro.ED_label;
 import static smetana.core.Macro.ED_label_ontop;
@@ -94,6 +95,7 @@ import h.Agedge_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsym_s;
+import h.ST_Agsym_s;
 import h.ST_boxf;
 import h.ST_port;
 import h.boxf;
@@ -933,11 +935,9 @@ LEAVING("8oon4q1mrublaru177xfntqgd","late_nnstring");
 
 //3 87ifze04q7qzigjj1fb9y9by2
 // boolean late_bool(void *obj, attrsym_t * attr, int def) 
-public static Object late_bool(Object... arg) {
-UNSUPPORTED("4p67t5j48pxpmswky3dw3s392"); // boolean late_bool(void *obj, attrsym_t * attr, int def)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("183nee60g5fytepk82gop4u8s"); //     if (attr == (void *)0)
-UNSUPPORTED("1jfc1szr9lzyizq62jp9jz7ah"); // 	return def;
+public static boolean late_bool(__ptr__ obj, Agsym_s attr, int def) {
+if (attr == null)
+	return def!=0;
 UNSUPPORTED("a0kh1y5n8u59z0xo7mag3zmt6"); //     return mapbool(agxget(obj, attr));
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 
@@ -1501,18 +1501,16 @@ LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 
 //3 ak3pxrdrq900wymudwnjmbito
 // static void initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi, 		      struct fontinfo *lfi) 
-public static Object initFontLabelEdgeAttr(Object... arg) {
-UNSUPPORTED("e2z2o5ybnr5tgpkt8ty7hwan1"); // static void
-UNSUPPORTED("64kdcuymwqrq619sxnmgnuyal"); // initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi,
-UNSUPPORTED("rd78u02b7ldtc7gt7aw5t8fz"); // 		      struct fontinfo *lfi)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("9rkwm6oonv051kf4hnage0877"); //     if (!fi->fontname) initFontEdgeAttr(e, fi);
-UNSUPPORTED("aok5f09eydgwsqtsl0xmmhft"); //     lfi->fontsize = late_double(e, E_labelfontsize, fi->fontsize, 1.0);
-UNSUPPORTED("aviu0lhq8s4ez3n8cil4bwac6"); //     lfi->fontname = late_nnstring(e, E_labelfontname, fi->fontname);
-UNSUPPORTED("75il36n46r24ag5njqgshp8xz"); //     lfi->fontcolor = late_nnstring(e, E_labelfontcolor, fi->fontcolor);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
-throw new UnsupportedOperationException();
+public static void initFontLabelEdgeAttr(Agedge_s e, fontinfo fi, fontinfo lfi) {
+ENTERING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
+try {
+	if (N(fi.getPtr("fontname"))) initFontEdgeAttr(e, fi);
+    lfi.setDouble("fontsize", late_double(e, Z.z().E_labelfontsize, fi.getDouble("fontsize"), 1.0));
+    lfi.setPtr("fontname", late_nnstring(e, Z.z().E_labelfontname, fi.getCString("fontname")));
+    lfi.setPtr("fontcolor", late_nnstring(e, Z.z().E_labelfontcolor, fi.getCString("fontcolor")));
+} finally {
+LEAVING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
+}
 }
 
 
@@ -1600,10 +1598,10 @@ UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
     }
     /* vladimir */
     if (Z.z().E_headlabel!=null && (str = agxget(e, Z.z().E_headlabel))!=null && (str.charAt(0)!='\0')) {
-UNSUPPORTED("cgznvdnh671wl8jq8q3tyhv1r"); // 	initFontLabelEdgeAttr(e, &fi, &lfi);
-UNSUPPORTED("6nfh8swason2akjp45hm0o5b0"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->head_label) = make_label((void*)e, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
-UNSUPPORTED("eu3ztkfva2x87y72tnu7vv4re"); // 				lfi.fontsize, lfi.fontname, lfi.fontcolor);
-UNSUPPORTED("axtvdewh7zhtm1diu8c6dprx4"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->has_labels) |= (1 << 1);
+    	initFontLabelEdgeAttr(e, fi.amp(), lfi.amp());
+    	ED_head_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? (1 << 1) : (0 << 1)),
+				lfi.getDouble("fontsize"), lfi.getCString("fontname"), lfi.getCString("fontcolor")));
+    	GD_has_labels(sg, GD_has_labels(sg) | (1 << 1));
     }
     if (Z.z().E_taillabel!=null && (str = agxget(e, Z.z().E_taillabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("6y6e1y496y6j6a6065nfesr8o"); // 	if (!lfi.fontname)

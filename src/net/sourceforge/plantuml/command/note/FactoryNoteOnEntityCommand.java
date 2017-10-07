@@ -179,7 +179,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				diagram.getSkinParam().getRankdir());
 		final Link link;
 
-		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();
+		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
 			link = new Link(cl1, note, type, Display.NULL, 1);
 			link.setHorizontalSolitary(true);

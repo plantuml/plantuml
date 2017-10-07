@@ -100,7 +100,7 @@ public class ComponentTextActor extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWidth(stringsToDisplay) + 2;
+		return StringUtils.getWcWidth(stringsToDisplay) + 2;
 	}
 
 }

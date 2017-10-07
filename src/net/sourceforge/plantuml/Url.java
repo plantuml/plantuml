@@ -54,6 +54,7 @@ public class Url implements EnsureVisible {
 		if (url.contains("{")) {
 			throw new IllegalArgumentException(url);
 		}
+		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, "\"");
 		this.url = url;
 		if (tooltip == null) {
 			this.tooltip = url;

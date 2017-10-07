@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
@@ -111,7 +112,8 @@ class FtileRepeat extends AbstractFtile {
 	public static Ftile create(LinkRendering backRepeatLinkRendering, Swimlane swimlane, Swimlane swimlaneOut,
 			Ftile backStart, Ftile repeat, Display test, Display yes, Display out, HtmlColor borderColor,
 			HtmlColor backColor, Rainbow arrowColor, Rainbow endRepeatLinkColor, ConditionStyle conditionStyle,
-			ISkinSimple spriteContainer, FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward) {
+			ISkinSimple spriteContainer, FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward,
+			boolean noOut) {
 
 		final FontConfiguration fontConfiguration1 = conditionStyle == ConditionStyle.INSIDE ? fcDiamond : fcArrow;
 
@@ -129,8 +131,13 @@ class FtileRepeat extends AbstractFtile {
 		}
 		final FtileRepeat result;
 		if (conditionStyle == ConditionStyle.INSIDE) {
-			final Ftile diamond2 = new FtileDiamondInside(repeat.skinParam(), backColor, borderColor, swimlaneOut,
-					tbTest).withEast(yesTb).withSouth(outTb);
+			final Ftile diamond2;
+			if (noOut && Display.isNull(test)) {
+				diamond2 = new FtileEmpty(repeat.skinParam());
+			} else {
+				diamond2 = new FtileDiamondInside(repeat.skinParam(), backColor, borderColor, swimlaneOut, tbTest)
+						.withEast(yesTb).withSouth(outTb);
+			}
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
 		} else if (conditionStyle == ConditionStyle.DIAMOND) {
 			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane)

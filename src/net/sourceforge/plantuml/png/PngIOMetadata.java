@@ -57,8 +57,20 @@ public class PngIOMetadata {
 			String debugData) throws IOException {
 
 		// Create & populate metadata
-		final PNGMetadata pngMetadata = new PNGMetadata();
+		PNGMetadata pngMetadata = null;
+		try {
+			pngMetadata = new PNGMetadata();
+		} catch (Throwable e) {
+			Log.info("Cannot create com.sun.imageio.plugins.png.PNGMetadata");
+			PngIO.forceImageIO = true;
+			ImageIO.write(image, "png", os);
+			return;
+		}
+		writeInternal(image, os, metadata, dpi, debugData, pngMetadata);
+	}
 
+	private static void writeInternal(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData,
+			final PNGMetadata pngMetadata) throws IOException {
 		if (dpi != 96) {
 			pngMetadata.pHYs_present = true;
 			pngMetadata.pHYs_unitSpecifier = PNGMetadata.PHYS_UNIT_METER;
@@ -97,7 +109,7 @@ public class PngIOMetadata {
 			try {
 				imagewriter.write(null /* default */, iioImage, null /* use default ImageWriteParam */);
 			} finally {
-				//os.flush();
+				// os.flush();
 				// Log.debug("PngIOMetadata finally 1");
 				imageOutputStream.flush();
 				// Log.debug("PngIOMetadata finally 2");

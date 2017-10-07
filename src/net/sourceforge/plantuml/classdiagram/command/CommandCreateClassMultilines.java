@@ -169,7 +169,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE) {
-					typeLink = typeLink.getDashed();
+					typeLink = typeLink.goDashed();
 				}
 				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null,
 						system.getLabeldistance(), system.getLabelangle());

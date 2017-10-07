@@ -724,8 +724,8 @@ public class Macro {
 	}
 
 	// #define ND_xlabel(n) (((Agnodeinfo_t*)AGDATA(n))->xlabel)
-	public static __ptr__ ND_xlabel(Agnode_s n) {
-		return AGDATA(n).castTo(Agnodeinfo_t.class).getPtr("xlabel");
+	public static textlabel_t ND_xlabel(Agnode_s n) {
+		return (textlabel_t) AGDATA(n).castTo(Agnodeinfo_t.class).getPtr("xlabel");
 	}
 
 	// #define ND_lim(n) (((Agnodeinfo_t*)AGDATA(n))->lim)
@@ -984,8 +984,11 @@ public class Macro {
 	// #define ED_factor(e) (((Agedgeinfo_t*)AGDATA(e))->factor)
 	// #define ED_gui_state(e) (((Agedgeinfo_t*)AGDATA(e))->gui_state)
 	// #define ED_head_label(e) (((Agedgeinfo_t*)AGDATA(e))->head_label)
-	public static __ptr__ ED_head_label(Agedge_s e) {
-		return AGDATA(e).castTo(Agedgeinfo_t.class).getPtr("head_label");
+	public static textlabel_t ED_head_label(Agedge_s e) {
+		return (textlabel_t) AGDATA(e).castTo(Agedgeinfo_t.class).getPtr("head_label");
+	}
+	public static void ED_head_label(Agedge_s e, __ptr__ v) {
+		AGDATA(e).castTo(Agedgeinfo_t.class).setPtr("head_label", v);
 	}
 
 	// #define ED_head_port(e) (((Agedgeinfo_t*)AGDATA(e))->head_port)
@@ -1005,8 +1008,8 @@ public class Macro {
 	}
 
 	// #define ED_xlabel(e) (((Agedgeinfo_t*)AGDATA(e))->xlabel)
-	public static __ptr__ ED_xlabel(Agedge_s e) {
-		return AGDATA(e).castTo(Agedgeinfo_t.class).getPtr("xlabel");
+	public static textlabel_t ED_xlabel(Agedge_s e) {
+		return (textlabel_t) AGDATA(e).castTo(Agedgeinfo_t.class).getPtr("xlabel");
 	}
 
 	// #define ED_label_ontop(e) (((Agedgeinfo_t*)AGDATA(e))->label_ontop)
@@ -1043,8 +1046,8 @@ public class Macro {
 	}
 
 	// #define ED_tail_label(e) (((Agedgeinfo_t*)AGDATA(e))->tail_label)
-	public static __ptr__ ED_tail_label(Agedge_s e) {
-		return AGDATA(e).castTo(Agedgeinfo_t.class).getPtr("tail_label");
+	public static textlabel_t ED_tail_label(Agedge_s e) {
+		return (textlabel_t) AGDATA(e).castTo(Agedgeinfo_t.class).getPtr("tail_label");
 	}
 
 	// #define ED_tail_port(e) (((Agedgeinfo_t*)AGDATA(e))->tail_port)

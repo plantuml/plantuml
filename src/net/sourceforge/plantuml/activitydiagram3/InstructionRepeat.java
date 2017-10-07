@@ -78,6 +78,13 @@ public class InstructionRepeat implements Instruction {
 		this.color = color;
 	}
 
+	private boolean isLastOfTheParent() {
+		if (parent instanceof InstructionList) {
+			return ((InstructionList) parent).getLast() == this;
+		}
+		return false;
+	}
+
 	public void setBackward(Display label) {
 		this.backward = label;
 	}
@@ -89,9 +96,9 @@ public class InstructionRepeat implements Instruction {
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = Display.isNull(backward) ? null : factory.activity(backward, swimlane, BoxStyle.PLAIN,
 				Colors.empty());
-		final Ftile result = factory.repeat(swimlane, repeatList.getSwimlaneOut(),
-				startLabel, factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering), test, yes, out,
-				color, backRepeatLinkRendering, back);
+		final Ftile result = factory.repeat(swimlane, repeatList.getSwimlaneOut(), startLabel,
+				factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering), test, yes, out, color,
+				backRepeatLinkRendering, back, isLastOfTheParent());
 		if (killed) {
 			return new FtileKilled(result);
 		}

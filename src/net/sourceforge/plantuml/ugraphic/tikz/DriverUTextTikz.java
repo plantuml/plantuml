@@ -34,19 +34,26 @@
  */
 package net.sourceforge.plantuml.ugraphic.tikz;
 
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 
 public class DriverUTextTikz implements UDriver<TikzGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final UText text = (UText) shape;
-
-		tikz.text(x, y, text.getText());
+	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
+		final UText shape = (UText) ushape;
+		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
+		final UFont font = fontConfiguration.getFont();
+		final HtmlColor col = fontConfiguration.getColor();
+		tikz.setStrokeColor(mapper.getMappedColor(col));
+		// tikz.setStrokeColor(mapper.getMappedColor(param.getColor()));
+		tikz.text(x, y, shape.getText());
 
 	}
 

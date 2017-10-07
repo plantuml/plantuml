@@ -44,6 +44,8 @@ public interface AllH extends Agraph_s, Agobj_s, Agrec_s, Agdesc_s, Agmemdisc_s,
 		pack_info, aspect_t, fontinfo, shape_functions, polygon_t, shape_desc, textlabel_t, IMapEntry_t, textspan_t,
 		textfont_t, point, port, elist, Dtmemory_f, nlist_t, nodequeue, Agnodeinfo_t, Agedgeinfo_t, spline_info_t,
 		splineInfo, path, pathend_t, boxf, Ppoly_t, pointnlink_t, deque_t, triangle_t, tna_t, Pedge_t, splines, bezier,
-		inside_t, arrowdir_t, arrowtype_t, label_params_t, object_t, xlabel_t, adjmatrix_t {
+		inside_t, arrowdir_t, arrowtype_t, label_params_t, object_t, xlabel_t, adjmatrix_t, _Node_t___, RTree,
+		HDict_t, XLabels_t
+		{
 
 }

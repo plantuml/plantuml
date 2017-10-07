@@ -41,6 +41,7 @@ import java.io.OutputStream;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -118,7 +119,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	private UGraphicSvg(Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg, boolean textAsPath,
 			String linkTarget) {
 		super(colorMapper, svg);
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		this.stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
 		this.textAsPath2 = textAsPath;
 		this.target = linkTarget;
 		register();

@@ -165,9 +165,9 @@ public class ImageBuilder {
 			throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.MJPEG) {
-			return writeImageMjpeg(os, fileFormat.getDefaultStringBounder());
+			return writeImageMjpeg(os, fileFormatOption.getDefaultStringBounder());
 		} else if (fileFormat == FileFormat.ANIMATED_GIF) {
-			return writeImageAnimatedGif(os, fileFormat.getDefaultStringBounder());
+			return writeImageAnimatedGif(os, fileFormatOption.getDefaultStringBounder());
 		}
 		return writeImageInternal(fileFormatOption, seed, os, animation);
 	}
@@ -376,9 +376,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(colorMapper);
 		case LATEX:
-			return new UGraphicTikz(colorMapper, dpiFactor, true);
+			return new UGraphicTikz(colorMapper, dpiFactor, true, fileFormatOption.getTikzFontDistortion());
 		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(colorMapper, dpiFactor, false);
+			return new UGraphicTikz(colorMapper, dpiFactor, false, fileFormatOption.getTikzFontDistortion());
 		case BRAILLE_PNG:
 			return new UGraphicBraille(colorMapper, fileFormat);
 		default:

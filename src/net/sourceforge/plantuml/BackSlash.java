@@ -99,7 +99,7 @@ public class BackSlash {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() - 1 && isEnglishLetter(s.charAt(i + 1))) {
+			if (c == '\\' && i < s.length() - 1 && isEnglishLetterOfBackSlash(s.charAt(i + 1))) {
 				result.append('\\');
 				result.append(translateChar(s.charAt(i + 1)));
 				i++;
@@ -108,6 +108,11 @@ public class BackSlash {
 			}
 		}
 		return result.toString();
+	}
+
+	private static boolean isEnglishLetterOfBackSlash(char c) {
+		return c == 'n';
+		// return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 	}
 
 	public static String untranslateBackSlashes(CharSequence s) {
@@ -123,10 +128,6 @@ public class BackSlash {
 			result.append(c);
 		}
 		return result.toString();
-	}
-
-	private static boolean isEnglishLetter(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 	}
 
 	private static char translateChar(char c) {

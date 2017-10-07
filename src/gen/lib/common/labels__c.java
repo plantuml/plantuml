@@ -1085,8 +1085,8 @@ try {
 	    h_len = strlen(h_str);
 	    tl = ED_label(obj.castTo(Agedge_s.class));
 	    if (tl!=null) {
-UNSUPPORTED("88b430s6vk0irhr2k7x9crz9l"); // 		l_str = tl->text;
-UNSUPPORTED("5hjl5oveu3muui5b0fffh0dz2"); // 	    	if (str) l_len = strlen(l_str);
+	    	l_str = tl.getCString("text");
+	    	if (str!=null) l_len = strlen(l_str);
 	    }
 	    if (agisdirected(agroot(agraphof(agtail((obj.castTo(Agedge_s.class)))))))
 		e_str = new CString("->");

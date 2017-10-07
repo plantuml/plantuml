@@ -116,8 +116,9 @@ public class VCompactFactory implements FtileFactory {
 		return new FtileAssemblySimple(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test, Display yes,
-			Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward) {
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test,
+			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
+			boolean noOut) {
 		return repeat;
 	}
 

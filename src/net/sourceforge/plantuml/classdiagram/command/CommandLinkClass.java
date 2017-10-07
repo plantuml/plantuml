@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -75,25 +76,21 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-		return new RegexConcat(
-				new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
+		return new RegexConcat(new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
 				new RegexOr( //
 						new RegexLeaf("ENT1", getClassIdentifier()),//
-						new RegexLeaf("COUPLE1", COUPLE)),
-				new RegexLeaf("[%s]*"), //
+						new RegexLeaf("COUPLE1", COUPLE)), new RegexLeaf("[%s]*"), //
 				new RegexLeaf("FIRST_LABEL", "(?:[%g]([^%g]+)[%g])?"), //
 				new RegexLeaf("[%s]*"), //
 
 				new RegexConcat(
-						//
+				//
 						new RegexLeaf("ARROW_HEAD1", "([%s]+[ox]|[)#\\[<*+^}]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
-						new RegexLeaf("ARROW_STYLE1",
-								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
+						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
 						new RegexLeaf("INSIDE", "(?:(0|\\(0\\)|\\(0|0\\))(?=[-=.~]))?"), //
-						new RegexLeaf("ARROW_STYLE2",
-								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank)*)\\])?"),
+						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
 						new RegexLeaf("ARROW_HEAD2", "([ox][%s]+|[(#\\]>*+^\\{]|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
 
@@ -375,7 +372,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		return CommandExecutionResult.ok();
 	}
-	
+
 	private CommandExecutionResult executeArgSpecial3(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final Code clName1A = Code.of(arg.get("COUPLE1", 0));
 		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
@@ -396,11 +393,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
-		
+
 		return diagram.associationClass(clName1A, clName1B, clName2A, clName2B, linkType, label);
 	}
-
-
 
 	private CommandExecutionResult executeArgSpecial2(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
@@ -532,7 +527,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		LinkType result = new LinkType(decors2, decors1);
 		if (arg.get("ARROW_BODY1", 0).contains(".") || arg.get("ARROW_BODY2", 0).contains(".")) {
-			result = result.getDashed();
+			result = result.goDashed();
 		}
 		final String middle = arg.get("INSIDE", 0);
 		if ("0".equals(middle)) {
@@ -611,6 +606,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				// Do nothing
 			} else if (s.equalsIgnoreCase("norank")) {
 				link.goNorank();
+			} else if (s.startsWith("thickness=")) {
+				link.goThickness(Double.parseDouble(s.substring("thickness=".length())));
 			} else {
 				link.setSpecificColor(s);
 				if (colors != null) {

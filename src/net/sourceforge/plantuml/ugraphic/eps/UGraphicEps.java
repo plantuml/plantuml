@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsStrategy;
@@ -83,7 +84,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	private UGraphicEps(ColorMapper colorMapper, EpsStrategy strategy, EpsGraphics eps) {
 		super(colorMapper, eps);
 		this.strategyTOBEREMOVED = strategy;
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		this.stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
 		register(strategy);
 	}
 

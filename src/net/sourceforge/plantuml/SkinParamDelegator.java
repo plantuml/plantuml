@@ -271,4 +271,8 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.displayGenericWithOldFashion();
 	}
 
+	public TikzFontDistortion getTikzFontDistortion() {
+		return skinParam.getTikzFontDistortion();
+	}
+
 }

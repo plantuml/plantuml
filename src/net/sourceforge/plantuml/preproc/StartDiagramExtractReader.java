@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
@@ -52,14 +53,18 @@ public class StartDiagramExtractReader implements ReadLine {
 	private boolean finished = false;
 
 	public StartDiagramExtractReader(CharSequence2 s, File f, String uid, String charset) {
-		this(getReadLine(s, f, charset), uid, charset);
+		this(getReadLine(s, f, charset), uid);
 	}
 
 	public StartDiagramExtractReader(CharSequence2 s, URL url, String uid, String charset) {
-		this(getReadLine(s, url, charset), uid, charset);
+		this(getReadLine(s, url, charset), uid);
 	}
 
-	private StartDiagramExtractReader(ReadLine raw, String suf, String charset) {
+	public StartDiagramExtractReader(CharSequence2 s, InputStream is) {
+		this(getReadLine(s, is), null);
+	}
+
+	private StartDiagramExtractReader(ReadLine raw, String suf) {
 		int bloc = 0;
 		String uid = null;
 		if (suf != null && suf.matches("\\d+")) {
@@ -112,6 +117,10 @@ public class StartDiagramExtractReader implements ReadLine {
 		}
 	}
 
+	private static ReadLine getReadLine(CharSequence2 s, InputStream is) {
+		return new UncommentReadLine(new ReadLineReader(new InputStreamReader(is), null));
+	}
+
 	private static ReadLine getReadLine(CharSequence2 s, URL url, String charset) {
 		try {
 			if (charset == null) {
@@ -134,6 +143,11 @@ public class StartDiagramExtractReader implements ReadLine {
 
 	static public boolean containsStartDiagram(CharSequence2 s, URL url, String charset) throws IOException {
 		final ReadLine r = getReadLine(s, url, charset);
+		return containsStartDiagram(r);
+	}
+
+	static public boolean containsStartDiagram(CharSequence2 s, InputStream is) throws IOException {
+		final ReadLine r = getReadLine(s, is);
 		return containsStartDiagram(r);
 	}
 

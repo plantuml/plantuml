@@ -96,7 +96,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight();
-		final int textWidth = StringUtils.getWidth(stringsToDisplay);
+		final int textWidth = StringUtils.getWcWidth(stringsToDisplay);
 
 		final int yarrow = height - 2;
 		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);
@@ -125,7 +125,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		final int width = StringUtils.getWidth(stringsToDisplay) + 2;
+		final int width = StringUtils.getWcWidth(stringsToDisplay) + 2;
 		if (maxAsciiMessageLength > 0) {
 			return Math.min(maxAsciiMessageLength, width);
 		}

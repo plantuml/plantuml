@@ -48,12 +48,14 @@ import gen.lib.cgraph.utils__c;
 import gen.lib.common.arrows__c;
 import gen.lib.common.shapes__c;
 import gen.lib.dotgen.dotsplines__c;
+import gen.lib.label.xlabels__c;
 import h.Agedge_s;
 import h.Agnode_s;
 import h.Agraph_s;
 import h.Agsubnode_s;
 import h.Agsym_s;
 import h.Agtag_s;
+import h.HDict_t;
 import h.ST_Agdesc_s;
 import h.ST_Agiddisc_s;
 import h.ST_Agmemdisc_s;
@@ -93,6 +95,9 @@ public class Z {
 	public final ST_dtmethod_s _Dttree = new ST_dtmethod_s();
 	public final _dtmethod_s Dttree = _Dttree.amp();
 
+	public final ST_dtmethod_s _Dtobag = new ST_dtmethod_s();
+	public final _dtmethod_s Dtobag = _Dtobag.amp();
+
 	public final ST_dtdisc_s AgDataDictDisc = new ST_dtdisc_s();
 
 	public final ST_Agdesc_s ProtoDesc = new ST_Agdesc_s();
@@ -122,6 +127,8 @@ public class Z {
 	public int CNT_BITS;
 
 	public final ST_dtdisc_s Refstrdisc = new ST_dtdisc_s();
+	
+	public final ST_dtdisc_s Hdisc = new ST_dtdisc_s();
 
 	public _dt_s Refdict_default;
 
@@ -334,6 +341,9 @@ public class Z {
 		_Dttree.searchf = function(dttree__c.class, "dttree");
 		_Dttree.type = 0000004;
 
+		_Dtobag.searchf = function(dttree__c.class, "dttree");
+		_Dtobag.type = 0000010;
+
 		AgDataDictDisc.key = OFFSET.create(Agsym_s.class, "name").toInt();
 		AgDataDictDisc.size = -1;
 		AgDataDictDisc.link = OFFSET.create(Agsym_s.class, "link").toInt();
@@ -437,6 +447,16 @@ public class Z {
 		Refstrdisc.hashf = null;
 		Refstrdisc.memoryf = function(utils__c.class, "agdictobjmem");
 		Refstrdisc.eventf = null;
+
+		Hdisc.key = OFFSET.create(HDict_t.class, "key").toInt();
+		Hdisc.size = 4;
+		Hdisc.link = -1;
+		Hdisc.makef = null;
+		Hdisc.freef = null;
+		Hdisc.comparf = function(xlabels__c.class, "icompare");
+		Hdisc.hashf = null;
+		Hdisc.memoryf = null;
+		Hdisc.eventf = null;
 
 		Arrowsynonyms.plus(0).setStruct(create_arrowname_t(null, 0));
 

@@ -62,6 +62,8 @@ public class TikzGraphics {
 
 	private Color color = Color.BLACK;
 	private Color fillcolor = Color.BLACK;
+	private Color fillcolorGradient2 = null;
+	private char gradientPolicy;
 	private double thickness = 1.0;
 	private final double scale;
 	private String dash = null;
@@ -160,12 +162,18 @@ public class TikzGraphics {
 
 	public void rectangle(double x, double y, double width, double height) {
 		final StringBuilder sb = new StringBuilder();
+		final boolean gradient = this.fillcolorGradient2 != null;
 		if (pendingUrl == null) {
-			sb.append("\\draw[");
+			sb.append(gradient ? "\\shade[" : "\\draw[");
 			if (color != null) {
-				sb.append("color=" + getColorName(color) + ",");
+				sb.append(gradient ? "draw=" : "color=");
+				sb.append(getColorName(color) + ",");
 			}
-			if (fillcolor != null) {
+			if (gradient) {
+				sb.append("top color=" + getColorName(fillcolor) + ",");
+				sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
+				sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
+			} else if (fillcolor != null) {
 				sb.append("fill=" + getColorName(fillcolor) + ",");
 				if (color == null) {
 					sb.append("color=" + getColorName(fillcolor) + ",");
@@ -202,6 +210,22 @@ public class TikzGraphics {
 		cmd.add(sb.toString());
 	}
 
+	private String getAngleFromGradientPolicy() {
+		if (this.gradientPolicy == '-') {
+			return "0";
+		}
+		if (this.gradientPolicy == '|') {
+			return "90";
+		}
+		if (this.gradientPolicy == '/') {
+			return "45";
+		}
+		if (this.gradientPolicy == '\\') {
+			return "135";
+		}
+		throw new IllegalArgumentException();
+	}
+
 	private String couple(double x, double y) {
 		return "(" + format(x) + "pt," + format(y) + "pt)";
 	}
@@ -216,7 +240,13 @@ public class TikzGraphics {
 	}
 
 	public void text(double x, double y, String text) {
-		final StringBuilder sb = new StringBuilder("\\node at " + couple(x, y) + "[below right]{");
+		final StringBuilder sb = new StringBuilder("\\node at " + couple(x, y));
+		sb.append("[below right");
+		if (color != null) {
+			sb.append(",color=");
+			sb.append(getColorName(color));
+		}
+		sb.append("]{");
 		if (pendingUrl == null || urlIgnoreText) {
 			sb.append(protectText(text));
 		} else {
@@ -350,8 +380,24 @@ public class TikzGraphics {
 	}
 
 	public void upath(double x, double y, UPath path) {
-		final StringBuilder sb = new StringBuilder("\\draw[color=" + getColorName(color) + ",line width=" + thickness
-				+ "pt] ");
+		final StringBuilder sb = new StringBuilder();
+		final boolean gradient = this.fillcolorGradient2 != null;
+		sb.append(gradient ? "\\shade[" : "\\draw[");
+		if (color != null) {
+			sb.append(gradient ? "draw=" : "color=");
+			sb.append(getColorName(color) + ",");
+		}
+		if (gradient) {
+			sb.append("top color=" + getColorName(fillcolor) + ",");
+			sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
+			sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
+		} else if (fillcolor != null) {
+			sb.append("fill=" + getColorName(fillcolor) + ",");
+			if (color == null) {
+				sb.append("color=" + getColorName(fillcolor) + ",");
+			}
+		}
+		sb.append("line width=" + thickness + "pt] ");
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
@@ -391,6 +437,14 @@ public class TikzGraphics {
 		}
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
 				+ format(height) + "pt);");
+		cmd.add(sb.toString());
+	}
+
+	public void drawSingleCharacter(double x, double y, char c) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("\\node at ");
+		sb.append(couple(x, y));
+		sb.append("[]{\\textbf{\\Large " + c + "}};");
 		cmd.add(sb.toString());
 	}
 
@@ -438,7 +492,16 @@ public class TikzGraphics {
 		// c = Color.WHITE;
 		// }
 		this.fillcolor = c;
+		this.fillcolorGradient2 = null;
 		addColor(c);
+	}
+
+	public void setGradientColor(Color c1, Color c2, char policy) {
+		this.fillcolor = c1;
+		this.fillcolorGradient2 = c2;
+		this.gradientPolicy = policy;
+		addColor(c1);
+		addColor(c2);
 	}
 
 	public void setStrokeColor(Color c) {

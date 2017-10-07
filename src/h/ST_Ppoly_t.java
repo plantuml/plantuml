@@ -142,7 +142,7 @@ public class ST_Ppoly_t extends UnsupportedStructAndPtr implements HardcodedStru
 		if (fieldName.equals("ps")) {
 			if (newData instanceof StarArrayOfStruct) {
 				StarArrayOfStruct newData2 = (StarArrayOfStruct) newData;
-				System.err.println("newData2=" + newData2);
+				System.err.println("newData2B=" + newData2);
 				this.ps2 = new StarArrayOfPtr(new Adaptor(newData2, 0));
 				return ps2;
 			}

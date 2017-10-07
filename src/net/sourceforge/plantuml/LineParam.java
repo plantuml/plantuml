@@ -46,6 +46,7 @@ public enum LineParam {
 	sequenceParticipantBorder, noteBorder, sequenceGroupBorder, sequenceReferenceBorder,
 	legendBorder,
 	sequenceArrow,
+	arrow,
 	classBorder, objectBorder, usecaseBorder,
 	partitionBorder,
 	packageBorder,

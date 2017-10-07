@@ -44,6 +44,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -284,11 +285,22 @@ public class StringUtils {
 		return s;
 	}
 
-	public static int getWidth(Display stringsToDisplay) {
+	private static int getWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
 			if (s != null && result < s.length()) {
 				result = s.length();
+			}
+		}
+		return result;
+	}
+
+	public static int getWcWidth(Display stringsToDisplay) {
+		int result = 1;
+		for (CharSequence s : stringsToDisplay) {
+			final int length = Wcwidth.length(s);
+			if (s != null && result < length) {
+				result = length;
 			}
 		}
 		return result;
@@ -423,6 +435,8 @@ public class StringUtils {
 				c += 13;
 			} else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z')) {
 				c -= 13;
+			} else if (c > 126) {
+				throw new IllegalArgumentException(s);
 			}
 			sb.append(c);
 		}

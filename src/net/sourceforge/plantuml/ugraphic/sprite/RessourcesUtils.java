@@ -55,8 +55,7 @@ public class RessourcesUtils {
 		if (path.startsWith("/") || path.endsWith("/")) {
 			throw new IllegalArgumentException();
 		}
-		final URL resource = Version.class.getClassLoader().getResource("net/sourceforge/plantuml/version/logo.png");
-		final String protocol = resource.getProtocol();
+		final String protocol = getProtocol();
 		if ("file".equals(protocol)) {
 			final URL local = Version.class.getClassLoader().getResource(path);
 			try {
@@ -78,6 +77,11 @@ public class RessourcesUtils {
 			}
 		}
 		return Collections.<String> emptySet();
+	}
+
+	private static String getProtocol() {
+		final URL resource = Version.class.getClassLoader().getResource("net/sourceforge/plantuml/version/logo.png");
+		return resource.getProtocol();
 	}
 
 	private static Set<String> listFiles(JarFile jarFile, String path) {

@@ -2,8 +2,6 @@ PlantUML
 ========
 [![Build Status](https://travis-ci.org/plantuml/plantuml.png?branch=master)](https://travis-ci.org/plantuml/plantuml)
 
-**Notice** : Current version is 1.2017.16 (Tag 1.2017.17 is misnamed). Sorry about the confusion
-
 Generate UML diagram from textual description
 
 PlantUML is a component that allows to quickly write :

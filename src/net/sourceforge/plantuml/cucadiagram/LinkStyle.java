@@ -37,43 +37,113 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public enum LinkStyle {
+public class LinkStyle {
 
-	NORMAL, DASHED, DOTTED, BOLD, INVISIBLE,
-
-	DOUBLE_tobedone, __toremove_INTERFACE_PROVIDER, __toremove_INTERFACE_USER;
-
-	public static UStroke getStroke(LinkStyle style) {
-		return getStroke(style, 1);
+	static enum Type {
+		NORMAL, DASHED, DOTTED, BOLD, INVISIBLE;
 	}
 
-	public static UStroke getStroke(LinkStyle style, double thickness) {
-		if (style == LinkStyle.DASHED) {
-			return new UStroke(6, 6, thickness);
+	private LinkStyle(Type type, double thickness) {
+		this.type = type;
+		this.thickness = thickness;
+
+	}
+
+	// private final static LinkStyle NORMAL = new LinkStyle();
+	// private final static LinkStyle DASHED = new LinkStyle();
+	// private final static LinkStyle DOTTED = new LinkStyle();
+	// private final static LinkStyle BOLD = new LinkStyle();
+	// private final static LinkStyle INVISIBLE = new LinkStyle();
+
+	private final Type type;
+	private final double thickness;
+
+	@Override
+	public String toString() {
+		return type.toString() + "(" + thickness + ")";
+	}
+
+	// DOUBLE_tobedone, __toremove_INTERFACE_PROVIDER, __toremove_INTERFACE_USER;
+
+	// private UStroke getStroke2() {
+	// return getStroke2(1);
+	// }
+
+	public boolean isNormal() {
+		return type == Type.NORMAL;
+	}
+
+	public boolean isInvisible() {
+		return type == Type.INVISIBLE;
+	}
+
+	public static LinkStyle NORMAL() {
+		return new LinkStyle(Type.NORMAL, 0);
+	}
+
+	public static LinkStyle INVISIBLE() {
+		return new LinkStyle(Type.INVISIBLE, 0);
+	}
+
+	public static LinkStyle BOLD() {
+		return new LinkStyle(Type.BOLD, 0);
+	}
+
+	public static LinkStyle DOTTED() {
+		return new LinkStyle(Type.DOTTED, 0);
+	}
+
+	public static LinkStyle DASHED() {
+		return new LinkStyle(Type.DASHED, 0);
+	}
+
+	public LinkStyle goThickness(double thickness) {
+		return new LinkStyle(type, thickness);
+	}
+
+	public UStroke getStroke3() {
+		if (type == Type.DASHED) {
+			return new UStroke(7, 7, nonZeroThickness());
 		}
-		if (style == LinkStyle.DOTTED) {
-			return new UStroke(1, 3, thickness);
+		if (type == Type.DOTTED) {
+			return new UStroke(1, 3, nonZeroThickness());
 		}
-		if (style == LinkStyle.BOLD) {
-			return new UStroke(2.5);
+		if (type == Type.BOLD) {
+			return new UStroke(2);
 		}
-		return new UStroke();
+		return new UStroke(nonZeroThickness());
+	}
+
+	private double nonZeroThickness() {
+		if (thickness == 0) {
+			return 1;
+		}
+		return thickness;
 	}
 
 	public static LinkStyle fromString(String s) {
 		if ("dashed".equalsIgnoreCase(s)) {
-			return DASHED;
+			return DASHED();
 		}
 		if ("dotted".equalsIgnoreCase(s)) {
-			return DOTTED;
+			return DOTTED();
 		}
 		if ("bold".equalsIgnoreCase(s)) {
-			return BOLD;
+			return BOLD();
 		}
 		if ("hidden".equalsIgnoreCase(s)) {
-			return INVISIBLE;
+			return INVISIBLE();
 		}
-		return LinkStyle.NORMAL;
+		return LinkStyle.NORMAL();
+	}
+
+	@Deprecated
+	public static LinkStyle valueOf(String s) {
+		return fromString(s);
+	}
+
+	public boolean isThicknessOverrided() {
+		return thickness != 0;
 	}
 
 }

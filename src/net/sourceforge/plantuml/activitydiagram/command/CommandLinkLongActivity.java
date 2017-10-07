@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
@@ -93,11 +94,9 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 
 				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-				new RegexLeaf("ARROW_STYLE1",
-						"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
+				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-				new RegexLeaf("ARROW_STYLE2",
-						"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
+				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("ARROW_BODY2", "([-.]*)\\>"), //
 
 				new RegexLeaf("[%s]*"), //
@@ -179,7 +178,8 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			entity2.setStereotype(new Stereotype(lineLast.get(2)));
 		}
 		if (lineLast.get(4) != null) {
-			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(lineLast.get(4)));
+			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
+					.getColorIfValid(lineLast.get(4)));
 		}
 
 		if (entity1 == null || entity2 == null) {
@@ -198,7 +198,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 		if (arrow.contains(".")) {
-			type = type.getDotted();
+			type = type.goDotted();
 		}
 		Link link = new Link(entity1, entity2, type, linkLabel, lenght);
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");

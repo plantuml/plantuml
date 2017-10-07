@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -61,16 +62,19 @@ import net.sourceforge.plantuml.ugraphic.UText;
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer, UGraphic2 {
 
 	private final StringBounder stringBounder;
+	private final TikzFontDistortion tikzFontDistortion;
 
-	private UGraphicTikz(ColorMapper colorMapper, TikzGraphics tikz) {
+	private UGraphicTikz(ColorMapper colorMapper, TikzGraphics tikz, TikzFontDistortion tikzFontDistortion) {
 		super(colorMapper, tikz);
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		this.tikzFontDistortion = tikzFontDistortion;
+		this.stringBounder = FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion);
 		register();
 
 	}
 
-	public UGraphicTikz(ColorMapper colorMapper, double scale, boolean withPreamble) {
-		this(colorMapper, new TikzGraphics(scale, withPreamble));
+	public UGraphicTikz(ColorMapper colorMapper, double scale, boolean withPreamble,
+			TikzFontDistortion tikzFontDistortion) {
+		this(colorMapper, new TikzGraphics(scale, withPreamble), tikzFontDistortion);
 
 	}
 
@@ -81,6 +85,7 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	private UGraphicTikz(UGraphicTikz other) {
 		super(other);
+		this.tikzFontDistortion = other.tikzFontDistortion;
 		this.stringBounder = other.stringBounder;
 		register();
 	}
@@ -96,7 +101,8 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		registerDriver(UImageSvg.class, new DriverNoneTikz());
 		registerDriver(UPath.class, new DriverUPathTikz());
 		registerDriver(DotPath.class, new DriverDotPathTikz());
-		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
+		// registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
+		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());
 	}
 
 	public StringBounder getStringBounder() {

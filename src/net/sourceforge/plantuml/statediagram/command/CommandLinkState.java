@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
@@ -65,14 +66,12 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 				getStatePattern("ENT1"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexConcat(
-						//
+				//
 						new RegexLeaf("ARROW_CROSS_START", "(x)?"), //
 						new RegexLeaf("ARROW_BODY1", "(-+)"), //
-						new RegexLeaf("ARROW_STYLE1",
-								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
+						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexLeaf("ARROW_STYLE2",
-								"(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)\\])?"), //
+						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "(-*)"), //
 						new RegexLeaf("\\>"), //
 						new RegexLeaf("ARROW_CIRCLE_END", "(o[%s]+)?")), //
@@ -109,13 +108,15 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 			cl1.setStereotype(new Stereotype(arg.get("ENT1", 1)));
 		}
 		if (arg.get("ENT1", 2) != null) {
-			cl1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("ENT1", 2)));
+			cl1.setSpecificColorTOBEREMOVED(ColorType.BACK,
+					diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("ENT1", 2)));
 		}
 		if (arg.get("ENT2", 1) != null) {
 			cl2.setStereotype(new Stereotype(arg.get("ENT2", 1)));
 		}
 		if (arg.get("ENT2", 2) != null) {
-			cl2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("ENT2", 2)));
+			cl2.setSpecificColorTOBEREMOVED(ColorType.BACK,
+					diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("ENT2", 2)));
 		}
 
 		String queue = arg.get("ARROW_BODY1", 0) + arg.get("ARROW_BODY2", 0);

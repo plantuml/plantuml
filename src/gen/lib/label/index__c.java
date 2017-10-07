@@ -44,7 +44,13 @@
  *
  */
 package gen.lib.label;
+import static gen.lib.label.node__c.*;
+import static gen.lib.common.memory__c.zmalloc;
+import static smetana.core.JUtils.sizeof;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.RTree;
+import h._Node_t___;
+import smetana.core.__ptr__;
 
 public class index__c {
 
@@ -105,6 +111,140 @@ UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
 throw new UnsupportedOperationException();
 }
 
+///* Allocate space for a node in the list used in DeletRect to
+// * store Nodes that are too empty.
+// */
+//static struct ListNode *RTreeNewListNode(void)
+//{
+//    return (struct ListNode*)zmalloc(sizeof(struct ListNode));
+//}
+//
+///* Add a node to the reinsertion list.  All its branches will later
+// * be reinserted into the index structure.
+// */
+//static int RTreeReInsert(RTree_t * rtp, Node_t * n, struct ListNode **ee)
+//{
+//    register struct ListNode *l;
+//
+//    if (!(l = RTreeNewListNode()))
+//	return -1;
+//    l->node = n;
+//    l->next = *ee;
+//    *ee = l;
+//    return 0;
+//}
+//
+//RTree_t *RTreeOpen()
+public static __ptr__ RTreeOpen() {
+	RTree rtp;
+    rtp = (RTree) zmalloc(sizeof(RTree.class));
+    if (rtp!=null)
+    	rtp.setPtr("root", RTreeNewIndex(rtp));
+    return rtp;
+}
+
+///* Make a new index, empty.  Consists of a single node. */
+//Node_t *RTreeNewIndex(RTree_t * rtp)
+public static _Node_t___ RTreeNewIndex(RTree rtp) {
+	_Node_t___ x;
+	x = RTreeNewNode(rtp);
+//  x->level = 0;		/* leaf */
+//  rtp->LeafCount++;
+//  return x;
+//}
+	throw new UnsupportedOperationException();
+}
+//
+//static int RTreeClose2(RTree_t * rtp, Node_t * n)
+//{
+//    int i;
+//
+//    if (n->level > 0) {
+//	for (i = 0; i < 64; i++) {
+//	    if (!n->branch[i].child)
+//		continue;
+//	    if (!RTreeClose2(rtp, n->branch[i].child)) {
+//		free(n->branch[i].child);
+//		DisconBranch(n, i);
+//		rtp->EntryCount--;
+//		if (rtp->StatFlag)
+//		    rtp->ElimCount++;
+//	    }
+//	}
+//    } else {
+//	for (i = 0; i < 64; i++) {
+//	    if (!n->branch[i].child)
+//		continue;
+//	    // free(n->branch[i].child);
+//	    DisconBranch(n, i);
+//	    rtp->EntryCount--;
+//	    if (rtp->StatFlag)
+//	        rtp->ElimCount++;
+//	}
+//	//free(n);
+//    }
+//    return 0;
+//}
+//
+//int RTreeClose(RTree_t * rtp)
+//{
+//    RTreeClose2(rtp, rtp->root);
+//    free(rtp->root);
+//    free(rtp);
+//    return 0;
+//}
+//
+//
+///* RTreeSearch in an index tree or subtree for all data retangles that
+//** overlap the argument rectangle.
+//** Returns the number of qualifying data rects.
+//*/
+//LeafList_t *RTreeSearch(RTree_t * rtp, Node_t * n, Rect_t * r)
+//{
+//    register int i;
+//    LeafList_t *llp = 0;
+//
+//    assert(n);
+//    assert(n->level >= 0);
+//    assert(r);
+//
+//    rtp->SeTouchCount++;
+//
+//    if (n->level > 0) {		/* this is an internal node in the tree */
+//	for (i = 0; i < 64; i++)
+//	    if (n->branch[i].child && Overlap(r, &n->branch[i].rect)) {
+//		LeafList_t *tlp = RTreeSearch(rtp, n->branch[i].child, r);
+//		if (llp) {
+//		    LeafList_t *xlp = llp;
+//		    while (xlp->next)
+//			xlp = xlp->next;
+//		    xlp->next = tlp;
+//		} else
+//		    llp = tlp;
+//	    }
+//    } else {			/* this is a leaf node */
+//	for (i = 0; i < 64; i++) {
+//	    if (n->branch[i].child && Overlap(r, &n->branch[i].rect)) {
+//		llp = RTreeLeafListAdd(llp, (Leaf_t *) & n->branch[i]);
+//
+//		
+//
+//	    }
+//	}
+//    }
+//    return llp;
+//}
+//
+///* Insert a data rectangle into an index structure.
+//** RTreeInsert provides for splitting the root;
+//** returns 1 if root was split, 0 if it was not.
+//** The level argument specifies the number of steps up from the leaf
+//** level to insert; e.g. a data rectangle goes in at level = 0.
+//** RTreeInsert2 does the recursion.
+//*/
+//static int RTreeInsert2(RTree_t *, Rect_t *, void *, Node_t *, Node_t **,
+//			int);
+///*static int RTreeInsert2(RTree_t*, Rect_t*, int, Node_t*, Node_t**, int); */
 
 
 

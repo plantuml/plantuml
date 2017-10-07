@@ -65,19 +65,19 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
 
-	public static final String DONORS = "UDfbL4jksp0GtSyfk1RIGoXsujI_17QQ0jcDvR75c29Tad8ghuBUe421hdk3eaKMHOjiUW7bHXsvbKcb"
-			+ "10oOud3utinxawhato8BL-J9YbHxeoLcS4r9MAQ0iGbRwo1jh-821ZOSKGLpMg3p4hMOcbn3gfV6Ye4X"
-			+ "lwVcxsh54MquQXXZz93sq9VjHYf8GsgpWtaP85Gma4btQGF35cNfOEvfcvCMFMEspA_VlaCEHiMBgyP2"
-			+ "poYfnSoKZc1OlZXFxWmJQJTR2PC8DHRnbfzA5Rr7lUHozdB9MTTeAsOwEzBMQvZ6wFqUBfNSyOM-p3QC"
-			+ "_7WYDPovOseTWKXe1_rz8Rsjn1XpiqGODaM_pP7JHt49gT0kNfkAowJHSnpZOrp3l-1fqs6bbxor6TVa"
-			+ "71UssfXxjv6SIF6rI-lb7Yv2zDB0H6OvAN6AKbKn0xMFmJW7GqBzQeZPkvASw9SBYznB5VZUc3jFMIv6"
-			+ "5Xq6I6jYYKOTks-KnI5YP7Oo5if1Acy2OOamYyJRF17pJExuzZQIbTaqbJar5ZMgxOcu9Ozcws361D4k"
-			+ "nKWshOLpPMnJxydlNqeTcXu4eI9nifp6HpbPRAlTT3tlCd9mXQqyPh83E5LIp16NR1sx9l6Mz9hiYPYa"
-			+ "rw_dQP1sOZGCg6EPcBdEM2A5k67KVHRjA4HQQZhBPXaJmTakLluEOHgIKD62J28QWrAoBig2nBafoOVw"
-			+ "PWxEuyuSk0Grw7rSDeOxbMlMq5mMmO8CY9syQYgDxEe8TA8Kr9_gnoXz_LZ_W5xUiNR5nYiNXq5WDNlX"
-			+ "mdJW3CYiLfOgCPK5Dsw8_q-L6QvGYKdb57ka_b8_FZ_KtvkdHFsvVgf_ra_F7_Ztm9--mPcblHYXAjXP"
-			+ "5t6l6xaIw_MKL7EeexRnApAQYad2GxBBWWLsGo-7Kb8gdXij5G_pGqBdeVvOVpsMX86nvqAUQxEG3AEF"
-			+ "jeXzoY8mdS6dU8G65Qwugt7XDl07r_Qm0000";
+	public static final String DONORS = "UDfjL4jksp0GtSyfk1RIGoXsxDI_17QQ0jcDvR75c29TKd8ghOBUe421hdk3eaKMHOjiUW7bHXqvbKcb"
+			+ "9M3058V3zsRUcrX5VnTPkAISh8XrRhJ41AueyijaC35-Qnt4xLLSmj3w8ofXGKjqkKGjPYRL4EkLiM9e"
+			+ "AA-e-RjUSqGRZXec63oaS-ZBTYCLn3wrsSEYy11A6CgekxI1KOkoSB38QPUI5ZrZTioltxv33iRPYwl6"
+			+ "GiyegSNS58vWLBmuZsuD4satEmdJ03LcuPQVYXMzHxtYSlPIoLatQ4jcEZ_IrXkOXUZp2YwKtFE5laos"
+			+ "ZFnu8ZMSkMDg7O28Q0_zAfEvBSK4KxD263L5lqcHqmTn4IdVBbxRaikaCUSuniUuHi_WQTjXfLUyjGdN"
+			+ "P81BMsxDdTjAJgJuseNDPGNdFdfbO2gJb9GuHQdAa86gGZ3EmOXGlnfXyguW9_h5qYBtKdc-r-OsfoGL"
+			+ "OuiEFQGDiKI3Zjqrok8GCJPx6Ghb89Ktdh14c0VYRPu8UKQtV7iNoCficygS6eiQrUv4t52EPkTWpWJH"
+			+ "hiHODgs5WJAsgVVqzo-b3attWb21E5bEawESBBRLRhgUTXavkCHM7dFP0HmhAHQ8AxQEtP1uItf3zaHC"
+			+ "uwlNYzXBEp8QXjInJCXS9ooHJ5mpwZwBTkmZBJMTPRDCYE1i7of_Zp3pIIXhGKO1ZM4XMHT5Hc9W2ifz"
+			+ "VHC7Wx0p1ovU3ReAoyPmPtB36bh8p5kG0R6JrqsbaLqTW8wKWlfJ_H2ahn_g7z1BEzOksNZ5yZ08h6Ol"
+			+ "d9iEd26PzTfIAMOouyQDyD-fCiSrAZ4jdMAFr5_gXwVx-dlpbAW_ru_rp_hnwGF_xldJDpYpL8angeoT"
+			+ "THxskf4hiLvFIJM7EcWRloA3gHX5F2IxB5XWr_HoA4M5uhdHKibXSKZeSgW_rb-F9M5Wx3cVvyei9SFe"
+			+ "eyr2dx88J6VmAHwXNeLhxcfOkAtF-PyPyzpDFxMzjnO0";
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)

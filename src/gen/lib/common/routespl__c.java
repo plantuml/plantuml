@@ -1250,8 +1250,12 @@ UNSUPPORTED("btmwubugs9vkexo4yb7a5nqel"); // 	    return 1;
 	    	bb.getStruct("UR").setDouble("x", xy);
 	    	r = 0;
 	    }
-	    else if (d == 1)
-UNSUPPORTED("eg1w87s0blk4i583rqumhmv6n"); // 		xy = ba.getStruct("UR").getDouble("y"), ba.getStruct("UR").getDouble("y") = bb.getStruct("LL").getDouble("y"), bb.getStruct("LL").getDouble("y") = xy, d = 0;
+	    else if (d == 1) {
+	    	xy = (int)(ba.getStruct("UR").getDouble("y"));
+	    	ba.getStruct("UR").setDouble("y", bb.getStruct("LL").getDouble("y"));
+	    	bb.getStruct("LL").setDouble("y", xy);
+	    	d = 0;
+	    }
 	    else if (u == 1)
 UNSUPPORTED("5kcd52bwvbxxs0md0enfs100u"); // 		xy = ba.getStruct("LL").getDouble("y"), ba.getStruct("LL").getDouble("y") = bb.getStruct("UR").getDouble("y"), bb.getStruct("UR").getDouble("y") = xy, u = 0;
 	    for (i = 0; i < errs - 1; i++) {

@@ -143,7 +143,7 @@ public final class FactoryNoteActivityCommand implements SingleMultiFactoryComma
 		final Position position = Position.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0))).withRankdir(
 				diagram.getSkinParam().getRankdir());
 
-		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getDashed();
+		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
 		if (position == Position.RIGHT) {
 			link = new Link(activity, note, type, Display.NULL, 1);

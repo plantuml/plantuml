@@ -64,7 +64,7 @@ public class HtmlColorAndStyle {
 	}
 
 	private HtmlColorAndStyle(HtmlColor color) {
-		this(color, LinkStyle.NORMAL);
+		this(color, LinkStyle.NORMAL());
 	}
 
 	public HtmlColorAndStyle(HtmlColor color, LinkStyle style) {
@@ -85,11 +85,11 @@ public class HtmlColorAndStyle {
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) {
 		HtmlColor color = build(skinParam).getColors().get(0).color;
-		LinkStyle style = LinkStyle.NORMAL;
+		LinkStyle style = LinkStyle.NORMAL();
 		final IHtmlColorSet set = skinParam.getIHtmlColorSet();
 		for (String s : definition.split(",")) {
 			final LinkStyle tmpStyle = LinkStyle.fromString(s);
-			if (tmpStyle != LinkStyle.NORMAL) {
+			if (tmpStyle.isNormal() == false) {
 				style = tmpStyle;
 				continue;
 			}

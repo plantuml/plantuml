@@ -311,7 +311,7 @@ public class OptionFlags {
 	}
 
 	private static boolean isTrue(final String value) {
-		return "on".equalsIgnoreCase(value) || "true".equalsIgnoreCase(value) || "on".equalsIgnoreCase(value);
+		return "on".equalsIgnoreCase(value) || "true".equalsIgnoreCase(value);
 	}
 
 	public boolean isEnableStats() {

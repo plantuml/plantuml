@@ -86,7 +86,7 @@ public class ComponentTextNote extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWidth(stringsToDisplay) + 7;
+		return StringUtils.getWcWidth(stringsToDisplay) + 7;
 	}
 
 }

@@ -166,6 +166,9 @@ final class EntityImpl implements ILeaf, IGroup {
 			throw new IllegalArgumentException();
 		}
 		if (leafType != LeafType.STILL_UNKNOWN) {
+			if (newType == this.leafType) {
+				return true;
+			}
 			if (leafType != LeafType.ANNOTATION && leafType != LeafType.ABSTRACT_CLASS && leafType != LeafType.CLASS
 					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE) {
 				return false;

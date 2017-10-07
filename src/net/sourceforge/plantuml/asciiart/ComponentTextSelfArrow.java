@@ -102,7 +102,7 @@ public class ComponentTextSelfArrow extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWidth(stringsToDisplay) + 6;
+		return StringUtils.getWcWidth(stringsToDisplay) + 6;
 	}
 
 }

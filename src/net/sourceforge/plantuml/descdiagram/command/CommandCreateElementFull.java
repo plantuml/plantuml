@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -204,7 +205,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return CommandExecutionResult.ok();
 	}
 
-	public static boolean existsWithBadType(DescriptionDiagram diagram, final Code code, LeafType type, USymbol usymbol) {
+	public static boolean existsWithBadType(AbstractEntityDiagram diagram, final Code code, LeafType type, USymbol usymbol) {
 		if (diagram.leafExist(code) == false) {
 			return false;
 		}

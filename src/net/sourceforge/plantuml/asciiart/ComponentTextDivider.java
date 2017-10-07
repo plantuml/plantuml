@@ -63,7 +63,7 @@ public class ComponentTextDivider extends AbstractComponentText {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
-		final int textWidth = StringUtils.getWidth(stringsToDisplay);
+		final int textWidth = StringUtils.getWcWidth(stringsToDisplay);
 		// final int height = (int) dimensionToUse.getHeight();
 
 		final int textPos = (width - textWidth - 1) / 2;
@@ -91,7 +91,7 @@ public class ComponentTextDivider extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWidth(stringsToDisplay) + 2;
+		return StringUtils.getWcWidth(stringsToDisplay) + 2;
 	}
 
 }

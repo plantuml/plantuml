@@ -78,6 +78,17 @@ public class BasicCharAreaImpl implements BasicCharArea {
 		}
 	}
 
+	private boolean isLong(char c) {
+		final int wc = Wcwidth.of(c);
+		if (wc == 1) {
+			return false;
+		}
+		if (wc == 2) {
+			return true;
+		}
+		throw new IllegalArgumentException("warning width=" + wc + " char=" + ((int) c));
+	}
+
 	private void ensurePossible(int x, int y) {
 		int newCharSize1 = charSize1;
 		int newCharSize2 = charSize2;
@@ -106,8 +117,15 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	}
 
 	public void drawStringLR(String string, int x, int y) {
+		int pos = x;
 		for (int i = 0; i < string.length(); i++) {
-			drawChar(string.charAt(i), x + i, y);
+			final char c = string.charAt(i);
+			drawChar(c, pos, y);
+			pos++;
+			if (isLong(c)) {
+				drawChar('\0', pos, y);
+				pos++;
+			}
 		}
 	}
 
@@ -120,7 +138,10 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	public String getLine(int line) {
 		final StringBuilder sb = new StringBuilder(charSize1);
 		for (int x = 0; x < width; x++) {
-			sb.append(chars[x][line]);
+			final char c = chars[x][line];
+			if (c != '\0') {
+				sb.append(c);
+			}
 		}
 		return sb.toString();
 	}

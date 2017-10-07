@@ -82,25 +82,28 @@ public class PngIO {
 
 	public static void write(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData)
 			throws IOException {
-		if (metadata != null && checkPNGMetadata()) {
+		if (forceImageIO == false && metadata != null && checkPNGMetadata()) {
 			PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, debugData);
 		} else {
 			ImageIO.write(image, "png", os);
 		}
-
 	}
+
+	public static boolean forceImageIO = false;
 
 	static boolean checkPNGMetadata() {
 		try {
 			final Class cl = Class.forName("com.sun.imageio.plugins.png.PNGMetadata");
 			if (cl == null) {
 				Log.info("Cannot load com.sun.imageio.plugins.png.PNGMetadata");
+				forceImageIO = true;
 				return false;
 			}
 			Log.info("Ok for com.sun.imageio.plugins.png.PNGMetadata");
 			return true;
 		} catch (Exception e) {
 			Log.info("Error loading com.sun.imageio.plugins.png.PNGMetadata " + e);
+			forceImageIO = true;
 			return false;
 		}
 	}

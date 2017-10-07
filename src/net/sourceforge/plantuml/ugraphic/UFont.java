@@ -70,6 +70,10 @@ public class UFont {
 		return sansSerif(12);
 	}
 
+	public UFont goTikz(int delta) {
+		return new UFont(new Font("Serif", getStyle(), getSize() + delta), "Serif");
+	}
+
 	public static UFont monospaced(int size) {
 		return new UFont("Monospaced", Font.PLAIN, size);
 	}

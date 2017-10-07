@@ -142,9 +142,9 @@ public class FtileFactoryDelegator implements FtileFactory {
 	}
 
 	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test, Display yes,
-			Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward) {
+			Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward, boolean noOut) {
 		return factory.repeat(swimlane, swimlaneOut, startLabel, repeat, test, yes, out, color, backRepeatLinkRendering,
-				backward);
+				backward, noOut);
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,

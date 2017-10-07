@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class MiddleCircleCircled extends Extremity {
 
+	private final HtmlColor diagramBackColor = HtmlColorUtils.WHITE;
 	private final double angle;
 	private final MiddleCircleCircledMode mode;
 	private final double radius1 = 6;
@@ -54,24 +56,26 @@ class MiddleCircleCircled extends Extremity {
 
 	private final double radius2 = 10;
 	private final UEllipse bigcircle = new UEllipse(2 * radius2, 2 * radius2);
+	private final HtmlColor backColor;
 
-	public MiddleCircleCircled(double angle, MiddleCircleCircledMode mode) {
+	public MiddleCircleCircled(double angle, MiddleCircleCircledMode mode, HtmlColor backColor) {
 		this.angle = angle;
 		this.mode = mode;
+		this.backColor = backColor;
 	}
-	
+
 	@Override
 	public Point2D somePoint() {
 		return null;
 	}
 
-
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE));
 		if (mode == MiddleCircleCircledMode.BOTH) {
-			ug.apply(new UChangeColor(HtmlColorUtils.WHITE)).apply(new UTranslate(-radius2, -radius2)).draw(bigcircle);
+			ug.apply(new UChangeColor(diagramBackColor)).apply(new UChangeBackColor(diagramBackColor))
+					.apply(new UTranslate(-radius2, -radius2)).draw(bigcircle);
 		}
 
+		ug = ug.apply(new UChangeBackColor(backColor));
 		ug = ug.apply(new UStroke(1.5));
 
 		final double d = 0;

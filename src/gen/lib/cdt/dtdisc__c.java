@@ -54,6 +54,7 @@ import h._dt_s;
 import h._dtdisc_s;
 import h._dtlink_s;
 import smetana.core.CString;
+import smetana.core.size_t;
 
 public class dtdisc__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -124,19 +125,15 @@ public class dtdisc__c {
 
 //3 507t9jcy6v9twvl30rs9i2nwi
 // static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)        
-public static Object dtmemory(Object... arg) {
-UNSUPPORTED("18b3dn3pevbf7ajed6fftvnzk"); // static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("cmb0rxzo3c2wr18j0upjz9iml"); // 	if(addr)
-UNSUPPORTED("bn1cyxafod2777wzl55qh14xq"); // 	{	if(size == 0)
+public static Object dtmemory(_dt_s dt, Object addr, size_t size, _dtdisc_s disc) {
+if(addr!=null) {
+UNSUPPORTED("bn1cyxafod2777wzl55qh14xq"); // 		if(size == 0)
 UNSUPPORTED("15j5ccp5owse1ebc5ljhbzg59"); // 		{	free(addr);
 UNSUPPORTED("aihzmr4oo3tuh6kkxwtn9tlbd"); // 			return ((void*)0);
 UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 UNSUPPORTED("9ed8imo9cbvwtwe92qmavoqko"); // 		else	return realloc(addr,size);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("ew5p7pzg1fmdih1t3u25rqz6y"); // 	else	return size > 0 ? malloc(size) : ((void*)0);
-UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }
-
+}
+else	return size.isStrictPositive() ? size.malloc() : null;
 throw new UnsupportedOperationException();
 }
 

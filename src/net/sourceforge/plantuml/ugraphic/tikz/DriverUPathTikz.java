@@ -34,6 +34,10 @@
  */
 package net.sourceforge.plantuml.ugraphic.tikz;
 
+import java.awt.Color;
+
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorGradient;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -45,6 +49,15 @@ public class DriverUPathTikz implements UDriver<TikzGraphics> {
 
 	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final UPath path = (UPath) shape;
+		final HtmlColor back = param.getBackcolor();
+		if (back instanceof HtmlColorGradient) {
+			final HtmlColorGradient gr = (HtmlColorGradient) back;
+			final Color color1 = mapper.getMappedColor(gr.getColor1());
+			final Color color2 = mapper.getMappedColor(gr.getColor2());
+			tikz.setGradientColor(color1, color2, gr.getPolicy());
+		} else {
+			tikz.setFillColor(mapper.getMappedColor(back));
+		}
 		tikz.setStrokeColor(mapper.getMappedColor(param.getColor()));
 		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());
 		tikz.upath(x, y, path);

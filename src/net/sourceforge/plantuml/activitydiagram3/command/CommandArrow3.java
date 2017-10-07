@@ -43,11 +43,13 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.Rainbow;
 
 public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public static final String STYLE_COLORS = "-\\[((?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*(?:;(?:#\\w+|dotted|dashed|plain|bold|hidden)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden)*)*)\\]->";
+	public static final String STYLE_COLORS = "-\\[(" + CommandLinkElement.LINE_STYLE + "(?:;"
+			+ CommandLinkElement.LINE_STYLE + ")*)\\]->";
 
 	public CommandArrow3() {
 		super(getRegexConcat());

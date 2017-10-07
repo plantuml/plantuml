@@ -178,6 +178,9 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 		if (fieldName.equals("html")) {
 			return html != null;
 		}
+		if (fieldName.equals("set")) {
+			return set != 0;
+		}
 		return super.getBoolean(fieldName);
 	}
 
@@ -247,6 +250,7 @@ public class ST_textlabel_t extends UnsupportedStructAndPtr {
 		}
 		return super.getInt(fieldName);
 	}
+	
 }
 
 // typedef struct textlabel_t {

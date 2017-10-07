@@ -44,7 +44,19 @@
  *
  */
 package gen.lib.label;
+import static gen.lib.cdt.dtopen__c.dtopen;
+import static gen.lib.common.memory__c.zmalloc;
+import static gen.lib.label.index__c.RTreeOpen;
+import static smetana.core.JUtils.sizeof;
+import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.BestPos_t;
+import h.XLabels_t;
+import h._dt_s;
+import h._dtdisc_s;
+import h.label_params_t;
+import smetana.core.Z;
+import smetana.core.__ptr__;
 
 public class xlabels__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -123,8 +135,7 @@ public class xlabels__c {
 
 //3 5p3ac8qk4gnne5hj1dc21ysi
 // static int icompare(Dt_t * dt, void * v1, void * v2, Dtdisc_t * disc) 
-public static Object icompare(Object... arg) {
-UNSUPPORTED("bpbhsdw4fe10xdxxfuegnvqt2"); // static int icompare(Dt_t * dt, void * v1, void * v2, Dtdisc_t * disc)
+public static int icompare(_dt_s dt, __ptr__ v1, __ptr__ v2, _dtdisc_s disc) {
 UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
 UNSUPPORTED("ehks25fxahyjbjd4lm6ryh9su"); //     int k1 = *((int *) v1), k2 = *((int *) v2);
 UNSUPPORTED("6in30ubiocmaih693f0arymgc"); //     return k1 - k2;
@@ -138,24 +149,22 @@ throw new UnsupportedOperationException();
 
 //3 88mbfm305igsr7cew5qx6yldp
 // static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params) 
-public static Object xlnew(Object... arg) {
-UNSUPPORTED("3le94zdf67vws2boexolzlx7k"); // static XLabels_t *xlnew(object_t * objs, int n_objs,
-UNSUPPORTED("cb2wq8p902q5tlc1mh5hikgi2"); // 			xlabel_t * lbls, int n_lbls,
-UNSUPPORTED("bz8hxsdu70exdmt52dnayj0c7"); // 			label_params_t * params)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("bkrrqfyt0mc9r9usgj4c7t9zs"); //     XLabels_t *xlp;
-UNSUPPORTED("5tfjcsm3vbxebkz2ev3uqptnx"); //     xlp = (XLabels_t*)zmalloc(sizeof(XLabels_t));
-UNSUPPORTED("evg8rhuwggcno9jwcrub0i4y4"); //     /* used to load the rtree in hilbert space filling curve order */
-UNSUPPORTED("8yj6rj5llf2mw5pp8tt355a7o"); //     if (!(xlp->hdx = dtopen(&Hdisc, Dtobag))) {
+public static XLabels_t xlnew(__ptr__ objs, int n_objs, __ptr__ lbls, int n_lbls, label_params_t params) {
+__ptr__ xlp;
+xlp = zmalloc(sizeof(XLabels_t.class));
+/* used to load the rtree in hilbert space filling curve order */
+xlp.setPtr("hdx", dtopen(Z.z().Hdisc.amp(), Z.z().Dtobag));
+if (N(xlp.getPtr("hdx"))) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
-UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("1bzq9uxiqzj7l6llb7e6gti7e"); //     /* for querying intersection candidates */
+}
+/* for querying intersection candidates */
+xlp.setPtr("spdx", RTreeOpen());
 UNSUPPORTED("7elrkgy2129t2ut4mi03dhf75"); //     if (!(xlp->spdx = RTreeOpen())) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
 UNSUPPORTED("dvgyxsnyeqqnyzq696k3vskib"); //     }
-UNSUPPORTED("85lb5m2umu5izyudq40of0dgi"); //     /* save arg pointers in the handle */
+/* save arg pointers in the handle */
 UNSUPPORTED("ava6c0wrmq2d6j1i4j7bd1lpp"); //     xlp->objs = objs;
 UNSUPPORTED("85sh2ov52z31nsy9mk5su9p5p"); //     xlp->n_objs = n_objs;
 UNSUPPORTED("3et8g76wlkf60sgxrmi3z1vom"); //     xlp->lbls = lbls;
@@ -804,14 +813,10 @@ throw new UnsupportedOperationException();
 
 //3 brqgbskh3z4ah8infjompibvu
 // int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params) 
-public static Object placeLabels(Object... arg) {
-UNSUPPORTED("etrjsq5w49uo9jq5pzifohkqw"); // int
-UNSUPPORTED("ec68cktfb4yv5ddz6c3prlrlz"); // placeLabels(object_t * objs, int n_objs,
-UNSUPPORTED("5ldon0a05p5rangda7ft97vpf"); // 	    xlabel_t * lbls, int n_lbls, label_params_t * params)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("ch9su7givqwexp175hzif4dga"); //     int r, i;
-UNSUPPORTED("ac14qcqjljksbh1ulqbhsnrnb"); //     BestPos_t bp;
-UNSUPPORTED("as2y5lue6yv2statqso3a65vn"); //     XLabels_t *xlp = xlnew(objs, n_objs, lbls, n_lbls, params);
+public static int placeLabels(__ptr__ objs, int n_objs, __ptr__ lbls, int n_lbls, label_params_t params) {
+int r, i;
+BestPos_t bp;
+XLabels_t xlp = xlnew(objs, n_objs, lbls, n_lbls, params);
 UNSUPPORTED("dm5w2lmehr2rv6b2yi2v83i3g"); //     if ((r = xlinitialize(xlp)) < 0)
 UNSUPPORTED("bt8wt6mqb316pv7egiekltb74"); // 	return r;
 UNSUPPORTED("8izrf1sxed8y2dmpz5ju27b6h"); //     /* Place xlabel_t* lp near lp->obj so that the rectangle whose lower-left

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.svek.extremity.MiddleCircleCircledMode;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactory;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircle;
@@ -44,18 +45,18 @@ public enum LinkMiddleDecor {
 
 	NONE, CIRCLE, CIRCLE_CIRCLED, CIRCLE_CIRCLED1, CIRCLE_CIRCLED2;
 
-	public MiddleFactory getMiddleFactory() {
+	public MiddleFactory getMiddleFactory(HtmlColor backColor) {
 		if (this == CIRCLE) {
-			return new MiddleFactoryCircle();
+			return new MiddleFactoryCircle(backColor);
 		}
 		if (this == CIRCLE_CIRCLED) {
-			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.BOTH);
+			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.BOTH, backColor);
 		}
 		if (this == CIRCLE_CIRCLED1) {
-			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE1);
+			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE1, backColor);
 		}
 		if (this == CIRCLE_CIRCLED2) {
-			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE2);
+			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE2, backColor);
 		}
 		throw new UnsupportedOperationException();
 	}

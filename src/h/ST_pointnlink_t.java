@@ -156,7 +156,7 @@ public class ST_pointnlink_t extends UnsupportedStructAndPtr implements Hardcode
 				link = tmp;
 				return link;
 			}
-			System.err.println("newData2=" + newData.getClass());
+			System.err.println("newData2A=" + newData.getClass());
 		}
 		return super.setPtr(fieldName, newData);
 	}

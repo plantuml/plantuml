@@ -324,6 +324,10 @@ public class ST_Agedgeinfo_t extends UnsupportedStructAndPtr {
 			this.label = (ST_textlabel_t) newData;
 			return this.label;
 		}
+		if (fieldName.equals("head_label")) {
+			this.head_label = (ST_textlabel_t) newData;
+			return this.head_label;
+		}
 		return super.setPtr(fieldName, newData);
 	}
 

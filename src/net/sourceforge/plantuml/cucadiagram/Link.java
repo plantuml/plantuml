@@ -167,11 +167,15 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public void goDashed() {
-		type = type.getDashed();
+		type = type.goDashed();
 	}
 
 	public void goDotted() {
-		type = type.getDotted();
+		type = type.goDotted();
+	}
+
+	public void goThickness(double thickness) {
+		type = type.goThickness(thickness);
 	}
 
 	private boolean hidden = false;
@@ -185,7 +189,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public void goBold() {
-		type = type.getBold();
+		type = type.goBold();
 	}
 
 	public String getLabeldistance() {

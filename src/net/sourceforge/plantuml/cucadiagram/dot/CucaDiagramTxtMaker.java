@@ -161,15 +161,15 @@ public final class CucaDiagramTxtMaker {
 	}
 
 	private int getWidth(IEntity entity) {
-		int result = StringUtils.getWidth(entity.getDisplay());
+		int result = StringUtils.getWcWidth(entity.getDisplay());
 		for (Member att : entity.getBodier().getMethodsToDisplay()) {
-			final int w = StringUtils.getWidth(Display.getWithNewlines(att.getDisplay(true)));
+			final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
 			if (w > result) {
 				result = w;
 			}
 		}
 		for (Member att : entity.getBodier().getFieldsToDisplay()) {
-			final int w = StringUtils.getWidth(Display.getWithNewlines(att.getDisplay(true)));
+			final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
 			if (w > result) {
 				result = w;
 			}

@@ -40,10 +40,12 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
@@ -64,6 +66,7 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockArrow;
@@ -85,7 +88,6 @@ import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UComment;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -133,6 +135,8 @@ public class Line implements Moveable, Hideable {
 	private final Pragma pragma;
 	private final HtmlColor backgroundColor;
 	private final boolean useRankSame;
+	private final UStroke defaultThickness;
+	private HtmlColor arrowLollipopColor;
 
 	@Override
 	public String toString() {
@@ -232,6 +236,11 @@ public class Line implements Moveable, Hideable {
 			labelFont = labelFont.mute(link.getColors());
 		}
 		this.backgroundColor = skinParam.getBackgroundColor();
+		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);
+		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);
+		if (arrowLollipopColor == null) {
+			this.arrowLollipopColor = HtmlColorUtils.WHITE;
+		}
 		this.pragma = pragma;
 		this.bibliotekon = bibliotekon;
 		this.stringBounder = stringBounder;
@@ -650,7 +659,7 @@ public class Line implements Moveable, Hideable {
 
 		ug = ug.apply(new UChangeBackColor(null)).apply(new UChangeColor(color));
 		final LinkType linkType = link.getType();
-		UStroke stroke = linkType.getStroke();
+		UStroke stroke = linkType.getStroke3(defaultThickness);
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
 			stroke = link.getColors().getSpecificLineStroke();
 		}
@@ -716,7 +725,8 @@ public class Line implements Moveable, Hideable {
 			final PointAndAngle middle = dotPath.getMiddle();
 			final double angleRad = middle.getAngle();
 			final double angleDeg = -angleRad * 180.0 / Math.PI;
-			final UDrawable mi = linkType.getMiddleDecor().getMiddleFactory().createUDrawable(angleDeg - 45);
+			final UDrawable mi = linkType.getMiddleDecor().getMiddleFactory(arrowLollipopColor)
+					.createUDrawable(angleDeg - 45);
 			mi.drawU(ug.apply(new UTranslate(x + middle.getX(), y + middle.getY())));
 		}
 

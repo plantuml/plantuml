@@ -38,8 +38,8 @@ package smetana.core;
 
 import h.*;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import smetana.core.amiga.StarArrayOfInteger;
 import smetana.core.amiga.StarArrayOfPtr;
@@ -95,6 +95,21 @@ public class JUtils {
 		}
 		if (cl == bezier.class) {
 			return ST_bezier.sizeof(nb);
+		}
+		if (cl == triangle_t.class) {
+			return ST_triangle_t.sizeof(nb);
+		}
+		if (cl == Pedge_t.class) {
+			return ST_Pedge_t.sizeof(nb);
+		}
+		if (cl == tna_t.class) {
+			return ST_tna_t.sizeof(nb);
+		}
+		if (cl == object_t.class) {
+			return ST_object_t.sizeof(nb);
+		}
+		if (cl == xlabel_t.class) {
+			return ST_xlabel_t.sizeof(nb);
 		}
 		// }
 		if (from(cl) instanceof __struct_impl__ == false) {
@@ -578,6 +593,70 @@ public class JUtils {
 		if (theClass == _dthold_s.class) {
 			return new ST_dthold_s();
 		}
+		//
+		if (theClass == pack_info.class) {
+			return new ST_pack_info();
+		}
+		if (theClass == aspect_t.class) {
+			return new ST_aspect_t();
+		}
+		if (theClass == fontinfo.class) {
+			return new ST_fontinfo();
+		}
+		if (theClass == IMapEntry_t.class) {
+			return new ST_IMapEntry_t();
+		}
+		if (theClass == point.class) {
+			return new ST_point();
+		}
+		if (theClass == nodequeue.class) {
+			return new ST_nodequeue();
+		}
+		if (theClass == spline_info_t.class) {
+			return new ST_spline_info_t();
+		}
+		if (theClass == path.class) {
+			return new ST_path();
+		}
+		if (theClass == pathend_t.class) {
+			return new ST_pathend_t();
+		}
+		if (theClass == inside_t.class) {
+			return new ST_inside_t();
+		}
+		if (theClass == triangle_t.class) {
+			return new ST_triangle_t();
+		}
+		if (theClass == tedge_t.class) {
+			return new ST_tedge_t();
+		}
+		if (theClass == Pedge_t.class) {
+			return new ST_Pedge_t();
+		}
+		if (theClass == tna_t.class) {
+			return new ST_tna_t();
+		}
+		if (theClass == label_params_t.class) {
+			return new ST_label_params_t();
+		}
+		if (theClass == object_t.class) {
+			return new ST_object_t();
+		}
+		if (theClass == xlabel_t.class) {
+			return new ST_xlabel_t();
+		}
+		if (theClass == XLabels_t.class) {
+			return new ST_XLabels_t();
+		}
+		if (theClass == HDict_t.class) {
+			return new ST_HDict_t();
+		}
+		if (theClass == RTree.class) {
+			return new ST_RTree();
+		}
+		if (theClass == _Node_t___.class) {
+			return new ST_Node_t___();
+		}
 		// }
 		notFound(theClass);
 		return new __struct_impl__<C>(theClass);
@@ -757,17 +836,80 @@ public class JUtils {
 		if (theClass == _dthold_s.class) {
 			return new ST_dthold_s(parent);
 		}
-
+		//
+		if (theClass == pack_info.class) {
+			return new ST_pack_info(parent);
+		}
+		if (theClass == aspect_t.class) {
+			return new ST_aspect_t(parent);
+		}
+		if (theClass == fontinfo.class) {
+			return new ST_fontinfo(parent);
+		}
+		if (theClass == IMapEntry_t.class) {
+			return new ST_IMapEntry_t(parent);
+		}
+		if (theClass == point.class) {
+			return new ST_point(parent);
+		}
+		if (theClass == nodequeue.class) {
+			return new ST_nodequeue(parent);
+		}
+		if (theClass == spline_info_t.class) {
+			return new ST_spline_info_t(parent);
+		}
+		if (theClass == path.class) {
+			return new ST_path(parent);
+		}
+		if (theClass == pathend_t.class) {
+			return new ST_pathend_t(parent);
+		}
+		if (theClass == inside_t.class) {
+			return new ST_inside_t(parent);
+		}
+		if (theClass == triangle_t.class) {
+			return new ST_triangle_t(parent);
+		}
+		if (theClass == tedge_t.class) {
+			return new ST_tedge_t(parent);
+		}
+		if (theClass == Pedge_t.class) {
+			return new ST_Pedge_t(parent);
+		}
+		if (theClass == tna_t.class) {
+			return new ST_tna_t(parent);
+		}
+		if (theClass == label_params_t.class) {
+			return new ST_label_params_t(parent);
+		}
+		if (theClass == object_t.class) {
+			return new ST_object_t(parent);
+		}
+		if (theClass == xlabel_t.class) {
+			return new ST_xlabel_t(parent);
+		}
+		if (theClass == XLabels_t.class) {
+			return new ST_XLabels_t(parent);
+		}
+		if (theClass == HDict_t.class) {
+			return new ST_HDict_t(parent);
+		}
+		if (theClass == RTree.class) {
+			return new ST_RTree(parent);
+		}
+		if (theClass == _Node_t___.class) {
+			return new ST_Node_t___(parent);
+		}
 		// }
 		notFound(theClass);
 		return new StarStructImpl(theClass, parent);
 	}
 
-	private static final Set<String> todo = new TreeSet<String>();
+	private static final Set<String> todo = new LinkedHashSet<String>();
 
 	private static void notFound(Class theClass) {
-//		todo.add(theClass.getName());
-//		System.err.println("todo=" + todo);
+		todo.add(theClass.getName());
+		System.err.println("todo=" + todo);
 	}
 
 }

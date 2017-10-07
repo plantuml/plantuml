@@ -35,12 +35,19 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
+import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.UDrawable;
 
 public class MiddleFactoryCircle implements MiddleFactory {
+	
+	private final HtmlColor backColor;
+
+	public MiddleFactoryCircle(HtmlColor backColor) {
+		this.backColor = backColor;
+	}
 
 	public UDrawable createUDrawable(double angle) {
-		return new MiddleCircle();
+		return new MiddleCircle(backColor);
 	}
 
 }

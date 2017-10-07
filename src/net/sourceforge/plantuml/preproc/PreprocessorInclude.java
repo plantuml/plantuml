@@ -192,6 +192,15 @@ public class PreprocessorInclude implements ReadLine {
 	private CharSequence2 manageFileInclude(CharSequence2 s, Matcher2 matcher, boolean allowMany) throws IOException {
 		String fileName = matcher.group(1);
 		fileName = defines.applyDefines(fileName).get(0);
+		if (fileName.startsWith("<") && fileName.endsWith(">")) {
+			final ReadLine strlibReader = getReaderStdlibInclude(s, fileName.substring(1, fileName.length() - 1));
+			if (strlibReader == null) {
+				return s.withErrorPreprocessor("Cannot include " + fileName);
+			}
+			included = new PreprocessorInclude(strlibReader, defines, charset, null, filesUsedCurrent, filesUsedGlobal,
+					definitionsContainer);
+			return this.readLine();
+		}
 		final int idx = fileName.lastIndexOf('!');
 		String suf = null;
 		if (idx != -1) {
@@ -242,6 +251,48 @@ public class PreprocessorInclude implements ReadLine {
 		}
 		return null;
 	}
+
+	private InputStream getStdlibInputStream(String filename) {
+		if (filename.endsWith(".puml") == false) {
+			filename = filename + ".puml";
+		}
+		InputStream is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename);
+		if (is == null) {
+			is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename.toLowerCase());
+		}
+		return is;
+	}
+
+	private ReadLine getReaderStdlibInclude(CharSequence2 s, String filename) {
+		InputStream is = getStdlibInputStream(filename);
+		if (is == null) {
+			return null;
+		}
+		try {
+			if (StartDiagramExtractReader.containsStartDiagram(s, is)) {
+				is = getStdlibInputStream(filename);
+				return new StartDiagramExtractReader(s, is);
+			}
+			is = getStdlibInputStream(filename);
+			if (is == null) {
+				return null;
+			}
+			return new ReadLineReader(new InputStreamReader(is), filename);
+		} catch (IOException e) {
+			return new ReadLineSimple(s, e.toString());
+		}
+	}
+
+	// private ReadLine getReaderStdlibInclude2(CharSequence2 s, String filename) {
+	// InputStream is = DummyEmptyStdlibFile.class.getResourceAsStream(filename);
+	// if (is == null) {
+	// is = DummyEmptyStdlibFile.class.getResourceAsStream(filename.toLowerCase());
+	// }
+	// if (is == null) {
+	// return null;
+	// }
+	// return new ReadLineReader(new InputStreamReader(is), filename);
+	// }
 
 	private ReadLine getReaderInclude(CharSequence2 s, final File f, String suf) {
 		try {

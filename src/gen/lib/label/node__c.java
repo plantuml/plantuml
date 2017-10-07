@@ -45,18 +45,19 @@
  */
 package gen.lib.label;
 import static smetana.core.Macro.UNSUPPORTED;
+import h.RTree;
+import h._Node_t___;
+import smetana.core.Memory;
 
 public class node__c {
 
 
 //3 9uj7ni1m6q6drtoh56w82d6m4
 // Node_t *RTreeNewNode(RTree_t * rtp) 
-public static Object RTreeNewNode(Object... arg) {
-UNSUPPORTED("6r87cuk0qgu4wqagr86fr5tts"); // Node_t *RTreeNewNode(RTree_t * rtp)
-UNSUPPORTED("erg9i1970wdri39osu8hx2a6e"); // {
-UNSUPPORTED("7wl3hkaktfhqdqsm6ubxboo1q"); //     register Node_t *n;
-UNSUPPORTED("4bwg40kiiowl2obspxcr4saa2"); //     rtp->NodeCount++;
-UNSUPPORTED("azoy4bfuupxwp4mi8hfbfb78g"); //     n = (Node_t *) malloc(sizeof(Node_t));
+public static _Node_t___ RTreeNewNode(RTree rtp) {
+	_Node_t___ n;
+	rtp.setInt("NodeCount", rtp.getInt("NodeCount") + 1);
+	n = (_Node_t___) Memory.malloc(_Node_t___.class);
 UNSUPPORTED("a4ey5uckjqallol1ktyqe35bv"); //     InitNode(n);
 UNSUPPORTED("69hc24ic55i66g8tf2ne42327"); //     return n;
 UNSUPPORTED("c24nfmv9i7o5eoqaymbibp7m7"); // }

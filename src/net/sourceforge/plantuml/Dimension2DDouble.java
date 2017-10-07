@@ -73,6 +73,10 @@ public class Dimension2DDouble extends Dimension2D {
 		return delta(dim, delta, delta);
 	}
 
+	public Dimension2DDouble withWidth(double newWidth) {
+		return new Dimension2DDouble(newWidth, height);
+	}
+
 	public static Dimension2D delta(Dimension2D dim, double deltaWidth, double deltaHeight) {
 		if (deltaHeight == 0 && deltaWidth == 0) {
 			return dim;

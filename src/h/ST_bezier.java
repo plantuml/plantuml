@@ -111,6 +111,16 @@ public class ST_bezier extends UnsupportedStructAndPtr {
 		public __array_of_ptr__ getArrayOfPtr(String fieldName) {
 			return ST_bezier.this.getArrayOfPtr(fieldName);
 		}
+		
+		@Override
+		public boolean getBoolean(String fieldName) {
+			return ST_bezier.this.getBoolean(fieldName);
+		}
+		
+		@Override
+		public __struct__ getStruct(String fieldName) {
+			return ST_bezier.this.getStruct(fieldName);
+		}
 
 	}
 

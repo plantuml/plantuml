@@ -205,6 +205,8 @@ public class PSystemVersion extends AbstractPSystem {
 		add(strings, "<u>Official Eclipse Plugin</u>: Hallvard Tr\u00E6tteberg", withTag);
 		add(strings, "<u>Original Eclipse Plugin</u>: Claude Durif & Anne Pecoil", withTag);
 		add(strings, "<u>Servlet & XWiki</u>: Maxime Sinclair", withTag);
+		add(strings, "<u>Docker</u>: David Ducatel", withTag);
+		add(strings, "<u>AWS lib</u>: milo-minderbinder", withTag);
 		add(strings, "<u>Site design</u>: Raphael Cotisson", withTag);
 		add(strings, "<u>Logo</u>: Benjamin Croizet", withTag);
 

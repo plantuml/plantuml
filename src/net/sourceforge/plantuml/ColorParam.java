@@ -162,7 +162,9 @@ public enum ColorParam {
 	iconProtectedBackground(HtmlColorUtils.COL_FFFF44),
 	iconPublic(HtmlColorUtils.COL_038048),
 	iconPublicBackground(HtmlColorUtils.COL_84BE84),
-	iconIEMandatory(HtmlColorUtils.BLACK);
+	iconIEMandatory(HtmlColorUtils.BLACK),
+	
+	arrowLollipop(HtmlColorUtils.WHITE);
 
 	private final boolean isBackground;
 	private final HtmlColor defaultValue;

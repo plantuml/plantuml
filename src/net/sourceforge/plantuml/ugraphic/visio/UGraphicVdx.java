@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -63,7 +64,7 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 
 	private UGraphicVdx(ColorMapper colorMapper, VisioGraphics visio) {
 		super(colorMapper, visio);
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		this.stringBounder = FileFormat.PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
 		register();
 
 	}

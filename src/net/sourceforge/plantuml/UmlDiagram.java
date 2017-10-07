@@ -223,6 +223,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 		final HtmlColor hover = getSkinParam().getHoverPathColor();
 		fileFormatOption = fileFormatOption.withSvgLinkTarget(getSkinParam().getSvgLinkTarget());
+		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		if (hover != null) {
 			fileFormatOption = fileFormatOption.withHoverColor(StringUtils.getAsHtml(getSkinParam().getColorMapper()
 					.getMappedColor(hover)));
@@ -439,7 +440,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	public void setUseJDot(boolean useJDot) {
 		this.useJDot = useJDot;
 	}
-	
+
 	public boolean isUseJDot() {
 		return useJDot;
 	}

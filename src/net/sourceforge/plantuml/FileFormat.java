@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
@@ -86,24 +87,71 @@ public enum FileFormat {
 	final static private BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
 	final static private Graphics2D gg = imDummy.createGraphics();
 
-	public StringBounder getDefaultStringBounder() {
+	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion) {
+		if (this == LATEX || this == LATEX_NO_PREAMBLE) {
+			return getTikzStringBounder(tikzFontDistortion);
+		}
 		if (this == BRAILLE_PNG) {
-			return new StringBounder() {
-				public Dimension2D calculateDimension(UFont font, String text) {
-					final int nb = BrailleCharFactory.build(text).size();
-					final double quanta = UGraphicBraille.QUANTA;
-					final double height = 5 * quanta;
-					final double width = 3 * nb * quanta + 1;
-					return new Dimension2DDouble(width, height);
-				}
-			};
+			return getBrailleStringBounder();
 
 		}
+		return getNormalStringBounder();
+	}
+
+	private StringBounder getNormalStringBounder() {
 		return new StringBounder() {
+			@Override
+			public String toString() {
+				return "FileFormat::getNormalStringBounder";
+			}
+
 			public Dimension2D calculateDimension(UFont font, String text) {
-				final FontMetrics fm = gg.getFontMetrics(font.getFont());
-				final Rectangle2D rect = fm.getStringBounds(text, gg);
-				return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
+				return getJavaDimension(font, text);
+			}
+
+		};
+	}
+
+	private Dimension2DDouble getJavaDimension(UFont font, String text) {
+		final Font javaFont = font.getFont();
+		final FontMetrics fm = gg.getFontMetrics(javaFont);
+		final Rectangle2D rect = fm.getStringBounds(text, gg);
+		return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
+	}
+
+	private StringBounder getBrailleStringBounder() {
+		return new StringBounder() {
+			@Override
+			public String toString() {
+				return "FileFormat::getBrailleStringBounder";
+			}
+
+			public Dimension2D calculateDimension(UFont font, String text) {
+				final int nb = BrailleCharFactory.build(text).size();
+				final double quanta = UGraphicBraille.QUANTA;
+				final double height = 5 * quanta;
+				final double width = 3 * nb * quanta + 1;
+				return new Dimension2DDouble(width, height);
+			}
+		};
+	}
+
+	private StringBounder getTikzStringBounder(final TikzFontDistortion tikzFontDistortion) {
+		return new StringBounder() {
+			@Override
+			public String toString() {
+				return "FileFormat::getTikzStringBounder";
+			}
+
+			public Dimension2D calculateDimension(UFont font, String text) {
+				final Dimension2DDouble w1 = getJavaDimension(font.goTikz(-1), text);
+				final Dimension2DDouble w2 = getJavaDimension(font.goTikz(0), text);
+				final Dimension2DDouble w3 = getJavaDimension(font.goTikz(1), text);
+				final double factor = (w3.getWidth() - w1.getWidth()) / w2.getWidth();
+				final double distortion = tikzFontDistortion.getDistortion();
+				final double magnify = tikzFontDistortion.getMagnify();
+				final double delta = (w2.getWidth() - w1.getWidth()) * factor * distortion;
+				return w2.withWidth(Math.max(w1.getWidth(), magnify * w2.getWidth() - delta));
 			}
 		};
 	}

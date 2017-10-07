@@ -60,6 +60,13 @@ public class UStroke implements UChange {
 		this(1.0);
 	}
 
+	private UStroke applyThickness(UStroke thickness) {
+		if (thickness == null) {
+			return this;
+		}
+		return new UStroke(dashVisible, dashSpace, thickness.thickness);
+	}
+
 	public double getDashVisible() {
 		return dashVisible;
 	}

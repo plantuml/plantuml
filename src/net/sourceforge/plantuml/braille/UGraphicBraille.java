@@ -39,6 +39,7 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -117,7 +118,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	}
 
 	public StringBounder getStringBounder() {
-		return FileFormat.BRAILLE_PNG.getDefaultStringBounder();
+		return FileFormat.BRAILLE_PNG.getDefaultStringBounder(TikzFontDistortion.getDefault());
 	}
 
 	public void startUrl(Url url) {

@@ -119,7 +119,7 @@ public class PostItDiagram extends UmlDiagram {
 				.getMappedColor(this.getSkinParam().getBackgroundColor());
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		if (fileFormat == FileFormat.PNG) {
-			final double height = getDefaultArea().heightWhenWidthIs(width, fileFormat.getDefaultStringBounder());
+			final double height = getDefaultArea().heightWhenWidthIs(width, fileFormatOption.getDefaultStringBounder());
 			final EmptyImageBuilder builder = new EmptyImageBuilder(width, height, backColor);
 
 			final Graphics2D graphics2D = builder.getGraphics2D();

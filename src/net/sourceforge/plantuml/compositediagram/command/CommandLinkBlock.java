@@ -61,11 +61,11 @@ public class CommandLinkBlock extends SingleLineCommand<CompositeDiagram> {
 		final String deco2 = arg.get(3);
 		LinkType linkType = new LinkType(getLinkDecor(deco1), getLinkDecor(deco2));
 		
-		if ("*)".equals(deco1)) {
-			linkType = linkType.getInterfaceProvider();
-		} else if ("(*".equals(deco2)) {
-			linkType = linkType.getInterfaceUser();
-		}
+//		if ("*)".equals(deco1)) {
+//			linkType = linkType.getInterfaceProvider();
+//		} else if ("(*".equals(deco2)) {
+//			linkType = linkType.getInterfaceUser();
+//		}
 
 		final String queue = arg.get(2);
 

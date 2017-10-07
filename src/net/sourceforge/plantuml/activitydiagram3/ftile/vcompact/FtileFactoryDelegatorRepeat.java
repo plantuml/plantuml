@@ -72,13 +72,14 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, final Ftile repeat, Display test,
-			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward) {
+			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
+			boolean noOut) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
 		final HtmlColor borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
-				: color;
+		final HtmlColor backColor = color == null ? getRose().getHtmlColor(skinParam(),
+				ColorParam.activityDiamondBackground) : color;
 		final Rainbow arrowColor = HtmlColorAndStyle.build(skinParam());
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
@@ -92,7 +93,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		Ftile result = FtileRepeat.create(backRepeatLinkRendering, swimlane, swimlaneOut, backStart, repeat, test, yes,
 				out, borderColor, backColor, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(),
-				fcDiamond, fcArrow, backward);
+				fcDiamond, fcArrow, backward, noOut);
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
@@ -110,7 +111,8 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 					final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
 					final Dimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
 
-					final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor, Arrows.asToRight());
+					final Snake snake = new Snake(getFtile1().arrowHorizontalAlignment(), arrowColor, Arrows
+							.asToRight());
 					snake.addPoint(tr1.getDx(), tr1.getDy());
 					snake.addPoint(0, tr1.getDy());
 					snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);
