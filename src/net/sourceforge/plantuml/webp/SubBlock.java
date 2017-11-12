@@ -606,12 +606,12 @@ public class SubBlock {
 	}
 
 	public String toString() {
-		String r = "[";
+		StringBuilder r = new StringBuilder("[");
 		for (int x = 0; x < 16; x++)
-			r = r + tokens[x] + " ";
-		r = r + "]";
+			r.append(tokens[x]).append(" ");
+		r.append("]");
 
-		return r;
+		return r.toString();
 	}
 
 }

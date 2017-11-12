@@ -134,7 +134,7 @@ public class Jasic {
     private static List<Token> tokenize(String source) {
         List<Token> tokens = new ArrayList<Token>();
         
-        String token = "";
+        StringBuilder token = new StringBuilder();
         TokenizeState state = TokenizeState.DEFAULT;
         
         // Many tokens are a single character, like operators and ().
@@ -155,10 +155,10 @@ public class Jasic {
                     tokens.add(new Token(Character.toString(c),
                         tokenTypes[charTokens.indexOf(c)]));
                 } else if (Character.isLetter(c)) {
-                    token += c;
+                    token.append(c);
                     state = TokenizeState.WORD;
                 } else if (Character.isDigit(c)) {
-                    token += c;
+                    token.append(c);
                     state = TokenizeState.NUMBER;
                 } else if (c == '"') {
                     state = TokenizeState.STRING;
@@ -169,14 +169,14 @@ public class Jasic {
                 
             case WORD:
                 if (Character.isLetterOrDigit(c)) {
-                    token += c;
+                    token.append(c);
                 } else if (c == ':') {
-                    tokens.add(new Token(token, TokenType.LABEL));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.LABEL));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                 } else {
-                    tokens.add(new Token(token, TokenType.WORD));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.WORD));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                     i--; // Reprocess this character in the default state.
                 }
@@ -187,10 +187,10 @@ public class Jasic {
                 // To get a negative number, just do 0 - <your number>.
                 // To get a floating point, divide.
                 if (Character.isDigit(c)) {
-                    token += c;
+                    token.append(c);
                 } else {
-                    tokens.add(new Token(token, TokenType.NUMBER));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.NUMBER));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                     i--; // Reprocess this character in the default state.
                 }
@@ -198,11 +198,11 @@ public class Jasic {
                 
             case STRING:
                 if (c == '"') {
-                    tokens.add(new Token(token, TokenType.STRING));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.STRING));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                 } else {
-                    token += c;
+                    token.append(c);
                 }
                 break;
                 
