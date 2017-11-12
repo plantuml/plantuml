@@ -84,7 +84,7 @@ public class Display implements Iterable<CharSequence> {
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
 	public boolean isWhite() {
-		return display.size() == 0 || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
+		return display.isEmpty() || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
 	}
 
 	public static Display empty() {

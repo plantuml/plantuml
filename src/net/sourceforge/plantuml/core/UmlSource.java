@@ -201,7 +201,7 @@ final public class UmlSource {
 			if (s.matches("\\s*'.*")) {
 				continue;
 			}
-			if (StringUtils.trin(s).length() != 0) {
+			if (!StringUtils.trin(s).isEmpty()) {
 				return false;
 			}
 		}

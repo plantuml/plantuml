@@ -42,7 +42,7 @@ public class GTileOneLevelFactory {
 
 	public GTile createGTile(GNode root) {
 		final GTileNode left = new GTileNode(root);
-		if (root.getChildren().size() == 0) {
+		if (root.getChildren().isEmpty()) {
 			return left;
 		}
 		final List<GTile> all = new ArrayList<GTile>();

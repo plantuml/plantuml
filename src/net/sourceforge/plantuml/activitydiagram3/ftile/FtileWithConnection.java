@@ -50,7 +50,7 @@ class FtileWithConnection extends FtileDecorate {
 
 	FtileWithConnection(Ftile ftile, Collection<Connection> connections) {
 		super(ftile);
-		if (connections == null || connections.size() == 0) {
+		if (connections == null || connections.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		this.connections.addAll(connections);

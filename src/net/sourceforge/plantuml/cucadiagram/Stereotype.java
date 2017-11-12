@@ -204,7 +204,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	public String getLabel(boolean withGuillement) {
-		assert label == null || label.length() > 0;
+		assert label == null || !label.isEmpty();
 		if (isWithOOSymbol()) {
 			return null;
 		}

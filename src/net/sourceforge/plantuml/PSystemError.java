@@ -199,7 +199,7 @@ public class PSystemError extends AbstractPSystem {
 
 	private List<String> getTextStrings() {
 		final List<String> result = new ArrayList<String>(getStack());
-		if (result.size() > 0) {
+		if (!result.isEmpty()) {
 			result.add(" ");
 		}
 
@@ -307,7 +307,7 @@ public class PSystemError extends AbstractPSystem {
 
 	private List<String> getHtmlStrings(boolean useRed) {
 		final List<String> htmlStrings = new ArrayList<String>(getStack());
-		if (htmlStrings.size() > 0) {
+		if (!htmlStrings.isEmpty()) {
 			htmlStrings.add("----");
 		}
 
@@ -470,7 +470,7 @@ public class PSystemError extends AbstractPSystem {
 			}
 			errors.addAll(system.getErrorsUml());
 			debugs.addAll(system.debugLines);
-			if (system.debugLines.size() > 0) {
+			if (!system.debugLines.isEmpty()) {
 				debugs.add("-");
 			}
 		}

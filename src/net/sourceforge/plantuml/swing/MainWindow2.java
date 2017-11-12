@@ -128,7 +128,7 @@ public class MainWindow2 extends JFrame {
 
 		}
 		ext = sb.toString();
-		if (ext.length() == 0) {
+		if (ext.isEmpty()) {
 			ext = getDefaultFileExtensions();
 		}
 		extensions.setText(ext);

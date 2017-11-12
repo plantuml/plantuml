@@ -68,7 +68,7 @@ public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 			final String s = t.getElement();
 			if (subentry == null) {
 				result.addEntry(s);
-			} else if (subentry.length() == 0) {
+			} else if (subentry.isEmpty()) {
 				subentry = s;
 			} else {
 				result.addSubEntry(subentry, s);

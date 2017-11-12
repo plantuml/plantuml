@@ -70,7 +70,7 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0));
 
 		String test = arg.get("TEST", 0);
-		if (test.length() == 0) {
+		if (test.isEmpty()) {
 			test = null;
 		}
 

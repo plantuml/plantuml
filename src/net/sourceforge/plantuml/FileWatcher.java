@@ -45,7 +45,7 @@ public class FileWatcher {
 	private final Map<File, Long> modified2 = new HashMap<File, Long>();
 
 	public FileWatcher(Set<File> files) {
-		if (files.size() == 0) {
+		if (files.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		for (File f : files) {

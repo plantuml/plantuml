@@ -95,7 +95,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		}
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
-		if (getPositionedNotes().size() > 0) {
+		if (!getPositionedNotes().isEmpty()) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
 		final List<WeldingPoint> weldingPoints = new ArrayList<WeldingPoint>();
@@ -103,7 +103,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			weldingPoints.addAll(branch.getWeldingPoints());
 		}
 		weldingPoints.addAll(elseBranch.getWeldingPoints());
-		if (weldingPoints.size() > 0) {
+		if (!weldingPoints.isEmpty()) {
 			result = new FtileDecorateWelding(result, weldingPoints);
 		}
 		return result;

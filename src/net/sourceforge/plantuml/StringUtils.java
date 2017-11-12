@@ -74,15 +74,15 @@ public class StringUtils {
 	}
 
 	public static boolean isNotEmpty(String input) {
-		return input != null && trin(input).length() > 0;
+		return input != null && !trin(input).isEmpty();
 	}
 
 	public static boolean isNotEmpty(List<? extends CharSequence> input) {
-		return input != null && input.size() > 0;
+		return input != null && !input.isEmpty();
 	}
 
 	public static boolean isEmpty(String input) {
-		return input == null || trin(input).length() == 0;
+		return input == null || trin(input).isEmpty();
 	}
 
 	public static String manageHtml(String s) {

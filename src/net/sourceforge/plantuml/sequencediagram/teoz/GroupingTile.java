@@ -115,7 +115,7 @@ public class GroupingTile implements TileWithCallbackY {
 		}
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final double width = dim1.getWidth();
-		if (min2.size() == 0) {
+		if (min2.isEmpty()) {
 			min2.add(tileArgumentsOriginal.getOrigin());
 		}
 		this.min = RealUtils.min(min2);

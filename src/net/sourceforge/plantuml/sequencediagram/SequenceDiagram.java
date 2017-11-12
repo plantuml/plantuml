@@ -137,7 +137,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public void addNote(Note n, boolean tryMerge) {
 		// this.lastEventWithDeactivate = null;
-		if (tryMerge && events.size() > 0) {
+		if (tryMerge && !events.isEmpty()) {
 			final Event last = events.get(events.size() - 1);
 			if (last instanceof Note) {
 				final Notes notes = new Notes((Note) last, n);
@@ -277,14 +277,14 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public boolean grouping(String title, String comment, GroupingType type, HtmlColor backColorGeneral,
 			HtmlColor backColorElement) {
-		if (type != GroupingType.START && openGroupings.size() == 0) {
+		if (type != GroupingType.START && openGroupings.isEmpty()) {
 			return false;
 		}
 		if (backColorGeneral == null) {
 			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);
 		}
 
-		final GroupingStart top = openGroupings.size() > 0 ? openGroupings.get(0) : null;
+		final GroupingStart top = !openGroupings.isEmpty() ? openGroupings.get(0) : null;
 
 		final Grouping g = type == GroupingType.START ? new GroupingStart(title, comment, backColorGeneral,
 				backColorElement, top)
@@ -476,7 +476,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public boolean isOk() {
-		if (participants.size() == 0) {
+		if (participants.isEmpty()) {
 			return false;
 		}
 		return true;

@@ -296,7 +296,7 @@ public class SvgGraphics {
 	}
 
 	public void closeLink() {
-		if (pendingAction.size() > 0) {
+		if (!pendingAction.isEmpty()) {
 			final Element element = pendingAction.get(0);
 			pendingAction.remove(0);
 			if (element.getFirstChild() != null) {
@@ -313,7 +313,7 @@ public class SvgGraphics {
 			throw new IllegalArgumentException();
 		}
 
-		if (pendingAction.size() > 0) {
+		if (!pendingAction.isEmpty()) {
 			closeLink();
 		}
 
@@ -332,7 +332,7 @@ public class SvgGraphics {
 	}
 
 	public final Element getG() {
-		if (pendingAction.size() == 0) {
+		if (pendingAction.isEmpty()) {
 			return gRoot;
 		}
 		return pendingAction.get(0);
@@ -537,7 +537,7 @@ public class SvgGraphics {
 	}
 
 	public void createXml(OutputStream os) throws TransformerException, IOException {
-		if (images.size() == 0) {
+		if (images.isEmpty()) {
 			createXmlInternal(os);
 			return;
 		}

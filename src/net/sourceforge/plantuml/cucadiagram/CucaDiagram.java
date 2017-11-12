@@ -423,7 +423,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
 			return true;
 		}
-		if (getChildrenGroups(g).size() > 0) {
+		if (!getChildrenGroups(g).isEmpty()) {
 			return false;
 		}
 		for (Link link : getLinks()) {

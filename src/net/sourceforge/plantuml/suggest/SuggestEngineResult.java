@@ -81,7 +81,7 @@ public class SuggestEngineResult {
 	}
 
 	public SuggestEngineResult(String suggestedLine) {
-		if (StringUtils.trin(suggestedLine).length() == 0) {
+		if (StringUtils.trin(suggestedLine).isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		this.status = SuggestEngineStatus.ONE_SUGGESTION;

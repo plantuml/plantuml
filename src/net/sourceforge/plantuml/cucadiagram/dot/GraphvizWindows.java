@@ -82,7 +82,7 @@ class GraphvizWindows extends AbstractGraphviz {
 	}
 
 	static File higherVersion(List<File> dots) {
-		if (dots.size() == 0) {
+		if (dots.isEmpty()) {
 			return null;
 		}
 		Collections.sort(dots, Collections.reverseOrder());

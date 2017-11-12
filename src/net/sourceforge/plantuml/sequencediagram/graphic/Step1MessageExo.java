@@ -115,7 +115,7 @@ class Step1MessageExo extends Step1Abstract {
 	}
 
 	private Arrow createArrow() {
-		if (getMessage().getNoteOnMessages().size() == 0) {
+		if (getMessage().getNoteOnMessages().isEmpty()) {
 			return messageArrow;
 		}
 		final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();

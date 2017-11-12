@@ -134,7 +134,7 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		pw.println("<hr>");
-		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
+		if (entity.getBodier().getFieldsToDisplay().isEmpty()) {
 			pw.println("<h2>No fields</h2>");
 		} else {
 			pw.println("<h2>Fields:</h2>");
@@ -148,7 +148,7 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		pw.println("<hr>");
-		if (entity.getBodier().getMethodsToDisplay().size() == 0) {
+		if (entity.getBodier().getMethodsToDisplay().isEmpty()) {
 			pw.println("<h2>No methods</h2>");
 		} else {
 			pw.println("<h2>Methods:</h2>");
@@ -163,7 +163,7 @@ public final class CucaDiagramHtmlMaker {
 
 		pw.println("<hr>");
 		final Collection<Link> links = getLinksButNotes(entity);
-		if (links.size() == 0) {
+		if (links.isEmpty()) {
 			pw.println("<h2>No links</h2>");
 		} else {
 			pw.println("<h2>Links:</h2>");
@@ -177,7 +177,7 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		final Collection<IEntity> notes = getNotes(entity);
-		if (notes.size() > 0) {
+		if (!notes.isEmpty()) {
 			pw.println("<hr>");
 			pw.println("<h2>Notes:</h2>");
 			pw.println("<ul>");

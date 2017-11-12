@@ -167,7 +167,7 @@ class Step1Message extends Step1Abstract {
 		if (getMessage().isCreate()) {
 			return createArrowCreate();
 		}
-		if (getMessage().getNoteOnMessages().size() > 0 && isSelfMessage()) {
+		if (!getMessage().getNoteOnMessages().isEmpty() && isSelfMessage()) {
 			final MessageSelfArrow messageSelfArrow = createMessageSelfArrow();
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {
@@ -176,7 +176,7 @@ class Step1Message extends Step1Abstract {
 				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));
 			}
 			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBoxes);
-		} else if (getMessage().getNoteOnMessages().size() > 0) {
+		} else if (!getMessage().getNoteOnMessages().isEmpty()) {
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
@@ -223,7 +223,7 @@ class Step1Message extends Step1Abstract {
 		}
 		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2(), getDrawingSet()
 				.getSkinParam().getPadding(PaddingParam.PARTICIPANT));
-		if (getMessage().getNoteOnMessages().size() > 0) {
+		if (!getMessage().getNoteOnMessages().isEmpty()) {
 			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);

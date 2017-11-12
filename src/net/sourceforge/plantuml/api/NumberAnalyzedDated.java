@@ -90,7 +90,7 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 
 	public static NumberAnalyzedDated load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			Log.info("Cannot load " + name);
 			return null;
 		}

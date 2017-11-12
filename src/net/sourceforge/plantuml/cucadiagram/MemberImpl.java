@@ -79,7 +79,7 @@ public class MemberImpl implements Member {
 			this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 			this.abstractModifier = lower.contains("{abstract}");
 			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "").trim();
-			if (displayClean.length() == 0) {
+			if (displayClean.isEmpty()) {
 				displayClean = " ";
 			}
 
@@ -95,7 +95,7 @@ public class MemberImpl implements Member {
 			this.visibilityModifier = null;
 			this.abstractModifier = false;
 			tmpDisplay = StringUtils.trin(tmpDisplay);
-			this.display = tmpDisplay.length() == 0 ? " " : StringUtils.manageGuillemet(StringUtils.trin(tmpDisplay));
+			this.display = tmpDisplay.isEmpty() ? " " : StringUtils.manageGuillemet(StringUtils.trin(tmpDisplay));
 		}
 	}
 

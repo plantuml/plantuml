@@ -479,7 +479,7 @@ public class Cluster implements Moveable {
 	private TextBlockWidth getTextBlockAttribute(ISkinParam skinParam) {
 		final TextBlockWidth attribute;
 		final List<Member> members = group.getBodier().getFieldsToDisplay();
-		if (members.size() == 0) {
+		if (members.isEmpty()) {
 			attribute = new TextBlockEmpty();
 		} else {
 			attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, skinParam, group.getStereotype(),
@@ -546,7 +546,7 @@ public class Cluster implements Moveable {
 		} else {
 			entries = shapesEntryExitList;
 		}
-		if (entries.size() > 0) {
+		if (!entries.isEmpty()) {
 			sb.append("{rank=source;");
 			for (IShapePseudo sh : entries) {
 				sb.append(sh.getUid() + ";");
@@ -557,7 +557,7 @@ public class Cluster implements Moveable {
 			}
 		}
 		final List<Shape> exits = getShapesEntryExit(EntityPosition.getOutputs());
-		if (exits.size() > 0) {
+		if (!exits.isEmpty()) {
 			sb.append("{rank=sink;");
 			for (Shape sh : exits) {
 				sb.append(sh.getUid() + ";");

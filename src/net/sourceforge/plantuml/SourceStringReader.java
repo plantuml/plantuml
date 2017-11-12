@@ -142,7 +142,7 @@ public class SourceStringReader {
 
 	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			noStartumlFound(os, fileFormatOption, 42);
 			return null;
 		}
@@ -165,7 +165,7 @@ public class SourceStringReader {
 	}
 
 	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			return null;
 		}
 		for (BlockUml b : blocks) {
@@ -197,7 +197,7 @@ public class SourceStringReader {
 	}
 
 	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			return null;
 		}
 		for (BlockUml b : blocks) {

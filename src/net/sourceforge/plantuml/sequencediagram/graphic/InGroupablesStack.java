@@ -65,7 +65,7 @@ class InGroupablesStack {
 	}
 
 	public InGroupableList getTopGroupingStructure() {
-		if (inGroupableStack.size() == 0) {
+		if (inGroupableStack.isEmpty()) {
 			return null;
 		}
 		return inGroupableStack.get(inGroupableStack.size() - 1);

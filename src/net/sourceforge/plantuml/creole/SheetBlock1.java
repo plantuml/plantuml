@@ -103,7 +103,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		minMax = MinMax.getEmpty(true);
 		double y = 0;
 		for (Stripe stripe : stripes) {
-			if (stripe.getAtoms().size() == 0) {
+			if (stripe.getAtoms().isEmpty()) {
 				continue;
 			}
 			final Sea sea = new Sea(stringBounder);

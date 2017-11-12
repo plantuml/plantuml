@@ -52,7 +52,7 @@ public class GTileStack extends AbstractTextBlock implements GTile {
 	public GTileStack(List<GTile> tiles, double space) {
 		this.tiles = tiles;
 		this.space = space;
-		if (tiles.size() == 0) {
+		if (tiles.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 	}

@@ -63,7 +63,7 @@ public class PSystemCute extends AbstractPSystem {
 
 	public void doCommandLine(String line) {
 		line = StringUtils.trin(line);
-		if (line.length() == 0 || line.startsWith("'")) {
+		if (line.isEmpty() || line.startsWith("'")) {
 			return;
 		}
 		if (line.startsWith("group ")) {

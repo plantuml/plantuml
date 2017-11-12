@@ -293,7 +293,7 @@ class FtpLoop implements Runnable {
 	private void list(final Socket soc) throws IOException {
 		final PrintWriter listing = new PrintWriter(soc.getOutputStream(), true);
 		final Collection<String> files = connexion.getFiles();
-		if (files.size() > 0) {
+		if (!files.isEmpty()) {
 			int total = 0;
 			for (String n : files) {
 				total += (connexion.getSize(n) + 511) / 512;

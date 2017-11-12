@@ -109,7 +109,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private void printMinRanking(StringBuilder sb) {
-		if (rankMin.size() == 0) {
+		if (rankMin.isEmpty()) {
 			return;
 		}
 		sb.append("{ rank = min;");
@@ -234,7 +234,7 @@ public class DotStringFactory implements Moveable {
 				maxPointCluster.add(maxPoint);
 			}
 		}
-		if (minPointCluster.size() > 0) {
+		if (!minPointCluster.isEmpty()) {
 			sb.append("{rank=min;");
 			for (String s : minPointCluster) {
 				sb.append(s);
@@ -244,7 +244,7 @@ public class DotStringFactory implements Moveable {
 			sb.append("}");
 			SvekUtils.println(sb);
 		}
-		if (maxPointCluster.size() > 0) {
+		if (!maxPointCluster.isEmpty()) {
 			sb.append("{rank=max;");
 			for (String s : maxPointCluster) {
 				sb.append(s);
@@ -344,7 +344,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	public ClusterPosition solve(String svg) throws IOException, InterruptedException {
-		if (svg.length() == 0) {
+		if (svg.isEmpty()) {
 			throw new EmptySvgException();
 		}
 

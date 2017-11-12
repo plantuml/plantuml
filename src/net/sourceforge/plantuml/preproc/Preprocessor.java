@@ -153,7 +153,7 @@ public class Preprocessor implements ReadLine {
 	private String cleanEndDefineLong(String s) {
 		if (s.trim().startsWith(END_DEFINE_LONG)) {
 			s = s.trim().substring(END_DEFINE_LONG.length());
-			if (s.length() == 0) {
+			if (s.isEmpty()) {
 				return null;
 			}
 		}

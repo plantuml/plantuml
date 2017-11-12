@@ -86,7 +86,7 @@ public class SyntaxChecker {
 				Collections.<String> emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			result.setError(true);
 			result.setLineLocation(lastLineNumber2(source));
 			// result.setErrorLinePosition(lastLineNumber(source));
@@ -121,7 +121,7 @@ public class SyntaxChecker {
 				Collections.<String> emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			result.setError(true);
 			result.setLineLocation(lastLineNumber2(source));
 			result.addErrorText("No @enduml found");

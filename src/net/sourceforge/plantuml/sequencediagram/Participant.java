@@ -67,7 +67,7 @@ public class Participant implements SpecificBackcolorable {
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
-		if (code == null || code.length() == 0) {
+		if (code == null || code.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		if (Display.isNull(display) || display.size() == 0) {

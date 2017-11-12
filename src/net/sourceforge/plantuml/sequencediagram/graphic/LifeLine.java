@@ -88,7 +88,7 @@ public class LifeLine {
 	}
 
 	public void addSegmentVariation(LifeSegmentVariation type, double y, SymbolContext colors) {
-		if (events.size() > 0) {
+		if (!events.isEmpty()) {
 			final Variation last = events.get(events.size() - 1);
 			if (y < last.y) {
 				return;
@@ -250,7 +250,7 @@ public class LifeLine {
 	}
 
 	public SymbolContext getColors() {
-		if (events.size() == 0) {
+		if (events.isEmpty()) {
 			return null;
 		}
 		return events.get(events.size() - 1).colors;

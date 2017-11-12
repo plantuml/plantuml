@@ -70,7 +70,7 @@ public class CreoleHorizontalLine implements Atom {
 	}
 
 	private UHorizontalLine getHorizontalLine() {
-		if (line.length() == 0) {
+		if (line.isEmpty()) {
 			return UHorizontalLine.infinite(0, 0, style);
 		}
 		final TextBlock tb = getTitle();
@@ -78,7 +78,7 @@ public class CreoleHorizontalLine implements Atom {
 	}
 
 	private TextBlock getTitle() {
-		if (line.length() == 0) {
+		if (line.isEmpty()) {
 			return TextBlockUtils.empty(0, 0);
 		}
 		final CreoleParser parser = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL);
@@ -95,7 +95,7 @@ public class CreoleHorizontalLine implements Atom {
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		if (line.length() == 0) {
+		if (line.isEmpty()) {
 			return new Dimension2DDouble(10, 10);
 		}
 		final TextBlock tb = getTitle();

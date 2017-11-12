@@ -81,7 +81,7 @@ public class Histogram implements TimeDrawing {
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
 		final List<String> states = getStatesAt(tick);
-		if (states.size() == 0) {
+		if (states.isEmpty()) {
 			return null;
 		}
 		if (states.size() == 1) {
@@ -100,7 +100,7 @@ public class Histogram implements TimeDrawing {
 	}
 
 	private List<String> getStatesAt(TimeTick tick) {
-		if (changes.size() == 0) {
+		if (changes.isEmpty()) {
 			return Collections.emptyList();
 		}
 		for (int i = 0; i < changes.size(); i++) {
@@ -145,7 +145,7 @@ public class Histogram implements TimeDrawing {
 	public void drawU(UGraphic ug) {
 		ug = getContext().apply(ug);
 		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
-		if (changes.size() == 0) {
+		if (changes.isEmpty()) {
 			return;
 		}
 		if (initialState != null) {

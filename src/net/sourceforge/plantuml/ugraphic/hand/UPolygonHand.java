@@ -46,7 +46,7 @@ public class UPolygonHand {
 
 	public UPolygonHand(UPolygon source) {
 		final List<Point2D.Double> pt = source.getPoints();
-		if (pt.size() == 0) {
+		if (pt.isEmpty()) {
 			poly = new UPolygon();
 			return;
 		}

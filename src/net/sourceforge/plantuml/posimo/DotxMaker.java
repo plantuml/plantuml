@@ -72,7 +72,7 @@ public class DotxMaker {
 	}
 
 	private void printCluster(StringBuilder sb, Cluster cl) {
-		if (cl.getContents().size() == 0 && cl.getSubClusters().size() == 0) {
+		if (cl.getContents().isEmpty() && cl.getSubClusters().isEmpty()) {
 			throw new IllegalStateException(cl.toString());
 		}
 		for (Cluster sub : cl.getSubClusters()) {

@@ -60,7 +60,7 @@ public class Stairs2 {
 		}
 		// System.err.println("Stairs2::addStep " + position + " " + value + " color=" + color);
 		assert ys.size() == values.size();
-		if (ys.size() > 0) {
+		if (!ys.isEmpty()) {
 			final double lastY = ys.get(ys.size() - 1).getValue();
 			if (position.getValue() < lastY) {
 				// throw new IllegalArgumentException();

@@ -48,7 +48,7 @@ public class Animation {
 	private final List<AffineTransformation> all;
 
 	private Animation(List<AffineTransformation> all) {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		this.all = all;

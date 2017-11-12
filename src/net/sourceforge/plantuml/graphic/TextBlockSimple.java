@@ -141,7 +141,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 	}
 
 	private void addSingleLineNoSpace(String s) {
-		if (s.length() == 0 || MyPattern.mtches(s, "^[%s]*$ ")) {
+		if (s.isEmpty() || MyPattern.mtches(s, "^[%s]*$ ")) {
 			return;
 		}
 		lines2.add(new SingleLine(s, fontConfiguration, horizontalAlignment, spriteContainer));

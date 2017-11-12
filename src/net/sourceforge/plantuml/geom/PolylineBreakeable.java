@@ -64,7 +64,7 @@ public class PolylineBreakeable extends AbstractPolyline implements Polyline {
 	}
 
 	public List<LineSegmentInt> segments() {
-		if (breakures.size() == 0) {
+		if (breakures.isEmpty()) {
 			return Collections.singletonList(new LineSegmentInt(getStart().getPosition(), getEnd().getPosition()));
 		}
 		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();

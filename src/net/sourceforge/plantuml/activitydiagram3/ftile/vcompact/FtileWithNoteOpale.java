@@ -108,7 +108,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 		if (notes.size() > 1) {
 			return new FtileWithNotes(tile, notes, skinParam);
 		}
-		if (notes.size() == 0) {
+		if (notes.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		return new FtileWithNoteOpale(tile, notes.iterator().next(), skinParam, withLink);

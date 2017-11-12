@@ -177,7 +177,7 @@ public class Defines implements Truth {
 	}
 
 	public void saveState() {
-		if (savedState.size() > 0) {
+		if (!savedState.isEmpty()) {
 			throw new IllegalStateException();
 		}
 		this.savedState.putAll(values);

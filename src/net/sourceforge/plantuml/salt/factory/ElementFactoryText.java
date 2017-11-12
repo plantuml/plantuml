@@ -73,7 +73,7 @@ public class ElementFactoryText implements ElementFactory {
 		if (text.startsWith("{") || text.startsWith("}")) {
 			return false;
 		}
-		return StringUtils.trin(text).length() > 0;
+		return !StringUtils.trin(text).isEmpty();
 	}
 
 }

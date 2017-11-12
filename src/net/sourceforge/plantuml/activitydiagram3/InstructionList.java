@@ -79,7 +79,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
 		}
 		final List<WeldingPoint> breaks = new ArrayList<WeldingPoint>();
@@ -100,7 +100,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		if (outlinkRendering != null) {
 			result = factory.decorateOut(result, outlinkRendering);
 		}
-		if (breaks.size() > 0) {
+		if (!breaks.isEmpty()) {
 			result = new FtileDecorateWelding(result, breaks);
 		}
 
@@ -111,7 +111,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	final public boolean kill() {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return false;
 		}
 		return getLast().kill();
@@ -122,7 +122,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public Instruction getLast() {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return null;
 		}
 		return all.get(all.size() - 1);
@@ -154,7 +154,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public Swimlane getSwimlaneOut() {
 		final Set<Swimlane> swimlanes = getSwimlanes();
-		if (swimlanes.size() == 0) {
+		if (swimlanes.isEmpty()) {
 			return null;
 		}
 		if (swimlanes.size() == 1) {

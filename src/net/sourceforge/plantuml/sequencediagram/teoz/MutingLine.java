@@ -80,7 +80,7 @@ public class MutingLine {
 	public void drawLine(UGraphic ug, Context2D context, double createY, double endY) {
 		final ComponentType defaultLineType = useContinueLineBecauseOfDelay ? ComponentType.CONTINUE_LINE
 				: ComponentType.PARTICIPANT_LINE;
-		if (delays.size() > 0) {
+		if (!delays.isEmpty()) {
 			double y = createY;
 			for (Map.Entry<Double, Double> ent : delays.entrySet()) {
 				if (ent.getKey() >= createY) {

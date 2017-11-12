@@ -143,7 +143,7 @@ public class SkinParam implements ISkinParam {
 			final String s = mm.group(1);
 			result.add(key.replaceAll(stereoPatternString, "") + "<<" + s + ">>");
 		}
-		if (result.size() == 0) {
+		if (result.isEmpty()) {
 			result.add(key);
 		}
 		return Collections.unmodifiableList(result);

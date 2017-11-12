@@ -53,7 +53,7 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes) {
-		if (notes.size() == 0) {
+		if (notes.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		// if (notes.size() > 1) {

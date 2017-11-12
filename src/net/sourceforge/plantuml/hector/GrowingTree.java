@@ -76,7 +76,7 @@ public class GrowingTree {
 	}
 
 	public boolean canBeAdded(PinLink candidat) {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return true;
 		}
 		final Pin p1 = candidat.getPin1();
@@ -90,7 +90,7 @@ public class GrowingTree {
 	public void add(PinLink newPinLink) {
 		final Pin p1 = newPinLink.getPin1();
 		final Pin p2 = newPinLink.getPin2();
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			newPinLink.getPin1().setRow(0);
 			simpleRowComputation(newPinLink);
 		} else if (isPartiallyNew(newPinLink)) {

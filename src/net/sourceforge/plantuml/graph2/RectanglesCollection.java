@@ -152,25 +152,25 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 			}
 			final List<Rectangle2D.Double> lX1 = sortedX1.lesserOrEquals((int) (rect.x + rect.width));
 			List<Rectangle2D.Double> lmin = lX1;
-			if (lX1.size() == 0) {
+			if (lX1.isEmpty()) {
 				return false;
 			}
 			final List<Rectangle2D.Double> lX2 = sortedX2.biggerOrEquals((int) rect.x);
-			if (lX2.size() == 0) {
+			if (lX2.isEmpty()) {
 				return false;
 			}
 			if (lX2.size() < lmin.size()) {
 				lmin = lX2;
 			}
 			final List<Rectangle2D.Double> lY1 = sortedY1.lesserOrEquals((int) (rect.y + rect.height));
-			if (lY1.size() == 0) {
+			if (lY1.isEmpty()) {
 				return false;
 			}
 			if (lY1.size() < lmin.size()) {
 				lmin = lY1;
 			}
 			final List<Rectangle2D.Double> lY2 = sortedY2.biggerOrEquals((int) rect.y);
-			if (lY2.size() == 0) {
+			if (lY2.isEmpty()) {
 				return false;
 			}
 			if (lY2.size() < lmin.size()) {

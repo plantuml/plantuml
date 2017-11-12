@@ -83,7 +83,7 @@ public class InstructionFork extends WithNote implements Instruction {
 			all.add(list.createFtile(factory));
 		}
 		Ftile result = factory.createParallel(getSwimlaneIn(), all, style, label);
-		if (getPositionedNotes().size() > 0) {
+		if (!getPositionedNotes().isEmpty()) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
 		return result;

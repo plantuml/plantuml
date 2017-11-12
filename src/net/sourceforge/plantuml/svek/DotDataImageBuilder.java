@@ -194,7 +194,7 @@ public final class DotDataImageBuilder {
 		} catch (IOException e) {
 			return new GraphvizCrash(source.getPlainString());
 		}
-		if (svg.length() == 0) {
+		if (svg.isEmpty()) {
 			return new GraphvizCrash(source.getPlainString());
 		}
 		final String graphvizVersion = extractGraphvizVersion(svg);
@@ -346,7 +346,7 @@ public final class DotDataImageBuilder {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
 				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
 			}
-			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
+			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().isEmpty()) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
 			}
 			if (leaf.getStereotype() != null && "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(false))) {
@@ -482,7 +482,7 @@ public final class DotDataImageBuilder {
 		if (dimLabel.getWidth() > 0) {
 			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
-			if (members.size() == 0) {
+			if (members.isEmpty()) {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),

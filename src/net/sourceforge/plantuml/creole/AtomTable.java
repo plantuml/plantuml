@@ -152,7 +152,7 @@ public class AtomTable implements Atom {
 	}
 
 	private void initMap(StringBounder stringBounder) {
-		if (positions.size() > 0) {
+		if (!positions.isEmpty()) {
 			return;
 		}
 		for (Line line : lines) {

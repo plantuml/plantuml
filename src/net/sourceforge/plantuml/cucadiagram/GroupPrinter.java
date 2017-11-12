@@ -54,7 +54,7 @@ public class GroupPrinter {
 		pw.println(group.getCode());
 		pw.println("<tr>");
 		pw.println("<td>");
-		if (group.getLeafsDirect().size() == 0) {
+		if (group.getLeafsDirect().isEmpty()) {
 			pw.println("<i>No direct leaf</i>");
 		} else {
 			for (ILeaf leaf : group.getLeafsDirect()) {
@@ -65,7 +65,7 @@ public class GroupPrinter {
 		}
 		pw.println("</td>");
 		pw.println("</tr>");
-		if (group.getChildren().size() > 0) {
+		if (!group.getChildren().isEmpty()) {
 			pw.println("<tr>");
 			pw.println("<td>");
 			for (IGroup g : group.getChildren()) {

@@ -248,7 +248,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		if (dimLabel.getWidth() > 0) {
 			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
-			if (members.size() == 0) {
+			if (members.isEmpty()) {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),

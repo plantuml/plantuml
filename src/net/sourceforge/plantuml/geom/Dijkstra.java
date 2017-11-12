@@ -82,7 +82,7 @@ public class Dijkstra {
 
 	private void computePrevious() {
 		init();
-		while (q.size() > 0) {
+		while (!q.isEmpty()) {
 			final int u = smallest();
 			if (dist[u] == Double.MAX_VALUE) {
 				return;

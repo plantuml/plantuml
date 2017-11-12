@@ -69,7 +69,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 	}
 
 	public final void save(Preferences prefs) {
-		if (name.length() == 0) {
+		if (name.isEmpty()) {
 			throw new UnsupportedOperationException();
 		}
 		if (saveLock.tryLock())
@@ -111,7 +111,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 
 	public static NumberAnalyzed load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			Log.info("Cannot load " + name);
 			return null;
 		}

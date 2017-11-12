@@ -163,7 +163,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines removeStartingAndEnding2(String data) {
-		if (lines.size() == 0) {
+		if (lines.isEmpty()) {
 			return this;
 		}
 		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);

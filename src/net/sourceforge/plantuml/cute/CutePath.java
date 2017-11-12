@@ -84,7 +84,7 @@ public class CutePath {
 	}
 
 	public void add(Arc arc) {
-		if (arcs.size() > 0) {
+		if (!arcs.isEmpty()) {
 			final Arc last = arcs.get(arcs.size() - 1);
 			if (last.getB().equals(arc.getA()) == false) {
 				throw new IllegalArgumentException("last=" + last.getB() + " arc=" + arc.getA());

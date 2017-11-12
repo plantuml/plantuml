@@ -114,7 +114,7 @@ public final class GroupPngMakerState {
 				new FontConfiguration(skinParam, FontParam.STATE, group.getStereotype()), HorizontalAlignment.CENTER,
 				diagram.getSkinParam());
 
-		if (group.size() == 0 && group.getChildren().size() == 0) {
+		if (group.size() == 0 && group.getChildren().isEmpty()) {
 			return new EntityImageState(group, diagram.getSkinParam());
 		}
 		final List<Link> links = getPureInnerLinks();
@@ -163,7 +163,7 @@ public final class GroupPngMakerState {
 	private TextBlockWidth getAttributes(final ISkinParam skinParam) {
 		final List<String> details = ((IEntity) group).getBodier().getRawBody();
 
-		if (details.size() == 0) {
+		if (details.isEmpty()) {
 			return new TextBlockEmpty();
 		}
 		final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);

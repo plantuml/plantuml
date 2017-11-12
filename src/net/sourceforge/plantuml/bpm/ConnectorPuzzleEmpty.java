@@ -68,7 +68,7 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 
 	@Override
 	public String toString() {
-		if (connections().size() == 0) {
+		if (connections().isEmpty()) {
 			return "NONE";
 
 		}

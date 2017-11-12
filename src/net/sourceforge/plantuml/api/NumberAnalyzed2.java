@@ -65,7 +65,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 	}
 
 	public final void save(Preferences prefs) {
-		if (name.length() == 0) {
+		if (name.isEmpty()) {
 			throw new UnsupportedOperationException();
 		}
 		prefs.put(name + ".saved", getSavedString());
@@ -83,7 +83,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 
 	public static NumberAnalyzed2 load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			System.err.println("Cannot load " + name);
 			return null;
 		}

@@ -74,7 +74,7 @@ class PageSplitter {
 
 	public List<Page> getPages() {
 
-		if (positions.size() == 0) {
+		if (positions.isEmpty()) {
 			return Arrays.asList(onePage());
 		}
 		final List<Page> result = new ArrayList<Page>();

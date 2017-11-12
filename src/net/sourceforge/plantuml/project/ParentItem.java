@@ -119,7 +119,7 @@ public class ParentItem implements Item {
 	}
 
 	public boolean isValid() {
-		if (children.size() == 0) {
+		if (children.isEmpty()) {
 			return false;
 		}
 		for (Item it : children) {

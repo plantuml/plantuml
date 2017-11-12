@@ -57,7 +57,7 @@ public class WithNote {
 	}
 
 	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
-		if (notes.size() == 0) {
+		if (notes.isEmpty()) {
 			return ftile;
 		}
 		return factory.addNote(ftile, swimlane, notes);
@@ -68,7 +68,7 @@ public class WithNote {
 	}
 
 	public boolean hasNotes() {
-		return notes.size() > 0;
+		return !notes.isEmpty();
 	}
 
 }

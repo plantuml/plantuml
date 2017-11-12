@@ -53,7 +53,7 @@ class SingleLine extends AbstractTextBlock implements Line {
 
 	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer) {
-		if (text.length() == 0) {
+		if (text.isEmpty()) {
 			text = " ";
 		}
 		this.horizontalAlignment = horizontalAlignment;

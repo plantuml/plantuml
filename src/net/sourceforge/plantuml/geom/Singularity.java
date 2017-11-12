@@ -139,7 +139,7 @@ public class Singularity {
 	}
 
 	public List<Neighborhood> getNeighborhoods() {
-		if (angles.size() == 0) {
+		if (angles.isEmpty()) {
 			return Collections.singletonList(new Neighborhood(center));
 		}
 		final List<Neighborhood> result = new ArrayList<Neighborhood>();

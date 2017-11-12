@@ -487,7 +487,7 @@ final class EntityImpl implements ILeaf, IGroup {
 			if (removed) {
 				return true;
 			}
-			if (getLeafsDirect().size() == 0) {
+			if (getLeafsDirect().isEmpty()) {
 				return false;
 			}
 			for (ILeaf leaf : getLeafsDirect()) {

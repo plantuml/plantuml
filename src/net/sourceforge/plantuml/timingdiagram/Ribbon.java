@@ -214,7 +214,7 @@ public class Ribbon implements TimeDrawing {
 	}
 
 	private double getHeightForConstraints() {
-		if (constraints.size() == 0) {
+		if (constraints.isEmpty()) {
 			return 0;
 		}
 		return 30;

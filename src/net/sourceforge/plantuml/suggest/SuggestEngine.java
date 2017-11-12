@@ -138,7 +138,7 @@ final public class SuggestEngine {
 	private SuggestEngineResult tryThis(Iterator<String> it2) {
 		while (it2.hasNext()) {
 			final String newS = it2.next();
-			if (StringUtils.trin(newS).length() == 0) {
+			if (StringUtils.trin(newS).isEmpty()) {
 				continue;
 			}
 			final CommandControl commandControl = systemFactory.isValid2(replaceFirstLine(newS));

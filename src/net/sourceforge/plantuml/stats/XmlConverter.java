@@ -194,7 +194,7 @@ public class XmlConverter {
 				result.append(String.format("%,d", v));
 			} else if (v instanceof Date) {
 				result.append(formatter.format(v));
-			} else if (v == null || v.toString().length() == 0) {
+			} else if (v == null || v.toString().isEmpty()) {
 				result.append(" ");
 			} else {
 				result.append(v.toString());

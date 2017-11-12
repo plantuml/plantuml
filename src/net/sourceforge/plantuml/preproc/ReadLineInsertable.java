@@ -58,7 +58,7 @@ class ReadLineInsertable implements ReadLine {
 	}
 
 	public CharSequence2 readLine() throws IOException {
-		if (inserted.size() > 0) {
+		if (!inserted.isEmpty()) {
 			final Iterator<CharSequence2> it = inserted.iterator();
 			final CharSequence2 result = it.next();
 			it.remove();

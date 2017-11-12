@@ -228,7 +228,7 @@ public class Run {
 
 	private static String getSpriteName(File f) {
 		final String s = getSpriteNameInternal(f);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return "test";
 		}
 		return s;

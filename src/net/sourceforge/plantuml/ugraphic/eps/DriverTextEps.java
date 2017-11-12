@@ -176,7 +176,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 
 	static void drawPathIterator(EpsGraphics eps, double x, double y, Shape shape) {
 		final List<Integer> breaks = analyze(shape);
-		if (breaks.size() == 0) {
+		if (breaks.isEmpty()) {
 			final PathIterator path = shape.getPathIterator(null);
 			drawSingle(eps, x, y, path);
 			return;

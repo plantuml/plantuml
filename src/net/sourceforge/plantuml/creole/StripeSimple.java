@@ -133,7 +133,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
-		if (atoms.size() == 0) {
+		if (atoms.isEmpty()) {
 			atoms.add(AtomText.create(" ", fontConfiguration));
 		}
 		return Collections.unmodifiableList(atoms);
@@ -197,7 +197,7 @@ public class StripeSimple implements Stripe {
 	private void modifyStripe(String line) {
 		final StringBuilder pending = new StringBuilder();
 
-		while (line.length() > 0) {
+		while (!line.isEmpty()) {
 			final Command cmd = searchCommand(line);
 			if (cmd == null) {
 				pending.append(line.charAt(0));

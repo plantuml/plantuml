@@ -158,7 +158,7 @@ public class FtpConnexion {
 			final FileFormat format = getFileFormat();
 			final DiagramDescription desc = sourceStringReader.generateDiagramDescription(new FileFormatOption(format));
 			final List<BlockUml> blocks = sourceStringReader.getBlocks();
-			if (blocks.size() > 0) {
+			if (!blocks.isEmpty()) {
 				blocks.get(0).getDiagram().exportDiagram(baos, 0, new FileFormatOption(format));
 			}
 			final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + ".err";

@@ -351,7 +351,7 @@ public class Line implements Moveable, Hideable {
 		sb.append("[");
 		final LinkType linkType = link.getTypePatchCluster();
 		String decoration = linkType.getSpecificDecorationSvek();
-		if (decoration.length() > 0 && decoration.endsWith(",") == false) {
+		if (!decoration.isEmpty() && decoration.endsWith(",") == false) {
 			decoration += ",";
 		}
 		sb.append(decoration);
@@ -481,7 +481,7 @@ public class Line implements Moveable, Hideable {
 
 		if (extremityFactory != null) {
 			final List<Point2D.Double> points = pointListIterator.next();
-			if (points.size() == 0) {
+			if (points.isEmpty()) {
 				return extremityFactory.createUDrawable(center, angle, null);
 			}
 			final Point2D p0 = points.get(0);

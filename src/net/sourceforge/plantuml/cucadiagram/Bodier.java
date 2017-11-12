@@ -112,7 +112,7 @@ public class Bodier {
 				if (isMethod(i, rawBody) == false) {
 					continue;
 				}
-				if (s.length() == 0 && methodsToDisplay.size() == 0) {
+				if (s.isEmpty() && methodsToDisplay.isEmpty()) {
 					continue;
 				}
 				final Member m = new MemberImpl(s, true, manageModifier);
@@ -126,7 +126,7 @@ public class Bodier {
 	}
 
 	private boolean isMethod(int i, List<String> rawBody) {
-		if (i > 0 && i < rawBody.size() - 1 && rawBody.get(i).length() == 0 && isMethod(rawBody.get(i - 1))
+		if (i > 0 && i < rawBody.size() - 1 && rawBody.get(i).isEmpty() && isMethod(rawBody.get(i - 1))
 				&& isMethod(rawBody.get(i + 1))) {
 			return true;
 		}
@@ -140,7 +140,7 @@ public class Bodier {
 				if (isMethod(s) == true) {
 					continue;
 				}
-				if (s.length() == 0 && fieldsToDisplay.size() == 0) {
+				if (s.isEmpty() && fieldsToDisplay.isEmpty()) {
 					continue;
 				}
 				final Member m = new MemberImpl(s, false, manageModifier);
@@ -154,7 +154,7 @@ public class Bodier {
 	}
 
 	private void removeFinalEmptyMembers(List<Member> result) {
-		while (result.size() > 0 && StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).length() == 0) {
+		while (!result.isEmpty() && StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).isEmpty()) {
 			result.remove(result.size() - 1);
 		}
 	}
@@ -174,7 +174,7 @@ public class Bodier {
 	}
 
 	private List<String> rawBodyWithoutHidden() {
-		if (hides == null || hides.size() == 0) {
+		if (hides == null || hides.isEmpty()) {
 			return rawBody;
 		}
 		final List<String> result = new ArrayList<String>();

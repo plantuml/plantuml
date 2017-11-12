@@ -77,7 +77,7 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 			diagram.setColorNextArrow(rainbow);
 		}
 		final String label = arg.get("LABEL", 0);
-		if (label != null && label.length() > 0) {
+		if (label != null && !label.isEmpty()) {
 			diagram.setLabelNextArrow(Display.getWithNewlines(label));
 		}
 

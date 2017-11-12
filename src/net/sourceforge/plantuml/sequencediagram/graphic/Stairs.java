@@ -61,7 +61,7 @@ public class Stairs {
 
 	public void addStep(double y, int value) {
 		assert ys.size() == values.size();
-		if (ys.size() > 0) {
+		if (!ys.isEmpty()) {
 			final double lastY = ys.get(ys.size() - 1);
 			if (y < lastY) {
 				throw new IllegalArgumentException();
@@ -92,7 +92,7 @@ public class Stairs {
 	}
 
 	private double getLastY() {
-		if (ys.size() == 0) {
+		if (ys.isEmpty()) {
 			return 0;
 		}
 		return ys.get(ys.size() - 1);

@@ -103,7 +103,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		// final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 
-		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
+		if (entity.getBodier().getFieldsToDisplay().isEmpty()) {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
 			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, showFields,

@@ -100,7 +100,7 @@ public class EntityGenderUtils {
 	static public EntityGender emptyMethods() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getBodier().getMethodsToDisplay().size() == 0;
+				return test.getBodier().getMethodsToDisplay().isEmpty();
 			}
 		};
 	}
@@ -108,7 +108,7 @@ public class EntityGenderUtils {
 	static public EntityGender emptyFields() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getBodier().getFieldsToDisplay().size() == 0;
+				return test.getBodier().getFieldsToDisplay().isEmpty();
 			}
 		};
 	}

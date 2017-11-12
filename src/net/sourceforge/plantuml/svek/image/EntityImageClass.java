@@ -192,7 +192,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((ILeaf) getEntity()).getPortShortNames().size() > 0) {
+		if (!((ILeaf) getEntity()).getPortShortNames().isEmpty()) {
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 		}
 		return ShapeType.RECTANGLE;

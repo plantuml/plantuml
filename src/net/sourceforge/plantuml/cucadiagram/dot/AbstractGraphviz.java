@@ -110,13 +110,13 @@ abstract class AbstractGraphviz implements Graphviz {
 		} finally {
 			Log.info("Ending Graphviz process");
 		}
-		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getError().length() > 0) {
+		if (OptionFlags.getInstance().isCheckDotError() && p != null && !p.getError().isEmpty()) {
 			Log.error("GraphViz error stream : " + p.getError());
 			if (OptionFlags.getInstance().isCheckDotError()) {
 				throw new IllegalStateException("Dot error " + p.getError());
 			}
 		}
-		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getOut().length() > 0) {
+		if (OptionFlags.getInstance().isCheckDotError() && p != null && !p.getOut().isEmpty()) {
 			Log.error("GraphViz out stream : " + p.getOut());
 			if (OptionFlags.getInstance().isCheckDotError()) {
 				throw new IllegalStateException("Dot out " + p.getOut());

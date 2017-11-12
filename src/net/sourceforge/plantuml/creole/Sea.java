@@ -88,7 +88,7 @@ public class Sea {
 	}
 
 	public double getMinY() {
-		if (positions.size() == 0) {
+		if (positions.isEmpty()) {
 			throw new IllegalStateException();
 		}
 		double result = Double.MAX_VALUE;
@@ -101,7 +101,7 @@ public class Sea {
 	}
 
 	public double getMaxY() {
-		if (positions.size() == 0) {
+		if (positions.isEmpty()) {
 			throw new IllegalStateException();
 		}
 		double result = -Double.MAX_VALUE;

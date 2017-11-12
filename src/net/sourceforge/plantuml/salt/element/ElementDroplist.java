@@ -67,10 +67,10 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		while (st.hasMoreTokens()) {
 			drop.add(st.nextToken());
 		}
-		if (drop.size() > 0) {
+		if (!drop.isEmpty()) {
 			drop.remove(0);
 		}
-		if (drop.size() == 0) {
+		if (drop.isEmpty()) {
 			this.openDrop = null;
 		} else {
 			this.openDrop = Display.create(drop).create(getConfig(), HorizontalAlignment.LEFT, spriteContainer);

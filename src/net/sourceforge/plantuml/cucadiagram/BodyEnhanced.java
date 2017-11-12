@@ -147,7 +147,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 				title = getTitle(s, skinParam);
 				members = new ArrayList<Member>();
 			} else if (CreoleParser.isTreeStart(s)) {
-				if (members.size() > 0) {
+				if (!members.isEmpty()) {
 					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
 							stereotype, entity), separator, title));
 				}

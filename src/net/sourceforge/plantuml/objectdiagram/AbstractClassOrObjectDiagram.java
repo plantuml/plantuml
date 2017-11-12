@@ -102,7 +102,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final IEntity entity2B = getOrCreateLeaf(clName2B, null, null);
 		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
 		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
-		if (same1.size() == 0 && same2.size() == 0) {
+		if (same1.isEmpty() && same2.isEmpty()) {
 
 			final IEntity point1 = getOrCreateLeaf(UniqueSequence.getCode("apoint"), LeafType.POINT_FOR_ASSOCIATION,
 					null);
@@ -161,7 +161,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
 		if (same.size() > 1) {
 			return false;
-		} else if (same.size() == 0) {
+		} else if (same.isEmpty()) {
 			final Association association = new Association(mode, entity1, entity2, associed);
 			association.createNew(mode, linkType, label);
 
