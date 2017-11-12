@@ -614,7 +614,7 @@ public class Jasic {
         
         public void execute() {
             if (labels.containsKey(label)) {
-                currentStatement = labels.get(label).intValue();
+                currentStatement = labels.get(label);
             }
         }
 
@@ -635,7 +635,7 @@ public class Jasic {
             if (labels.containsKey(label)) {
                 double value = condition.evaluate().toNumber();
                 if (value != 0) {
-                    currentStatement = labels.get(label).intValue();
+                    currentStatement = labels.get(label);
                 }
             }
         }

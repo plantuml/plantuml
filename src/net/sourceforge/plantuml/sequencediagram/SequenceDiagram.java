@@ -307,7 +307,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public boolean changeSkin(String className) {
 		final Skin s = SkinUtils.loadSkin(className);
-		final Integer expected = new Integer(1);
+		final Integer expected = 1;
 		if (s != null && expected.equals(s.getProtocolVersion())) {
 			this.skin2 = new ProtectedSkin(s);
 			return true;

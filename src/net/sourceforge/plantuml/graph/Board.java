@@ -222,7 +222,7 @@ public class Board {
 
 	public ANode getNodeAt(int row, int col) {
 		for (Map.Entry<ANode, Integer> ent : nodesCols.entrySet()) {
-			if (ent.getKey().getRow() == row && ent.getValue().intValue() == col) {
+			if (ent.getKey().getRow() == row && ent.getValue() == col) {
 				return ent.getKey();
 			}
 		}

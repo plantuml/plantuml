@@ -66,7 +66,7 @@ public class TimeConverterDay implements TimeConverter {
 	private int getPosition(Day d) {
 		Integer result = map1.get(d);
 		if (result != null) {
-			return result.intValue();
+			return result;
 		}
 		while (d.compareTo(biggest) > 0) {
 			int n = getPosition(biggest);
@@ -86,7 +86,7 @@ public class TimeConverterDay implements TimeConverter {
 		}
 		result = map1.get(d);
 		if (result != null) {
-			return result.intValue();
+			return result;
 		}
 		throw new UnsupportedOperationException();
 	}
