@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project2;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;

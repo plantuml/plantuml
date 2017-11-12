@@ -49,7 +49,6 @@ import h.Agraph_s;
 import h.Agraphinfo_t;
 import h.GVC_s;
 import h.ST_boxf;
-import h.boxf;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
@@ -114,7 +113,6 @@ import smetana.core.JUtils;
 import smetana.core.Macro;
 import smetana.core.Z;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;

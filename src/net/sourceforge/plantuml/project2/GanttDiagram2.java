@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project2;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
