@@ -97,9 +97,7 @@ public final class CucaDiagramSimplifierState {
 
 	private void addOneLevel(Collection<IGroup> currents) {
 		for (IGroup g : new ArrayList<IGroup>(currents)) {
-			for (IGroup child : reverse(g.getChildren())) {
-				currents.add(child);
-			}
+            currents.addAll(reverse(g.getChildren()));
 		}
 	}
 

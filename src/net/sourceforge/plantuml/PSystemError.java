@@ -219,9 +219,7 @@ public class PSystemError extends AbstractPSystem {
 		// for (int i = start; i < higherErrorPosition; i++) {
 		// result.add(getSource().getLine(i));
 		// }
-		for (String s : getPartialCode()) {
-			result.add(s);
-		}
+		result.addAll(getPartialCode());
 		final String errorLine = getSource().getLine(higherErrorPosition);
 		final String err = StringUtils.hideComparatorCharacters(errorLine);
 		if (StringUtils.isNotEmpty(err)) {

@@ -179,12 +179,8 @@ public class PSystemVersion extends AbstractPSystem {
 
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		strings.add(" ");
-		for (String name : OptionPrint.interestingProperties()) {
-			strings.add(name);
-		}
-		for (String v : OptionPrint.interestingValues()) {
-			strings.add(v);
-		}
+		strings.addAll(OptionPrint.interestingProperties());
+		strings.addAll(OptionPrint.interestingValues());
 
 		return new PSystemVersion(true, strings);
 	}

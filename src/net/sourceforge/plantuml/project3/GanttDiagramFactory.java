@@ -65,9 +65,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		cmds.add(new CommandNope());
 //		cmds.add(new CommandComment());
 //		cmds.add(new CommandMultilinesComment());
-		for (Command cmd : getLanguageCommands()) {
-			cmds.add(cmd);
-		}
+        cmds.addAll(getLanguageCommands());
 		cmds.add(new CommandGanttArrow());
 		return cmds;
 	}

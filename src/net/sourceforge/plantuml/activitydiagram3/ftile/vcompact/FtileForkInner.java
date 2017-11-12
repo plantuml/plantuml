@@ -57,9 +57,7 @@ class FtileForkInner extends AbstractFtile {
 
 	public FtileForkInner(List<Ftile> forks) {
 		super(forks.get(0).skinParam());
-		for (Ftile ftile : forks) {
-			this.forks.add(ftile);
-		}
+        this.forks.addAll(forks);
 	}
 
 	public Swimlane getSwimlaneIn() {
