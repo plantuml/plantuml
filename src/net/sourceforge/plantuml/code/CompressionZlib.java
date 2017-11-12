@@ -81,9 +81,7 @@ public class CompressionZlib implements Compression {
 	public byte[] decompress(byte[] in) throws IOException {
 
 		final byte in2[] = new byte[in.length + 256];
-		for (int i = 0; i < in.length; i++) {
-			in2[i] = in[i];
-		}
+		System.arraycopy(in, 0, in2, 0, in.length);
 
 		int len = in.length * 5;
 		byte[] result = null;
@@ -115,9 +113,7 @@ public class CompressionZlib implements Compression {
 
 	private byte[] copyArray(final byte[] data, final int len) {
 		final byte[] result = new byte[len];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = data[i];
-		}
+		System.arraycopy(data, 0, result, 0, result.length);
 		return result;
 	}
 
