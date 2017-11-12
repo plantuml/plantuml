@@ -58,22 +58,25 @@ public class CutePath {
 		final StringTokenizer spl = new StringTokenizer(value, "~:", true);
 		while (spl.hasMoreTokens()) {
 			final String token = spl.nextToken();
-			if (token.equals(":")) {
-				continue;
-			} else if (token.equals("~")) {
-				tension = spl.nextToken();
-				final String next = spl.nextToken();
-				if (!next.equals("~")) {
-					throw new IllegalArgumentException();
-				}
-			} else {
-				final StringTokenizer st = new StringTokenizer(token.replaceAll("[()]", ""), ",^");
-				final MyPoint2D current = new MyPoint2D(st);
-				if (lastAdded != null) {
-					add(new Arc(lastAdded, current).withTension(tension));
-				}
-				lastAdded = current;
-				tension = null;
+			switch (token) {
+				case ":":
+					break;
+				case "~":
+					tension = spl.nextToken();
+					final String next = spl.nextToken();
+					if (!next.equals("~")) {
+						throw new IllegalArgumentException();
+					}
+					break;
+				default:
+					final StringTokenizer st = new StringTokenizer(token.replaceAll("[()]", ""), ",^");
+					final MyPoint2D current = new MyPoint2D(st);
+					if (lastAdded != null) {
+						add(new Arc(lastAdded, current).withTension(tension));
+					}
+					lastAdded = current;
+					tension = null;
+					break;
 			}
 		}
 		add(new Arc(lastAdded, arcs.get(0).getA()).withTension(tension));
