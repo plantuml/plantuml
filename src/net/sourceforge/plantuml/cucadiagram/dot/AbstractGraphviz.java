@@ -103,7 +103,7 @@ abstract class AbstractGraphviz implements Graphviz {
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Log.error("Error: " + e);
-			Log.error("The command was " + cmd);
+			Log.error("The command was " + Arrays.toString(cmd));
 			Log.error("");
 			Log.error("Try java -jar plantuml.jar -testdot to figure out the issue");
 			Log.error("");
