@@ -106,7 +106,7 @@ public class FileGroup {
 		if (OptionFlags.getInstance().isWord()) {
 			addSimpleDirectory(dir, "(?i)^.*_extr\\d+\\.txt$");
 		} else {
-			addSimpleDirectory(dir, option.getPattern());
+			addSimpleDirectory(dir, Option.getPattern());
 		}
 	}
 
