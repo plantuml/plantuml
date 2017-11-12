@@ -109,7 +109,7 @@ class LogoScanner {
 
 	public LogoToken getToken() {
 		final LogoToken token = new LogoToken();
-		final StringBuffer lexeme = new StringBuffer();
+		final StringBuilder lexeme = new StringBuilder();
 
 		if (i >= sourceLength) {
 			token.kind = LogoToken.END_OF_INPUT;
