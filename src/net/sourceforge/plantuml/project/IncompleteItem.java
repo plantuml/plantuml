@@ -64,7 +64,7 @@ class IncompleteItem implements Item {
 			throw new IllegalStateException();
 		}
 		data.put(caract, value);
-		boolean change = false;
+		boolean change;
 		do {
 			change = false;
 			change = eventuallyUseBeginComplete() || change;

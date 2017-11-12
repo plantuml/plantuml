@@ -66,7 +66,7 @@ public class DataSourceImpl implements DataSource {
 					continue;
 				}
 				int lastStart = 0;
-				int end = 0;
+				int end;
 				do {
 					final int start = m.start();
 					if (start > lastStart) {

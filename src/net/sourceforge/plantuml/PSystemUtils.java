@@ -119,7 +119,7 @@ public class PSystemUtils {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
 		OutputStream os = null;
-		ImageData imageData = null;
+		ImageData imageData;
 		try {
 			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
 				return Collections.emptyList();
@@ -141,8 +141,8 @@ public class PSystemUtils {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
 		OutputStream os = null;
-		ImageData cmap = null;
-		ImageData imageData = null;
+		ImageData cmap;
+		ImageData imageData;
 		try {
 			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
 				return Collections.emptyList();
@@ -171,7 +171,7 @@ public class PSystemUtils {
 				return result;
 			}
 			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
-			ImageData cmap = null;
+			ImageData cmap;
 			try {
 				cmap = system.exportDiagram(fos, i, fileFormat);
 			} finally {
@@ -196,7 +196,7 @@ public class PSystemUtils {
 			return createFilesHtml(system, suggestedFile);
 		}
 
-		ImageData cmap = null;
+		ImageData cmap;
 		OutputStream os = null;
 		try {
 			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {

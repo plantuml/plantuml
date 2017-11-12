@@ -88,7 +88,8 @@ public class TileBuilder {
 			final LivingSpace livingSpace1 = livingSpaces.get(msg.getParticipant1());
 			final LivingSpace livingSpace2 = livingSpaces.get(msg.getParticipant2());
 			boolean reverse = false;
-			Tile result = null;
+			Tile result;
+			result = null;
 			if (msg.isSelfMessage()) {
 				result = new CommunicationTileSelf(livingSpace1, msg, skin, skinParam, livingSpaces);
 			} else {
@@ -113,7 +114,7 @@ public class TileBuilder {
 		} else if (ev instanceof MessageExo) {
 			final MessageExo exo = (MessageExo) ev;
 			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
-			Tile result = null;
+			Tile result;
 			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments);
 			for (NoteOnMessage noteOnMessage : exo.getNoteOnMessages()) {
 				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getNotePosition();

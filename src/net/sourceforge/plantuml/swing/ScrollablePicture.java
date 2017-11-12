@@ -92,7 +92,7 @@ class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListene
 
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 		// Get the current position.
-		int currentPosition = 0;
+		int currentPosition;
 		if (orientation == SwingConstants.HORIZONTAL) {
 			currentPosition = visibleRect.x;
 		} else {

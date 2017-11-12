@@ -76,7 +76,7 @@ public class PSystemListOpenIconic extends AbstractPSystem {
 		lines.add("https://useiconic.com/open");
 		lines.add(" ");
 		final BufferedReader br = new BufferedReader(new InputStreamReader(getRessourceAllTxt()));
-		String s = null;
+		String s;
 		while ((s = br.readLine()) != null) {
 			// lines.add("<&yen> " + s);
 			// System.err.println("s=" + s);

@@ -271,10 +271,9 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	private void mergeMe(MergeStrategy merge) {
-		boolean change = false;
+		boolean change;
 		do {
-			change = false;
-			change = change || removeNullVector();
+			change = removeNullVector();
 			change = change || removeRedondantDirection();
 			change = change || removePattern1();
 			change = change || removePattern2();

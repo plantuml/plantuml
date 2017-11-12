@@ -76,7 +76,7 @@ public class SignatureUtils {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
-			int read = 0;
+			int read;
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);
 			}
@@ -109,7 +109,7 @@ public class SignatureUtils {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 			final FileInputStream is = new FileInputStream(f);
-			int read = -1;
+			int read;
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);
 			}

@@ -55,7 +55,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 		final ReadLine r = new UncommentReadLine(new ReadLineReader(new StringReader(data), "COMPRESS"));
 		final StringBuilder sb = new StringBuilder();
 		final StringBuilder full = new StringBuilder();
-		CharSequence2 s = null;
+		CharSequence2 s;
 		boolean startDone = false;
 		while ((s = r.readLine()) != null) {
 			append(full, s);

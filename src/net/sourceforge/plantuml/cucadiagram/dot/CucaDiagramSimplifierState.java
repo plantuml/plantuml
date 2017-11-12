@@ -78,7 +78,7 @@ public final class CucaDiagramSimplifierState {
 	private Collection<IGroup> getOrdered(IGroup root) {
 		final Collection<IGroup> ordered = new LinkedHashSet<IGroup>();
 		ordered.add(root);
-		int size = 1;
+		int size;
 		while (true) {
 			size = ordered.size();
 			addOneLevel(ordered);

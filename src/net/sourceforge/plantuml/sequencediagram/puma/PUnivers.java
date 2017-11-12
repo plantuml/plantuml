@@ -57,7 +57,7 @@ public class PUnivers {
 	}
 
 	public void solve() {
-		boolean changed = false;
+		boolean changed;
 		do {
 			changed = false;
 			for (FixedLink link : links) {

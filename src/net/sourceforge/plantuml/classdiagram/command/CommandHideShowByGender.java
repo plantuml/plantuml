@@ -146,7 +146,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
 		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
 
-		EntityGender gender = null;
+		EntityGender gender;
 		final String arg1 = arg.get("GENDER", 0);
 		if (arg1 == null) {
 			gender = EntityGenderUtils.all();

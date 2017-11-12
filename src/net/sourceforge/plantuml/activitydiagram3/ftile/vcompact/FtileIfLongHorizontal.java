@@ -35,44 +35,21 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileAssemblySimple;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidth;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
-import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.*;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.*;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 class FtileIfLongHorizontal extends AbstractFtile {
 
@@ -164,11 +141,10 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
 					swimlane, tbTest);
-			TextBlock tbInlabel = null;
 			if (Display.isNull(branch.getInlabel())) {
 				inlabelSizes.add(0.0);
 			} else {
-				tbInlabel = branch.getInlabel().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+				TextBlock tbInlabel = branch.getInlabel().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 				inlabelSizes.add(tbInlabel.calculateDimension(ftileFactory.getStringBounder()).getWidth());
 				diamond = diamond.withWest(tbInlabel);
 			}

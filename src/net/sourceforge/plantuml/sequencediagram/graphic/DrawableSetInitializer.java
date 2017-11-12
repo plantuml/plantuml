@@ -517,7 +517,7 @@ skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 			final double delta = comp.getPreferredHeight(stringBounder) / 2;
 			final LivingParticipantBox livingParticipantBox = drawableSet.getLivingParticipantBox(lifeEvent
 					.getParticipant());
-			double pos2 = y;
+			double pos2;
 			if (message == null) {
 				pos2 = y;
 				freeY2 = freeY2.add(comp.getPreferredHeight(stringBounder), range);

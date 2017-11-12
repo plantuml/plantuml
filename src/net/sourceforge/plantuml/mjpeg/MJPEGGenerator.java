@@ -97,7 +97,6 @@ public class MJPEGGenerator
             for(int i = 0; i < extra; i++)
                 aviOutput.write(0);
         }
-        imagedata = null;
     }
     
     public void finishAVI() throws IOException
@@ -537,9 +536,7 @@ public class MJPEGGenerator
         g.drawImage(image,0,0,width,height,null);
         ImageIO.write(bi,"jpg",baos);
         baos.close();
-        bi = null;
-        g = null;
-        
+
         return baos.toByteArray();
     }
     

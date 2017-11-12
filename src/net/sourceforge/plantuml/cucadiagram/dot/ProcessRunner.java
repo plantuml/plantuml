@@ -233,7 +233,7 @@ public class ProcessRunner {
 
 		@Override
 		public void run() {
-			int read = 0;
+			int read;
 			try {
 				while ((read = streamToRead.read()) != -1) {
 					if (state.equals(ProcessState.TIMEOUT())) {

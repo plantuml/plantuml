@@ -65,7 +65,7 @@ public class AsciiMath implements ScientificEquation {
 			final BufferedReader br = new BufferedReader(new InputStreamReader(
 					AsciiMath.class.getResourceAsStream(ASCIIMATH_PARSER_JS_LOCATION + "ASCIIMathTeXImg.js"), "UTF-8"));
 			final StringBuilder sb = new StringBuilder();
-			String s = null;
+			String s;
 			while ((s = br.readLine()) != null) {
 				sb.append(s);
 				sb.append(BackSlash.NEWLINE);

@@ -678,7 +678,6 @@ public class Line implements Moveable, Hideable {
 						.checkFolderPosition(dotPath.getEndPoint(), ug.getStringBounder());
 				todraw = new DotPath(dotPath);
 				todraw.moveEndPoint(0, deltaFolderH);
-				moveEndY = deltaFolderH;
 			}
 		}
 

@@ -35,16 +35,12 @@
  */
 package net.sourceforge.plantuml.graph2;
 
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graph2.Dijkstra.Vertex;
+
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 public class Plan {
 
@@ -202,26 +198,15 @@ public class Plan {
 		}
 
 		if (l1a.equals(l2b)) {
-			final Point2D.Double tmp = l2a;
 			l2a = l2b;
-			l2b = tmp;
 		} else if (l2a.equals(l1b)) {
-			final Point2D.Double tmp = l1a;
 			l1a = l1b;
-			l1b = tmp;
 		} else if (l1b.equals(l2b)) {
-			Point2D.Double tmp = l2a;
 			l2a = l2b;
-			l2b = tmp;
-			tmp = l1a;
 			l1a = l1b;
-			l1b = tmp;
 		}
-
 		assert l1a.equals(l2a);
-
 		return false;
-
 	}
 
 	final double getMindist(Point2D.Double pt) {

@@ -127,14 +127,10 @@ public class SvgPath {
 
 	private List<SvgCommand> manageHV(List<SvgCommand> commands) {
 		final List<SvgCommand> result = new ArrayList<SvgCommand>();
-		SvgCommandNumber lastX = null;
-		SvgCommandNumber lastY = null;
 		final Iterator<SvgCommand> it = commands.iterator();
 		while (it.hasNext()) {
 			final SvgCommand cmd = it.next();
 			if (cmd instanceof SvgCommandNumber) {
-				lastX = lastY;
-				lastY = (SvgCommandNumber) cmd;
 				result.add(cmd);
 				continue;
 			}

@@ -322,7 +322,7 @@ public class AnimatedGifEncoder {
 	 * @return false if open or initial write failed.
 	 */
 	public boolean start(String file) {
-		boolean ok = true;
+		boolean ok;
 		try {
 			out = new BufferedOutputStream(new FileOutputStream(file));
 			ok = start(out);

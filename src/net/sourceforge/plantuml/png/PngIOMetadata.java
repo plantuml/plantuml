@@ -57,7 +57,7 @@ public class PngIOMetadata {
 			String debugData) throws IOException {
 
 		// Create & populate metadata
-		PNGMetadata pngMetadata = null;
+		PNGMetadata pngMetadata;
 		try {
 			pngMetadata = new PNGMetadata();
 		} catch (Throwable e) {

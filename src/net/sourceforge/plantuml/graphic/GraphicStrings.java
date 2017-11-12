@@ -35,10 +35,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Dimension2D;
-import java.awt.image.BufferedImage;
-import java.util.List;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -46,11 +42,11 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImage;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.*;
+
+import java.awt.geom.Dimension2D;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
@@ -117,12 +113,10 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	}
 
 	private TextBlock getTextBlock() {
-		TextBlock result = null;
-		result = Display.create(strings).create(
-				new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		// result = DateEventUtils.addEvent(result, green);
-		return result;
+		return Display.create(strings)
+		              .create(
+			              new FontConfiguration(font, maincolor, hyperlinkColor, useUnderlineForHyperlink),
+			              HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	public void drawU(UGraphic ug) {

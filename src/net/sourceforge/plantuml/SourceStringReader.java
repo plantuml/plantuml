@@ -108,7 +108,7 @@ public class SourceStringReader {
 
 	public DiagramDescription outputImage(File f) throws IOException {
 		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-		DiagramDescription result = null;
+		DiagramDescription result;
 		try {
 			result = outputImage(os, 0);
 		} finally {

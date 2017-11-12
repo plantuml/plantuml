@@ -178,7 +178,7 @@ public class VP8Frame {
 					if(updateMacroBlockSegmentationMap > 0) {
 						macroBlockSegmentTreeProbs = new int[Globals.MB_FEATURE_TREE_PROBS];
 						for (int i = 0; i < Globals.MB_FEATURE_TREE_PROBS; i++) {
-							int value=255;
+							int value;
 							if (bc.readBit()>0) {
 								value = bc.readLiteral(8);
 							}
@@ -886,7 +886,7 @@ public class VP8Frame {
 //					logger.error("TODO:");
 				}
 				
-				int mb_skip_coeff = 0;
+				int mb_skip_coeff;
 				if (macroBlockNoCoeffSkip > 0)
 					mb_skip_coeff = bc.readBool(prob_skip_false);
 				else
@@ -983,7 +983,7 @@ public class VP8Frame {
 	
 	private void setupTokenDecoder(BoolDecoder bc, int first_partition_length_in_bytes, long offset) throws IOException {
 
-		long partitionSize = 0;
+		long partitionSize;
 		long partitionsStart = offset+first_partition_length_in_bytes;
 		long partition = partitionsStart;
 		multiTokenPartition = bc.readLiteral(2);

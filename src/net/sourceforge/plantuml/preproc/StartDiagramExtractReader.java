@@ -76,7 +76,7 @@ public class StartDiagramExtractReader implements ReadLine {
 			bloc = 0;
 		}
 		this.raw = raw;
-		CharSequence2 s = null;
+		CharSequence2 s;
 		try {
 			while ((s = raw.readLine()) != null) {
 				if (StartUtils.isArobaseStartDiagram(s) && checkUid(uid, s)) {
@@ -153,7 +153,7 @@ public class StartDiagramExtractReader implements ReadLine {
 
 	private static boolean containsStartDiagram(final ReadLine r) throws IOException {
 		try {
-			CharSequence2 s = null;
+			CharSequence2 s;
 			while ((s = r.readLine()) != null) {
 				if (StartUtils.isArobaseStartDiagram(s)) {
 					return true;

@@ -124,30 +124,9 @@ public class PathDrawerInterface implements PathDrawer {
 		if (middle2 != null) {
 			final CubicCurve2D.Double before = getLine(middle2, startPath);
 			dotPath = dotPath.addBefore(before);
-			// dotPath = dotPath.addBefore(out);
 		}
 
-		final LinkStyle style = linkType.getStyle();
-//		if (style == LinkStyle.__toremove_INTERFACE_PROVIDER || style == LinkStyle.__toremove_INTERFACE_USER) {
-//			final Decor decor = new DecorInterfaceProvider(style);
-//			final Map<Point2D, Double> all = dotPath.somePoints();
-//			final Point2D p = getFarest(outPoint, inPoint, all.keySet());
-//
-//			ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.background)));
-//			ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
-//
-//			decor.drawDecor(ug, p, all.get(p));
-//		}
-
 		throw new UnsupportedOperationException();
-//		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
-//		if (linkType.isDashed()) {
-//			goDash(ug);
-//		}
-//		ug.draw(dotPath);
-//		if (linkType.isDashed()) {
-//			noDash(ug);
-//		}
 	}
 
 	private double atan2(final Point2D endPath, final Point2D inPoint) {

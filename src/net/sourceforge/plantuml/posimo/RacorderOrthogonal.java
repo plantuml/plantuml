@@ -47,7 +47,7 @@ public class RacorderOrthogonal extends RacorderAbstract implements Racorder {
 		final Point2D in = tangeante.getP1();
 
 		final DotPath result = new DotPath();
-		Point2D inter = null;
+		Point2D inter;
 
 		if (in.getX() > rect.getMinX() && in.getX() < rect.getMaxX()) {
 			if (in.getY() < rect.getMinY()) {

@@ -175,7 +175,6 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		final double lastY = ymin + nb * (getDashVisible() + getDashSpace());
 		double v = ymax - lastY;
 		if (v > getDashVisible()) {
-			v = getDashVisible();
 			nb++;
 			v = 0;
 		}
@@ -195,7 +194,6 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		final double lastX = xmin + nb * (getDashVisible() + getDashSpace());
 		double v = xmax - lastX;
 		if (v > getDashVisible()) {
-			v = getDashVisible();
 			nb++;
 			v = 0;
 		}

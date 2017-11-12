@@ -79,7 +79,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	}
 
 	private void init(Preprocessor includer) throws IOException {
-		CharSequence2 s = null;
+		CharSequence2 s;
 		List<CharSequence2> current2 = null;
 		boolean paused = false;
 		int startLine = 0;

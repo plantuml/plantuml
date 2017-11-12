@@ -190,7 +190,7 @@ public class Heap {
 
 	HashSet<ANode> getAllChildren(ANode n) {
 		final HashSet<ANode> result = new HashSet<ANode>(directChildren.get(n).keySet());
-		int size = 0;
+		int size;
 		do {
 			size = result.size();
 			for (ANode other : new HashSet<ANode>(result)) {

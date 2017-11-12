@@ -42,8 +42,8 @@ public class MacroBlock {
 		ySubBlocks = new SubBlock[4][4];
 		uSubBlocks = new SubBlock[2][2];
 		vSubBlocks = new SubBlock[2][2];
-		SubBlock above = null;
-		SubBlock left = null;
+		SubBlock above;
+		SubBlock left;
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -400,8 +400,8 @@ public class MacroBlock {
 			boolean left_available = false;
 			int Uaverage = 0;
 			int Vaverage = 0;
-			int expected_udc = 0;
-			int expected_vdc = 0;
+			int expected_udc;
+			int expected_vdc;
 			if (x > 0)
 				left_available = true;
 			if (y > 0)
@@ -577,7 +577,7 @@ public class MacroBlock {
 			boolean left_available = false;
 
 			int average = 0;
-			int expected_dc = 0;
+			int expected_dc;
 			if (x > 0)
 				left_available = true;
 			if (y > 0)
