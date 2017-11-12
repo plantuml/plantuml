@@ -184,7 +184,7 @@ public class EntityFactory {
 		return result;
 	}
 
-	static class Protect<O extends Object> implements Map<Code, O> {
+	static class Protect<O> implements Map<Code, O> {
 
 		private final Map<Code, O> m;
 

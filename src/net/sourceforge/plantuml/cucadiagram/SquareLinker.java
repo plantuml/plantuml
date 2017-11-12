@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-interface SquareLinker<O extends Object> {
+interface SquareLinker<O> {
 
 	public void leftRight(O left, O right);
 
