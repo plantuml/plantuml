@@ -177,7 +177,7 @@ public class StatsUtils {
 		}
 	}
 
-	static void xmlOutput(Stats stats) throws FileNotFoundException, TransformerException,
+	static void xmlOutput(Stats stats) throws TransformerException,
 			ParserConfigurationException, IOException {
 		OutputStream os = null;
 		try {

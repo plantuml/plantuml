@@ -103,7 +103,7 @@ class FtpLoop implements Runnable {
 		}
 	}
 
-	private boolean manage(final String cmd) throws UnknownHostException, IOException, InterruptedException {
+	private boolean manage(final String cmd) throws IOException, InterruptedException {
 		final String upper = StringUtils.goUpperCase(cmd);
 		if (upper.startsWith("USER")) {
 			myOut("331 Password required");
@@ -178,7 +178,7 @@ class FtpLoop implements Runnable {
 	private void localLog(String s) {
 	}
 
-	private void retr(final String fileName, Socket soc) throws UnknownHostException, IOException, InterruptedException {
+	private void retr(final String fileName, Socket soc) throws IOException, InterruptedException {
 		final OutputStream os = soc.getOutputStream();
 		final byte[] data = connexion.getData(fileName);
 
@@ -191,7 +191,7 @@ class FtpLoop implements Runnable {
 		myOut("226 Transfer complete.");
 	}
 
-	private void retrPassif(final String s) throws UnknownHostException, IOException, InterruptedException {
+	private void retrPassif(final String s) throws IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
 		if (!connexion.willExist(fileName)) {
@@ -215,7 +215,7 @@ class FtpLoop implements Runnable {
 		} while (true);
 	}
 
-	private void retrActif(final String s) throws UnknownHostException, IOException, InterruptedException {
+	private void retrActif(final String s) throws IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
 		if (!connexion.willExist(fileName)) {
@@ -251,7 +251,7 @@ class FtpLoop implements Runnable {
 		return fileName;
 	}
 
-	private void stor(String fileName, Socket socket) throws UnknownHostException, IOException {
+	private void stor(String fileName, Socket socket) throws IOException {
 		final InputStream is = socket.getInputStream();
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		FileUtils.copyToStream(is, baos);
@@ -276,13 +276,13 @@ class FtpLoop implements Runnable {
 		}
 	}
 
-	private void listActif() throws UnknownHostException, IOException {
+	private void listActif() throws IOException {
 		myOut("150 Opening ASCII mode data");
 		final Socket soc = new Socket(ipClient, port);
 		list(soc);
 	}
 
-	private void listPassif() throws UnknownHostException, IOException {
+	private void listPassif() throws IOException {
 		myOut("150 Opening ASCII mode data");
 		final ServerSocket ss = new ServerSocket(port);
 		final Socket incoming = ss.accept();
