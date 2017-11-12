@@ -53,9 +53,9 @@ public class Bibliotekon {
 
 	private final List<Cluster> allCluster = new ArrayList<Cluster>();
 
-	private final Map<ILeaf, Shape> shapeMap = new LinkedHashMap<ILeaf, Shape>();;
+	private final Map<ILeaf, Shape> shapeMap = new LinkedHashMap<ILeaf, Shape>();
 
-	private final List<Line> lines0 = new ArrayList<Line>();
+    private final List<Line> lines0 = new ArrayList<Line>();
 	private final List<Line> lines1 = new ArrayList<Line>();
 	private final List<Line> allLines = new ArrayList<Line>();
 

@@ -84,8 +84,8 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
-	private final ISkinParam skinParam;;
-	private final Pragma pragma;
+	private final ISkinParam skinParam;
+    private final Pragma pragma;
 
 	private final List<Swimlane> swimlanes = new ArrayList<Swimlane>();
 	private Swimlane currentSwimlane = null;

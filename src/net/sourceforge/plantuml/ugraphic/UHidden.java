@@ -36,6 +36,6 @@ package net.sourceforge.plantuml.ugraphic;
 
 public enum UHidden implements UChange {
 
-	NORMAL_SHOWN, HIDDEN;
+	NORMAL_SHOWN, HIDDEN
 
 }

@@ -66,8 +66,8 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class ActivityDiagram3 extends UmlDiagram {
 
 	enum SwimlaneStrategy {
-		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED;
-	}
+		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED
+    }
 
 	private SwimlaneStrategy swimlaneStrategy;
 

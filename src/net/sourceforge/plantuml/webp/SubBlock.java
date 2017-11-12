@@ -20,9 +20,9 @@ import java.io.IOException;
 public class SubBlock {
 	public enum PLANE {
 		U, V, Y1, Y2
-	};
+	}
 
-	public static final int UV = 2;
+    public static final int UV = 2;
 	public static final int Y = 3;
 	public static final int Y_AFTER_Y2 = 0;
 	public static final int Y2 = 1;

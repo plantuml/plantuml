@@ -58,9 +58,9 @@ import net.sourceforge.plantuml.StringUtils;
 class FtpLoop implements Runnable {
 	enum Mode {
 		ACTIF, PASSIF
-	};
+	}
 
-	private final Socket incoming;
+    private final Socket incoming;
 	private final FtpServer ftpServer;
 	private final BufferedReader br;
 	private final PrintWriter pw;

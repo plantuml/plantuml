@@ -69,9 +69,9 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 		this.created.set(now);
 		this.modified.set(now);
 		this.comment = " ";
-	};
+	}
 
-	@Override
+    @Override
 	public void addValue(long v) {
 		super.addValue(v);
 		this.modified.set(System.currentTimeMillis());

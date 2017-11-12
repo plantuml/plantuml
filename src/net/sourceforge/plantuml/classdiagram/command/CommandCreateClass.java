@@ -65,9 +65,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS
-	};
+	}
 
-	public CommandCreateClass() {
+    public CommandCreateClass() {
 		super(getRegexConcat());
 	}
 

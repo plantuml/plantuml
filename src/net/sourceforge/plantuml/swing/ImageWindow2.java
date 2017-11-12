@@ -104,7 +104,7 @@ class ImageWindow2 extends JFrame {
 
 	private enum SizeMode {
 		FULL_SIZE, ZOOM_FIT, WIDTH_FIT
-	};
+	}
 
 	private SizeMode sizeMode = SizeMode.FULL_SIZE;
 

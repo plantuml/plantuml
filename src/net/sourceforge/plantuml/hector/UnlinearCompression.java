@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.hector;
 class UnlinearCompression {
 
 	enum Rounding {
-		BORDER_1, CENTRAL, BORDER_2;
-	}
+		BORDER_1, CENTRAL, BORDER_2
+    }
 
 	private final double inner;
 	private final double outer;

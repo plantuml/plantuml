@@ -1009,9 +1009,8 @@ class dlx_generator {
 							w++;
 							W[(int) w] = c;
 						}
-						;
 
-						if (V[c] < min) {
+                        if (V[c] < min) {
 							w = 1;
 							W[(int) w] = c;
 							min = V[c];

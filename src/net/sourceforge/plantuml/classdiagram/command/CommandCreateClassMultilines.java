@@ -72,9 +72,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS
-	};
+	}
 
-	public CommandCreateClassMultilines() {
+    public CommandCreateClassMultilines() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
 

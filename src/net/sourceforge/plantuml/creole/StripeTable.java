@@ -51,7 +51,7 @@ public class StripeTable implements Stripe {
 
 	enum Mode {
 		HEADER, NORMAL
-	};
+	}
 
 	private FontConfiguration fontConfiguration;
 	private final ISkinSimple skinParam;
