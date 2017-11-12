@@ -229,13 +229,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean hasUrl() {
-		if (!Display.isNull(display) && display.hasUrl()) {
-			return true;
-		}
-		if (bodier.hasUrl()) {
-			return true;
-		}
-		return url != null;
+		return !Display.isNull(display) && display.hasUrl() || bodier.hasUrl() || url != null;
 	}
 
 	public final void addUrl(Url url) {
@@ -455,13 +449,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean isHidden() {
-		if (entityFactory.isHidden(this)) {
-			return true;
-		}
-		if (stereotype != null) {
-			return stereotype.isHidden();
-		}
-		return false;
+		return entityFactory.isHidden(this) || stereotype != null && stereotype.isHidden();
 	}
 
 	public USymbol getUSymbol() {

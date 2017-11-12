@@ -51,10 +51,7 @@ public class HtmlColorSimple implements HtmlColor {
 
 	@Override
 	public boolean equals(Object other) {
-		if (!(other instanceof HtmlColorSimple)) {
-			return false;
-		}
-		return this.color.equals(((HtmlColorSimple) other).color);
+		return other instanceof HtmlColorSimple && this.color.equals(((HtmlColorSimple) other).color);
 	}
 
 	public HtmlColorSimple(Color c, boolean monochrome) {

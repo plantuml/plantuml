@@ -69,10 +69,7 @@ public class ElementFactoryText implements ElementFactory {
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
 		// return text.startsWith("\"") && text.endsWith("\"");
-		if (text.startsWith("{") || text.startsWith("}")) {
-			return false;
-		}
-		return !StringUtils.trin(text).isEmpty();
+		return !text.startsWith("{") && !text.startsWith("}") && !StringUtils.trin(text).isEmpty();
 	}
 
 }

@@ -35,11 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
@@ -48,6 +43,11 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class Bodier {
 
@@ -97,11 +97,12 @@ public class Bodier {
 	}
 
 	private boolean isMethod(String s) {
-		if (type == LeafType.ANNOTATION || type == LeafType.ABSTRACT_CLASS || type == LeafType.CLASS
-				|| type == LeafType.INTERFACE || type == LeafType.ENUM) {
-			return MemberImpl.isMethod(s);
-		}
-		return false;
+		return (type == LeafType.ANNOTATION
+			|| type == LeafType.ABSTRACT_CLASS
+			|| type == LeafType.CLASS
+			|| type == LeafType.INTERFACE
+			|| type == LeafType.ENUM)
+			&& MemberImpl.isMethod(s);
 	}
 
 	public List<Member> getMethodsToDisplay() {
@@ -126,11 +127,12 @@ public class Bodier {
 	}
 
 	private boolean isMethod(int i, List<String> rawBody) {
-		if (i > 0 && i < rawBody.size() - 1 && rawBody.get(i).isEmpty() && isMethod(rawBody.get(i - 1))
-				&& isMethod(rawBody.get(i + 1))) {
-			return true;
-		}
-		return isMethod(rawBody.get(i));
+		return i > 0
+			&& i < rawBody.size() - 1
+			&& rawBody.get(i).isEmpty()
+			&& isMethod(rawBody.get(i - 1))
+			&& isMethod(rawBody.get(i + 1))
+			|| isMethod(rawBody.get(i));
 	}
 
 	public List<Member> getFieldsToDisplay() {

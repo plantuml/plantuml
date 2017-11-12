@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.suggest;
 
 import net.sourceforge.plantuml.StringUtils;
 
+import java.util.Objects;
+
 
 public class SuggestEngineResult {
 
@@ -71,13 +73,7 @@ public class SuggestEngineResult {
 	}
 
 	private static boolean sameString(String a, String b) {
-		if (a == null && b == null) {
-			return true;
-		}
-		if (a != null || b != null) {
-			return false;
-		}
-		return a.equals(b);
+		return a != null && b != null && a.equals(b);
 	}
 
 	public SuggestEngineResult(String suggestedLine) {

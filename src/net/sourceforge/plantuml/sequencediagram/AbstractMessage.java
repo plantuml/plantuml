@@ -93,10 +93,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 				return true;
 			}
 		}
-		if (label != null && label.hasUrl()) {
-			return true;
-		}
-		return getUrl() != null;
+		return label != null && label.hasUrl() || getUrl() != null;
 	}
 
 	private boolean firstIsActivate = false;

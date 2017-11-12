@@ -74,10 +74,7 @@ public class PathIteratorLimited implements PathIterator {
 	}
 
 	public boolean isDone() {
-		if (current >= limit) {
-			return true;
-		}
-		return path.isDone();
+		return current >= limit || path.isDone();
 	}
 
 	public void next() {

@@ -111,10 +111,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public final boolean kill() {
-		if (all.isEmpty()) {
-			return false;
-		}
-		return getLast().kill();
+		return !all.isEmpty() && getLast().kill();
 	}
 
 	public LinkRendering getInLinkRendering() {

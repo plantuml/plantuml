@@ -207,10 +207,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public final boolean isInvis() {
-		if (type.isInvisible()) {
-			return true;
-		}
-		return invis;
+		return type.isInvisible() || invis;
 	}
 
 	public final void setInvis(boolean invis) {
@@ -218,13 +215,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean isBetween(IEntity cl1, IEntity cl2) {
-		if (cl1.equals(this.cl1) && cl2.equals(this.cl2)) {
-			return true;
-		}
-		if (cl1.equals(this.cl2) && cl2.equals(this.cl1)) {
-			return true;
-		}
-		return false;
+		return cl1.equals(this.cl1) && cl2.equals(this.cl2) || cl1.equals(this.cl2) && cl2.equals(this.cl1);
 	}
 
 	@Override
@@ -526,10 +517,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean hasUrl() {
-		if (!Display.isNull(label) && label.hasUrl()) {
-			return true;
-		}
-		return getUrl() != null;
+		return !Display.isNull(label) && label.hasUrl() || getUrl() != null;
 	}
 
 	public String getSametail() {

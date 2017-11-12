@@ -35,25 +35,16 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.graphic.*;
+import net.sourceforge.plantuml.ugraphic.*;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
-import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.ugraphic.CompressionTransform;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Snake implements UShape {
 
@@ -256,13 +247,9 @@ public class Snake implements UShape {
 	}
 
 	public boolean touches(Snake other) {
-		if (other.mergeable != MergeStrategy.FULL) {
-			return false;
-		}
-		if (other.worm.isPureHorizontal()) {
-			return false;
-		}
-		return same(this.getLast(), other.getFirst());
+		return other.mergeable == MergeStrategy.FULL
+			&& !other.worm.isPureHorizontal()
+			&& same(this.getLast(), other.getFirst());
 	}
 
 	public void goUnmergeable(MergeStrategy strategy) {

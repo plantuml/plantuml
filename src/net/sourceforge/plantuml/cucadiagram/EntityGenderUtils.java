@@ -56,10 +56,7 @@ public class EntityGenderUtils {
 	public static EntityGender byStereotype(final String stereotype) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				if (test.getStereotype() == null) {
-					return false;
-				}
-				return stereotype.equals(test.getStereotype().getLabel(false));
+				return test.getStereotype() != null && stereotype.equals(test.getStereotype().getLabel(false));
 			}
 		};
 	}

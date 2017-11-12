@@ -269,10 +269,7 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private boolean isGroupButNotTheCurrentGroup(AbstractClassOrObjectDiagram diagram, Code code) {
-		if (diagram.getCurrentGroup().getCode().equals(code)) {
-			return false;
-		}
-		return diagram.isGroup(code);
+		return !diagram.getCurrentGroup().getCode().equals(code) && diagram.isGroup(code);
 	}
 
 	private Code removeMemberPart(AbstractClassOrObjectDiagram diagram, Code code) {

@@ -76,10 +76,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	@Override
 	protected boolean isLineConsistent(String line, int level) {
 		line = StringUtils.trin(line);
-		if (hasStartingQuote(line)) {
-			return true;
-		}
-		return p1.matcher(line).matches();
+		return hasStartingQuote(line) || p1.matcher(line).matches();
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {

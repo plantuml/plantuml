@@ -847,10 +847,7 @@ public class Cluster implements Moveable {
 	}
 
 	public boolean isClusterOf(IEntity ent) {
-		if (!ent.isGroup()) {
-			return false;
-		}
-		return group == ent;
+		return ent.isGroup() && group == ent;
 	}
 
 	public static HtmlColor getBackColor(HtmlColor backColor, ISkinParam skinParam, Stereotype stereotype) {

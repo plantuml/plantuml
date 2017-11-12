@@ -180,10 +180,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-		if (propertyName.equalsIgnoreCase("SVG")) {
-			return true;
-		}
-		return super.matchesProperty(propertyName);
+		return propertyName.equalsIgnoreCase("SVG") || super.matchesProperty(propertyName);
 	}
 
 	// @Override

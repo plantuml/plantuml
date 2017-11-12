@@ -85,10 +85,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 	}
 
 	private boolean isStar(Element element) {
-		if (!(element instanceof ElementText)) {
-			return false;
-		}
-		return "*".equals(((ElementText) element).getText());
+		return element instanceof ElementText && "*".equals(((ElementText) element).getText());
 	}
 
 	public boolean ready() {
@@ -96,10 +93,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 		if (text.equals("{") || text.equals("{+") || text.equals("{^") || text.equals("{#") || text.equals("{!")
 				|| text.equals("{-")) {
 			final String text1 = getDataSource().peek(1).getElement();
-			if (text1.matches("[NSEW]=|T")) {
-				return false;
-			}
-			return true;
+			return !text1.matches("[NSEW]=|T");
 		}
 		return false;
 	}

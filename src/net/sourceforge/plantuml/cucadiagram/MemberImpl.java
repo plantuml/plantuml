@@ -186,13 +186,6 @@ public class MemberImpl implements Member {
 	}
 
 	public static boolean isMethod(String s) {
-		// s = UrlBuilder.purgeUrl(s);
-		if (s.contains("{method}")) {
-			return true;
-		}
-		if (s.contains("{field}")) {
-			return false;
-		}
-		return s.contains("(") || s.contains(")");
+		return s.contains("{method}") || !s.contains("{field}") && (s.contains("(") || s.contains(")"));
 	}
 }
