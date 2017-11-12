@@ -46,10 +46,10 @@ public class BrailleChar {
 	public void draw(BrailleGrid grid, double xv, double yv) {
 		final int x = grid.toInt(xv);
 		final int y = grid.toInt(yv);
-		drawOneSpot(grid, x + 0, y + 0, 1);
-		drawOneSpot(grid, x + 0, y + 1, 2);
-		drawOneSpot(grid, x + 0, y + 2, 4);
-		drawOneSpot(grid, x + 1, y + 0, 8);
+		drawOneSpot(grid, x, y, 1);
+		drawOneSpot(grid, x, y + 1, 2);
+		drawOneSpot(grid, x, y + 2, 4);
+		drawOneSpot(grid, x + 1, y, 8);
 		drawOneSpot(grid, x + 1, y + 1, 16);
 		drawOneSpot(grid, x + 1, y + 2, 32);
 	}

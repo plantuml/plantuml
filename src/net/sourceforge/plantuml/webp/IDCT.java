@@ -31,8 +31,8 @@ public class IDCT {
 		int temp1, temp2;
 
 		for (i = 0; i < 4; i++) {
-			a1 = input[offset + 0] + input[offset + 8];
-			b1 = input[offset + 0] - input[offset + 8];
+			a1 = input[offset] + input[offset + 8];
+			b1 = input[offset] - input[offset + 8];
 
 			temp1 = (input[offset + 4] * sinpi8sqrt2) >> 16;
 			temp2 = input[offset + 12]
@@ -45,9 +45,9 @@ public class IDCT {
 			temp2 = (input[offset + 12] * sinpi8sqrt2) >> 16;
 			d1 = temp1 + temp2;
 
-			output[offset + (0 * 4)] = a1 + d1;
+			output[offset] = a1 + d1;
 			output[offset + (3 * 4)] = a1 - d1;
-			output[offset + (1 * 4)] = b1 + c1;
+			output[offset + (4)] = b1 + c1;
 			output[offset + (2 * 4)] = b1 - c1;
 
 			offset++;
@@ -57,8 +57,8 @@ public class IDCT {
 		int diff[][] = new int[4][4];
 		offset = 0;
 		for (i = 0; i < 4; i++) {
-			a1 = output[(offset * 4) + 0] + output[(offset * 4) + 2];
-			b1 = output[(offset * 4) + 0] - output[(offset * 4) + 2];
+			a1 = output[(offset * 4)] + output[(offset * 4) + 2];
+			b1 = output[(offset * 4)] - output[(offset * 4) + 2];
 
 			temp1 = (output[(offset * 4) + 1] * sinpi8sqrt2) >> 16;
 			temp2 = output[(offset * 4) + 3]
@@ -70,7 +70,7 @@ public class IDCT {
 			temp2 = (output[(offset * 4) + 3] * sinpi8sqrt2) >> 16;
 			d1 = temp1 + temp2;
 
-			output[(offset * 4) + 0] = (a1 + d1 + 4) >> 3;
+			output[(offset * 4)] = (a1 + d1 + 4) >> 3;
 			output[(offset * 4) + 3] = (a1 - d1 + 4) >> 3;
 			output[(offset * 4) + 1] = (b1 + c1 + 4) >> 3;
 			output[(offset * 4) + 2] = (b1 - c1 + 4) >> 3;
@@ -97,12 +97,12 @@ public class IDCT {
 		int diff[][] = new int[4][4];
 		int offset = 0;
 		for (i = 0; i < 4; i++) {
-			a1 = input[offset + 0] + input[offset + 12];
+			a1 = input[offset] + input[offset + 12];
 			b1 = input[offset + 4] + input[offset + 8];
 			c1 = input[offset + 4] - input[offset + 8];
-			d1 = input[offset + 0] - input[offset + 12];
+			d1 = input[offset] - input[offset + 12];
 
-			output[offset + 0] = a1 + b1;
+			output[offset] = a1 + b1;
 			output[offset + 4] = c1 + d1;
 			output[offset + 8] = a1 - b1;
 			output[offset + 12] = d1 - c1;
@@ -112,16 +112,16 @@ public class IDCT {
 		offset = 0;
 
 		for (i = 0; i < 4; i++) {
-			a1 = output[offset + 0] + output[offset + 3];
+			a1 = output[offset] + output[offset + 3];
 			b1 = output[offset + 1] + output[offset + 2];
 			c1 = output[offset + 1] - output[offset + 2];
-			d1 = output[offset + 0] - output[offset + 3];
+			d1 = output[offset] - output[offset + 3];
 
 			a2 = a1 + b1;
 			b2 = c1 + d1;
 			c2 = a1 - b1;
 			d2 = d1 - c1;
-			output[offset + 0] = (a2 + 3) >> 3;
+			output[offset] = (a2 + 3) >> 3;
 			output[offset + 1] = (b2 + 3) >> 3;
 			output[offset + 2] = (c2 + 3) >> 3;
 			output[offset + 3] = (d2 + 3) >> 3;

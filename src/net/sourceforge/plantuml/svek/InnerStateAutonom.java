@@ -92,7 +92,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		r.drawU(ug, shadowing);
 		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));
 		attribute.asTextBlock(total.getWidth()).drawU(
-				ug.apply(new UTranslate(0 + IEntityImage.MARGIN, IEntityImage.MARGIN + text.getHeight()
+				ug.apply(new UTranslate(IEntityImage.MARGIN, IEntityImage.MARGIN + text.getHeight()
 						+ IEntityImage.MARGIN)));
 
 		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());

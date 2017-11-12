@@ -137,8 +137,8 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			}
 			eps.setStrokeWidth("1.1", 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
-				eps.epsLine(i, ypos - 0, i + 3, ypos + 1);
-				eps.epsLine(i + 3, ypos + 1, i + 6, ypos - 0);
+				eps.epsLine(i, ypos, i + 3, ypos + 1);
+				eps.epsLine(i + 3, ypos + 1, i + 6, ypos);
 			}
 			eps.setStrokeWidth("1", 0, 0);
 		}

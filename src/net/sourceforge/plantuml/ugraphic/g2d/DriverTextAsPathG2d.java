@@ -124,8 +124,8 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
-				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
-				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);
+				g2d.drawLine(i, ypos, i + 3, ypos + 1);
+				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos);
 			}
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {

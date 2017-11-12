@@ -121,7 +121,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 	private double getHeaderHeight(StringBounder stringBounder) {
 		final Dimension2D headerDim = textHeader.calculateDimension(stringBounder);
-		return headerDim.getHeight() + 2 * 1;
+		return headerDim.getHeight() + 2;
 	}
 
 	private double getHeaderWidth(StringBounder stringBounder) {

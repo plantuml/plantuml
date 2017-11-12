@@ -85,7 +85,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		final UGraphic ug2 = getArrowConfiguration().applyStroke(ug);
 
 		double x1 = area.getDeltaX1() < 0 ? area.getDeltaX1() : 0;
-		double x2 = area.getDeltaX1() > 0 ? -area.getDeltaX1() : 0 + 1;
+		double x2 = area.getDeltaX1() > 0 ? -area.getDeltaX1() : 1;
 
 		final double textAndArrowHeight = textHeight + getArrowOnlyHeight(stringBounder);
 		final UEllipse circle = new UEllipse(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
