@@ -114,9 +114,7 @@ public class RessourcesUtils {
 
 	private static Set<String> listEntry(File dir) {
 		final Set<String> result = new TreeSet<String>();
-		for (String n : dir.list()) {
-			result.add(n);
-		}
+		Collections.addAll(result, dir.list());
 		return result;
 	}
 
