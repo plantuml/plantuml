@@ -68,7 +68,7 @@ public class Bodier {
 	public Bodier(LeafType type, Set<VisibilityModifier> hides) {
 		this.hides = hides;
 		this.type = type;
-		this.manageModifier = type == null ? false : type.manageModifier();
+		this.manageModifier = type != null && type.manageModifier();
 	}
 
 	public void addFieldOrMethod(String s, IEntity leaf) {
