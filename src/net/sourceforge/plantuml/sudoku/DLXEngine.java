@@ -74,7 +74,7 @@ class dlx_solver {
 	 * puzzle
 	 */
 	String solve(String puzzle) {
-		String result = new String();
+		String result = "";
 		int STATE = M6;
 
 		vmax = 4000000;
@@ -815,7 +815,7 @@ class dlx_generator {
 			samples = Samples;
 
 		for (i = 0; i < samples; i++)
-			result[i] = new String();
+			result[i] = "";
 
 		// Set to 1 for rating, set to 2 for rating and hint
 		rate = 0;

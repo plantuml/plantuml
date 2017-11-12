@@ -224,7 +224,7 @@ public class SubBlock {
 	}
 
 	public String getDebugString() {
-		String r = new String();
+		String r = "";
 		r = r + "  " + plane;
 		if (getMacroBlock().getYMode() == Globals.B_PRED
 				&& plane == SubBlock.PLANE.Y1)

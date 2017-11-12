@@ -801,9 +801,7 @@ public class Globals {
 			225, 229, 234, 239, 245, 249, 254, 259, 264, 269, 274, 279, 284, };
 
 	public static String toHex(int c) {
-		String r = new String();
-		r = String.format("%1$#x ", c);
-		return r;
+		return String.format("%1$#x ", c);
 	}
 
 	// clamp between 0 and value

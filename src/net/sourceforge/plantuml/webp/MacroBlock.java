@@ -234,7 +234,7 @@ public class MacroBlock {
 	}
 
 	public String getDebugString() {
-		String r = new String();
+		String r = "";
 		r = r + " YMode: " + Globals.getModeAsString(yMode);
 		r = r + "\n UVMode: " + Globals.getModeAsString(uvMode);
 		r = r + "\n SegmentID: " + segmentId;

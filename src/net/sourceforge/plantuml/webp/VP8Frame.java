@@ -745,7 +745,7 @@ public class VP8Frame {
 		return macroBlockCols;
 	}
 	public String getMacroBlockDebugString(int mbx, int mby, int sbx, int sby) {
-		String r = new String();
+		String r = "";
 		if(mbx<this.macroBlockCols && mby<this.getMacroBlockRows()) {
 			MacroBlock mb = getMacroBlock(mbx, mby);
 			r=r+mb.getDebugString();
