@@ -110,8 +110,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			maxOutY = Math.max(maxOutY, diamond.calculateDimension(stringBounder).getOutY());
 		}
 		final List<Ftile> result = new ArrayList<Ftile>();
-		for (int i = 0; i < diamonds.size(); i++) {
-			Ftile diamond = diamonds.get(i);
+		for (Ftile diamond : diamonds) {
 			final double missing = maxOutY - diamond.calculateDimension(stringBounder).getOutY();
 			assert missing >= 0;
 			diamond = FtileUtils.addVerticalMargin(diamond, missing / 2, 20);

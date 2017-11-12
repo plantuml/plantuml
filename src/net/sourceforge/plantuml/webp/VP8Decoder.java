@@ -58,11 +58,11 @@ public class VP8Decoder {
 		try {
 			out = new FileOutputStream("outagain.raw");
 			for (int y = 0; y < data[0].length; y++)
-				for (int x = 0; x < data.length; x++) {
-					out.write(data[x][y]);
-					out.write(data[x][y]);
-					out.write(data[x][y]);
-				}
+                for (final int[] aData : data) {
+                    out.write(aData[y]);
+                    out.write(aData[y]);
+                    out.write(aData[y]);
+                }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

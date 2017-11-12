@@ -79,12 +79,12 @@ public class MetadataTag {
 
 			final String[] names = metadata.getMetadataFormatNames();
 			final int length = names.length;
-			for (int i = 0; i < length; i++) {
-				final String result = displayMetadata(metadata.getAsTree(names[i]));
-				if (result != null) {
-					return result;
-				}
-			}
+            for (final String name : names) {
+                final String result = displayMetadata(metadata.getAsTree(name));
+                if (result != null) {
+                    return result;
+                }
+            }
 		}
 
 		return null;

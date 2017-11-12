@@ -107,12 +107,12 @@ class UnlinarCompressedPlan {
 			result.add(getUncompressedSegment(x1, y1, x2, y2, UnlinearCompression.Rounding.BORDER_2));
 			return result;
 		}
-		for (int i = 0; i < x.length; i++) {
-			final double y = segment.getIntersectionVertical(x[i]);
-			result.add(getUncompressedSegment(x1, y1, x[i], y, UnlinearCompression.Rounding.BORDER_2));
-			x1 = x[i];
-			y1 = y;
-		}
+        for (final double aX : x) {
+            final double y = segment.getIntersectionVertical(aX);
+            result.add(getUncompressedSegment(x1, y1, aX, y, Rounding.BORDER_2));
+            x1 = aX;
+            y1 = y;
+        }
 		result.add(getUncompressedSegment(x1, y1, x2, y2, UnlinearCompression.Rounding.BORDER_2));
 		return result;
 	}

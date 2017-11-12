@@ -469,9 +469,8 @@ public class MJPEGGenerator
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             baos.write(fcc);
             baos.write(intBytes(swapInt(cb)));
-            for(int i = 0; i < ind.size(); i++)
-            {
-                AVIIndex in = (AVIIndex)ind.get(i);
+            for (Object anInd : ind) {
+                AVIIndex in = (AVIIndex) anInd;
                 baos.write(in.toBytes());
             }
             

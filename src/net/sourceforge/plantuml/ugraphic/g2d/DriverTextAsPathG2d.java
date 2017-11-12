@@ -75,9 +75,9 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		final String fontNames[] = ge.getAvailableFontFamilyNames();
 		final int j = fontNames.length;
-		for (int i = 0; i < j; i++) {
-			Log.info("Available fonts: " + fontNames[i]);
-		}
+        for (final String fontName : fontNames) {
+            Log.info("Available fonts: " + fontName);
+        }
 	}
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {

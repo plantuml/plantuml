@@ -177,8 +177,7 @@ public class Cluster implements Moveable {
 		final Set<String> tops = new HashSet<String>();
 		final Map<String, Shape> shs = new HashMap<String, Shape>();
 
-		for (final Iterator<Shape> it = shapes.iterator(); it.hasNext();) {
-			final Shape sh = it.next();
+		for (final Shape sh : shapes) {
 			shs.put(sh.getUid(), sh);
 			if (sh.isTop() && sh.getEntityPosition() == EntityPosition.NORMAL) {
 				firsts.add(sh);
@@ -208,8 +207,7 @@ public class Cluster implements Moveable {
 	private List<Shape> getShapesEntryExit(EnumSet<EntityPosition> positions) {
 		final List<Shape> result = new ArrayList<Shape>();
 
-		for (final Iterator<Shape> it = shapes.iterator(); it.hasNext();) {
-			final Shape sh = it.next();
+		for (final Shape sh : shapes) {
 			if (positions.contains(sh.getEntityPosition())) {
 				result.add(sh);
 			}
