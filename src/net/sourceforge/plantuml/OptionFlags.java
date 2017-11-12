@@ -53,23 +53,23 @@ public class OptionFlags {
 	// static public boolean GRAPHVIZCACHE = false;
 	// static public final boolean TRACE_DOT = false;
 
-	static public boolean ALLOW_INCLUDE = true;
+	public static boolean ALLOW_INCLUDE = true;
 
-	static public void setMaxPixel(int max) {
+	public static void setMaxPixel(int max) {
 		ImageBuilder.setMaxPixel(max);
 	}
 
-	static public final boolean USE_HECTOR = false;
-	static public boolean ADD_NICE_FOR_DOT = false;
-	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
+	public static final boolean USE_HECTOR = false;
+	public static boolean ADD_NICE_FOR_DOT = false;
+	public static final boolean STRICT_SELFMESSAGE_POSITION = true;
 
 	// static public final boolean USE_IF_VERTICAL = true;
-	static public final boolean FORCE_TEOZ = false;
-	static public final boolean USE_INTERFACE_EYE1 = false;
-	static public final boolean USE_INTERFACE_EYE2 = false;
+    public static final boolean FORCE_TEOZ = false;
+	public static final boolean USE_INTERFACE_EYE1 = false;
+	public static final boolean USE_INTERFACE_EYE2 = false;
 	// static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
-	static public final boolean OMEGA_CROSSING = false;
+    public static final boolean OMEGA_CROSSING = false;
 
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
 	// static public final boolean USE_JDOT = false;

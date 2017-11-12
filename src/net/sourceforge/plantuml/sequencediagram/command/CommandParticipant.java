@@ -69,7 +69,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
 		final String code = arg.get("CODE", 0);
 		if (diagram.participants().containsKey(code)) {
 			diagram.putParticipantInLast(code);

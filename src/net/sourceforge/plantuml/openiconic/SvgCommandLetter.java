@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class SvgCommandLetter implements SvgCommand {
 
-	final private char letter;
+	private final char letter;
 
 	public SvgCommandLetter(String letter) {
 		if (letter.matches("[a-zA-Z]") == false) {

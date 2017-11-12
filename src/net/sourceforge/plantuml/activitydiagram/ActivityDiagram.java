@@ -120,7 +120,7 @@ public class ActivityDiagram extends CucaDiagram {
 		return super.createLeaf(code, display, LeafType.NOTE, null);
 	}
 
-	final protected List<String> getDotStrings() {
+	protected final List<String> getDotStrings() {
 		return Arrays.asList("nodesep=.20;", "ranksep=0.4;", "edge [fontsize=11,labelfontsize=11];",
 				"node [fontsize=11];");
 	}

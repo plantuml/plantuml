@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.salt.element.ElementImage;
 
 public class ElementFactoryImage implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private Dictionary dictionary;
+	private final DataSource dataSource;
+	private final Dictionary dictionary;
 
 	public ElementFactoryImage(DataSource dataSource, Dictionary dictionary) {
 		this.dataSource = dataSource;

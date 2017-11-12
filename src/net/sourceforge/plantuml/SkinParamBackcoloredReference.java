@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamBackcoloredReference extends SkinParamDelegator {
 
-	final private HtmlColor sequenceReferenceHeaderBackground;
-	final private HtmlColor sequenceReferenceBackground;
+	private final HtmlColor sequenceReferenceHeaderBackground;
+	private final HtmlColor sequenceReferenceBackground;
 
 	public SkinParamBackcoloredReference(ISkinParam skinParam, HtmlColor sequenceReferenceHeaderBackground,
 			HtmlColor sequenceReferenceBackground) {

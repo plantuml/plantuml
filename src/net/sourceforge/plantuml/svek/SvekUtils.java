@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class SvekUtils {
 
-	static public void traceString(final File f, String text) throws IOException {
+	public static void traceString(final File f, String text) throws IOException {
 		PrintWriter pw = null;
 		try {
 			Log.info("Creating intermediate file " + f.getAbsolutePath());
@@ -115,7 +115,7 @@ public class SvekUtils {
 
 	}
 
-	final private static String pointsString = "points=\"";
+	private static final String pointsString = "points=\"";
 
 	public static List<Point2D.Double> extractPointsList(final String svg, final int starting, double yDelta) {
 		final int p2 = svg.indexOf(pointsString, starting);
@@ -154,7 +154,7 @@ public class SvekUtils {
 
 	}
 
-	static public double getValue(String svg, int starting, String varName) {
+	public static double getValue(String svg, int starting, String varName) {
 		final String varNameString = varName + "=\"";
 		int p1 = svg.indexOf(varNameString, starting);
 		if (p1 == -1) {
@@ -210,7 +210,7 @@ public class SvekUtils {
 		return result;
 	}
 
-	static private List<Point2D.Double> getPoints(String points, double yDelta) {
+	private static List<Point2D.Double> getPoints(String points, double yDelta) {
 		try {
 			final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
 			final StringTokenizer st = new StringTokenizer(points, " MC");

@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
-	final public boolean insertBetween(IEntity entity1, IEntity entity2, IEntity node) {
+	public final boolean insertBetween(IEntity entity1, IEntity entity2, IEntity node) {
 		final Link link = foundLink(entity1, entity2);
 		if (link == null) {
 			return false;

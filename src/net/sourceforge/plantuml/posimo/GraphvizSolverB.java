@@ -177,7 +177,7 @@ public class GraphvizSolverB {
 		return new Dimension2DDouble(width, height);
 	}
 
-	static private List<Point2D.Double> extractPointsList(final String svg, final int starting) {
+	private static List<Point2D.Double> extractPointsList(final String svg, final int starting) {
 		final String pointsString = "points=\"";
 		final int p2 = svg.indexOf(pointsString, starting);
 		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
@@ -186,7 +186,7 @@ public class GraphvizSolverB {
 		return pointsList;
 	}
 
-	static private double getMaxX(List<Point2D.Double> points) {
+	private static double getMaxX(List<Point2D.Double> points) {
 		double result = points.get(0).x;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).x > result) {
@@ -196,7 +196,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	static private double getMinX(List<Point2D.Double> points) {
+	private static double getMinX(List<Point2D.Double> points) {
 		double result = points.get(0).x;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).x < result) {
@@ -206,7 +206,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	static private double getMaxY(List<Point2D.Double> points) {
+	private static double getMaxY(List<Point2D.Double> points) {
 		double result = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).y > result) {
@@ -216,7 +216,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	static private double getMinY(List<Point2D.Double> points) {
+	private static double getMinY(List<Point2D.Double> points) {
 		double result = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
 			if (points.get(i).y < result) {
@@ -226,7 +226,7 @@ public class GraphvizSolverB {
 		return result;
 	}
 
-	static private List<Point2D.Double> getPoints(String points) {
+	private static List<Point2D.Double> getPoints(String points) {
 		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
 		final StringTokenizer st = new StringTokenizer(points, " ");
 		while (st.hasMoreTokens()) {

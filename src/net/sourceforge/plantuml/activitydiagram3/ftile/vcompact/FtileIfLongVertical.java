@@ -204,7 +204,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		return FtileUtils.addConnection(result, conns);
 	}
 
-	static private double getYdiamontOutToLeft(FtileGeometry dimDiamond1, StringBounder stringBounder) {
+	private static double getYdiamontOutToLeft(FtileGeometry dimDiamond1, StringBounder stringBounder) {
 		return (dimDiamond1.getInY() + dimDiamond1.getOutY()) / 2;
 	}
 

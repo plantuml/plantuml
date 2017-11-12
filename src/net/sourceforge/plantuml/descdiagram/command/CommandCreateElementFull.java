@@ -116,7 +116,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
 
 	@Override
-	final protected boolean isForbidden(CharSequence line) {
+    protected final boolean isForbidden(CharSequence line) {
 		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
 			return true;
 		}

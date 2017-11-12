@@ -108,19 +108,19 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 		}
 	}
 
-	final public long getCreationTime() {
+	public final long getCreationTime() {
 		return created.get();
 	}
 
-	final public long getModificationTime() {
+	public final long getModificationTime() {
 		return modified.get();
 	}
 
-	final public synchronized String getComment() {
+	public final synchronized String getComment() {
 		return comment;
 	}
 
-	final public synchronized void setComment(String comment) {
+	public final synchronized void setComment(String comment) {
 		this.comment = comment;
 	}
 

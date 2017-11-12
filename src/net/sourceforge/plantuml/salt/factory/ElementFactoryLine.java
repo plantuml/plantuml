@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.salt.element.ElementLine;
 
 public class ElementFactoryLine implements ElementFactory {
 
-	final private DataSource dataSource;
+	private final DataSource dataSource;
 
 	public ElementFactoryLine(DataSource dataSource) {
 		this.dataSource = dataSource;

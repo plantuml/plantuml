@@ -113,8 +113,8 @@ public class PSystemUtils {
 		return true;
 	}
 
-	static private List<FileImageData> exportDiagramsDefault(Diagram system, SuggestedFile suggestedFile,
-			FileFormatOption fileFormat) throws IOException {
+	private static List<FileImageData> exportDiagramsDefault(Diagram system, SuggestedFile suggestedFile,
+                                                             FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
@@ -135,8 +135,8 @@ public class PSystemUtils {
 		return Arrays.asList(new FileImageData(suggestedFile.getFile(0), imageData));
 	}
 
-	static private List<FileImageData> exportDiagramsActivityDiagram3(ActivityDiagram3 system,
-			SuggestedFile suggestedFile, FileFormatOption fileFormat) throws IOException {
+	private static List<FileImageData> exportDiagramsActivityDiagram3(ActivityDiagram3 system,
+                                                                      SuggestedFile suggestedFile, FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
@@ -186,8 +186,8 @@ public class PSystemUtils {
 		return result;
 	}
 
-	static private List<FileImageData> exportDiagramsCuca(CucaDiagram system, SuggestedFile suggestedFile,
-			FileFormatOption fileFormat) throws IOException {
+	private static List<FileImageData> exportDiagramsCuca(CucaDiagram system, SuggestedFile suggestedFile,
+                                                          FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}

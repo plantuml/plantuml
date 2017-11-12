@@ -62,7 +62,7 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	}
 
 	@Override
-	final public double getArrowOnlyWidth(StringBounder stringBounder) {
+    public final double getArrowOnlyWidth(StringBounder stringBounder) {
 		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;
 	}
 

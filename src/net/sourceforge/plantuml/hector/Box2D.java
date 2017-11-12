@@ -41,10 +41,10 @@ import net.sourceforge.plantuml.geom.LineSegmentDouble;
 
 public class Box2D {
 
-	final private double x1;
-	final private double y1;
-	final private double x2;
-	final private double y2;
+	private final double x1;
+	private final double y1;
+	private final double x2;
+	private final double y2;
 
 	private Box2D(double x1, double y1, double x2, double y2) {
 		this.x1 = x1;

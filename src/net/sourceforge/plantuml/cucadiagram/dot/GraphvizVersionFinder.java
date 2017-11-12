@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizVersionFinder {
 
-	final private File dotExe;
-	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {
+	private final File dotExe;
+	public static final GraphvizVersion DEFAULT = new GraphvizVersion() {
 		public boolean useShield() {
 			return true;
 		}

@@ -77,9 +77,9 @@ abstract class AbstractGraphviz implements Graphviz {
 		return new File(skinParam.getDotExecutable());
 	}
 
-	abstract protected File specificDotExe();
+	protected abstract File specificDotExe();
 
-	final public ProcessState createFile3(OutputStream os) {
+	public final ProcessState createFile3(OutputStream os) {
 		if (dotString == null) {
 			throw new IllegalArgumentException();
 		}
@@ -125,11 +125,11 @@ abstract class AbstractGraphviz implements Graphviz {
 		return state;
 	}
 
-	final public ExeState getExeState() {
+	public final ExeState getExeState() {
 		return ExeState.checkFile(dotExe);
 	}
 
-	final public String dotVersion() {
+	public final String dotVersion() {
 		final String cmd[] = getCommandLineVersion();
 		return executeCmd(cmd);
 	}

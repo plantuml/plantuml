@@ -80,7 +80,7 @@ class ExtremityCircleCrowfoot extends Extremity {
 		ug.apply(new UTranslate(contact.getX()+circleBase.getX()-radius, contact.getY()+circleBase.getY()-radius)).draw(new UEllipse(2*radius, 2*radius));
 	}
 
-	static private void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
+	private static void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
 		final double dx = p2.getX() - p1.getX();
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));

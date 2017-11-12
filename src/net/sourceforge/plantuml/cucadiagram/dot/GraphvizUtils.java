@@ -98,7 +98,7 @@ public class GraphvizUtils {
 		return false;
 	}
 
-	static public File getDotExe() {
+	public static File getDotExe() {
 		return create(null, "png").getDotExe();
 	}
 
@@ -182,7 +182,7 @@ public class GraphvizUtils {
 		return retrieveVersion(dotVersion());
 	}
 
-	static public List<String> getTestDotStrings(boolean withRichText) {
+	public static List<String> getTestDotStrings(boolean withRichText) {
 		String red = "";
 		String bold = "";
 		if (withRichText) {

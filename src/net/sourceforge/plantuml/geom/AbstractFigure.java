@@ -54,13 +54,13 @@ abstract class AbstractFigure {
 	}
 
 	@Override
-	final public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
 		final AbstractFigure other = (AbstractFigure) obj;
 		return segments.equals(other.segments);
 	}
 
 	@Override
-	final public int hashCode() {
+    public final int hashCode() {
 		return segments.hashCode();
 	}
 
@@ -231,7 +231,7 @@ abstract class AbstractFigure {
 		return result;
 	}
 
-	static private double distance(Point2DInt p1, Point2DInt p2) {
+	private static double distance(Point2DInt p1, Point2DInt p2) {
 		return new LineSegmentInt(p1, p2).getLength();
 	}
 

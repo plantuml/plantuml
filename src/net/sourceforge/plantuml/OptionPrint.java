@@ -55,14 +55,14 @@ import net.sourceforge.plantuml.version.Version;
 
 public class OptionPrint {
 
-	static public void printTestDot() throws InterruptedException {
+	public static void printTestDot() throws InterruptedException {
 		for (String s : GraphvizUtils.getTestDotStrings(false)) {
 			System.out.println(s);
 		}
 		exit();
 	}
 
-	static public void printHelp() throws InterruptedException {
+	public static void printHelp() throws InterruptedException {
 
 		final String charset = Charset.defaultCharset().displayName();
 
@@ -148,7 +148,7 @@ public class OptionPrint {
 		exit();
 	}
 
-	static private void exit() throws InterruptedException {
+	private static void exit() throws InterruptedException {
 		if (OptionFlags.getInstance().isSystemExit()) {
 			System.exit(0);
 		}

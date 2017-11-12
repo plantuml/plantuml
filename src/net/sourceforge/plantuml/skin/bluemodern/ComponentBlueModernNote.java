@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-final public class ComponentBlueModernNote extends AbstractTextualComponent {
+public final class ComponentBlueModernNote extends AbstractTextualComponent {
 
 	private final int shadowview = 4;
 	private final int cornersize = 10;
@@ -67,13 +67,13 @@ final public class ComponentBlueModernNote extends AbstractTextualComponent {
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
+    public final double getPreferredWidth(StringBounder stringBounder) {
 		final double result = getTextWidth(stringBounder) + 2 * getPaddingX();
 		return result;
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return getTextHeight(stringBounder) + 2 * getPaddingY();
 	}
 

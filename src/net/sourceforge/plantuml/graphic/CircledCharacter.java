@@ -81,11 +81,11 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 		ug.draw(new UCenteredCharacter(c.charAt(0), font));
 	}
 
-	final public double getPreferredWidth(StringBounder stringBounder) {
+	public final double getPreferredWidth(StringBounder stringBounder) {
 		return 2 * radius;
 	}
 
-	final public double getPreferredHeight(StringBounder stringBounder) {
+	public final double getPreferredHeight(StringBounder stringBounder) {
 		return 2 * radius;
 	}
 

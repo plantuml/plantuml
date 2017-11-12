@@ -143,12 +143,12 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return rose.getHtmlColor(skinParam, colorParam, stereo);
 	}
 
-	final public double getPreferredWidth(StringBounder stringBounder) {
+	public final double getPreferredWidth(StringBounder stringBounder) {
 		final double result = getTextWidth(stringBounder);
 		return result;
 	}
 
-	final public double getPreferredHeight(StringBounder stringBounder) {
+	public final double getPreferredHeight(StringBounder stringBounder) {
 		return getTextHeight(stringBounder);
 	}
 
@@ -156,23 +156,23 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return textBlock.calculateDimension(stringBounder);
 	}
 
-	final protected double getTextHeight(StringBounder stringBounder) {
+	protected final double getTextHeight(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
 		final Dimension2D size = getSize(stringBounder, textBlock);
 		return size.getHeight() + 2 * marginY;
 	}
 
-	final protected TextBlock getTextBlock() {
+	protected final TextBlock getTextBlock() {
 		return textBlock;
 	}
 
-	final protected double getPureTextWidth(StringBounder stringBounder) {
+	protected final double getPureTextWidth(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
 		final Dimension2D size = getSize(stringBounder, textBlock);
 		return size.getWidth();
 	}
 
-	final public double getTextWidth(StringBounder stringBounder) {
+	public final double getTextWidth(StringBounder stringBounder) {
 		return getPureTextWidth(stringBounder) + marginX1 + marginX2;
 	}
 
@@ -182,7 +182,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return new Dimension2DDouble(width, height);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final Url url = getEntity().getUrl99();
 		if (url != null) {
 			ug.startUrl(url);

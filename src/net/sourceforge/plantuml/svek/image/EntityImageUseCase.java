@@ -69,9 +69,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageUseCase extends AbstractEntityImage {
 
-	final private TextBlock desc;
+	private final TextBlock desc;
 
-	final private Url url;
+	private final Url url;
 
 	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
@@ -105,7 +105,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
 		if (getSkinParam().shadowing()) {

@@ -63,7 +63,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		return true;
 	}
 
-	final protected void registerDriver(Class<? extends UShape> cl, UDriver<O> driver) {
+	protected final void registerDriver(Class<? extends UShape> cl, UDriver<O> driver) {
 		this.drivers.put(cl, driver);
 	}
 

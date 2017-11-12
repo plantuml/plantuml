@@ -41,8 +41,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class FtileDecoratePointOut extends FtileDecorate {
 
-	final private double dx;
-	final private double dy;
+	private final double dx;
+	private final double dy;
 
 	public FtileDecoratePointOut(final Ftile ftile, final double dx, double dy) {
 		super(ftile);

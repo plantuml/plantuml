@@ -89,7 +89,7 @@ public class World implements MoveObserver {
 		return result;
 	}
 
-	static private VectorForce getElectricForce(Point2DCharge onThis, Point2DCharge byThis) {
+	private static VectorForce getElectricForce(Point2DCharge onThis, Point2DCharge byThis) {
 		final double dist = onThis.distance(byThis);
 		if (dist == 0) {
 			return new VectorForce(0, 0);
@@ -99,7 +99,7 @@ public class World implements MoveObserver {
 		return result.normaliseTo(v);
 	}
 
-	static private VectorForce getAtomicForce(Point2DCharge onThis, Point2DCharge byThis) {
+	private static VectorForce getAtomicForce(Point2DCharge onThis, Point2DCharge byThis) {
 		final double dist = onThis.distance(byThis);
 		if (dist == 0) {
 			return new VectorForce(0, 0);

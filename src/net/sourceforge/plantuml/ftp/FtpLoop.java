@@ -60,10 +60,10 @@ class FtpLoop implements Runnable {
 		ACTIF, PASSIF
 	};
 
-	final private Socket incoming;
-	final private FtpServer ftpServer;
-	final private BufferedReader br;
-	final private PrintWriter pw;
+	private final Socket incoming;
+	private final FtpServer ftpServer;
+	private final BufferedReader br;
+	private final PrintWriter pw;
 
 	private FtpConnexion connexion;
 	private String ipClient = null;

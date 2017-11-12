@@ -48,7 +48,7 @@ public enum Month {
 		this.daysPerMonth = daysPerMonth;
 	}
 
-	static public String getRegexString() {
+	public static String getRegexString() {
 		final StringBuilder sb = new StringBuilder();
 		for (Month month : Month.values()) {
 			if (sb.length() > 0) {

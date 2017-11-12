@@ -78,16 +78,16 @@ public class GraphicsSudoku {
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
 
-	final private int xOffset = 5;
-	final private int yOffset = 5;
+	private final int xOffset = 5;
+	private final int yOffset = 5;
 
-	final private int cellWidth = 30;
-	final private int cellHeight = 32;
+	private final int cellWidth = 30;
+	private final int cellHeight = 32;
 
-	final private int numberxOffset = 10;
-	final private int numberyOffset = 5;
+	private final int numberxOffset = 10;
+	private final int numberyOffset = 5;
 
-	final private int textTotalHeight = 50;
+	private final int textTotalHeight = 50;
 
 	private BufferedImage createImage() {
 		final int boldWidth = 3;

@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 class AtomEmbededSystem implements Atom {
 
-	final private List<CharSequence2> lines2;
+	private final List<CharSequence2> lines2;
 
 	public AtomEmbededSystem(EmbededDiagram sys) {
 		this.lines2 = sys.getLines().as2();

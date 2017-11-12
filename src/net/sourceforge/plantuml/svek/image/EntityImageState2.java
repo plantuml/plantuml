@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class EntityImageState2 extends AbstractEntityImage {
 
-	final private Url url;
+	private final Url url;
 
-	final private LineConfigurable lineConfig;
+	private final LineConfigurable lineConfig;
 
 	private final TextBlock asSmall;
 
@@ -107,7 +107,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		return asSmall.calculateDimension(stringBounder);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
 		}

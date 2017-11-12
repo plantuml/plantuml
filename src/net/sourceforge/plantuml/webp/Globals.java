@@ -755,12 +755,12 @@ public class Globals {
 			-dct_cat5, -dct_cat6 /* cat4 = "1111110", cat4 = "1111111" */
 	};
 
-	public final static int Pcat1[] = { 159, 0 };
-	public final static int Pcat2[] = { 165, 145, 0 };
-	public final static int Pcat3[] = { 173, 148, 140, 0 };
-	public final static int Pcat4[] = { 176, 155, 140, 135, 0 };
-	public final static int Pcat5[] = { 180, 157, 141, 134, 130, 0 };
-	public final static int Pcat6[] = { 254, 254, 243, 230, 196, 177, 153, 140,
+	public static final int Pcat1[] = { 159, 0 };
+	public static final int Pcat2[] = { 165, 145, 0 };
+	public static final int Pcat3[] = { 173, 148, 140, 0 };
+	public static final int Pcat4[] = { 176, 155, 140, 135, 0 };
+	public static final int Pcat5[] = { 180, 157, 141, 134, 130, 0 };
+	public static final int Pcat6[] = { 254, 254, 243, 230, 196, 177, 153, 140,
 			133, 130, 129, 0 };
 	public static final int vp8CoefBands[] = { 0, 1, 2, 3, 6, 4, 5, 6, 6, 6, 6,
 			6, 6, 6, 6, 7 };

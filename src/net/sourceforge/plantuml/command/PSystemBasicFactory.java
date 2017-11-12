@@ -66,7 +66,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 		return result.trin().length() == 0;
 	}
 
-	final public Diagram createSystem(UmlSource source) {
+	public final Diagram createSystem(UmlSource source) {
 		final IteratorCounter2 it = source.iterator2();
 		final CharSequence2 startLine = it.next();
 		P system = init(startLine.toString2());

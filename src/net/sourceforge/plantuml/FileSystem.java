@@ -43,7 +43,7 @@ import java.util.StringTokenizer;
 
 public class FileSystem {
 
-	private final static FileSystem singleton = new FileSystem();
+	private static final FileSystem singleton = new FileSystem();
 
 	private final ThreadLocal<File> currentDir = new ThreadLocal<File>();
 

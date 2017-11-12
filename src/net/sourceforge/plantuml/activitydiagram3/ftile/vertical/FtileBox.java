@@ -84,7 +84,7 @@ public class FtileBox extends AbstractFtile {
 	private final BoxStyle style;
 	// private final ISkinParam skinParam;
 
-	final public LinkRendering getInLinkRendering() {
+	public final LinkRendering getInLinkRendering() {
 		return inRenreding;
 	}
 
@@ -129,7 +129,7 @@ public class FtileBox extends AbstractFtile {
 		this.print = label.toString();
 	}
 
-	final private String print;
+	private final String print;
 
 	@Override
 	public String toString() {

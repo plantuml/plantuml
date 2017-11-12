@@ -71,7 +71,7 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+    protected final ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final UGraphic ug = createImage(fileFormatOption);
 		drawU(ug);

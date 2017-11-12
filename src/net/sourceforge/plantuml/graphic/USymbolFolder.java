@@ -47,12 +47,12 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class USymbolFolder extends USymbol {
 
-	private final static int marginTitleX1 = 3;
-	private final static int marginTitleX2 = 3;
-	private final static int marginTitleX3 = 7;
-	private final static int marginTitleY0 = 0;
-	private final static int marginTitleY1 = 3;
-	private final static int marginTitleY2 = 3;
+	private static final int marginTitleX1 = 3;
+	private static final int marginTitleX2 = 3;
+	private static final int marginTitleX3 = 7;
+	private static final int marginTitleY0 = 0;
+	private static final int marginTitleY1 = 3;
+	private static final int marginTitleY2 = 3;
 
 	private final SkinParameter skinParameter;
 

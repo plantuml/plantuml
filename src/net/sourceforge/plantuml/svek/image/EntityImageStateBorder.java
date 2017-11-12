@@ -102,7 +102,7 @@ public class EntityImageStateBorder extends AbstractEntityImage {
 		return dimDesc.getWidth();
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 
 		double y = 0;
 		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());

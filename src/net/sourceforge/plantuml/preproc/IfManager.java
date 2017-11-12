@@ -61,7 +61,7 @@ class IfManager implements ReadLine {
 		this.source = source;
 	}
 
-	final public CharSequence2 readLine() throws IOException {
+	public final CharSequence2 readLine() throws IOException {
 		if (child != null) {
 			final CharSequence2 s = child.readLine();
 			if (s != null) {

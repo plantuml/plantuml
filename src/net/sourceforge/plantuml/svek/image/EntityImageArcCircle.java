@@ -91,7 +91,7 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 		return stereo.calculateDimension(stringBounder);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimStereo = getStereoDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimension(stringBounder);

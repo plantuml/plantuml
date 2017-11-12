@@ -50,8 +50,8 @@ public class ConstraintSet {
 
 	private final ParticipantBoxSimple lastborder;
 
-	final private List<Pushable> participantList = new ArrayList<Pushable>();
-	final private Map<List<Pushable>, Constraint> constraints = new HashMap<List<Pushable>, Constraint>();
+	private final List<Pushable> participantList = new ArrayList<Pushable>();
+	private final Map<List<Pushable>, Constraint> constraints = new HashMap<List<Pushable>, Constraint>();
 
 	public ConstraintSet(Collection<? extends Pushable> all, double freeX) {
 		this.participantList.add(firstBorder = new ParticipantBoxSimple(0, "LEFT"));

@@ -39,8 +39,8 @@ import java.util.Random;
 
 public class Oven {
 
-	final private double temp;
-	final private CostComputer costComputer;
+	private final double temp;
+	private final CostComputer costComputer;
 
 	public Oven(double temp, CostComputer costComputer) {
 		this.temp = temp;

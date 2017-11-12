@@ -379,7 +379,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find while");
 	}
 
-	final public CommandExecutionResult kill() {
+	public final CommandExecutionResult kill() {
 		if (current().kill() == false) {
 			return CommandExecutionResult.error("kill cannot be used here");
 		}

@@ -83,9 +83,9 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 class ImageWindow2 extends JFrame {
 
-	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
-	private final static String KEY_ZOOM_FIT = "zoomfit";
-	private final static String KEY_WIDTH_FIT = "widthfit";
+	private static final Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
+	private static final String KEY_ZOOM_FIT = "zoomfit";
+	private static final String KEY_WIDTH_FIT = "widthfit";
 
 	private SimpleLine2 simpleLine2;
 	private final JScrollPane scrollPane;

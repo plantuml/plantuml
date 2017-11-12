@@ -71,7 +71,7 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	}
 
 	@Override
-	final public double getArrowOnlyWidth(StringBounder stringBounder) {
+    public final double getArrowOnlyWidth(StringBounder stringBounder) {
 		return arrow.getPreferredWidth(stringBounder);
 	}
 

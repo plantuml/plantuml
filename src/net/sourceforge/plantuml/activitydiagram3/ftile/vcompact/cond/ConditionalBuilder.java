@@ -103,9 +103,9 @@ public class ConditionalBuilder {
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
-			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
+	public static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+                               FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+                               ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
 		if (isEmptyOrOnlySingleStop(branch2) && isEmptyOrOnlySingleStop(branch1) == false) {

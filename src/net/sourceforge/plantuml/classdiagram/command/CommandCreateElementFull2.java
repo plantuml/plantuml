@@ -99,7 +99,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 
 	@Override
-	final protected boolean isForbidden(CharSequence line) {
+    protected final boolean isForbidden(CharSequence line) {
 		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
 			return true;
 		}

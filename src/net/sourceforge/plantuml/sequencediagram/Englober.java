@@ -56,11 +56,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Englober {
 
-	final private ParticipantEnglober participantEnglober;
-	final private List<Participant> participants = new ArrayList<Participant>();
-	final private TileArguments tileArguments;
-	final private Real core1;
-	final private Real core2;
+	private final ParticipantEnglober participantEnglober;
+	private final List<Participant> participants = new ArrayList<Participant>();
+	private final TileArguments tileArguments;
+	private final Real core1;
+	private final Real core2;
 
 	@Deprecated
 	public Englober(ParticipantEnglober participantEnglober, Participant first, ISkinParam skinParam, Skin skin,

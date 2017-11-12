@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class TextTable {
 
-	private final static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+	private static final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
 	static interface TextLine {
 		public int nbCols();

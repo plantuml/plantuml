@@ -73,7 +73,7 @@ public class PSystemProject2 extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final GanttDiagram2 diagram = new GanttDiagram2(project);
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();

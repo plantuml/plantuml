@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	private final TextBlock desc;
-	private final static int MARGIN = 10;
+	private static final int MARGIN = 10;
 	private final HtmlColor specificBackColor;
 	private final ISkinParam skinParam;
 	private final Stereotype stereotype;
@@ -111,7 +111,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		return stroke;
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
 		}

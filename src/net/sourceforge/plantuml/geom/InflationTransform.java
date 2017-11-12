@@ -76,7 +76,7 @@ public class InflationTransform {
 		add(inflateY, ypos, inflation);
 	}
 
-	static private void add(List<InflateData> list, int ypos, int inflation) {
+	private static void add(List<InflateData> list, int ypos, int inflation) {
 		for (final ListIterator<InflateData> it = list.listIterator(); it.hasNext();) {
 			final InflateData cur = it.next();
 			if (cur.getPos() == ypos) {

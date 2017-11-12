@@ -63,10 +63,10 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
  * @author Arnaud Roques
  * 
  */
-final public class UmlSource {
+public final class UmlSource {
 
-	final private List<String> source;
-	final private List<CharSequence2> source2;
+	private final List<String> source;
+	private final List<CharSequence2> source2;
 
 	// final private int startLine;
 	// final private LineLocation startLocation;

@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class ColorChange implements FontChange {
 
-	static private final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontColorPattern2);
+	private static final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontColorPattern2);
 
 	private final HtmlColor color;
 

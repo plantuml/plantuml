@@ -72,7 +72,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		cmds = createCommands();
 	}
 
-	final public Diagram createSystem(UmlSource source) {
+	public final Diagram createSystem(UmlSource source) {
 		final IteratorCounter2 it = source.iterator2();
 		final CharSequence2 startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
@@ -236,7 +236,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	// -----------------------------------
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(lines);
 			if (result == CommandControl.OK) {
@@ -264,7 +264,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	public abstract AbstractPSystem createEmptyDiagram();
 
-	final protected void addCommonCommands(List<Command> cmds) {
+	protected final void addCommonCommands(List<Command> cmds) {
 		cmds.add(new CommandNope());
 //		cmds.add(new CommandComment());
 //		cmds.add(new CommandMultilinesComment());
@@ -303,7 +303,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	}
 
-	final public List<String> getDescription() {
+	public final List<String> getDescription() {
 		final List<String> result = new ArrayList<String>();
 		for (Command cmd : createCommands()) {
 			result.addAll(Arrays.asList(cmd.getDescription()));

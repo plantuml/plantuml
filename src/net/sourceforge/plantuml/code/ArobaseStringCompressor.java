@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.preproc.UncommentReadLine;
 
 public class ArobaseStringCompressor implements StringCompressor {
 
-	private final static Pattern2 p = MyPattern.cmpile("(?s)(?i)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+	private static final Pattern2 p = MyPattern.cmpile("(?s)(?i)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
 
 	public String compress(final String data) throws IOException {
 		final ReadLine r = new UncommentReadLine(new ReadLineReader(new StringReader(data), "COMPRESS"));

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class Diamond {
 
-	final static public double diamondHalfSize = 12;
+	public static final double diamondHalfSize = 12;
 
 	public static UPolygon asPolygon(boolean shadowing) {
 		final UPolygon diams = new UPolygon();

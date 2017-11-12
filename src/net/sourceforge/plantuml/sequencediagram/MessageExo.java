@@ -40,9 +40,9 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public class MessageExo extends AbstractMessage {
 
-	final private MessageExoType type;
-	final private Participant participant;
-	final private boolean shortArrow;
+	private final MessageExoType type;
+	private final Participant participant;
+	private final boolean shortArrow;
 
 	public MessageExo(Participant p, MessageExoType type, Display label, ArrowConfiguration arrowConfiguration,
 			String messageNumber, boolean shortArrow) {

@@ -54,7 +54,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		super(DiagramType.UML);
 	}
 
-	final public Diagram createSystem(UmlSource source) {
+	public final Diagram createSystem(UmlSource source) {
 
 		if (source.getTotalLineCount() != 3) {
 			return null;

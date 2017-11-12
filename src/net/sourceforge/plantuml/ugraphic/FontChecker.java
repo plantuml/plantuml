@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.svg.SvgGraphics;
 
 public class FontChecker {
 
-	final private UFont font;
+	private final UFont font;
 	private static final Set<String> SQUARRE = new HashSet<String>(Arrays.asList("MI=I=XM=I=IX",
 			"MI=I=XM=I=IXMI=I=XM=I=IX"));
 
@@ -77,7 +77,7 @@ public class FontChecker {
 		return SQUARRE.contains(getCharDesc(c)) == false;
 	}
 
-	static private String getType(int type, double oldX, double oldY, double x, double y) {
+	private static String getType(int type, double oldX, double oldY, double x, double y) {
 		if (type == PathIterator.SEG_CLOSE) {
 			return "X";
 		}

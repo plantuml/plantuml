@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 
 public class URectangleHand {
 
-	final private UPolygon poly;
+	private final UPolygon poly;
 
 	public URectangleHand(URectangle rectangle) {
 		final double width = rectangle.getWidth();

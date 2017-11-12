@@ -69,7 +69,7 @@ public class PSystemDefinition extends AbstractPSystem implements UDrawable {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1, null, "", "", 0, 0, null,
 				false);

@@ -65,7 +65,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		return new Dimension2DDouble(80, 8);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		final Shadowable rect = new URectangle(dim.getWidth(), dim.getHeight());
 		if (getSkinParam().shadowing()) {

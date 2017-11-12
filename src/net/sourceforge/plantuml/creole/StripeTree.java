@@ -44,10 +44,10 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 public class StripeTree implements Stripe {
 
 	private FontConfiguration fontConfiguration;
-	final private ISkinSimple skinParam;
-	final private AtomTree tree;
-	final private Atom marged;
-	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.TREE, 0, '\0');
+	private final ISkinSimple skinParam;
+	private final AtomTree tree;
+	private final Atom marged;
+	private final StripeStyle stripeStyle = new StripeStyle(StripeStyleType.TREE, 0, '\0');
 
 	public StripeTree(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {
 		this.fontConfiguration = fontConfiguration;

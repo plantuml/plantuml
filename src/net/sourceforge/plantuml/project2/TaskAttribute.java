@@ -39,7 +39,7 @@ public enum TaskAttribute {
 
 	START, END, COMPLETED, DURATION, LOAD;
 
-	static public TaskAttribute fromString(String n) {
+	public static TaskAttribute fromString(String n) {
 		if (n.equalsIgnoreCase("begin")) {
 			return START;
 		}

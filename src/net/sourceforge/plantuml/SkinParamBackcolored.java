@@ -43,9 +43,9 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamBackcolored extends SkinParamDelegator {
 
-	final private HtmlColor backColorElement;
-	final private HtmlColor backColorGeneral;
-	final private boolean forceClickage;
+	private final HtmlColor backColorElement;
+	private final HtmlColor backColorGeneral;
+	private final boolean forceClickage;
 
 	public SkinParamBackcolored(ISkinParam skinParam, HtmlColor backColorElement) {
 		this(skinParam, backColorElement, null, false);

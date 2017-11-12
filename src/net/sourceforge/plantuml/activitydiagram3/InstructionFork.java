@@ -97,7 +97,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		this.forks.add(new InstructionList());
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		return getLastList().kill();
 	}
 

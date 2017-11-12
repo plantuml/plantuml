@@ -67,7 +67,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		return starting;
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}

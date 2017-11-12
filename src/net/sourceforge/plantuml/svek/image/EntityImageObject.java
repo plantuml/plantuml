@@ -75,13 +75,13 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageObject extends AbstractEntityImage implements Stencil {
 
-	final private TextBlock name;
-	final private TextBlock stereo;
-	final private TextBlock fields;
-	final private Url url;
-	final private double roundCorner;
+	private final TextBlock name;
+	private final TextBlock stereo;
+	private final TextBlock fields;
+	private final Url url;
+	private final double roundCorner;
 
-	final private LineConfigurable lineConfig;
+	private final LineConfigurable lineConfig;
 
 	public EntityImageObject(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
@@ -124,7 +124,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		return new Dimension2DDouble(width, height);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimTitle = getTitleDimension(stringBounder);

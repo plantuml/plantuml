@@ -76,7 +76,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		return parallel;
 	}
 
-	final public Url getUrl() {
+	public final Url getUrl() {
 		if (url == null) {
 			for (NoteOnMessage n : noteOnMessages) {
 				if (n.getUrlNote() != null) {

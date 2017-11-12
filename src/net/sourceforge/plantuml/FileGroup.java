@@ -51,7 +51,7 @@ public class FileGroup {
 	private final List<String> excluded;
 	private final Option option;
 
-	private final static Pattern2 predirPath = MyPattern.cmpile("^([^*?]*[/\\\\])?(.*)$");
+	private static final Pattern2 predirPath = MyPattern.cmpile("^([^*?]*[/\\\\])?(.*)$");
 
 	public FileGroup(String pattern, List<String> excluded, Option option) {
 		this.pattern = pattern;
@@ -125,7 +125,7 @@ public class FileGroup {
 		return f.getPath().replace('\\', '/');
 	}
 
-	private final static Pattern2 noStarInDirectory = MyPattern.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
+	private static final Pattern2 noStarInDirectory = MyPattern.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
 
 	private void initWithSimpleStar() {
 		assert pattern.indexOf("**") == -1;

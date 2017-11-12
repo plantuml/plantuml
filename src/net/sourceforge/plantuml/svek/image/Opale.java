@@ -85,11 +85,11 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		this.pp2 = pp2;
 	}
 
-	final private double getWidth(StringBounder stringBounder) {
+	private final double getWidth(StringBounder stringBounder) {
 		return textBlock.calculateDimension(stringBounder).getWidth() + marginX1 + marginX2;
 	}
 
-	final private double getHeight(StringBounder stringBounder) {
+	private final double getHeight(StringBounder stringBounder) {
 		final Dimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + 2 * marginY;
 	}
@@ -100,7 +100,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		return new Dimension2DDouble(width, height);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final UPolygon polygon = getPolygonNormal(stringBounder);

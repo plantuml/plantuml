@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class PSystemListOpenIconic extends AbstractPSystem {
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,

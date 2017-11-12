@@ -548,7 +548,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		return e;
 	}
 
-	static private List<String> getFailureText3(Throwable exception) {
+	private static List<String> getFailureText3(Throwable exception) {
 		exception.printStackTrace();
 		final List<String> strings = new ArrayList<String>();
 		strings.add("An error has occured : " + exception);

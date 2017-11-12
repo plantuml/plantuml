@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageTips extends AbstractEntityImage {
 
-	final private Rose rose = new Rose();
+	private final Rose rose = new Rose();
 	private final ISkinParam skinParam;
 
 	private final HtmlColor noteBackgroundColor;

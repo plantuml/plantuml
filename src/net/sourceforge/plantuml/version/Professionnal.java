@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.dedication.QBlocks;
 
 public class Professionnal {
 
-	final private static Preferences prefs = Preferences.userNodeForPackage(Professionnal.class);
+	private static final Preferences prefs = Preferences.userNodeForPackage(Professionnal.class);
 
 	private final String hostname;
 	private final String organization;

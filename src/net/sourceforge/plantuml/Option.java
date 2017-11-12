@@ -91,13 +91,13 @@ public class Option {
 
 	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
 
-	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")
-	final public void setFileFormat(FileFormat fileFormat) {
+    @Deprecated
+    public final void setFileFormat(FileFormat fileFormat) {
 		setFileFormatOption(new FileFormatOption(fileFormat));
 	}
 
-	final public void setFileFormatOption(FileFormatOption newFormat) {
+	public final void setFileFormatOption(FileFormatOption newFormat) {
 		this.fileFormatOption = newFormat;
 	}
 
@@ -405,7 +405,7 @@ public class Option {
 		return outputDir;
 	}
 
-	public final static String getPattern() {
+	public static final String getPattern() {
 		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu)$";
 	}
 

@@ -61,7 +61,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd() };
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		lines = lines.cleanList2(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;

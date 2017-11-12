@@ -44,7 +44,7 @@ public class Singularity {
 
 	private final TreeSet<Double> angles = new TreeSet<Double>();
 
-	final private Point2DInt center;
+	private final Point2DInt center;
 
 	public Singularity(Point2DInt center) {
 		this.center = center;

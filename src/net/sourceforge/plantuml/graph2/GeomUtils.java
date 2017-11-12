@@ -45,31 +45,31 @@ public class GeomUtils {
 		return new Point2D.Double(pt.getX() + deltaX, pt.getY() + deltaY);
 	}
 
-	static public boolean isHorizontal(Line2D.Double seg) {
+	public static boolean isHorizontal(Line2D.Double seg) {
 		return seg.getP1().getY() == seg.getP2().getY();
 	}
 
-	static public boolean isVertical(Line2D.Double seg) {
+	public static boolean isVertical(Line2D.Double seg) {
 		return seg.getP1().getX() == seg.getP2().getX();
 	}
 
-	static public double getMinX(Line2D.Double seg) {
+	public static double getMinX(Line2D.Double seg) {
 		return Math.min(seg.x1, seg.x2);
 	}
 
-	static public double getMaxX(Line2D.Double seg) {
+	public static double getMaxX(Line2D.Double seg) {
 		return Math.max(seg.x1, seg.x2);
 	}
 
-	static public double getMinY(Line2D.Double seg) {
+	public static double getMinY(Line2D.Double seg) {
 		return Math.min(seg.y1, seg.y2);
 	}
 
-	static public double getMaxY(Line2D.Double seg) {
+	public static double getMaxY(Line2D.Double seg) {
 		return Math.max(seg.y1, seg.y2);
 	}
 
-	static public Point2D.Double getPoint2D(Line2D.Double line, double u) {
+	public static Point2D.Double getPoint2D(Line2D.Double line, double u) {
 		final double x = line.x1 + u * (line.x2 - line.x1);
 		final double y = line.y1 + u * (line.y2 - line.y1);
 		return new Point2D.Double(x, y);
@@ -88,7 +88,7 @@ public class GeomUtils {
 		return isBetween(toTest.getX(), pos1.getX(), pos2.getX()) && isBetween(toTest.getY(), pos1.getY(), pos2.getY());
 	}
 
-	static private double getIntersectionVertical(Line2D.Double line, double xOther) {
+	private static double getIntersectionVertical(Line2D.Double line, double xOther) {
 		final double coef = line.x2 - line.x1;
 		if (coef == 0) {
 			return java.lang.Double.NaN;
@@ -96,7 +96,7 @@ public class GeomUtils {
 		return (xOther - line.x1) / coef;
 	}
 
-	static private double getIntersectionHorizontal(Line2D.Double line, double yOther) {
+	private static double getIntersectionHorizontal(Line2D.Double line, double yOther) {
 		final double coef = line.y2 - line.y1;
 		if (coef == 0) {
 			return java.lang.Double.NaN;
@@ -104,7 +104,7 @@ public class GeomUtils {
 		return (yOther - line.y1) / coef;
 	}
 
-	static public Point2D.Double getSegIntersection(Line2D.Double line1, Line2D.Double line2) {
+	public static Point2D.Double getSegIntersection(Line2D.Double line1, Line2D.Double line2) {
 		final double u;
 		if (isVertical(line2)) {
 			u = getIntersectionVertical(line1, line2.getP1().getX());

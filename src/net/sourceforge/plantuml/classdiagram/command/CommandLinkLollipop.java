@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
-final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
+public final class CommandLinkLollipop extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
 	public CommandLinkLollipop(UmlDiagramType umlDiagramType) {
 		super(getRegexConcat(umlDiagramType));

@@ -55,9 +55,9 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence, Hideable {
-	private final static Pattern2 circleChar = MyPattern
+	private static final Pattern2 circleChar = MyPattern
 			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
-	private final static Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
+	private static final Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
 			+ ")[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
 
 	private final double radius;

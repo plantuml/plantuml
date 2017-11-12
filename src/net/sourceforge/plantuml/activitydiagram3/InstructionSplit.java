@@ -97,7 +97,7 @@ public class InstructionSplit implements Instruction {
 
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		return getLast().kill();
 	}
 

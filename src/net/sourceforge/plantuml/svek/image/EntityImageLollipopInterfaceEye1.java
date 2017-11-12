@@ -67,7 +67,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 	private static final int SIZE = 24;
 	private final TextBlock desc;
 	private final Bibliotekon bibliotekon;
-	final private Url url;
+	private final Url url;
 
 	public EntityImageLollipopInterfaceEye1(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
 		super(entity, skinParam);
@@ -83,7 +83,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		return new Dimension2DDouble(SIZE, SIZE);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		ug = ug.apply(new UChangeColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.classBorder, getStereo())));
 		ug = ug.apply(new UChangeBackColor(SkinParamUtils.getColor(getSkinParam(), ColorParam.classBackground,
 				getStereo())));

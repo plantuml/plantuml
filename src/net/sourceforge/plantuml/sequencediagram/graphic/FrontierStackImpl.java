@@ -42,8 +42,8 @@ import java.util.List;
 class FrontierStackImpl implements FrontierStack {
 
 	class Stack {
-		final private FrontierComplex current;
-		final private FrontierComplex envelop;
+		private final FrontierComplex current;
+		private final FrontierComplex envelop;
 
 		Stack(FrontierComplex current) {
 			this(current, null);
@@ -62,7 +62,7 @@ class FrontierStackImpl implements FrontierStack {
 		}
 	}
 
-	final private List<Stack> all;
+	private final List<Stack> all;
 
 	public FrontierStackImpl(double freeY, int rangeEnd) {
 		final Stack s = new Stack(new FrontierComplex(freeY, rangeEnd));

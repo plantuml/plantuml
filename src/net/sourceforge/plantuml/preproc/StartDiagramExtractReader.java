@@ -136,17 +136,17 @@ public class StartDiagramExtractReader implements ReadLine {
 		}
 	}
 
-	static public boolean containsStartDiagram(CharSequence2 s, File f, String charset) throws IOException {
+	public static boolean containsStartDiagram(CharSequence2 s, File f, String charset) throws IOException {
 		final ReadLine r = getReadLine(s, f, charset);
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(CharSequence2 s, URL url, String charset) throws IOException {
+	public static boolean containsStartDiagram(CharSequence2 s, URL url, String charset) throws IOException {
 		final ReadLine r = getReadLine(s, url, charset);
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(CharSequence2 s, InputStream is) throws IOException {
+	public static boolean containsStartDiagram(CharSequence2 s, InputStream is) throws IOException {
 		final ReadLine r = getReadLine(s, is);
 		return containsStartDiagram(r);
 	}

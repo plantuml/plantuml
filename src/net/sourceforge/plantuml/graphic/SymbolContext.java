@@ -67,7 +67,7 @@ public class SymbolContext {
 		return super.toString() + " backColor=" + backColor + " foreColor=" + foreColor;
 	}
 
-	final public UGraphic apply(UGraphic ug) {
+    public final UGraphic apply(UGraphic ug) {
 		ug = applyColors(ug);
 		ug = applyStroke(ug);
 		return ug;

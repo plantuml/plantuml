@@ -60,7 +60,7 @@ public class StringUtils {
 		return file.getAbsolutePath();
 	}
 
-	final static public List<String> getSplit(Pattern2 pattern, String line) {
+	public static final List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false) {
 			return null;

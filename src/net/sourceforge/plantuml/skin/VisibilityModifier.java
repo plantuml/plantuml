@@ -162,7 +162,7 @@ public enum VisibilityModifier {
 		ug.apply(new UTranslate(x + 2, y + 2)).draw(new UEllipse(size - 4, size - 4));
 	}
 
-	static private int ensureEven(int n) {
+	private static int ensureEven(int n) {
 		if (n % 2 == 1) {
 			n--;
 		}

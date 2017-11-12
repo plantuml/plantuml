@@ -39,8 +39,8 @@ public class Box implements XMoveable, Pointable {
 
 	private int x;
 	private int y;
-	final private int width;
-	final private int height;
+	private final int width;
+	private final int height;
 
 	public Box(int x, int y, int width, int height) {
 		if (width <= 0 || height <= 0) {

@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class EntityImageClassHeader2 extends AbstractEntityImage {
 
-	final private HeaderLayout headerLayout;
+	private final HeaderLayout headerLayout;
 
 	public EntityImageClassHeader2(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
@@ -186,7 +186,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		return headerLayout.getDimension(stringBounder);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		throw new UnsupportedOperationException();
 	}
 

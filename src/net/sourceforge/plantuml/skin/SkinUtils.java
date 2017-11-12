@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class SkinUtils {
 
-	static public Skin loadSkin(String className) {
+	public static Skin loadSkin(String className) {
 		final List<String> errors = new ArrayList<String>();
 		Skin result = tryLoading(className, errors);
 		if (result != null) {

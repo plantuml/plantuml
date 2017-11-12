@@ -59,7 +59,7 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final long tick = Long.parseLong(arg.get("TICK", 0));
 		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
 		diagram.scaleInPixels(tick, pixel);

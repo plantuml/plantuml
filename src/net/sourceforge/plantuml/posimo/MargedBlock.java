@@ -47,7 +47,7 @@ public class MargedBlock {
 	private final double marginDecorator;
 	private final Dimension2D imageDimension;
 
-	static private int uid = 1;
+	private static int uid = 1;
 
 	public MargedBlock(StringBounder stringBounder, IEntityImageBlock imageBlock, double marginDecorator, Cluster parent) {
 		this.imageBlock = imageBlock;

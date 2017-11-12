@@ -50,11 +50,11 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 @Deprecated
 public class DirWatcher {
 
-	final private File dir;
-	final private Option option;
-	final private String pattern;
+	private final File dir;
+	private final Option option;
+	private final String pattern;
 
-	final private Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
+	private final Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
 
 	public DirWatcher(File dir, Option option, String pattern) {
 		this.dir = dir;

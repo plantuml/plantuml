@@ -186,8 +186,8 @@ public class DrawableSet {
 		return result;
 	}
 
-	static private final int MARGIN_FOR_ENGLOBERS = 4;
-	static private final int MARGIN_FOR_ENGLOBERS1 = 2;
+	private static final int MARGIN_FOR_ENGLOBERS = 4;
+	private static final int MARGIN_FOR_ENGLOBERS1 = 2;
 
 	public double getTailHeight(StringBounder stringBounder, boolean showTail) {
 		final double marginForEnglobers = !getExistingParticipantEnglober(stringBounder).isEmpty() ? MARGIN_FOR_ENGLOBERS

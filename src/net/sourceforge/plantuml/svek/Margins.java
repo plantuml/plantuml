@@ -42,7 +42,7 @@ public class Margins {
 	private final double y1;
 	private final double y2;
 
-	static public Margins NONE = new Margins(0, 0, 0, 0);
+	public static Margins NONE = new Margins(0, 0, 0, 0);
 
 	public static Margins uniform(double value) {
 		return new Margins(value, value, value, value);

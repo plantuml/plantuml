@@ -105,7 +105,7 @@ public class EpsGraphics {
 	private int maxX = 10;
 	private int maxY = 10;
 
-	final protected void ensureVisible(double x, double y) {
+	protected final void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
 		}
@@ -558,17 +558,17 @@ public class EpsGraphics {
 		body.append(s + BackSlash.NEWLINE);
 	}
 
-	final public void linetoNoMacro(double x1, double y1) {
+	public final void linetoNoMacro(double x1, double y1) {
 		append(format(x1) + " " + format(y1) + " lineto", true);
 		ensureVisible(x1, y1);
 	}
 
-	final public void movetoNoMacro(double x1, double y1) {
+	public final void movetoNoMacro(double x1, double y1) {
 		append(format(x1) + " " + format(y1) + " moveto", true);
 		ensureVisible(x1, y1);
 	}
 
-	final public void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
+	public final void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
 		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " "
 				+ format(y3) + " curveto", true);
 		ensureVisible(x1, y1);
@@ -734,7 +734,7 @@ public class EpsGraphics {
 	}
 
 	// Shadow
-	final private ShadowManager shadowManager = new ShadowManager(50, 200);
+    private final ShadowManager shadowManager = new ShadowManager(50, 200);
 
 	public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
 			double deltaShadow) {

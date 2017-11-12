@@ -41,7 +41,7 @@ import java.util.HashSet;
 
 public class Quadrant {
 
-	static final private int SIZE = 100;
+	private static final int SIZE = 100;
 
 	private final int x;
 	private final int y;

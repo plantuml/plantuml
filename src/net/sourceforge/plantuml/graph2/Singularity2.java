@@ -46,7 +46,7 @@ public class Singularity2 {
 
 	private final TreeSet<Double> angles = new TreeSet<Double>();
 
-	final private Point2D.Double center;
+	private final Point2D.Double center;
 
 	public Singularity2(Point2D.Double center) {
 		this.center = center;

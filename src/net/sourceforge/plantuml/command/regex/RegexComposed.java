@@ -45,7 +45,7 @@ public abstract class RegexComposed implements IRegex {
 
 	private final List<IRegex> partials;
 
-	abstract protected Pattern2 getFull();
+	protected abstract Pattern2 getFull();
 
 	public RegexComposed(IRegex... partial) {
 		this.partials = Arrays.asList(partial);
@@ -59,7 +59,7 @@ public abstract class RegexComposed implements IRegex {
 		return result;
 	}
 
-	final public int count() {
+	public final int count() {
 		int cpt = getStartCount();
 		for (IRegex r : partials) {
 			cpt += r.count();
@@ -81,15 +81,15 @@ public abstract class RegexComposed implements IRegex {
 		return new RegexResult(createPartialMatch(it));
 	}
 
-	final public boolean match(String s) {
+	public final boolean match(String s) {
 		return getFull().matcher(s).find();
 	}
 
-	final public String getPattern() {
+	public final String getPattern() {
 		return getFull().pattern();
 	}
 
-	final protected List<IRegex> getPartials() {
+	protected final List<IRegex> getPartials() {
 		return partials;
 	}
 

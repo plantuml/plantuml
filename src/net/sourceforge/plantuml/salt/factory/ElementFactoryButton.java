@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryButton implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryButton(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;

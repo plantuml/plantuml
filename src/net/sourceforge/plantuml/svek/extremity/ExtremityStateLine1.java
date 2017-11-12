@@ -90,7 +90,7 @@ class ExtremityStateLine1 extends Extremity {
 		return new Point2D.Double(x, y);
 	}
 
-	static private void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
+	private static void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
 		final double dx = p2.getX() - p1.getX();
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(p1.getX(), p1.getY())).draw(new ULine(dx, dy));

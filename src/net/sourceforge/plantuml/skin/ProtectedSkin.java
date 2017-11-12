@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class ProtectedSkin implements Skin {
 
-	final private Skin skinToProtect;
+	private final Skin skinToProtect;
 
 	public ProtectedSkin(Skin skinToProtect) {
 		this.skinToProtect = skinToProtect;

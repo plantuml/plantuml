@@ -40,17 +40,17 @@ public abstract class Log {
 
 	private static final long start = System.currentTimeMillis();
 
-	public synchronized static void debug(String s) {
+	public static synchronized void debug(String s) {
 	}
 
-	public synchronized static void info(String s) {
+	public static synchronized void info(String s) {
 		if (OptionFlags.getInstance().isVerbose()) {
 			ProgressBar.clear();
 			System.err.println(format(s));
 		}
 	}
 
-	public synchronized static void error(String s) {
+	public static synchronized void error(String s) {
 		ProgressBar.clear();
 		System.err.println(s);
 	}

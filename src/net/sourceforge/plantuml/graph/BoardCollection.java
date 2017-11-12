@@ -41,8 +41,8 @@ import java.util.List;
 public class BoardCollection {
 
 	static class Entry implements Comparable<Entry> {
-		final private Board board;
-		final private double cost;
+		private final Board board;
+		private final double cost;
 		private boolean explored;
 
 		public Entry(Board b, CostComputer costComputer) {

@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
 
-	final private List<Atom> atoms = new ArrayList<Atom>();
-	final private List<Command> commands = new ArrayList<Command>();
+	private final List<Atom> atoms = new ArrayList<Atom>();
+	private final List<Command> commands = new ArrayList<Command>();
 	private HorizontalAlignment align = HorizontalAlignment.LEFT;
 
 	public void setCellAlignment(HorizontalAlignment align) {
@@ -68,8 +68,8 @@ public class StripeSimple implements Stripe {
 
 	private FontConfiguration fontConfiguration;
 
-	final private StripeStyle style;
-	final private ISkinSimple skinParam;
+	private final StripeStyle style;
+	private final ISkinSimple skinParam;
 
 	@Override
 	public String toString() {

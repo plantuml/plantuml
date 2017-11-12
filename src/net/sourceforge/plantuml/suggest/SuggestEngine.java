@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
-final public class SuggestEngine {
+public final class SuggestEngine {
 
 	private static final int LIMIT = 120;
 

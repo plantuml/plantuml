@@ -48,11 +48,11 @@ abstract class AbstractPolyline implements Polyline {
 	}
 
 	@Override
-	final public String toString() {
+    public final String toString() {
 		return segments().toString();
 	}
 
-	final public boolean doesTouch(Polyline other) {
+	public final boolean doesTouch(Polyline other) {
 		final boolean result = doesTouchInternal(other);
 		assert result == ((AbstractPolyline) other).doesTouchInternal(this);
 		return result;
@@ -76,15 +76,15 @@ abstract class AbstractPolyline implements Polyline {
 		return false;
 	}
 
-	final public LineSegmentInt getFirst() {
+	public final LineSegmentInt getFirst() {
 		return segments().get(0);
 	}
 
-	final public LineSegmentInt getLast() {
+	public final LineSegmentInt getLast() {
 		return segments().get(nbSegments() - 1);
 	}
 
-	final public double getLength() {
+	public final double getLength() {
 		double result = 0;
 		for (LineSegmentInt seg : segments()) {
 			result += seg.getLength();
@@ -92,7 +92,7 @@ abstract class AbstractPolyline implements Polyline {
 		return result;
 	}
 
-	final public Point2DInt clipStart(Box box) {
+	public final Point2DInt clipStart(Box box) {
 		assert box.doesIntersect(segments().get(0));
 		final Point2DInt inter[] = box.intersect(segments().get(0));
 		assert inter.length == 1;
@@ -103,7 +103,7 @@ abstract class AbstractPolyline implements Polyline {
 		return inter[0];
 	}
 
-	final public Point2DInt clipEnd(Box box) {
+	public final Point2DInt clipEnd(Box box) {
 		final int last = nbSegments() - 1;
 		if (last == -1) {
 			return null;
@@ -118,7 +118,7 @@ abstract class AbstractPolyline implements Polyline {
 		return inter[0];
 	}
 
-	final public boolean intersectBox(Box b) {
+	public final boolean intersectBox(Box b) {
 		for (LineSegmentInt seg : segments()) {
 			if (b.doesIntersect(seg)) {
 				return true;
@@ -127,7 +127,7 @@ abstract class AbstractPolyline implements Polyline {
 		return false;
 	}
 
-	final public double getDistance(Box b) {
+	public final double getDistance(Box b) {
 		double result = Double.MAX_VALUE;
 		for (LineSegmentInt seg : segments()) {
 			if (b.doesIntersect(seg)) {
@@ -137,7 +137,7 @@ abstract class AbstractPolyline implements Polyline {
 		return result;
 	}
 
-	final public double getDistance(Polyline other) {
+	public final double getDistance(Polyline other) {
 		double result = 0;
 		for (LineSegmentInt seg1 : segments()) {
 			for (LineSegmentInt seg2 : other.segments()) {
@@ -147,7 +147,7 @@ abstract class AbstractPolyline implements Polyline {
 		return result;
 	}
 
-	final public GeneralPath asGeneralPath() {
+	public final GeneralPath asGeneralPath() {
 		final GeneralPath generalPath = new GeneralPath();
 
 		for (LineSegmentInt seg : segments()) {
@@ -157,7 +157,7 @@ abstract class AbstractPolyline implements Polyline {
 		return generalPath;
 	}
 
-	final public int getMinX() {
+	public final int getMinX() {
 		int result = Integer.MAX_VALUE;
 		for (LineSegmentInt seg : segments()) {
 			result = Math.min(result, seg.getMinX());
@@ -165,7 +165,7 @@ abstract class AbstractPolyline implements Polyline {
 		return result;
 	}
 
-	final public int getMinY() {
+	public final int getMinY() {
 		int result = Integer.MAX_VALUE;
 		for (LineSegmentInt seg : segments()) {
 			result = Math.min(result, seg.getMinY());
@@ -173,7 +173,7 @@ abstract class AbstractPolyline implements Polyline {
 		return result;
 	}
 
-	final public int getMaxX() {
+	public final int getMaxX() {
 		int result = Integer.MIN_VALUE;
 		for (LineSegmentInt seg : segments()) {
 			result = Math.max(result, seg.getMaxX());
@@ -181,7 +181,7 @@ abstract class AbstractPolyline implements Polyline {
 		return result;
 	}
 
-	final public int getMaxY() {
+	public final int getMaxY() {
 		int result = Integer.MIN_VALUE;
 		for (LineSegmentInt seg : segments()) {
 			result = Math.max(result, seg.getMaxY());

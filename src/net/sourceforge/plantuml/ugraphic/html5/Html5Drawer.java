@@ -48,7 +48,7 @@ public class Html5Drawer {
 
 	private List<String> data = new ArrayList<String>();
 
-	final protected void ensureVisible(double x, double y) {
+	protected final void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
 		}

@@ -79,7 +79,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 		};
 	}
 
-	abstract protected TextBlock getDrawing(final SymbolContext symbolContext);
+	protected abstract TextBlock getDrawing(final SymbolContext symbolContext);
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, TextBlock stereotype,

@@ -109,8 +109,8 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 		return intersectSeveral(other, this);
 	}
 
-	static private long TPS1;
-	static private long TPS2;
+	private static long TPS1;
+	private static long TPS2;
 
 	private static boolean intersectSeveral(RectanglesCollection large, RectanglesCollection compact) {
 		assert large.size() >= compact.size();

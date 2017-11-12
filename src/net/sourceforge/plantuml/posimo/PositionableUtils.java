@@ -43,13 +43,13 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 
 public class PositionableUtils {
 
-	static public Rectangle2D convert(Positionable positionable) {
+	public static Rectangle2D convert(Positionable positionable) {
 		final Point2D position = positionable.getPosition();
 		final Dimension2D size = positionable.getSize();
 		return new Rectangle2D.Double(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 	}
 
-	static public boolean contains(Positionable positionable, Point2D p) {
+	public static boolean contains(Positionable positionable, Point2D p) {
 		final Point2D position = positionable.getPosition();
 		final Dimension2D size = positionable.getSize();
 		final double width = size.getWidth();
@@ -70,7 +70,7 @@ public class PositionableUtils {
 		return true;
 	}
 
-	static public boolean intersect(Positionable big, Positionable small) {
+	public static boolean intersect(Positionable big, Positionable small) {
 		final Rectangle2D bigR = convert(big);
 		final Rectangle2D smallR = convert(small);
 		return bigR.intersects(smallR);
@@ -100,7 +100,7 @@ public class PositionableUtils {
 	// return intersect(p.getPosition(), p.getSize());
 	// }
 
-	static public Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
+	public static Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
 		return new Positionable() {
 
 			public Point2D getPosition() {
@@ -122,13 +122,13 @@ public class PositionableUtils {
 		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
 	}
 
-	static public Point2D getCenter(Positionable p) {
+	public static Point2D getCenter(Positionable p) {
 		final Point2D pt = p.getPosition();
 		final Dimension2D dim = p.getSize();
 		return new Point2D.Double(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);
 	}
 
-	static public Positionable move(Positionable p, double deltaX, double deltaY) {
+	public static Positionable move(Positionable p, double deltaX, double deltaY) {
 		final Point2D pt = p.getPosition();
 		final Dimension2D dim = p.getSize();
 		return new PositionableImpl(pt.getX() + deltaX, pt.getY() + deltaY, dim);

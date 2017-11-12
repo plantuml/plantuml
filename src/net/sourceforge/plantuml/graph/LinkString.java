@@ -41,10 +41,10 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class LinkString {
 
-	final private static Pattern2 p = MyPattern.cmpile("(.*)->(.*)");
+	private static final Pattern2 p = MyPattern.cmpile("(.*)->(.*)");
 
-	final private String node1;
-	final private String node2;
+	private final String node1;
+	private final String node2;
 
 	public LinkString(String desc) {
 		final Matcher2 m = p.matcher(desc);

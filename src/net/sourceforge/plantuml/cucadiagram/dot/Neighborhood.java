@@ -143,7 +143,7 @@ public class Neighborhood {
 		return null;
 	}
 
-	static private Point2D intersection(Point2D pt1, Point2D pt2, Point2D pt3, Point2D pt4) {
+	private static Point2D intersection(Point2D pt1, Point2D pt2, Point2D pt3, Point2D pt4) {
 		// System.err.println("Checking intersection of " + pt1 + "-" + pt2 + " and " + pt3 + "-" + pt4);
 		return intersection(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(), pt4.getX(),
 				pt4.getY());
@@ -151,8 +151,8 @@ public class Neighborhood {
 
 	private static final double epsilon = .001;
 
-	static private Point2D intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
-			double y4) {
+	private static Point2D intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
+                                        double y4) {
 		final double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		if (d == 0) {
 			return null;

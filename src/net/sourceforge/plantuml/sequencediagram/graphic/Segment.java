@@ -43,8 +43,8 @@ import java.util.List;
 
 public class Segment {
 
-	final private double pos1;
-	final private double pos2;
+	private final double pos1;
+	private final double pos2;
 
 	public Segment(double pos1, double pos2) {
 		this.pos1 = pos1;
@@ -65,11 +65,11 @@ public class Segment {
 		return new Double(pos1).hashCode() + new Double(pos2).hashCode();
 	}
 
-	final public boolean contains(double y) {
+	public final boolean contains(double y) {
 		return y >= pos1 && y <= pos2;
 	}
 
-	final public boolean contains(Segment other) {
+	public final boolean contains(Segment other) {
 		return contains(other.pos1) && contains(other.pos2);
 	}
 
@@ -78,15 +78,15 @@ public class Segment {
 		return "" + pos1 + " - " + pos2;
 	}
 
-	final public double getLength() {
+	public final double getLength() {
 		return pos2 - pos1;
 	}
 
-	final public double getPos1() {
+	public final double getPos1() {
 		return pos1;
 	}
 
-	final public double getPos2() {
+	public final double getPos2() {
 		return pos2;
 	}
 

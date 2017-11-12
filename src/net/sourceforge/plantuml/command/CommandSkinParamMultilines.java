@@ -66,7 +66,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 	}
 
-	private final static Pattern2 p1 = MyPattern
+	private static final Pattern2 p1 = MyPattern
 			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	public CommandSkinParamMultilines() {

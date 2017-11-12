@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryCheckboxOn implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryCheckboxOn(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;

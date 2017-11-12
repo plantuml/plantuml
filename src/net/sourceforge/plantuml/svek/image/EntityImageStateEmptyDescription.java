@@ -65,11 +65,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 
-	final private TextBlock desc;
-	final private Url url;
+	private final TextBlock desc;
+	private final Url url;
 
-	final private static int MIN_WIDTH = 50;
-	final private static int MIN_HEIGHT = 40;
+	private static final int MIN_WIDTH = 50;
+	private static final int MIN_HEIGHT = 40;
 
 	public EntityImageStateEmptyDescription(IEntity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
@@ -93,7 +93,7 @@ public class EntityImageStateEmptyDescription extends AbstractEntityImage {
 		return Dimension2DDouble.atLeast(result, MIN_WIDTH, MIN_HEIGHT);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
 		}

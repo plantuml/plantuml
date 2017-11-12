@@ -80,7 +80,7 @@ public class CommandChangeStateByPlayerCode extends SingleLineCommand2<TimingDia
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final String code = arg.get("CODE", 0);
 		final Player player = diagram.getPlayer(code);
 		if (player == null) {

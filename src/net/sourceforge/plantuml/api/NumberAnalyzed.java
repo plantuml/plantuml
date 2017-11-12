@@ -188,23 +188,23 @@ public class NumberAnalyzed implements INumberAnalyzed {
 		}
 	}
 
-	synchronized public final long getNb() {
+	public final synchronized long getNb() {
 		return nb;
 	}
 
-	synchronized public final long getSum() {
+	public final synchronized long getSum() {
 		return sum;
 	}
 
-	synchronized public final long getMin() {
+	public final synchronized long getMin() {
 		return min;
 	}
 
-	synchronized public final long getMax() {
+	public final synchronized long getMax() {
 		return max;
 	}
 
-	synchronized public final long getMean() {
+	public final synchronized long getMean() {
 		if (nb == 0) {
 			return 0;
 		}
@@ -227,7 +227,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 		return Math.round(Math.sqrt(sumOfSquare1 / nb1 - mean * mean));
 	}
 
-	final public String getName() {
+	public final String getName() {
 		return name;
 	}
 

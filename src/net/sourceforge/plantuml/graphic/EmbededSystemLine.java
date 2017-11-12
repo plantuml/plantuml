@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 class EmbededSystemLine extends AbstractTextBlock implements Line {
 
-	final private List<CharSequence2> lines2;
+	private final List<CharSequence2> lines2;
 
 	public EmbededSystemLine(EmbededDiagram sys) {
 		this.lines2 = sys.getLines().as2();

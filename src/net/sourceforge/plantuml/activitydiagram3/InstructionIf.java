@@ -143,7 +143,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.current.setInlinkRendering(nextLinkRenderer);
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (endifCalled) {
 			for (Branch branch : thens) {
 				if (branch.getLast().kill() == false) {

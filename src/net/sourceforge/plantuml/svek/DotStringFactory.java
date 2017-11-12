@@ -70,7 +70,7 @@ public class DotStringFactory implements Moveable {
 
 	private final Bibliotekon bibliotekon = new Bibliotekon();
 
-	final private Set<String> rankMin = new HashSet<String>();
+	private final Set<String> rankMin = new HashSet<String>();
 
 	private final ColorSequence colorSequence;
 	private final Cluster root;

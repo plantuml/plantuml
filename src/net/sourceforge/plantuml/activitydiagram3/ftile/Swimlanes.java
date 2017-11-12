@@ -172,7 +172,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	}
 
-	static private final double separationMargin = 10;
+    private static final double separationMargin = 10;
 	private TextBlock full;
 
 	public void drawU(UGraphic ug) {
@@ -232,7 +232,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		// getCollisionDetector(ug, titleHeightTranslate).drawDebug(ug);
 	}
 
-	static private void printDebug(UGraphic ug, SlotSet slot, HtmlColor col, TextBlock full) {
+	private static void printDebug(UGraphic ug, SlotSet slot, HtmlColor col, TextBlock full) {
 		slot.drawDebugX(ug.apply(new UChangeColor(col)).apply(new UChangeBackColor(col)),
 				full.calculateDimension(ug.getStringBounder()).getHeight());
 
@@ -387,20 +387,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
 	}
 
-	// private Dimension2D cachedDimension;
-
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return getMinMax(stringBounder).getDimension();
-		// if (cachedDimension == null) {
-		// cachedDimension = calculateDimensionSlow(stringBounder);
-		// }
-		// return cachedDimension;
 	}
-
-	// private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
-	// final Dimension2D result = TextBlockUtils.getMinMax(this, stringBounder).getDimension();
-	// return result;
-	// }
 
 	public Instruction getCurrent() {
 		return currentInstruction;

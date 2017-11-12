@@ -644,7 +644,7 @@ public class Cluster implements Moveable {
 		return CENTER_ID + group.getUid();
 	}
 
-	public final static String CENTER_ID = "za";
+	public static final String CENTER_ID = "za";
 
 	private boolean protection0(UmlDiagramType type) {
 		if (skinParam.useSwimlanes(type)) {

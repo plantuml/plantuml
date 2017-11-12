@@ -57,11 +57,11 @@ public abstract class Grouping implements Event {
 		return super.toString() + " " + type + " " + title;
 	}
 
-	final public String getTitle() {
+	public final String getTitle() {
 		return title;
 	}
 
-	final public GroupingType getType() {
+	public final GroupingType getType() {
 		return type;
 	}
 
@@ -69,7 +69,7 @@ public abstract class Grouping implements Event {
 
 	public abstract HtmlColor getBackColorGeneral();
 	
-	final public String getComment() {
+	public final String getComment() {
 		return comment;
 	}
 

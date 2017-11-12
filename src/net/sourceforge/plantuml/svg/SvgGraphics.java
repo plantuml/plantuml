@@ -88,10 +88,10 @@ public class SvgGraphics {
 	// http://www.w3schools.com/svg/svg_feoffset.asp
 	// http://www.adobe.com/svg/demos/samples.html
 
-	final private Document document;
-	final private Element root;
-	final private Element defs;
-	final private Element gRoot;
+	private final Document document;
+	private final Element root;
+	private final Element defs;
+	private final Element gRoot;
 
 	private String fill = "black";
 	private String stroke = "black";
@@ -107,7 +107,7 @@ public class SvgGraphics {
 	private final String shadowId;
 	private final String gradientId;
 
-	final protected void ensureVisible(double x, double y) {
+	protected final void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
 		}

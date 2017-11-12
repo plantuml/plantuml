@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class SourceStringReader {
 
-	final private List<BlockUml> blocks;
+	private final List<BlockUml> blocks;
 
 	public SourceStringReader(String source) {
 		this(Defines.createEmpty(), source, Collections.<String> emptyList());

@@ -50,14 +50,14 @@ abstract class GroupingGraphicalElement extends GraphicalElement {
 		}
 	}
 
-	final public double getActualWidth(StringBounder stringBounder) {
+	public final double getActualWidth(StringBounder stringBounder) {
 		return Math.max(getPreferredWidth(stringBounder),
 				inGroupableList.getMaxX(stringBounder) - inGroupableList.getMinX(stringBounder) + 2
 						* InGroupableList.MARGIN10);
 	}
 
 	@Override
-	final public double getStartingX(StringBounder stringBounder) {
+    public final double getStartingX(StringBounder stringBounder) {
 		return inGroupableList.getMinX(stringBounder) - InGroupableList.MARGIN10;
 	}
 

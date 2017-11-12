@@ -47,11 +47,11 @@ public class SpiderWeb {
 	private int nbRow;
 	private int nbCol;
 
-	final private int widthCell;
-	final private int heightCell;
+	private final int widthCell;
+	private final int heightCell;
 
-	final private int xMargin = 50;
-	final private int yMargin = 50;
+	private final int xMargin = 50;
+	private final int yMargin = 50;
 
 	private final List<PolylineBreakeable> lines = new ArrayList<PolylineBreakeable>();
 

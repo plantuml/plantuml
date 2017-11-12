@@ -51,7 +51,7 @@ abstract class AbstractReal implements Real {
 
 	abstract double getCurrentValueInternal();
 
-	final public double getCurrentValue() {
+	public final double getCurrentValue() {
 		final double result = getCurrentValueInternal();
 		line.register(result);
 		return result;

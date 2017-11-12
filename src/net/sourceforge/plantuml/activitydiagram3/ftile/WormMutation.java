@@ -156,7 +156,7 @@ public class WormMutation {
 		throw new UnsupportedOperationException(signature);
 	}
 
-	static private class MinMax {
+	private static class MinMax {
 
 		private double min = Double.MAX_VALUE;
 		private double max = Double.MIN_VALUE;

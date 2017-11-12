@@ -120,7 +120,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		this.getGraphicObject().drawEps(eps, x, y);
 	}
 
-	static public String getEpsString(ColorMapper colorMapper, EpsStrategy epsStrategy, UDrawable udrawable)
+	public static String getEpsString(ColorMapper colorMapper, EpsStrategy epsStrategy, UDrawable udrawable)
 			throws IOException {
 		final UGraphicEps ug = new UGraphicEps(colorMapper, epsStrategy);
 		udrawable.drawU(ug);

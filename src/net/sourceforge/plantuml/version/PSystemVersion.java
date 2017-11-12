@@ -151,7 +151,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image,
 				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);

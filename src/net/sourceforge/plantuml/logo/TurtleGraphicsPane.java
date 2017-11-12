@@ -59,8 +59,8 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class TurtleGraphicsPane {
-	final private double width;
-	final private double height;
+	private final double width;
+	private final double height;
 	private double x;
 	private double y;
 	private double turtleDirection = 90;

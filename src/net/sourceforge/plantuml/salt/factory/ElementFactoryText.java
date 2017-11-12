@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryText implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryText(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;

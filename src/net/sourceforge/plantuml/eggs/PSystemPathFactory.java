@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class PSystemPathFactory extends PSystemSingleLineFactory {
 
-	final private static Pattern2 p = MyPattern.cmpile("(?i)^path[%s]+([0-9A-Za-z]+)$");
+	private static final Pattern2 p = MyPattern.cmpile("(?i)^path[%s]+([0-9A-Za-z]+)$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {

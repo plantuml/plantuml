@@ -47,9 +47,9 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SourceStringReader;
 
 class AcceptTelnetClient extends Thread {
-	final private Socket clientSocket;
-	final private BufferedReader br;
-	final private OutputStream os;
+	private final Socket clientSocket;
+	private final BufferedReader br;
+	private final OutputStream os;
 
 	AcceptTelnetClient(Socket socket) throws Exception {
 		clientSocket = socket;

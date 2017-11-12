@@ -48,14 +48,14 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class ClusterDecoration {
 
 	private final UStroke defaultStroke;// = new UStroke(2);
-	final private USymbol symbol;
-	final private TextBlock title;
-	final private TextBlock stereo;
+	private final USymbol symbol;
+	private final TextBlock title;
+	private final TextBlock stereo;
 
-	final private double minX;
-	final private double minY;
-	final private double maxX;
-	final private double maxY;
+	private final double minX;
+	private final double minY;
+	private final double maxX;
+	private final double maxY;
 
 	public ClusterDecoration(PackageStyle style, USymbol symbol, TextBlock title, TextBlock stereo, double minX,
 			double minY, double maxX, double maxY, UStroke stroke) {
@@ -79,12 +79,12 @@ public class ClusterDecoration {
 		return style.toUSymbol();
 	}
 
-	public final static int marginTitleX1 = 3;
-	public final static int marginTitleX2 = 3;
-	public final static int marginTitleX3 = 7;
-	public final static int marginTitleY0 = 0;
-	public final static int marginTitleY1 = 3;
-	public final static int marginTitleY2 = 3;
+	public static final int marginTitleX1 = 3;
+	public static final int marginTitleX2 = 3;
+	public static final int marginTitleX3 = 7;
+	public static final int marginTitleY0 = 0;
+	public static final int marginTitleY1 = 3;
+	public static final int marginTitleY2 = 3;
 
 	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing, double roundCorner,
 			HorizontalAlignment titleAlignment) {

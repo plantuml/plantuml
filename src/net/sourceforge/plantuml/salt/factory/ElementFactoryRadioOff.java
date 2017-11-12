@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryRadioOff implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryRadioOff(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;

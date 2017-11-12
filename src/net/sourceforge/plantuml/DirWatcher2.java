@@ -53,12 +53,12 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class DirWatcher2 {
 
-	final private File dir;
-	final private Option option;
-	final private String pattern;
+	private final File dir;
+	private final Option option;
+	private final String pattern;
 
-	final private Map<File, FileWatcher> modifieds = new ConcurrentHashMap<File, FileWatcher>();
-	final private ExecutorService executorService;
+	private final Map<File, FileWatcher> modifieds = new ConcurrentHashMap<File, FileWatcher>();
+	private final ExecutorService executorService;
 
 	public DirWatcher2(File dir, Option option, String pattern) {
 		this.dir = dir;

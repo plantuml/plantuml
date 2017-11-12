@@ -457,7 +457,7 @@ public class DotPath implements UShape, Moveable {
 		}
 	}
 
-	static private boolean contains(Point2D.Double point, Rectangle2D... rects) {
+	private static boolean contains(Point2D.Double point, Rectangle2D... rects) {
 		for (Rectangle2D r : rects) {
 			if (r.contains(point)) {
 				return true;
@@ -466,7 +466,7 @@ public class DotPath implements UShape, Moveable {
 		return false;
 	}
 
-	static private boolean contains(CubicCurve2D.Double cubic, Rectangle2D... rects) {
+	private static boolean contains(CubicCurve2D.Double cubic, Rectangle2D... rects) {
 		for (Rectangle2D r : rects) {
 			if (r.contains(cubic.getP1()) && r.contains(cubic.getP2())) {
 				return true;

@@ -350,7 +350,7 @@ class DrawableSetInitializer {
 		drawableSet.addEvent(delay, graphicalDivider);
 	}
 
-	final private InGroupablesStack inGroupableStack = new InGroupablesStack();
+	private final InGroupablesStack inGroupableStack = new InGroupablesStack();
 
 	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart m, ParticipantRange range) {
 		if (m.getType() != GroupingType.START) {

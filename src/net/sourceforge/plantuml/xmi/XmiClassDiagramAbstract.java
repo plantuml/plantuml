@@ -114,18 +114,18 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 
 	}
 
-	final protected String forXMI(String s) {
+	protected final String forXMI(String s) {
 		return s.replace(':', ' ');
 	}
 
-	final protected String forXMI(Display s) {
+	protected final String forXMI(Display s) {
 		if (Display.isNull(s)) {
 			return "";
 		}
 		return s.get(0).toString().replace(':', ' ');
 	}
 
-	final public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+	public final void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
 		final Source source = new DOMSource(document);
 
 		final Result resultat = new StreamResult(os);
@@ -139,7 +139,7 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 		transformer.transform(source, resultat);
 	}
 
-	final protected Element createEntityNode(IEntity entity) {
+	protected final Element createEntityNode(IEntity entity) {
 		// <UML:Class xmi.id="UMLClass.5" name="Class1" visibility="public"
 		// isSpecification="false"
 		// namespace="UMLModel.4" isRoot="false" isLeaf="false"

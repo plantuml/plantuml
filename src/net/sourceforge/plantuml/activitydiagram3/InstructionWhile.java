@@ -112,7 +112,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return parent;
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (testCalled) {
 			this.killed = true;
 			return true;

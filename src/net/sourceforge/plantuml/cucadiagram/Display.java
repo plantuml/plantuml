@@ -81,7 +81,7 @@ public class Display implements Iterable<CharSequence> {
 	private final boolean isNull;
 	private final CreoleMode defaultCreoleMode;
 
-	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
+	public static final Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
 	public boolean isWhite() {
 		return display.isEmpty() || (display.size() == 1 && display.get(0).toString().matches("\\s*"));

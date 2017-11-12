@@ -54,7 +54,7 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final TimeTick timeTick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
 		diagram.addTime(timeTick);
 		return CommandExecutionResult.ok();

@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class SkinParamDelegator implements ISkinParam {
 
-	final private ISkinParam skinParam;
+	private final ISkinParam skinParam;
 
 	public SkinParamDelegator(ISkinParam skinParam) {
 		this.skinParam = skinParam;

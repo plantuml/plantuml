@@ -46,9 +46,9 @@ import net.sourceforge.plantuml.version.Version;
 
 public class HistoricalData {
 
-	final private Preferences prefs;
+	private final Preferences prefs;
 	private ParsedGenerated current;
-	final private List<ParsedGenerated> historical = new ArrayList<ParsedGenerated>();
+	private final List<ParsedGenerated> historical = new ArrayList<ParsedGenerated>();
 
 	HistoricalData(Preferences prefs) {
 		this.prefs = prefs;

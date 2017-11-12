@@ -47,11 +47,11 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 
 public class AffineTransformation {
 
-	static private final Pattern rotate = Pattern.compile("rotate\\s+(-?\\d+\\.?\\d*)");
-	static private final Pattern shear = Pattern.compile("shear\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
-	static private final Pattern translate = Pattern.compile("translate\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
-	static private final Pattern scale = Pattern.compile("scale\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
-	static private final Pattern color = Pattern.compile("color\\s+.*");
+	private static final Pattern rotate = Pattern.compile("rotate\\s+(-?\\d+\\.?\\d*)");
+	private static final Pattern shear = Pattern.compile("shear\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
+	private static final Pattern translate = Pattern.compile("translate\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
+	private static final Pattern scale = Pattern.compile("scale\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
+	private static final Pattern color = Pattern.compile("color\\s+.*");
 
 	private final AffineTransform affineTransform;
 	private Dimension2D dimension;

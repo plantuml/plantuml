@@ -110,7 +110,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return result;
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (all.isEmpty()) {
 			return false;
 		}

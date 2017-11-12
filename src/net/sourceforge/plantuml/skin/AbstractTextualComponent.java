@@ -92,7 +92,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		}
 	}
 
-	final protected TextBlock getTextBlock() {
+	protected final TextBlock getTextBlock() {
 		return textBlock;
 	}
 
@@ -102,7 +102,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		return size.getWidth();
 	}
 
-	final public double getTextWidth(StringBounder stringBounder) {
+	public final double getTextWidth(StringBounder stringBounder) {
 		return getPureTextWidth(stringBounder) + marginX1 + marginX2;
 	}
 
@@ -116,29 +116,29 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	// return size;
 	// }
 
-	final protected double getTextHeight(StringBounder stringBounder) {
+	protected final double getTextHeight(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
 		final Dimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + 2 * marginY;
 	}
 
-	final protected Display getLabels() {
+	protected final Display getLabels() {
 		return strings;
 	}
 
-	final protected int getMarginX1() {
+	protected final int getMarginX1() {
 		return marginX1;
 	}
 
-	final protected int getMarginX2() {
+	protected final int getMarginX2() {
 		return marginX2;
 	}
 
-	final protected int getMarginY() {
+	protected final int getMarginY() {
 		return marginY;
 	}
 
-	final protected UFont getFont() {
+	protected final UFont getFont() {
 		return font;
 	}
 

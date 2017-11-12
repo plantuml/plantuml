@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 
-	final private static Pattern2 p = MyPattern.cmpile("(?i)^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
+	private static final Pattern2 p = MyPattern.cmpile("(?i)^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {

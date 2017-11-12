@@ -87,9 +87,9 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class MainWindow2 extends JFrame {
 
-	final private static Preferences prefs = Preferences.userNodeForPackage(MainWindow2.class);
-	final private static String KEY_DIR = "cur";
-	final private static String KEY_PATTERN = "pat";
+	private static final Preferences prefs = Preferences.userNodeForPackage(MainWindow2.class);
+	private static final String KEY_DIR = "cur";
+	private static final String KEY_PATTERN = "pat";
 
 	private final JList jList1 = new JList();
 	private final JScrollPane scrollPane;
@@ -97,9 +97,9 @@ public class MainWindow2 extends JFrame {
 	private final JTextField extensions = new JTextField();
 	private final int period = 300;
 
-	final private List<SimpleLine2> currentDirectoryListing2 = new ArrayList<SimpleLine2>();
-	final private Set<ImageWindow2> openWindows2 = new HashSet<ImageWindow2>();
-	final private Option option;
+	private final List<SimpleLine2> currentDirectoryListing2 = new ArrayList<SimpleLine2>();
+	private final Set<ImageWindow2> openWindows2 = new HashSet<ImageWindow2>();
+	private final Option option;
 
 	private DirWatcher2 dirWatcher;
 

@@ -54,10 +54,10 @@ public class StripeTable implements Stripe {
 	};
 
 	private FontConfiguration fontConfiguration;
-	final private ISkinSimple skinParam;
-	final private AtomTable table;
-	final private Atom marged;
-	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');
+	private final ISkinSimple skinParam;
+	private final AtomTable table;
+	private final Atom marged;
+	private final StripeStyle stripeStyle = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');
 
 	public StripeTable(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {
 		this.fontConfiguration = fontConfiguration;

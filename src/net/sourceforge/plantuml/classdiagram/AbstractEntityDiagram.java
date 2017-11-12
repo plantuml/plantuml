@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
 
-	final protected List<String> getDotStrings() {
+	protected final List<String> getDotStrings() {
 		final List<String> def = Arrays.asList("nodesep=.35;", "ranksep=0.8;", "edge [fontsize=11,labelfontsize=11];",
 				"node [fontsize=11,height=.35,width=.55];");
 		if (getPragma().isDefine("graphattributes") == false) {
@@ -57,7 +57,7 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 		return Collections.unmodifiableList(result);
 	}
 
-	final public DiagramDescription getDescription() {
+	public final DiagramDescription getDescription() {
 		final StringBuilder result = new StringBuilder("(" + getLeafssize() + " entities");
 		if (getSource() != null) {
 			final String id = getSource().getId();

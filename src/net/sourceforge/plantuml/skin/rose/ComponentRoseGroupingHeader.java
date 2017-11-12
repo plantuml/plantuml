@@ -102,7 +102,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
+    public final double getPreferredWidth(StringBounder stringBounder) {
 		final double sup;
 		if (commentTextBlock == null) {
 			sup = commentMargin * 2;
@@ -115,7 +115,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return getTextHeight(stringBounder) + 2 * getPaddingY() + getSuppHeightForComment(stringBounder);
 	}
 

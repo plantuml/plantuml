@@ -44,14 +44,14 @@ import java.awt.geom.Rectangle2D;
 
 public class BezierUtils {
 
-	static public double getEndingAngle(final CubicCurve2D.Double left) {
+	public static double getEndingAngle(final CubicCurve2D.Double left) {
 		if (left.getCtrlP2().equals(left.getP2())) {
 			return getAngle(left.getP1(), left.getP2());
 		}
 		return getAngle(left.getCtrlP2(), left.getP2());
 	}
 
-	static public double getStartingAngle(final CubicCurve2D.Double left) {
+	public static double getStartingAngle(final CubicCurve2D.Double left) {
 		if (left.getP1().equals(left.getCtrlP1())) {
 			return getAngle(left.getP1(), left.getP2());
 		}
@@ -130,11 +130,11 @@ public class BezierUtils {
 		return Point2D.distance(seg.x1, seg.y1, seg.x2, seg.y2);
 	}
 
-	static public Point2D middle(Line2D.Double seg) {
+	public static Point2D middle(Line2D.Double seg) {
 		return new Point2D.Double((seg.x1 + seg.x2) / 2, (seg.y1 + seg.y2) / 2);
 	}
 
-	static public Point2D middle(Point2D p1, Point2D p2) {
+	public static Point2D middle(Point2D p1, Point2D p2) {
 		return new Point2D.Double((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 	}
 
@@ -169,17 +169,17 @@ public class BezierUtils {
 		}
 	}
 
-	static public Rectangle2D toRectangle(Positionable p) {
+	public static Rectangle2D toRectangle(Positionable p) {
 		final Point2D point = p.getPosition();
 		final Dimension2D dim = p.getSize();
 		return new Rectangle2D.Double(point.getX(), point.getY(), dim.getWidth(), dim.getHeight());
 	}
 
-	static public boolean intersect(Positionable p1, Positionable p2) {
+	public static boolean intersect(Positionable p1, Positionable p2) {
 		return toRectangle(p1).intersects(toRectangle(p2));
 	}
 
-	static public Point2D.Double getCenter(Positionable p) {
+	public static Point2D.Double getCenter(Positionable p) {
 		return new Point2D.Double(toRectangle(p).getCenterX(), toRectangle(p).getCenterY());
 	}
 

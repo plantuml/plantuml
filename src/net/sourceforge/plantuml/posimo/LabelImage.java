@@ -48,9 +48,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class LabelImage {
 
 	// private final Entity entity;
-	final private ISkinParam param;
-	final private Rose rose;
-	final private TextBlock name;
+    private final ISkinParam param;
+	private final Rose rose;
+	private final TextBlock name;
 
 	public LabelImage(Link link, Rose rose, ISkinParam param) {
 		if (link == null) {

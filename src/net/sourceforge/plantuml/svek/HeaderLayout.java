@@ -47,10 +47,10 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class HeaderLayout {
 
-	final private TextBlock name;
-	final private TextBlock stereo;
-	final private TextBlock generic;
-	final private TextBlock circledCharacter;
+	private final TextBlock name;
+	private final TextBlock stereo;
+	private final TextBlock generic;
+	private final TextBlock circledCharacter;
 
 	public HeaderLayout(TextBlock circledCharacter, TextBlock stereo, TextBlock name, TextBlock generic) {
 		this.circledCharacter = protectAgaintNull(circledCharacter);

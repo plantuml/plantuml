@@ -80,7 +80,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 	// final private Map<Pin, IEntityImage> images = new LinkedHashMap<Pin, IEntityImage>();
 	// final private Map<Pin, Box2D> boxes = new LinkedHashMap<Pin, Box2D>();
 
-	final private Map<Link, PinLink> links = new LinkedHashMap<Link, PinLink>();
+	private final Map<Link, PinLink> links = new LinkedHashMap<Link, PinLink>();
 
 	// final private List<Box2D> forbidden = new ArrayList<Box2D>();
 

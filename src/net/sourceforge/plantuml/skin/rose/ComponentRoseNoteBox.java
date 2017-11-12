@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-final public class ComponentRoseNoteBox extends AbstractTextualComponent {
+public final class ComponentRoseNoteBox extends AbstractTextualComponent {
 
 	private final SymbolContext symbolContext;
 
@@ -60,13 +60,13 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
+    public final double getPreferredWidth(StringBounder stringBounder) {
 		final double result = getTextWidth(stringBounder) + 2 * getPaddingX();
 		return result;
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return getTextHeight(stringBounder) + 2 * getPaddingY();
 	}
 

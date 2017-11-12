@@ -57,9 +57,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class LifeLine {
 
 	static class Variation {
-		final private LifeSegmentVariation type;
-		final private SymbolContext colors;
-		final private double y;
+		private final LifeSegmentVariation type;
+		private final SymbolContext colors;
+		private final double y;
 
 		Variation(LifeSegmentVariation type, double y, SymbolContext backcolor) {
 			this.type = type;

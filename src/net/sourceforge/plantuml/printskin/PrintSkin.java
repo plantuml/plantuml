@@ -78,8 +78,8 @@ class PrintSkin extends AbstractPSystem {
 
 	private static final UFont FONT1 = UFont.sansSerif(10);
 
-	final private Skin skin;
-	final private List<String> toPrint;
+	private final Skin skin;
+	private final List<String> toPrint;
 	private UGraphic ug;
 	private float xpos = 10;
 	private float ypos = 0;
@@ -96,7 +96,7 @@ class PrintSkin extends AbstractPSystem {
 	// }
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final BufferedImage im = createImage();
 		final ImageData imageData = new ImageDataSimple(im.getWidth(), (int) maxYpos);

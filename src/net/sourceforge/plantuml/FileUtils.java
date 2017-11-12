@@ -62,7 +62,7 @@ public class FileUtils {
 		counter = new AtomicInteger(0);
 	}
 
-	static public File createTempFile(String prefix, String suffix) throws IOException {
+	public static File createTempFile(String prefix, String suffix) throws IOException {
 		if (suffix.startsWith(".") == false) {
 			throw new IllegalArgumentException();
 		}
@@ -91,7 +91,7 @@ public class FileUtils {
 		fis.close();
 	}
 
-	static public void copyToFile(File src, File dest) throws IOException {
+	public static void copyToFile(File src, File dest) throws IOException {
 		if (dest.isDirectory()) {
 			dest = new File(dest, src.getName());
 		}
@@ -100,30 +100,30 @@ public class FileUtils {
 		copyInternal(fis, fos);
 	}
 
-	static public void copyToStream(File src, OutputStream os) throws IOException {
+	public static void copyToStream(File src, OutputStream os) throws IOException {
 		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
 		final OutputStream fos = new BufferedOutputStream(os);
 		copyInternal(fis, fos);
 	}
 
-	static public void copyToStream(InputStream is, OutputStream os) throws IOException {
+	public static void copyToStream(InputStream is, OutputStream os) throws IOException {
 		final InputStream fis = new BufferedInputStream(is);
 		final OutputStream fos = new BufferedOutputStream(os);
 		copyInternal(fis, fos);
 	}
 
-	static public void copyToFile(byte[] src, File dest) throws IOException {
+	public static void copyToFile(byte[] src, File dest) throws IOException {
 		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest));
 		fos.write(src);
 		fos.close();
 	}
 
-	static public String readSvg(File svgFile) throws IOException {
+	public static String readSvg(File svgFile) throws IOException {
 		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
 		return readSvg(br, false, true);
 	}
 
-	static public String readSvg(InputStream is) throws IOException {
+	public static String readSvg(InputStream is) throws IOException {
 		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		return readSvg(br, false, false);
 	}

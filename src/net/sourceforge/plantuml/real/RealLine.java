@@ -72,7 +72,7 @@ class RealLine {
 		this.forces.add(force);
 	}
 
-	static private int CPT;
+	private static int CPT;
 
 	public void compile() {
 		int cpt = 0;

@@ -48,11 +48,11 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 
 public class FillRoundShape {
 
-	final private double width;
-	final private double height;
-	final private double corner;
-	final private HtmlColor c1;
-	final private HtmlColor c2;
+	private final double width;
+	private final double height;
+	private final double corner;
+	private final HtmlColor c1;
+	private final HtmlColor c2;
 
 	public FillRoundShape(double width, double height, HtmlColor c1, HtmlColor c2, double corner) {
 		this.width = width;

@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 
 public class Matcher2 {
 
-	private final static boolean INSTRUMENT = false;
+	private static final boolean INSTRUMENT = false;
 	private final Matcher matcher;
 	private final String id;
 

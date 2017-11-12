@@ -56,7 +56,7 @@ public class WithNote {
 		return true;
 	}
 
-	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
+	protected final Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
 		if (notes.isEmpty()) {
 			return ftile;
 		}

@@ -57,19 +57,19 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Link implements Hideable, Removeable {
 
-	final private IEntity cl1;
-	final private IEntity cl2;
+	private final IEntity cl1;
+	private final IEntity cl2;
 
 	private String port1;
 	private String port2;
 
 	private LinkType type;
-	final private Display label;
+	private final Display label;
 
 	private int length;
-	final private String qualifier1;
-	final private String qualifier2;
-	final private String uid = "LNK" + UniqueSequence.getValue();
+	private final String qualifier1;
+	private final String qualifier2;
+	private final String uid = "LNK" + UniqueSequence.getValue();
 
 	private Display note;
 	private Position notePosition;

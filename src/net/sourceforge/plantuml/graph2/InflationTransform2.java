@@ -87,7 +87,7 @@ public class InflationTransform2 implements IInflationTransform {
 		return sumInflation(inflateY);
 	}
 
-	static private double sumInflation(List<InflateData2> list) {
+	private static double sumInflation(List<InflateData2> list) {
 		double result = 0;
 		for (InflateData2 data : list) {
 			result += data.getInflation();
@@ -95,7 +95,7 @@ public class InflationTransform2 implements IInflationTransform {
 		return result;
 	}
 
-	static private void add(List<InflateData2> list, double ypos, double inflation) {
+	private static void add(List<InflateData2> list, double ypos, double inflation) {
 		for (final ListIterator<InflateData2> it = list.listIterator(); it.hasNext();) {
 			final InflateData2 cur = it.next();
 			if (cur.getPos() == ypos) {

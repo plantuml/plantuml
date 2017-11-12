@@ -57,20 +57,20 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.svek.DotMode;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
-final public class DotData implements PortionShower {
+public final class DotData implements PortionShower {
 
-	final private List<Link> links;
-	final private Collection<ILeaf> leafs;
-	final private UmlDiagramType umlDiagramType;
-	final private ISkinParam skinParam;
+	private final List<Link> links;
+	private final Collection<ILeaf> leafs;
+	private final UmlDiagramType umlDiagramType;
+	private final ISkinParam skinParam;
 	// final private Rankdir rankdir;
-	final private GroupHierarchy groupHierarchy;
-	final private IGroup topParent;
-	final private PortionShower portionShower;
-	final private boolean isHideEmptyDescriptionForState;
-	final private DotMode dotMode;
-	final private String namespaceSeparator;
-	final private Pragma pragma;
+    private final GroupHierarchy groupHierarchy;
+	private final IGroup topParent;
+	private final PortionShower portionShower;
+	private final boolean isHideEmptyDescriptionForState;
+	private final DotMode dotMode;
+	private final String namespaceSeparator;
+	private final Pragma pragma;
 
 	private final ColorMapper colorMapper;
 	private final EntityFactory entityFactory;

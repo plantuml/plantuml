@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 public enum DiagramType {
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, DEFINITION, GANTT, UNKNOWN;
 
-	static public DiagramType getTypeFromArobaseStart(String s) {
+	public static DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
 		// if (s.startsWith("@startuml2")) {
 		// return UML2;

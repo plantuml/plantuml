@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public abstract class UGraphicDelegator implements UGraphic {
 
-	final private UGraphic ug;
+	private final UGraphic ug;
 	
 	public final boolean matchesProperty(String propertyName) {
 		return ug.matchesProperty(propertyName);

@@ -84,7 +84,7 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
+    public final double getPreferredWidth(StringBounder stringBounder) {
 		final double preferredWidth = comp.getPreferredWidth(stringBounder);
 		if (position == NotePosition.OVER_SEVERAL) {
 			assert p1 != p2;
@@ -98,7 +98,7 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return comp.getPreferredHeight(stringBounder);
 	}
 

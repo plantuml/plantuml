@@ -128,7 +128,7 @@ public class InstructionRepeat implements Instruction {
 		this.testCalled = true;
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (testCalled) {
 			this.killed = true;
 			return true;

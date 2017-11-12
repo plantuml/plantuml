@@ -66,19 +66,19 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 		return foregroundColor;
 	}
 
-	final protected int getArrowDeltaX() {
+	protected final int getArrowDeltaX() {
 		return arrowDeltaX;
 	}
 
-	final protected int getArrowDeltaY() {
+	protected final int getArrowDeltaY() {
 		return arrowDeltaY;
 	}
 
-	final protected int getArrowDeltaY2() {
+	protected final int getArrowDeltaY2() {
 		return arrowDeltaY2;
 	}
 
-	final protected int getArrowDeltaX2() {
+	protected final int getArrowDeltaX2() {
 		return arrowDeltaX2;
 	}
 
@@ -87,7 +87,7 @@ public abstract class AbstractComponentBlueModernArrow extends AbstractTextualCo
 		return 6;
 	}
 
-	final protected ArrowConfiguration getArrowConfiguration() {
+	protected final ArrowConfiguration getArrowConfiguration() {
 		return arrowConfiguration;
 	}
 

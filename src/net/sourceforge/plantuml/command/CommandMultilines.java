@@ -58,7 +58,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		return new String[] { "START: " + starting.pattern(), "END: " + getPatternEnd() };
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}

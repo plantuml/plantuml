@@ -143,7 +143,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		}
 	}
 
-	static public Dimension2D calculateDimension(StringBounder stringBounder, UFont font, String text) {
+	public static Dimension2D calculateDimension(StringBounder stringBounder, UFont font, String text) {
 		final Dimension2D rect = stringBounder.calculateDimension(font, text);
 		double h = rect.getHeight();
 		if (h < 10) {

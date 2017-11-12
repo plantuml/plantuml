@@ -229,7 +229,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 
 	// Static
 
-	public synchronized static void createSplash() {
+	public static synchronized void createSplash() {
 		if (singleton == null) {
 			singleton = new Splash();
 		}
@@ -247,7 +247,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 		}
 	}
 
-	public synchronized static void disposeSplash() {
+	public static synchronized void disposeSplash() {
 		if (singleton != null) {
 			singleton.setVisible(false);
 			singleton.dispose();

@@ -58,8 +58,8 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Rose implements Skin {
 
-	final private double paddingX = 5;
-	final private double paddingY = 5;
+	private final double paddingX = 5;
+	private final double paddingY = 5;
 
 	public HtmlColor getFontColor(ISkinParam skin, FontParam fontParam) {
 		return skin.getFontHtmlColor(null, fontParam);
@@ -340,7 +340,7 @@ public class Rose implements Skin {
 		throw new IllegalArgumentException();
 	}
 
-	static public UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
+	public static UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
 		final UStroke result = param.getThickness(lineParam, null);
 		if (result == null) {
 			return new UStroke(defaultValue);

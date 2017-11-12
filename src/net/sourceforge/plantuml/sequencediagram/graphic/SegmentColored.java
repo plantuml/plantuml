@@ -52,10 +52,10 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class SegmentColored {
 
-	final private Segment segment;
-	final private SymbolContext colors;
-	final private boolean shadowing;
-	final private double pos1Initial;
+	private final Segment segment;
+	private final SymbolContext colors;
+	private final boolean shadowing;
+	private final double pos1Initial;
 
 	SegmentColored(double pos1, double pos2, SymbolContext colors, boolean shadowing) {
 		this(new Segment(pos1, pos2), colors, shadowing, pos1);

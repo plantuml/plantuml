@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class UnusedSpace {
 
 	static class Point {
-		final private double x;
-		final private double y;
+		private final double x;
+		private final double y;
 
 		Point(double x, double y) {
 			this.x = x;
@@ -70,7 +70,7 @@ public class UnusedSpace {
 
 	private final List<Point> points = new ArrayList<Point>();
 
-	final private static Map<Object, UnusedSpace> cache = new HashMap<Object, UnusedSpace>();
+	private static final Map<Object, UnusedSpace> cache = new HashMap<Object, UnusedSpace>();
 
 	public static UnusedSpace getUnusedSpace(UFont font, char c) {
 		final Object key = Arrays.asList(font, c);

@@ -58,7 +58,7 @@ public class CommandLifeLine extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final String code = arg.get("CODE", 0);
 		final String full = arg.get("FULL", 0);
 		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());

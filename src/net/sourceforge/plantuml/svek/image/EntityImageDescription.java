@@ -74,7 +74,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	private final ShapeType shapeType;
 
-	final private Url url;
+	private final Url url;
 
 	private final TextBlock asSmall;
 
@@ -204,7 +204,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return false;
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCode().getFullName()));
 		if (url != null) {
 			ug.startUrl(url);

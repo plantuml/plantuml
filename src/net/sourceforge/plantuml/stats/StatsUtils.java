@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.stats.api.Stats;
 
 public class StatsUtils {
 
-	final static Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);
+	static final Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);
 
 	static ParsedGenerated fullEver;
 
@@ -79,7 +79,7 @@ public class StatsUtils {
 				fullEver);
 	}
 
-	private final static int VERSION = 14;
+	private static final int VERSION = 14;
 
 	static {
 		try {

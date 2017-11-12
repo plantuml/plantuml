@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
-final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
+public final class GroupingLeaf extends Grouping implements EventWithDeactivate {
 
 	private final GroupingStart start;
 	private final HtmlColor backColorGeneral;

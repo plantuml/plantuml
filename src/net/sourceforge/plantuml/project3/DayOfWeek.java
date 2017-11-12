@@ -41,7 +41,7 @@ public enum DayOfWeek implements Subject {
 
 	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
-	static public String getRegexString() {
+	public static String getRegexString() {
 		final StringBuilder sb = new StringBuilder();
 		for (DayOfWeek day : DayOfWeek.values()) {
 			if (sb.length() > 0) {

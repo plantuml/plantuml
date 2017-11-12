@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.openiconic;
 
 public class SvgPosition {
 
-	final private SvgCommandNumber x;
-	final private SvgCommandNumber y;
+	private final SvgCommandNumber x;
+	private final SvgCommandNumber y;
 
 	public SvgPosition() {
 		this(new SvgCommandNumber("0"), new SvgCommandNumber("0"));

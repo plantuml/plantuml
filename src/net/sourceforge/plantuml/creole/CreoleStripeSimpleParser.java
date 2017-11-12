@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.utils.CharHidder;
 
 public class CreoleStripeSimpleParser {
 
-	final private String line;
-	final private StripeStyle style;
+	private final String line;
+	private final StripeStyle style;
 	private final CreoleMode modeSimpleLine;
 
 	private final FontConfiguration fontConfiguration;

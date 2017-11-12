@@ -58,28 +58,28 @@ public abstract class USymbol {
 	public final static USymbol ARTIFACT = record("ARTIFACT", SkinParameter.ARTIFACT, new USymbolArtifact());
 	public final static USymbol PACKAGE = record("PACKAGE", SkinParameter.PACKAGE, new USymbolFolder(
 			SkinParameter.PACKAGE));
-	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER));
-	public final static USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
-	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE, new USymbolRect(
+	public static final USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER, new USymbolFolder(SkinParameter.FOLDER));
+	public static final USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
+	public static final USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE, new USymbolRect(
 			SkinParameter.RECTANGLE, HorizontalAlignment.CENTER));
-	public final static USymbol COLLECTIONS = record("COLLECTIONS", SkinParameter.COLLECTIONS, new USymbolCollections(
+	public static final  USymbol COLLECTIONS = record("COLLECTIONS", SkinParameter.COLLECTIONS, new USymbolCollections(
 			SkinParameter.RECTANGLE, HorizontalAlignment.CENTER));
-	public final static USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRect(SkinParameter.AGENT,
+	public static final USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRect(SkinParameter.AGENT,
 			HorizontalAlignment.CENTER));
-	public final static USymbol ACTOR = record("ACTOR", SkinParameter.ACTOR, new USymbolActor());
-	public final static USymbol USECASE = null;
-	public final static USymbol COMPONENT1 = record("COMPONENT1", SkinParameter.COMPONENT1, new USymbolComponent1());
-	public final static USymbol COMPONENT2 = record("COMPONENT2", SkinParameter.COMPONENT2, new USymbolComponent2());
-	public final static USymbol BOUNDARY = record("BOUNDARY", SkinParameter.BOUNDARY, new USymbolBoundary());
-	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", SkinParameter.ENTITY_DOMAIN,
+	public static final USymbol ACTOR = record("ACTOR", SkinParameter.ACTOR, new USymbolActor());
+	public static final USymbol USECASE = null;
+	public static final USymbol COMPONENT1 = record("COMPONENT1", SkinParameter.COMPONENT1, new USymbolComponent1());
+	public static final USymbol COMPONENT2 = record("COMPONENT2", SkinParameter.COMPONENT2, new USymbolComponent2());
+	public static final USymbol BOUNDARY = record("BOUNDARY", SkinParameter.BOUNDARY, new USymbolBoundary());
+	public static final USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", SkinParameter.ENTITY_DOMAIN,
 			new USymbolEntityDomain(2));
-	public final static USymbol CONTROL = record("CONTROL", SkinParameter.CONTROL, new USymbolControl(2));
-	public final static USymbol INTERFACE = record("INTERFACE", SkinParameter.INTERFACE, new USymbolInterface());
-	public final static USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
-	public final static USymbol STACK = record("STACK", SkinParameter.STACK, new USymbolStack());
-	public final static USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
+	public static final USymbol CONTROL = record("CONTROL", SkinParameter.CONTROL, new USymbolControl(2));
+	public static final USymbol INTERFACE = record("INTERFACE", SkinParameter.INTERFACE, new USymbolInterface());
+	public static final USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
+	public static final USymbol STACK = record("STACK", SkinParameter.STACK, new USymbolStack());
+	public static final USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
 
-	abstract public SkinParameter getSkinParameter();
+	public abstract SkinParameter getSkinParameter();
 
 	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
 		return this;

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class HtmlColorAndStyle {
 
-	private final static Rose rose = new Rose();
+	private static final Rose rose = new Rose();
 
 	private final HtmlColor color;
 	private final LinkStyle style;

@@ -52,14 +52,14 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 		this.type = type;
 	}
 
-	final protected AbstractPSystem buildEmptyError(UmlSource source, LineLocation lineLocation) {
+	protected final AbstractPSystem buildEmptyError(UmlSource source, LineLocation lineLocation) {
 		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Empty description", /* 1, */lineLocation);
 		final PSystemError result = new PSystemError(source, err, null);
 		result.setSource(source);
 		return result;
 	}
 
-	final protected PSystemError buildExecutionError(UmlSource source, String stringError, LineLocation lineLocation) {
+	protected final PSystemError buildExecutionError(UmlSource source, String stringError, LineLocation lineLocation) {
 		final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, stringError, /* 1, */
 		lineLocation);
 		final PSystemError result = new PSystemError(source, err, null);
@@ -67,7 +67,7 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 		return result;
 	}
 
-	final public DiagramType getDiagramType() {
+	public final DiagramType getDiagramType() {
 		return type;
 	}
 

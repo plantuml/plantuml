@@ -155,7 +155,7 @@ public class Defines implements Truth {
 	}
 
 	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";
-	private final static Pattern datePattern = Pattern.compile(DATE);
+	private static final Pattern datePattern = Pattern.compile(DATE);
 
 	private String manageDate(String line) {
 		final Matcher m = datePattern.matcher(line);

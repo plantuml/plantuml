@@ -165,7 +165,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+    protected final ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		if (useLayoutExplicit != 0) {
 			return exportLayoutExplicit(os, index, fileFormatOption);
@@ -173,7 +173,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		return super.exportDiagramInternal(os, index, fileFormatOption);
 	}
 
-	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected final ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final FullLayout fullLayout = new FullLayout();
 		for (int i = 0; i <= useLayoutExplicit; i++) {

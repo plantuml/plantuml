@@ -43,11 +43,11 @@ import java.util.Set;
 
 public class Dijkstra {
 
-	final private double basic[][];
-	final private double dist[];
-	final private int previous[];
-	final private Set<Integer> q = new HashSet<Integer>();
-	final private int size;
+	private final double basic[][];
+	private final double dist[];
+	private final int previous[];
+	private final Set<Integer> q = new HashSet<Integer>();
+	private final int size;
 
 	public Dijkstra(int size) {
 		this.size = size;

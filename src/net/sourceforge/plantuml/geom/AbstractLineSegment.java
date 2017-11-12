@@ -42,13 +42,13 @@ import java.awt.geom.Rectangle2D;
 public abstract class AbstractLineSegment extends Line2D {
 
 	@Override
-	final public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
 		final AbstractLineSegment other = (AbstractLineSegment) obj;
 		return this.getP1().equals(other.getP1()) && getP2().equals(other.getP2());
 	}
 
 	@Override
-	final public int hashCode() {
+    public final int hashCode() {
 		int result = 7;
 		final int multiplier = 17;
 		result = result * multiplier + getP1().hashCode();
@@ -56,18 +56,18 @@ public abstract class AbstractLineSegment extends Line2D {
 		return result;
 	}
 
-	final public double getLength() {
+	public final double getLength() {
 		return Math.sqrt((getP2().getX() - getP1().getX()) * (getP2().getX() - getP1().getX())
 				+ (getP2().getY() - getP1().getY()) * (getP2().getY() - getP1().getY()));
 	}
 
-	final protected Point2D.Double getPoint2D(double u) {
+	protected final Point2D.Double getPoint2D(double u) {
 		final double x = getP1().getX() + u * (getP2().getX() - getP1().getX());
 		final double y = getP1().getY() + u * (getP2().getY() - getP1().getY());
 		return new Point2D.Double(x, y);
 	}
 
-	final public double getDistance(Point2D f) {
+	public final double getDistance(Point2D f) {
 		return this.ptSegDist(f);
 	}
 
@@ -144,11 +144,11 @@ public abstract class AbstractLineSegment extends Line2D {
 	// Line2D
 
 	@Override
-	final public void setLine(double x1, double y1, double x2, double y2) {
+    public final void setLine(double x1, double y1, double x2, double y2) {
 		throw new UnsupportedOperationException();
 	}
 
-	final public Rectangle2D getBounds2D() {
+	public final Rectangle2D getBounds2D() {
 		final double x;
 		final double w;
 		if (getX1() < getX2()) {
@@ -170,15 +170,15 @@ public abstract class AbstractLineSegment extends Line2D {
 		return new Rectangle2D.Double(x, y, w, h);
 	}
 
-	final public boolean isHorizontal() {
+	public final boolean isHorizontal() {
 		return getP1().getY() == getP2().getY();
 	}
 
-	final public boolean isVertical() {
+	public final boolean isVertical() {
 		return getP1().getX() == getP2().getX();
 	}
 
-	final public double getDistance(AbstractLineSegment other) {
+	public final double getDistance(AbstractLineSegment other) {
 		final double result = getDistanceInternal(other);
 		assert equals(result, other.getDistanceInternal(this));
 		return result;
@@ -200,15 +200,15 @@ public abstract class AbstractLineSegment extends Line2D {
 		return result;
 	}
 
-	final public double getAngle() {
+	public final double getAngle() {
 		return Math.atan2(getP2().getY() - getP1().getY(), getP2().getX() - getP1().getX());
 	}
 
-	final public double getOppositeAngle() {
+	public final double getOppositeAngle() {
 		return Math.atan2(getP1().getY() - getP2().getY(), getP1().getX() - getP2().getX());
 	}
 
-	final public Point2D.Double startTranslatedAsVector(double u) {
+	public final Point2D.Double startTranslatedAsVector(double u) {
 		final double pour = 1.0 * u / 100.0;
 		final double x = getP1().getX() + pour * (getP2().getX() - getP1().getX());
 		final double y = getP1().getY() + pour * (getP2().getY() - getP1().getY());

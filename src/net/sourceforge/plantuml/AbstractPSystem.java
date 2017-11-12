@@ -70,25 +70,25 @@ public abstract class AbstractPSystem implements Diagram {
 		return toAppend.toString();
 	}
 
-	final public String getMetadata() {
+	public final String getMetadata() {
 		if (source == null) {
 			return getVersion();
 		}
 		return source.getPlainString() + BackSlash.NEWLINE + getVersion();
 	}
 
-	final public UmlSource getSource() {
+	public final UmlSource getSource() {
 		return source;
 	}
 
-	final public long seed() {
+	public final long seed() {
 		if (source == null) {
 			return 42;
 		}
 		return getSource().seed();
 	}
 
-	final public void setSource(UmlSource source) {
+	public final void setSource(UmlSource source) {
 		this.source = source;
 	}
 
@@ -127,7 +127,7 @@ public abstract class AbstractPSystem implements Diagram {
 		return false;
 	}
 
-	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+	public final ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final long now = System.currentTimeMillis();
 		try {

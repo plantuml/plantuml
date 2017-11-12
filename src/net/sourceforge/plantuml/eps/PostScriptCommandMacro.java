@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.eps;
 
 public class PostScriptCommandMacro implements PostScriptCommand {
 
-	final private String name;
-	final private PostScriptData data = new PostScriptData();
+	private final String name;
+	private final PostScriptData data = new PostScriptData();
 
 	public PostScriptCommandMacro(String name) {
 		this.name = name;

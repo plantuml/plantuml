@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 
-final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
+public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
 	private static final String SINGLE = "[.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*";
 	private static final String COUPLE = "\\([%s]*(" + SINGLE + ")[%s]*,[%s]*(" + SINGLE + ")[%s]*\\)";
@@ -75,7 +75,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		super(getRegexConcat(umlDiagramType));
 	}
 
-	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
+	private static RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
 		return new RegexConcat(new RegexLeaf("HEADER", "^(?:@([\\d.]+)[%s]+)?"), //
 				new RegexOr( //
 						new RegexLeaf("ENT1", getClassIdentifier()),//

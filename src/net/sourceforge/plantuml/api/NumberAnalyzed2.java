@@ -165,7 +165,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 		return sum.get() / nb.get();
 	}
 
-	final public String getName() {
+	public final String getName() {
 		return name;
 	}
 

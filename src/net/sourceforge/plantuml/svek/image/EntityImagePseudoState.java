@@ -75,7 +75,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		return new Dimension2DDouble(SIZE, SIZE);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		if (getSkinParam().shadowing()) {
 			circle.setDeltaShadow(4);

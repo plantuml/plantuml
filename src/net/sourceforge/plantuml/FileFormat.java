@@ -84,8 +84,8 @@ public enum FileFormat {
 		return "." + StringUtils.goLowerCase(name());
 	}
 
-	final static private BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
-	final static private Graphics2D gg = imDummy.createGraphics();
+	private static final BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
+	private static final Graphics2D gg = imDummy.createGraphics();
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion) {
 		if (this == LATEX || this == LATEX_NO_PREAMBLE) {

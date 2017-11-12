@@ -75,7 +75,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		return copy;
 	}
 
-	final public UClip getClip() {
+	public final UClip getClip() {
 		return clip;
 	}
 
@@ -98,7 +98,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	protected abstract AbstractCommonUGraphic copyUGraphic();
 
-	final public UParam getParam() {
+	public final UParam getParam() {
 		return new UParam() {
 
 			public boolean isHidden() {
@@ -127,15 +127,15 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		};
 	}
 
-	final protected double getTranslateX() {
+	protected final double getTranslateX() {
 		return translate.getDx();
 	}
 
-	final protected double getTranslateY() {
+	protected final double getTranslateY() {
 		return translate.getDy();
 	}
 
-	final public ColorMapper getColorMapper() {
+	public final ColorMapper getColorMapper() {
 		return new ColorMapperTransparentWrapper(colorMapper);
 	}
 

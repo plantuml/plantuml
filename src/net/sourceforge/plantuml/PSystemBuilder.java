@@ -94,7 +94,7 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(final List<CharSequence2> strings2, int startLine) {
+	public final Diagram createPSystem(final List<CharSequence2> strings2, int startLine) {
 
 		final long now = System.currentTimeMillis();
 
