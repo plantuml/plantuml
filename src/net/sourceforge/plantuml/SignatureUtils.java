@@ -54,14 +54,11 @@ public class SignatureUtils {
 			msgDigest.update(s.getBytes("UTF-8"));
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e);
-		} catch (UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
-	}
+    }
 
 	public static String getSignatureSha512(File f) throws IOException {
 		try (InputStream is = new FileInputStream(f)) {
@@ -79,14 +76,11 @@ public class SignatureUtils {
 			}
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e);
-		} catch (UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
-	}
+    }
 
 	public static String getSignatureWithoutImgSrc(String s) {
 		s = getSignature(purge(s));
@@ -113,12 +107,9 @@ public class SignatureUtils {
 			is.close();
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e);
-		} catch (UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
-	}
+    }
 }

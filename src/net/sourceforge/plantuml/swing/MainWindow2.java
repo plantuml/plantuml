@@ -339,14 +339,10 @@ public class MainWindow2 extends JFrame {
 						jList1.setListData(new Vector<SimpleLine2>(currentDirectoryListing2));
 						jList1.setVisible(true);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
+				} catch (IOException | ExecutionException | InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
+            }
 		});
 	}
 

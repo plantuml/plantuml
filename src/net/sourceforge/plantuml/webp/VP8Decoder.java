@@ -63,8 +63,6 @@ public class VP8Decoder {
                     out.write(aData[y]);
                     out.write(aData[y]);
                 }
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,8 +107,6 @@ public class VP8Decoder {
 
 			}
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -148,8 +144,6 @@ public class VP8Decoder {
 				for (int x = 0; x < (f.getWidth() + 1) / 2; x++) {
 					out.write(vData[x][y]);
 				}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

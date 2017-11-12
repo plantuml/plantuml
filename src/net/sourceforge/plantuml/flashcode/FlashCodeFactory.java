@@ -42,13 +42,9 @@ public class FlashCodeFactory {
 		try {
 			final Class cl = Class.forName(name);
 			return (FlashCodeUtils) cl.newInstance();
-		} catch (ClassNotFoundException e) {
-			return new FlashCodeUtilsNone();
-		} catch (InstantiationException e) {
-			return new FlashCodeUtilsNone();
-		} catch (IllegalAccessException e) {
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
 			return new FlashCodeUtilsNone();
 		}
-	}
+    }
 
 }

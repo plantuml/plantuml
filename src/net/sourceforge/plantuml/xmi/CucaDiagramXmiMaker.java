@@ -80,15 +80,11 @@ public final class CucaDiagramXmiMaker {
 				throw new UnsupportedOperationException();
 			}
 			xmi.transformerXml(fos);
-		} catch (ParserConfigurationException e) {
-			Log.error(e.toString());
-			e.printStackTrace();
-			throw new IOException(e.toString());
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | TransformerException e) {
 			Log.error(e.toString());
 			e.printStackTrace();
 			throw new IOException(e.toString());
 		}
-	}
+    }
 
 }

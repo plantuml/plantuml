@@ -363,12 +363,10 @@ public class Run {
 							if (error) {
 								errors.set(true);
 							}
-						} catch (IOException e) {
-							e.printStackTrace();
-						} catch (InterruptedException e) {
+						} catch (IOException | InterruptedException e) {
 							e.printStackTrace();
 						}
-						incDone(errors.get());
+                        incDone(errors.get());
 					}
 				});
 			}

@@ -129,15 +129,12 @@ public class PlantUmlTask extends Task {
 				}
 			}
 			this.log("Nb images generated: " + nbFiles.get());
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new BuildException(e.toString());
-		} catch (InterruptedException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			throw new BuildException(e.toString());
 		}
 
-	}
+    }
 
 	private void eventuallyFailfast(final File error) throws IOException {
 		if (error != null && option.isFailfastOrFailfast2()) {

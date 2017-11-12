@@ -148,12 +148,10 @@ public class SpriteWindow extends JFrame {
                 return (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
 			}
 
-		} catch (UnsupportedFlavorException e) {
-			Log.error(e.toString());
-		} catch (IOException e) {
+		} catch (UnsupportedFlavorException | IOException e) {
 			Log.error(e.toString());
 		}
-		return null;
+        return null;
 	}
 
 	public static void main(String[] args) {
