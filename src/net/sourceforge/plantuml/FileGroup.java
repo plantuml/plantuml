@@ -57,9 +57,9 @@ public class FileGroup {
 		this.pattern = pattern;
 		this.excluded = excluded;
 		this.option = option;
-		if (pattern.indexOf("*") == -1 && pattern.indexOf("?") == -1) {
+		if (!pattern.contains("*") && !pattern.contains("?")) {
 			initNoStar();
-		} else if (pattern.indexOf("**") != -1) {
+		} else if (pattern.contains("**")) {
 			recurse();
 		} else {
 			initWithSimpleStar();
@@ -128,7 +128,7 @@ public class FileGroup {
 	private static final Pattern2 noStarInDirectory = MyPattern.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
 
 	private void initWithSimpleStar() {
-		assert pattern.indexOf("**") == -1;
+		assert !pattern.contains("**");
 		final Matcher2 m = noStarInDirectory.matcher(pattern);
 		if (m.find()) {
 			File dir = new File(".");

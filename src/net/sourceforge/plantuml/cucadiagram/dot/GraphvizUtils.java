@@ -262,7 +262,7 @@ public class GraphvizUtils {
 			return "Error: dot generates empty file. Check you dot installation.";
 		}
 		final String s = new String(data);
-		if (s.indexOf("<svg") == -1) {
+		if (!s.contains("<svg")) {
 			return "Error: dot generates unreadable SVG file. Check you dot installation.";
 		}
 		return null;
