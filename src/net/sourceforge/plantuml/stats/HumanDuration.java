@@ -55,15 +55,15 @@ class HumanDuration {
 		final long hour = time % 24;
 		final long day = time / 24;
 		if (day > 0) {
-			return String.format("%dd %02dh%02dm%02ds", day, hour, min, sec, ms);
+			return String.format("%dd %02dh%02dm%02ds%03dms", day, hour, min, sec, ms);
 		}
 		if (hour > 0) {
-			return String.format("%dh%02dm%02ds", hour, min, sec, ms);
+			return String.format("%dh%02dm%02ds%03dms", hour, min, sec, ms);
 		}
 		if (min > 0) {
-			return String.format("%dm%02ds", min, sec, ms);
+			return String.format("%dm%02ds%03dms", min, sec, ms);
 		}
-		return String.format("%ds", sec, ms);
+		return String.format("%ds%03dms", sec, ms);
 	}
 
 }

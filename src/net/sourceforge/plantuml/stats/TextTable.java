@@ -116,7 +116,7 @@ public class TextTable {
 			HorizontalAlignment align = HorizontalAlignment.CENTER;
 
 			if (s instanceof Long) {
-				final String num = String.format("%,d", s).replaceAll("\u00A0", " ");
+				final String num = String.format("%d", s).replaceAll("\u00A0", " ");
 				sb.append(num);
 				align = HorizontalAlignment.RIGHT;
 			} else if (s instanceof Date) {

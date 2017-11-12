@@ -191,7 +191,7 @@ public class XmlConverter {
 				result.append("<b>");
 			}
 			if (v instanceof Long) {
-				result.append(String.format("%,d", v));
+				result.append(String.format("%d", v));
 			} else if (v instanceof Date) {
 				result.append(formatter.format(v));
 			} else if (v == null || v.toString().isEmpty()) {
