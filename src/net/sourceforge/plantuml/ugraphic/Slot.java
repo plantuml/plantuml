@@ -88,13 +88,7 @@ public class Slot implements Comparable<Slot> {
 	}
 
 	public int compareTo(Slot other) {
-		if (this.start < other.start) {
-			return -1;
-		}
-		if (this.start > other.start) {
-			return 1;
-		}
-		return 0;
+		return Double.compare(this.start, other.start);
 	}
 
 }

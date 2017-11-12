@@ -56,13 +56,7 @@ public class StairsPosition implements Comparable<StairsPosition> {
 	}
 
 	public int compareTo(StairsPosition other) {
-		if (this.value > other.value) {
-			return 1;
-		}
-		if (this.value < other.value) {
-			return -1;
-		}
-		return 0;
+		return Double.compare(this.value, other.value);
 	}
 
 	public boolean isDestroy() {
