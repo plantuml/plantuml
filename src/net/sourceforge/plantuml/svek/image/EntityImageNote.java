@@ -144,8 +144,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	public final double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getTextWidth(stringBounder);
-		return result;
+        return getTextWidth(stringBounder);
 	}
 
 	public final double getPreferredHeight(StringBounder stringBounder) {

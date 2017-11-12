@@ -145,9 +145,8 @@ public class FtileGroup extends AbstractFtile {
 		final FtileGeometry orig = getInnerDimension(stringBounder);
 		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
-		final double suppWidth = MathUtils
-				.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20) - orig.getWidth();
-		return suppWidth;
+        return MathUtils
+                .max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20) - orig.getWidth();
 	}
 
 	private FtileGeometry cachedInnerDimension;

@@ -96,15 +96,13 @@ class PageSplitter {
 	}
 
 	private Page firstPage() {
-		final double newpage1 = this.headerHeight;
-		final double newpage2 = positions.get(0) + this.newpageHeight;
-		return new Page(headerHeight, newpage1, newpage2, tailHeight, 0, diagramTitle);
+        final double newpage2 = positions.get(0) + this.newpageHeight;
+		return new Page(headerHeight, this.headerHeight, newpage2, tailHeight, 0, diagramTitle);
 	}
 
 	private Page onePage() {
-		final double newpage1 = this.headerHeight;
-		final double newpage2 = this.fullHeight - this.tailHeight - this.signatureHeight;
-		return new Page(headerHeight, newpage1, newpage2, tailHeight, signatureHeight, diagramTitle);
+        final double newpage2 = this.fullHeight - this.tailHeight - this.signatureHeight;
+		return new Page(headerHeight, this.headerHeight, newpage2, tailHeight, signatureHeight, diagramTitle);
 	}
 
 	private Page createPage(int i) {

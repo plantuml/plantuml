@@ -83,9 +83,8 @@ public class DelayTile implements Tile, TileWithCallbackY {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = tileArguments.getSkin().createComponent(ComponentType.DELAY_TEXT, null,
-				tileArguments.getSkinParam(), delay.getText());
-		return comp;
+        return tileArguments.getSkin().createComponent(ComponentType.DELAY_TEXT, null,
+tileArguments.getSkinParam(), delay.getText());
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {

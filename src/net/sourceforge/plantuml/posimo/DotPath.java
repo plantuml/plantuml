@@ -294,14 +294,12 @@ public class DotPath implements UShape, Moveable {
 
 	public double getEndAngle() {
 		final Line2D tan = getEndTangeante();
-		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
-		return theta1;
+		return Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
 	}
 
 	public double getStartAngle() {
 		final Line2D tan = getStartTangeante();
-		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
-		return theta1;
+		return Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
 	}
 
 	public Line2D getStartTangeante() {

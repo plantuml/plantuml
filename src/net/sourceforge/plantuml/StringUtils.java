@@ -95,8 +95,7 @@ public class StringUtils {
 		final StringBuilder result = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			if (c > 127 || c == '&' || c == '|') {
-				final int i = c;
-				result.append("&#" + i + ";");
+				result.append("&#" + (int) c + ";");
 			} else {
 				result.append(c);
 			}
@@ -108,8 +107,7 @@ public class StringUtils {
 		final StringBuilder result = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			if (c > 127 || c == '&' || c == '|' || c == '<' || c == '>') {
-				final int i = c;
-				result.append("&#" + i + ";");
+				result.append("&#" + (int) c + ";");
 			} else {
 				result.append(c);
 			}

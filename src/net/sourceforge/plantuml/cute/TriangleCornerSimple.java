@@ -109,9 +109,8 @@ public class TriangleCornerSimple {
 		final double sign = Math.signum(a.getY());
 		// System.err.println("sgn=" + sign);
 		final double x = solveX(alpha, y);
-		final Balloon result = new Balloon(new Point2D.Double(x * sign, y * sign), Math.abs(x));
 		// System.err.println("result=" + result);
-		return result;
+		return new Balloon(new Point2D.Double(x * sign, y * sign), Math.abs(x));
 	}
 
 }

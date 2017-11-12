@@ -108,9 +108,8 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 		if (isReverse(stringBounder)) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabelNumbered());
-		return comp;
+        return skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
+message.getLabelNumbered());
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;

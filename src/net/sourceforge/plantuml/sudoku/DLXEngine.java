@@ -1167,7 +1167,6 @@ public class DLXEngine {
 	}
 
 	String solve(String s) {
-		String result = solver.solve(s);
-		return result;
+		return solver.solve(s);
 	}
 }

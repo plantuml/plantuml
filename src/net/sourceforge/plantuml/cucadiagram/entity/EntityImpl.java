@@ -537,9 +537,8 @@ final class EntityImpl implements ILeaf, IGroup {
 		final FontParam fontParam = getTitleFontParam();
 		final HtmlColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);
 		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);
-		final FontConfiguration fontConfiguration = new FontConfiguration(font, fontHtmlColor,
-				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
-		return fontConfiguration;
+        return new FontConfiguration(font, fontHtmlColor,
+skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 	}
 
 	public final int getRawLayout() {

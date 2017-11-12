@@ -154,9 +154,8 @@ public class PathDrawerInterface implements PathDrawer {
 	private double atan2(final Point2D endPath, final Point2D inPoint) {
 		final double y = -endPath.getX() + inPoint.getX();
 		final double x = endPath.getY() - inPoint.getY();
-		final double angle = Math.atan2(y, x);
-		// Log.println("x=" + x + " y=" + y + " angle=" + angle + " " + angle * 180.0 / Math.PI);
-		return angle;
+        // Log.println("x=" + x + " y=" + y + " angle=" + angle + " " + angle * 180.0 / Math.PI);
+		return Math.atan2(y, x);
 	}
 
 	private Point2D drawSymbol(UGraphic ug, double theta, final Point2D position, LinkDecor decor) {

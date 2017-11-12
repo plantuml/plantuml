@@ -111,8 +111,7 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	private double getDiff(UGraphic ug) {
 		final double y1 = arrow.getPreferredHeight(ug.getStringBounder());
 		final double y2 = participantBox.getHeadHeight(ug.getStringBounder());
-		final double diff = y1 - y2;
-		return diff;
+        return y1 - y2;
 	}
 
 	@Override

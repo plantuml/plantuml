@@ -71,8 +71,7 @@ public class DividerTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.DIVIDER, null, skinParam, divider.getText());
-		return comp;
+        return skin.createComponent(ComponentType.DIVIDER, null, skinParam, divider.getText());
 	}
 
 	public void drawU(UGraphic ug) {

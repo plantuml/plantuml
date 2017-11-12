@@ -69,8 +69,7 @@ public final class ComponentRoseNote extends AbstractTextualComponent implements
 
 	@Override
     public final double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();
-		return result;
+        return getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();
 	}
 
 	@Override

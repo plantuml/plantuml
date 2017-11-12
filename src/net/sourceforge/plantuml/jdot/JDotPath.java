@@ -187,8 +187,7 @@ public class JDotPath implements UDrawable {
 
 	private splines getSplines(Agedge_s e) {
 		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(e).castTo(Agedgeinfo_t.class);
-		final splines splines = (splines) data.getPtr("spl");
-		return splines;
+        return (splines) data.getPtr("spl");
 	}
 
 	private DotPath getDotPath(splines splines) {

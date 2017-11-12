@@ -166,8 +166,7 @@ public class LifeLine {
 	}
 
 	private double getStartingX(StringBounder stringBounder) {
-		final double delta = participant.getCenterX(stringBounder) - nominalPreferredWidth / 2.0;
-		return delta;
+        return participant.getCenterX(stringBounder) - nominalPreferredWidth / 2.0;
 	}
 
 	private SegmentColored getSegment(int i) {

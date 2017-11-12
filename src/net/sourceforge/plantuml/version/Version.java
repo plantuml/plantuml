@@ -75,8 +75,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 0;
-		return beta;
+        return 0;
 	}
 
 	public static String etag() {

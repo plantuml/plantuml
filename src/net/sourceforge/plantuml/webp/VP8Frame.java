@@ -960,22 +960,18 @@ public class VP8Frame {
 	
 	private int readPartitionSize(long l) throws IOException {
 		frame.seek(l);
-		int size =frame.readUnsignedByte() + (frame.readUnsignedByte() << 8) + (frame.readUnsignedByte() << 16);
-		return size;
+        return frame.readUnsignedByte() + (frame.readUnsignedByte() << 8) + (frame.readUnsignedByte() << 16);
 		
 	}
 	private int readSubBlockMode(BoolDecoder bc, int A, int L) throws IOException {
-		int i = bc.readTree(Globals.vp8SubBlockModeTree, Globals.vp8KeyFrameSubBlockModeProb[A][L]);
-		return i;
+        return bc.readTree(Globals.vp8SubBlockModeTree, Globals.vp8KeyFrameSubBlockModeProb[A][L]);
 	}
 	private int readUvMode(BoolDecoder bc) throws IOException {
-		int i = bc.readTree(Globals.vp8UVModeTree, Globals.vp8KeyFrameUVModeProb);
-		return i;
+        return bc.readTree(Globals.vp8UVModeTree, Globals.vp8KeyFrameUVModeProb);
 	}
 	
 	private int readYMode(BoolDecoder bc) throws IOException {
-		int i = bc.readTree(Globals.vp8KeyFrameYModeTree, Globals.vp8KeyFrameYModeProb);
-		return i;
+        return bc.readTree(Globals.vp8KeyFrameYModeTree, Globals.vp8KeyFrameYModeProb);
 	}
 	
 	public void removeIIOReadProgressListener(IIOReadProgressListener listener) {

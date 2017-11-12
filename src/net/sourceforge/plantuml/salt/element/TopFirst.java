@@ -46,8 +46,7 @@ class TopFirst implements Comparator<Cell> {
 		if (diffNb != 0) {
 			return diffNb;
 		}
-		final int diffPos = c0.getMinRow() - c1.getMinRow();
-		return diffPos;
+        return c0.getMinRow() - c1.getMinRow();
 	}
 
 }

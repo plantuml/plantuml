@@ -72,7 +72,6 @@ public class AnimationScript {
 		final StringWriter sw = new StringWriter();
 		context.setWriter(new PrintWriter(sw));
 		engine.eval(line, context);
-		final String result = sw.toString();
-		return result;
+        return sw.toString();
 	}
 }

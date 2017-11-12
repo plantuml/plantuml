@@ -741,9 +741,8 @@ public class EpsGraphics {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
-			final double diff = i;
-			epsRectangle(x + deltaShadow + diff, y + deltaShadow + diff, width - 2 * diff, height - 2 * diff, rx + 1,
-					ry + 1);
+            epsRectangle(x + deltaShadow + i, y + deltaShadow + i, width - 2 * i, height - 2 * i, rx + 1,
+                         ry + 1);
 		}
 	}
 
@@ -751,8 +750,7 @@ public class EpsGraphics {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
-			final double diff = i;
-			epsPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, diff, points));
+            epsPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, i, points));
 		}
 	}
 
@@ -760,8 +758,7 @@ public class EpsGraphics {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
-			final double diff = i;
-			epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - diff, yRadius - diff);
+            epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - i, yRadius - i);
 		}
 	}
 

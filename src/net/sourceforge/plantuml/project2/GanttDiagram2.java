@@ -89,8 +89,7 @@ public class GanttDiagram2 {
 			rows.add(new RowSimple((Day) t.getStart(), (Day) t.getEnd(), HtmlColorUtils.BLACK, TextBlockUtils
 					.withMargin(label, 3, 3)));
 		}
-		final Row row = RowUtils.merge(rows);
-		return row;
+        return RowUtils.merge(rows);
 	}
 
 	public double getWidth(StringBounder stringBounder) {

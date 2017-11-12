@@ -182,8 +182,7 @@ public class GraphvizSolverB {
 		final int p2 = svg.indexOf(pointsString, starting);
 		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
 		final String points = svg.substring(p2 + pointsString.length(), p3);
-		final List<Point2D.Double> pointsList = getPoints(points);
-		return pointsList;
+		return getPoints(points);
 	}
 
 	private static double getMaxX(List<Point2D.Double> points) {

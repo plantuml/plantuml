@@ -96,9 +96,8 @@ public class HeaderLayout {
 		assert h1 >= 0;
 		assert h2 >= 0;
 
-		final double xCircle = h1;
-		final double yCircle = (height - circleDim.getHeight()) / 2;
-		circledCharacter.drawU(ug.apply(new UTranslate(xCircle, yCircle)));
+        final double yCircle = (height - circleDim.getHeight()) / 2;
+		circledCharacter.drawU(ug.apply(new UTranslate(h1, yCircle)));
 
 		final double diffHeight = height - stereoDim.getHeight() - nameDim.getHeight();
 		final double xStereo = circleDim.getWidth() + (widthStereoAndName - stereoDim.getWidth()) / 2 + h1 + h2;

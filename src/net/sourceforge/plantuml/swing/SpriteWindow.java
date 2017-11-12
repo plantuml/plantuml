@@ -145,8 +145,7 @@ public class SpriteWindow extends JFrame {
 
 		try {
 			if (t != null && t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-				final BufferedImage text = (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
-				return text;
+                return (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
 			}
 
 		} catch (UnsupportedFlavorException e) {

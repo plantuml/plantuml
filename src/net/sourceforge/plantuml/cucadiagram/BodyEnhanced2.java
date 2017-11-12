@@ -121,8 +121,7 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private TextBlock getTextBlock(Display members2, StringBounder stringBounder) {
-		final TextBlock result = members2.create(titleConfig, align, spriteContainer);
-		return result;
+        return members2.create(titleConfig, align, spriteContainer);
 	}
 
 	public static boolean isBlockSeparator(String s) {

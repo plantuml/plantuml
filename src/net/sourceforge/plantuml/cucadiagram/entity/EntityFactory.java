@@ -99,13 +99,12 @@ public class EntityFactory {
 	}
 
 	private LongCode getLongCode(Code code, String namespaceSeparator) {
-		final LongCode result = LongCode.of(code.getFullName(), namespaceSeparator);
 		// if (result.toString().equals(code.toString()) == false) {
 		// System.err.println("result=" + result);
 		// System.err.println(" code =" + code);
 		// throw new UnsupportedOperationException();
 		// }
-		return result;
+		return LongCode.of(code.getFullName(), namespaceSeparator);
 	}
 
 	public IGroup createGroup(Code code, Display display, Code namespace2, GroupType groupType, IGroup parentContainer,

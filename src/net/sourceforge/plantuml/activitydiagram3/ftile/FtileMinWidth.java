@@ -87,8 +87,7 @@ public class FtileMinWidth extends FtileDecorate {
 	private UTranslate getUTranslateInternal(final StringBounder stringBounder) {
 		final Dimension2D dimTile = getFtileDelegated().calculateDimension(stringBounder);
 		final Dimension2D dimTotal = getDimensionInternal(stringBounder);
-		final UTranslate change = new UTranslate((dimTotal.getWidth() - dimTile.getWidth()) / 2, 0);
-		return change;
+        return new UTranslate((dimTotal.getWidth() - dimTile.getWidth()) / 2, 0);
 	}
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {

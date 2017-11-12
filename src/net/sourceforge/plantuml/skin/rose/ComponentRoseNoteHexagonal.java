@@ -63,8 +63,7 @@ public final class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 
 	@Override
     public final double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getTextWidth(stringBounder) + 2 * getPaddingX();
-		return result;
+        return getTextWidth(stringBounder) + 2 * getPaddingX();
 	}
 
 	@Override

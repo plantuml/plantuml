@@ -88,9 +88,8 @@ public class CommunicationTileSelf implements TileWithUpdateStairs {
 	private Component getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		arrowConfiguration = arrowConfiguration.self();
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabelNumbered());
-		return comp;
+        return skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
+message.getLabelNumbered());
 	}
 
 	public void updateStairs(StringBounder stringBounder, double y) {

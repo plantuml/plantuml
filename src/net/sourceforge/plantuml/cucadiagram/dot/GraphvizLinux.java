@@ -52,8 +52,7 @@ class GraphvizLinux extends AbstractGraphviz {
 		if (usrLocalBinDot.exists()) {
 			return usrLocalBinDot;
 		}
-		final File usrBinDot = new File("/usr/bin/dot");
-		return usrBinDot;
+        return new File("/usr/bin/dot");
 	}
 
 }

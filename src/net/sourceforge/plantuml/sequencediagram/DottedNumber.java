@@ -94,12 +94,11 @@ public class DottedNumber {
 	}
 
 	public void incrementIntermediate(int position) {
-		final int intermediate = position;
-		final int newValue = nums.get(intermediate) + 1;
-		for (int i = intermediate + 1; i < nums.size(); i++) {
+        final int newValue = nums.get(position) + 1;
+		for (int i = position + 1; i < nums.size(); i++) {
 			nums.set(i, 1);
 		}
-		nums.set(intermediate, newValue);
+		nums.set(position, newValue);
 	}
 
 	public String format(DecimalFormat format) {

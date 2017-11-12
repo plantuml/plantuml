@@ -90,8 +90,7 @@ public class SpriteImage implements Sprite {
 
 	public static InputStream getInternalSprite(final String inner) {
 		final String path = "/sprites/" + inner;
-		final InputStream is = SpriteImage.class.getResourceAsStream(path);
-		return is;
+        return SpriteImage.class.getResourceAsStream(path);
 	}
 
 }

@@ -76,8 +76,7 @@ public class UText implements UShape {
 	
 	public double getDescent() {
 		final LineMetrics fm = TextBlockUtils.getLineMetrics(font.getFont(), text);
-		final double descent = fm.getDescent();
-		return descent;
+        return (double) fm.getDescent();
 	}
 
 	public String getAriaLabel() {

@@ -160,8 +160,7 @@ public class BetweenCorners {
 	private double getRadiusFuzzy1() {
 		final double a = getLength() / 2;
 		final double b = getTension().getValue();
-		final double radius = (a * a + b * b) / 2 / b;
-		return radius;
+        return (a * a + b * b) / 2 / b;
 	}
 
 	private Segment getSegment() {

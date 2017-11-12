@@ -74,9 +74,8 @@ public class NoteTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(getNoteComponentType(note.getStyle()), null,
-				note.getSkinParamBackcolored(skinParam), note.getStrings());
-		return comp;
+        return skin.createComponent(getNoteComponentType(note.getStyle()), null,
+note.getSkinParamBackcolored(skinParam), note.getStrings());
 	}
 
 	private ComponentType getNoteComponentType(NoteStyle noteStyle) {

@@ -270,9 +270,8 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	private TextBlock getTextName(final UFont font, String name, final HtmlColorSimple color) {
 		final HtmlColorSimple opposite = color.opposite();
 		final FontConfiguration fc = new FontConfiguration(font, opposite, HtmlColorUtils.BLUE, true);
-		final TextBlock tt = Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
-				new SpriteContainerEmpty());
-		return tt;
+        return Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
+new SpriteContainerEmpty());
 	}
 
 	private UGraphic getPositioned(UGraphic ug, int i, int j) {

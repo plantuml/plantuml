@@ -65,8 +65,7 @@ public class BlockUml {
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		final String source = getDiagram().getSource().getPlainString();
-		final String encoded = transcoder.encode(source);
-		return encoded;
+		return transcoder.encode(source);
 	}
 
 	public String getFlashData() {

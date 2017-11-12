@@ -196,8 +196,7 @@ public class LivingSpace {
 
 	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
 		final Component comp = rose.createComponent(headType, null, skinParam, p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return dim;
+        return comp.getPreferredDimension(stringBounder);
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {

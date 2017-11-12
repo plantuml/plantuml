@@ -198,8 +198,7 @@ public class AtomText implements Atom {
 
 	private double getDescent() {
 		final LineMetrics fm = TextBlockUtils.getLineMetrics(fontConfiguration.getFont(), text);
-		final double descent = fm.getDescent();
-		return descent;
+        return (double) fm.getDescent();
 	}
 
 	public double getFontSize2D() {

@@ -83,8 +83,7 @@ public class CreoleHorizontalLine implements Atom {
 		}
 		final CreoleParser parser = new CreoleParser(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL);
 		final Sheet sheet = parser.createSheet(Display.getWithNewlines(line));
-		final TextBlock tb = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		return tb;
+        return new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 	}
 
 	public void drawU(UGraphic ug) {

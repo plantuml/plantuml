@@ -354,8 +354,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());
 		}
-		final UTranslate titleHeightTranslate = new UTranslate(0, titlesHeight);
-		return titleHeightTranslate;
+        return new UTranslate(0, titlesHeight);
 	}
 
 	private CollisionDetector getCollisionDetector(UGraphic ug, final UTranslate titleHeightTranslate) {

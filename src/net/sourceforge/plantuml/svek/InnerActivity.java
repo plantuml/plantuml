@@ -82,8 +82,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D img = im.calculateDimension(stringBounder);
-		return img;
+        return im.calculateDimension(stringBounder);
 	}
 
 	public ShapeType getShapeType() {

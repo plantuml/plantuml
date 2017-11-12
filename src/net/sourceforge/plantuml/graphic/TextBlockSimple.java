@@ -192,8 +192,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
 				deltaX = diff / 2.0;
 			} else if (lineHorizontalAlignment == HorizontalAlignment.RIGHT) {
-				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
-				deltaX = diff;
+                deltaX = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
 			}
 			line.drawU(ug.apply(new UTranslate(deltaX, y)));
 			y += line.calculateDimension(ug.getStringBounder()).getHeight();

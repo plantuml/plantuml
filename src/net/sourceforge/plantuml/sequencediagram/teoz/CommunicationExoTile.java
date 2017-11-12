@@ -81,9 +81,8 @@ public class CommunicationExoTile implements TileWithUpdateStairs {
 		if (message.getType().getDirection() == -1) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabel());
-		return comp;
+        return skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
+message.getLabel());
 	}
 
 	public void drawU(UGraphic ug) {

@@ -46,11 +46,8 @@ public class DriverCenteredCharacterBraille implements UDriver<BrailleGrid> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		final UCenteredCharacter characterCircled = (UCenteredCharacter) ushape;
 
-		final double xpos = x;
-		final double ypos = y;
-
-		final BrailleChar bchar = BrailleCharFactory.build("" + characterCircled.getChar()).get(0);
-		bchar.draw(grid, xpos, ypos);
+        final BrailleChar bchar = BrailleCharFactory.build("" + characterCircled.getChar()).get(0);
+		bchar.draw(grid, x, y);
 	}
 
 }

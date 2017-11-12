@@ -98,26 +98,25 @@ public class BezierUtils {
 	}
 
 	private static void subdivide(CubicCurve2D src, CubicCurve2D left, CubicCurve2D right, final double coef) {
-		final double coef1 = coef;
-		final double coef2 = 1 - coef;
-		final double centerxA = src.getCtrlX1() * coef1 + src.getCtrlX2() * coef2;
-		final double centeryA = src.getCtrlY1() * coef1 + src.getCtrlY2() * coef2;
+        final double coef2 = 1 - coef;
+		final double centerxA = src.getCtrlX1() * coef + src.getCtrlX2() * coef2;
+		final double centeryA = src.getCtrlY1() * coef + src.getCtrlY2() * coef2;
 
 		final double x1 = src.getX1();
 		final double y1 = src.getY1();
 		final double x2 = src.getX2();
 		final double y2 = src.getY2();
-		final double ctrlx1 = x1 * coef1 + src.getCtrlX1() * coef1;
-		final double ctrly1 = y1 * coef1 + src.getCtrlY1() * coef1;
-		final double ctrlx2 = x2 * coef1 + src.getCtrlX2() * coef1;
-		final double ctrly2 = y2 * coef1 + src.getCtrlY2() * coef1;
+		final double ctrlx1 = x1 * coef + src.getCtrlX1() * coef;
+		final double ctrly1 = y1 * coef + src.getCtrlY1() * coef;
+		final double ctrlx2 = x2 * coef + src.getCtrlX2() * coef;
+		final double ctrly2 = y2 * coef + src.getCtrlY2() * coef;
 
-		final double ctrlx12 = ctrlx1 * coef1 + centerxA * coef1;
-		final double ctrly12 = ctrly1 * coef1 + centeryA * coef1;
-		final double ctrlx21 = ctrlx2 * coef1 + centerxA * coef1;
-		final double ctrly21 = ctrly2 * coef1 + centeryA * coef1;
-		final double centerxB = ctrlx12 * coef1 + ctrlx21 * coef1;
-		final double centeryB = ctrly12 * coef1 + ctrly21 * coef1;
+		final double ctrlx12 = ctrlx1 * coef + centerxA * coef;
+		final double ctrly12 = ctrly1 * coef + centeryA * coef;
+		final double ctrlx21 = ctrlx2 * coef + centerxA * coef;
+		final double ctrly21 = ctrly2 * coef + centeryA * coef;
+		final double centerxB = ctrlx12 * coef + ctrlx21 * coef;
+		final double centeryB = ctrly12 * coef + ctrly21 * coef;
 		left.setCurve(x1, y1, ctrlx1, ctrly1, ctrlx12, ctrly12, centerxB, centeryB);
 		right.setCurve(centerxB, centeryB, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);
 	}

@@ -143,8 +143,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 	}
 
 	public synchronized INumberAnalyzed getCopyImmutable() {
-		final NumberAnalyzed copy = new NumberAnalyzed(name, nb, sum, min, max, sumOfSquare, sliddingSum);
-		return copy;
+        return new NumberAnalyzed(name, nb, sum, min, max, sumOfSquare, sliddingSum);
 	}
 
 	public synchronized void addValue(long v) {

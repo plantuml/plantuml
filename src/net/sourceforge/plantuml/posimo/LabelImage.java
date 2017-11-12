@@ -67,8 +67,7 @@ public class LabelImage {
 	}
 
 	public Dimension2D getDimension(StringBounder stringBounder) {
-		final Dimension2D dim = name.calculateDimension(stringBounder);
-		return dim;
+        return name.calculateDimension(stringBounder);
 		// return Dimension2DDouble.delta(dim, 2 * margin);
 	}
 

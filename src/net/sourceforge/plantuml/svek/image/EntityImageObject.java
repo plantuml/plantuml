@@ -193,9 +193,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		final Dimension2D nameDim = name.calculateDimension(stringBounder);
 		final Dimension2D stereoDim = stereo == null ? new Dimension2DDouble(0, 0) : stereo
 				.calculateDimension(stringBounder);
-		final Dimension2D nameAndStereo = new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
-				nameDim.getHeight() + stereoDim.getHeight());
-		return nameAndStereo;
+        return new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
+                                     nameDim.getHeight() + stereoDim.getHeight());
 	}
 
 	public ShapeType getShapeType() {

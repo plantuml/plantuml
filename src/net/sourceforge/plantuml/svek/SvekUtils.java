@@ -121,16 +121,14 @@ public class SvekUtils {
 		final int p2 = svg.indexOf(pointsString, starting);
 		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
 		final String points = svg.substring(p2 + pointsString.length(), p3);
-		final List<Point2D.Double> pointsList = getPoints(points, yDelta);
-		return pointsList;
+        return getPoints(points, yDelta);
 	}
 
 	public static List<Point2D.Double> extractD(final String svg, final int starting, double yDelta) {
 		final int p2 = svg.indexOf("d=\"", starting);
 		final int p3 = svg.indexOf("\"", p2 + "d=\"".length());
 		final String points = svg.substring(p2 + "d=\"".length(), p3);
-		final List<Point2D.Double> pointsList = getPoints(points, yDelta);
-		return pointsList;
+        return getPoints(points, yDelta);
 	}
 
 	public static int getIndexFromColor(String svg, int color) {

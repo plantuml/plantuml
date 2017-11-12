@@ -120,9 +120,8 @@ public class MainTile implements Tile, Bordered {
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);
 		final double finalY = drawUInternal(interceptor, false);
-		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;
-		// System.err.println("MainTile::getPreferredHeight=" + result);
-		return result;
+        // System.err.println("MainTile::getPreferredHeight=" + result);
+		return Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;
 	}
 
 	public void addConstraints(StringBounder stringBounder) {

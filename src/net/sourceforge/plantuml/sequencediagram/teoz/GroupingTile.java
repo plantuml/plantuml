@@ -128,8 +128,7 @@ public class GroupingTile implements TileWithCallbackY {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.GROUPING_HEADER, null, skinParam, display);
-		return comp;
+        return skin.createComponent(ComponentType.GROUPING_HEADER, null, skinParam, display);
 	}
 
 	private Dimension2D getPreferredDimensionIfEmpty(StringBounder stringBounder) {

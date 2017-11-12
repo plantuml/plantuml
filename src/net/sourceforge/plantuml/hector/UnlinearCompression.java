@@ -79,8 +79,7 @@ class UnlinearCompression {
 
 	private int nbOuterBefore(double x) {
 		final double pour = x / outer;
-		final int pourInter = (int) Math.floor(pour);
-		return pourInter;
+        return (int) Math.floor(pour);
 	}
 
 	public double[] encounteredSingularities(double from, double to) {

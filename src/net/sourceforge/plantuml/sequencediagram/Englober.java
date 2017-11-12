@@ -69,8 +69,7 @@ public class Englober {
 	}
 
 	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Skin skin, StringBounder stringBounder) {
-		final TileArguments result = new TileArguments(stringBounder, null, skin, skinParam, null);
-		return result;
+        return new TileArguments(stringBounder, null, skin, skinParam, null);
 	}
 
 	public Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments) {

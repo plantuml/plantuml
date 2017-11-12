@@ -461,9 +461,8 @@ class DrawableSetInitializer {
 		}
 		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final ComponentType type = n.getStyle().getNoteComponentType();
-		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
-				skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
-		return noteBox;
+        return new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
+skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 	}
 
 	private void prepareNotes(StringBounder stringBounder, Notes notes, ParticipantRange range) {

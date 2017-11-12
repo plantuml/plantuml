@@ -98,8 +98,7 @@ public class AsciiMathOld {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);
 		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document document = db.newDocument();
-		return document;
+        return db.newDocument();
 	}
 
 	private Dimension2D dim;

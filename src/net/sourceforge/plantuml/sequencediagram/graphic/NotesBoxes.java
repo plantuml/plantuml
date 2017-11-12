@@ -131,8 +131,7 @@ final class NotesBoxes extends GraphicalElement implements InGroupable {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getMaxX(stringBounder) - getMinX(stringBounder);
-		return result;
+        return getMaxX(stringBounder) - getMinX(stringBounder);
 	}
 
 	@Override

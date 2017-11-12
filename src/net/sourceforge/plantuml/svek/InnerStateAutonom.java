@@ -129,10 +129,8 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		final Dimension2D dim = Dimension2DDouble.mergeTB(text, attr, img);
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
-		final Dimension2D result = Dimension2DDouble.delta(dim, IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE
-				+ marginForFields);
-
-		return result;
+        return Dimension2DDouble.delta(dim, IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE
+                + marginForFields);
 	}
 
 	public ShapeType getShapeType() {

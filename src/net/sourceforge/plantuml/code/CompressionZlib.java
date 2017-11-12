@@ -75,8 +75,7 @@ public class CompressionZlib implements Compression {
 		if (!compresser.finished()) {
 			return null;
 		}
-		final byte[] result = copyArray(output, compressedDataLength);
-		return result;
+        return copyArray(output, compressedDataLength);
 	}
 
 	public byte[] decompress(byte[] in) throws IOException {
@@ -107,8 +106,7 @@ public class CompressionZlib implements Compression {
 			}
 			decompresser.end();
 
-			final byte[] result = copyArray(tmp, resultLength);
-			return result;
+            return copyArray(tmp, resultLength);
 		} catch (DataFormatException e) {
 			// e.printStackTrace();
 			throw new IOException(e.toString());

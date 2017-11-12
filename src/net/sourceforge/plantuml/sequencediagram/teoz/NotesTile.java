@@ -75,9 +75,8 @@ public class NotesTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder, Note note) {
-		final Component comp = skin.createComponent(getNoteComponentType(note.getStyle()), null,
-				note.getSkinParamBackcolored(skinParam), note.getStrings());
-		return comp;
+        return skin.createComponent(getNoteComponentType(note.getStyle()), null,
+note.getSkinParamBackcolored(skinParam), note.getStrings());
 	}
 
 	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
@@ -107,8 +106,7 @@ public class NotesTile implements Tile {
 	private double getUsedWidth(StringBounder stringBounder, Note note) {
 		final Component comp = getComponent(stringBounder, note);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final double width = dim.getWidth();
-		return width;
+        return dim.getWidth();
 	}
 
 	private Real getXcenter(StringBounder stringBounder, Note note) {

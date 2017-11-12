@@ -79,9 +79,8 @@ public class CommunicationTileNoteLeft implements TileWithUpdateStairs, TileWith
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(ComponentType.NOTE, null,
-				noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
-		return comp;
+        return skin.createComponent(ComponentType.NOTE, null,
+noteOnMessage.getSkinParamNoteBackcolored(skinParam), noteOnMessage.getDisplay());
 	}
 
 	private Real getNotePosition(StringBounder stringBounder) {

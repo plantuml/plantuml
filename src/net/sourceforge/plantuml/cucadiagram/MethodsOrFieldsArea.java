@@ -192,8 +192,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 		}
 
 		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			final Dimension2D dim = bloc.calculateDimension(stringBounder);
-			return dim;
+            return bloc.calculateDimension(stringBounder);
 		}
 
 		@Override

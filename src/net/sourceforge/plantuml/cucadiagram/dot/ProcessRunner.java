@@ -199,8 +199,7 @@ public class ProcessRunner {
 		public int joinInternal() throws InterruptedException {
 			errorStream.join();
 			outStream.join();
-			final int result = process.waitFor();
-			return result;
+            return process.waitFor();
 		}
 
 	}

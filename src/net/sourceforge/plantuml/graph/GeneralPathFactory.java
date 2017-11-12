@@ -62,10 +62,9 @@ public class GeneralPathFactory {
 
 		// final Point2D.Double start = polyline.clipStart(b1);
 		// final Point2D.Double end = polyline.clipEnd(b2);
-		final GeneralPath generalPath = polyline.asGeneralPath();
-		// addSymbol(generalPath, start, polyline.getFirst(), end,
+        // addSymbol(generalPath, start, polyline.getFirst(), end,
 		// polyline.getLast());
-		return generalPath;
+		return polyline.asGeneralPath();
 
 	}
 

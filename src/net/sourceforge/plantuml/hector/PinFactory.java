@@ -61,8 +61,7 @@ public class PinFactory {
 	}
 
 	public PinLink createPinLink(Link link) {
-		final PinLink result = new PinLink(create(link.getEntity1()), create(link.getEntity2()), link.getLength(), link);
-		return result;
+        return new PinLink(create(link.getEntity1()), create(link.getEntity2()), link.getLength(), link);
 	}
 
 }

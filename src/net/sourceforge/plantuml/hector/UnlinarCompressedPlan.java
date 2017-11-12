@@ -127,9 +127,8 @@ class UnlinarCompressedPlan {
 
 	private LineSegmentDouble getUncompressedSegment(final double x1, final double y1, final double x2,
 			final double y2, UnlinearCompression.Rounding rounding) {
-		final LineSegmentDouble un1 = new LineSegmentDouble(compX.uncompress(x1, rounding), compY.uncompress(y1,
-				rounding), compX.uncompress(x2, rounding), compY.uncompress(y2, rounding));
-		return un1;
+        return new LineSegmentDouble(compX.uncompress(x1, rounding), compY.uncompress(y1,
+rounding), compX.uncompress(x2, rounding), compY.uncompress(y2, rounding));
 	}
 
 	// private LineSegmentDouble getUncompressedSegmentRoundBefore(final double

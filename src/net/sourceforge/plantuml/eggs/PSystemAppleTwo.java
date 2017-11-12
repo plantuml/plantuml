@@ -81,11 +81,10 @@ public class PSystemAppleTwo extends AbstractPSystem {
 
 	private TextBlockBackcolored getGraphicStrings() throws IOException {
 		// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
-		// final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
+        // final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
 		// image, GraphicPosition.BOTTOM);
 		// result.setMinWidth(200);
-		return result;
+		return GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
 	}
 
 	public DiagramDescription getDescription() {

@@ -56,8 +56,7 @@ public class TextBlockGeneric extends AbstractTextBlock implements TextBlock {
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return dim;
+        return textBlock.calculateDimension(stringBounder);
 	}
 
 	public void drawU(UGraphic ug) {

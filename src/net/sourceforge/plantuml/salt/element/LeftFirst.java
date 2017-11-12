@@ -46,8 +46,7 @@ class LeftFirst implements Comparator<Cell> {
 		if (diffNb != 0) {
 			return diffNb;
 		}
-		final int diffPos = c0.getMinCol() - c1.getMinCol();
-		return diffPos;
+        return c0.getMinCol() - c1.getMinCol();
 	}
 
 }

@@ -95,8 +95,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		// final double totalWidth = Math.max(widthDesc, SIZE);
 
 		final double x = SIZE / 2 - widthDesc / 2;
-		final double y = SIZE;
-		desc.drawU(ug.apply(new UTranslate(x, y)));
+        desc.drawU(ug.apply(new UTranslate(x, (double) SIZE)));
 		if (url != null) {
 			ug.closeAction();
 		}

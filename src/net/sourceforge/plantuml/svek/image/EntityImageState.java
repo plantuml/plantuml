@@ -156,12 +156,10 @@ public class EntityImageState extends AbstractEntityImage {
 		}
 
 		final double xDesc = (widthTotal - dimDesc.getWidth()) / 2;
-		final double yDesc = MARGIN;
-		desc.drawU(ug.apply(new UTranslate(xDesc, yDesc)));
+        desc.drawU(ug.apply(new UTranslate(xDesc, (double) MARGIN)));
 
-		final double xFields = MARGIN;
-		final double yFields = yLine + MARGIN_LINE;
-		fields.drawU(ug.apply(new UTranslate(xFields, yFields)));
+        final double yFields = yLine + MARGIN_LINE;
+		fields.drawU(ug.apply(new UTranslate((double) MARGIN, yFields)));
 
 		if (url != null) {
 			ug.closeAction();

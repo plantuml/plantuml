@@ -103,8 +103,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 		}
 		assert data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty;
 		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;
-		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;
-		return puz2;
+        return (ConnectorPuzzleEmpty) data2;
 	}
 
 	private boolean mergeable(Placeable data1, Placeable data2) {
@@ -116,14 +115,12 @@ public class CleanerInterleavingLines implements GridCleaner {
 			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);
 		}
 		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof BpmElement) {
-			final boolean result = mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);
-			// System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
-			return result;
+            // System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
+			return mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);
 		}
 		if (data2 instanceof ConnectorPuzzleEmpty && data1 instanceof BpmElement) {
-			final boolean result = mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
-			// System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
-			return result;
+            // System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
+			return mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
 		}
 		return false;
 	}

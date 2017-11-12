@@ -52,9 +52,8 @@ public class DriverShadowedG2d {
 	private ConvolveOp getConvolveOp(int blurRadius, double dpiFactor) {
 		blurRadius = (int) (blurRadius * dpiFactor);
 		final int blurRadius2 = blurRadius * blurRadius;
-		final float blurRadius2F = blurRadius2;
-		// final float weight = (float) (1.0 / blurRadius2F / dpiFactor);
-		final float weight = (float) (1.0 / blurRadius2F);
+        // final float weight = (float) (1.0 / blurRadius2F / dpiFactor);
+		final float weight = (float) (1.0 / (float) blurRadius2);
 		final float[] elements = new float[blurRadius2];
 		for (int k = 0; k < blurRadius2; k++) {
 			elements[k] = weight;

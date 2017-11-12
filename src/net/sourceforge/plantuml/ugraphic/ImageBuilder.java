@@ -189,9 +189,8 @@ public class ImageBuilder {
 		if (MAX_PRICE == 0) {
 			return 0;
 		}
-		final int price = Math.min(MAX_PRICE, ((int) (dim.getHeight() * dpiFactor))
-				* ((int) (dim.getWidth() * dpiFactor)));
-		return price;
+        return Math.min(MAX_PRICE, ((int) (dim.getHeight() * dpiFactor))
+                * ((int) (dim.getWidth() * dpiFactor)));
 	}
 
 	private Semaphore getSemaphore(int price) {
@@ -273,9 +272,8 @@ public class ImageBuilder {
 	public Dimension2D getFinalDimension(StringBounder stringBounder) {
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
-		Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2 + externalMargin(),
-				limitFinder.getMaxY() + 1 + margin1 + margin2 + externalMargin());
-		return dim;
+        return new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2 + externalMargin(),
+                                     limitFinder.getMaxY() + 1 + margin1 + margin2 + externalMargin());
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
