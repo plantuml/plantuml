@@ -633,7 +633,6 @@ class dlx_generator {
 			FO.close();
 		} catch (IOException IOE) {
 			// Well, well, well....
-			return;
 		}
 	}
 

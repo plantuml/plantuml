@@ -106,7 +106,6 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		final ActivityBox box = new ActivityBox(newTile, idDest, label);
 		tilesBoxes.put(newTile, box);
 		lastTile = newTile;
-		return;
 	}
 
 	public void linkSimple(TileGeometry orientation, String idDest) {

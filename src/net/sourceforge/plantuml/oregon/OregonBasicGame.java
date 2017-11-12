@@ -626,7 +626,6 @@ public class OregonBasicGame implements BasicGame {
 		print("Nice shot... right on target... good eatin' tonight!");
 		f = f + 24 - 2 * br;
 		b = b - 10 - 3 * br;
-		return;
 	}
 
 	private void stopAtFort1100(int j) throws NoInputException {
