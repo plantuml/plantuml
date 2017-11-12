@@ -134,7 +134,7 @@ public class SpriteWindow extends JFrame {
 	private String last;
 
 	private void printData(final String s) {
-		if (s.equals(last) == false) {
+		if (!s.equals(last)) {
 			area.setText(s);
 			last = s;
 		}

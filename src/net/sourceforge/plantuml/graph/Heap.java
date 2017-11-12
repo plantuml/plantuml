@@ -62,9 +62,9 @@ public class Heap {
 		assert this.nodes.values().contains(under);
 		assert otherHeap.nodes.values().contains(otherRoot);
 		assert otherHeap.directChildren.keySet().contains(otherRoot);
-		assert this.nodes.values().contains(otherRoot) == false;
-		assert this.directChildren.keySet().contains(otherRoot) == false;
-		assert otherHeap.directChildren.keySet().contains(under) == false;
+		assert !this.nodes.values().contains(otherRoot);
+		assert !this.directChildren.keySet().contains(otherRoot);
+		assert !otherHeap.directChildren.keySet().contains(under);
 		final int oldSize = this.nodes.size();
 		assert oldSize == this.directChildren.size();
 		this.nodes.putAll(otherHeap.nodes);
@@ -225,10 +225,10 @@ public class Heap {
 	}
 
 	private void addUnderMe(final ANode n1, final ANode n2, final ALinkImpl link) {
-		assert getAllChildren(n2).contains(n1) == false;
+		assert !getAllChildren(n2).contains(n1);
 		directChildren.get(n1).put(n2, link);
 		assert getAllChildren(n1).contains(n2);
-		assert getAllChildren(n2).contains(n1) == false;
+		assert !getAllChildren(n2).contains(n1);
 	}
 
 	public int getRowMax() {

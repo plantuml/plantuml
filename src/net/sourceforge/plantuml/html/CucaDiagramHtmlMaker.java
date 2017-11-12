@@ -65,7 +65,7 @@ public final class CucaDiagramHtmlMaker {
 
 	public List<FileImageData> create() throws IOException {
 		dir.mkdirs();
-		if (dir.exists() == false) {
+		if (!dir.exists()) {
 			throw new IOException("Cannot create " + dir);
 		}
 		final File f = new File(dir, "index.html");
@@ -206,7 +206,7 @@ public final class CucaDiagramHtmlMaker {
 	private Collection<IEntity> getNotes(IEntity ent) {
 		final List<IEntity> result = new ArrayList<IEntity>();
 		for (Link link : diagram.getLinks()) {
-			if (link.contains(ent) == false) {
+			if (!link.contains(ent)) {
 				continue;
 			}
 			if (link.getEntity1().getLeafType() == LeafType.NOTE
@@ -220,7 +220,7 @@ public final class CucaDiagramHtmlMaker {
 	private Collection<Link> getLinksButNotes(IEntity ent) {
 		final List<Link> result = new ArrayList<Link>();
 		for (Link link : diagram.getLinks()) {
-			if (link.contains(ent) == false) {
+			if (!link.contains(ent)) {
 				continue;
 			}
 			if (link.getEntity1().getLeafType() == LeafType.NOTE

@@ -64,7 +64,7 @@ public final class SuggestEngine {
 		this.systemFactory = systemFactory;
 		this.it99 = source.iterator2();
 		final CharSequence startLine = it99.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+		if (!StartUtils.isArobaseStartDiagram(startLine)) {
 			throw new UnsupportedOperationException();
 		}
 	}

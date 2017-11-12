@@ -63,7 +63,7 @@ public class CutePath {
 			} else if (token.equals("~")) {
 				tension = spl.nextToken();
 				final String next = spl.nextToken();
-				if (next.equals("~") == false) {
+				if (!next.equals("~")) {
 					throw new IllegalArgumentException();
 				}
 			} else {
@@ -86,7 +86,7 @@ public class CutePath {
 	public void add(Arc arc) {
 		if (!arcs.isEmpty()) {
 			final Arc last = arcs.get(arcs.size() - 1);
-			if (last.getB().equals(arc.getA()) == false) {
+			if (!last.getB().equals(arc.getA())) {
 				throw new IllegalArgumentException("last=" + last.getB() + " arc=" + arc.getA());
 			}
 		}

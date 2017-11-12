@@ -57,7 +57,7 @@ public class SmartKeyboard {
 
 	public int inputInt(Screen screen) throws NoInputException {
 		final String s = input(screen);
-		if (s.matches("\\d+") == false) {
+		if (!s.matches("\\d+")) {
 			screen.print("Please enter a valid number instead of " + s);
 			throw new NoInputException();
 		}

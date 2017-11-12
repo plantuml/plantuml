@@ -115,7 +115,7 @@ public class UClip implements UChange {
 		if (isInside(line.x1, line.y1) && isInside(line.x2, line.y2)) {
 			return line;
 		}
-		if (isInside(line.x1, line.y1) == false && isInside(line.x2, line.y2) == false) {
+		if (!isInside(line.x1, line.y1) && !isInside(line.x2, line.y2)) {
 			if (line.x1 == line.x2) {
 				final double newy1 = getClippedY(line.y1);
 				final double newy2 = getClippedY(line.y2);

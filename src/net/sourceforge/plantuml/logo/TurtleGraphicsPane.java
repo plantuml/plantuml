@@ -91,7 +91,7 @@ class TurtleGraphicsPane {
 	}
 
 	private void drawTurtle(UGraphic ug) {
-		if (showTurtle == false) {
+		if (!showTurtle) {
 			return;
 		}
 		final UPolygon poly = new UPolygon();

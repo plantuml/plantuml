@@ -118,7 +118,7 @@ public class SkeletonConfiguration {
 		result.append("(");
 		boolean first = true;
 		for (int c = minCol; c <= maxCol; c++) {
-			if (first == false) {
+			if (!first) {
 				result.append("-");
 			}
 			final Pin pin = getPin(row, c);
@@ -205,10 +205,10 @@ public class SkeletonConfiguration {
 		final Collection<SkeletonMutation> result = new ArrayList<SkeletonMutation>();
 		for (Pin pin1 : pins) {
 			final int c = getCol(pin1);
-			if (usedCols.contains(c + 1) == false) {
+			if (!usedCols.contains(c + 1)) {
 				result.add(new Move(pin1, 1));
 			}
-			if (usedCols.contains(c - 1) == false) {
+			if (!usedCols.contains(c - 1)) {
 				result.add(new Move(pin1, -1));
 			}
 			for (Pin pin2 : pins) {

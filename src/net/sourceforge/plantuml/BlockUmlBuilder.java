@@ -93,7 +93,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				paused = true;
 				reader2.setPaused(true);
 			}
-			if (current2 != null && paused == false) {
+			if (current2 != null && !paused) {
 				current2.add(s);
 			} else if (paused) {
 				final CharSequence2 append = StartUtils.getPossibleAppend(s);

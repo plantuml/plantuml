@@ -150,7 +150,7 @@ public class Project {
 		}
 		final String itemName = destination.substring(0, idx);
 		final Item item = getItem(itemName);
-		if (item instanceof IncompleteItem == false) {
+		if (!(item instanceof IncompleteItem)) {
 			return false;
 		}
 		final IncompleteItem incompleteItem = (IncompleteItem) item;
@@ -245,7 +245,7 @@ public class Project {
 	}
 
 	private boolean affectationVariable(String destination, Expression expression) {
-		if (variables.containsKey(destination) == false) {
+		if (!variables.containsKey(destination)) {
 			return false;
 		}
 		variables.get(destination).setValue(expression);

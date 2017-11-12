@@ -236,7 +236,7 @@ class FtileRepeat extends AbstractFtile {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false) {
+			if (!getFtile1().calculateDimension(stringBounder).hasPointOut()) {
 				return;
 			}
 
@@ -250,7 +250,7 @@ class FtileRepeat extends AbstractFtile {
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false) {
+			if (!getFtile1().calculateDimension(stringBounder).hasPointOut()) {
 				return;
 			}
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor);

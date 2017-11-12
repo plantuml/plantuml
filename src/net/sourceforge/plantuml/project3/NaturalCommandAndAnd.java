@@ -78,13 +78,13 @@ public class NaturalCommandAndAnd extends SingleLineCommand2<GanttDiagram> {
 		final Verb verb1 = verbPattern1.getVerb(system, arg);
 		final Complement complement1 = complementPattern1.getComplement(system, arg, "1").get();
 		final CommandExecutionResult result1 = verb1.execute(subject, complement1);
-		if (result1.isOk() == false) {
+		if (!result1.isOk()) {
 			return result1;
 		}
 		final Verb verb2 = verbPattern2.getVerb(system, arg);
 		final Complement complement2 = complementPattern2.getComplement(system, arg, "2").get();
 		final CommandExecutionResult result2 = verb2.execute(subject, complement2);
-		if (result2.isOk() == false) {
+		if (!result2.isOk()) {
 			return result2;
 		}
 		final Verb verb3 = verbPattern3.getVerb(system, arg);

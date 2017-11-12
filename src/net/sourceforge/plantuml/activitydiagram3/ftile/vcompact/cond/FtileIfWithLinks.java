@@ -190,7 +190,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final StringBounder stringBounder = ug.getStringBounder();
 
 			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
@@ -241,7 +241,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Point2D p2 = getP2(stringBounder);
@@ -309,7 +309,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 
 			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
@@ -337,7 +337,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 
 			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
@@ -385,10 +385,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 					.isEmpty()));
 			conns.add(new ConnectionVerticalThenHorizontal(tile2, branch2.getInlinkRenderingColorAndStyle(), branch2
 					.isEmpty()));
-		} else if (hasPointOut1 && hasPointOut2 == false) {
+		} else if (hasPointOut1 && !hasPointOut2) {
 			conns.add(new ConnectionVerticalThenHorizontalDirect(tile1, branch1.getInlinkRenderingColorAndStyle(),
 					branch1.isEmpty()));
-		} else if (hasPointOut1 == false && hasPointOut2) {
+		} else if (!hasPointOut1 && hasPointOut2) {
 			conns.add(new ConnectionVerticalThenHorizontalDirect(tile2, branch2.getInlinkRenderingColorAndStyle(),
 					branch2.isEmpty()));
 		}

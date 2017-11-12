@@ -89,7 +89,7 @@ public class Participant implements SpecificBackcolorable {
 
 	public Display getDisplay(boolean underlined) {
 		Display result = underlined ? display.underlined() : display;
-		if (stereotype != null && hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {
+		if (stereotype != null && !hiddenPortions.contains(EntityPortion.STEREOTYPE)) {
 			if (stereotypePositionTop) {
 				result = result.addFirst(stereotype);
 			} else {

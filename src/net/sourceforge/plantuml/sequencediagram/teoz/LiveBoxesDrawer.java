@@ -96,7 +96,7 @@ public class LiveBoxesDrawer {
 		}
 		for (Iterator<Segment> it = segments.iterator(); it.hasNext();) {
 			final Segment seg = it.next();
-			if (it.hasNext() == false && type != ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
+			if (!it.hasNext() && type != ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 				type = ComponentType.ALIVE_BOX_OPEN_CLOSE;
 			}
 			drawInternal(ug, yposition, seg.getPos1(), seg.getPos2(), type);

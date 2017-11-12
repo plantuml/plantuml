@@ -345,7 +345,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			return TextBlockUtils.empty(0, 0);
 		}
 		final boolean show = diagram.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false) {
+		if (!show) {
 			return TextBlockUtils.empty(0, 0);
 		}
 
@@ -536,7 +536,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		// + (length - 1) + " ");
 
 		final TextBlock label = getLabel(link);
-		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {
+		if (!TextBlockUtils.isEmpty(label, stringBounder)) {
 			final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),

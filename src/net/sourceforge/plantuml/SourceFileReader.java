@@ -87,16 +87,16 @@ public class SourceFileReader implements ISourceFileReader {
 			String charset, FileFormatOption fileFormatOption) throws IOException {
 		this.file = file;
 		this.fileFormatOption = fileFormatOption;
-		if (file.exists() == false) {
+		if (!file.exists()) {
 			throw new IllegalArgumentException();
 		}
 		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
 		if (outputDirectory == null) {
 			outputDirectory = file.getAbsoluteFile().getParentFile();
-		} else if (outputDirectory.isAbsolute() == false) {
+		} else if (!outputDirectory.isAbsolute()) {
 			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath());
 		}
-		if (outputDirectory.exists() == false) {
+		if (!outputDirectory.exists()) {
 			outputDirectory.mkdirs();
 		}
 		this.outputDirectory = outputDirectory;
@@ -121,12 +121,12 @@ public class SourceFileReader implements ISourceFileReader {
 			newName = newName.substring(0, newName.length() - 1);
 			File f = new File(newName);
 			Log.info("f=" + f);
-			if (f.isAbsolute() == false) {
+			if (!f.isAbsolute()) {
 				Log.info("It's relative, so let's change it");
 				f = new File(outputDirectory, newName);
 				Log.info("f=" + f);
 			}
-			if (f.exists() == false) {
+			if (!f.exists()) {
 				Log.info("It does not exist: let's create it");
 				try {
 					f.mkdirs();
@@ -138,7 +138,7 @@ public class SourceFileReader implements ISourceFileReader {
 					return f;
 				}
 				Log.info("We cannot create it");
-			} else if (f.isDirectory() == false) {
+			} else if (!f.isDirectory()) {
 				Log.info("It exists, but is not a directory: we ignore it");
 				return null;
 			}
@@ -147,7 +147,7 @@ public class SourceFileReader implements ISourceFileReader {
 		}
 		File f = new File(newName);
 		Log.info("f=" + f);
-		if (f.isAbsolute() == false) {
+		if (!f.isAbsolute()) {
 			Log.info("Relative, so let's change it");
 			f = new File(outputDirectory, newName);
 			Log.info("f=" + f);

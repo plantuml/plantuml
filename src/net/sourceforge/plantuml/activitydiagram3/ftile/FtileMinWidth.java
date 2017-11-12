@@ -70,7 +70,7 @@ public class FtileMinWidth extends FtileDecorate {
 	private FtileGeometry calculateDimensionSlow(StringBounder stringBounder) {
 		final FtileGeometry geo = super.calculateDimension(stringBounder);
 		final double left = getPoint2(geo.getLeft(), stringBounder);
-		if (geo.hasPointOut() == false) {
+		if (!geo.hasPointOut()) {
 			return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY());
 		}
 		return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY(), geo.getOutY());

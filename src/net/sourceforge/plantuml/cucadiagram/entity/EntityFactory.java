@@ -117,7 +117,7 @@ public class EntityFactory {
 		final LongCode longCode = getLongCode(code, namespaceSeparator);
 		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, groupType, namespace2, longCode,
 				namespaceSeparator, rawLayout);
-		if (Display.isNull(display) == false) {
+		if (!Display.isNull(display)) {
 			result.setDisplay(display);
 		}
 		return result;
@@ -171,7 +171,7 @@ public class EntityFactory {
 
 	public void removeLink(Link link) {
 		final boolean ok = links.remove(link);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -193,14 +193,14 @@ public class EntityFactory {
 		}
 
 		public O remove(Object key) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.remove(key);
 		}
 
 		public O get(Object key) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.get(key);
@@ -215,7 +215,7 @@ public class EntityFactory {
 		}
 
 		public boolean containsKey(Object key) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.containsKey(key);
@@ -226,7 +226,7 @@ public class EntityFactory {
 		}
 
 		public O put(Code key, O value) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.put(key, value);

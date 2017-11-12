@@ -71,7 +71,7 @@ public class ProgressBar {
 	}
 
 	private static synchronized void printBar(int done, int total) {
-		if (enable == false) {
+		if (!enable) {
 			return;
 		}
 		if (total == 0) {

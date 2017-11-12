@@ -294,7 +294,7 @@ public class AtomText implements Atom {
 			if (w > maxWidth) {
 				result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
 				currentLine.setLength(0);
-				if (token.startsWith(" ") == false) {
+				if (!token.startsWith(" ")) {
 					currentLine.append(token);
 				}
 			} else {

@@ -96,7 +96,7 @@ public class CreoleParser {
 
 	public Sheet createSheet(Display display) {
 		final Sheet sheet = new Sheet(horizontalAlignment);
-		if (Display.isNull(display) == false) {
+		if (!Display.isNull(display)) {
 			final CreoleContext context = new CreoleContext();
 			for (CharSequence cs : display) {
 				final Stripe stripe;

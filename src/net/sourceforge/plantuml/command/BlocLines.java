@@ -94,7 +94,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public CharSequence getFirst499() {
-		if (lines.size()==0) {
+		if (lines.isEmpty()) {
 			return null;
 		}
 		return lines.get(0);
@@ -127,7 +127,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines removeEmptyColumns() {
-		if (firstColumnRemovable(lines) == false) {
+		if (!firstColumnRemovable(lines)) {
 			return this;
 		}
 		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
@@ -154,7 +154,7 @@ public class BlocLines implements Iterable<CharSequence> {
 				return false;
 			}
 		}
-		return allEmpty == false;
+		return !allEmpty;
 	}
 
 	public char getLastChar() {

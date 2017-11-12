@@ -151,7 +151,7 @@ public class ClosedArea extends AbstractFigure {
 		}
 		for (int i = 0; i < segmentsList.size(); i++) {
 			final LineSegmentInt seg = segmentsList.get(i);
-			if (seg.sameExtremities(new LineSegmentInt(points.get(i), points.get(i + 1))) == false) {
+			if (!seg.sameExtremities(new LineSegmentInt(points.get(i), points.get(i + 1)))) {
 				return false;
 			}
 		}
@@ -188,11 +188,11 @@ public class ClosedArea extends AbstractFigure {
 		for (LineSegmentInt seg : segmentsList) {
 			result.addSegment(seg);
 		}
-		if (!result.getSegments().isEmpty() && result.getLastSegment().atLeastOneCommonExtremities(other) == false) {
+		if (!result.getSegments().isEmpty() && !result.getLastSegment().atLeastOneCommonExtremities(other)) {
 			throw new IllegalArgumentException();
 		}
 		if (points.contains(other.getP1()) && points.contains(other.getP2())
-				&& other.getP1().equals(getFirstPoint()) == false && other.getP2().equals(getFirstPoint()) == false) {
+				&& !other.getP1().equals(getFirstPoint()) && !other.getP2().equals(getFirstPoint())) {
 			return null;
 		}
 		result.addSegment(other);
@@ -274,11 +274,11 @@ public class ClosedArea extends AbstractFigure {
 	}
 
 	public boolean contains(ClosedArea other) {
-		if (isClosed() == false) {
+		if (!isClosed()) {
 			throw new IllegalStateException();
 		}
 		for (Point2DInt point : other.points) {
-			if (this.contains(point) == false) {
+			if (!this.contains(point)) {
 				return false;
 			}
 		}

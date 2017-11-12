@@ -49,7 +49,7 @@ public class CommandBoxEnd extends SingleLineCommand<SequenceDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, List<String> arg) {
-		if (sequenceDiagram.isBoxPending() == false) {
+		if (!sequenceDiagram.isBoxPending()) {
 			return CommandExecutionResult.error("Missing starting box");
 		}
 		sequenceDiagram.endBox();

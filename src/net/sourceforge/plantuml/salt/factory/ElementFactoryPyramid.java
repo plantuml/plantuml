@@ -53,7 +53,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> tmp = getDataSource().next();
@@ -71,7 +71,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 
 		final Positionner2 positionner = new Positionner2();
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final Terminated<Element> next = getNextElement();
 			if (isStar(next.getElement())) {
 				positionner.mergeLeft(next.getTerminator());
@@ -85,7 +85,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 	}
 
 	private boolean isStar(Element element) {
-		if (element instanceof ElementText == false) {
+		if (!(element instanceof ElementText)) {
 			return false;
 		}
 		return "*".equals(((ElementText) element).getText());

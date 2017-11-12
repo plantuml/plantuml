@@ -58,7 +58,7 @@ public class Kingdom extends AbstractFigure {
 
 	private void grow(Set<ClosedArea> areas) {
 		for (ClosedArea area : new HashSet<ClosedArea>(areas)) {
-			if (area.isClosed() == false) {
+			if (!area.isClosed()) {
 				areas.addAll(buildClosedArea(area));
 			}
 		}
@@ -76,7 +76,7 @@ public class Kingdom extends AbstractFigure {
 		} while (result.size() != lastSize);
 		for (final Iterator<ClosedArea> it = result.iterator(); it.hasNext();) {
 			final ClosedArea area = it.next();
-			if (area.isClosed() == false) {
+			if (!area.isClosed()) {
 				it.remove();
 			}
 		}
@@ -113,7 +113,7 @@ public class Kingdom extends AbstractFigure {
 	@Override
 	public boolean arePointsConnectable(Point2DInt p1, Point2DInt p2) {
 		for (ClosedArea area : getAllClosedArea()) {
-			if (area.arePointsConnectable(p1, p2) == false) {
+			if (!area.arePointsConnectable(p1, p2)) {
 				return false;
 			}
 		}

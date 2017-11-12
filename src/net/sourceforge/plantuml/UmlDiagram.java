@@ -383,7 +383,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		final File cmapFile = new File(name);
 		PrintWriter pw = null;
 		try {
-			if (PSystemUtils.canFileBeWritten(cmapFile) == false) {
+			if (!PSystemUtils.canFileBeWritten(cmapFile)) {
 				return;
 			}
 			pw = new PrintWriter(cmapFile);
@@ -413,7 +413,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		if (value == null) {
 			return null;
 		}
-		if (value.matches("\\d+") == false) {
+		if (!value.matches("\\d+")) {
 			return null;
 		}
 		final int widthwarning = Integer.parseInt(value);

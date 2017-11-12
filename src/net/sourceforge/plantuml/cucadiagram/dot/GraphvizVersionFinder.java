@@ -71,7 +71,7 @@ public class GraphvizVersionFinder {
 		final Pattern p = Pattern.compile("\\d\\.\\d\\d");
 		final Matcher m = p.matcher(dotVersion);
 		final boolean find = m.find();
-		if (find == false) {
+		if (!find) {
 			return DEFAULT;
 		}
 		final String vv = m.group(0);

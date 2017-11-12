@@ -87,7 +87,7 @@ public class ProcessState {
 	}
 
 	public boolean differs(ProcessState other) {
-		return name.equals(other.name) == false;
+		return !name.equals(other.name);
 	}
 
 	@Override

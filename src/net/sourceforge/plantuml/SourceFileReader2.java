@@ -64,7 +64,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 		this.file = file;
 		this.fileFormatOption = fileFormatOption;
 		this.outputFile = outputFile;
-		if (file.exists() == false) {
+		if (!file.exists()) {
 			throw new IllegalArgumentException();
 		}
 		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());

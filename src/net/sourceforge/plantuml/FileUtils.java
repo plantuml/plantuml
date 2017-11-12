@@ -63,7 +63,7 @@ public class FileUtils {
 	}
 
 	public static File createTempFile(String prefix, String suffix) throws IOException {
-		if (suffix.startsWith(".") == false) {
+		if (!suffix.startsWith(".")) {
 			throw new IllegalArgumentException();
 		}
 		if (prefix == null) {

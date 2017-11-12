@@ -68,7 +68,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	private static Display clean(Display orig) {
-		if (orig.size() == 0 || orig.get(0) instanceof MessageNumber == false) {
+		if (orig.size() == 0 || !(orig.get(0) instanceof MessageNumber)) {
 			return orig;
 		}
 		Display result = Display.empty();

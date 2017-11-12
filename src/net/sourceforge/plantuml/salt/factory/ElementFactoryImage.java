@@ -55,13 +55,13 @@ public class ElementFactoryImage implements ElementFactory {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = dataSource.next().getElement();
 		final String name = header.length() > 2 ? header.substring(2) : null;
 		final List<String> img = new ArrayList<String>();
-		while (dataSource.peek(0).getElement().equals(">>") == false) {
+		while (!dataSource.peek(0).getElement().equals(">>")) {
 			img.add(dataSource.next().getElement());
 		}
 		final Terminated<String> next = dataSource.next();

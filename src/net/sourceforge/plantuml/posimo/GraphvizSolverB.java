@@ -116,7 +116,7 @@ public class GraphvizSolverB {
 
 		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(s);
-		if (mGraph.find() == false) {
+		if (!mGraph.find()) {
 			throw new IllegalStateException();
 		}
 		final int width = Integer.parseInt(mGraph.group(1));

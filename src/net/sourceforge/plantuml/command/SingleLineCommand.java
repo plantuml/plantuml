@@ -51,7 +51,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
-		if (pattern.startsWith("(?i)^") == false || pattern.endsWith("$") == false) {
+		if (!pattern.startsWith("(?i)^") || !pattern.endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + pattern);
 		}
 

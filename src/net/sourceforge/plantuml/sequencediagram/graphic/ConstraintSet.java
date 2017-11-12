@@ -146,7 +146,7 @@ public class ConstraintSet {
 		for (Pushable box : participantList) {
 			if (box.equals(firstToChange)) {
 				founded = true;
-				if (including == false) {
+				if (!including) {
 					continue;
 				}
 			}

@@ -65,7 +65,7 @@ abstract class AbstractPolyline implements Polyline {
 				final LineSegmentInt seg2 = other.segments().get(j);
 				final boolean ignoreExtremities = i == 0 || i == nbSegments() - 1 || j == 0
 						|| j == other.nbSegments() - 1;
-				if (ignoreExtremities == false && seg1.doesIntersect(seg2)) {
+				if (!ignoreExtremities && seg1.doesIntersect(seg2)) {
 					return true;
 				}
 				if (ignoreExtremities && seg1.doesIntersectButNotSameExtremity(seg2)) {

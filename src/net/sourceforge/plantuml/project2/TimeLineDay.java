@@ -42,7 +42,7 @@ public class TimeLineDay implements TimeLine {
 	public TimeElement next(TimeElement timeElement) {
 		do {
 			timeElement = timeElement.next();
-			if (isClosed(timeElement) == false) {
+			if (!isClosed(timeElement)) {
 				return timeElement;
 			}
 		} while (true);
@@ -51,7 +51,7 @@ public class TimeLineDay implements TimeLine {
 	public TimeElement previous(TimeElement timeElement) {
 		do {
 			timeElement = timeElement.previous();
-			if (isClosed(timeElement) == false) {
+			if (!isClosed(timeElement)) {
 				return timeElement;
 			}
 		} while (true);

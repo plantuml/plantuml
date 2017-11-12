@@ -60,7 +60,7 @@ public class CommandCreoleSizeChange implements Command {
 
 	public int matchingSize(String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return 0;
 		}
 		return m.group(2).length();
@@ -68,7 +68,7 @@ public class CommandCreoleSizeChange implements Command {
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			throw new IllegalStateException();
 		}
 		final int size = Integer.parseInt(m.group(2));

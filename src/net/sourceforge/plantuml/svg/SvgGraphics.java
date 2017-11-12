@@ -208,7 +208,7 @@ public class SvgGraphics {
 
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		manageShadow(deltaShadow);
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("ellipse");
 			elt.setAttribute("cx", format(x));
 			elt.setAttribute("cy", format(y));
@@ -223,7 +223,7 @@ public class SvgGraphics {
 	}
 
 	public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
-		if (hidden == false) {
+		if (!hidden) {
 			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
 					+ format(x2) + " " + format(y2);
 			final Element elt = (Element) document.createElement("path");
@@ -344,7 +344,7 @@ public class SvgGraphics {
 			throw new IllegalArgumentException();
 		}
 		manageShadow(deltaShadow);
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = createRectangleInternal(x, y, width, height);
 			addFilterShadowId(elt, deltaShadow);
 			if (rx > 0 && ry > 0) {
@@ -372,7 +372,7 @@ public class SvgGraphics {
 
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 		manageShadow(deltaShadow);
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("line");
 			elt.setAttribute("x1", format(x1));
 			elt.setAttribute("y1", format(y1));
@@ -400,7 +400,7 @@ public class SvgGraphics {
 
 	public void svgPolygon(double deltaShadow, double... points) {
 		manageShadow(deltaShadow);
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("polygon");
 			final StringBuilder sb = new StringBuilder();
 			for (double coord : points) {
@@ -425,7 +425,7 @@ public class SvgGraphics {
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("text");
 			// required for web-kit based browsers
 			// elt.setAttribute("text-rendering", "geometricPrecision");
@@ -625,7 +625,7 @@ public class SvgGraphics {
 			}
 
 		}
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
@@ -687,7 +687,7 @@ public class SvgGraphics {
 	}
 
 	public void fill(int windingRule) {
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			// elt elt.setAttribute("style", getStyle());
@@ -698,7 +698,7 @@ public class SvgGraphics {
 	}
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = (Element) document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
@@ -715,7 +715,7 @@ public class SvgGraphics {
 	private final Map<String, String> images = new HashMap<String, String>();
 
 	public void svgImage(SvgString image, double x, double y) {
-		if (hidden == false) {
+		if (!hidden) {
 			String svg = manageScale(image);
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
@@ -751,7 +751,7 @@ public class SvgGraphics {
 
 	private void manageShadow(double deltaShadow) {
 		if (deltaShadow != 0) {
-			if (withShadow == false) {
+			if (!withShadow) {
 				// <filter id="f1" x="0" y="0" width="120%" height="120%">
 				final Element filter = (Element) document.createElement("filter");
 				filter.setAttribute("id", shadowId);

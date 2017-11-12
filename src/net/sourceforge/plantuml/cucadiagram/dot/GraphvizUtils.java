@@ -172,7 +172,7 @@ public class GraphvizUtils {
 		}
 		final Pattern p = Pattern.compile("\\s([12].\\d\\d)\\D");
 		final Matcher m = p.matcher(s);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return -1;
 		}
 		return Integer.parseInt(m.group(1).replaceAll("\\.", ""));

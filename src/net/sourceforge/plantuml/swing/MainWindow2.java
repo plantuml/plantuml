@@ -143,12 +143,12 @@ public class MainWindow2 extends JFrame {
 
 		while (m.find()) {
 			final String value = m.group();
-			if (filePattern.toString().endsWith("(") == false) {
+			if (!filePattern.toString().endsWith("(")) {
 				filePattern.append("|");
 			}
 			filePattern.append(value);
 		}
-		if (filePattern.toString().endsWith("(") == false) {
+		if (!filePattern.toString().endsWith("(")) {
 			filePattern.append(")$");
 			return filePattern.toString();
 		}
@@ -402,7 +402,7 @@ public class MainWindow2 extends JFrame {
 
 	public void closing(ImageWindow2 imageWindow) {
 		final boolean ok = openWindows2.remove(imageWindow);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalStateException();
 		}
 	}

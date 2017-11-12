@@ -42,7 +42,7 @@ public class SvgCommandLetter implements SvgCommand {
 	private final char letter;
 
 	public SvgCommandLetter(String letter) {
-		if (letter.matches("[a-zA-Z]") == false) {
+		if (!letter.matches("[a-zA-Z]")) {
 			throw new IllegalArgumentException();
 		}
 		this.letter = letter.charAt(0);

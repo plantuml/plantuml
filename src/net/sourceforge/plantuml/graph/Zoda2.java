@@ -86,8 +86,8 @@ public class Zoda2 {
 		final ANode n2 = getNode(l.getNode2());
 		final Heap h1 = n1 == null ? null : heaps.get(n1);
 		final Heap h2 = n2 == null ? null : heaps.get(n2);
-		assert h1 == null || h1.isEmpty() == false;
-		assert h2 == null || h2.isEmpty() == false;
+		assert h1 == null || !h1.isEmpty();
+		assert h2 == null || !h2.isEmpty();
 		if (h1 == null && h2 == null) {
 			final Heap h = new Heap();
 			h.addLink(link, diffHeight, userData);

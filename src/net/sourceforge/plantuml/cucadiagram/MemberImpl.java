@@ -59,7 +59,7 @@ public class MemberImpl implements Member {
 		if (manageModifier) {
 			final Pattern2 finalUrl = MyPattern.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
 			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
-			if (matcher.matches() == false) {
+			if (!matcher.matches()) {
 				throw new IllegalStateException();
 			}
 			tmpDisplay = matcher.group(1);
@@ -84,7 +84,7 @@ public class MemberImpl implements Member {
 			}
 
 			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {
-				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);
+				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, !isMethod);
 				this.display = StringUtils.trin(StringUtils.manageGuillemet(displayClean.substring(1)));
 			} else {
 				this.display = StringUtils.manageGuillemet(displayClean);

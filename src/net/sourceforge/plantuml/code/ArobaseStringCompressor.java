@@ -67,7 +67,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 				append(sb, s);
 			}
 		}
-		if (startDone == false) {
+		if (!startDone) {
 			return compressOld(full.toString());
 		}
 		return sb.toString();
@@ -94,7 +94,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 			return result;
 		}
 		result = "@startuml\n" + result;
-		if (result.endsWith("\n") == false) {
+		if (!result.endsWith("\n")) {
 			result += "\n";
 		}
 		result += "@enduml";

@@ -75,7 +75,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 	public final Diagram createSystem(UmlSource source) {
 		final IteratorCounter2 it = source.iterator2();
 		final CharSequence2 startLine = it.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+		if (!StartUtils.isArobaseStartDiagram(startLine)) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -97,7 +97,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 					return buildEmptyError(source, it.peek().getLocation());
 				}
 				sys.makeDiagramReady();
-				if (sys.isOk() == false) {
+				if (!sys.isOk()) {
 					return null;
 				}
 				sys.setSource(source);
@@ -129,7 +129,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		} else if (commandControl == CommandControl.OK_PARTIAL) {
 			final IteratorCounter2 saved = it.cloneMe();
 			final CommandExecutionResult result = manageMultiline2(it, sys);
-			if (result.isOk() == false) {
+			if (!result.isOk()) {
 				final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
 				/* it.currentNum() - 1, */saved.next().getLocation());
 				sys = new PSystemError(source, err, null);
@@ -140,7 +140,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 			final BlocLines lines = BlocLines.single(line);
 			Command cmd = getFirstCommandOkForLines(lines);
 			final CommandExecutionResult result = sys.executeCommand(cmd, lines);
-			if (result.isOk() == false) {
+			if (!result.isOk()) {
 				final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
 				/* it.currentNum() - 1, */((CharSequence2) line).getLocation());
 				sys = new PSystemError(source, err,

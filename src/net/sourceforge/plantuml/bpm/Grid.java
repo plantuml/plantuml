@@ -76,10 +76,10 @@ public class Grid {
 	}
 
 	public Cell getCell(Line line, Col col) {
-		if (lines.contains(line) == false) {
+		if (!lines.contains(line)) {
 			throw new IllegalArgumentException();
 		}
-		if (cols.contains(col) == false) {
+		if (!cols.contains(col)) {
 			throw new IllegalArgumentException();
 		}
 		final Coord coord = new Coord(line, col);
@@ -283,7 +283,7 @@ public class Grid {
 		}
 
 		final boolean done = lines.remove(line);
-		if (done == false) {
+		if (!done) {
 			throw new IllegalArgumentException();
 		}
 	}

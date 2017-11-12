@@ -86,7 +86,7 @@ public class AtomImg implements Atom {
 		}
 		try {
 			final File f = FileSystem.getInstance().getFile(src);
-			if (f.exists() == false) {
+			if (!f.exists()) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 					// final byte image[] = getFile(src);

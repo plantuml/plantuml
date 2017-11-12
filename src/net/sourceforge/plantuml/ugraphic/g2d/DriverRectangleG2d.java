@@ -101,7 +101,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 				managePattern(param, g2d);
 				g2d.fill(shape);
 			}
-			if (color != null && color.equals(param.getBackcolor()) == false) {
+			if (color != null && !color.equals(param.getBackcolor())) {
 				drawBorder(param, color, mapper, rect, shape, g2d, x, y);
 			}
 		}

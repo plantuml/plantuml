@@ -76,7 +76,7 @@ public class Board {
 		final Iterator<Integer> it2 = other.nodesCols.values().iterator();
 		assert this.nodesCols.size() == other.nodesCols.size();
 		while (it1.hasNext()) {
-			if (it1.next().equals(it2.next()) == false) {
+			if (!it1.next().equals(it2.next())) {
 				return false;
 			}
 		}

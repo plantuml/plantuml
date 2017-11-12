@@ -52,7 +52,7 @@ public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = getDataSource().next().getElement();
@@ -63,7 +63,7 @@ public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 
 		String subentry = null;
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final Terminated<String> t = getDataSource().next();
 			final String s = t.getElement();
 			if (subentry == null) {

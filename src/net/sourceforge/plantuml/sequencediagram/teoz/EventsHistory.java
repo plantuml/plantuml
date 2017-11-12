@@ -157,7 +157,7 @@ public class EventsHistory {
 
 	private Event nextButSkippingNotes(Iterator<Event> it) {
 		while (true) {
-			if (it.hasNext() == false) {
+			if (!it.hasNext()) {
 				return null;
 			}
 			final Event next = it.next();

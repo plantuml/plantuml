@@ -101,7 +101,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 
 		final TextBlock stereo;
 		if (stereotype == null || stereotype.getLabel(false) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				|| !portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereo = null;
 		} else {
 			stereo = TextBlockUtils.withMargin(

@@ -79,7 +79,7 @@ public class CommandCreoleStyle implements Command {
 
 	public String executeAndGetRemaining(final String line, StripeSimple stripe) {
 		final Matcher2 m = p.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			throw new IllegalStateException();
 		}
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
@@ -93,7 +93,7 @@ public class CommandCreoleStyle implements Command {
 
 	public int matchingSize(String line) {
 		final Matcher2 m = p.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return 0;
 		}
 		return m.group(1).length();

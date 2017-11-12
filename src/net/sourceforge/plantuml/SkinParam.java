@@ -150,7 +150,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	private static String replaceSmart(String s, String src, String target) {
-		if (s.contains(src) == false) {
+		if (!s.contains(src)) {
 			return s;
 		}
 		return s.replaceAll(src, target);
@@ -256,10 +256,10 @@ public class SkinParam implements ISkinParam {
 			}
 		}
 		String value = getFirstValueNonNullWithSuffix("fontsize", param);
-		if (value == null || value.matches("\\d+") == false) {
+		if (value == null || !value.matches("\\d+")) {
 			value = getValue("defaultfontsize");
 		}
-		if (value == null || value.matches("\\d+") == false) {
+		if (value == null || !value.matches("\\d+")) {
 			return param[0].getDefaultSize(this);
 		}
 		return Integer.parseInt(value);

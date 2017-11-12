@@ -91,7 +91,7 @@ public class Plan {
 
 	List<Neighborhood2> getShortestPathToInternal(Point2D start, Point2D end) {
 		final Dijkstra dijkstra = new Dijkstra();
-		if (points.containsKey(start) == false || points.containsKey(end) == false) {
+		if (!points.containsKey(start) || !points.containsKey(end)) {
 			throw new IllegalArgumentException();
 		}
 		final Vertex vStart = dijkstra.addVertex(start);
@@ -121,7 +121,7 @@ public class Plan {
 				if (isStrictCrossing(line)) {
 					continue;
 				}
-				if (n1.isConnectable(n2) == false) {
+				if (!n1.isConnectable(n2)) {
 					continue;
 				}
 				final double dist = n1.getCenter().distance(n2.getCenter());
@@ -186,7 +186,7 @@ public class Plan {
 	}
 
 	private static boolean intersectsLineStrictInternal(Line2D.Double l1, Line2D.Double l2) {
-		if (l1.intersectsLine(l2) == false) {
+		if (!l1.intersectsLine(l2)) {
 			return false;
 		}
 		assert l1.intersectsLine(l2);
@@ -196,8 +196,8 @@ public class Plan {
 		Point2D.Double l2a = (Point2D.Double) l2.getP1();
 		Point2D.Double l2b = (Point2D.Double) l2.getP2();
 
-		if (l1a.equals(l2a) == false && l1a.equals(l2b) == false && l1b.equals(l2a) == false
-				&& l1b.equals(l2b) == false) {
+		if (!l1a.equals(l2a) && !l1a.equals(l2b) && !l1b.equals(l2a)
+				&& !l1b.equals(l2b)) {
 			return true;
 		}
 

@@ -61,7 +61,7 @@ public class TriangleCorner {
 	}
 
 	public double getCurvation() {
-		if (hasCurvation() == false) {
+		if (!hasCurvation()) {
 			throw new IllegalStateException();
 		}
 		return ((MyPoint2D) o).getCurvation(0);
@@ -134,7 +134,7 @@ public class TriangleCorner {
 	}
 
 	public Balloon getBalloonInside() {
-		if (hasCurvation() == false) {
+		if (!hasCurvation()) {
 			throw new IllegalStateException();
 		}
 		return getBalloonWithFixedY(getCurvation());

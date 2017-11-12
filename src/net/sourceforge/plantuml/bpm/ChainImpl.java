@@ -49,7 +49,7 @@ public class ChainImpl<O> implements Chain<O> {
 	public boolean remove(O data) {
 		updateStructuralVersion();
 		boolean result = positive.remove(data);
-		if (result == false) {
+		if (!result) {
 			result = negative.remove(data);
 		}
 		return result;

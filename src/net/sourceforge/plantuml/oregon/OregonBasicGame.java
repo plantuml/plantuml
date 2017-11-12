@@ -900,7 +900,7 @@ public class OregonBasicGame implements BasicGame {
 	private int shoot3870() throws NoInputException {
 		final int time1 = getTime();
 		final ShootingWord word1Printed = ShootingWord.values()[time1];
-		if (skb.hasMore() == false) {
+		if (!skb.hasMore()) {
 			print("Type: " + word1Printed);
 		}
 		final String typed1 = skb.input(screen);
@@ -914,7 +914,7 @@ public class OregonBasicGame implements BasicGame {
 		}
 		// print("delta="+delta);
 		final ShootingWord word2 = wordType1.encode(delta);
-		if (skb.hasMore() == false) {
+		if (!skb.hasMore()) {
 			print("Type: " + word2);
 		}
 		final String typed2 = skb.input(screen);

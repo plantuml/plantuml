@@ -146,7 +146,7 @@ public class PositionableUtils {
 		final double deltaY = centerToMove.getY() - centerFixe.getY();
 
 		double min = 0.0;
-		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false) {
+		if (!doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min)) {
 			throw new IllegalArgumentException();
 		}
 		double max = 0.1;
@@ -155,7 +155,7 @@ public class PositionableUtils {
 		}
 		for (int i = 0; i < 5; i++) {
 			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);
-			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;
+			assert !doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max);
 			final double candidat = (min + max) / 2.0;
 			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat)) {
 				min = candidat;

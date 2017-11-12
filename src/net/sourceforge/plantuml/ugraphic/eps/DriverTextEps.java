@@ -79,7 +79,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && !clip.isInside(x, y)) {
 			return;
 		}
 
@@ -196,7 +196,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private static void drawSingle(EpsGraphics eps, double x, double y, final PathIterator path) {
 		eps.newpath();
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
 			if (code == PathIterator.SEG_MOVETO) {
 				eps.moveto(coord[0] + x, coord[1] + y);
@@ -241,7 +241,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		final List<Integer> result = new ArrayList<Integer>();
 		int current = 0;
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
 			if (code == PathIterator.SEG_CLOSE) {
 				result.add(current);
@@ -257,7 +257,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		MinMax result = MinMax.getEmpty(false);
 
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
 			if (code == PathIterator.SEG_MOVETO) {
 				result = result.addPoint(coord[0] + x, coord[1] + y);

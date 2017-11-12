@@ -283,7 +283,7 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (before == null) {
 			return null;
 		}
-		if (diagram.leafExist(before) == false) {
+		if (!diagram.leafExist(before)) {
 			return null;
 		}
 		return before;
@@ -352,10 +352,10 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	private CommandExecutionResult executeArgSpecial1(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final Code clName1A = Code.of(arg.get("COUPLE1", 0));
 		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
-		if (diagram.leafExist(clName1A) == false) {
+		if (!diagram.leafExist(clName1A)) {
 			return CommandExecutionResult.error("No class " + clName1A);
 		}
-		if (diagram.leafExist(clName1B) == false) {
+		if (!diagram.leafExist(clName1B)) {
 			return CommandExecutionResult.error("No class " + clName1B);
 		}
 
@@ -366,7 +366,7 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
 
 		final boolean result = diagram.associationClass(1, clName1A, clName1B, cl2, linkType, label);
-		if (result == false) {
+		if (!result) {
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 		}
 
@@ -378,16 +378,16 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Code clName1B = Code.of(arg.get("COUPLE1", 1));
 		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
 		final Code clName2B = Code.of(arg.get("COUPLE2", 1));
-		if (diagram.leafExist(clName1A) == false) {
+		if (!diagram.leafExist(clName1A)) {
 			return CommandExecutionResult.error("No class " + clName1A);
 		}
-		if (diagram.leafExist(clName1B) == false) {
+		if (!diagram.leafExist(clName1B)) {
 			return CommandExecutionResult.error("No class " + clName1B);
 		}
-		if (diagram.leafExist(clName2A) == false) {
+		if (!diagram.leafExist(clName2A)) {
 			return CommandExecutionResult.error("No class " + clName2A);
 		}
-		if (diagram.leafExist(clName2B) == false) {
+		if (!diagram.leafExist(clName2B)) {
 			return CommandExecutionResult.error("No class " + clName2B);
 		}
 
@@ -400,10 +400,10 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	private CommandExecutionResult executeArgSpecial2(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final Code clName2A = Code.of(arg.get("COUPLE2", 0));
 		final Code clName2B = Code.of(arg.get("COUPLE2", 1));
-		if (diagram.leafExist(clName2A) == false) {
+		if (!diagram.leafExist(clName2A)) {
 			return CommandExecutionResult.error("No class " + clName2A);
 		}
-		if (diagram.leafExist(clName2B) == false) {
+		if (!diagram.leafExist(clName2B)) {
 			return CommandExecutionResult.error("No class " + clName2B);
 		}
 
@@ -414,7 +414,7 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
 
 		final boolean result = diagram.associationClass(2, clName2A, clName2B, cl1, linkType, label);
-		if (result == false) {
+		if (!result) {
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 		}
 

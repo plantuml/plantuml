@@ -48,7 +48,7 @@ class FontFamilyChange implements FontChange {
 
 	FontFamilyChange(String s) {
 		final Matcher2 matcherColor = colorPattern.matcher(s);
-		if (matcherColor.find() == false) {
+		if (!matcherColor.find()) {
 			throw new IllegalArgumentException();
 		}
 		this.family = StringUtils.trin(matcherColor.group(1));

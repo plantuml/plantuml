@@ -331,7 +331,7 @@ public class TikzGraphics {
 	}
 
 	private static String extractInternalHref(String pendingUrl) {
-		if (Url.isLatex(pendingUrl) == false) {
+		if (!Url.isLatex(pendingUrl)) {
 			throw new IllegalArgumentException();
 		}
 		return pendingUrl.substring("latex://".length());
@@ -513,7 +513,7 @@ public class TikzGraphics {
 		final StringBuilder sb = new StringBuilder("\\draw[color=" + getColorName(color) + ",fill="
 				+ getColorName(color) + "] ");
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
 			if (code == PathIterator.SEG_MOVETO) {
 				sb.append(couple(coord[0] + x, coord[1] + y));

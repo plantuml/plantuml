@@ -364,7 +364,7 @@ public class PSystemError extends AbstractPSystem {
 				suggested = true;
 			}
 		}
-		if (suggested == false) {
+		if (!suggested) {
 			return Collections.emptyList();
 		}
 		final List<String> result = new ArrayList<String>();

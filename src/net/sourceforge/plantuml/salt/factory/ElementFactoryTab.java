@@ -52,7 +52,7 @@ public class ElementFactoryTab extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = getDataSource().next().getElement();
@@ -61,7 +61,7 @@ public class ElementFactoryTab extends AbstractElementFactoryComplex {
 		final UFont font = UFont.byDefault(12);
 		final ElementTabBar result = new ElementTabBar(font, getDictionary());
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final Terminated<String> t = getDataSource().next();
 			result.addTab(t.getElement());
 			if (t.getTerminator() == Terminator.NEWLINE) {

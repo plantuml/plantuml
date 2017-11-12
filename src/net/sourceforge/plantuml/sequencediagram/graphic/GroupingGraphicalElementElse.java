@@ -74,7 +74,7 @@ public class GroupingGraphicalElementElse extends GroupingGraphicalElement imple
 		}
 		final Dimension2D dim = new Dimension2DDouble(x2 - x1, height);
 
-		if (parallel == false) {
+		if (!parallel) {
 			compElse.drawU(ug, new Area(dim), context);
 		}
 	}

@@ -78,11 +78,11 @@ public class Layer {
 	}
 
 	private boolean isLongitudeFree(int longitude) {
-		return entities.values().contains(longitude) == false;
+		return !entities.values().contains(longitude);
 	}
 
 	public void put(IEntity ent, int longitude) {
-		if (entities.containsKey(ent) == false) {
+		if (!entities.containsKey(ent)) {
 			throw new IllegalArgumentException();
 		}
 		this.entities.put(ent, longitude);

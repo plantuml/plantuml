@@ -46,7 +46,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final MultilinesStrategy strategy;
 
 	public CommandMultilines3(RegexConcat patternStart, MultilinesStrategy strategy) {
-		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false) {
+		if (!patternStart.getPattern().startsWith("^") || !patternStart.getPattern().endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
 		}
 		this.strategy = strategy;
@@ -78,7 +78,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 
 		final String potentialLast = StringUtils.trinNoTrace(lines.getLast499());
 		final boolean m1 = getPatternEnd2().match(potentialLast);
-		if (m1 == false) {
+		if (!m1) {
 			return CommandControl.OK_PARTIAL;
 		}
 

@@ -92,7 +92,7 @@ public final class GroupPngMakerState {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.group = group;
-		if (group.isGroup() == false) {
+		if (!group.isGroup()) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -185,7 +185,7 @@ public final class GroupPngMakerState {
 
 	private boolean containsOnlyConcurrentStates(DotData dotData) {
 		for (ILeaf leaf : dotData.getLeafs()) {
-			if (leaf instanceof IGroup == false) {
+			if (!(leaf instanceof IGroup)) {
 				return false;
 			}
 			if (((IGroup) leaf).getLeafType() != LeafType.STATE_CONCURRENT) {

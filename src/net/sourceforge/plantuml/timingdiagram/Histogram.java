@@ -122,7 +122,7 @@ public class Histogram implements TimeDrawing {
 
 	public void addChange(ChangeState change) {
 		final String state = change.getState();
-		if (allStates.contains(state) == false) {
+		if (!allStates.contains(state)) {
 			allStates.add(state);
 		}
 		changes.add(change);

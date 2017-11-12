@@ -41,7 +41,7 @@ public class PdfConverter {
 
 	public static void convert(File svgFile, File pdfFile) {
 
-		if (svgFile.exists() == false) {
+		if (!svgFile.exists()) {
 			throw new IllegalArgumentException();
 		}
 		pdfFile.delete();
@@ -71,7 +71,7 @@ public class PdfConverter {
 			e.printStackTrace();
 			throw new UnsupportedOperationException();
 		}
-		if (pdfFile.exists() == false) {
+		if (!pdfFile.exists()) {
 			throw new IllegalStateException();
 		}
 	}

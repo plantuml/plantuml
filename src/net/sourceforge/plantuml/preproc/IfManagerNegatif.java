@@ -50,7 +50,7 @@ class IfManagerNegatif extends IfManager {
 
 	@Override
 	protected CharSequence2 readLineInternal() throws IOException {
-		if (skippingDone == false) {
+		if (!skippingDone) {
 			skippingDone = true;
 			do {
 				final CharSequence2 s = readLine();

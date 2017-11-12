@@ -85,7 +85,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 			}
 		}
 		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement);
-		if (result == false) {
+		if (!result) {
 			return CommandExecutionResult.error("Cannot create group");
 		}
 		return CommandExecutionResult.ok();

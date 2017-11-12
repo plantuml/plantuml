@@ -268,7 +268,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	private boolean isReallyGroup(IEntity ent) {
-		if (ent.isGroup() == false) {
+		if (!ent.isGroup()) {
 			return false;
 		}
 		final IGroup group = (IGroup) ent;
@@ -365,10 +365,10 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean isAutoLinkOfAGroup() {
-		if (getEntity1().isGroup() == false) {
+		if (!getEntity1().isGroup()) {
 			return false;
 		}
-		if (getEntity2().isGroup() == false) {
+		if (!getEntity2().isGroup()) {
 			return false;
 		}
 		if (getEntity1() == getEntity2()) {
@@ -468,12 +468,12 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean hasEntryPoint() {
-		return (getEntity1().isGroup() == false && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
-				|| (getEntity2().isGroup() == false && ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
+		return (!getEntity1().isGroup() && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
+				|| (!getEntity2().isGroup() && ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
 	}
 
 	public boolean hasTwoEntryPointsSameContainer() {
-		return getEntity1().isGroup() == false && getEntity2().isGroup() == false
+		return !getEntity1().isGroup() && !getEntity2().isGroup()
 				&& ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL
 				&& ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL
 				&& getEntity1().getParentContainer() == getEntity2().getParentContainer();
@@ -526,7 +526,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean hasUrl() {
-		if (Display.isNull(label) == false && label.hasUrl()) {
+		if (!Display.isNull(label) && label.hasUrl()) {
 			return true;
 		}
 		return getUrl() != null;

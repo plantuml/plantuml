@@ -229,7 +229,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean hasUrl() {
-		if (Display.isNull(display) == false && display.hasUrl()) {
+		if (!Display.isNull(display) && display.hasUrl()) {
 			return true;
 		}
 		if (bodier.hasUrl()) {
@@ -305,7 +305,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	// ----------
 
 	private void checkGroup() {
-		if (isGroup() == false) {
+		if (!isGroup()) {
 			throw new UnsupportedOperationException();
 		}
 	}
@@ -362,7 +362,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public void moveEntitiesTo(IGroup dest) {
 		checkGroup();
-		if (dest.isGroup() == false) {
+		if (!dest.isGroup()) {
 			throw new UnsupportedOperationException();
 		}
 		for (ILeaf ent : getLeafsDirect()) {
@@ -445,7 +445,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	void muteToGroup(Code namespace2, GroupType groupType, IGroup parentContainer) {
 		checkNotGroup();
-		if (parentContainer.isGroup() == false) {
+		if (!parentContainer.isGroup()) {
 			throw new IllegalArgumentException();
 		}
 		this.namespace2 = namespace2;
@@ -491,12 +491,12 @@ final class EntityImpl implements ILeaf, IGroup {
 				return false;
 			}
 			for (ILeaf leaf : getLeafsDirect()) {
-				if (leaf.isRemoved() == false) {
+				if (!leaf.isRemoved()) {
 					return false;
 				}
 			}
 			for (IGroup g : getChildren()) {
-				if (g.isRemoved() == false) {
+				if (!g.isRemoved()) {
 					return false;
 				}
 			}

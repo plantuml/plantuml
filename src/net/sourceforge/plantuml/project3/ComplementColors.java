@@ -51,7 +51,7 @@ public class ComplementColors implements Complement {
 	}
 
 	public UGraphic apply(UGraphic ug) {
-		if (isOk() == false) {
+		if (!isOk()) {
 			throw new IllegalStateException();
 		}
 		ug = ug.apply(new UChangeBackColor(center));

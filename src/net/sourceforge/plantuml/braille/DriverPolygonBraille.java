@@ -68,7 +68,7 @@ public class DriverPolygonBraille implements UDriver<BrailleGrid> {
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
 			for (Point2D pt : points) {
-				if (clip.isInside(pt) == false) {
+				if (!clip.isInside(pt)) {
 					return;
 				}
 			}

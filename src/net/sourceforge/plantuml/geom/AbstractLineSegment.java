@@ -91,7 +91,7 @@ public abstract class AbstractLineSegment extends Line2D {
 	}
 
 	private Point2D getDichoIntersection(AbstractLineSegment other) {
-		if (doesIntersect(other) == false) {
+		if (!doesIntersect(other)) {
 			return null;
 		}
 		if (other.getLength() < 0.01) {

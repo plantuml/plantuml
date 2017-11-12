@@ -49,7 +49,7 @@ public class TriangleCornerSimple {
 	}
 
 	public TriangleCornerSimple(Point2D a, Point2D b) {
-		if (isZero(a.getX()) == false) {
+		if (!isZero(a.getX())) {
 			throw new IllegalArgumentException("a=" + a);
 		}
 		this.a = a;

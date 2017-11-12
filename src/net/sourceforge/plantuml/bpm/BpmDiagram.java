@@ -58,7 +58,7 @@ public class BpmDiagram extends UmlDiagram {
 			final boolean v1 = new CleanerEmptyLine().clean(grid);
 			final boolean v2 = new CleanerInterleavingLines().clean(grid);
 			final boolean v3 = new CleanerMoveBlock().clean(grid);
-			if (v1 == false && v2 == false && v3 == false) {
+			if (!v1 && !v2 && !v3) {
 				return;
 			}
 		}

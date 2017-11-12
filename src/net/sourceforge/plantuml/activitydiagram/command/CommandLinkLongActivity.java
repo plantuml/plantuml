@@ -149,7 +149,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()), lines.getLast499()
 				.toString());
 		if (StringUtils.isNotEmpty(lineLast.get(0))) {
-			if (sb.length() > 0 && sb.toString().endsWith(BackSlash.BS_BS_N) == false) {
+			if (sb.length() > 0 && !sb.toString().endsWith(BackSlash.BS_BS_N)) {
 				sb.append(BackSlash.BS_BS_N);
 			}
 			sb.append(lineLast.get(0));

@@ -97,7 +97,7 @@ public class LiveBoxes {
 			if (pending && level == levelToDraw) {
 				drawer.addStart(yposition.getValue(), integerColored.getColors());
 				pending = false;
-			} else if (pending == false && (it.hasNext() == false || level < levelToDraw)) {
+			} else if (!pending && (!it.hasNext() || level < levelToDraw)) {
 				drawer.doDrawing(ug, yposition);
 				drawer.drawDestroyIfNeeded(ug, yposition);
 				pending = true;

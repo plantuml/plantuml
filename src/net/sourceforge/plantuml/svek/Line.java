@@ -351,7 +351,7 @@ public class Line implements Moveable, Hideable {
 		sb.append("[");
 		final LinkType linkType = link.getTypePatchCluster();
 		String decoration = linkType.getSpecificDecorationSvek();
-		if (!decoration.isEmpty() && decoration.endsWith(",") == false) {
+		if (!decoration.isEmpty() && !decoration.endsWith(",")) {
 			decoration += ",";
 		}
 		sb.append(decoration);
@@ -405,7 +405,7 @@ public class Line implements Moveable, Hideable {
 			sb.append("style=invis");
 		}
 
-		if (link.isConstraint() == false || link.hasTwoEntryPointsSameContainer()) {
+		if (!link.isConstraint() || link.hasTwoEntryPointsSameContainer()) {
 			sb.append(",constraint=false");
 		}
 
@@ -428,7 +428,7 @@ public class Line implements Moveable, Hideable {
 		// if (graphvizVersion == GraphvizVersion.V2_34_0) {
 		// return null;
 		// }
-		if (pragma.horizontalLineBetweenDifferentPackageAllowed() == false && link.getLength() == 1
+		if (!pragma.horizontalLineBetweenDifferentPackageAllowed() && link.getLength() == 1
 		/* && graphvizVersion.isJs() == false */) {
 			return "{rank=same; " + getStartUidPrefix() + "; " + getEndUidPrefix() + "}";
 		}
@@ -533,7 +533,7 @@ public class Line implements Moveable, Hideable {
 		final int end = svg.indexOf("\"", idx + 3);
 		final String path = svg.substring(idx + 3, end);
 
-		if (DotPath.isPathConsistent(path) == false) {
+		if (!DotPath.isPathConsistent(path)) {
 			return;
 		}
 		dotPath = new DotPath(path, fullHeight);
@@ -601,7 +601,7 @@ public class Line implements Moveable, Hideable {
 			}
 		}
 
-		if (isOpalisable() == false) {
+		if (!isOpalisable()) {
 			setOpale(false);
 		}
 	}

@@ -112,7 +112,7 @@ public class InflationTransform2 implements IInflationTransform {
 		final SortedSet<Point2D.Double> result = new TreeSet<Point2D.Double>(new Point2DComparatorDistance(original
 				.getP1()));
 
-		if (GeomUtils.isHorizontal(original) == false) {
+		if (!GeomUtils.isHorizontal(original)) {
 			for (InflateData2 x : inflateX) {
 				final Line2D.Double vertical = new Line2D.Double(x.getPos(), GeomUtils.getMinY(original), x.getPos(),
 						GeomUtils.getMaxY(original));
@@ -122,7 +122,7 @@ public class InflationTransform2 implements IInflationTransform {
 				}
 			}
 		}
-		if (GeomUtils.isVertical(original) == false) {
+		if (!GeomUtils.isVertical(original)) {
 			for (InflateData2 y : inflateY) {
 				final Line2D.Double horizontal = new Line2D.Double(GeomUtils.getMinX(original), y.getPos(), GeomUtils
 						.getMaxX(original), y.getPos());
@@ -146,7 +146,7 @@ public class InflationTransform2 implements IInflationTransform {
 			result.add(new Line2D.Double(cur, inter));
 			cur = inter;
 		}
-		if (cur.equals(original.getP2()) == false) {
+		if (!cur.equals(original.getP2())) {
 			result.add(new Line2D.Double(cur, original.getP2()));
 		}
 		return result;
@@ -227,7 +227,7 @@ public class InflationTransform2 implements IInflationTransform {
 		final List<Line2D.Double> inflated = inflateSegmentCollection(cutSegments);
 		final List<Line2D.Double> result = new ArrayList<Line2D.Double>();
 		for (Line2D.Double seg : inflated) {
-			if (last != null && last.getP2().equals(seg.getP1()) == false) {
+			if (last != null && !last.getP2().equals(seg.getP1())) {
 				result.add(new Line2D.Double(last.getP2(), seg.getP1()));
 			}
 			result.add(seg);

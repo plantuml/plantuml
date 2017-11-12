@@ -143,7 +143,7 @@ public class GroupingTile implements TileWithCallbackY {
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
 
-		if (ug instanceof LiveBoxFinder == false) {
+		if (!(ug instanceof LiveBoxFinder)) {
 			comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), 0)), area, (Context2D) ug);
 			drawAllElses(ug);
 		}

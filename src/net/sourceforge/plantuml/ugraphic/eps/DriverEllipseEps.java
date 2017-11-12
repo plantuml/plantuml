@@ -58,10 +58,10 @@ public class DriverEllipseEps implements UDriver<EpsGraphics> {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			if (clip.isInside(x, y) == false) {
+			if (!clip.isInside(x, y)) {
 				return;
 			}
-			if (clip.isInside(x + width, y + height) == false) {
+			if (!clip.isInside(x + width, y + height)) {
 				return;
 			}
 		}

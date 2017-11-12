@@ -88,7 +88,7 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements IXmi
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
 		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
-		if (Display.isNull(link.getLabel()) == false) {
+		if (!Display.isNull(link.getLabel())) {
 			association.setAttribute("name", forXMI(link.getLabel()));
 		}
 

@@ -42,7 +42,7 @@ public class SvgCommandNumber implements SvgCommand {
 	private final String number;
 
 	public SvgCommandNumber(String number) {
-		if (number.matches("[-.0-9]+") == false) {
+		if (!number.matches("[-.0-9]+")) {
 			throw new IllegalArgumentException();
 		}
 		this.number = number;

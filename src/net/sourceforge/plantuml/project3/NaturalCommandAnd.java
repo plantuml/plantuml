@@ -75,7 +75,7 @@ public class NaturalCommandAnd extends SingleLineCommand2<GanttDiagram> {
 			return CommandExecutionResult.error(complement1.getError());
 		}
 		final CommandExecutionResult result1 = verb1.execute(subject, complement1.get());
-		if (result1.isOk() == false) {
+		if (!result1.isOk()) {
 			return result1;
 		}
 		final Verb verb2 = verbPattern2.getVerb(system, arg);

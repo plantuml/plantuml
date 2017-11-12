@@ -64,7 +64,7 @@ class GraphvizWindows extends AbstractGraphviz {
 	}
 
 	private static File searchInDir(final File programFile) {
-		if (programFile.exists() == false || programFile.isDirectory() == false) {
+		if (!programFile.exists() || !programFile.isDirectory()) {
 			return null;
 		}
 		final List<File> dots = new ArrayList<File>();

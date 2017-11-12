@@ -75,7 +75,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 			final Placeable cell1 = grid.getCell(line1, col).getData();
 			final Placeable cell2 = grid.getCell(line2, col).getData();
 			// System.err.println("cells=" + cell1 + " " + cell2 + " " + mergeable(cell1, cell2));
-			if (mergeable(cell1, cell2) == false) {
+			if (!mergeable(cell1, cell2)) {
 				return false;
 			}
 		}

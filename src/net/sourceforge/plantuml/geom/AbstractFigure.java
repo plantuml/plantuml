@@ -125,21 +125,21 @@ abstract class AbstractFigure {
 
 	public boolean isSimpleSegmentPossible(Point2DInt start, Point2DInt end) {
 		final LineSegmentInt direct = new LineSegmentInt(start, end);
-		return hasIntersectionStrict(direct) == false;
+		return !hasIntersectionStrict(direct);
 	}
 
 	public Polyline getPath(Pointable start, Pointable end) {
-		if (knowThisPoint(start.getPosition()) == false) {
+		if (!knowThisPoint(start.getPosition())) {
 			throw new IllegalArgumentException();
 		}
-		if (knowThisPoint(end.getPosition()) == false) {
+		if (!knowThisPoint(end.getPosition())) {
 			throw new IllegalArgumentException("" + end.getPosition());
 		}
 		if (isSimpleSegmentPossible(start.getPosition(), end.getPosition())) {
 			throw new IllegalArgumentException();
 			// return new PolylineImpl(start, end);
 		}
-		if (arePointsConnectable(start.getPosition(), end.getPosition()) == false) {
+		if (!arePointsConnectable(start.getPosition(), end.getPosition())) {
 			return null;
 		}
 		return findBestPath(start, end);
@@ -149,7 +149,7 @@ abstract class AbstractFigure {
 		Log.println("start=" + start.getPosition());
 		Log.println("end=" + end.getPosition());
 		final Set<Point2DInt> points = getAllPoints();
-		if (points.contains(start.getPosition()) == false || points.contains(end.getPosition()) == false) {
+		if (!points.contains(start.getPosition()) || !points.contains(end.getPosition())) {
 			throw new IllegalArgumentException();
 		}
 		points.remove(start.getPosition());

@@ -48,7 +48,7 @@ public class LinkString {
 
 	public LinkString(String desc) {
 		final Matcher2 m = p.matcher(desc);
-		if (m.find() == false) {
+		if (!m.find()) {
 			throw new IllegalArgumentException();
 		}
 		node1 = m.group(1);

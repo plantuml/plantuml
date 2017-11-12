@@ -115,9 +115,9 @@ public class Path {
 
 	public void addIntermediate(Point2DCharge point) {
 		assert points1.size() == points2.size();
-		assert points1.contains(point) == false;
-		assert points2.containsKey(point) == false;
-		assert containsPoint2DCharge(point) == false;
+		assert !points1.contains(point);
+		assert !points2.containsKey(point);
+		assert !containsPoint2DCharge(point);
 		points1.add(point);
 		points2.put(point, points2.size());
 		assert points1.size() == points2.size();

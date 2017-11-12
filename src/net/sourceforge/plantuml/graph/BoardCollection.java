@@ -85,7 +85,7 @@ public class BoardCollection {
 
 	public Board getAndSetExploredSmallest() {
 		for (Entry ent : all) {
-			if (ent.explored == false) {
+			if (!ent.explored) {
 				ent.explored = true;
 				assert costComputer.getCost(ent.board) == ent.cost;
 				// Log.println("Peeking " + ent.cost);

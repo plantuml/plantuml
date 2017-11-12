@@ -335,7 +335,7 @@ public class DotStringFactory implements Moveable {
 			return false;
 		}
 		final File dotExe = graphviz.getDotExe();
-		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
+		return dotExe == null || !dotExe.isFile() || !dotExe.canRead();
 	}
 
 	public File getDotExe() {
@@ -350,7 +350,7 @@ public class DotStringFactory implements Moveable {
 
 		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(svg);
-		if (mGraph.find() == false) {
+		if (!mGraph.find()) {
 			throw new IllegalStateException();
 		}
 		final int fullWidth = Integer.parseInt(mGraph.group(1));

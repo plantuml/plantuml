@@ -79,7 +79,7 @@ public class Bibliotekon {
 				// lines0.add(0, line);
 				for (int i = 0; i < lines0.size(); i++) {
 					final Line other = lines0.get(i);
-					if (other.hasNoteLabelText() == false && line.sameConnections(other)) {
+					if (!other.hasNoteLabelText() && line.sameConnections(other)) {
 						lines0.add(i, line);
 						return;
 					}

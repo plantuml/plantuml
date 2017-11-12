@@ -80,7 +80,7 @@ public class Movement {
 	}
 
 	public Movement mutoToC(SvgPosition mirrorControlPoint) {
-		if (is('S') == false) {
+		if (!is('S')) {
 			throw new UnsupportedOperationException();
 		}
 		if (mirrorControlPoint == null) {

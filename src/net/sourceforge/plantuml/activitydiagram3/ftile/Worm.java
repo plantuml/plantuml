@@ -85,7 +85,7 @@ public class Worm implements Iterable<Point2D.Double> {
 			final java.awt.geom.Point2D.Double p1 = points.get(i);
 			final java.awt.geom.Point2D.Double p2 = points.get(i + 1);
 			final Line2D line = new Line2D.Double(p1, p2);
-			if (drawn == false && emphasizeDirection != null && Direction.fromVector(p1, p2) == emphasizeDirection) {
+			if (!drawn && emphasizeDirection != null && Direction.fromVector(p1, p2) == emphasizeDirection) {
 				drawLine(ug, line, emphasizeDirection);
 				drawn = true;
 			} else {
@@ -260,7 +260,7 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	public Worm merge(Worm other, MergeStrategy merge) {
-		if (Snake.same(this.getLast(), other.getFirst()) == false) {
+		if (!Snake.same(this.getLast(), other.getFirst())) {
 			throw new IllegalArgumentException();
 		}
 		final Worm result = new Worm();

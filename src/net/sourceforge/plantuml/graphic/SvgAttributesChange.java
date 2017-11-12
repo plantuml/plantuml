@@ -46,7 +46,7 @@ class SvgAttributesChange implements FontChange {
 
 	SvgAttributesChange(String s) {
 		final Matcher2 m = pattern.matcher(s);
-		if (m.find() == false) {
+		if (!m.find()) {
 			throw new IllegalStateException();
 		}
 		attributes = new SvgAttributes(m.group(1));

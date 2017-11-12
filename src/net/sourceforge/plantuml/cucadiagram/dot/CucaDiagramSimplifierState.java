@@ -88,7 +88,7 @@ public final class CucaDiagramSimplifierState {
 		}
 		final List<IGroup> result = new ArrayList<IGroup>();
 		for (IGroup g : ordered) {
-			if (g instanceof GroupRoot == false) {
+			if (!(g instanceof GroupRoot)) {
 				result.add(0, g);
 			}
 		}

@@ -152,7 +152,7 @@ public class Run {
 				final double duration = (System.currentTimeMillis() - start2) / 1000.0;
 				Log.error("Check Duration = " + duration + " seconds");
 			}
-			if (error == false) {
+			if (!error) {
 				error = manageAllFiles(option);
 			}
 			forceQuit = true;
@@ -310,8 +310,8 @@ public class Run {
 	}
 
 	private static boolean processArgs(Option option) throws IOException, InterruptedException {
-		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
-				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
+		if (!option.isDecodeurl() && option.getNbThreads() > 1 && !option.isCheckOnly()
+				&& !OptionFlags.getInstance().isExtractFromMetadata()) {
 			return multithread(option);
 		}
 		boolean errorGlobal = false;

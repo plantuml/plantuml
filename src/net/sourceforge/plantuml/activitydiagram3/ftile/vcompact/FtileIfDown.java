@@ -231,7 +231,7 @@ public class FtileIfDown extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			if (getFtile1().calculateDimension(ug.getStringBounder()).hasPointOut() == false) {
+			if (!getFtile1().calculateDimension(ug.getStringBounder()).hasPointOut()) {
 				return;
 			}
 
@@ -244,7 +244,7 @@ public class FtileIfDown extends AbstractFtile {
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 
-			if (getFtile1().calculateDimension(ug.getStringBounder()).hasPointOut() == false) {
+			if (!getFtile1().calculateDimension(ug.getStringBounder()).hasPointOut()) {
 				return;
 			}
 

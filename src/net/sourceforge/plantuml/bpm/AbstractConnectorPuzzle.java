@@ -52,7 +52,7 @@ abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {
 
 	public final void remove(Where where) {
 		final boolean ok = connections.remove(where);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 	}

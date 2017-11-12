@@ -46,7 +46,7 @@ public class VariatorSwapLetter extends VariatorIteratorAdaptor {
 	}
 
 	private void ensureTwoLetters() {
-		while (i < data.length() - 1 && areTwoLetters() == false) {
+		while (i < data.length() - 1 && !areTwoLetters()) {
 			i++;
 		}
 

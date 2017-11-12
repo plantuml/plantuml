@@ -155,7 +155,7 @@ public final class DotDataImageBuilder {
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
-				if (link.getEntity1().isGroup() == false && link.getEntity1().getLeafType() == LeafType.NOTE
+				if (!link.getEntity1().isGroup() && link.getEntity1().getLeafType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity1())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
@@ -163,7 +163,7 @@ public final class DotDataImageBuilder {
 						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 						line.setOpale(true);
 					}
-				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getLeafType() == LeafType.NOTE
+				} else if (!link.getEntity2().isGroup() && link.getEntity2().getLeafType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity2())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
@@ -307,7 +307,7 @@ public final class DotDataImageBuilder {
 	private double getMaxWidth(DotStringFactory dotStringFactory) {
 		double result = 0;
 		for (ILeaf ent : dotData.getLeafs()) {
-			if (ent.getLeafType().isLikeClass() == false) {
+			if (!ent.getLeafType().isLikeClass()) {
 				continue;
 			}
 			final IEntityImage im = new EntityImageClass(dotStringFactory.getGraphvizVersion(), ent,
@@ -535,7 +535,7 @@ public final class DotDataImageBuilder {
 			return TextBlockUtils.empty(0, 0);
 		}
 		final boolean show = dotData.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false) {
+		if (!show) {
 			return TextBlockUtils.empty(0, 0);
 		}
 

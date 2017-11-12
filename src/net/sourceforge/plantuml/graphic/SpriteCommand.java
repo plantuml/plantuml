@@ -45,10 +45,10 @@ public class SpriteCommand implements HtmlCommand {
 		if (sprite == null) {
 			throw new IllegalArgumentException();
 		}
-		if (sprite.startsWith("<$") == false) {
+		if (!sprite.startsWith("<$")) {
 			throw new IllegalArgumentException();
 		}
-		if (sprite.endsWith(">") == false) {
+		if (!sprite.endsWith(">")) {
 			throw new IllegalArgumentException();
 		}
 		this.sprite = StringUtils.trin(sprite.substring(2, sprite.length() - 1));

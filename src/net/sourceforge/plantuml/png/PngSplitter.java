@@ -67,7 +67,7 @@ public class PngSplitter {
 		// Thread.yield();
 		final boolean ok = pngFile.getFile(0).renameTo(full);
 		// Thread.yield();
-		if (ok == false) {
+		if (!ok) {
 			throw new IOException("Cannot rename");
 		}
 

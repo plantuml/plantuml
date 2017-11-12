@@ -49,7 +49,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
-		if (pattern.getPattern().startsWith("^") == false || pattern.getPattern().endsWith("$") == false) {
+		if (!pattern.getPattern().startsWith("^") || !pattern.getPattern().endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + pattern.getPattern());
 		}
 

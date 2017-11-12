@@ -112,7 +112,7 @@ public class Pipe {
 				}
 			}
 			ps.flush();
-		} while (closed == false);
+		} while (!closed);
 		return error;
 	}
 
@@ -154,7 +154,7 @@ public class Pipe {
 			return null;
 		}
 		String source = sb.toString();
-		if (source.startsWith("@start") == false) {
+		if (!source.startsWith("@start")) {
 			source = "@startuml\n" + source + "\n@enduml";
 		}
 		return source;

@@ -108,7 +108,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, RegexResult arg) {
-		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
+		if (mode == Mode.NORMAL_KEYWORD && !diagram.isAllowMixing()) {
 			return CommandExecutionResult
 					.error("Use 'allow_mixing' if you want to mix classes and other UML elements.");
 		}

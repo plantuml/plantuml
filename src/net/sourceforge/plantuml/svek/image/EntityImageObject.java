@@ -92,7 +92,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
 		if (stereotype == null || stereotype.getLabel(false) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				|| !portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			this.stereo = null;
 		} else {
 			this.stereo = Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(

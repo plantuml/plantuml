@@ -82,7 +82,7 @@ public class PngIO {
 
 	public static void write(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData)
 			throws IOException {
-		if (forceImageIO == false && metadata != null && checkPNGMetadata()) {
+		if (!forceImageIO && metadata != null && checkPNGMetadata()) {
 			PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, debugData);
 		} else {
 			ImageIO.write(image, "png", os);

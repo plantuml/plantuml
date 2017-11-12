@@ -110,7 +110,7 @@ class SingleLine extends AbstractTextBlock implements Line {
 		double result = 0;
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		for (TextBlock b : blocs) {
-			if (b instanceof TileText == false) {
+			if (!(b instanceof TileText)) {
 				continue;
 			}
 			final Dimension2D dimBloc = b.calculateDimension(ug.getStringBounder());

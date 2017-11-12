@@ -88,7 +88,7 @@ public final class SvgData {
 		double minY = Double.MAX_VALUE;
 		double maxX = -Double.MAX_VALUE;
 		double maxY = -Double.MAX_VALUE;
-		if (m.find() == false) {
+		if (!m.find()) {
 			return;
 		}
 		final String points = m.group(1);

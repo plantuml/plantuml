@@ -697,7 +697,7 @@ public class Cluster implements Moveable {
 		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;
 		final boolean useProtectionWhenThereALinkFromOrToGroup = graphvizVersion
 				.useProtectionWhenThereALinkFromOrToGroup();
-		if (useProtectionWhenThereALinkFromOrToGroup == false) {
+		if (!useProtectionWhenThereALinkFromOrToGroup) {
 			thereALinkFromOrToGroup1 = false;
 		}
 		// final boolean thereALinkFromOrToGroup1 = false;
@@ -714,7 +714,7 @@ public class Cluster implements Moveable {
 		}
 		boolean protection0 = protection0(type);
 		boolean protection1 = protection1(type);
-		if (hasEntryOrExitPoint || useProtectionWhenThereALinkFromOrToGroup == false) {
+		if (hasEntryOrExitPoint || !useProtectionWhenThereALinkFromOrToGroup) {
 			protection0 = false;
 			protection1 = false;
 		}
@@ -781,7 +781,7 @@ public class Cluster implements Moveable {
 		SvekUtils.println(sb);
 		printCluster1(sb, lines, stringBounder);
 		final boolean added = printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
-		if (hasEntryOrExitPoint && added == false) {
+		if (hasEntryOrExitPoint && !added) {
 			final String empty = "empty" + color;
 			sb.append(empty + " [shape=point,width=.01,label=\"\"];");
 		}
@@ -847,7 +847,7 @@ public class Cluster implements Moveable {
 	}
 
 	public boolean isClusterOf(IEntity ent) {
-		if (ent.isGroup() == false) {
+		if (!ent.isGroup()) {
 			return false;
 		}
 		return group == ent;

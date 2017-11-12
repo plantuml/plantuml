@@ -50,7 +50,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements IXmi
 		super(classDiagram);
 
 		for (final IEntity ent : classDiagram.getLeafsvalues()) {
-			if (classDiagram.isStandalone(ent) == false) {
+			if (!classDiagram.isStandalone(ent)) {
 				continue;
 			}
 			final Element cla = createEntityNode(ent);

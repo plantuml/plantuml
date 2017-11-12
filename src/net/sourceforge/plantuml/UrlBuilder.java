@@ -97,7 +97,7 @@ public class UrlBuilder {
 			throw new IllegalStateException();
 		}
 		final Matcher2 m = p.matcher(StringUtils.trinNoTrace(s));
-		if (m.matches() == false) {
+		if (!m.matches()) {
 			return null;
 		}
 		// String url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(1));
@@ -131,7 +131,7 @@ public class UrlBuilder {
 	}
 
 	private String withTopUrl(String url) {
-		if (url.startsWith("http:") == false && url.startsWith("https:") == false && topurl != null) {
+		if (!url.startsWith("http:") && !url.startsWith("https:") && topurl != null) {
 			return topurl + url;
 		}
 		return url;

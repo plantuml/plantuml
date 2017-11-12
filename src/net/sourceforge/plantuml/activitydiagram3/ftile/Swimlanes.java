@@ -124,7 +124,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		if (color != null) {
 			currentSwimlane.setSpecificColorTOBEREMOVED(ColorType.BACK, color);
 		}
-		if (Display.isNull(label) == false) {
+		if (!Display.isNull(label)) {
 			currentSwimlane.setDisplay(label);
 		}
 	}

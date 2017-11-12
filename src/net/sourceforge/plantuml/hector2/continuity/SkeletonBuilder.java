@@ -49,7 +49,7 @@ public class SkeletonBuilder {
 		addInternal(link);
 		do {
 			final boolean changed = merge();
-			if (changed == false) {
+			if (!changed) {
 				return;
 			}
 		} while (true);

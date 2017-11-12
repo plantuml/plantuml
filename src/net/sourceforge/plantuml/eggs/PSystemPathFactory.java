@@ -48,7 +48,7 @@ public class PSystemPathFactory extends PSystemSingleLineFactory {
 	@Override
 	protected AbstractPSystem executeLine(String line) {
 		final Matcher2 m = p.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return null;
 		}
 		return new PSystemPath(m.group(1));

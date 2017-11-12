@@ -120,7 +120,7 @@ public class Display implements Iterable<CharSequence> {
 			} else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]")) {
 				rawMode = false;
 			}
-			if (rawMode == false && c == '\\' && i < s.length() - 1) {
+			if (!rawMode && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
@@ -165,7 +165,7 @@ public class Display implements Iterable<CharSequence> {
 	private Display(Collection<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment,
 			boolean isNull, CreoleMode defaultCreoleMode) {
 		this(naturalHorizontalAlignment, isNull, defaultCreoleMode);
-		if (isNull == false) {
+		if (!isNull) {
 			this.display.addAll(manageEmbededDiagrams2(other));
 		}
 	}

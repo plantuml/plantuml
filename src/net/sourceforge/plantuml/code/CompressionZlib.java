@@ -72,7 +72,7 @@ public class CompressionZlib implements Compression {
 
 		final byte[] output = new byte[len];
 		final int compressedDataLength = compresser.deflate(output);
-		if (compresser.finished() == false) {
+		if (!compresser.finished()) {
 			return null;
 		}
 		final byte[] result = copyArray(output, compressedDataLength);
@@ -102,7 +102,7 @@ public class CompressionZlib implements Compression {
 		decompresser.setInput(in);
 		try {
 			final int resultLength = decompresser.inflate(tmp);
-			if (decompresser.finished() == false) {
+			if (!decompresser.finished()) {
 				return null;
 			}
 			decompresser.end();

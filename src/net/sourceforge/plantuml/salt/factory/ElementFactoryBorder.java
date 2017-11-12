@@ -48,7 +48,7 @@ public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = getDataSource().next().getElement();
@@ -61,7 +61,7 @@ public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 
 		final ElementBorder result = new ElementBorder();
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final String pos = getDataSource().next().getElement();
 			switch (pos.charAt(0)) {
 			case 'N':

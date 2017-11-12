@@ -128,7 +128,7 @@ class Step1Message extends Step1Abstract {
 		if (graphic instanceof InGroupable) {
 			inGroupablesStack.addElement((InGroupable) graphic);
 			inGroupablesStack.addElement(getLivingParticipantBox1());
-			if (isSelfMessage() == false) {
+			if (!isSelfMessage()) {
 				inGroupablesStack.addElement(getLivingParticipantBox2());
 			}
 		}

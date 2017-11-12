@@ -318,7 +318,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final UTranslate tr1 = getTranslate2(stringBounder);
 			final FtileGeometry dim = getFtile1().calculateDimension(stringBounder);
-			if (dim.hasPointOut() == false) {
+			if (!dim.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = tr1.getTranslated(dim.getPointOut());
@@ -407,7 +407,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 
 		private Point2D getP1(StringBounder stringBounder) {
 			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return null;
 			}
 			final Point2D p = geo.getPointOut();
@@ -442,10 +442,10 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			double maxX = totalDim.getWidth() / 2;
 			boolean atLeastOne = false;
 			for (Ftile tmp : all) {
-				if (tmp.calculateDimension(stringBounder).hasPointOut() == false) {
+				if (!tmp.calculateDimension(stringBounder).hasPointOut()) {
 					continue;
 				}
-				if (intoSw != null && tmp.getSwimlanes().contains(intoSw) == false) {
+				if (intoSw != null && !tmp.getSwimlanes().contains(intoSw)) {
 					continue;
 				}
 				if (intoSw != null && tmp.getSwimlaneOut() != intoSw) {
@@ -457,7 +457,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 				minX = Math.min(minX, out);
 				maxX = Math.max(maxX, out);
 			}
-			if (atLeastOne == false) {
+			if (!atLeastOne) {
 				return;
 			}
 

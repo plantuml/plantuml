@@ -59,7 +59,7 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraph
 		final UPath shape = (UPath) ushape;
 
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y, shape) == false) {
+		if (clip != null && !clip.isInside(x, y, shape)) {
 			return;
 		}
 

@@ -99,7 +99,7 @@ public class Variables {
 				newValue = newValue.replaceAll(var2, Matcher.quoteReplacement(variable.getDefaultValue()));
 			}
 		}
-		if (appended == true) {
+		if (appended) {
 			regex.setLength(regex.length() - 1);
 		}
 		regex.append("\\)");

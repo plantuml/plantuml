@@ -46,7 +46,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 	private final Pattern2 starting;
 
 	public CommandMultilinesBracket(String patternStart) {
-		if (patternStart.startsWith("(?i)^") == false || patternStart.endsWith("$") == false) {
+		if (!patternStart.startsWith("(?i)^") || !patternStart.endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
 		}
 		this.starting = MyPattern.cmpile(patternStart);
@@ -72,7 +72,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 			return CommandControl.NOT_OK;
 		}
 		final Matcher2 m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
-		if (m1.matches() == false) {
+		if (!m1.matches()) {
 			return CommandControl.NOT_OK;
 		}
 		if (lines.size() == 1) {
@@ -82,7 +82,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		int level = 1;
 		for (CharSequence cs : lines.subExtract(1, 0)) {
 			final String s = StringUtils.trin(cs);
-			if (isLineConsistent(s, level) == false) {
+			if (!isLineConsistent(s, level)) {
 				return CommandControl.NOT_OK;
 			}
 			if (s.endsWith("{")) {

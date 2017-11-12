@@ -96,7 +96,7 @@ public class Rose implements Skin {
 					.getColor();
 			if (config.getArrowDirection() == ArrowDirection.SELF) {
 				return new ComponentRoseSelfArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay,
-						config, param, param.maxMessageSize(), param.strictUmlStyle() == false);
+                                                  config, param, param.maxMessageSize(), !param.strictUmlStyle());
 			}
 			final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
 					AlignParam.SEQUENCE_MESSAGE_ALIGN, config.getArrowDirection());
@@ -104,7 +104,7 @@ public class Rose implements Skin {
 					AlignParam.SEQUENCE_MESSAGETEXT_ALIGN, config.getArrowDirection());
 			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay, config,
 					messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
-					param.strictUmlStyle() == false);
+                                          !param.strictUmlStyle());
 		}
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 		if (type == ComponentType.PARTICIPANT_HEAD) {

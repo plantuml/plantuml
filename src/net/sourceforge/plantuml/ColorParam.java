@@ -190,7 +190,7 @@ public enum ColorParam {
 		this.isBackground = isBackground;
 		this.defaultValue = defaultValue;
 		this.colorType = colorType;
-		if (colorType == ColorType.BACK && isBackground == false) {
+		if (colorType == ColorType.BACK && !isBackground) {
 			System.err.println(this);
 			throw new IllegalStateException();
 		}

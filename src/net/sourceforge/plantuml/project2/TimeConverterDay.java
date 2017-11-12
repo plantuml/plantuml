@@ -71,7 +71,7 @@ public class TimeConverterDay implements TimeConverter {
 		while (d.compareTo(biggest) > 0) {
 			int n = getPosition(biggest);
 			biggest = biggest.next();
-			if (timeLine.isClosed(biggest) == false) {
+			if (!timeLine.isClosed(biggest)) {
 				n++;
 			}
 			putDay(biggest, n);
@@ -79,7 +79,7 @@ public class TimeConverterDay implements TimeConverter {
 		while (d.compareTo(smallest) < 0) {
 			int n = getPosition(smallest);
 			smallest = smallest.previous();
-			if (timeLine.isClosed(smallest) == false) {
+			if (!timeLine.isClosed(smallest)) {
 				n--;
 			}
 			putDay(smallest, n);

@@ -73,10 +73,10 @@ public class DirWatcher2 {
 		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<File, Future<List<GeneratedImage>>>();
 		if (dir.listFiles() != null) {
 			for (final File f : dir.listFiles()) {
-				if (f.isFile() == false) {
+				if (!f.isFile()) {
 					continue;
 				}
-				if (fileToProcess(f.getName()) == false) {
+				if (!fileToProcess(f.getName())) {
 					continue;
 				}
 				final FileWatcher watcher = modifieds.get(f);

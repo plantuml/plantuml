@@ -90,7 +90,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
 		final Context context = new Context();
 		final Matcher2 mStart = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
-		if (mStart.find() == false) {
+		if (!mStart.find()) {
 			throw new IllegalStateException();
 		}
 		if (mStart.group(1) != null) {
@@ -111,7 +111,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 				continue;
 			}
 			final Matcher2 m = p1.matcher(s);
-			if (m.find() == false) {
+			if (!m.find()) {
 				throw new IllegalStateException();
 			}
 			if (m.group(2) != null) {

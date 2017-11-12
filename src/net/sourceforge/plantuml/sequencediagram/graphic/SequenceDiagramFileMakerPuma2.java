@@ -203,7 +203,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 				final double delta1 = Math.max(0, dimLegend.getWidth() - area.getWidth());
 
-				final boolean legendTop = DisplayPositionned.isNull(legend) == false
+				final boolean legendTop = !DisplayPositionned.isNull(legend)
 						&& legend.getVerticalAlignment() == VerticalAlignment.TOP;
 
 				double sequenceAreaY = area.getSequenceAreaY();
@@ -216,7 +216,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				drawHeader(area, ug, index);
 				drawFooter(area, ug, index);
 
-				if (DisplayPositionned.isNull(legend) == false) {
+				if (!DisplayPositionned.isNull(legend)) {
 					final double delta2;
 					if (legend.getHorizontalAlignment() == HorizontalAlignment.LEFT) {
 						delta2 = 0;

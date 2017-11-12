@@ -239,16 +239,16 @@ public class PlantUmlTask extends Task {
 	}
 
 	private File processingSingleDirectory(File dir) throws IOException, InterruptedException {
-		if (dir.exists() == false) {
+		if (!dir.exists()) {
 			final String s = "The file " + dir.getAbsolutePath() + " does not exists.";
 			this.log(s);
 			throw new BuildException(s);
 		}
 		for (File f : dir.listFiles()) {
-			if (f.isFile() == false) {
+			if (!f.isFile()) {
 				continue;
 			}
-			if (fileToProcess(f.getName()) == false) {
+			if (!fileToProcess(f.getName())) {
 				continue;
 			}
 			final boolean error = processingSingleFile(f);

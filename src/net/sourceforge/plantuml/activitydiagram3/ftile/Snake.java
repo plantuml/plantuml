@@ -236,7 +236,7 @@ public class Snake implements UShape {
 		}
 		final boolean emptyOther = TextBlockUtils.isEmpty(other.textBlock, stringBounder);
 		// final boolean emptyThis = TextBlockUtils.isEmpty(this.textBlock, stringBounder);
-		if (emptyOther == false /* || emptyThis == false */) {
+		if (!emptyOther /* || emptyThis == false */) {
 			// System.err.println("merge other.textBlock="+other.textBlock+" "+other.textBlock.calculateDimension(TextBlockUtils.getDummyStringBounder()));
 			return null;
 		}

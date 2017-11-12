@@ -67,7 +67,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public boolean isOnlySingleStop() {
 		return all.size() == 1 && getLast() instanceof InstructionStop
-				&& ((InstructionStop) getLast()).hasNotes() == false;
+				&& !((InstructionStop) getLast()).hasNotes();
 	}
 
 	public InstructionList(Swimlane defaultSwimlane) {
@@ -87,7 +87,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
 			breaks.addAll(cur.getWeldingPoints());
-			if (ins.getInLinkRendering().isNone() == false) {
+			if (!ins.getInLinkRendering().isNone()) {
 				cur = factory.decorateIn(cur, ins.getInLinkRendering());
 			}
 

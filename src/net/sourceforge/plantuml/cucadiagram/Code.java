@@ -76,7 +76,7 @@ public class Code implements Comparable<Code> {
 		if (separator == null) {
 			throw new IllegalArgumentException();
 		}
-		if (this.separator != null && this.separator.equals(separator) == false) {
+		if (this.separator != null && !this.separator.equals(separator)) {
 			throw new IllegalStateException();
 		}
 		return new Code(fullName, separator);

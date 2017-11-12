@@ -79,8 +79,8 @@ public class CubicCurveFactory {
 				for (Point2D.Double p2 : all) {
 					final MyCurve me = new MyCurve(new CubicCurve2D.Double(start.getX(), start.getY(), p1.getX(), p1
 							.getY(), p2.getX(), p2.getY(), end.getX(), end.getY()));
-					if (me.getLenght() < min && me.intersects(forbiddenRect) == false
-							&& me.intersects(forbiddenCurves) == false) {
+					if (me.getLenght() < min && !me.intersects(forbiddenRect)
+							&& !me.intersects(forbiddenCurves)) {
 						result = me;
 						min = me.getLenght();
 					}

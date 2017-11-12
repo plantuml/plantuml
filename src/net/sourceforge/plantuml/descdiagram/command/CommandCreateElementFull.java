@@ -207,7 +207,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	public static boolean existsWithBadType(AbstractEntityDiagram diagram, final Code code, LeafType type,
 			USymbol usymbol) {
-		if (diagram.leafExist(code) == false) {
+		if (!diagram.leafExist(code)) {
 			return false;
 		}
 		final ILeaf other = diagram.getLeafsget(code);

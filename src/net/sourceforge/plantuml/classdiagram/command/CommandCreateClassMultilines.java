@@ -197,7 +197,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final ILeaf result;
 		if (diagram.leafExist(code)) {
 			result = diagram.getOrCreateLeaf(code, null, null);
-			if (result.muteToType(type, null) == false) {
+			if (!result.muteToType(type, null)) {
 				return null;
 			}
 		} else {

@@ -130,7 +130,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath(String init, double deltaY) {
-		if (isPathConsistent(init) == false) {
+		if (!isPathConsistent(init)) {
 			throw new IllegalArgumentException();
 		}
 		final int posC = init.indexOf("C");
@@ -161,7 +161,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public static boolean isPathConsistent(String init) {
-		if (init.startsWith("M") == false) {
+		if (!init.startsWith("M")) {
 			return false;
 		}
 		return true;
@@ -435,7 +435,7 @@ public class DotPath implements UShape, Moveable {
 						BezierUtils.shorten(bez, shape);
 					}
 					final Point2D.Double result = new Point2D.Double((bez.x1 + bez.x2) / 2, (bez.y1 + bez.y2) / 2);
-					if (contains(result, notIn) == false) {
+					if (!contains(result, notIn)) {
 						return result;
 					}
 				}
@@ -478,7 +478,7 @@ public class DotPath implements UShape, Moveable {
 	private DotPath manageRect(Rectangle2D start, Rectangle2D end) {
 		final List<CubicCurve2D.Double> list = new ArrayList<CubicCurve2D.Double>(this.beziers);
 		while (true) {
-			if (BezierUtils.isCutting(list.get(0), start) == false) {
+			if (!BezierUtils.isCutting(list.get(0), start)) {
 				throw new IllegalStateException();
 			}
 			if (BezierUtils.dist(list.get(0)) <= 1.0) {
@@ -575,7 +575,7 @@ public class DotPath implements UShape, Moveable {
 				final DotPath result = new DotPath();
 				int idx = 0;
 				while (idx + 1 < this.beziers.size() && clusterPosition.contains(this.beziers.get(idx).getP2())) {
-					if (clusterPosition.contains(this.beziers.get(idx).getP1()) == false) {
+					if (!clusterPosition.contains(this.beziers.get(idx).getP1())) {
 						throw new IllegalStateException();
 					}
 					idx++;
@@ -584,7 +584,7 @@ public class DotPath implements UShape, Moveable {
 					// System.err.println("strange1");
 				} else {
 					assert clusterPosition.contains(this.beziers.get(idx).getP1());
-					assert clusterPosition.contains(this.beziers.get(idx).getP2()) == false;
+					assert !clusterPosition.contains(this.beziers.get(idx).getP2());
 					CubicCurve2D current = this.beziers.get(idx);
 					for (int k = 0; k < 8; k++) {
 						// System.err.println("length=" + length(current));
@@ -612,14 +612,14 @@ public class DotPath implements UShape, Moveable {
 			final ClusterPosition clusterPosition = head.getClusterPosition();
 			if (clusterPosition.contains(getEndPoint())) {
 				for (CubicCurve2D.Double current : me.beziers) {
-					if (clusterPosition.contains(current.getP2()) == false) {
+					if (!clusterPosition.contains(current.getP2())) {
 						result.beziers.add(current);
 					} else {
 						if (clusterPosition.contains(current.getP1())) {
 							// System.err.println("strange2");
 							return me;
 						}
-						assert clusterPosition.contains(current.getP1()) == false;
+						assert !clusterPosition.contains(current.getP1());
 						assert clusterPosition.contains(current.getP2());
 						for (int k = 0; k < 8; k++) {
 							// System.err.println("length=" + length(current));

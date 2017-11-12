@@ -66,7 +66,7 @@ public class DriverTextSvg implements UDriver<SvgGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && !clip.isInside(x, y)) {
 			return;
 		}
 

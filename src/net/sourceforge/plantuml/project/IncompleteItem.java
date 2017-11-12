@@ -78,7 +78,7 @@ class IncompleteItem implements Item {
 
 	private boolean eventuallyUseDurationWork() {
 		if (data.containsKey(ItemCaract.DURATION) && data.containsKey(ItemCaract.WORK)
-				&& data.containsKey(ItemCaract.LOAD) == false) {
+				&& !data.containsKey(ItemCaract.LOAD)) {
 			final Duration d = (Duration) data.get(ItemCaract.DURATION);
 			final NumericNumber w = (NumericNumber) data.get(ItemCaract.WORK);
 			data.put(ItemCaract.LOAD, new Load(d.getMinutes() * w.getIntValue()));
@@ -89,7 +89,7 @@ class IncompleteItem implements Item {
 
 	private boolean eventuallyUseLoadWork() {
 		if (data.containsKey(ItemCaract.LOAD) && data.containsKey(ItemCaract.WORK)
-				&& data.containsKey(ItemCaract.DURATION) == false) {
+				&& !data.containsKey(ItemCaract.DURATION)) {
 			final Load l = (Load) data.get(ItemCaract.LOAD);
 			final NumericNumber w = (NumericNumber) data.get(ItemCaract.WORK);
 			data.put(ItemCaract.DURATION, new Duration(l.getMinuteMen() / w.getIntValue()));
@@ -100,7 +100,7 @@ class IncompleteItem implements Item {
 
 	private boolean eventuallyUseDurationLoad() {
 		if (data.containsKey(ItemCaract.DURATION) && data.containsKey(ItemCaract.LOAD)
-				&& data.containsKey(ItemCaract.WORK) == false) {
+				&& !data.containsKey(ItemCaract.WORK)) {
 			final Duration d = (Duration) data.get(ItemCaract.DURATION);
 			final Load l = (Load) data.get(ItemCaract.LOAD);
 			data.put(ItemCaract.WORK, new NumericNumber((int) (l.getMinuteMen() / d.getMinutes())));
@@ -111,7 +111,7 @@ class IncompleteItem implements Item {
 
 	private boolean eventuallyUseBeginDuration() {
 		if (data.containsKey(ItemCaract.BEGIN) && data.containsKey(ItemCaract.DURATION)
-				&& data.containsKey(ItemCaract.COMPLETED) == false) {
+				&& !data.containsKey(ItemCaract.COMPLETED)) {
 			final Instant i1 = (Instant) data.get(ItemCaract.BEGIN);
 			final Duration d = (Duration) data.get(ItemCaract.DURATION);
 			data.put(ItemCaract.COMPLETED, math.add(i1, d));
@@ -122,7 +122,7 @@ class IncompleteItem implements Item {
 
 	private boolean eventuallyUseCompleteDuration() {
 		if (data.containsKey(ItemCaract.COMPLETED) && data.containsKey(ItemCaract.DURATION)
-				&& data.containsKey(ItemCaract.BEGIN) == false) {
+				&& !data.containsKey(ItemCaract.BEGIN)) {
 			final Instant i2 = (Instant) data.get(ItemCaract.COMPLETED);
 			final Duration d = (Duration) data.get(ItemCaract.DURATION);
 			data.put(ItemCaract.BEGIN, math.sub(i2, d));
@@ -133,7 +133,7 @@ class IncompleteItem implements Item {
 
 	private boolean eventuallyUseBeginComplete() {
 		if (data.containsKey(ItemCaract.BEGIN) && data.containsKey(ItemCaract.COMPLETED)
-				&& data.containsKey(ItemCaract.DURATION) == false) {
+				&& !data.containsKey(ItemCaract.DURATION)) {
 			final Instant i1 = (Instant) data.get(ItemCaract.BEGIN);
 			final Instant i2 = (Instant) data.get(ItemCaract.COMPLETED);
 			if (i2.compareTo(i1) <= 0) {

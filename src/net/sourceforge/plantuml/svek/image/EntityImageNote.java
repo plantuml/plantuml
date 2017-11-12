@@ -188,7 +188,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			ug.startUrl(url);
 		}
 		final UGraphic ug2 = UGraphicStencil.create(ug, this, new UStroke());
-		if (opaleLine == null || opaleLine.isOpale() == false) {
+		if (opaleLine == null || !opaleLine.isOpale()) {
 			drawNormal(ug2);
 		} else {
 			final StringBounder stringBounder = ug.getStringBounder();

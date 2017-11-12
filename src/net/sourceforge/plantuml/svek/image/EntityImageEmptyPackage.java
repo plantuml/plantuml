@@ -84,7 +84,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		this.url = entity.getUrl99();
 
 		if (stereotype == null || stereotype.getLabel(false) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				|| !portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereoBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			stereoBlock = TextBlockUtils.withMargin(

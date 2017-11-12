@@ -121,7 +121,7 @@ public enum FontStyle {
 
 	public HtmlColor getExtendedColor(String s) {
 		final Matcher2 m = MyPattern.cmpile(getActivationPattern()).matcher(s);
-		if (m.find() == false || m.groupCount() != 1) {
+		if (!m.find() || m.groupCount() != 1) {
 			return null;
 		}
 		final String color = m.group(1);

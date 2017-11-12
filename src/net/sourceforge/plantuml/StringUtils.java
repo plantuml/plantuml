@@ -62,7 +62,7 @@ public class StringUtils {
 
 	public static final List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return null;
 		}
 		final List<String> result = new ArrayList<String>();
@@ -347,7 +347,7 @@ public class StringUtils {
 	public static int getPragmaRevision(String uml) {
 		uml = uml.toLowerCase();
 		final String header = "@startuml\n!pragma revision ";
-		if (uml.startsWith(header) == false) {
+		if (!uml.startsWith(header)) {
 			return -1;
 		}
 		int x1 = header.length();
@@ -410,7 +410,7 @@ public class StringUtils {
 	}
 
 	public static boolean endsWithBackslash(final String s) {
-		return s.endsWith("\\") && s.endsWith("\\\\") == false;
+		return s.endsWith("\\") && !s.endsWith("\\\\");
 	}
 
 	public static String manageGuillemetStrict(String st) {

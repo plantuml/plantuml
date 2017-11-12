@@ -44,13 +44,13 @@ public enum ExeState {
 	public static ExeState checkFile(File dotExe) {
 		if (dotExe == null) {
 			return NULL_UNDEFINED;
-		} else if (dotExe.exists() == false) {
+		} else if (!dotExe.exists()) {
 			return DOES_NOT_EXIST;
 		} else if (dotExe.isDirectory()) {
 			return IS_A_DIRECTORY;
-		} else if (dotExe.isFile() == false) {
+		} else if (!dotExe.isFile()) {
 			return NOT_A_FILE;
-		} else if (dotExe.canRead() == false) {
+		} else if (!dotExe.canRead()) {
 			return CANNOT_BE_READ;
 		}
 		return OK;

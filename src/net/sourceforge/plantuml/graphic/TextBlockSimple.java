@@ -113,7 +113,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 				if (w > maxMessageSize) {
 					addSingleLineNoSpace(currentLine.toString());
 					currentLine.setLength(0);
-					if (token.startsWith(" ") == false) {
+					if (!token.startsWith(" ")) {
 						currentLine.append(token);
 					}
 				} else {

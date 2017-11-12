@@ -65,7 +65,7 @@ public class MyCurve {
 	}
 
 	private Line2D.Double change(Line2D.Double line, Point2D p1, Point2D p2) {
-		if (line.getP1().equals(p1) == false && line.getP2().equals(p2) == false) {
+		if (!line.getP1().equals(p1) && !line.getP2().equals(p2)) {
 			return line;
 		}
 		final double dx = line.x2 - line.x1;

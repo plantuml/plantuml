@@ -73,7 +73,7 @@ public class Matcher2 {
 	}
 
 	private void addTime(long duration) {
-		if (INSTRUMENT == false) {
+		if (!INSTRUMENT) {
 			return;
 		}
 		addTime(id, duration);

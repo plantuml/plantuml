@@ -109,14 +109,14 @@ public class Bodier {
 			methodsToDisplay = new ArrayList<Member>();
 			for (int i = 0; i < rawBody.size(); i++) {
 				final String s = rawBody.get(i);
-				if (isMethod(i, rawBody) == false) {
+				if (!isMethod(i, rawBody)) {
 					continue;
 				}
 				if (s.isEmpty() && methodsToDisplay.isEmpty()) {
 					continue;
 				}
 				final Member m = new MemberImpl(s, true, manageModifier);
-				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
+				if (hides == null || !hides.contains(m.getVisibilityModifier())) {
 					methodsToDisplay.add(m);
 				}
 			}
@@ -137,14 +137,14 @@ public class Bodier {
 		if (fieldsToDisplay == null) {
 			fieldsToDisplay = new ArrayList<Member>();
 			for (String s : rawBody) {
-				if (isMethod(s) == true) {
+				if (isMethod(s)) {
 					continue;
 				}
 				if (s.isEmpty() && fieldsToDisplay.isEmpty()) {
 					continue;
 				}
 				final Member m = new MemberImpl(s, false, manageModifier);
-				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
+				if (hides == null || !hides.contains(m.getVisibilityModifier())) {
 					fieldsToDisplay.add(m);
 				}
 			}
@@ -180,7 +180,7 @@ public class Bodier {
 		final List<String> result = new ArrayList<String>();
 		for (String s : rawBody) {
 			final Member m = new MemberImpl(s, isMethod(s), manageModifier);
-			if (hides.contains(m.getVisibilityModifier()) == false) {
+			if (!hides.contains(m.getVisibilityModifier())) {
 				result.add(s);
 			}
 
@@ -199,21 +199,21 @@ public class Bodier {
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
 				stereotype, leaf);
 		if (type == LeafType.OBJECT) {
-			if (showFields == false) {
+			if (!showFields) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
 			}
 			return fields.asBlockMemberImpl();
 		}
-		if (type.isLikeClass() == false) {
+		if (!type.isLikeClass()) {
 			throw new UnsupportedOperationException();
 		}
 		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
 				stereotype, leaf);
-		if (showFields && showMethods == false) {
+		if (showFields && !showMethods) {
 			return fields.asBlockMemberImpl();
-		} else if (showMethods && showFields == false) {
+		} else if (showMethods && !showFields) {
 			return methods.asBlockMemberImpl();
-		} else if (showFields == false && showMethods == false) {
+		} else if (!showFields && !showMethods) {
 			return TextBlockUtils.empty(0, 0);
 		}
 

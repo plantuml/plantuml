@@ -91,8 +91,8 @@ public final class GroupPngMakerActivity {
 		for (Link link : diagram.getLinks()) {
 			final IEntity e1 = (IEntity) link.getEntity1();
 			final IEntity e2 = (IEntity) link.getEntity2();
-			if (e1.getParentContainer() == group && e1.isGroup() == false && e2.getParentContainer() == group
-					&& e2.isGroup() == false) {
+			if (e1.getParentContainer() == group && !e1.isGroup() && e2.getParentContainer() == group
+					&& !e2.isGroup()) {
 				result.add(link);
 			}
 		}

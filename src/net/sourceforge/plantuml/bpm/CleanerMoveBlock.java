@@ -50,11 +50,11 @@ public class CleanerMoveBlock implements GridCleaner {
 		// System.err.println("TRYING LINE " + line);
 		for (Col col1 : grid.cols().toList()) {
 			final Placeable cell1 = grid.getCell(line, col1).getData();
-			if (cell1 instanceof ConnectorPuzzleEmpty == false) {
+			if (!(cell1 instanceof ConnectorPuzzleEmpty)) {
 				continue;
 			}
 			final ConnectorPuzzleEmpty puzzle1 = (ConnectorPuzzleEmpty) cell1;
-			if (puzzle1.checkDirections("NS") == false) {
+			if (!puzzle1.checkDirections("NS")) {
 				continue;
 			}
 			final Navigator<Col> it2 = grid.cols().navigator(col1);
@@ -72,11 +72,11 @@ public class CleanerMoveBlock implements GridCleaner {
 				if (cell2 == null) {
 					continue;
 				}
-				if (cell2 instanceof ConnectorPuzzleEmpty == false) {
+				if (!(cell2 instanceof ConnectorPuzzleEmpty)) {
 					break;
 				}
 				final ConnectorPuzzleEmpty puzzle2 = (ConnectorPuzzleEmpty) cell2;
-				if (puzzle2.checkDirections("NS") == false) {
+				if (!puzzle2.checkDirections("NS")) {
 					continue;
 				}
 				if (cpt > 1) {

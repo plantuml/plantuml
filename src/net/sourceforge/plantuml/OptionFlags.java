@@ -196,7 +196,7 @@ public class OptionFlags {
 			return;
 		}
 		synchronized (logDataInitized) {
-			if (logData == null && logDataInitized.get() == false) {
+			if (logData == null && !logDataInitized.get()) {
 				final String s = GraphvizUtils.getenvLogData();
 				if (s != null) {
 					setLogData(new File(s));

@@ -124,7 +124,7 @@ public class Dijkstra {
 		final PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
 		vertexQueue.add(source);
 
-		while (vertexQueue.isEmpty() == false) {
+		while (!vertexQueue.isEmpty()) {
 			final Vertex u = vertexQueue.poll();
 
 			// Visit each edge exiting u

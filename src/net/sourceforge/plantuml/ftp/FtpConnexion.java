@@ -178,7 +178,7 @@ public class FtpConnexion {
 				}
 			}
 		} finally {
-			if (done == false) {
+			if (!done) {
 				outgoing.put(pngFileName, new byte[0]);
 			}
 		}

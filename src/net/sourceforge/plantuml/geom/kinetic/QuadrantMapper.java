@@ -79,15 +79,15 @@ public class QuadrantMapper {
 		final Quadrant newQ = new Quadrant(pt);
 		final Quadrant old = quadrants.get(pt);
 		assert getSetOfPoints(old).contains(pt);
-		if (old.equals(newQ) == false) {
-			assert getSetOfPoints(newQ).contains(pt) == false;
+		if (!old.equals(newQ)) {
+			assert !getSetOfPoints(newQ).contains(pt);
 			assert getSetOfPoints(old).contains(pt);
 			final boolean remove = getSetOfPoints(old).remove(pt);
 			assert remove;
 			final boolean add = getSetOfPoints(newQ).add(pt);
 			assert add;
 			assert getSetOfPoints(newQ).contains(pt);
-			assert getSetOfPoints(old).contains(pt) == false;
+			assert !getSetOfPoints(old).contains(pt);
 			quadrants.put(pt, newQ);
 		}
 		assert getSetOfPoints(new Quadrant(pt)).contains(pt);

@@ -110,7 +110,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		IGroup group = getCurrentGroup();
 		final String namespace = getNamespace(fullyCode);
 		if (namespace != null
-				&& (EntityUtils.groupRoot(group) || group.getCode().getFullName().equals(namespace) == false)) {
+				&& (EntityUtils.groupRoot(group) || !group.getCode().getFullName().equals(namespace))) {
 			final Code namespace2 = Code.of(namespace);
 			group = getOrCreateNamespaceInternal(namespace2, Display.getWithNewlines(namespace), GroupType.PACKAGE,
 					getRootGroup());

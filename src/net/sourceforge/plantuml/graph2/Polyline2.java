@@ -57,7 +57,7 @@ public class Polyline2 {
 	public void addLine(Line2D.Double newLine) {
 		// Log.println("# Polyline2::addLine " +
 		// GeomUtils.toString(newLine));
-		if (lastCurrent.equals(newLine.getP1()) == false) {
+		if (!lastCurrent.equals(newLine.getP1())) {
 			lines.add(new Line2D.Double(lastCurrent, newLine.getP1()));
 		}
 		lines.add(newLine);
@@ -104,7 +104,7 @@ public class Polyline2 {
 	}
 
 	private void close() {
-		if (lastCurrent.equals(end) == false) {
+		if (!lastCurrent.equals(end)) {
 			lines.add(new Line2D.Double(lastCurrent, end));
 		}
 	}

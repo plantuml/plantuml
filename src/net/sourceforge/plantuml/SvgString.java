@@ -58,7 +58,7 @@ public class SvgString {
 			final int idx = result.indexOf(">");
 			result = "<svg>" + result.substring(idx + 1);
 		}
-		if (result.startsWith("<svg>") == false) {
+		if (!result.startsWith("<svg>")) {
 			throw new IllegalArgumentException();
 		}
 		return result;

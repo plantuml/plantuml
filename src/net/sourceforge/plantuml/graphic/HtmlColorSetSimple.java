@@ -70,13 +70,13 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 			final int idx = s.indexOf(sep);
 			final String s1 = s.substring(0, idx);
 			final String s2 = s.substring(idx + 1);
-			if (isValid(s1, false) == false || isValid(s2, false) == false) {
+			if (!isValid(s1, false) || !isValid(s2, false)) {
 				return null;
 			}
 			return new HtmlColorGradient(build(s1), build(s2), sep);
 			// return getColorIfValid(s2);
 		}
-		if (isValid(s, acceptTransparent) == false) {
+		if (!isValid(s, acceptTransparent)) {
 			return new HtmlColorUserDef();
 		}
 		return build(s);

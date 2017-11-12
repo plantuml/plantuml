@@ -64,7 +64,7 @@ public class WormMutation {
 				result.translations.add(tmp.translations.get(0));
 			} else {
 				UTranslate last = result.getLast();
-				if (last.isAlmostSame(tmp.translations.get(0)) == false) {
+				if (!last.isAlmostSame(tmp.translations.get(0))) {
 					tmp = tmp.reverse();
 				}
 			}

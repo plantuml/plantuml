@@ -123,7 +123,7 @@ public class ParentItem implements Item {
 			return false;
 		}
 		for (Item it : children) {
-			if (it.isValid() == false) {
+			if (!it.isValid()) {
 				return false;
 			}
 		}

@@ -210,7 +210,7 @@ class FtileWhile extends AbstractFtile {
 
 		private Point2D getP1(final StringBounder stringBounder) {
 			final FtileGeometry geo = whileBlock.calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return null;
 			}
 			return getTranslateForWhile(stringBounder).getTranslated(geo.getPointOut());

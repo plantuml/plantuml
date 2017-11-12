@@ -51,7 +51,7 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();

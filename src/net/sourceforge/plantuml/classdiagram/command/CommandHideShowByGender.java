@@ -171,10 +171,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		if (gender != null) {
 			final boolean empty = arg.get("EMPTY", 0) != null;
 			final boolean emptyMembers = empty && portion == PORTION_MEMBER;
-			if (empty == true && emptyMembers == false) {
+			if (empty && !emptyMembers) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
-			if (EntityUtils.groupRoot(classDiagram.getCurrentGroup()) == false) {
+			if (!EntityUtils.groupRoot(classDiagram.getCurrentGroup())) {
 				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(classDiagram.getCurrentGroup()));
 			}
 

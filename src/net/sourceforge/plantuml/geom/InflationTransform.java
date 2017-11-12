@@ -96,7 +96,7 @@ public class InflationTransform {
 
 		final SortedSet<Point2DInt> result = new TreeSet<Point2DInt>(new Point2DIntComparatorDistance(original.getP1()));
 
-		if (original.isHorizontal() == false) {
+		if (!original.isHorizontal()) {
 			for (InflateData x : inflateX) {
 				final LineSegmentInt vertical = new LineSegmentInt(x.getPos(), original.getMinY(), x.getPos(), original
 						.getMaxY());
@@ -106,7 +106,7 @@ public class InflationTransform {
 				}
 			}
 		}
-		if (original.isVertical() == false) {
+		if (!original.isVertical()) {
 			for (InflateData y : inflateY) {
 				final LineSegmentInt horizontal = new LineSegmentInt(original.getMinX(), y.getPos(),
 						original.getMaxX(), y.getPos());
@@ -130,7 +130,7 @@ public class InflationTransform {
 			result.add(new LineSegmentInt(cur, inter));
 			cur = inter;
 		}
-		if (cur.equals(original.getP2()) == false) {
+		if (!cur.equals(original.getP2())) {
 			result.add(new LineSegmentInt(cur, original.getP2()));
 		}
 		return result;
@@ -164,7 +164,7 @@ public class InflationTransform {
 				onGrid = true;
 			}
 		}
-		if (onGrid == false) {
+		if (!onGrid) {
 			return false;
 		}
 		for (InflateData y : inflateY) {
@@ -199,7 +199,7 @@ public class InflationTransform {
 		LineSegmentInt last = null;
 		final Collection<LineSegmentInt> cutSegments = cutSegments(segments);
 		for (LineSegmentInt seg : inflateSegmentCollection(cutSegments)) {
-			if (last != null && last.getP2().equals(seg.getP1()) == false) {
+			if (last != null && !last.getP2().equals(seg.getP1())) {
 				result.add(new LineSegmentInt(last.getP2(), seg.getP1()));
 			}
 			result.add(seg);

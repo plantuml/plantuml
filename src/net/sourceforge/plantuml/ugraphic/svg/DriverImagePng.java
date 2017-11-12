@@ -59,10 +59,10 @@ public class DriverImagePng implements UDriver<SvgGraphics> {
 		final UImage image = (UImage) ushape;
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			if (clip.isInside(x, y) == false) {
+			if (!clip.isInside(x, y)) {
 				return;
 			}
-			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {
+			if (!clip.isInside(x + image.getWidth(), y + image.getHeight())) {
 				return;
 			}
 		}

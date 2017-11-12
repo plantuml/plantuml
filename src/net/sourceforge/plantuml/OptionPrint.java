@@ -195,7 +195,7 @@ public class OptionPrint {
 
 	public static Collection<String> interestingValues() {
 		final List<String> strings = new ArrayList<String>();
-		if (withIp() == false) {
+		if (!withIp()) {
 			strings.add("Machine: " + getHostName());
 		}
 		strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());

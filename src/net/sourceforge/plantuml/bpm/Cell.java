@@ -62,7 +62,7 @@ public class Cell {
 
 	public void addConnectionTo2(Placeable other) {
 		// Should be an assert
-		if (other instanceof BpmElement == false) {
+		if (!(other instanceof BpmElement)) {
 			throw new IllegalArgumentException();
 		}
 		this.destinations.add(other);

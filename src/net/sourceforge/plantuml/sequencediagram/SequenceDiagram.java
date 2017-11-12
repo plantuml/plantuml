@@ -126,7 +126,7 @@ public class SequenceDiagram extends UmlDiagram {
 		lastDelay = null;
 		events.add(m);
 		if (pendingCreate != null) {
-			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false) {
+			if (!m.compatibleForCreate(pendingCreate.getParticipant())) {
 				return "After create command, you have to send a message to \"" + pendingCreate.getParticipant() + "\"";
 			}
 			m.addLifeEvent(pendingCreate);
@@ -260,7 +260,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		if (lifeEventType == LifeEventType.ACTIVATE && lastEventWithDeactivate instanceof Message) {
 			activationState.push((Message) lastEventWithDeactivate);
-		} else if (lifeEventType == LifeEventType.DEACTIVATE && activationState.empty() == false) {
+		} else if (lifeEventType == LifeEventType.DEACTIVATE && !activationState.empty()) {
 			activationState.pop();
 		}
 		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);
@@ -414,7 +414,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private void remove(Participant p) {
 		final boolean ok = participants.values().remove(p);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 		participantEnglobers2.remove(p);
@@ -464,7 +464,7 @@ public class SequenceDiagram extends UmlDiagram {
 				return true;
 			}
 		}
-		if (DisplayPositionned.isNull(getLegend()) == false && getLegend().hasUrl()) {
+		if (!DisplayPositionned.isNull(getLegend()) && getLegend().hasUrl()) {
 			return true;
 		}
 		return false;

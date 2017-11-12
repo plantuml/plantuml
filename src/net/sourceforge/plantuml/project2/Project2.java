@@ -124,7 +124,7 @@ public class Project2 implements TaskContainer {
 		}
 		Task result = null;
 		for (Task t : tasks) {
-			if (t.getCode().startsWith(code) == false) {
+			if (!t.getCode().startsWith(code)) {
 				continue;
 			}
 			if (result == null) {

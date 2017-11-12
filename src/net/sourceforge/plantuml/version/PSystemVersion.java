@@ -221,7 +221,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	private static void add(List<String> result, String s, boolean withTag) {
-		if (withTag == false) {
+		if (!withTag) {
 			s = s.replaceAll("\\</?\\w+\\>", "");
 		}
 		result.add(s);

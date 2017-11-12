@@ -81,16 +81,16 @@ public class FrontierCalculator {
 				touchMaxY = true;
 			}
 		}
-		if (touchMinX == false) {
+		if (!touchMinX) {
 			core = core.withMinX(initial.getMinX());
 		}
-		if (touchMaxX == false) {
+		if (!touchMaxX) {
 			core = core.withMaxX(initial.getMaxX());
 		}
-		if (touchMinY == false) {
+		if (!touchMinY) {
 			core = core.withMinY(initial.getMinY());
 		}
-		if (touchMaxY == false) {
+		if (!touchMaxY) {
 			core = core.withMaxY(initial.getMaxY());
 		}
 		boolean pushMinX = false;

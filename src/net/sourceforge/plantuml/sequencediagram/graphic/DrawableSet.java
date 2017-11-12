@@ -193,7 +193,7 @@ public class DrawableSet {
 		final double marginForEnglobers = !getExistingParticipantEnglober(stringBounder).isEmpty() ? MARGIN_FOR_ENGLOBERS
 				: 0;
 
-		if (showTail == false) {
+		if (!showTail) {
 			return 1 + marginForEnglobers;
 		}
 		double r = 0;
@@ -210,14 +210,14 @@ public class DrawableSet {
 	}
 
 	public void setLivingParticipantBox(Participant p, LivingParticipantBox box) {
-		if (participants.containsKey(p) == false) {
+		if (!participants.containsKey(p)) {
 			throw new IllegalArgumentException();
 		}
 		participants.put(p, box);
 	}
 
 	public void addEvent(Event event, GraphicalElement object) {
-		if (events.keySet().contains(event) == false) {
+		if (!events.keySet().contains(event)) {
 			eventsList.add(event);
 		}
 		events.put(event, object);

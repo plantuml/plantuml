@@ -84,7 +84,7 @@ public class LineSegmentInt extends AbstractLineSegment {
 
 	public boolean doesIntersectButNotSameExtremity(LineSegmentInt other) {
 		// assert sameExtremities(other) == false;
-		if (doesIntersect(other) == false) {
+		if (!doesIntersect(other)) {
 			return false;
 		}
 		if (atLeastOneCommonExtremities(other)) {

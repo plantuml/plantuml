@@ -77,7 +77,7 @@ public class PinLinksContinuousSet {
 	}
 
 	public void addAll(PinLinksContinuousSet other) {
-		if (doesTouch(other) == false) {
+		if (!doesTouch(other)) {
 			throw new IllegalArgumentException();
 		}
 		this.all.addAll(other.all);

@@ -61,7 +61,7 @@ public class DataSourceImpl implements DataSource {
 				final Terminator terminator = st.hasMoreTokens() ? Terminator.NEWCOL : Terminator.NEWLINE;
 				final Matcher2 m = p.matcher(token);
 				final boolean found = m.find();
-				if (found == false) {
+				if (!found) {
 					addInternal(token, terminator);
 					continue;
 				}

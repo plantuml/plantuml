@@ -57,7 +57,7 @@ public final class TimeoutExecutor {
 			return false;
 		} finally {
 			done = mainThread.done.get();
-			if (done == false) {
+			if (!done) {
 				task.cancelJob();
 				mainThread.interrupt();
 			}

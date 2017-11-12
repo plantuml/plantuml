@@ -64,7 +64,7 @@ public class PolylineImpl extends AbstractPolyline implements Polyline {
 	}
 
 	public void addIntermediate(Point2DInt intermediate) {
-		assert intermediates.contains(intermediate) == false;
+		assert !intermediates.contains(intermediate);
 		intermediates.add(intermediate);
 	}
 

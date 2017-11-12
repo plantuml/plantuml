@@ -213,7 +213,7 @@ public class LifeLine {
 					skinParam2 = new SkinParamForceColor(skinParam2, ColorParam.sequenceLifeLineBorder,
 							specificLineColor);
 				}
-				if (it.hasNext() == false) {
+				if (!it.hasNext()) {
 					type = type == ComponentType.ALIVE_BOX_CLOSE_OPEN ? ComponentType.ALIVE_BOX_CLOSE_CLOSE
 							: ComponentType.ALIVE_BOX_OPEN_CLOSE;
 				}

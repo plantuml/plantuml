@@ -79,7 +79,7 @@ public class PSystemUtils {
 		for (int i = 0; i < nbImages; i++) {
 
 			final File f = suggestedFile.getFile(i);
-			if (canFileBeWritten(f) == false) {
+			if (!canFileBeWritten(f)) {
 				return result;
 			}
 			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
@@ -100,7 +100,7 @@ public class PSystemUtils {
 
 	public static boolean canFileBeWritten(final File f) {
 		Log.info("Creating file: " + f);
-		if (f.exists() && f.canWrite() == false) {
+		if (f.exists() && !f.canWrite()) {
 			if (OptionFlags.getInstance().isOverwrite()) {
 				Log.info("Overwrite " + f);
 				f.setWritable(true);
@@ -121,7 +121,7 @@ public class PSystemUtils {
 		OutputStream os = null;
 		ImageData imageData = null;
 		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
+			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
 				return Collections.emptyList();
 			}
 			os = new BufferedOutputStream(new FileOutputStream(suggestedFile.getFile(0)));
@@ -144,7 +144,7 @@ public class PSystemUtils {
 		ImageData cmap = null;
 		ImageData imageData = null;
 		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
+			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
 				return Collections.emptyList();
 			}
 			os = new BufferedOutputStream(new FileOutputStream(suggestedFile.getFile(0)));
@@ -167,7 +167,7 @@ public class PSystemUtils {
 		for (int i = 0; i < nbImages; i++) {
 
 			final File f = suggestedFile.getFile(i);
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(i)) == false) {
+			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(i))) {
 				return result;
 			}
 			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
@@ -199,7 +199,7 @@ public class PSystemUtils {
 		ImageData cmap = null;
 		OutputStream os = null;
 		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
+			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
 				return Collections.emptyList();
 			}
 			// System.err.println("FOO11=" + suggestedFile);

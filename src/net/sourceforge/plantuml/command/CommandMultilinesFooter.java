@@ -57,7 +57,7 @@ public class CommandMultilinesFooter extends CommandMultilines<UmlDiagram> {
 	public CommandExecutionResult execute(final UmlDiagram diagram, BlocLines lines) {
 		lines = lines.trim(false);
 		final Matcher2 m = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
-		if (m.find() == false) {
+		if (!m.find()) {
 			throw new IllegalStateException();
 		}
 		final String align = m.group(1);

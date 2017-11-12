@@ -128,7 +128,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			result.setUSymbol(symbol);
 		}
 		if (result.getLeafType() == LeafType.CLASS && type == LeafType.OBJECT) {
-			if (result.muteToType(type, symbol) == false) {
+			if (!result.muteToType(type, symbol)) {
 				return null;
 			}
 		}
@@ -240,11 +240,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public final boolean isGroup(Code code) {
-		return leafExist(code) == false && entityFactory.getGroups().containsKey(code);
+		return !leafExist(code) && entityFactory.getGroups().containsKey(code);
 	}
 
 	public final Collection<IGroup> getGroups(boolean withRootGroup) {
-		if (withRootGroup == false) {
+		if (!withRootGroup) {
 			return entityFactory.getGroups().values();
 		}
 		final Collection<IGroup> result = new ArrayList<IGroup>();
@@ -427,7 +427,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return false;
 		}
 		for (Link link : getLinks()) {
-			if (EntityUtils.isPureInnerLink3(g, link) == false) {
+			if (!EntityUtils.isPureInnerLink3(g, link)) {
 				return false;
 			}
 		}

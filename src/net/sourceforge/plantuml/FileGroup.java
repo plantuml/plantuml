@@ -71,7 +71,7 @@ public class FileGroup {
 	private void recurse() {
 		final Matcher2 m = predirPath.matcher(pattern);
 		final boolean ok = m.find();
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 		final File parent;
@@ -111,7 +111,7 @@ public class FileGroup {
 	}
 
 	private void addSimpleDirectory(File dir, String pattern) {
-		if (dir.isDirectory() == false) {
+		if (!dir.isDirectory()) {
 			throw new IllegalArgumentException("dir=" + dir);
 		}
 		for (File f : dir.listFiles()) {

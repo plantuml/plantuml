@@ -116,7 +116,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final ILeaf entity;
 		if (diagram.leafExist(code)) {
 			entity = diagram.getOrCreateLeaf(code, type, null);
-			if (entity.muteToType(type, null) == false) {
+			if (!entity.muteToType(type, null)) {
 				return CommandExecutionResult.error("Bad name");
 			}
 		} else {

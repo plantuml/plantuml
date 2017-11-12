@@ -62,7 +62,7 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && !clip.isInside(x, y)) {
 			return;
 		}
 
@@ -79,7 +79,7 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 
 		svg.newpath();
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
 			if (code == PathIterator.SEG_MOVETO) {
 				svg.moveto(coord[0] + x, coord[1] + y);

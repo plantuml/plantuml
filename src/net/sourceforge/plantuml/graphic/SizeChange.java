@@ -47,7 +47,7 @@ class SizeChange implements FontChange {
 
 	SizeChange(String s) {
 		final Matcher2 matcherSize = sizePattern.matcher(s);
-		if (matcherSize.find() == false) {
+		if (!matcherSize.find()) {
 			throw new IllegalArgumentException();
 		}
 		size = new Integer(matcherSize.group(1));

@@ -68,7 +68,7 @@ public class Img implements HtmlCommand {
 
 	static int getVspace(String html) {
 		final Matcher2 m = vspacePattern.matcher(html);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return 0;
 		}
 		return Integer.parseInt(m.group(1));
@@ -76,7 +76,7 @@ public class Img implements HtmlCommand {
 
 	static ImgValign getValign(String html) {
 		final Matcher2 m = valignPattern.matcher(html);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return ImgValign.TOP;
 		}
 		return ImgValign.valueOf(StringUtils.goUpperCase(m.group(1)));
@@ -94,13 +94,13 @@ public class Img implements HtmlCommand {
 	}
 
 	private static HtmlCommand build(final Matcher2 m, final ImgValign valign, final int vspace) {
-		if (m.find() == false) {
+		if (!m.find()) {
 			return new Text("(SYNTAX ERROR)");
 		}
 		final String src = m.group(1);
 		try {
 			final File f = FileSystem.getInstance().getFile(src);
-			if (f.exists() == false) {
+			if (!f.exists()) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 //					final byte image[] = getFile(src);

@@ -74,7 +74,7 @@ public class FontChecker {
 	}
 
 	public boolean isCharOk(char c) {
-		return SQUARRE.contains(getCharDesc(c)) == false;
+		return !SQUARRE.contains(getCharDesc(c));
 	}
 
 	private static String getType(int type, double oldX, double oldY, double x, double y) {
@@ -109,7 +109,7 @@ public class FontChecker {
 		final PathIterator it = sh.getPathIterator(null);
 		int sum = 0;
 		final StringBuilder result = new StringBuilder();
-		while (it.isDone() == false) {
+		while (!it.isDone()) {
 			final double oldX = current[0];
 			final double oldY = current[1];
 			final int nb = it.currentSegment(current);
@@ -127,7 +127,7 @@ public class FontChecker {
 		final PathIterator it = sh.getPathIterator(null);
 		int sum = 0;
 		final StringBuilder result = new StringBuilder();
-		while (it.isDone() == false) {
+		while (!it.isDone()) {
 			final double oldX = current[0];
 			final double oldY = current[1];
 			final int nb = it.currentSegment(current);
@@ -218,7 +218,7 @@ public class FontChecker {
 		for (int i = v1; i <= v2; i++) {
 			final char c = (char) i;
 			final boolean ok = fc.isCharOk(c);
-			if (ok == false) {
+			if (!ok) {
 				fc.printChar(pw, c);
 				pw.println("</p>");
 			}

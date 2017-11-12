@@ -57,10 +57,10 @@ public class DriverImageEps implements UDriver<EpsGraphics> {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			if (clip.isInside(x, y) == false) {
+			if (!clip.isInside(x, y)) {
 				return;
 			}
-			if (clip.isInside(x + shape.getWidth(), y + shape.getHeight()) == false) {
+			if (!clip.isInside(x + shape.getWidth(), y + shape.getHeight())) {
 				return;
 			}
 		}

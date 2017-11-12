@@ -89,7 +89,7 @@ public class HtmlColorAndStyle {
 		final IHtmlColorSet set = skinParam.getIHtmlColorSet();
 		for (String s : definition.split(",")) {
 			final LinkStyle tmpStyle = LinkStyle.fromString1(s);
-			if (tmpStyle.isNormal() == false) {
+			if (!tmpStyle.isNormal()) {
 				style = tmpStyle;
 				continue;
 			}

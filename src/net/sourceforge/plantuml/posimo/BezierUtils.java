@@ -74,18 +74,18 @@ public class BezierUtils {
 	static void shorten(CubicCurve2D.Double bez, Shape shape) {
 		final boolean contains1 = shape.contains(bez.x1, bez.y1);
 		final boolean contains2 = shape.contains(bez.x2, bez.y2);
-		if (contains1 ^ contains2 == false) {
+		if (contains1 ^ !contains2) {
 			throw new IllegalArgumentException();
 		}
-		if (contains1 == false) {
+		if (!contains1) {
 			bez.setCurve(bez.x2, bez.y2, bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, bez.x1, bez.y1);
 		}
-		assert shape.contains(bez.x1, bez.y1) && shape.contains(bez.x2, bez.y2) == false;
+		assert shape.contains(bez.x1, bez.y1) && !shape.contains(bez.x2, bez.y2);
 		final CubicCurve2D.Double left = new CubicCurve2D.Double();
 		final CubicCurve2D.Double right = new CubicCurve2D.Double();
 		subdivide(bez, left, right, 0.5);
 
-		if (isCutting(left, shape) ^ isCutting(right, shape) == false) {
+		if (isCutting(left, shape) ^ !isCutting(right, shape)) {
 			throw new IllegalArgumentException();
 		}
 
@@ -142,7 +142,7 @@ public class BezierUtils {
 		final Line2D.Double copy = new Line2D.Double(orig.x1, orig.y1, orig.x2, orig.y2);
 		final boolean contains1 = shape.contains(copy.x1, copy.y1);
 		final boolean contains2 = shape.contains(copy.x2, copy.y2);
-		if (contains1 ^ contains2 == false) {
+		if (contains1 ^ !contains2) {
 			// return new Point2D.Double(orig.x2, orig.y2);
 			throw new IllegalArgumentException();
 		}

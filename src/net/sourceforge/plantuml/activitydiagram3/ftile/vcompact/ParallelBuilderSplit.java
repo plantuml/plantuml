@@ -139,13 +139,13 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 						found = true;
 					}
 				}
-				if (found == false) {
+				if (!found) {
 					return;
 				}
 			}
 			final StringBounder stringBounder = ug.getStringBounder();
 			for (Ftile tmp : list) {
-				if (y > 0 && tmp.calculateDimension(stringBounder).hasPointOut() == false) {
+				if (y > 0 && !tmp.calculateDimension(stringBounder).hasPointOut()) {
 					continue;
 				}
 				final UTranslate ut = inner.getTranslateFor(tmp, stringBounder);
@@ -261,7 +261,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile1().calculateDimension(ug.getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				assert false;
 				return;
 			}

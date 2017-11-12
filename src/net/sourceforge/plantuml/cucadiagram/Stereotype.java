@@ -78,7 +78,7 @@ public class Stereotype implements CharSequence, Hideable {
 		if (label == null) {
 			throw new IllegalArgumentException();
 		}
-		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
+		if (!label.startsWith("<<") || !label.endsWith(">>")) {
 			throw new IllegalArgumentException(label);
 		}
 		this.automaticPackageStyle = automaticPackageStyle;
@@ -237,7 +237,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	public PackageStyle getPackageStyle() {
-		if (automaticPackageStyle == false) {
+		if (!automaticPackageStyle) {
 			return null;
 		}
 		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {

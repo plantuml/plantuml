@@ -339,7 +339,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final FtileGeometry dim1 = getFtile1().calculateDimension(stringBounder);
-			if (dim1.hasPointOut() == false) {
+			if (!dim1.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = getTranslate2(stringBounder).getTranslated(dim1.getPointOut());
@@ -368,7 +368,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final FtileGeometry dim1 = getFtile1().calculateDimension(stringBounder);
-			if (dim1.hasPointOut() == false) {
+			if (!dim1.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = getTranslate1(getFtile1(), stringBounder).getTranslated(dim1.getPointOut());
@@ -402,7 +402,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final FtileGeometry dim1 = getFtile1().calculateDimension(stringBounder);
-			if (dim1.hasPointOut() == false) {
+			if (!dim1.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = getTranslate1(getFtile1(), stringBounder).getTranslated(dim1.getPointOut());

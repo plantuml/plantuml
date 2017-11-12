@@ -162,7 +162,7 @@ public class EpsGraphics {
 	}
 
 	public String getEPSCode() {
-		if (closeDone == false) {
+		if (!closeDone) {
 			close();
 		}
 		return header.toString() + getBodyString();

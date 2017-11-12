@@ -218,7 +218,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 				it.remove();
 			}
 		}
-		if (containsCaseInsensitive(result, other) == false) {
+		if (!containsCaseInsensitive(result, other)) {
 			result.add(other);
 		}
 		Collections.sort(result, closeComparator(paletteCentralColor));

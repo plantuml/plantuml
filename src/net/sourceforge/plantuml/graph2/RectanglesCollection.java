@@ -130,7 +130,7 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 	private boolean intersectSimple(Rectangle2D.Double rect) {
 		final long start = System.currentTimeMillis();
 		try {
-			if (max == null || max.intersects(rect) == false) {
+			if (max == null || !max.intersects(rect)) {
 				return false;
 			}
 			for (Rectangle2D.Double r : areas) {
@@ -147,7 +147,7 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 	private boolean intersectSimpleOld(Rectangle2D.Double rect) {
 		final long start = System.currentTimeMillis();
 		try {
-			if (max == null || max.intersects(rect) == false) {
+			if (max == null || !max.intersects(rect)) {
 				return false;
 			}
 			final List<Rectangle2D.Double> lX1 = sortedX1.lesserOrEquals((int) (rect.x + rect.width));

@@ -152,7 +152,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
 		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
-		if (Display.isNull(link.getLabel()) == false) {
+		if (!Display.isNull(link.getLabel())) {
 			association.setAttribute("name", forXMI(link.getLabel()));
 		}
 

@@ -199,7 +199,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		if (s.startsWith("==") && s.endsWith("==")) {
 			return true;
 		}
-		if (s.startsWith("..") && s.endsWith("..") && s.equals("...") == false) {
+		if (s.startsWith("..") && s.endsWith("..") && !s.equals("...")) {
 			return true;
 		}
 		if (s.startsWith("__") && s.endsWith("__")) {

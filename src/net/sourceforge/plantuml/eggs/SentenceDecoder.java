@@ -52,7 +52,7 @@ public class SentenceDecoder {
 			if ((int) c > 256) {
 				return false;
 			}
-			if (Character.isDefined(c) == false) {
+			if (!Character.isDefined(c)) {
 				return false;
 			}
 			if (Character.isISOControl(c)) {

@@ -80,7 +80,7 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<Graph
 			first = false;
 		}
 
-		if (first == false) {
+		if (!first) {
 			path.closePath();
 		}
 

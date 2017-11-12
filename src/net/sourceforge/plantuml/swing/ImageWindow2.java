@@ -405,7 +405,7 @@ class ImageWindow2 extends JFrame {
 	public void refreshImage(boolean external) {
 		final JScrollBar bar1 = scrollPane.getVerticalScrollBar();
 		final JScrollBar bar2 = scrollPane.getHorizontalScrollBar();
-		if (external && isError() == false) {
+		if (external && !isError()) {
 			v1 = bar1.getValue();
 			v2 = bar2.getValue();
 		}
@@ -415,7 +415,7 @@ class ImageWindow2 extends JFrame {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					refreshSimpleLine();
-					if (isError() == false) {
+					if (!isError()) {
 						bar1.setValue(v1);
 						bar2.setValue(v2);
 					}

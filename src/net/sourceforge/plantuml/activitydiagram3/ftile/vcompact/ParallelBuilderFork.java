@@ -129,7 +129,7 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			snake.addPoint(geo.getLeft(), 0);
@@ -144,7 +144,7 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
 
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			final Point2D mp1a = translate1.getTranslated(p1);
@@ -179,11 +179,11 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
@@ -196,14 +196,14 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
 			final Point2D p2 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), height));
 
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			final Point2D mp1a = translate1.getTranslated(p1);

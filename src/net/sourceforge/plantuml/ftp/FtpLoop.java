@@ -194,7 +194,7 @@ class FtpLoop implements Runnable {
 	private void retrPassif(final String s) throws UnknownHostException, IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
-		if (connexion.willExist(fileName) == false) {
+		if (!connexion.willExist(fileName)) {
 			myOut("550 No such file.");
 			return;
 		}
@@ -218,7 +218,7 @@ class FtpLoop implements Runnable {
 	private void retrActif(final String s) throws UnknownHostException, IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
-		if (connexion.willExist(fileName) == false) {
+		if (!connexion.willExist(fileName)) {
 			myOut("550 No such file.");
 			return;
 		}

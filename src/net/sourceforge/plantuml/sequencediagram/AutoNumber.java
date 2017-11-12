@@ -79,7 +79,7 @@ public class AutoNumber {
 	}
 
 	public String getNextMessageNumber() {
-		if (running == false) {
+		if (!running) {
 			return null;
 		}
 		final String result = current.format(format);

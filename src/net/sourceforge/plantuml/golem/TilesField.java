@@ -112,7 +112,7 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 			}
 			return true;
 		}
-		if (geom1.equals(geom2.opposite()) == false) {
+		if (!geom1.equals(geom2.opposite())) {
 			return false;
 		}
 		switch (geom1) {
