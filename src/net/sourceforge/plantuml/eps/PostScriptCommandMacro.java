@@ -57,11 +57,9 @@ public class PostScriptCommandMacro implements PostScriptCommand {
 	}
 
 	public String getPostStringDefinition() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("/" + name + " {\n");
-		sb.append(data.toPostString());
-		sb.append("} def\n");
-		return sb.toString();
+		return ("/" + name + " {\n") +
+			data.toPostString() +
+			"} def\n";
 	}
 
 	@Override

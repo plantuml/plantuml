@@ -56,18 +56,7 @@ public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 
 	private String getPSName(FontConfiguration fontConfiguration) {
 		final UFont font = fontConfiguration.getFont();
-		final StringBuilder sb = new StringBuilder(font.getFamily(UFontContext.EPS));
-		// final int style = fontConfiguration.getFont().getStyle();
-		// final boolean bold = (style & Font.BOLD) != 0 || fontConfiguration.containsStyle(FontStyle.BOLD);
-		// final boolean italic = (style & Font.ITALIC) != 0 || fontConfiguration.containsStyle(FontStyle.ITALIC);
-		// if (bold && italic) {
-		// sb.append("-BoldItalic");
-		// } else if (bold) {
-		// sb.append("-Bold");
-		// } else if (italic) {
-		// sb.append("-Italic");
-		// }
-		return sb.toString();
+		return font.getFamily(UFontContext.EPS);
 	}
 
 	private String getTextAsEps(String text) {

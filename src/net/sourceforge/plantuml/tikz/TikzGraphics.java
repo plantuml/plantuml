@@ -502,11 +502,10 @@ public class TikzGraphics {
 	}
 
 	public void drawSingleCharacter(double x, double y, char c) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("\\node at ");
-		sb.append(couple(x, y));
-		sb.append("[]{\\textbf{\\Large " + c + "}};");
-		addCommand(sb);
+		final String sb = "\\node at " +
+			couple(x, y) +
+			"[]{\\textbf{\\Large " + c + "}};";
+        addCommand(sb);
 	}
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
