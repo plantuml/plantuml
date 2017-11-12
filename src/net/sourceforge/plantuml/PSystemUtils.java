@@ -35,16 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
@@ -52,6 +42,12 @@ import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class PSystemUtils {
 
@@ -82,16 +78,12 @@ public class PSystemUtils {
 			if (!canFileBeWritten(f)) {
 				return result;
 			}
-			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
 			ImageData cmap = null;
-			try {
+
+			try (final FileOutputStream fs = new FileOutputStream(f);
+			     OutputStream fos = new BufferedOutputStream(fs)) {
 				system.exportDiagram(fos, i, fileFormat);
-			} finally {
-				fos.close();
 			}
-			// if (system.hasUrl() && cmap != null && cmap.containsCMapData()) {
-			// system.exportCmap(suggestedFile, cmap);
-			// }
 			Log.info("File size : " + f.length());
 			result.add(new FileImageData(f, cmap));
 		}
@@ -170,12 +162,11 @@ public class PSystemUtils {
 			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(i))) {
 				return result;
 			}
-			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(f));
 			ImageData cmap;
-			try {
+
+			try (final FileOutputStream fs = new FileOutputStream(f);
+			     OutputStream fos = new BufferedOutputStream(fs)) {
 				cmap = system.exportDiagram(fos, i, fileFormat);
-			} finally {
-				fos.close();
 			}
 			if (cmap != null && cmap.containsCMapData()) {
 				system.exportCmap(suggestedFile, i, cmap);

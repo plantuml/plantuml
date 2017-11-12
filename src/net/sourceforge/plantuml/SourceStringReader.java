@@ -35,16 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -53,6 +43,11 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class SourceStringReader {
 
@@ -107,14 +102,10 @@ public class SourceStringReader {
 	}
 
 	public DiagramDescription outputImage(File f) throws IOException {
-		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-		DiagramDescription result;
-		try {
-			result = outputImage(os, 0);
-		} finally {
-			os.close();
+		try (final FileOutputStream fs = new FileOutputStream(f);
+		     OutputStream os = new BufferedOutputStream(fs)) {
+			return outputImage(os, 0);
 		}
-		return result;
 	}
 
 	@Deprecated

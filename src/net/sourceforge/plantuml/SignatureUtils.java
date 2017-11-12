@@ -64,11 +64,8 @@ public class SignatureUtils {
 	}
 
 	public static String getSignatureSha512(File f) throws IOException {
-		final InputStream is = new FileInputStream(f);
-		try {
+		try (InputStream is = new FileInputStream(f)) {
 			return getSignatureSha512(is);
-		} finally {
-			is.close();
 		}
 	}
 

@@ -1,11 +1,7 @@
 package net.sourceforge.plantuml.jasic;
 
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -856,34 +852,26 @@ public class Jasic {
      * 
      * @param  path  Path to the text file to read.
      * @return       The contents of the file or null if the load failed.
-     * @throws       IOException
      */
     private static String readFile(String path) {
-        try {
-            FileInputStream stream = new FileInputStream(path);
-            
-            try {
-                InputStreamReader input = new InputStreamReader(stream,
-                    Charset.defaultCharset());
-                Reader reader = new BufferedReader(input);
-                
-                StringBuilder builder = new StringBuilder();
-                char[] buffer = new char[8192];
-                int read;
-                
-                while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
-                    builder.append(buffer, 0, read);
-                }
-                
-                // HACK: The parser expects every statement to end in a newline,
-                // even the very last one, so we'll just tack one on here in
-                // case the file doesn't have one.
-                builder.append("\n");
-                
-                return builder.toString();
-            } finally {
-                stream.close();
+        try (final FileInputStream stream = new FileInputStream(path);
+             final InputStreamReader input = new InputStreamReader(stream, Charset.defaultCharset());
+             final Reader reader = new BufferedReader(input)) {
+
+            StringBuilder builder = new StringBuilder();
+            char[] buffer = new char[8192];
+            int read;
+
+            while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
+                builder.append(buffer, 0, read);
             }
+
+            // HACK: The parser expects every statement to end in a newline,
+            // even the very last one, so we'll just tack one on here in
+            // case the file doesn't have one.
+            builder.append("\n");
+
+            return builder.toString();
         } catch (IOException ex) {
             return null;
         }
