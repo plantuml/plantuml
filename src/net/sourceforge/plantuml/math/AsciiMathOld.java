@@ -85,7 +85,7 @@ public class AsciiMathOld {
 
 	private final Node mathML;
 
-	public AsciiMathOld(String form) throws IOException, ScriptException, ParserConfigurationException,
+	public AsciiMathOld(String form) throws ScriptException, ParserConfigurationException,
 			NoSuchMethodException {
 		final ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
 		engine.eval(JAVASCRIPT_CODE);
@@ -103,7 +103,7 @@ public class AsciiMathOld {
 
 	private Dimension2D dim;
 
-	public String getSvg() throws IOException, ClassNotFoundException, NoSuchMethodException, SecurityException,
+	public String getSvg() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final Class<?> clConverter = Class.forName("net.sourceforge.jeuclid.converter.Converter");
@@ -115,7 +115,7 @@ public class AsciiMathOld {
 		return new String(baos.toByteArray());
 	}
 
-	public BufferedImage getImage() throws IOException, ClassNotFoundException, NoSuchMethodException,
+	public BufferedImage getImage() throws ClassNotFoundException, NoSuchMethodException,
 			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchFieldException {
 		final Class<?> clConverter = Class.forName("net.sourceforge.jeuclid.converter.Converter");

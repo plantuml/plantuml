@@ -160,7 +160,7 @@ public class PSystemError extends AbstractPSystem {
 		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
 	}
 
-	private TextBlock addMessage(final TextBlock source) throws IOException {
+	private TextBlock addMessage(final TextBlock source) {
 		final TextBlock message = getMessage();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);

@@ -54,7 +54,7 @@ public final class CucaDiagramXmiMaker {
 	private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
 
-	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
+	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) {
 		this.diagram = diagram;
 		this.fileFormat = fileFormat;
 	}

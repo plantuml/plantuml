@@ -91,7 +91,7 @@ public class PSystemWelcome extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	public TextBlockBackcolored getGraphicStrings() throws IOException {
+	public TextBlockBackcolored getGraphicStrings() {
 		if (position != null) {
 			return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(), position);
 		}

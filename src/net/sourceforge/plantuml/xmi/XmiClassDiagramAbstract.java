@@ -125,7 +125,7 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 		return s.get(0).toString().replace(':', ' ');
 	}
 
-	public final void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+	public final void transformerXml(OutputStream os) throws TransformerException {
 		final Source source = new DOMSource(document);
 
 		final Result resultat = new StreamResult(os);

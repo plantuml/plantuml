@@ -79,7 +79,7 @@ public class PSystemAppleTwo extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
         // final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
 		// image, GraphicPosition.BOTTOM);

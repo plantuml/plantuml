@@ -104,7 +104,7 @@ class EmbededSystemLine extends AbstractTextBlock implements Line {
 		return HorizontalAlignment.LEFT;
 	}
 
-	private Diagram getSystem() throws IOException, InterruptedException {
+	private Diagram getSystem() {
 		final BlockUml blockUml = new BlockUml(lines2, 0, Defines.createEmpty());
 		return blockUml.getDiagram();
 

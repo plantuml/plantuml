@@ -388,7 +388,7 @@ public class Run {
 		ProgressBar.incTotal(nb);
 	}
 
-	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
+	private static boolean manageFileInternal(File f, Option option) throws IOException {
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
 			System.out.println(f);

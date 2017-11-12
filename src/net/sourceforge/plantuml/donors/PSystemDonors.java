@@ -115,7 +115,7 @@ public class PSystemDonors extends AbstractPSystem {
 		};
 	}
 
-	public static List<TextBlock> getCols(List<String> lines, final int nbCol, final int reserved) throws IOException {
+	public static List<TextBlock> getCols(List<String> lines, final int nbCol, final int reserved) {
 		final List<TextBlock> result = new ArrayList<TextBlock>();
 		final int maxLine = (lines.size() + (nbCol - 1) + reserved) / nbCol;
 		for (int i = 0; i < lines.size(); i += maxLine) {

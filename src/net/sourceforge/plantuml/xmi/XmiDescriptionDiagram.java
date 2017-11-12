@@ -226,7 +226,7 @@ public class XmiDescriptionDiagram implements IXmiClassDiagram {
 		return cla;
 	}
 
-	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+	public void transformerXml(OutputStream os) throws TransformerException {
 		final Source source = new DOMSource(document);
 
 		final Result resultat = new StreamResult(os);

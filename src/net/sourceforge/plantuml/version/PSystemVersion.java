@@ -302,7 +302,7 @@ public class PSystemVersion extends AbstractPSystem {
 		return 0;
 	}
 
-	public static PSystemVersion createTestDot() throws IOException {
+	public static PSystemVersion createTestDot() {
 		final List<String> strings = new ArrayList<String>();
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		return new PSystemVersion(false, strings);

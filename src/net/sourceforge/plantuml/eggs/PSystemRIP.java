@@ -87,7 +87,7 @@ public class PSystemRIP extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
 	}
 

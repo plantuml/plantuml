@@ -111,7 +111,7 @@ public final class CucaDiagramSimplifierState {
 		return result;
 	}
 
-	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(IGroup g) {
 		final GroupPngMakerState maker = new GroupPngMakerState(diagram, g, stringBounder);
 		return maker.getImage();
 	}

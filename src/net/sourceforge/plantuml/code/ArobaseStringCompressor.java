@@ -80,7 +80,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 		sb.append(s.toString2());
 	}
 
-	private String compressOld(String s) throws IOException {
+	private String compressOld(String s) {
 		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			return clean(m.group(2));
@@ -88,7 +88,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 		return "";
 	}
 
-	public String decompress(String s) throws IOException {
+	public String decompress(String s) {
 		String result = clean(s);
 		if (result.startsWith("@start")) {
 			return result;

@@ -211,8 +211,7 @@ public class PlantUmlTask extends Task {
 		return false;
 	}
 
-	private boolean doFile(final File f, final SourceFileReader sourceFileReader) throws IOException,
-			InterruptedException {
+	private boolean doFile(final File f, final SourceFileReader sourceFileReader) throws IOException {
 		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
 		boolean error = false;
 		for (GeneratedImage g : result) {

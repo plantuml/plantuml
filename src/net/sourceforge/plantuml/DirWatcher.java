@@ -62,7 +62,7 @@ public class DirWatcher {
 		this.pattern = pattern;
 	}
 
-	public List<GeneratedImage> buildCreatedFiles() throws IOException, InterruptedException {
+	public List<GeneratedImage> buildCreatedFiles() throws IOException {
 		boolean error = false;
 		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
 		for (File f : dir.listFiles()) {
@@ -95,7 +95,7 @@ public class DirWatcher {
 		return Collections.unmodifiableList(result);
 	}
 
-	public File getErrorFile() throws IOException, InterruptedException {
+	public File getErrorFile() throws IOException {
 		for (File f : dir.listFiles()) {
 			if (!f.isFile()) {
 				continue;

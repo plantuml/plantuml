@@ -79,7 +79,7 @@ public class PSystemListFonts extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 

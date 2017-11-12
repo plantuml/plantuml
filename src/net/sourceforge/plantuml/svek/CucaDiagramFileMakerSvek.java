@@ -60,7 +60,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
-	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
+	public CucaDiagramFileMakerSvek(CucaDiagram diagram) {
 		this.diagram = diagram;
 	}
 

@@ -108,7 +108,7 @@ public class FtpConnexion {
 		return false;
 	}
 
-	public synchronized byte[] getData(String fileName) throws InterruptedException {
+	public synchronized byte[] getData(String fileName) {
 		if (fileName.startsWith("/")) {
 			throw new IllegalArgumentException();
 		}

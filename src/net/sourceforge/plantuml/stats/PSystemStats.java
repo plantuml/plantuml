@@ -52,7 +52,7 @@ public class PSystemStats extends AbstractPSystem {
 
 	private final List<String> strings = new ArrayList<String>();
 
-	PSystemStats() throws IOException {
+	PSystemStats() {
 		final StatsImpl stats = (StatsImpl) StatsUtils.getStats();
 		strings.addAll(new CreoleConverter(stats).toCreole());
 	}
@@ -71,7 +71,7 @@ public class PSystemStats extends AbstractPSystem {
 		return new PSystemStats();
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 

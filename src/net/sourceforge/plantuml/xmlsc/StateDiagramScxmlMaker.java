@@ -48,7 +48,7 @@ public final class StateDiagramScxmlMaker {
 
 	private final StateDiagram diagram;
 
-	public StateDiagramScxmlMaker(StateDiagram diagram) throws IOException {
+	public StateDiagramScxmlMaker(StateDiagram diagram) {
 		this.diagram = diagram;
 	}
 

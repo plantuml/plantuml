@@ -153,7 +153,7 @@ public class GraphvizUtils {
 
 	private static String dotVersion = null;
 
-	public static String dotVersion() throws IOException, InterruptedException {
+	public static String dotVersion() {
 		if (dotVersion == null) {
 			final File dotExe = GraphvizUtils.getDotExe();
 			final ExeState exeState = ExeState.checkFile(dotExe);
@@ -248,7 +248,7 @@ public class GraphvizUtils {
 		return Collections.unmodifiableList(result);
 	}
 
-	static String getTestCreateSimpleFile() throws IOException {
+	static String getTestCreateSimpleFile() {
 		final Graphviz graphviz2 = GraphvizUtils.create(null, "digraph foo { test; }", "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz2.createFile3(baos);

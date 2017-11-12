@@ -52,7 +52,7 @@ public class PSystemLicense extends AbstractPSystem {
 
 	private final List<String> strings = new ArrayList<String>();
 
-	PSystemLicense() throws IOException {
+	PSystemLicense() {
 		strings.addAll(License.getCurrent().getText());
 	}
 
@@ -70,7 +70,7 @@ public class PSystemLicense extends AbstractPSystem {
 		return new PSystemLicense();
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 

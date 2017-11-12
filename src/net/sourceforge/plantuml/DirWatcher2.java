@@ -69,7 +69,7 @@ public class DirWatcher2 {
 
 	}
 
-	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException, InterruptedException {
+	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException {
 		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<File, Future<List<GeneratedImage>>>();
 		if (dir.listFiles() != null) {
 			for (final File f : dir.listFiles()) {

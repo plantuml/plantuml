@@ -104,7 +104,7 @@ public class PSystemOregon extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createGreenOnBlackMonospaced(getScreen().getLines());
 	}
 
