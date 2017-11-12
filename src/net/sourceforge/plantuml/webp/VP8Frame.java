@@ -20,7 +20,6 @@ import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
-
 import javax.imageio.event.IIOReadProgressListener;
 import javax.imageio.stream.ImageInputStream;
 
@@ -299,22 +298,21 @@ public class VP8Frame {
 	}
 	
 	public void fireLFProgressUpdate(float p) {
-        java.util.Iterator<IIOReadProgressListener> listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-            ( (IIOReadProgressListener)listeners.next() ).imageProgress( null, (100/buffersToCreate)+(p/buffersToCreate));
-        }
+		for (final IIOReadProgressListener _listener : _listeners) {
+			(_listener).imageProgress(null, (100 / buffersToCreate) + (p / buffersToCreate));
+		}
 	}
+
 	private void fireProgressUpdate(int mb_row) {
-        java.util.Iterator<IIOReadProgressListener> listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-            ( (IIOReadProgressListener)listeners.next() ).imageProgress( null, (100.0f*((float)(mb_row+1)/(float)getMacroBlockRows()))/buffersToCreate);
-        }
+		for (final IIOReadProgressListener _listener : _listeners) {
+			(_listener).imageProgress(null, (100.0f * ((float) (mb_row + 1) / (float) getMacroBlockRows())) / buffersToCreate);
+		}
 	}
+
 	public void fireRGBProgressUpdate(float p) {
-        java.util.Iterator<IIOReadProgressListener> listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-            ( (IIOReadProgressListener)listeners.next() ).imageProgress( null, ((bufferCount+4)*(100/buffersToCreate))+(p/buffersToCreate));
-        }
+		for (final IIOReadProgressListener _listener : _listeners) {
+			(_listener).imageProgress(null, ((bufferCount + 4) * (100 / buffersToCreate)) + (p / buffersToCreate));
+		}
 	}
 
 	public SubBlock getAboveRightSubBlock(SubBlock sb, SubBlock.PLANE plane) {
