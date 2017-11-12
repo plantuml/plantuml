@@ -39,6 +39,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 
 public interface Verb {
 
-	public CommandExecutionResult execute(Subject subject, Complement complement);
+	CommandExecutionResult execute(Subject subject, Complement complement);
 
 }

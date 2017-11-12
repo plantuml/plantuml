@@ -43,14 +43,14 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public interface Tile extends UDrawable, UShape {
 
-	public double getPreferredHeight(StringBounder stringBounder);
+	double getPreferredHeight(StringBounder stringBounder);
 
-	public void addConstraints(StringBounder stringBounder);
+	void addConstraints(StringBounder stringBounder);
 
-	public Real getMinX(StringBounder stringBounder);
+	Real getMinX(StringBounder stringBounder);
 
-	public Real getMaxX(StringBounder stringBounder);
+	Real getMaxX(StringBounder stringBounder);
 
-	public Event getEvent();
+	Event getEvent();
 
 }

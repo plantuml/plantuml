@@ -45,29 +45,29 @@ import net.sourceforge.plantuml.svek.SingleStrategy;
 
 public interface IGroup extends IEntity {
 
-	public boolean containsLeafRecurse(ILeaf entity);
+	boolean containsLeafRecurse(ILeaf entity);
 
-	public Collection<ILeaf> getLeafsDirect();
+	Collection<ILeaf> getLeafsDirect();
 
-	public Collection<IGroup> getChildren();
+	Collection<IGroup> getChildren();
 
-	public void moveEntitiesTo(IGroup dest);
+	void moveEntitiesTo(IGroup dest);
 
-	public int size();
+	int size();
 
-	public GroupType getGroupType();
+	GroupType getGroupType();
 
-	public Code getNamespace2();
+	Code getNamespace2();
 
-	public PackageStyle getPackageStyle();
+	PackageStyle getPackageStyle();
 
-	public void overrideImage(IEntityImage img, LeafType state);
+	void overrideImage(IEntityImage img, LeafType state);
 
-	public SingleStrategy getSingleStrategy();
+	SingleStrategy getSingleStrategy();
 
-	public FontConfiguration getFontConfigurationForTitle(ISkinParam skinParam);
+	FontConfiguration getFontConfigurationForTitle(ISkinParam skinParam);
 
-	public char getConcurrentSeparator();
+	char getConcurrentSeparator();
 
-	public void setConcurrentSeparator(char separator);
+	void setConcurrentSeparator(char separator);
 }

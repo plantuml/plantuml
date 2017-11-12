@@ -39,8 +39,8 @@ import java.util.Collection;
 
 public interface MDAPackage {
 
-	public String getName();
+	String getName();
 
-	public Collection<MDAEntity> getEntities();
+	Collection<MDAEntity> getEntities();
 
 }

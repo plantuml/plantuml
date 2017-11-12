@@ -40,13 +40,13 @@ import java.util.List;
 
 public interface ISourceFileReader {
 
-	public List<GeneratedImage> getGeneratedImages() throws IOException;
+	List<GeneratedImage> getGeneratedImages() throws IOException;
 	
-	public List<BlockUml> getBlocks();
+	List<BlockUml> getBlocks();
 
-	public boolean hasError();
+	boolean hasError();
 	
-	public void setFileFormatOption(FileFormatOption fileFormatOption);
+	void setFileFormatOption(FileFormatOption fileFormatOption);
 
 
 }

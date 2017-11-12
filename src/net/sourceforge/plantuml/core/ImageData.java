@@ -53,19 +53,19 @@ public interface ImageData {
 	 * Width in pixel of the image.
 	 * @return
 	 */
-	public int getWidth();
+    int getWidth();
 
 	/**
 	 * Height in pixel of the image.
 	 * @return
 	 */
-	public int getHeight();
+    int getHeight();
 
 	/**
 	 * Indicates if the image has some position information.
 	 * @return <code>true</code> if the image has position information.
 	 */
-	public boolean containsCMapData();
+    boolean containsCMapData();
 
 	/**
 	 * Return position information as a CMap formated string.
@@ -81,9 +81,9 @@ public interface ImageData {
 	 * @param nameId thie id to be used in the cmap data string.
 	 * @return
 	 */
-	public String getCMapData(String nameId);
+    String getCMapData(String nameId);
 	
-	public String getWarningOrError();
+	String getWarningOrError();
 
 
 }

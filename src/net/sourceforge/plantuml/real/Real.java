@@ -37,17 +37,17 @@ package net.sourceforge.plantuml.real;
 
 public interface Real {
 
-	public void printCreationStackTrace();
+	void printCreationStackTrace();
 
-	public String getName();
+	String getName();
 
-	public double getCurrentValue();
+	double getCurrentValue();
 
-	public Real addFixed(double delta);
+	Real addFixed(double delta);
 
-	public Real addAtLeast(double delta);
+	Real addAtLeast(double delta);
 
-	public void ensureBiggerThan(Real other);
+	void ensureBiggerThan(Real other);
 
 //	public Real getMaxAbsolute();
 //

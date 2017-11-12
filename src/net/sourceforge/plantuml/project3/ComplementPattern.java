@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public interface ComplementPattern {
 
-	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix);
+	Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix);
 
-	public IRegex toRegex(String suffix);
+	IRegex toRegex(String suffix);
 
 }

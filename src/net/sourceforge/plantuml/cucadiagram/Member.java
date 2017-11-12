@@ -40,15 +40,15 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public interface Member {
 
-	public Url getUrl();
+	Url getUrl();
 
-	public String getDisplay(boolean withVisibilityChar);
+	String getDisplay(boolean withVisibilityChar);
 
-	public boolean hasUrl();
+	boolean hasUrl();
 
-	public VisibilityModifier getVisibilityModifier();
+	VisibilityModifier getVisibilityModifier();
 
-	public boolean isStatic();
+	boolean isStatic();
 
-	public boolean isAbstract();
+	boolean isAbstract();
 }

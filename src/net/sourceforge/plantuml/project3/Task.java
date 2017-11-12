@@ -37,24 +37,24 @@ package net.sourceforge.plantuml.project3;
 
 public interface Task extends Subject {
 
-	public TaskCode getCode();
+	TaskCode getCode();
 
-	public Instant getStart();
+	Instant getStart();
 
-	public Instant getEnd();
+	Instant getEnd();
 
-	public Duration getDuration();
+	Duration getDuration();
 
-	public void setStart(Instant start);
+	void setStart(Instant start);
 
-	public void setEnd(Instant end);
+	void setEnd(Instant end);
 
-	public void setDuration(Duration duration);
+	void setDuration(Duration duration);
 
-	public void setTaskDraw(TaskDraw taskDraw);
+	void setTaskDraw(TaskDraw taskDraw);
 
-	public TaskDraw getTaskDraw();
+	TaskDraw getTaskDraw();
 
-	public void setColors(ComplementColors colors);
+	void setColors(ComplementColors colors);
 
 }

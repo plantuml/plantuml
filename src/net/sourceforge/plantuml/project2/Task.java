@@ -37,16 +37,16 @@ package net.sourceforge.plantuml.project2;
 
 public interface Task {
 
-	public String getCode();
+	String getCode();
 
-	public String getName();
+	String getName();
 
-	public long getLoad();
+	long getLoad();
 
-	public TimeElement getStart();
+	TimeElement getStart();
 
-	public TimeElement getEnd();
+	TimeElement getEnd();
 
-	public TimeElement getCompleted();
+	TimeElement getCompleted();
 
 }

@@ -43,10 +43,10 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface Placeable {
 
-	public Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
+	Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
 
-	public TextBlock toTextBlock(ISkinParam skinParam);
+	TextBlock toTextBlock(ISkinParam skinParam);
 
-	public String getId();
+	String getId();
 
 }

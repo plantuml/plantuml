@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.project3;
 
 public interface TimeScale {
 
-	public double getStartingPosition(Instant instant);
+	double getStartingPosition(Instant instant);
 
-	public double getWidth(Instant instant);
+	double getWidth(Instant instant);
 
 }

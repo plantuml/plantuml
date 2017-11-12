@@ -39,6 +39,6 @@ import java.util.List;
 
 public interface Stripe {
 
-	public List<Atom> getAtoms();
+	List<Atom> getAtoms();
 
 }

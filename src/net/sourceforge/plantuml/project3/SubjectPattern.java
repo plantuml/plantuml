@@ -42,10 +42,10 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public interface SubjectPattern {
 
-	public Collection<VerbPattern> getVerbs();
+	Collection<VerbPattern> getVerbs();
 
-	public Subject getSubject(GanttDiagram project, RegexResult arg);
+	Subject getSubject(GanttDiagram project, RegexResult arg);
 
-	public IRegex toRegex();
+	IRegex toRegex();
 
 }

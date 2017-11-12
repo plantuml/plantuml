@@ -39,7 +39,7 @@ public interface GCalendar {
 
 	// public DayAsDate next(DayAsDate day);
 
-	public DayAsDate toDayAsDate(InstantDay day);
+	DayAsDate toDayAsDate(InstantDay day);
 
 	public DayAsDate getStartingDate();
 

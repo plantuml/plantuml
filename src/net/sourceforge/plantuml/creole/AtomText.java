@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.utils.CharHidder;
 public class AtomText implements Atom {
 
 	interface DelayedDouble {
-		public double getDouble(StringBounder stringBounder);
+		double getDouble(StringBounder stringBounder);
 	}
 
 	private static DelayedDouble ZERO = new DelayedDouble() {

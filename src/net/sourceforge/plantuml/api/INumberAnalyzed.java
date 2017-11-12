@@ -30,14 +30,14 @@ package net.sourceforge.plantuml.api;
 
 public interface INumberAnalyzed {
 
-	public long getNb();
+	long getNb();
 
-	public long getSum();
+	long getSum();
 
-	public long getMin();
+	long getMin();
 
-	public long getMax();
+	long getMax();
 
-	public long getMean();
+	long getMean();
 
 }

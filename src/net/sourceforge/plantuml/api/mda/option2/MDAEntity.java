@@ -36,6 +36,6 @@
 package net.sourceforge.plantuml.api.mda.option2;
 
 public interface MDAEntity {
-	public String getName();
+	String getName();
 
 }

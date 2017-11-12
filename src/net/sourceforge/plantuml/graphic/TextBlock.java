@@ -42,11 +42,9 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 public interface TextBlock extends UDrawable, UShape {
+	Dimension2D calculateDimension(StringBounder stringBounder);
 
-	public Dimension2D calculateDimension(StringBounder stringBounder);
+	MinMax getMinMax(StringBounder stringBounder);
 
-	public MinMax getMinMax(StringBounder stringBounder);
-
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
-
+	Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
 }

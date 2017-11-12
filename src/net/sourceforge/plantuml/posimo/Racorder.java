@@ -39,6 +39,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 public interface Racorder {
-	public DotPath getRacordIn(Rectangle2D rect, Line2D tangeante);
-	public DotPath getRacordOut(Rectangle2D rect, Line2D tangeante);
+	DotPath getRacordIn(Rectangle2D rect, Line2D tangeante);
+	DotPath getRacordOut(Rectangle2D rect, Line2D tangeante);
 }

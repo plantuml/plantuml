@@ -39,15 +39,15 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public interface UParam {
 
-	public HtmlColor getColor();
+	HtmlColor getColor();
 
-	public HtmlColor getBackcolor();
+	HtmlColor getBackcolor();
 
-	public UStroke getStroke();
+	UStroke getStroke();
 
-	public boolean isHidden();
+	boolean isHidden();
 
-	public UPattern getPattern();
+	UPattern getPattern();
 	
-	public double getScale();
+	double getScale();
 }

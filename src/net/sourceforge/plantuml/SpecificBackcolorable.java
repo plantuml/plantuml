@@ -39,10 +39,10 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public interface SpecificBackcolorable {
 
-	public Colors getColors(ISkinParam skinParam);
+	Colors getColors(ISkinParam skinParam);
 
 	// public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
 	
-	public void setColors(Colors colors);
+	void setColors(Colors colors);
 
 }

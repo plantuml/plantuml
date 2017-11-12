@@ -39,6 +39,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface FtileOverpassing extends Ftile {
 
-	public FtileGeometry getOverpassDimension(StringBounder stringBounder);
+	FtileGeometry getOverpassDimension(StringBounder stringBounder);
 
 }

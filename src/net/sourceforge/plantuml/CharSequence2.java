@@ -37,23 +37,23 @@ package net.sourceforge.plantuml;
 
 public interface CharSequence2 extends CharSequence {
 
-	public int length();
+	int length();
 
-	public char charAt(int index);
+	char charAt(int index);
 
-	public CharSequence2 subSequence(int start, int end);
+	CharSequence2 subSequence(int start, int end);
 
-	public String toString2();
+	String toString2();
 
-	public LineLocation getLocation();
+	LineLocation getLocation();
 
-	public CharSequence2 trin();
+	CharSequence2 trin();
 
-	public boolean startsWith(String string);
+	boolean startsWith(String string);
 
-	public String getPreprocessorError();
+	String getPreprocessorError();
 	
-	public CharSequence2 withErrorPreprocessor(String preprocessorError);
+	CharSequence2 withErrorPreprocessor(String preprocessorError);
 
 
 }

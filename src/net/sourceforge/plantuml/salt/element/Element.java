@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface Element {
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y);
+	Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y);
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse);
+	void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse);
 
 }

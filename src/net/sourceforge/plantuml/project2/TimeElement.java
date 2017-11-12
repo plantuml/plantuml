@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.project2;
 
 public interface TimeElement extends Comparable<TimeElement> {
 
-	public long getTypicalDuration();
+	long getTypicalDuration();
 
-	public long getStartUTC();
+	long getStartUTC();
 
-	public long getEndUTC();
+	long getEndUTC();
 
-	public TimeElement next();
+	TimeElement next();
 
-	public TimeElement previous();
+	TimeElement previous();
 
 }

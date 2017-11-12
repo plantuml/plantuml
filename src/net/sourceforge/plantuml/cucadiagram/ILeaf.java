@@ -44,42 +44,42 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 
 public interface ILeaf extends IEntity {
 
-	public EntityPosition getEntityPosition();
+	EntityPosition getEntityPosition();
 
-	public void setContainer(IGroup container);
+	void setContainer(IGroup container);
 
-	public boolean isTop();
+	boolean isTop();
 
-	public void setTop(boolean top);
+	void setTop(boolean top);
 
-	public boolean hasNearDecoration();
+	boolean hasNearDecoration();
 
-	public void setNearDecoration(boolean nearDecoration);
+	void setNearDecoration(boolean nearDecoration);
 
-	public int getXposition();
+	int getXposition();
 
-	public void setXposition(int pos);
+	void setXposition(int pos);
 
-	public IEntityImage getSvekImage();
+	IEntityImage getSvekImage();
 
-	public String getGeneric();
+	String getGeneric();
 
-	public boolean muteToType(LeafType newType, USymbol newSymbol);
+	boolean muteToType(LeafType newType, USymbol newSymbol);
 
-	public void setGeneric(String generic);
+	void setGeneric(String generic);
 
-	public void setSvekImage(IEntityImage svekImage);
+	void setSvekImage(IEntityImage svekImage);
 
-	public void setNeighborhood(Neighborhood neighborhood);
+	void setNeighborhood(Neighborhood neighborhood);
 
-	public Neighborhood getNeighborhood();
+	Neighborhood getNeighborhood();
 
-	public Collection<String> getPortShortNames();
+	Collection<String> getPortShortNames();
 
-	public void addPortShortName(String portShortName);
+	void addPortShortName(String portShortName);
 
-	public void setVisibilityModifier(VisibilityModifier visibility);
+	void setVisibilityModifier(VisibilityModifier visibility);
 
-	public VisibilityModifier getVisibilityModifier();
+	VisibilityModifier getVisibilityModifier();
 
 }

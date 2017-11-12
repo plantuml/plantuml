@@ -39,10 +39,10 @@ import java.util.Collection;
 
 public interface IHtmlColorSet {
 
-	public Collection<String> names();
+	Collection<String> names();
 
-	public HtmlColor getColorIfValid(String s);
+	HtmlColor getColorIfValid(String s);
 
-	public HtmlColor getColorIfValid(String s, boolean acceptTransparent);
+	HtmlColor getColorIfValid(String s, boolean acceptTransparent);
 
 }

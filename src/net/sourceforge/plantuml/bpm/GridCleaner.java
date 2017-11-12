@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.bpm;
 
 public interface GridCleaner {
 
-	public boolean clean(Grid grid);
+	boolean clean(Grid grid);
 
 }

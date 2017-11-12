@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.api;
 
 public interface MyRunnable {
 
-	public void runJob() throws InterruptedException;
+	void runJob() throws InterruptedException;
 
-	public void cancelJob();
+	void cancelJob();
 }

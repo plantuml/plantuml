@@ -42,5 +42,5 @@ import net.sourceforge.plantuml.CharSequence2;
 
 public interface ReadLine extends Closeable {
 
-	public CharSequence2 readLine() throws IOException;
+	CharSequence2 readLine() throws IOException;
 }

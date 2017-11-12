@@ -47,12 +47,12 @@ public class TextTable {
 
 	private static final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
-	static interface TextLine {
-		public int nbCols();
+	interface TextLine {
+		int nbCols();
 
-		public int getPreferredWidth(int col);
+		int getPreferredWidth(int col);
 
-		public String getPrinted(int[] width);
+		String getPrinted(int[] width);
 
 	}
 

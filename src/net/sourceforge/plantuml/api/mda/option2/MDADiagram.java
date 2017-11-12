@@ -38,5 +38,5 @@ package net.sourceforge.plantuml.api.mda.option2;
 import java.util.Collection;
 
 public interface MDADiagram {
-	public Collection<MDAPackage> getPackages();
+	Collection<MDAPackage> getPackages();
 }

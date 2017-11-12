@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.cucadiagram;
 
 interface SquareLinker<O> {
 
-	public void leftRight(O left, O right);
+	void leftRight(O left, O right);
 
-	public void topDown(O top, O down);
+	void topDown(O top, O down);
 
 }

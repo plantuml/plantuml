@@ -40,12 +40,12 @@ import net.sourceforge.plantuml.CharSequence2;
 
 public interface IteratorCounter2 extends Iterator<CharSequence2> {
 
-	public int currentNum();
+	int currentNum();
 
-	public IteratorCounter2 cloneMe();
+	IteratorCounter2 cloneMe();
 
-	public CharSequence2 peek();
+	CharSequence2 peek();
 
-	public CharSequence2 peekPrevious();
+	CharSequence2 peekPrevious();
 
 }

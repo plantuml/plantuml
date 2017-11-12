@@ -41,6 +41,6 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public interface StringBounder {
 
-	public Dimension2D calculateDimension(UFont font, String text);
+	Dimension2D calculateDimension(UFont font, String text);
 	
 }

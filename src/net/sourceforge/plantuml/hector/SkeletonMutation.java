@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.hector;
 
 interface SkeletonMutation {
 
-	public SkeletonConfiguration mutate();
+	SkeletonConfiguration mutate();
 
 }

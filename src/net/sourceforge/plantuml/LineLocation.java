@@ -45,19 +45,19 @@ public interface LineLocation extends Comparable<LineLocation> {
 	/**
 	 * Position of the line, starting at 0.
 	 */
-	public int getPosition();
+    int getPosition();
 	
 	/**
 	 * A description of the ressource.
 	 * If the ressource is a file, this is the complete path of the file.
 	 */
-	public String getDescription();
+    String getDescription();
 	
 	/**
 	 * Get the parent of this location.
 	 * If this resource has been included by a !include or !includeurl directive,
 	 * this return the location of the !include line.
 	 */
-	public LineLocation getParent();
+    LineLocation getParent();
 
 }

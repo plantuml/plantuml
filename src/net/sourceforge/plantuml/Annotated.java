@@ -39,14 +39,14 @@ import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 
 public interface Annotated {
 
-	public DisplayPositionned getTitle();
+	DisplayPositionned getTitle();
 
-	public DisplayPositionned getCaption();
+	DisplayPositionned getCaption();
 
-	public DisplayPositionned getLegend();
+	DisplayPositionned getLegend();
 
-	public DisplayPositionned getHeader();
+	DisplayPositionned getHeader();
 
-	public DisplayPositionned getFooter();
+	DisplayPositionned getFooter();
 
 }

@@ -40,6 +40,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface Sprite {
 	
-	public TextBlock asTextBlock(final HtmlColor color, double scale);
+	TextBlock asTextBlock(final HtmlColor color, double scale);
 
 }

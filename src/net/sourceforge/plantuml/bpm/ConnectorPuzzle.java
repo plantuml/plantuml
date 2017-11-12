@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.bpm;
 
 public interface ConnectorPuzzle extends Placeable {
 
-	public enum Where {
+	enum Where {
 		NORTH(1), EAST(2), SOUTH(4), WEST(8);
 
 		private int coding;
@@ -55,10 +55,10 @@ public interface ConnectorPuzzle extends Placeable {
 		}
 	}
 
-	public void append(Where where);
+	void append(Where where);
 
-	public void remove(Where where);
+	void remove(Where where);
 
-	public boolean have(Where where);
+	boolean have(Where where);
 
 }

@@ -38,5 +38,5 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 public interface TileWithCallbackY extends Tile {
 
-	public void callbackY(double y);
+	void callbackY(double y);
 }

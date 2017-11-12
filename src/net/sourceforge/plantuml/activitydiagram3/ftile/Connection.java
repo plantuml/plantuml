@@ -41,9 +41,9 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 public interface Connection extends UDrawable, UShape {
 
-	public Ftile getFtile1();
+	Ftile getFtile1();
 
-	public Ftile getFtile2();
+	Ftile getFtile2();
 	
 
 }

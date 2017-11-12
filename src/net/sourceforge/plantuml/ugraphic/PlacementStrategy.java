@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface PlacementStrategy {
 
-	public void add(TextBlock block);
+	void add(TextBlock block);
 
-	public Map<TextBlock, Point2D> getPositions(double width, double height);
+	Map<TextBlock, Point2D> getPositions(double width, double height);
 
 }

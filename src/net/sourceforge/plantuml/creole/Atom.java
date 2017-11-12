@@ -43,10 +43,10 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 interface Atom extends UShape {
 
-	public Dimension2D calculateDimension(StringBounder stringBounder);
+	Dimension2D calculateDimension(StringBounder stringBounder);
 
-	public double getStartingAltitude(StringBounder stringBounder);
+	double getStartingAltitude(StringBounder stringBounder);
 
-	public void drawU(UGraphic ug);
+	void drawU(UGraphic ug);
 	
 }

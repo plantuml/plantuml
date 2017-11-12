@@ -40,10 +40,10 @@ import java.util.List;
 
 public interface StatsTable {
 
-	public String getName();
+	String getName();
 
-	public Collection<StatsColumn> getColumnHeaders();
+	Collection<StatsColumn> getColumnHeaders();
 
-	public List<StatsLine> getLines();
+	List<StatsLine> getLines();
 
 }

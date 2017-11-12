@@ -37,6 +37,6 @@ package net.sourceforge.plantuml;
 
 public interface EnsureVisible {
 
-	public void ensureVisible(double x, double y);
+	void ensureVisible(double x, double y);
 
 }

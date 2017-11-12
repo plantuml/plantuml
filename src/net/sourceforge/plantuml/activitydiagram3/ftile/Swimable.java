@@ -39,10 +39,10 @@ import java.util.Set;
 
 public interface Swimable {
 
-	public Set<Swimlane> getSwimlanes();
+	Set<Swimlane> getSwimlanes();
 
-	public Swimlane getSwimlaneIn();
+	Swimlane getSwimlaneIn();
 
-	public Swimlane getSwimlaneOut();
+	Swimlane getSwimlaneOut();
 
 }

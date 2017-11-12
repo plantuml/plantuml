@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.geom.kinetic;
 
 public interface MoveObserver {
 
-	public void pointMoved(Point2DCharge point);
+	void pointMoved(Point2DCharge point);
 
 }
