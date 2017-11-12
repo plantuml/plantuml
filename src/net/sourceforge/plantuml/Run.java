@@ -363,7 +363,7 @@ public class Run {
 							if (error) {
 								errors.set(true);
 							}
-						} catch (IOException | InterruptedException e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
                         incDone(errors.get());
