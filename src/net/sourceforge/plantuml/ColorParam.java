@@ -170,23 +170,23 @@ public enum ColorParam {
 	private final HtmlColor defaultValue;
 	private final ColorType colorType;
 	
-	private ColorParam(HtmlColor defaultValue, ColorType colorType) {
+	ColorParam(HtmlColor defaultValue, ColorType colorType) {
 		this(defaultValue, false, colorType);
 	}
 	
-	private ColorParam(HtmlColor defaultValue) {
+	ColorParam(HtmlColor defaultValue) {
 		this(defaultValue, false, null);
 	}
 	
-	private ColorParam() {
+	ColorParam() {
 		this(null, false, null);
 	}
 	
-	private ColorParam(boolean isBackground) {
+	ColorParam(boolean isBackground) {
 		this(null, isBackground, null);
 	}
 	
-	private ColorParam(HtmlColor defaultValue, boolean isBackground, ColorType colorType) {
+	ColorParam(HtmlColor defaultValue, boolean isBackground, ColorType colorType) {
 		this.isBackground = isBackground;
 		this.defaultValue = defaultValue;
 		this.colorType = colorType;

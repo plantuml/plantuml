@@ -58,7 +58,7 @@ public enum SpriteGrayLevel {
 	private final int nbColor;
 	private static final ColorChangerMonochrome mono = new ColorChangerMonochrome();
 
-	private SpriteGrayLevel(int nbColor) {
+	SpriteGrayLevel(int nbColor) {
 		this.nbColor = nbColor;
 	}
 

@@ -40,7 +40,7 @@ public enum TableStrategy {
 
 	private final char c;
 
-	private TableStrategy(char c) {
+	TableStrategy(char c) {
 		this.c = c;
 	}
 

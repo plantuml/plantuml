@@ -60,7 +60,7 @@ public final class ConcurrentStateImage extends AbstractTextBlock implements IEn
 	private final ISkinParam skinParam;
 	private final HtmlColor backColor;
 
-	static enum Separator {
+	enum Separator {
 		VERTICAL, HORIZONTAL;
 
 		static Separator fromChar(char sep) {

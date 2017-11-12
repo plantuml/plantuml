@@ -45,7 +45,7 @@ public enum Month {
 
 	private final int nbDays;
 
-	private Month(int nbDays) {
+	Month(int nbDays) {
 		this.nbDays = nbDays;
 	}
 

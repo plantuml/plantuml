@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class UrlBuilder {
 
-	public static enum ModeUrl {
+	public enum ModeUrl {
 		STRICT, ANYWHERE
 	}
 

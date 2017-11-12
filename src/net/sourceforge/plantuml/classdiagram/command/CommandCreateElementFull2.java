@@ -61,7 +61,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 	private final Mode mode;
 
-	public static enum Mode {
+	public enum Mode {
 		NORMAL_KEYWORD, WITH_MIX_PREFIX
 	}
 

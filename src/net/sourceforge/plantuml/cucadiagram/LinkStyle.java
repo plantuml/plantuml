@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class LinkStyle {
 
-	static enum Type {
+	enum Type {
 		NORMAL, DASHED, DOTTED, BOLD, INVISIBLE;
 	}
 

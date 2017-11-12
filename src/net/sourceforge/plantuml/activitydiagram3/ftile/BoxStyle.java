@@ -147,11 +147,11 @@ public enum BoxStyle {
 	private static double DELTA_CONTINUOUS = 5.0;
 	private static int PADDING = 5;
 
-	private BoxStyle() {
+	BoxStyle() {
 		this('\0');
 	}
 
-	private BoxStyle(char style) {
+	BoxStyle(char style) {
 		this.style = style;
 	}
 

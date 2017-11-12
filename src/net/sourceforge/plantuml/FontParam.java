@@ -123,14 +123,14 @@ public enum FontParam {
 	private final String defaultColor;
 	private final String defaultFamily;
 
-	private FontParam(int defaultSize, int fontStyle, String defaultColor, String defaultFamily) {
+	FontParam(int defaultSize, int fontStyle, String defaultColor, String defaultFamily) {
 		this.defaultSize = defaultSize;
 		this.fontStyle = fontStyle;
 		this.defaultColor = defaultColor;
 		this.defaultFamily = defaultFamily;
 	}
 
-	private FontParam(int defaultSize, int fontStyle) {
+	FontParam(int defaultSize, int fontStyle) {
 		this(defaultSize, fontStyle, FontParamConstant.COLOR, FontParamConstant.FAMILY);
 	}
 

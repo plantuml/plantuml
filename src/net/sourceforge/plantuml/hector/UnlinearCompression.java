@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.hector;
 
 class UnlinearCompression {
 
-	static enum Rounding {
+	enum Rounding {
 		BORDER_1, CENTRAL, BORDER_2;
 	}
 

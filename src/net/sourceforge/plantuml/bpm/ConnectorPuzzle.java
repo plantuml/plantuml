@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.bpm;
 
 public interface ConnectorPuzzle extends Placeable {
 
-	public static enum Where {
+	public enum Where {
 		NORTH(1), EAST(2), SOUTH(4), WEST(8);
 
 		private int coding;
 
-		private Where(int coding) {
+		Where(int coding) {
 			this.coding = coding;
 		}
 

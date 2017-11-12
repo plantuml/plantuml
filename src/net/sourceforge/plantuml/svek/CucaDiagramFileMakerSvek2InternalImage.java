@@ -57,7 +57,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	private final Separator separator;
 	private final ISkinParam skinParam;
 
-	static enum Separator {
+	enum Separator {
 		VERTICAL, HORIZONTAL;
 
 		static Separator fromChar(char sep) {

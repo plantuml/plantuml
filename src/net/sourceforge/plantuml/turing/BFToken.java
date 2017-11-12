@@ -42,7 +42,7 @@ public enum BFToken {
 
 	private final char c;
 	
-	private BFToken(char c) {
+	BFToken(char c) {
 		this.c = c;
 	}
 	

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.Log;
 
 public class MagicTable {
 
-	static enum Oc {
+	enum Oc {
 		USED, NEAR
 	}
 

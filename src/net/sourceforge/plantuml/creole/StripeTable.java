@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class StripeTable implements Stripe {
 
-	static enum Mode {
+	enum Mode {
 		HEADER, NORMAL
 	};
 

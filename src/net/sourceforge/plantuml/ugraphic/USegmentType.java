@@ -47,7 +47,7 @@ public enum USegmentType {
 
 	private final int code;
 
-	private USegmentType(int code) {
+	USegmentType(int code) {
 		this.code = code;
 	}
 

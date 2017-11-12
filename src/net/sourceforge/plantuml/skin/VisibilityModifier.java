@@ -72,7 +72,7 @@ public enum VisibilityModifier {
 		return "[-#+~]";
 	}
 
-	private VisibilityModifier(ColorParam foreground, ColorParam background) {
+	VisibilityModifier(ColorParam foreground, ColorParam background) {
 		this.foregroundParam = foreground;
 		this.backgroundParam = background;
 	}

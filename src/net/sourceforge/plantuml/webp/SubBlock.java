@@ -18,7 +18,7 @@ package net.sourceforge.plantuml.webp;
 import java.io.IOException;
 
 public class SubBlock {
-	public static enum PLANE {
+	public enum PLANE {
 		U, V, Y1, Y2
 	};
 

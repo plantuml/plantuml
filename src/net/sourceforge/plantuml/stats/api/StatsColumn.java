@@ -45,7 +45,7 @@ public enum StatsColumn {
 
 	private final String title;
 
-	private StatsColumn(String title) {
+	StatsColumn(String title) {
 		this.title = title;
 	}
 

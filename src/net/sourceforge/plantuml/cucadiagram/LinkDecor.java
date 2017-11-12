@@ -74,7 +74,7 @@ public enum LinkDecor {
 	private final int margin;
 	private final boolean fill;
 
-	private LinkDecor(int margin, boolean fill, double arrowSize) {
+	LinkDecor(int margin, boolean fill, double arrowSize) {
 		this.margin = margin;
 		this.fill = fill;
 		this.arrowSize = arrowSize;
