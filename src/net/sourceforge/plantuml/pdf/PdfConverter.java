@@ -64,7 +64,7 @@ public class PdfConverter {
 			final Method setSources = clSVGConverter.getMethod("setSources", path.getClass());
 			setSources.invoke(converter, new Object[] { path });
 			final Method setDst = clSVGConverter.getMethod("setDst", pdfFile.getClass());
-			setDst.invoke(converter, new Object[] { pdfFile });
+			setDst.invoke(converter, pdfFile);
 			final Method execute = clSVGConverter.getMethod("execute");
 			execute.invoke(converter);
 		} catch (Exception e) {
