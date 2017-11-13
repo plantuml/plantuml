@@ -177,7 +177,7 @@ class FtpLoop implements Runnable {
 	private void localLog(String s) {
 	}
 
-	private void retr(final String fileName, Socket soc) throws IOException, InterruptedException {
+	private void retr(final String fileName, Socket soc) throws IOException {
 		final OutputStream os = soc.getOutputStream();
 		final byte[] data = connexion.getData(fileName);
 

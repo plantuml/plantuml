@@ -34,22 +34,15 @@
  */
 package net.sourceforge.plantuml.version;
 
-import java.io.IOException;
-
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 
 public class PSystemLicenseFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected AbstractPSystem executeLine(String line) {
-		try {
-			if (line.matches("(?i)^li[sc][ea]n[sc]e\\s*$")) {
-				return PSystemLicense.create();
-			}
-		} catch (IOException e) {
-			Log.error("Error " + e);
+		if (line.matches("(?i)^li[sc][ea]n[sc]e\\s*$")) {
+			return PSystemLicense.create();
 		}
 		return null;
 	}

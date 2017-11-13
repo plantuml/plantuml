@@ -183,7 +183,7 @@ public class PlantUmlTask extends Task {
 
 	}
 
-	private boolean processingSingleFile(final File f) throws IOException, InterruptedException {
+	private boolean processingSingleFile(final File f) throws IOException {
 		if (OptionFlags.getInstance().isVerbose()) {
 			this.log("Processing " + f.getAbsolutePath());
 		}

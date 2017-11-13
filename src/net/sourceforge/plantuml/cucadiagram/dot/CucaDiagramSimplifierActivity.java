@@ -86,7 +86,7 @@ public final class CucaDiagramSimplifierActivity {
 	// proxy.setSvekImage(maker.getImage());
 	// }
 
-	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(IGroup g) {
 		final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g, stringBounder);
 		return maker.getImage();
 	}

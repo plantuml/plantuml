@@ -67,7 +67,7 @@ public class PSystemStats extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	public static PSystemStats create() throws IOException {
+	public static PSystemStats create() {
 		return new PSystemStats();
 	}
 

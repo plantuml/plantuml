@@ -151,7 +151,7 @@ public class PSystemError extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 	}
 
-	private TextBlockBackcolored getWelcome() throws IOException {
+	private TextBlockBackcolored getWelcome() {
 		return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
 	}
 

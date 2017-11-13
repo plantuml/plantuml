@@ -173,7 +173,7 @@ public class GraphvizUtils {
 		return Integer.parseInt(m.group(1).replaceAll("\\.", ""));
 	}
 
-	public static int getDotVersion() throws IOException, InterruptedException {
+	public static int getDotVersion() {
 		return retrieveVersion(dotVersion());
 	}
 

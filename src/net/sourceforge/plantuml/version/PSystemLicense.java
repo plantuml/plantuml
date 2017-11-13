@@ -66,7 +66,7 @@ public class PSystemLicense extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	public static PSystemLicense create() throws IOException {
+	public static PSystemLicense create() {
 		return new PSystemLicense();
 	}
 

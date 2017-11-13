@@ -55,8 +55,7 @@ public final class CucaDiagramSimplifierState {
 	private final CucaDiagram diagram;
 	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
-			throws IOException, InterruptedException {
+	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		boolean changed;

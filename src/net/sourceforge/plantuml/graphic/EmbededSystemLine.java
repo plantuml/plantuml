@@ -68,7 +68,7 @@ class EmbededSystemLine extends AbstractTextBlock implements Line {
 		try {
 			final BufferedImage im = getImage();
 			return new Dimension2DDouble(im.getWidth(), im.getHeight());
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
         return new Dimension2DDouble(42, 42);
@@ -79,13 +79,13 @@ class EmbededSystemLine extends AbstractTextBlock implements Line {
 			final BufferedImage im = getImage();
 			final UShape image = new UImage(im);
 			ug.draw(image);
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
     }
 
-	private BufferedImage getImage() throws IOException, InterruptedException {
+	private BufferedImage getImage() throws IOException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
