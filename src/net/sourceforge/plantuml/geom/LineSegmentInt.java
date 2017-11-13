@@ -83,40 +83,19 @@ public class LineSegmentInt extends AbstractLineSegment {
 	}
 
 	public boolean doesIntersectButNotSameExtremity(LineSegmentInt other) {
-		// assert sameExtremities(other) == false;
-		if (!doesIntersect(other)) {
-			return false;
-		}
-		if (atLeastOneCommonExtremities(other)) {
-			return false;
-		}
-		return true;
+		return doesIntersect(other) && !atLeastOneCommonExtremities(other);
 	}
 
 	public boolean sameExtremities(LineSegmentInt other) {
-		if (p1.equals(other.p1) && p2.equals(other.p2)) {
-			return true;
-		}
-		if (p1.equals(other.p2) && p2.equals(other.p1)) {
-			return true;
-		}
-		return false;
+		return p1.equals(other.p1) && p2.equals(other.p2)
+			|| p1.equals(other.p2) && p2.equals(other.p1);
 	}
 
 	public boolean atLeastOneCommonExtremities(LineSegmentInt other) {
-		if (p1.equals(other.p1)) {
-			return true;
-		}
-		if (p1.equals(other.p2)) {
-			return true;
-		}
-		if (p2.equals(other.p1)) {
-			return true;
-		}
-		if (p2.equals(other.p2)) {
-			return true;
-		}
-		return false;
+		return p1.equals(other.p1)
+			|| p1.equals(other.p2)
+			|| p2.equals(other.p1)
+			|| p2.equals(other.p2);
 	}
 
 	public Point2DInt getCommonExtremities(LineSegmentInt other) {

@@ -73,10 +73,7 @@ public abstract class EntityUtils {
 		final IEntity e2 = link.getEntity2();
 		final IGroup group1 = e1.getParentContainer();
 		final IGroup group2 = e2.getParentContainer();
-		if (isParent(group1, group) && isParent(group2, group)) {
-			return true;
-		}
-		return false;
+		return isParent(group1, group) && isParent(group2, group);
 	}
 
 	public static boolean isPureInnerLink3(IGroup group, Link link) {
@@ -87,9 +84,6 @@ public abstract class EntityUtils {
 		final IEntity e2 = link.getEntity2();
 		final IGroup group1 = e1.getParentContainer();
 		final IGroup group2 = e2.getParentContainer();
-		if (isParent(group2, group) == isParent(group1, group)) {
-			return true;
-		}
-		return false;
+		return isParent(group2, group) == isParent(group1, group);
 	}
 }

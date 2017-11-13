@@ -159,16 +159,10 @@ public enum FileFormat {
 	/**
 	 * Check if this file format is Encapsulated PostScript.
 	 * 
-	 * @return <code>true</code> for EPS.
+	 * @return {@code true} for EPS.
 	 */
 	public boolean isEps() {
-		if (this == EPS) {
-			return true;
-		}
-		if (this == EPS_TEXT) {
-			return true;
-		}
-		return false;
+		return this == EPS || this == EPS_TEXT;
 	}
 
 	public String changeName(String fileName, int cpt) {

@@ -56,7 +56,7 @@ public class UnusedSpace {
 			this.y = y;
 		}
 
-		public double getDistSq(Point other) {
+		double getDistSq(Point other) {
 			final double dx = this.x - other.x;
 			final double dy = this.y - other.y;
 			return dx * dx + dy * dy;
@@ -125,23 +125,6 @@ public class UnusedSpace {
 				}
 			}
 		}
-
-		// g2d.setColor(Color.RED);
-		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE - 1, meanY2 + HALF_SIZE
-		// - 1, meanX2 + HALF_SIZE + 1, meanY2
-		// + HALF_SIZE + 1));
-		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE + 1, meanY2 + HALF_SIZE
-		// - 1, meanX2 + HALF_SIZE - 1, meanY2
-		// + HALF_SIZE + 1));
-
-		// int cpt = 1;
-		// try {
-		// ImageIO.write(im, "png", new File("c:/img" + cpt + ".png"));
-		// cpt++;
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-
 	}
 
 	private double biggestDistSqFromPoint(Point p) {
@@ -157,10 +140,7 @@ public class UnusedSpace {
 
 	private static boolean isPoint(BufferedImage im, int x, int y) {
 		final int color = im.getRGB(x, y) & 0x00FFFFFF;
-		if (color == 0) {
-			return false;
-		}
-		return true;
+		return color != 0;
 	}
 
 	public double getCenterX() {

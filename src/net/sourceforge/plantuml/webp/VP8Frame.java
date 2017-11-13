@@ -393,9 +393,7 @@ public class VP8Frame {
 
 	private boolean getBit(int data, int bit) {
 		int r = data & (1 << bit);
-		if (r > 0)
-			return true;
-		return false;
+		return r > 0;
 	}
 	
 	private int getBitAsInt(int data, int bit) {

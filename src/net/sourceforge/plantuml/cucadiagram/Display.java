@@ -202,6 +202,7 @@ public class Display implements Iterable<CharSequence> {
 			} else {
 				result.add(withGuillement);
 			}
+
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}

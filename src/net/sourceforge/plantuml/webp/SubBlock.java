@@ -317,9 +317,7 @@ public class SubBlock {
 	}
 
 	public boolean isDest() {
-		if (dest == null)
-			return false;
-		return true;
+		return dest != null;
 	}
 
 	public void predict(VP8Frame frame) {

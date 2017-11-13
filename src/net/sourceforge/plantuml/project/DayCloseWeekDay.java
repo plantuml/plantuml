@@ -44,10 +44,7 @@ class DayCloseWeekDay implements DayClose {
 	}
 
 	public boolean isClose(Day day) {
-		if (day.getWeekDay() == weekDay) {
-			return true;
-		}
-		return false;
+		return day.getWeekDay() == weekDay;
 	}
 
 }

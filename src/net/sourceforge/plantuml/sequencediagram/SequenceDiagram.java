@@ -356,10 +356,7 @@ public class SequenceDiagram extends UmlDiagram {
 		if (footbox == null) {
 			return showFootbox;
 		}
-		if (footbox.equalsIgnoreCase("hide")) {
-			return false;
-		}
-		return true;
+		return !footbox.equalsIgnoreCase("hide");
 	}
 
 	private boolean showFootbox = true;
@@ -464,10 +461,7 @@ public class SequenceDiagram extends UmlDiagram {
 				return true;
 			}
 		}
-		if (!DisplayPositionned.isNull(getLegend()) && getLegend().hasUrl()) {
-			return true;
-		}
-		return false;
+		return !DisplayPositionned.isNull(getLegend()) && getLegend().hasUrl();
 	}
 
 	public void addReference(Reference ref) {
@@ -476,10 +470,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public boolean isOk() {
-		if (participants.isEmpty()) {
-			return false;
-		}
-		return true;
+		return !participants.isEmpty();
 	}
 
 	public double getDpiFactor(FileFormatOption fileFormatOption, Dimension2D dim) {
@@ -501,7 +492,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return super.checkFinalError();
 	}
 
-	private final Set<EntityPortion> hiddenPortions = EnumSet.<EntityPortion> noneOf(EntityPortion.class);
+	private final Set<EntityPortion> hiddenPortions = EnumSet.noneOf(EntityPortion.class);
 
 	public void hideOrShow(Set<EntityPortion> portions, boolean show) {
 		if (show) {

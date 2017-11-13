@@ -201,10 +201,7 @@ public class PSystemBuilder {
 	}
 
 	private boolean isOk(Diagram ps) {
-		if (ps == null || ps instanceof PSystemError) {
-			return false;
-		}
-		return true;
+		return ps != null && !(ps instanceof PSystemError);
 	}
 
 }

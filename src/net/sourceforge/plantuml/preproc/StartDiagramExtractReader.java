@@ -94,13 +94,7 @@ public class StartDiagramExtractReader implements ReadLine {
 	}
 
 	private boolean checkUid(String uid, CharSequence2 s) {
-		if (uid == null) {
-			return true;
-		}
-		if (s.toString().matches(".*id=" + uid + "\\W.*")) {
-			return true;
-		}
-		return false;
+		return uid == null || s.toString().matches(".*id=" + uid + "\\W.*");
 	}
 
 	private static ReadLine getReadLine(CharSequence2 s, File f, String charset) {

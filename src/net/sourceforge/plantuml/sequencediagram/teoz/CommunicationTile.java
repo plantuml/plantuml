@@ -90,10 +90,7 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 	public boolean isReverse(StringBounder stringBounder) {
 		final Real point1 = livingSpace1.getPosC(stringBounder);
 		final Real point2 = livingSpace2.getPosC(stringBounder);
-		if (point1.getCurrentValue() > point2.getCurrentValue()) {
-			return true;
-		}
-		return false;
+		return point1.getCurrentValue() > point2.getCurrentValue();
 	}
 
 	private boolean isCreate() {

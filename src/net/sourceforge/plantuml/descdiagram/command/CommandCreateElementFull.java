@@ -117,10 +117,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	@Override
     protected final boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
-			return true;
-		}
-		return false;
+		return line.toString().matches("^[\\p{L}0-9_.]+$");
 	}
 
 	@Override
@@ -211,13 +208,8 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			return false;
 		}
 		final ILeaf other = diagram.getLeafsget(code);
-		if (other.getLeafType() != type) {
-			return true;
-		}
-		if (usymbol != null && other.getUSymbol() != usymbol) {
-			return true;
-		}
-		return false;
+		return other.getLeafType() != type
+			|| (usymbol != null && other.getUSymbol() != usymbol);
 	}
 
 	private char getCharEncoding(final String codeRaw) {

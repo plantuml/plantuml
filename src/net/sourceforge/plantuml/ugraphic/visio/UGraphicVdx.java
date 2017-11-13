@@ -119,10 +119,7 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-		if ("SPECIALTXT".equalsIgnoreCase(propertyName)) {
-			return true;
-		}
-		return false;
+		return "SPECIALTXT".equalsIgnoreCase(propertyName);
 	}
 
 }

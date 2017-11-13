@@ -65,11 +65,16 @@ public class CharHidder {
 	}
 
 	private static boolean isToBeHidden(final char c) {
-		if (c == '_' || c == '-' || c == '\"' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/'
-				|| c == '<') {
-			return true;
-		}
-		return false;
+		return c == '_'
+			|| c == '-'
+			|| c == '\"'
+			|| c == '#'
+			|| c == ']'
+			|| c == '['
+			|| c == '*'
+			|| c == '.'
+			|| c == '/'
+			|| c == '<';
 	}
 
 	private static char hideChar(char c) {

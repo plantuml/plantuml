@@ -164,26 +164,17 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
 	private boolean isShortArrow(RegexResult arg2) {
 		final String s = arg2.get("SHORT", 0);
-		if (s != null && s.contains("?")) {
-			return true;
-		}
-		return false;
+		return s != null && s.contains("?");
 	}
 
 	private boolean containsSymbolExterior(RegexResult arg2, String symbol) {
 		final String s = arg2.get("SHORT", 0);
-		if (s != null && s.contains(symbol)) {
-			return true;
-		}
-		return false;
+		return s != null && s.contains(symbol);
 	}
 
 	private boolean containsSymbol(RegexResult arg2, String symbol) {
 		final String s = arg2.get("ARROW_SUPPCIRCLE", 0);
-		if (s != null && s.contains(symbol)) {
-			return true;
-		}
-		return false;
+		return s != null && s.contains(symbol);
 	}
 
 }

@@ -35,32 +35,20 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.*;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.graphic.*;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.InnerStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.TextBlockVertical2;
-import net.sourceforge.plantuml.svek.Ports;
-import net.sourceforge.plantuml.svek.WithPorts;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -193,19 +181,10 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	public static boolean isBlockSeparator(String s) {
-		if (s.startsWith("--") && s.endsWith("--")) {
-			return true;
-		}
-		if (s.startsWith("==") && s.endsWith("==")) {
-			return true;
-		}
-		if (s.startsWith("..") && s.endsWith("..") && !s.equals("...")) {
-			return true;
-		}
-		if (s.startsWith("__") && s.endsWith("__")) {
-			return true;
-		}
-		return false;
+		return s.startsWith("--") && s.endsWith("--")
+			|| s.startsWith("==") && s.endsWith("==")
+			|| s.startsWith("..") && s.endsWith("..") && !s.equals("...")
+			|| s.startsWith("__") && s.endsWith("__");
 	}
 
 	private TextBlock getTitle(String s, ISkinSimple spriteContainer) {

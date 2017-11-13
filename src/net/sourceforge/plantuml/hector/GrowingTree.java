@@ -35,14 +35,7 @@
  */
 package net.sourceforge.plantuml.hector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class GrowingTree {
 
@@ -81,10 +74,8 @@ public class GrowingTree {
 		}
 		final Pin p1 = candidat.getPin1();
 		final Pin p2 = candidat.getPin2();
-		if (p1.getRow() == Integer.MAX_VALUE && p2.getRow() == Integer.MAX_VALUE) {
-			return false;
-		}
-		return true;
+		return p1.getRow() != Integer.MAX_VALUE
+			|| p2.getRow() != Integer.MAX_VALUE;
 	}
 
 	public void add(PinLink newPinLink) {
@@ -158,13 +149,8 @@ public class GrowingTree {
 	private boolean isPartiallyNew(PinLink link) {
 		final Pin p1 = link.getPin1();
 		final Pin p2 = link.getPin2();
-		if (p1.getRow() == Integer.MAX_VALUE && p2.getRow() != Integer.MAX_VALUE) {
-			return true;
-		} else if (p1.getRow() != Integer.MAX_VALUE && p2.getRow() == Integer.MAX_VALUE) {
-			return true;
-		} else {
-			return false;
-		}
+		return p1.getRow() == Integer.MAX_VALUE && p2.getRow() != Integer.MAX_VALUE
+			|| p1.getRow() != Integer.MAX_VALUE && p2.getRow() == Integer.MAX_VALUE;
 	}
 
 	public void normalizeRowToZero() {

@@ -138,13 +138,7 @@ public class CollisionDetector implements UGraphic {
 		}
 		final double x1 = Math.min(hline.getX1(), hline.getX2());
 		final double x2 = Math.max(hline.getX1(), hline.getX2());
-		if (x2 < rect.getMinX()) {
-			return false;
-		}
-		if (x1 > rect.getMaxX()) {
-			return false;
-		}
-		return true;
+		return !(x2 < rect.getMinX()) && !(x1 > rect.getMaxX());
 	}
 
 	public CollisionDetector(StringBounder stringBounder) {

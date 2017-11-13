@@ -35,22 +35,15 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.geom.Dimension2D;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.TextBlockVertical2;
+import net.sourceforge.plantuml.graphic.*;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+
+import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 
@@ -125,19 +118,10 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	public static boolean isBlockSeparator(String s) {
-		if (s.startsWith("--") && s.endsWith("--")) {
-			return true;
-		}
-		if (s.startsWith("==") && s.endsWith("==")) {
-			return true;
-		}
-		if (s.startsWith("..") && s.endsWith("..")) {
-			return true;
-		}
-		if (s.startsWith("__") && s.endsWith("__")) {
-			return true;
-		}
-		return false;
+		return s.startsWith("--") && s.endsWith("--")
+			|| s.startsWith("==") && s.endsWith("==")
+			|| s.startsWith("..") && s.endsWith("..")
+			|| s.startsWith("__") && s.endsWith("__");
 	}
 
 	private TextBlock getTitle(String s, ISkinSimple spriteContainer) {

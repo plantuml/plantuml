@@ -356,30 +356,19 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean isAutoLinkOfAGroup() {
-		if (!getEntity1().isGroup()) {
-			return false;
-		}
-		if (!getEntity2().isGroup()) {
-			return false;
-		}
-		if (getEntity1() == getEntity2()) {
-			return true;
-		}
-		return false;
+		return getEntity1().isGroup()
+			&& getEntity2().isGroup()
+			&& getEntity1() == getEntity2();
 	}
 
 	public boolean containsType(LeafType type) {
-		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type) {
-			return true;
-		}
-		return false;
+		return getEntity1().getLeafType() == type
+			|| getEntity2().getLeafType() == type;
 	}
 
 	public boolean contains(IEntity entity) {
-		if (getEntity1() == entity || getEntity2() == entity) {
-			return true;
-		}
-		return false;
+		return getEntity1() == entity
+			|| getEntity2() == entity;
 	}
 
 	public IEntity getOther(IEntity entity) {
@@ -483,29 +472,15 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean sameConnections(Link other) {
-		if (this.cl1 == other.cl1 && this.cl2 == other.cl2) {
-			return true;
-		}
-		if (this.cl1 == other.cl2 && this.cl2 == other.cl1) {
-			return true;
-		}
-		return false;
+		return this.cl1 == other.cl1 && this.cl2 == other.cl2
+			|| this.cl1 == other.cl2 && this.cl2 == other.cl1;
 	}
 
 	public boolean doesTouch(Link other) {
-		if (this.cl1 == other.cl1) {
-			return true;
-		}
-		if (this.cl1 == other.cl2) {
-			return true;
-		}
-		if (this.cl2 == other.cl1) {
-			return true;
-		}
-		if (this.cl2 == other.cl2) {
-			return true;
-		}
-		return false;
+		return this.cl1 == other.cl1
+			|| this.cl1 == other.cl2
+			|| this.cl2 == other.cl1
+			|| this.cl2 == other.cl2;
 	}
 
 	public boolean isAutolink() {

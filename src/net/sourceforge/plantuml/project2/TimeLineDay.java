@@ -63,10 +63,7 @@ public class TimeLineDay implements TimeLine {
 
 	public boolean isClosed(TimeElement timeElement) {
 		final WeekDay wd = ((Day) timeElement).getWeekDay();
-		if (wd == WeekDay.SAT || wd == WeekDay.SUN) {
-			return true;
-		}
-		return false;
+		return wd == WeekDay.SAT || wd == WeekDay.SUN;
 	}
 
 }

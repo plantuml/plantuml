@@ -129,10 +129,8 @@ public class Singularity2 {
 			last = current;
 		}
 		final double first = angles.first();
-		if ((angle1 <= first || angle1 >= last) && (angle2 <= first || angle2 >= last)) {
-			return false;
-		}
-		return true;
+		return (!(angle1 <= first) && !(angle1 >= last))
+			|| (!(angle2 <= first) && !(angle2 >= last));
 	}
 
 	private boolean isBetween(double test, double v1, double v2) {

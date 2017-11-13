@@ -57,13 +57,8 @@ public class Day implements TimeElement {
 	}
 
 	public static boolean isValidDesc(String desc) {
-		if (desc.matches("^\\d{4}/\\d{2}/\\d{2}$")) {
-			return true;
-		}
-		if (desc.matches("^\\d{2}-[A-Za-z]{3}-\\d{4}$")) {
-			return true;
-		}
-		return false;
+		return desc.matches("^\\d{4}/\\d{2}/\\d{2}$")
+			|| desc.matches("^\\d{2}-[A-Za-z]{3}-\\d{4}$");
 	}
 
 	public Day(String desc) {

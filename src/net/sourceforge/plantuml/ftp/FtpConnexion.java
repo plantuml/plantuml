@@ -86,26 +86,14 @@ public class FtpConnexion {
 	}
 
 	public synchronized boolean willExist(String fileName) {
-		if (incoming.containsKey(fileName)) {
-			return true;
-		}
-		if (outgoing.containsKey(fileName)) {
-			return true;
-		}
-		if (futureOutgoing.contains(fileName)) {
-			return true;
-		}
-		return false;
+		return incoming.containsKey(fileName)
+			|| outgoing.containsKey(fileName)
+			|| futureOutgoing.contains(fileName);
 	}
 
 	public synchronized boolean doesExist(String fileName) {
-		if (incoming.containsKey(fileName)) {
-			return true;
-		}
-		if (outgoing.containsKey(fileName)) {
-			return true;
-		}
-		return false;
+		return incoming.containsKey(fileName)
+			|| outgoing.containsKey(fileName);
 	}
 
 	public synchronized byte[] getData(String fileName) {

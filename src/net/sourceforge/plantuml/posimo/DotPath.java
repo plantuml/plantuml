@@ -161,10 +161,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public static boolean isPathConsistent(String init) {
-		if (!init.startsWith("M")) {
-			return false;
-		}
-		return true;
+		return init.startsWith("M");
 	}
 
 	// private final String print;

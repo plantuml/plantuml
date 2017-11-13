@@ -89,7 +89,6 @@ public class CleanerInterleavingLines implements GridCleaner {
 		if (data2 == null) {
 			return data1;
 		}
-		assert data1 != null && data2 != null;
 		if (data1 instanceof BpmElement) {
 			return data1;
 		}
@@ -110,49 +109,30 @@ public class CleanerInterleavingLines implements GridCleaner {
 		if (data1 == null || data2 == null) {
 			return true;
 		}
-		assert data1 != null && data2 != null;
 		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty) {
 			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);
 		}
 		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof BpmElement) {
-            // System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
+			// System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
 			return mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);
 		}
-		if (data2 instanceof ConnectorPuzzleEmpty && data1 instanceof BpmElement) {
-            // System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
-			return mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
-		}
-		return false;
+		// System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
+		return data2 instanceof ConnectorPuzzleEmpty
+			&& data1 instanceof BpmElement
+			&& mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
 	}
 
 	private boolean mergeablePuzzleSingle(ConnectorPuzzleEmpty data1, BpmElement data2) {
-		if (data1.checkDirections("NS")) {
-			return true;
-		}
-		if (data1.checkDirections("SW")) {
-			return true;
-		}
-		return false;
+		return data1.checkDirections("NS") || data1.checkDirections("SW");
 	}
 
 	private boolean mergeablePuzzleSingle(BpmElement data1, ConnectorPuzzleEmpty data2) {
-		if (data2.checkDirections("NS")) {
-			return true;
-		}
-		return false;
+		return data2.checkDirections("NS");
 	}
 
 	private boolean mergeableCC(ConnectorPuzzleEmpty puz1, ConnectorPuzzleEmpty puz2) {
-		if (puz1.checkDirections("NS") && puz2.checkDirections("NS")) {
-			return true;
-		}
-		if (puz1.checkDirections("NS") && puz2.checkDirections("NE")) {
-			return true;
-		}
-		if (puz1.checkDirections("NS") && puz2.checkDirections("NW")) {
-			return true;
-		}
-		return false;
+		return puz1.checkDirections("NS") && (
+			puz2.checkDirections("NS") || puz2.checkDirections("NE") || puz2.checkDirections("NW"));
 	}
 
 }

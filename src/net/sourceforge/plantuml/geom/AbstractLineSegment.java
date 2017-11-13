@@ -254,13 +254,8 @@ public abstract class AbstractLineSegment extends Line2D {
 	}
 
 	private static boolean signDiffers(double a, double b) {
-		if (a > 0 && b < 0) {
-			return true;
-		}
-		if (a < 0 && b > 0) {
-			return true;
-		}
-		return false;
+		return a > 0 && b < 0
+			|| a < 0 && b > 0;
 	}
 
 	public double determinant(AbstractLineSegment other) {

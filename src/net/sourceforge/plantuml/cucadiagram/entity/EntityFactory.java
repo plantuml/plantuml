@@ -78,10 +78,8 @@ public class EntityFactory {
 			return true;
 		}
 		final Stereotype stereotype = leaf.getStereotype();
-		if (stereotype != null && hiddenStereotype.contains(stereotype.getLabel(false))) {
-			return true;
-		}
-		return false;
+		return stereotype != null
+			&& hiddenStereotype.contains(stereotype.getLabel(false));
 
 	}
 

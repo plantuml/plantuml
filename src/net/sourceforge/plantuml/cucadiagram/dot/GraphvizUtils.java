@@ -35,6 +35,12 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.vizjs.GraphvizJs;
+import net.sourceforge.plantuml.vizjs.VizJsEngine;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -43,12 +49,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.vizjs.GraphvizJs;
-import net.sourceforge.plantuml.vizjs.VizJsEngine;
 
 public class GraphvizUtils {
 
@@ -89,13 +89,8 @@ public class GraphvizUtils {
 	}
 
 	private static boolean useVizJs(ISkinParam skinParam) {
-		if (skinParam != null && VIZJS.equalsIgnoreCase(skinParam.getDotExecutable()) && VizJsEngine.isOk()) {
-			return true;
-		}
-		if (VIZJS.equalsIgnoreCase(getenvGraphvizDot()) && VizJsEngine.isOk()) {
-			return true;
-		}
-		return false;
+		return skinParam != null && VIZJS.equalsIgnoreCase(skinParam.getDotExecutable()) && VizJsEngine.isOk()
+			|| VIZJS.equalsIgnoreCase(getenvGraphvizDot()) && VizJsEngine.isOk();
 	}
 
 	public static File getDotExe() {

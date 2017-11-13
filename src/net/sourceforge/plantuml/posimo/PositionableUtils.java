@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.posimo;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 
 public class PositionableUtils {
 
@@ -55,50 +55,17 @@ public class PositionableUtils {
 		final double width = size.getWidth();
 		final double height = size.getHeight();
 
-		if (p.getX() < position.getX()) {
-			return false;
-		}
-		if (p.getX() > position.getX() + width) {
-			return false;
-		}
-		if (p.getY() < position.getY()) {
-			return false;
-		}
-		if (p.getY() > position.getY() + height) {
-			return false;
-		}
-		return true;
+		return !(p.getX() < position.getX())
+			&& !(p.getX() > position.getX() + width)
+			&& !(p.getY() < position.getY())
+			&& !(p.getY() > position.getY() + height);
 	}
 
 	public static boolean intersect(Positionable big, Positionable small) {
 		final Rectangle2D bigR = convert(big);
 		final Rectangle2D smallR = convert(small);
 		return bigR.intersects(smallR);
-		// final Point2D pt = small.getPosition();
-		// final Dimension2D dim = small.getSize();
-		//
-		// if (contains(big, pt)) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
-		// pt.getY()))) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
-		// pt.getY() + dim.getHeight()))) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX(), pt.getY() +
-		// dim.getHeight()))) {
-		// return true;
-		// }
-		// return false;
 	}
-
-	//
-	// public boolean intersect(Positionable p) {
-	// return intersect(p.getPosition(), p.getSize());
-	// }
 
 	public static Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
 		return new Positionable() {

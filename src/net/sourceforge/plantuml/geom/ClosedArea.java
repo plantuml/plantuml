@@ -145,10 +145,8 @@ public class ClosedArea extends AbstractFigure {
 
 	private boolean isConsistent() {
 		assert getSegments().size() == segmentsList.size();
-		assert getSegments().equals(new HashSet<LineSegmentInt>(segmentsList));
-		if (!getSegments().isEmpty()) {
-			assert getSegments().size() + 1 == points.size() : "points=" + points + " getSegment()=" + getSegments();
-		}
+		assert getSegments().equals(new HashSet<>(segmentsList));
+		assert getSegments().isEmpty() || getSegments().size() + 1 == points.size() : "points=" + points + " getSegment()=" + getSegments();
 		for (int i = 0; i < segmentsList.size(); i++) {
 			final LineSegmentInt seg = segmentsList.get(i);
 			if (!seg.sameExtremities(new LineSegmentInt(points.get(i), points.get(i + 1)))) {
@@ -168,13 +166,8 @@ public class ClosedArea extends AbstractFigure {
 	}
 
 	public boolean isClosed() {
-		if (getSegments().size() < 3) {
-			return false;
-		}
-		if (getFirstSegment().atLeastOneCommonExtremities(getLastSegment())) {
-			return true;
-		}
-		return false;
+		return getSegments().size() >= 3
+			&& getFirstSegment().atLeastOneCommonExtremities(getLastSegment());
 	}
 
 	ClosedArea append(LineSegmentInt other) {

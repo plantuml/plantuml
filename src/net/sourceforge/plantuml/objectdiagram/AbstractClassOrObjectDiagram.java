@@ -300,13 +300,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 
 		boolean sameCouple(IEntity entity1, IEntity entity2) {
-			if (this.entity1 == entity1 && this.entity2 == entity2) {
-				return true;
-			}
-			if (this.entity1 == entity2 && this.entity2 == entity1) {
-				return true;
-			}
-			return false;
+			return this.entity1 == entity1 && this.entity2 == entity2
+				|| this.entity1 == entity2 && this.entity2 == entity1;
 		}
 	}
 

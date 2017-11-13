@@ -63,10 +63,7 @@ public abstract class Extremity implements UDrawable {
 	}
 
 	private boolean isCloseToo(double value, double variable) {
-		if (Math.abs(value - variable) < 0.05) {
-			return true;
-		}
-		return false;
+		return Math.abs(value - variable) < 0.05;
 	}
 	
 	public abstract Point2D somePoint();

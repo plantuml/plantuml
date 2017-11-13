@@ -35,17 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -54,25 +43,18 @@ import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorSetSimple;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.IHtmlColorSet;
-import net.sourceforge.plantuml.graphic.SkinParameter;
+import net.sourceforge.plantuml.graphic.*;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.ugraphic.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.ColorMapperMonochrome;
-import net.sourceforge.plantuml.ugraphic.ColorMapperReverse;
-import net.sourceforge.plantuml.ugraphic.ColorOrder;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.*;
 import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteImage;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class SkinParam implements ISkinParam {
 
@@ -526,16 +508,7 @@ public class SkinParam implements ISkinParam {
 
 	public boolean shadowing() {
 		final String value = getValue("shadowing");
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		if ("true".equalsIgnoreCase(value)) {
-			return true;
-		}
-		if (strictUmlStyle()) {
-			return false;
-		}
-		return true;
+		return !"false".equalsIgnoreCase(value) && ("true".equalsIgnoreCase(value) || !strictUmlStyle());
 	}
 
 	public boolean shadowingForNote(Stereotype stereotype) {
@@ -562,16 +535,7 @@ public class SkinParam implements ISkinParam {
 		if (value == null) {
 			return shadowing();
 		}
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		if ("true".equalsIgnoreCase(value)) {
-			return true;
-		}
-		if (strictUmlStyle()) {
-			return false;
-		}
-		return true;
+		return !"false".equalsIgnoreCase(value) && ("true".equalsIgnoreCase(value) || !strictUmlStyle());
 	}
 
 	public PackageStyle getPackageStyle() {
@@ -607,23 +571,12 @@ public class SkinParam implements ISkinParam {
 
 	public boolean stereotypePositionTop() {
 		final String value = getValue("stereotypePosition");
-		if ("bottom".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return !"bottom".equalsIgnoreCase(value);
 	}
 
 	public boolean useSwimlanes(UmlDiagramType type) {
-		if (type != UmlDiagramType.ACTIVITY) {
-			return false;
-		}
-		if ("true".equalsIgnoreCase(getValue("swimlane"))) {
-			return true;
-		}
-		if ("true".equalsIgnoreCase(getValue("swimlanes"))) {
-			return true;
-		}
-		return false;
+		return type == UmlDiagramType.ACTIVITY
+			&& ("true".equalsIgnoreCase(getValue("swimlane")) || "true".equalsIgnoreCase(getValue("swimlanes")));
 	}
 
 	public double getNodesep() {
@@ -697,18 +650,12 @@ public class SkinParam implements ISkinParam {
 
 	public boolean strictUmlStyle() {
 		final String value = getValue("style");
-		if ("strictuml".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return "strictuml".equalsIgnoreCase(value);
 	}
 
 	public boolean forceSequenceParticipantUnderlined() {
 		final String value = getValue("sequenceParticipant");
-		if ("underline".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return "underline".equalsIgnoreCase(value);
 	}
 
 	public ConditionStyle getConditionStyle() {
@@ -749,13 +696,7 @@ public class SkinParam implements ISkinParam {
 				value = value2;
 			}
 		}
-		if ("roundedbox".equalsIgnoreCase(value)) {
-			return false;
-		}
-		if ("octagon".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return !"roundedbox".equalsIgnoreCase(value) && "octagon".equalsIgnoreCase(value);
 	}
 
 	private final IHtmlColorSet htmlColorSet = new HtmlColorSetSimple();
@@ -766,10 +707,7 @@ public class SkinParam implements ISkinParam {
 
 	public boolean useUnderlineForHyperlink() {
 		final String value = getValue("hyperlinkunderline");
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return !"false".equalsIgnoreCase(value);
 	}
 
 	public int groupInheritance() {
@@ -786,18 +724,12 @@ public class SkinParam implements ISkinParam {
 
 	public boolean useGuillemet() {
 		final String value = getValue("guillemet");
-		if ("false".equalsIgnoreCase(value)) {
-			return false;
-		}
-		return true;
+		return !"false".equalsIgnoreCase(value);
 	}
 
 	public boolean handwritten() {
 		final String value = getValue("handwritten");
-		if ("true".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return "true".equalsIgnoreCase(value);
 	}
 
 	public String getSvgLinkTarget() {
@@ -899,10 +831,7 @@ public class SkinParam implements ISkinParam {
 
 	public boolean displayGenericWithOldFashion() {
 		final String value = getValue("genericDisplay");
-		if ("old".equalsIgnoreCase(value)) {
-			return true;
-		}
-		return false;
+		return "old".equalsIgnoreCase(value);
 	}
 
 	public TikzFontDistortion getTikzFontDistortion() {

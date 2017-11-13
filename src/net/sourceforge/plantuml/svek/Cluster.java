@@ -645,20 +645,11 @@ public class Cluster implements Moveable {
 	public static final String CENTER_ID = "za";
 
 	private boolean protection0(UmlDiagramType type) {
-		if (skinParam.useSwimlanes(type)) {
-			return false;
-		}
-		return true;
+		return !skinParam.useSwimlanes(type);
 	}
 
 	private boolean protection1(UmlDiagramType type) {
-		if (group.getUSymbol() == USymbol.NODE) {
-			return true;
-		}
-		if (skinParam.useSwimlanes(type)) {
-			return false;
-		}
-		return true;
+		return group.getUSymbol() == USymbol.NODE || !skinParam.useSwimlanes(type);
 	}
 
 	public String getMinPoint(UmlDiagramType type) {

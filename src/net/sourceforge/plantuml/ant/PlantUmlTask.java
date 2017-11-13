@@ -223,10 +223,7 @@ public class PlantUmlTask extends Task {
 		if (error) {
 			myLog("Error: " + f.getCanonicalPath());
 		}
-		if (error && option.isFailfastOrFailfast2()) {
-			return true;
-		}
-		return false;
+		return error && option.isFailfastOrFailfast2();
 	}
 
 	private synchronized void myLog(String s) {

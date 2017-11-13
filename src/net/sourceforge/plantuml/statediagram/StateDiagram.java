@@ -37,14 +37,7 @@ package net.sourceforge.plantuml.statediagram;
 
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.EntityUtils;
-import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.*;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -57,15 +50,10 @@ public class StateDiagram extends AbstractEntityDiagram {
 			return true;
 		}
 		final IEntity existing = this.getLeafsget(code);
-		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE
-				&& getCurrentGroup() != existing.getParentContainer()) {
-			return false;
-		}
-		if (existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
-				&& getCurrentGroup() != existing.getParentContainer()) {
-			return false;
-		}
-		return true;
+		return (getCurrentGroup().getGroupType() != GroupType.CONCURRENT_STATE
+			|| getCurrentGroup() == existing.getParentContainer())
+			&& (existing.getParentContainer().getGroupType() != GroupType.CONCURRENT_STATE
+			|| getCurrentGroup() == existing.getParentContainer());
 	}
 
 	@Override
@@ -183,14 +171,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 	}
 
 	private static boolean isCompatible(IGroup parent1, IGroup parent2) {
-		if (parent1 == null && parent2 == null) {
-			return true;
-		}
-		if (parent1 != null ^ parent2 != null) {
-			return false;
-		}
-		assert parent1 != null && parent2 != null;
-		return parent1 == parent2;
+		return (parent1 == null && parent2 == null)
+			|| (parent1 == parent2);
 	}
 
 	private static IGroup getGroupParentIfItIsConcurrentState(IEntity ent) {

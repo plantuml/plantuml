@@ -193,25 +193,12 @@ public enum VisibilityModifier {
 			return false;
 		}
 		final char c = s.charAt(0);
-		if (s.charAt(1) == c) {
-			return false;
-		}
-		if (c == '-') {
-			return true;
-		}
-		if (c == '#') {
-			return true;
-		}
-		if (c == '+') {
-			return true;
-		}
-		if (c == '~') {
-			return true;
-		}
-		if (c == '*') {
-			return true;
-		}
-		return false;
+		return s.charAt(1) != c
+			&& (c == '-'
+			|| c == '#'
+			|| c == '+'
+			|| c == '~'
+			|| c == '*');
 	}
 
 	public static VisibilityModifier getVisibilityModifier(CharSequence s, boolean isField) {

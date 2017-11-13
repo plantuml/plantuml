@@ -35,17 +35,12 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+
+import java.awt.*;
+import java.util.*;
 
 public class HtmlColorSetSimple implements IHtmlColorSet {
 
@@ -272,19 +267,10 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 
 	private boolean isValid(String s, boolean acceptTransparent) {
 		s = removeFirstDieseAndgoLowerCase(s);
-		if (s.matches("[0-9A-Fa-f]{3}")) {
-			return true;
-		}
-		if (s.matches("[0-9A-Fa-f]{6}")) {
-			return true;
-		}
-		if (acceptTransparent && s.equalsIgnoreCase("transparent")) {
-			return true;
-		}
-		if (htmlNames.containsKey(s)) {
-			return true;
-		}
-		return false;
+		return acceptTransparent && s.equalsIgnoreCase("transparent")
+			|| s.matches("[0-9A-Fa-f]{3}")
+			|| s.matches("[0-9A-Fa-f]{6}")
+			|| htmlNames.containsKey(s);
 
 	}
 

@@ -95,10 +95,7 @@ public class Bibliotekon {
 
 	private static boolean first(Line line) {
 		final int length = line.getLength();
-		if (length == 1) {
-			return true;
-		}
-		return false;
+		return length == 1;
 	}
 
 	public void addCluster(Cluster current) {
@@ -118,7 +115,6 @@ public class Bibliotekon {
 			}
 			return uid;
 		}
-		assert result == null;
 		if (ent.isGroup()) {
 			for (IEntity i : shapeMap.keySet()) {
 				if (ent.getCode().equals(i.getCode())) {
