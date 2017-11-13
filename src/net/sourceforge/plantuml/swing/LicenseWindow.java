@@ -110,7 +110,7 @@ class LicenseWindow extends JFrame {
 	private JComponent getJComponent(List<String> lines) {
 		final StringBuilder sb = new StringBuilder("<html>");
 		for (String s : lines) {
-			sb.append(s + "</b></i></u>");
+			sb.append(s).append("</b></i></u>");
 			sb.append("<br>");
 		}
 		sb.append("</html>");

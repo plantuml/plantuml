@@ -181,7 +181,7 @@ public class Worm implements Iterable<Point2D.Double> {
 	public String toString() {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < points.size() - 1; i++) {
-			result.append(getDirectionAtPoint(i) + " ");
+			result.append(getDirectionAtPoint(i)).append(" ");
 		}
 		return result + points.toString();
 	}

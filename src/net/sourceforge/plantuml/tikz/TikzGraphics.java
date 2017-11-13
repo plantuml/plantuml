@@ -39,15 +39,9 @@ import java.awt.Color;
 import java.awt.geom.PathIterator;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -205,7 +199,7 @@ public class TikzGraphics {
 	private void purgeStyles() {
 		for (Iterator<Map.Entry<String, Integer>> it = styles.entrySet().iterator(); it.hasNext();) {
 			final Map.Entry<String, Integer> ent = it.next();
-			if (ent.getValue().intValue() == 1) {
+			if (ent.getValue() == 1) {
 				it.remove();
 			}
 		}
@@ -220,29 +214,29 @@ public class TikzGraphics {
 		final StringBuilder sb = new StringBuilder();
 		if (pendingUrl == null) {
 			appendShadeOrDraw(sb);
-			sb.append("line width=" + thickness + "pt] ");
-			sb.append(couple(x, y) + " rectangle " + couple(x + width, y + height));
+			sb.append("line width=").append(thickness).append("pt] ");
+			sb.append(couple(x, y)).append(" rectangle ").append(couple(x + width, y + height));
 			sb.append(";");
 		} else {
-			sb.append("\\node at " + couple(x, y) + "[draw, ");
+			sb.append("\\node at ").append(couple(x, y)).append("[draw, ");
 			if (color != null) {
-				sb.append("color=" + getColorName(color) + ",");
+				sb.append("color=").append(getColorName(color)).append(",");
 			}
 			if (fillcolor != null) {
-				sb.append("fill=" + getColorName(fillcolor) + ",");
+				sb.append("fill=").append(getColorName(fillcolor)).append(",");
 				if (color == null) {
-					sb.append("color=" + getColorName(fillcolor) + ",");
+					sb.append("color=").append(getColorName(fillcolor)).append(",");
 				}
 			}
-			sb.append("line width=" + thickness + "pt,");
+			sb.append("line width=").append(thickness).append("pt,");
 			sb.append("below right,");
 			sb.append("inner sep=2ex,");
-			sb.append("minimum width=" + format(width) + "pt,");
-			sb.append("minimum height=" + format(height) + "pt,");
+			sb.append("minimum width=").append(format(width)).append("pt,");
+			sb.append("minimum height=").append(format(height)).append("pt,");
 			if (Url.isLatex(pendingUrl)) {
-				sb.append("hyperref node=" + extractInternalHref(pendingUrl));
+				sb.append("hyperref node=").append(extractInternalHref(pendingUrl));
 			} else {
-				sb.append("href node=" + pendingUrl);
+				sb.append("href node=").append(pendingUrl);
 			}
 			sb.append("] ");
 			sb.append(" {};");
@@ -353,11 +347,11 @@ public class TikzGraphics {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("\\draw[");
 		if (color != null) {
-			sb.append("color=" + getColorName(color) + ",");
+			sb.append("color=").append(getColorName(color)).append(",");
 		}
-		sb.append("line width=" + thickness + "pt");
+		sb.append("line width=").append(thickness).append("pt");
 		if (dash != null) {
-			sb.append(",dash pattern=" + dash);
+			sb.append(",dash pattern=").append(dash);
 		}
 		sb.append("] ");
 		sb.append(couple(x1, y1));
@@ -368,10 +362,9 @@ public class TikzGraphics {
 	}
 
 	public void polygon(double[] points) {
-
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
-		sb.append("line width=" + thickness + "pt]");
+		sb.append("line width=").append(thickness).append("pt]");
 		sb.append(" ");
 		for (int i = 0; i < points.length; i += 2) {
 			sb.append(couple(points[i], points[i + 1]));
@@ -384,23 +377,23 @@ public class TikzGraphics {
 	private void round(double r, double[] points) {
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
-		sb.append("line width=" + thickness + "pt]");
+		sb.append("line width=").append(thickness).append("pt]");
 		sb.append(" ");
 		int i = 0;
 		sb.append(couple(points[i++], points[i++]));
-		sb.append(" arc (180:270:" + format(r) + "pt) -- ");
+		sb.append(" arc (180:270:").append(format(r)).append("pt) -- ");
 		sb.append(couple(points[i++], points[i++]));
 		sb.append(" -- ");
 		sb.append(couple(points[i++], points[i++]));
-		sb.append(" arc (270:360:" + format(r) + "pt) -- ");
+		sb.append(" arc (270:360:").append(format(r)).append("pt) -- ");
 		sb.append(couple(points[i++], points[i++]));
 		sb.append(" -- ");
 		sb.append(couple(points[i++], points[i++]));
-		sb.append(" arc (0:90:" + format(r) + "pt) -- ");
+		sb.append(" arc (0:90:").append(format(r)).append("pt) -- ");
 		sb.append(couple(points[i++], points[i++]));
 		sb.append(" -- ");
 		sb.append(couple(points[i++], points[i++]));
-		sb.append(" arc (90:180:" + format(r) + "pt) -- ");
+		sb.append(" arc (90:180:").append(format(r)).append("pt) -- ");
 		sb.append(couple(points[i++], points[i++]));
 		sb.append(" -- ");
 		sb.append("cycle;");
@@ -412,16 +405,17 @@ public class TikzGraphics {
 		sb.append(gradient ? "\\shade[" : "\\draw[");
 		if (color != null) {
 			sb.append(gradient ? "draw=" : "color=");
-			sb.append(getColorName(color) + ",");
+			sb.append(getColorName(color)).append(",");
 		}
 		if (gradient) {
-			sb.append("top color=" + getColorName(fillcolor) + ",");
-			sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
-			sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
+			sb.append("top color=").append(getColorName(fillcolor)).append(",");
+			sb.append("bottom color=").append(getColorName(fillcolorGradient2)).append(",");
+			sb.append("shading=axis,shading angle=").append(getAngleFromGradientPolicy())
+			  .append(",");
 		} else if (fillcolor != null) {
-			sb.append("fill=" + getColorName(fillcolor) + ",");
+			sb.append("fill=").append(getColorName(fillcolor)).append(",");
 			if (color == null) {
-				sb.append("color=" + getColorName(fillcolor) + ",");
+				sb.append("color=").append(getColorName(fillcolor)).append(",");
 			}
 		}
 	}
@@ -454,9 +448,9 @@ public class TikzGraphics {
 	public void upath(double x, double y, UPath path) {
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
-		sb.append("line width=" + thickness + "pt");
+		sb.append("line width=").append(thickness).append("pt");
 		if (dash != null) {
-			sb.append(",dash pattern=" + dash);
+			sb.append(",dash pattern=").append(dash);
 		}
 		sb.append("] ");
 		for (USegment seg : path) {
@@ -491,21 +485,21 @@ public class TikzGraphics {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("\\draw[");
 		if (color != null) {
-			sb.append("color=" + getColorName(color) + ",");
+			sb.append("color=").append(getColorName(color)).append(",");
 		}
 		if (fillcolor != null) {
-			sb.append("fill=" + getColorName(fillcolor) + ",");
+			sb.append("fill=").append(getColorName(fillcolor)).append(",");
 		}
-		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
-				+ format(height) + "pt);");
-		addCommand(sb);
+		sb.append("line width=").append(thickness).append("pt] ").append(couple(x, y)).append(" ellipse (").append(format(width))
+          .append("pt and ").append(format(height)).append("pt);");
+        addCommand(sb);
 	}
 
 	public void drawSingleCharacter(double x, double y, char c) {
 		final String sb = "\\node at " +
 			couple(x, y) +
 			"[]{\\textbf{\\Large " + c + "}};";
-        addCommand(sb);
+        addCommand(new StringBuilder(sb));
 	}
 
 	public void drawPathIterator(double x, double y, PathIterator path) {

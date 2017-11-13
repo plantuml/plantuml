@@ -47,7 +47,7 @@ public enum DayOfWeek implements Subject {
 			if (sb.length() > 0) {
 				sb.append("|");
 			}
-			sb.append(day.name().substring(0, 3) + "[a-z]*");
+			sb.append(day.name().substring(0, 3)).append("[a-z]*");
 		}
 		return sb.toString();
 	}

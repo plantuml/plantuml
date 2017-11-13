@@ -54,7 +54,7 @@ public enum Month {
 			if (sb.length() > 0) {
 				sb.append("|");
 			}
-			sb.append(month.name().substring(0, 3) + "[a-z]*");
+			sb.append(month.name().substring(0, 3)).append("[a-z]*");
 		}
 		return sb.toString();
 	}

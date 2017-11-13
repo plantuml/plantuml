@@ -190,7 +190,7 @@ public class LinkType {
 			if (sb.length() > 0) {
 				sb.append(",");
 			}
-			sb.append("arrowsize=" + arrowsize);
+			sb.append("arrowsize=").append(arrowsize);
 		}
 		return sb.toString();
 	}

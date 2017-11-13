@@ -61,8 +61,8 @@ public abstract class AbstractPSystem implements Diagram {
 		final StringBuilder toAppend = new StringBuilder();
 		toAppend.append("PlantUML version ");
 		toAppend.append(Version.versionString());
-		toAppend.append("(" + Version.compileTimeString() + ")\n");
-		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
+		toAppend.append("(").append(Version.compileTimeString()).append(")\n");
+		toAppend.append("(").append(License.getCurrent()).append(" source distribution)\n");
 		for (String name : OptionPrint.interestingProperties()) {
 			toAppend.append(name);
 			toAppend.append(BackSlash.CHAR_NEWLINE);

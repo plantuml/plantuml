@@ -133,7 +133,7 @@ public class Bibliotekon {
 			final double maxX = sh.getMinX() + sh.getWidth();
 			if (maxX > warningOrError) {
 				final IEntity entity = ent.getKey();
-				sb.append(entity.getCode() + " is overpassing the width limit.");
+				sb.append(entity.getCode()).append(" is overpassing the width limit.");
 				sb.append("\n");
 			}
 

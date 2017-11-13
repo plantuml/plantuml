@@ -53,7 +53,7 @@ public class Stairs {
 		Collections.sort(copy);
 		final StringBuilder sb = new StringBuilder("[");
 		for (Double y : copy) {
-			sb.append(y + "=" + getValue(y) + " ");
+			sb.append(y).append("=").append(getValue(y)).append(" ");
 		}
 		sb.append("]");
 		return sb.toString();

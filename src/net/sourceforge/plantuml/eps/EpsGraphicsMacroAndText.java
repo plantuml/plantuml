@@ -79,7 +79,7 @@ public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 					final byte b[] = s.getBytes("ISO-8859-1");
 					if (b.length == 1) {
 						final int code = b[0] & 0xFF;
-						sb.append("\\" + Integer.toOctalString(code));
+						sb.append("\\").append(Integer.toOctalString(code));
 					} else {
 						sb.append('?');
 					}

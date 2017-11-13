@@ -393,7 +393,7 @@ public class SvgGraphics {
 	private static String getStyleInternal(String color, String strokeWidth, String strokeDasharray) {
 		final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: " + strokeWidth + ";");
 		if (strokeDasharray != null) {
-			style.append(" stroke-dasharray: " + strokeDasharray + ";");
+			style.append(" stroke-dasharray: ").append(strokeDasharray).append(";");
 		}
 		return style.toString();
 	}
@@ -597,26 +597,27 @@ public class SvgGraphics {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
 			if (type == USegmentType.SEG_MOVETO) {
-				sb.append("M" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
+				sb.append("M").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_LINETO) {
-				sb.append("L" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
+				sb.append("L").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_QUADTO) {
-				sb.append("Q" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " ");
+				sb.append("Q").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
+				  .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ");
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_CUBICTO) {
-				sb.append("C" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
+				sb.append("C").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
+				  .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ").append(format(coord[4] + x))
+				  .append(",").append(format(coord[5] + y)).append(" ");
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
 				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_ARCTO) {
-				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + ","
-						+ format(coord[3]) + " " + format(coord[4]) + "," + format(coord[5] + x) + ","
-						+ format(coord[6] + y) + " ");
+				sb.append("A").append(format(coord[0])).append(",").append(format(coord[1])).append(" ").append(format(coord[2]))
+				  .append(",").append(format(coord[3])).append(" ").append(format(coord[4])).append(",").append(format(coord[5] + x))
+				  .append(",").append(format(coord[6] + y)).append(" ");
 				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
@@ -653,12 +654,12 @@ public class SvgGraphics {
 	}
 
 	public void moveto(double x, double y) {
-		currentPath.append("M" + format(x) + "," + format(y) + " ");
+		currentPath.append("M").append(format(x)).append(",").append(format(y)).append(" ");
 		ensureVisible(x, y);
 	}
 
 	public void lineto(double x, double y) {
-		currentPath.append("L" + format(x) + "," + format(y) + " ");
+		currentPath.append("L").append(format(x)).append(",").append(format(y)).append(" ");
 		ensureVisible(x, y);
 	}
 
@@ -668,8 +669,8 @@ public class SvgGraphics {
 	}
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3)
-				+ "," + format(y3) + " ");
+		currentPath.append("C").append(format(x1)).append(",").append(format(y1)).append(" ").append(format(x2)).append(",")
+		           .append(format(y2)).append(" ").append(format(x3)).append(",").append(format(y3)).append(" ");
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 		ensureVisible(x3, y3);
@@ -677,7 +678,8 @@ public class SvgGraphics {
 	}
 
 	public void quadto(double x1, double y1, double x2, double y2) {
-		currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
+		currentPath.append("Q").append(format(x1)).append(",").append(format(y1)).append(" ").append(format(x2)).append(",")
+		           .append(format(y2)).append(" ");
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 	}

@@ -54,9 +54,9 @@ public class ShapePseudoImpl implements IShapePseudo {
 	}
 
 	public void appendShape(StringBuilder sb, StringBounder stringBounder) {
-		sb.append(uid + " [shape=rect,label=\"\"");
-		sb.append(",width=" + SvekUtils.pixelToInches(width));
-		sb.append(",height=" + SvekUtils.pixelToInches(height));
+		sb.append(uid).append(" [shape=rect,label=\"\"");
+		sb.append(",width=").append(SvekUtils.pixelToInches(width));
+		sb.append(",height=").append(SvekUtils.pixelToInches(height));
 		sb.append("];");
 	}
 

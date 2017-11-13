@@ -169,9 +169,9 @@ public class DotStringFactory implements Moveable {
 
 		for (String s : dotStrings) {
 			if (s.startsWith("ranksep")) {
-				sb.append("ranksep=" + ranksepInches + ";");
+				sb.append("ranksep=").append(ranksepInches).append(";");
 			} else if (s.startsWith("nodesep")) {
-				sb.append("nodesep=" + nodesepInches + ";");
+				sb.append("nodesep=").append(nodesepInches).append(";");
 			} else {
 				sb.append(s);
 			}

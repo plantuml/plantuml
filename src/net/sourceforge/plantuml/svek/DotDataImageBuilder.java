@@ -551,7 +551,7 @@ public final class DotDataImageBuilder {
 		final StringBuilder sb = new StringBuilder();
 		for (Map.Entry<Code, Double> ent : maxX.entrySet()) {
 			if (ent.getValue() > warningOrError) {
-				sb.append(ent.getKey() + " is overpassing the width limit.");
+				sb.append(ent.getKey()).append(" is overpassing the width limit.");
 				sb.append("\n");
 			}
 		}

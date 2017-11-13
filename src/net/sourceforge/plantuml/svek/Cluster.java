@@ -547,7 +547,7 @@ public class Cluster implements Moveable {
 		if (!entries.isEmpty()) {
 			sb.append("{rank=source;");
 			for (IShapePseudo sh : entries) {
-				sb.append(sh.getUid() + ";");
+				sb.append(sh.getUid()).append(";");
 			}
 			sb.append("}");
 			for (IShapePseudo sh : entries) {
@@ -558,7 +558,7 @@ public class Cluster implements Moveable {
 		if (!exits.isEmpty()) {
 			sb.append("{rank=sink;");
 			for (Shape sh : exits) {
-				sb.append(sh.getUid() + ";");
+				sb.append(sh.getUid()).append(";");
 			}
 			sb.append("}");
 			for (Shape sh : exits) {
@@ -714,9 +714,9 @@ public class Cluster implements Moveable {
 		if (protection0) {
 			subgraphCluster(sb, "p0");
 		}
-		sb.append("subgraph " + getClusterId() + " {");
+		sb.append("subgraph ").append(getClusterId()).append(" {");
 		sb.append("style=solid;");
-		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\";");
+		sb.append("color=\"").append(StringUtils.getAsHtml(color)).append("\";");
 
 		final String label;
 		if (isLabel()) {
@@ -735,7 +735,7 @@ public class Cluster implements Moveable {
 			printClusterEntryExit(sb, stringBounder);
 			subgraphCluster(sb, "ee", label);
 		} else {
-			sb.append("label=" + label + ";");
+			sb.append("label=").append(label).append(";");
 			SvekUtils.println(sb);
 		}
 
@@ -745,7 +745,7 @@ public class Cluster implements Moveable {
 		// }
 
 		if (thereALinkFromOrToGroup2) {
-			sb.append(getSpecialPointId(group) + " [shape=point,width=.01,label=\"\"];");
+			sb.append(getSpecialPointId(group)).append(" [shape=point,width=.01,label=\"\"];");
 		}
 		if (thereALinkFromOrToGroup1) {
 			subgraphCluster(sb, "i");
@@ -757,14 +757,14 @@ public class Cluster implements Moveable {
 			sb.append("{rank = source; ");
 			sb.append(getSourceInPoint(type));
 			sb.append(" [shape=point,width=.01,label=\"\"];");
-			sb.append(getMinPoint(type) + "->" + getSourceInPoint(type) + "  [weight=999];");
+			sb.append(getMinPoint(type)).append("->").append(getSourceInPoint(type)).append("  [weight=999];");
 			sb.append("}");
 			SvekUtils.println(sb);
 			sb.append("{rank = sink; ");
 			sb.append(getSinkInPoint(type));
 			sb.append(" [shape=point,width=.01,label=\"\"];");
 			sb.append("}");
-			sb.append(getSinkInPoint(type) + "->" + getMaxPoint(type) + "  [weight=999];");
+			sb.append(getSinkInPoint(type)).append("->").append(getMaxPoint(type)).append("  [weight=999];");
 			SvekUtils.println(sb);
 		}
 		SvekUtils.println(sb);
@@ -772,7 +772,7 @@ public class Cluster implements Moveable {
 		final boolean added = printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 		if (hasEntryOrExitPoint && !added) {
 			final String empty = "empty" + color;
-			sb.append(empty + " [shape=point,width=.01,label=\"\"];");
+			sb.append(empty).append(" [shape=point,width=.01,label=\"\"];");
 		}
 		sb.append("}");
 		if (protection1) {
@@ -801,8 +801,8 @@ public class Cluster implements Moveable {
 
 	private void subgraphCluster(StringBuilder sb, String id, String label) {
 		final String uid = getClusterId() + id;
-		sb.append("subgraph " + uid + " {");
-		sb.append("label=" + label + ";");
+		sb.append("subgraph ").append(uid).append(" {");
+		sb.append("label=").append(label).append(";");
 	}
 
 	public int getColor() {

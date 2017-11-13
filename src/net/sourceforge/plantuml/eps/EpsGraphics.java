@@ -75,7 +75,7 @@ public class EpsGraphics {
 
 	public EpsGraphics() {
 		header.append("%!PS-Adobe-3.0 EPSF-3.0\n");
-		header.append("%%Creator: PlantUML v" + Version.versionString(15) + BackSlash.NEWLINE);
+		header.append("%%Creator: PlantUML v").append(Version.versionString(15)).append(BackSlash.NEWLINE);
 		header.append("%%Title: noTitle\n");
 		// header.append("%%CreationDate: " + new Date() + BackSlash.BS_N);
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));
@@ -124,14 +124,14 @@ public class EpsGraphics {
 	public void close() {
 		checkCloseDone();
 
-		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + BackSlash.NEWLINE);
+		header.append("%%BoundingBox: 0 0 ").append(maxX).append(" ").append(maxY).append(BackSlash.NEWLINE);
 		// header.append("%%DocumentData: Clean7Bit\n");
 		// header.append("%%DocumentProcessColors: Black\n");
 		header.append("%%ColorUsage: Color\n");
 		header.append("%%Origin: 0 0\n");
 		header.append("%%EndComments\n\n");
 		header.append("gsave\n");
-		header.append("0 " + maxY + " translate\n");
+		header.append("0 ").append(maxY).append(" translate\n");
 		header.append("1 -1 scale\n");
 
 		if (setcolorgradientUsed) {
@@ -555,7 +555,7 @@ public class EpsGraphics {
 		if (checkConsistence && s.contains("  ")) {
 			throw new IllegalArgumentException(s);
 		}
-		body.append(s + BackSlash.NEWLINE);
+		body.append(s).append(BackSlash.NEWLINE);
 	}
 
 	public final void linetoNoMacro(double x1, double y1) {

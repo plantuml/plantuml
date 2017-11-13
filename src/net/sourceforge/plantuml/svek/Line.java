@@ -363,15 +363,15 @@ public class Line implements Moveable, Hideable {
 		if (useRankSame) {
 			if (pragma.horizontalLineBetweenDifferentPackageAllowed() || link.isInvis() || length != 1) {
 				// if (graphvizVersion.isJs() == false) {
-				sb.append("minlen=" + (length - 1));
+				sb.append("minlen=").append(length - 1);
 				sb.append(",");
 				// }
 			}
 		} else {
-			sb.append("minlen=" + (length - 1));
+			sb.append("minlen=").append(length - 1);
 			sb.append(",");
 		}
-		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
+		sb.append("color=\"").append(StringUtils.getAsHtml(lineColor)).append("\"");
 		if (labelText != null) {
 			sb.append(",");
 			if (graphvizVersion.modeSafe() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
@@ -410,7 +410,7 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (link.getSametail() != null) {
-			sb.append(",sametail=" + link.getSametail());
+			sb.append(",sametail=").append(link.getSametail());
 		}
 
 		sb.append("];");
@@ -443,8 +443,8 @@ public class Line implements Moveable, Hideable {
 
 	public static void appendTable(StringBuilder sb, int w, int h, int col) {
 		sb.append("<TABLE ");
-		sb.append("BGCOLOR=\"" + StringUtils.getAsHtml(col) + "\" ");
-		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">");
+		sb.append("BGCOLOR=\"").append(StringUtils.getAsHtml(col)).append("\" ");
+		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"").append(w).append("\" HEIGHT=\"").append(h).append("\">");
 		sb.append("<TR");
 		sb.append(">");
 		sb.append("<TD");
