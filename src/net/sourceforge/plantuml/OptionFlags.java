@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class OptionFlags {
 
@@ -208,9 +208,7 @@ public class OptionFlags {
 				return;
 			}
 			// final PSystemError systemError = (PSystemError) system;
-			PrintStream ps = null;
-			try {
-				ps = new PrintStream(new FileOutputStream(logData, true));
+			try (PrintStream ps = new PrintStream(new FileOutputStream(logData, true))) {
 				ps.println("Start of " + file.getName());
 				ps.println(warnOrError);
 				ps.println("End of " + file.getName());
@@ -218,10 +216,6 @@ public class OptionFlags {
 			} catch (FileNotFoundException e) {
 				Log.error("Cannot open " + logData);
 				e.printStackTrace();
-			} finally {
-				if (ps != null) {
-					ps.close();
-				}
 			}
 		}
 	}
@@ -229,17 +223,11 @@ public class OptionFlags {
 	public final void setLogData(File logData) {
 		this.logData = logData;
 		logData.delete();
-		PrintStream ps = null;
-		try {
-			ps = new PrintStream(new FileOutputStream(logData));
+		try (PrintStream ps = new PrintStream(new FileOutputStream(logData))) {
 			ps.println();
 		} catch (FileNotFoundException e) {
 			Log.error("Cannot open " + logData);
 			e.printStackTrace();
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
 		}
 	}
 

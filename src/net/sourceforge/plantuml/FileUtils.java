@@ -95,43 +95,49 @@ public class FileUtils {
 		if (dest.isDirectory()) {
 			dest = new File(dest, src.getName());
 		}
-		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
-		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest));
-		copyInternal(fis, fos);
+		try (InputStream fis = new BufferedInputStream(new FileInputStream(src));
+		     final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest))) {
+			copyInternal(fis, fos);
+		}
 	}
 
 	public static void copyToStream(File src, OutputStream os) throws IOException {
-		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
-		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+		try (final InputStream fis = new BufferedInputStream(new FileInputStream(src));
+		     final OutputStream fos = new BufferedOutputStream(os)) {
+			copyInternal(fis, fos);
+		}
 	}
 
 	public static void copyToStream(InputStream is, OutputStream os) throws IOException {
-		final InputStream fis = new BufferedInputStream(is);
-		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+		try (final InputStream fis = new BufferedInputStream(is);
+		     final OutputStream fos = new BufferedOutputStream(os)) {
+			copyInternal(fis, fos);
+		}
 	}
 
 	public static void copyToFile(byte[] src, File dest) throws IOException {
-		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest));
-		fos.write(src);
-		fos.close();
+		try (final FileOutputStream out = new FileOutputStream(dest);
+		     OutputStream fos = new BufferedOutputStream(out)) {
+			fos.write(src);
+		}
 	}
 
 	public static String readSvg(File svgFile) throws IOException {
-		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
-		return readSvg(br, false, true);
+		try (BufferedReader br = new BufferedReader(new FileReader(svgFile))) {
+			return readSvg(br, false, true);
+		}
 	}
 
 	public static String readSvg(InputStream is) throws IOException {
-		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		return readSvg(br, false, false);
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+			return readSvg(br, false, false);
+		}
 	}
 
-	static public String readFile(File svgFile) throws IOException {
-		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
-		return readSvg(br, true, true);
-	}
+    public static String readFile(File svgFile) throws IOException {
+        final BufferedReader br = new BufferedReader(new FileReader(svgFile));
+        return readSvg(br, true, true);
+    }
 
 	private static String readSvg(final BufferedReader br, boolean withNewline, boolean withClose) throws IOException {
 		final StringBuilder sb = new StringBuilder();

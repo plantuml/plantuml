@@ -106,23 +106,16 @@ public class PSystemUtils {
 	}
 
 	private static List<FileImageData> exportDiagramsDefault(Diagram system, SuggestedFile suggestedFile,
-                                                             FileFormatOption fileFormat) throws IOException {
+	                                                         FileFormatOption fileFormat) throws IOException {
 		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
-		OutputStream os = null;
+		if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
+			return Collections.emptyList();
+		}
 		ImageData imageData;
-		try {
-			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
-				return Collections.emptyList();
-			}
-			os = new BufferedOutputStream(new FileOutputStream(suggestedFile.getFile(0)));
-			// system.exportDiagram(os, null, 0, fileFormat);
+		try (final OutputStream os = new BufferedOutputStream(new FileOutputStream(suggestedFile.getFile(0)))) {
 			imageData = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
 		}
 		return Arrays.asList(new FileImageData(suggestedFile.getFile(0), imageData));
 	}
@@ -132,19 +125,13 @@ public class PSystemUtils {
 		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
 			throw new IllegalArgumentException("File is a directory " + suggestedFile);
 		}
-		OutputStream os = null;
 		ImageData cmap;
 		ImageData imageData;
-		try {
-			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
-				return Collections.emptyList();
-			}
-			os = new BufferedOutputStream(new FileOutputStream(suggestedFile.getFile(0)));
+		if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
+			return Collections.emptyList();
+		}
+		try (OutputStream os = new BufferedOutputStream(new FileOutputStream(suggestedFile.getFile(0)))) {
 			imageData = cmap = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
 		}
 		if (cmap != null && cmap.containsCMapData()) {
 			system.exportCmap(suggestedFile, 0, cmap);
@@ -187,20 +174,12 @@ public class PSystemUtils {
 			return createFilesHtml(system, suggestedFile);
 		}
 
+		if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
+			return Collections.emptyList();
+		}
 		ImageData cmap;
-		OutputStream os = null;
-		try {
-			if (!PSystemUtils.canFileBeWritten(suggestedFile.getFile(0))) {
-				return Collections.emptyList();
-			}
-			// System.err.println("FOO11=" + suggestedFile);
-			// os = new BufferedOutputStream(new FileOutputStream(suggestedFile));
-			os = new NamedOutputStream(suggestedFile.getFile(0));
+		try (final OutputStream os = new NamedOutputStream(suggestedFile.getFile(0))) {
 			cmap = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
 		}
 		List<File> result = Arrays.asList(suggestedFile.getFile(0));
 
