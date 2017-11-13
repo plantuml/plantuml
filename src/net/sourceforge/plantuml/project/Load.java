@@ -57,13 +57,7 @@ class Load implements Numeric {
 
 	public int compareTo(Numeric other) {
 		final Load this2 = (Load) other;
-		if (this2.minuteMen > minuteMen) {
-			return -1;
-		}
-		if (this2.minuteMen < minuteMen) {
-			return 1;
-		}
-		return 0;
+		return Long.compare(minuteMen, this2.minuteMen);
 	}
 
 	public final long getMinuteMen() {
