@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.suggest;
 
 import net.sourceforge.plantuml.StringUtils;
 
-import java.util.Objects;
-
 
 public class SuggestEngineResult {
 

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.creole;
 
 import java.util.Arrays;
-import java.util.List;
 
 import net.sourceforge.plantuml.EmbededDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
