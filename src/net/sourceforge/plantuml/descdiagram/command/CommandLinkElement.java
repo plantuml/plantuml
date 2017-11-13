@@ -108,52 +108,76 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		LinkDecor d1 = LinkDecor.NONE;
 		LinkDecor d2 = LinkDecor.NONE;
 
-		if (head1.equals("(0")) {
-			d1 = LinkDecor.CIRCLE_CONNECT;
-		} else if (head1.equals("#")) {
-			d1 = LinkDecor.SQUARE;
-		} else if (head1.equals("0")) {
-			d1 = LinkDecor.CIRCLE;
-		} else if (head1.equals("(")) {
-			d1 = LinkDecor.PARENTHESIS;
-		} else if (head1.equals(">")) {
-			d1 = LinkDecor.ARROW;
-		} else if (head1.equals("*")) {
-			d1 = LinkDecor.COMPOSITION;
-		} else if (head1.equals("o")) {
-			d1 = LinkDecor.AGREGATION;
-		} else if (head1.equals("+")) {
-			d1 = LinkDecor.PLUS;
-		} else if (head1.equals(">>")) {
-			d1 = LinkDecor.ARROW_TRIANGLE;
-		} else if (head1.equals("^")) {
-			d1 = LinkDecor.EXTENDS;
-		} else if (head1.equals("|>")) {
-			d1 = LinkDecor.EXTENDS;
+		switch (head1) {
+			case "(0":
+				d1 = LinkDecor.CIRCLE_CONNECT;
+				break;
+			case "#":
+				d1 = LinkDecor.SQUARE;
+				break;
+			case "0":
+				d1 = LinkDecor.CIRCLE;
+				break;
+			case "(":
+				d1 = LinkDecor.PARENTHESIS;
+				break;
+			case ">":
+				d1 = LinkDecor.ARROW;
+				break;
+			case "*":
+				d1 = LinkDecor.COMPOSITION;
+				break;
+			case "o":
+				d1 = LinkDecor.AGREGATION;
+				break;
+			case "+":
+				d1 = LinkDecor.PLUS;
+				break;
+			case ">>":
+				d1 = LinkDecor.ARROW_TRIANGLE;
+				break;
+			case "^":
+				d1 = LinkDecor.EXTENDS;
+				break;
+			case "|>":
+				d1 = LinkDecor.EXTENDS;
+				break;
 		}
 
-		if (head2.equals("0)")) {
-			d2 = LinkDecor.CIRCLE_CONNECT;
-		} else if (head2.equals("#")) {
-			d2 = LinkDecor.SQUARE;
-		} else if (head2.equals("0")) {
-			d2 = LinkDecor.CIRCLE;
-		} else if (head2.equals(")")) {
-			d2 = LinkDecor.PARENTHESIS;
-		} else if (head2.equals("<")) {
-			d2 = LinkDecor.ARROW;
-		} else if (head2.equals("*")) {
-			d2 = LinkDecor.COMPOSITION;
-		} else if (head2.equals("o")) {
-			d2 = LinkDecor.AGREGATION;
-		} else if (head2.equals("+")) {
-			d2 = LinkDecor.PLUS;
-		} else if (head2.equals("<<")) {
-			d2 = LinkDecor.ARROW_TRIANGLE;
-		} else if (head2.equals("^")) {
-			d2 = LinkDecor.EXTENDS;
-		} else if (head2.equals("<|")) {
-			d2 = LinkDecor.EXTENDS;
+		switch (head2) {
+			case "0)":
+				d2 = LinkDecor.CIRCLE_CONNECT;
+				break;
+			case "#":
+				d2 = LinkDecor.SQUARE;
+				break;
+			case "0":
+				d2 = LinkDecor.CIRCLE;
+				break;
+			case ")":
+				d2 = LinkDecor.PARENTHESIS;
+				break;
+			case "<":
+				d2 = LinkDecor.ARROW;
+				break;
+			case "*":
+				d2 = LinkDecor.COMPOSITION;
+				break;
+			case "o":
+				d2 = LinkDecor.AGREGATION;
+				break;
+			case "+":
+				d2 = LinkDecor.PLUS;
+				break;
+			case "<<":
+				d2 = LinkDecor.ARROW_TRIANGLE;
+				break;
+			case "^":
+				d2 = LinkDecor.EXTENDS;
+				break;
+			case "<|":
+				d2 = LinkDecor.EXTENDS;
+				break;
 		}
 
 		LinkType result = new LinkType(d1, d2);
@@ -167,14 +191,19 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 
 		final String middle = arg.get("INSIDE", 0);
-		if ("0".equals(middle)) {
-			result = result.withMiddleCircle();
-		} else if ("0)".equals(middle)) {
-			result = result.withMiddleCircleCircled1();
-		} else if ("(0".equals(middle)) {
-			result = result.withMiddleCircleCircled2();
-		} else if ("(0)".equals(middle)) {
-			result = result.withMiddleCircleCircled();
+		switch (middle) {
+			case "0":
+				result = result.withMiddleCircle();
+				break;
+			case "0)":
+				result = result.withMiddleCircleCircled1();
+				break;
+			case "(0":
+				result = result.withMiddleCircleCircled2();
+				break;
+			case "(0)":
+				result = result.withMiddleCircleCircled();
+				break;
 		}
 		return result;
 	}

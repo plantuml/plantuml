@@ -135,16 +135,20 @@ public class SvgPath {
 				continue;
 			}
 			final String letter = cmd.toSvg();
-			if (letter.equals("h")) {
-				result.add(new SvgCommandLetter("l"));
-				result.add(it.next());
-				result.add(new SvgCommandNumber("0"));
-			} else if (letter.equals("v")) {
-				result.add(new SvgCommandLetter("l"));
-				result.add(new SvgCommandNumber("0"));
-				result.add(it.next());
-			} else {
-				result.add(cmd);
+			switch (letter) {
+				case "h":
+					result.add(new SvgCommandLetter("l"));
+					result.add(it.next());
+					result.add(new SvgCommandNumber("0"));
+					break;
+				case "v":
+					result.add(new SvgCommandLetter("l"));
+					result.add(new SvgCommandNumber("0"));
+					result.add(it.next());
+					break;
+				default:
+					result.add(cmd);
+					break;
 			}
 		}
 		return result;
