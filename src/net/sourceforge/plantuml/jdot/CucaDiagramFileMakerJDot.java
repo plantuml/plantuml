@@ -244,7 +244,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
+			final List<Member> members = g.getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
 			if (members.isEmpty()) {
 				attribute = new TextBlockEmpty();

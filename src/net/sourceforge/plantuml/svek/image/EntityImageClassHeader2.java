@@ -128,7 +128,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		}
 
 		final TextBlock circledCharacter;
-		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (ILeaf) getEntity())) {
+		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, getEntity())) {
 			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, skinParam), 4, 0, 5, 5);
 		} else {
 			circledCharacter = null;

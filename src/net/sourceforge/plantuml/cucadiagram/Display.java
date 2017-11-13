@@ -88,7 +88,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public static Display empty() {
-		return new Display((HorizontalAlignment) null, false, CreoleMode.FULL);
+		return new Display(null, false, CreoleMode.FULL);
 	}
 
 	public static Display create(CharSequence... s) {

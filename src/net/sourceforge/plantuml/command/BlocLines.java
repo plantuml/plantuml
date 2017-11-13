@@ -56,7 +56,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	private BlocLines(List<? extends CharSequence> lines) {
-		this.lines = (List<CharSequence>) Collections.unmodifiableList(lines);
+		this.lines = Collections.unmodifiableList(lines);
 	}
 
 	public Display toDisplay() {

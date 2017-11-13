@@ -88,8 +88,8 @@ public final class GroupPngMakerActivity {
 	private List<Link> getPureInnerLinks() {
 		final List<Link> result = new ArrayList<Link>();
 		for (Link link : diagram.getLinks()) {
-			final IEntity e1 = (IEntity) link.getEntity1();
-			final IEntity e2 = (IEntity) link.getEntity2();
+			final IEntity e1 = link.getEntity1();
+			final IEntity e2 = link.getEntity2();
 			if (e1.getParentContainer() == group && !e1.isGroup() && e2.getParentContainer() == group
 					&& !e2.isGroup()) {
 				result.add(link);

@@ -76,7 +76,7 @@ public class XmlConverter {
 		final Document document = builder.newDocument();
 		document.setXmlStandalone(true);
 
-		final Element root = (Element) document.createElement("plantuml".toUpperCase());
+		final Element root = document.createElement("plantuml".toUpperCase());
 		document.appendChild(root);
 
 		// final Element elt1 = (Element) document.createElement("totalLaunch".toUpperCase());
@@ -93,12 +93,12 @@ public class XmlConverter {
 	}
 
 	private void addNode(Element root, Document document, StatsTable table) {
-		final Element elt = (Element) document.createElement(toXmlName(table.getName()).toUpperCase());
+		final Element elt = document.createElement(toXmlName(table.getName()).toUpperCase());
 
 		for (StatsLine statsLine : table.getLines()) {
-			final Element line = (Element) document.createElement("line".toUpperCase());
+			final Element line = document.createElement("line".toUpperCase());
 			for (StatsColumn col : table.getColumnHeaders()) {
-				final Element value = (Element) document.createElement(col.name());
+				final Element value = document.createElement(col.name());
 				// value.setAttribute("value", toText(statsLine.getValue(col)));
 				value.setTextContent(toText(statsLine.getValue(col)));
 				line.appendChild(value);

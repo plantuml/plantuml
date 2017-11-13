@@ -172,7 +172,7 @@ public class SvgGraphics {
 	// This method returns a reference to a simple XML
 	// element node that has no attributes.
 	private Element simpleElement(String type) {
-		final Element theElement = (Element) document.createElement(type);
+		final Element theElement = document.createElement(type);
 		root.appendChild(theElement);
 		return theElement;
 	}
@@ -191,7 +191,7 @@ public class SvgGraphics {
 	private Element getRootNode() {
 		// Create the root node named svg and append it to
 		// the document.
-		final Element svg = (Element) document.createElement("svg");
+		final Element svg = document.createElement("svg");
 		document.appendChild(svg);
 
 		// Set some attributes on the root node that are
@@ -209,7 +209,7 @@ public class SvgGraphics {
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("ellipse");
+			final Element elt = document.createElement("ellipse");
 			elt.setAttribute("cx", format(x));
 			elt.setAttribute("cy", format(y));
 			elt.setAttribute("rx", format(xRadius));
@@ -226,7 +226,7 @@ public class SvgGraphics {
 		if (!hidden) {
 			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
 					+ format(x2) + " " + format(y2);
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", path);
 			elt.setAttribute("fill", fill);
 			elt.setAttribute("style", getStyle());
@@ -239,10 +239,10 @@ public class SvgGraphics {
 	private Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
 
 	public String createSvgGradient(String color1, String color2, char policy) {
-		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
+		final List<Object> key = Arrays.asList(color1, color2, policy);
 		String id = gradients.get(key);
 		if (id == null) {
-			final Element elt = (Element) document.createElement("linearGradient");
+			final Element elt = document.createElement("linearGradient");
 			if (policy == '|') {
 				elt.setAttribute("x1", "0%");
 				elt.setAttribute("y1", "50%");
@@ -268,10 +268,10 @@ public class SvgGraphics {
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
 
-			final Element stop1 = (Element) document.createElement("stop");
+			final Element stop1 = document.createElement("stop");
 			stop1.setAttribute("stop-color", color1);
 			stop1.setAttribute("offset", "0%");
-			final Element stop2 = (Element) document.createElement("stop");
+			final Element stop2 = document.createElement("stop");
 			stop2.setAttribute("stop-color", color2);
 			stop2.setAttribute("offset", "100%");
 
@@ -317,7 +317,7 @@ public class SvgGraphics {
 			closeLink();
 		}
 
-		pendingAction.add(0, (Element) document.createElement("a"));
+		pendingAction.add(0, document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", target);
 		pendingAction.get(0).setAttribute("xlink:href", url);
 		pendingAction.get(0).setAttribute("xlink:type", "simple");
@@ -360,7 +360,7 @@ public class SvgGraphics {
 	}
 
 	private Element createRectangleInternal(double x, double y, double width, double height) {
-		final Element elt = (Element) document.createElement("rect");
+		final Element elt = document.createElement("rect");
 		elt.setAttribute("x", format(x));
 		elt.setAttribute("y", format(y));
 		elt.setAttribute("width", format(width));
@@ -373,7 +373,7 @@ public class SvgGraphics {
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("line");
+			final Element elt = document.createElement("line");
 			elt.setAttribute("x1", format(x1));
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
@@ -401,7 +401,7 @@ public class SvgGraphics {
 	public void svgPolygon(double deltaShadow, double... points) {
 		manageShadow(deltaShadow);
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("polygon");
+			final Element elt = document.createElement("polygon");
 			final StringBuilder sb = new StringBuilder();
 			for (double coord : points) {
 				if (sb.length() > 0) {
@@ -426,7 +426,7 @@ public class SvgGraphics {
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("text");
+			final Element elt = document.createElement("text");
 			// required for web-kit based browsers
 			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
@@ -468,7 +468,7 @@ public class SvgGraphics {
 
 			if (textDecoration != null && textDecoration.contains("underline")) {
 				final double delta = 2;
-				final Element elt2 = (Element) document.createElement("line");
+				final Element elt2 = document.createElement("line");
 				elt2.setAttribute("x1", format(x));
 				elt2.setAttribute("y1", format(y + delta));
 				elt2.setAttribute("x2", format(x + textLength));
@@ -499,7 +499,7 @@ public class SvgGraphics {
 			return id;
 		}
 		id = getIdFilterBackColor(color);
-		final Element filter = (Element) document.createElement("filter");
+		final Element filter = document.createElement("filter");
 		filter.setAttribute("id", id);
 		filter.setAttribute("x", "0");
 		filter.setAttribute("y", "0");
@@ -627,7 +627,7 @@ public class SvgGraphics {
 
 		}
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
 			elt.setAttribute("fill", fill);
@@ -690,7 +690,7 @@ public class SvgGraphics {
 
 	public void fill(int windingRule) {
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			// elt elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
@@ -701,7 +701,7 @@ public class SvgGraphics {
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
 		if (!hidden) {
-			final Element elt = (Element) document.createElement("image");
+			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -722,7 +722,7 @@ public class SvgGraphics {
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
 			final String key = "imagesvginlined" + images.size();
-			final Element elt = (Element) document.createElement(key);
+			final Element elt = document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
 		}
@@ -755,7 +755,7 @@ public class SvgGraphics {
 		if (deltaShadow != 0) {
 			if (!withShadow) {
 				// <filter id="f1" x="0" y="0" width="120%" height="120%">
-				final Element filter = (Element) document.createElement("filter");
+				final Element filter = document.createElement("filter");
 				filter.setAttribute("id", shadowId);
 				filter.setAttribute("x", "-1");
 				filter.setAttribute("y", "-1");
@@ -775,7 +775,7 @@ public class SvgGraphics {
 	}
 
 	private void addFilter(Element filter, String name, String... data) {
-		final Element elt = (Element) document.createElement(name);
+		final Element elt = document.createElement(name);
 		for (int i = 0; i < data.length; i += 2) {
 			elt.setAttribute(data[i], data[i + 1]);
 		}

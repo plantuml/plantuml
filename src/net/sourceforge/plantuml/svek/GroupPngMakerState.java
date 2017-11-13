@@ -161,7 +161,7 @@ public final class GroupPngMakerState {
 	}
 
 	private TextBlockWidth getAttributes(final ISkinParam skinParam) {
-		final List<String> details = ((IEntity) group).getBodier().getRawBody();
+		final List<String> details = group.getBodier().getRawBody();
 
 		if (details.isEmpty()) {
 			return new TextBlockEmpty();
@@ -188,7 +188,7 @@ public final class GroupPngMakerState {
 			if (!(leaf instanceof IGroup)) {
 				return false;
 			}
-			if (((IGroup) leaf).getLeafType() != LeafType.STATE_CONCURRENT) {
+			if (leaf.getLeafType() != LeafType.STATE_CONCURRENT) {
 				return false;
 			}
 		}

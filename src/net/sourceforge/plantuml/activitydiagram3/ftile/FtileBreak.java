@@ -65,7 +65,7 @@ public class FtileBreak extends FtileEmpty implements WeldingPoint {
 
 	@Override
 	public List<WeldingPoint> getWeldingPoints() {
-		return Collections.singletonList((WeldingPoint) this);
+		return Collections.singletonList(this);
 	}
 
 }

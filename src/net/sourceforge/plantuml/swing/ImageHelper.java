@@ -69,7 +69,7 @@ public class ImageHelper {
 		final int targetHeight = targetDim.height;
 		final int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB
 				: BufferedImage.TYPE_INT_ARGB;
-		BufferedImage ret = (BufferedImage) img;
+		BufferedImage ret = img;
 		int w;
 		int h;
 		if (higherQuality) {

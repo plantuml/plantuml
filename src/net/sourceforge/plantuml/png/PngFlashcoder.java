@@ -72,7 +72,7 @@ public class PngFlashcoder {
 		g2d.drawImage(im, null, 0, 0);
 		int x = 0;
 		for (BufferedImage f : flashcodes) {
-			g2d.drawImage(f, null, x, (int) im.getHeight());
+			g2d.drawImage(f, null, x, im.getHeight());
 			x += f.getWidth();
 		}
 		g2d.dispose();

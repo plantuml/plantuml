@@ -327,8 +327,8 @@ public final class DotDataImageBuilder {
 			throw new IllegalStateException();
 		}
 		if (leaf.getLeafType().isLikeClass()) {
-			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, (ILeaf) leaf, skinParam,
-					portionShower);
+			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, leaf, skinParam,
+                                                                           portionShower);
 			final Neighborhood neighborhood = leaf.getNeighborhood();
 			if (neighborhood != null) {
 				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
@@ -480,7 +480,7 @@ public final class DotDataImageBuilder {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
+			final List<Member> members = g.getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
 			if (members.isEmpty()) {
 				attribute = new TextBlockEmpty();

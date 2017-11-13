@@ -119,7 +119,7 @@ public class Zoda2 {
 
 	private void recordHeap(final Heap h) {
 		for (ANode n : h.getNodes()) {
-			heaps.put((ANodeImpl) n, h);
+			heaps.put(n, h);
 		}
 	}
 

@@ -109,7 +109,7 @@ public class EvalBoolean {
 			final String func = str.substring(startPos, pos);
 			x = truth.isTrue(func);
 		} else {
-			throw new IllegalArgumentException("Unexpected: " + (char) ch);
+			throw new IllegalArgumentException("Unexpected: " + ch);
 		}
 
 		return x;
@@ -123,7 +123,7 @@ public class EvalBoolean {
 		nextChar();
 		final boolean x = parseExpression();
 		if (pos < str.length()) {
-			throw new IllegalArgumentException("Unexpected: " + (char) ch);
+			throw new IllegalArgumentException("Unexpected: " + ch);
 		}
 		return x;
 	}

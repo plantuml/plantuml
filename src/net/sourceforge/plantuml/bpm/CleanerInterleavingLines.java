@@ -102,7 +102,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 		}
 		assert data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty;
 		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;
-        return (ConnectorPuzzleEmpty) data2;
+        return data2;
 	}
 
 	private boolean mergeable(Placeable data1, Placeable data2) {

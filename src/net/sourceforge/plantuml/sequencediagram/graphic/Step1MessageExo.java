@@ -103,7 +103,7 @@ class Step1MessageExo extends Step1Abstract {
 
 		assert graphic instanceof InGroupable;
 		if (graphic instanceof InGroupable) {
-			inGroupablesStack.addElement((InGroupable) graphic);
+			inGroupablesStack.addElement(graphic);
 			inGroupablesStack.addElement(livingParticipantBox);
 		}
 

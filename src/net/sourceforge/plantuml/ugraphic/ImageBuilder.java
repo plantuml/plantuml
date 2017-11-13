@@ -426,7 +426,7 @@ public class ImageBuilder {
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, dpiFactor, affineTransforms == null ? null
 				: affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
-		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
+		final BufferedImage im = ug.getBufferedImage();
 		if (mybackcolor instanceof HtmlColorGradient) {
 			ug.apply(new UChangeBackColor(mybackcolor)).draw(new URectangle(im.getWidth(), im.getHeight()));
 		}
