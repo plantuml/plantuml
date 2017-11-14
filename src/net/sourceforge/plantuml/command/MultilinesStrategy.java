@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
