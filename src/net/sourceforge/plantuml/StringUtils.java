@@ -35,15 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -52,6 +43,15 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
+
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Do not move
 public class StringUtils {
@@ -318,28 +318,13 @@ public class StringUtils {
 
 	public static boolean isDiagramCacheable(String uml) {
 		uml = uml.toLowerCase();
-		if (uml.startsWith("@startuml\nversion\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nlicense\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nlicence\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nauthor\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\ncheckversion")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\ntestdot\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nsudoku\n")) {
-			return false;
-		}
-		return true;
+		return !uml.startsWith("@startuml\nversion\n")
+			&& !uml.startsWith("@startuml\nlicense\n")
+			&& !uml.startsWith("@startuml\nlicence\n")
+			&& !uml.startsWith("@startuml\nauthor\n")
+			&& !uml.startsWith("@startuml\ncheckversion")
+			&& !uml.startsWith("@startuml\ntestdot\n")
+			&& !uml.startsWith("@startuml\nsudoku\n");
 	}
 
 	public static int getPragmaRevision(String uml) {
