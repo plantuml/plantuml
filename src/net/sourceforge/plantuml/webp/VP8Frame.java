@@ -252,7 +252,7 @@ public class VP8Frame {
 					}
 
 		// Read the mb_no_coeff_skip flag
-		macroBlockNoCoeffSkip = (int) bc.readBit();
+		macroBlockNoCoeffSkip = bc.readBit();
 		if (frameType == 0) {
 			readModes(bc);
 		} else {
