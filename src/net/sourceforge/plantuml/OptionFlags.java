@@ -97,7 +97,7 @@ public class OptionFlags {
 		quiet = false;
 		checkDotError = false;
 		printFonts = false;
-		useSuggestEngine = true;
+		// useSuggestEngine = true;
 		// failOnError = false;
 		encodesprite = false;
 		// PIC_LINE = false;
@@ -116,7 +116,7 @@ public class OptionFlags {
 	private boolean quiet;
 	private boolean checkDotError;
 	private boolean printFonts;
-	private boolean useSuggestEngine;
+	// private boolean useSuggestEngine;
 	private boolean encodesprite;
 	private boolean dumpHtmlStats;
 	private boolean dumpStats;
@@ -250,13 +250,17 @@ public class OptionFlags {
 		this.printFonts = printFonts;
 	}
 
-	public final boolean isUseSuggestEngine() {
-		return useSuggestEngine;
+	public final boolean isUseSuggestEngine2() {
+		return false;
 	}
 
-	public final void setUseSuggestEngine(boolean useSuggestEngine) {
-		this.useSuggestEngine = useSuggestEngine;
-	}
+	// public final boolean isUseSuggestEngine() {
+	// return useSuggestEngine;
+	// }
+	//
+	// public final void setUseSuggestEngine(boolean useSuggestEngine) {
+	// this.useSuggestEngine = useSuggestEngine;
+	// }
 
 	public final boolean isEncodesprite() {
 		return encodesprite;

@@ -92,6 +92,9 @@ public class SkinParameter {
 	public static final SkinParameter RECTANGLE = new SkinParameter("RECTANGLE", ColorParam.rectangleBackground,
 			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
 
+	public static final SkinParameter COLLECTIONS = new SkinParameter("COLLECTIONS", ColorParam.collectionsBackground,
+			ColorParam.collectionsBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
+
 	public static final SkinParameter ACTOR = new SkinParameter("ACTOR", ColorParam.actorBackground,
 			ColorParam.actorBorder, FontParam.ACTOR, FontParam.ACTOR_STEREOTYPE);
 

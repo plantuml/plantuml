@@ -80,9 +80,19 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public abstract IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol);
 
-	public String getNamespaceSeparator() {
-		return null;
+	private String namespaceSeparator = ".";
+
+	final public void setNamespaceSeparator(String namespaceSeparator) {
+		this.namespaceSeparator = namespaceSeparator;
 	}
+
+	final public String getNamespaceSeparator() {
+		return namespaceSeparator;
+	}
+
+	// public String getNamespaceSeparator() {
+	// return null;
+	// }
 
 	@Override
 	public boolean hasUrl() {
@@ -157,12 +167,40 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 		return Collections.unmodifiableCollection(result);
 	}
-
+	
+	final public IGroup getOrCreateNamespace(Code namespace, Display display, GroupType type, IGroup parent) {
+		if (getNamespaceSeparator() != null) {
+			namespace = namespace.withSeparator(getNamespaceSeparator()).getFullyQualifiedCode(getCurrentGroup());
+		}
+		final IGroup g = getOrCreateNamespaceInternal(namespace, display, type, parent);
+		currentGroup = g;
+		return g;
+	}
+	
 	final public IGroup getOrCreateGroup(Code code, Display display, GroupType type, IGroup parent) {
 		final IGroup g = getOrCreateGroupInternal(code, display, null, type, parent);
 		currentGroup = g;
 		return g;
 	}
+
+
+
+	final protected IGroup getOrCreateNamespaceInternal(Code namespace, Display display, GroupType type, IGroup parent) {
+		IGroup result = entityFactory.getGroups().get(namespace);
+		if (result != null) {
+			return result;
+		}
+		if (entityFactory.getLeafs().containsKey(namespace)) {
+			result = entityFactory.muteToGroup(namespace, namespace, type, parent);
+			result.setDisplay(display);
+		} else {
+			result = entityFactory.createGroup(namespace, display, namespace, type, parent, getHides(),
+					getNamespaceSeparator());
+		}
+		entityFactory.addGroup(result);
+		return result;
+	}
+
 
 	private IGroup getOrCreateGroupInternal(Code code, Display display, Code namespace2, GroupType type, IGroup parent) {
 		IGroup result = entityFactory.getGroups().get(code);

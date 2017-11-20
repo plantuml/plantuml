@@ -130,12 +130,12 @@ public class FtileGroup extends AbstractFtile {
 		return new UTranslate(suppWidth / 2, diffHeightTitle(stringBounder) + headerNoteHeight(stringBounder));
 	}
 
-	private static MinMax getMinMax(TextBlock tb, StringBounder stringBounder) {
+	private MinMax getInnerMinMax(StringBounder stringBounder) {
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
 		final UGraphicForSnake interceptor = new UGraphicForSnake(limitFinder);
 		final UGraphicInterceptorUDrawable interceptor2 = new UGraphicInterceptorUDrawable(interceptor);
 
-		tb.drawU(interceptor2);
+		inner.drawU(interceptor2);
 		interceptor2.flushUg();
 		return limitFinder.getMinMax();
 	}
@@ -149,9 +149,19 @@ public class FtileGroup extends AbstractFtile {
 		return suppWidth;
 	}
 
+	private FtileGeometry cachedInnerDimension;
+
 	private FtileGeometry getInnerDimension(StringBounder stringBounder) {
+		if (cachedInnerDimension == null) {
+			cachedInnerDimension = getInnerDimensionSlow(stringBounder);
+		}
+		return cachedInnerDimension;
+
+	}
+
+	private FtileGeometry getInnerDimensionSlow(StringBounder stringBounder) {
 		final FtileGeometry orig = inner.calculateDimension(stringBounder);
-		final MinMax minMax = getMinMax(inner, stringBounder);
+		final MinMax minMax = getInnerMinMax(stringBounder);
 		final double missingWidth = minMax.getMaxX() - orig.getWidth();
 		if (missingWidth > 0) {
 			return orig.addDim(missingWidth + 5, 0);
@@ -159,7 +169,8 @@ public class FtileGroup extends AbstractFtile {
 		return orig;
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry orig = getInnerDimension(stringBounder);
 		final double suppWidth = suppWidth(stringBounder);
 		final double width = orig.getWidth() + suppWidth;

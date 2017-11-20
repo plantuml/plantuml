@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|node|frame|cloud|database|queue|stack|storage|agent|usecase|component|boundary|control|entity|interface|circle";
+	public static final String ALL_TYPES = "artifact|actor|folder|card|file|package|rectangle|node|frame|cloud|database|queue|stack|storage|agent|usecase|component|boundary|control|entity|interface|circle|collections";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
@@ -205,7 +205,8 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return CommandExecutionResult.ok();
 	}
 
-	public static boolean existsWithBadType(AbstractEntityDiagram diagram, final Code code, LeafType type, USymbol usymbol) {
+	public static boolean existsWithBadType(AbstractEntityDiagram diagram, final Code code, LeafType type,
+			USymbol usymbol) {
 		if (diagram.leafExist(code) == false) {
 			return false;
 		}
@@ -213,7 +214,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		if (other.getLeafType() != type) {
 			return true;
 		}
-		if (other.getUSymbol() != usymbol) {
+		if (usymbol != null && other.getUSymbol() != usymbol) {
 			return true;
 		}
 		return false;

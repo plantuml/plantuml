@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class TextBlockWithUrl implements TextBlock {
@@ -67,6 +68,10 @@ public class TextBlockWithUrl implements TextBlock {
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return block.calculateDimension(stringBounder);
+	}
+	
+	public MinMax getMinMax(StringBounder stringBounder) {
+		return block.getMinMax(stringBounder);
 	}
 
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

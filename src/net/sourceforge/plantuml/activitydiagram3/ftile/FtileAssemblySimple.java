@@ -40,8 +40,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -76,7 +78,18 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		return tile2.getSwimlaneOut();
 	}
 
+	private final Map<Ftile, UTranslate> cachedTranslation = new HashMap<Ftile, UTranslate>();
+
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		UTranslate result = cachedTranslation.get(child);
+		if (result == null) {
+			result = getTranslateForSlow(child, stringBounder);
+			cachedTranslation.put(child, result);
+		}
+		return result;
+	}
+
+	private UTranslate getTranslateForSlow(Ftile child, StringBounder stringBounder) {
 		if (child == tile1) {
 			return getTranslated1(stringBounder);
 		}
@@ -96,8 +109,8 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug.apply(getTranslated1(stringBounder)).draw(tile1);
-		ug.apply(getTranslated2(stringBounder)).draw(tile2);
+		ug.apply(getTranslateFor(tile1, stringBounder)).draw(tile1);
+		ug.apply(getTranslateFor(tile2, stringBounder)).draw(tile2);
 	}
 
 	public LinkRendering getInLinkRendering() {

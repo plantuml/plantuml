@@ -38,13 +38,15 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 public interface TextBlock extends UDrawable, UShape {
 
 	public Dimension2D calculateDimension(StringBounder stringBounder);
-	
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
 
+	public MinMax getMinMax(StringBounder stringBounder);
+
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
 
 }

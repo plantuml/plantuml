@@ -51,4 +51,8 @@ public class GCalendarSimple implements GCalendar {
 		return result;
 	}
 
+	public DayAsDate getStartingDate() {
+		return start;
+	}
+
 }

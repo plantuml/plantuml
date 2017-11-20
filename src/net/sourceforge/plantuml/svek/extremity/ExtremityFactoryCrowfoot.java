@@ -47,4 +47,10 @@ public class ExtremityFactoryCrowfoot extends AbstractExtremityFactory implement
 		final double ortho = atan2(p0, p2);
 		return new ExtremityCrowfoot(p1, ortho, side);
 	}
+
+	@Override
+	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
+
 }

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -252,6 +253,10 @@ public class Histogram implements TimeDrawing {
 					width += getInitialWidth();
 				}
 				return new Dimension2DDouble(width, getFullDeltaY());
+			}
+			
+			public MinMax getMinMax(StringBounder stringBounder) {
+				throw new UnsupportedOperationException();
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

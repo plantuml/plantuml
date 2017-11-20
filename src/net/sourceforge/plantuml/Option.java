@@ -282,8 +282,8 @@ public class Option {
 				OptionFlags.getInstance().setGui(true);
 			} else if (s.equalsIgnoreCase("-encodesprite")) {
 				OptionFlags.getInstance().setEncodesprite(true);
-			} else if (s.equalsIgnoreCase("-nosuggestengine")) {
-				OptionFlags.getInstance().setUseSuggestEngine(false);
+				// } else if (s.equalsIgnoreCase("-nosuggestengine")) {
+				// OptionFlags.getInstance().setUseSuggestEngine(false);
 			} else if (s.equalsIgnoreCase("-printfonts")) {
 				OptionFlags.getInstance().setPrintFonts(true);
 			} else if (s.equalsIgnoreCase("-dumphtmlstats")) {

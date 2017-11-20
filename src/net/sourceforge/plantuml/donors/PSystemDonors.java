@@ -77,7 +77,7 @@ public class PSystemDonors extends AbstractPSystem {
 			+ "VHC7Wx0p1ovU3ReAoyPmPtB36bh8p5kG0R6JrqsbaLqTW8wKWlfJ_H2ahn_g7z1BEzOksNZ5yZ08h6Ol"
 			+ "d9iEd26PzTfIAMOouyQDyD-fCiSrAZ4jdMAFr5_gXwVx-dlpbAW_ru_rp_hnwGF_xldJDpYpL8angeoT"
 			+ "THxskf4hiLvFIJM7EcWRloA3gHX5F2IxB5XWr_HoA4M5uhdHKibXSKZeSgW_rb-F9M5Wx3cVvyei9SFe"
-			+ "eyr2dx88J6VmAHwXNeLhxcfOkAtF-PyPyzpDFxMzjnO0";
+			+ "eyr2dx88J6VmAHwXNeLhxcfOkAtF-PyPyzpDgyhFkpzUfhdf";
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)

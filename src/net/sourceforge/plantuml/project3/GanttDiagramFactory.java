@@ -54,20 +54,21 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 		return Arrays.<SubjectPattern> asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek());
 	}
 
-	public GanttDiagramFactory() {
-		super(DiagramType.UML);
+	public GanttDiagramFactory(DiagramType type) {
+		super(type);
 	}
 
 	@Override
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
+		//addCommonCommands(cmds);
 		cmds.add(new CommandNope());
 		cmds.add(new CommandComment());
 		cmds.add(new CommandMultilinesComment());
-
 		for (Command cmd : getLanguageCommands()) {
 			cmds.add(cmd);
 		}
+		cmds.add(new CommandGanttArrow());
 		return cmds;
 	}
 

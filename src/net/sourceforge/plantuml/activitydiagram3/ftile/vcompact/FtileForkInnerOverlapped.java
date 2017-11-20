@@ -93,7 +93,8 @@ class FtileForkInnerOverlapped extends AbstractFtile {
 		}
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		double height = 0;
 		double width = 0;
 		for (Ftile ftile : forks) {

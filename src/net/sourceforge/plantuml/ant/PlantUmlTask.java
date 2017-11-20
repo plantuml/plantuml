@@ -362,10 +362,10 @@ public class PlantUmlTask extends Task {
 		setNbThread(s);
 	}
 
-	public void setSuggestEngine(String s) {
-		OptionFlags.getInstance().setUseSuggestEngine(
-				"true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s));
-	}
+//	public void setSuggestEngine(String s) {
+//		OptionFlags.getInstance().setUseSuggestEngine(
+//				"true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s));
+//	}
 
 	public void setFailFast(String s) {
 		final boolean flag = "true".equalsIgnoreCase(s) || "yes".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);

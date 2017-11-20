@@ -152,7 +152,8 @@ public class FtileDiamondInside3 extends AbstractFtile implements FtileOverpassi
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D diamond = calculateDimensionAlone(stringBounder);
 		final Dimension2D north = this.north.calculateDimension(stringBounder);
 		final double height = diamond.getHeight() + north.getHeight();

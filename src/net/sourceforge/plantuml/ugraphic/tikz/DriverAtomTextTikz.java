@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.ugraphic.tikz;
 
 import net.sourceforge.plantuml.creole.AtomText;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
@@ -52,9 +53,10 @@ public class DriverAtomTextTikz implements UDriver<TikzGraphics> {
 		final UFont font = fontConfiguration.getFont();
 		final HtmlColor col = fontConfiguration.getColor();
 		tikz.setStrokeColor(mapper.getMappedColor(col));
-		// tikz.setStrokeColor(mapper.getMappedColor(param.getColor()));
-
-		tikz.text(x, y, text.getText());
+		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);
+		final boolean italic = font.isItalic();
+		final boolean bold = font.isBold();
+		tikz.text(x, y, text.getText(), underline, italic, bold);
 
 	}
 

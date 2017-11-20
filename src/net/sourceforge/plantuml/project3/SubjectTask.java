@@ -45,8 +45,8 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 public class SubjectTask implements SubjectPattern {
 
 	public Collection<VerbPattern> getVerbs() {
-		return Arrays.<VerbPattern> asList(new VerbLasts(), new VerbStarts(), new VerbHappens(), new VerbEnds(),
-				new VerbIsColored());
+		return Arrays.<VerbPattern> asList(new VerbLasts(), new VerbTaskStarts(), new VerbTaskStartsAbsolute(),
+				new VerbHappens(), new VerbEnds(), new VerbIsColored());
 	}
 
 	public IRegex toRegex() {

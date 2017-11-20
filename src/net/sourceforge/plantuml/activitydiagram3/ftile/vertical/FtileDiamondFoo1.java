@@ -130,7 +130,8 @@ public class FtileDiamondFoo1 extends AbstractFtile {
 
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D dim = calculateDimensionInternal(stringBounder);
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
 	}

@@ -151,7 +151,8 @@ public class FtileBox extends AbstractFtile {
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D dim = tb.calculateDimension(stringBounder);
 		return new FtileGeometry(Dimension2DDouble.delta(dim, 2 * MARGIN, 2 * MARGIN), dim.getWidth() / 2 + MARGIN, 0,
 				dim.getHeight() + 2 * MARGIN);

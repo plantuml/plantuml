@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CommandCreoleMonospaced;
+import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -112,7 +113,18 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	static List<String> cleanForKey(String key) {
+	private final Map<String, List<String>> cacheCleanForKey = new HashMap<String, List<String>>();
+
+	List<String> cleanForKey(String key) {
+		List<String> result = cacheCleanForKey.get(key);
+		if (result == null) {
+			result = cleanForKeySlow(key);
+			cacheCleanForKey.put(key, result);
+		}
+		return result;
+	}
+
+	List<String> cleanForKeySlow(String key) {
 		key = StringUtils.trin(StringUtils.goLowerCase(key));
 		key = key.replaceAll("_|\\.|\\s", "");
 		// key = replaceSmart(key, "partition", "package");
@@ -134,7 +146,7 @@ public class SkinParam implements ISkinParam {
 		if (result.size() == 0) {
 			result.add(key);
 		}
-		return result;
+		return Collections.unmodifiableList(result);
 	}
 
 	private static String replaceSmart(String s, String src, String target) {
@@ -200,7 +212,7 @@ public class SkinParam implements ISkinParam {
 			return null;
 		}
 		final boolean acceptTransparent = param == ColorParam.background
-				|| param == ColorParam.sequenceGroupBodyBackground;
+				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
 		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
 	}
 
@@ -643,16 +655,38 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
+		LinkStyle style = null;
 		if (stereotype != null) {
 			checkStereotype(stereotype);
+
+			final String styleValue = getValue(param.name() + "style" + stereotype.getLabel(false));
+			if (styleValue != null) {
+				style = LinkStyle.fromString2(styleValue);
+			}
+
 			final String value2 = getValue(param.name() + "thickness" + stereotype.getLabel(false));
 			if (value2 != null && value2.matches("[\\d.]+")) {
-				return new UStroke(Double.parseDouble(value2));
+				if (style == null) {
+					style = LinkStyle.NORMAL();
+				}
+				return style.goThickness(Double.parseDouble(value2)).getStroke3();
 			}
 		}
 		final String value = getValue(param.name() + "thickness");
 		if (value != null && value.matches("[\\d.]+")) {
-			return new UStroke(Double.parseDouble(value));
+			if (style == null) {
+				style = LinkStyle.NORMAL();
+			}
+			return style.goThickness(Double.parseDouble(value)).getStroke3();
+		}
+		if (style == null) {
+			final String styleValue = getValue(param.name() + "style");
+			if (styleValue != null) {
+				style = LinkStyle.fromString2(styleValue);
+			}
+		}
+		if (style != null && style.isNormal() == false) {
+			return style.getStroke3();
 		}
 		return null;
 	}

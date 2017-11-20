@@ -128,7 +128,8 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		ug.apply(getTranslate2(stringBounder)).draw(tile2);
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		if (tile1.calculateDimension(stringBounder).hasPointOut()
 				|| tile2.calculateDimension(stringBounder).hasPointOut()) {

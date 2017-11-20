@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -115,6 +116,11 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return new Dimension2DDouble(20, 20);
 	}
+	
+	public MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return null;

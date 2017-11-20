@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.graphic.TextBlockRecentred;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -128,6 +129,10 @@ public class TimingDiagram extends UmlDiagram implements Clock {
 				final double withBeforeRuler = getWithBeforeRuler(stringBounder);
 				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;
 				return new Dimension2DDouble(totalWith, lastTranslate.getDy() + ruler.getHeight(stringBounder));
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				throw new UnsupportedOperationException();
 			}
 
 			public HtmlColor getBackcolor() {

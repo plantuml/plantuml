@@ -118,7 +118,7 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 		if (commandControl == CommandControl.NOT_OK) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", /* it.currentNum(), */it.peek()
 					.getLocation());
-			if (OptionFlags.getInstance().isUseSuggestEngine()) {
+			if (OptionFlags.getInstance().isUseSuggestEngine2()) {
 				final SuggestEngine engine = new SuggestEngine(source, this);
 				final SuggestEngineResult result = engine.tryToSuggest(sys);
 				if (result.getStatus() == SuggestEngineStatus.ONE_SUGGESTION) {

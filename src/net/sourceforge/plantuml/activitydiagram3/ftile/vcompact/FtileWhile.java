@@ -454,7 +454,8 @@ class FtileWhile extends AbstractFtile {
 		}
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry geoDiamond1 = diamond1.calculateDimension(stringBounder);
 		FtileGeometry geoWhile = whileBlock.calculateDimension(stringBounder);
 		final double diff = -geoWhile.getWidth();

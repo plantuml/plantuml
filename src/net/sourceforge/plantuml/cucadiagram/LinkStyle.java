@@ -121,7 +121,15 @@ public class LinkStyle {
 		return thickness;
 	}
 
-	public static LinkStyle fromString(String s) {
+	public static LinkStyle fromString1(String s) {
+		final LinkStyle result = fromString2(s);
+		if (result == null) {
+			return LinkStyle.NORMAL();
+		}
+		return result;
+	}
+
+	public static LinkStyle fromString2(String s) {
 		if ("dashed".equalsIgnoreCase(s)) {
 			return DASHED();
 		}
@@ -134,12 +142,7 @@ public class LinkStyle {
 		if ("hidden".equalsIgnoreCase(s)) {
 			return INVISIBLE();
 		}
-		return LinkStyle.NORMAL();
-	}
-
-	@Deprecated
-	public static LinkStyle valueOf(String s) {
-		return fromString(s);
+		return null;
 	}
 
 	public boolean isThicknessOverrided() {

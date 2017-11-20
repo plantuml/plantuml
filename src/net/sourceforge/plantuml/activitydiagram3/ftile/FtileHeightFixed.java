@@ -76,7 +76,8 @@ public class FtileHeightFixed extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		return tile.calculateDimension(stringBounder).translate(getTranslate(stringBounder)).fixedHeight(fixedHeight);
 	}
 

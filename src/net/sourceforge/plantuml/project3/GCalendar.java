@@ -41,4 +41,6 @@ public interface GCalendar {
 
 	public DayAsDate toDayAsDate(InstantDay day);
 
+	public DayAsDate getStartingDate();
+
 }

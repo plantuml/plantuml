@@ -92,7 +92,8 @@ public class FtileCircleStart extends AbstractFtile {
 		ug.apply(new UChangeColor(null)).apply(new UChangeBackColor(backColor)).draw(circle);
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0, SIZE);
 	}
 

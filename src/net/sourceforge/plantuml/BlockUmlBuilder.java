@@ -39,7 +39,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -65,8 +64,8 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		this.defines = defines;
 		try {
 			reader2 = new UncommentReadLine(new ReadLineReader(reader, desc));
-			includer = new Preprocessor(reader2, charset, defines, newCurrentDir, this);
-			init(includer, config);
+			includer = new Preprocessor(config, reader2, charset, defines, newCurrentDir, this);
+			init(includer);
 		} finally {
 			if (includer != null) {
 				includer.close();
@@ -79,7 +78,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		this(config, charset, defines, reader, null, null);
 	}
 
-	private void init(Preprocessor includer, List<String> config) throws IOException {
+	private void init(Preprocessor includer) throws IOException {
 		CharSequence2 s = null;
 		List<CharSequence2> current2 = null;
 		boolean paused = false;
@@ -108,21 +107,21 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				reader2.setPaused(false);
 			}
 			if (StartUtils.isArobaseEndDiagram(s) && current2 != null) {
-				current2.addAll(1, convert(config, new LineLocationImpl(null, null).oneLineRead()));
-				blocks.add(new BlockUml(current2, startLine - config.size(), defines.cloneMe()));
+				// current2.addAll(1, convert(config, new LineLocationImpl(null, null).oneLineRead()));
+				blocks.add(new BlockUml(current2, startLine/* - config.size() */, defines.cloneMe()));
 				current2 = null;
 				reader2.setPaused(false);
 			}
 		}
 	}
 
-	private Collection<CharSequence2> convert(List<String> config, LineLocation location) {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
-		for (String s : config) {
-			result.add(new CharSequence2Impl(s, location));
-		}
-		return result;
-	}
+	// private Collection<CharSequence2> convert(List<String> config, LineLocation location) {
+	// final List<CharSequence2> result = new ArrayList<CharSequence2>();
+	// for (String s : config) {
+	// result.add(new CharSequence2Impl(s, location));
+	// }
+	// return result;
+	// }
 
 	public List<BlockUml> getBlockUmls() {
 		return Collections.unmodifiableList(blocks);

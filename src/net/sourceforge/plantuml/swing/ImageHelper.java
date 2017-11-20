@@ -145,7 +145,6 @@ public class ImageHelper {
 	 *            dimensions of the area the image is to be drawn in.
 	 */
 	public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
-
 		final int originalWidth = imgSize.width;
 		final int originaHeight = imgSize.height;
 		final int boundWidth = boundary.width;
@@ -167,6 +166,25 @@ public class ImageHelper {
 			newHeight = boundHeight;
 			// scale width to maintain aspect ratio
 			newWidth = (newHeight * originalWidth) / originaHeight;
+		}
+
+		return new Dimension(newWidth, newHeight);
+	}
+
+	public static Dimension getScaledDimensionWidthFit(Dimension imgSize, Dimension boundary) {
+		final int originalWidth = imgSize.width;
+		final int originaHeight = imgSize.height;
+		final int boundWidth = boundary.width;
+		final int boundHeight = boundary.height;
+		int newWidth = originalWidth;
+		int newHeight = originaHeight;
+
+		// first check if we need to scale width
+		if (originalWidth != boundWidth) {
+			// scale width to fit
+			newWidth = boundWidth;
+			// scale height to maintain aspect ratio
+			newHeight = (newWidth * originaHeight) / originalWidth;
 		}
 
 		return new Dimension(newWidth, newHeight);

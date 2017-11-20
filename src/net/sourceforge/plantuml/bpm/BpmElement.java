@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -110,6 +111,10 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return raw.calculateDimension(stringBounder);
+			}
+			
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return raw.getMinMax(stringBounder);
 			}
 		};
 	}

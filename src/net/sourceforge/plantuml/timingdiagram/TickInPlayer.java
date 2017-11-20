@@ -40,6 +40,9 @@ public class TickInPlayer {
 	private final TimeTick tick;
 
 	public TickInPlayer(Player player, TimeTick tick) {
+		if (player == null) {
+			throw new IllegalArgumentException();
+		}
 		this.player = player;
 		this.tick = tick;
 	}

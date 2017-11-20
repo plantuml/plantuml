@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -209,4 +210,9 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		final MinMaxGolem minMax = getMinMax();
 		return new Dimension2DDouble(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);
 	}
+	
+	public MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 }

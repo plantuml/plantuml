@@ -54,15 +54,17 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 
 	private final SymbolContext symbolContext;
 
-	public ComponentRoseEnglober(SymbolContext symbolContext, Display strings, FontConfiguration font, ISkinSimple spriteContainer) {
-		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, false, null, null);
+	public ComponentRoseEnglober(SymbolContext symbolContext, Display strings, FontConfiguration font,
+			ISkinSimple spriteContainer) {
+		super(LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, false, null,
+				null);
 		this.symbolContext = symbolContext;
 	}
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
-		ug = symbolContext.apply(ug);
+		ug = symbolContext.transparentBackColorToNull().apply(ug);
 		ug.draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()));
 		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;
 		getTextBlock().drawU(ug.apply(new UTranslate(xpos, 0)));

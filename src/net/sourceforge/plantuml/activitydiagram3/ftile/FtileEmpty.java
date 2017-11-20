@@ -85,7 +85,12 @@ public class FtileEmpty extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+		return calculateDimensionEmpty();
+	}
+
+	final protected FtileGeometry calculateDimensionEmpty() {
 		return new FtileGeometry(width, height, width / 2, 0, height);
 	}
 

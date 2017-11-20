@@ -164,6 +164,10 @@ public class TextBlockUtils {
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return bloc.calculateDimension(stringBounder);
 			}
+			
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return bloc.getMinMax(stringBounder);
+			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				if (strategy.check(display, member)) {

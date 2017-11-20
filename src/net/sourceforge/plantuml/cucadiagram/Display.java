@@ -206,6 +206,19 @@ public class Display implements Iterable<CharSequence> {
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}
 
+	public Display withPage(int page, int lastpage) {
+		if (display == null) {
+			return this;
+		}
+		final List<CharSequence> result = new ArrayList<CharSequence>();
+		for (CharSequence line : display) {
+			line = line.toString().replace("%page%", "" + page);
+			line = line.toString().replace("%lastpage%", "" + lastpage);
+			result.add(line);
+		}
+		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
+	}
+
 	public Display underlined() {
 		final List<CharSequence> result = new ArrayList<CharSequence>();
 		for (CharSequence line : display) {

@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -183,6 +184,10 @@ public class PSystemError extends AbstractPSystem {
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
 				return new Dimension2DDouble(imWidth + 1, imHeight + 1);
+			}
+
+			public MinMax getMinMax(StringBounder stringBounder) {
+				return MinMax.fromMax(imWidth + 1, imHeight + 1);
 			}
 
 			public HtmlColor getBackcolor() {

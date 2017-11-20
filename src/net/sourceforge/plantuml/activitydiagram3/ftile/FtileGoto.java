@@ -47,8 +47,9 @@ public class FtileGoto extends FtileEmpty {
 		this.name = name;
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		return super.calculateDimension(stringBounder).withoutPointOut();
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+		return calculateDimensionEmpty().withoutPointOut();
 	}
 
 	public String getName() {

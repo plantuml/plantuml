@@ -170,7 +170,7 @@ public class Colors {
 			throw new IllegalArgumentException();
 		}
 		final Colors result = copy();
-		result.lineStyle = LinkStyle.valueOf(StringUtils.goUpperCase(s));
+		result.lineStyle = LinkStyle.fromString1(StringUtils.goUpperCase(s));
 		return result;
 
 	}

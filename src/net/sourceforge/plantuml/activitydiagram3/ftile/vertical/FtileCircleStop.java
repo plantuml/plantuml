@@ -108,7 +108,8 @@ public class FtileCircleStop extends AbstractFtile {
 				.draw(circleSmall);
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0);
 	}
 

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -69,6 +70,10 @@ public class TextBlockTitle implements TextBlock {
 		final double width = textDim.getWidth() + outMargin * 2;
 		final double height = textDim.getHeight();
 		return new Dimension2DDouble(width, height);
+	}
+
+	public MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
 	}
 
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

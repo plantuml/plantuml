@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public class VerbStarts implements VerbPattern {
+public class VerbTaskStarts implements VerbPattern {
 
 	public Collection<ComplementPattern> getComplements() {
 		return Arrays.<ComplementPattern> asList(new ComplementBeforeOrAfterOrAtTaskStartOrEnd());

@@ -75,7 +75,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	private final IHtmlColorSet colorSet = new HtmlColorSetSimple();
 	private GCalendar calendar;
 
-	private Instant min;
+	private final Instant min = new InstantDay(0);
 	private Instant max;
 
 	public DiagramDescription getDescription() {
@@ -95,7 +95,8 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1, null, "", "", 0, 0, null,
 				false);
-		imageBuilder.setUDrawable(getUDrawable());
+		final UDrawable result = getUDrawable();
+		imageBuilder.setUDrawable(result);
 
 		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, seed, os);
 	}
@@ -226,14 +227,14 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	}
 
 	private void initMinMax() {
-		min = tasks.values().iterator().next().getStart();
+		// min = tasks.values().iterator().next().getStart();
 		max = tasks.values().iterator().next().getEnd();
 		for (Task task : tasks.values()) {
 			final Instant start = task.getStart();
 			final Instant end = task.getEnd();
-			if (min.compareTo(start) > 0) {
-				min = start;
-			}
+			// if (min.compareTo(start) > 0) {
+			// min = start;
+			// }
 			if (max.compareTo(end) < 0) {
 				max = end;
 			}
@@ -318,6 +319,10 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	public void setStartingDate(DayAsDate start) {
 		this.calendar = new GCalendarSimple(start);
+	}
+
+	public DayAsDate getStartingDate() {
+		return this.calendar.getStartingDate();
 	}
 
 }

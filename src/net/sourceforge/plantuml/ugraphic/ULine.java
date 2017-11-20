@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-public class ULine extends AbstractShadowable implements Scalable {
+public class ULine extends AbstractShadowable implements Scalable, UShapeSized {
 
 	private final double dx;
 	private final double dy;
@@ -69,6 +69,14 @@ public class ULine extends AbstractShadowable implements Scalable {
 
 	public double getLength() {
 		return Math.sqrt(dx * dx + dy * dy);
+	}
+
+	public double getWidth() {
+		return dx;
+	}
+
+	public double getHeight() {
+		return dy;
 	}
 
 }

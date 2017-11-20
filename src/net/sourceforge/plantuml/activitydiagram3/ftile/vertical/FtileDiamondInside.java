@@ -161,7 +161,8 @@ public class FtileDiamondInside extends AbstractFtile {
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry dimDiamonAlone = calculateDimensionAlone(stringBounder);
 		final Dimension2D dimWest = west.calculateDimension(stringBounder);
 		final Dimension2D dimEast = east.calculateDimension(stringBounder);

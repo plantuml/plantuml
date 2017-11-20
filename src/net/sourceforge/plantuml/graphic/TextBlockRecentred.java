@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
 
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -51,12 +52,29 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBa
 	}
 
 	public void drawU(final UGraphic ug) {
-		final MinMax minMax = TextBlockUtils.getMinMax(textBlock, ug.getStringBounder());
+		StringBounder stringBounder = ug.getStringBounder();
+		final MinMax minMax = getMinMax(stringBounder);
 		textBlock.drawU(ug.apply(new UTranslate(-minMax.getMinX(), -minMax.getMinY())));
 	}
 
+	// private MinMax cachedMinMax;
+
+	public MinMax getMinMax(StringBounder stringBounder) {
+		return textBlock.getMinMax(stringBounder);
+		// if (cachedMinMax == null) {
+		// cachedMinMax = getMinMaxSlow(stringBounder);
+		// }
+		// // assert cachedMinMax.toString().equals(getMinMaxSlow(stringBounder).toString());
+		// return cachedMinMax;
+	}
+
+	// private MinMax getMinMaxSlow(StringBounder stringBounder) {
+	// final MinMax result = TextBlockUtils.getMinMax(textBlock, stringBounder);
+	// return result;
+	// }
+
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final MinMax minMax = TextBlockUtils.getMinMax(textBlock, stringBounder);
+		final MinMax minMax = getMinMax(stringBounder);
 		return minMax.getDimension();
 	}
 

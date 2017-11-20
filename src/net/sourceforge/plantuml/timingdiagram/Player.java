@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -160,6 +161,11 @@ public class Player implements TextBlock, TimeProjected {
 		final double zoneHeight = getZoneHeight();
 		return new Dimension2DDouble(width, title.calculateDimension(stringBounder).getHeight() * 2 + zoneHeight);
 	}
+	
+	public MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException();
+	}
+
 
 	private double getZoneHeight() {
 		return getTimeDrawing().getHeight();

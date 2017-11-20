@@ -1,0 +1,21 @@
+@startuml
+' Creates an aliased entity with a colorized sprite and stereotype
+' Params:
+'   e_type:     the entity type (e.g. component, node, agent, etc.)
+'   e_color:    the color for the sprite
+'   e_sprite:   the sprite for the AWS Icon representing the entity
+'   e_alias:    the alias to give the entity
+'   e_stereo:   the stereotype, which can define additional styling
+!define ENTITY(e_type,e_color,e_sprite,e_alias,e_stereo) e_type "<color:e_color><$e_sprite></color>" as e_alias <<e_stereo>>
+
+' Creates an aliased entity with a colorized sprite, label, and stereotype
+' Params:
+'   e_type:     the entity type (e.g. component, node, agent, etc.)
+'   e_color:    the color for the sprite
+'   e_sprite:   the sprite for the AWS Icon representing the entity
+'   e_label:    the label to display under the sprite
+'   e_alias:    the alias to give the entity
+'   e_stereo:   the stereotype, which can define additional styling
+!define ENTITY(e_type,e_color,e_sprite,e_label,e_alias,e_stereo) e_type "<color:e_color><$e_sprite></color>\r e_label" as e_alias <<e_stereo>>
+
+hide stereotype

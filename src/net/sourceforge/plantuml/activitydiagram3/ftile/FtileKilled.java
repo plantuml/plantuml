@@ -61,7 +61,8 @@ public class FtileKilled extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry geo = tile.calculateDimension(stringBounder);
 		return new FtileGeometry(tile.calculateDimension(stringBounder), geo.getLeft(), geo.getInY());
 	}

@@ -85,6 +85,7 @@ class ImageWindow2 extends JFrame {
 
 	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
 	private final static String KEY_ZOOM_FIT = "zoomfit";
+	private final static String KEY_WIDTH_FIT = "widthfit";
 
 	private SimpleLine2 simpleLine2;
 	private final JScrollPane scrollPane;
@@ -92,6 +93,7 @@ class ImageWindow2 extends JFrame {
 	private final JButton copy = new JButton("Copy");
 	private final JButton previous = new JButton("Previous");
 	private final JCheckBox zoomFitButt = new JCheckBox("Zoom fit");
+	private final JCheckBox widthFitButt = new JCheckBox("Width fit");
 	private final JButton zoomMore = new JButton("+");
 	private final JButton zoomLess = new JButton("-");
 	private final MainWindow2 main;
@@ -101,7 +103,7 @@ class ImageWindow2 extends JFrame {
 	private int zoomFactor = 0;
 
 	private enum SizeMode {
-		FULL_SIZE, ZOOM_FIT
+		FULL_SIZE, ZOOM_FIT, WIDTH_FIT
 	};
 
 	private SizeMode sizeMode = SizeMode.FULL_SIZE;
@@ -121,6 +123,7 @@ class ImageWindow2 extends JFrame {
 		north.add(copy);
 		north.add(next);
 		north.add(zoomFitButt);
+		north.add(widthFitButt);
 		north.add(zoomMore);
 		north.add(zoomLess);
 		copy.setFocusable(false);
@@ -144,6 +147,14 @@ class ImageWindow2 extends JFrame {
 		zoomFitButt.setFocusable(false);
 		zoomFitButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				widthFitButt.setSelected(false);
+				zoomFit();
+			}
+		});
+		widthFitButt.setFocusable(false);
+		widthFitButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				zoomFitButt.setSelected(false);
 				zoomFit();
 			}
 		});
@@ -188,6 +199,11 @@ class ImageWindow2 extends JFrame {
 		zoomFitButt.setSelected(zoomChecked);
 		if (zoomChecked) {
 			sizeMode = SizeMode.ZOOM_FIT;
+		}
+		final boolean widthZoomChecked = prefs.getBoolean(KEY_WIDTH_FIT, false);
+		widthFitButt.setSelected(widthZoomChecked);
+		if (widthZoomChecked) {
+			sizeMode = SizeMode.WIDTH_FIT;
 		}
 
 		this.setFocusable(true);
@@ -251,11 +267,15 @@ class ImageWindow2 extends JFrame {
 	}
 
 	private void zoomFit() {
-		final boolean selected = zoomFitButt.isSelected();
-		prefs.putBoolean(KEY_ZOOM_FIT, selected);
+		final boolean selectedZoom = zoomFitButt.isSelected();
+		final boolean selectedWidth = widthFitButt.isSelected();
+		prefs.putBoolean(KEY_ZOOM_FIT, selectedZoom);
+		prefs.putBoolean(KEY_WIDTH_FIT, selectedWidth);
 		zoomFactor = 0;
-		if (selected) {
+		if (selectedZoom) {
 			sizeMode = SizeMode.ZOOM_FIT;
+		} else if (selectedWidth) {
+			sizeMode = SizeMode.WIDTH_FIT;
 		} else {
 			sizeMode = SizeMode.FULL_SIZE;
 		}
@@ -297,6 +317,11 @@ class ImageWindow2 extends JFrame {
 				final Dimension newImgDim = ImageHelper
 						.getScaledDimension(imageDim, scrollPane.getViewport().getSize());
 				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), true);
+			} else if (sizeMode == SizeMode.WIDTH_FIT) {
+				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
+				final Dimension newImgDim = ImageHelper.getScaledDimensionWidthFit(imageDim, scrollPane.getViewport()
+						.getSize());
+				image = ImageHelper.getScaledInstance(image, newImgDim, getHints(), false);
 			} else if (zoomFactor != 0) {
 				final Dimension imageDim = new Dimension(image.getWidth(), image.getHeight());
 				final Dimension newImgDim = ImageHelper.getScaledDimension(imageDim, getZoom());

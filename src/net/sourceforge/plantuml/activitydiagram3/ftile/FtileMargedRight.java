@@ -74,7 +74,8 @@ public class FtileMargedRight extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry orig = tile.calculateDimension(stringBounder);
 		if (orig.getWidth() > maxX) {
 			throw new IllegalStateException();

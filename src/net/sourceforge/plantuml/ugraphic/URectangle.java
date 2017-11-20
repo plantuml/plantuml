@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Dimension2D;
 
-public class URectangle extends AbstractShadowable implements Scalable {
+public class URectangle extends AbstractShadowable implements Scalable, UShapeSized {
 
 	private final double width;
 	private final double height;

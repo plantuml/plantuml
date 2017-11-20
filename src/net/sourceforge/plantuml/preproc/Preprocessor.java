@@ -66,16 +66,35 @@ public class Preprocessor implements ReadLine {
 	private final Defines defines;
 	private final PreprocessorInclude rawSource;
 	private final ReadLineInsertable source;
+	private final SubPreprocessor subPreprocessor;
 
-	public Preprocessor(ReadLine reader, String charset, Defines defines, File newCurrentDir,
+	public Sub getSub(String blocname) {
+		return subPreprocessor.getSub(blocname);
+	}
+
+	public Preprocessor(List<String> config, ReadLine reader, String charset, Defines defines, File newCurrentDir,
 			DefinitionsContainer definitionsContainer) {
 		this.defines = defines;
 		this.defines.saveState();
-		this.rawSource = new PreprocessorInclude(reader, defines, charset, newCurrentDir, definitionsContainer);
+		this.rawSource = new PreprocessorInclude(config, reader, defines, charset, newCurrentDir, definitionsContainer);
 		this.source = new ReadLineInsertable(new IfManager(rawSource, defines));
+		this.subPreprocessor = new SubPreprocessor(config, charset, defines, definitionsContainer, new ReadLine() {
+
+			public void close() throws IOException {
+				Preprocessor.this.close();
+			}
+
+			public CharSequence2 readLine() throws IOException {
+				return readLineInternal();
+			}
+		});
 	}
 
 	public CharSequence2 readLine() throws IOException {
+		return subPreprocessor.readLine();
+	}
+
+	private CharSequence2 readLineInternal() throws IOException {
 		final CharSequence2 s = source.readLine();
 		if (s == null) {
 			return null;
@@ -194,5 +213,5 @@ public class Preprocessor implements ReadLine {
 	public Set<FileWithSuffix> getFilesUsed() {
 		return Collections.unmodifiableSet(rawSource.getFilesUsedGlobal());
 	}
-	
+
 }

@@ -456,6 +456,8 @@ public enum License {
 		text.add("");
 		text.add("Icons provided by OpenIconic :  https://useiconic.com/open");
 		text.add("Archimate sprites provided by Archi :  http://www.archimatetool.com");
+		text.add("Stdlib AWS provided by https://github.com/milo-minderbinder/AWS-PlantUML");
+		text.add("Stdlib Icons provided https://github.com/tupadr3/plantuml-icon-font-sprites");
 		text.add("ASCIIMathML (c) Peter Jipsen http://www.chapman.edu/~jipsen");
 		text.add("ASCIIMathML (c) David Lippman http://www.pierce.ctc.edu/dlippman");
 		text.add("");

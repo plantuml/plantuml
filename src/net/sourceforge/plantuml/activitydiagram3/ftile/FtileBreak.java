@@ -58,8 +58,9 @@ public class FtileBreak extends FtileEmpty implements WeldingPoint {
 		return "FtileBreak";
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		return super.calculateDimension(stringBounder).withoutPointOut();
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+		return calculateDimensionEmpty().withoutPointOut();
 	}
 
 	@Override

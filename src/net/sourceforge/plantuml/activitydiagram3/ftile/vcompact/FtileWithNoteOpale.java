@@ -199,7 +199,8 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 		ug.apply(getTranslate(stringBounder)).draw(tile);
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry orig = tile.calculateDimension(stringBounder);
 		final UTranslate translate = getTranslate(stringBounder);

@@ -289,7 +289,6 @@ public class MainWindow2 extends JFrame {
 		final JFileChooser chooser = new JFileChooser();
 		chooser.setDialogType(JFileChooser.CUSTOM_DIALOG);
 		chooser.setDialogTitle("Directory to watch:");
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
 		final String currentPath = prefs.get(KEY_DIR, ".");
 		chooser.setCurrentDirectory(new File(currentPath));
@@ -298,7 +297,11 @@ public class MainWindow2 extends JFrame {
 		Log.info("Closing OpenDialog");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			final File dir = chooser.getSelectedFile();
-			changeDir(dir);
+			if (dir.isDirectory()) {
+				changeDir(dir);
+			} else {
+				changeDir(dir.getParentFile());
+			}
 		}
 
 	}

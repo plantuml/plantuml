@@ -39,7 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 
-public class UEllipse extends AbstractShadowable implements Scalable {
+public class UEllipse extends AbstractShadowable implements Scalable, UShapeSized {
 
 	private final double width;
 	private final double height;

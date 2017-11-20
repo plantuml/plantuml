@@ -490,7 +490,8 @@ class FtileRepeat extends AbstractFtile {
 
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		return new FtileGeometry(dimTotal, getLeft(stringBounder), 0, dimTotal.getHeight());
 	}

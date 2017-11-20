@@ -147,7 +147,8 @@ public class FtileDiamond extends AbstractFtile {
 				+ Diamond.diamondHalfSize)));
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final double suppY1 = north.calculateDimension(stringBounder).getHeight();
 		final Dimension2D dim = new Dimension2DDouble(Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2 + suppY1);
 		return new FtileGeometry(dim, dim.getWidth() / 2, suppY1, dim.getHeight());

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
+import net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
 import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
@@ -157,6 +158,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemDonorsFactory());
+		factories.add(new PSystemSkinparameterListFactory());
 		factories.add(new PSystemListFontsFactory());
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
@@ -188,7 +190,8 @@ public class PSystemBuilder {
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
-		factories.add(new GanttDiagramFactory());
+		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
+		factories.add(new GanttDiagramFactory(DiagramType.UML));
 		factories.add(new FlowDiagramFactory());
 		factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		factories.add(new PSystemCuteFactory(DiagramType.CUTE));

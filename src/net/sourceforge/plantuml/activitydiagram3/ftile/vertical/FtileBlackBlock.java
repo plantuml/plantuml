@@ -81,7 +81,8 @@ public class FtileBlackBlock extends AbstractFtile {
 		this.label = label;
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		double supp = label.calculateDimension(stringBounder).getWidth();
 		if (supp > 0) {
 			supp += labelMargin;

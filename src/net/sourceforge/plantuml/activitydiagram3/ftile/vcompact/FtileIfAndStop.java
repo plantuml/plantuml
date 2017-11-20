@@ -271,7 +271,8 @@ class FtileIfAndStop extends AbstractFtile {
 		ug.apply(getTranslateStop(stringBounder)).draw(stop2);
 	}
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+	@Override
+	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D dimStop2 = stop2.calculateDimension(stringBounder);
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder).addDim(0,
 				getDiamondStopDistance() + dimStop2.getWidth());

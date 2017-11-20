@@ -40,11 +40,14 @@ import java.awt.geom.PathIterator;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -73,6 +76,29 @@ public class TikzGraphics {
 	public TikzGraphics(double scale, boolean withPreamble) {
 		this.withPreamble = withPreamble;
 		this.scale = scale;
+	}
+
+	private final Map<String, Integer> styles = new LinkedHashMap<String, Integer>();
+	private final Map<String, String> stylesID = new HashMap<String, String>();
+
+	private void addCommand(final StringBuilder sb) {
+		final String s = sb.toString();
+		cmd.add(s);
+		if (s.startsWith("\\draw[") || s.startsWith("\\shade[")) {
+			final int end = s.indexOf(']');
+			if (end != -1) {
+				final int start = s.indexOf('[');
+				final String style = s.substring(start + 1, end);
+				Integer count = styles.get(style);
+				if (count == null) {
+					count = 1;
+					stylesID.put(style, "pstyle" + stylesID.size());
+				} else {
+					count++;
+				}
+				styles.put(style, count);
+			}
+		}
 	}
 
 	private String getColorName(Color c) {
@@ -142,9 +168,14 @@ public class TikzGraphics {
 		if (scale != 1) {
 			out(os, "\\scalebox{" + format(scale) + "}{");
 		}
-		out(os, "\\begin{tikzpicture}[yscale=-1]");
+		out(os, "\\begin{tikzpicture}[yscale=-1");
+		purgeStyles();
+		for (String style : styles.keySet()) {
+			out(os, "," + stylesID.get(style) + "/.style={" + style + "}");
+		}
+		out(os, "]");
 		for (String s : cmd) {
-			out(os, s);
+			out(os, useStyle(s));
 		}
 		out(os, "\\end{tikzpicture}");
 		if (scale != 1) {
@@ -155,6 +186,31 @@ public class TikzGraphics {
 		}
 	}
 
+	private String useStyle(String s) {
+		for (String style : styles.keySet()) {
+			final String start1 = "\\draw[" + style + "]";
+			if (s.startsWith(start1)) {
+				final String newStart = "\\draw[" + stylesID.get(style) + "]";
+				return newStart + s.substring(start1.length());
+			}
+			final String start2 = "\\shade[" + style + "]";
+			if (s.startsWith(start2)) {
+				final String newStart = "\\shade[" + stylesID.get(style) + "]";
+				return newStart + s.substring(start2.length());
+			}
+		}
+		return s;
+	}
+
+	private void purgeStyles() {
+		for (Iterator<Map.Entry<String, Integer>> it = styles.entrySet().iterator(); it.hasNext();) {
+			final Map.Entry<String, Integer> ent = it.next();
+			if (ent.getValue().intValue() == 1) {
+				it.remove();
+			}
+		}
+	}
+
 	private String definecolor(String name, Color color) {
 		return "\\definecolor{" + name + "}{RGB}{" + color.getRed() + "," + color.getGreen() + "," + color.getBlue()
 				+ "}";
@@ -162,23 +218,8 @@ public class TikzGraphics {
 
 	public void rectangle(double x, double y, double width, double height) {
 		final StringBuilder sb = new StringBuilder();
-		final boolean gradient = this.fillcolorGradient2 != null;
 		if (pendingUrl == null) {
-			sb.append(gradient ? "\\shade[" : "\\draw[");
-			if (color != null) {
-				sb.append(gradient ? "draw=" : "color=");
-				sb.append(getColorName(color) + ",");
-			}
-			if (gradient) {
-				sb.append("top color=" + getColorName(fillcolor) + ",");
-				sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
-				sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
-			} else if (fillcolor != null) {
-				sb.append("fill=" + getColorName(fillcolor) + ",");
-				if (color == null) {
-					sb.append("color=" + getColorName(fillcolor) + ",");
-				}
-			}
+			appendShadeOrDraw(sb);
 			sb.append("line width=" + thickness + "pt] ");
 			sb.append(couple(x, y) + " rectangle " + couple(x + width, y + height));
 			sb.append(";");
@@ -207,7 +248,7 @@ public class TikzGraphics {
 			sb.append(" {};");
 			urlIgnoreText = true;
 		}
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	private String getAngleFromGradientPolicy() {
@@ -235,11 +276,11 @@ public class TikzGraphics {
 	}
 
 	private void out(OutputStream os, String s) throws IOException {
-		os.write(s.getBytes());
-		os.write("\n".getBytes());
+		os.write(s.getBytes("UTF-8"));
+		os.write("\n".getBytes("UTF-8"));
 	}
 
-	public void text(double x, double y, String text) {
+	public void text(double x, double y, String text, boolean underline, boolean italic, boolean bold) {
 		final StringBuilder sb = new StringBuilder("\\node at " + couple(x, y));
 		sb.append("[below right");
 		if (color != null) {
@@ -248,7 +289,25 @@ public class TikzGraphics {
 		}
 		sb.append("]{");
 		if (pendingUrl == null || urlIgnoreText) {
+			if (underline) {
+				sb.append("\\underline{");
+			}
+			if (italic) {
+				sb.append("\\textit{");
+			}
+			if (bold) {
+				sb.append("\\textbf{");
+			}
 			sb.append(protectText(text));
+			if (bold) {
+				sb.append("}");
+			}
+			if (italic) {
+				sb.append("}");
+			}
+			if (underline) {
+				sb.append("}");
+			}
 		} else {
 			appendPendingUrl(sb);
 			sb.append("{");
@@ -256,7 +315,7 @@ public class TikzGraphics {
 			sb.append("}");
 		}
 		sb.append("};");
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	private void appendPendingUrl(final StringBuilder sb) {
@@ -279,11 +338,14 @@ public class TikzGraphics {
 	}
 
 	private String protectText(String text) {
+		text = text.replaceAll("\\\\", "\\\\\\\\");
 		text = text.replaceAll("_", "\\\\_");
 		text = text.replaceAll("\u00AB", "\\\\guillemotleft ");
 		text = text.replaceAll("\u00BB", "\\\\guillemotright ");
 		text = text.replaceAll("<", "\\\\textless ");
 		text = text.replaceAll(">", "\\\\textgreater ");
+		text = text.replaceAll("&", "\\\\&");
+		text = text.replaceAll("~", "\\\\~{}");
 		return text;
 	}
 
@@ -302,17 +364,13 @@ public class TikzGraphics {
 		sb.append(" -- ");
 		sb.append(couple(x2, y2));
 		sb.append(";");
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	public void polygon(double[] points) {
-		final StringBuilder sb = new StringBuilder("\\draw[");
-		if (color != null) {
-			sb.append("color=" + getColorName(color) + ",");
-		}
-		if (fillcolor != null) {
-			sb.append("fill=" + getColorName(fillcolor) + ",");
-		}
+
+		final StringBuilder sb = new StringBuilder();
+		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt]");
 		sb.append(" ");
 		for (int i = 0; i < points.length; i += 2) {
@@ -320,17 +378,12 @@ public class TikzGraphics {
 			sb.append(" -- ");
 		}
 		sb.append("cycle;");
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	private void round(double r, double[] points) {
-		final StringBuilder sb = new StringBuilder("\\draw[");
-		if (color != null) {
-			sb.append("color=" + getColorName(color) + ",");
-		}
-		if (fillcolor != null) {
-			sb.append("fill=" + getColorName(fillcolor) + ",");
-		}
+		final StringBuilder sb = new StringBuilder();
+		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt]");
 		sb.append(" ");
 		int i = 0;
@@ -351,7 +404,26 @@ public class TikzGraphics {
 		sb.append(couple(points[i++], points[i++]));
 		sb.append(" -- ");
 		sb.append("cycle;");
-		cmd.add(sb.toString());
+		addCommand(sb);
+	}
+
+	private void appendShadeOrDraw(final StringBuilder sb) {
+		final boolean gradient = this.fillcolorGradient2 != null;
+		sb.append(gradient ? "\\shade[" : "\\draw[");
+		if (color != null) {
+			sb.append(gradient ? "draw=" : "color=");
+			sb.append(getColorName(color) + ",");
+		}
+		if (gradient) {
+			sb.append("top color=" + getColorName(fillcolor) + ",");
+			sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
+			sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
+		} else if (fillcolor != null) {
+			sb.append("fill=" + getColorName(fillcolor) + ",");
+			if (color == null) {
+				sb.append("color=" + getColorName(fillcolor) + ",");
+			}
+		}
 	}
 
 	public void rectangleRound(double x, double y, double width, double height, double r) {
@@ -381,23 +453,12 @@ public class TikzGraphics {
 
 	public void upath(double x, double y, UPath path) {
 		final StringBuilder sb = new StringBuilder();
-		final boolean gradient = this.fillcolorGradient2 != null;
-		sb.append(gradient ? "\\shade[" : "\\draw[");
-		if (color != null) {
-			sb.append(gradient ? "draw=" : "color=");
-			sb.append(getColorName(color) + ",");
+		appendShadeOrDraw(sb);
+		sb.append("line width=" + thickness + "pt");
+		if (dash != null) {
+			sb.append(",dash pattern=" + dash);
 		}
-		if (gradient) {
-			sb.append("top color=" + getColorName(fillcolor) + ",");
-			sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
-			sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
-		} else if (fillcolor != null) {
-			sb.append("fill=" + getColorName(fillcolor) + ",");
-			if (color == null) {
-				sb.append("color=" + getColorName(fillcolor) + ",");
-			}
-		}
-		sb.append("line width=" + thickness + "pt] ");
+		sb.append("] ");
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
@@ -423,7 +484,7 @@ public class TikzGraphics {
 			}
 		}
 		sb.append(";");
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	public void ellipse(double x, double y, double width, double height) {
@@ -437,7 +498,7 @@ public class TikzGraphics {
 		}
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
 				+ format(height) + "pt);");
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	public void drawSingleCharacter(double x, double y, char c) {
@@ -445,7 +506,7 @@ public class TikzGraphics {
 		sb.append("\\node at ");
 		sb.append(couple(x, y));
 		sb.append("[]{\\textbf{\\Large " + c + "}};");
-		cmd.add(sb.toString());
+		addCommand(sb);
 	}
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
@@ -461,7 +522,7 @@ public class TikzGraphics {
 				sb.append(couple(coord[0] + x, coord[1] + y));
 			} else if (code == PathIterator.SEG_CLOSE) {
 				sb.append(";");
-				cmd.add(sb.toString());
+				addCommand(sb);
 				sb.setLength(0);
 				sb.append("\\draw ");
 			} else if (code == PathIterator.SEG_CUBICTO) {

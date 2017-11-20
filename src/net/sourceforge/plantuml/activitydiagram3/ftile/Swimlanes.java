@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -113,7 +112,8 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		factory = new FtileFactoryDelegatorWhile(factory);
 		factory = new FtileFactoryDelegatorRepeat(factory);
 		factory = new FtileFactoryDelegatorCreateParallel(factory);
-		// factory = new FtileFactoryDelegatorCreateParallelAddingMargin(new FtileFactoryDelegatorCreateParallel1(factory));
+		// factory = new FtileFactoryDelegatorCreateParallelAddingMargin(new
+		// FtileFactoryDelegatorCreateParallel1(factory));
 		factory = new FtileFactoryDelegatorAddNote(factory);
 		factory = new FtileFactoryDelegatorCreateGroup(factory);
 		return factory;
@@ -173,16 +173,20 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	}
 
 	static private final double separationMargin = 10;
+	private TextBlock full;
 
 	public void drawU(UGraphic ug) {
-		final FtileFactory factory = getFtileFactory(ug.getStringBounder());
-		TextBlock full = root.createFtile(factory);
+		if (full == null) {
+			final FtileFactory factory = getFtileFactory(ug.getStringBounder());
+			full = root.createFtile(factory);
+			if (swimlanes.size() <= 1) {
+				// BUG42
+				full = new TextBlockInterceptorUDrawable(full);
+			}
+		}
 
 		ug = new UGraphicForSnake(ug);
 		if (swimlanes.size() <= 1) {
-			full = new TextBlockInterceptorUDrawable(full);
-			// BUG42
-			// full.drawU(ug);
 			full.drawU(ug);
 			ug.flushUg();
 			return;
@@ -383,9 +387,20 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
 	}
 
+	// private Dimension2D cachedDimension;
+
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return TextBlockUtils.getMinMax(this, stringBounder).getDimension();
+		return getMinMax(stringBounder).getDimension();
+		// if (cachedDimension == null) {
+		// cachedDimension = calculateDimensionSlow(stringBounder);
+		// }
+		// return cachedDimension;
 	}
+
+	// private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
+	// final Dimension2D result = TextBlockUtils.getMinMax(this, stringBounder).getDimension();
+	// return result;
+	// }
 
 	public Instruction getCurrent() {
 		return currentInstruction;
