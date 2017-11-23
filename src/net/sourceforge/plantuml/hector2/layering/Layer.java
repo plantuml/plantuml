@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.hector2.mpos.MutationLayerMove;
 public class Layer {
 
 	private final int id;
-	private final Map<IEntity, Integer> entities = new HashMap<IEntity, Integer>();
+	private final Map<IEntity, Integer> entities = new HashMap<>();
 
 	public Layer(int id) {
 		this.id = id;
@@ -63,7 +63,7 @@ public class Layer {
 	}
 
 	public List<MutationLayer> getPossibleMutations() {
-		final List<MutationLayer> result = new ArrayList<MutationLayer>();
+		final List<MutationLayer> result = new ArrayList<>();
 		for (Map.Entry<IEntity, Integer> ent : entities.entrySet()) {
 			final IEntity entity = ent.getKey();
 			final int longitude = ent.getValue();

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.SuggestedFile;
 
 public class PngSplitter {
 
-	private final List<File> files = new ArrayList<File>();
+	private final List<File> files = new ArrayList<>();
 
 	public PngSplitter(SuggestedFile pngFile, int horizontalPages, int verticalPages, String source, int dpi,
 			boolean isWithMetadata, SplitParam splitParam) throws IOException {

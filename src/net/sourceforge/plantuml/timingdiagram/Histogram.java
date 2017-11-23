@@ -63,10 +63,10 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Histogram implements TimeDrawing {
 
-	private final List<ChangeState> changes = new ArrayList<ChangeState>();
-	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
+	private final List<ChangeState> changes = new ArrayList<>();
+	private final List<TimeConstraint> constraints = new ArrayList<>();
 
-	private List<String> allStates = new ArrayList<String>();
+	private List<String> allStates = new ArrayList<>();
 	private final double stepHeight = 20;
 
 	private final ISkinParam skinParam;

@@ -47,7 +47,7 @@ public class LayerFactory {
 	public List<Layer> getLayers(Skeleton skeleton) {
 		skeleton = skeleton.removeCycle();
 		skeleton.computeLayers();
-		final List<Layer> result = new ArrayList<Layer>();
+		final List<Layer> result = new ArrayList<>();
 		for (IEntity ent : skeleton.entities()) {
 			ensureLayer(result, ent.getHectorLayer());
 		}

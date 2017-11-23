@@ -46,7 +46,7 @@ public class Kingdom extends AbstractFigure {
 		if (area.isClosed()) {
 			throw new IllegalArgumentException();
 		}
-		final Set<ClosedArea> result = new HashSet<ClosedArea>();
+		final Set<ClosedArea> result = new HashSet<>();
 		for (LineSegmentInt seg : getSegmentsWithExtremity(area.getFreePoint(), area.getSegments())) {
 			final ClosedArea newArea = area.append(seg);
 			if (newArea != null) {
@@ -57,7 +57,7 @@ public class Kingdom extends AbstractFigure {
 	}
 
 	private void grow(Set<ClosedArea> areas) {
-		for (ClosedArea area : new HashSet<ClosedArea>(areas)) {
+		for (ClosedArea area : new HashSet<>(areas)) {
 			if (!area.isClosed()) {
 				areas.addAll(buildClosedArea(area));
 			}
@@ -65,7 +65,7 @@ public class Kingdom extends AbstractFigure {
 	}
 
 	public Set<ClosedArea> getAllClosedArea() {
-		final Set<ClosedArea> result = new HashSet<ClosedArea>();
+		final Set<ClosedArea> result = new HashSet<>();
 		for (LineSegmentInt seg : getSegments()) {
 			result.add(new ClosedArea().append(seg));
 		}

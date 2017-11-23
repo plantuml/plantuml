@@ -83,8 +83,8 @@ public final class UmlSource {
 	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash, int startLine) {
 		// this.startLocation = source.get(0).getLocation();
 		// this.startLine = startLine;
-		final List<String> tmp = new ArrayList<String>();
-		final List<CharSequence2> tmp2 = new ArrayList<CharSequence2>();
+		final List<String> tmp = new ArrayList<>();
+		final List<CharSequence2> tmp2 = new ArrayList<>();
 
 		if (checkEndingBackslash) {
 			final StringBuilder pending = new StringBuilder();

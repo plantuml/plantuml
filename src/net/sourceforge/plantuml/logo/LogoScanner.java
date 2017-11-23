@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class LogoScanner {
-	private final Map<String, Integer> keywordTable = new HashMap<String, Integer>();
+	private final Map<String, Integer> keywordTable = new HashMap<>();
 	private char sourceString[];
 	private int sourceLength;
 	private int i;

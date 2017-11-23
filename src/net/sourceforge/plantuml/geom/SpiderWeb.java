@@ -53,7 +53,7 @@ public class SpiderWeb {
 	private final int xMargin = 50;
 	private final int yMargin = 50;
 
-	private final List<PolylineBreakeable> lines = new ArrayList<PolylineBreakeable>();
+	private final List<PolylineBreakeable> lines = new ArrayList<>();
 
 	public SpiderWeb(int widthCell, int heightCell) {
 		Log.info("widthCell=" + widthCell + " heightCell=" + heightCell);
@@ -69,7 +69,7 @@ public class SpiderWeb {
 		// final double dist = Math.pow(1.6, -row - 10) + Math.pow(1.5, -col -
 		// 10);
 		assert pointsInCircle % 4 == 0;
-		final List<Point2DInt> result = new ArrayList<Point2DInt>();
+		final List<Point2DInt> result = new ArrayList<>();
 		final int dist = (int) Math.round(Math.sqrt(widthCell * widthCell + heightCell * heightCell) / 10);
 		for (int i = 0; i < pointsInCircle; i++) {
 			final Point2DInt main = getMainPoint(row, col);

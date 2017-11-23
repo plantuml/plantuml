@@ -166,7 +166,7 @@ note.getSkinParamBackcolored(skinParam), note.getStrings());
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-		final List<Real> reals = new ArrayList<Real>();
+		final List<Real> reals = new ArrayList<>();
 		for (Note note : notes) {
 			reals.add(getX(stringBounder, note));
 		}
@@ -178,7 +178,7 @@ note.getSkinParamBackcolored(skinParam), note.getStrings());
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		final List<Real> reals = new ArrayList<Real>();
+		final List<Real> reals = new ArrayList<>();
 		for (Note note : notes) {
 			reals.add(getX2(stringBounder, note));
 		}

@@ -62,8 +62,8 @@ public class StatsUtils {
 
 	static ParsedGenerated fullEver;
 
-	static ConcurrentMap<String, ParsedGenerated> byTypeEver = new ConcurrentHashMap<String, ParsedGenerated>();
-	static ConcurrentMap<String, ParsedGenerated> byTypeCurrent = new ConcurrentHashMap<String, ParsedGenerated>();
+	static ConcurrentMap<String, ParsedGenerated> byTypeEver = new ConcurrentHashMap<>();
+	static ConcurrentMap<String, ParsedGenerated> byTypeCurrent = new ConcurrentHashMap<>();
 
 	static FormatCounter formatCounterCurrent = new FormatCounter("currentformat.");
 	static FormatCounter formatCounterEver = new FormatCounter("format.");

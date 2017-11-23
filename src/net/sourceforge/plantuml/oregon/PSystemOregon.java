@@ -69,7 +69,7 @@ public class PSystemOregon extends AbstractPSystem {
 	}
 
 	public PSystemOregon() {
-		this.inputs = new ArrayList<String>();
+		this.inputs = new ArrayList<>();
 	}
 
 	public void add(String line) {

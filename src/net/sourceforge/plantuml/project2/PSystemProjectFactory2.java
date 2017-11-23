@@ -55,7 +55,7 @@ public class PSystemProjectFactory2 extends UmlDiagramFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		cmds.add(new CommandNope());
 //		cmds.add(new CommandComment());
 //		cmds.add(new CommandMultilinesComment());

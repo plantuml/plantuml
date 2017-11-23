@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemWelcome extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private final GraphicPosition position;
 
 	public PSystemWelcome(GraphicPosition position) {

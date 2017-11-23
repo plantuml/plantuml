@@ -112,7 +112,7 @@ class TimeScale {
 	}
 
 	public SortedMap<Instant, Double> getAbscisse(StringBounder stringBounder) {
-		final SortedMap<Instant, Double> pos = new TreeMap<Instant, Double>();
+		final SortedMap<Instant, Double> pos = new TreeMap<>();
 		final double caseWidth = getCaseWidth(stringBounder);
 		final Instant end = project.getEnd();
 		double x = 0;

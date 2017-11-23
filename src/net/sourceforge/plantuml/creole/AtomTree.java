@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class AtomTree implements Atom {
 
 	private final HtmlColor lineColor;
-	private final List<Atom> cells = new ArrayList<Atom>();
-	private final Map<Atom, Integer> levels = new HashMap<Atom, Integer>();
+	private final List<Atom> cells = new ArrayList<>();
+	private final Map<Atom, Integer> levels = new HashMap<>();
 	private final double margin = 2;
 
 	public AtomTree(HtmlColor lineColor) {

@@ -39,17 +39,17 @@ import java.util.*;
 
 public class GrowingTree {
 
-	private final List<PinLink> all = new ArrayList<PinLink>();
-	private final Map<Pin, ArrayList<Pin>> directlyAfter = new HashMap<Pin, ArrayList<Pin>>();
+	private final List<PinLink> all = new ArrayList<>();
+	private final Map<Pin, ArrayList<Pin>> directlyAfter = new HashMap<>();
 
 	public Skeleton createSkeleton() {
-		final Set<Pin> pins = new LinkedHashSet<Pin>();
+		final Set<Pin> pins = new LinkedHashSet<>();
 		for (PinLink link : all) {
 			pins.add(link.getPin1());
 			pins.add(link.getPin2());
 		}
 		normalizeRowToZero(pins);
-		return new Skeleton(new ArrayList<Pin>(pins), new ArrayList<PinLink>(all));
+		return new Skeleton(new ArrayList<>(pins), new ArrayList<>(all));
 	}
 
 	private void normalizeRowToZero(Collection<Pin> pins) {
@@ -100,17 +100,17 @@ public class GrowingTree {
 	private List<Pin> getDirectlyAfter(Pin p) {
 		ArrayList<Pin> result = directlyAfter.get(p);
 		if (result == null) {
-			result = new ArrayList<Pin>();
+			result = new ArrayList<>();
 			directlyAfter.put(p, result);
 		}
 		return result;
 	}
 
 	private Collection<Pin> getIndirectlyAfter(Pin pin) {
-		final Set<Pin> result = new HashSet<Pin>(getDirectlyAfter(pin));
+		final Set<Pin> result = new HashSet<>(getDirectlyAfter(pin));
 		int lastSize = result.size();
 		while (true) {
-			for (Pin p : new ArrayList<Pin>(result)) {
+			for (Pin p : new ArrayList<>(result)) {
 				result.addAll(getDirectlyAfter(p));
 			}
 			if (result.size() == lastSize) {

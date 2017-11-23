@@ -48,10 +48,10 @@ public class Path {
 
 	private final Frame frame1;
 	private final Frame frame2;
-	private final List<Point2DCharge> points1 = new ArrayList<Point2DCharge>();
+	private final List<Point2DCharge> points1 = new ArrayList<>();
 	// private final Map<Point2DCharge, Integer> points2 = new
 	// HashMap<Point2DCharge, Integer>(1000, (float).01);
-	private final Map<Point2DCharge, Integer> points2 = new HashMap<Point2DCharge, Integer>();
+	private final Map<Point2DCharge, Integer> points2 = new HashMap<>();
 
 	public Path(Frame f1, Frame f2) {
 		if (f1 == null || f2 == null) {
@@ -84,7 +84,7 @@ public class Path {
 	private static final double MINDIST = 30;
 
 	public void renderContinue() {
-		final List<Point2D> newPoints = new ArrayList<Point2D>();
+		final List<Point2D> newPoints = new ArrayList<>();
 		Point2D cur = frame1.getMainCorner();
 		for (Point2DCharge pc : points1) {
 			final SegmentCutter segmentCutter = new SegmentCutter(cur, pc, MINDIST);
@@ -103,7 +103,7 @@ public class Path {
 	}
 
 	public List<Line2D> segments() {
-		final List<Line2D> result = new ArrayList<Line2D>();
+		final List<Line2D> result = new ArrayList<>();
 		Point2D cur = frame1.getMainCorner();
 		for (Point2D pt : points1) {
 			result.add(new Line2D.Double(cur, pt));

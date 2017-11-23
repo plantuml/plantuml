@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 
 	private final StringBounder stringBounder;
-	private final Map<TextBlock, Dimension2D> dimensions = new LinkedHashMap<TextBlock, Dimension2D>();
+	private final Map<TextBlock, Dimension2D> dimensions = new LinkedHashMap<>();
 
 	public AbstractPlacementStrategy(StringBounder stringBounder) {
 		this.stringBounder = stringBounder;

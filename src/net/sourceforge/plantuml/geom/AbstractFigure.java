@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.Log;
 
 abstract class AbstractFigure {
 
-	private final Set<LineSegmentInt> segments = new HashSet<LineSegmentInt>();
+	private final Set<LineSegmentInt> segments = new HashSet<>();
 
 	@Override
 	public String toString() {
@@ -86,7 +86,7 @@ abstract class AbstractFigure {
 	}
 
 	Collection<LineSegmentInt> getSegmentsWithExtremity(Point2DInt extremity, Collection<LineSegmentInt> exceptions) {
-		final Collection<LineSegmentInt> result = new HashSet<LineSegmentInt>();
+		final Collection<LineSegmentInt> result = new HashSet<>();
 		for (LineSegmentInt seg : segments) {
 			if (exceptions.contains(seg)) {
 				continue;
@@ -154,7 +154,7 @@ abstract class AbstractFigure {
 		}
 		points.remove(start.getPosition());
 		points.remove(end.getPosition());
-		final List<Neighborhood> neighborhoods = new ArrayList<Neighborhood>();
+		final List<Neighborhood> neighborhoods = new ArrayList<>();
 		for (Point2DInt p : points) {
 			neighborhoods.addAll(getSingularity(p).getNeighborhoods());
 		}
@@ -192,7 +192,7 @@ abstract class AbstractFigure {
 		assert path.size() > 2;
 
 		Log.println("PATH=" + path);
-		final List<Neighborhood> usedNeighborhoods = new ArrayList<Neighborhood>();
+		final List<Neighborhood> usedNeighborhoods = new ArrayList<>();
 		for (int i = 1; i < path.size() - 1; i++) {
 			final int idx = path.get(i) - 1;
 			usedNeighborhoods.add(neighborhoods.get(idx));
@@ -302,7 +302,7 @@ abstract class AbstractFigure {
 	}
 
 	private Set<Point2DInt> getAllPoints() {
-		final Set<Point2DInt> result = new HashSet<Point2DInt>();
+		final Set<Point2DInt> result = new HashSet<>();
 		for (LineSegmentInt seg : segments) {
 			result.add(seg.getP1());
 			result.add(seg.getP2());

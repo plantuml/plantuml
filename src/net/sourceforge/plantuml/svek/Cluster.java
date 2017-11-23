@@ -93,8 +93,8 @@ public class Cluster implements Moveable {
 
 	private final Cluster parent;
 	private final IGroup group;
-	private final List<Shape> shapes = new ArrayList<Shape>();
-	private final List<Cluster> children = new ArrayList<Cluster>();
+	private final List<Shape> shapes = new ArrayList<>();
+	private final List<Cluster> children = new ArrayList<>();
 	private final int color;
 	private final int colorTitle;
 	private final ISkinParam skinParam;
@@ -173,9 +173,9 @@ public class Cluster implements Moveable {
 	}
 
 	private List<Shape> getShapesOrderedTop(Collection<Line> lines) {
-		final List<Shape> firsts = new ArrayList<Shape>();
-		final Set<String> tops = new HashSet<String>();
-		final Map<String, Shape> shs = new HashMap<String, Shape>();
+		final List<Shape> firsts = new ArrayList<>();
+		final Set<String> tops = new HashSet<>();
+		final Map<String, Shape> shs = new HashMap<>();
 
 		for (final Shape sh : shapes) {
 			shs.put(sh.getUid(), sh);
@@ -205,7 +205,7 @@ public class Cluster implements Moveable {
 	}
 
 	private List<Shape> getShapesEntryExit(EnumSet<EntityPosition> positions) {
-		final List<Shape> result = new ArrayList<Shape>();
+		final List<Shape> result = new ArrayList<>();
 
 		for (final Shape sh : shapes) {
 			if (positions.contains(sh.getEntityPosition())) {
@@ -216,9 +216,9 @@ public class Cluster implements Moveable {
 	}
 
 	private List<Shape> getShapesOrderedWithoutTop(Collection<Line> lines) {
-		final List<Shape> all = new ArrayList<Shape>(shapes);
-		final Set<String> tops = new HashSet<String>();
-		final Map<String, Shape> shs = new HashMap<String, Shape>();
+		final List<Shape> all = new ArrayList<>(shapes);
+		final Set<String> tops = new HashSet<>();
+		final Map<String, Shape> shs = new HashMap<>();
 
 		for (final Iterator<Shape> it = all.iterator(); it.hasNext();) {
 			final Shape sh = it.next();
@@ -393,8 +393,8 @@ public class Cluster implements Moveable {
 	}
 
 	public void manageEntryExitPoint(StringBounder stringBounder) {
-		final Collection<ClusterPosition> insides = new ArrayList<ClusterPosition>();
-		final List<Point2D> points = new ArrayList<Point2D>();
+		final Collection<ClusterPosition> insides = new ArrayList<>();
+		final List<Point2D> points = new ArrayList<>();
 		for (Shape sh : shapes) {
 			if (sh.getEntityPosition() == EntityPosition.NORMAL) {
 				insides.add(sh.getClusterPosition());
@@ -510,7 +510,7 @@ public class Cluster implements Moveable {
 	}
 
 	private List<IShapePseudo> addProtection(List<Shape> entries, double width) {
-		final List<IShapePseudo> result = new ArrayList<IShapePseudo>();
+		final List<IShapePseudo> result = new ArrayList<>();
 		result.add(entries.get(0));
 		for (int i = 1; i < entries.size(); i++) {
 			result.add(new ShapePseudoImpl("psd" + UniqueSequence.getValue(), width, 5));
@@ -596,7 +596,7 @@ public class Cluster implements Moveable {
 	}
 
 	private Set<String> getRankSame(Collection<Line> lines) {
-		final Set<String> rankSame = new HashSet<String>();
+		final Set<String> rankSame = new HashSet<>();
 		for (Line l : lines) {
 			if (l.hasEntryPoint()) {
 				continue;

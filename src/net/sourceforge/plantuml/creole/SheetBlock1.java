@@ -93,13 +93,13 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		if (positions != null) {
 			return;
 		}
-		stripes = new ArrayList<Stripe>();
+		stripes = new ArrayList<>();
 		for (Stripe stripe : sheet) {
 			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));
 		}
-		positions = new LinkedHashMap<Atom, Position>();
-		widths = new LinkedHashMap<Stripe, Double>();
-		heights = new LinkedHashMap<Stripe, Double>();
+		positions = new LinkedHashMap<>();
+		widths = new LinkedHashMap<>();
+		heights = new LinkedHashMap<>();
 		minMax = MinMax.getEmpty(true);
 		double y = 0;
 		for (Stripe stripe : stripes) {

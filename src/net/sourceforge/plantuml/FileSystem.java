@@ -45,7 +45,7 @@ public class FileSystem {
 
 	private static final FileSystem singleton = new FileSystem();
 
-	private final ThreadLocal<File> currentDir = new ThreadLocal<File>();
+	private final ThreadLocal<File> currentDir = new ThreadLocal<>();
 
 	private FileSystem() {
 		reset();
@@ -92,7 +92,7 @@ public class FileSystem {
 	}
 
 	private List<File> getPath(String prop) {
-		final List<File> result = new ArrayList<File>();
+		final List<File> result = new ArrayList<>();
 		String paths = System.getProperty(prop);
 		if (paths == null) {
 			return result;

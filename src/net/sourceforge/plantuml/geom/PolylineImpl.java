@@ -42,7 +42,7 @@ import java.util.List;
 
 public class PolylineImpl extends AbstractPolyline implements Polyline {
 
-	private final List<Point2DInt> intermediates = new ArrayList<Point2DInt>();
+	private final List<Point2DInt> intermediates = new ArrayList<>();
 
 	public PolylineImpl(Pointable start, Pointable end) {
 		super(start, end);
@@ -53,7 +53,7 @@ public class PolylineImpl extends AbstractPolyline implements Polyline {
 	}
 
 	public List<LineSegmentInt> segments() {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		Point2DInt cur = getStart().getPosition();
 		for (Point2DInt intermediate : intermediates) {
 			result.add(new LineSegmentInt(cur, intermediate));

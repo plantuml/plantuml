@@ -52,7 +52,7 @@ public class Area implements Elastic {
 
 	private Dimension2D minimumDimension;
 
-	private final List<PostIt> postIts = new ArrayList<PostIt>();
+	private final List<PostIt> postIts = new ArrayList<>();
 
 	public Area(char id, String title) {
 		this.id = id;

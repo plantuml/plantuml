@@ -47,7 +47,7 @@ public class Project2 implements TaskContainer {
 
 	private final TimeLine timeline;
 	private final Knowledge knowledge;
-	private final List<TaskImpl> tasks = new ArrayList<TaskImpl>();
+	private final List<TaskImpl> tasks = new ArrayList<>();
 
 	public Project2() {
 		this.timeline = new TimeLineDay();

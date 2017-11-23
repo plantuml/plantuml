@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemDefinition extends AbstractPSystem implements UDrawable {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 	private final String startLine;
 
 	public PSystemDefinition(String startLine) {

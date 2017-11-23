@@ -122,7 +122,7 @@ public class PreprocessorInclude implements ReadLine {
 	public CharSequence2 readLine() throws IOException {
 		final CharSequence2 result = readLineInternal();
 		if (result != null && StartUtils.isArobaseStartDiagram(result) && config.size() > 0) {
-			final List<String> empty = new ArrayList<String>();
+			final List<String> empty = new ArrayList<>();
 			included = new PreprocessorInclude(empty, new ReadLineList(config, result.getLocation()), defines, charset,
 					null, filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		}

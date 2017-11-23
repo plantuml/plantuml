@@ -57,7 +57,7 @@ public class DirWatcher2 {
 	private final Option option;
 	private final String pattern;
 
-	private final Map<File, FileWatcher> modifieds = new ConcurrentHashMap<File, FileWatcher>();
+	private final Map<File, FileWatcher> modifieds = new ConcurrentHashMap<>();
 	private final ExecutorService executorService;
 
 	public DirWatcher2(File dir, Option option, String pattern) {
@@ -70,7 +70,7 @@ public class DirWatcher2 {
 	}
 
 	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException {
-		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<File, Future<List<GeneratedImage>>>();
+		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<>();
 		if (dir.listFiles() != null) {
 			for (final File f : dir.listFiles()) {
 				if (!f.isFile()) {

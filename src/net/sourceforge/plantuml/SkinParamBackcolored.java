@@ -99,7 +99,7 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 		return super.getHtmlColor(param, stereotype, clickable);
 	}
 
-	private final Map<ColorParam, HtmlColor> forced = new EnumMap<ColorParam, HtmlColor>(ColorParam.class);
+	private final Map<ColorParam, HtmlColor> forced = new EnumMap<>(ColorParam.class);
 
 	public void forceColor(ColorParam param, HtmlColor color) {
 		forced.put(param, color);

@@ -41,11 +41,11 @@ public class Failable<O> {
 	private final String error;
 
 	public static <O> Failable<O> ok(O data) {
-		return new Failable<O>(data, null);
+		return new Failable<>(data, null);
 	}
 
 	public static <O> Failable<O> error(String error) {
-		return new Failable<O>(null, error);
+		return new Failable<>(null, error);
 	}
 
 	private Failable(O data, String error) {

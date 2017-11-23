@@ -41,11 +41,11 @@ import java.util.Iterator;
 
 public class PinLinksContinuousSet {
 
-	private final Collection<PinLink> all = new ArrayList<PinLink>();
+	private final Collection<PinLink> all = new ArrayList<>();
 
 	public Skeleton createSkeleton() {
 		final GrowingTree tree = new GrowingTree();
-		final Collection<PinLink> pendings = new ArrayList<PinLink>(all);
+		final Collection<PinLink> pendings = new ArrayList<>(all);
 		while (!pendings.isEmpty()) {
 			for (Iterator<PinLink> it = pendings.iterator(); it.hasNext();) {
 				final PinLink candidat = it.next();

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionFork extends WithNote implements Instruction {
 
-	private final List<InstructionList> forks = new ArrayList<InstructionList>();
+	private final List<InstructionList> forks = new ArrayList<>();
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 	private final ISkinParam skinParam;
@@ -78,7 +78,7 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		final List<Ftile> all = new ArrayList<Ftile>();
+		final List<Ftile> all = new ArrayList<>();
 		for (InstructionList list : forks) {
 			all.add(list.createFtile(factory));
 		}

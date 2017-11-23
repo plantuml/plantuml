@@ -108,7 +108,7 @@ public class Display implements Iterable<CharSequence> {
 			// Thread.dumpStack();
 			return NULL;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
 		HorizontalAlignment naturalHorizontalAlignment = null;
 		boolean rawMode = false;
@@ -171,12 +171,12 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	private static List<CharSequence> manageEmbededDiagrams2(final Collection<? extends CharSequence> strings) {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
 			CharSequence s = it.next();
 			if (s != null && StringUtils.trin(s.toString()).equals("{{")) {
-				final List<CharSequence> other = new ArrayList<CharSequence>();
+				final List<CharSequence> other = new ArrayList<>();
 				other.add("@startuml");
 				while (it.hasNext()) {
 					final CharSequence s2 = it.next();
@@ -194,7 +194,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public Display manageGuillemet() {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : display) {
 			final String withGuillement = StringUtils.manageGuillemet(line.toString());
 			if (withGuillement.equals(line.toString())) {
@@ -211,7 +211,7 @@ public class Display implements Iterable<CharSequence> {
 		if (display == null) {
 			return this;
 		}
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : display) {
 			line = line.toString().replace("%page%", "" + page);
 			line = line.toString().replace("%lastpage%", "" + lastpage);
@@ -221,7 +221,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public Display underlined() {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : display) {
 			result.add("<u>" + line);
 		}
@@ -318,7 +318,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public List<CharSequence2> as2() {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		final List<CharSequence2> result = new ArrayList<>();
 		LineLocationImpl location = new LineLocationImpl("inner", null);
 		for (CharSequence cs : display) {
 			location = location.oneLineRead();
@@ -342,7 +342,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public List<Display> splitMultiline(Pattern2 separator) {
-		final List<Display> result = new ArrayList<Display>();
+		final List<Display> result = new ArrayList<>();
 		Display pending = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 		result.add(pending);
 		for (CharSequence line : display) {

@@ -70,7 +70,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemVersion extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private BufferedImage image;
 
 	PSystemVersion(boolean withImage, List<String> args) {
@@ -162,7 +162,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static PSystemVersion createShowVersion() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		strings.add("Loaded from " + Version.getJarPath());
@@ -192,7 +192,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static List<String> getAuthorsStrings(boolean withTag) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		add(strings, "<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")",
 				withTag);
 		add(strings, "(" + License.getCurrent() + " source distribution)", withTag);
@@ -225,7 +225,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static PSystemVersion createCheckVersions(String host, String port) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 
 		final int lastversion = extractDownloadableVersion(host, port);
@@ -299,7 +299,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static PSystemVersion createTestDot() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		return new PSystemVersion(false, strings);
 	}

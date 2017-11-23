@@ -70,8 +70,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	private int horizontalPages = 1;
 	private int verticalPages = 1;
-	private final Set<LeafType> hiddenType = new HashSet<LeafType>();
-	private final Set<String> hiddenStereotype = new HashSet<String>();
+	private final Set<LeafType> hiddenType = new HashSet<>();
+	private final Set<String> hiddenStereotype = new HashSet<>();
 
 	protected final EntityFactory entityFactory = new EntityFactory(hiddenType, hiddenStereotype);
 	protected IGroup currentGroup = entityFactory.getRootGroup();
@@ -159,7 +159,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public final Collection<IGroup> getChildrenGroups(IGroup parent) {
-		final Collection<IGroup> result = new ArrayList<IGroup>();
+		final Collection<IGroup> result = new ArrayList<>();
 		for (IGroup gg : getGroups(false)) {
 			if (gg.getParentContainer() == parent) {
 				result.add(gg);
@@ -247,7 +247,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (!withRootGroup) {
 			return entityFactory.getGroups().values();
 		}
-		final Collection<IGroup> result = new ArrayList<IGroup>();
+		final Collection<IGroup> result = new ArrayList<>();
 		result.add(getRootGroup());
 		result.addAll(entityFactory.getGroups().values());
 		return Collections.unmodifiableCollection(result);
@@ -315,7 +315,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	protected abstract List<String> getDotStrings();
 
 	public final String[] getDotStringSkek() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String s : getDotStrings()) {
 			if (s.startsWith("nodesep") || s.startsWith("ranksep")) {
 				result.add(s);
@@ -549,8 +549,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 	}
 
-	private final List<HideOrShow> hideOrShows = new ArrayList<HideOrShow>();
-	private final Set<VisibilityModifier> hides = new HashSet<VisibilityModifier>();
+	private final List<HideOrShow> hideOrShows = new ArrayList<>();
+	private final Set<VisibilityModifier> hides = new HashSet<>();
 
 	static class HideOrShow {
 		private final EntityGender gender;
@@ -618,7 +618,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		final MagmaList magmaList = new MagmaList();
 
 		for (IGroup g : getGroups(true)) {
-			final List<ILeaf> standalones = new ArrayList<ILeaf>();
+			final List<ILeaf> standalones = new ArrayList<>();
 			// final SingleStrategy singleStrategy = g.getSingleStrategy();
 
 			for (ILeaf ent : g.getLeafsDirect()) {

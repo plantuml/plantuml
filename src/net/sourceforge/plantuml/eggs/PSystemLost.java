@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemLost extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	public PSystemLost() {
 		strings.add("Thank you for choosing Oceanic Airlines.");

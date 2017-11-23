@@ -33,7 +33,7 @@ public class VP8Frame {
 	private static int PREV_COEF_CONTEXTS = 3;
 	
 
-    private ArrayList<IIOReadProgressListener> _listeners = new ArrayList<IIOReadProgressListener>();
+    private ArrayList<IIOReadProgressListener> _listeners = new ArrayList<>();
 
 	private int bufferCount;
 	private int buffersToCreate=1;
@@ -75,13 +75,13 @@ public class VP8Frame {
 		this.frame = stream;
 		offset = frame.getStreamPosition();
 		this.coefProbs=Globals.getDefaultCoefProbs();
-		tokenBoolDecoders = new Vector<BoolDecoder>();
+		tokenBoolDecoders = new Vector<>();
 	}
 	public VP8Frame(ImageInputStream stream, int[][][][] coefProbs) throws IOException {
 		this.frame = stream;
 		offset = frame.getStreamPosition();
 		this.coefProbs=coefProbs;
-		tokenBoolDecoders = new Vector<BoolDecoder>();
+		tokenBoolDecoders = new Vector<>();
 	}
 	public void addIIOReadProgressListener(IIOReadProgressListener listener) {
 		_listeners.add(listener);
@@ -1040,7 +1040,7 @@ public class VP8Frame {
 			this.frame = frame;
 			offset = frame.getStreamPosition();
 			this.coefProbs=Globals.getDefaultCoefProbs();
-			tokenBoolDecoders = new Vector<BoolDecoder>();
+			tokenBoolDecoders = new Vector<>();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 public class Sea {
 
 	private double currentX;
-	private final Map<Atom, Position> positions = new HashMap<Atom, Position>();
+	private final Map<Atom, Position> positions = new HashMap<>();
 	private final StringBounder stringBounder;
 
 	public Sea(StringBounder stringBounder) {
@@ -65,7 +65,7 @@ public class Sea {
 	}
 
 	public void doAlign() {
-		for (Map.Entry<Atom, Position> ent : new HashMap<Atom, Position>(positions).entrySet()) {
+		for (Map.Entry<Atom, Position> ent : new HashMap<>(positions).entrySet()) {
 			final Position pos = ent.getValue();
 			final Atom atom = ent.getKey();
 			final double height = atom.calculateDimension(stringBounder).getHeight();
@@ -76,7 +76,7 @@ public class Sea {
 
 	public void translateMinYto(double newValue) {
 		final double delta = newValue - getMinY();
-		for (Map.Entry<Atom, Position> ent : new HashMap<Atom, Position>(positions).entrySet()) {
+		for (Map.Entry<Atom, Position> ent : new HashMap<>(positions).entrySet()) {
 			final Position pos = ent.getValue();
 			final Atom atom = ent.getKey();
 			positions.put(atom, pos.translateY(delta));

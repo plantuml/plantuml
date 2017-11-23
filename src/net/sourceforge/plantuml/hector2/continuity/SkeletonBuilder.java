@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 
 public class SkeletonBuilder {
 
-	private List<Skeleton> all = new ArrayList<Skeleton>();
+	private List<Skeleton> all = new ArrayList<>();
 
 	public void add(Link link) {
 		addInternal(link);

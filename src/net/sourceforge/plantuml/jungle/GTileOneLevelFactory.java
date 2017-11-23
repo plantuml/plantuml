@@ -45,7 +45,7 @@ public class GTileOneLevelFactory {
 		if (root.getChildren().isEmpty()) {
 			return left;
 		}
-		final List<GTile> all = new ArrayList<GTile>();
+		final List<GTile> all = new ArrayList<>();
 		for (GNode n : root.getChildren()) {
 			all.add(createGTile(n));
 		}

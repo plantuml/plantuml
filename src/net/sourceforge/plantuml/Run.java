@@ -315,7 +315,7 @@ public class Run {
 			return multithread(option);
 		}
 		boolean errorGlobal = false;
-		final List<File> files = new ArrayList<File>();
+		final List<File> files = new ArrayList<>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();

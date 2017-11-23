@@ -40,7 +40,7 @@ import java.util.List;
 
 public class PostScriptData {
 
-	private final List<PostScriptCommand> data = new ArrayList<PostScriptCommand>();
+	private final List<PostScriptCommand> data = new ArrayList<>();
 
 	private String toString;
 

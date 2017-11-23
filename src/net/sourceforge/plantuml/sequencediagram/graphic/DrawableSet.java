@@ -70,11 +70,11 @@ import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class DrawableSet {
 
-	private final Map<Participant, LivingParticipantBox> participants = new LinkedHashMap<Participant, LivingParticipantBox>();
-	private final Map<Event, GraphicalElement> events = new HashMap<Event, GraphicalElement>();
-	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new LinkedHashMap<Participant, ParticipantEnglober>();
+	private final Map<Participant, LivingParticipantBox> participants = new LinkedHashMap<>();
+	private final Map<Event, GraphicalElement> events = new HashMap<>();
+	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new LinkedHashMap<>();
 
-	private final List<Event> eventsList = new ArrayList<Event>();
+	private final List<Event> eventsList = new ArrayList<>();
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private Dimension2D dimension;
@@ -116,7 +116,7 @@ public class DrawableSet {
 	}
 
 	public Collection<GraphicalElement> getAllGraphicalElements() {
-		final Collection<GraphicalElement> result = new ArrayList<GraphicalElement>();
+		final Collection<GraphicalElement> result = new ArrayList<>();
 		for (Event ev : eventsList) {
 			result.add(events.get(ev));
 		}
@@ -154,7 +154,7 @@ public class DrawableSet {
 	}
 
 	public List<Englober> getExistingParticipantEnglober(StringBounder stringBounder) {
-		final List<Englober> result = new ArrayList<Englober>();
+		final List<Englober> result = new ArrayList<>();
 		Englober pending = null;
 		for (Map.Entry<Participant, ParticipantEnglober> ent : participantEnglobers2.entrySet()) {
 			final ParticipantEnglober englober = ent.getValue();
@@ -404,7 +404,7 @@ public class DrawableSet {
 	}
 
 	Participant getFirst(Collection<Participant> someParticipants) {
-		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
+		final List<Participant> list = new ArrayList<>(participants.keySet());
 		int min = -1;
 		for (Participant p : someParticipants) {
 			final int n = list.indexOf(p);
@@ -417,7 +417,7 @@ public class DrawableSet {
 	}
 
 	Participant getLast(Collection<Participant> someParticipants) {
-		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
+		final List<Participant> list = new ArrayList<>(participants.keySet());
 		int max = -1;
 		for (Participant p : someParticipants) {
 			final int n = list.indexOf(p);

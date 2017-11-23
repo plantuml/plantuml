@@ -45,7 +45,7 @@ public class SkeletonConfigurationSet implements Iterable<SkeletonConfiguration>
 
 	public SkeletonConfigurationSet(int limitSize, SkeletonConfigurationEvaluator evaluator) {
 		this.comparator = new SkeletonConfigurationComparator(evaluator);
-		this.all = new ArrayList<SkeletonConfiguration>();
+		this.all = new ArrayList<>();
 		this.limitSize = limitSize;
 	}
 
@@ -76,7 +76,7 @@ public class SkeletonConfigurationSet implements Iterable<SkeletonConfiguration>
 	}
 
 	public Iterator<SkeletonConfiguration> iterator() {
-		return new ArrayList<SkeletonConfiguration>(all).iterator();
+		return new ArrayList<>(all).iterator();
 	}
 
 	public SkeletonConfiguration first() {

@@ -118,7 +118,7 @@ public final class GroupingLeaf extends Grouping implements EventWithDeactivate 
 		return true;
 	}
 
-	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+	private List<NoteOnMessage> noteOnMessages = new ArrayList<>();
 
 	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
 		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {

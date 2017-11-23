@@ -42,7 +42,7 @@ import java.util.Map.Entry;
 
 public class Solver {
 
-	private final Map<TaskAttribute, Value> values = new LinkedHashMap<TaskAttribute, Value>();
+	private final Map<TaskAttribute, Value> values = new LinkedHashMap<>();
 
 	public void setData(TaskAttribute attribute, Value value) {
 		values.remove(attribute);

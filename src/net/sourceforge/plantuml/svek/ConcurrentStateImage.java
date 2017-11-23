@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public final class ConcurrentStateImage extends AbstractTextBlock implements IEntityImage {
 
-	private final List<IEntityImage> inners = new ArrayList<IEntityImage>();
+	private final List<IEntityImage> inners = new ArrayList<>();
 	private final Separator separator;
 	private final ISkinParam skinParam;
 	private final HtmlColor backColor;

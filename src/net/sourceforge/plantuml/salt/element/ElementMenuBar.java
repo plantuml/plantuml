@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementMenuBar extends AbstractElement {
 
-	private final Collection<ElementMenuEntry> entries = new ArrayList<ElementMenuEntry>();
-	private final Map<ElementMenuEntry, ElementMenuPopup> popups = new HashMap<ElementMenuEntry, ElementMenuPopup>();
+	private final Collection<ElementMenuEntry> entries = new ArrayList<>();
+	private final Map<ElementMenuEntry, ElementMenuPopup> popups = new HashMap<>();
 	private final UFont font;
 	private final ISkinSimple spriteContainer;
 

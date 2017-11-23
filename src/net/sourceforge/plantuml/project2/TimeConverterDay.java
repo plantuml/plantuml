@@ -43,8 +43,8 @@ public class TimeConverterDay implements TimeConverter {
 	private Day biggest;
 	private Day smallest;
 	private final double dayWith;
-	private final Map<Day, Integer> map1 = new HashMap<Day, Integer>();
-	private final Map<Integer, Day> map2 = new HashMap<Integer, Day>();
+	private final Map<Day, Integer> map1 = new HashMap<>();
+	private final Map<Integer, Day> map2 = new HashMap<>();
 	private final TimeLine timeLine;
 
 	public TimeConverterDay(TimeLine timeLine, Day start, double dayWith) {

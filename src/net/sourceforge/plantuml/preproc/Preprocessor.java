@@ -139,7 +139,7 @@ public class Preprocessor implements ReadLine {
 	}
 
 	private List<String> cleanEndDefineLong(List<String> data) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String s : data) {
 			final String clean = cleanEndDefineLong(s);
 			if (clean != null) {
@@ -169,7 +169,7 @@ public class Preprocessor implements ReadLine {
 
 	private CharSequence2 manageDefineLong(Matcher2 m, boolean emptyParentheses) throws IOException {
 		final String group1 = m.group(1);
-		final List<String> def = new ArrayList<String>();
+		final List<String> def = new ArrayList<>();
 		while (true) {
 			final CharSequence2 read = this.readLine();
 			if (read == null) {
@@ -205,7 +205,7 @@ public class Preprocessor implements ReadLine {
 					final CharSequence2 read = this.readLine();
 					value.append(read.toString2());
 				}
-				final List<String> li = new ArrayList<String>();
+				final List<String> li = new ArrayList<>();
 				li.add(value.toString());
 				defines.define(group1, li, emptyParentheses);
 			}

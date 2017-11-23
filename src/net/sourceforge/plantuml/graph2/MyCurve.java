@@ -48,8 +48,8 @@ import java.util.List;
 public class MyCurve {
 
 	private final CubicCurve2D.Double curve;
-	private final List<Line2D.Double> lines = new ArrayList<Line2D.Double>();
-	private final List<Line2D.Double> linesForInters = new ArrayList<Line2D.Double>();
+	private final List<Line2D.Double> lines = new ArrayList<>();
+	private final List<Line2D.Double> linesForInters = new ArrayList<>();
 	private Color color = Color.GREEN;
 	private double lenght = 0;
 

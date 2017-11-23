@@ -278,7 +278,7 @@ public enum License {
 	}
 
 	private List<String> getHeaderStart() {
-		final List<String> text = new ArrayList<String>();
+		final List<String> text = new ArrayList<>();
 		text.add("========================================================================");
 		text.add("PlantUML : a free UML diagram generator");
 		text.add("========================================================================");
@@ -296,7 +296,7 @@ public enum License {
 	}
 
 	public List<String> getJavaHeader() {
-		final List<String> h = new ArrayList<String>();
+		final List<String> h = new ArrayList<>();
 		h.add("/* ========================================================================");
 		h.add(" * PlantUML : a free UML diagram generator");
 		h.add(" * ========================================================================");

@@ -54,7 +54,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 	private final Component comp;
 	private double endY;
 	private final boolean isParallel;
-	private final List<Component> notes = new ArrayList<Component>();
+	private final List<Component> notes = new ArrayList<>();
 
 	public GroupingGraphicalElementHeader(double currentY, Component comp, InGroupableList inGroupableList,
 			boolean isParallel) {

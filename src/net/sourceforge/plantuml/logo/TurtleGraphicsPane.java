@@ -67,8 +67,8 @@ class TurtleGraphicsPane {
 	private boolean penIsDown = true;
 	private boolean showTurtle = true;
 	private HtmlColor penColor = HtmlColorUtils.BLACK;
-	private List<Rectangle2D.Double> lines = new ArrayList<Rectangle2D.Double>();
-	private List<HtmlColor> colors = new ArrayList<HtmlColor>();
+	private List<Rectangle2D.Double> lines = new ArrayList<>();
+	private List<HtmlColor> colors = new ArrayList<>();
 
 	private String message;
 

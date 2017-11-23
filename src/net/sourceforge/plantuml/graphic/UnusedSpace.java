@@ -68,9 +68,9 @@ public class UnusedSpace {
 	private double meanX2;
 	private double meanY2;
 
-	private final List<Point> points = new ArrayList<Point>();
+	private final List<Point> points = new ArrayList<>();
 
-	private static final Map<Object, UnusedSpace> cache = new HashMap<Object, UnusedSpace>();
+	private static final Map<Object, UnusedSpace> cache = new HashMap<>();
 
 	public static UnusedSpace getUnusedSpace(UFont font, char c) {
 		final Object key = Arrays.asList(font, c);

@@ -44,11 +44,11 @@ import java.util.Set;
 
 class RealLine {
 
-	private final List<PositiveForce> forces = new ArrayList<PositiveForce>();
+	private final List<PositiveForce> forces = new ArrayList<>();
 
 	private double min;
 	private double max;
-	private Set<AbstractReal> all = new HashSet<AbstractReal>();
+	private Set<AbstractReal> all = new HashSet<>();
 
 	void register(double v) {
 		// System.err.println("RealLine::register " + v);
@@ -76,7 +76,7 @@ class RealLine {
 
 	public void compile() {
 		int cpt = 0;
-		final Map<PositiveForce, Integer> counter = new HashMap<PositiveForce, Integer>();
+		final Map<PositiveForce, Integer> counter = new HashMap<>();
 		do {
 			boolean done = true;
 			for (PositiveForce f : forces) {

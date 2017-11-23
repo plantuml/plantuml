@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemStats extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	PSystemStats() {
 		final StatsImpl stats = (StatsImpl) StatsUtils.getStats();

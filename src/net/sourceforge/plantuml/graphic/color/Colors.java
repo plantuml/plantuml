@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Colors {
 
-	private final Map<ColorType, HtmlColor> map = new EnumMap<ColorType, HtmlColor>(ColorType.class);
+	private final Map<ColorType, HtmlColor> map = new EnumMap<>(ColorType.class);
 	private LinkStyle lineStyle = null;
 	private Boolean shadowing = null;
 

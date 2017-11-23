@@ -49,7 +49,7 @@ public class CompositeDiagramFactory extends UmlDiagramFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		cmds.add(new CommandCreateBlock());
 		cmds.add(new CommandLinkBlock());
 		cmds.add(new CommandCreatePackageBlock());

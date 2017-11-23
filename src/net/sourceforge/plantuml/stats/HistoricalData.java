@@ -48,7 +48,7 @@ public class HistoricalData {
 
 	private final Preferences prefs;
 	private ParsedGenerated current;
-	private final List<ParsedGenerated> historical = new ArrayList<ParsedGenerated>();
+	private final List<ParsedGenerated> historical = new ArrayList<>();
 
 	HistoricalData(Preferences prefs) {
 		this.prefs = prefs;
@@ -98,7 +98,7 @@ public class HistoricalData {
 	}
 
 	private List<ParsedGenerated> reload() throws BackingStoreException {
-		final List<ParsedGenerated> result = new ArrayList<ParsedGenerated>();
+		final List<ParsedGenerated> result = new ArrayList<>();
 		final int length = "histo.".length();
 		for (String key : prefs.keys()) {
 			if (key.startsWith("histo.") && key.endsWith(".p.saved")) {

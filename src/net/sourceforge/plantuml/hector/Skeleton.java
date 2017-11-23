@@ -46,7 +46,7 @@ public class Skeleton {
 
 	private final List<Pin> pins;
 	private final List<PinLink> pinLinks;
-	private final SortedSet<Integer> rows = new TreeSet<Integer>();
+	private final SortedSet<Integer> rows = new TreeSet<>();
 
 	public Skeleton(List<Pin> pins, List<PinLink> pinLinks) {
 		this.pins = pins;
@@ -67,7 +67,7 @@ public class Skeleton {
 	}
 
 	public Collection<Pin> getPinsOfRow(int row) {
-		final Set<Pin> result = new LinkedHashSet<Pin>();
+		final Set<Pin> result = new LinkedHashSet<>();
 		for (Pin pin : pins) {
 			if (pin.getRow() == row) {
 				result.add(pin);

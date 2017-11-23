@@ -60,7 +60,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		//addCommonCommands(cmds);
 		cmds.add(new CommandNope());
 //		cmds.add(new CommandComment());
@@ -71,7 +71,7 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 	}
 
 	private Collection<Command> getLanguageCommands() {
-		final Collection<Command> result = new ArrayList<Command>();
+		final Collection<Command> result = new ArrayList<>();
 		for (SubjectPattern subject : subjects()) {
 			for (VerbPattern verb : subject.getVerbs()) {
 				for (ComplementPattern complement : verb.getComplements()) {

@@ -84,7 +84,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil {
 
 	public Set<Swimlane> getSwimlanes() {
 		if (swimlaneNote != null) {
-			final Set<Swimlane> result = new HashSet<Swimlane>(tile.getSwimlanes());
+			final Set<Swimlane> result = new HashSet<>(tile.getSwimlanes());
 			result.add(swimlaneNote);
 			return Collections.unmodifiableSet(result);
 		}

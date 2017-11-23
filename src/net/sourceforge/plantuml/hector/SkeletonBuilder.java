@@ -41,7 +41,7 @@ import java.util.List;
 
 public class SkeletonBuilder {
 
-	private List<PinLinksContinuousSet> sets = new ArrayList<PinLinksContinuousSet>();
+	private List<PinLinksContinuousSet> sets = new ArrayList<>();
 
 	public void add(PinLink pinLink) {
 		addInternal(pinLink);
@@ -74,7 +74,7 @@ public class SkeletonBuilder {
 	}
 
 	public List<Skeleton> createSkeletons() {
-		final List<Skeleton> result = new ArrayList<Skeleton>();
+		final List<Skeleton> result = new ArrayList<>();
 
 		for (PinLinksContinuousSet set : sets) {
 			result.add(set.createSkeleton());

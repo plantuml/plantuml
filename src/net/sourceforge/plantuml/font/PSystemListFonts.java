@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemListFonts extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	public PSystemListFonts(String text) {
 		strings.add("   <b><size:16>Fonts available:");

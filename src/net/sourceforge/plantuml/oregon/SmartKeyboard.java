@@ -42,7 +42,7 @@ import java.util.List;
 public class SmartKeyboard {
 
 	private final Keyboard keyboard;
-	private final List<String> history = new ArrayList<String>();
+	private final List<String> history = new ArrayList<>();
 
 	public SmartKeyboard(Keyboard keyboard) {
 		this.keyboard = keyboard;

@@ -56,7 +56,7 @@ class JavaFile {
 
 	private static final Pattern2 packageDefinition = MyPattern.cmpile("^package[%s]+([\\w+.]+)[%s]*;");
 
-	private final List<JavaClass> all = new ArrayList<JavaClass>();
+	private final List<JavaClass> all = new ArrayList<>();
 
 	public JavaFile(File f) throws IOException {
 		BufferedReader br = null;

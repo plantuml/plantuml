@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 public class DataSourceImpl implements DataSource {
 
 	private int i = 0;
-	private final List<Terminated<String>> data = new ArrayList<Terminated<String>>();
+	private final List<Terminated<String>> data = new ArrayList<>();
 
 	public DataSourceImpl(List<String> data) {
 		final Pattern2 p = MyPattern.cmpile("\\{[-+^#!*/]?");
@@ -87,7 +87,7 @@ public class DataSourceImpl implements DataSource {
 	private void addInternal(String s, Terminator t) {
 		s = StringUtils.trin(s);
 		if (!s.isEmpty()) {
-			data.add(new Terminated<String>(s, t));
+			data.add(new Terminated<>(s, t));
 		}
 	}
 

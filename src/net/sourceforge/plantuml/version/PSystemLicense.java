@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemLicense extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	PSystemLicense() {
 		strings.addAll(License.getCurrent().getText());

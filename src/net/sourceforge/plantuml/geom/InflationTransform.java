@@ -60,8 +60,8 @@ class Point2DIntComparatorDistance implements Comparator<Point2DInt> {
 
 public class InflationTransform {
 
-	private final List<InflateData> inflateX = new ArrayList<InflateData>();
-	private final List<InflateData> inflateY = new ArrayList<InflateData>();
+	private final List<InflateData> inflateX = new ArrayList<>();
+	private final List<InflateData> inflateY = new ArrayList<>();
 
 	public void addInflationX(int xpos, int inflation) {
 		add(inflateX, xpos, inflation);
@@ -94,7 +94,8 @@ public class InflationTransform {
 		// Log.println("inflateX=" + inflateX);
 		// Log.println("inflateY=" + inflateY);
 
-		final SortedSet<Point2DInt> result = new TreeSet<Point2DInt>(new Point2DIntComparatorDistance(original.getP1()));
+		final SortedSet<Point2DInt> result = new TreeSet<>(new Point2DIntComparatorDistance(original
+                                                                                                .getP1()));
 
 		if (!original.isHorizontal()) {
 			for (InflateData x : inflateX) {
@@ -120,7 +121,7 @@ public class InflationTransform {
 	}
 
 	Collection<LineSegmentInt> cutSegments(LineSegmentInt original) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		Point2DInt cur = original.getP1();
 		final Collection<Point2DInt> cutPoints = cutPoints(original);
 		for (Point2DInt inter : cutPoints) {
@@ -137,7 +138,7 @@ public class InflationTransform {
 	}
 
 	Collection<LineSegmentInt> cutSegments(Collection<LineSegmentInt> segments) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		for (LineSegmentInt seg : segments) {
 			result.addAll(cutSegments(seg));
 		}
@@ -187,7 +188,7 @@ public class InflationTransform {
 	}
 
 	List<LineSegmentInt> inflateSegmentCollection(Collection<LineSegmentInt> segments) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		for (LineSegmentInt seg : segments) {
 			result.add(inflateSegment(seg));
 		}
@@ -195,7 +196,7 @@ public class InflationTransform {
 	}
 
 	public List<LineSegmentInt> inflate(Collection<LineSegmentInt> segments) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		LineSegmentInt last = null;
 		final Collection<LineSegmentInt> cutSegments = cutSegments(segments);
 		for (LineSegmentInt seg : inflateSegmentCollection(cutSegments)) {

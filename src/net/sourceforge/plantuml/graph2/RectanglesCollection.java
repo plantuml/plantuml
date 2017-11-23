@@ -42,7 +42,7 @@ import java.util.List;
 
 public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 
-	private final List<Rectangle2D.Double> areas = new ArrayList<Rectangle2D.Double>();
+	private final List<Rectangle2D.Double> areas = new ArrayList<>();
 	private final SortedListImpl<Rectangle2D.Double> sortedX1;
 	private final SortedListImpl<Rectangle2D.Double> sortedX2;
 	private final SortedListImpl<Rectangle2D.Double> sortedY1;
@@ -51,26 +51,26 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 	private Rectangle2D.Double max = null;
 
 	public RectanglesCollection() {
-		sortedX1 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) data.x;
-			}
-		});
-		sortedX2 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) (data.x + data.width);
-			}
-		});
-		sortedY1 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) data.y;
-			}
-		});
-		sortedY2 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) (data.y + data.height);
-			}
-		});
+		sortedX1 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) data.x;
+            }
+        });
+		sortedX2 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) (data.x + data.width);
+            }
+        });
+		sortedY1 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) data.y;
+            }
+        });
+		sortedY2 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) (data.y + data.height);
+            }
+        });
 	}
 
 	public RectanglesCollection(Rectangle2D.Double rect) {

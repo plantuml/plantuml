@@ -375,7 +375,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 	}
 
 	public Ftile addLinks(Branch branch1, Branch branch2, StringBounder stringBounder) {
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		conns.add(new ConnectionHorizontalThenVertical(tile1, branch1));
 		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));
 		final boolean hasPointOut1 = tile1.calculateDimension(stringBounder).hasPointOut();

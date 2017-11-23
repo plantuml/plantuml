@@ -63,7 +63,7 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 			throw new IllegalArgumentException("Cannot retrieve " + name);
 		}
 
-		return new Terminated<Element>(retrieve, next.getTerminator());
+		return new Terminated<>(retrieve, next.getTerminator());
 	}
 
 	public boolean ready() {

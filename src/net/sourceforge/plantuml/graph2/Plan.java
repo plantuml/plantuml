@@ -44,8 +44,8 @@ import java.util.*;
 
 public class Plan {
 
-	private final Map<Point2D.Double, Singularity2> points = new LinkedHashMap<Point2D.Double, Singularity2>();
-	private final Collection<Line2D.Double> lines = new ArrayList<Line2D.Double>();
+	private final Map<Point2D.Double, Singularity2> points = new LinkedHashMap<>();
+	private final Collection<Line2D.Double> lines = new ArrayList<>();
 
 	public void addPoint2D(Point2D.Double point) {
 		if (points.containsKey(point)) {
@@ -92,7 +92,7 @@ public class Plan {
 		}
 		final Vertex vStart = dijkstra.addVertex(start);
 		final Vertex vEnd = dijkstra.addVertex(end);
-		final Map<Neighborhood2, Vertex> vertexes = new LinkedHashMap<Neighborhood2, Vertex>();
+		final Map<Neighborhood2, Vertex> vertexes = new LinkedHashMap<>();
 		for (Singularity2 s : points.values()) {
 			for (Neighborhood2 n : s.getNeighborhoods()) {
 				final Vertex v = dijkstra.addVertex(n);
@@ -131,7 +131,7 @@ public class Plan {
 		if (list.size() < 2) {
 			throw new IllegalStateException("list=" + list);
 		}
-		final List<Neighborhood2> result = new ArrayList<Neighborhood2>();
+		final List<Neighborhood2> result = new ArrayList<>();
 		for (Vertex v : list.subList(1, list.size() - 1)) {
 			result.add((Neighborhood2) v.getData());
 		}
@@ -140,7 +140,7 @@ public class Plan {
 
 	public List<Point2D.Double> getIntermediatePoints(Point2D start, Point2D end) {
 		// Log.println("start=" + start + " end=" + end);
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+		final List<Point2D.Double> result = new ArrayList<>();
 		final List<Neighborhood2> list = getShortestPathToInternal(start, end);
 		// Log.println("Neighborhood2 = " + list);
 		for (int i = 1; i < list.size() - 1; i++) {

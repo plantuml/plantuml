@@ -48,7 +48,7 @@ public class Galaxy4 {
 
 	private final Board board;
 
-	private final Map<ALink, PolylineBreakeable> lines = new LinkedHashMap<ALink, PolylineBreakeable>();
+	private final Map<ALink, PolylineBreakeable> lines = new LinkedHashMap<>();
 	private final SpiderWeb spiderWeb;
 
 	public Galaxy4(Board board, int widthCell, int heightCell) {

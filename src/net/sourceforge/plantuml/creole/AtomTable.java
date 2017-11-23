@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class AtomTable implements Atom {
 
 	class Line {
-		private final List<Atom> cells = new ArrayList<Atom>();
-		private final List<HtmlColor> cellsBackColor = new ArrayList<HtmlColor>();
+		private final List<Atom> cells = new ArrayList<>();
+		private final List<HtmlColor> cellsBackColor = new ArrayList<>();
 		private final HtmlColor lineBackColor;
 
 		private Line(HtmlColor lineBackColor) {
@@ -78,8 +78,8 @@ public class AtomTable implements Atom {
 		}
 	}
 
-	private final List<Line> lines = new ArrayList<Line>();
-	private final Map<Atom, Position> positions = new HashMap<Atom, Position>();
+	private final List<Line> lines = new ArrayList<>();
+	private final Map<Atom, Position> positions = new HashMap<>();
 	private final HtmlColor lineColor;
 
 	public AtomTable(HtmlColor lineColor) {

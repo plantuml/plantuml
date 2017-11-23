@@ -45,7 +45,7 @@ public class ParentItem implements Item {
 	private final String code;
 	private final Item parent;
 
-	private final List<Item> children = new ArrayList<Item>();
+	private final List<Item> children = new ArrayList<>();
 
 	public ParentItem(String code, Item parent) {
 		this.code = code;

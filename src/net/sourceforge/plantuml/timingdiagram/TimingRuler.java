@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TimingRuler {
 
-	private final SortedSet<TimeTick> times = new TreeSet<TimeTick>();
+	private final SortedSet<TimeTick> times = new TreeSet<>();
 	private long highestCommonFactor = -1;
 	private final ISkinParam skinParam;
 
@@ -138,7 +138,7 @@ public class TimingRuler {
 	}
 
 	private Collection<Long> roundValues() {
-		final Set<Long> result = new TreeSet<Long>();
+		final Set<Long> result = new TreeSet<>();
 		if (tickUnitary == 0) {
 			for (TimeTick tick : times) {
 				final long round = tick.getTime().longValue();

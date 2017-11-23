@@ -52,12 +52,12 @@ public class InGroupableList implements InGroupable {
 	public static final int MARGIN10 = 10;
 
 	private final Grouping grouping;
-	private final Set<InGroupable> inGroupables = new HashSet<InGroupable>();
+	private final Set<InGroupable> inGroupables = new HashSet<>();
 
 	private double minWidth;
 
 	public List<InGroupableList> getInnerList() {
-		final List<InGroupableList> result = new ArrayList<InGroupableList>();
+		final List<InGroupableList> result = new ArrayList<>();
 		for (InGroupable i : inGroupables) {
 			if (i instanceof InGroupableList) {
 				result.add((InGroupableList) i);

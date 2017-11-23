@@ -45,7 +45,7 @@ import java.util.List;
 
 public class Polyline2 {
 
-	private final List<Line2D.Double> lines = new ArrayList<Line2D.Double>();
+	private final List<Line2D.Double> lines = new ArrayList<>();
 	private Point2D lastCurrent;
 	private final Point2D end;
 
@@ -73,7 +73,7 @@ public class Polyline2 {
 			drawDebug(g2d);
 		}
 		g2d.setColor(Color.BLUE);
-		final List<Point2D.Double> centers = new ArrayList<Point2D.Double>();
+		final List<Point2D.Double> centers = new ArrayList<>();
 		for (Line2D.Double l : lines) {
 			centers.add(GeomUtils.getCenter(l));
 		}

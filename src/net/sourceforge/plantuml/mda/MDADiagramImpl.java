@@ -68,7 +68,7 @@ public class MDADiagramImpl implements MDADiagram {
 		return null;
 	}
 
-	private final Collection<MDAPackage> packages = new ArrayList<MDAPackage>();
+	private final Collection<MDAPackage> packages = new ArrayList<>();
 
 	private MDADiagramImpl(ClassDiagram classDiagram) {
 		final EntityFactory entityFactory = classDiagram.getEntityFactory();

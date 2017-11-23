@@ -40,7 +40,7 @@ import java.util.List;
 
 class DayCloseOr implements DayClose {
 
-	private final List<DayClose> all = new ArrayList<DayClose>();
+	private final List<DayClose> all = new ArrayList<>();
 
 	public boolean isClose(Day day) {
 		for (DayClose dc : all) {

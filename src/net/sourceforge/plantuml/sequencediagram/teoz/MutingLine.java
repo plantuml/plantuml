@@ -56,7 +56,7 @@ public class MutingLine {
 	private final Skin skin;
 	private final ISkinParam skinParam;
 	private final boolean useContinueLineBecauseOfDelay;
-	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
+	private final Map<Double, Double> delays = new TreeMap<>();
 
 	public MutingLine(Skin skin, ISkinParam skinParam, List<Event> events) {
 		this.skin = skin;

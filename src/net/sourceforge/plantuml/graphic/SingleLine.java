@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 class SingleLine extends AbstractTextBlock implements Line {
 
-	private final List<TextBlock> blocs = new ArrayList<TextBlock>();
+	private final List<TextBlock> blocs = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
 	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,

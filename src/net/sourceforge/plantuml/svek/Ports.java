@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class Ports {
 
-	private final Map<String, PortGeometry> all = new LinkedHashMap<String, PortGeometry>();
+	private final Map<String, PortGeometry> all = new LinkedHashMap<>();
 
 	public void addThis(Ports other) {
 		all.putAll(other.all);

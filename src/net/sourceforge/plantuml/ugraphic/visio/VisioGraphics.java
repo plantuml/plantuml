@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 public class VisioGraphics {
 
-	private final List<VisioShape> shapes = new ArrayList<VisioShape>();
+	private final List<VisioShape> shapes = new ArrayList<>();
 	private final MinMaxDouble limits = new MinMaxDouble();
 
 	public void createVsd(OutputStream os) throws IOException {

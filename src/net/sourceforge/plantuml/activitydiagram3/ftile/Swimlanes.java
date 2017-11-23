@@ -87,7 +87,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 	private final ISkinParam skinParam;
     private final Pragma pragma;
 
-	private final List<Swimlane> swimlanes = new ArrayList<Swimlane>();
+	private final List<Swimlane> swimlanes = new ArrayList<>();
 	private Swimlane currentSwimlane = null;
 
 	private final Instruction root = new InstructionList();

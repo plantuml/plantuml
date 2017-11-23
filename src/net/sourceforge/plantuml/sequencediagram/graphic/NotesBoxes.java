@@ -45,9 +45,9 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 final class NotesBoxes extends GraphicalElement implements InGroupable {
 
-	private final List<NoteBox> notes = new ArrayList<NoteBox>();
-	private final List<ParticipantBox> participants1 = new ArrayList<ParticipantBox>();
-	private final List<ParticipantBox> participants2 = new ArrayList<ParticipantBox>();
+	private final List<NoteBox> notes = new ArrayList<>();
+	private final List<ParticipantBox> participants1 = new ArrayList<>();
+	private final List<ParticipantBox> participants2 = new ArrayList<>();
 
 	NotesBoxes(double startingY) {
 		super(startingY);

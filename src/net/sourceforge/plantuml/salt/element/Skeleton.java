@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Skeleton {
 
-	private final List<Entry> entries = new ArrayList<Entry>();
+	private final List<Entry> entries = new ArrayList<>();
 
 	static class Entry {
 		private final double xpos;

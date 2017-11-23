@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class OpenIcon {
 
 	private SvgPath svgPath;
-	private List<String> rawData = new ArrayList<String>();
+	private List<String> rawData = new ArrayList<>();
 	private final String id;
 
 	public static OpenIcon retrieve(String name) {

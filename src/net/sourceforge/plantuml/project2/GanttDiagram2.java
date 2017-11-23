@@ -80,7 +80,7 @@ public class GanttDiagram2 {
 
 	private Row getMainRow() {
 		final List<Task> tasks = project.getTasks();
-		final List<Row> rows = new ArrayList<Row>();
+		final List<Row> rows = new ArrayList<>();
 		for (Task t : tasks) {
 			final String text = t.getCode();
 			final TextBlock label = Display.create(text).create(fontConfig, HorizontalAlignment.LEFT,

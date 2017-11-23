@@ -74,7 +74,7 @@ public class RegexOr extends RegexComposed implements IRegex {
 	}
 
 	public final Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
-		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
+		final Map<String, RegexPartialMatch> result = new HashMap<>();
 		final String fullGroup = name == null ? null : it.next();
 		result.putAll(super.createPartialMatch(it));
 		if (name != null) {

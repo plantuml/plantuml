@@ -70,7 +70,7 @@ public class DotStringFactory implements Moveable {
 
 	private final Bibliotekon bibliotekon = new Bibliotekon();
 
-	private final Set<String> rankMin = new HashSet<String>();
+	private final Set<String> rankMin = new HashSet<>();
 
 	private final ColorSequence colorSequence;
 	private final Cluster root;
@@ -222,8 +222,8 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private void manageMinMaxCluster(final StringBuilder sb) {
-		final List<String> minPointCluster = new ArrayList<String>();
-		final List<String> maxPointCluster = new ArrayList<String>();
+		final List<String> minPointCluster = new ArrayList<>();
+		final List<String> maxPointCluster = new ArrayList<>();
 		for (Cluster cluster : bibliotekon.allCluster()) {
 			final String minPoint = cluster.getMinPoint(umlDiagramType);
 			if (minPoint != null) {

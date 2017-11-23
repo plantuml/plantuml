@@ -67,7 +67,7 @@ class GraphvizWindows extends AbstractGraphviz {
 		if (!programFile.exists() || !programFile.isDirectory()) {
 			return null;
 		}
-		final List<File> dots = new ArrayList<File>();
+		final List<File> dots = new ArrayList<>();
 		for (File f : programFile.listFiles(new FileFilter() {
 			public boolean accept(File pathname) {
 				return pathname.isDirectory() && StringUtils.goLowerCase(pathname.getName()).startsWith("graphviz");

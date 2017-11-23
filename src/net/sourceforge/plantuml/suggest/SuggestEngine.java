@@ -118,7 +118,7 @@ public final class SuggestEngine {
 			return new SuggestEngineResult(it99.peekPrevious() + " {");
 		}
 
-		final Collection<Iterator<String>> all = new ArrayList<Iterator<String>>();
+		final Collection<Iterator<String>> all = new ArrayList<>();
 		all.add(new VariatorRemoveOneChar(incorrectLine));
 		all.add(new VariatorSwapLetter(incorrectLine));
 		// all.add(new VariatorAddOneCharBetweenWords(incorrectLine, ':'));
@@ -150,7 +150,7 @@ public final class SuggestEngine {
 	}
 
 	private IteratorCounter2 replaceFirstLine(String s) {
-		final List<CharSequence2> tmp = new ArrayList<CharSequence2>();
+		final List<CharSequence2> tmp = new ArrayList<>();
 		tmp.add(new CharSequence2Impl(s, null));
 		final Iterator<? extends CharSequence> it3 = it99.cloneMe();
 		if (it3.hasNext()) {

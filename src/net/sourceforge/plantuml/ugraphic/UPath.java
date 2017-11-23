@@ -43,7 +43,7 @@ import java.util.List;
 public class UPath extends AbstractShadowable implements Iterable<USegment> {
 
 	private final String comment;
-	private final List<USegment> segments = new ArrayList<USegment>();
+	private final List<USegment> segments = new ArrayList<>();
 	private MinMax minmax = MinMax.getEmpty(false);
 
 	private boolean isOpenIconic;

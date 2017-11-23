@@ -73,7 +73,7 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Ftile black = new FtileBlackBlock(skinParam(), getRose()
 				.getHtmlColor(skinParam(), ColorParam.activityBar), getList().get(0).getSwimlaneIn());
 		double x = 0;
@@ -99,7 +99,7 @@ public class ParallelBuilderFork extends ParallelFtilesBuilder {
 			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(label)));
 		}
 		result = new FtileAssemblySimple(result, out);
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		double x = 0;
 		for (Ftile tmp : getList()) {
 			final UTranslate translate0 = new UTranslate(0, barHeight);

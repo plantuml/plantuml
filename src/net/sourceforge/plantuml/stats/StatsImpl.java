@@ -72,7 +72,7 @@ public class StatsImpl implements Stats {
 	}
 
 	private StatsLine createDataLineSession(final ParsedGenerated data) {
-		final Map<StatsColumn, Object> result = new EnumMap<StatsColumn, Object>(StatsColumn.class);
+		final Map<StatsColumn, Object> result = new EnumMap<>(StatsColumn.class);
 		final long id = data.getId();
 		if (id != -1) {
 			result.put(StatsColumn.SESSION_ID, id);
@@ -95,7 +95,7 @@ public class StatsImpl implements Stats {
 	}
 
 	private StatsLine createLineByDiagramType(String key, NumberAnalyzed parse, NumberAnalyzed generate) {
-		final Map<StatsColumn, Object> result = new EnumMap<StatsColumn, Object>(StatsColumn.class);
+		final Map<StatsColumn, Object> result = new EnumMap<>(StatsColumn.class);
 		result.put(StatsColumn.DIAGRAM_TYPE, key);
 		result.put(StatsColumn.PARSED_COUNT, parse.getNb());
 		result.put(StatsColumn.PARSED_MEAN_TIME, parse.getMean());
@@ -138,7 +138,7 @@ public class StatsImpl implements Stats {
 
 	private StatsTable getByDiagramType(String name, Map<String, ParsedGenerated> data) {
 		final StatsTableImpl result = new StatsTableImpl(name);
-		final TreeSet<String> keys = new TreeSet<String>(data.keySet());
+		final TreeSet<String> keys = new TreeSet<>(data.keySet());
 		final NumberAnalyzed totalParsing = new NumberAnalyzed();
 		final NumberAnalyzed totalGenerating = new NumberAnalyzed();
 		for (String key : keys) {

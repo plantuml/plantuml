@@ -57,7 +57,7 @@ public class CreoleConverter {
 	}
 
 	public List<String> toCreole() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add("<b><size:16>Statistics</b>");
 		printTableCreole(result, stats.getLastSessions());
 		result.add(" ");

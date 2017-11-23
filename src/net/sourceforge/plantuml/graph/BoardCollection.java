@@ -71,7 +71,7 @@ public class BoardCollection {
 
 	}
 
-	private final SortedCollection<Entry> all = new SortedCollectionArrayList<Entry>();
+	private final SortedCollection<Entry> all = new SortedCollectionArrayList<>();
 
 	private final CostComputer costComputer;
 
@@ -110,7 +110,7 @@ public class BoardCollection {
 	}
 
 	public List<Double> getCosts() {
-		final List<Double> result = new ArrayList<Double>();
+		final List<Double> result = new ArrayList<>();
 		for (Entry ent : all) {
 			result.add(costComputer.getCost(ent.board));
 		}

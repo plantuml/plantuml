@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.creole.Stencil;
 
 public abstract class USymbol {
 
-	private static final Map<String, USymbol> all = new HashMap<String, USymbol>();
+	private static final Map<String, USymbol> all = new HashMap<>();
 
 	public final static USymbol STORAGE = record("STORAGE", SkinParameter.STORAGE, new USymbolStorage());
 	public final static USymbol DATABASE = record("DATABASE", SkinParameter.DATABASE, new USymbolDatabase());

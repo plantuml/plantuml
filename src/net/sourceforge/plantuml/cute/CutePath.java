@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 
 public class CutePath {
 
-	private final List<Arc> arcs = new ArrayList<Arc>();
+	private final List<Arc> arcs = new ArrayList<>();
 
 	public CutePath(String value) {
 

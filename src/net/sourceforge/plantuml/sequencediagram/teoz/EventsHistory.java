@@ -52,7 +52,7 @@ public class EventsHistory {
 
 	private final Participant p;
 	private final List<Event> events;
-	private final Map<Event, Double> ys3 = new HashMap<Event, Double>();
+	private final Map<Event, Double> ys3 = new HashMap<>();
 
 	public EventsHistory(Participant p, List<Event> events) {
 		this.p = p;

@@ -86,7 +86,7 @@ public class PSystemSkinparameterList extends AbstractPSystem {
 	}
 
 	public static List<TextBlock> getCols(List<String> lines, final int nbCol) throws IOException {
-		final List<TextBlock> result = new ArrayList<TextBlock>();
+		final List<TextBlock> result = new ArrayList<>();
 		final int maxLine = (lines.size() + (nbCol - 1)) / nbCol;
 		for (int i = 0; i < lines.size(); i += maxLine) {
 			final List<String> current = lines.subList(i, Math.min(lines.size(), i + maxLine));

@@ -45,7 +45,7 @@ import javax.script.ScriptException;
 
 public class AnimationDecoder {
 
-	private final List<String> result = new ArrayList<String>();
+	private final List<String> result = new ArrayList<>();
 
 	public AnimationDecoder(Iterable<CharSequence> data) throws ScriptException {
 		

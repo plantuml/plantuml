@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Worm implements Iterable<Point2D.Double> {
 
-	private final List<Point2D.Double> points = new ArrayList<Point2D.Double>();
+	private final List<Point2D.Double> points = new ArrayList<>();
 
 	public boolean isPureHorizontal() {
 		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();

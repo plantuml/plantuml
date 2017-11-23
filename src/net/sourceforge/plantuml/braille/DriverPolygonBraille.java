@@ -58,7 +58,7 @@ public class DriverPolygonBraille implements UDriver<BrailleGrid> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		final UPolygon shape = (UPolygon) ushape;
 
-		final List<Point2D> points = new ArrayList<Point2D>();
+		final List<Point2D> points = new ArrayList<>();
 		int i = 0;
 
 		for (Point2D pt : shape.getPoints()) {

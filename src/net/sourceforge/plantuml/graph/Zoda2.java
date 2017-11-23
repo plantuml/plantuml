@@ -45,7 +45,7 @@ import java.util.Set;
 
 public class Zoda2 {
 
-	private final Map<ANode, Heap> heaps = new LinkedHashMap<ANode, Heap>();
+	private final Map<ANode, Heap> heaps = new LinkedHashMap<>();
 
 	public ANode getNode(String code) {
 		for (ANode n : heaps.keySet()) {
@@ -67,11 +67,11 @@ public class Zoda2 {
 	}
 
 	public List<? extends ANode> getNodes() {
-		return Collections.unmodifiableList(new ArrayList<ANode>(heaps.keySet()));
+		return Collections.unmodifiableList(new ArrayList<>(heaps.keySet()));
 	}
 
 	public Set<Heap> getHeaps() {
-		return new HashSet<Heap>(heaps.values());
+		return new HashSet<>(heaps.values());
 	}
 
 	public void addLink(String link, int diffHeight, Object userData) {

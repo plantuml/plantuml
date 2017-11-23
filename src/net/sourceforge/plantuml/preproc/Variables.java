@@ -41,7 +41,7 @@ import java.util.regex.Matcher;
 
 public class Variables {
 
-	private final List<DefineVariable> all = new ArrayList<DefineVariable>();
+	private final List<DefineVariable> all = new ArrayList<>();
 
 	public void add(DefineVariable var) {
 		this.all.add(var);

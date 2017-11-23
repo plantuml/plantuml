@@ -59,9 +59,9 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class EntityFactory {
 
-	private final Map<Code, ILeaf> leafs = new Protect<ILeaf>(new LinkedHashMap<Code, ILeaf>());
-	private final List<Link> links = new ArrayList<Link>();
-	private final Map<Code, IGroup> groups = new Protect<IGroup>(new LinkedHashMap<Code, IGroup>());
+	private final Map<Code, ILeaf> leafs = new Protect<>(new LinkedHashMap<Code, ILeaf>());
+	private final List<Link> links = new ArrayList<>();
+	private final Map<Code, IGroup> groups = new Protect<>(new LinkedHashMap<Code, IGroup>());
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);

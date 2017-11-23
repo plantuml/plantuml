@@ -236,7 +236,7 @@ public class SvgGraphics {
 		ensureVisible(x2, y2);
 	}
 
-	private Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
+	private Map<List<Object>, String> gradients = new HashMap<>();
 
 	public String createSvgGradient(String color1, String color2, char policy) {
 		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
@@ -306,7 +306,7 @@ public class SvgGraphics {
 		}
 	}
 
-	private final List<Element> pendingAction = new ArrayList<Element>();
+	private final List<Element> pendingAction = new ArrayList<>();
 
 	public void openLink(String url, String title, String target) {
 		if (url == null) {
@@ -482,7 +482,7 @@ public class SvgGraphics {
 		ensureVisible(x + textLength, y);
 	}
 
-	private final Map<String, String> filterBackColor = new HashMap<String, String>();
+	private final Map<String, String> filterBackColor = new HashMap<>();
 
 	private String getIdFilterBackColor(String color) {
 		String result = filterBackColor.get(color);
@@ -714,7 +714,7 @@ public class SvgGraphics {
 		ensureVisible(x + image.getWidth(), y + image.getHeight());
 	}
 
-	private final Map<String, String> images = new HashMap<String, String>();
+	private final Map<String, String> images = new HashMap<>();
 
 	public void svgImage(SvgString image, double x, double y) {
 		if (!hidden) {

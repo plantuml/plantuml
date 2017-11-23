@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.LimitFinder;
 public class PSystemTree extends AbstractPSystem {
 
 	private GNode root;
-	private List<GNode> stack = new ArrayList<GNode>();
+	private List<GNode> stack = new ArrayList<>();
 	private final Rendering rendering = Rendering.NEEDLE;
 
 	public DiagramDescription getDescription() {

@@ -44,9 +44,9 @@ import java.util.Map;
 
 public class Heap {
 
-	private final Map<String, ANode> nodes = new LinkedHashMap<String, ANode>();
-	private final Map<ANode, LinkedHashMap<ANode, ALink>> directChildren = new LinkedHashMap<ANode, LinkedHashMap<ANode, ALink>>();
-	private final List<ALink> links = new ArrayList<ALink>();
+	private final Map<String, ANode> nodes = new LinkedHashMap<>();
+	private final Map<ANode, LinkedHashMap<ANode, ALink>> directChildren = new LinkedHashMap<>();
+	private final List<ALink> links = new ArrayList<>();
 
 	public boolean isEmpty() {
 		if (links.isEmpty()) {
@@ -185,15 +185,15 @@ public class Heap {
 	}
 
 	public List<ANode> getNodes() {
-		return Collections.unmodifiableList(new ArrayList<ANode>(nodes.values()));
+		return Collections.unmodifiableList(new ArrayList<>(nodes.values()));
 	}
 
 	HashSet<ANode> getAllChildren(ANode n) {
-		final HashSet<ANode> result = new HashSet<ANode>(directChildren.get(n).keySet());
+		final HashSet<ANode> result = new HashSet<>(directChildren.get(n).keySet());
 		int size;
 		do {
 			size = result.size();
-			for (ANode other : new HashSet<ANode>(result)) {
+			for (ANode other : new HashSet<>(result)) {
 				result.addAll(getAllChildren(other));
 			}
 		} while (result.size() != size);

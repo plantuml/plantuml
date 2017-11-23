@@ -150,7 +150,7 @@ class FtileRepeat extends AbstractFtile {
 			throw new IllegalStateException();
 		}
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Display in1 = repeat.getInLinkRendering().getDisplay();
 		final TextBlock tbin1 = in1 == null ? null : in1.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
 				CreoleMode.SIMPLE_LINE);

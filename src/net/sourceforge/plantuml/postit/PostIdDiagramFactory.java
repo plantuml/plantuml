@@ -45,7 +45,7 @@ public class PostIdDiagramFactory extends UmlDiagramFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		addCommonCommands(cmds);
 		cmds.add(new CommandCreatePostIt());
 		cmds.add(new CommandWidth());

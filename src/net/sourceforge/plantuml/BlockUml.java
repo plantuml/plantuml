@@ -83,7 +83,7 @@ public class BlockUml {
 	}
 
 	public static List<CharSequence2> convert(List<String> strings) {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		final List<CharSequence2> result = new ArrayList<>();
 		LineLocationImpl location = new LineLocationImpl("block", null);
 		for (String s : strings) {
 			location = location.oneLineRead();
@@ -99,7 +99,7 @@ public class BlockUml {
 		if (!StartUtils.startsWithSymbolAnd("start", s0)) {
 			throw new IllegalArgumentException();
 		}
-		this.data = new ArrayList<CharSequence2>(strings);
+		this.data = new ArrayList<>(strings);
 	}
 
 	public String getFileOrDirname() {

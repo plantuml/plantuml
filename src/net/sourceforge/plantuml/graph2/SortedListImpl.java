@@ -65,7 +65,7 @@ public class SortedListImpl<V> implements SortedList<V> {
 	}
 
 	private final Measurer<V> measurer;
-	private final List<V> all = new ArrayList<V>();
+	private final List<V> all = new ArrayList<>();
 	private final Comparator<V> comparator;
 
 	public SortedListImpl(Measurer<V> m) {
@@ -90,7 +90,7 @@ public class SortedListImpl<V> implements SortedList<V> {
 	}
 
 	private int getPos(int v, boolean plus) {
-		final Measurer<V> m = new NullableAndEvenMeasurer<V>(measurer, v, plus);
+		final Measurer<V> m = new NullableAndEvenMeasurer<>(measurer, v, plus);
 		final Comparator<V> myComp = new Comparator<V>() {
 			public int compare(V o1, V o2) {
 				final int v1 = m.getMeasure(o1);

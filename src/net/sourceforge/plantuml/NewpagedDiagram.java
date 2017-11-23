@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.core.ImageData;
 
 public class NewpagedDiagram extends AbstractPSystem {
 
-	private final List<Diagram> diagrams = new ArrayList<Diagram>();
+	private final List<Diagram> diagrams = new ArrayList<>();
 
 	public NewpagedDiagram(AbstractPSystem diag1, AbstractPSystem diag2) {
 		if (diag1 instanceof NewpagedDiagram) {

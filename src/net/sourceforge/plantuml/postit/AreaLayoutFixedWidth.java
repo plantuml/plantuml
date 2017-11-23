@@ -56,7 +56,7 @@ public class AreaLayoutFixedWidth implements AreaLayout {
 		double x = 0;
 		double y = 0;
 		double maxY = 0;
-		final Map<PostIt, Point2D> result = new LinkedHashMap<PostIt, Point2D>();
+		final Map<PostIt, Point2D> result = new LinkedHashMap<>();
 
 		for (PostIt p : all) {
 			final Dimension2D dim = p.getDimension(stringBounder);

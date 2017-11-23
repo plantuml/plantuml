@@ -62,7 +62,7 @@ public class Animation {
 	}
 
 	public static Animation create(List<String> descriptions) {
-		final List<AffineTransformation> all = new ArrayList<AffineTransformation>();
+		final List<AffineTransformation> all = new ArrayList<>();
 		for (String s : descriptions) {
 			final AffineTransformation tmp = AffineTransformation.create(s);
 			if (tmp != null) {

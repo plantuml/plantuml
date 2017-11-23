@@ -119,10 +119,10 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	private final CucaDiagram diagram;
 
 	private final StringBounder stringBounder;
-	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<ILeaf, Agnode_s>();
-	private final Map<Link, Agedge_s> edges = new LinkedHashMap<Link, Agedge_s>();
-	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<IGroup, Agraph_s>();
-	private Map<IGroup, ILeaf> emptyGroups = new HashMap<IGroup, ILeaf>();
+	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<>();
+	private final Map<Link, Agedge_s> edges = new LinkedHashMap<>();
+	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<>();
+	private Map<IGroup, ILeaf> emptyGroups = new HashMap<>();
 
 	private final DotStringFactory dotStringFactory;
 
@@ -353,7 +353,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : diagram.getLeafsvalues()) {
 			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer()) {
 				result.add(ent);
@@ -548,7 +548,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private static List<String> getFailureText3(Throwable exception) {
 		exception.printStackTrace();
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("An error has occured : " + exception);
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);

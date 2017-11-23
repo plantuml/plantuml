@@ -51,9 +51,9 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
-	private final Map<String, String> environment = new LinkedHashMap<String, String>();
-	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
-	private final Map<String, Define> savedState = new LinkedHashMap<String, Define>();
+	private final Map<String, String> environment = new LinkedHashMap<>();
+	private final Map<String, Define> values = new LinkedHashMap<>();
+	private final Map<String, Define> savedState = new LinkedHashMap<>();
 
 	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")

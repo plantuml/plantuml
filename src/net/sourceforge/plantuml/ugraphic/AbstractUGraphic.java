@@ -42,7 +42,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 
 	private final O graphic;
 
-	private final Map<Class<? extends UShape>, UDriver<O>> drivers = new HashMap<Class<? extends UShape>, UDriver<O>>();
+	private final Map<Class<? extends UShape>, UDriver<O>> drivers = new HashMap<>();
 
 	public AbstractUGraphic(ColorMapper colorMapper, O graphic) {
 		super(colorMapper);

@@ -43,7 +43,7 @@ public class GraphvizVersions {
 
 	private static final GraphvizVersions singleton = new GraphvizVersions();
 
-	private final Map<File, GraphvizVersion> map = new ConcurrentHashMap<File, GraphvizVersion>();
+	private final Map<File, GraphvizVersion> map = new ConcurrentHashMap<>();
 
 	private GraphvizVersions() {
 	}

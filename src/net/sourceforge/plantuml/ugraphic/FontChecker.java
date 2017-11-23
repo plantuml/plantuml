@@ -65,8 +65,8 @@ import net.sourceforge.plantuml.svg.SvgGraphics;
 public class FontChecker {
 
 	private final UFont font;
-	private static final Set<String> SQUARRE = new HashSet<String>(Arrays.asList("MI=I=XM=I=IX",
-			"MI=I=XM=I=IXMI=I=XM=I=IX"));
+	private static final Set<String> SQUARRE = new HashSet<>(Arrays.asList("MI=I=XM=I=IX",
+	                                                                       "MI=I=XM=I=IXMI=I=XM=I=IX"));
 
 	public FontChecker(UFont font) {
 		this.font = font;

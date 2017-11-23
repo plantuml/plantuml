@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemRIP extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private final BufferedImage image;
 
 	public PSystemRIP() throws IOException {

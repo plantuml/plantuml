@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class Englober {
 
 	private final ParticipantEnglober participantEnglober;
-	private final List<Participant> participants = new ArrayList<Participant>();
+	private final List<Participant> participants = new ArrayList<>();
 	private final TileArguments tileArguments;
 	private final Real core1;
 	private final Real core2;

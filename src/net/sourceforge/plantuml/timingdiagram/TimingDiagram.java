@@ -68,8 +68,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TimingDiagram extends UmlDiagram implements Clock {
 
-	private final Map<String, Player> players = new LinkedHashMap<String, Player>();
-	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
+	private final Map<String, Player> players = new LinkedHashMap<>();
+	private final List<TimeMessage> messages = new ArrayList<>();
 	private final TimingRuler ruler = new TimingRuler(getSkinParam());
 	private TimeTick now;
 	private Player lastPlayer;

@@ -69,9 +69,9 @@ public class Player implements TextBlock, TimeProjected {
 	private final TimingRuler ruler;
 	private String initialState;
 
-	private final Set<ChangeState> changes = new TreeSet<ChangeState>();
-	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
-	private final List<TimingNote> notes = new ArrayList<TimingNote>();
+	private final Set<ChangeState> changes = new TreeSet<>();
+	private final List<TimeConstraint> constraints = new ArrayList<>();
+	private final List<TimingNote> notes = new ArrayList<>();
 
 	public Player(String code, String full, TimingStyle type, ISkinParam skinParam, TimingRuler ruler) {
 		this.code = code;

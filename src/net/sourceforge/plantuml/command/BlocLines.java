@@ -76,7 +76,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines add2(CharSequence s) {
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		copy.add(s);
 		return new BlocLines(copy);
 	}
@@ -105,13 +105,13 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines cleanList2(MultilinesStrategy strategy) {
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		strategy.cleanList(copy);
 		return new BlocLines(copy);
 	}
 
 	public BlocLines trim(boolean removeEmptyLines) {
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		for (int i = 0; i < copy.size(); i++) {
 			final CharSequence s = copy.get(i);
 			copy.set(i, StringUtils.trin(s));
@@ -130,7 +130,7 @@ public class BlocLines implements Iterable<CharSequence> {
 		if (!firstColumnRemovable(lines)) {
 			return this;
 		}
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		do {
 			for (int i = 0; i < copy.size(); i++) {
 				final CharSequence s = copy.get(i);
@@ -166,7 +166,7 @@ public class BlocLines implements Iterable<CharSequence> {
 		if (lines.isEmpty()) {
 			return this;
 		}
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		copy.set(0, data);
 		final int n = copy.size() - 1;
 		final CharSequence s = copy.get(n);
@@ -187,7 +187,7 @@ public class BlocLines implements Iterable<CharSequence> {
 		if (lines.size() <= referenceLine) {
 			return this;
 		}
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		final int nbStartingSpace = nbStartingSpace(copy.get(referenceLine));
 		for (int i = referenceLine; i < copy.size(); i++) {
 			final CharSequence s = copy.get(i);
@@ -223,7 +223,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines subExtract(int start, int end) {
-		List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		List<CharSequence> copy = new ArrayList<>(lines);
 		copy = copy.subList(start, copy.size() - end);
 		return new BlocLines(copy);
 	}

@@ -226,7 +226,7 @@ public class GraphvizSolverB {
 	}
 
 	private static List<Point2D.Double> getPoints(String points) {
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+		final List<Point2D.Double> result = new ArrayList<>();
 		final StringTokenizer st = new StringTokenizer(points, " ");
 		while (st.hasMoreTokens()) {
 			final String t = st.nextToken();

@@ -54,7 +54,7 @@ public class DirWatcher {
 	private final Option option;
 	private final String pattern;
 
-	private final Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
+	private final Map<File, FileWatcher> modifieds = new HashMap<>();
 
 	public DirWatcher(File dir, Option option, String pattern) {
 		this.dir = dir;
@@ -64,7 +64,7 @@ public class DirWatcher {
 
 	public List<GeneratedImage> buildCreatedFiles() throws IOException {
 		boolean error = false;
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
+		final List<GeneratedImage> result = new ArrayList<>();
 		for (File f : dir.listFiles()) {
 			if (error) {
 				continue;

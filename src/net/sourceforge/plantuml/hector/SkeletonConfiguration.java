@@ -50,7 +50,7 @@ public class SkeletonConfiguration {
 
 	public static SkeletonConfiguration getDefault(Skeleton skeleton) {
 		final Collection<Integer> rows = skeleton.getRows();
-		final Map<Integer, Integer> free = new HashMap<Integer, Integer>();
+		final Map<Integer, Integer> free = new HashMap<>();
 		for (Integer i : rows) {
 			free.put(i, 0);
 		}
@@ -198,11 +198,11 @@ public class SkeletonConfiguration {
 
 	private Collection<SkeletonMutation> getMutationForRow(int row) {
 		final Collection<Pin> pins = skeleton.getPinsOfRow(row);
-		final Collection<Integer> usedCols = new HashSet<Integer>();
+		final Collection<Integer> usedCols = new HashSet<>();
 		for (Pin pin : pins) {
 			usedCols.add(getCol(pin));
 		}
-		final Collection<SkeletonMutation> result = new ArrayList<SkeletonMutation>();
+		final Collection<SkeletonMutation> result = new ArrayList<>();
 		for (Pin pin1 : pins) {
 			final int c = getCol(pin1);
 			if (!usedCols.contains(c + 1)) {
@@ -228,7 +228,7 @@ public class SkeletonConfiguration {
 	}
 
 	public Set<SkeletonConfiguration> getSomeMuteds() {
-		final Set<SkeletonConfiguration> result = new HashSet<SkeletonConfiguration>();
+		final Set<SkeletonConfiguration> result = new HashSet<>();
 		for (Integer row : skeleton.getRows()) {
 			for (SkeletonMutation mutation : getMutationForRow(row)) {
 				result.add(mutation.mutate());

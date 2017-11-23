@@ -52,7 +52,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
-		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
+		final Map<String, RegexPartialMatch> result = new HashMap<>();
 		for (IRegex r : partials) {
 			result.putAll(r.createPartialMatch(it));
 		}

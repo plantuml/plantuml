@@ -80,7 +80,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 	// final private Map<Pin, IEntityImage> images = new LinkedHashMap<Pin, IEntityImage>();
 	// final private Map<Pin, Box2D> boxes = new LinkedHashMap<Pin, Box2D>();
 
-	private final Map<Link, PinLink> links = new LinkedHashMap<Link, PinLink>();
+	private final Map<Link, PinLink> links = new LinkedHashMap<>();
 
 	// final private List<Box2D> forbidden = new ArrayList<Box2D>();
 
@@ -156,7 +156,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 
 		final Rose rose = new Rose();
 		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.arrow);
-		final List<Box2D> b = new ArrayList<Box2D>();
+		final List<Box2D> b = new ArrayList<>();
 		final SmartConnection connection = new SmartConnection(x1, y1, x2, y2, b);
 		connection.draw(ug, color);
 	}

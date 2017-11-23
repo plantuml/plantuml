@@ -46,7 +46,7 @@ public class Dijkstra {
 	private final double basic[][];
 	private final double dist[];
 	private final int previous[];
-	private final Set<Integer> q = new HashSet<Integer>();
+	private final Set<Integer> q = new HashSet<>();
 	private final int size;
 
 	public Dijkstra(int size) {
@@ -102,7 +102,7 @@ public class Dijkstra {
 	}
 
 	public List<Integer> getBestPath() {
-		final List<Integer> result = new ArrayList<Integer>();
+		final List<Integer> result = new ArrayList<>();
 		computePrevious();
 		int u = size - 1;
 		while (previous[u] >= 0) {

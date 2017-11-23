@@ -61,7 +61,7 @@ public class SkinParam implements ISkinParam {
 	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
 	private static final Pattern2 stereoPattern = MyPattern.cmpile(stereoPatternString);
 
-	private final Map<String, String> params = new HashMap<String, String>();
+	private final Map<String, String> params = new HashMap<>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
 	private String dotExecutable;
 	private final UmlDiagramType type;
@@ -95,7 +95,7 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
-	private final Map<String, List<String>> cacheCleanForKey = new HashMap<String, List<String>>();
+	private final Map<String, List<String>> cacheCleanForKey = new HashMap<>();
 
 	List<String> cleanForKey(String key) {
 		List<String> result = cacheCleanForKey.get(key);
@@ -120,7 +120,7 @@ public class SkinParam implements ISkinParam {
 		key = key.replaceAll("usecasearrow", "arrow");
 		key = key.replaceAll("sequencearrow", "arrow");
 		final Matcher2 mm = stereoPattern.matcher(key);
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		while (mm.find()) {
 			final String s = mm.group(1);
 			result.add(key.replaceAll(stereoPatternString, "") + "<<" + s + ">>");
@@ -352,7 +352,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public static Collection<String> getPossibleValues() {
-		final Set<String> result = new TreeSet<String>();
+		final Set<String> result = new TreeSet<>();
 		result.add("Monochrome");
 		// result.add("BackgroundColor");
 		result.add("CircledCharacterRadius");
@@ -547,7 +547,7 @@ public class SkinParam implements ISkinParam {
 		return p;
 	}
 
-	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
+	private final Map<String, Sprite> sprites = new HashMap<>();
 
 	public void addSprite(String name, Sprite sprite) {
 		sprites.put(name, sprite);

@@ -51,7 +51,7 @@ import java.util.Set;
 
 public class Bodier {
 
-	private final List<String> rawBody = new ArrayList<String>();
+	private final List<String> rawBody = new ArrayList<>();
 	private final Set<VisibilityModifier> hides;
 	private LeafType type;
 	private List<Member> methodsToDisplay;
@@ -107,7 +107,7 @@ public class Bodier {
 
 	public List<Member> getMethodsToDisplay() {
 		if (methodsToDisplay == null) {
-			methodsToDisplay = new ArrayList<Member>();
+			methodsToDisplay = new ArrayList<>();
 			for (int i = 0; i < rawBody.size(); i++) {
 				final String s = rawBody.get(i);
 				if (!isMethod(i, rawBody)) {
@@ -137,7 +137,7 @@ public class Bodier {
 
 	public List<Member> getFieldsToDisplay() {
 		if (fieldsToDisplay == null) {
-			fieldsToDisplay = new ArrayList<Member>();
+			fieldsToDisplay = new ArrayList<>();
 			for (String s : rawBody) {
 				if (isMethod(s)) {
 					continue;
@@ -179,7 +179,7 @@ public class Bodier {
 		if (hides == null || hides.isEmpty()) {
 			return rawBody;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String s : rawBody) {
 			final Member m = new MemberImpl(s, isMethod(s), manageModifier);
 			if (!hides.contains(m.getVisibilityModifier())) {

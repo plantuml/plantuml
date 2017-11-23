@@ -85,7 +85,7 @@ public class SourceFileReader2 implements ISourceFileReader {
 	public List<GeneratedImage> getGeneratedImages() throws IOException {
 		Log.info("Reading file: " + file);
 
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
+		final List<GeneratedImage> result = new ArrayList<>();
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());

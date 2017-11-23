@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class SvgAttributes {
 
-	private final Map<String, String> attributes = new TreeMap<String, String>();
+	private final Map<String, String> attributes = new TreeMap<>();
 
 	public SvgAttributes() {
 	}

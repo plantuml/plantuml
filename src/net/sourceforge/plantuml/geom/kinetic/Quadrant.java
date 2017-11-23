@@ -75,7 +75,7 @@ public class Quadrant {
 		final Collection<Quadrant> result = Arrays.asList(new Quadrant(x - 1, y - 1), new Quadrant(x, y - 1),
 				new Quadrant(x + 1, y - 1), new Quadrant(x - 1, y), this, new Quadrant(x + 1, y), new Quadrant(x - 1,
 						y + 1), new Quadrant(x, y + 1), new Quadrant(x + 1, y + 1));
-		assert new HashSet<Quadrant>(result).size() == 9;
+		assert new HashSet<>(result).size() == 9;
 		return result;
 	}
 

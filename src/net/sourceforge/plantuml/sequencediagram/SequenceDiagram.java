@@ -73,11 +73,11 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class SequenceDiagram extends UmlDiagram {
 
-	private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
+	private final Map<String, Participant> participants = new LinkedHashMap<>();
 
-	private final List<Event> events = new ArrayList<Event>();
+	private final List<Event> events = new ArrayList<>();
 
-	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
+	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<>();
 
 	private final Skin skinInitial = new ProtectedSkin(new Rose());
 	private Skin skin2 = new ProtectedSkin(new Rose());
@@ -226,7 +226,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	// support for CommandReturn
-	private final Stack<Message> activationState = new Stack<Message>();
+	private final Stack<Message> activationState = new Stack<>();
 
 	public Message getActivatingMessage() {
 		if (activationState.empty()) {
@@ -273,7 +273,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return "Activate/Deactivate already done on " + p.getCode();
 	}
 
-	private final List<GroupingStart> openGroupings = new ArrayList<GroupingStart>();
+	private final List<GroupingStart> openGroupings = new ArrayList<>();
 
 	public boolean grouping(String title, String comment, GroupingType type, HtmlColor backColorGeneral,
 			HtmlColor backColorElement) {
@@ -402,7 +402,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void removeHiddenParticipants() {
-		for (Participant p : new ArrayList<Participant>(participants.values())) {
+		for (Participant p : new ArrayList<>(participants.values())) {
 			if (isAlone(p)) {
 				remove(p);
 			}

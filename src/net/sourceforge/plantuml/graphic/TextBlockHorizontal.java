@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TextBlockHorizontal extends AbstractTextBlock implements TextBlock {
 
-	private final List<TextBlock> blocks = new ArrayList<TextBlock>();
+	private final List<TextBlock> blocks = new ArrayList<>();
 	private final VerticalAlignment alignment;
 
 	TextBlockHorizontal(TextBlock b1, TextBlock b2, VerticalAlignment alignment) {

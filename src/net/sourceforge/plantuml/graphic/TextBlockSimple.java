@@ -85,7 +85,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 			if (stringBounder == null) {
 				throw new IllegalStateException();
 			}
-			this.lines2 = new ArrayList<Line>();
+			this.lines2 = new ArrayList<>();
 			for (CharSequence s : texts) {
 				if (s instanceof Stereotype) {
 					lines2.addAll(createLinesForStereotype(
@@ -159,7 +159,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 	private List<SingleLine> createLinesForStereotype(FontConfiguration fontConfiguration, Stereotype s,
 			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
 		assert s.getLabel(false) != null;
-		final List<SingleLine> result = new ArrayList<SingleLine>();
+		final List<SingleLine> result = new ArrayList<>();
 		for (String st : s.getLabels(spriteContainer.useGuillemet())) {
 			result.add(new SingleLine(st, fontConfiguration, horizontalAlignment, spriteContainer));
 		}

@@ -210,7 +210,7 @@ public class SvekUtils {
 
 	private static List<Point2D.Double> getPoints(String points, double yDelta) {
 		try {
-			final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+			final List<Point2D.Double> result = new ArrayList<>();
 			final StringTokenizer st = new StringTokenizer(points, " MC");
 			while (st.hasMoreTokens()) {
 				final String t = st.nextToken();

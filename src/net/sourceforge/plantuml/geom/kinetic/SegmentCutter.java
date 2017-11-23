@@ -42,7 +42,7 @@ import java.util.List;
 
 class SegmentCutter {
 
-	private final List<Point2D> intermediates = new ArrayList<Point2D>();
+	private final List<Point2D> intermediates = new ArrayList<>();
 
 	public SegmentCutter(Point2D start, Point2D end, double maxDistance) {
 		final double d = end.distance(start);

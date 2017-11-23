@@ -44,7 +44,7 @@ import java.util.Map;
 
 class Election {
 
-	private final Map<String, Member> all = new HashMap<String, Member>();
+	private final Map<String, Member> all = new HashMap<>();
 
 	public void addCandidate(String display, Member candidate) {
 		all.put(display, candidate);
@@ -64,7 +64,7 @@ class Election {
 	}
 
 	private List<Member> getAllCandidateContains(String shortName) {
-		final List<Member> result = new ArrayList<Member>();
+		final List<Member> result = new ArrayList<>();
 		for (Map.Entry<String, Member> ent : all.entrySet()) {
 			if (ent.getKey().contains(shortName)) {
 				result.add(ent.getValue());
@@ -74,7 +74,7 @@ class Election {
 	}
 
 	private List<Member> getAllCandidateContainsStrict(String shortName) {
-		final List<Member> result = new ArrayList<Member>();
+		final List<Member> result = new ArrayList<>();
 		for (Map.Entry<String, Member> ent : all.entrySet()) {
 			final String key = ent.getKey();
 			if (key.matches(".*\\b" + shortName + "\\b.*")) {
@@ -85,7 +85,7 @@ class Election {
 	}
 
 	public Map<Member, String> getAllElected(Collection<String> shortNames) {
-		final Map<Member, String> memberWithPort = new HashMap<Member, String>();
+		final Map<Member, String> memberWithPort = new HashMap<>();
 		for (String shortName : shortNames) {
 			final Member m = getCandidate(shortName);
 			if (m != null) {

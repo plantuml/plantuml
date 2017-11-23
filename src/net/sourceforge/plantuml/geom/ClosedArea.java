@@ -41,8 +41,8 @@ import java.util.List;
 
 public class ClosedArea extends AbstractFigure {
 
-	private final List<Point2DInt> points = new ArrayList<Point2DInt>();
-	private final List<LineSegmentInt> segmentsList = new ArrayList<LineSegmentInt>();
+	private final List<Point2DInt> points = new ArrayList<>();
+	private final List<LineSegmentInt> segmentsList = new ArrayList<>();
 
 	private int minY = Integer.MAX_VALUE;
 	private int minX = Integer.MAX_VALUE;

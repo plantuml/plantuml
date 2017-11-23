@@ -100,14 +100,14 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			// }
 		}
 		drawableSet = initializer.createDrawableSet(stringBounder);
-		final List<Newpage> newpages = new ArrayList<Newpage>();
+		final List<Newpage> newpages = new ArrayList<>();
 		for (Event ev : drawableSet.getAllEvents()) {
 			if (ev instanceof Newpage) {
 				newpages.add((Newpage) ev);
 			}
 		}
 		fullDimension = drawableSet.getDimension();
-		final Map<Newpage, Double> positions = new LinkedHashMap<Newpage, Double>();
+		final Map<Newpage, Double> positions = new LinkedHashMap<>();
 		for (Newpage n : newpages) {
 			positions.put(n, initializer.getYposition(stringBounder, n));
 		}

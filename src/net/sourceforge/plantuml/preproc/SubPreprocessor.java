@@ -65,7 +65,7 @@ public class SubPreprocessor implements ReadLine {
 	private final Defines defines;
 	private final DefinitionsContainer definitionsContainer;
 	private final String charset;
-	private final Map<String, Sub> subs = new HashMap<String, Sub>();
+	private final Map<String, Sub> subs = new HashMap<>();
 	private final List<String> config;
 	private Sub learningSub;
 	private ReadLine includedSub;

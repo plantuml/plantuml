@@ -47,7 +47,7 @@ public enum WeekDay {
 		if (this.ordinal() == 6) {
 			return SUN;
 		}
-		final List<WeekDay> all = new ArrayList<WeekDay>(EnumSet.allOf(WeekDay.class));
+		final List<WeekDay> all = new ArrayList<>(EnumSet.allOf(WeekDay.class));
 		return all.get(this.ordinal() + 1);
 	}
 
@@ -55,7 +55,7 @@ public enum WeekDay {
 		if (this.ordinal() == 0) {
 			return SAT;
 		}
-		final List<WeekDay> all = new ArrayList<WeekDay>(EnumSet.allOf(WeekDay.class));
+		final List<WeekDay> all = new ArrayList<>(EnumSet.allOf(WeekDay.class));
 		return all.get(this.ordinal() - 1);
 	}
 

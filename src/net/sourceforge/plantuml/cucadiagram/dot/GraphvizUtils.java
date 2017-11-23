@@ -111,7 +111,7 @@ public class GraphvizUtils {
 		return null;
 	}
 
-	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<Integer>();
+	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<>();
 
 	public static void removeLocalLimitSize() {
 		limitSize.remove();
@@ -184,7 +184,7 @@ public class GraphvizUtils {
 			bold = "<b>";
 		}
 
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (useVizJs(null)) {
 			result.add("VizJs library is used!");
 			try {

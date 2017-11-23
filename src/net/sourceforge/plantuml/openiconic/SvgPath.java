@@ -49,8 +49,8 @@ public class SvgPath {
 	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 	// http://tutorials.jenkov.com/svg/path-element.html
 
-	private List<Movement> movements = new ArrayList<Movement>();
-	private List<SvgCommand> commands = new ArrayList<SvgCommand>();
+	private List<Movement> movements = new ArrayList<>();
+	private List<SvgCommand> commands = new ArrayList<>();
 
 	public SvgPath(String path) {
 		path = StringDecipher.decipher(path);
@@ -89,7 +89,7 @@ public class SvgPath {
 	}
 
 	private List<SvgCommand> insertMissingLetter(List<SvgCommand> commands) {
-		final List<SvgCommand> result = new ArrayList<SvgCommand>();
+		final List<SvgCommand> result = new ArrayList<>();
 		final Iterator<SvgCommand> it = commands.iterator();
 		SvgCommandLetter lastLetter = null;
 		while (it.hasNext()) {
@@ -126,7 +126,7 @@ public class SvgPath {
 	}
 
 	private List<SvgCommand> manageHV(List<SvgCommand> commands) {
-		final List<SvgCommand> result = new ArrayList<SvgCommand>();
+		final List<SvgCommand> result = new ArrayList<>();
 		final Iterator<SvgCommand> it = commands.iterator();
 		while (it.hasNext()) {
 			final SvgCommand cmd = it.next();

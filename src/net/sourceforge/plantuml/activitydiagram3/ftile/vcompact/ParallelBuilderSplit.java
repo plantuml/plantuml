@@ -68,7 +68,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 
 		double x1 = 0;
 		for (Ftile tmp : getList()) {
@@ -85,7 +85,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep2(Ftile result) {
-		final List<Connection> conns2 = new ArrayList<Connection>();
+		final List<Connection> conns2 = new ArrayList<>();
 		double x2 = 0;
 		boolean hasOut = false;
 		for (Ftile tmp : getList()) {

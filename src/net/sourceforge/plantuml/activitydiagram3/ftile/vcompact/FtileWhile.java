@@ -82,7 +82,7 @@ class FtileWhile extends AbstractFtile {
 	private final Ftile specialOut;
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>(whileBlock.getSwimlanes());
+		final Set<Swimlane> result = new HashSet<>(whileBlock.getSwimlanes());
 		result.add(getSwimlaneIn());
 		return result;
 	}
@@ -138,7 +138,7 @@ class FtileWhile extends AbstractFtile {
 		final Display backDisplay = whileBlock.getOutLinkRendering().getDisplay();
 		final TextBlock back = backDisplay.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		if (dim.getWidth() == 0 || dim.getHeight() == 0) {
 			conns.add(result.new ConnectionBackEmpty(endInlinkColor));
 		} else {

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.StringUtils;
 public class SkinUtils {
 
 	public static Skin loadSkin(String className) {
-		final List<String> errors = new ArrayList<String>();
+		final List<String> errors = new ArrayList<>();
 		Skin result = tryLoading(className, errors);
 		if (result != null) {
 			return result;

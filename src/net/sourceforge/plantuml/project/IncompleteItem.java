@@ -42,7 +42,7 @@ import java.util.Map;
 
 class IncompleteItem implements Item {
 
-	private Map<ItemCaract, Numeric> data = new EnumMap<ItemCaract, Numeric>(ItemCaract.class);
+	private Map<ItemCaract, Numeric> data = new EnumMap<>(ItemCaract.class);
 
 	private final InstantArithmetic math;
 

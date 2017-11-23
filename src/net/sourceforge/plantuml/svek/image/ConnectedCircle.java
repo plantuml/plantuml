@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class ConnectedCircle implements UDrawable {
 
 	private final double radius;
-	private final List<Double> angles = new ArrayList<Double>();
-	private final List<Point2D> points = new ArrayList<Point2D>();
+	private final List<Double> angles = new ArrayList<>();
+	private final List<Point2D> points = new ArrayList<>();
 
 	public ConnectedCircle(double radius) {
 		this.radius = radius;

@@ -81,7 +81,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 	private final HtmlColor hyperlinkColor;
 	private final boolean useUnderlineForHyperlink;
 	private final Rose rose = new Rose();
-	private final List<Member> members = new ArrayList<Member>();
+	private final List<Member> members = new ArrayList<>();
 	private final HorizontalAlignment align;
 	private final Stereotype stereotype;
 	private final ILeaf leaf;

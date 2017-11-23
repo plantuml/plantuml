@@ -63,7 +63,7 @@ public class PostItDiagram extends UmlDiagram {
 
 	private final Area defaultArea = new Area('\0', null);
 
-	private final Map<String, PostIt> postIts = new HashMap<String, PostIt>();
+	private final Map<String, PostIt> postIts = new HashMap<>();
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {

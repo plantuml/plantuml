@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class VarArgs {
 
-	private final Map<String, String> args = new HashMap<String, String>();
+	private final Map<String, String> args = new HashMap<>();
 
 	public VarArgs(String data) {
 		for (String s : data.split("\\s")) {

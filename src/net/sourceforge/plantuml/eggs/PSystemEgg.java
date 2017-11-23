@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemEgg extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	PSystemEgg(String sentence) {
 		final StringTokenizer st = new StringTokenizer(sentence, "|");

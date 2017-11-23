@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiagram> {
 
 	static class Context {
-		private List<String> strings = new ArrayList<String>();
+		private List<String> strings = new ArrayList<>();
 
 		public void push(String s) {
 			strings.add(s);

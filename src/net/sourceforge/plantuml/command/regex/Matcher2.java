@@ -79,7 +79,7 @@ public class Matcher2 {
 		addTime(id, duration);
 	}
 
-	private static final Map<String, Long> durations = new HashMap<String, Long>();
+	private static final Map<String, Long> durations = new HashMap<>();
 
 	private static synchronized void addTime(String id, long duration) {
 		Long total = durations.get(id);

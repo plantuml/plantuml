@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 class ArrowAndNoteBox extends Arrow implements InGroupable {
 
 	private final Arrow arrow;
-	private final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+	private final List<NoteBox> noteBoxes = new ArrayList<>();
 
 	public ArrowAndNoteBox(StringBounder stringBounder, Arrow arrow, List<NoteBox> noteBoxes) {
 		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());

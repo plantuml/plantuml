@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.LineLocation;
 class ReadLineInsertable implements ReadLine {
 
 	private final ReadLine source;
-	private final List<CharSequence2> inserted = new LinkedList<CharSequence2>();
+	private final List<CharSequence2> inserted = new LinkedList<>();
 
 	public ReadLineInsertable(ReadLine source) {
 		this.source = source;

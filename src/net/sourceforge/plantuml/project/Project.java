@@ -45,11 +45,11 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class Project {
 
-	private final Map<String, FreeVariable> variables = new TreeMap<String, FreeVariable>();
+	private final Map<String, FreeVariable> variables = new TreeMap<>();
 
-	private final Map<String, Item> items = new TreeMap<String, Item>();
+	private final Map<String, Item> items = new TreeMap<>();
 
-	private final Map<String, Ressource> ressources = new TreeMap<String, Ressource>();
+	private final Map<String, Ressource> ressources = new TreeMap<>();
 
 	private final DayCloseOr dayClose = new DayCloseOr();
 
@@ -253,7 +253,7 @@ public class Project {
 	}
 
 	public List<Item> getValidItems() {
-		final List<Item> result = new ArrayList<Item>();
+		final List<Item> result = new ArrayList<>();
 		for (Item item : items.values()) {
 			if (item.isValid()) {
 				result.add(item);

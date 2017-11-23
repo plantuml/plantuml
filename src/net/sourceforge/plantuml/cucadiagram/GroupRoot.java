@@ -65,7 +65,7 @@ public class GroupRoot implements IGroup {
 	}
 
 	public Collection<ILeaf> getLeafsDirect() {
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : entityFactory.getLeafs().values()) {
 			if (ent.getParentContainer() == this) {
 				result.add(ent);
@@ -141,7 +141,7 @@ public class GroupRoot implements IGroup {
 	}
 
 	public Collection<IGroup> getChildren() {
-		final List<IGroup> result = new ArrayList<IGroup>();
+		final List<IGroup> result = new ArrayList<>();
 		for (IGroup ent : entityFactory.getGroups().values()) {
 			if (ent.getParentContainer() == this) {
 				result.add(ent);

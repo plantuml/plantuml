@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class MethodsOrFieldsArea {
 
 	private final UFont font;
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	public MethodsOrFieldsArea(List<Member> attributes, UFont font) {
 		this.font = font;

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class HectorPath {
 
-	private final List<LineSegmentDouble> segments = new ArrayList<LineSegmentDouble>();
+	private final List<LineSegmentDouble> segments = new ArrayList<>();
 
 	public void add(LineSegmentDouble seg) {
 		this.segments.add(seg);

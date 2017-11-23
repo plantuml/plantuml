@@ -53,15 +53,15 @@ public class MainTile implements Tile, Bordered {
 	private final Real max;
 	private final boolean isShowFootbox;
 
-	private final List<Tile> tiles = new ArrayList<Tile>();
+	private final List<Tile> tiles = new ArrayList<>();
 	private final LivingSpaces livingSpaces;
 
 	public MainTile(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
 
 		this.livingSpaces = tileArguments.getLivingSpaces();
 
-		final List<Real> min2 = new ArrayList<Real>();
-		final List<Real> max2 = new ArrayList<Real>();
+		final List<Real> min2 = new ArrayList<>();
+		final List<Real> max2 = new ArrayList<>();
 
 		min2.add(tileArguments.getOrigin());
 		max2.add(tileArguments.getOrigin());
@@ -107,7 +107,7 @@ public class MainTile implements Tile, Bordered {
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final List<YPositionedTile> positionedTiles = new ArrayList<YPositionedTile>();
+		final List<YPositionedTile> positionedTiles = new ArrayList<>();
 		final double y = GroupingTile.fillPositionelTiles(stringBounder, startingY, tiles, positionedTiles);
 		for (YPositionedTile tile : positionedTiles) {
 			tile.drawU(ug);

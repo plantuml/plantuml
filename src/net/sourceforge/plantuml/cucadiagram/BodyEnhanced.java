@@ -61,13 +61,13 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final HorizontalAlignment align;
 	private final boolean manageHorizontalLine;
 	private final boolean manageModifier;
-	private final List<Url> urls = new ArrayList<Url>();
+	private final List<Url> urls = new ArrayList<>();
 	private final Stereotype stereotype;
 	private final ILeaf entity;
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
 			Stereotype stereotype, ILeaf entity) {
-		this.rawBody = new ArrayList<String>(rawBody);
+		this.rawBody = new ArrayList<>(rawBody);
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
@@ -84,7 +84,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity) {
 		this.entity = entity;
 		this.stereotype = stereotype;
-		this.rawBody = new ArrayList<String>();
+		this.rawBody = new ArrayList<>();
 		for (CharSequence s : display) {
 			this.rawBody.add(s.toString());
 		}
@@ -121,11 +121,11 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			return area2;
 		}
 		urls.clear();
-		final List<TextBlock> blocks = new ArrayList<TextBlock>();
+		final List<TextBlock> blocks = new ArrayList<>();
 
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
-		List<Member> members = new ArrayList<Member>();
+		List<Member> members = new ArrayList<>();
 		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {
@@ -133,13 +133,13 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 						stereotype, entity), separator, title));
 				separator = s.charAt(0);
 				title = getTitle(s, skinParam);
-				members = new ArrayList<Member>();
+				members = new ArrayList<>();
 			} else if (CreoleParser.isTreeStart(s)) {
 				if (!members.isEmpty()) {
 					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
 							stereotype, entity), separator, title));
 				}
-				members = new ArrayList<Member>();
+				members = new ArrayList<>();
 				final List<String> allTree = buildAllTree(s, it);
 				final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam), align,
 						skinParam, CreoleMode.FULL);
@@ -165,7 +165,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	private static List<String> buildAllTree(String init, ListIterator<String> it) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add(init);
 		while (it.hasNext()) {
 			final String s = it.next();

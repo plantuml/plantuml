@@ -72,7 +72,7 @@ public class EpsGraphicsMacro extends EpsGraphics {
 	private double posX;
 	private double posY;
 	private int macroCpt;
-	private final Map<PostScriptCommandMacro, String> macros = new HashMap<PostScriptCommandMacro, String>();
+	private final Map<PostScriptCommandMacro, String> macros = new HashMap<>();
 
 	@Override
 	public void newpath() {

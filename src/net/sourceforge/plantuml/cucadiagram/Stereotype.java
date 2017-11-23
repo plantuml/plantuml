@@ -157,7 +157,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	public List<String> getMultipleLabels() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (label != null) {
 			final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
 			final Matcher m = p.matcher(label);
@@ -223,7 +223,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	private static List<String> cutLabels(final String label, boolean useGuillemet) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
 		final Matcher2 m = p.matcher(label);
 		while (m.find()) {

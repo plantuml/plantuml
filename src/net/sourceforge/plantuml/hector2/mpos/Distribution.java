@@ -50,7 +50,7 @@ public class Distribution {
 	private final List<Layer> layers;
 
 	public Distribution(List<Layer> layers) {
-		this.layers = new ArrayList<Layer>(layers);
+		this.layers = new ArrayList<>(layers);
 	}
 
 	public Distribution mute(MutationLayer mutation) {
@@ -84,7 +84,7 @@ public class Distribution {
 	}
 
 	public List<MutationLayer> getPossibleMutations() {
-		final List<MutationLayer> result = new ArrayList<MutationLayer>();
+		final List<MutationLayer> result = new ArrayList<>();
 		for (Layer layer : layers) {
 			result.addAll(layer.getPossibleMutations());
 		}

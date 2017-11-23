@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.FileFormat;
 
 public class FtpServer {
 
-	private final Map<String, FtpConnexion> datas = new TreeMap<String, FtpConnexion>();
+	private final Map<String, FtpConnexion> datas = new TreeMap<>();
 	private final ExecutorService exeImage = Executors.newFixedThreadPool(2);
 	private final String charset = "UTF-8";
 

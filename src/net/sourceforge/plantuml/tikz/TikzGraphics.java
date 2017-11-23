@@ -54,7 +54,7 @@ public class TikzGraphics {
 	// https://www.sharelatex.com/blog/2013/08/27/tikz-series-pt1.html
 	// http://cremeronline.com/LaTeX/minimaltikz.pdf
 
-	private final List<String> cmd = new ArrayList<String>();
+	private final List<String> cmd = new ArrayList<>();
 	private final boolean withPreamble;
 
 	private Color color = Color.BLACK;
@@ -65,15 +65,15 @@ public class TikzGraphics {
 	private final double scale;
 	private String dash = null;
 
-	private final Map<Color, String> colornames = new LinkedHashMap<Color, String>();
+	private final Map<Color, String> colornames = new LinkedHashMap<>();
 
 	public TikzGraphics(double scale, boolean withPreamble) {
 		this.withPreamble = withPreamble;
 		this.scale = scale;
 	}
 
-	private final Map<String, Integer> styles = new LinkedHashMap<String, Integer>();
-	private final Map<String, String> stylesID = new HashMap<String, String>();
+	private final Map<String, Integer> styles = new LinkedHashMap<>();
+	private final Map<String, String> stylesID = new HashMap<>();
 
 	private void addCommand(final StringBuilder sb) {
 		final String s = sb.toString();

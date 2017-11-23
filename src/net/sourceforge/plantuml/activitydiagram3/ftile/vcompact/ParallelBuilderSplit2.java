@@ -69,7 +69,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Rainbow thinColor = result.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
 		final Ftile thin = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
 		double x = 0;
@@ -113,7 +113,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		final Rainbow thinColor = result.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
 		final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
 		result = new FtileAssemblySimple(result, out);
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		double x = 0;
 		double first = 0;
 		double last = 0;

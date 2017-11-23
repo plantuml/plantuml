@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Genealogy {
 
-	private Map<Ftile, Ftile> myFatherIs = new HashMap<Ftile, Ftile>();
+	private Map<Ftile, Ftile> myFatherIs = new HashMap<>();
 	private final Ftile root;
 
 	public Genealogy(Ftile root) {

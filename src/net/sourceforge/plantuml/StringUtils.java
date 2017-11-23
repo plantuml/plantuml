@@ -65,7 +65,7 @@ public class StringUtils {
 		if (!m.find()) {
 			return null;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (int i = 1; i <= m.groupCount(); i++) {
 			result.add(m.group(i));
 		}
@@ -349,7 +349,7 @@ public class StringUtils {
 		// if (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*") == false) {
 		// throw new IllegalArgumentException();
 		// }
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final Pattern2 p = MyPattern.cmpile("([\\p{L}0-9_.]+|[%g][^%g]+[%g])");
 		final Matcher2 m = p.matcher(s);
 		while (m.find()) {
@@ -387,7 +387,7 @@ public class StringUtils {
 	}
 
 	public static <O> List<O> merge(List<O> l1, List<O> l2) {
-		final List<O> result = new ArrayList<O>(l1);
+		final List<O> result = new ArrayList<>(l1);
 		result.addAll(l2);
 		return Collections.unmodifiableList(result);
 	}

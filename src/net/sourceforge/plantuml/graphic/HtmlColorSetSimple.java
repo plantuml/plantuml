@@ -80,8 +80,8 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 	public HtmlColorSetSimple() {
 		// Taken from http://perl.wikipedia.com/wiki/Named_colors ?
 		// http://www.w3schools.com/HTML/html_colornames.asp
-		htmlNames = new HashMap<String, String>();
-		names = new TreeSet<String>();
+		htmlNames = new HashMap<>();
+		names = new TreeSet<>();
 		register("AliceBlue", "#F0F8FF");
 		register("AntiqueWhite", "#FAEBD7");
 		register("Aqua", "#00FFFF");

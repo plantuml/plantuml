@@ -45,9 +45,9 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 
 public class Stairs2 {
 
-	private final List<StairsPosition> ys = new ArrayList<StairsPosition>();
-	private final List<IntegerColored> values = new ArrayList<IntegerColored>();
-	private final Map<Double, IntegerColored> cache = new HashMap<Double, IntegerColored>();
+	private final List<StairsPosition> ys = new ArrayList<>();
+	private final List<IntegerColored> values = new ArrayList<>();
+	private final Map<Double, IntegerColored> cache = new HashMap<>();
 
 	@Override
 	public String toString() {

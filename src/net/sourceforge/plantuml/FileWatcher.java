@@ -42,7 +42,7 @@ import java.util.Set;
 
 public class FileWatcher {
 
-	private final Map<File, Long> modified2 = new HashMap<File, Long>();
+	private final Map<File, Long> modified2 = new HashMap<>();
 
 	public FileWatcher(Set<File> files) {
 		if (files.isEmpty()) {

@@ -79,8 +79,8 @@ public class PlantUmlTask extends Task {
 
 	private String dir = null;
 	private final Option option = new Option();
-	private List<FileSet> filesets = new ArrayList<FileSet>();
-	private List<FileList> filelists = new ArrayList<FileList>();
+	private List<FileSet> filesets = new ArrayList<>();
+	private List<FileList> filelists = new ArrayList<>();
 	private AtomicInteger nbFiles = new AtomicInteger(0);
 	private ExecutorService executorService;
 
