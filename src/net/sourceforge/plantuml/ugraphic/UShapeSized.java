@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.ugraphic;
 
 public interface UShapeSized extends UShape {
 
-	public double getWidth();
+	double getWidth();
 
-	public double getHeight();
+	double getHeight();
 
 }
