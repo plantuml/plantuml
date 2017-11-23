@@ -96,8 +96,7 @@ public class PSystemSkinparameterList extends AbstractPSystem {
 	}
 
 	private List<String> getDonors() throws IOException {
-		final List<String> lines = new ArrayList<String>(SkinParam.getPossibleValues());
-		return lines;
+		return new ArrayList<>(SkinParam.getPossibleValues());
 	}
 
 	public DiagramDescription getDescription() {
