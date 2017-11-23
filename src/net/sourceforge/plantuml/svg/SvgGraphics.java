@@ -239,7 +239,7 @@ public class SvgGraphics {
 	private Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
 
 	public String createSvgGradient(String color1, String color2, char policy) {
-		final List<Object> key = Arrays.asList(color1, color2, policy);
+		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
 		String id = gradients.get(key);
 		if (id == null) {
 			final Element elt = document.createElement("linearGradient");

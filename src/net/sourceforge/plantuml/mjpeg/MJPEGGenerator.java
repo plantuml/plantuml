@@ -13,11 +13,7 @@ package net.sourceforge.plantuml.mjpeg;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -549,9 +545,7 @@ public class MJPEGGenerator
         File[] files = photoDir.listFiles(new FilenameFilter(){
             public boolean accept(File dir, String name)
             {
-                if(StringUtils.goLowerCase(name).endsWith("jpg"))
-                    return true;
-                return false;
+                return StringUtils.goLowerCase(name).endsWith("jpg");
             }
         });
         
