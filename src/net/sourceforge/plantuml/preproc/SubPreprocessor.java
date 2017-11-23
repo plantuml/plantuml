@@ -125,7 +125,7 @@ public class SubPreprocessor implements ReadLine {
 			final String filename = name.substring(0, idx);
 			final String blocname = name.substring(idx + 1);
 			final File f = FileSystem.getInstance().getFile(PreprocessorInclude.withEnvironmentVariable(filename));
-			if (f.exists() == false || f.isDirectory()) {
+			if (!f.exists() || f.isDirectory()) {
 				return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
 			}
 			final Preprocessor data = new Preprocessor(config, getReaderInclude(s, f), charset, defines, null,

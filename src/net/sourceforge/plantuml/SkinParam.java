@@ -638,7 +638,7 @@ public class SkinParam implements ISkinParam {
 				style = LinkStyle.fromString2(styleValue);
 			}
 		}
-		if (style != null && style.isNormal() == false) {
+		if (style != null && !style.isNormal()) {
 			return style.getStroke3();
 		}
 		return null;
