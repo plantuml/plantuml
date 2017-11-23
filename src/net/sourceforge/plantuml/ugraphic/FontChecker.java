@@ -176,7 +176,7 @@ public class FontChecker {
 				ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
 				ug.draw(new URectangle(dim - 1, dim - 1));
 				if (ug instanceof UGraphic2) {
-					ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
+					ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
 					final UText text = new UText("" + c, FontConfiguration.blackBlueTrue(font));
 					ug.draw(text);
 				}
