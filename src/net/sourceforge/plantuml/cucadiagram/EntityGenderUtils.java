@@ -67,13 +67,8 @@ public class EntityGenderUtils {
 		}
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				if (EntityUtils.groupRoot(test.getParentContainer())) {
-					return false;
-				}
-				if (group == test.getParentContainer()) {
-					return true;
-				}
-				return false;
+				return !EntityUtils.groupRoot(test.getParentContainer())
+					&& group == test.getParentContainer();
 			}
 		};
 	}
