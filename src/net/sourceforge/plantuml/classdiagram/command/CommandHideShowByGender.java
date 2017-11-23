@@ -58,10 +58,10 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
-	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
-			EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
+	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.of(EntityPortion.METHOD);
+	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.of(EntityPortion.FIELD,
+                                                                            EntityPortion.METHOD);
+	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.of(EntityPortion.FIELD);
 
 	public CommandHideShowByGender() {
 		super(getRegexConcat());
@@ -202,10 +202,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			return PORTION_FIELD;
 		}
 		if (sub.equals("cir")) {
-			return EnumSet.<EntityPortion> of(EntityPortion.CIRCLED_CHARACTER);
+			return EnumSet.of(EntityPortion.CIRCLED_CHARACTER);
 		}
 		if (sub.equals("ste")) {
-			return EnumSet.<EntityPortion> of(EntityPortion.STEREOTYPE);
+			return EnumSet.of(EntityPortion.STEREOTYPE);
 		}
 		throw new IllegalArgumentException();
 	}

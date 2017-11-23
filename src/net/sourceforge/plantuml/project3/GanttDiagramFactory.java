@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 public class GanttDiagramFactory extends UmlDiagramFactory {
 
 	private List<SubjectPattern> subjects() {
-		return Arrays.<SubjectPattern> asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek());
+		return Arrays.asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek());
 	}
 
 	public GanttDiagramFactory(DiagramType type) {

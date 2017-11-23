@@ -52,10 +52,10 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> {
 
-	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
-			EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
+	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.of(EntityPortion.METHOD);
+	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.of(EntityPortion.FIELD,
+                                                                            EntityPortion.METHOD);
+	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.of(EntityPortion.FIELD);
 
 	public CommandHideShowByVisibility() {
 		super(getRegexConcat());
@@ -86,7 +86,7 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 
 		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
 
-		final Set<VisibilityModifier> visibilities = EnumSet.<VisibilityModifier> noneOf(VisibilityModifier.class);
+		final Set<VisibilityModifier> visibilities = EnumSet.noneOf(VisibilityModifier.class);
 		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get("VISIBILITY", 0)), " ,");
 		while (st.hasMoreTokens()) {
 			addVisibilities(st.nextToken(), portion, visibilities);

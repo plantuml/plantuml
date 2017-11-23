@@ -58,7 +58,7 @@ public class StripeTree implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
-		return Collections.<Atom> singletonList(marged);
+		return Collections.singletonList(marged);
 	}
 
 	public void analyzeAndAdd(String line) {

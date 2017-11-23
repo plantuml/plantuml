@@ -76,13 +76,13 @@ public class ComplementDate implements ComplementPattern {
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		if (arg.get("ADAY" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultA(arg, suffix));
+			return Failable.ok(resultA(arg, suffix));
 		}
 		if (arg.get("BDAY" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultB(arg, suffix));
+			return Failable.ok(resultB(arg, suffix));
 		}
 		if (arg.get("CDAY" + suffix, 0) != null) {
-			return Failable.<Complement> ok(resultC(arg, suffix));
+			return Failable.ok(resultC(arg, suffix));
 		}
 		throw new IllegalStateException();
 	}

@@ -68,7 +68,7 @@ public class StripeTable implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
-		return Collections.<Atom> singletonList(marged);
+		return Collections.singletonList(marged);
 	}
 
 	static Atom asAtom(List<StripeSimple> cells, double padding) {

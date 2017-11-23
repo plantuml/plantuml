@@ -76,7 +76,7 @@ public class RessourcesUtils {
 
 			}
 		}
-		return Collections.<String> emptySet();
+		return Collections.emptySet();
 	}
 
 	private static String getProtocol() {
