@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -46,7 +48,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.swing.ImageIcon;
 
 // Used by the Eclipse Plugin, so do not change package location.
 public class FileUtils {
@@ -115,24 +120,64 @@ public class FileUtils {
 
 	static public String readSvg(File svgFile) throws IOException {
 		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
-		return readSvg(br, true);
+		return readSvg(br, false, true);
 	}
 
 	static public String readSvg(InputStream is) throws IOException {
 		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		return readSvg(br, false);
+		return readSvg(br, false, false);
 	}
 
-	private static String readSvg(final BufferedReader br, boolean withClose) throws IOException {
+	static public String readFile(File svgFile) throws IOException {
+		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
+		return readSvg(br, true, true);
+	}
+
+	private static String readSvg(final BufferedReader br, boolean withNewline, boolean withClose) throws IOException {
 		final StringBuilder sb = new StringBuilder();
 		String s;
 		while ((s = br.readLine()) != null) {
 			sb.append(s);
+			if (withNewline) {
+				sb.append("\n");
+			}
 		}
 		if (withClose) {
 			br.close();
 		}
 		return sb.toString();
+	}
+
+	// public static BufferedImage ImageIO_read(File f) throws IOException {
+	// return ImageIO.read(f);
+	// }
+
+	public static BufferedImage ImageIO_read(File f) {
+		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
+		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
+
+		try {
+			return readImage(new ImageIcon(f.getAbsolutePath()));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static BufferedImage ImageIO_read(URL url) {
+		try {
+			return readImage(new ImageIcon(url));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private static BufferedImage readImage(final ImageIcon imageIcon) {
+		final Image tmpImage = imageIcon.getImage();
+		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		image.getGraphics().drawImage(tmpImage, 0, 0, null);
+		tmpImage.flush();
+		return image;
 	}
 
 }

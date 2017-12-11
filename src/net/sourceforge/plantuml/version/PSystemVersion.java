@@ -62,8 +62,8 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.preproc.Preprocessor;
 import net.sourceforge.plantuml.preproc.PreprocessorInclude;
+import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -173,6 +173,9 @@ public class PSystemVersion extends AbstractPSystem {
 			strings.add("plantuml.include.path: " + PreprocessorInclude.getenv("plantuml.include.path"));
 		}
 		strings.add(" ");
+		strings.add("<b>Stdlib:");
+		Stdlib.addInfoVersion(strings);
+		strings.add(" ");
 
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		strings.add(" ");
@@ -206,7 +209,8 @@ public class PSystemVersion extends AbstractPSystem {
 		add(strings, "<u>Original Eclipse Plugin</u>: Claude Durif & Anne Pecoil", withTag);
 		add(strings, "<u>Servlet & XWiki</u>: Maxime Sinclair", withTag);
 		add(strings, "<u>Docker</u>: David Ducatel", withTag);
-		add(strings, "<u>AWS lib</u>: milo-minderbinder", withTag);
+		add(strings, "<u>AWS lib</u>: Chris Passarello", withTag);
+		add(strings, "<u>Stdlib Icons</u>: tupadr3", withTag);
 		add(strings, "<u>Site design</u>: Raphael Cotisson", withTag);
 		add(strings, "<u>Logo</u>: Benjamin Croizet", withTag);
 

@@ -57,8 +57,8 @@ public class PSystemProjectFactory2 extends UmlDiagramFactory {
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<Command>();
 		cmds.add(new CommandNope());
-		cmds.add(new CommandComment());
-		cmds.add(new CommandMultilinesComment());
+//		cmds.add(new CommandComment());
+//		cmds.add(new CommandMultilinesComment());
 		cmds.add(new CommandAffectation());
 		cmds.add(new CommandCloseWeekDay());
 		return cmds;

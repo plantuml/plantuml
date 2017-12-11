@@ -103,4 +103,21 @@ public class CharSequence2Impl implements CharSequence2 {
 		return preprocessorError;
 	}
 
+	public CharSequence2 removeInnerComment() {
+		final String string = s.toString();
+		final String trim = string.replace('\t', ' ').trim();
+		if (trim.startsWith("/'")) {
+			final int idx = string.indexOf("'/");
+			if (idx != -1) {
+				return new CharSequence2Impl(s.subSequence(idx + 2, s.length()), location, preprocessorError);
+			}
+		}
+		if (trim.endsWith("'/")) {
+			final int idx = string.lastIndexOf("/'");
+			if (idx != -1) {
+				return new CharSequence2Impl(s.subSequence(0, idx), location, preprocessorError);
+			}
+		}
+		return this;
+	}
 }

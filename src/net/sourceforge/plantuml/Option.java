@@ -82,6 +82,7 @@ public class Option {
 
 	private File outputDir = null;
 	private File outputFile = null;
+	private String filename;
 
 	private final List<String> result = new ArrayList<String>();
 
@@ -168,6 +169,12 @@ public class Option {
 					continue;
 				}
 				charset = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);
+			} else if (s.equalsIgnoreCase("-filename")) {
+				i++;
+				if (i == arg.length) {
+					continue;
+				}
+				filename = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]);
 			} else if (s.startsWith("-o") && s.length() > 3) {
 				s = s.substring(2);
 				outputDir = new File(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
@@ -296,6 +303,8 @@ public class Option {
 				OptionFlags.getInstance().setEnableStats(true);
 			} else if (s.equalsIgnoreCase("-disablestats")) {
 				OptionFlags.getInstance().setEnableStats(false);
+			} else if (s.equalsIgnoreCase("-extractstdlib")) {
+				OptionFlags.getInstance().setExtractStdLib(true);
 			} else if (s.equalsIgnoreCase("-htmlstats")) {
 				StatsUtils.setHtmlStats(true);
 			} else if (s.equalsIgnoreCase("-xmlstats")) {
@@ -546,6 +555,14 @@ public class Option {
 
 	public final int getImageIndex() {
 		return imageIndex;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public final void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 }

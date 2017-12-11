@@ -239,4 +239,11 @@ public class Colors {
 		return shadowing;
 	}
 
+	public UStroke muteStroke(UStroke stroke) {
+		if (lineStyle == null) {
+			return stroke;
+		}
+		return lineStyle.muteStroke(stroke);
+	}
+
 }

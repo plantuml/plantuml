@@ -69,4 +69,8 @@ public enum HorizontalAlignment {
 		return result;
 	}
 
+	public String getGraphVizValue() {
+		return toString().substring(0, 1).toLowerCase();
+	}
+
 }

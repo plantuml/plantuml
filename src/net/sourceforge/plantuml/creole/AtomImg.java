@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -50,6 +49,7 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
+import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
@@ -89,19 +89,19 @@ public class AtomImg implements Atom {
 			if (f.exists() == false) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
-					final byte image[] = getFile(src);
-					return build(src, fc, image, scale);
+					// final byte image[] = getFile(src);
+					return build(src, fc, new URL(src), scale);
 				}
-				return AtomText.create("(File not found: " + f + ")", fc);
+				return AtomText.create("(File not found: " + f.getCanonicalPath() + ")", fc);
 			}
 			if (f.getName().endsWith(".svg")) {
 				return new AtomImgSvg(new TileImageSvg(f));
 			}
-			final BufferedImage read = ImageIO.read(f);
+			final BufferedImage read = FileUtils.ImageIO_read(f);
 			if (read == null) {
-				return AtomText.create("(Cannot decode: " + f + ")", fc);
+				return AtomText.create("(Cannot decode: " + f.getCanonicalPath() + ")", fc);
 			}
-			return new AtomImg(ImageIO.read(f), scale);
+			return new AtomImg(FileUtils.ImageIO_read(f), scale);
 		} catch (IOException e) {
 			return AtomText.create("ERROR " + e.toString(), fc);
 		}
@@ -116,8 +116,16 @@ public class AtomImg implements Atom {
 		return new AtomImg(read, scale);
 	}
 
+	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) throws IOException {
+		final BufferedImage read = FileUtils.ImageIO_read(url);
+		if (read == null) {
+			return AtomText.create("(Cannot decode: " + source + ")", fc);
+		}
+		return new AtomImg(read, scale);
+	}
+
 	// Added by Alain Corbiere
-	static byte[] getFile(String host) throws IOException {
+	private static byte[] getFile(String host) throws IOException {
 		final ByteArrayOutputStream image = new ByteArrayOutputStream();
 		InputStream input = null;
 		try {

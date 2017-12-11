@@ -67,6 +67,7 @@ public class PreprocessorInclude implements ReadLine {
 
 	private static final Pattern2 includeDefPattern = MyPattern.cmpile("^[%s]*!includedef[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includePattern = MyPattern.cmpile("^[%s]*!include[%s]+[%g]?([^%g]+)[%g]?$");
+	private static final Pattern2 includePatternStdlib = MyPattern.cmpile("^[%s]*!include[%s]+(\\<[^%g]+\\>)$");
 	private static final Pattern2 includeManyPattern = MyPattern.cmpile("^[%s]*!include_many[%s]+[%g]?([^%g]+)[%g]?$");
 	private static final Pattern2 includeURLPattern = MyPattern.cmpile("^[%s]*!includeurl[%s]+[%g]?([^%g]+)[%g]?$");
 
@@ -100,7 +101,7 @@ public class PreprocessorInclude implements ReadLine {
 		this.config = config;
 		this.defines = defines;
 		this.charset = charset;
-		this.reader2 = reader;
+		this.reader2 = new ReadLineQuoteComment(reader);
 		this.definitionsContainer = definitionsContainer;
 		this.filesUsedCurrent = filesUsedCurrent;
 		this.filesUsedGlobal = filesUsedGlobal;
@@ -160,6 +161,11 @@ public class PreprocessorInclude implements ReadLine {
 			final Matcher2 m3 = includeDefPattern.matcher(s);
 			if (m3.find()) {
 				return manageDefinitionInclude(s, m3);
+			}
+		} else {
+			final Matcher2 m1 = includePatternStdlib.matcher(s);
+			if (m1.find()) {
+				return manageFileInclude(s, m1, false);
 			}
 		}
 		final Matcher2 mUrl = includeURLPattern.matcher(s);
@@ -260,6 +266,10 @@ public class PreprocessorInclude implements ReadLine {
 	}
 
 	private InputStream getStdlibInputStream(String filename) {
+		return Stdlib.getResourceAsStream(filename);
+	}
+
+	private InputStream getStdlibInputStreamOld(String filename) {
 		if (filename.endsWith(".puml") == false) {
 			filename = filename + ".puml";
 		}

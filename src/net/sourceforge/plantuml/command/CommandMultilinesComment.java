@@ -44,7 +44,7 @@ public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 	public static final String COMMENT_SINGLE_LINE = "(?i)^[%s]*([%q].*||/[%q].*[%q]/[%s]*)$";
 	public static final String INNER_COMMENT = "/[%q].*?[%q]/";
 
-	public CommandMultilinesComment() {
+	private CommandMultilinesComment() {
 		super(COMMENT_MULTILINE_START);
 	}
 

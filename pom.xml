@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>1.2017.20-SNAPSHOT</version>
+    <version>1.2017.21-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -123,7 +123,7 @@
             <resource>
                 <directory>${project.basedir}</directory>
                 <includes>
-                    <include>stdlib/**/*.puml</include>
+                    <include>stdlib/**/*.repx</include>
                 </includes>
             </resource>
         </resources>        

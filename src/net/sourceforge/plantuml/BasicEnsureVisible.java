@@ -57,6 +57,10 @@ public class BasicEnsureVisible implements EnsureVisible {
 		}
 	}
 
+	public boolean hasData() {
+		return minX != Double.MAX_VALUE;
+	}
+
 	public String getCoords(double scale) {
 		if (minX == Double.MAX_VALUE) {
 			return "0,0,0,0";

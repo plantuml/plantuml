@@ -199,7 +199,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public void ensureVisible(double x, double y) {
 		for (Url u : urls) {
-			u.ensureVisible(x, y);
+			if (getClip() == null || getClip().isInside(x, y)) {
+				u.ensureVisible(x, y);
+			}
 		}
 	}
 

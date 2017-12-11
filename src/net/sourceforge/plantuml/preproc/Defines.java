@@ -67,7 +67,20 @@ public class Defines implements Truth {
 	}
 
 	public static Defines createEmpty() {
-		return new Defines();
+		return createEmpty(null);
+	}
+
+	public static Defines createEmpty(String filename) {
+		final Defines result = new Defines();
+		if (filename != null) {
+			result.overrideFilename(filename);
+		}
+		return result;
+	}
+
+	public void overrideFilename(String filename) {
+		environment.put("filename", filename);
+		environment.put("filenameNoExtension", nameNoExtension(filename));
 	}
 
 	public void importFrom(Defines other) {
@@ -85,16 +98,15 @@ public class Defines implements Truth {
 		if (file == null) {
 			throw new IllegalArgumentException();
 		}
-		final Defines result = createEmpty();
+		final Defines result = createEmpty(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
-		result.environment.put("filename", file.getName());
-		result.environment.put("filenameNoExtension", nameNoExtension(file));
+		// result.environment.put("filename", file.getName());
+		// result.environment.put("filenameNoExtension", nameNoExtension(file));
 		result.environment.put("dirpath", file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
 		return result;
 	}
 
-	private static String nameNoExtension(File file) {
-		final String name = file.getName();
+	private static String nameNoExtension(String name) {
 		final int x = name.lastIndexOf('.');
 		if (x == -1) {
 			return name;

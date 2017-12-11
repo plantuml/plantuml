@@ -60,7 +60,7 @@ public class CMapData {
 		stringBuilder.append(s);
 	}
 
-	public void appendUrl(int seq, Url url, double scale) {
+	private void appendUrl(int seq, Url url, double scale) {
 		appendString("<area shape=\"rect\" id=\"id");
 		appendLong(seq);
 		appendString("\" href=\"");
@@ -76,9 +76,6 @@ public class CMapData {
 		appendString(BackSlash.NEWLINE);
 	}
 
-	// private CMapData() {
-	// }
-
 	public static CMapData cmapString(Set<Url> allUrlEncountered, double scale) {
 		final CMapData cmapdata = new CMapData();
 
@@ -87,6 +84,9 @@ public class CMapData {
 
 		int seq = 1;
 		for (Url u : all) {
+			if (u.hasData() == false) {
+				continue;
+			}
 			cmapdata.appendUrl(seq, u, scale);
 			seq++;
 		}

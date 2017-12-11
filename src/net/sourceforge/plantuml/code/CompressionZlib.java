@@ -42,10 +42,13 @@ import java.util.zip.Inflater;
 
 public class CompressionZlib implements Compression {
 
+	private static boolean USE_ZOPFLI = false;
 	private static final int COMPRESSION_LEVEL = 9;
-	// private static final int COMPRESSION_LEVEL = 1;
 
 	public byte[] compress(byte[] in) {
+		if (USE_ZOPFLI) {
+			return new CompressionZopfliZlib().compress(in);
+		}
 		if (in.length == 0) {
 			return null;
 		}

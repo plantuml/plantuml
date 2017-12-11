@@ -123,6 +123,7 @@ public class OptionFlags {
 	private boolean loopStats;
 	private boolean overwrite;
 	private boolean enableStats = defaultForStats();
+	private boolean extractStdLib;
 	private String fileSeparator = "_";
 	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes
 	private File logData;
@@ -332,5 +333,13 @@ public class OptionFlags {
 
 	public final void setTimeoutMs(long timeoutMs) {
 		this.timeoutMs = timeoutMs;
+	}
+
+	public void setExtractStdLib(boolean extractStdLib) {
+		this.extractStdLib = extractStdLib;
+	}
+
+	public boolean getExtractStdLib() {
+		return extractStdLib;
 	}
 }

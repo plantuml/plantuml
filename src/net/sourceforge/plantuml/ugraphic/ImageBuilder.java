@@ -394,12 +394,13 @@ public class ImageBuilder {
 		}
 		final UGraphicSvg ug;
 		if (mybackcolor instanceof HtmlColorGradient) {
-			ug = new UGraphicSvg(dim, colorMapper, (HtmlColorGradient) mybackcolor, false, scale, svgLinkTarget, hover, seed);
+			ug = new UGraphicSvg(dim, colorMapper, (HtmlColorGradient) mybackcolor, false, scale, svgLinkTarget, hover,
+					seed);
 		} else if (backColor == null || backColor.equals(Color.WHITE)) {
 			ug = new UGraphicSvg(dim, colorMapper, false, scale, svgLinkTarget, hover, seed);
 		} else {
-			ug = new UGraphicSvg(dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale, svgLinkTarget, hover,
-					seed);
+			ug = new UGraphicSvg(dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale, svgLinkTarget,
+					hover, seed);
 		}
 		return ug;
 

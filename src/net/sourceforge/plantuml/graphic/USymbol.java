@@ -126,8 +126,8 @@ public abstract class USymbol {
 
 	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype, SymbolContext symbolContext);
 
-	public abstract TextBlock asBig(TextBlock label, TextBlock stereotype, double width, double height,
-			SymbolContext symbolContext);
+	public abstract TextBlock asBig(TextBlock label, HorizontalAlignment labelAlignment, TextBlock stereotype,
+			double width, double height, SymbolContext symbolContext);
 
 	static class Margin {
 		private final double x1;

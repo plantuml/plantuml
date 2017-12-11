@@ -58,7 +58,7 @@
 		</copy>
 		<copy todir="build/stdlib">
 			<fileset dir="stdlib">
-				<include name="**/*.puml" />
+				<include name="**/*.repx" />
 			</fileset>
 		</copy>
 	</target>

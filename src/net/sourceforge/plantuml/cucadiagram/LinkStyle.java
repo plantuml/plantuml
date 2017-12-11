@@ -114,6 +114,13 @@ public class LinkStyle {
 		return new UStroke(nonZeroThickness());
 	}
 
+	public UStroke muteStroke(UStroke stroke) {
+		if (type == Type.DASHED || type == Type.DOTTED || type == Type.BOLD) {
+			return getStroke3();
+		}
+		return stroke;
+	}
+
 	private double nonZeroThickness() {
 		if (thickness == 0) {
 			return 1;

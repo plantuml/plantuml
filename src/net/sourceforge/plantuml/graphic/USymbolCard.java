@@ -44,18 +44,17 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolCard extends USymbol {
-	
+
 	private final SkinParameter skinParameter;
 
 	public USymbolCard(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
 	}
-	
+
 	@Override
 	public SkinParameter getSkinParameter() {
 		return skinParameter;
 	}
-
 
 	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double top) {
 		final URectangle shape = new URectangle(width, height);
@@ -72,7 +71,9 @@ class USymbolCard extends USymbol {
 		return new Margin(10, 10, 3, 3);
 	}
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -92,8 +93,9 @@ class USymbolCard extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

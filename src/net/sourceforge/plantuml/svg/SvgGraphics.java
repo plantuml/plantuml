@@ -296,43 +296,46 @@ public class SvgGraphics {
 	}
 
 	public void closeLink() {
-		if (pendingLink2.size() > 0) {
-			final Element element = pendingLink2.get(0);
-			pendingLink2.remove(0);
-			getG().appendChild(element);
+		if (pendingAction.size() > 0) {
+			final Element element = pendingAction.get(0);
+			pendingAction.remove(0);
+			if (element.getFirstChild() != null) {
+				// Empty link
+				getG().appendChild(element);
+			}
 		}
 	}
 
-	private final List<Element> pendingLink2 = new ArrayList<Element>();
+	private final List<Element> pendingAction = new ArrayList<Element>();
 
 	public void openLink(String url, String title, String target) {
 		if (url == null) {
 			throw new IllegalArgumentException();
 		}
 
-		if (pendingLink2.size() > 0) {
+		if (pendingAction.size() > 0) {
 			closeLink();
 		}
 
-		pendingLink2.add(0, (Element) document.createElement("a"));
-		pendingLink2.get(0).setAttribute("target", target);
-		pendingLink2.get(0).setAttribute("xlink:href", url);
-		pendingLink2.get(0).setAttribute("xlink:type", "simple");
-		pendingLink2.get(0).setAttribute("xlink:actuate", "onRequest");
-		pendingLink2.get(0).setAttribute("xlink:show", "new");
+		pendingAction.add(0, (Element) document.createElement("a"));
+		pendingAction.get(0).setAttribute("target", target);
+		pendingAction.get(0).setAttribute("xlink:href", url);
+		pendingAction.get(0).setAttribute("xlink:type", "simple");
+		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
+		pendingAction.get(0).setAttribute("xlink:show", "new");
 		if (title == null) {
-			pendingLink2.get(0).setAttribute("xlink:title", url);
+			pendingAction.get(0).setAttribute("xlink:title", url);
 		} else {
 			title = title.replaceAll("\\\\n", "\n");
-			pendingLink2.get(0).setAttribute("xlink:title", title);
+			pendingAction.get(0).setAttribute("xlink:title", title);
 		}
 	}
 
 	public final Element getG() {
-		if (pendingLink2.size() == 0) {
+		if (pendingAction.size() == 0) {
 			return gRoot;
 		}
-		return pendingLink2.get(0);
+		return pendingAction.get(0);
 	}
 
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow,

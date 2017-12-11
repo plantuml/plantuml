@@ -94,6 +94,9 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public CharSequence getFirst499() {
+		if (lines.size()==0) {
+			return null;
+		}
 		return lines.get(0);
 	}
 
@@ -229,34 +232,38 @@ public class BlocLines implements Iterable<CharSequence> {
 		return lines.iterator();
 	}
 
+	@Deprecated
 	public BlocLines removeComments() {
-		final List<CharSequence> copy = new ArrayList<CharSequence>();
-		boolean inComment = false;
-		for (CharSequence cs : lines) {
-			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_SINGLE_LINE)) {
-				continue;
-			}
-			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_START)) {
-				inComment = true;
-				continue;
-			}
-			if (inComment && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_END)) {
-				inComment = false;
-				continue;
-			}
-			if (inComment == false) {
-				copy.add(cs);
-			}
-		}
-		return new BlocLines(copy);
+		return this;
+//		final List<CharSequence> copy = new ArrayList<CharSequence>();
+//		boolean inComment = false;
+//		for (CharSequence cs : lines) {
+//			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_SINGLE_LINE)) {
+//				continue;
+//			}
+//			if (inComment == false && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_START)) {
+//				inComment = true;
+//				continue;
+//			}
+//			if (inComment && MyPattern.mtches(cs, CommandMultilinesComment.COMMENT_MULTILINE_END)) {
+//				inComment = false;
+//				continue;
+//			}
+//			if (inComment == false) {
+//				copy.add(cs);
+//			}
+//		}
+//		return new BlocLines(copy);
 	}
 
+	@Deprecated
 	public BlocLines removeInnerComments() {
-		final List<CharSequence> copy = new ArrayList<CharSequence>();
-		for (CharSequence cs : lines) {
-			copy.add(MyPattern.removeAll(cs, CommandMultilinesComment.INNER_COMMENT));
-		}
-		return new BlocLines(copy);
+		return this;
+//		final List<CharSequence> copy = new ArrayList<CharSequence>();
+//		for (CharSequence cs : lines) {
+//			copy.add(MyPattern.removeAll(cs, CommandMultilinesComment.INNER_COMMENT));
+//		}
+//		return new BlocLines(copy);
 	}
 
 }

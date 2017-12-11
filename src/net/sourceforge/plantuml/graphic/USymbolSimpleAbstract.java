@@ -43,7 +43,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 abstract class USymbolSimpleAbstract extends USymbol {
 
-	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype, final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
+			final SymbolContext symbolContext) {
 		if (stereotype == null) {
 			throw new IllegalArgumentException();
 		}
@@ -79,8 +81,9 @@ abstract class USymbolSimpleAbstract extends USymbol {
 
 	abstract protected TextBlock getDrawing(final SymbolContext symbolContext);
 
-	public TextBlock asBig(final TextBlock title, TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		throw new UnsupportedOperationException();
 	}
 

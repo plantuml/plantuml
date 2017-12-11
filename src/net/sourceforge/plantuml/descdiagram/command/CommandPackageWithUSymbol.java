@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntityDiagram> {
@@ -93,8 +94,12 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
-				ColorParser.exp1(), //
+				color().getRegex(), //
 				new RegexLeaf("[%s]*\\{$"));
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -123,11 +128,8 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype, false));
 		}
-		final String color = arg.get("COLOR", 0);
-		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
-		}
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		p.setColors(colors);
 		return CommandExecutionResult.ok();
 	}
 

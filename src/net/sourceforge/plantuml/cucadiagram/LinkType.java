@@ -46,6 +46,10 @@ public class LinkType {
 	private final LinkHat hat2;
 	private final LinkMiddleDecor middleDecor;
 
+	public boolean isDoubleDecorated() {
+		return decor1 != LinkDecor.NONE && decor2 != LinkDecor.NONE;
+	}
+
 	public LinkType(LinkDecor decor1, LinkDecor decor2) {
 		this(LinkHat.NONE, decor1, decor2, LinkHat.NONE);
 	}

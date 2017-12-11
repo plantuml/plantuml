@@ -105,6 +105,7 @@ public class USymbolFolder extends USymbol {
 		return new Margin(10, 10 + 10, 10 + 3, 10);
 	}
 
+	@Override
 	public TextBlock asSmall(final TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final SymbolContext symbolContext) {
 		if (name == null) {
@@ -133,8 +134,9 @@ public class USymbolFolder extends USymbol {
 		};
 	}
 
-	public TextBlock asBig(final TextBlock title, final TextBlock stereotype, final double width, final double height,
-			final SymbolContext symbolContext) {
+	@Override
+	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
+			final double width, final double height, final SymbolContext symbolContext) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

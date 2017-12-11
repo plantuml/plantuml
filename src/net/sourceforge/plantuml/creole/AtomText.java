@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -50,8 +52,10 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -84,14 +88,46 @@ public class AtomText implements Atom {
 		fontConfiguration = fontConfiguration.hyperlink();
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
-			final List<AtomText> all = new ArrayList<AtomText>();
+			final List<Atom> all = new ArrayList<Atom>();
 			for (CharSequence s : display.as()) {
-				all.add(new AtomText(s.toString(), fontConfiguration, url, ZERO, ZERO));
+				all.add(createAtomText(s.toString(), url, fontConfiguration));
 			}
-			return new AtomTexts(all);
+			return new AtomVerticalTexts(all);
 
 		}
-		return new AtomText(url.getLabel(), fontConfiguration, url, ZERO, ZERO);
+		return createAtomText(url.getLabel(), url, fontConfiguration);
+	}
+
+	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration) {
+		final Pattern p = Pattern.compile(Splitter.openiconPattern);
+		final Matcher m = p.matcher(text);
+		final List<Atom> result = new ArrayList<Atom>();
+
+		while (m.find()) {
+			final String val = m.group(1);
+			final StringBuffer sb = new StringBuffer();
+			m.appendReplacement(sb, "");
+			if (sb.length() > 0) {
+				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO));
+			}
+			final OpenIcon openIcon = OpenIcon.retrieve(val);
+			if (openIcon != null) {
+				result.add(new AtomOpenIcon(openIcon, fontConfiguration, url));
+			}
+		}
+		final StringBuffer sb = new StringBuffer();
+		m.appendTail(sb);
+		if (sb.length() > 0) {
+			result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO));
+		}
+		if (result.size() == 1) {
+			return result.get(0);
+		}
+		return new AtomHorizontalTexts(result);
+	}
+
+	private static Atom createAtomTextOld(final String text, Url url, FontConfiguration fontConfiguration) {
+		return new AtomText(text, fontConfiguration, url, ZERO, ZERO);
 	}
 
 	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {

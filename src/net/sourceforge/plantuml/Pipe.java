@@ -69,8 +69,8 @@ public class Pipe {
 				ps.flush();
 				return error;
 			}
-			final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
-					option.getConfig());
+			final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(option
+					.getFilename()), source, option.getConfig());
 			if (option.isComputeurl()) {
 				for (BlockUml s : sourceStringReader.getBlocks()) {
 					ps.println(s.getEncodedUrl());
@@ -88,11 +88,17 @@ public class Pipe {
 					ps.println(system.getDescription());
 				}
 			} else if (option.isPipeMap()) {
-				final String result = sourceStringReader.getCMapData(0, option.getFileFormatOption());
-				ps.println(result);
+				final String result = sourceStringReader.getCMapData(option.getImageIndex(),
+						option.getFileFormatOption());
+				if (result == null) {
+					ps.println();
+				} else {
+					ps.println(result);
+				}
 			} else {
 				final OutputStream os = noStdErr ? new ByteArrayOutputStream() : ps;
-				final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(), option.getFileFormatOption());
+				final DiagramDescription result = sourceStringReader.outputImage(os, option.getImageIndex(),
+						option.getFileFormatOption());
 				if (result != null && "(error)".equalsIgnoreCase(result.getDescription())) {
 					error = true;
 					manageErrors(noStdErr ? ps : System.err, sourceStringReader);

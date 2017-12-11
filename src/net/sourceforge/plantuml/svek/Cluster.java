@@ -48,12 +48,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.AlignParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.MethodsOrFieldsArea;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -74,6 +75,7 @@ import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockWidth;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -301,7 +303,10 @@ public class Cluster implements Moveable {
 	}
 
 	public void drawU(UGraphic ug, UStroke stroke, final UmlDiagramType umlDiagramType, final ISkinParam skinParam2) {
-		ug.draw(new UComment("cluster " + group.getCode().getFullName()));
+		final String fullName = group.getCode().getFullName();
+		if (fullName.startsWith("##") == false) {
+			ug.draw(new UComment("cluster " + fullName));
+		}
 		final Stereotype stereotype = group.getStereotype();
 		HtmlColor borderColor;
 		if (umlDiagramType == UmlDiagramType.STATE) {
@@ -351,9 +356,11 @@ public class Cluster implements Moveable {
 				final double roundCorner = group.getUSymbol() == null ? 0 : group.getUSymbol().getSkinParameter()
 						.getRoundCorner(skinParam, stereotype);
 
+				final UStroke stroke2 = getStrokeInternal(skinParam2);
 				final ClusterDecoration decoration = new ClusterDecoration(style, group.getUSymbol(), ztitle, zstereo,
-						minX, minY, maxX, maxY, getStroke(skinParam2, group.getStereotype()));
-				decoration.drawU(ug, back, borderColor, skinParam2.shadowing(), roundCorner);
+						minX, minY, maxX, maxY, stroke2);
+				decoration.drawU(ug, back, borderColor, skinParam2.shadowing(), roundCorner,
+						skinParam2.getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null));
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);
@@ -372,10 +379,17 @@ public class Cluster implements Moveable {
 
 	}
 
-	private UStroke getStroke(ISkinParam skinParam, Stereotype stereo) {
-		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, stereo);
+	private UStroke getStrokeInternal(ISkinParam skinParam) {
+		final Colors colors = group.getColors(skinParam);
+		if (colors.getSpecificLineStroke() != null) {
+			return colors.getSpecificLineStroke();
+		}
+		if (group.getUSymbol() != null) {
+			return group.getUSymbol().getSkinParameter().getStroke(skinParam, group.getStereotype());
+		}
+		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, group.getStereotype());
 		if (stroke == null) {
-			stroke = new UStroke(2.0);
+			stroke = new UStroke(1.5);
 		}
 		return stroke;
 	}
@@ -721,6 +735,9 @@ public class Cluster implements Moveable {
 			Line.appendTable(sblabel, getTitleAndAttributeWidth(), getTitleAndAttributeHeight() - 5, colorTitle);
 			sblabel.append(">");
 			label = sblabel.toString();
+			final HorizontalAlignment align = skinParam
+					.getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null);
+			sb.append("labeljust=\"" + align.getGraphVizValue() + "\";");
 		} else {
 			label = "\"\"";
 		}

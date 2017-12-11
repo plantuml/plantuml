@@ -44,7 +44,11 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.AsciiEncoder;
+import net.sourceforge.plantuml.code.AsciiEncoderFinalZeros;
 import net.sourceforge.plantuml.code.CompressionZlib;
+import net.sourceforge.plantuml.code.CompressionZopfliZlib;
+import net.sourceforge.plantuml.code.PairInt;
+import net.sourceforge.plantuml.code.SpiralOnRectangle;
 import net.sourceforge.plantuml.ugraphic.ColorChangerMonochrome;
 
 public enum SpriteGrayLevel {
@@ -113,7 +117,6 @@ public enum SpriteGrayLevel {
 		// final int type = img.getType();
 
 		final List<String> result = new ArrayList<String>();
-		final AsciiEncoder encoder = new AsciiEncoder();
 
 		for (int y = 0; y < height; y += 2) {
 			final StringBuilder sb = new StringBuilder();
@@ -123,7 +126,7 @@ public enum SpriteGrayLevel {
 				final int level2 = getGrayOn16(img, x, y + 1) / 2;
 				assert level2 >= 0 && level2 <= 7;
 				final int v = level1 * 8 + level2;
-				sb.append(encoder.encode6bit((byte) v));
+				sb.append(AsciiEncoder.encode6bit((byte) v));
 			}
 			result.add(sb.toString());
 		}
@@ -136,7 +139,6 @@ public enum SpriteGrayLevel {
 		// final int type = img.getType();
 
 		final List<String> result = new ArrayList<String>();
-		final AsciiEncoder encoder = new AsciiEncoder();
 
 		for (int y = 0; y < height; y += 3) {
 			final StringBuilder sb = new StringBuilder();
@@ -148,7 +150,7 @@ public enum SpriteGrayLevel {
 				final int level3 = getGrayOn16(img, x, y + 2) / 4;
 				assert level3 >= 0 && level3 <= 3;
 				final int v = level1 * 16 + level2 * 4 + level3;
-				sb.append(encoder.encode6bit((byte) v));
+				sb.append(AsciiEncoder.encode6bit((byte) v));
 			}
 			result.add(sb.toString());
 		}
@@ -198,14 +200,13 @@ public enum SpriteGrayLevel {
 	}
 
 	private Sprite buildSprite8(int width, int height, List<CharSequence> strings) {
-		final AsciiEncoder encoder = new AsciiEncoder();
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, 8);
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < strings.size(); line++) {
 				if (col >= strings.get(line).length()) {
 					continue;
 				}
-				final int v = encoder.decode6bit(strings.get(line).charAt(col));
+				final int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));
 				final int w1 = v / 8;
 				final int w2 = v % 8;
 				result.setPixel(col, line * 2, w1);
@@ -217,14 +218,13 @@ public enum SpriteGrayLevel {
 	}
 
 	private Sprite buildSprite4(int width, int height, List<CharSequence> strings) {
-		final AsciiEncoder encoder = new AsciiEncoder();
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, 4);
 		for (int col = 0; col < result.getWidth(); col++) {
 			for (int line = 0; line < strings.size(); line++) {
 				if (col >= strings.get(line).length()) {
 					continue;
 				}
-				int v = encoder.decode6bit(strings.get(line).charAt(col));
+				int v = AsciiEncoder.decode6bit(strings.get(line).charAt(col));
 				final int w1 = v / 16;
 				v = v % 16;
 				final int w2 = v / 4;
@@ -242,18 +242,33 @@ public enum SpriteGrayLevel {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
 		final byte raw[] = new byte[width * height];
-		final BufferedImage grayImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		int cpt = 0;
 		final int coef = 16 / nbColor;
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				final int color = getGrayOn16(img, x, y) / coef;
 				raw[cpt++] = (byte) color;
-				grayImg.setRGB(x, y, color * coef);
 			}
 		}
-		final byte[] comp = new CompressionZlib().compress(raw);
-		return cut(new AsciiEncoder().encode(comp));
+		// final byte[] comp = new CompressionZlib().compress(raw);
+		final byte[] comp = new CompressionZopfliZlib().compress(raw);
+		return cut(new AsciiEncoderFinalZeros().encode(comp));
+	}
+
+	private List<String> encodeZSpiral(BufferedImage img) {
+		final int width = img.getWidth();
+		final int height = img.getHeight();
+		final byte raw[] = new byte[width * height];
+		final int coef = 16 / nbColor;
+		final SpiralOnRectangle spiral = new SpiralOnRectangle(width, height);
+		for (int cpt = 0; cpt < width * height; cpt++) {
+			final PairInt pt = spiral.nextPoint();
+			final int color = getGrayOn16(img, pt.getX(), pt.getY()) / coef;
+			raw[cpt] = (byte) color;
+		}
+		// final byte[] comp = new CompressionZlib().compress(raw);
+		final byte[] comp = new CompressionZopfliZlib().compress(raw);
+		return cut(new AsciiEncoderFinalZeros().encode(comp));
 	}
 
 	private List<String> cut(String s) {

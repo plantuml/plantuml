@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -104,7 +105,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		HtmlColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		final Colors colors = entity.getColors(skinParam);
+		HtmlColor backcolor = colors.getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBack(), getStereo());
 		}
@@ -112,7 +114,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 		assert getStereo() == stereotype;
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), stereotype);
 		final double roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
-		final UStroke stroke = symbol.getSkinParameter().getStroke(getSkinParam(), stereotype);
+		final UStroke stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
+
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke)
 				.withShadow(getSkinParam().shadowing2(symbol.getSkinParameter())).withRoundCorner(roundCorner);
 
@@ -162,24 +165,39 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		if (hideText && (useRankSame == false || hasSomeHorizontalLink((ILeaf) getEntity(), links) == false)) {
-			final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
-			final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-			final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
-			final double x = Math.max(dimStereo.getWidth(), dimDesc.getWidth());
-			double suppX = x - dimSmall.getWidth();
-			if (suppX < 1) {
-				suppX = 1;
-			}
-			final double y = MathUtils.max(1, dimDesc.getHeight(), dimStereo.getHeight());
-			return new Margins(suppX / 2, suppX / 2, y, y);
+		if (hideText == false) {
+			return Margins.NONE;
 		}
-		return Margins.NONE;
+		if (useRankSame && hasSomeHorizontalLink((ILeaf) getEntity(), links)) {
+			return Margins.NONE;
+		}
+		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links)) {
+			return Margins.NONE;
+		}
+		final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
+		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
+		final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
+		final double x = Math.max(dimStereo.getWidth(), dimDesc.getWidth());
+		double suppX = x - dimSmall.getWidth();
+		if (suppX < 1) {
+			suppX = 1;
+		}
+		final double y = MathUtils.max(1, dimDesc.getHeight(), dimStereo.getHeight());
+		return new Margins(suppX / 2, suppX / 2, y, y);
 	}
 
 	private boolean hasSomeHorizontalLink(ILeaf leaf, Collection<Link> links) {
 		for (Link link : links) {
 			if (link.getLength() == 1 && link.contains(leaf)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasSomeHorizontalLinkDoubleDecorated(ILeaf leaf, Collection<Link> links) {
+		for (Link link : links) {
+			if (link.getLength() == 1 && link.contains(leaf) && link.getType().isDoubleDecorated()) {
 				return true;
 			}
 		}

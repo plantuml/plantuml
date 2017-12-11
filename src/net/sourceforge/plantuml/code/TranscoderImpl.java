@@ -47,6 +47,10 @@ public class TranscoderImpl implements Transcoder {
 		this(new AsciiEncoder(), new StringCompressorNone(), new CompressionHuffman());
 	}
 
+	public TranscoderImpl(Compression compression) {
+		this(new AsciiEncoder(), new StringCompressorNone(), compression);
+	}
+
 	public TranscoderImpl(URLEncoder urlEncoder, Compression compression) {
 		this(urlEncoder, new ArobaseStringCompressor(), compression);
 	}

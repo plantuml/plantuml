@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.util.Set;
 
+import net.sourceforge.plantuml.AlignParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
@@ -82,7 +83,7 @@ public class FtileGroup extends AbstractFtile {
 		super(inner.skinParam());
 		this.backColor = backColor == null ? HtmlColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
-		this.borderColor = backColor == null ? HtmlColorUtils.BLACK : borderColor;
+		this.borderColor = borderColor == null ? HtmlColorUtils.BLACK : borderColor;
 		final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
 
 		final HtmlColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
@@ -195,8 +196,8 @@ public class FtileGroup extends AbstractFtile {
 
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(
 				skinParam().shadowing()).withStroke(stroke);
-		USymbol.FRAME.asBig(name, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext)
-				.drawU(ug);
+		USymbol.FRAME.asBig(name, inner.skinParam().getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null),
+				TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext).drawU(ug);
 
 		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
 		headerNote.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimHeaderNote.getWidth() - 10,

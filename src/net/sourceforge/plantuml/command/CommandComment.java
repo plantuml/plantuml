@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.core.Diagram;
 public class CommandComment extends SingleLineCommand<Diagram> {
 
 
-	public CommandComment() {
+	private CommandComment() {
 		super(CommandMultilinesComment.COMMENT_SINGLE_LINE);
 	}
 

@@ -141,6 +141,8 @@ public class OptionPrint {
 		System.out.println("    -splash\t\tTo display a splash screen with some progress bar");
 		System.out.println("    -progress\t\tTo display a textual progress bar in console");
 		System.out.println("    -pipeimageindex N\tTo generate the Nth image with pipe option");
+		System.out.println("    -extractstdlib\tTo extract PlantUML Standard Library into stdlib folder");
+		System.out.println("    -filename \"example.puml\"\tTo override %filename% variable");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit();

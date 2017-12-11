@@ -36,6 +36,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -85,15 +86,16 @@ public class ClusterDecoration {
 	public final static int marginTitleY1 = 3;
 	public final static int marginTitleY2 = 3;
 
-	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing, double roundCorner) {
+	public void drawU(UGraphic ug, HtmlColor backColor, HtmlColor borderColor, boolean shadowing, double roundCorner,
+			HorizontalAlignment titleAlignment) {
 		final SymbolContext biColor = new SymbolContext(backColor, borderColor);
 		if (symbol == null) {
 			throw new UnsupportedOperationException();
 		}
 		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke)
 				.withRoundCorner(roundCorner);
-		symbol.asBig(title, stereo, maxX - minX, maxY - minY, symbolContext)
-				.drawU(ug.apply(new UTranslate(minX, minY)));
+		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext).drawU(
+				ug.apply(new UTranslate(minX, minY)));
 		// return;
 		// }
 		// if (style == PackageStyle.NODE) {

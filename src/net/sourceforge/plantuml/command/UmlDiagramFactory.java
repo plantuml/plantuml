@@ -266,8 +266,8 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	final protected void addCommonCommands(List<Command> cmds) {
 		cmds.add(new CommandNope());
-		cmds.add(new CommandComment());
-		cmds.add(new CommandMultilinesComment());
+//		cmds.add(new CommandComment());
+//		cmds.add(new CommandMultilinesComment());
 		cmds.add(new CommandPragma());
 		cmds.add(new CommandTitle());
 		cmds.add(new CommandCaption());

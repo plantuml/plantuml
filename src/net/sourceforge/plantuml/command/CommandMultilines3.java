@@ -64,7 +64,11 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
-		final boolean result1 = starting.match(StringUtils.trin(lines.getFirst499()));
+		final CharSequence first = lines.getFirst499();
+		if (first == null) {
+			return CommandControl.NOT_OK;
+		}
+		final boolean result1 = starting.match(StringUtils.trin(first));
 		if (result1 == false) {
 			return CommandControl.NOT_OK;
 		}
