@@ -1,4 +1,3 @@
-OK   PlantUML
 ========
 [![Build Status](https://travis-ci.org/plantuml/plantuml.png?branch=master)](https://travis-ci.org/plantuml/plantuml)
 
