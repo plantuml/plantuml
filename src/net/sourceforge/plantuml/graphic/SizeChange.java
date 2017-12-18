@@ -50,7 +50,7 @@ class SizeChange implements FontChange {
 		if (!matcherSize.find()) {
 			throw new IllegalArgumentException();
 		}
-		size = new Integer(matcherSize.group(1));
+		size = Integer.valueOf(matcherSize.group(1));
 	}
 
 	Integer getSize() {
