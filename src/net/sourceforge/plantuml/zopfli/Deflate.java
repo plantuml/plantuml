@@ -20,7 +20,7 @@ package net.sourceforge.plantuml.zopfli;
 
 class Deflate {
 
-  static enum BlockType {
+  enum BlockType {
     DYNAMIC,
     FIXED
   }

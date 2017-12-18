@@ -19,13 +19,13 @@ Author: eustas.ru@gmail.com (Eugene Klyuchnikov)
 package net.sourceforge.plantuml.zopfli;
 
 public class Options {
-  public static enum BlockSplitting {
+  public enum BlockSplitting {
     FIRST,
     LAST,
     NONE
   }
 
-  public static enum OutputFormat {
+  public enum OutputFormat {
     DEFLATE,
     GZIP,
     ZLIB
