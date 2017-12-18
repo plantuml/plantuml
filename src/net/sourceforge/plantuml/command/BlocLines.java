@@ -43,7 +43,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class BlocLines implements Iterable<CharSequence> {

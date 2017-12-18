@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandComment;
-import net.sourceforge.plantuml.command.CommandMultilinesComment;
 import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.DiagramType;
