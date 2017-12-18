@@ -730,7 +730,7 @@ public class Cluster implements Moveable {
 			label = sblabel.toString();
 			final HorizontalAlignment align = skinParam
 					.getHorizontalAlignment(AlignParam.PACKAGE_TITLE_ALIGNMENT, null);
-			sb.append("labeljust=\"" + align.getGraphVizValue() + "\";");
+			sb.append("labeljust=\"").append(align.getGraphVizValue()).append("\";");
 		} else {
 			label = "\"\"";
 		}
