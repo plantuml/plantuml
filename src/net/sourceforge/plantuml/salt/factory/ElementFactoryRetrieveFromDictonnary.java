@@ -68,6 +68,6 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
-		return text.matches("\\<\\<\\w+\\>\\>");
+		return text.matches("<<\\w+>>");
 	}
 }

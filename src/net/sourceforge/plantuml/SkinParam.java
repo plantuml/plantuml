@@ -58,7 +58,7 @@ import java.util.List;
 
 public class SkinParam implements ISkinParam {
 
-	private static final String stereoPatternString = "\\<\\<(.*?)\\>\\>";
+	private static final String stereoPatternString = "<<(.*?)>>";
 	private static final Pattern2 stereoPattern = MyPattern.cmpile(stereoPatternString);
 
 	private final Map<String, String> params = new HashMap<>();

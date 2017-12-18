@@ -51,11 +51,11 @@ public class AnimationDecoder {
 		
 		for (final Iterator<CharSequence> it = data.iterator(); it.hasNext();) {
 			String line = it.next().toString();
-			if (line.matches("^\\s*\\[script\\]\\s*$")) {
+			if (line.matches("^\\s*\\[script]\\s*$")) {
 				final StringBuilder scriptText = new StringBuilder();
 				while (true) {
 					line = it.next().toString();
-					if (line.matches("^\\s*\\[/script\\]\\s*$")) {
+					if (line.matches("^\\s*\\[/script]\\s*$")) {
 						final AnimationScript script = new AnimationScript();
 						final String out = script.eval(scriptText.toString());
 						for (final StringTokenizer st = new StringTokenizer(out, "\n"); st.hasMoreTokens();) {

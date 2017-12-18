@@ -296,7 +296,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		pw.println();
 		pw.println();
 		for (String s : strings) {
-			s = s.replaceAll("\\</?\\w+?\\>", "");
+			s = s.replaceAll("</?\\w+?>", "");
 			pw.println(s);
 		}
 		pw.flush();

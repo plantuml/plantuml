@@ -55,7 +55,7 @@ public class MemberImpl implements Member {
 	private final VisibilityModifier visibilityModifier;
 
 	public MemberImpl(String tmpDisplay, boolean isMethod, boolean manageModifier) {
-		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
+		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)}\\s*", "");
 		if (manageModifier) {
 			final Pattern2 finalUrl = MyPattern.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
 			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
@@ -78,7 +78,7 @@ public class MemberImpl implements Member {
 		if (manageModifier) {
 			this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 			this.abstractModifier = lower.contains("{abstract}");
-			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "").trim();
+			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)}\\s*", "").trim();
 			if (displayClean.isEmpty()) {
 				displayClean = " ";
 			}

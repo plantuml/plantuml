@@ -348,7 +348,7 @@ public class DotStringFactory implements Moveable {
 			throw new EmptySvgException();
 		}
 
-		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
+		final Pattern pGraph = Pattern.compile("(?m)<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(svg);
 		if (!mGraph.find()) {
 			throw new IllegalStateException();

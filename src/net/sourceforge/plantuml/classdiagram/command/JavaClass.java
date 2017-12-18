@@ -59,7 +59,7 @@ class JavaClass {
 		}
 		final StringTokenizer st = new StringTokenizer(StringUtils.trin(p), ",");
 		while (st.hasMoreTokens()) {
-			this.parents.add(StringUtils.trin(st.nextToken()).replaceAll("\\<.*", ""));
+			this.parents.add(StringUtils.trin(st.nextToken()).replaceAll("<.*", ""));
 		}
 		this.type = type;
 		this.parentType = parentType;

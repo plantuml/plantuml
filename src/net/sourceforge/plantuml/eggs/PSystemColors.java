@@ -80,7 +80,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 		if (option == null) {
 			this.paletteCentralColor = null;
 		} else {
-			this.paletteCentralColor = option.replaceAll("\\#", "");
+			this.paletteCentralColor = option.replaceAll("#", "");
 		}
 	}
 

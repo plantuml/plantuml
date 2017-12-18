@@ -550,7 +550,7 @@ public class SvgGraphics {
 		createXmlInternal(baos);
 		String s = new String(baos.toByteArray());
 		for (Map.Entry<String, String> ent : images.entrySet()) {
-			final String k = "\\<" + ent.getKey() + "/\\>";
+			final String k = "<" + ent.getKey() + "/>";
 			s = s.replaceAll(k, ent.getValue());
 		}
 		os.write(s.getBytes());
@@ -748,7 +748,7 @@ public class SvgGraphics {
 		if (svgScale * scale == 1) {
 			return svg.getSvg();
 		}
-		final String s1 = "\\<g\\b";
+		final String s1 = "<g\\b";
 		final String s2 = "<g transform=\"scale(" + format(svgScale) + "," + format(svgScale) + ")\" ";
 		return svg.getSvg().replaceFirst(s1, s2);
 	}

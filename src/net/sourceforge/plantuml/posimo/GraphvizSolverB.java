@@ -114,7 +114,7 @@ public class GraphvizSolverB {
 		// traceSvgString(s);
 		// }
 
-		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
+		final Pattern pGraph = Pattern.compile("(?m)<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(s);
 		if (!mGraph.find()) {
 			throw new IllegalStateException();

@@ -427,11 +427,11 @@ public class StringUtils {
 	}
 
 	public static String manageGuillemet(String st) {
-		return st.replaceAll("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>", "\u00AB$1\u00BB");
+		return st.replaceAll("<<\\s?((?:<&\\w+>|[^<>])+?)\\s?>>", "\u00AB$1\u00BB");
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {
-		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4,5})\\>");
+		final Pattern pattern = Pattern.compile("<U\\+([0-9a-fA-F]{4,5})>");
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer();
 		while (matcher.find()) {
@@ -444,7 +444,7 @@ public class StringUtils {
 	}
 
 	public static String manageAmpDiese(String s) {
-		final Pattern pattern = Pattern.compile("\\&#([0-9]+);");
+		final Pattern pattern = Pattern.compile("&#([0-9]+);");
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer();
 		while (matcher.find()) {

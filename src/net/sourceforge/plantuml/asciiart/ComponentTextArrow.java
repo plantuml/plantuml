@@ -85,7 +85,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	private static String removeTag(String s) {
-		return s.replaceAll("\\<[^<>]+\\>", "");
+		return s.replaceAll("<[^<>]+>", "");
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
