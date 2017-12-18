@@ -75,20 +75,26 @@ public class SpiderWeb {
 			final Point2DInt main = getMainPoint(row, col);
 			final int x = main.getXint();
 			final int y = main.getYint();
-			if (i == 0) {
-				result.add(new Point2DInt(x + dist, y));
-			} else if (i == pointsInCircle / 4) {
-				result.add(new Point2DInt(x, y + dist));
-			} else if (i == 2 * pointsInCircle / 4) {
-				result.add(new Point2DInt(x - dist, y));
-			} else if (i == 3 * pointsInCircle / 4) {
-				result.add(new Point2DInt(x, y - dist));
-			} else {
-				final double angle = Math.PI * 2.0 * i / pointsInCircle;
-				final double x1 = x + dist * Math.cos(angle);
-				final double y1 = y + dist * Math.sin(angle);
-				result.add(new Point2DInt((int) Math.round(x1), (int) Math.round(y1)));
-			}
+            switch (i) {
+                case 0:
+                    result.add(new Point2DInt(x + dist, y));
+                    break;
+                case pointsInCircle / 4:
+                    result.add(new Point2DInt(x, y + dist));
+                    break;
+                case 2 * pointsInCircle / 4:
+                    result.add(new Point2DInt(x - dist, y));
+                    break;
+                case 3 * pointsInCircle / 4:
+                    result.add(new Point2DInt(x, y - dist));
+                    break;
+                default:
+                    final double angle = Math.PI * 2.0 * i / pointsInCircle;
+                    final double x1 = x + dist * Math.cos(angle);
+                    final double y1 = y + dist * Math.sin(angle);
+                    result.add(new Point2DInt((int) Math.round(x1), (int) Math.round(y1)));
+                    break;
+            }
 		}
 		// Log.println("getHangPoints="+result);
 		return result;

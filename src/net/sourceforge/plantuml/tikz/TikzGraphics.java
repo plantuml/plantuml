@@ -456,25 +456,31 @@ public class TikzGraphics {
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
-			if (type == USegmentType.SEG_MOVETO) {
-				sb.append(couple(coord[0] + x, coord[1] + y));
-			} else if (type == USegmentType.SEG_LINETO) {
-				sb.append(" -- ");
-				sb.append(couple(coord[0] + x, coord[1] + y));
-			} else if (type == USegmentType.SEG_QUADTO) {
-				throw new UnsupportedOperationException();
-			} else if (type == USegmentType.SEG_CUBICTO) {
-				// curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-				sb.append(" ..controls ");
-				sb.append(couple(coord[0] + x, coord[1] + y));
-				sb.append(" and ");
-				sb.append(couple(coord[2] + x, coord[3] + y));
-				sb.append(" .. ");
-				sb.append(couple(coord[4] + x, coord[5] + y));
-			} else if (type == USegmentType.SEG_CLOSE) {
-				// Nothing
-			} else {
-				Log.println("unknown " + seg);
+			switch (type) {
+				case SEG_MOVETO:
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					break;
+				case SEG_LINETO:
+					sb.append(" -- ");
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					break;
+				case SEG_QUADTO:
+					throw new UnsupportedOperationException();
+				case SEG_CUBICTO:
+					// curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+					sb.append(" ..controls ");
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					sb.append(" and ");
+					sb.append(couple(coord[2] + x, coord[3] + y));
+					sb.append(" .. ");
+					sb.append(couple(coord[4] + x, coord[5] + y));
+					break;
+				case SEG_CLOSE:
+					// Nothing
+					break;
+				default:
+					Log.println("unknown " + seg);
+					break;
 			}
 		}
 		sb.append(";");
@@ -508,30 +514,36 @@ public class TikzGraphics {
 		final double coord[] = new double[6];
 		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
-				sb.append(couple(coord[0] + x, coord[1] + y));
-			} else if (code == PathIterator.SEG_LINETO) {
-				sb.append(" -- ");
-				sb.append(couple(coord[0] + x, coord[1] + y));
-			} else if (code == PathIterator.SEG_CLOSE) {
-				sb.append(";");
-				addCommand(sb);
-				sb.setLength(0);
-				sb.append("\\draw ");
-			} else if (code == PathIterator.SEG_CUBICTO) {
-				sb.append(" ..controls ");
-				sb.append(couple(coord[0] + x, coord[1] + y));
-				sb.append(" and ");
-				sb.append(couple(coord[2] + x, coord[3] + y));
-				sb.append(" .. ");
-				sb.append(couple(coord[4] + x, coord[5] + y));
-			} else if (code == PathIterator.SEG_QUADTO) {
-				sb.append(" ..controls ");
-				sb.append(couple(coord[0] + x, coord[1] + y));
-				sb.append(" .. ");
-				sb.append(couple(coord[2] + x, coord[3] + y));
-			} else {
-				throw new UnsupportedOperationException("code=" + code);
+			switch (code) {
+				case PathIterator.SEG_MOVETO:
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					break;
+				case PathIterator.SEG_LINETO:
+					sb.append(" -- ");
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					break;
+				case PathIterator.SEG_CLOSE:
+					sb.append(";");
+					addCommand(sb);
+					sb.setLength(0);
+					sb.append("\\draw ");
+					break;
+				case PathIterator.SEG_CUBICTO:
+					sb.append(" ..controls ");
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					sb.append(" and ");
+					sb.append(couple(coord[2] + x, coord[3] + y));
+					sb.append(" .. ");
+					sb.append(couple(coord[4] + x, coord[5] + y));
+					break;
+				case PathIterator.SEG_QUADTO:
+					sb.append(" ..controls ");
+					sb.append(couple(coord[0] + x, coord[1] + y));
+					sb.append(" .. ");
+					sb.append(couple(coord[2] + x, coord[3] + y));
+					break;
+				default:
+					throw new UnsupportedOperationException("code=" + code);
 			}
 
 			path.next();

@@ -121,13 +121,17 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 			y += height;
 		}
 		final int coef;
-		if (sheet.getHorizontalAlignment() == HorizontalAlignment.CENTER) {
-			coef = 2;
-		} else if (sheet.getHorizontalAlignment() == HorizontalAlignment.RIGHT) {
-			coef = 1;
-		} else {
-			coef = 0;
-		}
+        switch (sheet.getHorizontalAlignment()) {
+            case CENTER:
+                coef = 2;
+                break;
+            case RIGHT:
+                coef = 1;
+                break;
+            default:
+                coef = 0;
+                break;
+        }
 		if (coef != 0) {
 			double maxWidth = 0;
 			for (Double v : widths.values()) {

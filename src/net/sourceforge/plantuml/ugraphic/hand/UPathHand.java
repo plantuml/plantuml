@@ -53,27 +53,32 @@ public class UPathHand {
 
 		for (USegment segment : source) {
 			final USegmentType type = segment.getSegmentType();
-			if (type == USegmentType.SEG_MOVETO) {
-				final double x = segment.getCoord()[0];
-				final double y = segment.getCoord()[1];
-				jigglePath.moveTo(x, y);
-				last = new Point2D.Double(x, y);
+            switch (type) {
+                case SEG_MOVETO: {
+                    final double x = segment.getCoord()[0];
+                    final double y = segment.getCoord()[1];
+                    jigglePath.moveTo(x, y);
+                    last = new Point2D.Double(x, y);
 
-			} else if (type == USegmentType.SEG_LINETO) {
-				final double x = segment.getCoord()[0];
-				final double y = segment.getCoord()[1];
-				final HandJiggle jiggle = new HandJiggle(last.getX(), last.getY(), defaultVariation);
-				jiggle.lineTo(x, y);
-				for (USegment seg2 : jiggle.toUPath()) {
-					if (seg2.getSegmentType() == USegmentType.SEG_LINETO) {
-						jigglePath.lineTo(seg2.getCoord()[0], seg2.getCoord()[1]);
-					}
-				}
-				last = new Point2D.Double(x, y);
-			} else {
-				this.path = source;
-				return;
-			}
+                    break;
+                }
+                case SEG_LINETO: {
+                    final double x = segment.getCoord()[0];
+                    final double y = segment.getCoord()[1];
+                    final HandJiggle jiggle = new HandJiggle(last.getX(), last.getY(), defaultVariation);
+                    jiggle.lineTo(x, y);
+                    for (USegment seg2 : jiggle.toUPath()) {
+                        if (seg2.getSegmentType() == USegmentType.SEG_LINETO) {
+                            jigglePath.lineTo(seg2.getCoord()[0], seg2.getCoord()[1]);
+                        }
+                    }
+                    last = new Point2D.Double(x, y);
+                    break;
+                }
+                default:
+                    this.path = source;
+                    return;
+            }
 		}
 		this.path = jigglePath;
 	}

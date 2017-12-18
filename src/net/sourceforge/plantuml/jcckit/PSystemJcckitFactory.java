@@ -62,15 +62,16 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		this.data = null;
 		this.width = 640;
 		this.height = 400;
-		if (getDiagramType() == DiagramType.UML) {
-			return null;
-		} else if (getDiagramType() == DiagramType.JCCKIT) {
-			extractDimension(startLine);
-			data = new StringBuilder();
-			return createSystem();
-		} else {
-			throw new IllegalStateException(getDiagramType().name());
-		}
+        switch (getDiagramType()) {
+            case UML:
+                return null;
+            case JCCKIT:
+                extractDimension(startLine);
+                data = new StringBuilder();
+                return createSystem();
+            default:
+                throw new IllegalStateException(getDiagramType().name());
+        }
 
 	}
 

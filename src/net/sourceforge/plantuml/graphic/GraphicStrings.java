@@ -125,15 +125,19 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		getTextBlock().drawU(ug.apply(new UChangeColor(maincolor)));
 
 		if (image != null) {
-			if (position == GraphicPosition.BOTTOM) {
-				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))
-						.draw(new UImage(image));
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
-				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
-						.draw(new UImage(image));
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
-				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1)).draw(new UImage(image));
-			}
+            switch (position) {
+                case BOTTOM:
+                    ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))
+                            .draw(new UImage(image));
+                    break;
+                case BACKGROUND_CORNER_BOTTOM_RIGHT:
+                    ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))
+                            .draw(new UImage(image));
+                    break;
+                case BACKGROUND_CORNER_TOP_RIGHT:
+                    ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1)).draw(new UImage(image));
+                    break;
+            }
 		}
 	}
 
@@ -144,13 +148,17 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
 		Dimension2D dim = getTextBlock().calculateDimension(stringBounder);
 		if (image != null) {
-			if (position == GraphicPosition.BOTTOM) {
-				dim = new Dimension2DDouble(dim.getWidth(), dim.getHeight() + image.getHeight());
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT) {
-				dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
-			} else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT) {
-				dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
-			}
+            switch (position) {
+                case BOTTOM:
+                    dim = new Dimension2DDouble(dim.getWidth(), dim.getHeight() + image.getHeight());
+                    break;
+                case BACKGROUND_CORNER_BOTTOM_RIGHT:
+                    dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
+                    break;
+                case BACKGROUND_CORNER_TOP_RIGHT:
+                    dim = new Dimension2DDouble(dim.getWidth() + image.getWidth(), dim.getHeight());
+                    break;
+            }
 		}
 		return dim;
 	}

@@ -221,15 +221,16 @@ public class MacroBlock {
 	}
 
 	public SubBlock getBottomSubBlock(int x, SubBlock.PLANE plane) {
-		if (plane == SubBlock.PLANE.Y1) {
-			return ySubBlocks[x][3];
-		} else if (plane == SubBlock.PLANE.U) {
-			return uSubBlocks[x][1];
-		} else if (plane == SubBlock.PLANE.V) {
-			return vSubBlocks[x][1];
-		} else if (plane == SubBlock.PLANE.Y2) {
-			return y2SubBlock;
-		}
+        switch (plane) {
+            case Y1:
+                return ySubBlocks[x][3];
+            case U:
+                return uSubBlocks[x][1];
+            case V:
+                return vSubBlocks[x][1];
+            case Y2:
+                return y2SubBlock;
+        }
 		return null;
 	}
 
@@ -266,15 +267,16 @@ public class MacroBlock {
 	}
 
 	public SubBlock getRightSubBlock(int y, SubBlock.PLANE plane) {
-		if (plane == SubBlock.PLANE.Y1) {
-			return ySubBlocks[3][y];
-		} else if (plane == SubBlock.PLANE.U) {
-			return uSubBlocks[1][y];
-		} else if (plane == SubBlock.PLANE.V) {
-			return vSubBlocks[1][y];
-		} else if (plane == SubBlock.PLANE.Y2) {
-			return y2SubBlock;
-		}
+        switch (plane) {
+            case Y1:
+                return ySubBlocks[3][y];
+            case U:
+                return uSubBlocks[1][y];
+            case V:
+                return vSubBlocks[1][y];
+            case Y2:
+                return y2SubBlock;
+        }
 		return null;
 	}
 
@@ -298,48 +300,56 @@ public class MacroBlock {
 	}
 
 	public int getSubblockX(SubBlock sb) {
-		if (sb.getPlane() == SubBlock.PLANE.Y1) {
-			for (int y = 0; y < 4; y++)
-				for (int x = 0; x < 4; x++)
-					if (ySubBlocks[x][y] == sb)
-						return x;
-		} else if (sb.getPlane() == SubBlock.PLANE.U) {
-			for (int y = 0; y < 2; y++)
-				for (int x = 0; x < 2; x++)
-					if (uSubBlocks[x][y] == sb)
-						return x;
-		} else if (sb.getPlane() == SubBlock.PLANE.V) {
-			for (int y = 0; y < 2; y++)
-				for (int x = 0; x < 2; x++)
-					if (vSubBlocks[x][y] == sb)
-						return x;
-		} else if (sb.getPlane() == SubBlock.PLANE.Y2) {
-			return 0;
-		}
+        switch (sb.getPlane()) {
+            case Y1:
+                for (int y = 0; y < 4; y++)
+                    for (int x = 0; x < 4; x++)
+                        if (ySubBlocks[x][y] == sb)
+                            return x;
+                break;
+            case U:
+                for (int y = 0; y < 2; y++)
+                    for (int x = 0; x < 2; x++)
+                        if (uSubBlocks[x][y] == sb)
+                            return x;
+                break;
+            case V:
+                for (int y = 0; y < 2; y++)
+                    for (int x = 0; x < 2; x++)
+                        if (vSubBlocks[x][y] == sb)
+                            return x;
+                break;
+            case Y2:
+                return 0;
+        }
 
 		return -100;
 
 	}
 
 	public int getSubblockY(SubBlock sb) {
-		if (sb.getPlane() == SubBlock.PLANE.Y1) {
-			for (int y = 0; y < 4; y++)
-				for (int x = 0; x < 4; x++)
-					if (ySubBlocks[x][y] == sb)
-						return y;
-		} else if (sb.getPlane() == SubBlock.PLANE.U) {
-			for (int y = 0; y < 2; y++)
-				for (int x = 0; x < 2; x++)
-					if (uSubBlocks[x][y] == sb)
-						return y;
-		} else if (sb.getPlane() == SubBlock.PLANE.V) {
-			for (int y = 0; y < 2; y++)
-				for (int x = 0; x < 2; x++)
-					if (vSubBlocks[x][y] == sb)
-						return y;
-		} else if (sb.getPlane() == SubBlock.PLANE.Y2) {
-			return 0;
-		}
+        switch (sb.getPlane()) {
+            case Y1:
+                for (int y = 0; y < 4; y++)
+                    for (int x = 0; x < 4; x++)
+                        if (ySubBlocks[x][y] == sb)
+                            return y;
+                break;
+            case U:
+                for (int y = 0; y < 2; y++)
+                    for (int x = 0; x < 2; x++)
+                        if (uSubBlocks[x][y] == sb)
+                            return y;
+                break;
+            case V:
+                for (int y = 0; y < 2; y++)
+                    for (int x = 0; x < 2; x++)
+                        if (vSubBlocks[x][y] == sb)
+                            return y;
+                break;
+            case Y2:
+                return 0;
+        }
 
 		return -100;
 	}

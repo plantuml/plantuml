@@ -139,15 +139,19 @@ public class StripeTable implements Stripe {
 			if (c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
-				if (c2 == 'n') {
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == '\\') {
-					current.append(c2);
-				} else {
-					current.append(c);
-					current.append(c2);
-				}
+                switch (c2) {
+                    case 'n':
+                        result.add(current.toString());
+                        current.setLength(0);
+                        break;
+                    case '\\':
+                        current.append(c2);
+                        break;
+                    default:
+                        current.append(c);
+                        current.append(c2);
+                        break;
+                }
 			} else if (c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);

@@ -123,35 +123,43 @@ public class ComponentBlueModernArrow extends AbstractComponentBlueModernArrow {
 	}
 
 	private void createPolygonReverse(final int textHeight, final UPolygon polygon) {
-		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(0, textHeight);
-			polygon.addPoint(getArrowDeltaX(), textHeight);
-		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight);
-			polygon.addPoint(0, textHeight);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
-		} else {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(0, textHeight);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
-		}
+        switch (getArrowConfiguration().getPart()) {
+            case TOP_PART:
+                polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(0, textHeight);
+                polygon.addPoint(getArrowDeltaX(), textHeight);
+                break;
+            case BOTTOM_PART:
+                polygon.addPoint(getArrowDeltaX(), textHeight);
+                polygon.addPoint(0, textHeight);
+                polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+                break;
+            default:
+                polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(0, textHeight);
+                polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+                break;
+        }
 	}
 
 	private void createPolygonNormal(final int textHeight, final int x2, final UPolygon polygon) {
-		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(x2, textHeight);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
-		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
-			polygon.addPoint(x2, textHeight);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
-		} else {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(x2, textHeight);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
-		}
+        switch (getArrowConfiguration().getPart()) {
+            case TOP_PART:
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(x2, textHeight);
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+                break;
+            case BOTTOM_PART:
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+                polygon.addPoint(x2, textHeight);
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+                break;
+            default:
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(x2, textHeight);
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+                break;
+        }
 	}
 
 	protected int getDirection(Graphics2D g2d) {

@@ -122,19 +122,24 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 	public double getStartingX(StringBounder stringBounder) {
 		final SegmentColored segment = getSegment(stringBounder);
 		final int xStart;
-		if (position == NotePosition.LEFT) {
-			xStart = (int) (segment.getSegment().getPos1() - getPreferredWidth(stringBounder));
-		} else if (position == NotePosition.RIGHT) {
-			xStart = (int) (segment.getSegment().getPos2());
-		} else if (position == NotePosition.OVER) {
-			xStart = (int) (p1.getParticipantBox().getCenterX(stringBounder) - getPreferredWidth(stringBounder) / 2);
-		} else if (position == NotePosition.OVER_SEVERAL) {
-			final double centre = (p1.getParticipantBox().getCenterX(stringBounder) + p2.getParticipantBox()
-					.getCenterX(stringBounder)) / 2.0;
-			xStart = (int) (centre - getPreferredWidth(stringBounder) / 2.0);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (position) {
+            case LEFT:
+                xStart = (int) (segment.getSegment().getPos1() - getPreferredWidth(stringBounder));
+                break;
+            case RIGHT:
+                xStart = (int) (segment.getSegment().getPos2());
+                break;
+            case OVER:
+                xStart = (int) (p1.getParticipantBox().getCenterX(stringBounder) - getPreferredWidth(stringBounder) / 2);
+                break;
+            case OVER_SEVERAL:
+                final double centre = (p1.getParticipantBox().getCenterX(stringBounder) + p2.getParticipantBox()
+                        .getCenterX(stringBounder)) / 2.0;
+                xStart = (int) (centre - getPreferredWidth(stringBounder) / 2.0);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		return xStart + delta;
 	}
 

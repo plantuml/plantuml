@@ -113,18 +113,22 @@ class FtileWhile extends AbstractFtile {
 		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
-			diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
-					.withNorth(yesTb).withWest(out);
-		} else if (conditionStyle == ConditionStyle.FOO1) {
-			diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
-					.withNorth(yesTb).withWest(out);
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withNorth(testTb)
-					.withSouth(yesTb).withWest(out);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (conditionStyle) {
+            case INSIDE:
+                diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
+                        .withNorth(yesTb).withWest(out);
+                break;
+            case FOO1:
+                diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
+                        .withNorth(yesTb).withWest(out);
+                break;
+            case DIAMOND:
+                diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withNorth(testTb)
+                        .withSouth(yesTb).withWest(out);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 
 		final Ftile special = specialOut == null ? null : specialOut.createFtile(ftileFactory);
 

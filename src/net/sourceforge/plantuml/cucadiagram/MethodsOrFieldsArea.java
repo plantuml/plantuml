@@ -255,13 +255,16 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlockW
 			}
 		} else {
 			final PlacementStrategy placementStrategy;
-			if (align == HorizontalAlignment.LEFT) {
-				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);
-			} else if (align == HorizontalAlignment.CENTER) {
-				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);
-			} else {
-				throw new IllegalStateException();
-			}
+            switch (align) {
+                case LEFT:
+                    placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);
+                    break;
+                case CENTER:
+                    placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
 			group = new ULayoutGroup(placementStrategy);
 			for (Member att : members) {
 				final TextBlock bloc = createTextBlock(att);

@@ -71,16 +71,21 @@ public class ElementLine extends AbstractElement {
 	}
 
 	private static void drawLine(UGraphic ug, double x, double y, double widthToUse, char separator) {
-		if (separator == '=') {
-			ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
-			ug.apply(new UStroke()).apply(new UTranslate(x, y + 2)).draw(new ULine(widthToUse, 0));
-		} else if (separator == '.') {
-			ug.apply(new UStroke(1, 2, 1)).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
-		} else if (separator == '-') {
-			ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
-		} else {
-			ug.apply(new UStroke(1.5)).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
-		}
+        switch (separator) {
+            case '=':
+                ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+                ug.apply(new UStroke()).apply(new UTranslate(x, y + 2)).draw(new ULine(widthToUse, 0));
+                break;
+            case '.':
+                ug.apply(new UStroke(1, 2, 1)).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+                break;
+            case '-':
+                ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+                break;
+            default:
+                ug.apply(new UStroke(1.5)).apply(new UTranslate(x, y)).draw(new ULine(widthToUse, 0));
+                break;
+        }
 	}
 
 }

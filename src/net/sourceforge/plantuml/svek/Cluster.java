@@ -307,13 +307,17 @@ public class Cluster implements Moveable {
 		}
 		final Stereotype stereotype = group.getStereotype();
 		HtmlColor borderColor;
-		if (umlDiagramType == UmlDiagramType.STATE) {
-			borderColor = getColor(ColorParam.stateBorder, skinParam, stereotype);
-		} else if (umlDiagramType == UmlDiagramType.ACTIVITY) {
-			borderColor = getColor(ColorParam.packageBorder, skinParam, stereotype);
-		} else {
-			borderColor = getColor(ColorParam.packageBorder, skinParam, stereotype);
-		}
+        switch (umlDiagramType) {
+            case STATE:
+                borderColor = getColor(ColorParam.stateBorder, skinParam, stereotype);
+                break;
+            case ACTIVITY:
+                borderColor = getColor(ColorParam.packageBorder, skinParam, stereotype);
+                break;
+            default:
+                borderColor = getColor(ColorParam.packageBorder, skinParam, stereotype);
+                break;
+        }
 
 		final Url url = group.getUrl99();
 		if (url != null) {

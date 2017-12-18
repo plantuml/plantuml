@@ -106,16 +106,20 @@ public class ComponentTextArrow extends AbstractComponentText {
 			}
 		}
 
-		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
-			charArea.drawChar('>', width - 1, yarrow);
-		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
-			charArea.drawChar('<', 1, yarrow);
-		} else if (config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {
-			charArea.drawChar('>', width - 1, yarrow);
-			charArea.drawChar('<', 1, yarrow);
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (config.getArrowDirection()) {
+            case LEFT_TO_RIGHT_NORMAL:
+                charArea.drawChar('>', width - 1, yarrow);
+                break;
+            case RIGHT_TO_LEFT_REVERSE:
+                charArea.drawChar('<', 1, yarrow);
+                break;
+            case BOTH_DIRECTION:
+                charArea.drawChar('>', width - 1, yarrow);
+                charArea.drawChar('<', 1, yarrow);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 		// final int position = Math.max(0, (width - textWidth) / 2);
 		charArea.drawStringsLR(stringsToDisplay.as(), (width - textWidth) / 2, 0);
 	}

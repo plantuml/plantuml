@@ -51,39 +51,44 @@ public class Oscillator {
 		final int halfN = (n - 1) / 2;
 		final Point2D.Double result = new Point2D.Double(x, y);
 		i++;
-		if (seg == 'A') {
-			x++;
-			if (x > halfN) {
-				seg = 'B';
-				x = halfN;
-				y = -halfN + 1;
-			}
-		} else if (seg == 'B') {
-			y++;
-			if (y > halfN) {
-				seg = 'C';
-				x = halfN - 1;
-				y = halfN;
-			}
-		} else if (seg == 'C') {
-			x--;
-			if (x < -halfN) {
-				seg = 'D';
-				x = -halfN;
-				y = halfN - 1;
-			}
-		} else if (seg == 'D') {
-			y--;
-			if (y == -halfN) {
-				n += 2;
-				i = 0;
-				x = -((n - 1) / 2);
-				y = x;
-				seg = 'A';
-			}
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (seg) {
+            case 'A':
+                x++;
+                if (x > halfN) {
+                    seg = 'B';
+                    x = halfN;
+                    y = -halfN + 1;
+                }
+                break;
+            case 'B':
+                y++;
+                if (y > halfN) {
+                    seg = 'C';
+                    x = halfN - 1;
+                    y = halfN;
+                }
+                break;
+            case 'C':
+                x--;
+                if (x < -halfN) {
+                    seg = 'D';
+                    x = -halfN;
+                    y = halfN - 1;
+                }
+                break;
+            case 'D':
+                y--;
+                if (y == -halfN) {
+                    n += 2;
+                    i = 0;
+                    x = -((n - 1) / 2);
+                    y = x;
+                    seg = 'A';
+                }
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 		return result;
 	}
 }

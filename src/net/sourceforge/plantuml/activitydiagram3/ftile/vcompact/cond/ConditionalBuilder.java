@@ -203,25 +203,28 @@ public class ConditionalBuilder {
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
-			if (eastWest) {
-				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
-						.withWestAndEast(tb1, tb2);
-			} else {
-				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
-						.withSouth(tb1).withEast(tb2);
-			}
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			if (eastWest) {
-				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
-						.withWestAndEast(tb1, tb2);
-			} else {
-				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
-						.withSouth(tb1).withEast(tb2);
-			}
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (conditionStyle) {
+            case INSIDE:
+                if (eastWest) {
+                    diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+                            .withWestAndEast(tb1, tb2);
+                } else {
+                    diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+                            .withSouth(tb1).withEast(tb2);
+                }
+                break;
+            case DIAMOND:
+                if (eastWest) {
+                    diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
+                            .withWestAndEast(tb1, tb2);
+                } else {
+                    diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
+                            .withSouth(tb1).withEast(tb2);
+                }
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		return diamond1;
 	}
 

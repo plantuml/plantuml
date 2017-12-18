@@ -138,18 +138,24 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		final ArrowDirection direction2 = getDirection2();
 		final double textPos;
-		if (messagePosition == HorizontalAlignment.CENTER) {
-			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = (dimensionToUse.getWidth() - textWidth) / 2;
-		} else if (messagePosition == HorizontalAlignment.RIGHT) {
-			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2()
-					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);
-		} else {
-			textPos = getMarginX1()
-					+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE
-							|| direction2 == ArrowDirection.BOTH_DIRECTION ? getArrowDeltaX() : 0);
-		}
+        switch (messagePosition) {
+            case CENTER: {
+                final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
+                textPos = (dimensionToUse.getWidth() - textWidth) / 2;
+                break;
+            }
+            case RIGHT: {
+                final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
+                textPos = dimensionToUse.getWidth() - textWidth - getMarginX2()
+                        - (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);
+                break;
+            }
+            default:
+                textPos = getMarginX1()
+                        + (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE
+                        || direction2 == ArrowDirection.BOTH_DIRECTION ? getArrowDeltaX() : 0);
+                break;
+        }
 		getTextBlock().drawU(ug.apply(new UTranslate(textPos, 0)));
 	}
 
@@ -166,23 +172,27 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 			x += diamCircle / 2 + thinCircle;
 		}
 
-		if (dressing.getHead() == ArrowHead.ASYNC) {
-			if (dressing.getPart() != ArrowPart.BOTTOM_PART) {
-				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x - 1, textHeight)).draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));
-			}
-			if (dressing.getPart() != ArrowPart.TOP_PART) {
-				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x - 1, textHeight)).draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));
-			}
-		} else if (dressing.getHead() == ArrowHead.CROSSX) {
-			ug = ug.apply(new UStroke(2));
-			ug.apply(new UTranslate(spaceCrossX, textHeight - getArrowDeltaX() / 2)).draw(
-					new ULine(getArrowDeltaX(), getArrowDeltaX()));
-			ug.apply(new UTranslate(spaceCrossX, textHeight + getArrowDeltaX() / 2)).draw(
-					new ULine(getArrowDeltaX(), -getArrowDeltaX()));
-		} else if (dressing.getHead() == ArrowHead.NORMAL) {
-			final UPolygon polygon = getPolygonReverse(dressing.getPart(), textHeight);
-			ug.apply(new UChangeBackColor(getForegroundColor())).apply(new UTranslate(x, 0)).draw(polygon);
-		}
+        switch (dressing.getHead()) {
+            case ASYNC:
+                if (dressing.getPart() != ArrowPart.BOTTOM_PART) {
+                    getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x - 1, textHeight)).draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));
+                }
+                if (dressing.getPart() != ArrowPart.TOP_PART) {
+                    getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x - 1, textHeight)).draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));
+                }
+                break;
+            case CROSSX:
+                ug = ug.apply(new UStroke(2));
+                ug.apply(new UTranslate(spaceCrossX, textHeight - getArrowDeltaX() / 2)).draw(
+                        new ULine(getArrowDeltaX(), getArrowDeltaX()));
+                ug.apply(new UTranslate(spaceCrossX, textHeight + getArrowDeltaX() / 2)).draw(
+                        new ULine(getArrowDeltaX(), -getArrowDeltaX()));
+                break;
+            case NORMAL:
+                final UPolygon polygon = getPolygonReverse(dressing.getPart(), textHeight);
+                ug.apply(new UChangeBackColor(getForegroundColor())).apply(new UTranslate(x, 0)).draw(polygon);
+                break;
+        }
 
 	}
 
@@ -199,66 +209,78 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 			x -= diamCircle / 2 + thinCircle;
 		}
 
-		if (dressing.getHead() == ArrowHead.ASYNC) {
-			if (dressing.getPart() != ArrowPart.BOTTOM_PART) {
-				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x, textHeight)).draw(new ULine(-getArrowDeltaX(), -getArrowDeltaY()));
-			}
-			if (dressing.getPart() != ArrowPart.TOP_PART) {
-				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x, textHeight)).draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()));
-			}
-		} else if (dressing.getHead() == ArrowHead.CROSSX) {
-			ug = ug.apply(new UStroke(2));
-			ug.apply(new UTranslate(x - spaceCrossX - getArrowDeltaX(), textHeight - getArrowDeltaX() / 2)).draw(
-					new ULine(getArrowDeltaX(), getArrowDeltaX()));
-			ug.apply(new UTranslate(x - spaceCrossX - getArrowDeltaX(), textHeight + getArrowDeltaX() / 2)).draw(
-					new ULine(getArrowDeltaX(), -getArrowDeltaX()));
-			ug = ug.apply(new UStroke());
-		} else if (dressing.getHead() == ArrowHead.NORMAL) {
-			final UPolygon polygon = getPolygonNormal(dressing.getPart(), textHeight, x);
-			ug.apply(new UChangeBackColor(getForegroundColor())).draw(polygon);
-		}
+        switch (dressing.getHead()) {
+            case ASYNC:
+                if (dressing.getPart() != ArrowPart.BOTTOM_PART) {
+                    getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x, textHeight)).draw(new ULine(-getArrowDeltaX(), -getArrowDeltaY()));
+                }
+                if (dressing.getPart() != ArrowPart.TOP_PART) {
+                    getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x, textHeight)).draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()));
+                }
+                break;
+            case CROSSX:
+                ug = ug.apply(new UStroke(2));
+                ug.apply(new UTranslate(x - spaceCrossX - getArrowDeltaX(), textHeight - getArrowDeltaX() / 2)).draw(
+                        new ULine(getArrowDeltaX(), getArrowDeltaX()));
+                ug.apply(new UTranslate(x - spaceCrossX - getArrowDeltaX(), textHeight + getArrowDeltaX() / 2)).draw(
+                        new ULine(getArrowDeltaX(), -getArrowDeltaX()));
+                ug = ug.apply(new UStroke());
+                break;
+            case NORMAL:
+                final UPolygon polygon = getPolygonNormal(dressing.getPart(), textHeight, x);
+                ug.apply(new UChangeBackColor(getForegroundColor())).draw(polygon);
+                break;
+        }
 
 	}
 
 	private UPolygon getPolygonNormal(ArrowPart part, final int textHeight, final double x2) {
 		final UPolygon polygon = new UPolygon();
-		if (part == ArrowPart.TOP_PART) {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(x2, textHeight);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
-		} else if (part == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + 1);
-			polygon.addPoint(x2, textHeight + 1);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY() + 1);
-		} else {
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(x2, textHeight);
-			polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
-			if (niceArrow) {
-				polygon.addPoint(x2 - getArrowDeltaX() + 4, textHeight);
-			}
-		}
+        switch (part) {
+            case TOP_PART:
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(x2, textHeight);
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight);
+                break;
+            case BOTTOM_PART:
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight + 1);
+                polygon.addPoint(x2, textHeight + 1);
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY() + 1);
+                break;
+            default:
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(x2, textHeight);
+                polygon.addPoint(x2 - getArrowDeltaX(), textHeight + getArrowDeltaY());
+                if (niceArrow) {
+                    polygon.addPoint(x2 - getArrowDeltaX() + 4, textHeight);
+                }
+                break;
+        }
 		return polygon;
 	}
 
 	private UPolygon getPolygonReverse(ArrowPart part, final int textHeight) {
 		final UPolygon polygon = new UPolygon();
-		if (part == ArrowPart.TOP_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(0, textHeight);
-			polygon.addPoint(getArrowDeltaX(), textHeight);
-		} else if (part == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight + 1);
-			polygon.addPoint(0, textHeight + 1);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + 1);
-		} else {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
-			polygon.addPoint(0, textHeight);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
-			if (niceArrow) {
-				polygon.addPoint(getArrowDeltaX() - 4, textHeight);
-			}
-		}
+        switch (part) {
+            case TOP_PART:
+                polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(0, textHeight);
+                polygon.addPoint(getArrowDeltaX(), textHeight);
+                break;
+            case BOTTOM_PART:
+                polygon.addPoint(getArrowDeltaX(), textHeight + 1);
+                polygon.addPoint(0, textHeight + 1);
+                polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + 1);
+                break;
+            default:
+                polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY());
+                polygon.addPoint(0, textHeight);
+                polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY());
+                if (niceArrow) {
+                    polygon.addPoint(getArrowDeltaX() - 4, textHeight);
+                }
+                break;
+        }
 		return polygon;
 	}
 

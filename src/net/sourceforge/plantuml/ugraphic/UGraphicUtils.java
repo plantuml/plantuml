@@ -58,27 +58,34 @@ public abstract class UGraphicUtils {
 	public static void writeImage(OutputStream os, String metadata, FileFormatOption fileFormatOption, long seed,
 			ColorMapper colorMapper, HtmlColor background, TextBlock image) throws IOException {
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		if (fileFormat == FileFormat.PNG) {
-			final BufferedImage im = createImage(colorMapper, background, image);
-			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
-		} else if (fileFormat == FileFormat.SVG) {
-			final Dimension2D size = computeSize(colorMapper, background, image);
-			final UGraphicSvg svg = new UGraphicSvg(size, colorMapper, StringUtils.getAsHtml(colorMapper
-					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
-					fileFormatOption.getHoverColor(), seed);
-			image.drawU(svg);
-			svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);
-		} else if (fileFormat == FileFormat.EPS) {
-			final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
-			image.drawU(ug);
-			os.write(ug.getEPSCode().getBytes());
-		} else if (fileFormat == FileFormat.EPS_TEXT) {
-			final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.WITH_MACRO_AND_TEXT);
-			image.drawU(ug);
-			os.write(ug.getEPSCode().getBytes());
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (fileFormat) {
+            case PNG:
+                final BufferedImage im = createImage(colorMapper, background, image);
+                PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
+                break;
+            case SVG:
+                final Dimension2D size = computeSize(colorMapper, background, image);
+                final UGraphicSvg svg = new UGraphicSvg(size, colorMapper, StringUtils.getAsHtml(colorMapper
+                        .getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
+                        fileFormatOption.getHoverColor(), seed);
+                image.drawU(svg);
+                svg.createXml(os, fileFormatOption.isWithMetadata() ? metadata : null);
+                break;
+            case EPS: {
+                final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
+                image.drawU(ug);
+                os.write(ug.getEPSCode().getBytes());
+                break;
+            }
+            case EPS_TEXT: {
+                final UGraphicEps ug = new UGraphicEps(colorMapper, EpsStrategy.WITH_MACRO_AND_TEXT);
+                image.drawU(ug);
+                os.write(ug.getEPSCode().getBytes());
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException();
+        }
 	}
 
 	private static BufferedImage createImage(ColorMapper colorMapper, HtmlColor background, TextBlock image) {

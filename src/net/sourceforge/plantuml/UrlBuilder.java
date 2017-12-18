@@ -89,13 +89,16 @@ public class UrlBuilder {
 
 	public Url getUrl(String s) {
 		final Pattern2 p;
-		if (mode == ModeUrl.STRICT) {
-			p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
-		} else if (mode == ModeUrl.ANYWHERE) {
-			p = MyPattern.cmpile("(?i).*" + URL_PATTERN + ".*");
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (mode) {
+            case STRICT:
+                p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
+                break;
+            case ANYWHERE:
+                p = MyPattern.cmpile("(?i).*" + URL_PATTERN + ".*");
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		final Matcher2 m = p.matcher(StringUtils.trinNoTrace(s));
 		if (!m.matches()) {
 			return null;

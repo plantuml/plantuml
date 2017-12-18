@@ -312,117 +312,124 @@ public enum License {
 		h.add(" * ");
 		h.add(" * This file is part of PlantUML.");
 		h.add(" *");
-		if (this == License.LGPL) {
-			h.add(" * PlantUML is free software; you can redistribute it and/or modify it");
-			h.add(" * under the terms of the GNU Lesser General Public License as published by");
-			h.add(" * the Free Software Foundation, either version 3 of the License, or");
-			h.add(" * (at your option) any later version.");
-			h.add(" *");
-			h.add(" * PlantUML distributed in the hope that it will be useful, but");
-			h.add(" * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
-			h.add(" * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
-			h.add(" * License for more details.");
-			h.add(" *");
-			h.add(" * You should have received a copy of the GNU Lesser General Public");
-			h.add(" * License along with this library; if not, write to the Free Software");
-			h.add(" * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-			h.add(" * USA.");
-			h.add(" *");
-		} else if (this == License.GPLV2) {
-			h.add(" * PlantUML is free software; you can redistribute it and/or modify it");
-			h.add(" * under the terms of the GNU General Public License as published by");
-			h.add(" * the Free Software Foundation, either version 2 of the License, or");
-			h.add(" * (at your option) any later version.");
-			h.add(" *");
-			h.add(" * PlantUML distributed in the hope that it will be useful, but");
-			h.add(" * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
-			h.add(" * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public");
-			h.add(" * License for more details.");
-			h.add(" *");
-			h.add(" * You should have received a copy of the GNU General Public");
-			h.add(" * License along with this library; if not, write to the Free Software");
-			h.add(" * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-			h.add(" * USA.");
-			h.add(" *");
-		} else if (this == License.APACHE) {
-			h.add(" * Licensed under the Apache License, Version 2.0 (the \"License\");");
-			h.add(" * you may not use this file except in compliance with the License.");
-			h.add(" * You may obtain a copy of the License at");
-			h.add(" * ");
-			h.add(" * http://www.apache.org/licenses/LICENSE-2.0");
-			h.add(" * ");
-			h.add(" * Unless required by applicable law or agreed to in writing, software");
-			h.add(" * distributed under the License is distributed on an \"AS IS\" BASIS,");
-			h.add(" * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.");
-			h.add(" * See the License for the specific language governing permissions and");
-			h.add(" * limitations under the License.");
-			h.add(" *");
-		} else if (this == License.EPL) {
-			h.add(" * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC");
-			h.add(" * LICENSE (\"AGREEMENT\"). [Eclipse Public License - v 1.0]");
-			h.add(" * ");
-			h.add(" * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES");
-			h.add(" * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.");
-			h.add(" * ");
-			h.add(" * You may obtain a copy of the License at");
-			h.add(" * ");
-			h.add(" * http://www.eclipse.org/legal/epl-v10.html");
-			h.add(" * ");
-			h.add(" * Unless required by applicable law or agreed to in writing, software");
-			h.add(" * distributed under the License is distributed on an \"AS IS\" BASIS,");
-			h.add(" * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.");
-			h.add(" * See the License for the specific language governing permissions and");
-			h.add(" * limitations under the License.");
-			h.add(" * ");
-		} else if (this == License.BSD) {
-			h.add(" * Licensed under the Revised BSD License (the Revised Berkeley Software Distribution)");
-			h.add(" * ");
-			h.add(" * Redistribution and use in source and binary forms, with or without");
-			h.add(" * modification, are permitted provided that the following conditions are met:");
-			h.add(" * ");
-			h.add(" * * Redistributions of source code must retain the above copyright");
-			h.add(" *   notice, this list of conditions and the following disclaimer.");
-			h.add(" * * Redistributions in binary form must reproduce the above copyright");
-			h.add(" *   notice, this list of conditions and the following disclaimer in the");
-			h.add(" *   documentation and/or other materials provided with the distribution.");
-			h.add(" * * Neither the name of the University of California, Berkeley nor the");
-			h.add(" *   names of its contributors may be used to endorse or promote products");
-			h.add(" *   derived from this software without specific prior written permission.");
-			h.add(" * ");
-			h.add(" * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY");
-			h.add(" * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED");
-			h.add(" * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE");
-			h.add(" * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY");
-			h.add(" * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES");
-			h.add(" * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;");
-			h.add(" * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND");
-			h.add(" * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT");
-			h.add(" * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS");
-			h.add(" * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.");
-			h.add(" * ");
-		} else if (this == License.MIT) {
-			h.add(" * Licensed under The MIT License (Massachusetts Institute of Technology License)");
-			h.add(" * ");
-			h.add(" * See http://opensource.org/licenses/MIT");
-			h.add(" * ");
-			h.add(" * Permission is hereby granted, free of charge, to any person obtaining");
-			h.add(" * a copy of this software and associated documentation files (the \"Software\"),");
-			h.add(" * to deal in the Software without restriction, including without limitation");
-			h.add(" * the rights to use, copy, modify, merge, publish, distribute, sublicense,");
-			h.add(" * and/or sell copies of the Software, and to permit persons to whom the");
-			h.add(" * Software is furnished to do so, subject to the following conditions:");
-			h.add(" * ");
-			h.add(" * The above copyright notice and this permission notice shall be included");
-			h.add(" * in all copies or substantial portions of the Software.");
-			h.add(" * ");
-			h.add(" * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS");
-			h.add(" * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,");
-			h.add(" * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE");
-			h.add(" * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,");
-			h.add(" * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR");
-			h.add(" * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
-			h.add(" * ");
-		}
+        switch (this) {
+            case LGPL:
+                h.add(" * PlantUML is free software; you can redistribute it and/or modify it");
+                h.add(" * under the terms of the GNU Lesser General Public License as published by");
+                h.add(" * the Free Software Foundation, either version 3 of the License, or");
+                h.add(" * (at your option) any later version.");
+                h.add(" *");
+                h.add(" * PlantUML distributed in the hope that it will be useful, but");
+                h.add(" * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
+                h.add(" * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
+                h.add(" * License for more details.");
+                h.add(" *");
+                h.add(" * You should have received a copy of the GNU Lesser General Public");
+                h.add(" * License along with this library; if not, write to the Free Software");
+                h.add(" * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
+                h.add(" * USA.");
+                h.add(" *");
+                break;
+            case GPLV2:
+                h.add(" * PlantUML is free software; you can redistribute it and/or modify it");
+                h.add(" * under the terms of the GNU General Public License as published by");
+                h.add(" * the Free Software Foundation, either version 2 of the License, or");
+                h.add(" * (at your option) any later version.");
+                h.add(" *");
+                h.add(" * PlantUML distributed in the hope that it will be useful, but");
+                h.add(" * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
+                h.add(" * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public");
+                h.add(" * License for more details.");
+                h.add(" *");
+                h.add(" * You should have received a copy of the GNU General Public");
+                h.add(" * License along with this library; if not, write to the Free Software");
+                h.add(" * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
+                h.add(" * USA.");
+                h.add(" *");
+                break;
+            case APACHE:
+                h.add(" * Licensed under the Apache License, Version 2.0 (the \"License\");");
+                h.add(" * you may not use this file except in compliance with the License.");
+                h.add(" * You may obtain a copy of the License at");
+                h.add(" * ");
+                h.add(" * http://www.apache.org/licenses/LICENSE-2.0");
+                h.add(" * ");
+                h.add(" * Unless required by applicable law or agreed to in writing, software");
+                h.add(" * distributed under the License is distributed on an \"AS IS\" BASIS,");
+                h.add(" * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.");
+                h.add(" * See the License for the specific language governing permissions and");
+                h.add(" * limitations under the License.");
+                h.add(" *");
+                break;
+            case EPL:
+                h.add(" * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC");
+                h.add(" * LICENSE (\"AGREEMENT\"). [Eclipse Public License - v 1.0]");
+                h.add(" * ");
+                h.add(" * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES");
+                h.add(" * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.");
+                h.add(" * ");
+                h.add(" * You may obtain a copy of the License at");
+                h.add(" * ");
+                h.add(" * http://www.eclipse.org/legal/epl-v10.html");
+                h.add(" * ");
+                h.add(" * Unless required by applicable law or agreed to in writing, software");
+                h.add(" * distributed under the License is distributed on an \"AS IS\" BASIS,");
+                h.add(" * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.");
+                h.add(" * See the License for the specific language governing permissions and");
+                h.add(" * limitations under the License.");
+                h.add(" * ");
+                break;
+            case BSD:
+                h.add(" * Licensed under the Revised BSD License (the Revised Berkeley Software Distribution)");
+                h.add(" * ");
+                h.add(" * Redistribution and use in source and binary forms, with or without");
+                h.add(" * modification, are permitted provided that the following conditions are met:");
+                h.add(" * ");
+                h.add(" * * Redistributions of source code must retain the above copyright");
+                h.add(" *   notice, this list of conditions and the following disclaimer.");
+                h.add(" * * Redistributions in binary form must reproduce the above copyright");
+                h.add(" *   notice, this list of conditions and the following disclaimer in the");
+                h.add(" *   documentation and/or other materials provided with the distribution.");
+                h.add(" * * Neither the name of the University of California, Berkeley nor the");
+                h.add(" *   names of its contributors may be used to endorse or promote products");
+                h.add(" *   derived from this software without specific prior written permission.");
+                h.add(" * ");
+                h.add(" * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY");
+                h.add(" * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED");
+                h.add(" * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE");
+                h.add(" * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY");
+                h.add(" * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES");
+                h.add(" * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;");
+                h.add(" * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND");
+                h.add(" * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT");
+                h.add(" * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS");
+                h.add(" * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.");
+                h.add(" * ");
+                break;
+            case MIT:
+                h.add(" * Licensed under The MIT License (Massachusetts Institute of Technology License)");
+                h.add(" * ");
+                h.add(" * See http://opensource.org/licenses/MIT");
+                h.add(" * ");
+                h.add(" * Permission is hereby granted, free of charge, to any person obtaining");
+                h.add(" * a copy of this software and associated documentation files (the \"Software\"),");
+                h.add(" * to deal in the Software without restriction, including without limitation");
+                h.add(" * the rights to use, copy, modify, merge, publish, distribute, sublicense,");
+                h.add(" * and/or sell copies of the Software, and to permit persons to whom the");
+                h.add(" * Software is furnished to do so, subject to the following conditions:");
+                h.add(" * ");
+                h.add(" * The above copyright notice and this permission notice shall be included");
+                h.add(" * in all copies or substantial portions of the Software.");
+                h.add(" * ");
+                h.add(" * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS");
+                h.add(" * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,");
+                h.add(" * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE");
+                h.add(" * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,");
+                h.add(" * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR");
+                h.add(" * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
+                h.add(" * ");
+                break;
+        }
 		h.add(" *");
 		h.add(" * Original Author:  Arnaud Roques");
 		h.add(" */");
@@ -431,23 +438,31 @@ public enum License {
 
 	public List<String> getText() {
 		final List<String> text = getHeaderStart();
-		if (this == License.GPL) {
-			addGpl(text);
-		} else if (this == License.GPLV2) {
-			addGplV2(text);
-		} else if (this == License.MIT) {
-			addMit(text);
-		} else if (this == License.EPL) {
-			addEpl(text);
-		} else if (this == License.BSD) {
-			addBsd(text);
-		} else if (this == License.APACHE) {
-			addApache(text);
-		} else if (this == License.LGPL) {
-			addLgpl(text);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (this) {
+            case GPL:
+                addGpl(text);
+                break;
+            case GPLV2:
+                addGplV2(text);
+                break;
+            case MIT:
+                addMit(text);
+                break;
+            case EPL:
+                addEpl(text);
+                break;
+            case BSD:
+                addBsd(text);
+                break;
+            case APACHE:
+                addApache(text);
+                break;
+            case LGPL:
+                addLgpl(text);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		if (OptionFlags.getInstance().isEnableStats()) {
 			text.add("");
 			text.add("This version of PlantUML records general local statistics about usage.");

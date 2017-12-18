@@ -249,22 +249,26 @@ public class OptionPrint {
 		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
 		System.out.println();
 		final int lastversion = PSystemVersion.extractDownloadableVersion(null, null);
-		if (lastversion == -1) {
-			System.out.println("Error");
-			System.out.println("Cannot connect to http://plantuml.com/");
-			System.out.println("Maybe you should set your proxy ?");
-		} else if (lastversion == 0) {
-			System.out.println("Error");
-			System.out.println("Cannot retrieve last version from http://plantuml.com/");
-		} else {
-			System.out.println("Last available version for download : " + lastversion);
-			System.out.println();
-			if (Version.version() >= lastversion) {
-				System.out.println("Your version is up to date.");
-			} else {
-				System.out.println("A newer version is available for download.");
-			}
-		}
+        switch (lastversion) {
+            case -1:
+                System.out.println("Error");
+                System.out.println("Cannot connect to http://plantuml.com/");
+                System.out.println("Maybe you should set your proxy ?");
+                break;
+            case 0:
+                System.out.println("Error");
+                System.out.println("Cannot retrieve last version from http://plantuml.com/");
+                break;
+            default:
+                System.out.println("Last available version for download : " + lastversion);
+                System.out.println();
+                if (Version.version() >= lastversion) {
+                    System.out.println("Your version is up to date.");
+                } else {
+                    System.out.println("A newer version is available for download.");
+                }
+                break;
+        }
 
 		exit();
 	}

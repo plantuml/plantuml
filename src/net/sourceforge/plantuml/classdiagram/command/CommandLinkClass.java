@@ -527,15 +527,20 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			result = result.goDashed();
 		}
 		final String middle = arg.get("INSIDE", 0);
-		if ("0".equals(middle)) {
-			result = result.withMiddleCircle();
-		} else if ("0)".equals(middle)) {
-			result = result.withMiddleCircleCircled1();
-		} else if ("(0".equals(middle)) {
-			result = result.withMiddleCircleCircled2();
-		} else if ("(0)".equals(middle)) {
-			result = result.withMiddleCircleCircled();
-		}
+        switch (middle) {
+            case "0":
+                result = result.withMiddleCircle();
+                break;
+            case "0)":
+                result = result.withMiddleCircleCircled1();
+                break;
+            case "(0":
+                result = result.withMiddleCircleCircled2();
+                break;
+            case "(0)":
+                result = result.withMiddleCircleCircled();
+                break;
+        }
 		return result;
 	}
 

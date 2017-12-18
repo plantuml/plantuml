@@ -180,19 +180,24 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 		final Link link;
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
-		if (position == Position.RIGHT) {
-			link = new Link(cl1, note, type, Display.NULL, 1);
-			link.setHorizontalSolitary(true);
-		} else if (position == Position.LEFT) {
-			link = new Link(note, cl1, type, Display.NULL, 1);
-			link.setHorizontalSolitary(true);
-		} else if (position == Position.BOTTOM) {
-			link = new Link(cl1, note, type, Display.NULL, 2);
-		} else if (position == Position.TOP) {
-			link = new Link(note, cl1, type, Display.NULL, 2);
-		} else {
-			throw new IllegalArgumentException();
-		}
+        switch (position) {
+            case RIGHT:
+                link = new Link(cl1, note, type, Display.NULL, 1);
+                link.setHorizontalSolitary(true);
+                break;
+            case LEFT:
+                link = new Link(note, cl1, type, Display.NULL, 1);
+                link.setHorizontalSolitary(true);
+                break;
+            case BOTTOM:
+                link = new Link(cl1, note, type, Display.NULL, 2);
+                break;
+            case TOP:
+                link = new Link(note, cl1, type, Display.NULL, 2);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

@@ -117,15 +117,16 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 	}
 
 	private double getTextX(final Dimension2D dimText, final Dimension2D dimTotal, HorizontalAlignment h) {
-		if (h == HorizontalAlignment.CENTER) {
-			return (dimTotal.getWidth() - dimText.getWidth()) / 2;
-		} else if (h == HorizontalAlignment.LEFT) {
-			return 0;
-		} else if (h == HorizontalAlignment.RIGHT) {
-			return dimTotal.getWidth() - dimText.getWidth();
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (h) {
+            case CENTER:
+                return (dimTotal.getWidth() - dimText.getWidth()) / 2;
+            case LEFT:
+                return 0;
+            case RIGHT:
+                return dimTotal.getWidth() - dimText.getWidth();
+            default:
+                throw new IllegalStateException();
+        }
 	}
 
 	public HtmlColor getBackcolor() {

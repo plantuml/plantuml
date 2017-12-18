@@ -83,17 +83,18 @@ public class JDotPath implements UDrawable {
 	}
 
 	private ColorParam getArrowColorParam() {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return ColorParam.arrow;
-		}
+        switch (diagram.getUmlDiagramType()) {
+            case CLASS:
+                return ColorParam.arrow;
+            case OBJECT:
+                return ColorParam.arrow;
+            case DESCRIPTION:
+                return ColorParam.arrow;
+            case ACTIVITY:
+                return ColorParam.arrow;
+            case STATE:
+                return ColorParam.arrow;
+        }
 		throw new IllegalStateException();
 	}
 

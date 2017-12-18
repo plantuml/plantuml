@@ -34,31 +34,20 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.*;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.*;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
-import net.sourceforge.plantuml.graphic.InnerStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Player implements TextBlock, TimeProjected {
 
@@ -140,13 +129,16 @@ public class Player implements TextBlock, TimeProjected {
 
 	private TimeDrawing computeTimeDrawing() {
 		final TimeDrawing result;
-		if (type == TimingStyle.CONCISE) {
-			result = new Ribbon(ruler, skinParam, notes);
-		} else if (type == TimingStyle.ROBUST) {
-			result = new Histogram(ruler, skinParam);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (type) {
+            case CONCISE:
+                result = new Ribbon(ruler, skinParam, notes);
+                break;
+            case ROBUST:
+                result = new Histogram(ruler, skinParam);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		result.setInitialState(initialState, initialColors);
 		for (ChangeState change : changes) {
 			result.addChange(change);
@@ -164,7 +156,8 @@ public class Player implements TextBlock, TimeProjected {
 		return new Dimension2DDouble(width, title.calculateDimension(stringBounder).getHeight() * 2 + zoneHeight);
 	}
 
-	public MinMax getMinMax(StringBounder stringBounder) {
+    public MinMax getMinMax(StringBounder stringBounder) {
+
 		throw new UnsupportedOperationException();
 	}
 

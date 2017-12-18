@@ -267,19 +267,25 @@ public class EpsGraphics {
 			for (USegment seg : path) {
 				final USegmentType type = seg.getSegmentType();
 				final double coord[] = seg.getCoord();
-				if (type == USegmentType.SEG_MOVETO) {
-					movetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_LINETO) {
-					linetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_QUADTO) {
-					throw new UnsupportedOperationException();
-				} else if (type == USegmentType.SEG_CUBICTO) {
-					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-				} else if (type == USegmentType.SEG_CLOSE) {
-					// Nothing
-				} else {
-					Log.println("unknown " + seg);
-				}
+                switch (type) {
+                    case SEG_MOVETO:
+                        movetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_LINETO:
+                        linetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_QUADTO:
+                        throw new UnsupportedOperationException();
+                    case SEG_CUBICTO:
+                        curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                        break;
+                    case SEG_CLOSE:
+                        // Nothing
+                        break;
+                    default:
+                        Log.println("unknown " + seg);
+                        break;
+                }
 			}
 			append("closepath eofill", true);
 		}
@@ -291,19 +297,25 @@ public class EpsGraphics {
 			for (USegment seg : path) {
 				final USegmentType type = seg.getSegmentType();
 				final double coord[] = seg.getCoord();
-				if (type == USegmentType.SEG_MOVETO) {
-					movetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_LINETO) {
-					linetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_QUADTO) {
-					throw new UnsupportedOperationException();
-				} else if (type == USegmentType.SEG_CUBICTO) {
-					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-				} else if (type == USegmentType.SEG_CLOSE) {
-					// Nothing
-				} else {
-					Log.println("unknown " + seg);
-				}
+                switch (type) {
+                    case SEG_MOVETO:
+                        movetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_LINETO:
+                        linetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_QUADTO:
+                        throw new UnsupportedOperationException();
+                    case SEG_CUBICTO:
+                        curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                        break;
+                    case SEG_CLOSE:
+                        // Nothing
+                        break;
+                    default:
+                        Log.println("unknown " + seg);
+                        break;
+                }
 			}
 			append("stroke", true);
 		}

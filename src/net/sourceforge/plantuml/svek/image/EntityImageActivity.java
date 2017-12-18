@@ -90,13 +90,16 @@ public class EntityImageActivity extends AbstractEntityImage {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		if (getShapeType() == ShapeType.ROUND_RECTANGLE) {
-			ug = drawNormal(ug);
-		} else if (getShapeType() == ShapeType.OCTAGON) {
-			ug = drawOctagon(ug);
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (getShapeType()) {
+            case ROUND_RECTANGLE:
+                ug = drawNormal(ug);
+                break;
+            case OCTAGON:
+                ug = drawOctagon(ug);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 		if (url != null) {
 			ug.closeAction();
 		}

@@ -74,15 +74,19 @@ public class FtileFactoryDelegatorCreateParallel extends FtileFactoryDelegator {
 
 		ParallelFtilesBuilder builder;
 
-		if (style == ForkStyle.SPLIT) {
-			builder = new ParallelBuilderSplit2(skinParam(), getStringBounder(), list, inner, swimlane);
-		} else if (style == ForkStyle.MERGE) {
-			builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), list, inner, swimlane);
-		} else if (style == ForkStyle.FORK) {
-			builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, swimlane, label);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (style) {
+            case SPLIT:
+                builder = new ParallelBuilderSplit2(skinParam(), getStringBounder(), list, inner, swimlane);
+                break;
+            case MERGE:
+                builder = new ParallelBuilderMerge(skinParam(), getStringBounder(), list, inner, swimlane);
+                break;
+            case FORK:
+                builder = new ParallelBuilderFork(skinParam(), getStringBounder(), list, inner, swimlane, label);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		return builder.build();
 	}
 

@@ -296,15 +296,20 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (labelOnly != null && noteOnly != null) {
-			if (link.getNotePosition() == Position.LEFT) {
-				labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
-			} else if (link.getNotePosition() == Position.RIGHT) {
-				labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
-			} else if (link.getNotePosition() == Position.TOP) {
-				labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
-			} else {
-				labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
-			}
+            switch (link.getNotePosition()) {
+                case LEFT:
+                    labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
+                    break;
+                case RIGHT:
+                    labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
+                    break;
+                case TOP:
+                    labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
+                    break;
+                default:
+                    labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
+                    break;
+            }
 		} else if (labelOnly != null) {
 			labelText = labelOnly;
 		} else if (noteOnly != null) {

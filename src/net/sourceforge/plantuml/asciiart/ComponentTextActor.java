@@ -69,23 +69,27 @@ public class ComponentTextActor extends AbstractComponentText {
 		charArea.fillRect(' ', 0, 0, width, height);
 
 		final int xman = width / 2 - 1;
-		if (type == ComponentType.ACTOR_HEAD) {
-			charArea.drawStringsLR(stringsToDisplay.as(), 1, getHeight());
-			if (fileFormat == FileFormat.UTXT) {
-				charArea.drawShape(AsciiShape.STICKMAN_UNICODE, xman, 0);
-			} else {
-				charArea.drawShape(AsciiShape.STICKMAN, xman, 0);
-			}
-		} else if (type == ComponentType.ACTOR_TAIL) {
-			charArea.drawStringsLR(stringsToDisplay.as(), 1, 0);
-			if (fileFormat == FileFormat.UTXT) {
-				charArea.drawShape(AsciiShape.STICKMAN_UNICODE, xman, 1);
-			} else {
-				charArea.drawShape(AsciiShape.STICKMAN, xman, 1);
-			}
-		} else {
-			assert false;
-		}
+        switch (type) {
+            case ACTOR_HEAD:
+                charArea.drawStringsLR(stringsToDisplay.as(), 1, getHeight());
+                if (fileFormat == FileFormat.UTXT) {
+                    charArea.drawShape(AsciiShape.STICKMAN_UNICODE, xman, 0);
+                } else {
+                    charArea.drawShape(AsciiShape.STICKMAN, xman, 0);
+                }
+                break;
+            case ACTOR_TAIL:
+                charArea.drawStringsLR(stringsToDisplay.as(), 1, 0);
+                if (fileFormat == FileFormat.UTXT) {
+                    charArea.drawShape(AsciiShape.STICKMAN_UNICODE, xman, 1);
+                } else {
+                    charArea.drawShape(AsciiShape.STICKMAN, xman, 1);
+                }
+                break;
+            default:
+                assert false;
+                break;
+        }
 	}
 
 	private int getHeight() {

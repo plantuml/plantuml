@@ -155,13 +155,17 @@ public class StripeSimple implements Stripe {
 			throw new IllegalArgumentException(line);
 		}
 		line = CharHidder.hide(line);
-		if (style.getType() == StripeStyleType.HEADING) {
-			atoms.add(AtomText.createHeading(line, fontConfiguration, style.getOrder()));
-		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {
-			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));
-		} else {
-			modifyStripe(line);
-		}
+        switch (style.getType()) {
+            case HEADING:
+                atoms.add(AtomText.createHeading(line, fontConfiguration, style.getOrder()));
+                break;
+            case HORIZONTAL_LINE:
+                atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));
+                break;
+            default:
+                modifyStripe(line);
+                break;
+        }
 	}
 
 	public void addImage(String src, double scale) {

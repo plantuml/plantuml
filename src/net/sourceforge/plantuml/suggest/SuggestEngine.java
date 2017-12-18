@@ -83,21 +83,24 @@ public final class SuggestEngine {
 				return check;
 			}
 			final CommandControl commandControl = systemFactory.isValid2(it99);
-			if (commandControl == CommandControl.OK_PARTIAL) {
-				systemFactory.goForwardMultiline(it99);
-				// if (ok == false) {
-				// return SuggestEngineResult.CANNOT_CORRECT;
-				// }
-			} else if (commandControl == CommandControl.OK) {
-				it99.next();
-				// final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
-				// final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
-				// if (result.isOk() == false) {
-				// return SuggestEngineResult.CANNOT_CORRECT;
-				// }
-			} else {
-				return SuggestEngineResult.CANNOT_CORRECT;
-			}
+            switch (commandControl) {
+                case OK_PARTIAL:
+                    systemFactory.goForwardMultiline(it99);
+                    // if (ok == false) {
+                    // return SuggestEngineResult.CANNOT_CORRECT;
+                    // }
+                    break;
+                case OK:
+                    it99.next();
+                    // final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
+                    // final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
+                    // if (result.isOk() == false) {
+                    // return SuggestEngineResult.CANNOT_CORRECT;
+                    // }
+                    break;
+                default:
+                    return SuggestEngineResult.CANNOT_CORRECT;
+            }
 		}
 		return SuggestEngineResult.CANNOT_CORRECT;
 		// throw new IllegalStateException();

@@ -386,54 +386,59 @@ class DrawableSetInitializer {
 	private void prepareGroupingLeaf(StringBounder stringBounder, final GroupingLeaf m, ParticipantRange range) {
 		final GraphicalElement element;
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), null, m.getBackColorGeneral());
-		if (m.getType() == GroupingType.ELSE) {
-			if (m.isParallel()) {
-				freeY2 = ((FrontierStack) freeY2).restore();
-			}
-			final Component compElse = drawableSet.getSkin().createComponent(ComponentType.GROUPING_ELSE, null,
-					skinParam, Display.create(m.getComment()));
-			final Lazy lazy = new Lazy() {
-				public double getNow() {
-					final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());
-					if (after == null) {
-						return 0;
-					}
-					return after.getStartingY();
-				}
-			};
-			element = new GroupingGraphicalElementElse(freeY2.getFreeY(range), compElse,
-					inGroupableStack.getTopGroupingStructure(), m.isParallel(), lazy);
-			final double preferredHeight = element.getPreferredHeight(stringBounder);
-			freeY2 = freeY2.add(preferredHeight, range);
-			// MODIF42
-			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
-		} else if (m.getType() == GroupingType.END) {
-			final List<Component> notes = new ArrayList<>();
-			for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
-				final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
-				final Component note = drawableSet.getSkin().createComponent(
-						noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
-				notes.add(note);
-			}
-			if (m.isParallel()) {
-				freeY2 = ((FrontierStack) freeY2).closeBar();
-			}
-			final GroupingGraphicalElementHeader groupingHeaderStart = (GroupingGraphicalElementHeader) drawableSet
-					.getEvent(m.getGroupingStart());
-			if (groupingHeaderStart != null) {
-				groupingHeaderStart.setEndY(freeY2.getFreeY(range));
-				groupingHeaderStart.addNotes(stringBounder, notes);
-			}
-			element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
-					inGroupableStack.getTopGroupingStructure(), m.isParallel());
-			final Component comp = drawableSet.getSkin().createComponent(ComponentType.GROUPING_SPACE, null, skinParam,
-					Display.create(m.getComment()));
-			final double preferredHeight = comp.getPreferredHeight(stringBounder);
-			freeY2 = freeY2.add(preferredHeight, range);
-			inGroupableStack.pop();
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (m.getType()) {
+            case ELSE: {
+                if (m.isParallel()) {
+                    freeY2 = ((FrontierStack) freeY2).restore();
+                }
+                final Component compElse = drawableSet.getSkin().createComponent(ComponentType.GROUPING_ELSE, null,
+                        skinParam, Display.create(m.getComment()));
+                final Lazy lazy = new Lazy() {
+                    public double getNow() {
+                        final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());
+                        if (after == null) {
+                            return 0;
+                        }
+                        return after.getStartingY();
+                    }
+                };
+                element = new GroupingGraphicalElementElse(freeY2.getFreeY(range), compElse,
+                        inGroupableStack.getTopGroupingStructure(), m.isParallel(), lazy);
+                final double preferredHeight = element.getPreferredHeight(stringBounder);
+                freeY2 = freeY2.add(preferredHeight, range);
+                // MODIF42
+                inGroupableStack.addElement((GroupingGraphicalElementElse) element);
+                break;
+            }
+            case END: {
+                final List<Component> notes = new ArrayList<>();
+                for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
+                    final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
+                    final Component note = drawableSet.getSkin().createComponent(
+                            noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
+                    notes.add(note);
+                }
+                if (m.isParallel()) {
+                    freeY2 = ((FrontierStack) freeY2).closeBar();
+                }
+                final GroupingGraphicalElementHeader groupingHeaderStart = (GroupingGraphicalElementHeader) drawableSet
+                        .getEvent(m.getGroupingStart());
+                if (groupingHeaderStart != null) {
+                    groupingHeaderStart.setEndY(freeY2.getFreeY(range));
+                    groupingHeaderStart.addNotes(stringBounder, notes);
+                }
+                element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
+                        inGroupableStack.getTopGroupingStructure(), m.isParallel());
+                final Component comp = drawableSet.getSkin().createComponent(ComponentType.GROUPING_SPACE, null, skinParam,
+                        Display.create(m.getComment()));
+                final double preferredHeight = comp.getPreferredHeight(stringBounder);
+                freeY2 = freeY2.add(preferredHeight, range);
+                inGroupableStack.pop();
+                break;
+            }
+            default:
+                throw new IllegalStateException();
+        }
 		drawableSet.addEvent(m, element);
 
 	}
@@ -583,33 +588,42 @@ skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 	private void prepareParticipant(StringBounder stringBounder, Participant p) {
 		final ComponentType headType;
 		final ComponentType tailType;
-		if (p.getType() == ParticipantType.PARTICIPANT) {
-			headType = ComponentType.PARTICIPANT_HEAD;
-			tailType = ComponentType.PARTICIPANT_TAIL;
-		} else if (p.getType() == ParticipantType.ACTOR) {
-			headType = ComponentType.ACTOR_HEAD;
-			tailType = ComponentType.ACTOR_TAIL;
-		} else if (p.getType() == ParticipantType.BOUNDARY) {
-			headType = ComponentType.BOUNDARY_HEAD;
-			tailType = ComponentType.BOUNDARY_TAIL;
-		} else if (p.getType() == ParticipantType.CONTROL) {
-			headType = ComponentType.CONTROL_HEAD;
-			tailType = ComponentType.CONTROL_TAIL;
-		} else if (p.getType() == ParticipantType.ENTITY) {
-			headType = ComponentType.ENTITY_HEAD;
-			tailType = ComponentType.ENTITY_TAIL;
-		} else if (p.getType() == ParticipantType.QUEUE) {
-			headType = ComponentType.QUEUE_HEAD;
-			tailType = ComponentType.QUEUE_TAIL;
-		} else if (p.getType() == ParticipantType.DATABASE) {
-			headType = ComponentType.DATABASE_HEAD;
-			tailType = ComponentType.DATABASE_TAIL;
-		} else if (p.getType() == ParticipantType.COLLECTIONS) {
-			headType = ComponentType.COLLECTIONS_HEAD;
-			tailType = ComponentType.COLLECTIONS_TAIL;
-		} else {
-			throw new IllegalArgumentException();
-		}
+        switch (p.getType()) {
+            case PARTICIPANT:
+                headType = ComponentType.PARTICIPANT_HEAD;
+                tailType = ComponentType.PARTICIPANT_TAIL;
+                break;
+            case ACTOR:
+                headType = ComponentType.ACTOR_HEAD;
+                tailType = ComponentType.ACTOR_TAIL;
+                break;
+            case BOUNDARY:
+                headType = ComponentType.BOUNDARY_HEAD;
+                tailType = ComponentType.BOUNDARY_TAIL;
+                break;
+            case CONTROL:
+                headType = ComponentType.CONTROL_HEAD;
+                tailType = ComponentType.CONTROL_TAIL;
+                break;
+            case ENTITY:
+                headType = ComponentType.ENTITY_HEAD;
+                tailType = ComponentType.ENTITY_TAIL;
+                break;
+            case QUEUE:
+                headType = ComponentType.QUEUE_HEAD;
+                tailType = ComponentType.QUEUE_TAIL;
+                break;
+            case DATABASE:
+                headType = ComponentType.DATABASE_HEAD;
+                tailType = ComponentType.DATABASE_TAIL;
+                break;
+            case COLLECTIONS:
+                headType = ComponentType.COLLECTIONS_HEAD;
+                tailType = ComponentType.COLLECTIONS_TAIL;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
 
 		final ISkinParam skinParam = p.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());

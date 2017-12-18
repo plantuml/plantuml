@@ -55,40 +55,47 @@ public enum EntityPosition {
 	public static final double RADIUS = 6;
 
 	public void drawSymbol(UGraphic ug, Rankdir rankdir) {
-		if (this == NORMAL) {
-			throw new IllegalStateException();
-		} else if (this == ENTRY_POINT || this == EXIT_POINT) {
-			final Shadowable circle = new UEllipse(RADIUS * 2, RADIUS * 2);
-			ug.draw(circle);
-			if (this == EntityPosition.EXIT_POINT) {
-				final double xc = 0 + RADIUS + .5;
-				final double yc = 0 + RADIUS + .5;
-				final double radius = RADIUS - .5;
-				drawLine(ug, getPointOnCircle(xc, yc, Math.PI / 4, radius),
-						getPointOnCircle(xc, yc, Math.PI + Math.PI / 4, radius));
-				drawLine(ug, getPointOnCircle(xc, yc, -Math.PI / 4, radius),
-						getPointOnCircle(xc, yc, Math.PI - Math.PI / 4, radius));
-			}
-		} else if (this == INPUT_PIN || this == OUTPUT_PIN) {
-			final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2);
-			ug.draw(rectangle);
-		} else if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {
-			if (rankdir == Rankdir.TOP_TO_BOTTOM) {
-				final Shadowable rectangle = new URectangle(RADIUS * 2 * 4, RADIUS * 2);
-				ug.draw(rectangle);
-				final ULine vline = new ULine(0, RADIUS * 2);
-				ug.apply(new UTranslate(RADIUS * 2, 0)).draw(vline);
-				ug.apply(new UTranslate(RADIUS * 2 * 2, 0)).draw(vline);
-				ug.apply(new UTranslate(RADIUS * 2 * 3, 0)).draw(vline);
-			} else {
-				final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2 * 4);
-				ug.apply(new UTranslate(0, 0)).draw(rectangle);
-				final ULine hline = new ULine(RADIUS * 2, 0);
-				ug.apply(new UTranslate(0, RADIUS * 2)).draw(hline);
-				ug.apply(new UTranslate(0, RADIUS * 2 * 2)).draw(hline);
-				ug.apply(new UTranslate(0, RADIUS * 2 * 3)).draw(hline);
-			}
-		}
+        switch (this) {
+            case NORMAL:
+                throw new IllegalStateException();
+            case ENTRY_POINT:
+            case EXIT_POINT:
+                final Shadowable circle = new UEllipse(RADIUS * 2, RADIUS * 2);
+                ug.draw(circle);
+                if (this == EntityPosition.EXIT_POINT) {
+                    final double xc = 0 + RADIUS + .5;
+                    final double yc = 0 + RADIUS + .5;
+                    final double radius = RADIUS - .5;
+                    drawLine(ug, getPointOnCircle(xc, yc, Math.PI / 4, radius),
+                            getPointOnCircle(xc, yc, Math.PI + Math.PI / 4, radius));
+                    drawLine(ug, getPointOnCircle(xc, yc, -Math.PI / 4, radius),
+                            getPointOnCircle(xc, yc, Math.PI - Math.PI / 4, radius));
+                }
+                break;
+            case INPUT_PIN:
+            case OUTPUT_PIN:
+                final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2);
+                ug.draw(rectangle);
+                break;
+            case EXPANSION_INPUT:
+            case EXPANSION_OUTPUT:
+                if (rankdir == Rankdir.TOP_TO_BOTTOM) {
+                    final Shadowable rect = new URectangle(RADIUS * 2 * 4, RADIUS * 2);
+                    ug.draw(rect);
+                    final ULine vline = new ULine(0, RADIUS * 2);
+                    ug.apply(new UTranslate(RADIUS * 2, 0)).draw(vline);
+                    ug.apply(new UTranslate(RADIUS * 2 * 2, 0)).draw(vline);
+                    ug.apply(new UTranslate(RADIUS * 2 * 3, 0)).draw(vline);
+                } else {
+                    final Shadowable rect = new URectangle(RADIUS * 2, RADIUS * 2 * 4);
+                    ug.apply(new UTranslate(0, 0)).draw(rect);
+                    final ULine hline = new ULine(RADIUS * 2, 0);
+                    ug.apply(new UTranslate(0, RADIUS * 2)).draw(hline);
+                    ug.apply(new UTranslate(0, RADIUS * 2 * 2)).draw(hline);
+                    ug.apply(new UTranslate(0, RADIUS * 2 * 3)).draw(hline);
+                }
+                break;
+        }
 
 	}
 

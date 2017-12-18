@@ -115,43 +115,50 @@ public abstract class UmlDiagramFactory extends PSystemAbstractFactory {
 
 	private AbstractPSystem executeOneLine(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it) {
 		final CommandControl commandControl = isValid2(it);
-		if (commandControl == CommandControl.NOT_OK) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", /* it.currentNum(), */it.peek()
-					.getLocation());
-			if (OptionFlags.getInstance().isUseSuggestEngine2()) {
-				final SuggestEngine engine = new SuggestEngine(source, this);
-				final SuggestEngineResult result = engine.tryToSuggest(sys);
-				if (result.getStatus() == SuggestEngineStatus.ONE_SUGGESTION) {
-					err.setSuggest(result);
-				}
-			}
-			sys = new PSystemError(source, err, null);
-		} else if (commandControl == CommandControl.OK_PARTIAL) {
-			final IteratorCounter2 saved = it.cloneMe();
-			final CommandExecutionResult result = manageMultiline2(it, sys);
-			if (!result.isOk()) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-				/* it.currentNum() - 1, */saved.next().getLocation());
-				sys = new PSystemError(source, err, null);
+        switch (commandControl) {
+            case NOT_OK:
+                final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", /* it.currentNum(), */it.peek()
+                        .getLocation());
+                if (OptionFlags.getInstance().isUseSuggestEngine2()) {
+                    final SuggestEngine engine = new SuggestEngine(source, this);
+                    final SuggestEngineResult result = engine.tryToSuggest(sys);
+                    if (result.getStatus() == SuggestEngineStatus.ONE_SUGGESTION) {
+                        err.setSuggest(result);
+                    }
+                }
+                sys = new PSystemError(source, err, null);
+                break;
+            case OK_PARTIAL: {
+                final IteratorCounter2 saved = it.cloneMe();
+                final CommandExecutionResult result = manageMultiline2(it, sys);
+                if (!result.isOk()) {
+                    final ErrorUml errUml = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
+                            /* it.currentNum() - 1, */saved.next().getLocation());
+                    sys = new PSystemError(source, errUml, null);
 
-			}
-		} else if (commandControl == CommandControl.OK) {
-			final CharSequence line = it.next();
-			final BlocLines lines = BlocLines.single(line);
-			Command cmd = getFirstCommandOkForLines(lines);
-			final CommandExecutionResult result = sys.executeCommand(cmd, lines);
-			if (!result.isOk()) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
-				/* it.currentNum() - 1, */((CharSequence2) line).getLocation());
-				sys = new PSystemError(source, err,
-						result.getDebugLines());
-			}
-			if (result.getNewDiagram() != null) {
-				sys = result.getNewDiagram();
-			}
-		} else {
-			assert false;
-		}
+                }
+                break;
+            }
+            case OK: {
+                final CharSequence line = it.next();
+                final BlocLines lines = BlocLines.single(line);
+                Command cmd = getFirstCommandOkForLines(lines);
+                final CommandExecutionResult result = sys.executeCommand(cmd, lines);
+                if (!result.isOk()) {
+                    final ErrorUml errUml = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(),
+                            /* it.currentNum() - 1, */((CharSequence2) line).getLocation());
+                    sys = new PSystemError(source, errUml,
+                            result.getDebugLines());
+                }
+                if (result.getNewDiagram() != null) {
+                    sys = result.getNewDiagram();
+                }
+                break;
+            }
+            default:
+                assert false;
+                break;
+        }
 		return sys;
 	}
 

@@ -131,14 +131,19 @@ public class AtomText implements Atom {
 	}
 
 	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
-		if (order == 0) {
-			fontConfiguration = fontConfiguration.bigger(4).bold();
-		} else if (order == 1) {
-			fontConfiguration = fontConfiguration.bigger(2).bold();
-		} else if (order == 2) {
-			fontConfiguration = fontConfiguration.bigger(1).bold();
-		} else {
-			fontConfiguration = fontConfiguration.italic();
+		switch (order) {
+			case 0:
+				fontConfiguration = fontConfiguration.bigger(4).bold();
+				break;
+			case 1:
+				fontConfiguration = fontConfiguration.bigger(2).bold();
+				break;
+			case 2:
+				fontConfiguration = fontConfiguration.bigger(1).bold();
+				break;
+			default:
+				fontConfiguration = fontConfiguration.italic();
+				break;
 		}
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}

@@ -211,13 +211,17 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 				if (!DisplayPositionned.isNull(legend)) {
 					final double delta2;
-					if (legend.getHorizontalAlignment() == HorizontalAlignment.LEFT) {
-						delta2 = 0;
-					} else if (legend.getHorizontalAlignment() == HorizontalAlignment.RIGHT) {
-						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth());
-					} else {
-						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth()) / 2;
-					}
+                    switch (legend.getHorizontalAlignment()) {
+                        case LEFT:
+                            delta2 = 0;
+                            break;
+                        case RIGHT:
+                            delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth());
+                            break;
+                        default:
+                            delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth()) / 2;
+                            break;
+                    }
 					legendBlock.drawU(ug.apply(new UTranslate(delta2, legendTop ? legendYdelta : legendYdelta
 							+ area.getHeight())));
 				}

@@ -243,27 +243,32 @@ public class SvgGraphics {
 		String id = gradients.get(key);
 		if (id == null) {
 			final Element elt = document.createElement("linearGradient");
-			if (policy == '|') {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "50%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "50%");
-			} else if (policy == '\\') {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "100%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "0%");
-			} else if (policy == '-') {
-				elt.setAttribute("x1", "50%");
-				elt.setAttribute("y1", "0%");
-				elt.setAttribute("x2", "50%");
-				elt.setAttribute("y2", "100%");
-			} else {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "0%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "100%");
-			}
+            switch (policy) {
+                case '|':
+                    elt.setAttribute("x1", "0%");
+                    elt.setAttribute("y1", "50%");
+                    elt.setAttribute("x2", "100%");
+                    elt.setAttribute("y2", "50%");
+                    break;
+                case '\\':
+                    elt.setAttribute("x1", "0%");
+                    elt.setAttribute("y1", "100%");
+                    elt.setAttribute("x2", "100%");
+                    elt.setAttribute("y2", "0%");
+                    break;
+                case '-':
+                    elt.setAttribute("x1", "50%");
+                    elt.setAttribute("y1", "0%");
+                    elt.setAttribute("x2", "50%");
+                    elt.setAttribute("y2", "100%");
+                    break;
+                default:
+                    elt.setAttribute("x1", "0%");
+                    elt.setAttribute("y1", "0%");
+                    elt.setAttribute("x2", "100%");
+                    elt.setAttribute("y2", "100%");
+                    break;
+            }
 			id = gradientId + gradients.size();
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
@@ -596,34 +601,42 @@ public class SvgGraphics {
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
-			if (type == USegmentType.SEG_MOVETO) {
-				sb.append("M").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_LINETO) {
-				sb.append("L").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_QUADTO) {
-				sb.append("Q").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
-				  .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_CUBICTO) {
-				sb.append("C").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
-				  .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ").append(format(coord[4] + x))
-				  .append(",").append(format(coord[5] + y)).append(" ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
-				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_ARCTO) {
-				sb.append("A").append(format(coord[0])).append(",").append(format(coord[1])).append(" ").append(format(coord[2]))
-				  .append(",").append(format(coord[3])).append(" ").append(format(coord[4])).append(",").append(format(coord[5] + x))
-				  .append(",").append(format(coord[6] + y)).append(" ");
-				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_CLOSE) {
-				// Nothing
-			} else {
-				Log.println("unknown " + seg);
-			}
+            switch (type) {
+                case SEG_MOVETO:
+                    sb.append("M").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    break;
+                case SEG_LINETO:
+                    sb.append("L").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    break;
+                case SEG_QUADTO:
+                    sb.append("Q").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
+                            .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
+                    break;
+                case SEG_CUBICTO:
+                    sb.append("C").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
+                            .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ").append(format(coord[4] + x))
+                            .append(",").append(format(coord[5] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
+                    ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
+                    break;
+                case SEG_ARCTO:
+                    sb.append("A").append(format(coord[0])).append(",").append(format(coord[1])).append(" ").append(format(coord[2]))
+                            .append(",").append(format(coord[3])).append(" ").append(format(coord[4])).append(",").append(format(coord[5] + x))
+                            .append(",").append(format(coord[6] + y)).append(" ");
+                    ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
+                    break;
+                case SEG_CLOSE:
+                    // Nothing
+                    break;
+                default:
+                    Log.println("unknown " + seg);
+                    break;
+            }
 
 		}
 		if (!hidden) {

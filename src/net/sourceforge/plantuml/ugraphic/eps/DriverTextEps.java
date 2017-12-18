@@ -198,19 +198,25 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		final double coord[] = new double[6];
 		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
-				eps.moveto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_LINETO) {
-				eps.lineto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_CLOSE) {
-				eps.closepath();
-			} else if (code == PathIterator.SEG_CUBICTO) {
-				eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-			} else if (code == PathIterator.SEG_QUADTO) {
-				eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
-			} else {
-				throw new UnsupportedOperationException("code=" + code);
-			}
+            switch (code) {
+                case PathIterator.SEG_MOVETO:
+                    eps.moveto(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_LINETO:
+                    eps.lineto(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_CLOSE:
+                    eps.closepath();
+                    break;
+                case PathIterator.SEG_CUBICTO:
+                    eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                    break;
+                case PathIterator.SEG_QUADTO:
+                    eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+                    break;
+                default:
+                    throw new UnsupportedOperationException("code=" + code);
+            }
 
 			path.next();
 		}
@@ -259,21 +265,27 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		final double coord[] = new double[6];
 		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_LINETO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_CLOSE) {
-			} else if (code == PathIterator.SEG_CUBICTO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-				result = result.addPoint(coord[2] + x, coord[3] + y);
-				result = result.addPoint(coord[4] + x, coord[5] + y);
-			} else if (code == PathIterator.SEG_QUADTO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-				result = result.addPoint(coord[2] + x, coord[3] + y);
-			} else {
-				throw new UnsupportedOperationException("code=" + code);
-			}
+            switch (code) {
+                case PathIterator.SEG_MOVETO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_LINETO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_CLOSE:
+                    break;
+                case PathIterator.SEG_CUBICTO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    result = result.addPoint(coord[2] + x, coord[3] + y);
+                    result = result.addPoint(coord[4] + x, coord[5] + y);
+                    break;
+                case PathIterator.SEG_QUADTO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    result = result.addPoint(coord[2] + x, coord[3] + y);
+                    break;
+                default:
+                    throw new UnsupportedOperationException("code=" + code);
+            }
 			path.next();
 		}
 

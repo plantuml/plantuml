@@ -76,14 +76,18 @@ public class BackSlash {
 			if (c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
-				if (c2 == 'n') {
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
-				}
+                switch (c2) {
+                    case 'n':
+                        result.add(current.toString());
+                        current.setLength(0);
+                        break;
+                    case 't':
+                        current.append('\t');
+                        break;
+                    case '\\':
+                        current.append(c2);
+                        break;
+                }
 			} else {
 				current.append(c);
 			}

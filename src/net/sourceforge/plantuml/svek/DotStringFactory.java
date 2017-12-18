@@ -360,49 +360,60 @@ public class DotStringFactory implements Moveable {
 
 		for (Shape sh : bibliotekon.allShapes()) {
 			int idx = svg.indexOf("<title>" + sh.getUid() + "</title>");
-			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
-					|| sh.getType() == ShapeType.FOLDER || sh.getType() == ShapeType.DIAMOND) {
-				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-			} else if (sh.getType() == ShapeType.ROUND_RECTANGLE) {
-				final int idx2 = svg.indexOf("d=\"", idx + 1);
-				idx = svg.indexOf("points=\"", idx + 1);
-				final List<Point2D.Double> points;
-				if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
-					// GraphViz 2.30
-					points = SvekUtils.extractD(svg, idx2, fullHeight);
-				} else {
-					points = SvekUtils.extractPointsList(svg, idx, fullHeight);
-					for (int i = 0; i < 3; i++) {
-						idx = svg.indexOf("points=\"", idx + 1);
-						points.addAll(SvekUtils.extractPointsList(svg, idx, fullHeight));
-					}
-				}
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-			} else if (sh.getType() == ShapeType.OCTAGON) {
-				idx = svg.indexOf("points=\"", idx + 1);
-				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-				sh.setOctagon(minX, minY, points);
-			} else if (sh.getType() == ShapeType.CIRCLE || sh.getType() == ShapeType.CIRCLE_IN_RECT
-					|| sh.getType() == ShapeType.OVAL) {
-				final double cx = SvekUtils.getValue(svg, idx, "cx");
-				final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
-				final double rx = SvekUtils.getValue(svg, idx, "rx");
-				final double ry = SvekUtils.getValue(svg, idx, "ry");
-				sh.moveSvek(cx - rx, cy - ry);
-			} else {
-				throw new IllegalStateException(sh.getType().toString() + " " + sh.getUid());
-			}
+            switch (sh.getType()) {
+                case RECTANGLE:
+                case RECTANGLE_HTML_FOR_PORTS:
+                case FOLDER:
+                case DIAMOND: {
+                    final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+                    final double minX = SvekUtils.getMinX(points);
+                    final double minY = SvekUtils.getMinY(points);
+                    corner1.manage(minX, minY);
+                    sh.moveSvek(minX, minY);
+                    break;
+                }
+                case ROUND_RECTANGLE: {
+                    final int idx2 = svg.indexOf("d=\"", idx + 1);
+                    idx = svg.indexOf("points=\"", idx + 1);
+                    final List<Point2D.Double> points;
+                    if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
+                        // GraphViz 2.30
+                        points = SvekUtils.extractD(svg, idx2, fullHeight);
+                    } else {
+                        points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+                        for (int i = 0; i < 3; i++) {
+                            idx = svg.indexOf("points=\"", idx + 1);
+                            points.addAll(SvekUtils.extractPointsList(svg, idx, fullHeight));
+                        }
+                    }
+                    final double minX = SvekUtils.getMinX(points);
+                    final double minY = SvekUtils.getMinY(points);
+                    corner1.manage(minX, minY);
+                    sh.moveSvek(minX, minY);
+                    break;
+                }
+                case OCTAGON: {
+                    idx = svg.indexOf("points=\"", idx + 1);
+                    final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+                    final double minX = SvekUtils.getMinX(points);
+                    final double minY = SvekUtils.getMinY(points);
+                    corner1.manage(minX, minY);
+                    sh.moveSvek(minX, minY);
+                    sh.setOctagon(minX, minY, points);
+                    break;
+                }
+                case CIRCLE:
+                case CIRCLE_IN_RECT:
+                case OVAL:
+                    final double cx = SvekUtils.getValue(svg, idx, "cx");
+                    final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
+                    final double rx = SvekUtils.getValue(svg, idx, "rx");
+                    final double ry = SvekUtils.getValue(svg, idx, "ry");
+                    sh.moveSvek(cx - rx, cy - ry);
+                    break;
+                default:
+                    throw new IllegalStateException(sh.getType().toString() + " " + sh.getUid());
+            }
 		}
 
 		for (Cluster cluster : bibliotekon.allCluster()) {
