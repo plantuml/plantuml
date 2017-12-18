@@ -114,15 +114,13 @@ final class SymbolStats {
   }
 
   final void alloy(final SymbolStats ligand) {
-    int[] ligandLitLens = ligand.litLens;
     for (int i = 0; i < 288; i++) {
-      litLens[i] += ligandLitLens[i] / 2;
+      litLens[i] += ligand.litLens[i] / 2;
     }
     litLens[256] = 1;
 
-    int[] ligandDists = ligand.dists;
     for (int i = 0; i < 32; i++) {
-      dists[i] += ligandDists[i] / 2;
+      dists[i] += ligand.dists[i] / 2;
     }
   }
 
