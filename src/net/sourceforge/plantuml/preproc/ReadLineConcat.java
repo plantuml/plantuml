@@ -57,7 +57,7 @@ public class ReadLineConcat implements ReadLine {
 	}
 
 	public CharSequence2 readLine() throws IOException {
-		CharSequence2 result = null;
+		CharSequence2 result;
 		if (file1 != null) {
 			result = file1.readLine();
 			if (result == null) {

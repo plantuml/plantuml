@@ -48,7 +48,7 @@ import javax.swing.SwingConstants;
 
 class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListener {
 
-	private int maxUnitIncrement = 1;
+	private int maxUnitIncrement;
 	private boolean missingPicture = false;
 
 	public ScrollablePicture(ImageIcon i, int m) {

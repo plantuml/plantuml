@@ -203,7 +203,7 @@ public class ChainImpl<O> implements Chain<O> {
 
 	class InternalNavigator implements Navigator<O> {
 
-		private int position = 0;
+		private int position;
 		private int version;
 
 		private InternalNavigator(int position, int version) {

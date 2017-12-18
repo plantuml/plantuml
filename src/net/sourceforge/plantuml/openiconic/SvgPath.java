@@ -50,7 +50,7 @@ public class SvgPath {
 	// http://tutorials.jenkov.com/svg/path-element.html
 
 	private List<Movement> movements = new ArrayList<>();
-	private List<SvgCommand> commands = new ArrayList<>();
+	private List<SvgCommand> commands;
 
 	public SvgPath(String path) {
 		path = StringDecipher.decipher(path);

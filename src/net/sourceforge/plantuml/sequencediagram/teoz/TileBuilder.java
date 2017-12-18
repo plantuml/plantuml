@@ -89,8 +89,7 @@ public class TileBuilder {
 			final LivingSpace livingSpace2 = livingSpaces.get(msg.getParticipant2());
 			boolean reverse = false;
 			Tile result;
-			result = null;
-			if (msg.isSelfMessage()) {
+            if (msg.isSelfMessage()) {
 				result = new CommunicationTileSelf(livingSpace1, msg, skin, skinParam, livingSpaces);
 			} else {
 				// System.err.println("msg=" + msg);

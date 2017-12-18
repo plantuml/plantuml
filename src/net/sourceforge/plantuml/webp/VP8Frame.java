@@ -108,8 +108,7 @@ public class VP8Frame {
 		int versionNumber = getBitAsInt(c, 1) << 1;
 
 		versionNumber += getBitAsInt(c, 2) << 1;
-		versionNumber += getBitAsInt(c, 3);
-		int firstPartitionLengthInBytes;
+        int firstPartitionLengthInBytes;
 		firstPartitionLengthInBytes = getBitAsInt(c, 5) << 0;
 		firstPartitionLengthInBytes += getBitAsInt(c, 6) << 1;
 		firstPartitionLengthInBytes += getBitAsInt(c, 7) << 2;

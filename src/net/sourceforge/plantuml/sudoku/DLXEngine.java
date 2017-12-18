@@ -618,7 +618,7 @@ class dlx_generator {
 	 * Save the generated Sudoku to a file.
 	 */
 	void saveSudokuToFile(String s) {
-		FileOutputStream FO = null;
+		FileOutputStream FO;
 		byte[] buffer = new byte[s.length() + 1];
 		int i = 0;
 

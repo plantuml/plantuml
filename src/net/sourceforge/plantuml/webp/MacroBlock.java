@@ -20,7 +20,7 @@ import java.io.IOException;
 public class MacroBlock {
 
 	private int filterLevel;
-	private boolean keepDebugInfo = false;
+	private boolean keepDebugInfo;
 	private int segmentId;
 	private int skipCoeff;
 	private boolean skipInnerLoopFilter;
