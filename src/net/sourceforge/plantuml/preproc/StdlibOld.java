@@ -22,7 +22,7 @@ import org.brotli.dec.BrotliInputStream;
 
 public class StdlibOld {
 
-	static private final Map<String, StdlibOld> all = new ConcurrentHashMap<String, StdlibOld>();
+	static private final Map<String, StdlibOld> all = new ConcurrentHashMap<>();
 
 	static class Portion {
 		int position;
@@ -42,10 +42,10 @@ public class StdlibOld {
 		}
 	}
 
-	private final Map<String, Portion> data = new HashMap<String, Portion>();
-	private final Map<String, SoftReference<byte[]>> cache = new ConcurrentHashMap<String, SoftReference<byte[]>>();
+	private final Map<String, Portion> data = new HashMap<>();
+	private final Map<String, SoftReference<byte[]>> cache = new ConcurrentHashMap<>();
 	private final String name;
-	private final Map<String, String> info = new HashMap<String, String>();
+	private final Map<String, String> info = new HashMap<>();
 
 	public static InputStream getResourceAsStream(String fullname) {
 		fullname = fullname.toLowerCase().replace(".puml", "");
@@ -132,7 +132,7 @@ public class StdlibOld {
 		final String full = name + "/" + filename + ".puml";
 		if (result == null) {
 			result = getDataSlow(filename);
-			cache.put(filename, new SoftReference<byte[]>(result));
+			cache.put(filename, new SoftReference<>(result));
 			Log.info("Reading " + full);
 		} else {
 			Log.info("Retrieving " + full);
@@ -153,7 +153,7 @@ public class StdlibOld {
 	}
 
 	private static List<String> getAll() throws IOException {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final InputStream home = getInternalInputStream("home", ".repx");
 		final BufferedReader br = new BufferedReader(new InputStreamReader(home));
 		String name;

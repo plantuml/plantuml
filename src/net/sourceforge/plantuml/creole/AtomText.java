@@ -88,7 +88,7 @@ public class AtomText implements Atom {
 		fontConfiguration = fontConfiguration.hyperlink();
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
-			final List<Atom> all = new ArrayList<Atom>();
+			final List<Atom> all = new ArrayList<>();
 			for (CharSequence s : display.as()) {
 				all.add(createAtomText(s.toString(), url, fontConfiguration));
 			}
@@ -101,7 +101,7 @@ public class AtomText implements Atom {
 	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration) {
 		final Pattern p = Pattern.compile(Splitter.openiconPattern);
 		final Matcher m = p.matcher(text);
-		final List<Atom> result = new ArrayList<Atom>();
+		final List<Atom> result = new ArrayList<>();
 
 		while (m.find()) {
 			final String val = m.group(1);
