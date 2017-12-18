@@ -86,14 +86,8 @@ public class HistoricalData {
 			public int compare(ParsedGenerated v1, ParsedGenerated v2) {
 				final long time1 = v1.getId();
 				final long time2 = v2.getId();
-				if (time1 > time2) {
-					return 1;
-				}
-				if (time1 < time2) {
-					return -1;
-				}
-				return 0;
-			}
+                return Long.compare(time1, time2);
+            }
 		};
 	}
 
