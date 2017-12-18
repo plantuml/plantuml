@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,8 +51,7 @@ public final class CucaDiagramSimplifierActivity {
 	private final CucaDiagram diagram;
 	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierActivity(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
-			throws IOException, InterruptedException {
+	public CucaDiagramSimplifierActivity(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		boolean changed;

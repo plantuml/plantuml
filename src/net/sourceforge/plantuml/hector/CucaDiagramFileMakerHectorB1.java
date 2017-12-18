@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.hector;
 
 import java.awt.geom.Dimension2D;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -100,8 +99,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 	// return singleHeight * pin.getRow() + singleHeight / 2.0;
 	// }
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
+	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption) {
 		final PinFactory pinFactory = new PinFactory();
 		final SkeletonBuilder skeletonBuilder = new SkeletonBuilder();
 		links.clear();

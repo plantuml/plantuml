@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.EnsureVisible;
@@ -69,7 +68,7 @@ public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisi
 	public void closeAction() {
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) {
 	}
 
 	public void ensureVisible(double x, double y) {

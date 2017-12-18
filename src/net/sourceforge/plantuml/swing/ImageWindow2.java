@@ -454,7 +454,7 @@ class ImageSelection implements Transferable {
 	}
 
 	// Returns image
-	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
 		if (!DataFlavor.imageFlavor.equals(flavor)) {
 			throw new UnsupportedFlavorException(flavor);
 		}

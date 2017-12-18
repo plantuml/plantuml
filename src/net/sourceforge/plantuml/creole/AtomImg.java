@@ -116,7 +116,7 @@ public class AtomImg implements Atom {
 		return new AtomImg(read, scale);
 	}
 
-	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) throws IOException {
+	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) {
 		final BufferedImage read = FileUtils.ImageIO_read(url);
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + source + ")", fc);

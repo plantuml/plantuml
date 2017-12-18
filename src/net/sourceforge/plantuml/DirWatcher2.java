@@ -88,7 +88,7 @@ public class DirWatcher2 {
 					modifieds.put(f, new FileWatcher(Collections.singleton(f)));
 					final Future<List<GeneratedImage>> value = executorService
 							.submit(new Callable<List<GeneratedImage>>() {
-								public List<GeneratedImage> call() throws Exception {
+								public List<GeneratedImage> call() {
 									try {
 										final List<GeneratedImage> generatedImages = sourceFileReader
 												.getGeneratedImages();

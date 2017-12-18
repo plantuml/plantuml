@@ -143,7 +143,7 @@ public class PlantUmlTask extends Task {
 		}
 	}
 
-	private File manageFileList(FileList fl) throws IOException, InterruptedException {
+	private File manageFileList(FileList fl) throws IOException {
 		final File fromDir = fl.getDir(getProject());
 
 		final String[] srcFiles = fl.getFiles(getProject());
@@ -158,7 +158,7 @@ public class PlantUmlTask extends Task {
 		return null;
 	}
 
-	private File manageFileSet(FileSet fs) throws IOException, InterruptedException {
+	private File manageFileSet(FileSet fs) throws IOException {
 		final DirectoryScanner ds = fs.getDirectoryScanner(getProject());
 		final File fromDir = fs.getDir(getProject());
 
@@ -231,7 +231,7 @@ public class PlantUmlTask extends Task {
 		this.log(s);
 	}
 
-	private File processingSingleDirectory(File dir) throws IOException, InterruptedException {
+	private File processingSingleDirectory(File dir) throws IOException {
 		if (!dir.exists()) {
 			final String s = "The file " + dir.getAbsolutePath() + " does not exists.";
 			this.log(s);

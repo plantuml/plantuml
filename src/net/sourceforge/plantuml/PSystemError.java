@@ -155,7 +155,7 @@ public class PSystemError extends AbstractPSystem {
 		return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
 	}
 
-	private TextBlock addWelcome(final TextBlockBackcolored result) throws IOException {
+	private TextBlock addWelcome(final TextBlockBackcolored result) {
 		final TextBlockBackcolored welcome = getWelcome();
 		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
 	}
