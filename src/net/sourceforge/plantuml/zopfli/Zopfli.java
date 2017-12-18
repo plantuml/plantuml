@@ -44,9 +44,9 @@ public class Zopfli {
 
     public static int calculate(byte[] input) {
       int c = ~0;
-      for (int i = 0, n = input.length; i < n; ++i) {
-        c = table[(c ^ input[i]) & 0xFF] ^ (c >>> 8);
-      }
+        for (byte anInput : input) {
+            c = table[(c ^ anInput) & 0xFF] ^ (c >>> 8);
+        }
       return ~c;
     }
   }
