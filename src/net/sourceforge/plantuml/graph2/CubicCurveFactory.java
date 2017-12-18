@@ -67,8 +67,7 @@ public class CubicCurveFactory {
 		MyCurve result = new MyCurve(new CubicCurve2D.Double(start.getX(), start.getY(), start.getX(), start.getY(),
 				end.getX(), end.getY(), end.getX(), end.getY()));
 		if (result.intersects(forbiddenRect) || result.intersects(forbiddenCurves)) {
-			final Set<Point2D.Double> all = new HashSet<>();
-			all.addAll(MagicPointsFactory.get(start, end));
+            final Set<Point2D.Double> all = new HashSet<>(MagicPointsFactory.get(start, end));
 			for (Rectangle2D.Double rect : forbiddenRect) {
 				all.addAll(MagicPointsFactory.get(rect));
 			}

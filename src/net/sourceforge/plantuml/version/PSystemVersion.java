@@ -299,8 +299,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static PSystemVersion createTestDot() {
-		final List<String> strings = new ArrayList<>();
-		strings.addAll(GraphvizUtils.getTestDotStrings(true));
+        final List<String> strings = new ArrayList<>(GraphvizUtils.getTestDotStrings(true));
 		return new PSystemVersion(false, strings);
 	}
 
