@@ -27,6 +27,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.apache.ant:ant:1.10.1'
+    compile 'org.brotli:dec:0.1.2'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
