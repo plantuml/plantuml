@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -36,19 +36,7 @@
 package net.sourceforge.plantuml.flashcode;
 
 public class FlashCodeFactory {
-
 	public static FlashCodeUtils getFlashCodeUtils() {
-		final String name = "net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing";
-		try {
-			final Class cl = Class.forName(name);
-			return (FlashCodeUtils) cl.newInstance();
-		} catch (ClassNotFoundException e) {
-			return new FlashCodeUtilsNone();
-		} catch (InstantiationException e) {
-			return new FlashCodeUtilsNone();
-		} catch (IllegalAccessException e) {
-			return new FlashCodeUtilsNone();
-		}
+        return new FlashCodeUtilsZxing();
 	}
-
 }

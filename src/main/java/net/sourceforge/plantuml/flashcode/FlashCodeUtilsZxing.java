@@ -35,11 +35,6 @@
  */
 package net.sourceforge.plantuml.flashcode;
 
-import java.awt.image.BufferedImage;
-import java.util.Hashtable;
-
-import net.sourceforge.plantuml.Log;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -47,17 +42,22 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import net.sourceforge.plantuml.Log;
 
-public class FlashCodeUtilsZxing implements FlashCodeUtils {
+import java.awt.image.BufferedImage;
+import java.util.EnumMap;
+import java.util.Map;
 
+class FlashCodeUtilsZxing implements FlashCodeUtils {
+    @Override
     public BufferedImage exportFlashcode(String s) {
         try {
             final QRCodeWriter writer = new QRCodeWriter();
-            final Hashtable hints = new Hashtable();
+            final Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
             hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
             final int multiple = 1;
-            final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
+            final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, multiple, hints);
             return MatrixToImageWriter.toBufferedImage(bit);
         } catch (WriterException e) {
             Log.debug("Cannot create flashcode " + e);
@@ -65,5 +65,4 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
             return null;
         }
     }
-
 }
