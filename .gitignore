@@ -1,5 +1,6 @@
-# Maven build files
-target/
+# Gradle files
+build/
+.gradle
 
 # IntelliJ files
 .idea/
@@ -58,7 +59,6 @@ local.properties
 
 # netbeans
 nbproject/private/
-build/
 nbbuild/
 dist/
 nbdist/
