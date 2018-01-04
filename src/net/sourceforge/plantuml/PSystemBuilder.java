@@ -35,11 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
@@ -58,14 +53,7 @@ import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
-import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
-import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
-import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
-import net.sourceforge.plantuml.eggs.PSystemEggFactory;
-import net.sourceforge.plantuml.eggs.PSystemLostFactory;
-import net.sourceforge.plantuml.eggs.PSystemPathFactory;
-import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
-import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
+import net.sourceforge.plantuml.eggs.*;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
@@ -89,6 +77,10 @@ import net.sourceforge.plantuml.ugraphic.sprite.PSystemListInternalSpritesFactor
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PSystemBuilder {
 
@@ -187,9 +179,6 @@ public class PSystemBuilder {
 		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemCharlieFactory());
-		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			factories.add(new PSystemXearthFactory());
-		}
 		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
 		factories.add(new GanttDiagramFactory(DiagramType.UML));
 		factories.add(new FlowDiagramFactory());
