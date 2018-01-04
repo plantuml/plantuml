@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
-import net.sourceforge.plantuml.eggs.*;
+import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
@@ -135,7 +135,6 @@ public class PSystemBuilder {
 	private List<PSystemFactory> getAllFactories() {
 		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
 		factories.add(new PSystemWelcomeFactory());
-		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -172,13 +171,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		// factories.add(new PSystemStatsFactory());
 		factories.add(new PSystemCreoleFactory());
-		factories.add(new PSystemEggFactory());
-		factories.add(new PSystemAppleTwoFactory());
-		factories.add(new PSystemRIPFactory());
-		factories.add(new PSystemLostFactory());
-		factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
-		factories.add(new PSystemCharlieFactory());
 		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
 		factories.add(new GanttDiagramFactory(DiagramType.UML));
 		factories.add(new FlowDiagramFactory());
