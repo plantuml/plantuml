@@ -227,7 +227,7 @@ public class Histogram implements TimeDrawing {
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
-	public double getHeight() {
+	public double getHeight(StringBounder stringBounder) {
 		return stepHeight * allStates.size() + 10;
 	}
 

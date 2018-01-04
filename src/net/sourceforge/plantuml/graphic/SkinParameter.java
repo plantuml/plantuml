@@ -51,7 +51,7 @@ public class SkinParameter {
 			ColorParam.artifactBorder, FontParam.ARTIFACT, FontParam.ARTIFACT_STEREOTYPE);
 
 	public static final SkinParameter COMPONENT1 = new SkinParameter("COMPONENT1", ColorParam.componentBackground,
-			ColorParam.componentBorder, FontParam.COMPONENT, FontParam.COMPONENT_STEREOTYPE);
+			ColorParam.componentBorder, FontParam.COMPONENT, FontParam.COMPONENT_STEREOTYPE, LineParam.componentBorder);
 
 	public static final SkinParameter NODE = new SkinParameter("NODE", ColorParam.nodeBackground,
 			ColorParam.nodeBorder, FontParam.NODE, FontParam.NODE_STEREOTYPE);
@@ -72,7 +72,7 @@ public class SkinParameter {
 			ColorParam.frameBorder, FontParam.FRAME, FontParam.FRAME_STEREOTYPE);
 
 	public static final SkinParameter COMPONENT2 = new SkinParameter("COMPONENT2", ColorParam.componentBackground,
-			ColorParam.componentBorder, FontParam.COMPONENT, FontParam.COMPONENT_STEREOTYPE);
+			ColorParam.componentBorder, FontParam.COMPONENT, FontParam.COMPONENT_STEREOTYPE, LineParam.componentBorder);
 
 	public static final SkinParameter AGENT = new SkinParameter("AGENT", ColorParam.agentBackground,
 			ColorParam.agentBorder, FontParam.AGENT, FontParam.AGENT_STEREOTYPE);
@@ -90,7 +90,7 @@ public class SkinParameter {
 			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
 
 	public static final SkinParameter RECTANGLE = new SkinParameter("RECTANGLE", ColorParam.rectangleBackground,
-			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
+			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE, LineParam.rectangleBorder);
 
 	public static final SkinParameter COLLECTIONS = new SkinParameter("COLLECTIONS", ColorParam.collectionsBackground,
 			ColorParam.collectionsBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE);
@@ -115,14 +115,21 @@ public class SkinParameter {
 	private final FontParam fontParam;
 	private final FontParam fontParamStereotype;
 	private final String name;
+	private final LineParam lineParam;
 
 	private SkinParameter(String name, ColorParam colorParamBack, ColorParam colorParamBorder, FontParam fontParam,
-			FontParam fontParamStereotype) {
+			FontParam fontParamStereotype, LineParam lineParam) {
 		this.name = name;
 		this.colorParamBack = colorParamBack;
 		this.colorParamBorder = colorParamBorder;
 		this.fontParam = fontParam;
 		this.fontParamStereotype = fontParamStereotype;
+		this.lineParam = lineParam;
+	}
+
+	private SkinParameter(String name, ColorParam colorParamBack, ColorParam colorParamBorder, FontParam fontParam,
+			FontParam fontParamStereotype) {
+		this(name, colorParamBack, colorParamBorder, fontParam, fontParamStereotype, null);
 	}
 
 	public String getUpperCaseName() {
@@ -154,8 +161,8 @@ public class SkinParameter {
 
 	public UStroke getStroke(ISkinParam skinParam, Stereotype stereotype) {
 		UStroke result = null;
-		if (name.equals("RECTANGLE")) {
-			result = skinParam.getThickness(LineParam.rectangleBorder, stereotype);
+		if (lineParam != null) {
+			result = skinParam.getThickness(lineParam, stereotype);
 		}
 		if (result == null) {
 			result = new UStroke(1.5);

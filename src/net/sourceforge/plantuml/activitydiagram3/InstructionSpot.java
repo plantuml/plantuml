@@ -31,24 +31,50 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.timingdiagram;
+package net.sourceforge.plantuml.activitydiagram3;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 
-public interface TimeDrawing extends TimeProjected, UDrawable {
+public class InstructionSpot extends MonoSwimable implements Instruction {
 
-	public double getHeight(StringBounder stringBounder);
+	private boolean killed = false;
+	private final LinkRendering inlinkRendering;
+	private final String spot;
 
-	public void addChange(ChangeState change);
+	public InstructionSpot(String spot, LinkRendering inlinkRendering, Swimlane swimlane) {
+		super(swimlane);
+		this.spot = spot;
+		this.inlinkRendering = inlinkRendering;
+		if (inlinkRendering == null) {
+			throw new IllegalArgumentException();
+		}
+	}
 
-	public TextBlock getWidthHeader(StringBounder stringBounder);
+	public Ftile createFtile(FtileFactory factory) {
+		Ftile result = factory.spot(getSwimlaneIn(), spot);
+		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
+		if (killed) {
+			return new FtileKilled(result);
+		}
+		return result;
+	}
 
-	public void setInitialState(String initialState, Colors initialColors);
+	public void add(Instruction other) {
+		throw new UnsupportedOperationException();
+	}
 
-	public void addConstraint(TimeConstraint constraint);
+	final public boolean kill() {
+		this.killed = true;
+		return true;
+	}
+
+	public LinkRendering getInLinkRendering() {
+		return inlinkRendering;
+	}
 
 }

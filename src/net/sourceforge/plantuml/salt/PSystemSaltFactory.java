@@ -58,7 +58,7 @@ public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 
 	@Override
 	public PSystemSalt executeLine(PSystemSalt system, String line) {
-		if (system == null && line.equals("salt")) {
+		if (system == null && line.replace('\t', ' ').trim().equals("salt")) {
 			return new PSystemSalt();
 		}
 		if (system == null) {

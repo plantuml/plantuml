@@ -54,7 +54,8 @@ public enum LineParam {
 	activityBorder,
 	titleBorder,
 	diagramBorder,
-	rectangleBorder;
+	rectangleBorder,
+	componentBorder;
 //	sequenceBoxBorder(0.1);
 	
 }

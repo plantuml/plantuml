@@ -41,6 +41,10 @@ import net.sourceforge.plantuml.cucadiagram.Rankdir;
 public enum Position {
 	RIGHT, LEFT, BOTTOM, TOP;
 
+	public static Position fromString(String s) {
+		return Position.valueOf(s.toUpperCase());
+	}
+
 	public Position withRankdir(Rankdir rankdir) {
 		if (rankdir == null) {
 			throw new IllegalArgumentException();

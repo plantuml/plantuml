@@ -421,7 +421,15 @@ public class Option {
 		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines.entrySet()) {
 			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);
+		}
+		return result;
+	}
 
+	public Defines getDefaultDefines() {
+		final Defines result = Defines.createEmpty();
+		result.overrideFilename(filename);
+		for (Map.Entry<String, String> ent : defines.entrySet()) {
+			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false);
 		}
 		return result;
 	}
@@ -555,10 +563,6 @@ public class Option {
 
 	public final int getImageIndex() {
 		return imageIndex;
-	}
-
-	public String getFilename() {
-		return filename;
 	}
 
 	public final void setFilename(String filename) {

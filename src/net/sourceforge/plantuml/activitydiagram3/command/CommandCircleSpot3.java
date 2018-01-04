@@ -31,24 +31,34 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.timingdiagram;
+package net.sourceforge.plantuml.activitydiagram3.command;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
 
-public interface TimeDrawing extends TimeProjected, UDrawable {
+public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 
-	public double getHeight(StringBounder stringBounder);
+	public CommandCircleSpot3() {
+		super(getRegexConcat());
+	}
 
-	public void addChange(ChangeState change);
+	static RegexConcat getRegexConcat() {
+		return new RegexConcat(//
+				new RegexLeaf("^"), //
+				new RegexLeaf("SPOT", "\\((\\S)\\)"), //
+				new RegexLeaf(";?$"));
+	}
 
-	public TextBlock getWidthHeader(StringBounder stringBounder);
-
-	public void setInitialState(String initialState, Colors initialColors);
-
-	public void addConstraint(TimeConstraint constraint);
+	@Override
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
+		diagram.addSpot(arg.get("SPOT", 0));
+		return CommandExecutionResult.ok();
+	}
 
 }

@@ -39,7 +39,7 @@ import java.io.IOException;
 
 public class TranscoderSmart implements Transcoder {
 
-	// private final Transcoder oldOne = new TranscoderImpl(new AsciiEncoder(), new CompressionHuffman());
+	private final Transcoder oldOne = new TranscoderImpl(new AsciiEncoder(), new CompressionHuffman());
 	private final Transcoder zlib = new TranscoderImpl(new AsciiEncoder(), new CompressionZlib());
 	private final Transcoder brotli = new TranscoderImpl(new AsciiEncoder(), new CompressionBrotli());
 
@@ -47,7 +47,12 @@ public class TranscoderSmart implements Transcoder {
 		if (code.startsWith("0")) {
 			return brotli.decode(code.substring(1));
 		}
-		return zlib.decode(code);
+		try {
+			return zlib.decode(code);
+		} catch (Exception ex) {
+			return oldOne.decode(code);
+		}
+		// return zlib.decode(code);
 	}
 
 	public String encode(String text) throws IOException {

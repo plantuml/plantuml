@@ -111,6 +111,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.stop(swimlane);
 	}
 
+	public Ftile spot(Swimlane swimlane, String spot) {
+		return factory.spot(swimlane, spot);
+	}
+
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors) {
 		return factory.activity(label, swimlane, style, colors);
 	}
@@ -141,10 +145,11 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.assembly(tile1, tile2);
 	}
 
-	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test, Display yes,
-			Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward, boolean noOut) {
-		return factory.repeat(swimlane, swimlaneOut, startLabel, repeat, test, yes, out, color, backRepeatLinkRendering,
-				backward, noOut);
+	public Ftile repeat(Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test,
+			Display yes, Display out, HtmlColor color, LinkRendering backRepeatLinkRendering, Ftile backward,
+			boolean noOut) {
+		return factory.repeat(swimlane, swimlaneOut, startLabel, repeat, test, yes, out, color,
+				backRepeatLinkRendering, backward, noOut);
 	}
 
 	public Ftile createWhile(Swimlane swimlane, Ftile whileBlock, Display test, Display yes, Display out,
@@ -181,4 +186,5 @@ public class FtileFactoryDelegator implements FtileFactory {
 	protected FtileFactory getFactory() {
 		return factory;
 	}
+
 }

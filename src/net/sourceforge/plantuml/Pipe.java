@@ -69,8 +69,8 @@ public class Pipe {
 				ps.flush();
 				return error;
 			}
-			final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(option
-					.getFilename()), source, option.getConfig());
+			final Defines defines = option.getDefaultDefines();
+			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, option.getConfig());
 			if (option.isComputeurl()) {
 				for (BlockUml s : sourceStringReader.getBlocks()) {
 					ps.println(s.getEncodedUrl());

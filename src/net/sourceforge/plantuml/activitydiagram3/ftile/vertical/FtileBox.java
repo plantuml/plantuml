@@ -82,7 +82,7 @@ public class FtileBox extends AbstractFtile {
 	private final LinkRendering inRenreding;
 	private final Swimlane swimlane;
 	private final BoxStyle style;
-	private final ISkinParam skinParam;
+	// private final ISkinParam skinParam;
 
 	final public LinkRendering getInLinkRendering() {
 		return inRenreding;
@@ -119,7 +119,7 @@ public class FtileBox extends AbstractFtile {
 	public FtileBox(ISkinParam skinParam, Display label, UFont font, Swimlane swimlane, BoxStyle style) {
 		super(skinParam);
 		this.style = style;
-		this.skinParam = skinParam;
+		// this.skinParam = skinParam;
 		this.swimlane = swimlane;
 		this.inRenreding = new LinkRendering(HtmlColorAndStyle.build(skinParam));
 		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
@@ -142,8 +142,8 @@ public class FtileBox extends AbstractFtile {
 		final double heightTotal = dimTotal.getHeight();
 		final UDrawable rect = style.getUDrawable(widthTotal, heightTotal, skinParam().shadowing());
 
-		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam, ColorParam.activityBorder, null);
-		final HtmlColor backColor = SkinParamUtils.getColor(skinParam, ColorParam.activityBackground, null);
+		final HtmlColor borderColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBorder, null);
+		final HtmlColor backColor = SkinParamUtils.getColor(skinParam(), ColorParam.activityBackground, null);
 
 		ug = ug.apply(new UChangeColor(borderColor)).apply(new UChangeBackColor(backColor)).apply(getThickness());
 		rect.drawU(ug);

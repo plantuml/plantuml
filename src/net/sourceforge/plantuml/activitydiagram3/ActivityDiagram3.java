@@ -115,6 +115,13 @@ public class ActivityDiagram3 extends UmlDiagram {
 		}
 	}
 
+	public void addSpot(String spot) {
+		final InstructionSpot ins = new InstructionSpot(spot, nextLinkRenderer(), swinlanes.getCurrentSwimlane());
+		current().add(ins);
+		setNextLinkRendererInternal(LinkRendering.none());
+		manageSwimlaneStrategy();
+	}
+
 	public CommandExecutionResult addGoto(String name) {
 		final InstructionGoto ins = new InstructionGoto(swinlanes.getCurrentSwimlane(), name);
 		current().add(ins);

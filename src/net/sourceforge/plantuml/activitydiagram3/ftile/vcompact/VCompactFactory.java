@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleEnd;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleSpot;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStop;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateIn;
@@ -89,6 +90,12 @@ public class VCompactFactory implements FtileFactory {
 	public Ftile stop(Swimlane swimlane) {
 		final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityEnd);
 		return new FtileCircleStop(skinParam(), color, swimlane);
+	}
+
+	public Ftile spot(Swimlane swimlane, String spot) {
+		// final HtmlColor color = rose.getHtmlColor(skinParam, ColorParam.activityBackground);
+		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
+		return new FtileCircleSpot(skinParam(), swimlane, spot, font);
 	}
 
 	public Ftile end(Swimlane swimlane) {
@@ -163,5 +170,4 @@ public class VCompactFactory implements FtileFactory {
 	public ISkinParam skinParam() {
 		return skinParam;
 	}
-
 }

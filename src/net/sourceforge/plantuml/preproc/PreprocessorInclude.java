@@ -266,7 +266,7 @@ public class PreprocessorInclude implements ReadLine {
 	}
 
 	private InputStream getStdlibInputStream(String filename) {
-		return Stdlib.getResourceAsStream(filename);
+		return StdlibOld.getResourceAsStream(filename);
 	}
 
 	private InputStream getStdlibInputStreamOld(String filename) {

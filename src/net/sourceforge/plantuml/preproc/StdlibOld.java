@@ -20,9 +20,9 @@ import net.sourceforge.plantuml.Log;
 
 import org.brotli.dec.BrotliInputStream;
 
-public class Stdlib {
+public class StdlibOld {
 
-	static private final Map<String, Stdlib> all = new ConcurrentHashMap<String, Stdlib>();
+	static private final Map<String, StdlibOld> all = new ConcurrentHashMap<String, StdlibOld>();
 
 	static class Portion {
 		int position;
@@ -54,7 +54,7 @@ public class Stdlib {
 			return null;
 		}
 		try {
-			final Stdlib folder = retrieve(fullname.substring(0, last));
+			final StdlibOld folder = retrieve(fullname.substring(0, last));
 			if (folder == null) {
 				return null;
 			}
@@ -71,19 +71,19 @@ public class Stdlib {
 
 	private static InputStream getInternalInputStream(String fullname, String extension) {
 		final String res = "/stdlib/" + fullname + extension;
-		return Stdlib.class.getResourceAsStream(res);
+		return StdlibOld.class.getResourceAsStream(res);
 	}
 
-	private static Stdlib retrieve(final String name) throws IOException {
-		Stdlib result = all.get(name);
+	private static StdlibOld retrieve(final String name) throws IOException {
+		StdlibOld result = all.get(name);
 		if (result == null) {
-			result = new Stdlib(name);
+			result = new StdlibOld(name);
 			all.put(name, result);
 		}
 		return result;
 	}
 
-	private Stdlib(String name) throws IOException {
+	private StdlibOld(String name) throws IOException {
 		this.name = name;
 		Log.info("Opening archive " + name);
 		int pos = 0;
@@ -147,7 +147,7 @@ public class Stdlib {
 
 	public static void extractStdLib() throws IOException {
 		for (String name : getAll()) {
-			final Stdlib folder = new Stdlib(name);
+			final StdlibOld folder = new StdlibOld(name);
 			folder.extractMeFull(new File("stdlib", name));
 		}
 	}
@@ -188,7 +188,7 @@ public class Stdlib {
 	public static void addInfoVersion(List<String> strings) {
 		try {
 			for (String name : getAll()) {
-				final Stdlib folder = new Stdlib(name);
+				final StdlibOld folder = new StdlibOld(name);
 				strings.add("* " + name + " (Version " + folder.getVersion() + ")");
 			}
 		} catch (IOException e) {

@@ -109,15 +109,29 @@ public class CharSequence2Impl implements CharSequence2 {
 		if (trim.startsWith("/'")) {
 			final int idx = string.indexOf("'/");
 			if (idx != -1) {
-				return new CharSequence2Impl(s.subSequence(idx + 2, s.length()), location, preprocessorError);
+				return new CharSequence2Impl(removeSpecialInnerComment(s.subSequence(idx + 2, s.length())), location,
+						preprocessorError);
 			}
 		}
 		if (trim.endsWith("'/")) {
 			final int idx = string.lastIndexOf("/'");
 			if (idx != -1) {
-				return new CharSequence2Impl(s.subSequence(0, idx), location, preprocessorError);
+				return new CharSequence2Impl(removeSpecialInnerComment(s.subSequence(0, idx)), location,
+						preprocessorError);
 			}
 		}
+		if (trim.contains("/'''") && trim.contains("'''/")) {
+			return new CharSequence2Impl(removeSpecialInnerComment(s), location, preprocessorError);
+		}
 		return this;
+	}
+
+	private CharSequence removeSpecialInnerComment(CharSequence cs) {
+		final String s = cs.toString();
+		if (s.contains("/'''") && s.contains("'''/")) {
+			return s.replaceAll("/'''[-\\w]*'''/", "");
+
+		}
+		return cs;
 	}
 }
