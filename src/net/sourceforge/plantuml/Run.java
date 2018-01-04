@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
-import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.objectdiagram.ObjectDiagramFactory;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.StdlibOld;
@@ -110,11 +109,6 @@ public class Run {
 		}
 		if (OptionFlags.getInstance().isPrintFonts()) {
 			printFonts();
-			return;
-		}
-
-		if (option.getFtpPort() != -1) {
-			goFtp(option);
 			return;
 		}
 
@@ -244,13 +238,6 @@ public class Run {
 			}
 		}
 		return sb.toString();
-	}
-
-	private static void goFtp(Option option) throws IOException {
-		final int ftpPort = option.getFtpPort();
-		System.err.println("ftpPort=" + ftpPort);
-		final FtpServer ftpServer = new FtpServer(ftpPort, option.getFileFormatOption().getFileFormat());
-		ftpServer.go();
 	}
 
 	public static void printFonts() {
