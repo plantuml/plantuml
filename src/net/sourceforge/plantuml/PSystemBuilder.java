@@ -70,7 +70,6 @@ import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
-import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.ugraphic.sprite.PSystemListInternalSpritesFactory;
 import net.sourceforge.plantuml.version.License;
@@ -163,7 +162,6 @@ public class PSystemBuilder {
 			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
 			factories.add(new PSystemJcckitFactory(DiagramType.UML));
 			factories.add(new PSystemLogoFactory());
-			factories.add(new PSystemSudokuFactory());
 		}
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
