@@ -209,8 +209,7 @@ public class RibbonNew implements TimeDrawing {
 	}
 
 	private double getRibbonHeight(StringBounder stringBounder) {
-		double height = 24;
-		return height;
+		return 24.0;
 	}
 
 	private double getHeightForNotes(StringBounder stringBounder) {
