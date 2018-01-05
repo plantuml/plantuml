@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.AsciiEncoderFinalZeros;
 import net.sourceforge.plantuml.code.CompressionZlib;
 import net.sourceforge.plantuml.code.CompressionZopfliZlib;
-import net.sourceforge.plantuml.code.PairInt;
-import net.sourceforge.plantuml.code.SpiralOnRectangle;
 import net.sourceforge.plantuml.ugraphic.ColorChangerMonochrome;
 
 public enum SpriteGrayLevel {
@@ -249,22 +247,6 @@ public enum SpriteGrayLevel {
 				final int color = getGrayOn16(img, x, y) / coef;
 				raw[cpt++] = (byte) color;
 			}
-		}
-		// final byte[] comp = new CompressionZlib().compress(raw);
-		final byte[] comp = new CompressionZopfliZlib().compress(raw);
-		return cut(new AsciiEncoderFinalZeros().encode(comp));
-	}
-
-	private List<String> encodeZSpiral(BufferedImage img) {
-		final int width = img.getWidth();
-		final int height = img.getHeight();
-		final byte raw[] = new byte[width * height];
-		final int coef = 16 / nbColor;
-		final SpiralOnRectangle spiral = new SpiralOnRectangle(width, height);
-		for (int cpt = 0; cpt < width * height; cpt++) {
-			final PairInt pt = spiral.nextPoint();
-			final int color = getGrayOn16(img, pt.getX(), pt.getY()) / coef;
-			raw[cpt] = (byte) color;
 		}
 		// final byte[] comp = new CompressionZlib().compress(raw);
 		final byte[] comp = new CompressionZopfliZlib().compress(raw);

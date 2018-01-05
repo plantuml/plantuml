@@ -824,26 +824,6 @@ public class Line implements Moveable, Hideable {
 
 	}
 
-	private void avoid(Point2D.Double move, Positionable pos, Shape sh) {
-		final Oscillator oscillator = new Oscillator();
-		final Point2D.Double orig = new Point2D.Double(move.x, move.y);
-		while (cut(pos, sh)) {
-			final Point2D.Double m = oscillator.nextPosition();
-			move.setLocation(orig.x + m.x, orig.y + m.y);
-		}
-	}
-
-	private boolean cut(Positionable pos, Shape sh) {
-		return BezierUtils.intersect(pos, sh) || tooClose(pos);
-	}
-
-	private boolean tooClose(Positionable pos) {
-		final double dist = dotPath.getMinDist(BezierUtils.getCenter(pos));
-		final Dimension2D dim = pos.getSize();
-		// Log.println("dist=" + dist);
-		return dist < (dim.getWidth() / 2 + 2) || dist < (dim.getHeight() / 2 + 2);
-	}
-
 	public void moveSvek(double deltaX, double deltaY) {
 		this.dx += deltaX;
 		this.dy += deltaY;
