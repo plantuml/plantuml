@@ -45,7 +45,6 @@ import h.textlabel_t;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.HtmlColor;
