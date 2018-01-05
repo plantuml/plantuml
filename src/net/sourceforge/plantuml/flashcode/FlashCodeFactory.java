@@ -38,17 +38,7 @@ package net.sourceforge.plantuml.flashcode;
 public class FlashCodeFactory {
 
 	public static FlashCodeUtils getFlashCodeUtils() {
-		final String name = "net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing";
-		try {
-			final Class cl = Class.forName(name);
-			return (FlashCodeUtils) cl.newInstance();
-		} catch (ClassNotFoundException e) {
-			return new FlashCodeUtilsNone();
-		} catch (InstantiationException e) {
-			return new FlashCodeUtilsNone();
-		} catch (IllegalAccessException e) {
-			return new FlashCodeUtilsNone();
-		}
+		return new FlashCodeUtilsZxing();
 	}
 
 }

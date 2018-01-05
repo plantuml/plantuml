@@ -37,83 +37,77 @@ package net.sourceforge.plantuml;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
-import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
-@Deprecated
 public class DirWatcher {
 
-	final private File dir;
-	final private Option option;
-	final private String pattern;
+	private final File dir;
+	private final Option option;
+	private final String pattern;
 
-	final private Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
+	private final Map<File, FileWatcher> modifieds = new ConcurrentHashMap<>();
+	private final ExecutorService executorService;
 
 	public DirWatcher(File dir, Option option, String pattern) {
 		this.dir = dir;
 		this.option = option;
 		this.pattern = pattern;
+		final int nb = Option.defaultNbThreads();
+		this.executorService = Executors.newFixedThreadPool(nb);
+
 	}
 
-	public List<GeneratedImage> buildCreatedFiles() throws IOException, InterruptedException {
-		boolean error = false;
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
-		for (File f : dir.listFiles()) {
-			if (error) {
-				continue;
-			}
-			if (f.isFile() == false) {
-				continue;
-			}
-			if (fileToProcess(f.getName()) == false) {
-				continue;
-			}
-			final FileWatcher watcher = modifieds.get(f);
-
-			if (watcher == null || watcher.hasChanged()) {
-				final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-						option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
-				final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
-				files.add(f);
-				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
-					result.add(g);
-					if (option.isFailfastOrFailfast2() && g.lineErrorRaw() != -1) {
-						error = true;
-					}
+	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException {
+		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<>();
+		if (dir.listFiles() != null) {
+			for (final File f : dir.listFiles()) {
+				if (!f.isFile()) {
+					continue;
 				}
-				modifieds.put(f, new FileWatcher(files));
-			}
-		}
-		Collections.sort(result);
-		return Collections.unmodifiableList(result);
-	}
+				if (!fileToProcess(f.getName())) {
+					continue;
+				}
+				final FileWatcher watcher = modifieds.get(f);
 
-	public File getErrorFile() throws IOException, InterruptedException {
-		for (File f : dir.listFiles()) {
-			if (f.isFile() == false) {
-				continue;
-			}
-			if (fileToProcess(f.getName()) == false) {
-				continue;
-			}
-			final FileWatcher watcher = modifieds.get(f);
-
-			if (watcher == null || watcher.hasChanged()) {
-				final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-						option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
-				if (sourceFileReader.hasError()) {
-					return f;
+				if (watcher == null || watcher.hasChanged()) {
+					final SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f,
+							option.getOutputDir(), option.getConfig(), option.getCharset(),
+							option.getFileFormatOption());
+					modifieds.put(f, new FileWatcher(Collections.singleton(f)));
+					final Future<List<GeneratedImage>> value = executorService
+							.submit(new Callable<List<GeneratedImage>>() {
+								public List<GeneratedImage> call() {
+									try {
+										final List<GeneratedImage> generatedImages = sourceFileReader
+												.getGeneratedImages();
+										final Set<File> files = FileWithSuffix.convert(sourceFileReader
+												.getIncludedFiles());
+										files.add(f);
+										modifieds.put(f, new FileWatcher(files));
+										return Collections.unmodifiableList(generatedImages);
+									} catch (Exception e) {
+										e.printStackTrace();
+										return Collections.emptyList();
+									}
+								}
+							});
+					result.put(f, value);
 				}
 			}
 		}
-		return null;
+		return Collections.unmodifiableMap(result);
 	}
 
 	private boolean fileToProcess(String name) {
@@ -124,7 +118,13 @@ public class DirWatcher {
 		return dir;
 	}
 
-	// public void setPattern(String pattern) {
-	// this.pattern = pattern;
-	// }
+	public void cancel() {
+		executorService.shutdownNow();
+	}
+
+	public void waitEnd() throws InterruptedException {
+		executorService.shutdown();
+		executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+	}
+
 }

@@ -35,11 +35,6 @@
  */
 package net.sourceforge.plantuml.stats;
 
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.prefs.Preferences;
-
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.PSystemError;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
@@ -51,7 +46,11 @@ import net.sourceforge.plantuml.jcckit.PSystemJcckit;
 import net.sourceforge.plantuml.math.PSystemMath;
 import net.sourceforge.plantuml.salt.PSystemSalt;
 import net.sourceforge.plantuml.stats.api.Stats;
-import net.sourceforge.plantuml.sudoku.PSystemSudoku;
+
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.prefs.Preferences;
 
 public class StatsUtilsIncrement {
 
@@ -121,9 +120,6 @@ public class StatsUtilsIncrement {
 		}
 		if (type == PSystemSalt.class) {
 			return "Salt";
-		}
-		if (type == PSystemSudoku.class) {
-			return "Sudoku";
 		}
 		if (type == PSystemDot.class) {
 			return "Dot";

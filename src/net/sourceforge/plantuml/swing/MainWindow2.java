@@ -79,7 +79,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 
-import net.sourceforge.plantuml.DirWatcher2;
+import net.sourceforge.plantuml.DirWatcher;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Option;
@@ -101,7 +101,7 @@ public class MainWindow2 extends JFrame {
 	final private Set<ImageWindow2> openWindows2 = new HashSet<ImageWindow2>();
 	final private Option option;
 
-	private DirWatcher2 dirWatcher;
+	private DirWatcher dirWatcher;
 
 	private String getExtensions() {
 		return prefs.get(KEY_PATTERN, getDefaultFileExtensions());
@@ -160,7 +160,7 @@ public class MainWindow2 extends JFrame {
 		final File dir = getDirectory(arg);
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
 		this.option = option;
-		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));
+		dirWatcher = new DirWatcher(dir, option, getRegexpPattern(getExtensions()));
 
 		Log.info("Showing MainWindow");
 		scrollPane = new JScrollPane(jList1);
@@ -309,7 +309,7 @@ public class MainWindow2 extends JFrame {
 	private void changeDir(File dir) {
 		prefs.put(KEY_DIR, dir.getAbsolutePath());
 		dirWatcher.cancel();
-		dirWatcher = new DirWatcher2(dir, option, getRegexpPattern(getExtensions()));
+		dirWatcher = new DirWatcher(dir, option, getRegexpPattern(getExtensions()));
 		setTitle(dir.getAbsolutePath());
 		Log.info("Creating DirWatcher");
 		currentDirectoryListing2.clear();

@@ -76,7 +76,6 @@ public class Option {
 	private boolean splash = false;
 	private boolean textProgressBar = false;
 	private int nbThreads = 0;
-	private int ftpPort = -1;
 	private boolean hideMetadata = false;
 	private int imageIndex = 0;
 
@@ -328,13 +327,6 @@ public class Option {
 				if (nb.matches("\\d+")) {
 					this.imageIndex = Integer.parseInt(nb);
 				}
-			} else if (StringUtils.goLowerCase(s).startsWith("-ftp")) {
-				final int x = s.indexOf(':');
-				if (x == -1) {
-					this.ftpPort = 4242;
-				} else {
-					this.ftpPort = Integer.parseInt(s.substring(x + 1));
-				}
 			} else if (s.startsWith("-c")) {
 				s = s.substring(2);
 				config.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s));
@@ -342,10 +334,6 @@ public class Option {
 				result.add(s);
 			}
 		}
-	}
-
-	public int getFtpPort() {
-		return ftpPort;
 	}
 
 	private void addInConfig(final FileReader source) throws IOException {
