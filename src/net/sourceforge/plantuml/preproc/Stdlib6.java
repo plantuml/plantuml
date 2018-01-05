@@ -22,13 +22,13 @@ import org.brotli.dec.BrotliInputStream;
 
 public class Stdlib6 {
 
-	static private final Map<String, Stdlib6> all = new ConcurrentHashMap<String, Stdlib6>();
+	static private final Map<String, Stdlib6> all = new ConcurrentHashMap<>();
 	private static final String SEPARATOR = "\uF8FF";
 
-	private final Map<String, List<String>> raw = new HashMap<String, List<String>>();
+	private final Map<String, List<String>> raw = new HashMap<>();
 	// private final Map<String, SoftReference<byte[]>> cache = new ConcurrentHashMap<String, SoftReference<byte[]>>();
 	private final String name;
-	private final Map<String, String> info = new HashMap<String, String>();
+	private final Map<String, String> info = new HashMap<>();
 
 	public static InputStream getResourceAsStream(String fullname) {
 		fullname = fullname.toLowerCase().replace(".puml", "");
@@ -84,7 +84,7 @@ public class Stdlib6 {
 			if (filename.equals(SEPARATOR)) {
 				break;
 			}
-			final List<String> text = new ArrayList<String>();
+			final List<String> text = new ArrayList<>();
 			while (true) {
 				final String s = dataStream.readUTF();
 				if (s.equals(SEPARATOR)) {
@@ -216,7 +216,7 @@ public class Stdlib6 {
 	}
 
 	private static List<String> getAll() throws IOException {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final InputStream home = getInternalInputStream("home", ".repx");
 		final BufferedReader br = new BufferedReader(new InputStreamReader(home));
 		String name;

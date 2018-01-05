@@ -56,8 +56,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class RibbonNew implements TimeDrawing {
 
-	private final List<ChangeState> changes = new ArrayList<ChangeState>();
-	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
+	private final List<ChangeState> changes = new ArrayList<>();
+	private final List<TimeConstraint> constraints = new ArrayList<>();
 
 	private final double delta = 12;
 	private final ISkinParam skinParam;
