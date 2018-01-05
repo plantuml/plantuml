@@ -87,7 +87,7 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		return parent;
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		return list.kill();
 	}
 

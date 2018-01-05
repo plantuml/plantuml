@@ -48,12 +48,12 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 class SingleLine extends AbstractTextBlock implements Line {
 
-	private final List<TextBlock> blocs = new ArrayList<TextBlock>();
+	private final List<TextBlock> blocs = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
 	public SingleLine(String text, FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer) {
-		if (text.length() == 0) {
+		if (text.isEmpty()) {
 			text = " ";
 		}
 		this.horizontalAlignment = horizontalAlignment;
@@ -110,7 +110,7 @@ class SingleLine extends AbstractTextBlock implements Line {
 		double result = 0;
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		for (TextBlock b : blocs) {
-			if (b instanceof TileText == false) {
+			if (!(b instanceof TileText)) {
 				continue;
 			}
 			final Dimension2D dimBloc = b.calculateDimension(ug.getStringBounder());

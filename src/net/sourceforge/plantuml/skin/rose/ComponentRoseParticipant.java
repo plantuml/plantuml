@@ -121,7 +121,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		return Math.max(super.getPureTextWidth(stringBounder), minWidth);
 	}
 
-	private final double suppWidth(StringBounder stringBounder) {
+	private double suppWidth(StringBounder stringBounder) {
 		return getPureTextWidth(stringBounder) - super.getPureTextWidth(stringBounder);
 	}
 

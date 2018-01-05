@@ -110,7 +110,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		IGroup group = getCurrentGroup();
 		final String namespace = getNamespace(fullyCode);
 		if (namespace != null
-				&& (EntityUtils.groupRoot(group) || group.getCode().getFullName().equals(namespace) == false)) {
+				&& (EntityUtils.groupRoot(group) || !group.getCode().getFullName().equals(namespace))) {
 			final Code namespace2 = Code.of(namespace);
 			group = getOrCreateNamespaceInternal(namespace2, Display.getWithNewlines(namespace), GroupType.PACKAGE,
 					getRootGroup());
@@ -121,7 +121,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 						CreoleMode.SIMPLE_LINE) : display, type, group, symbol);
 	}
 
-	private final String getNamespace(Code fullyCode) {
+	private String getNamespace(Code fullyCode) {
 		String name = fullyCode.getFullName();
 		do {
 			final int x = name.lastIndexOf(getNamespaceSeparator());
@@ -165,7 +165,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+    protected final ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		if (useLayoutExplicit != 0) {
 			return exportLayoutExplicit(os, index, fileFormatOption);
@@ -173,7 +173,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		return super.exportDiagramInternal(os, index, fileFormatOption);
 	}
 
-	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected final ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final FullLayout fullLayout = new FullLayout();
 		for (int i = 0; i <= useLayoutExplicit; i++) {

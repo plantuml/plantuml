@@ -60,7 +60,7 @@ public class CommandReturn extends SingleLineCommand<SequenceDiagram> {
 		boolean doDeactivation = true;
 		if (message == null) {
 			final EventWithDeactivate last = sequenceDiagram.getLastEventWithDeactivate();
-			if (last instanceof Message == false) {
+			if (!(last instanceof Message)) {
 				return CommandExecutionResult.error("Nowhere to return to.");
 			}
 			message = (Message) last;

@@ -54,21 +54,15 @@ public class SignatureUtils {
 			msgDigest.update(s.getBytes("UTF-8"));
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e);
-		} catch (UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
-	}
+    }
 
 	public static String getSignatureSha512(File f) throws IOException {
-		final InputStream is = new FileInputStream(f);
-		try {
+		try (InputStream is = new FileInputStream(f)) {
 			return getSignatureSha512(is);
-		} finally {
-			is.close();
 		}
 	}
 
@@ -76,20 +70,17 @@ public class SignatureUtils {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
-			int read = 0;
+			int read;
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);
 			}
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e);
-		} catch (UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
-	}
+    }
 
 	public static String getSignatureWithoutImgSrc(String s) {
 		s = getSignature(purge(s));
@@ -97,7 +88,7 @@ public class SignatureUtils {
 	}
 
 	public static String purge(String s) {
-		final String regex = "(?i)\\<img\\s+src=\"(?:[^\"]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\"/\\>";
+		final String regex = "(?i)<img\\s+src=\"(?:[^\"]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\"/>";
 		s = s.replaceAll(regex, "<img src=\"$1$2\"/>");
 		final String regex2 = "(?i)image=\"(?:[^\"]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\"";
 		s = s.replaceAll(regex2, "image=\"$1$2\"");
@@ -109,19 +100,16 @@ public class SignatureUtils {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 			final FileInputStream is = new FileInputStream(f);
-			int read = -1;
+			int read;
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);
 			}
 			is.close();
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e);
-		} catch (UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException(e);
 		}
-	}
+    }
 }

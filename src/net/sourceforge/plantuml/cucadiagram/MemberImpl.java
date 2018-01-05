@@ -55,11 +55,11 @@ public class MemberImpl implements Member {
 	private final VisibilityModifier visibilityModifier;
 
 	public MemberImpl(String tmpDisplay, boolean isMethod, boolean manageModifier) {
-		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)\\}\\s*", "");
+		tmpDisplay = tmpDisplay.replaceAll("(?i)\\{(method|field)}\\s*", "");
 		if (manageModifier) {
 			final Pattern2 finalUrl = MyPattern.cmpile("^(.*?)(?:\\[(" + UrlBuilder.getRegexp() + ")\\])?$");
 			final Matcher2 matcher = finalUrl.matcher(tmpDisplay);
-			if (matcher.matches() == false) {
+			if (!matcher.matches()) {
 				throw new IllegalStateException();
 			}
 			tmpDisplay = matcher.group(1);
@@ -78,13 +78,13 @@ public class MemberImpl implements Member {
 		if (manageModifier) {
 			this.staticModifier = lower.contains("{static}") || lower.contains("{classifier}");
 			this.abstractModifier = lower.contains("{abstract}");
-			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)\\}\\s*", "").trim();
-			if (displayClean.length() == 0) {
+			String displayClean = tmpDisplay.replaceAll("(?i)\\{(static|classifier|abstract)}\\s*", "").trim();
+			if (displayClean.isEmpty()) {
 				displayClean = " ";
 			}
 
 			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {
-				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);
+				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, !isMethod);
 				this.display = StringUtils.trin(StringUtils.manageGuillemet(displayClean.substring(1)));
 			} else {
 				this.display = StringUtils.manageGuillemet(displayClean);
@@ -95,7 +95,7 @@ public class MemberImpl implements Member {
 			this.visibilityModifier = null;
 			this.abstractModifier = false;
 			tmpDisplay = StringUtils.trin(tmpDisplay);
-			this.display = tmpDisplay.length() == 0 ? " " : StringUtils.manageGuillemet(StringUtils.trin(tmpDisplay));
+			this.display = tmpDisplay.isEmpty() ? " " : StringUtils.manageGuillemet(StringUtils.trin(tmpDisplay));
 		}
 	}
 
@@ -186,13 +186,6 @@ public class MemberImpl implements Member {
 	}
 
 	public static boolean isMethod(String s) {
-		// s = UrlBuilder.purgeUrl(s);
-		if (s.contains("{method}")) {
-			return true;
-		}
-		if (s.contains("{field}")) {
-			return false;
-		}
-		return s.contains("(") || s.contains(")");
+		return s.contains("{method}") || !s.contains("{field}") && (s.contains("(") || s.contains(")"));
 	}
 }

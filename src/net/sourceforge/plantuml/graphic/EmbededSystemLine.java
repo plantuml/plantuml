@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 class EmbededSystemLine extends AbstractTextBlock implements Line {
 
-	final private List<CharSequence2> lines2;
+	private final List<CharSequence2> lines2;
 
 	public EmbededSystemLine(EmbededDiagram sys) {
 		this.lines2 = sys.getLines().as2();
@@ -70,10 +70,8 @@ class EmbededSystemLine extends AbstractTextBlock implements Line {
 			return new Dimension2DDouble(im.getWidth(), im.getHeight());
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
-		return new Dimension2DDouble(42, 42);
+        return new Dimension2DDouble(42, 42);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -83,13 +81,11 @@ class EmbededSystemLine extends AbstractTextBlock implements Line {
 			ug.draw(image);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 
-	}
+    }
 
-	private BufferedImage getImage() throws IOException, InterruptedException {
+	private BufferedImage getImage() throws IOException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
@@ -104,7 +100,7 @@ class EmbededSystemLine extends AbstractTextBlock implements Line {
 		return HorizontalAlignment.LEFT;
 	}
 
-	private Diagram getSystem() throws IOException, InterruptedException {
+	private Diagram getSystem() {
 		final BlockUml blockUml = new BlockUml(lines2, 0, Defines.createEmpty());
 		return blockUml.getDiagram();
 

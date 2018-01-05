@@ -44,9 +44,9 @@ import java.util.TreeSet;
 
 public class Singularity2 {
 
-	private final TreeSet<Double> angles = new TreeSet<Double>();
+	private final TreeSet<Double> angles = new TreeSet<>();
 
-	final private Point2D.Double center;
+	private final Point2D.Double center;
 
 	public Singularity2(Point2D.Double center) {
 		this.center = center;
@@ -75,14 +75,14 @@ public class Singularity2 {
 
 	}
 
-	static final double getAngle(Line2D.Double line) {
+	static double getAngle(Line2D.Double line) {
 		if (line.getP1().equals(line.getP2())) {
 			throw new IllegalArgumentException();
 		}
 		return Math.atan2(line.getP2().getY() - line.getP1().getY(), line.getP2().getX() - line.getP1().getX());
 	}
 
-	static final double getOppositeAngle(Line2D.Double line) {
+	static double getOppositeAngle(Line2D.Double line) {
 		return Math.atan2(line.getP1().getY() - line.getP2().getY(), line.getP1().getX() - line.getP2().getX());
 	}
 
@@ -102,7 +102,7 @@ public class Singularity2 {
 	}
 
 	List<Double> getAngles() {
-		return new ArrayList<Double>(angles);
+		return new ArrayList<>(angles);
 	}
 
 	public boolean crossing(Point2D.Double direction1, Point2D.Double direction2) {
@@ -129,10 +129,8 @@ public class Singularity2 {
 			last = current;
 		}
 		final double first = angles.first();
-		if ((angle1 <= first || angle1 >= last) && (angle2 <= first || angle2 >= last)) {
-			return false;
-		}
-		return true;
+		return (!(angle1 <= first) && !(angle1 >= last))
+			|| (!(angle2 <= first) && !(angle2 >= last));
 	}
 
 	private boolean isBetween(double test, double v1, double v2) {
@@ -149,10 +147,10 @@ public class Singularity2 {
 	}
 
 	public List<Neighborhood2> getNeighborhoods() {
-		if (angles.size() == 0) {
+		if (angles.isEmpty()) {
 			return Collections.singletonList(new Neighborhood2(center));
 		}
-		final List<Neighborhood2> result = new ArrayList<Neighborhood2>();
+		final List<Neighborhood2> result = new ArrayList<>();
 		double last = angles.last();
 		for (Double currentAngle : angles) {
 			result.add(new Neighborhood2(center, last, currentAngle));

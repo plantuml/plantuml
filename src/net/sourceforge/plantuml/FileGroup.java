@@ -46,20 +46,20 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class FileGroup {
 
-	private final List<File> result = new ArrayList<File>();
+	private final List<File> result = new ArrayList<>();
 	private final String pattern;
 	private final List<String> excluded;
 	private final Option option;
 
-	private final static Pattern2 predirPath = MyPattern.cmpile("^([^*?]*[/\\\\])?(.*)$");
+	private static final Pattern2 predirPath = MyPattern.cmpile("^([^*?]*[/\\\\])?(.*)$");
 
 	public FileGroup(String pattern, List<String> excluded, Option option) {
 		this.pattern = pattern;
 		this.excluded = excluded;
 		this.option = option;
-		if (pattern.indexOf("*") == -1 && pattern.indexOf("?") == -1) {
+		if (!pattern.contains("*") && !pattern.contains("?")) {
 			initNoStar();
-		} else if (pattern.indexOf("**") != -1) {
+		} else if (pattern.contains("**")) {
 			recurse();
 		} else {
 			initWithSimpleStar();
@@ -71,7 +71,7 @@ public class FileGroup {
 	private void recurse() {
 		final Matcher2 m = predirPath.matcher(pattern);
 		final boolean ok = m.find();
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 		final File parent;
@@ -106,12 +106,12 @@ public class FileGroup {
 		if (OptionFlags.getInstance().isWord()) {
 			addSimpleDirectory(dir, "(?i)^.*_extr\\d+\\.txt$");
 		} else {
-			addSimpleDirectory(dir, option.getPattern());
+			addSimpleDirectory(dir, Option.getPattern());
 		}
 	}
 
 	private void addSimpleDirectory(File dir, String pattern) {
-		if (dir.isDirectory() == false) {
+		if (!dir.isDirectory()) {
 			throw new IllegalArgumentException("dir=" + dir);
 		}
 		for (File f : dir.listFiles()) {
@@ -125,10 +125,10 @@ public class FileGroup {
 		return f.getPath().replace('\\', '/');
 	}
 
-	private final static Pattern2 noStarInDirectory = MyPattern.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
+	private static final Pattern2 noStarInDirectory = MyPattern.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
 
 	private void initWithSimpleStar() {
-		assert pattern.indexOf("**") == -1;
+		assert !pattern.contains("**");
 		final Matcher2 m = noStarInDirectory.matcher(pattern);
 		if (m.find()) {
 			File dir = new File(".");

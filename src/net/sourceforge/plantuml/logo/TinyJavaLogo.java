@@ -46,7 +46,7 @@ public class TinyJavaLogo {
 
 	private final TurtleGraphicsPane turtleGraphicsPane;
 
-	private final Map<String, String> dictionary = new HashMap<String, String>();
+	private final Map<String, String> dictionary = new HashMap<>();
 	private HtmlColor penColor;
 
 	public TinyJavaLogo(TurtleGraphicsPane turtleGraphicsPane) {

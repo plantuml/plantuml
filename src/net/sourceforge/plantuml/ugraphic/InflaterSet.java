@@ -50,7 +50,7 @@ public class InflaterSet {
 		}
 	}
 
-	private final List<Inflater> all = new ArrayList<Inflater>();
+	private final List<Inflater> all = new ArrayList<>();
 
 	public void addInflater(double start, double size) {
 		all.add(new Inflater(start, size));

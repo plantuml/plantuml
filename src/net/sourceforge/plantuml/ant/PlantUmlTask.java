@@ -79,8 +79,8 @@ public class PlantUmlTask extends Task {
 
 	private String dir = null;
 	private final Option option = new Option();
-	private List<FileSet> filesets = new ArrayList<FileSet>();
-	private List<FileList> filelists = new ArrayList<FileList>();
+	private List<FileSet> filesets = new ArrayList<>();
+	private List<FileList> filelists = new ArrayList<>();
 	private AtomicInteger nbFiles = new AtomicInteger(0);
 	private ExecutorService executorService;
 
@@ -129,15 +129,12 @@ public class PlantUmlTask extends Task {
 				}
 			}
 			this.log("Nb images generated: " + nbFiles.get());
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new BuildException(e.toString());
-		} catch (InterruptedException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			throw new BuildException(e.toString());
 		}
 
-	}
+    }
 
 	private void eventuallyFailfast(final File error) throws IOException {
 		if (error != null && option.isFailfastOrFailfast2()) {
@@ -146,7 +143,7 @@ public class PlantUmlTask extends Task {
 		}
 	}
 
-	private File manageFileList(FileList fl) throws IOException, InterruptedException {
+	private File manageFileList(FileList fl) throws IOException {
 		final File fromDir = fl.getDir(getProject());
 
 		final String[] srcFiles = fl.getFiles(getProject());
@@ -161,7 +158,7 @@ public class PlantUmlTask extends Task {
 		return null;
 	}
 
-	private File manageFileSet(FileSet fs) throws IOException, InterruptedException {
+	private File manageFileSet(FileSet fs) throws IOException {
 		final DirectoryScanner ds = fs.getDirectoryScanner(getProject());
 		final File fromDir = fs.getDir(getProject());
 
@@ -187,7 +184,7 @@ public class PlantUmlTask extends Task {
 
 	}
 
-	private boolean processingSingleFile(final File f) throws IOException, InterruptedException {
+	private boolean processingSingleFile(final File f) throws IOException {
 		if (OptionFlags.getInstance().isVerbose()) {
 			this.log("Processing " + f.getAbsolutePath());
 		}
@@ -211,8 +208,7 @@ public class PlantUmlTask extends Task {
 		return false;
 	}
 
-	private boolean doFile(final File f, final SourceFileReader sourceFileReader) throws IOException,
-			InterruptedException {
+	private boolean doFile(final File f, final SourceFileReader sourceFileReader) throws IOException {
 		final Collection<GeneratedImage> result = sourceFileReader.getGeneratedImages();
 		boolean error = false;
 		for (GeneratedImage g : result) {
@@ -228,27 +224,24 @@ public class PlantUmlTask extends Task {
 		if (error) {
 			myLog("Error: " + f.getCanonicalPath());
 		}
-		if (error && option.isFailfastOrFailfast2()) {
-			return true;
-		}
-		return false;
+		return error && option.isFailfastOrFailfast2();
 	}
 
 	private synchronized void myLog(String s) {
 		this.log(s);
 	}
 
-	private File processingSingleDirectory(File dir) throws IOException, InterruptedException {
-		if (dir.exists() == false) {
+	private File processingSingleDirectory(File dir) throws IOException {
+		if (!dir.exists()) {
 			final String s = "The file " + dir.getAbsolutePath() + " does not exists.";
 			this.log(s);
 			throw new BuildException(s);
 		}
 		for (File f : dir.listFiles()) {
-			if (f.isFile() == false) {
+			if (!f.isFile()) {
 				continue;
 			}
-			if (fileToProcess(f.getName()) == false) {
+			if (!fileToProcess(f.getName())) {
 				continue;
 			}
 			final boolean error = processingSingleFile(f);

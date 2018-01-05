@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public interface Positionned extends CuteShape {
 
-	public Positionned rotateZoom(RotationZoom rotation);
+	Positionned rotateZoom(RotationZoom rotation);
 
-	public Positionned translate(UTranslate translation);
+	Positionned translate(UTranslate translation);
 
 }

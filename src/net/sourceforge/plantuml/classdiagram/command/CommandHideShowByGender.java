@@ -58,10 +58,10 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
-	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.<EntityPortion> of(EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.<EntityPortion> of(EntityPortion.FIELD,
-			EntityPortion.METHOD);
-	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.<EntityPortion> of(EntityPortion.FIELD);
+	private static final EnumSet<EntityPortion> PORTION_METHOD = EnumSet.of(EntityPortion.METHOD);
+	private static final EnumSet<EntityPortion> PORTION_MEMBER = EnumSet.of(EntityPortion.FIELD,
+                                                                            EntityPortion.METHOD);
+	private static final EnumSet<EntityPortion> PORTION_FIELD = EnumSet.of(EntityPortion.FIELD);
 
 	public CommandHideShowByGender() {
 		super(getRegexConcat());
@@ -78,7 +78,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 				new RegexLeaf("$"));
 	}
 
-	private final EntityGender emptyByGender(Set<EntityPortion> portion) {
+	private EntityGender emptyByGender(Set<EntityPortion> portion) {
 		if (portion == PORTION_METHOD) {
 			return EntityGenderUtils.emptyMethods();
 		}
@@ -146,7 +146,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
 		final Set<EntityPortion> portion = getEntityPortion(arg.get("PORTION", 0));
 
-		EntityGender gender = null;
+		EntityGender gender;
 		final String arg1 = arg.get("GENDER", 0);
 		if (arg1 == null) {
 			gender = EntityGenderUtils.all();
@@ -171,10 +171,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		if (gender != null) {
 			final boolean empty = arg.get("EMPTY", 0) != null;
 			final boolean emptyMembers = empty && portion == PORTION_MEMBER;
-			if (empty == true && emptyMembers == false) {
+			if (empty && !emptyMembers) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
-			if (EntityUtils.groupRoot(classDiagram.getCurrentGroup()) == false) {
+			if (!EntityUtils.groupRoot(classDiagram.getCurrentGroup())) {
 				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(classDiagram.getCurrentGroup()));
 			}
 
@@ -202,10 +202,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			return PORTION_FIELD;
 		}
 		if (sub.equals("cir")) {
-			return EnumSet.<EntityPortion> of(EntityPortion.CIRCLED_CHARACTER);
+			return EnumSet.of(EntityPortion.CIRCLED_CHARACTER);
 		}
 		if (sub.equals("ste")) {
-			return EnumSet.<EntityPortion> of(EntityPortion.STEREOTYPE);
+			return EnumSet.of(EntityPortion.STEREOTYPE);
 		}
 		throw new IllegalArgumentException();
 	}

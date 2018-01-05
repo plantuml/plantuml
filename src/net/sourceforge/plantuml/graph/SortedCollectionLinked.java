@@ -43,7 +43,7 @@ import java.util.ListIterator;
 
 public class SortedCollectionLinked<S extends Comparable<S>> implements SortedCollection<S> {
 
-	private final List<S> all = new LinkedList<S>();
+	private final List<S> all = new LinkedList<>();
 
 	public Iterator<S> iterator() {
 		return all.iterator();
@@ -68,7 +68,7 @@ public class SortedCollectionLinked<S extends Comparable<S>> implements SortedCo
 	}
 
 	List<S> toList() {
-		return new ArrayList<S>(all);
+		return new ArrayList<>(all);
 	}
 
 	boolean isSorted() {

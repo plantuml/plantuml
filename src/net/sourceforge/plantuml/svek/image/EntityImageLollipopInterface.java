@@ -62,7 +62,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	private static final int SIZE = 10;
 	private final TextBlock desc;
-	final private Url url;
+	private final Url url;
 
 	public EntityImageLollipopInterface(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
@@ -77,7 +77,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		return new Dimension2DDouble(SIZE, SIZE);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		if (getSkinParam().shadowing()) {
 			circle.setDeltaShadow(4);
@@ -95,8 +95,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		// final double totalWidth = Math.max(widthDesc, SIZE);
 
 		final double x = SIZE / 2 - widthDesc / 2;
-		final double y = SIZE;
-		desc.drawU(ug.apply(new UTranslate(x, y)));
+        desc.drawU(ug.apply(new UTranslate(x, (double) SIZE)));
 		if (url != null) {
 			ug.closeAction();
 		}

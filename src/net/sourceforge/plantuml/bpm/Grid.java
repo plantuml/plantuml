@@ -51,12 +51,12 @@ public class Grid {
 	private final Chain<Line> lines;
 	private final Chain<Col> cols;
 	private final Coord root;
-	private final Map<Coord, Cell> cells = new HashMap<Coord, Cell>();
+	private final Map<Coord, Cell> cells = new HashMap<>();
 
 	public Grid() {
 		this.root = new Coord(new Line(), new Col());
-		this.lines = new ChainImpl<Line>(root.getLine());
-		this.cols = new ChainImpl<Col>(root.getCol());
+		this.lines = new ChainImpl<>(root.getLine());
+		this.cols = new ChainImpl<>(root.getCol());
 		this.cells.put(root, new Cell());
 	}
 
@@ -76,10 +76,10 @@ public class Grid {
 	}
 
 	public Cell getCell(Line line, Col col) {
-		if (lines.contains(line) == false) {
+		if (!lines.contains(line)) {
 			throw new IllegalArgumentException();
 		}
-		if (cols.contains(col) == false) {
+		if (!cols.contains(col)) {
 			throw new IllegalArgumentException();
 		}
 		final Coord coord = new Coord(line, col);
@@ -254,7 +254,7 @@ public class Grid {
 	// }
 
 	public Set<Col> usedColsOf(Line line) {
-		final Set<Col> result = new HashSet<Col>();
+		final Set<Col> result = new HashSet<>();
 		for (Map.Entry<Coord, Cell> ent : cells.entrySet()) {
 			final Cell cell = ent.getValue();
 			if (cell == null || cell.getData() == null) {
@@ -283,7 +283,7 @@ public class Grid {
 		}
 
 		final boolean done = lines.remove(line);
-		if (done == false) {
+		if (!done) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -311,7 +311,7 @@ public class Grid {
 	// }
 
 	public void addConnections() {
-		for (Map.Entry<Coord, Cell> ent : new HashMap<Coord, Cell>(cells).entrySet()) {
+		for (Map.Entry<Coord, Cell> ent : new HashMap<>(cells).entrySet()) {
 			final List<Placeable> dests2 = ent.getValue().getDestinations2();
 			final Coord src = ent.getKey();
 			for (int i = 0; i < dests2.size(); i++) {

@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -296,15 +295,20 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (labelOnly != null && noteOnly != null) {
-			if (link.getNotePosition() == Position.LEFT) {
-				labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
-			} else if (link.getNotePosition() == Position.RIGHT) {
-				labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
-			} else if (link.getNotePosition() == Position.TOP) {
-				labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
-			} else {
-				labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
-			}
+            switch (link.getNotePosition()) {
+                case LEFT:
+                    labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
+                    break;
+                case RIGHT:
+                    labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
+                    break;
+                case TOP:
+                    labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
+                    break;
+                default:
+                    labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
+                    break;
+            }
 		} else if (labelOnly != null) {
 			labelText = labelOnly;
 		} else if (noteOnly != null) {
@@ -351,7 +355,7 @@ public class Line implements Moveable, Hideable {
 		sb.append("[");
 		final LinkType linkType = link.getTypePatchCluster();
 		String decoration = linkType.getSpecificDecorationSvek();
-		if (decoration.length() > 0 && decoration.endsWith(",") == false) {
+		if (!decoration.isEmpty() && !decoration.endsWith(",")) {
 			decoration += ",";
 		}
 		sb.append(decoration);
@@ -363,15 +367,15 @@ public class Line implements Moveable, Hideable {
 		if (useRankSame) {
 			if (pragma.horizontalLineBetweenDifferentPackageAllowed() || link.isInvis() || length != 1) {
 				// if (graphvizVersion.isJs() == false) {
-				sb.append("minlen=" + (length - 1));
+				sb.append("minlen=").append(length - 1);
 				sb.append(",");
 				// }
 			}
 		} else {
-			sb.append("minlen=" + (length - 1));
+			sb.append("minlen=").append(length - 1);
 			sb.append(",");
 		}
-		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
+		sb.append("color=\"").append(StringUtils.getAsHtml(lineColor)).append("\"");
 		if (labelText != null) {
 			sb.append(",");
 			if (graphvizVersion.modeSafe() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
@@ -405,12 +409,12 @@ public class Line implements Moveable, Hideable {
 			sb.append("style=invis");
 		}
 
-		if (link.isConstraint() == false || link.hasTwoEntryPointsSameContainer()) {
+		if (!link.isConstraint() || link.hasTwoEntryPointsSameContainer()) {
 			sb.append(",constraint=false");
 		}
 
 		if (link.getSametail() != null) {
-			sb.append(",sametail=" + link.getSametail());
+			sb.append(",sametail=").append(link.getSametail());
 		}
 
 		sb.append("];");
@@ -428,7 +432,7 @@ public class Line implements Moveable, Hideable {
 		// if (graphvizVersion == GraphvizVersion.V2_34_0) {
 		// return null;
 		// }
-		if (pragma.horizontalLineBetweenDifferentPackageAllowed() == false && link.getLength() == 1
+		if (!pragma.horizontalLineBetweenDifferentPackageAllowed() && link.getLength() == 1
 		/* && graphvizVersion.isJs() == false */) {
 			return "{rank=same; " + getStartUidPrefix() + "; " + getEndUidPrefix() + "}";
 		}
@@ -443,8 +447,8 @@ public class Line implements Moveable, Hideable {
 
 	public static void appendTable(StringBuilder sb, int w, int h, int col) {
 		sb.append("<TABLE ");
-		sb.append("BGCOLOR=\"" + StringUtils.getAsHtml(col) + "\" ");
-		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">");
+		sb.append("BGCOLOR=\"").append(StringUtils.getAsHtml(col)).append("\" ");
+		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"").append(w).append("\" HEIGHT=\"").append(h).append("\">");
 		sb.append("<TR");
 		sb.append(">");
 		sb.append("<TD");
@@ -481,7 +485,7 @@ public class Line implements Moveable, Hideable {
 
 		if (extremityFactory != null) {
 			final List<Point2D.Double> points = pointListIterator.next();
-			if (points.size() == 0) {
+			if (points.isEmpty()) {
 				return extremityFactory.createUDrawable(center, angle, null);
 			}
 			final Point2D p0 = points.get(0);
@@ -533,7 +537,7 @@ public class Line implements Moveable, Hideable {
 		final int end = svg.indexOf("\"", idx + 3);
 		final String path = svg.substring(idx + 3, end);
 
-		if (DotPath.isPathConsistent(path) == false) {
+		if (!DotPath.isPathConsistent(path)) {
 			return;
 		}
 		dotPath = new DotPath(path, fullHeight);
@@ -601,7 +605,7 @@ public class Line implements Moveable, Hideable {
 			}
 		}
 
-		if (isOpalisable() == false) {
+		if (!isOpalisable()) {
 			setOpale(false);
 		}
 	}
@@ -678,7 +682,6 @@ public class Line implements Moveable, Hideable {
 						.checkFolderPosition(dotPath.getEndPoint(), ug.getStringBounder());
 				todraw = new DotPath(dotPath);
 				todraw.moveEndPoint(0, deltaFolderH);
-				moveEndY = deltaFolderH;
 			}
 		}
 

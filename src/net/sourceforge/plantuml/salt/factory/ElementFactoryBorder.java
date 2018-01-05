@@ -48,7 +48,7 @@ public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = getDataSource().next().getElement();
@@ -61,7 +61,7 @@ public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 
 		final ElementBorder result = new ElementBorder();
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final String pos = getDataSource().next().getElement();
 			switch (pos.charAt(0)) {
 			case 'N':
@@ -92,10 +92,7 @@ public class ElementFactoryBorder extends AbstractElementFactoryComplex {
 		final String text = getDataSource().peek(0).getElement();
 		if (text.equals("{") || text.equals("{+") || text.equals("{#") || text.equals("{!") || text.equals("{-")) {
 			final String text1 = getDataSource().peek(1).getElement();
-			if (text1.matches("[NSEW]=")) {
-				return true;
-			}
-			return false;
+			return text1.matches("[NSEW]=");
 		}
 		return false;
 	}

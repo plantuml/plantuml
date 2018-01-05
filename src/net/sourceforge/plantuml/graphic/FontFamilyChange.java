@@ -42,13 +42,13 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class FontFamilyChange implements FontChange {
 
-	static private final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontFamilyPattern);
+	private static final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontFamilyPattern);
 
 	private final String family;
 
 	FontFamilyChange(String s) {
 		final Matcher2 matcherColor = colorPattern.matcher(s);
-		if (matcherColor.find() == false) {
+		if (!matcherColor.find()) {
 			throw new IllegalArgumentException();
 		}
 		this.family = StringUtils.trin(matcherColor.group(1));

@@ -52,15 +52,15 @@ public abstract class AbstractConnection implements Connection {
 		return "[" + ftile1 + "]->[" + ftile2 + "]";
 	}
 
-	final public Ftile getFtile1() {
+	public final Ftile getFtile1() {
 		return ftile1;
 	}
 
-	final public Ftile getFtile2() {
+	public final Ftile getFtile2() {
 		return ftile2;
 	}
 
-	final public HorizontalAlignment arrowHorizontalAlignment() {
+	public final HorizontalAlignment arrowHorizontalAlignment() {
 		if (ftile1 != null) {
 			return ftile1.arrowHorizontalAlignment();
 		}

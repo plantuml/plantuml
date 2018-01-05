@@ -51,7 +51,7 @@ public class PolylineBreakeable extends AbstractPolyline implements Polyline {
 		}
 	}
 
-	private final List<Breakure> breakures = new ArrayList<Breakure>();
+	private final List<Breakure> breakures = new ArrayList<>();
 
 	public PolylineBreakeable copy(Pointable newStart, Pointable newEnd) {
 		final PolylineBreakeable result = new PolylineBreakeable(newStart, newEnd);
@@ -64,10 +64,10 @@ public class PolylineBreakeable extends AbstractPolyline implements Polyline {
 	}
 
 	public List<LineSegmentInt> segments() {
-		if (breakures.size() == 0) {
+		if (breakures.isEmpty()) {
 			return Collections.singletonList(new LineSegmentInt(getStart().getPosition(), getEnd().getPosition()));
 		}
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		Point2DInt cur = getStart().getPosition();
 		for (Breakure breakure : breakures) {
 			final Point2DInt next = getBreakurePoint(breakure);
@@ -89,7 +89,7 @@ public class PolylineBreakeable extends AbstractPolyline implements Polyline {
 	}
 
 	public List<XMoveable> getFreedoms() {
-		final List<XMoveable> allFreedom = new ArrayList<XMoveable>();
+		final List<XMoveable> allFreedom = new ArrayList<>();
 
 		for (final Breakure breakure : breakures) {
 			allFreedom.add(new XMoveable() {

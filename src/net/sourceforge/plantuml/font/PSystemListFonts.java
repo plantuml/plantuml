@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemListFonts extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	public PSystemListFonts(String text) {
 		strings.add("   <b><size:16>Fonts available:");
@@ -70,7 +70,7 @@ public class PSystemListFonts extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
@@ -79,7 +79,7 @@ public class PSystemListFonts extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 

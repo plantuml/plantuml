@@ -49,8 +49,8 @@ public class SvgPath {
 	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 	// http://tutorials.jenkov.com/svg/path-element.html
 
-	private List<Movement> movements = new ArrayList<Movement>();
-	private List<SvgCommand> commands = new ArrayList<SvgCommand>();
+	private List<Movement> movements = new ArrayList<>();
+	private List<SvgCommand> commands;
 
 	public SvgPath(String path) {
 		path = StringDecipher.decipher(path);
@@ -89,7 +89,7 @@ public class SvgPath {
 	}
 
 	private List<SvgCommand> insertMissingLetter(List<SvgCommand> commands) {
-		final List<SvgCommand> result = new ArrayList<SvgCommand>();
+		final List<SvgCommand> result = new ArrayList<>();
 		final Iterator<SvgCommand> it = commands.iterator();
 		SvgCommandLetter lastLetter = null;
 		while (it.hasNext()) {
@@ -126,29 +126,29 @@ public class SvgPath {
 	}
 
 	private List<SvgCommand> manageHV(List<SvgCommand> commands) {
-		final List<SvgCommand> result = new ArrayList<SvgCommand>();
-		SvgCommandNumber lastX = null;
-		SvgCommandNumber lastY = null;
+		final List<SvgCommand> result = new ArrayList<>();
 		final Iterator<SvgCommand> it = commands.iterator();
 		while (it.hasNext()) {
 			final SvgCommand cmd = it.next();
 			if (cmd instanceof SvgCommandNumber) {
-				lastX = lastY;
-				lastY = (SvgCommandNumber) cmd;
 				result.add(cmd);
 				continue;
 			}
 			final String letter = cmd.toSvg();
-			if (letter.equals("h")) {
-				result.add(new SvgCommandLetter("l"));
-				result.add(it.next());
-				result.add(new SvgCommandNumber("0"));
-			} else if (letter.equals("v")) {
-				result.add(new SvgCommandLetter("l"));
-				result.add(new SvgCommandNumber("0"));
-				result.add(it.next());
-			} else {
-				result.add(cmd);
+			switch (letter) {
+				case "h":
+					result.add(new SvgCommandLetter("l"));
+					result.add(it.next());
+					result.add(new SvgCommandNumber("0"));
+					break;
+				case "v":
+					result.add(new SvgCommandLetter("l"));
+					result.add(new SvgCommandNumber("0"));
+					result.add(it.next());
+					break;
+				default:
+					result.add(cmd);
+					break;
 			}
 		}
 		return result;
@@ -179,30 +179,36 @@ public class SvgPath {
 		for (Movement move : movements) {
 			final char letter = move.getLetter();
 			final SvgPosition lastPosition = move.lastPosition();
-			if (letter == 'M') {
-				result.moveTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
-			} else if (letter == 'C') {
-				final SvgPosition ctl1 = move.getSvgPosition(0);
-				final SvgPosition ctl2 = move.getSvgPosition(2);
-				result.cubicTo(ctl1.getXDouble() * factor, ctl1.getYDouble() * factor, ctl2.getXDouble() * factor,
-						ctl2.getYDouble() * factor, lastPosition.getXDouble() * factor, lastPosition.getYDouble()
-								* factor);
-			} else if (letter == 'L') {
-				result.lineTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
-			} else if (letter == 'A') {
+            switch (letter) {
+                case 'M':
+                    result.moveTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
+                    break;
+                case 'C':
+                    final SvgPosition ctl1 = move.getSvgPosition(0);
+                    final SvgPosition ctl2 = move.getSvgPosition(2);
+                    result.cubicTo(ctl1.getXDouble() * factor, ctl1.getYDouble() * factor, ctl2.getXDouble() * factor,
+                            ctl2.getYDouble() * factor, lastPosition.getXDouble() * factor, lastPosition.getYDouble()
+                                    * factor);
+                    break;
+                case 'L':
+                    result.lineTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
+                    break;
+                case 'A':
 
-				final double rx = move.getArgument(0);
-				final double ry = move.getArgument(1);
-				final double x_axis_rotation = move.getArgument(2);
-				final double large_arc_flag = move.getArgument(3);
-				final double sweep_flag = move.getArgument(4);
-				result.arcTo(rx * factor, ry * factor, x_axis_rotation, large_arc_flag, sweep_flag,
-						lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
-			} else if (letter == 'Z') {
-				result.closePath();
-			} else {
-				throw new UnsupportedOperationException("letter " + letter);
-			}
+                    final double rx = move.getArgument(0);
+                    final double ry = move.getArgument(1);
+                    final double x_axis_rotation = move.getArgument(2);
+                    final double large_arc_flag = move.getArgument(3);
+                    final double sweep_flag = move.getArgument(4);
+                    result.arcTo(rx * factor, ry * factor, x_axis_rotation, large_arc_flag, sweep_flag,
+                            lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
+                    break;
+                case 'Z':
+                    result.closePath();
+                    break;
+                default:
+                    throw new UnsupportedOperationException("letter " + letter);
+            }
 
 		}
 		result.setOpenIconic(true);

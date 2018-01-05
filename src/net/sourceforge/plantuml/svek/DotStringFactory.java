@@ -70,7 +70,7 @@ public class DotStringFactory implements Moveable {
 
 	private final Bibliotekon bibliotekon = new Bibliotekon();
 
-	final private Set<String> rankMin = new HashSet<String>();
+	private final Set<String> rankMin = new HashSet<>();
 
 	private final ColorSequence colorSequence;
 	private final Cluster root;
@@ -109,7 +109,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private void printMinRanking(StringBuilder sb) {
-		if (rankMin.size() == 0) {
+		if (rankMin.isEmpty()) {
 			return;
 		}
 		sb.append("{ rank = min;");
@@ -169,9 +169,9 @@ public class DotStringFactory implements Moveable {
 
 		for (String s : dotStrings) {
 			if (s.startsWith("ranksep")) {
-				sb.append("ranksep=" + ranksepInches + ";");
+				sb.append("ranksep=").append(ranksepInches).append(";");
 			} else if (s.startsWith("nodesep")) {
-				sb.append("nodesep=" + nodesepInches + ";");
+				sb.append("nodesep=").append(nodesepInches).append(";");
 			} else {
 				sb.append(s);
 			}
@@ -222,8 +222,8 @@ public class DotStringFactory implements Moveable {
 	}
 
 	private void manageMinMaxCluster(final StringBuilder sb) {
-		final List<String> minPointCluster = new ArrayList<String>();
-		final List<String> maxPointCluster = new ArrayList<String>();
+		final List<String> minPointCluster = new ArrayList<>();
+		final List<String> maxPointCluster = new ArrayList<>();
 		for (Cluster cluster : bibliotekon.allCluster()) {
 			final String minPoint = cluster.getMinPoint(umlDiagramType);
 			if (minPoint != null) {
@@ -234,7 +234,7 @@ public class DotStringFactory implements Moveable {
 				maxPointCluster.add(maxPoint);
 			}
 		}
-		if (minPointCluster.size() > 0) {
+		if (!minPointCluster.isEmpty()) {
 			sb.append("{rank=min;");
 			for (String s : minPointCluster) {
 				sb.append(s);
@@ -244,7 +244,7 @@ public class DotStringFactory implements Moveable {
 			sb.append("}");
 			SvekUtils.println(sb);
 		}
-		if (maxPointCluster.size() > 0) {
+		if (!maxPointCluster.isEmpty()) {
 			sb.append("{rank=max;");
 			for (String s : maxPointCluster) {
 				sb.append(s);
@@ -335,7 +335,7 @@ public class DotStringFactory implements Moveable {
 			return false;
 		}
 		final File dotExe = graphviz.getDotExe();
-		return dotExe == null || dotExe.isFile() == false || dotExe.canRead() == false;
+		return dotExe == null || !dotExe.isFile() || !dotExe.canRead();
 	}
 
 	public File getDotExe() {
@@ -343,14 +343,14 @@ public class DotStringFactory implements Moveable {
 		return graphviz.getDotExe();
 	}
 
-	public ClusterPosition solve(String svg) throws IOException, InterruptedException {
-		if (svg.length() == 0) {
+	public ClusterPosition solve(String svg) {
+		if (svg.isEmpty()) {
 			throw new EmptySvgException();
 		}
 
-		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
+		final Pattern pGraph = Pattern.compile("(?m)<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(svg);
-		if (mGraph.find() == false) {
+		if (!mGraph.find()) {
 			throw new IllegalStateException();
 		}
 		final int fullWidth = Integer.parseInt(mGraph.group(1));
@@ -360,49 +360,60 @@ public class DotStringFactory implements Moveable {
 
 		for (Shape sh : bibliotekon.allShapes()) {
 			int idx = svg.indexOf("<title>" + sh.getUid() + "</title>");
-			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
-					|| sh.getType() == ShapeType.FOLDER || sh.getType() == ShapeType.DIAMOND) {
-				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-			} else if (sh.getType() == ShapeType.ROUND_RECTANGLE) {
-				final int idx2 = svg.indexOf("d=\"", idx + 1);
-				idx = svg.indexOf("points=\"", idx + 1);
-				final List<Point2D.Double> points;
-				if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
-					// GraphViz 2.30
-					points = SvekUtils.extractD(svg, idx2, fullHeight);
-				} else {
-					points = SvekUtils.extractPointsList(svg, idx, fullHeight);
-					for (int i = 0; i < 3; i++) {
-						idx = svg.indexOf("points=\"", idx + 1);
-						points.addAll(SvekUtils.extractPointsList(svg, idx, fullHeight));
-					}
-				}
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-			} else if (sh.getType() == ShapeType.OCTAGON) {
-				idx = svg.indexOf("points=\"", idx + 1);
-				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-				corner1.manage(minX, minY);
-				sh.moveSvek(minX, minY);
-				sh.setOctagon(minX, minY, points);
-			} else if (sh.getType() == ShapeType.CIRCLE || sh.getType() == ShapeType.CIRCLE_IN_RECT
-					|| sh.getType() == ShapeType.OVAL) {
-				final double cx = SvekUtils.getValue(svg, idx, "cx");
-				final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
-				final double rx = SvekUtils.getValue(svg, idx, "rx");
-				final double ry = SvekUtils.getValue(svg, idx, "ry");
-				sh.moveSvek(cx - rx, cy - ry);
-			} else {
-				throw new IllegalStateException(sh.getType().toString() + " " + sh.getUid());
-			}
+            switch (sh.getType()) {
+                case RECTANGLE:
+                case RECTANGLE_HTML_FOR_PORTS:
+                case FOLDER:
+                case DIAMOND: {
+                    final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+                    final double minX = SvekUtils.getMinX(points);
+                    final double minY = SvekUtils.getMinY(points);
+                    corner1.manage(minX, minY);
+                    sh.moveSvek(minX, minY);
+                    break;
+                }
+                case ROUND_RECTANGLE: {
+                    final int idx2 = svg.indexOf("d=\"", idx + 1);
+                    idx = svg.indexOf("points=\"", idx + 1);
+                    final List<Point2D.Double> points;
+                    if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
+                        // GraphViz 2.30
+                        points = SvekUtils.extractD(svg, idx2, fullHeight);
+                    } else {
+                        points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+                        for (int i = 0; i < 3; i++) {
+                            idx = svg.indexOf("points=\"", idx + 1);
+                            points.addAll(SvekUtils.extractPointsList(svg, idx, fullHeight));
+                        }
+                    }
+                    final double minX = SvekUtils.getMinX(points);
+                    final double minY = SvekUtils.getMinY(points);
+                    corner1.manage(minX, minY);
+                    sh.moveSvek(minX, minY);
+                    break;
+                }
+                case OCTAGON: {
+                    idx = svg.indexOf("points=\"", idx + 1);
+                    final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+                    final double minX = SvekUtils.getMinX(points);
+                    final double minY = SvekUtils.getMinY(points);
+                    corner1.manage(minX, minY);
+                    sh.moveSvek(minX, minY);
+                    sh.setOctagon(minX, minY, points);
+                    break;
+                }
+                case CIRCLE:
+                case CIRCLE_IN_RECT:
+                case OVAL:
+                    final double cx = SvekUtils.getValue(svg, idx, "cx");
+                    final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
+                    final double rx = SvekUtils.getValue(svg, idx, "rx");
+                    final double ry = SvekUtils.getValue(svg, idx, "ry");
+                    sh.moveSvek(cx - rx, cy - ry);
+                    break;
+                default:
+                    throw new IllegalStateException(sh.getType().toString() + " " + sh.getUid());
+            }
 		}
 
 		for (Cluster cluster : bibliotekon.allCluster()) {

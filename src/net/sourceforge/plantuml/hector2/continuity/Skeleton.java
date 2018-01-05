@@ -47,11 +47,11 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 
 public class Skeleton {
 
-	private final Set<IEntity> entities = new HashSet<IEntity>();
-	private final List<Link> links = new ArrayList<Link>();
+	private final Set<IEntity> entities = new HashSet<>();
+	private final List<Link> links = new ArrayList<>();
 
 	private Set<IEntity> getDirectChildren(IEntity parent) {
-		final Set<IEntity> result = new HashSet<IEntity>();
+		final Set<IEntity> result = new HashSet<>();
 		for (Link link : links) {
 			if (link.isAutolink()) {
 				continue;
@@ -69,10 +69,10 @@ public class Skeleton {
 	}
 
 	private Set<IEntity> getIndirectChildren(IEntity parent) {
-		final Set<IEntity> result = new HashSet<IEntity>(getDirectChildren(parent));
+		final Set<IEntity> result = new HashSet<>(getDirectChildren(parent));
 		int currentSize = result.size();
 		while (true) {
-			for (IEntity ent : new HashSet<IEntity>(result)) {
+			for (IEntity ent : new HashSet<>(result)) {
 				result.addAll(getDirectChildren(ent));
 			}
 			if (result.contains(parent) || result.size() == currentSize) {

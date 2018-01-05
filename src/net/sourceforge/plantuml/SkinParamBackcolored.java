@@ -43,9 +43,9 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamBackcolored extends SkinParamDelegator {
 
-	final private HtmlColor backColorElement;
-	final private HtmlColor backColorGeneral;
-	final private boolean forceClickage;
+	private final HtmlColor backColorElement;
+	private final HtmlColor backColorGeneral;
+	private final boolean forceClickage;
 
 	public SkinParamBackcolored(ISkinParam skinParam, HtmlColor backColorElement) {
 		this(skinParam, backColorElement, null, false);
@@ -99,7 +99,7 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 		return super.getHtmlColor(param, stereotype, clickable);
 	}
 
-	private final Map<ColorParam, HtmlColor> forced = new EnumMap<ColorParam, HtmlColor>(ColorParam.class);
+	private final Map<ColorParam, HtmlColor> forced = new EnumMap<>(ColorParam.class);
 
 	public void forceColor(ColorParam param, HtmlColor color) {
 		forced.put(param, color);

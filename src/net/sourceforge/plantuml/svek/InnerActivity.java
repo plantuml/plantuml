@@ -60,7 +60,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 		this.shadowing = shadowing;
 	}
 
-	public final static double THICKNESS_BORDER = 1.5;
+	public static final double THICKNESS_BORDER = 1.5;
 
 	public void drawU(UGraphic ug) {
 		final Dimension2D total = calculateDimension(ug.getStringBounder());
@@ -82,8 +82,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D img = im.calculateDimension(stringBounder);
-		return img;
+        return im.calculateDimension(stringBounder);
 	}
 
 	public ShapeType getShapeType() {

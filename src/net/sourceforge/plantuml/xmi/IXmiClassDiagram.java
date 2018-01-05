@@ -37,11 +37,10 @@ package net.sourceforge.plantuml.xmi;
 
 import java.io.OutputStream;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 public interface IXmiClassDiagram {
 
-	void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException;
+	void transformerXml(OutputStream os) throws TransformerException;
 
 }

@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class OptionFlags {
 
@@ -53,23 +53,23 @@ public class OptionFlags {
 	// static public boolean GRAPHVIZCACHE = false;
 	// static public final boolean TRACE_DOT = false;
 
-	static public boolean ALLOW_INCLUDE = true;
+	public static boolean ALLOW_INCLUDE = true;
 
-	static public void setMaxPixel(int max) {
+	public static void setMaxPixel(int max) {
 		ImageBuilder.setMaxPixel(max);
 	}
 
-	static public final boolean USE_HECTOR = false;
-	static public boolean ADD_NICE_FOR_DOT = false;
-	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
+	public static final boolean USE_HECTOR = false;
+	public static boolean ADD_NICE_FOR_DOT = false;
+	public static final boolean STRICT_SELFMESSAGE_POSITION = true;
 
 	// static public final boolean USE_IF_VERTICAL = true;
-	static public final boolean FORCE_TEOZ = false;
-	static public final boolean USE_INTERFACE_EYE1 = false;
-	static public final boolean USE_INTERFACE_EYE2 = false;
+    public static final boolean FORCE_TEOZ = false;
+	public static final boolean USE_INTERFACE_EYE1 = false;
+	public static final boolean USE_INTERFACE_EYE2 = false;
 	// static public final boolean SWI2 = false;
 	// static public final boolean USE_COMPOUND = false;
-	static public final boolean OMEGA_CROSSING = false;
+    public static final boolean OMEGA_CROSSING = false;
 
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
 	// static public final boolean USE_JDOT = false;
@@ -196,7 +196,7 @@ public class OptionFlags {
 			return;
 		}
 		synchronized (logDataInitized) {
-			if (logData == null && logDataInitized.get() == false) {
+			if (logData == null && !logDataInitized.get()) {
 				final String s = GraphvizUtils.getenvLogData();
 				if (s != null) {
 					setLogData(new File(s));
@@ -208,9 +208,7 @@ public class OptionFlags {
 				return;
 			}
 			// final PSystemError systemError = (PSystemError) system;
-			PrintStream ps = null;
-			try {
-				ps = new PrintStream(new FileOutputStream(logData, true));
+			try (PrintStream ps = new PrintStream(new FileOutputStream(logData, true))) {
 				ps.println("Start of " + file.getName());
 				ps.println(warnOrError);
 				ps.println("End of " + file.getName());
@@ -218,10 +216,6 @@ public class OptionFlags {
 			} catch (FileNotFoundException e) {
 				Log.error("Cannot open " + logData);
 				e.printStackTrace();
-			} finally {
-				if (ps != null) {
-					ps.close();
-				}
 			}
 		}
 	}
@@ -229,17 +223,11 @@ public class OptionFlags {
 	public final void setLogData(File logData) {
 		this.logData = logData;
 		logData.delete();
-		PrintStream ps = null;
-		try {
-			ps = new PrintStream(new FileOutputStream(logData));
+		try (PrintStream ps = new PrintStream(new FileOutputStream(logData))) {
 			ps.println();
 		} catch (FileNotFoundException e) {
 			Log.error("Cannot open " + logData);
 			e.printStackTrace();
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
 		}
 	}
 

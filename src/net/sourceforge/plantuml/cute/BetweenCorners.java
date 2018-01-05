@@ -64,7 +64,7 @@ public class BetweenCorners {
 		if (corner2.hasCurvation()) {
 			inside2 = corner2.getBalloonInside();
 		}
-		if (tension.isNone() == false) {
+		if (!tension.isNone()) {
 			contact = new Balloon(getTensionPoint(), getLength() / 1000.0);
 		}
 
@@ -77,7 +77,7 @@ public class BetweenCorners {
 	}
 
 	public Point2D getPointJ() {
-		if (getCorner1().hasCurvation() == false) {
+		if (!getCorner1().hasCurvation()) {
 			return getCorner1().getO();
 		}
 		if (tension.isNone()) {
@@ -87,7 +87,7 @@ public class BetweenCorners {
 	}
 
 	public Point2D getPointK() {
-		if (getCorner1().hasCurvation() == false) {
+		if (!getCorner1().hasCurvation()) {
 			return getCorner1().getO();
 		}
 		if (tension.isNone()) {
@@ -133,7 +133,7 @@ public class BetweenCorners {
 	}
 
 	public void debugMe(UGraphic ug) {
-		if (getCorner2().hasCurvation() == false) {
+		if (!getCorner2().hasCurvation()) {
 			return;
 		}
 		if (tension.isNone()) {
@@ -160,8 +160,7 @@ public class BetweenCorners {
 	private double getRadiusFuzzy1() {
 		final double a = getLength() / 2;
 		final double b = getTension().getValue();
-		final double radius = (a * a + b * b) / 2 / b;
-		return radius;
+        return (a * a + b * b) / 2 / b;
 	}
 
 	private Segment getSegment() {

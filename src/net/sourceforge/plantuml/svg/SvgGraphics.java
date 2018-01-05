@@ -88,10 +88,10 @@ public class SvgGraphics {
 	// http://www.w3schools.com/svg/svg_feoffset.asp
 	// http://www.adobe.com/svg/demos/samples.html
 
-	final private Document document;
-	final private Element root;
-	final private Element defs;
-	final private Element gRoot;
+	private final Document document;
+	private final Element root;
+	private final Element defs;
+	private final Element gRoot;
 
 	private String fill = "black";
 	private String stroke = "black";
@@ -107,7 +107,7 @@ public class SvgGraphics {
 	private final String shadowId;
 	private final String gradientId;
 
-	final protected void ensureVisible(double x, double y) {
+	protected final void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
 		}
@@ -172,7 +172,7 @@ public class SvgGraphics {
 	// This method returns a reference to a simple XML
 	// element node that has no attributes.
 	private Element simpleElement(String type) {
-		final Element theElement = (Element) document.createElement(type);
+		final Element theElement = document.createElement(type);
 		root.appendChild(theElement);
 		return theElement;
 	}
@@ -191,7 +191,7 @@ public class SvgGraphics {
 	private Element getRootNode() {
 		// Create the root node named svg and append it to
 		// the document.
-		final Element svg = (Element) document.createElement("svg");
+		final Element svg = document.createElement("svg");
 		document.appendChild(svg);
 
 		// Set some attributes on the root node that are
@@ -208,8 +208,8 @@ public class SvgGraphics {
 
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("ellipse");
+		if (!hidden) {
+			final Element elt = document.createElement("ellipse");
 			elt.setAttribute("cx", format(x));
 			elt.setAttribute("cy", format(y));
 			elt.setAttribute("rx", format(xRadius));
@@ -223,10 +223,10 @@ public class SvgGraphics {
 	}
 
 	public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
-		if (hidden == false) {
+		if (!hidden) {
 			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
 					+ format(x2) + " " + format(y2);
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", path);
 			elt.setAttribute("fill", fill);
 			elt.setAttribute("style", getStyle());
@@ -236,42 +236,47 @@ public class SvgGraphics {
 		ensureVisible(x2, y2);
 	}
 
-	private Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
+	private Map<List<Object>, String> gradients = new HashMap<>();
 
 	public String createSvgGradient(String color1, String color2, char policy) {
 		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
 		String id = gradients.get(key);
 		if (id == null) {
-			final Element elt = (Element) document.createElement("linearGradient");
-			if (policy == '|') {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "50%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "50%");
-			} else if (policy == '\\') {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "100%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "0%");
-			} else if (policy == '-') {
-				elt.setAttribute("x1", "50%");
-				elt.setAttribute("y1", "0%");
-				elt.setAttribute("x2", "50%");
-				elt.setAttribute("y2", "100%");
-			} else {
-				elt.setAttribute("x1", "0%");
-				elt.setAttribute("y1", "0%");
-				elt.setAttribute("x2", "100%");
-				elt.setAttribute("y2", "100%");
-			}
+			final Element elt = document.createElement("linearGradient");
+            switch (policy) {
+                case '|':
+                    elt.setAttribute("x1", "0%");
+                    elt.setAttribute("y1", "50%");
+                    elt.setAttribute("x2", "100%");
+                    elt.setAttribute("y2", "50%");
+                    break;
+                case '\\':
+                    elt.setAttribute("x1", "0%");
+                    elt.setAttribute("y1", "100%");
+                    elt.setAttribute("x2", "100%");
+                    elt.setAttribute("y2", "0%");
+                    break;
+                case '-':
+                    elt.setAttribute("x1", "50%");
+                    elt.setAttribute("y1", "0%");
+                    elt.setAttribute("x2", "50%");
+                    elt.setAttribute("y2", "100%");
+                    break;
+                default:
+                    elt.setAttribute("x1", "0%");
+                    elt.setAttribute("y1", "0%");
+                    elt.setAttribute("x2", "100%");
+                    elt.setAttribute("y2", "100%");
+                    break;
+            }
 			id = gradientId + gradients.size();
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
 
-			final Element stop1 = (Element) document.createElement("stop");
+			final Element stop1 = document.createElement("stop");
 			stop1.setAttribute("stop-color", color1);
 			stop1.setAttribute("offset", "0%");
-			final Element stop2 = (Element) document.createElement("stop");
+			final Element stop2 = document.createElement("stop");
 			stop2.setAttribute("stop-color", color2);
 			stop2.setAttribute("offset", "100%");
 
@@ -296,7 +301,7 @@ public class SvgGraphics {
 	}
 
 	public void closeLink() {
-		if (pendingAction.size() > 0) {
+		if (!pendingAction.isEmpty()) {
 			final Element element = pendingAction.get(0);
 			pendingAction.remove(0);
 			if (element.getFirstChild() != null) {
@@ -306,18 +311,18 @@ public class SvgGraphics {
 		}
 	}
 
-	private final List<Element> pendingAction = new ArrayList<Element>();
+	private final List<Element> pendingAction = new ArrayList<>();
 
 	public void openLink(String url, String title, String target) {
 		if (url == null) {
 			throw new IllegalArgumentException();
 		}
 
-		if (pendingAction.size() > 0) {
+		if (!pendingAction.isEmpty()) {
 			closeLink();
 		}
 
-		pendingAction.add(0, (Element) document.createElement("a"));
+		pendingAction.add(0, document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", target);
 		pendingAction.get(0).setAttribute("xlink:href", url);
 		pendingAction.get(0).setAttribute("xlink:type", "simple");
@@ -332,7 +337,7 @@ public class SvgGraphics {
 	}
 
 	public final Element getG() {
-		if (pendingAction.size() == 0) {
+		if (pendingAction.isEmpty()) {
 			return gRoot;
 		}
 		return pendingAction.get(0);
@@ -344,7 +349,7 @@ public class SvgGraphics {
 			throw new IllegalArgumentException();
 		}
 		manageShadow(deltaShadow);
-		if (hidden == false) {
+		if (!hidden) {
 			final Element elt = createRectangleInternal(x, y, width, height);
 			addFilterShadowId(elt, deltaShadow);
 			if (rx > 0 && ry > 0) {
@@ -360,7 +365,7 @@ public class SvgGraphics {
 	}
 
 	private Element createRectangleInternal(double x, double y, double width, double height) {
-		final Element elt = (Element) document.createElement("rect");
+		final Element elt = document.createElement("rect");
 		elt.setAttribute("x", format(x));
 		elt.setAttribute("y", format(y));
 		elt.setAttribute("width", format(width));
@@ -372,8 +377,8 @@ public class SvgGraphics {
 
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("line");
+		if (!hidden) {
+			final Element elt = document.createElement("line");
 			elt.setAttribute("x1", format(x1));
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
@@ -393,15 +398,15 @@ public class SvgGraphics {
 	private static String getStyleInternal(String color, String strokeWidth, String strokeDasharray) {
 		final StringBuilder style = new StringBuilder("stroke: " + color + "; stroke-width: " + strokeWidth + ";");
 		if (strokeDasharray != null) {
-			style.append(" stroke-dasharray: " + strokeDasharray + ";");
+			style.append(" stroke-dasharray: ").append(strokeDasharray).append(";");
 		}
 		return style.toString();
 	}
 
 	public void svgPolygon(double deltaShadow, double... points) {
 		manageShadow(deltaShadow);
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("polygon");
+		if (!hidden) {
+			final Element elt = document.createElement("polygon");
 			final StringBuilder sb = new StringBuilder();
 			for (double coord : points) {
 				if (sb.length() > 0) {
@@ -425,8 +430,8 @@ public class SvgGraphics {
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("text");
+		if (!hidden) {
+			final Element elt = document.createElement("text");
 			// required for web-kit based browsers
 			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
@@ -468,7 +473,7 @@ public class SvgGraphics {
 
 			if (textDecoration != null && textDecoration.contains("underline")) {
 				final double delta = 2;
-				final Element elt2 = (Element) document.createElement("line");
+				final Element elt2 = document.createElement("line");
 				elt2.setAttribute("x1", format(x));
 				elt2.setAttribute("y1", format(y + delta));
 				elt2.setAttribute("x2", format(x + textLength));
@@ -482,7 +487,7 @@ public class SvgGraphics {
 		ensureVisible(x + textLength, y);
 	}
 
-	private final Map<String, String> filterBackColor = new HashMap<String, String>();
+	private final Map<String, String> filterBackColor = new HashMap<>();
 
 	private String getIdFilterBackColor(String color) {
 		String result = filterBackColor.get(color);
@@ -499,7 +504,7 @@ public class SvgGraphics {
 			return id;
 		}
 		id = getIdFilterBackColor(color);
-		final Element filter = (Element) document.createElement("filter");
+		final Element filter = document.createElement("filter");
 		filter.setAttribute("id", id);
 		filter.setAttribute("x", "0");
 		filter.setAttribute("y", "0");
@@ -513,7 +518,7 @@ public class SvgGraphics {
 
 	private Transformer getTransformer() throws TransformerException {
 		// Get a TransformerFactory object.
-		TransformerFactory xformFactory = null;
+		TransformerFactory xformFactory;
 		try {
 			final Class<?> factoryClass = Class
 					.forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
@@ -537,7 +542,7 @@ public class SvgGraphics {
 	}
 
 	public void createXml(OutputStream os) throws TransformerException, IOException {
-		if (images.size() == 0) {
+		if (images.isEmpty()) {
 			createXmlInternal(os);
 			return;
 		}
@@ -545,7 +550,7 @@ public class SvgGraphics {
 		createXmlInternal(baos);
 		String s = new String(baos.toByteArray());
 		for (Map.Entry<String, String> ent : images.entrySet()) {
-			final String k = "\\<" + ent.getKey() + "/\\>";
+			final String k = "<" + ent.getKey() + "/>";
 			s = s.replaceAll(k, ent.getValue());
 		}
 		os.write(s.getBytes());
@@ -596,37 +601,46 @@ public class SvgGraphics {
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
-			if (type == USegmentType.SEG_MOVETO) {
-				sb.append("M" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_LINETO) {
-				sb.append("L" + format(coord[0] + x) + "," + format(coord[1] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_QUADTO) {
-				sb.append("Q" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_CUBICTO) {
-				sb.append("C" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
-				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
-				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
-				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_ARCTO) {
-				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + ","
-						+ format(coord[3]) + " " + format(coord[4]) + "," + format(coord[5] + x) + ","
-						+ format(coord[6] + y) + " ");
-				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
-			} else if (type == USegmentType.SEG_CLOSE) {
-				// Nothing
-			} else {
-				Log.println("unknown " + seg);
-			}
+            switch (type) {
+                case SEG_MOVETO:
+                    sb.append("M").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    break;
+                case SEG_LINETO:
+                    sb.append("L").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    break;
+                case SEG_QUADTO:
+                    sb.append("Q").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
+                            .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
+                    break;
+                case SEG_CUBICTO:
+                    sb.append("C").append(format(coord[0] + x)).append(",").append(format(coord[1] + y)).append(" ")
+                            .append(format(coord[2] + x)).append(",").append(format(coord[3] + y)).append(" ").append(format(coord[4] + x))
+                            .append(",").append(format(coord[5] + y)).append(" ");
+                    ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
+                    ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
+                    ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
+                    break;
+                case SEG_ARCTO:
+                    sb.append("A").append(format(coord[0])).append(",").append(format(coord[1])).append(" ").append(format(coord[2]))
+                            .append(",").append(format(coord[3])).append(" ").append(format(coord[4])).append(",").append(format(coord[5] + x))
+                            .append(",").append(format(coord[6] + y)).append(" ");
+                    ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
+                    break;
+                case SEG_CLOSE:
+                    // Nothing
+                    break;
+                default:
+                    Log.println("unknown " + seg);
+                    break;
+            }
 
 		}
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("path");
+		if (!hidden) {
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
 			elt.setAttribute("fill", fill);
@@ -653,12 +667,12 @@ public class SvgGraphics {
 	}
 
 	public void moveto(double x, double y) {
-		currentPath.append("M" + format(x) + "," + format(y) + " ");
+		currentPath.append("M").append(format(x)).append(",").append(format(y)).append(" ");
 		ensureVisible(x, y);
 	}
 
 	public void lineto(double x, double y) {
-		currentPath.append("L" + format(x) + "," + format(y) + " ");
+		currentPath.append("L").append(format(x)).append(",").append(format(y)).append(" ");
 		ensureVisible(x, y);
 	}
 
@@ -668,8 +682,8 @@ public class SvgGraphics {
 	}
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3)
-				+ "," + format(y3) + " ");
+		currentPath.append("C").append(format(x1)).append(",").append(format(y1)).append(" ").append(format(x2)).append(",")
+		           .append(format(y2)).append(" ").append(format(x3)).append(",").append(format(y3)).append(" ");
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 		ensureVisible(x3, y3);
@@ -677,7 +691,8 @@ public class SvgGraphics {
 	}
 
 	public void quadto(double x1, double y1, double x2, double y2) {
-		currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
+		currentPath.append("Q").append(format(x1)).append(",").append(format(y1)).append(" ").append(format(x2)).append(",")
+		           .append(format(y2)).append(" ");
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 	}
@@ -687,8 +702,8 @@ public class SvgGraphics {
 	}
 
 	public void fill(int windingRule) {
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("path");
+		if (!hidden) {
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			// elt elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
@@ -698,8 +713,8 @@ public class SvgGraphics {
 	}
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
-		if (hidden == false) {
-			final Element elt = (Element) document.createElement("image");
+		if (!hidden) {
+			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -712,15 +727,15 @@ public class SvgGraphics {
 		ensureVisible(x + image.getWidth(), y + image.getHeight());
 	}
 
-	private final Map<String, String> images = new HashMap<String, String>();
+	private final Map<String, String> images = new HashMap<>();
 
 	public void svgImage(SvgString image, double x, double y) {
-		if (hidden == false) {
+		if (!hidden) {
 			String svg = manageScale(image);
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
 			final String key = "imagesvginlined" + images.size();
-			final Element elt = (Element) document.createElement(key);
+			final Element elt = document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
 		}
@@ -733,7 +748,7 @@ public class SvgGraphics {
 		if (svgScale * scale == 1) {
 			return svg.getSvg();
 		}
-		final String s1 = "\\<g\\b";
+		final String s1 = "<g\\b";
 		final String s2 = "<g transform=\"scale(" + format(svgScale) + "," + format(svgScale) + ")\" ";
 		return svg.getSvg().replaceFirst(s1, s2);
 	}
@@ -751,9 +766,9 @@ public class SvgGraphics {
 
 	private void manageShadow(double deltaShadow) {
 		if (deltaShadow != 0) {
-			if (withShadow == false) {
+			if (!withShadow) {
 				// <filter id="f1" x="0" y="0" width="120%" height="120%">
-				final Element filter = (Element) document.createElement("filter");
+				final Element filter = document.createElement("filter");
 				filter.setAttribute("id", shadowId);
 				filter.setAttribute("x", "-1");
 				filter.setAttribute("y", "-1");
@@ -773,7 +788,7 @@ public class SvgGraphics {
 	}
 
 	private void addFilter(Element filter, String name, String... data) {
-		final Element elt = (Element) document.createElement(name);
+		final Element elt = document.createElement(name);
 		for (int i = 0; i < data.length; i += 2) {
 			elt.setAttribute(data[i], data[i + 1]);
 		}

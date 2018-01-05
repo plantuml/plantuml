@@ -54,7 +54,7 @@ public class PlacementStrategyX1X2 extends AbstractPlacementStrategy {
 		//double maxHeight = getMaxHeight();
 
 		final double space = (width - usedWidth) / (getDimensions().size() + 1);
-		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
+		final Map<TextBlock, Point2D> result = new LinkedHashMap<>();
 		double x = space;
 		for (Map.Entry<TextBlock, Dimension2D> ent : getDimensions().entrySet()) {
 			final double y = (height - ent.getValue().getHeight()) / 2;

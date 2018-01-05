@@ -42,7 +42,7 @@ import java.util.List;
 
 public class SlotSet implements Iterable<Slot> {
 
-	private final List<Slot> all = new ArrayList<Slot>();
+	private final List<Slot> all = new ArrayList<>();
 
 	public SlotSet filter(double start, double end) {
 		final SlotSet result = new SlotSet();
@@ -60,7 +60,7 @@ public class SlotSet implements Iterable<Slot> {
 	}
 
 	public void addSlot(double start, double end) {
-		final List<Slot> collisions = new ArrayList<Slot>();
+		final List<Slot> collisions = new ArrayList<>();
 		Slot newSlot = new Slot(start, end);
 		for (final Iterator<Slot> it = all.iterator(); it.hasNext();) {
 			final Slot s = it.next();

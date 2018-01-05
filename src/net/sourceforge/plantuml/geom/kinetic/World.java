@@ -46,9 +46,9 @@ import java.util.Map;
 
 public class World implements MoveObserver {
 
-	private final List<Path> paths = new ArrayList<Path>();
-	private final Map<Point2DCharge, Path> pathOfPoints = new HashMap<Point2DCharge, Path>();
-	private final List<Frame> frames = new ArrayList<Frame>();
+	private final List<Path> paths = new ArrayList<>();
+	private final Map<Point2DCharge, Path> pathOfPoints = new HashMap<>();
+	private final List<Frame> frames = new ArrayList<>();
 
 	public void addFrame(Frame frame) {
 		this.frames.add(frame);
@@ -89,7 +89,7 @@ public class World implements MoveObserver {
 		return result;
 	}
 
-	static private VectorForce getElectricForce(Point2DCharge onThis, Point2DCharge byThis) {
+	private static VectorForce getElectricForce(Point2DCharge onThis, Point2DCharge byThis) {
 		final double dist = onThis.distance(byThis);
 		if (dist == 0) {
 			return new VectorForce(0, 0);
@@ -99,7 +99,7 @@ public class World implements MoveObserver {
 		return result.normaliseTo(v);
 	}
 
-	static private VectorForce getAtomicForce(Point2DCharge onThis, Point2DCharge byThis) {
+	private static VectorForce getAtomicForce(Point2DCharge onThis, Point2DCharge byThis) {
 		final double dist = onThis.distance(byThis);
 		if (dist == 0) {
 			return new VectorForce(0, 0);
@@ -113,7 +113,7 @@ public class World implements MoveObserver {
 	}
 
 	Map<Point2DCharge, VectorForce> getForces() {
-		final Map<Point2DCharge, VectorForce> result = new LinkedHashMap<Point2DCharge, VectorForce>();
+		final Map<Point2DCharge, VectorForce> result = new LinkedHashMap<>();
 		for (Path path : paths) {
 			for (Point2DCharge pt : path.getPoints()) {
 				// final VectorForce elastic = new VectorForce(0, 0);

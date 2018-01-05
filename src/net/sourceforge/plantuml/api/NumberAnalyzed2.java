@@ -65,16 +65,15 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 	}
 
 	public final void save(Preferences prefs) {
-		if (name.length() == 0) {
+		if (name.isEmpty()) {
 			throw new UnsupportedOperationException();
 		}
 		prefs.put(name + ".saved", getSavedString());
 	}
 
 	protected String getSavedString() {
-		final String value = longToString(nb) + ";" + longToString(sum) + ";" + longToString(min) + ";"
-				+ longToString(max) + ";" + longToString(sumOfSquare) + ";" + longToString(sliddingSum);
-		return value;
+        return longToString(nb) + ";" + longToString(sum) + ";" + longToString(min) + ";"
+                + longToString(max) + ";" + longToString(sumOfSquare) + ";" + longToString(sliddingSum);
 	}
 
 	protected final String longToString(AtomicLong val) {
@@ -83,7 +82,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 
 	public static NumberAnalyzed2 load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			System.err.println("Cannot load " + name);
 			return null;
 		}
@@ -115,9 +114,8 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 	}
 
 	public INumberAnalyzed getCopyImmutable() {
-		final NumberAnalyzed2 copy = new NumberAnalyzed2(name, nb.get(), sum.get(), min.get(), max.get(),
-				sumOfSquare.get(), sliddingSum.get());
-		return copy;
+        return new NumberAnalyzed2(name, nb.get(), sum.get(), min.get(), max.get(),
+sumOfSquare.get(), sliddingSum.get());
 	}
 
 	public void addValue(long v) {
@@ -165,7 +163,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 		return sum.get() / nb.get();
 	}
 
-	final public String getName() {
+	public final String getName() {
 		return name;
 	}
 

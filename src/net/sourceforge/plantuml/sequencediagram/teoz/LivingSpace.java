@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
-import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -112,33 +111,42 @@ public class LivingSpace {
 		this.skinParam = skinParam;
 		this.englober = englober;
 		this.posB = position;
-		if (p.getType() == ParticipantType.PARTICIPANT) {
-			headType = ComponentType.PARTICIPANT_HEAD;
-			tailType = ComponentType.PARTICIPANT_TAIL;
-		} else if (p.getType() == ParticipantType.ACTOR) {
-			headType = ComponentType.ACTOR_HEAD;
-			tailType = ComponentType.ACTOR_TAIL;
-		} else if (p.getType() == ParticipantType.BOUNDARY) {
-			headType = ComponentType.BOUNDARY_HEAD;
-			tailType = ComponentType.BOUNDARY_TAIL;
-		} else if (p.getType() == ParticipantType.CONTROL) {
-			headType = ComponentType.CONTROL_HEAD;
-			tailType = ComponentType.CONTROL_TAIL;
-		} else if (p.getType() == ParticipantType.ENTITY) {
-			headType = ComponentType.ENTITY_HEAD;
-			tailType = ComponentType.ENTITY_TAIL;
-		} else if (p.getType() == ParticipantType.QUEUE) {
-			headType = ComponentType.QUEUE_HEAD;
-			tailType = ComponentType.QUEUE_TAIL;
-		} else if (p.getType() == ParticipantType.DATABASE) {
-			headType = ComponentType.DATABASE_HEAD;
-			tailType = ComponentType.DATABASE_TAIL;
-		} else if (p.getType() == ParticipantType.COLLECTIONS) {
-			headType = ComponentType.COLLECTIONS_HEAD;
-			tailType = ComponentType.COLLECTIONS_TAIL;
-		} else {
-			throw new IllegalArgumentException();
-		}
+        switch (p.getType()) {
+            case PARTICIPANT:
+                headType = ComponentType.PARTICIPANT_HEAD;
+                tailType = ComponentType.PARTICIPANT_TAIL;
+                break;
+            case ACTOR:
+                headType = ComponentType.ACTOR_HEAD;
+                tailType = ComponentType.ACTOR_TAIL;
+                break;
+            case BOUNDARY:
+                headType = ComponentType.BOUNDARY_HEAD;
+                tailType = ComponentType.BOUNDARY_TAIL;
+                break;
+            case CONTROL:
+                headType = ComponentType.CONTROL_HEAD;
+                tailType = ComponentType.CONTROL_TAIL;
+                break;
+            case ENTITY:
+                headType = ComponentType.ENTITY_HEAD;
+                tailType = ComponentType.ENTITY_TAIL;
+                break;
+            case QUEUE:
+                headType = ComponentType.QUEUE_HEAD;
+                tailType = ComponentType.QUEUE_TAIL;
+                break;
+            case DATABASE:
+                headType = ComponentType.DATABASE_HEAD;
+                tailType = ComponentType.DATABASE_TAIL;
+                break;
+            case COLLECTIONS:
+                headType = ComponentType.COLLECTIONS_HEAD;
+                tailType = ComponentType.COLLECTIONS_TAIL;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
 		// this.stairs2.addStep2(0, p.getInitialLife());
 		// this.stairs2.addStep2(0, 0);
 		this.useContinueLineBecauseOfDelay = useContinueLineBecauseOfDelay(events);
@@ -196,8 +204,7 @@ public class LivingSpace {
 
 	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
 		final Component comp = rose.createComponent(headType, null, skinParam, p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		return dim;
+        return comp.getPreferredDimension(stringBounder);
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {

@@ -99,7 +99,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
 		this.shield = shield;
-		if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+		if (!shield.isZero() && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -121,7 +121,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 			appendLabelHtmlSpecialForLink(sb, stringBounder);
 			return;
 		}
-		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
+		if (type == ShapeType.RECTANGLE && !shield.isZero()) {
 			appendHtml(sb);
 			return;
 		}
@@ -131,11 +131,11 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append(",");
 		sb.append("label=\"\"");
 		sb.append(",");
-		sb.append("width=" + SvekUtils.pixelToInches(getWidth()));
+		sb.append("width=").append(SvekUtils.pixelToInches(getWidth()));
 		sb.append(",");
-		sb.append("height=" + SvekUtils.pixelToInches(getHeight()));
+		sb.append("height=").append(SvekUtils.pixelToInches(getHeight()));
 		sb.append(",");
-		sb.append("color=\"" + StringUtils.getAsHtml(color) + "\"");
+		sb.append("color=\"").append(StringUtils.getAsHtml(color)).append("\"");
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
@@ -162,8 +162,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append("</TR>");
 		sb.append("<TR>");
 		appendTd(sb, shield.getX1(), 1);
-		sb.append("<TD BGCOLOR=\"" + StringUtils.getAsHtml(color) + "\"");
-		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + getHeight() + "\"");
+		sb.append("<TD BGCOLOR=\"").append(StringUtils.getAsHtml(color)).append("\"");
+		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"").append(getWidth()).append("\" HEIGHT=\"").append(getHeight()).append("\"");
 		sb.append(" PORT=\"h\">");
 		sb.append("</TD>");
 		appendTd(sb, shield.getX2(), 1);
@@ -184,8 +184,8 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		sb.append("shape=plaintext,");
 		// sb.append("color=\"" + StringUtils.getAsHtml(color) + "\",");
 		sb.append("label=<");
-		sb.append("<TABLE BGCOLOR=\"" + StringUtils.getAsHtml(color)
-				+ "\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
+		sb.append("<TABLE BGCOLOR=\"").append(StringUtils.getAsHtml(color))
+          .append("\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 		double position = 0;
 		for (Map.Entry<String, PortGeometry> ent : ports.getAll().entrySet()) {
 			final String portName = ent.getKey();
@@ -208,9 +208,9 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 		}
 		sb.append("<TR>");
 		sb.append("<TD ");
-		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + height + "\"");
+		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"").append(getWidth()).append("\" HEIGHT=\"").append(height).append("\"");
 		if (portName != null) {
-			sb.append(" PORT=\"" + portName + "\"");
+			sb.append(" PORT=\"").append(portName).append("\"");
 		}
 		sb.append(">");
 		sb.append("</TD>");
@@ -219,7 +219,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 
 	private void appendTd(StringBuilder sb, double w, double h) {
 		sb.append("<TD");
-		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\"");
+		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"").append(w).append("\" HEIGHT=\"").append(h).append("\"");
 		sb.append(">");
 		sb.append("</TD>");
 	}
@@ -230,7 +230,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	}
 
 	private void appendShapeInternal(StringBuilder sb) {
-		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
+		if (type == ShapeType.RECTANGLE && !shield.isZero()) {
 			throw new UnsupportedOperationException();
 		} else if (type == ShapeType.RECTANGLE || type == ShapeType.FOLDER) {
 			sb.append("shape=rect");
@@ -289,7 +289,7 @@ public class Shape implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public boolean isShielded() {
-		return shield.isZero() == false;
+		return !shield.isZero();
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {

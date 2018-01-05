@@ -40,8 +40,8 @@ import java.util.Collection;
 
 public class PUnivers {
 
-	private final Collection<PSegment> all = new ArrayList<PSegment>();
-	private final Collection<FixedLink> links = new ArrayList<FixedLink>();
+	private final Collection<PSegment> all = new ArrayList<>();
+	private final Collection<FixedLink> links = new ArrayList<>();
 
 	public PSegment createPSegment(double minsize) {
 		final PSegment result = new PSegment(minsize);
@@ -57,7 +57,7 @@ public class PUnivers {
 	}
 
 	public void solve() {
-		boolean changed = false;
+		boolean changed;
 		do {
 			changed = false;
 			for (FixedLink link : links) {

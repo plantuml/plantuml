@@ -75,9 +75,8 @@ public class NotesTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder, Note note) {
-		final Component comp = skin.createComponent(getNoteComponentType(note.getStyle()), null,
-				note.getSkinParamBackcolored(skinParam), note.getStrings());
-		return comp;
+        return skin.createComponent(getNoteComponentType(note.getStyle()), null,
+note.getSkinParamBackcolored(skinParam), note.getStrings());
 	}
 
 	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
@@ -107,8 +106,7 @@ public class NotesTile implements Tile {
 	private double getUsedWidth(StringBounder stringBounder, Note note) {
 		final Component comp = getComponent(stringBounder, note);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final double width = dim.getWidth();
-		return width;
+        return dim.getWidth();
 	}
 
 	private Real getXcenter(StringBounder stringBounder, Note note) {
@@ -120,22 +118,23 @@ public class NotesTile implements Tile {
 		final LivingSpace livingSpace1 = livingSpaces.get(note.getParticipant());
 		final NotePosition position = note.getPosition();
 		final double width = getUsedWidth(stringBounder, note);
-		if (position == NotePosition.LEFT) {
-			return livingSpace1.getPosC(stringBounder).addFixed(-width);
-		} else if (position == NotePosition.RIGHT) {
-			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;
-			return livingSpace1.getPosC(stringBounder).addFixed(dx);
-		} else if (position == NotePosition.OVER_SEVERAL) {
-			final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());
-			final Real x1 = livingSpace1.getPosC(stringBounder);
-			final Real x2 = livingSpace2.getPosC(stringBounder);
-			return RealUtils.middle(x1, x2).addFixed(-width / 2);
-		} else if (position == NotePosition.OVER) {
-			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);
-		} else {
-			throw new UnsupportedOperationException(position.toString());
-		}
+        switch (position) {
+            case LEFT:
+                return livingSpace1.getPosC(stringBounder).addFixed(-width);
+            case RIGHT:
+                final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+                final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;
+                return livingSpace1.getPosC(stringBounder).addFixed(dx);
+            case OVER_SEVERAL:
+                final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());
+                final Real x1 = livingSpace1.getPosC(stringBounder);
+                final Real x2 = livingSpace2.getPosC(stringBounder);
+                return RealUtils.middle(x1, x2).addFixed(-width / 2);
+            case OVER:
+                return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);
+            default:
+                throw new UnsupportedOperationException(position.toString());
+        }
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -168,7 +167,7 @@ public class NotesTile implements Tile {
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-		final List<Real> reals = new ArrayList<Real>();
+		final List<Real> reals = new ArrayList<>();
 		for (Note note : notes) {
 			reals.add(getX(stringBounder, note));
 		}
@@ -180,7 +179,7 @@ public class NotesTile implements Tile {
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		final List<Real> reals = new ArrayList<Real>();
+		final List<Real> reals = new ArrayList<>();
 		for (Note note : notes) {
 			reals.add(getX2(stringBounder, note));
 		}

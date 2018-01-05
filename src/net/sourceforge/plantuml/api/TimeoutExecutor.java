@@ -47,7 +47,7 @@ public final class TimeoutExecutor {
 
 	public boolean executeNow(MyRunnable task) {
 		final MyThread mainThread = new MyThread(task);
-		boolean done = false;
+		boolean done;
 		try {
 			mainThread.start();
 			mainThread.join(ms);
@@ -57,7 +57,7 @@ public final class TimeoutExecutor {
 			return false;
 		} finally {
 			done = mainThread.done.get();
-			if (done == false) {
+			if (!done) {
 				task.cancelJob();
 				mainThread.interrupt();
 			}

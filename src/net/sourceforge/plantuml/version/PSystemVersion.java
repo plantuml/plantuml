@@ -70,7 +70,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemVersion extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private BufferedImage image;
 
 	PSystemVersion(boolean withImage, List<String> args) {
@@ -151,7 +151,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image,
 				GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
@@ -162,7 +162,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static PSystemVersion createShowVersion() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		strings.add("Loaded from " + Version.getJarPath());
@@ -179,12 +179,8 @@ public class PSystemVersion extends AbstractPSystem {
 
 		strings.addAll(GraphvizUtils.getTestDotStrings(true));
 		strings.add(" ");
-		for (String name : OptionPrint.interestingProperties()) {
-			strings.add(name);
-		}
-		for (String v : OptionPrint.interestingValues()) {
-			strings.add(v);
-		}
+		strings.addAll(OptionPrint.interestingProperties());
+		strings.addAll(OptionPrint.interestingValues());
 
 		return new PSystemVersion(true, strings);
 	}
@@ -196,7 +192,7 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	public static List<String> getAuthorsStrings(boolean withTag) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		add(strings, "<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")",
 				withTag);
 		add(strings, "(" + License.getCurrent() + " source distribution)", withTag);
@@ -221,39 +217,43 @@ public class PSystemVersion extends AbstractPSystem {
 	}
 
 	private static void add(List<String> result, String s, boolean withTag) {
-		if (withTag == false) {
-			s = s.replaceAll("\\</?\\w+\\>", "");
+		if (!withTag) {
+			s = s.replaceAll("</?\\w+>", "");
 		}
 		result.add(s);
 
 	}
 
 	public static PSystemVersion createCheckVersions(String host, String port) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 
 		final int lastversion = extractDownloadableVersion(host, port);
 
 		int lim = 7;
-		if (lastversion == -1) {
-			strings.add("<b><color:red>Error");
-			strings.add("<color:red>Cannot connect to http://plantuml.com/");
-			strings.add("Maybe you should set your proxy ?");
-			strings.add("@startuml");
-			strings.add("checkversion(proxy=myproxy.com,port=8080)");
-			strings.add("@enduml");
-			lim = 9;
-		} else if (lastversion == 0) {
-			strings.add("<b><color:red>Error</b>");
-			strings.add("Cannot retrieve last version from http://plantuml.com/");
-		} else {
-			strings.add("<b>Last available version for download</b> : " + lastversion);
-			strings.add(" ");
-			if (Version.version() >= lastversion) {
-				strings.add("<b><color:green>Your version is up to date.");
-			} else {
-				strings.add("<b><color:red>A newer version is available for download.");
-			}
+		switch (lastversion) {
+			case -1:
+				strings.add("<b><color:red>Error");
+				strings.add("<color:red>Cannot connect to http://plantuml.com/");
+				strings.add("Maybe you should set your proxy ?");
+				strings.add("@startuml");
+				strings.add("checkversion(proxy=myproxy.com,port=8080)");
+				strings.add("@enduml");
+				lim = 9;
+				break;
+			case 0:
+				strings.add("<b><color:red>Error</b>");
+				strings.add("Cannot retrieve last version from http://plantuml.com/");
+				break;
+			default:
+				strings.add("<b>Last available version for download</b> : " + lastversion);
+				strings.add(" ");
+				if (Version.version() >= lastversion) {
+					strings.add("<b><color:green>Your version is up to date.");
+				} else {
+					strings.add("<b><color:red>A newer version is available for download.");
+				}
+				break;
 		}
 
 		while (strings.size() < lim) {
@@ -302,9 +302,8 @@ public class PSystemVersion extends AbstractPSystem {
 		return 0;
 	}
 
-	public static PSystemVersion createTestDot() throws IOException {
-		final List<String> strings = new ArrayList<String>();
-		strings.addAll(GraphvizUtils.getTestDotStrings(true));
+	public static PSystemVersion createTestDot() {
+        final List<String> strings = new ArrayList<>(GraphvizUtils.getTestDotStrings(true));
 		return new PSystemVersion(false, strings);
 	}
 

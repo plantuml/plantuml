@@ -130,27 +130,34 @@ class FtileRepeat extends AbstractFtile {
 			diamond1 = backStart;
 		}
 		final FtileRepeat result;
-		if (conditionStyle == ConditionStyle.INSIDE) {
-			final Ftile diamond2;
-			if (noOut && Display.isNull(test)) {
-				diamond2 = new FtileEmpty(repeat.skinParam());
-			} else {
-				diamond2 = new FtileDiamondInside(repeat.skinParam(), backColor, borderColor, swimlaneOut, tbTest)
-						.withEast(yesTb).withSouth(outTb);
-			}
-			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane)
-					.withEast(tbTest);
-			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);
-		} else if (conditionStyle == ConditionStyle.FOO1) {
-			final Ftile diamond2 = new FtileDiamondFoo1(repeat.skinParam(), backColor, borderColor, swimlane, tbTest);
-			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (conditionStyle) {
+            case INSIDE: {
+                final Ftile diamond2;
+                if (noOut && Display.isNull(test)) {
+                    diamond2 = new FtileEmpty(repeat.skinParam());
+                } else {
+                    diamond2 = new FtileDiamondInside(repeat.skinParam(), backColor, borderColor, swimlaneOut, tbTest)
+                            .withEast(yesTb).withSouth(outTb);
+                }
+                result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
+                break;
+            }
+            case DIAMOND: {
+                final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane)
+                        .withEast(tbTest);
+                result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);
+                break;
+            }
+            case FOO1: {
+                final Ftile diamond2 = new FtileDiamondFoo1(repeat.skinParam(), backColor, borderColor, swimlane, tbTest);
+                result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
+                break;
+            }
+            default:
+                throw new IllegalStateException();
+        }
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Display in1 = repeat.getInLinkRendering().getDisplay();
 		final TextBlock tbin1 = in1 == null ? null : in1.create(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
 				CreoleMode.SIMPLE_LINE);
@@ -236,7 +243,7 @@ class FtileRepeat extends AbstractFtile {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false) {
+			if (!getFtile1().calculateDimension(stringBounder).hasPointOut()) {
 				return;
 			}
 
@@ -250,7 +257,7 @@ class FtileRepeat extends AbstractFtile {
 
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false) {
+			if (!getFtile1().calculateDimension(stringBounder).hasPointOut()) {
 				return;
 			}
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor);

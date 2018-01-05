@@ -35,21 +35,17 @@
  */
 package net.sourceforge.plantuml.graph2;
 
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graph2.Dijkstra.Vertex;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.util.*;
+
 public class Plan {
 
-	private final Map<Point2D.Double, Singularity2> points = new LinkedHashMap<Point2D.Double, Singularity2>();
-	private final Collection<Line2D.Double> lines = new ArrayList<Line2D.Double>();
+	private final Map<Point2D.Double, Singularity2> points = new LinkedHashMap<>();
+	private final Collection<Line2D.Double> lines = new ArrayList<>();
 
 	public void addPoint2D(Point2D.Double point) {
 		if (points.containsKey(point)) {
@@ -91,12 +87,12 @@ public class Plan {
 
 	List<Neighborhood2> getShortestPathToInternal(Point2D start, Point2D end) {
 		final Dijkstra dijkstra = new Dijkstra();
-		if (points.containsKey(start) == false || points.containsKey(end) == false) {
+		if (!points.containsKey(start) || !points.containsKey(end)) {
 			throw new IllegalArgumentException();
 		}
 		final Vertex vStart = dijkstra.addVertex(start);
 		final Vertex vEnd = dijkstra.addVertex(end);
-		final Map<Neighborhood2, Vertex> vertexes = new LinkedHashMap<Neighborhood2, Vertex>();
+		final Map<Neighborhood2, Vertex> vertexes = new LinkedHashMap<>();
 		for (Singularity2 s : points.values()) {
 			for (Neighborhood2 n : s.getNeighborhoods()) {
 				final Vertex v = dijkstra.addVertex(n);
@@ -121,7 +117,7 @@ public class Plan {
 				if (isStrictCrossing(line)) {
 					continue;
 				}
-				if (n1.isConnectable(n2) == false) {
+				if (!n1.isConnectable(n2)) {
 					continue;
 				}
 				final double dist = n1.getCenter().distance(n2.getCenter());
@@ -135,7 +131,7 @@ public class Plan {
 		if (list.size() < 2) {
 			throw new IllegalStateException("list=" + list);
 		}
-		final List<Neighborhood2> result = new ArrayList<Neighborhood2>();
+		final List<Neighborhood2> result = new ArrayList<>();
 		for (Vertex v : list.subList(1, list.size() - 1)) {
 			result.add((Neighborhood2) v.getData());
 		}
@@ -144,7 +140,7 @@ public class Plan {
 
 	public List<Point2D.Double> getIntermediatePoints(Point2D start, Point2D end) {
 		// Log.println("start=" + start + " end=" + end);
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+		final List<Point2D.Double> result = new ArrayList<>();
 		final List<Neighborhood2> list = getShortestPathToInternal(start, end);
 		// Log.println("Neighborhood2 = " + list);
 		for (int i = 1; i < list.size() - 1; i++) {
@@ -186,7 +182,7 @@ public class Plan {
 	}
 
 	private static boolean intersectsLineStrictInternal(Line2D.Double l1, Line2D.Double l2) {
-		if (l1.intersectsLine(l2) == false) {
+		if (!l1.intersectsLine(l2)) {
 			return false;
 		}
 		assert l1.intersectsLine(l2);
@@ -196,32 +192,21 @@ public class Plan {
 		Point2D.Double l2a = (Point2D.Double) l2.getP1();
 		Point2D.Double l2b = (Point2D.Double) l2.getP2();
 
-		if (l1a.equals(l2a) == false && l1a.equals(l2b) == false && l1b.equals(l2a) == false
-				&& l1b.equals(l2b) == false) {
+		if (!l1a.equals(l2a) && !l1a.equals(l2b) && !l1b.equals(l2a)
+				&& !l1b.equals(l2b)) {
 			return true;
 		}
 
 		if (l1a.equals(l2b)) {
-			final Point2D.Double tmp = l2a;
 			l2a = l2b;
-			l2b = tmp;
 		} else if (l2a.equals(l1b)) {
-			final Point2D.Double tmp = l1a;
 			l1a = l1b;
-			l1b = tmp;
 		} else if (l1b.equals(l2b)) {
-			Point2D.Double tmp = l2a;
 			l2a = l2b;
-			l2b = tmp;
-			tmp = l1a;
 			l1a = l1b;
-			l1b = tmp;
 		}
-
 		assert l1a.equals(l2a);
-
 		return false;
-
 	}
 
 	final double getMindist(Point2D.Double pt) {

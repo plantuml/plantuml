@@ -47,10 +47,10 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class HeaderLayout {
 
-	final private TextBlock name;
-	final private TextBlock stereo;
-	final private TextBlock generic;
-	final private TextBlock circledCharacter;
+	private final TextBlock name;
+	private final TextBlock stereo;
+	private final TextBlock generic;
+	private final TextBlock circledCharacter;
 
 	public HeaderLayout(TextBlock circledCharacter, TextBlock stereo, TextBlock name, TextBlock generic) {
 		this.circledCharacter = protectAgaintNull(circledCharacter);
@@ -96,9 +96,8 @@ public class HeaderLayout {
 		assert h1 >= 0;
 		assert h2 >= 0;
 
-		final double xCircle = h1;
-		final double yCircle = (height - circleDim.getHeight()) / 2;
-		circledCharacter.drawU(ug.apply(new UTranslate(xCircle, yCircle)));
+        final double yCircle = (height - circleDim.getHeight()) / 2;
+		circledCharacter.drawU(ug.apply(new UTranslate(h1, yCircle)));
 
 		final double diffHeight = height - stereoDim.getHeight() - nameDim.getHeight();
 		final double xStereo = circleDim.getWidth() + (widthStereoAndName - stereoDim.getWidth()) / 2 + h1 + h2;

@@ -63,7 +63,7 @@ public class PostItDiagram extends UmlDiagram {
 
 	private final Area defaultArea = new Area('\0', null);
 
-	private final Map<String, PostIt> postIts = new HashMap<String, PostIt>();
+	private final Map<String, PostIt> postIts = new HashMap<>();
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
@@ -71,7 +71,7 @@ public class PostItDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+    protected final ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final UGraphic ug = createImage(fileFormatOption);
 		drawU(ug);

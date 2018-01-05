@@ -52,7 +52,7 @@ public class Board {
 	private final List<ALink> links;
 	private final Map<ALink, Integer> initialDirection;
 
-	private final Map<ANode, Integer> nodesCols = new LinkedHashMap<ANode, Integer>();
+	private final Map<ANode, Integer> nodesCols = new LinkedHashMap<>();
 
 	private int hashcodeValue;
 	private boolean hashcodeComputed = false;
@@ -76,7 +76,7 @@ public class Board {
 		final Iterator<Integer> it2 = other.nodesCols.values().iterator();
 		assert this.nodesCols.size() == other.nodesCols.size();
 		while (it1.hasNext()) {
-			if (it1.next().equals(it2.next()) == false) {
+			if (!it1.next().equals(it2.next())) {
 				return false;
 			}
 		}
@@ -145,8 +145,8 @@ public class Board {
 		for (ANode n : nodes) {
 			addInRow(n);
 		}
-		this.links = Collections.unmodifiableList(new ArrayList<ALink>(links));
-		this.initialDirection = new HashMap<ALink, Integer>();
+		this.links = Collections.unmodifiableList(new ArrayList<>(links));
+		this.initialDirection = new HashMap<>();
 		for (ALink link : links) {
 			this.initialDirection.put(link, getDirection(link));
 		}
@@ -178,7 +178,7 @@ public class Board {
 	}
 
 	public Collection<ANode> getNodesInRow(int row) {
-		final List<ANode> result = new ArrayList<ANode>();
+		final List<ANode> result = new ArrayList<>();
 		for (ANode n : nodesCols.keySet()) {
 			if (n.getRow() == row) {
 				result.add(n);
@@ -210,7 +210,7 @@ public class Board {
 	}
 
 	public Collection<Move> getAllPossibleMoves() {
-		final List<Move> result = new ArrayList<Move>();
+		final List<Move> result = new ArrayList<>();
 		for (Map.Entry<ANode, Integer> ent : nodesCols.entrySet()) {
 			final int row = ent.getKey().getRow();
 			final int col = ent.getValue();
@@ -222,7 +222,7 @@ public class Board {
 
 	public ANode getNodeAt(int row, int col) {
 		for (Map.Entry<ANode, Integer> ent : nodesCols.entrySet()) {
-			if (ent.getKey().getRow() == row && ent.getValue().intValue() == col) {
+			if (ent.getKey().getRow() == row && ent.getValue() == col) {
 				return ent.getKey();
 			}
 		}
@@ -236,7 +236,7 @@ public class Board {
 		if (level == 0) {
 			return Collections.singleton(root);
 		}
-		final Set<ANode> result = new HashSet<ANode>();
+		final Set<ANode> result = new HashSet<>();
 		if (level == 1) {
 			for (ALink link : links) {
 				if (link.getNode1() == root) {
@@ -255,7 +255,7 @@ public class Board {
 	}
 
 	public Set<ALink> getAllLinks(Set<ANode> nodes) {
-		final Set<ALink> result = new HashSet<ALink>();
+		final Set<ALink> result = new HashSet<>();
 		for (ALink link : links) {
 			if (nodes.contains(link.getNode1()) || nodes.contains(link.getNode2())) {
 				result.add(link);

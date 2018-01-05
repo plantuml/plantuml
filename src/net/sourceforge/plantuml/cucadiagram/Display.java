@@ -81,14 +81,14 @@ public class Display implements Iterable<CharSequence> {
 	private final boolean isNull;
 	private final CreoleMode defaultCreoleMode;
 
-	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
+	public static final Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
 	public boolean isWhite() {
-		return display.size() == 0 || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
+		return display.isEmpty() || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
 	}
 
 	public static Display empty() {
-		return new Display((HorizontalAlignment) null, false, CreoleMode.FULL);
+		return new Display(null, false, CreoleMode.FULL);
 	}
 
 	public static Display create(CharSequence... s) {
@@ -108,7 +108,7 @@ public class Display implements Iterable<CharSequence> {
 			// Thread.dumpStack();
 			return NULL;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
 		HorizontalAlignment naturalHorizontalAlignment = null;
 		boolean rawMode = false;
@@ -120,25 +120,32 @@ public class Display implements Iterable<CharSequence> {
 			} else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]")) {
 				rawMode = false;
 			}
-			if (rawMode == false && c == '\\' && i < s.length() - 1) {
+			if (!rawMode && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
-				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
-					if (c2 == 'r') {
-						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
-					} else if (c2 == 'l') {
-						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
-					}
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
-				} else {
-					current.append(c);
-					current.append(c2);
-				}
+                switch (c2) {
+                    case 'n':
+                    case 'r':
+                    case 'l':
+                        if (c2 == 'r') {
+                            naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
+                        } else if (c2 == 'l') {
+                            naturalHorizontalAlignment = HorizontalAlignment.LEFT;
+                        }
+                        result.add(current.toString());
+                        current.setLength(0);
+                        break;
+                    case 't':
+                        current.append('\t');
+                        break;
+                    case '\\':
+                        current.append(c2);
+                        break;
+                    default:
+                        current.append(c);
+                        current.append(c2);
+                        break;
+                }
 			} else if (c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);
@@ -165,18 +172,18 @@ public class Display implements Iterable<CharSequence> {
 	private Display(Collection<? extends CharSequence> other, HorizontalAlignment naturalHorizontalAlignment,
 			boolean isNull, CreoleMode defaultCreoleMode) {
 		this(naturalHorizontalAlignment, isNull, defaultCreoleMode);
-		if (isNull == false) {
+		if (!isNull) {
 			this.display.addAll(manageEmbededDiagrams2(other));
 		}
 	}
 
 	private static List<CharSequence> manageEmbededDiagrams2(final Collection<? extends CharSequence> strings) {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		final Iterator<? extends CharSequence> it = strings.iterator();
 		while (it.hasNext()) {
 			CharSequence s = it.next();
 			if (s != null && StringUtils.trin(s.toString()).equals("{{")) {
-				final List<CharSequence> other = new ArrayList<CharSequence>();
+				final List<CharSequence> other = new ArrayList<>();
 				other.add("@startuml");
 				while (it.hasNext()) {
 					final CharSequence s2 = it.next();
@@ -194,7 +201,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public Display manageGuillemet() {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : display) {
 			final String withGuillement = StringUtils.manageGuillemet(line.toString());
 			if (withGuillement.equals(line.toString())) {
@@ -202,6 +209,7 @@ public class Display implements Iterable<CharSequence> {
 			} else {
 				result.add(withGuillement);
 			}
+
 		}
 		return new Display(result, this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 	}
@@ -210,7 +218,7 @@ public class Display implements Iterable<CharSequence> {
 		if (display == null) {
 			return this;
 		}
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : display) {
 			line = line.toString().replace("%page%", "" + page);
 			line = line.toString().replace("%lastpage%", "" + lastpage);
@@ -220,7 +228,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public Display underlined() {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (CharSequence line : display) {
 			result.add("<u>" + line);
 		}
@@ -317,7 +325,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public List<CharSequence2> as2() {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		final List<CharSequence2> result = new ArrayList<>();
 		LineLocationImpl location = new LineLocationImpl("inner", null);
 		for (CharSequence cs : display) {
 			location = location.oneLineRead();
@@ -341,7 +349,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public List<Display> splitMultiline(Pattern2 separator) {
-		final List<Display> result = new ArrayList<Display>();
+		final List<Display> result = new ArrayList<>();
 		Display pending = new Display(this.naturalHorizontalAlignment, this.isNull, this.defaultCreoleMode);
 		result.add(pending);
 		for (CharSequence line : display) {

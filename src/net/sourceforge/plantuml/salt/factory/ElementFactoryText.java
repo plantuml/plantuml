@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import java.awt.Font;
 import java.util.Arrays;
 
 import net.sourceforge.plantuml.ISkinSimple;
@@ -48,8 +47,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryText implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryText(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;
@@ -57,7 +56,7 @@ public class ElementFactoryText implements ElementFactory {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();
@@ -70,10 +69,7 @@ public class ElementFactoryText implements ElementFactory {
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
 		// return text.startsWith("\"") && text.endsWith("\"");
-		if (text.startsWith("{") || text.startsWith("}")) {
-			return false;
-		}
-		return StringUtils.trin(text).length() > 0;
+		return !text.startsWith("{") && !text.startsWith("}") && !StringUtils.trin(text).isEmpty();
 	}
 
 }

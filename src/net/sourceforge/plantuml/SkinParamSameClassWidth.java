@@ -37,7 +37,7 @@ package net.sourceforge.plantuml;
 
 public class SkinParamSameClassWidth extends SkinParamDelegator {
 
-	final private double width;
+	private final double width;
 
 	public SkinParamSameClassWidth(ISkinParam skinParam, double width) {
 		super(skinParam);

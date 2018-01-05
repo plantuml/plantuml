@@ -35,16 +35,9 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -69,9 +62,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GanttDiagram extends AbstractPSystem implements Subject {
 
-	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
-	private final Map<String, Task> byShortName = new HashMap<String, Task>();
-	private final List<GanttConstraint> constraints = new ArrayList<GanttConstraint>();
+	private final Map<TaskCode, Task> tasks = new LinkedHashMap<>();
+	private final Map<String, Task> byShortName = new HashMap<>();
+	private final List<GanttConstraint> constraints = new ArrayList<>();
 	private final IHtmlColorSet colorSet = new HtmlColorSetSimple();
 	private GCalendar calendar;
 
@@ -103,7 +96,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 
 	private void sortTasks() {
 		final TaskCodeSimpleOrder order = getCanonicalOrder(1);
-		final List<Task> list = new ArrayList<Task>(tasks.values());
+		final List<Task> list = new ArrayList<>(tasks.values());
 		Collections.sort(list, new Comparator<Task>() {
 			public int compare(Task task1, Task task2) {
 				return order.compare(task1.getCode(), task2.getCode());
@@ -292,7 +285,7 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	}
 
 	private TaskCodeSimpleOrder getCanonicalOrder(int hierarchyHeader) {
-		final List<TaskCode> codes = new ArrayList<TaskCode>();
+		final List<TaskCode> codes = new ArrayList<>();
 		for (TaskCode code : tasks.keySet()) {
 			if (code.getHierarchySize() >= hierarchyHeader) {
 				codes.add(code.truncateHierarchy(hierarchyHeader));

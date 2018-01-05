@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -95,17 +94,18 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage,
 	}
 
 	private ColorParam getArrowColorParam() {
-		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return ColorParam.arrow;
-		}
+        switch (dotData.getUmlDiagramType()) {
+            case CLASS:
+                return ColorParam.arrow;
+            case OBJECT:
+                return ColorParam.arrow;
+            case DESCRIPTION:
+                return ColorParam.arrow;
+            case ACTIVITY:
+                return ColorParam.arrow;
+            case STATE:
+                return ColorParam.arrow;
+        }
 		throw new IllegalStateException();
 	}
 

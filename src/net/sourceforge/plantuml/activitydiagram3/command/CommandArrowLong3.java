@@ -87,14 +87,14 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	private <CS extends CharSequence> void removeStarting(List<CS> lines, String data) {
-		if (lines.size() == 0) {
+		if (lines.isEmpty()) {
 			return;
 		}
 		lines.set(0, (CS) data);
 	}
 
 	private <CS extends CharSequence> void removeEnding(List<CS> lines) {
-		if (lines.size() == 0) {
+		if (lines.isEmpty()) {
 			return;
 		}
 		final int n = lines.size() - 1;

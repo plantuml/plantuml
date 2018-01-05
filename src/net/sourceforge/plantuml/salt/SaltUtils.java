@@ -65,7 +65,7 @@ public class SaltUtils {
 	public static Element createElement(List<String> data) {
 		final DataSourceImpl source = new DataSourceImpl(data);
 
-		final Collection<AbstractElementFactoryComplex> cpx = new ArrayList<AbstractElementFactoryComplex>();
+		final Collection<AbstractElementFactoryComplex> cpx = new ArrayList<>();
 
 		final Dictionary dictionary = new Dictionary();
 

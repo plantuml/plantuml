@@ -62,8 +62,8 @@ public class FileUtils {
 		counter = new AtomicInteger(0);
 	}
 
-	static public File createTempFile(String prefix, String suffix) throws IOException {
-		if (suffix.startsWith(".") == false) {
+	public static File createTempFile(String prefix, String suffix) throws IOException {
+		if (!suffix.startsWith(".")) {
 			throw new IllegalArgumentException();
 		}
 		if (prefix == null) {
@@ -91,47 +91,53 @@ public class FileUtils {
 		fis.close();
 	}
 
-	static public void copyToFile(File src, File dest) throws IOException {
+	public static void copyToFile(File src, File dest) throws IOException {
 		if (dest.isDirectory()) {
 			dest = new File(dest, src.getName());
 		}
-		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
-		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest));
-		copyInternal(fis, fos);
+		try (InputStream fis = new BufferedInputStream(new FileInputStream(src));
+		     final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest))) {
+			copyInternal(fis, fos);
+		}
 	}
 
-	static public void copyToStream(File src, OutputStream os) throws IOException {
-		final InputStream fis = new BufferedInputStream(new FileInputStream(src));
-		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+	public static void copyToStream(File src, OutputStream os) throws IOException {
+		try (final InputStream fis = new BufferedInputStream(new FileInputStream(src));
+		     final OutputStream fos = new BufferedOutputStream(os)) {
+			copyInternal(fis, fos);
+		}
 	}
 
-	static public void copyToStream(InputStream is, OutputStream os) throws IOException {
-		final InputStream fis = new BufferedInputStream(is);
-		final OutputStream fos = new BufferedOutputStream(os);
-		copyInternal(fis, fos);
+	public static void copyToStream(InputStream is, OutputStream os) throws IOException {
+		try (final InputStream fis = new BufferedInputStream(is);
+		     final OutputStream fos = new BufferedOutputStream(os)) {
+			copyInternal(fis, fos);
+		}
 	}
 
-	static public void copyToFile(byte[] src, File dest) throws IOException {
-		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(dest));
-		fos.write(src);
-		fos.close();
+	public static void copyToFile(byte[] src, File dest) throws IOException {
+		try (final FileOutputStream out = new FileOutputStream(dest);
+		     OutputStream fos = new BufferedOutputStream(out)) {
+			fos.write(src);
+		}
 	}
 
-	static public String readSvg(File svgFile) throws IOException {
-		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
-		return readSvg(br, false, true);
+	public static String readSvg(File svgFile) throws IOException {
+		try (BufferedReader br = new BufferedReader(new FileReader(svgFile))) {
+			return readSvg(br, false, true);
+		}
 	}
 
-	static public String readSvg(InputStream is) throws IOException {
-		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		return readSvg(br, false, false);
+	public static String readSvg(InputStream is) throws IOException {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+			return readSvg(br, false, false);
+		}
 	}
 
-	static public String readFile(File svgFile) throws IOException {
-		final BufferedReader br = new BufferedReader(new FileReader(svgFile));
-		return readSvg(br, true, true);
-	}
+    public static String readFile(File svgFile) throws IOException {
+        final BufferedReader br = new BufferedReader(new FileReader(svgFile));
+        return readSvg(br, true, true);
+    }
 
 	private static String readSvg(final BufferedReader br, boolean withNewline, boolean withClose) throws IOException {
 		final StringBuilder sb = new StringBuilder();

@@ -71,17 +71,11 @@ public class SuggestEngineResult {
 	}
 
 	private static boolean sameString(String a, String b) {
-		if (a == null && b == null) {
-			return true;
-		}
-		if (a != null || b != null) {
-			return false;
-		}
-		return a.equals(b);
+		return a != null && b != null && a.equals(b);
 	}
 
 	public SuggestEngineResult(String suggestedLine) {
-		if (StringUtils.trin(suggestedLine).length() == 0) {
+		if (StringUtils.trin(suggestedLine).isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		this.status = SuggestEngineStatus.ONE_SUGGESTION;

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionFork extends WithNote implements Instruction {
 
-	private final List<InstructionList> forks = new ArrayList<InstructionList>();
+	private final List<InstructionList> forks = new ArrayList<>();
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 	private final ISkinParam skinParam;
@@ -78,12 +78,12 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		final List<Ftile> all = new ArrayList<Ftile>();
+		final List<Ftile> all = new ArrayList<>();
 		for (InstructionList list : forks) {
 			all.add(list.createFtile(factory));
 		}
 		Ftile result = factory.createParallel(getSwimlaneIn(), all, style, label);
-		if (getPositionedNotes().size() > 0) {
+		if (!getPositionedNotes().isEmpty()) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
 		return result;
@@ -97,7 +97,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		this.forks.add(new InstructionList());
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		return getLastList().kill();
 	}
 

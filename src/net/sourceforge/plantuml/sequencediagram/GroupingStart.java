@@ -44,10 +44,10 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class GroupingStart extends Grouping {
 
-	private final List<GroupingLeaf> children = new ArrayList<GroupingLeaf>();
+	private final List<GroupingLeaf> children = new ArrayList<>();
 	private final HtmlColor backColorGeneral;
 
-	final private GroupingStart parent;
+	private final GroupingStart parent;
 
 	public GroupingStart(String title, String comment, HtmlColor backColorGeneral, HtmlColor backColorElement,
 			GroupingStart parent) {

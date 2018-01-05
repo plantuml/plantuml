@@ -44,7 +44,7 @@ enum ItemCaract {
 
 	private final NumericType type;
 
-	private ItemCaract(NumericType type) {
+	ItemCaract(NumericType type) {
 		this.type = type;
 	}
 

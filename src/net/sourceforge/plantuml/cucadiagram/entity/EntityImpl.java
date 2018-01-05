@@ -102,7 +102,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	// Other
 	private boolean nearDecoration = false;
-	private final Collection<String> portShortNames = new HashSet<String>();
+	private final Collection<String> portShortNames = new HashSet<>();
 	private int xposition;
 	private IEntityImage svekImage;
 
@@ -229,13 +229,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean hasUrl() {
-		if (Display.isNull(display) == false && display.hasUrl()) {
-			return true;
-		}
-		if (bodier.hasUrl()) {
-			return true;
-		}
-		return url != null;
+		return !Display.isNull(display) && display.hasUrl() || bodier.hasUrl() || url != null;
 	}
 
 	public final void addUrl(Url url) {
@@ -305,7 +299,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	// ----------
 
 	private void checkGroup() {
-		if (isGroup() == false) {
+		if (!isGroup()) {
 			throw new UnsupportedOperationException();
 		}
 	}
@@ -337,7 +331,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public Collection<ILeaf> getLeafsDirect() {
 		checkGroup();
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : entityFactory.getLeafs().values()) {
 			if (ent.isGroup()) {
 				throw new IllegalStateException();
@@ -351,7 +345,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public Collection<IGroup> getChildren() {
 		checkGroup();
-		final Collection<IGroup> result = new ArrayList<IGroup>();
+		final Collection<IGroup> result = new ArrayList<>();
 		for (IGroup g : entityFactory.getGroups().values()) {
 			if (g != this && g.getParentContainer() == this) {
 				result.add(g);
@@ -362,7 +356,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	public void moveEntitiesTo(IGroup dest) {
 		checkGroup();
-		if (dest.isGroup() == false) {
+		if (!dest.isGroup()) {
 			throw new UnsupportedOperationException();
 		}
 		for (ILeaf ent : getLeafsDirect()) {
@@ -425,14 +419,14 @@ final class EntityImpl implements ILeaf, IGroup {
 		this.svekImage = img;
 		this.url = null;
 
-		for (final Link link : new ArrayList<Link>(entityFactory.getLinks())) {
+		for (final Link link : new ArrayList<>(entityFactory.getLinks())) {
 			if (EntityUtils.isPureInnerLink12(this, link)) {
 				entityFactory.removeLink(link);
 			}
 		}
 
 		entityFactory.removeGroup(this.getCode());
-		for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.getLeafs().values())) {
+		for (ILeaf ent : new ArrayList<>(entityFactory.getLeafs().values())) {
 			if (this != ent && this == ent.getParentContainer()) {
 				entityFactory.removeLeaf(ent.getCode());
 			}
@@ -445,7 +439,7 @@ final class EntityImpl implements ILeaf, IGroup {
 
 	void muteToGroup(Code namespace2, GroupType groupType, IGroup parentContainer) {
 		checkNotGroup();
-		if (parentContainer.isGroup() == false) {
+		if (!parentContainer.isGroup()) {
 			throw new IllegalArgumentException();
 		}
 		this.namespace2 = namespace2;
@@ -455,13 +449,7 @@ final class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean isHidden() {
-		if (entityFactory.isHidden(this)) {
-			return true;
-		}
-		if (stereotype != null) {
-			return stereotype.isHidden();
-		}
-		return false;
+		return entityFactory.isHidden(this) || stereotype != null && stereotype.isHidden();
 	}
 
 	public USymbol getUSymbol() {
@@ -487,16 +475,16 @@ final class EntityImpl implements ILeaf, IGroup {
 			if (removed) {
 				return true;
 			}
-			if (getLeafsDirect().size() == 0) {
+			if (getLeafsDirect().isEmpty()) {
 				return false;
 			}
 			for (ILeaf leaf : getLeafsDirect()) {
-				if (leaf.isRemoved() == false) {
+				if (!leaf.isRemoved()) {
 					return false;
 				}
 			}
 			for (IGroup g : getChildren()) {
-				if (g.isRemoved() == false) {
+				if (!g.isRemoved()) {
 					return false;
 				}
 			}
@@ -537,9 +525,8 @@ final class EntityImpl implements ILeaf, IGroup {
 		final FontParam fontParam = getTitleFontParam();
 		final HtmlColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);
 		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);
-		final FontConfiguration fontConfiguration = new FontConfiguration(font, fontHtmlColor,
-				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
-		return fontConfiguration;
+        return new FontConfiguration(font, fontHtmlColor,
+skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 	}
 
 	public final int getRawLayout() {
@@ -564,7 +551,7 @@ final class EntityImpl implements ILeaf, IGroup {
 		return neighborhood;
 	}
 
-	private final Map<String, Display> tips = new LinkedHashMap<String, Display>();
+	private final Map<String, Display> tips = new LinkedHashMap<>();
 
 	public void putTip(String member, Display display) {
 		tips.put(member, display);

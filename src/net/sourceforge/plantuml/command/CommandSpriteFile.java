@@ -85,7 +85,7 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 			} else if (src.contains("~")) {
 				final int idx = src.lastIndexOf("~");
 				final File f = FileSystem.getInstance().getFile(src.substring(0, idx));
-				if (f.exists() == false) {
+				if (!f.exists()) {
 					return CommandExecutionResult.error("File does not exist: " + src);
 				}
 				final String name = src.substring(idx + 1);
@@ -95,7 +95,7 @@ public class CommandSpriteFile extends SingleLineCommand2<UmlDiagram> {
 				}
 			} else {
 				final File f = FileSystem.getInstance().getFile(src);
-				if (f.exists() == false) {
+				if (!f.exists()) {
 					return CommandExecutionResult.error("File does not exist: " + src);
 				}
 				if (isSvg(f.getName())) {

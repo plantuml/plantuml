@@ -83,7 +83,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 				currentPackage);
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		if (colors.isEmpty() == false) {
+		if (!colors.isEmpty()) {
 			p.setColors(colors);
 		}
 

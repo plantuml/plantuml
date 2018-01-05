@@ -58,8 +58,8 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Rose implements Skin {
 
-	final private double paddingX = 5;
-	final private double paddingY = 5;
+	private final double paddingX = 5;
+	private final double paddingY = 5;
 
 	public HtmlColor getFontColor(ISkinParam skin, FontParam fontParam) {
 		return skin.getFontHtmlColor(null, fontParam);
@@ -96,7 +96,7 @@ public class Rose implements Skin {
 					.getColor();
 			if (config.getArrowDirection() == ArrowDirection.SELF) {
 				return new ComponentRoseSelfArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay,
-						config, param, param.maxMessageSize(), param.strictUmlStyle() == false);
+                                                  config, param, param.maxMessageSize(), !param.strictUmlStyle());
 			}
 			final HorizontalAlignment messageHorizontalAlignment = param.getHorizontalAlignment(
 					AlignParam.SEQUENCE_MESSAGE_ALIGN, config.getArrowDirection());
@@ -104,7 +104,7 @@ public class Rose implements Skin {
 					AlignParam.SEQUENCE_MESSAGETEXT_ALIGN, config.getArrowDirection());
 			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay, config,
 					messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
-					param.strictUmlStyle() == false);
+                                          !param.strictUmlStyle());
 		}
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 		if (type == ComponentType.PARTICIPANT_HEAD) {
@@ -340,7 +340,7 @@ public class Rose implements Skin {
 		throw new IllegalArgumentException();
 	}
 
-	static public UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
+	public static UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
 		final UStroke result = param.getThickness(lineParam, null);
 		if (result == null) {
 			return new UStroke(defaultValue);

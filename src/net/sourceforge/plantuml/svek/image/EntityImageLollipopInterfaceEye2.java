@@ -69,7 +69,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 	private final TextBlock desc;
 	private final TextBlock stereo;
 	private final SymbolContext ctx;
-	final private Url url;
+	private final Url url;
 
 	public EntityImageLollipopInterfaceEye2(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
@@ -110,7 +110,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		return new Dimension2DDouble(SIZE, SIZE);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
 		}

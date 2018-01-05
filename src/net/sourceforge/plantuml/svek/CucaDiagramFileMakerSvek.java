@@ -60,18 +60,13 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
-	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
+	public CucaDiagramFileMakerSvek(CucaDiagram diagram) {
 		this.diagram = diagram;
 	}
 
 	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
-		try {
-			return createFileInternal(os, dotStrings, fileFormatOption);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			throw new IOException(e);
-		}
+		return createFileInternal(os, dotStrings, fileFormatOption);
 	}
 
 	private DotDataImageBuilder createDotDataImageBuilder(DotMode dotMode, StringBounder stringBounder) {
@@ -85,7 +80,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	}
 
 	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
+			throws IOException {
 		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
 			new CucaDiagramSimplifierActivity(diagram, dotStrings, fileFormatOption.getDefaultStringBounder());
 		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
@@ -126,7 +121,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	}
 
 	private List<Link> getOrderedLinks() {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link l : diagram.getLinks()) {
 			addLinkNew(result, l);
 		}

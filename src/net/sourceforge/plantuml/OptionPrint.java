@@ -55,14 +55,14 @@ import net.sourceforge.plantuml.version.Version;
 
 public class OptionPrint {
 
-	static public void printTestDot() throws InterruptedException {
+	public static void printTestDot() throws InterruptedException {
 		for (String s : GraphvizUtils.getTestDotStrings(false)) {
 			System.out.println(s);
 		}
 		exit();
 	}
 
-	static public void printHelp() throws InterruptedException {
+	public static void printHelp() throws InterruptedException {
 
 		final String charset = Charset.defaultCharset().displayName();
 
@@ -148,7 +148,7 @@ public class OptionPrint {
 		exit();
 	}
 
-	static private void exit() throws InterruptedException {
+	private static void exit() throws InterruptedException {
 		if (OptionFlags.getInstance().isSystemExit()) {
 			System.exit(0);
 		}
@@ -186,7 +186,7 @@ public class OptionPrint {
 				"java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "java.runtime.version", "Java Version",
 				"os.name", "Operating System", "os.version", "OS Version", "file.encoding", "Default Encoding",
 				"user.language", "Language", "user.country", "Country");
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < all.size(); i += 2) {
 			result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));
 		}
@@ -194,8 +194,8 @@ public class OptionPrint {
 	}
 
 	public static Collection<String> interestingValues() {
-		final List<String> strings = new ArrayList<String>();
-		if (withIp() == false) {
+		final List<String> strings = new ArrayList<>();
+		if (!withIp()) {
 			strings.add("Machine: " + getHostName());
 		}
 		strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());
@@ -249,22 +249,26 @@ public class OptionPrint {
 		System.out.println("PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")");
 		System.out.println();
 		final int lastversion = PSystemVersion.extractDownloadableVersion(null, null);
-		if (lastversion == -1) {
-			System.out.println("Error");
-			System.out.println("Cannot connect to http://plantuml.com/");
-			System.out.println("Maybe you should set your proxy ?");
-		} else if (lastversion == 0) {
-			System.out.println("Error");
-			System.out.println("Cannot retrieve last version from http://plantuml.com/");
-		} else {
-			System.out.println("Last available version for download : " + lastversion);
-			System.out.println();
-			if (Version.version() >= lastversion) {
-				System.out.println("Your version is up to date.");
-			} else {
-				System.out.println("A newer version is available for download.");
-			}
-		}
+        switch (lastversion) {
+            case -1:
+                System.out.println("Error");
+                System.out.println("Cannot connect to http://plantuml.com/");
+                System.out.println("Maybe you should set your proxy ?");
+                break;
+            case 0:
+                System.out.println("Error");
+                System.out.println("Cannot retrieve last version from http://plantuml.com/");
+                break;
+            default:
+                System.out.println("Last available version for download : " + lastversion);
+                System.out.println();
+                if (Version.version() >= lastversion) {
+                    System.out.println("Your version is up to date.");
+                } else {
+                    System.out.println("A newer version is available for download.");
+                }
+                break;
+        }
 
 		exit();
 	}

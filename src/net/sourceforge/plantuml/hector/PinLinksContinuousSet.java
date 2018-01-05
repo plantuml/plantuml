@@ -41,12 +41,12 @@ import java.util.Iterator;
 
 public class PinLinksContinuousSet {
 
-	private final Collection<PinLink> all = new ArrayList<PinLink>();
+	private final Collection<PinLink> all = new ArrayList<>();
 
 	public Skeleton createSkeleton() {
 		final GrowingTree tree = new GrowingTree();
-		final Collection<PinLink> pendings = new ArrayList<PinLink>(all);
-		while (pendings.size() > 0) {
+		final Collection<PinLink> pendings = new ArrayList<>(all);
+		while (!pendings.isEmpty()) {
 			for (Iterator<PinLink> it = pendings.iterator(); it.hasNext();) {
 				final PinLink candidat = it.next();
 				if (tree.canBeAdded(candidat)) {
@@ -60,7 +60,7 @@ public class PinLinksContinuousSet {
 	}
 
 	public void add(PinLink newPinLink) {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			all.add(newPinLink);
 			return;
 		}
@@ -77,7 +77,7 @@ public class PinLinksContinuousSet {
 	}
 
 	public void addAll(PinLinksContinuousSet other) {
-		if (doesTouch(other) == false) {
+		if (!doesTouch(other)) {
 			throw new IllegalArgumentException();
 		}
 		this.all.addAll(other.all);

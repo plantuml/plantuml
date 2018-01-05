@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class Diamond {
 
-	final static public double diamondHalfSize = 12;
+	public static final double diamondHalfSize = 12;
 
 	public static UPolygon asPolygon(boolean shadowing) {
 		final UPolygon diams = new UPolygon();
@@ -83,7 +83,7 @@ public class Diamond {
 	public static Stencil asStencil(final TextBlock tb) {
 		return new Stencil() {
 
-			private final double getDeltaX(double height, double y) {
+			private double getDeltaX(double height, double y) {
 				final double p = y / height * 2;
 				if (p <= 1) {
 					return diamondHalfSize * p;

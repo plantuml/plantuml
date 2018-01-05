@@ -54,7 +54,7 @@ public final class CucaDiagramXmiMaker {
 	private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
 
-	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
+	public CucaDiagramXmiMaker(CucaDiagram diagram, FileFormat fileFormat) {
 		this.diagram = diagram;
 		this.fileFormat = fileFormat;
 	}
@@ -80,15 +80,11 @@ public final class CucaDiagramXmiMaker {
 				throw new UnsupportedOperationException();
 			}
 			xmi.transformerXml(fos);
-		} catch (ParserConfigurationException e) {
-			Log.error(e.toString());
-			e.printStackTrace();
-			throw new IOException(e.toString());
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | TransformerException e) {
 			Log.error(e.toString());
 			e.printStackTrace();
 			throw new IOException(e.toString());
 		}
-	}
+    }
 
 }

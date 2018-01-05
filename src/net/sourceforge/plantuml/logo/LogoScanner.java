@@ -39,35 +39,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 class LogoScanner {
-	final private Map<String, Integer> keywordTable = new HashMap<String, Integer>();
+	private final Map<String, Integer> keywordTable = new HashMap<>();
 	private char sourceString[];
 	private int sourceLength;
 	private int i;
 
 	public LogoScanner() {
-		keywordTable.put("forward", new Integer(LogoToken.FORWARD));
-		keywordTable.put("fd", new Integer(LogoToken.FORWARD));
-		keywordTable.put("back", new Integer(LogoToken.BACK));
-		keywordTable.put("bk", new Integer(LogoToken.BACK));
-		keywordTable.put("right", new Integer(LogoToken.RIGHT));
-		keywordTable.put("rt", new Integer(LogoToken.RIGHT));
-		keywordTable.put("left", new Integer(LogoToken.LEFT));
-		keywordTable.put("lt", new Integer(LogoToken.LEFT));
-		keywordTable.put("penup", new Integer(LogoToken.PENUP));
-		keywordTable.put("pu", new Integer(LogoToken.PENUP));
-		keywordTable.put("pendown", new Integer(LogoToken.PENDOWN));
-		keywordTable.put("pd", new Integer(LogoToken.PENDOWN));
-		keywordTable.put("hideturtle", new Integer(LogoToken.HIDETURTLE));
-		keywordTable.put("ht", new Integer(LogoToken.HIDETURTLE));
-		keywordTable.put("showturtle", new Integer(LogoToken.SHOWTURTLE));
-		keywordTable.put("st", new Integer(LogoToken.SHOWTURTLE));
-		keywordTable.put("clearscreen", new Integer(LogoToken.CLEARSCREEN));
-		keywordTable.put("cs", new Integer(LogoToken.CLEARSCREEN));
-		keywordTable.put("repeat", new Integer(LogoToken.REPEAT));
-		keywordTable.put("rep", new Integer(LogoToken.REPEAT));
-		keywordTable.put("to", new Integer(LogoToken.TO));
-		keywordTable.put("setpc", new Integer(LogoToken.SETPC));
-		keywordTable.put("pc", new Integer(LogoToken.SETPC));
+		keywordTable.put("forward", LogoToken.FORWARD);
+		keywordTable.put("fd", LogoToken.FORWARD);
+		keywordTable.put("back", LogoToken.BACK);
+		keywordTable.put("bk", LogoToken.BACK);
+		keywordTable.put("right", LogoToken.RIGHT);
+		keywordTable.put("rt", LogoToken.RIGHT);
+		keywordTable.put("left", LogoToken.LEFT);
+		keywordTable.put("lt", LogoToken.LEFT);
+		keywordTable.put("penup", LogoToken.PENUP);
+		keywordTable.put("pu", LogoToken.PENUP);
+		keywordTable.put("pendown", LogoToken.PENDOWN);
+		keywordTable.put("pd", LogoToken.PENDOWN);
+		keywordTable.put("hideturtle", LogoToken.HIDETURTLE);
+		keywordTable.put("ht", LogoToken.HIDETURTLE);
+		keywordTable.put("showturtle", LogoToken.SHOWTURTLE);
+		keywordTable.put("st", LogoToken.SHOWTURTLE);
+		keywordTable.put("clearscreen", LogoToken.CLEARSCREEN);
+		keywordTable.put("cs", LogoToken.CLEARSCREEN);
+		keywordTable.put("repeat", LogoToken.REPEAT);
+		keywordTable.put("rep", LogoToken.REPEAT);
+		keywordTable.put("to", LogoToken.TO);
+		keywordTable.put("setpc", LogoToken.SETPC);
+		keywordTable.put("pc", LogoToken.SETPC);
 	}
 
 	public int getPosition() {
@@ -109,7 +109,7 @@ class LogoScanner {
 
 	public LogoToken getToken() {
 		final LogoToken token = new LogoToken();
-		final StringBuffer lexeme = new StringBuffer();
+		final StringBuilder lexeme = new StringBuilder();
 
 		if (i >= sourceLength) {
 			token.kind = LogoToken.END_OF_INPUT;
@@ -134,7 +134,7 @@ class LogoScanner {
 			token.kind = LogoToken.IDENTIFIER;
 			final Integer keyword = keywordTable.get(token.lexeme);
 			if (keyword != null) {
-				token.kind = keyword.intValue();
+				token.kind = keyword;
 			}
 		} else if (c >= '0' && c <= '9') {
 			do {
@@ -151,12 +151,12 @@ class LogoScanner {
 			}
 			i--;
 			token.lexeme = lexeme.toString();
-			token.value = Float.valueOf(token.lexeme).floatValue();
+			token.value = Float.valueOf(token.lexeme);
 			if (hasDecimalPart) {
 				token.kind = LogoToken.FLOAT;
 			} else {
 				token.kind = LogoToken.INTEGER;
-				token.intValue = Integer.valueOf(token.lexeme).intValue();
+				token.intValue = Integer.valueOf(token.lexeme);
 			}
 		} else if (c == 0) {
 			i--;

@@ -42,8 +42,7 @@ public class RealUtils {
 
 	public static RealOrigin createOrigin() {
 		final RealLine line = new RealLine();
-		final RealImpl result = new RealImpl("O", line, 0);
-		return result;
+        return new RealImpl("O", line, 0);
 	}
 
 	public static Real middle(Real r1, Real r2) {

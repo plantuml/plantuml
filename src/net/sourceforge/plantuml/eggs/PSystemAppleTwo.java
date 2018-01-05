@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemAppleTwo extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private final BufferedImage image;
 
 	public PSystemAppleTwo() throws IOException {
@@ -70,7 +70,7 @@ public class PSystemAppleTwo extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
@@ -79,13 +79,12 @@ public class PSystemAppleTwo extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		// final UFont font = new UFont("SansSerif", Font.PLAIN, 12);
-		final TextBlockBackcolored result = GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
-		// final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
+        // final GraphicStrings result = new GraphicStrings(strings, font, HtmlColorUtils.BLACK, HtmlColorUtils.WHITE,
 		// image, GraphicPosition.BOTTOM);
 		// result.setMinWidth(200);
-		return result;
+		return GraphicStrings.createBlackOnWhite(strings, image, GraphicPosition.BOTTOM);
 	}
 
 	public DiagramDescription getDescription() {

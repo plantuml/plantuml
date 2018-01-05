@@ -84,8 +84,8 @@ public enum FileFormat {
 		return "." + StringUtils.goLowerCase(name());
 	}
 
-	final static private BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
-	final static private Graphics2D gg = imDummy.createGraphics();
+	private static final BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
+	private static final Graphics2D gg = imDummy.createGraphics();
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion) {
 		if (this == LATEX || this == LATEX_NO_PREAMBLE) {
@@ -159,16 +159,10 @@ public enum FileFormat {
 	/**
 	 * Check if this file format is Encapsulated PostScript.
 	 * 
-	 * @return <code>true</code> for EPS.
+	 * @return {@code true} for EPS.
 	 */
 	public boolean isEps() {
-		if (this == EPS) {
-			return true;
-		}
-		if (this == EPS_TEXT) {
-			return true;
-		}
-		return false;
+		return this == EPS || this == EPS_TEXT;
 	}
 
 	public String changeName(String fileName, int cpt) {

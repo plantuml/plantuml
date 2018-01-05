@@ -53,12 +53,12 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class DirWatcher2 {
 
-	final private File dir;
-	final private Option option;
-	final private String pattern;
+	private final File dir;
+	private final Option option;
+	private final String pattern;
 
-	final private Map<File, FileWatcher> modifieds = new ConcurrentHashMap<File, FileWatcher>();
-	final private ExecutorService executorService;
+	private final Map<File, FileWatcher> modifieds = new ConcurrentHashMap<>();
+	private final ExecutorService executorService;
 
 	public DirWatcher2(File dir, Option option, String pattern) {
 		this.dir = dir;
@@ -69,14 +69,14 @@ public class DirWatcher2 {
 
 	}
 
-	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException, InterruptedException {
-		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<File, Future<List<GeneratedImage>>>();
+	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException {
+		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<>();
 		if (dir.listFiles() != null) {
 			for (final File f : dir.listFiles()) {
-				if (f.isFile() == false) {
+				if (!f.isFile()) {
 					continue;
 				}
-				if (fileToProcess(f.getName()) == false) {
+				if (!fileToProcess(f.getName())) {
 					continue;
 				}
 				final FileWatcher watcher = modifieds.get(f);
@@ -88,7 +88,7 @@ public class DirWatcher2 {
 					modifieds.put(f, new FileWatcher(Collections.singleton(f)));
 					final Future<List<GeneratedImage>> value = executorService
 							.submit(new Callable<List<GeneratedImage>>() {
-								public List<GeneratedImage> call() throws Exception {
+								public List<GeneratedImage> call() {
 									try {
 										final List<GeneratedImage> generatedImages = sourceFileReader
 												.getGeneratedImages();

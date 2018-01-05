@@ -164,10 +164,7 @@ public class UFont {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof UFont == false) {
-			return false;
-		}
-		return this.font.equals(((UFont) obj).font);
+		return obj instanceof UFont && this.font.equals(((UFont) obj).font);
 	}
 
 	@Deprecated

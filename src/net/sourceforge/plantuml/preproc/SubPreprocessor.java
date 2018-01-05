@@ -65,7 +65,7 @@ public class SubPreprocessor implements ReadLine {
 	private final Defines defines;
 	private final DefinitionsContainer definitionsContainer;
 	private final String charset;
-	private final Map<String, Sub> subs = new HashMap<String, Sub>();
+	private final Map<String, Sub> subs = new HashMap<>();
 	private final List<String> config;
 	private Sub learningSub;
 	private ReadLine includedSub;
@@ -125,7 +125,7 @@ public class SubPreprocessor implements ReadLine {
 			final String filename = name.substring(0, idx);
 			final String blocname = name.substring(idx + 1);
 			final File f = FileSystem.getInstance().getFile(PreprocessorInclude.withEnvironmentVariable(filename));
-			if (f.exists() == false || f.isDirectory()) {
+			if (!f.exists() || f.isDirectory()) {
 				return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
 			}
 			final Preprocessor data = new Preprocessor(config, getReaderInclude(s, f), charset, defines, null,

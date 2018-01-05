@@ -37,24 +37,24 @@ package net.sourceforge.plantuml.logo;
 
 
 class LogoToken {
-	public final static int END_OF_INPUT = 256;
-	public final static int INVALID_TOKEN = 257;
-	public final static int IDENTIFIER = 258;
-	public final static int FLOAT = 259;
-	public final static int INTEGER = 270;
+	public static final int END_OF_INPUT = 256;
+	public static final int INVALID_TOKEN = 257;
+	public static final int IDENTIFIER = 258;
+	public static final int FLOAT = 259;
+	public static final int INTEGER = 270;
 
-	public final static int FORWARD = 260;
-	public final static int BACK = 261;
-	public final static int LEFT = 262;
-	public final static int RIGHT = 263;
-	public final static int PENUP = 264;
-	public final static int PENDOWN = 265;
-	public final static int HIDETURTLE = 266;
-	public final static int SHOWTURTLE = 267;
-	public final static int CLEARSCREEN = 268;
-	public final static int REPEAT = 269;
-	public final static int TO = 271;
-	public final static int SETPC = 272;
+	public static final int FORWARD = 260;
+	public static final int BACK = 261;
+	public static final int LEFT = 262;
+	public static final int RIGHT = 263;
+	public static final int PENUP = 264;
+	public static final int PENDOWN = 265;
+	public static final int HIDETURTLE = 266;
+	public static final int SHOWTURTLE = 267;
+	public static final int CLEARSCREEN = 268;
+	public static final int REPEAT = 269;
+	public static final int TO = 271;
+	public static final int SETPC = 272;
 
 	public int kind;
 	public String lexeme;

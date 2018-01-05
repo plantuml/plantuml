@@ -157,7 +157,7 @@ public class ParticipantBox implements Pushable {
 
 	public void drawLineU22(UGraphic ug, double startingY, final double endingY, boolean showTail, double myDelta) {
 		ug = ug.apply(new UTranslate(startingX, 0));
-		if (delays.size() > 0) {
+		if (!delays.isEmpty()) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			for (GraphicalDelayText delay : delays) {
 				if (delay.getStartingY() - myDelta >= startingY) {
@@ -198,7 +198,7 @@ public class ParticipantBox implements Pushable {
 		return startingX;
 	}
 
-	private final List<GraphicalDelayText> delays = new ArrayList<GraphicalDelayText>();
+	private final List<GraphicalDelayText> delays = new ArrayList<>();
 
 	public void addDelay(GraphicalDelayText delay) {
 		this.delays.add(delay);

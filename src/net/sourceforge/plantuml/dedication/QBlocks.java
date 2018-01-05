@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.code.AsciiEncoder;
 
 public class QBlocks {
 
-	private final List<QBlock> all = new ArrayList<QBlock>();
+	private final List<QBlock> all = new ArrayList<>();
 
 	private QBlocks() {
 

@@ -89,6 +89,6 @@ public interface Diagram {
 	 * 
 	 * @return
 	 */
-	public boolean hasUrl();
+    boolean hasUrl();
 
 }

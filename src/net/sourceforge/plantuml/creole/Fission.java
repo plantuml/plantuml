@@ -62,7 +62,7 @@ public class Fission {
 		if (valueMaxWidth == 0) {
 			return Arrays.asList(stripe);
 		}
-		final List<Stripe> result = new ArrayList<Stripe>();
+		final List<Stripe> result = new ArrayList<>();
 		StripeSimple current = new StripeSimple();
 		for (Atom atom : stripe.getAtoms()) {
 			for (Atom atomSplitted : getSplitted(stringBounder, atom)) {
@@ -98,7 +98,7 @@ public class Fission {
 
 	static class StripeSimple implements Stripe {
 
-		private final List<Atom> atoms = new ArrayList<Atom>();
+		private final List<Atom> atoms = new ArrayList<>();
 		private double totalWidth;
 
 		public List<Atom> getAtoms() {

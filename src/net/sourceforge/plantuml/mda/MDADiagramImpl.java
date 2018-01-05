@@ -53,10 +53,10 @@ public class MDADiagramImpl implements MDADiagram {
 
 	public static MDADiagram create(String uml) {
 		List<BlockUml> blocks = new SourceStringReader(uml).getBlocks();
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			uml = "@startuml\n" + uml + "\n@enduml";
 			blocks = new SourceStringReader(uml).getBlocks();
-			if (blocks.size() == 0) {
+			if (blocks.isEmpty()) {
 				return null;
 			}
 		}
@@ -68,7 +68,7 @@ public class MDADiagramImpl implements MDADiagram {
 		return null;
 	}
 
-	private final Collection<MDAPackage> packages = new ArrayList<MDAPackage>();
+	private final Collection<MDAPackage> packages = new ArrayList<>();
 
 	private MDADiagramImpl(ClassDiagram classDiagram) {
 		final EntityFactory entityFactory = classDiagram.getEntityFactory();

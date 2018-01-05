@@ -75,7 +75,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 			final Placeable cell1 = grid.getCell(line1, col).getData();
 			final Placeable cell2 = grid.getCell(line2, col).getData();
 			// System.err.println("cells=" + cell1 + " " + cell2 + " " + mergeable(cell1, cell2));
-			if (mergeable(cell1, cell2) == false) {
+			if (!mergeable(cell1, cell2)) {
 				return false;
 			}
 		}
@@ -89,7 +89,6 @@ public class CleanerInterleavingLines implements GridCleaner {
 		if (data2 == null) {
 			return data1;
 		}
-		assert data1 != null && data2 != null;
 		if (data1 instanceof BpmElement) {
 			return data1;
 		}
@@ -103,59 +102,37 @@ public class CleanerInterleavingLines implements GridCleaner {
 		}
 		assert data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty;
 		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;
-		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;
-		return puz2;
+        return data2;
 	}
 
 	private boolean mergeable(Placeable data1, Placeable data2) {
 		if (data1 == null || data2 == null) {
 			return true;
 		}
-		assert data1 != null && data2 != null;
 		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty) {
 			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);
 		}
 		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof BpmElement) {
-			final boolean result = mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);
 			// System.err.println("OTHER2=" + data2 + " " + data1 + " " + result);
-			return result;
+			return mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);
 		}
-		if (data2 instanceof ConnectorPuzzleEmpty && data1 instanceof BpmElement) {
-			final boolean result = mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
-			// System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
-			return result;
-		}
-		return false;
+		// System.err.println("OTHER1=" + data1 + " " + data2 + " " + result);
+		return data2 instanceof ConnectorPuzzleEmpty
+			&& data1 instanceof BpmElement
+			&& mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);
 	}
 
 	private boolean mergeablePuzzleSingle(ConnectorPuzzleEmpty data1, BpmElement data2) {
-		if (data1.checkDirections("NS")) {
-			return true;
-		}
-		if (data1.checkDirections("SW")) {
-			return true;
-		}
-		return false;
+		return data1.checkDirections("NS") || data1.checkDirections("SW");
 	}
 
 	private boolean mergeablePuzzleSingle(BpmElement data1, ConnectorPuzzleEmpty data2) {
-		if (data2.checkDirections("NS")) {
-			return true;
-		}
-		return false;
+		return data2.checkDirections("NS");
 	}
 
 	private boolean mergeableCC(ConnectorPuzzleEmpty puz1, ConnectorPuzzleEmpty puz2) {
-		if (puz1.checkDirections("NS") && puz2.checkDirections("NS")) {
-			return true;
-		}
-		if (puz1.checkDirections("NS") && puz2.checkDirections("NE")) {
-			return true;
-		}
-		if (puz1.checkDirections("NS") && puz2.checkDirections("NW")) {
-			return true;
-		}
-		return false;
+		return puz1.checkDirections("NS") && (
+			puz2.checkDirections("NS") || puz2.checkDirections("NE") || puz2.checkDirections("NW"));
 	}
 
 }

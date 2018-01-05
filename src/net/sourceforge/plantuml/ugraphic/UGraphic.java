@@ -40,21 +40,21 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface UGraphic {
 
-	public StringBounder getStringBounder();
+	StringBounder getStringBounder();
 
-	public UParam getParam();
+	UParam getParam();
 
-	public void draw(UShape shape);
+	void draw(UShape shape);
 
-	public UGraphic apply(UChange change);
+	UGraphic apply(UChange change);
 
-	public ColorMapper getColorMapper();
+	ColorMapper getColorMapper();
 
-	public void startUrl(Url url);
+	void startUrl(Url url);
 
-	public void closeAction();
+	void closeAction();
 
-	public void flushUg();
+	void flushUg();
 
-	public boolean matchesProperty(String propertyName);
+	boolean matchesProperty(String propertyName);
 }

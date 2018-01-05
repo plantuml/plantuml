@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -87,19 +86,19 @@ public final class GroupPngMakerActivity {
 	}
 
 	private List<Link> getPureInnerLinks() {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			final IEntity e1 = (IEntity) link.getEntity1();
-			final IEntity e2 = (IEntity) link.getEntity2();
-			if (e1.getParentContainer() == group && e1.isGroup() == false && e2.getParentContainer() == group
-					&& e2.isGroup() == false) {
+			final IEntity e1 = link.getEntity1();
+			final IEntity e2 = link.getEntity2();
+			if (e1.getParentContainer() == group && !e1.isGroup() && e2.getParentContainer() == group
+					&& !e2.isGroup()) {
 				result.add(link);
 			}
 		}
 		return result;
 	}
 
-	public IEntityImage getImage() throws IOException, InterruptedException {
+	public IEntityImage getImage() {
 		// final List<? extends CharSequence> display = group.getDisplay();
 		// final TextBlock title = Display.create(display, new FontConfiguration(
 		// getFont(FontParam.STATE), HtmlColorUtils.BLACK), HorizontalAlignment.CENTER, diagram.getSkinParam());

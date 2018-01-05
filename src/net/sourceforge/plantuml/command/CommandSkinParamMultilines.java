@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiagram> {
 
 	static class Context {
-		private List<String> strings = new ArrayList<String>();
+		private List<String> strings = new ArrayList<>();
 
 		public void push(String s) {
 			strings.add(s);
@@ -66,7 +66,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 		}
 	}
 
-	private final static Pattern2 p1 = MyPattern
+	private static final Pattern2 p1 = MyPattern
 			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
 	public CommandSkinParamMultilines() {
@@ -76,10 +76,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	@Override
 	protected boolean isLineConsistent(String line, int level) {
 		line = StringUtils.trin(line);
-		if (hasStartingQuote(line)) {
-			return true;
-		}
-		return p1.matcher(line).matches();
+		return hasStartingQuote(line) || p1.matcher(line).matches();
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
@@ -90,7 +87,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 	public CommandExecutionResult execute(UmlDiagram diagram, BlocLines lines) {
 		final Context context = new Context();
 		final Matcher2 mStart = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
-		if (mStart.find() == false) {
+		if (!mStart.find()) {
 			throw new IllegalStateException();
 		}
 		if (mStart.group(1) != null) {
@@ -111,7 +108,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<UmlDiag
 				continue;
 			}
 			final Matcher2 m = p1.matcher(s);
-			if (m.find() == false) {
+			if (!m.find()) {
 				throw new IllegalStateException();
 			}
 			if (m.group(2) != null) {

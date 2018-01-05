@@ -37,5 +37,5 @@ package net.sourceforge.plantuml.ugraphic;
 
 public interface Scalable {
 
-	public UShape getScaled(double scale);
+	UShape getScaled(double scale);
 }

@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
-	private final List<Branch> thens = new ArrayList<Branch>();
+	private final List<Branch> thens = new ArrayList<>();
 	private Branch elseBranch;
 	private boolean endifCalled = false;
 	private final ISkinParam skinParam;
@@ -95,15 +95,15 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		}
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering);
-		if (getPositionedNotes().size() > 0) {
+		if (!getPositionedNotes().isEmpty()) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
-		final List<WeldingPoint> weldingPoints = new ArrayList<WeldingPoint>();
+		final List<WeldingPoint> weldingPoints = new ArrayList<>();
 		for (Branch branch : thens) {
 			weldingPoints.addAll(branch.getWeldingPoints());
 		}
 		weldingPoints.addAll(elseBranch.getWeldingPoints());
-		if (weldingPoints.size() > 0) {
+		if (!weldingPoints.isEmpty()) {
 			result = new FtileDecorateWelding(result, weldingPoints);
 		}
 		return result;
@@ -143,16 +143,11 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.current.setInlinkRendering(nextLinkRenderer);
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (endifCalled) {
 			for (Branch branch : thens) {
-				if (branch.getLast().kill() == false) {
-					return false;
-				}
-				if (elseBranch != null && elseBranch.getLast()!=null && elseBranch.getLast().kill() == false) {
-					return false;
-				}
-				return true;
+				return branch.getLast().kill()
+					&& (elseBranch == null || elseBranch.getLast() == null || elseBranch.getLast().kill());
 			}
 		}
 		return current.kill();
@@ -172,7 +167,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (swimlane != null) {
 			result.add(swimlane);
 		}

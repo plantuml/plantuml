@@ -57,7 +57,7 @@ public class PngIOMetadata {
 			String debugData) throws IOException {
 
 		// Create & populate metadata
-		PNGMetadata pngMetadata = null;
+		PNGMetadata pngMetadata;
 		try {
 			pngMetadata = new PNGMetadata();
 		} catch (Throwable e) {
@@ -80,7 +80,7 @@ public class PngIOMetadata {
 
 		if (metadata != null) {
 			pngMetadata.zTXt_keyword.add("plantuml");
-			pngMetadata.zTXt_compressionMethod.add(new Integer(0));
+			pngMetadata.zTXt_compressionMethod.add(0);
 			pngMetadata.zTXt_text.add(metadata);
 		}
 

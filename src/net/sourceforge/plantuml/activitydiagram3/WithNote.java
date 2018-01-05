@@ -49,15 +49,15 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class WithNote {
 
-	private final Collection<PositionedNote> notes = new ArrayList<PositionedNote>();
+	private final Collection<PositionedNote> notes = new ArrayList<>();
 
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		this.notes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
 		return true;
 	}
 
-	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
-		if (notes.size() == 0) {
+	protected final Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
+		if (notes.isEmpty()) {
 			return ftile;
 		}
 		return factory.addNote(ftile, swimlane, notes);
@@ -68,7 +68,7 @@ public class WithNote {
 	}
 
 	public boolean hasNotes() {
-		return notes.size() > 0;
+		return !notes.isEmpty();
 	}
 
 }

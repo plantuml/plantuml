@@ -40,12 +40,12 @@ import java.util.List;
 
 public interface Chain<O> extends Comparator<O> {
 
-	public Navigator<O> navigator(O data);
+	Navigator<O> navigator(O data);
 
-	public boolean contains(O data);
+	boolean contains(O data);
 
-	public List<O> toList();
+	List<O> toList();
 
-	public boolean remove(O data);
+	boolean remove(O data);
 
 }

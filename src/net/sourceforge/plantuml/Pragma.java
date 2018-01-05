@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class Pragma {
 
-	private final Map<String, String> values = new LinkedHashMap<String, String>();
+	private final Map<String, String> values = new LinkedHashMap<>();
 
 	public void define(String name, String value) {
 		values.put(name, value);

@@ -57,7 +57,7 @@ class ColorAndSizeChange implements FontChange {
 		}
 		final Matcher2 matcherSize = sizePattern.matcher(s);
 		if (matcherSize.find()) {
-			size = new Integer(matcherSize.group(1));
+			size = Integer.valueOf(matcherSize.group(1));
 		} else {
 			size = null;
 		}

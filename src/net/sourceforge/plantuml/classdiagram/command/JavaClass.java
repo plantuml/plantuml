@@ -47,7 +47,7 @@ class JavaClass {
 
 	private final String name;
 	private final String javaPackage;
-	private final List<String> parents = new ArrayList<String>();
+	private final List<String> parents = new ArrayList<>();
 	private final LeafType type;
 	private final LeafType parentType;
 
@@ -59,7 +59,7 @@ class JavaClass {
 		}
 		final StringTokenizer st = new StringTokenizer(StringUtils.trin(p), ",");
 		while (st.hasMoreTokens()) {
-			this.parents.add(StringUtils.trin(st.nextToken()).replaceAll("\\<.*", ""));
+			this.parents.add(StringUtils.trin(st.nextToken()).replaceAll("<.*", ""));
 		}
 		this.type = type;
 		this.parentType = parentType;

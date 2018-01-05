@@ -93,17 +93,17 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		if (positions != null) {
 			return;
 		}
-		stripes = new ArrayList<Stripe>();
+		stripes = new ArrayList<>();
 		for (Stripe stripe : sheet) {
 			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));
 		}
-		positions = new LinkedHashMap<Atom, Position>();
-		widths = new LinkedHashMap<Stripe, Double>();
-		heights = new LinkedHashMap<Stripe, Double>();
+		positions = new LinkedHashMap<>();
+		widths = new LinkedHashMap<>();
+		heights = new LinkedHashMap<>();
 		minMax = MinMax.getEmpty(true);
 		double y = 0;
 		for (Stripe stripe : stripes) {
-			if (stripe.getAtoms().size() == 0) {
+			if (stripe.getAtoms().isEmpty()) {
 				continue;
 			}
 			final Sea sea = new Sea(stringBounder);
@@ -121,13 +121,17 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 			y += height;
 		}
 		final int coef;
-		if (sheet.getHorizontalAlignment() == HorizontalAlignment.CENTER) {
-			coef = 2;
-		} else if (sheet.getHorizontalAlignment() == HorizontalAlignment.RIGHT) {
-			coef = 1;
-		} else {
-			coef = 0;
-		}
+        switch (sheet.getHorizontalAlignment()) {
+            case CENTER:
+                coef = 2;
+                break;
+            case RIGHT:
+                coef = 1;
+                break;
+            default:
+                coef = 0;
+                break;
+        }
 		if (coef != 0) {
 			double maxWidth = 0;
 			for (Double v : widths.values()) {

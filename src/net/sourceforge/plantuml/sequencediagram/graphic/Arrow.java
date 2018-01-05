@@ -58,7 +58,7 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 		this.maxX = m;
 	}
 
-	final protected double getMaxX() {
+	protected final double getMaxX() {
 		if (maxX == 0) {
 			// throw new IllegalStateException();
 		}
@@ -118,7 +118,7 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 		this.paddingArrowHead = paddingArrowHead;
 	}
 
-	final public double getMargin() {
+	public final double getMargin() {
 		return 5;
 	}
 

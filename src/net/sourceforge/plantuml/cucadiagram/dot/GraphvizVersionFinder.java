@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizVersionFinder {
 
-	final private File dotExe;
-	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {
+	private final File dotExe;
+	public static final GraphvizVersion DEFAULT = new GraphvizVersion() {
 		public boolean useShield() {
 			return true;
 		}
@@ -71,7 +71,7 @@ public class GraphvizVersionFinder {
 		final Pattern p = Pattern.compile("\\d\\.\\d\\d");
 		final Matcher m = p.matcher(dotVersion);
 		final boolean find = m.find();
-		if (find == false) {
+		if (!find) {
 			return DEFAULT;
 		}
 		final String vv = m.group(0);
@@ -82,11 +82,7 @@ public class GraphvizVersionFinder {
 			}
 
 			public boolean useProtectionWhenThereALinkFromOrToGroup() {
-				if (v == 239 || v == 240) {
-					return false;
-				}
-				// return v < 238;
-				return true;
+				return v != 239 && v != 240;
 			}
 
 			public boolean modeSafe() {

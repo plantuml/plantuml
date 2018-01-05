@@ -55,9 +55,9 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 public class FtpConnexion {
 
 	private final String user;
-	private final Map<String, String> incoming = new HashMap<String, String>();
-	private final Map<String, byte[]> outgoing = new HashMap<String, byte[]>();
-	private final Set<String> futureOutgoing = new HashSet<String>();
+	private final Map<String, String> incoming = new HashMap<>();
+	private final Map<String, byte[]> outgoing = new HashMap<>();
+	private final Set<String> futureOutgoing = new HashSet<>();
 
 	private FileFormat fileFormat;
 
@@ -79,36 +79,24 @@ public class FtpConnexion {
 	}
 
 	public synchronized Collection<String> getFiles() {
-		final List<String> result = new ArrayList<String>(incoming.keySet());
+		final List<String> result = new ArrayList<>(incoming.keySet());
 		result.addAll(outgoing.keySet());
 		result.addAll(futureOutgoing);
 		return Collections.unmodifiableCollection(result);
 	}
 
 	public synchronized boolean willExist(String fileName) {
-		if (incoming.containsKey(fileName)) {
-			return true;
-		}
-		if (outgoing.containsKey(fileName)) {
-			return true;
-		}
-		if (futureOutgoing.contains(fileName)) {
-			return true;
-		}
-		return false;
+		return incoming.containsKey(fileName)
+			|| outgoing.containsKey(fileName)
+			|| futureOutgoing.contains(fileName);
 	}
 
 	public synchronized boolean doesExist(String fileName) {
-		if (incoming.containsKey(fileName)) {
-			return true;
-		}
-		if (outgoing.containsKey(fileName)) {
-			return true;
-		}
-		return false;
+		return incoming.containsKey(fileName)
+			|| outgoing.containsKey(fileName);
 	}
 
-	public synchronized byte[] getData(String fileName) throws InterruptedException {
+	public synchronized byte[] getData(String fileName) {
 		if (fileName.startsWith("/")) {
 			throw new IllegalArgumentException();
 		}
@@ -158,7 +146,7 @@ public class FtpConnexion {
 			final FileFormat format = getFileFormat();
 			final DiagramDescription desc = sourceStringReader.generateDiagramDescription(new FileFormatOption(format));
 			final List<BlockUml> blocks = sourceStringReader.getBlocks();
-			if (blocks.size() > 0) {
+			if (!blocks.isEmpty()) {
 				blocks.get(0).getDiagram().exportDiagram(baos, 0, new FileFormatOption(format));
 			}
 			final String errorFileName = pngFileName.substring(0, pngFileName.length() - 4) + ".err";
@@ -178,7 +166,7 @@ public class FtpConnexion {
 				}
 			}
 		} finally {
-			if (done == false) {
+			if (!done) {
 				outgoing.put(pngFileName, new byte[0]);
 			}
 		}

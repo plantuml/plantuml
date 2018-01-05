@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 
 public class Matcher2 {
 
-	private final static boolean INSTRUMENT = false;
+	private static final boolean INSTRUMENT = false;
 	private final Matcher matcher;
 	private final String id;
 
@@ -73,13 +73,13 @@ public class Matcher2 {
 	}
 
 	private void addTime(long duration) {
-		if (INSTRUMENT == false) {
+		if (!INSTRUMENT) {
 			return;
 		}
 		addTime(id, duration);
 	}
 
-	private static final Map<String, Long> durations = new HashMap<String, Long>();
+	private static final Map<String, Long> durations = new HashMap<>();
 
 	private static synchronized void addTime(String id, long duration) {
 		Long total = durations.get(id);

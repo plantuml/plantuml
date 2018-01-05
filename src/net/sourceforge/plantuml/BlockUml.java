@@ -65,8 +65,7 @@ public class BlockUml {
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		final String source = getDiagram().getSource().getPlainString();
-		final String encoded = transcoder.encode(source);
-		return encoded;
+		return transcoder.encode(source);
 	}
 
 	public String getFlashData() {
@@ -84,7 +83,7 @@ public class BlockUml {
 	}
 
 	public static List<CharSequence2> convert(List<String> strings) {
-		final List<CharSequence2> result = new ArrayList<CharSequence2>();
+		final List<CharSequence2> result = new ArrayList<>();
 		LineLocationImpl location = new LineLocationImpl("block", null);
 		for (String s : strings) {
 			location = location.oneLineRead();
@@ -97,10 +96,10 @@ public class BlockUml {
 		this.startLine = startLine;
 		this.localDefines = defines;
 		final CharSequence2 s0 = strings.get(0).trin();
-		if (StartUtils.startsWithSymbolAnd("start", s0) == false) {
+		if (!StartUtils.startsWithSymbolAnd("start", s0)) {
 			throw new IllegalArgumentException();
 		}
-		this.data = new ArrayList<CharSequence2>(strings);
+		this.data = new ArrayList<>(strings);
 	}
 
 	public String getFileOrDirname() {
@@ -109,7 +108,7 @@ public class BlockUml {
 		}
 		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).toString()));
 		final boolean ok = m.find();
-		if (ok == false) {
+		if (!ok) {
 			return null;
 		}
 		String result = m.group(1);
@@ -174,7 +173,7 @@ public class BlockUml {
 	}
 
 	public List<? extends CharSequence> getDefinition() {
-		if (data.get(0).toString().startsWith("@startdef") == false) {
+		if (!data.get(0).toString().startsWith("@startdef")) {
 			throw new IllegalStateException();
 		}
 		return Collections.unmodifiableList(data.subList(1, data.size() - 1));

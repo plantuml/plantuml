@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class PSystemListInternalSprites extends AbstractPSystem {
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
@@ -66,7 +66,7 @@ public class PSystemListInternalSprites extends AbstractPSystem {
 	}
 
 	private UDrawable getGraphicStrings() throws IOException {
-		final List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<>();
 		lines.add("<b>List Current Sprits");
 		lines.add("<i>Credit to");
 		lines.add("http://www.archimatetool.com");

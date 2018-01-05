@@ -65,7 +65,6 @@ public class NiceNumber {
 		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 		df.setGroupingSize(3);
 		df.setMaximumFractionDigits(0);
-		final String t = df.format(v).replace(',', ' ');
-		return t;
+        return df.format(v).replace(',', ' ');
 	}
 }

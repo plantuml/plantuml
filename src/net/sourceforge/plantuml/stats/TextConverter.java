@@ -58,7 +58,7 @@ public class TextConverter {
 		// table.addLine("ID", "Start", "Last", "Parsed", "Mean(ms)", "Generated", "Mean(ms)");
 		table.addSeparator();
 		for (StatsLine line : stats.getLastSessions().getLines()) {
-			Object id = (Long) line.getValue(StatsColumn.SESSION_ID);
+			Object id = line.getValue(StatsColumn.SESSION_ID);
 			if (id == null) {
 				id = "";
 			}

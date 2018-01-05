@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.geom;
 
 public class Neighborhood {
 
-	final private double angle1;
-	final private double angle2;
-	final private Point2DInt center;
+	private final double angle1;
+	private final double angle2;
+	private final Point2DInt center;
 
 	public Neighborhood(Point2DInt center) {
 		this(center, 0, 0);

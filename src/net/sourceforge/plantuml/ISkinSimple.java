@@ -39,16 +39,16 @@ import net.sourceforge.plantuml.graphic.IHtmlColorSet;
 
 public interface ISkinSimple extends SpriteContainer {
 
-	public String getValue(String key);
+	String getValue(String key);
 
-	public double getPadding();
+	double getPadding();
 	
-	public String getMonospacedFamily();
+	String getMonospacedFamily();
 
-	public int getTabSize();
+	int getTabSize();
 	
-	public IHtmlColorSet getIHtmlColorSet();
+	IHtmlColorSet getIHtmlColorSet();
 	
-	public int getDpi();
+	int getDpi();
 
 }

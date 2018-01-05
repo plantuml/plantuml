@@ -66,9 +66,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class EntityImageActivity extends AbstractEntityImage {
 
 	public static final int CORNER = 25;
-	final private TextBlock desc;
-	final private static int MARGIN = 10;
-	final private Url url;
+	private final TextBlock desc;
+	private static final int MARGIN = 10;
+	private final Url url;
 	private final Bibliotekon bibliotekon;
 
 	public EntityImageActivity(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
@@ -86,17 +86,20 @@ public class EntityImageActivity extends AbstractEntityImage {
 		return Dimension2DDouble.delta(dim, MARGIN * 2);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		if (getShapeType() == ShapeType.ROUND_RECTANGLE) {
-			ug = drawNormal(ug);
-		} else if (getShapeType() == ShapeType.OCTAGON) {
-			ug = drawOctagon(ug);
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (getShapeType()) {
+            case ROUND_RECTANGLE:
+                ug = drawNormal(ug);
+                break;
+            case OCTAGON:
+                ug = drawOctagon(ug);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 		if (url != null) {
 			ug.closeAction();
 		}

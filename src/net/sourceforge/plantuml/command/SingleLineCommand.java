@@ -51,7 +51,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
-		if (pattern.startsWith("(?i)^") == false || pattern.endsWith("$") == false) {
+		if (!pattern.startsWith("(?i)^") || !pattern.endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + pattern);
 		}
 
@@ -62,7 +62,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 		return new String[] { pattern.pattern() };
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		if (lines.size() != 1) {
 			return CommandControl.NOT_OK;
 		}
@@ -108,7 +108,7 @@ public abstract class SingleLineCommand<S extends Diagram> implements Command<S>
 
 	protected abstract CommandExecutionResult executeArg(S system, List<String> arg);
 
-	final public List<String> getSplit(String line) {
+	public final List<String> getSplit(String line) {
 		return StringUtils.getSplit(pattern, line);
 	}
 

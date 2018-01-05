@@ -77,9 +77,9 @@ abstract class AbstractGraphviz implements Graphviz {
 		return new File(skinParam.getDotExecutable());
 	}
 
-	abstract protected File specificDotExe();
+	protected abstract File specificDotExe();
 
-	final public ProcessState createFile3(OutputStream os) {
+	public final ProcessState createFile3(OutputStream os) {
 		if (dotString == null) {
 			throw new IllegalArgumentException();
 		}
@@ -103,20 +103,20 @@ abstract class AbstractGraphviz implements Graphviz {
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Log.error("Error: " + e);
-			Log.error("The command was " + cmd);
+			Log.error("The command was " + Arrays.toString(cmd));
 			Log.error("");
 			Log.error("Try java -jar plantuml.jar -testdot to figure out the issue");
 			Log.error("");
 		} finally {
 			Log.info("Ending Graphviz process");
 		}
-		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getError().length() > 0) {
+		if (OptionFlags.getInstance().isCheckDotError() && p != null && !p.getError().isEmpty()) {
 			Log.error("GraphViz error stream : " + p.getError());
 			if (OptionFlags.getInstance().isCheckDotError()) {
 				throw new IllegalStateException("Dot error " + p.getError());
 			}
 		}
-		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getOut().length() > 0) {
+		if (OptionFlags.getInstance().isCheckDotError() && p != null && !p.getOut().isEmpty()) {
 			Log.error("GraphViz out stream : " + p.getOut());
 			if (OptionFlags.getInstance().isCheckDotError()) {
 				throw new IllegalStateException("Dot out " + p.getOut());
@@ -125,11 +125,11 @@ abstract class AbstractGraphviz implements Graphviz {
 		return state;
 	}
 
-	final public ExeState getExeState() {
+	public final ExeState getExeState() {
 		return ExeState.checkFile(dotExe);
 	}
 
-	final public String dotVersion() {
+	public final String dotVersion() {
 		final String cmd[] = getCommandLineVersion();
 		return executeCmd(cmd);
 	}

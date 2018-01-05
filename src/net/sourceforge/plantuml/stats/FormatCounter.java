@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.stats.api.StatsTable;
 
 public class FormatCounter {
 
-	private ConcurrentMap<FileFormat, NumberAnalyzed> data = new ConcurrentHashMap<FileFormat, NumberAnalyzed>();
+	private ConcurrentMap<FileFormat, NumberAnalyzed> data = new ConcurrentHashMap<>();
 
 	public FormatCounter(String prefix) {
 		for (FileFormat format : FileFormat.values()) {
@@ -66,7 +66,7 @@ public class FormatCounter {
 	}
 
 	private StatsLine createLine(String name, NumberAnalyzed n) {
-		final Map<StatsColumn, Object> result = new EnumMap<StatsColumn, Object>(StatsColumn.class);
+		final Map<StatsColumn, Object> result = new EnumMap<>(StatsColumn.class);
 		result.put(StatsColumn.FORMAT, name);
 		result.put(StatsColumn.GENERATED_COUNT, n.getNb());
 		result.put(StatsColumn.GENERATED_MEAN_TIME, n.getMean());

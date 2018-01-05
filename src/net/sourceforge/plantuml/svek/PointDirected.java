@@ -39,9 +39,9 @@ import java.awt.geom.Point2D;
 
 public class PointDirected {
 
-	final private double x;
-	final private double y;
-	final private double angle;
+	private final double x;
+	private final double y;
+	private final double angle;
 
 	public PointDirected(Point2D p, double angle) {
 		this.x = p.getX();

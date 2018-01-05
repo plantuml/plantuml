@@ -41,16 +41,16 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class SizeChange implements FontChange {
 
-	static private final Pattern2 sizePattern = MyPattern.cmpile("(?i)" + Splitter.fontSizePattern2);
+	private static final Pattern2 sizePattern = MyPattern.cmpile("(?i)" + Splitter.fontSizePattern2);
 
 	private final Integer size;
 
 	SizeChange(String s) {
 		final Matcher2 matcherSize = sizePattern.matcher(s);
-		if (matcherSize.find() == false) {
+		if (!matcherSize.find()) {
 			throw new IllegalArgumentException();
 		}
-		size = new Integer(matcherSize.group(1));
+		size = Integer.valueOf(matcherSize.group(1));
 	}
 
 	Integer getSize() {

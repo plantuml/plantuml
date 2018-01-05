@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 
 public class FtileDecorateIn extends FtileDecorate {
 
-	final private LinkRendering linkRendering;
+	private final LinkRendering linkRendering;
 
 	public FtileDecorateIn(final Ftile ftile, final LinkRendering linkRendering) {
 		super(ftile);

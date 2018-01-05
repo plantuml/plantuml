@@ -55,13 +55,13 @@ import net.sourceforge.plantuml.sudoku.PSystemSudoku;
 
 public class StatsUtilsIncrement {
 
-	final private static Preferences prefs = StatsUtils.prefs;
+	private static final Preferences prefs = StatsUtils.prefs;
 
-	final private static ConcurrentMap<String, ParsedGenerated> byTypeEver = StatsUtils.byTypeEver;
-	final private static ConcurrentMap<String, ParsedGenerated> byTypeCurrent = StatsUtils.byTypeCurrent;
+	private static final ConcurrentMap<String, ParsedGenerated> byTypeEver = StatsUtils.byTypeEver;
+	private static final ConcurrentMap<String, ParsedGenerated> byTypeCurrent = StatsUtils.byTypeCurrent;
 
-	final private static FormatCounter formatCounterCurrent = StatsUtils.formatCounterCurrent;
-	final private static FormatCounter formatCounterEver = StatsUtils.formatCounterEver;
+	private static final FormatCounter formatCounterCurrent = StatsUtils.formatCounterCurrent;
+	private static final FormatCounter formatCounterEver = StatsUtils.formatCounterEver;
 
 	public static void onceMoreParse(long duration, Class<? extends Diagram> type) {
 		getByTypeCurrent(type).parsed().addValue(duration);

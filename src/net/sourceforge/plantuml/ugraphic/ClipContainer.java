@@ -35,5 +35,5 @@
 package net.sourceforge.plantuml.ugraphic;
 
 public interface ClipContainer {
-	public UClip getClip();
+	UClip getClip();
 }

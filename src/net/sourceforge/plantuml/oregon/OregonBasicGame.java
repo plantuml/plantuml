@@ -352,41 +352,52 @@ public class OregonBasicGame implements BasicGame {
 			gh = 1 - gh;
 		}
 		if (gh == 1) {
-			if (gt == 1) {
-				m = m + 15;
-				a = a - 5;
-			} else if (gt == 2) {
-				m = m - 5;
-				b = b - 100;
-			} else if (gt == 4) {
-				m = m - 20;
-			}
+            switch (gt) {
+                case 1:
+                    m = m + 15;
+                    a = a - 5;
+                    break;
+                case 2:
+                    m = m - 5;
+                    b = b - 100;
+                    break;
+                case 4:
+                    m = m - 20;
+                    break;
+            }
 			print("Riders were friendly, but check for possible losses.");
 			return true;
 		}
-		if (gt == 1) {
-			m = m + 20;
-			r = r - 7;
-			b = b - 150;
-			a = a - 20;
-		} else if (gt == 2) {
-			final int br = shoot3870();
-			b = b - br * 40 - 80;
-			riderShoot(br);
-		} else if (gt == 3) {
-			if (rnd() > .8) {
-				print("They did not attack. Whew!");
-				return true;
-			}
-			b = b - 150;
-			r = r - 7;
-		} else {
-			assert gt == 4;
-			final int br = shoot3870();
-			b = b - br * 30 - 80;
-			m = m - 25;
-			riderShoot(br);
-		}
+        switch (gt) {
+            case 1:
+                m = m + 20;
+                r = r - 7;
+                b = b - 150;
+                a = a - 20;
+                break;
+            case 2: {
+                final int br = shoot3870();
+                b = b - br * 40 - 80;
+                riderShoot(br);
+                break;
+            }
+            case 3:
+                if (rnd() > .8) {
+                    print("They did not attack. Whew!");
+                    return true;
+                }
+                b = b - 150;
+                r = r - 7;
+                break;
+            default: {
+                assert gt == 4;
+                final int br = shoot3870();
+                b = b - br * 30 - 80;
+                m = m - 25;
+                riderShoot(br);
+                break;
+            }
+        }
 		print("Riders were hostile. Better check for losses!");
 		if (b >= 0) {
 			return true;
@@ -626,7 +637,6 @@ public class OregonBasicGame implements BasicGame {
 		print("Nice shot... right on target... good eatin' tonight!");
 		f = f + 24 - 2 * br;
 		b = b - 10 - 3 * br;
-		return;
 	}
 
 	private void stopAtFort1100(int j) throws NoInputException {
@@ -900,7 +910,7 @@ public class OregonBasicGame implements BasicGame {
 	private int shoot3870() throws NoInputException {
 		final int time1 = getTime();
 		final ShootingWord word1Printed = ShootingWord.values()[time1];
-		if (skb.hasMore() == false) {
+		if (!skb.hasMore()) {
 			print("Type: " + word1Printed);
 		}
 		final String typed1 = skb.input(screen);
@@ -914,7 +924,7 @@ public class OregonBasicGame implements BasicGame {
 		}
 		// print("delta="+delta);
 		final ShootingWord word2 = wordType1.encode(delta);
-		if (skb.hasMore() == false) {
+		if (!skb.hasMore()) {
 			print("Type: " + word2);
 		}
 		final String typed2 = skb.input(screen);

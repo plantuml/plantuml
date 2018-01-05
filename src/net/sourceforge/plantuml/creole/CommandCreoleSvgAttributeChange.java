@@ -62,7 +62,7 @@ public class CommandCreoleSvgAttributeChange implements Command {
 
 	public int matchingSize(String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return 0;
 		}
 		return m.group(1).length();
@@ -70,7 +70,7 @@ public class CommandCreoleSvgAttributeChange implements Command {
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			throw new IllegalStateException();
 		}
 

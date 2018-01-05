@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 
-final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
+public final class GroupingLeaf extends Grouping implements EventWithDeactivate {
 
 	private final GroupingStart start;
 	private final HtmlColor backColorGeneral;
@@ -118,7 +118,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 		return true;
 	}
 
-	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+	private List<NoteOnMessage> noteOnMessages = new ArrayList<>();
 
 	public final void setNote(Display strings, NotePosition notePosition, NoteStyle noteStyle, String backcolor, Url url) {
 		if (notePosition != NotePosition.LEFT && notePosition != NotePosition.RIGHT) {

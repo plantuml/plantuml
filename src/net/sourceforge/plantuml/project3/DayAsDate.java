@@ -90,12 +90,11 @@ public class DayAsDate implements Complement, Comparable<DayAsDate> {
 
 	// https://en.wikipedia.org/wiki/Zeller%27s_congruence
 	public DayOfWeek getDayOfWeek() {
-		final int q = dayOfMonth;
-		final int m = month.m();
+        final int m = month.m();
 		final int y = m >= 13 ? year - 1 : year;
 		final int k = y % 100;
 		final int j = y / 100;
-		final int h = ((q + 13 * (m + 1) / 5) + k + k / 4 + j / 4 + 5 * j) % 7;
+		final int h = ((dayOfMonth + 13 * (m + 1) / 5) + k + k / 4 + j / 4 + 5 * j) % 7;
 		return DayOfWeek.fromH(h);
 	}
 

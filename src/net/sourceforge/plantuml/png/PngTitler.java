@@ -105,7 +105,6 @@ public class PngTitler {
 			return 0;
 		}
 		final Dimension2D dimText = textBloc.calculateDimension(stringBounder);
-		final double height = dimText.getHeight();
-		return height;
+        return dimText.getHeight();
 	}
 }

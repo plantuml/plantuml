@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ISkinParam;
 
 public class Rainbow {
 
-	private final List<HtmlColorAndStyle> colors = new ArrayList<HtmlColorAndStyle>();
+	private final List<HtmlColorAndStyle> colors = new ArrayList<>();
 	private final int colorArrowSeparationSpace;
 
 	private Rainbow(int colorArrowSeparationSpace) {

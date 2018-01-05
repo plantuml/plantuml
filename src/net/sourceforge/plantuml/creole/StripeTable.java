@@ -49,15 +49,15 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class StripeTable implements Stripe {
 
-	static enum Mode {
+	enum Mode {
 		HEADER, NORMAL
-	};
+	}
 
 	private FontConfiguration fontConfiguration;
-	final private ISkinSimple skinParam;
-	final private AtomTable table;
-	final private Atom marged;
-	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');
+	private final ISkinSimple skinParam;
+	private final AtomTable table;
+	private final Atom marged;
+	private final StripeStyle stripeStyle = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');
 
 	public StripeTable(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {
 		this.fontConfiguration = fontConfiguration;
@@ -68,7 +68,7 @@ public class StripeTable implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
-		return Collections.<Atom> singletonList(marged);
+		return Collections.singletonList(marged);
 	}
 
 	static Atom asAtom(List<StripeSimple> cells, double padding) {
@@ -116,7 +116,7 @@ public class StripeTable implements Stripe {
 				v = v.substring(1);
 			}
 			final List<String> lines = getWithNewlinesInternal(v);
-			final List<StripeSimple> cells = new ArrayList<StripeSimple>();
+			final List<StripeSimple> cells = new ArrayList<>();
 			for (String s : lines) {
 				final StripeSimple cell = new StripeSimple(getFontConfiguration(mode), stripeStyle,
 						new CreoleContext(), skinParam, CreoleMode.FULL);
@@ -132,22 +132,26 @@ public class StripeTable implements Stripe {
 	}
 
 	static List<String> getWithNewlinesInternal(String s) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
 			if (c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
-				if (c2 == 'n') {
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == '\\') {
-					current.append(c2);
-				} else {
-					current.append(c);
-					current.append(c2);
-				}
+                switch (c2) {
+                    case 'n':
+                        result.add(current.toString());
+                        current.setLength(0);
+                        break;
+                    case '\\':
+                        current.append(c2);
+                        break;
+                    default:
+                        current.append(c);
+                        current.append(c2);
+                        break;
+                }
 			} else if (c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);

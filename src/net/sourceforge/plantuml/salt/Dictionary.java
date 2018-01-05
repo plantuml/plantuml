@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public class Dictionary implements SpriteContainer, ISkinSimple {
 
-	private final Map<String, Element> data = new HashMap<String, Element>();
+	private final Map<String, Element> data = new HashMap<>();
 
 	public void put(String name, Element element) {
 		data.put(name, element);

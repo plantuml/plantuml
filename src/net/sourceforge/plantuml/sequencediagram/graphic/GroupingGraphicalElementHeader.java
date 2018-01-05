@@ -54,7 +54,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 	private final Component comp;
 	private double endY;
 	private final boolean isParallel;
-	private final List<Component> notes = new ArrayList<Component>();
+	private final List<Component> notes = new ArrayList<>();
 
 	public GroupingGraphicalElementHeader(double currentY, Component comp, InGroupableList inGroupableList,
 			boolean isParallel) {
@@ -69,7 +69,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
+    public final double getPreferredWidth(StringBounder stringBounder) {
 		double width = comp.getPreferredWidth(stringBounder);
 		for (Component note : notes) {
 			final Dimension2D dimNote = note.getPreferredDimension(stringBounder);
@@ -79,7 +79,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return comp.getPreferredHeight(stringBounder);
 	}
 

@@ -41,7 +41,7 @@ import java.util.regex.Matcher;
 
 public class Variables {
 
-	private final List<DefineVariable> all = new ArrayList<DefineVariable>();
+	private final List<DefineVariable> all = new ArrayList<>();
 
 	public void add(DefineVariable var) {
 		this.all.add(var);
@@ -99,7 +99,7 @@ public class Variables {
 				newValue = newValue.replaceAll(var2, Matcher.quoteReplacement(variable.getDefaultValue()));
 			}
 		}
-		if (appended == true) {
+		if (appended) {
 			regex.setLength(regex.length() - 1);
 		}
 		regex.append("\\)");

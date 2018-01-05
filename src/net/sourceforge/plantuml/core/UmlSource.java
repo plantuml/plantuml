@@ -63,10 +63,10 @@ import net.sourceforge.plantuml.version.IteratorCounter2Impl;
  * @author Arnaud Roques
  * 
  */
-final public class UmlSource {
+public final class UmlSource {
 
-	final private List<String> source;
-	final private List<CharSequence2> source2;
+	private final List<String> source;
+	private final List<CharSequence2> source2;
 
 	// final private int startLine;
 	// final private LineLocation startLocation;
@@ -83,8 +83,8 @@ final public class UmlSource {
 	public UmlSource(List<CharSequence2> source, boolean checkEndingBackslash, int startLine) {
 		// this.startLocation = source.get(0).getLocation();
 		// this.startLine = startLine;
-		final List<String> tmp = new ArrayList<String>();
-		final List<CharSequence2> tmp2 = new ArrayList<CharSequence2>();
+		final List<String> tmp = new ArrayList<>();
+		final List<CharSequence2> tmp2 = new ArrayList<>();
 
 		if (checkEndingBackslash) {
 			final StringBuilder pending = new StringBuilder();
@@ -201,7 +201,7 @@ final public class UmlSource {
 			if (s.matches("\\s*'.*")) {
 				continue;
 			}
-			if (StringUtils.trin(s).length() != 0) {
+			if (!StringUtils.trin(s).isEmpty()) {
 				return false;
 			}
 		}

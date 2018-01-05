@@ -87,7 +87,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 		final String display;
 		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
 		if (arg.get("AS", 0) == null) {
-			if (name.length() == 0) {
+			if (name.isEmpty()) {
 				code = Code.of("##" + UniqueSequence.getValue());
 				display = null;
 			} else {

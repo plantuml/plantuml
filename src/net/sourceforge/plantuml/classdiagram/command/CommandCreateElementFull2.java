@@ -61,7 +61,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 	private final Mode mode;
 
-	public static enum Mode {
+	public enum Mode {
 		NORMAL_KEYWORD, WITH_MIX_PREFIX
 	}
 
@@ -99,16 +99,13 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 
 	@Override
-	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
-			return true;
-		}
-		return false;
+    protected final boolean isForbidden(CharSequence line) {
+		return line.toString().matches("^[\\p{L}0-9_.]+$");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, RegexResult arg) {
-		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
+		if (mode == Mode.NORMAL_KEYWORD && !diagram.isAllowMixing()) {
 			return CommandExecutionResult
 					.error("Use 'allow_mixing' if you want to mix classes and other UML elements.");
 		}

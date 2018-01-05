@@ -65,11 +65,11 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 		return foregroundColor;
 	}
 
-	final protected int getArrowDeltaX() {
+	protected final int getArrowDeltaX() {
 		return arrowDeltaX;
 	}
 
-	final protected int getArrowDeltaY() {
+	protected final int getArrowDeltaY() {
 		return arrowDeltaY;
 	}
 

@@ -44,5 +44,5 @@ public interface FileMaker {
 
 	ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException;
 
-	public int getNbPages();
+	int getNbPages();
 }

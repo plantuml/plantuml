@@ -73,11 +73,11 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class SequenceDiagram extends UmlDiagram {
 
-	private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
+	private final Map<String, Participant> participants = new LinkedHashMap<>();
 
-	private final List<Event> events = new ArrayList<Event>();
+	private final List<Event> events = new ArrayList<>();
 
-	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
+	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<>();
 
 	private final Skin skinInitial = new ProtectedSkin(new Rose());
 	private Skin skin2 = new ProtectedSkin(new Rose());
@@ -126,7 +126,7 @@ public class SequenceDiagram extends UmlDiagram {
 		lastDelay = null;
 		events.add(m);
 		if (pendingCreate != null) {
-			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false) {
+			if (!m.compatibleForCreate(pendingCreate.getParticipant())) {
 				return "After create command, you have to send a message to \"" + pendingCreate.getParticipant() + "\"";
 			}
 			m.addLifeEvent(pendingCreate);
@@ -137,7 +137,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public void addNote(Note n, boolean tryMerge) {
 		// this.lastEventWithDeactivate = null;
-		if (tryMerge && events.size() > 0) {
+		if (tryMerge && !events.isEmpty()) {
 			final Event last = events.get(events.size() - 1);
 			if (last instanceof Note) {
 				final Notes notes = new Notes((Note) last, n);
@@ -226,7 +226,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	// support for CommandReturn
-	private final Stack<Message> activationState = new Stack<Message>();
+	private final Stack<Message> activationState = new Stack<>();
 
 	public Message getActivatingMessage() {
 		if (activationState.empty()) {
@@ -260,7 +260,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		if (lifeEventType == LifeEventType.ACTIVATE && lastEventWithDeactivate instanceof Message) {
 			activationState.push((Message) lastEventWithDeactivate);
-		} else if (lifeEventType == LifeEventType.DEACTIVATE && activationState.empty() == false) {
+		} else if (lifeEventType == LifeEventType.DEACTIVATE && !activationState.empty()) {
 			activationState.pop();
 		}
 		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);
@@ -273,18 +273,18 @@ public class SequenceDiagram extends UmlDiagram {
 		return "Activate/Deactivate already done on " + p.getCode();
 	}
 
-	private final List<GroupingStart> openGroupings = new ArrayList<GroupingStart>();
+	private final List<GroupingStart> openGroupings = new ArrayList<>();
 
 	public boolean grouping(String title, String comment, GroupingType type, HtmlColor backColorGeneral,
 			HtmlColor backColorElement) {
-		if (type != GroupingType.START && openGroupings.size() == 0) {
+		if (type != GroupingType.START && openGroupings.isEmpty()) {
 			return false;
 		}
 		if (backColorGeneral == null) {
 			backColorGeneral = getSkinParam().getHtmlColor(ColorParam.sequenceGroupBodyBackground, null, false);
 		}
 
-		final GroupingStart top = openGroupings.size() > 0 ? openGroupings.get(0) : null;
+		final GroupingStart top = !openGroupings.isEmpty() ? openGroupings.get(0) : null;
 
 		final Grouping g = type == GroupingType.START ? new GroupingStart(title, comment, backColorGeneral,
 				backColorElement, top)
@@ -307,7 +307,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	public boolean changeSkin(String className) {
 		final Skin s = SkinUtils.loadSkin(className);
-		final Integer expected = new Integer(1);
+		final Integer expected = 1;
 		if (s != null && expected.equals(s.getProtocolVersion())) {
 			this.skin2 = new ProtectedSkin(s);
 			return true;
@@ -356,10 +356,7 @@ public class SequenceDiagram extends UmlDiagram {
 		if (footbox == null) {
 			return showFootbox;
 		}
-		if (footbox.equalsIgnoreCase("hide")) {
-			return false;
-		}
-		return true;
+		return !footbox.equalsIgnoreCase("hide");
 	}
 
 	private boolean showFootbox = true;
@@ -405,7 +402,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void removeHiddenParticipants() {
-		for (Participant p : new ArrayList<Participant>(participants.values())) {
+		for (Participant p : new ArrayList<>(participants.values())) {
 			if (isAlone(p)) {
 				remove(p);
 			}
@@ -414,7 +411,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private void remove(Participant p) {
 		final boolean ok = participants.values().remove(p);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 		participantEnglobers2.remove(p);
@@ -464,10 +461,7 @@ public class SequenceDiagram extends UmlDiagram {
 				return true;
 			}
 		}
-		if (DisplayPositionned.isNull(getLegend()) == false && getLegend().hasUrl()) {
-			return true;
-		}
-		return false;
+		return !DisplayPositionned.isNull(getLegend()) && getLegend().hasUrl();
 	}
 
 	public void addReference(Reference ref) {
@@ -476,10 +470,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public boolean isOk() {
-		if (participants.size() == 0) {
-			return false;
-		}
-		return true;
+		return !participants.isEmpty();
 	}
 
 	public double getDpiFactor(FileFormatOption fileFormatOption, Dimension2D dim) {
@@ -501,7 +492,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return super.checkFinalError();
 	}
 
-	private final Set<EntityPortion> hiddenPortions = EnumSet.<EntityPortion> noneOf(EntityPortion.class);
+	private final Set<EntityPortion> hiddenPortions = EnumSet.noneOf(EntityPortion.class);
 
 	public void hideOrShow(Set<EntityPortion> portions, boolean show) {
 		if (show) {

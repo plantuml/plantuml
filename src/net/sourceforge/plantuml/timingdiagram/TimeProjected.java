@@ -38,6 +38,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface TimeProjected {
 
-	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick);
+	IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick);
 
 }

@@ -88,7 +88,7 @@ public final class SvgData {
 		double minY = Double.MAX_VALUE;
 		double maxX = -Double.MAX_VALUE;
 		double maxY = -Double.MAX_VALUE;
-		if (m.find() == false) {
+		if (!m.find()) {
 			return;
 		}
 		final String points = m.group(1);
@@ -117,22 +117,17 @@ public final class SvgData {
 	}
 
 	private String modifiedSvgXmlHeader() {
-		final StringBuilder newString = new StringBuilder(
-				"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");
-		newString.append("style=\"width:");
-		newString.append(Math.round(getWidth()));
-		newString.append(";height:");
-		newString.append(Math.round(getHeight()));
-		newString.append(";\" ");
-		newString.append("width=\"" + Math.round(getWidth()) + "pt\" ");
-		newString.append("height=\"" + Math.round(getHeight()) + "pt\" ");
-		newString.append("viewBox=\"" + Math.round(startX) + " " + Math.round(startY) + " " + Math.round(getWidth()) + " "
-				+ Math.round(getHeight()) + "\"");
-		// newString.append("viewBox=\"" + Math.round(minX) + " " +
-		// Math.round(minY) + " " + Math.round(getWidth()) + " "
-		// + Math.round(getHeight()) + "\"");
-		newString.append(">");
-		return svg.replaceFirst("(?i)<svg[^>]*>", newString.toString());
+		final String newString = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" " + "style=\"width:" +
+			Math.round(getWidth()) +
+			";height:" +
+			Math.round(getHeight()) +
+			";\" " +
+			"width=\"" + Math.round(getWidth()) + "pt\" " +
+			"height=\"" + Math.round(getHeight()) + "pt\" " +
+			"viewBox=\"" + Math.round(startX) + " " + Math.round(startY) + " " + Math.round(getWidth()) + " "
+			+ Math.round(getHeight()) + "\"" +
+			">";
+		return svg.replaceFirst("(?i)<svg[^>]*>", newString);
 	}
 
 	public double getWidth() {

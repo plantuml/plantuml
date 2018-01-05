@@ -44,13 +44,13 @@ public class ProgressBar {
 	private static final AtomicInteger total = new AtomicInteger();
 	private static final AtomicInteger done = new AtomicInteger();
 
-	private synchronized static void print(String message) {
+	private static synchronized void print(String message) {
 		clear();
 		System.err.print(message);
 		last = message;
 	}
 
-	public synchronized static void clear() {
+	public static synchronized void clear() {
 		if (last != null) {
 			for (int i = 0; i < last.length(); i++) {
 				System.err.print('\b');
@@ -70,8 +70,8 @@ public class ProgressBar {
 		printBar(done.intValue(), total.intValue());
 	}
 
-	private synchronized static void printBar(int done, int total) {
-		if (enable == false) {
+	private static synchronized void printBar(int done, int total) {
+		if (!enable) {
 			return;
 		}
 		if (total == 0) {

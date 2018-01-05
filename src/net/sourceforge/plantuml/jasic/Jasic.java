@@ -1,11 +1,7 @@
 package net.sourceforge.plantuml.jasic;
 
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,9 +128,9 @@ public class Jasic {
      * variable name, a number, a string, or an operator.
      */
     private static List<Token> tokenize(String source) {
-        List<Token> tokens = new ArrayList<Token>();
+        List<Token> tokens = new ArrayList<>();
         
-        String token = "";
+        StringBuilder token = new StringBuilder();
         TokenizeState state = TokenizeState.DEFAULT;
         
         // Many tokens are a single character, like operators and ().
@@ -155,10 +151,10 @@ public class Jasic {
                     tokens.add(new Token(Character.toString(c),
                         tokenTypes[charTokens.indexOf(c)]));
                 } else if (Character.isLetter(c)) {
-                    token += c;
+                    token.append(c);
                     state = TokenizeState.WORD;
                 } else if (Character.isDigit(c)) {
-                    token += c;
+                    token.append(c);
                     state = TokenizeState.NUMBER;
                 } else if (c == '"') {
                     state = TokenizeState.STRING;
@@ -169,14 +165,14 @@ public class Jasic {
                 
             case WORD:
                 if (Character.isLetterOrDigit(c)) {
-                    token += c;
+                    token.append(c);
                 } else if (c == ':') {
-                    tokens.add(new Token(token, TokenType.LABEL));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.LABEL));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                 } else {
-                    tokens.add(new Token(token, TokenType.WORD));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.WORD));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                     i--; // Reprocess this character in the default state.
                 }
@@ -187,10 +183,10 @@ public class Jasic {
                 // To get a negative number, just do 0 - <your number>.
                 // To get a floating point, divide.
                 if (Character.isDigit(c)) {
-                    token += c;
+                    token.append(c);
                 } else {
-                    tokens.add(new Token(token, TokenType.NUMBER));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.NUMBER));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                     i--; // Reprocess this character in the default state.
                 }
@@ -198,11 +194,11 @@ public class Jasic {
                 
             case STRING:
                 if (c == '"') {
-                    tokens.add(new Token(token, TokenType.STRING));
-                    token = "";
+                    tokens.add(new Token(token.toString(), TokenType.STRING));
+                    token = new StringBuilder();
                     state = TokenizeState.DEFAULT;
                 } else {
-                    token += c;
+                    token.append(c);
                 }
                 break;
                 
@@ -293,7 +289,7 @@ public class Jasic {
          * @return          The list of parsed statements.
          */
         public List<Statement> parse(Map<String, Integer> labels) {
-            List<Statement> statements = new ArrayList<Statement>();
+            List<Statement> statements = new ArrayList<>();
             
             while (true) {
                 // Ignore empty lines.
@@ -614,7 +610,7 @@ public class Jasic {
         
         public void execute() {
             if (labels.containsKey(label)) {
-                currentStatement = labels.get(label).intValue();
+                currentStatement = labels.get(label);
             }
         }
 
@@ -635,7 +631,7 @@ public class Jasic {
             if (labels.containsKey(label)) {
                 double value = condition.evaluate().toNumber();
                 if (value != 0) {
-                    currentStatement = labels.get(label).intValue();
+                    currentStatement = labels.get(label);
                 }
             }
         }
@@ -804,8 +800,8 @@ public class Jasic {
      * current statement.
      */
     public Jasic() {
-        variables = new HashMap<String, Value>();
-        labels = new HashMap<String, Integer>();
+        variables = new HashMap<>();
+        labels = new HashMap<>();
         
         InputStreamReader converter = new InputStreamReader(System.in);
         lineIn = new BufferedReader(converter);
@@ -856,34 +852,26 @@ public class Jasic {
      * 
      * @param  path  Path to the text file to read.
      * @return       The contents of the file or null if the load failed.
-     * @throws       IOException
      */
     private static String readFile(String path) {
-        try {
-            FileInputStream stream = new FileInputStream(path);
-            
-            try {
-                InputStreamReader input = new InputStreamReader(stream,
-                    Charset.defaultCharset());
-                Reader reader = new BufferedReader(input);
-                
-                StringBuilder builder = new StringBuilder();
-                char[] buffer = new char[8192];
-                int read;
-                
-                while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
-                    builder.append(buffer, 0, read);
-                }
-                
-                // HACK: The parser expects every statement to end in a newline,
-                // even the very last one, so we'll just tack one on here in
-                // case the file doesn't have one.
-                builder.append("\n");
-                
-                return builder.toString();
-            } finally {
-                stream.close();
+        try (final FileInputStream stream = new FileInputStream(path);
+             final InputStreamReader input = new InputStreamReader(stream, Charset.defaultCharset());
+             final Reader reader = new BufferedReader(input)) {
+
+            StringBuilder builder = new StringBuilder();
+            char[] buffer = new char[8192];
+            int read;
+
+            while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
+                builder.append(buffer, 0, read);
             }
+
+            // HACK: The parser expects every statement to end in a newline,
+            // even the very last one, so we'll just tack one on here in
+            // case the file doesn't have one.
+            builder.append("\n");
+
+            return builder.toString();
         } catch (IOException ex) {
             return null;
         }

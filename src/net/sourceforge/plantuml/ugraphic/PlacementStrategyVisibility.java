@@ -54,7 +54,7 @@ public class PlacementStrategyVisibility extends AbstractPlacementStrategy {
 	}
 
 	public Map<TextBlock, Point2D> getPositions(double width, double height) {
-		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
+		final Map<TextBlock, Point2D> result = new LinkedHashMap<>();
 		double y = 0;
 		for (final Iterator<Map.Entry<TextBlock, Dimension2D>> it = getDimensions().entrySet().iterator(); it.hasNext();) {
 			final Map.Entry<TextBlock, Dimension2D> ent1 = it.next();

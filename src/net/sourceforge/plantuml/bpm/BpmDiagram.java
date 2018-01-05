@@ -58,7 +58,7 @@ public class BpmDiagram extends UmlDiagram {
 			final boolean v1 = new CleanerEmptyLine().clean(grid);
 			final boolean v2 = new CleanerInterleavingLines().clean(grid);
 			final boolean v3 = new CleanerMoveBlock().clean(grid);
-			if (v1 == false && v2 == false && v3 == false) {
+			if (!v1 && !v2 && !v3) {
 				return;
 			}
 		}
@@ -66,8 +66,8 @@ public class BpmDiagram extends UmlDiagram {
 
 	private final BpmElement start = new BpmElement(null, BpmElementType.START);
 
-	private List<BpmEvent> events = new ArrayList<BpmEvent>();
-	private Deque<BpmBranch> branches = new ArrayDeque<BpmBranch>();
+	private List<BpmEvent> events = new ArrayList<>();
+	private Deque<BpmBranch> branches = new ArrayDeque<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Bpm Diagram)");

@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.LimitFinder;
 public class PSystemTree extends AbstractPSystem {
 
 	private GNode root;
-	private List<GNode> stack = new ArrayList<GNode>();
+	private List<GNode> stack = new ArrayList<>();
 	private final Rendering rendering = Rendering.NEEDLE;
 
 	public DiagramDescription getDescription() {
@@ -63,7 +63,7 @@ public class PSystemTree extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE, null, null,
 				5, 5, null, false);

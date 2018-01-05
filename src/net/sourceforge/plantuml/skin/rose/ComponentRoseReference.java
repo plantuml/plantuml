@@ -107,21 +107,27 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 		textHeader.drawU(ug.apply(new UTranslate(15, 2)));
 		final double textPos;
-		if (position == HorizontalAlignment.CENTER) {
-			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = (dimensionToUse.getWidth() - textWidth) / 2;
-		} else if (position == HorizontalAlignment.RIGHT) {
-			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2() - xMargin;
-		} else {
-			textPos = getMarginX1() + xMargin;
-		}
+        switch (position) {
+            case CENTER: {
+                final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
+                textPos = (dimensionToUse.getWidth() - textWidth) / 2;
+                break;
+            }
+            case RIGHT: {
+                final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
+                textPos = dimensionToUse.getWidth() - textWidth - getMarginX2() - xMargin;
+                break;
+            }
+            default:
+                textPos = getMarginX1() + xMargin;
+                break;
+        }
 		getTextBlock().drawU(ug.apply(new UTranslate(textPos, (getMarginY() + textHeaderHeight))));
 	}
 
 	private double getHeaderHeight(StringBounder stringBounder) {
 		final Dimension2D headerDim = textHeader.calculateDimension(stringBounder);
-		return headerDim.getHeight() + 2 * 1;
+		return headerDim.getHeight() + 2;
 	}
 
 	private double getHeaderWidth(StringBounder stringBounder) {

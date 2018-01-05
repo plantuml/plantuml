@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Worm implements Iterable<Point2D.Double> {
 
-	private final List<Point2D.Double> points = new ArrayList<Point2D.Double>();
+	private final List<Point2D.Double> points = new ArrayList<>();
 
 	public boolean isPureHorizontal() {
 		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();
@@ -85,7 +85,7 @@ public class Worm implements Iterable<Point2D.Double> {
 			final java.awt.geom.Point2D.Double p1 = points.get(i);
 			final java.awt.geom.Point2D.Double p2 = points.get(i + 1);
 			final Line2D line = new Line2D.Double(p1, p2);
-			if (drawn == false && emphasizeDirection != null && Direction.fromVector(p1, p2) == emphasizeDirection) {
+			if (!drawn && emphasizeDirection != null && Direction.fromVector(p1, p2) == emphasizeDirection) {
 				drawLine(ug, line, emphasizeDirection);
 				drawn = true;
 			} else {
@@ -181,7 +181,7 @@ public class Worm implements Iterable<Point2D.Double> {
 	public String toString() {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < points.size() - 1; i++) {
-			result.append(getDirectionAtPoint(i) + " ");
+			result.append(getDirectionAtPoint(i)).append(" ");
 		}
 		return result + points.toString();
 	}
@@ -260,7 +260,7 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	public Worm merge(Worm other, MergeStrategy merge) {
-		if (Snake.same(this.getLast(), other.getFirst()) == false) {
+		if (!Snake.same(this.getLast(), other.getFirst())) {
 			throw new IllegalArgumentException();
 		}
 		final Worm result = new Worm();
@@ -271,10 +271,9 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	private void mergeMe(MergeStrategy merge) {
-		boolean change = false;
+		boolean change;
 		do {
-			change = false;
-			change = change || removeNullVector();
+			change = removeNullVector();
 			change = change || removeRedondantDirection();
 			change = change || removePattern1();
 			change = change || removePattern2();

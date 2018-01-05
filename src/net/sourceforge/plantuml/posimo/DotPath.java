@@ -92,7 +92,7 @@ public class DotPath implements UShape, Moveable {
 		// }
 	}
 
-	private final List<CubicCurve2D.Double> beziers = new ArrayList<CubicCurve2D.Double>();
+	private final List<CubicCurve2D.Double> beziers = new ArrayList<>();
 	private String comment;
 
 	public DotPath() {
@@ -111,7 +111,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath addCurve(Point2D pt1, Point2D pt2, Point2D pt3, Point2D pt4) {
-		final List<CubicCurve2D.Double> beziersNew = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> beziersNew = new ArrayList<>(beziers);
 		beziersNew.add(new CubicCurve2D.Double(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),
 				pt4.getX(), pt4.getY()));
 		return new DotPath(beziersNew);
@@ -130,7 +130,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath(String init, double deltaY) {
-		if (isPathConsistent(init) == false) {
+		if (!isPathConsistent(init)) {
 			throw new IllegalArgumentException();
 		}
 		final int posC = init.indexOf("C");
@@ -142,7 +142,7 @@ public class DotPath implements UShape, Moveable {
 		final double startY = Double.parseDouble(st.nextToken()) + deltaY;
 
 		final StringTokenizer st2 = new StringTokenizer(init.substring(posC + 1), " ");
-		final List<TriPoints> triPoints = new ArrayList<TriPoints>();
+		final List<TriPoints> triPoints = new ArrayList<>();
 		while (st2.hasMoreTokens()) {
 			final String p1 = st2.nextToken();
 			final String p2 = st2.nextToken();
@@ -161,10 +161,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public static boolean isPathConsistent(String init) {
-		if (init.startsWith("M") == false) {
-			return false;
-		}
-		return true;
+		return init.startsWith("M");
 	}
 
 	// private final String print;
@@ -294,14 +291,12 @@ public class DotPath implements UShape, Moveable {
 
 	public double getEndAngle() {
 		final Line2D tan = getEndTangeante();
-		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
-		return theta1;
+		return Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
 	}
 
 	public double getStartAngle() {
 		final Line2D tan = getStartTangeante();
-		final double theta1 = Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
-		return theta1;
+		return Math.atan2(tan.getY2() - tan.getY1(), tan.getX2() - tan.getX1());
 	}
 
 	public Line2D getStartTangeante() {
@@ -316,31 +311,31 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath addBefore(CubicCurve2D.Double before) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.add(0, before);
 		return new DotPath(copy);
 	}
 
 	private DotPath addBefore(DotPath other) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.addAll(0, other.beziers);
 		return new DotPath(copy);
 	}
 
 	public DotPath addAfter(CubicCurve2D.Double after) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.add(after);
 		return new DotPath(copy);
 	}
 
 	public DotPath addAfter(DotPath other) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.addAll(other.beziers);
 		return new DotPath(copy);
 	}
 
 	public Map<Point2D, Double> somePoints() {
-		final Map<Point2D, Double> result = new HashMap<Point2D, Double>();
+		final Map<Point2D, Double> result = new HashMap<>();
 		for (CubicCurve2D.Double bez : beziers) {
 			final CubicCurve2D.Double left = new CubicCurve2D.Double();
 			final CubicCurve2D.Double right = new CubicCurve2D.Double();
@@ -422,7 +417,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private Point2D getFrontierIntersection(Shape shape, Rectangle2D... notIn) {
-		final List<CubicCurve2D.Double> all = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> all = new ArrayList<>(beziers);
 		for (int i = 0; i < 8; i++) {
 			for (CubicCurve2D.Double immutable : all) {
 				if (contains(immutable, notIn)) {
@@ -435,7 +430,7 @@ public class DotPath implements UShape, Moveable {
 						BezierUtils.shorten(bez, shape);
 					}
 					final Point2D.Double result = new Point2D.Double((bez.x1 + bez.x2) / 2, (bez.y1 + bez.y2) / 2);
-					if (contains(result, notIn) == false) {
+					if (!contains(result, notIn)) {
 						return result;
 					}
 				}
@@ -446,7 +441,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private void cutAllCubic(List<CubicCurve2D.Double> all) {
-		final List<CubicCurve2D.Double> tmp = new ArrayList<CubicCurve2D.Double>(all);
+		final List<CubicCurve2D.Double> tmp = new ArrayList<>(all);
 		all.clear();
 		for (CubicCurve2D.Double bez : tmp) {
 			final CubicCurve2D.Double left = new CubicCurve2D.Double();
@@ -457,7 +452,7 @@ public class DotPath implements UShape, Moveable {
 		}
 	}
 
-	static private boolean contains(Point2D.Double point, Rectangle2D... rects) {
+	private static boolean contains(Point2D.Double point, Rectangle2D... rects) {
 		for (Rectangle2D r : rects) {
 			if (r.contains(point)) {
 				return true;
@@ -466,7 +461,7 @@ public class DotPath implements UShape, Moveable {
 		return false;
 	}
 
-	static private boolean contains(CubicCurve2D.Double cubic, Rectangle2D... rects) {
+	private static boolean contains(CubicCurve2D.Double cubic, Rectangle2D... rects) {
 		for (Rectangle2D r : rects) {
 			if (r.contains(cubic.getP1()) && r.contains(cubic.getP2())) {
 				return true;
@@ -476,9 +471,9 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private DotPath manageRect(Rectangle2D start, Rectangle2D end) {
-		final List<CubicCurve2D.Double> list = new ArrayList<CubicCurve2D.Double>(this.beziers);
+		final List<CubicCurve2D.Double> list = new ArrayList<>(this.beziers);
 		while (true) {
-			if (BezierUtils.isCutting(list.get(0), start) == false) {
+			if (!BezierUtils.isCutting(list.get(0), start)) {
 				throw new IllegalStateException();
 			}
 			if (BezierUtils.dist(list.get(0)) <= 1.0) {
@@ -536,9 +531,9 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath reverse() {
-		final List<CubicCurve2D.Double> reverse = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> reverse = new ArrayList<>(beziers);
 		Collections.reverse(reverse);
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>();
+		final List<CubicCurve2D.Double> copy = new ArrayList<>();
 		for (CubicCurve2D.Double cub : reverse) {
 			copy.add(reverse(cub));
 		}
@@ -575,7 +570,7 @@ public class DotPath implements UShape, Moveable {
 				final DotPath result = new DotPath();
 				int idx = 0;
 				while (idx + 1 < this.beziers.size() && clusterPosition.contains(this.beziers.get(idx).getP2())) {
-					if (clusterPosition.contains(this.beziers.get(idx).getP1()) == false) {
+					if (!clusterPosition.contains(this.beziers.get(idx).getP1())) {
 						throw new IllegalStateException();
 					}
 					idx++;
@@ -584,7 +579,7 @@ public class DotPath implements UShape, Moveable {
 					// System.err.println("strange1");
 				} else {
 					assert clusterPosition.contains(this.beziers.get(idx).getP1());
-					assert clusterPosition.contains(this.beziers.get(idx).getP2()) == false;
+					assert !clusterPosition.contains(this.beziers.get(idx).getP2());
 					CubicCurve2D current = this.beziers.get(idx);
 					for (int k = 0; k < 8; k++) {
 						// System.err.println("length=" + length(current));
@@ -612,14 +607,14 @@ public class DotPath implements UShape, Moveable {
 			final ClusterPosition clusterPosition = head.getClusterPosition();
 			if (clusterPosition.contains(getEndPoint())) {
 				for (CubicCurve2D.Double current : me.beziers) {
-					if (clusterPosition.contains(current.getP2()) == false) {
+					if (!clusterPosition.contains(current.getP2())) {
 						result.beziers.add(current);
 					} else {
 						if (clusterPosition.contains(current.getP1())) {
 							// System.err.println("strange2");
 							return me;
 						}
-						assert clusterPosition.contains(current.getP1()) == false;
+						assert !clusterPosition.contains(current.getP1());
 						assert clusterPosition.contains(current.getP2());
 						for (int k = 0; k < 8; k++) {
 							// System.err.println("length=" + length(current));
@@ -659,7 +654,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public List<LineSegmentDouble> getLineSegments() {
-		final List<LineSegmentDouble> result = new ArrayList<LineSegmentDouble>();
+		final List<LineSegmentDouble> result = new ArrayList<>();
 		for (CubicCurve2D.Double curve : beziers) {
 			if (curve.getFlatnessSq() <= 0.001) {
 				result.add(new LineSegmentDouble(curve));

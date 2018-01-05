@@ -82,8 +82,7 @@ public class GTileNode extends AbstractTextBlock implements GTile {
 
 		final Sheet sheet9 = new CreoleParser(fc, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL)
 				.createSheet(display);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet9, LineBreakStrategy.NONE, 0);
-		return sheetBlock1;
+        return new SheetBlock1(sheet9, LineBreakStrategy.NONE, 0);
 	}
 
 	public void drawU(UGraphic ug) {

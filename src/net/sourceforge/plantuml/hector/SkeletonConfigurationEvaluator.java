@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.hector;
 
 public interface SkeletonConfigurationEvaluator {
 
-	public double getPrice(SkeletonConfiguration configuration);
+	double getPrice(SkeletonConfiguration configuration);
 
 }

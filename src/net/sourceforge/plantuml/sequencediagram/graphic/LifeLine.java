@@ -57,9 +57,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class LifeLine {
 
 	static class Variation {
-		final private LifeSegmentVariation type;
-		final private SymbolContext colors;
-		final private double y;
+		private final LifeSegmentVariation type;
+		private final SymbolContext colors;
+		private final double y;
 
 		Variation(LifeSegmentVariation type, double y, SymbolContext backcolor) {
 			this.type = type;
@@ -76,7 +76,7 @@ public class LifeLine {
 	private final Pushable participant;
 	private final double nominalPreferredWidth;
 
-	private final List<Variation> events = new ArrayList<Variation>();
+	private final List<Variation> events = new ArrayList<>();
 	private final Stairs stairs = new Stairs();
 	private int maxLevel = 0;
 	private final boolean shadowing;
@@ -88,7 +88,7 @@ public class LifeLine {
 	}
 
 	public void addSegmentVariation(LifeSegmentVariation type, double y, SymbolContext colors) {
-		if (events.size() > 0) {
+		if (!events.isEmpty()) {
 			final Variation last = events.get(events.size() - 1);
 			if (y < last.y) {
 				return;
@@ -166,8 +166,7 @@ public class LifeLine {
 	}
 
 	private double getStartingX(StringBounder stringBounder) {
-		final double delta = participant.getCenterX(stringBounder) - nominalPreferredWidth / 2.0;
-		return delta;
+        return participant.getCenterX(stringBounder) - nominalPreferredWidth / 2.0;
 	}
 
 	private SegmentColored getSegment(int i) {
@@ -213,7 +212,7 @@ public class LifeLine {
 					skinParam2 = new SkinParamForceColor(skinParam2, ColorParam.sequenceLifeLineBorder,
 							specificLineColor);
 				}
-				if (it.hasNext() == false) {
+				if (!it.hasNext()) {
 					type = type == ComponentType.ALIVE_BOX_CLOSE_OPEN ? ComponentType.ALIVE_BOX_CLOSE_CLOSE
 							: ComponentType.ALIVE_BOX_OPEN_CLOSE;
 				}
@@ -250,7 +249,7 @@ public class LifeLine {
 	}
 
 	public SymbolContext getColors() {
-		if (events.size() == 0) {
+		if (events.isEmpty()) {
 			return null;
 		}
 		return events.get(events.size() - 1).colors;

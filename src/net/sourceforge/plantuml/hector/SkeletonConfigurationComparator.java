@@ -48,13 +48,7 @@ public class SkeletonConfigurationComparator implements Comparator<SkeletonConfi
 	public int compare(SkeletonConfiguration sc1, SkeletonConfiguration sc2) {
 		final double price1 = evaluator.getPrice(sc1);
 		final double price2 = evaluator.getPrice(sc2);
-		if (price1 > price2) {
-			return 1;
-		}
-		if (price1 < price2) {
-			return -1;
-		}
-		return 0;
+		return Double.compare(price1, price2);
 	}
 
 }

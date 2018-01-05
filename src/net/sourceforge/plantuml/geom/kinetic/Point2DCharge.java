@@ -64,12 +64,12 @@ public class Point2DCharge extends Point2D.Double {
 	}
 
 	@Override
-	final public void setLocation(double x, double y) {
+    public final void setLocation(double x, double y) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	final public void setLocation(Point2D p) {
+    public final void setLocation(Point2D p) {
 		throw new UnsupportedOperationException();
 	}
 

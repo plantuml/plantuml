@@ -55,7 +55,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 	private final String messageNumber;
 	private boolean parallel = false;
 
-	private List<NoteOnMessage> noteOnMessages = new ArrayList<NoteOnMessage>();
+	private List<NoteOnMessage> noteOnMessages = new ArrayList<>();
 
 	public AbstractMessage(Display label, ArrowConfiguration arrowConfiguration, String messageNumber) {
 		this.url = null;
@@ -76,7 +76,7 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 		return parallel;
 	}
 
-	final public Url getUrl() {
+	public final Url getUrl() {
 		if (url == null) {
 			for (NoteOnMessage n : noteOnMessages) {
 				if (n.getUrlNote() != null) {
@@ -93,14 +93,11 @@ public abstract class AbstractMessage implements EventWithDeactivate {
 				return true;
 			}
 		}
-		if (label != null && label.hasUrl()) {
-			return true;
-		}
-		return getUrl() != null;
+		return label != null && label.hasUrl() || getUrl() != null;
 	}
 
 	private boolean firstIsActivate = false;
-	private final Set<Participant> noActivationAuthorized2 = new HashSet<Participant>();
+	private final Set<Participant> noActivationAuthorized2 = new HashSet<>();
 
 	public final boolean addLifeEvent(LifeEvent lifeEvent) {
 		lifeEvent.setMessage(this);

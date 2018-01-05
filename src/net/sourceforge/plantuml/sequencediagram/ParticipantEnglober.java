@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class ParticipantEnglober {
 
-	final private Display title;
-	final private HtmlColor boxColor;
+	private final Display title;
+	private final HtmlColor boxColor;
 
 	public ParticipantEnglober(Display title, HtmlColor boxColor) {
 		this.title = title;

@@ -82,7 +82,7 @@ class FtileWhile extends AbstractFtile {
 	private final Ftile specialOut;
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>(whileBlock.getSwimlanes());
+		final Set<Swimlane> result = new HashSet<>(whileBlock.getSwimlanes());
 		result.add(getSwimlaneIn());
 		return result;
 	}
@@ -113,18 +113,22 @@ class FtileWhile extends AbstractFtile {
 		final TextBlock out = out2.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
-			diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
-					.withNorth(yesTb).withWest(out);
-		} else if (conditionStyle == ConditionStyle.FOO1) {
-			diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
-					.withNorth(yesTb).withWest(out);
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withNorth(testTb)
-					.withSouth(yesTb).withWest(out);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (conditionStyle) {
+            case INSIDE:
+                diamond1 = new FtileDiamondInside(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
+                        .withNorth(yesTb).withWest(out);
+                break;
+            case FOO1:
+                diamond1 = new FtileDiamondFoo1(whileBlock.skinParam(), backColor, borderColor, swimlane, testTb)
+                        .withNorth(yesTb).withWest(out);
+                break;
+            case DIAMOND:
+                diamond1 = new FtileDiamond(whileBlock.skinParam(), backColor, borderColor, swimlane).withNorth(testTb)
+                        .withSouth(yesTb).withWest(out);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 
 		final Ftile special = specialOut == null ? null : specialOut.createFtile(ftileFactory);
 
@@ -138,7 +142,7 @@ class FtileWhile extends AbstractFtile {
 		final Display backDisplay = whileBlock.getOutLinkRendering().getDisplay();
 		final TextBlock back = backDisplay.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		if (dim.getWidth() == 0 || dim.getHeight() == 0) {
 			conns.add(result.new ConnectionBackEmpty(endInlinkColor));
 		} else {
@@ -210,7 +214,7 @@ class FtileWhile extends AbstractFtile {
 
 		private Point2D getP1(final StringBounder stringBounder) {
 			final FtileGeometry geo = whileBlock.calculateDimension(stringBounder);
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return null;
 			}
 			return getTranslateForWhile(stringBounder).getTranslated(geo.getPointOut());

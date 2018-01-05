@@ -48,24 +48,24 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public interface Ftile extends Swimable, TextBlock {
 
-	public UStroke getThickness();
+	UStroke getThickness();
 
-	public ISkinParam skinParam();
+	ISkinParam skinParam();
 
-	public LinkRendering getInLinkRendering();
+	LinkRendering getInLinkRendering();
 
-	public LinkRendering getOutLinkRendering();
+	LinkRendering getOutLinkRendering();
 
-	public FtileGeometry calculateDimension(StringBounder stringBounder);
+	FtileGeometry calculateDimension(StringBounder stringBounder);
 
-	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder);
+	UTranslate getTranslateFor(Ftile child, StringBounder stringBounder);
 
-	public Collection<Ftile> getMyChildren();
+	Collection<Ftile> getMyChildren();
 
-	public Collection<Connection> getInnerConnections();
+	Collection<Connection> getInnerConnections();
 
-	public List<WeldingPoint> getWeldingPoints();
+	List<WeldingPoint> getWeldingPoints();
 	
-	public HorizontalAlignment arrowHorizontalAlignment();
+	HorizontalAlignment arrowHorizontalAlignment();
 
 }

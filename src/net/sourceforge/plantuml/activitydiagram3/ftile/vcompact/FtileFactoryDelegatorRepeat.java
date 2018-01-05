@@ -96,7 +96,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 				fcDiamond, fcArrow, backward, noOut);
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
-		if (weldingPoints.size() > 0) {
+		if (!weldingPoints.isEmpty()) {
 			// printAllChild(repeat);
 
 			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane);

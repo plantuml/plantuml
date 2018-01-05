@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,14 +51,13 @@ public final class CucaDiagramSimplifierActivity {
 	private final CucaDiagram diagram;
 	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierActivity(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
-			throws IOException, InterruptedException {
+	public CucaDiagramSimplifierActivity(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		boolean changed;
 		do {
 			changed = false;
-			final Collection<IGroup> groups = new ArrayList<IGroup>(diagram.getGroups(false));
+			final Collection<IGroup> groups = new ArrayList<>(diagram.getGroups(false));
 			for (IGroup g : groups) {
 				if (diagram.isAutarkic(g)) {
 					// final EntityType type;
@@ -86,7 +84,7 @@ public final class CucaDiagramSimplifierActivity {
 	// proxy.setSvekImage(maker.getImage());
 	// }
 
-	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(IGroup g) {
 		final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g, stringBounder);
 		return maker.getImage();
 	}

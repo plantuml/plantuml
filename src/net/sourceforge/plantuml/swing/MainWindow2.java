@@ -37,25 +37,10 @@ package net.sourceforge.plantuml.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.prefs.Preferences;
@@ -87,9 +72,9 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class MainWindow2 extends JFrame {
 
-	final private static Preferences prefs = Preferences.userNodeForPackage(MainWindow2.class);
-	final private static String KEY_DIR = "cur";
-	final private static String KEY_PATTERN = "pat";
+	private static final Preferences prefs = Preferences.userNodeForPackage(MainWindow2.class);
+	private static final String KEY_DIR = "cur";
+	private static final String KEY_PATTERN = "pat";
 
 	private final JList jList1 = new JList();
 	private final JScrollPane scrollPane;
@@ -97,9 +82,9 @@ public class MainWindow2 extends JFrame {
 	private final JTextField extensions = new JTextField();
 	private final int period = 300;
 
-	final private List<SimpleLine2> currentDirectoryListing2 = new ArrayList<SimpleLine2>();
-	final private Set<ImageWindow2> openWindows2 = new HashSet<ImageWindow2>();
-	final private Option option;
+	private final List<SimpleLine2> currentDirectoryListing2 = new ArrayList<>();
+	private final Set<ImageWindow2> openWindows2 = new HashSet<>();
+	private final Option option;
 
 	private DirWatcher2 dirWatcher;
 
@@ -128,7 +113,7 @@ public class MainWindow2 extends JFrame {
 
 		}
 		ext = sb.toString();
-		if (ext.length() == 0) {
+		if (ext.isEmpty()) {
 			ext = getDefaultFileExtensions();
 		}
 		extensions.setText(ext);
@@ -143,12 +128,12 @@ public class MainWindow2 extends JFrame {
 
 		while (m.find()) {
 			final String value = m.group();
-			if (filePattern.toString().endsWith("(") == false) {
+			if (!filePattern.toString().endsWith("(")) {
 				filePattern.append("|");
 			}
 			filePattern.append(value);
 		}
-		if (filePattern.toString().endsWith("(") == false) {
+		if (!filePattern.toString().endsWith("(")) {
 			filePattern.append(")$");
 			return filePattern.toString();
 		}
@@ -313,7 +298,7 @@ public class MainWindow2 extends JFrame {
 		setTitle(dir.getAbsolutePath());
 		Log.info("Creating DirWatcher");
 		currentDirectoryListing2.clear();
-		jList1.setListData(new Vector<SimpleLine2>(currentDirectoryListing2));
+		jList1.setListData(new Vector<>(currentDirectoryListing2));
 		jList1.setVisible(true);
 	}
 
@@ -336,17 +321,13 @@ public class MainWindow2 extends JFrame {
 				try {
 					final boolean changed = refreshDir();
 					if (changed) {
-						jList1.setListData(new Vector<SimpleLine2>(currentDirectoryListing2));
+						jList1.setListData(new Vector<>(currentDirectoryListing2));
 						jList1.setVisible(true);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
+				} catch (IOException | ExecutionException | InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
+            }
 		});
 	}
 
@@ -363,7 +344,7 @@ public class MainWindow2 extends JFrame {
 			changed = true;
 		}
 
-		for (SimpleLine2 line : new ArrayList<SimpleLine2>(currentDirectoryListing2)) {
+		for (SimpleLine2 line : new ArrayList<>(currentDirectoryListing2)) {
 			if (line.pendingAndFinished()) {
 				currentDirectoryListing2.remove(line);
 				changed = true;
@@ -402,7 +383,7 @@ public class MainWindow2 extends JFrame {
 
 	public void closing(ImageWindow2 imageWindow) {
 		final boolean ok = openWindows2.remove(imageWindow);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalStateException();
 		}
 	}

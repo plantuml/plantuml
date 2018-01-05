@@ -49,7 +49,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		if (pattern == null) {
 			throw new IllegalArgumentException();
 		}
-		if (pattern.getPattern().startsWith("^") == false || pattern.getPattern().endsWith("$") == false) {
+		if (!pattern.getPattern().startsWith("^") || !pattern.getPattern().endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + pattern.getPattern());
 		}
 
@@ -60,7 +60,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return new String[] { pattern.getPattern() };
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		if (lines.size() != 1) {
 			return CommandControl.NOT_OK;
 		}

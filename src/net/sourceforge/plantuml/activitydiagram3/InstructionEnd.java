@@ -61,7 +61,7 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 		throw new UnsupportedOperationException();
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		return false;
 	}
 

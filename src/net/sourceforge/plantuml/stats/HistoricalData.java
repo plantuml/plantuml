@@ -46,9 +46,9 @@ import net.sourceforge.plantuml.version.Version;
 
 public class HistoricalData {
 
-	final private Preferences prefs;
+	private final Preferences prefs;
 	private ParsedGenerated current;
-	final private List<ParsedGenerated> historical = new ArrayList<ParsedGenerated>();
+	private final List<ParsedGenerated> historical = new ArrayList<>();
 
 	HistoricalData(Preferences prefs) {
 		this.prefs = prefs;
@@ -86,19 +86,13 @@ public class HistoricalData {
 			public int compare(ParsedGenerated v1, ParsedGenerated v2) {
 				final long time1 = v1.getId();
 				final long time2 = v2.getId();
-				if (time1 > time2) {
-					return 1;
-				}
-				if (time1 < time2) {
-					return -1;
-				}
-				return 0;
-			}
+                return Long.compare(time1, time2);
+            }
 		};
 	}
 
 	private List<ParsedGenerated> reload() throws BackingStoreException {
-		final List<ParsedGenerated> result = new ArrayList<ParsedGenerated>();
+		final List<ParsedGenerated> result = new ArrayList<>();
 		final int length = "histo.".length();
 		for (String key : prefs.keys()) {
 			if (key.startsWith("histo.") && key.endsWith(".p.saved")) {

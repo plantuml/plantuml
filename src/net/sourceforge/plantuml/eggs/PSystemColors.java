@@ -39,12 +39,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.BackSlash;
@@ -85,12 +80,12 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 		if (option == null) {
 			this.paletteCentralColor = null;
 		} else {
-			this.paletteCentralColor = option.replaceAll("\\#", "");
+			this.paletteCentralColor = option.replaceAll("#", "");
 		}
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
 				getMetadata(), null, 0, 0, null, false);
@@ -207,7 +202,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	}
 
 	private List<String> getColorsCloseTo(String other) {
-		final List<String> result = new ArrayList<String>(colors.names());
+		final List<String> result = new ArrayList<>(colors.names());
 		for (Iterator<String> it = result.iterator(); it.hasNext();) {
 			final String candidat = it.next();
 			final String similar = candidat.replaceAll("Gray", "Grey");
@@ -218,7 +213,7 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 				it.remove();
 			}
 		}
-		if (containsCaseInsensitive(result, other) == false) {
+		if (!containsCaseInsensitive(result, other)) {
 			result.add(other);
 		}
 		Collections.sort(result, closeComparator(paletteCentralColor));
@@ -270,9 +265,8 @@ public class PSystemColors extends AbstractPSystem implements UDrawable {
 	private TextBlock getTextName(final UFont font, String name, final HtmlColorSimple color) {
 		final HtmlColorSimple opposite = color.opposite();
 		final FontConfiguration fc = new FontConfiguration(font, opposite, HtmlColorUtils.BLUE, true);
-		final TextBlock tt = Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
-				new SpriteContainerEmpty());
-		return tt;
+        return Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
+new SpriteContainerEmpty());
 	}
 
 	private UGraphic getPositioned(UGraphic ug, int i, int j) {

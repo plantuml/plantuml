@@ -66,7 +66,7 @@ public class Namespace {
 	}
 
 	public boolean isMain() {
-		return namespace.length() == 0;
+		return namespace.isEmpty();
 	}
 
 }

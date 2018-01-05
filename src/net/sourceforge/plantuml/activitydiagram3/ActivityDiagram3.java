@@ -66,8 +66,8 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class ActivityDiagram3 extends UmlDiagram {
 
 	enum SwimlaneStrategy {
-		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED;
-	}
+		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED
+    }
 
 	private SwimlaneStrategy swimlaneStrategy;
 
@@ -160,12 +160,12 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	private boolean manageSpecialStopEndAfterEndWhile(Instruction special) {
-		if (current() instanceof InstructionList == false) {
+		if (!(current() instanceof InstructionList)) {
 			return false;
 		}
 		final InstructionList current = (InstructionList) current();
 		final Instruction last = current.getLast();
-		if (last instanceof InstructionWhile == false) {
+		if (!(last instanceof InstructionWhile)) {
 			return false;
 		}
 		((InstructionWhile) last).setSpecial(special);
@@ -211,7 +211,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	}
 
-	private final double getDpiFactor(FileFormatOption fileFormatOption, final Dimension2D dim) {
+	private double getDpiFactor(FileFormatOption fileFormatOption, final Dimension2D dim) {
 		final double dpiFactor;
 		final Scale scale = getScale();
 		if (scale == null) {
@@ -290,7 +290,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult elseIf(Display inlabel, Display test, Display whenThen, HtmlColor color) {
 		if (current() instanceof InstructionIf) {
 			final boolean ok = ((InstructionIf) current()).elseIf(inlabel, test, whenThen, nextLinkRenderer(), color);
-			if (ok == false) {
+			if (!ok) {
 				return CommandExecutionResult.error("You cannot put an elseIf here");
 			}
 			setNextLinkRendererInternal(LinkRendering.none());
@@ -302,7 +302,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult else2(Display whenElse) {
 		if (current() instanceof InstructionIf) {
 			final boolean result = ((InstructionIf) current()).swithToElse2(whenElse, nextLinkRenderer());
-			if (result == false) {
+			if (!result) {
 				return CommandExecutionResult.error("Cannot find if");
 			}
 			setNextLinkRendererInternal(LinkRendering.none());
@@ -379,8 +379,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find while");
 	}
 
-	final public CommandExecutionResult kill() {
-		if (current().kill() == false) {
+	public final CommandExecutionResult kill() {
+		if (!current().kill()) {
 			return CommandExecutionResult.error("kill cannot be used here");
 		}
 		return CommandExecutionResult.ok();
@@ -445,7 +445,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors) {
 		final boolean ok = current().addNote(note, position, type, colors, swinlanes.getCurrentSwimlane());
-		if (ok == false) {
+		if (!ok) {
 			return CommandExecutionResult.error("Cannot add note here");
 		}
 		manageHasUrl(note);

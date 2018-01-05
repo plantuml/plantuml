@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
 
-	final private List<Atom> atoms = new ArrayList<Atom>();
-	final private List<Command> commands = new ArrayList<Command>();
+	private final List<Atom> atoms = new ArrayList<>();
+	private final List<Command> commands = new ArrayList<>();
 	private HorizontalAlignment align = HorizontalAlignment.LEFT;
 
 	public void setCellAlignment(HorizontalAlignment align) {
@@ -68,8 +68,8 @@ public class StripeSimple implements Stripe {
 
 	private FontConfiguration fontConfiguration;
 
-	final private StripeStyle style;
-	final private ISkinSimple skinParam;
+	private final StripeStyle style;
+	private final ISkinSimple skinParam;
 
 	@Override
 	public String toString() {
@@ -133,7 +133,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public List<Atom> getAtoms() {
-		if (atoms.size() == 0) {
+		if (atoms.isEmpty()) {
 			atoms.add(AtomText.create(" ", fontConfiguration));
 		}
 		return Collections.unmodifiableList(atoms);
@@ -155,13 +155,17 @@ public class StripeSimple implements Stripe {
 			throw new IllegalArgumentException(line);
 		}
 		line = CharHidder.hide(line);
-		if (style.getType() == StripeStyleType.HEADING) {
-			atoms.add(AtomText.createHeading(line, fontConfiguration, style.getOrder()));
-		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {
-			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));
-		} else {
-			modifyStripe(line);
-		}
+        switch (style.getType()) {
+            case HEADING:
+                atoms.add(AtomText.createHeading(line, fontConfiguration, style.getOrder()));
+                break;
+            case HORIZONTAL_LINE:
+                atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));
+                break;
+            default:
+                modifyStripe(line);
+                break;
+        }
 	}
 
 	public void addImage(String src, double scale) {
@@ -197,7 +201,7 @@ public class StripeSimple implements Stripe {
 	private void modifyStripe(String line) {
 		final StringBuilder pending = new StringBuilder();
 
-		while (line.length() > 0) {
+		while (!line.isEmpty()) {
 			final Command cmd = searchCommand(line);
 			if (cmd == null) {
 				pending.append(line.charAt(0));

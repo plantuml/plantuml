@@ -44,7 +44,7 @@ public class Knowledge {
 
 	private final TaskContainer taskContainer;
 	private final TimeLine timeline;
-	private final Map<String, Value> variables = new HashMap<String, Value>();
+	private final Map<String, Value> variables = new HashMap<>();
 
 	public Knowledge(TaskContainer taskContainer, TimeLine timeline) {
 		this.taskContainer = taskContainer;

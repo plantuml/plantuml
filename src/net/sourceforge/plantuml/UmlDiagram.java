@@ -103,36 +103,36 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
 
-	final public void setTitle(DisplayPositionned title) {
+	public final void setTitle(DisplayPositionned title) {
 		this.title = title;
 	}
 
-	final public void setCaption(DisplayPositionned caption) {
+	public final void setCaption(DisplayPositionned caption) {
 		this.caption = caption;
 	}
 
-	final public DisplayPositionned getCaption() {
+	public final DisplayPositionned getCaption() {
 		return caption;
 	}
 
 	@Override
-	final public DisplayPositionned getTitle() {
+    public final DisplayPositionned getTitle() {
 		return title;
 	}
 
-	final public int getMinwidth() {
+	public final int getMinwidth() {
 		return minwidth;
 	}
 
-	final public void setMinwidth(int minwidth) {
+	public final void setMinwidth(int minwidth) {
 		this.minwidth = minwidth;
 	}
 
-	final public boolean isRotation() {
+	public final boolean isRotation() {
 		return rotation;
 	}
 
-	final public void setRotation(boolean rotation) {
+	public final void setRotation(boolean rotation) {
 		this.rotation = rotation;
 	}
 
@@ -170,21 +170,21 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		throw new IllegalArgumentException();
 	}
 
-	abstract public UmlDiagramType getUmlDiagramType();
+	public abstract UmlDiagramType getUmlDiagramType();
 
 	public Pragma getPragma() {
 		return pragma;
 	}
 
-	final public void setScale(Scale scale) {
+	public final void setScale(Scale scale) {
 		this.scale = scale;
 	}
 
-	final public Scale getScale() {
+	public final Scale getScale() {
 		return scale;
 	}
 
-	final public void setAnimation(Iterable<CharSequence> animationData) {
+	public final void setAnimation(Iterable<CharSequence> animationData) {
 		try {
 			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
 			this.animation = Animation.create(animationDecoder.decode());
@@ -194,7 +194,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	}
 
-	final public Animation getAnimation() {
+	public final Animation getAnimation() {
 		return animation;
 	}
 
@@ -218,7 +218,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 
 		final HtmlColor hover = getSkinParam().getHoverPathColor();
@@ -296,7 +296,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		pw.println();
 		pw.println();
 		for (String s : strings) {
-			s = s.replaceAll("\\</?\\w+?\\>", "");
+			s = s.replaceAll("</?\\w+?>", "");
 			pw.println(s);
 		}
 		pw.flush();
@@ -310,7 +310,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		return source.getPlainString();
 	}
 
-	static private List<String> getFailureText1(Throwable exception, String graphvizVersion, String textDiagram) {
+	private static List<String> getFailureText1(Throwable exception, String graphvizVersion, String textDiagram) {
 		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
 		strings.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
 		if (exception instanceof EmptySvgException) {
@@ -377,13 +377,13 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException;
 
-	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
+	protected final void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
 			throws FileNotFoundException {
 		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());
 		final File cmapFile = new File(name);
 		PrintWriter pw = null;
 		try {
-			if (PSystemUtils.canFileBeWritten(cmapFile) == false) {
+			if (!PSystemUtils.canFileBeWritten(cmapFile)) {
 				return;
 			}
 			pw = new PrintWriter(cmapFile);
@@ -413,7 +413,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 		if (value == null) {
 			return null;
 		}
-		if (value.matches("\\d+") == false) {
+		if (!value.matches("\\d+")) {
 			return null;
 		}
 		final int widthwarning = Integer.parseInt(value);

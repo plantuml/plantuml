@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project.graphic;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.SortedMap;
@@ -113,7 +112,7 @@ class TimeScale {
 	}
 
 	public SortedMap<Instant, Double> getAbscisse(StringBounder stringBounder) {
-		final SortedMap<Instant, Double> pos = new TreeMap<Instant, Double>();
+		final SortedMap<Instant, Double> pos = new TreeMap<>();
 		final double caseWidth = getCaseWidth(stringBounder);
 		final Instant end = project.getEnd();
 		double x = 0;

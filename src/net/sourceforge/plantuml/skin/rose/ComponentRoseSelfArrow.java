@@ -85,7 +85,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		final UGraphic ug2 = getArrowConfiguration().applyStroke(ug);
 
 		double x1 = area.getDeltaX1() < 0 ? area.getDeltaX1() : 0;
-		double x2 = area.getDeltaX1() > 0 ? -area.getDeltaX1() : 0 + 1;
+		double x2 = area.getDeltaX1() > 0 ? -area.getDeltaX1() : 1;
 
 		final double textAndArrowHeight = textHeight + getArrowOnlyHeight(stringBounder);
 		final UEllipse circle = new UEllipse(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
@@ -144,22 +144,26 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
 	private UPolygon getPolygon(final double textAndArrowHeight) {
 		final UPolygon polygon = new UPolygon();
-		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
-			polygon.addPoint(0, textAndArrowHeight);
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight);
-		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight);
-			polygon.addPoint(0, textAndArrowHeight);
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
-		} else {
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
-			polygon.addPoint(0, textAndArrowHeight);
-			polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
-			if (niceArrow) {
-				polygon.addPoint(getArrowDeltaX() - 4, textAndArrowHeight);
-			}
-		}
+        switch (getArrowConfiguration().getPart()) {
+            case TOP_PART:
+                polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
+                polygon.addPoint(0, textAndArrowHeight);
+                polygon.addPoint(getArrowDeltaX(), textAndArrowHeight);
+                break;
+            case BOTTOM_PART:
+                polygon.addPoint(getArrowDeltaX(), textAndArrowHeight);
+                polygon.addPoint(0, textAndArrowHeight);
+                polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
+                break;
+            default:
+                polygon.addPoint(getArrowDeltaX(), textAndArrowHeight - getArrowDeltaY());
+                polygon.addPoint(0, textAndArrowHeight);
+                polygon.addPoint(getArrowDeltaX(), textAndArrowHeight + getArrowDeltaY());
+                if (niceArrow) {
+                    polygon.addPoint(getArrowDeltaX() - 4, textAndArrowHeight);
+                }
+                break;
+        }
 		return polygon;
 	}
 

@@ -150,10 +150,10 @@ public class LimitFinder implements UGraphic {
 		addPoint(x + shape.getMaxX(), y + shape.getMaxY());
 	}
 
-	private final static double HACK_X_FOR_POLYGON = 10;
+	private static final double HACK_X_FOR_POLYGON = 10;
 
 	private void drawUPolygon(double x, double y, UPolygon shape) {
-		if (shape.getPoints().size() == 0) {
+		if (shape.getPoints().isEmpty()) {
 			return;
 		}
 		addPoint(x + shape.getMinX() - HACK_X_FOR_POLYGON, y + shape.getMinY());

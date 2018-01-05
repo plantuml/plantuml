@@ -56,8 +56,6 @@ import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockCompressed;
-import net.sourceforge.plantuml.graphic.TextBlockRecentred;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -70,8 +68,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TimingDiagram extends UmlDiagram implements Clock {
 
-	private final Map<String, Player> players = new LinkedHashMap<String, Player>();
-	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
+	private final Map<String, Player> players = new LinkedHashMap<>();
+	private final List<TimeMessage> messages = new ArrayList<>();
 	private final TimingRuler ruler = new TimingRuler(getSkinParam());
 	private TimeTick now;
 	private Player lastPlayer;

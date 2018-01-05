@@ -46,10 +46,10 @@ import net.sourceforge.plantuml.geom.SpiderWeb;
 
 public class Galaxy4 {
 
-	final private Board board;
+	private final Board board;
 
-	final private Map<ALink, PolylineBreakeable> lines = new LinkedHashMap<ALink, PolylineBreakeable>();
-	final private SpiderWeb spiderWeb;
+	private final Map<ALink, PolylineBreakeable> lines = new LinkedHashMap<>();
+	private final SpiderWeb spiderWeb;
 
 	public Galaxy4(Board board, int widthCell, int heightCell) {
 		this.spiderWeb = new SpiderWeb(widthCell, heightCell);

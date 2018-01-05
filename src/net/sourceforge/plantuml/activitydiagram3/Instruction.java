@@ -46,14 +46,14 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public interface Instruction extends Swimable {
 
-	public Ftile createFtile(FtileFactory factory);
+	Ftile createFtile(FtileFactory factory);
 
-	public void add(Instruction other);
+	void add(Instruction other);
 
-	public boolean kill();
+	boolean kill();
 
-	public LinkRendering getInLinkRendering();
+	LinkRendering getInLinkRendering();
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote);
+	boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote);
 
 }

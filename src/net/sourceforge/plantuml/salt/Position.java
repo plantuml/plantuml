@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.salt;
 
 public class Position {
 
-	final private int row;
-	final private int col;
+	private final int row;
+	private final int col;
 
 	public Position(int row, int col) {
 		this.row = row;

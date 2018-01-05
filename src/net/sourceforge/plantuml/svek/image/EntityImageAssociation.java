@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class EntityImageAssociation extends AbstractEntityImage {
 
-	final private static int SIZE = 12;
+	private static final int SIZE = 12;
 
 	public EntityImageAssociation(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
@@ -63,7 +63,7 @@ public class EntityImageAssociation extends AbstractEntityImage {
 		return new Dimension2DDouble(SIZE * 2, SIZE * 2);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final UPolygon diams = new UPolygon();
 		if (getSkinParam().shadowing()) {
 			diams.setDeltaShadow(5);

@@ -85,19 +85,10 @@ public enum FontStyle {
 	}
 
 	public boolean canHaveExtendedColor() {
-		if (this == UNDERLINE) {
-			return true;
-		}
-		if (this == WAVE) {
-			return true;
-		}
-		if (this == BACKCOLOR) {
-			return true;
-		}
-		if (this == STRIKE) {
-			return true;
-		}
-		return false;
+		return this == UNDERLINE
+			|| this == WAVE
+			|| this == BACKCOLOR
+			|| this == STRIKE;
 	}
 
 	public String getCreoleSyntax() {
@@ -121,7 +112,7 @@ public enum FontStyle {
 
 	public HtmlColor getExtendedColor(String s) {
 		final Matcher2 m = MyPattern.cmpile(getActivationPattern()).matcher(s);
-		if (m.find() == false || m.groupCount() != 1) {
+		if (!m.find() || m.groupCount() != 1) {
 			return null;
 		}
 		final String color = m.group(1);

@@ -39,6 +39,6 @@ import java.util.List;
 
 public interface DefinitionsContainer {
 
-	public List<? extends CharSequence> getDefinition(String name);
+	List<? extends CharSequence> getDefinition(String name);
 
 }

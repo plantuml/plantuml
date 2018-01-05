@@ -52,9 +52,9 @@ public class Metadata {
 	public static void main(String[] args) throws IOException {
 		final Metadata meta = new Metadata();
 		final int length = args.length;
-		for (int i = 0; i < length; i++) {
-			meta.readAndDisplayMetadata(new File(args[i]));
-		}
+        for (final String arg : args) {
+            meta.readAndDisplayMetadata(new File(arg));
+        }
 	}
 
 	public void readAndDisplayMetadata(File file) throws IOException {
@@ -73,9 +73,9 @@ public class Metadata {
 
 			final String[] names = metadata.getMetadataFormatNames();
 			final int length = names.length;
-			for (int i = 0; i < length; i++) {
-				displayMetadata(metadata.getAsTree(names[i]));
-			}
+            for (final String name : names) {
+                displayMetadata(metadata.getAsTree(name));
+            }
 		}
 	}
 

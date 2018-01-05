@@ -55,13 +55,13 @@ import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class PSystemLogo extends AbstractPSystem {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 
 	public PSystemLogo() {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final int width = 640;
 		final int height = 480;

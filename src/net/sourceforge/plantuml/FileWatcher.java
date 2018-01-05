@@ -42,10 +42,10 @@ import java.util.Set;
 
 public class FileWatcher {
 
-	private final Map<File, Long> modified2 = new HashMap<File, Long>();
+	private final Map<File, Long> modified2 = new HashMap<>();
 
 	public FileWatcher(Set<File> files) {
-		if (files.size() == 0) {
+		if (files.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		for (File f : files) {
@@ -61,7 +61,7 @@ public class FileWatcher {
 	public boolean hasChanged() {
 		for (Map.Entry<File, Long> ent : modified2.entrySet()) {
 			final long nowModified = ent.getKey().lastModified();
-			if (ent.getValue().longValue() != nowModified) {
+			if (ent.getValue() != nowModified) {
 				return true;
 			}
 		}

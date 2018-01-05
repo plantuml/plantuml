@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project2;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -84,7 +83,7 @@ public class TimeHeaderMonth extends AbstractTextBlock implements TextBlock {
 			}
 			ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
 			ug = ug.apply(new UChangeBackColor(HtmlColorUtils.WHITE));
-			if (text.equals(last) == false) {
+			if (!text.equals(last)) {
 				manage(ug, 0, 0, n, last, pendingX);
 				pendingX = n * dayWidth;
 			}

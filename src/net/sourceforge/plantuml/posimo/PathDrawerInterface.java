@@ -38,12 +38,10 @@ package net.sourceforge.plantuml.posimo;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.Collection;
-import java.util.Map;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -125,38 +123,16 @@ public class PathDrawerInterface implements PathDrawer {
 		if (middle2 != null) {
 			final CubicCurve2D.Double before = getLine(middle2, startPath);
 			dotPath = dotPath.addBefore(before);
-			// dotPath = dotPath.addBefore(out);
 		}
 
-		final LinkStyle style = linkType.getStyle();
-//		if (style == LinkStyle.__toremove_INTERFACE_PROVIDER || style == LinkStyle.__toremove_INTERFACE_USER) {
-//			final Decor decor = new DecorInterfaceProvider(style);
-//			final Map<Point2D, Double> all = dotPath.somePoints();
-//			final Point2D p = getFarest(outPoint, inPoint, all.keySet());
-//
-//			ug = ug.apply(new UChangeBackColor(rose.getHtmlColor(param, ColorParam.background)));
-//			ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
-//
-//			decor.drawDecor(ug, p, all.get(p));
-//		}
-
 		throw new UnsupportedOperationException();
-//		ug = ug.apply(new UChangeColor(rose.getHtmlColor(param, ColorParam.classBorder)));
-//		if (linkType.isDashed()) {
-//			goDash(ug);
-//		}
-//		ug.draw(dotPath);
-//		if (linkType.isDashed()) {
-//			noDash(ug);
-//		}
 	}
 
 	private double atan2(final Point2D endPath, final Point2D inPoint) {
 		final double y = -endPath.getX() + inPoint.getX();
 		final double x = endPath.getY() - inPoint.getY();
-		final double angle = Math.atan2(y, x);
-		// Log.println("x=" + x + " y=" + y + " angle=" + angle + " " + angle * 180.0 / Math.PI);
-		return angle;
+        // Log.println("x=" + x + " y=" + y + " angle=" + angle + " " + angle * 180.0 / Math.PI);
+		return Math.atan2(y, x);
 	}
 
 	private Point2D drawSymbol(UGraphic ug, double theta, final Point2D position, LinkDecor decor) {

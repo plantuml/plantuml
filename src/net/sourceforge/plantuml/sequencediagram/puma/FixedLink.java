@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.sequencediagram.puma;
 
 public class FixedLink {
 
-	final private SegmentPosition segmentPosition1;
-	final private SegmentPosition segmentPosition2;
+	private final SegmentPosition segmentPosition1;
+	private final SegmentPosition segmentPosition2;
 
 	public FixedLink(SegmentPosition segmentPosition1, SegmentPosition segmentPosition2) {
 		this.segmentPosition1 = segmentPosition1;

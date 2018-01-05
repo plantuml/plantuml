@@ -45,17 +45,17 @@ import javax.script.ScriptException;
 
 public class AnimationDecoder {
 
-	private final List<String> result = new ArrayList<String>();
+	private final List<String> result = new ArrayList<>();
 
 	public AnimationDecoder(Iterable<CharSequence> data) throws ScriptException {
 		
 		for (final Iterator<CharSequence> it = data.iterator(); it.hasNext();) {
 			String line = it.next().toString();
-			if (line.matches("^\\s*\\[script\\]\\s*$")) {
+			if (line.matches("^\\s*\\[script]\\s*$")) {
 				final StringBuilder scriptText = new StringBuilder();
 				while (true) {
 					line = it.next().toString();
-					if (line.matches("^\\s*\\[/script\\]\\s*$")) {
+					if (line.matches("^\\s*\\[/script]\\s*$")) {
 						final AnimationScript script = new AnimationScript();
 						final String out = script.eval(scriptText.toString());
 						for (final StringTokenizer st = new StringTokenizer(out, "\n"); st.hasMoreTokens();) {

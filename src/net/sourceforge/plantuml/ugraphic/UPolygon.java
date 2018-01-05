@@ -42,7 +42,7 @@ import java.util.List;
 
 public class UPolygon extends AbstractShadowable {
 
-	private final List<Point2D.Double> all = new ArrayList<Point2D.Double>();
+	private final List<Point2D.Double> all = new ArrayList<>();
 	private final String name;
 
 	private MinMax minmax = MinMax.getEmpty(false);

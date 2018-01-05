@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.SignatureUtils;
 
 public class Dedications {
 
-	private static final Map<String, Dedication> normal = new HashMap<String, Dedication>();
-	private static final Map<String, Dedication> crypted = new HashMap<String, Dedication>();
+	private static final Map<String, Dedication> normal = new HashMap<>();
+	private static final Map<String, Dedication> crypted = new HashMap<>();
 
 	static {
 		addNormal("Write your own dedication!", "dedication");

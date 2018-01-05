@@ -56,11 +56,11 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Englober {
 
-	final private ParticipantEnglober participantEnglober;
-	final private List<Participant> participants = new ArrayList<Participant>();
-	final private TileArguments tileArguments;
-	final private Real core1;
-	final private Real core2;
+	private final ParticipantEnglober participantEnglober;
+	private final List<Participant> participants = new ArrayList<>();
+	private final TileArguments tileArguments;
+	private final Real core1;
+	private final Real core2;
 
 	@Deprecated
 	public Englober(ParticipantEnglober participantEnglober, Participant first, ISkinParam skinParam, Skin skin,
@@ -69,8 +69,7 @@ public class Englober {
 	}
 
 	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Skin skin, StringBounder stringBounder) {
-		final TileArguments result = new TileArguments(stringBounder, null, skin, skinParam, null);
-		return result;
+        return new TileArguments(stringBounder, null, skin, skinParam, null);
 	}
 
 	public Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments) {

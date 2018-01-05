@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.hector;
 
-import java.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.geom.LineSegmentDouble;
+
+import java.awt.geom.Dimension2D;
 
 public class Box2D {
 
-	final private double x1;
-	final private double y1;
-	final private double x2;
-	final private double y2;
+	private final double x1;
+	private final double y1;
+	private final double x2;
+	private final double y2;
 
 	private Box2D(double x1, double y1, double x2, double y2) {
 		this.x1 = x1;
@@ -63,19 +63,10 @@ public class Box2D {
 	}
 
 	public boolean doesIntersect(LineSegmentDouble seg) {
-		if (seg.doesIntersect(new LineSegmentDouble(x1, y1, x2, y1))) {
-			return true;
-		}
-		if (seg.doesIntersect(new LineSegmentDouble(x2, y1, x2, y2))) {
-			return true;
-		}
-		if (seg.doesIntersect(new LineSegmentDouble(x2, y2, x1, y2))) {
-			return true;
-		}
-		if (seg.doesIntersect(new LineSegmentDouble(x1, y2, x1, y1))) {
-			return true;
-		}
-		return false;
+		return seg.doesIntersect(new LineSegmentDouble(x1, y1, x2, y1))
+			|| seg.doesIntersect(new LineSegmentDouble(x2, y1, x2, y2))
+			|| seg.doesIntersect(new LineSegmentDouble(x2, y2, x1, y2))
+			|| seg.doesIntersect(new LineSegmentDouble(x1, y2, x1, y1));
 	}
 
 }

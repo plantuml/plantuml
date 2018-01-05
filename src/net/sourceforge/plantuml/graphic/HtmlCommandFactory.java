@@ -69,7 +69,7 @@ class HtmlCommandFactory {
 	private Pattern2 htmlTag = MyPattern.cmpile(Splitter.htmlTag, Pattern.CASE_INSENSITIVE);
 
 	HtmlCommand getHtmlCommand(String s) {
-		if (htmlTag.matcher(s).matches() == false) {
+		if (!htmlTag.matcher(s).matches()) {
 			return new Text(s);
 		}
 		if (MyPattern.mtches(s, Splitter.imgPattern)) {

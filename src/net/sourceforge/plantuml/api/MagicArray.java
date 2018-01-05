@@ -49,11 +49,11 @@ public final class MagicArray {
 		this.size = size;
 	}
 
-	synchronized public void incKey(long key) {
+	public synchronized void incKey(long key) {
 		incKey(key, 1);
 	}
 
-	synchronized public void incKey(long key, int delta) {
+	public synchronized void incKey(long key, int delta) {
 		if (key < lastUpdatedKey) {
 			return;
 		}
@@ -79,11 +79,11 @@ public final class MagicArray {
 		data[i] = value;
 	}
 
-	synchronized public long getSum() {
+	public synchronized long getSum() {
 		return sum;
 	}
 
-	synchronized public long getMaxSum() {
+	public synchronized long getMaxSum() {
 		return maxSum;
 	}
 

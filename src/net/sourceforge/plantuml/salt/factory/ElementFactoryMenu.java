@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -52,7 +50,7 @@ public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = getDataSource().next().getElement();
@@ -63,12 +61,12 @@ public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 
 		String subentry = null;
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final Terminated<String> t = getDataSource().next();
 			final String s = t.getElement();
 			if (subentry == null) {
 				result.addEntry(s);
-			} else if (subentry.length() == 0) {
+			} else if (subentry.isEmpty()) {
 				subentry = s;
 			} else {
 				result.addSubEntry(subentry, s);
@@ -83,9 +81,6 @@ public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 
 	public boolean ready() {
 		final String text = getDataSource().peek(0).getElement();
-		if (text.equals("{*")) {
-			return true;
-		}
-		return false;
+		return text.equals("{*");
 	}
 }

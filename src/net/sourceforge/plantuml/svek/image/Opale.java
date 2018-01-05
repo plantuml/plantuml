@@ -85,11 +85,11 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		this.pp2 = pp2;
 	}
 
-	final private double getWidth(StringBounder stringBounder) {
+	private double getWidth(StringBounder stringBounder) {
 		return textBlock.calculateDimension(stringBounder).getWidth() + marginX1 + marginX2;
 	}
 
-	final private double getHeight(StringBounder stringBounder) {
+	private double getHeight(StringBounder stringBounder) {
 		final Dimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + 2 * marginY;
 	}
@@ -100,7 +100,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		return new Dimension2DDouble(width, height);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final UPolygon polygon = getPolygonNormal(stringBounder);
@@ -112,17 +112,22 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 
 		if (withLink) {
 			final UShape polygonOpale;
-			if (strategy == Direction.LEFT) {
-				polygonOpale = getPolygonLeft(stringBounder, pp1, pp2);
-			} else if (strategy == Direction.RIGHT) {
-				polygonOpale = getPolygonRight(stringBounder, pp1, pp2);
-			} else if (strategy == Direction.UP) {
-				polygonOpale = getPolygonUp(stringBounder, pp1, pp2);
-			} else if (strategy == Direction.DOWN) {
-				polygonOpale = getPolygonDown(stringBounder, pp1, pp2);
-			} else {
-				throw new IllegalArgumentException();
-			}
+            switch (strategy) {
+                case LEFT:
+                    polygonOpale = getPolygonLeft(stringBounder, pp1, pp2);
+                    break;
+                case RIGHT:
+                    polygonOpale = getPolygonRight(stringBounder, pp1, pp2);
+                    break;
+                case UP:
+                    polygonOpale = getPolygonUp(stringBounder, pp1, pp2);
+                    break;
+                case DOWN:
+                    polygonOpale = getPolygonDown(stringBounder, pp1, pp2);
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
 			ug.draw(polygonOpale);
 		}
 		ug.apply(new UTranslate(getWidth(stringBounder) - cornersize, 0)).draw(new ULine(0, cornersize));

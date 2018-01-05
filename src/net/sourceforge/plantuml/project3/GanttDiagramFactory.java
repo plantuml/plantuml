@@ -42,8 +42,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandComment;
-import net.sourceforge.plantuml.command.CommandMultilinesComment;
 import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -51,7 +49,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 public class GanttDiagramFactory extends UmlDiagramFactory {
 
 	private List<SubjectPattern> subjects() {
-		return Arrays.<SubjectPattern> asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek());
+		return Arrays.asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek());
 	}
 
 	public GanttDiagramFactory(DiagramType type) {
@@ -60,20 +58,18 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		//addCommonCommands(cmds);
 		cmds.add(new CommandNope());
 //		cmds.add(new CommandComment());
 //		cmds.add(new CommandMultilinesComment());
-		for (Command cmd : getLanguageCommands()) {
-			cmds.add(cmd);
-		}
+        cmds.addAll(getLanguageCommands());
 		cmds.add(new CommandGanttArrow());
 		return cmds;
 	}
 
 	private Collection<Command> getLanguageCommands() {
-		final Collection<Command> result = new ArrayList<Command>();
+		final Collection<Command> result = new ArrayList<>();
 		for (SubjectPattern subject : subjects()) {
 			for (VerbPattern verb : subject.getVerbs()) {
 				for (ComplementPattern complement : verb.getComplements()) {

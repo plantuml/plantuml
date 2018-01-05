@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 public class VisioGraphics {
 
-	private final List<VisioShape> shapes = new ArrayList<VisioShape>();
+	private final List<VisioShape> shapes = new ArrayList<>();
 	private final MinMaxDouble limits = new MinMaxDouble();
 
 	public void createVsd(OutputStream os) throws IOException {
@@ -147,29 +147,36 @@ public class VisioGraphics {
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
-			if (type == USegmentType.SEG_MOVETO) {
-				lx = coord[0] + x;
-				ly = coord[1] + y;
-			} else if (type == USegmentType.SEG_LINETO) {
-				line(lx, ly, coord[0] + x, coord[1] + y);
-				lx = coord[0] + x;
-				ly = coord[1] + y;
-			} else if (type == USegmentType.SEG_QUADTO) {
-				line(lx, ly, coord[2] + x, coord[3] + y);
-				lx = coord[2] + x;
-				ly = coord[3] + y;
-			} else if (type == USegmentType.SEG_CUBICTO) {
-				line(lx, ly, coord[4] + x, coord[5] + y);
-				// linePoint(lx, ly, coord[0] + x, coord[1] + y);
-				// linePoint(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
-				// linePoint(coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-				lx = coord[4] + x;
-				ly = coord[5] + y;
-			} else if (type == USegmentType.SEG_CLOSE) {
-				// Nothing
-			} else {
-				Log.println("unknown " + seg);
-			}
+            switch (type) {
+                case SEG_MOVETO:
+                    lx = coord[0] + x;
+                    ly = coord[1] + y;
+                    break;
+                case SEG_LINETO:
+                    line(lx, ly, coord[0] + x, coord[1] + y);
+                    lx = coord[0] + x;
+                    ly = coord[1] + y;
+                    break;
+                case SEG_QUADTO:
+                    line(lx, ly, coord[2] + x, coord[3] + y);
+                    lx = coord[2] + x;
+                    ly = coord[3] + y;
+                    break;
+                case SEG_CUBICTO:
+                    line(lx, ly, coord[4] + x, coord[5] + y);
+                    // linePoint(lx, ly, coord[0] + x, coord[1] + y);
+                    // linePoint(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+                    // linePoint(coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                    lx = coord[4] + x;
+                    ly = coord[5] + y;
+                    break;
+                case SEG_CLOSE:
+                    // Nothing
+                    break;
+                default:
+                    Log.println("unknown " + seg);
+                    break;
+            }
 
 		}
 

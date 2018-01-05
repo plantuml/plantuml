@@ -74,9 +74,8 @@ public class NoteTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(getNoteComponentType(note.getStyle()), null,
-				note.getSkinParamBackcolored(skinParam), note.getStrings());
-		return comp;
+        return skin.createComponent(getNoteComponentType(note.getStyle()), null,
+note.getSkinParamBackcolored(skinParam), note.getStrings());
 	}
 
 	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
@@ -119,21 +118,22 @@ public class NoteTile implements Tile {
 	private Real getX(StringBounder stringBounder) {
 		final NotePosition position = note.getPosition();
 		final double width = getUsedWidth(stringBounder);
-		if (position == NotePosition.LEFT) {
-			return livingSpace1.getPosC(stringBounder).addFixed(-width);
-		} else if (position == NotePosition.RIGHT) {
-			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;
-			return livingSpace1.getPosC(stringBounder).addFixed(dx);
-		} else if (position == NotePosition.OVER_SEVERAL) {
-			final Real x1 = livingSpace1.getPosC(stringBounder);
-			final Real x2 = livingSpace2.getPosC(stringBounder);
-			return RealUtils.middle(x1, x2).addFixed(-width / 2);
-		} else if (position == NotePosition.OVER) {
-			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);
-		} else {
-			throw new UnsupportedOperationException(position.toString());
-		}
+        switch (position) {
+            case LEFT:
+                return livingSpace1.getPosC(stringBounder).addFixed(-width);
+            case RIGHT:
+                final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
+                final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;
+                return livingSpace1.getPosC(stringBounder).addFixed(dx);
+            case OVER_SEVERAL:
+                final Real x1 = livingSpace1.getPosC(stringBounder);
+                final Real x2 = livingSpace2.getPosC(stringBounder);
+                return RealUtils.middle(x1, x2).addFixed(-width / 2);
+            case OVER:
+                return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);
+            default:
+                throw new UnsupportedOperationException(position.toString());
+        }
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

@@ -87,7 +87,7 @@ public class RotationZoom {
 		return Math.toDegrees(angle);
 	}
 
-	static public RotationZoom builtRotationOnYaxis(Point2D toRotate) {
+	public static RotationZoom builtRotationOnYaxis(Point2D toRotate) {
 		final double a = Math.atan2(toRotate.getX(), toRotate.getY());
 		return new RotationZoom(a, 1);
 	}

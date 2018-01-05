@@ -40,5 +40,5 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface GTile extends TextBlock {
 
-	public GTileGeometry calculateDimension(StringBounder stringBounder);
+	GTileGeometry calculateDimension(StringBounder stringBounder);
 }

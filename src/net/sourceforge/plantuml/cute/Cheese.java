@@ -90,7 +90,6 @@ public class Cheese implements CuteShape {
 			path.lineTo(ptA1);
 			path.arcTo(ptA2, insideA.getRadius(), 0, 1);
 		} else {
-			insideA = null;
 			path.lineTo(ptA);
 		}
 		final Balloon insideB;
@@ -103,7 +102,6 @@ public class Cheese implements CuteShape {
 			path.arcTo(ptB1, balloon.getRadius(), 0, 1);
 			path.arcTo(ptB2, insideB.getRadius(), 0, 1);
 		} else {
-			insideB = null;
 			path.arcTo(ptB, balloon.getRadius(), 0, 1);
 		}
 		if (radius.hasCurvation()) {

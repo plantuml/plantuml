@@ -62,7 +62,7 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && !clip.isInside(x, y)) {
 			return;
 		}
 
@@ -79,21 +79,27 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 
 		svg.newpath();
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
-				svg.moveto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_LINETO) {
-				svg.lineto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_CLOSE) {
-				svg.closepath();
-			} else if (code == PathIterator.SEG_CUBICTO) {
-				svg.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-			} else if (code == PathIterator.SEG_QUADTO) {
-				svg.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
-			} else {
-				throw new UnsupportedOperationException("code=" + code);
-			}
+            switch (code) {
+                case PathIterator.SEG_MOVETO:
+                    svg.moveto(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_LINETO:
+                    svg.lineto(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_CLOSE:
+                    svg.closepath();
+                    break;
+                case PathIterator.SEG_CUBICTO:
+                    svg.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                    break;
+                case PathIterator.SEG_QUADTO:
+                    svg.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+                    break;
+                default:
+                    throw new UnsupportedOperationException("code=" + code);
+            }
 
 			path.next();
 		}

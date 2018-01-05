@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 import net.sourceforge.plantuml.version.IteratorCounter2Impl;
 
-final public class SuggestEngine {
+public final class SuggestEngine {
 
 	private static final int LIMIT = 120;
 
@@ -64,7 +64,7 @@ final public class SuggestEngine {
 		this.systemFactory = systemFactory;
 		this.it99 = source.iterator2();
 		final CharSequence startLine = it99.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+		if (!StartUtils.isArobaseStartDiagram(startLine)) {
 			throw new UnsupportedOperationException();
 		}
 	}
@@ -83,21 +83,24 @@ final public class SuggestEngine {
 				return check;
 			}
 			final CommandControl commandControl = systemFactory.isValid2(it99);
-			if (commandControl == CommandControl.OK_PARTIAL) {
-				systemFactory.goForwardMultiline(it99);
-				// if (ok == false) {
-				// return SuggestEngineResult.CANNOT_CORRECT;
-				// }
-			} else if (commandControl == CommandControl.OK) {
-				it99.next();
-				// final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
-				// final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
-				// if (result.isOk() == false) {
-				// return SuggestEngineResult.CANNOT_CORRECT;
-				// }
-			} else {
-				return SuggestEngineResult.CANNOT_CORRECT;
-			}
+            switch (commandControl) {
+                case OK_PARTIAL:
+                    systemFactory.goForwardMultiline(it99);
+                    // if (ok == false) {
+                    // return SuggestEngineResult.CANNOT_CORRECT;
+                    // }
+                    break;
+                case OK:
+                    it99.next();
+                    // final Command cmd = new ProtectedCommand(systemFactory.createCommand(Arrays.asList(s)));
+                    // final CommandExecutionResult result = cmd.execute(system, Arrays.asList(s));
+                    // if (result.isOk() == false) {
+                    // return SuggestEngineResult.CANNOT_CORRECT;
+                    // }
+                    break;
+                default:
+                    return SuggestEngineResult.CANNOT_CORRECT;
+            }
 		}
 		return SuggestEngineResult.CANNOT_CORRECT;
 		// throw new IllegalStateException();
@@ -118,7 +121,7 @@ final public class SuggestEngine {
 			return new SuggestEngineResult(it99.peekPrevious() + " {");
 		}
 
-		final Collection<Iterator<String>> all = new ArrayList<Iterator<String>>();
+		final Collection<Iterator<String>> all = new ArrayList<>();
 		all.add(new VariatorRemoveOneChar(incorrectLine));
 		all.add(new VariatorSwapLetter(incorrectLine));
 		// all.add(new VariatorAddOneCharBetweenWords(incorrectLine, ':'));
@@ -138,7 +141,7 @@ final public class SuggestEngine {
 	private SuggestEngineResult tryThis(Iterator<String> it2) {
 		while (it2.hasNext()) {
 			final String newS = it2.next();
-			if (StringUtils.trin(newS).length() == 0) {
+			if (StringUtils.trin(newS).isEmpty()) {
 				continue;
 			}
 			final CommandControl commandControl = systemFactory.isValid2(replaceFirstLine(newS));
@@ -150,7 +153,7 @@ final public class SuggestEngine {
 	}
 
 	private IteratorCounter2 replaceFirstLine(String s) {
-		final List<CharSequence2> tmp = new ArrayList<CharSequence2>();
+		final List<CharSequence2> tmp = new ArrayList<>();
 		tmp.add(new CharSequence2Impl(s, null));
 		final Iterator<? extends CharSequence> it3 = it99.cloneMe();
 		if (it3.hasNext()) {

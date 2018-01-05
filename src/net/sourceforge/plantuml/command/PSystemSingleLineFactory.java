@@ -54,7 +54,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		super(DiagramType.UML);
 	}
 
-	final public Diagram createSystem(UmlSource source) {
+	public final Diagram createSystem(UmlSource source) {
 
 		if (source.getTotalLineCount() != 3) {
 			return null;
@@ -65,11 +65,11 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		}
 
 		final CharSequence2 startLine = it.next();
-		if (StartUtils.isArobaseStartDiagram(startLine) == false) {
+		if (!StartUtils.isArobaseStartDiagram(startLine)) {
 			throw new UnsupportedOperationException();
 		}
 
-		if (it.hasNext() == false) {
+		if (!it.hasNext()) {
 			return buildEmptyError(source, startLine.getLocation());
 		}
 		final CharSequence2 s = it.next();

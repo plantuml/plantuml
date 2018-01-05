@@ -46,7 +46,7 @@ public class PathIteratorLimited implements PathIterator {
 	public static int count(Shape source) {
 		int result = 0;
 		final PathIterator path = source.getPathIterator(null);
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			result++;
 			path.next();
 		}
@@ -74,10 +74,7 @@ public class PathIteratorLimited implements PathIterator {
 	}
 
 	public boolean isDone() {
-		if (current >= limit) {
-			return true;
-		}
-		return path.isDone();
+		return current >= limit || path.isDone();
 	}
 
 	public void next() {

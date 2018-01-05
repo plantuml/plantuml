@@ -103,18 +103,18 @@ public class ConditionalBuilder {
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
-			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
+	public static Ftile create(Swimlane swimlane, HtmlColor borderColor, HtmlColor backColor, Rainbow arrowColor,
+                               FtileFactory ftileFactory, ConditionStyle conditionStyle, Branch branch1, Branch branch2,
+                               ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
-		if (isEmptyOrOnlySingleStop(branch2) && isEmptyOrOnlySingleStop(branch1) == false) {
+		if (isEmptyOrOnlySingleStop(branch2) && !isEmptyOrOnlySingleStop(branch1)) {
 			return builder.createDown(builder.branch1, builder.branch2);
 		}
 		if (branch1.isEmpty() && branch2.isOnlySingleStop()) {
 			return builder.createDown(builder.branch1, builder.branch2);
 		}
-		if (isEmptyOrOnlySingleStop(branch1) && isEmptyOrOnlySingleStop(branch2) == false) {
+		if (isEmptyOrOnlySingleStop(branch1) && !isEmptyOrOnlySingleStop(branch2)) {
 			return builder.createDown(builder.branch2, builder.branch1);
 		}
 		if (branch2.isEmpty() && branch1.isOnlySingleStop()) {
@@ -203,25 +203,28 @@ public class ConditionalBuilder {
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
 		final Ftile diamond1;
-		if (conditionStyle == ConditionStyle.INSIDE) {
-			if (eastWest) {
-				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
-						.withWestAndEast(tb1, tb2);
-			} else {
-				diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
-						.withSouth(tb1).withEast(tb2);
-			}
-		} else if (conditionStyle == ConditionStyle.DIAMOND) {
-			if (eastWest) {
-				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
-						.withWestAndEast(tb1, tb2);
-			} else {
-				diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
-						.withSouth(tb1).withEast(tb2);
-			}
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (conditionStyle) {
+            case INSIDE:
+                if (eastWest) {
+                    diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+                            .withWestAndEast(tb1, tb2);
+                } else {
+                    diamond1 = new FtileDiamondInside(tile1.skinParam(), backColor, borderColor, swimlane, tbTest)
+                            .withSouth(tb1).withEast(tb2);
+                }
+                break;
+            case DIAMOND:
+                if (eastWest) {
+                    diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
+                            .withWestAndEast(tb1, tb2);
+                } else {
+                    diamond1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
+                            .withSouth(tb1).withEast(tb2);
+                }
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		return diamond1;
 	}
 

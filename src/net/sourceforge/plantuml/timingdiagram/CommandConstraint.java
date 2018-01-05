@@ -61,7 +61,7 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final String part1 = arg.get("PART1", 0);
 		final Player player1;
 		if (part1 == null) {

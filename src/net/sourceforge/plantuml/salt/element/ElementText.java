@@ -56,7 +56,7 @@ public class ElementText extends AbstractElement {
 	public ElementText(List<String> text, UFont font, ISkinSimple spriteContainer) {
 		final FontConfiguration config = FontConfiguration.blackBlueTrue(font);
 		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);
-		this.show = text.get(0).equals(".") == false;
+		this.show = !text.get(0).equals(".");
 		this.text = text.get(0);
 	}
 

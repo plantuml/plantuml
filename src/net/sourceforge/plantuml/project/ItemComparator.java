@@ -44,10 +44,10 @@ public class ItemComparator implements Comparator<Item> {
 		if (cmp1 != 0) {
 			return cmp1;
 		}
-		if (it1 instanceof Jalon && it2 instanceof Jalon == false) {
+		if (it1 instanceof Jalon && !(it2 instanceof Jalon)) {
 			return -1;
 		}
-		if (it2 instanceof Jalon && it1 instanceof Jalon == false) {
+		if (it2 instanceof Jalon && !(it1 instanceof Jalon)) {
 			return 1;
 		}
 		final int cmp2 = it2.getCompleted().compareTo(it1.getCompleted());

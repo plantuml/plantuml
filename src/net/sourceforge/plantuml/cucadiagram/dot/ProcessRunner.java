@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.api.MyRunnable;
+import net.sourceforge.plantuml.api.TimeoutExecutor;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.api.MyRunnable;
-import net.sourceforge.plantuml.api.TimeoutExecutor;
 
 public class ProcessRunner {
 
@@ -177,13 +177,8 @@ public class ProcessRunner {
 			errorStream.start();
 			outStream.start();
 			if (in != null) {
-				final OutputStream os = process.getOutputStream();
-				try {
-					try {
-						os.write(in);
-					} finally {
-						os.close();
-					}
+				try (OutputStream os = process.getOutputStream()) {
+					os.write(in);
 				} catch (IOException e) {
 					changeState.lock();
 					try {
@@ -199,8 +194,7 @@ public class ProcessRunner {
 		public int joinInternal() throws InterruptedException {
 			errorStream.join();
 			outStream.join();
-			final int result = process.waitFor();
-			return result;
+            return process.waitFor();
 		}
 
 	}
@@ -234,7 +228,7 @@ public class ProcessRunner {
 
 		@Override
 		public void run() {
-			int read = 0;
+			int read;
 			try {
 				while ((read = streamToRead.read()) != -1) {
 					if (state.equals(ProcessState.TIMEOUT())) {

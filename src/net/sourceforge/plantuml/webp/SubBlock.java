@@ -18,11 +18,11 @@ package net.sourceforge.plantuml.webp;
 import java.io.IOException;
 
 public class SubBlock {
-	public static enum PLANE {
+	public enum PLANE {
 		U, V, Y1, Y2
-	};
+	}
 
-	public static final int UV = 2;
+    public static final int UV = 2;
 	public static final int Y = 3;
 	public static final int Y_AFTER_Y2 = 0;
 	public static final int Y2 = 1;
@@ -224,7 +224,7 @@ public class SubBlock {
 	}
 
 	public String getDebugString() {
-		String r = new String();
+		String r = "";
 		r = r + "  " + plane;
 		if (getMacroBlock().getYMode() == Globals.B_PRED
 				&& plane == SubBlock.PLANE.Y1)
@@ -317,9 +317,7 @@ public class SubBlock {
 	}
 
 	public boolean isDest() {
-		if (dest == null)
-			return false;
-		return true;
+		return dest != null;
 	}
 
 	public void predict(VP8Frame frame) {
@@ -606,12 +604,12 @@ public class SubBlock {
 	}
 
 	public String toString() {
-		String r = "[";
+		StringBuilder r = new StringBuilder("[");
 		for (int x = 0; x < 16; x++)
-			r = r + tokens[x] + " ";
-		r = r + "]";
+			r.append(tokens[x]).append(" ");
+		r.append("]");
 
-		return r;
+		return r.toString();
 	}
 
 }

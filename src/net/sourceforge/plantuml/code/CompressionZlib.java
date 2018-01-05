@@ -72,19 +72,16 @@ public class CompressionZlib implements Compression {
 
 		final byte[] output = new byte[len];
 		final int compressedDataLength = compresser.deflate(output);
-		if (compresser.finished() == false) {
+		if (!compresser.finished()) {
 			return null;
 		}
-		final byte[] result = copyArray(output, compressedDataLength);
-		return result;
+        return copyArray(output, compressedDataLength);
 	}
 
 	public byte[] decompress(byte[] in) throws IOException {
 
 		final byte in2[] = new byte[in.length + 256];
-		for (int i = 0; i < in.length; i++) {
-			in2[i] = in[i];
-		}
+		System.arraycopy(in, 0, in2, 0, in.length);
 
 		int len = in.length * 5;
 		byte[] result = null;
@@ -102,13 +99,12 @@ public class CompressionZlib implements Compression {
 		decompresser.setInput(in);
 		try {
 			final int resultLength = decompresser.inflate(tmp);
-			if (decompresser.finished() == false) {
+			if (!decompresser.finished()) {
 				return null;
 			}
 			decompresser.end();
 
-			final byte[] result = copyArray(tmp, resultLength);
-			return result;
+            return copyArray(tmp, resultLength);
 		} catch (DataFormatException e) {
 			// e.printStackTrace();
 			throw new IOException(e.toString());
@@ -117,9 +113,7 @@ public class CompressionZlib implements Compression {
 
 	private byte[] copyArray(final byte[] data, final int len) {
 		final byte[] result = new byte[len];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = data[i];
-		}
+		System.arraycopy(data, 0, result, 0, result.length);
 		return result;
 	}
 

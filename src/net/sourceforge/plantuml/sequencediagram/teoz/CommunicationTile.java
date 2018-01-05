@@ -90,10 +90,7 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 	public boolean isReverse(StringBounder stringBounder) {
 		final Real point1 = livingSpace1.getPosC(stringBounder);
 		final Real point2 = livingSpace2.getPosC(stringBounder);
-		if (point1.getCurrentValue() > point2.getCurrentValue()) {
-			return true;
-		}
-		return false;
+		return point1.getCurrentValue() > point2.getCurrentValue();
 	}
 
 	private boolean isCreate() {
@@ -108,9 +105,8 @@ public class CommunicationTile implements TileWithUpdateStairs, TileWithCallback
 		if (isReverse(stringBounder)) {
 			arrowConfiguration = arrowConfiguration.reverse();
 		}
-		final Component comp = skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
-				message.getLabelNumbered());
-		return comp;
+        return skin.createComponent(ComponentType.ARROW, arrowConfiguration, skinParam,
+message.getLabelNumbered());
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;

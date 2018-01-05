@@ -63,13 +63,14 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			dropShadows = false;
 		}
 		final float scale = extractScale(startLine);
-		if (getDiagramType() == DiagramType.UML) {
-			return null;
-		} else if (getDiagramType() == DiagramType.DITAA) {
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
-		} else {
-			throw new IllegalStateException(getDiagramType().name());
-		}
+        switch (getDiagramType()) {
+            case UML:
+                return null;
+            case DITAA:
+                return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
+            default:
+                throw new IllegalStateException(getDiagramType().name());
+        }
 	}
 
 	@Override

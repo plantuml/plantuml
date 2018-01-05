@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project2;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class GanttDiagram2 {
 
 	private Row getMainRow() {
 		final List<Task> tasks = project.getTasks();
-		final List<Row> rows = new ArrayList<Row>();
+		final List<Row> rows = new ArrayList<>();
 		for (Task t : tasks) {
 			final String text = t.getCode();
 			final TextBlock label = Display.create(text).create(fontConfig, HorizontalAlignment.LEFT,
@@ -89,8 +88,7 @@ public class GanttDiagram2 {
 			rows.add(new RowSimple((Day) t.getStart(), (Day) t.getEnd(), HtmlColorUtils.BLACK, TextBlockUtils
 					.withMargin(label, 3, 3)));
 		}
-		final Row row = RowUtils.merge(rows);
-		return row;
+        return RowUtils.merge(rows);
 	}
 
 	public double getWidth(StringBounder stringBounder) {

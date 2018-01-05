@@ -53,7 +53,7 @@ public class SyntaxResult {
 	private boolean isError;
 	private String description;
 	// private int errorLinePosition;
-	private Collection<String> errors = new TreeSet<String>();
+	private Collection<String> errors = new TreeSet<>();
 	private List<String> suggest;
 	private boolean hasCmapData;
 	private PSystemError systemError;

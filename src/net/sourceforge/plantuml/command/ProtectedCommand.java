@@ -49,12 +49,11 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 
 	public CommandExecutionResult execute(S system, BlocLines lines) {
 		try {
-			final CommandExecutionResult result = cmd.execute(system, lines);
-			// if (result.isOk()) {
+            // if (result.isOk()) {
 			// // TRACECOMMAND
 			// System.err.println("CMD = " + cmd.getClass());
 			// }
-			return result;
+			return cmd.execute(system, lines);
 		} catch (Throwable t) {
 			Log.error("Error " + t);
 			t.printStackTrace();

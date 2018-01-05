@@ -48,7 +48,7 @@ public final class StateDiagramScxmlMaker {
 
 	private final StateDiagram diagram;
 
-	public StateDiagramScxmlMaker(StateDiagram diagram) throws IOException {
+	public StateDiagramScxmlMaker(StateDiagram diagram) {
 		this.diagram = diagram;
 	}
 
@@ -57,15 +57,11 @@ public final class StateDiagramScxmlMaker {
 			final ScxmlStateDiagramStandard xmi;
 			xmi = new ScxmlStateDiagramStandard(diagram);
 			xmi.transformerXml(fos);
-		} catch (ParserConfigurationException e) {
-			Log.error(e.toString());
-			e.printStackTrace();
-			throw new IOException(e.toString());
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | TransformerException e) {
 			Log.error(e.toString());
 			e.printStackTrace();
 			throw new IOException(e.toString());
 		}
-	}
+    }
 
 }

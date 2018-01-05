@@ -54,7 +54,7 @@ public class PlacementStrategyY1Y2Left extends AbstractPlacementStrategy {
 		//double maxWidth = getMaxWidth();
 
 		final double space = (height - usedHeight) / (getDimensions().size() + 1);
-		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
+		final Map<TextBlock, Point2D> result = new LinkedHashMap<>();
 		double y = space;
 		for (Map.Entry<TextBlock, Dimension2D> ent : getDimensions().entrySet()) {
 			final double x = 0;

@@ -41,13 +41,13 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class ColorChange implements FontChange {
 
-	static private final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontColorPattern2);
+	private static final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontColorPattern2);
 
 	private final HtmlColor color;
 
 	ColorChange(String s) {
 		final Matcher2 matcherColor = colorPattern.matcher(s);
-		if (matcherColor.find() == false) {
+		if (!matcherColor.find()) {
 			throw new IllegalArgumentException();
 		}
 		this.color = HtmlColorSet.getInstance().getColorIfValid(matcherColor.group(1));

@@ -72,20 +72,24 @@ public class DriverPathOldG2d extends DriverShadowedG2d implements UDriver<Graph
 			final USegmentType type = seg.getSegmentType();
 			final double coord[] = seg.getCoord();
 			// Cast float for Java 1.5
-			if (type == USegmentType.SEG_MOVETO) {
-				p.moveTo((float) (x + coord[0]), (float) (y + coord[1]));
-				minMax.manage(x + coord[0], y + coord[1]);
-			} else if (type == USegmentType.SEG_LINETO) {
-				p.lineTo((float) (x + coord[0]), (float) (y + coord[1]));
-				minMax.manage(x + coord[0], y + coord[1]);
-			} else if (type == USegmentType.SEG_CUBICTO) {
-				p.curveTo((float) (x + coord[0]), (float) (y + coord[1]), (float) (x + coord[2]),
-						(float) (y + coord[3]), (float) (x + coord[4]), (float) (y + coord[5]));
-				minMax.manage(x + coord[4], y + coord[5]);
-				hasBezier = true;
-			} else {
-				throw new UnsupportedOperationException();
-			}
+            switch (type) {
+                case SEG_MOVETO:
+                    p.moveTo((float) (x + coord[0]), (float) (y + coord[1]));
+                    minMax.manage(x + coord[0], y + coord[1]);
+                    break;
+                case SEG_LINETO:
+                    p.lineTo((float) (x + coord[0]), (float) (y + coord[1]));
+                    minMax.manage(x + coord[0], y + coord[1]);
+                    break;
+                case SEG_CUBICTO:
+                    p.curveTo((float) (x + coord[0]), (float) (y + coord[1]), (float) (x + coord[2]),
+                            (float) (y + coord[3]), (float) (x + coord[4]), (float) (y + coord[5]));
+                    minMax.manage(x + coord[4], y + coord[5]);
+                    hasBezier = true;
+                    break;
+                default:
+                    throw new UnsupportedOperationException();
+            }
 			// bez = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x +
 			// bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2, y
 			// + bez.ctrly2, x + bez.x2, y + bez.y2);
@@ -104,17 +108,20 @@ public class DriverPathOldG2d extends DriverShadowedG2d implements UDriver<Graph
 					final USegmentType type = seg.getSegmentType();
 					final double coord[] = seg.getCoord();
 					// Cast float for Java 1.5
-					if (type == USegmentType.SEG_MOVETO) {
-						lastX = x + coord[0];
-						lastY = y + coord[1];
-					} else if (type == USegmentType.SEG_LINETO) {
-						final Shape line = new Line2D.Double(lastX, lastY, x + coord[0], y + coord[1]);
-						drawShadow(g2d, line, shape.getDeltaShadow(), dpiFactor);
-						lastX = x + coord[0];
-						lastY = y + coord[1];
-					} else {
-						throw new UnsupportedOperationException();
-					}
+                    switch (type) {
+                        case SEG_MOVETO:
+                            lastX = x + coord[0];
+                            lastY = y + coord[1];
+                            break;
+                        case SEG_LINETO:
+                            final Shape line = new Line2D.Double(lastX, lastY, x + coord[0], y + coord[1]);
+                            drawShadow(g2d, line, shape.getDeltaShadow(), dpiFactor);
+                            lastX = x + coord[0];
+                            lastY = y + coord[1];
+                            break;
+                        default:
+                            throw new UnsupportedOperationException();
+                    }
 				}
 			}
 		}
@@ -124,23 +131,28 @@ public class DriverPathOldG2d extends DriverShadowedG2d implements UDriver<Graph
 			final HtmlColorGradient gr = (HtmlColorGradient) back;
 			final char policy = gr.getPolicy();
 			final GradientPaint paint;
-			if (policy == '|') {
-				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
-						mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
-						mapper.getMappedColor(gr.getColor2()));
-			} else if (policy == '\\') {
-				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr
-						.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(), mapper.getMappedColor(gr
-						.getColor2()));
-			} else if (policy == '-') {
-				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
-						mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
-						mapper.getMappedColor(gr.getColor2()));
-			} else {
-				// for /
-				paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()),
-						(float) minMax.getMaxX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr.getColor2()));
-			}
+            switch (policy) {
+                case '|':
+                    paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
+                            mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
+                            mapper.getMappedColor(gr.getColor2()));
+                    break;
+                case '\\':
+                    paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr
+                            .getColor1()), (float) minMax.getMaxX(), (float) minMax.getMinY(), mapper.getMappedColor(gr
+                            .getColor2()));
+                    break;
+                case '-':
+                    paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
+                            mapper.getMappedColor(gr.getColor1()), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
+                            mapper.getMappedColor(gr.getColor2()));
+                    break;
+                default:
+                    // for /
+                    paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()),
+                            (float) minMax.getMaxX(), (float) minMax.getMaxY(), mapper.getMappedColor(gr.getColor2()));
+                    break;
+            }
 			g2d.setPaint(paint);
 			g2d.fill(p);
 		} else if (back != null) {

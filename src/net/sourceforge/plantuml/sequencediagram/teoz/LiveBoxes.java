@@ -53,7 +53,7 @@ public class LiveBoxes {
 	private final EventsHistory eventsHistory;
 	private final Skin skin;
 	private final ISkinParam skinParam;
-	private final Map<Double, Double> delays = new TreeMap<Double, Double>();
+	private final Map<Double, Double> delays = new TreeMap<>();
 
 	public LiveBoxes(EventsHistory eventsHistory, Skin skin, ISkinParam skinParam, Participant participant) {
 		this.eventsHistory = eventsHistory;
@@ -97,7 +97,7 @@ public class LiveBoxes {
 			if (pending && level == levelToDraw) {
 				drawer.addStart(yposition.getValue(), integerColored.getColors());
 				pending = false;
-			} else if (pending == false && (it.hasNext() == false || level < levelToDraw)) {
+			} else if (!pending && (!it.hasNext() || level < levelToDraw)) {
 				drawer.doDrawing(ug, yposition);
 				drawer.drawDestroyIfNeeded(ug, yposition);
 				pending = true;

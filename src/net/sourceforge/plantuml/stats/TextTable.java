@@ -45,14 +45,14 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class TextTable {
 
-	private final static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+	private static final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
-	static interface TextLine {
-		public int nbCols();
+	interface TextLine {
+		int nbCols();
 
-		public int getPreferredWidth(int col);
+		int getPreferredWidth(int col);
 
-		public String getPrinted(int[] width);
+		String getPrinted(int[] width);
 
 	}
 
@@ -116,7 +116,7 @@ public class TextTable {
 			HorizontalAlignment align = HorizontalAlignment.CENTER;
 
 			if (s instanceof Long) {
-				final String num = String.format("%,d", s).replaceAll("\u00A0", " ");
+				final String num = String.format("%d", s).replaceAll("\u00A0", " ");
 				sb.append(num);
 				align = HorizontalAlignment.RIGHT;
 			} else if (s instanceof Date) {
@@ -138,7 +138,7 @@ public class TextTable {
 		}
 	}
 
-	private final List<TextLine> lines = new ArrayList<TextLine>();
+	private final List<TextLine> lines = new ArrayList<>();
 
 	public void addLine(Object... cells) {
 		this.lines.add(new DataLine(cells));

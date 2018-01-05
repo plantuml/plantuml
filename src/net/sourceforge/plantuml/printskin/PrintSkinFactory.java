@@ -50,7 +50,7 @@ public class PrintSkinFactory extends PSystemSingleLineFactory {
 	@Override
 	protected AbstractPSystem executeLine(String line) {
 		final Matcher2 m = p.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return null;
 		}
 		return new PrintSkin(m.group(1), Arrays.asList(m.group(2)));

@@ -69,7 +69,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Rainbow thinColor = result.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
 		final Ftile thin = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
 		double x = 0;
@@ -106,14 +106,14 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 	protected Ftile doStep2(Ftile result) {
 
 		final FtileGeometry geom = result.calculateDimension(getStringBounder());
-		if (hasOut() == false) {
+		if (!hasOut()) {
 			return new FtileKilled(result);
 		}
 
 		final Rainbow thinColor = result.getInLinkRendering().getRainbow(HtmlColorAndStyle.build(skinParam()));
 		final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), getList().get(0).getSwimlaneIn());
 		result = new FtileAssemblySimple(result, out);
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		double x = 0;
 		double first = 0;
 		double last = 0;
@@ -155,7 +155,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			snake.addPoint(geo.getLeft(), 0);
@@ -170,7 +170,7 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
 
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			final Point2D mp1a = translate1.getTranslated(p1);
@@ -205,11 +205,11 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
@@ -222,14 +222,14 @@ public class ParallelBuilderSplit2 extends ParallelFtilesBuilder {
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				return;
 			}
 			final Point2D p1 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), geo.getOutY()));
 			final Point2D p2 = translate0.getTranslated(new Point2D.Double(geo.getLeft(), height));
 
 			final Snake snake = new Snake(arrowHorizontalAlignment(), arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			if (!Display.isNull(label)) {
 				snake.setLabel(getTextBlock(label));
 			}
 			final Point2D mp1a = translate1.getTranslated(p1);

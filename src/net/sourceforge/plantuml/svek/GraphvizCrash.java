@@ -75,7 +75,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public static List<String> anErrorHasOccured(Throwable exception, String text) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		if (exception == null) {
 			strings.add("An error has occured!");
 		} else {

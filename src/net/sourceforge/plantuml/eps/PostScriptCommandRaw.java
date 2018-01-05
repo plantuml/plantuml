@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.eps;
 
 public class PostScriptCommandRaw implements PostScriptCommand {
 
-	final private String cmd;
+	private final String cmd;
 
 	public PostScriptCommandRaw(String cmd, boolean checkConsistence) {
 		if (checkConsistence && cmd.indexOf('\n') != -1) {

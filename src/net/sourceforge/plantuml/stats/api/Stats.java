@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.stats.api;
 
 public interface Stats {
 
-	public StatsTable getLastSessions();
+	StatsTable getLastSessions();
 
-	public StatsTable getCurrentSessionByDiagramType();
+	StatsTable getCurrentSessionByDiagramType();
 
-	public StatsTable getCurrentSessionByFormat();
+	StatsTable getCurrentSessionByFormat();
 
-	public StatsTable getAllByDiagramType();
+	StatsTable getAllByDiagramType();
 
-	public StatsTable getAllByFormat();
+	StatsTable getAllByFormat();
 
 }

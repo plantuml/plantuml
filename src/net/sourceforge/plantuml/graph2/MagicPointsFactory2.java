@@ -45,7 +45,7 @@ public class MagicPointsFactory2 {
 	private final Point2D.Double p1;
 	private final Point2D.Double p2;
 
-	private final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+	private final List<Point2D.Double> result = new ArrayList<>();
 
 	public MagicPointsFactory2(Point2D.Double p1, Point2D.Double p2) {
 		this.p1 = p1;

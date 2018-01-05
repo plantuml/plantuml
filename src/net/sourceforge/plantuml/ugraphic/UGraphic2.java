@@ -40,5 +40,5 @@ import java.io.OutputStream;
 
 public interface UGraphic2 extends UGraphic {
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException;
+	void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException;
 }

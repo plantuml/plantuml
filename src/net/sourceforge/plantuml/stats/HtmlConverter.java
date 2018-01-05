@@ -113,10 +113,10 @@ public class HtmlConverter {
 				result.append("<b>");
 			}
 			if (v instanceof Long) {
-				result.append(String.format("%,d", v));
+				result.append(v);
 			} else if (v instanceof Date) {
 				result.append(formatter.format(v));
-			} else if (v == null || v.toString().length() == 0) {
+			} else if (v == null || v.toString().isEmpty()) {
 				result.append(" ");
 			} else {
 				result.append(v.toString());

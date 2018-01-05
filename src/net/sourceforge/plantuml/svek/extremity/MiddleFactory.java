@@ -39,6 +39,6 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 
 public interface MiddleFactory {
 
-	public UDrawable createUDrawable(double angle);
+	UDrawable createUDrawable(double angle);
 
 }

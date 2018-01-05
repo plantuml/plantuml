@@ -68,7 +68,7 @@ public class PSystemDot extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final Graphviz graphviz = GraphvizUtils.create(null, data,
 				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));

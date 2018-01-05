@@ -79,12 +79,12 @@ public class CMapData {
 	public static CMapData cmapString(Set<Url> allUrlEncountered, double scale) {
 		final CMapData cmapdata = new CMapData();
 
-		final List<Url> all = new ArrayList<Url>(allUrlEncountered);
+		final List<Url> all = new ArrayList<>(allUrlEncountered);
 		Collections.sort(all, Url.SURFACE_COMPARATOR);
 
 		int seq = 1;
 		for (Url u : all) {
-			if (u.hasData() == false) {
+			if (!u.hasData()) {
 				continue;
 			}
 			cmapdata.appendUrl(seq, u, scale);

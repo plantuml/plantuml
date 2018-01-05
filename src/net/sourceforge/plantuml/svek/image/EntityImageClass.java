@@ -73,13 +73,13 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
-	final private TextBlock body;
-	final private Margins shield;
-	final private EntityImageClassHeader2 header;
-	final private Url url;
-	final private double roundCorner;
+	private final TextBlock body;
+	private final Margins shield;
+	private final EntityImageClassHeader2 header;
+	private final Url url;
+	private final double roundCorner;
 
-	final private LineConfigurable lineConfig;
+	private final LineConfigurable lineConfig;
 
 	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
@@ -120,7 +120,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		return translate.apply(result);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		ug.draw(new UComment("class " + getEntity().getCode().getFullName()));
 		if (url != null) {
 			ug.startUrl(url);
@@ -192,7 +192,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((ILeaf) getEntity()).getPortShortNames().size() > 0) {
+		if (!((ILeaf) getEntity()).getPortShortNames().isEmpty()) {
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 		}
 		return ShapeType.RECTANGLE;

@@ -51,7 +51,7 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();
@@ -63,11 +63,11 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 			throw new IllegalArgumentException("Cannot retrieve " + name);
 		}
 
-		return new Terminated<Element>(retrieve, next.getTerminator());
+		return new Terminated<>(retrieve, next.getTerminator());
 	}
 
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
-		return text.matches("\\<\\<\\w+\\>\\>");
+		return text.matches("<<\\w+>>");
 	}
 }

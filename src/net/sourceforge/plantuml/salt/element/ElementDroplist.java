@@ -63,14 +63,14 @@ public class ElementDroplist extends AbstractElementText implements Element {
 	public ElementDroplist(String text, UFont font, ISkinSimple spriteContainer) {
 		super(extract(text), font, true, spriteContainer);
 		final StringTokenizer st = new StringTokenizer(text, "^");
-		final List<String> drop = new ArrayList<String>();
+		final List<String> drop = new ArrayList<>();
 		while (st.hasMoreTokens()) {
 			drop.add(st.nextToken());
 		}
-		if (drop.size() > 0) {
+		if (!drop.isEmpty()) {
 			drop.remove(0);
 		}
-		if (drop.size() == 0) {
+		if (drop.isEmpty()) {
 			this.openDrop = null;
 		} else {
 			this.openDrop = Display.create(drop).create(getConfig(), HorizontalAlignment.LEFT, spriteContainer);

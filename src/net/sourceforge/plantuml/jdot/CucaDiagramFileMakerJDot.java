@@ -49,7 +49,6 @@ import h.Agraph_s;
 import h.Agraphinfo_t;
 import h.GVC_s;
 import h.ST_boxf;
-import h.boxf;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
@@ -114,17 +113,16 @@ import smetana.core.JUtils;
 import smetana.core.Macro;
 import smetana.core.Z;
 import smetana.core.__ptr__;
-import smetana.core.__struct__;
 
 public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 
 	private final CucaDiagram diagram;
 
 	private final StringBounder stringBounder;
-	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<ILeaf, Agnode_s>();
-	private final Map<Link, Agedge_s> edges = new LinkedHashMap<Link, Agedge_s>();
-	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<IGroup, Agraph_s>();
-	private Map<IGroup, ILeaf> emptyGroups = new HashMap<IGroup, ILeaf>();
+	private final Map<ILeaf, Agnode_s> nodes = new LinkedHashMap<>();
+	private final Map<Link, Agedge_s> edges = new LinkedHashMap<>();
+	private final Map<IGroup, Agraph_s> clusters = new LinkedHashMap<>();
+	private Map<IGroup, ILeaf> emptyGroups = new HashMap<>();
 
 	private final DotStringFactory dotStringFactory;
 
@@ -246,9 +244,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
+			final List<Member> members = g.getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
-			if (members.size() == 0) {
+			if (members.isEmpty()) {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, diagram.getSkinParam(),
@@ -345,7 +343,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 			return TextBlockUtils.empty(0, 0);
 		}
 		final boolean show = diagram.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false) {
+		if (!show) {
 			return TextBlockUtils.empty(0, 0);
 		}
 
@@ -355,7 +353,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : diagram.getLeafsvalues()) {
 			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer()) {
 				result.add(ent);
@@ -536,7 +534,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		// + (length - 1) + " ");
 
 		final TextBlock label = getLabel(link);
-		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {
+		if (!TextBlockUtils.isEmpty(label, stringBounder)) {
 			final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
@@ -548,9 +546,9 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		return e;
 	}
 
-	static private List<String> getFailureText3(Throwable exception) {
+	private static List<String> getFailureText3(Throwable exception) {
 		exception.printStackTrace();
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("An error has occured : " + exception);
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);

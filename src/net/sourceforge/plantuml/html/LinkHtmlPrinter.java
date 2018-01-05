@@ -166,13 +166,11 @@ public final class LinkHtmlPrinter {
 	}
 
 	static String htmlLink(IEntity ent) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("<a href=\"");
-		sb.append(urlOf(ent));
-		sb.append("\">");
-		sb.append(StringUtils.unicodeForHtml(ent.getCode().getFullName()));
-		sb.append("</a>");
-		return sb.toString();
+		return "<a href=\"" +
+			urlOf(ent) +
+			"\">" +
+			StringUtils.unicodeForHtml(ent.getCode().getFullName()) +
+			"</a>";
 	}
 
 	static String urlOf(IEntity ent) {

@@ -36,15 +36,12 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
@@ -55,10 +52,10 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class Img implements HtmlCommand {
 
-	final static private Pattern2 srcPattern = MyPattern.cmpile("(?i)src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
-	final static private Pattern2 vspacePattern = MyPattern.cmpile("(?i)vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
-	final static private Pattern2 valignPattern = MyPattern.cmpile("(?i)valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
-	final static private Pattern2 noSrcColonPattern = MyPattern.cmpile("(?i)" + Splitter.imgPatternNoSrcColon);
+	private static final Pattern2 srcPattern = MyPattern.cmpile("(?i)src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
+	private static final Pattern2 vspacePattern = MyPattern.cmpile("(?i)vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
+	private static final Pattern2 valignPattern = MyPattern.cmpile("(?i)valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
+	private static final Pattern2 noSrcColonPattern = MyPattern.cmpile("(?i)" + Splitter.imgPatternNoSrcColon);
 
 	private final TextBlock tileImage;
 
@@ -68,7 +65,7 @@ public class Img implements HtmlCommand {
 
 	static int getVspace(String html) {
 		final Matcher2 m = vspacePattern.matcher(html);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return 0;
 		}
 		return Integer.parseInt(m.group(1));
@@ -76,7 +73,7 @@ public class Img implements HtmlCommand {
 
 	static ImgValign getValign(String html) {
 		final Matcher2 m = valignPattern.matcher(html);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return ImgValign.TOP;
 		}
 		return ImgValign.valueOf(StringUtils.goUpperCase(m.group(1)));
@@ -94,13 +91,13 @@ public class Img implements HtmlCommand {
 	}
 
 	private static HtmlCommand build(final Matcher2 m, final ImgValign valign, final int vspace) {
-		if (m.find() == false) {
+		if (!m.find()) {
 			return new Text("(SYNTAX ERROR)");
 		}
 		final String src = m.group(1);
 		try {
 			final File f = FileSystem.getInstance().getFile(src);
-			if (f.exists() == false) {
+			if (!f.exists()) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 //					final byte image[] = getFile(src);

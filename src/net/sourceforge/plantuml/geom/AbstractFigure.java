@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.Log;
 
 abstract class AbstractFigure {
 
-	private final Set<LineSegmentInt> segments = new HashSet<LineSegmentInt>();
+	private final Set<LineSegmentInt> segments = new HashSet<>();
 
 	@Override
 	public String toString() {
@@ -54,13 +54,13 @@ abstract class AbstractFigure {
 	}
 
 	@Override
-	final public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
 		final AbstractFigure other = (AbstractFigure) obj;
 		return segments.equals(other.segments);
 	}
 
 	@Override
-	final public int hashCode() {
+    public final int hashCode() {
 		return segments.hashCode();
 	}
 
@@ -86,7 +86,7 @@ abstract class AbstractFigure {
 	}
 
 	Collection<LineSegmentInt> getSegmentsWithExtremity(Point2DInt extremity, Collection<LineSegmentInt> exceptions) {
-		final Collection<LineSegmentInt> result = new HashSet<LineSegmentInt>();
+		final Collection<LineSegmentInt> result = new HashSet<>();
 		for (LineSegmentInt seg : segments) {
 			if (exceptions.contains(seg)) {
 				continue;
@@ -125,21 +125,21 @@ abstract class AbstractFigure {
 
 	public boolean isSimpleSegmentPossible(Point2DInt start, Point2DInt end) {
 		final LineSegmentInt direct = new LineSegmentInt(start, end);
-		return hasIntersectionStrict(direct) == false;
+		return !hasIntersectionStrict(direct);
 	}
 
 	public Polyline getPath(Pointable start, Pointable end) {
-		if (knowThisPoint(start.getPosition()) == false) {
+		if (!knowThisPoint(start.getPosition())) {
 			throw new IllegalArgumentException();
 		}
-		if (knowThisPoint(end.getPosition()) == false) {
+		if (!knowThisPoint(end.getPosition())) {
 			throw new IllegalArgumentException("" + end.getPosition());
 		}
 		if (isSimpleSegmentPossible(start.getPosition(), end.getPosition())) {
 			throw new IllegalArgumentException();
 			// return new PolylineImpl(start, end);
 		}
-		if (arePointsConnectable(start.getPosition(), end.getPosition()) == false) {
+		if (!arePointsConnectable(start.getPosition(), end.getPosition())) {
 			return null;
 		}
 		return findBestPath(start, end);
@@ -149,12 +149,12 @@ abstract class AbstractFigure {
 		Log.println("start=" + start.getPosition());
 		Log.println("end=" + end.getPosition());
 		final Set<Point2DInt> points = getAllPoints();
-		if (points.contains(start.getPosition()) == false || points.contains(end.getPosition()) == false) {
+		if (!points.contains(start.getPosition()) || !points.contains(end.getPosition())) {
 			throw new IllegalArgumentException();
 		}
 		points.remove(start.getPosition());
 		points.remove(end.getPosition());
-		final List<Neighborhood> neighborhoods = new ArrayList<Neighborhood>();
+		final List<Neighborhood> neighborhoods = new ArrayList<>();
 		for (Point2DInt p : points) {
 			neighborhoods.addAll(getSingularity(p).getNeighborhoods());
 		}
@@ -192,7 +192,7 @@ abstract class AbstractFigure {
 		assert path.size() > 2;
 
 		Log.println("PATH=" + path);
-		final List<Neighborhood> usedNeighborhoods = new ArrayList<Neighborhood>();
+		final List<Neighborhood> usedNeighborhoods = new ArrayList<>();
 		for (int i = 1; i < path.size() - 1; i++) {
 			final int idx = path.get(i) - 1;
 			usedNeighborhoods.add(neighborhoods.get(idx));
@@ -231,7 +231,7 @@ abstract class AbstractFigure {
 		return result;
 	}
 
-	static private double distance(Point2DInt p1, Point2DInt p2) {
+	private static double distance(Point2DInt p1, Point2DInt p2) {
 		return new LineSegmentInt(p1, p2).getLength();
 	}
 
@@ -302,7 +302,7 @@ abstract class AbstractFigure {
 	}
 
 	private Set<Point2DInt> getAllPoints() {
-		final Set<Point2DInt> result = new HashSet<Point2DInt>();
+		final Set<Point2DInt> result = new HashSet<>();
 		for (LineSegmentInt seg : segments) {
 			result.add(seg.getP1());
 			result.add(seg.getP2());

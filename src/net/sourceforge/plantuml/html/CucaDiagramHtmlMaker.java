@@ -65,7 +65,7 @@ public final class CucaDiagramHtmlMaker {
 
 	public List<FileImageData> create() throws IOException {
 		dir.mkdirs();
-		if (dir.exists() == false) {
+		if (!dir.exists()) {
 			throw new IOException("Cannot create " + dir);
 		}
 		final File f = new File(dir, "index.html");
@@ -134,7 +134,7 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		pw.println("<hr>");
-		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
+		if (entity.getBodier().getFieldsToDisplay().isEmpty()) {
 			pw.println("<h2>No fields</h2>");
 		} else {
 			pw.println("<h2>Fields:</h2>");
@@ -148,7 +148,7 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		pw.println("<hr>");
-		if (entity.getBodier().getMethodsToDisplay().size() == 0) {
+		if (entity.getBodier().getMethodsToDisplay().isEmpty()) {
 			pw.println("<h2>No methods</h2>");
 		} else {
 			pw.println("<h2>Methods:</h2>");
@@ -163,7 +163,7 @@ public final class CucaDiagramHtmlMaker {
 
 		pw.println("<hr>");
 		final Collection<Link> links = getLinksButNotes(entity);
-		if (links.size() == 0) {
+		if (links.isEmpty()) {
 			pw.println("<h2>No links</h2>");
 		} else {
 			pw.println("<h2>Links:</h2>");
@@ -177,7 +177,7 @@ public final class CucaDiagramHtmlMaker {
 		}
 
 		final Collection<IEntity> notes = getNotes(entity);
-		if (notes.size() > 0) {
+		if (!notes.isEmpty()) {
 			pw.println("<hr>");
 			pw.println("<h2>Notes:</h2>");
 			pw.println("<ul>");
@@ -204,9 +204,9 @@ public final class CucaDiagramHtmlMaker {
 	}
 
 	private Collection<IEntity> getNotes(IEntity ent) {
-		final List<IEntity> result = new ArrayList<IEntity>();
+		final List<IEntity> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			if (link.contains(ent) == false) {
+			if (!link.contains(ent)) {
 				continue;
 			}
 			if (link.getEntity1().getLeafType() == LeafType.NOTE
@@ -218,9 +218,9 @@ public final class CucaDiagramHtmlMaker {
 	}
 
 	private Collection<Link> getLinksButNotes(IEntity ent) {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			if (link.contains(ent) == false) {
+			if (!link.contains(ent)) {
 				continue;
 			}
 			if (link.getEntity1().getLeafType() == LeafType.NOTE

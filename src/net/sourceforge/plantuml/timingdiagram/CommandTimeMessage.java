@@ -64,7 +64,7 @@ public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final Player player1 = diagram.getPlayer(arg.get("PART1", 0));
 		if (player1 == null) {
 			return CommandExecutionResult.error("No such element: " + arg.get("PART1", 0));

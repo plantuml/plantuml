@@ -46,13 +46,14 @@ public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 	}
 
 	public PSystemSalt init(String startLine) {
-		if (getDiagramType() == DiagramType.UML) {
-			return null;
-		} else if (getDiagramType() == DiagramType.SALT) {
-			return new PSystemSalt();
-		} else {
-			throw new IllegalStateException(getDiagramType().name());
-		}
+        switch (getDiagramType()) {
+            case UML:
+                return null;
+            case SALT:
+                return new PSystemSalt();
+            default:
+                throw new IllegalStateException(getDiagramType().name());
+        }
 
 	}
 

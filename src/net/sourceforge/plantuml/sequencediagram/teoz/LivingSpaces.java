@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class LivingSpaces {
 
-	private final Map<Participant, LivingSpace> all = new LinkedHashMap<Participant, LivingSpace>();
+	private final Map<Participant, LivingSpace> all = new LinkedHashMap<>();
 
 	public Collection<LivingSpace> values() {
 		return all.values();

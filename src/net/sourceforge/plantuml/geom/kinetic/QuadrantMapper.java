@@ -43,8 +43,8 @@ import java.util.Set;
 
 public class QuadrantMapper {
 
-	private final Map<Point2DCharge, Quadrant> quadrants = new HashMap<Point2DCharge, Quadrant>();
-	private final Map<Quadrant, HashSet<Point2DCharge>> setOfPoints = new HashMap<Quadrant, HashSet<Point2DCharge>>();
+	private final Map<Point2DCharge, Quadrant> quadrants = new HashMap<>();
+	private final Map<Quadrant, HashSet<Point2DCharge>> setOfPoints = new HashMap<>();
 
 	public void addPoint(Point2DCharge pt) {
 		if (quadrants.containsKey(pt)) {
@@ -67,7 +67,7 @@ public class QuadrantMapper {
 	}
 
 	private Set<Point2DCharge> mergeOfSetOfPoints() {
-		final Set<Point2DCharge> result = new HashSet<Point2DCharge>();
+		final Set<Point2DCharge> result = new HashSet<>();
 		for (Set<Point2DCharge> set : setOfPoints.values()) {
 			assert Collections.disjoint(set, result);
 			result.addAll(set);
@@ -79,15 +79,15 @@ public class QuadrantMapper {
 		final Quadrant newQ = new Quadrant(pt);
 		final Quadrant old = quadrants.get(pt);
 		assert getSetOfPoints(old).contains(pt);
-		if (old.equals(newQ) == false) {
-			assert getSetOfPoints(newQ).contains(pt) == false;
+		if (!old.equals(newQ)) {
+			assert !getSetOfPoints(newQ).contains(pt);
 			assert getSetOfPoints(old).contains(pt);
 			final boolean remove = getSetOfPoints(old).remove(pt);
 			assert remove;
 			final boolean add = getSetOfPoints(newQ).add(pt);
 			assert add;
 			assert getSetOfPoints(newQ).contains(pt);
-			assert getSetOfPoints(old).contains(pt) == false;
+			assert !getSetOfPoints(old).contains(pt);
 			quadrants.put(pt, newQ);
 		}
 		assert getSetOfPoints(new Quadrant(pt)).contains(pt);
@@ -96,7 +96,7 @@ public class QuadrantMapper {
 	private HashSet<Point2DCharge> getSetOfPoints(Quadrant q) {
 		HashSet<Point2DCharge> result = setOfPoints.get(q);
 		if (result == null) {
-			result = new HashSet<Point2DCharge>();
+			result = new HashSet<>();
 			setOfPoints.put(q, result);
 		}
 		return result;

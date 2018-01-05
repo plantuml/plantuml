@@ -35,16 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -54,9 +44,14 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
+import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class SourceStringReader {
 
-	final private List<BlockUml> blocks;
+	private final List<BlockUml> blocks;
 
 	public SourceStringReader(String source) {
 		this(Defines.createEmpty(), source, Collections.<String> emptyList());
@@ -107,14 +102,10 @@ public class SourceStringReader {
 	}
 
 	public DiagramDescription outputImage(File f) throws IOException {
-		final OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
-		DiagramDescription result = null;
-		try {
-			result = outputImage(os, 0);
-		} finally {
-			os.close();
+		try (final FileOutputStream fs = new FileOutputStream(f);
+		     OutputStream os = new BufferedOutputStream(fs)) {
+			return outputImage(os, 0);
 		}
-		return result;
 	}
 
 	@Deprecated
@@ -142,7 +133,7 @@ public class SourceStringReader {
 
 	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			noStartumlFound(os, fileFormatOption, 42);
 			return null;
 		}
@@ -165,7 +156,7 @@ public class SourceStringReader {
 	}
 
 	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			return null;
 		}
 		for (BlockUml b : blocks) {
@@ -197,7 +188,7 @@ public class SourceStringReader {
 	}
 
 	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			return null;
 		}
 		for (BlockUml b : blocks) {

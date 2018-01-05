@@ -110,7 +110,7 @@ public class ScxmlStateDiagramStandard {
 	private void addLink(Element state, Link link) {
 		final Element transition = document.createElement("transition");
 		final Display label = link.getLabel();
-		if (Display.isNull(label) == false) {
+		if (!Display.isNull(label)) {
 			final String event = label.get(0).toString();
 			transition.setAttribute("event", event);
 		}
@@ -125,7 +125,7 @@ public class ScxmlStateDiagramStandard {
 		return result;
 	}
 
-	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+	public void transformerXml(OutputStream os) throws TransformerException {
 		final Source source = new DOMSource(document);
 
 		final Result resultat = new StreamResult(os);

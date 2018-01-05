@@ -48,7 +48,7 @@ public class CubicCurveFactory {
 	private final Point2D.Double start;
 	private final Point2D.Double end;
 	private final RectanglesCollection forbiddenRect = new RectanglesCollection();
-	private final List<MyCurve> forbiddenCurves = new ArrayList<MyCurve>();
+	private final List<MyCurve> forbiddenCurves = new ArrayList<>();
 
 	public CubicCurveFactory(Point2D start, Point2D end) {
 		this.start = new Point2D.Double(start.getX(), start.getY());
@@ -67,8 +67,7 @@ public class CubicCurveFactory {
 		MyCurve result = new MyCurve(new CubicCurve2D.Double(start.getX(), start.getY(), start.getX(), start.getY(),
 				end.getX(), end.getY(), end.getX(), end.getY()));
 		if (result.intersects(forbiddenRect) || result.intersects(forbiddenCurves)) {
-			final Set<Point2D.Double> all = new HashSet<Point2D.Double>();
-			all.addAll(MagicPointsFactory.get(start, end));
+            final Set<Point2D.Double> all = new HashSet<>(MagicPointsFactory.get(start, end));
 			for (Rectangle2D.Double rect : forbiddenRect) {
 				all.addAll(MagicPointsFactory.get(rect));
 			}
@@ -79,8 +78,8 @@ public class CubicCurveFactory {
 				for (Point2D.Double p2 : all) {
 					final MyCurve me = new MyCurve(new CubicCurve2D.Double(start.getX(), start.getY(), p1.getX(), p1
 							.getY(), p2.getX(), p2.getY(), end.getX(), end.getY()));
-					if (me.getLenght() < min && me.intersects(forbiddenRect) == false
-							&& me.intersects(forbiddenCurves) == false) {
+					if (me.getLenght() < min && !me.intersects(forbiddenRect)
+							&& !me.intersects(forbiddenCurves)) {
 						result = me;
 						min = me.getLenght();
 					}

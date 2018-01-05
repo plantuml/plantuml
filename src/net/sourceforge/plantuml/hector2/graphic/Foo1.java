@@ -59,9 +59,8 @@ public class Foo1 {
 	}
 
 	private static IEntityImage computeImage(final ILeaf leaf, CucaDiagram diagram) {
-		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null, diagram.getLinks());
-		return image;
+        return DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
+false, diagram, null, null, null, diagram.getLinks());
 	}
 
 }

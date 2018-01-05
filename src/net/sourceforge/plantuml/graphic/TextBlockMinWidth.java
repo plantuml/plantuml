@@ -59,14 +59,17 @@ class TextBlockMinWidth extends AbstractTextBlock  implements TextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (horizontalAlignment == HorizontalAlignment.LEFT) {
-			textBlock.drawU(ug);
-		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
-			final Dimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
-			final double diffx = minWidth - dim.getWidth();
-			textBlock.drawU(ug.apply(new UTranslate(diffx, 0)));
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (horizontalAlignment) {
+            case LEFT:
+                textBlock.drawU(ug);
+                break;
+            case RIGHT:
+                final Dimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
+                final double diffx = minWidth - dim.getWidth();
+                textBlock.drawU(ug.apply(new UTranslate(diffx, 0)));
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 	}
 }

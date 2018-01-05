@@ -63,8 +63,8 @@ class Point2DComparatorDistance implements Comparator<Point2D> {
 
 public class InflationTransform2 implements IInflationTransform {
 
-	private final List<InflateData2> inflateX = new ArrayList<InflateData2>();
-	private final List<InflateData2> inflateY = new ArrayList<InflateData2>();
+	private final List<InflateData2> inflateX = new ArrayList<>();
+	private final List<InflateData2> inflateY = new ArrayList<>();
 
 	public void addInflationX(double xpos, double inflation) {
 		add(inflateX, xpos, inflation);
@@ -87,7 +87,7 @@ public class InflationTransform2 implements IInflationTransform {
 		return sumInflation(inflateY);
 	}
 
-	static private double sumInflation(List<InflateData2> list) {
+	private static double sumInflation(List<InflateData2> list) {
 		double result = 0;
 		for (InflateData2 data : list) {
 			result += data.getInflation();
@@ -95,7 +95,7 @@ public class InflationTransform2 implements IInflationTransform {
 		return result;
 	}
 
-	static private void add(List<InflateData2> list, double ypos, double inflation) {
+	private static void add(List<InflateData2> list, double ypos, double inflation) {
 		for (final ListIterator<InflateData2> it = list.listIterator(); it.hasNext();) {
 			final InflateData2 cur = it.next();
 			if (cur.getPos() == ypos) {
@@ -109,10 +109,11 @@ public class InflationTransform2 implements IInflationTransform {
 
 	Collection<Point2D.Double> cutPoints(Line2D.Double original) {
 
-		final SortedSet<Point2D.Double> result = new TreeSet<Point2D.Double>(new Point2DComparatorDistance(original
-				.getP1()));
+		final SortedSet<Point2D.Double> result = new TreeSet<>(new Point2DComparatorDistance(
+            original
+                .getP1()));
 
-		if (GeomUtils.isHorizontal(original) == false) {
+		if (!GeomUtils.isHorizontal(original)) {
 			for (InflateData2 x : inflateX) {
 				final Line2D.Double vertical = new Line2D.Double(x.getPos(), GeomUtils.getMinY(original), x.getPos(),
 						GeomUtils.getMaxY(original));
@@ -122,7 +123,7 @@ public class InflationTransform2 implements IInflationTransform {
 				}
 			}
 		}
-		if (GeomUtils.isVertical(original) == false) {
+		if (!GeomUtils.isVertical(original)) {
 			for (InflateData2 y : inflateY) {
 				final Line2D.Double horizontal = new Line2D.Double(GeomUtils.getMinX(original), y.getPos(), GeomUtils
 						.getMaxX(original), y.getPos());
@@ -136,7 +137,7 @@ public class InflationTransform2 implements IInflationTransform {
 	}
 
 	Collection<Line2D.Double> cutSegments(Line2D.Double original) {
-		final List<Line2D.Double> result = new ArrayList<Line2D.Double>();
+		final List<Line2D.Double> result = new ArrayList<>();
 		Point2D.Double cur = (Point2D.Double) original.getP1();
 		final Collection<Point2D.Double> cutPoints = cutPoints(original);
 		for (Point2D.Double inter : cutPoints) {
@@ -146,14 +147,14 @@ public class InflationTransform2 implements IInflationTransform {
 			result.add(new Line2D.Double(cur, inter));
 			cur = inter;
 		}
-		if (cur.equals(original.getP2()) == false) {
+		if (!cur.equals(original.getP2())) {
 			result.add(new Line2D.Double(cur, original.getP2()));
 		}
 		return result;
 	}
 
 	Collection<Line2D.Double> cutSegments(Collection<Line2D.Double> segments) {
-		final List<Line2D.Double> result = new ArrayList<Line2D.Double>();
+		final List<Line2D.Double> result = new ArrayList<>();
 		for (Line2D.Double seg : segments) {
 			result.addAll(cutSegments(seg));
 		}
@@ -212,7 +213,7 @@ public class InflationTransform2 implements IInflationTransform {
 	}
 
 	List<Line2D.Double> inflateSegmentCollection(Collection<Line2D.Double> segments) {
-		final List<Line2D.Double> result = new ArrayList<Line2D.Double>();
+		final List<Line2D.Double> result = new ArrayList<>();
 		for (Line2D.Double seg : segments) {
 			final AffineTransform at = getAffineTransformAt(new Point2D.Double((seg.x1 + seg.x2) / 2,
 					(seg.y1 + seg.y2) / 2));
@@ -225,9 +226,9 @@ public class InflationTransform2 implements IInflationTransform {
 		final Collection<Line2D.Double> cutSegments = cutSegments(segments);
 		Line2D.Double last = null;
 		final List<Line2D.Double> inflated = inflateSegmentCollection(cutSegments);
-		final List<Line2D.Double> result = new ArrayList<Line2D.Double>();
+		final List<Line2D.Double> result = new ArrayList<>();
 		for (Line2D.Double seg : inflated) {
-			if (last != null && last.getP2().equals(seg.getP1()) == false) {
+			if (last != null && !last.getP2().equals(seg.getP1())) {
 				result.add(new Line2D.Double(last.getP2(), seg.getP1()));
 			}
 			result.add(seg);

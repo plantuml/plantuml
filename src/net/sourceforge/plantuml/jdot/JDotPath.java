@@ -45,7 +45,6 @@ import h.textlabel_t;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.HtmlColor;
@@ -83,17 +82,18 @@ public class JDotPath implements UDrawable {
 	}
 
 	private ColorParam getArrowColorParam() {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return ColorParam.arrow;
-		}
+        switch (diagram.getUmlDiagramType()) {
+            case CLASS:
+                return ColorParam.arrow;
+            case OBJECT:
+                return ColorParam.arrow;
+            case DESCRIPTION:
+                return ColorParam.arrow;
+            case ACTIVITY:
+                return ColorParam.arrow;
+            case STATE:
+                return ColorParam.arrow;
+        }
 		throw new IllegalStateException();
 	}
 
@@ -187,8 +187,7 @@ public class JDotPath implements UDrawable {
 
 	private splines getSplines(Agedge_s e) {
 		final Agedgeinfo_t data = (Agedgeinfo_t) Macro.AGDATA(e).castTo(Agedgeinfo_t.class);
-		final splines splines = (splines) data.getPtr("spl");
-		return splines;
+        return (splines) data.getPtr("spl");
 	}
 
 	private DotPath getDotPath(splines splines) {

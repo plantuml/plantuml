@@ -55,10 +55,10 @@ public class ProcessState {
 		return name + " " + cause.toString();
 	}
 
-	private final static ProcessState INIT = new ProcessState("INIT", null);
-	private final static ProcessState RUNNING = new ProcessState("RUNNING", null);
-	private final static ProcessState TERMINATED_OK = new ProcessState("TERMINATED_OK", null);
-	private final static ProcessState TIMEOUT = new ProcessState("TIMEOUT", null);
+	private static final ProcessState INIT = new ProcessState("INIT", null);
+	private static final ProcessState RUNNING = new ProcessState("RUNNING", null);
+	private static final ProcessState TERMINATED_OK = new ProcessState("TERMINATED_OK", null);
+	private static final ProcessState TIMEOUT = new ProcessState("TIMEOUT", null);
 
 	// INIT, RUNNING, TERMINATED_OK, TIMEOUT, IO_EXCEPTION1, IO_EXCEPTION2;
 
@@ -87,7 +87,7 @@ public class ProcessState {
 	}
 
 	public boolean differs(ProcessState other) {
-		return name.equals(other.name) == false;
+		return !name.equals(other.name);
 	}
 
 	@Override

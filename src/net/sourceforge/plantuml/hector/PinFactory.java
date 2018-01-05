@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 
 public class PinFactory {
 
-	private final Map<Object, Pin> pins = new HashMap<Object, Pin>();
+	private final Map<Object, Pin> pins = new HashMap<>();
 
 	Pin create(Object userData) {
 		return create(Integer.MAX_VALUE, userData);
@@ -61,8 +61,7 @@ public class PinFactory {
 	}
 
 	public PinLink createPinLink(Link link) {
-		final PinLink result = new PinLink(create(link.getEntity1()), create(link.getEntity2()), link.getLength(), link);
-		return result;
+        return new PinLink(create(link.getEntity1()), create(link.getEntity2()), link.getLength(), link);
 	}
 
 }

@@ -39,7 +39,7 @@ import java.util.Collection;
 
 public interface GroupHierarchy {
 
-	public Collection<IGroup> getChildrenGroups(IGroup parent);
+	Collection<IGroup> getChildrenGroups(IGroup parent);
 	
-	public boolean isEmpty(IGroup g);
+	boolean isEmpty(IGroup g);
 }

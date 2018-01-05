@@ -122,13 +122,17 @@ class USymbolRect extends USymbol {
 				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle;
-				if (labelAlignment == HorizontalAlignment.LEFT) {
-					posTitle = 3;
-				} else if (labelAlignment == HorizontalAlignment.RIGHT) {
-					posTitle = width - dimTitle.getWidth() - 3;
-				} else {
-					posTitle = (width - dimTitle.getWidth()) / 2;
-				}
+                switch (labelAlignment) {
+                    case LEFT:
+                        posTitle = 3;
+                        break;
+                    case RIGHT:
+                        posTitle = width - dimTitle.getWidth() - 3;
+                        break;
+                    default:
+                        posTitle = (width - dimTitle.getWidth()) / 2;
+                        break;
+                }
 				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
 			}
 

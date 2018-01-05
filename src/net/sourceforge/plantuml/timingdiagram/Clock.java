@@ -36,6 +36,6 @@ package net.sourceforge.plantuml.timingdiagram;
 
 public interface Clock {
 
-	public TimeTick getNow();
+	TimeTick getNow();
 
 }

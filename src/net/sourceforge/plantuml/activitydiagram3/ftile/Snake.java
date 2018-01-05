@@ -35,25 +35,16 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.graphic.*;
+import net.sourceforge.plantuml.ugraphic.*;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
-import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.ugraphic.CompressionTransform;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Snake implements UShape {
 
@@ -146,7 +137,7 @@ public class Snake implements UShape {
 		final double move = 2 + colorArrowSeparationSpace;
 		final WormMutation mutation = WormMutation.create(worm, move);
 		if (mutation.isDxNegative()) {
-			colors = new ArrayList<HtmlColorAndStyle>(colors);
+			colors = new ArrayList<>(colors);
 			Collections.reverse(colors);
 		}
 		final double globalMove = -1.0 * (colors.size() - 1) / 2.0;
@@ -204,7 +195,7 @@ public class Snake implements UShape {
 	}
 
 	public List<Line2D> getHorizontalLines() {
-		final List<Line2D> result = new ArrayList<Line2D>();
+		final List<Line2D> result = new ArrayList<>();
 		for (int i = 0; i < worm.size() - 1; i++) {
 			final Point2D pt1 = worm.get(i);
 			final Point2D pt2 = worm.get(i + 1);
@@ -236,7 +227,7 @@ public class Snake implements UShape {
 		}
 		final boolean emptyOther = TextBlockUtils.isEmpty(other.textBlock, stringBounder);
 		// final boolean emptyThis = TextBlockUtils.isEmpty(this.textBlock, stringBounder);
-		if (emptyOther == false /* || emptyThis == false */) {
+		if (!emptyOther /* || emptyThis == false */) {
 			// System.err.println("merge other.textBlock="+other.textBlock+" "+other.textBlock.calculateDimension(TextBlockUtils.getDummyStringBounder()));
 			return null;
 		}
@@ -256,13 +247,9 @@ public class Snake implements UShape {
 	}
 
 	public boolean touches(Snake other) {
-		if (other.mergeable != MergeStrategy.FULL) {
-			return false;
-		}
-		if (other.worm.isPureHorizontal()) {
-			return false;
-		}
-		return same(this.getLast(), other.getFirst());
+		return other.mergeable == MergeStrategy.FULL
+			&& !other.worm.isPureHorizontal()
+			&& same(this.getLast(), other.getFirst());
 	}
 
 	public void goUnmergeable(MergeStrategy strategy) {

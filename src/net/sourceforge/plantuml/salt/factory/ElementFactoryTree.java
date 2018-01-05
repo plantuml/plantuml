@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -53,7 +51,7 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final String header = getDataSource().next().getElement();
@@ -67,7 +65,7 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 		final ElementTree result = new ElementTree(font, getDictionary(), strategy);
 
 		boolean takeMe = true;
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final Terminated<String> t = getDataSource().next();
 			final Terminator terminator = t.getTerminator();
 			final String s = t.getElement();

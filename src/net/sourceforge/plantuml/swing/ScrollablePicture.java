@@ -48,7 +48,7 @@ import javax.swing.SwingConstants;
 
 class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListener {
 
-	private int maxUnitIncrement = 1;
+	private int maxUnitIncrement;
 	private boolean missingPicture = false;
 
 	public ScrollablePicture(ImageIcon i, int m) {
@@ -92,7 +92,7 @@ class ScrollablePicture extends JLabel implements Scrollable, MouseMotionListene
 
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 		// Get the current position.
-		int currentPosition = 0;
+		int currentPosition;
 		if (orientation == SwingConstants.HORIZONTAL) {
 			currentPosition = visibleRect.x;
 		} else {

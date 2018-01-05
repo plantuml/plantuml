@@ -44,17 +44,17 @@ public class Text implements HtmlCommand {
 	public static final Text TEXT_BS_BS_N = new Text(BackSlash.BS_BS_N);
 
 	Text(String text) {
-		this.text = text.replaceAll("\\\\\\[", "[").replaceAll("\\\\\\]", "]");
+		this.text = text.replaceAll("\\\\\\[", "[").replaceAll("\\\\]", "]");
 		if (text.indexOf(BackSlash.CHAR_NEWLINE) != -1) {
 			throw new IllegalArgumentException();
 		}
-		if (text.length() == 0) {
+		if (text.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 	}
 
 	public String getText() {
-		assert text.length() > 0;
+		assert !text.isEmpty();
 		return text;
 	}
 

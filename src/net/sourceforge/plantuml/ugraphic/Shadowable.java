@@ -36,8 +36,8 @@ package net.sourceforge.plantuml.ugraphic;
 
 public interface Shadowable extends UShape {
 
-	public void setDeltaShadow(double deltaShadow);
+	void setDeltaShadow(double deltaShadow);
 
-	public double getDeltaShadow();
+	double getDeltaShadow();
 
 }

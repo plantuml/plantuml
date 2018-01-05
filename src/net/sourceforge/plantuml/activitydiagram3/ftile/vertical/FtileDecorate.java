@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 
-	final private Ftile ftile;
+	private final Ftile ftile;
 
 	public FtileDecorate(final Ftile ftile) {
 		this.ftile = ftile;

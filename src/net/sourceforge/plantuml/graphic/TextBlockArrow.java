@@ -79,29 +79,34 @@ public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 
 	private UPolygon getTriangle(int triSize) {
 		final UPolygon triangle = new UPolygon();
-		if (arrow == Direction.RIGHT) {
-			triangle.addPoint(0, 0);
-			triangle.addPoint(triSize, triSize / 2);
-			triangle.addPoint(0, triSize);
-			triangle.addPoint(0, 0);
-		} else if (arrow == Direction.LEFT) {
-			triangle.addPoint(triSize, 0);
-			triangle.addPoint(0, triSize / 2);
-			triangle.addPoint(triSize, triSize);
-			triangle.addPoint(triSize, 0);
-		} else if (arrow == Direction.UP) {
-			triangle.addPoint(0, triSize);
-			triangle.addPoint(triSize / 2, 0);
-			triangle.addPoint(triSize, triSize);
-			triangle.addPoint(0, triSize);
-		} else if (arrow == Direction.DOWN) {
-			triangle.addPoint(0, 0);
-			triangle.addPoint(triSize / 2, triSize);
-			triangle.addPoint(triSize, 0);
-			triangle.addPoint(0, 0);
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (arrow) {
+            case RIGHT:
+                triangle.addPoint(0, 0);
+                triangle.addPoint(triSize, triSize / 2);
+                triangle.addPoint(0, triSize);
+                triangle.addPoint(0, 0);
+                break;
+            case LEFT:
+                triangle.addPoint(triSize, 0);
+                triangle.addPoint(0, triSize / 2);
+                triangle.addPoint(triSize, triSize);
+                triangle.addPoint(triSize, 0);
+                break;
+            case UP:
+                triangle.addPoint(0, triSize);
+                triangle.addPoint(triSize / 2, 0);
+                triangle.addPoint(triSize, triSize);
+                triangle.addPoint(0, triSize);
+                break;
+            case DOWN:
+                triangle.addPoint(0, 0);
+                triangle.addPoint(triSize / 2, triSize);
+                triangle.addPoint(triSize, 0);
+                triangle.addPoint(0, 0);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		return triangle;
 	}
 

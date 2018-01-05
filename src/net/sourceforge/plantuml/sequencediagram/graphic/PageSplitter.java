@@ -58,8 +58,8 @@ class PageSplitter {
 			double signatureHeight, double newpageHeight, Display diagramTitle) {
 		this.fullHeight = fullHeight;
 		this.diagramTitle = diagramTitle;
-		this.titles = new ArrayList<Display>();
-		this.positions = new ArrayList<Double>();
+		this.titles = new ArrayList<>();
+		this.positions = new ArrayList<>();
 
 		for (Map.Entry<Newpage, Double> ent : newpages.entrySet()) {
 			titles.add(ent.getKey().getTitle());
@@ -74,10 +74,10 @@ class PageSplitter {
 
 	public List<Page> getPages() {
 
-		if (positions.size() == 0) {
+		if (positions.isEmpty()) {
 			return Arrays.asList(onePage());
 		}
-		final List<Page> result = new ArrayList<Page>();
+		final List<Page> result = new ArrayList<>();
 
 		result.add(firstPage());
 		for (int i = 0; i < positions.size() - 1; i++) {
@@ -96,15 +96,13 @@ class PageSplitter {
 	}
 
 	private Page firstPage() {
-		final double newpage1 = this.headerHeight;
-		final double newpage2 = positions.get(0) + this.newpageHeight;
-		return new Page(headerHeight, newpage1, newpage2, tailHeight, 0, diagramTitle);
+        final double newpage2 = positions.get(0) + this.newpageHeight;
+		return new Page(headerHeight, this.headerHeight, newpage2, tailHeight, 0, diagramTitle);
 	}
 
 	private Page onePage() {
-		final double newpage1 = this.headerHeight;
-		final double newpage2 = this.fullHeight - this.tailHeight - this.signatureHeight;
-		return new Page(headerHeight, newpage1, newpage2, tailHeight, signatureHeight, diagramTitle);
+        final double newpage2 = this.fullHeight - this.tailHeight - this.signatureHeight;
+		return new Page(headerHeight, this.headerHeight, newpage2, tailHeight, signatureHeight, diagramTitle);
 	}
 
 	private Page createPage(int i) {

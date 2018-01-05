@@ -73,9 +73,9 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		final String fontNames[] = ge.getAvailableFontFamilyNames();
 		final int j = fontNames.length;
-		for (int i = 0; i < j; i++) {
-			Log.info("Available fonts: " + fontNames[i]);
-		}
+        for (final String fontName : fontNames) {
+            Log.info("Available fonts: " + fontName);
+        }
 	}
 
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
@@ -126,8 +126,8 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 				g2d.setColor(mapper.getMappedColor(extended));
 			}
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
-				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
-				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);
+				g2d.drawLine(i, ypos, i + 3, ypos + 1);
+				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos);
 			}
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
@@ -143,7 +143,7 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 		}
 	}
 
-	static public Dimension2D calculateDimension(StringBounder stringBounder, UFont font, String text) {
+	public static Dimension2D calculateDimension(StringBounder stringBounder, UFont font, String text) {
 		final Dimension2D rect = stringBounder.calculateDimension(font, text);
 		double h = rect.getHeight();
 		if (h < 10) {

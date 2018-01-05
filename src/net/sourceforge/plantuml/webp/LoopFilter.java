@@ -551,7 +551,7 @@ public class LoopFilter {
 
 	/* Clamp, then convert signed number back to pixel value. */
 	private static int s2u(int v) {
-		return (int) (c(v) + 128);
+		return c(v) + 128;
 	}
 
 	private static void setSegH(SubBlock rsb, SubBlock lsb, Segment seg, int a) {
@@ -617,6 +617,6 @@ public class LoopFilter {
 
 	/* Convert pixel value (0 <= v <= 255) to an 8-bit signed number. */
 	private static int u2s(int v) {
-		return (int) (v - 128);
+		return v - 128;
 	}
 }

@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Colors {
 
-	private final Map<ColorType, HtmlColor> map = new EnumMap<ColorType, HtmlColor>(ColorType.class);
+	private final Map<ColorType, HtmlColor> map = new EnumMap<>(ColorType.class);
 	private LinkStyle lineStyle = null;
 	private Boolean shadowing = null;
 
@@ -87,7 +87,7 @@ public class Colors {
 			final String s = st.nextToken();
 			final int x = s.indexOf(':');
 			if (x == -1) {
-				if (s.contains(".") == false) {
+				if (!s.contains(".")) {
 					map.put(mainType, set.getColorIfValid(s));
 				}
 			} else {

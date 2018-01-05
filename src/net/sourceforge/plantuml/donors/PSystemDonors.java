@@ -57,11 +57,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImage;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.*;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends AbstractPSystem {
@@ -81,7 +77,7 @@ public class PSystemDonors extends AbstractPSystem {
 			+ "QpGGzff2rVGvMLHSSW00";
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
@@ -115,8 +111,8 @@ public class PSystemDonors extends AbstractPSystem {
 		};
 	}
 
-	public static List<TextBlock> getCols(List<String> lines, final int nbCol, final int reserved) throws IOException {
-		final List<TextBlock> result = new ArrayList<TextBlock>();
+	public static List<TextBlock> getCols(List<String> lines, final int nbCol, final int reserved) {
+		final List<TextBlock> result = new ArrayList<>();
 		final int maxLine = (lines.size() + (nbCol - 1) + reserved) / nbCol;
 		for (int i = 0; i < lines.size(); i += maxLine) {
 			final List<String> current = lines.subList(i, Math.min(lines.size(), i + maxLine));
@@ -126,7 +122,7 @@ public class PSystemDonors extends AbstractPSystem {
 	}
 
 	private List<String> getDonors() throws IOException {
-		final List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<>();
 		final Transcoder t = new TranscoderImpl(new CompressionBrotli());
 		final String s = t.decode(DONORS).replace('*', '.');
 		final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);

@@ -99,7 +99,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = factory.decorateOut(repeatList.createFtile(factory), endInlinkRendering);
 		tmp = factory.createWhile(swimlane, tmp, test, yes, out, afterEndwhile, color, specialOut);
-		if (getPositionedNotes().size() > 0) {
+		if (!getPositionedNotes().isEmpty()) {
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
 		}
 		if (killed || specialOut != null) {
@@ -112,7 +112,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return parent;
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (testCalled) {
 			this.killed = true;
 			return true;

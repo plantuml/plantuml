@@ -79,10 +79,7 @@ public class InstructionRepeat implements Instruction {
 	}
 
 	private boolean isLastOfTheParent() {
-		if (parent instanceof InstructionList) {
-			return ((InstructionList) parent).getLast() == this;
-		}
-		return false;
+		return parent instanceof InstructionList && ((InstructionList) parent).getLast() == this;
 	}
 
 	public void setBackward(Display label) {
@@ -128,7 +125,7 @@ public class InstructionRepeat implements Instruction {
 		this.testCalled = true;
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		if (testCalled) {
 			this.killed = true;
 			return true;

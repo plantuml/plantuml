@@ -43,15 +43,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -83,9 +75,9 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 class ImageWindow2 extends JFrame {
 
-	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
-	private final static String KEY_ZOOM_FIT = "zoomfit";
-	private final static String KEY_WIDTH_FIT = "widthfit";
+	private static final Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
+	private static final String KEY_ZOOM_FIT = "zoomfit";
+	private static final String KEY_WIDTH_FIT = "widthfit";
 
 	private SimpleLine2 simpleLine2;
 	private final JScrollPane scrollPane;
@@ -104,7 +96,7 @@ class ImageWindow2 extends JFrame {
 
 	private enum SizeMode {
 		FULL_SIZE, ZOOM_FIT, WIDTH_FIT
-	};
+	}
 
 	private SizeMode sizeMode = SizeMode.FULL_SIZE;
 
@@ -405,7 +397,7 @@ class ImageWindow2 extends JFrame {
 	public void refreshImage(boolean external) {
 		final JScrollBar bar1 = scrollPane.getVerticalScrollBar();
 		final JScrollBar bar2 = scrollPane.getHorizontalScrollBar();
-		if (external && isError() == false) {
+		if (external && !isError()) {
 			v1 = bar1.getValue();
 			v2 = bar2.getValue();
 		}
@@ -415,7 +407,7 @@ class ImageWindow2 extends JFrame {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					refreshSimpleLine();
-					if (isError() == false) {
+					if (!isError()) {
 						bar1.setValue(v1);
 						bar2.setValue(v2);
 					}
@@ -462,7 +454,7 @@ class ImageSelection implements Transferable {
 	}
 
 	// Returns image
-	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
 		if (!DataFlavor.imageFlavor.equals(flavor)) {
 			throw new UnsupportedFlavorException(flavor);
 		}

@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.utils.CharHidder;
 public class AtomText implements Atom {
 
 	interface DelayedDouble {
-		public double getDouble(StringBounder stringBounder);
+		double getDouble(StringBounder stringBounder);
 	}
 
 	private static DelayedDouble ZERO = new DelayedDouble() {
@@ -88,7 +88,7 @@ public class AtomText implements Atom {
 		fontConfiguration = fontConfiguration.hyperlink();
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
-			final List<Atom> all = new ArrayList<Atom>();
+			final List<Atom> all = new ArrayList<>();
 			for (CharSequence s : display.as()) {
 				all.add(createAtomText(s.toString(), url, fontConfiguration));
 			}
@@ -101,7 +101,7 @@ public class AtomText implements Atom {
 	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration) {
 		final Pattern p = Pattern.compile(Splitter.openiconPattern);
 		final Matcher m = p.matcher(text);
-		final List<Atom> result = new ArrayList<Atom>();
+		final List<Atom> result = new ArrayList<>();
 
 		while (m.find()) {
 			final String val = m.group(1);
@@ -131,14 +131,19 @@ public class AtomText implements Atom {
 	}
 
 	public static AtomText createHeading(String text, FontConfiguration fontConfiguration, int order) {
-		if (order == 0) {
-			fontConfiguration = fontConfiguration.bigger(4).bold();
-		} else if (order == 1) {
-			fontConfiguration = fontConfiguration.bigger(2).bold();
-		} else if (order == 2) {
-			fontConfiguration = fontConfiguration.bigger(1).bold();
-		} else {
-			fontConfiguration = fontConfiguration.italic();
+		switch (order) {
+			case 0:
+				fontConfiguration = fontConfiguration.bigger(4).bold();
+				break;
+			case 1:
+				fontConfiguration = fontConfiguration.bigger(2).bold();
+				break;
+			case 2:
+				fontConfiguration = fontConfiguration.bigger(1).bold();
+				break;
+			default:
+				fontConfiguration = fontConfiguration.italic();
+				break;
 		}
 		return new AtomText(text, fontConfiguration, null, ZERO, ZERO);
 	}
@@ -198,8 +203,7 @@ public class AtomText implements Atom {
 
 	private double getDescent() {
 		final LineMetrics fm = TextBlockUtils.getLineMetrics(fontConfiguration.getFont(), text);
-		final double descent = fm.getDescent();
-		return descent;
+        return (double) fm.getDescent();
 	}
 
 	public double getFontSize2D() {
@@ -285,7 +289,7 @@ public class AtomText implements Atom {
 
 	public List<AtomText> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
 		final double maxWidth = maxWidthAsString.getMathWidth();
-		final List<AtomText> result = new ArrayList<AtomText>();
+		final List<AtomText> result = new ArrayList<>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();
 		while (st.hasMoreTokens()) {
@@ -294,7 +298,7 @@ public class AtomText implements Atom {
 			if (w > maxWidth) {
 				result.add(new AtomText(currentLine.toString(), fontConfiguration, url, marginLeft, marginRight));
 				currentLine.setLength(0);
-				if (token.startsWith(" ") == false) {
+				if (!token.startsWith(" ")) {
 					currentLine.append(token);
 				}
 			} else {

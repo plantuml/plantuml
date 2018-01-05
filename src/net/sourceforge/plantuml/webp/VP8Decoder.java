@@ -15,7 +15,6 @@
  */
 package net.sourceforge.plantuml.webp;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -58,13 +57,11 @@ public class VP8Decoder {
 		try {
 			out = new FileOutputStream("outagain.raw");
 			for (int y = 0; y < data[0].length; y++)
-				for (int x = 0; x < data.length; x++) {
-					out.write(data[x][y]);
-					out.write(data[x][y]);
-					out.write(data[x][y]);
-				}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+                for (final int[] aData : data) {
+                    out.write(aData[y]);
+                    out.write(aData[y]);
+                    out.write(aData[y]);
+                }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,8 +106,6 @@ public class VP8Decoder {
 
 			}
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -148,8 +143,6 @@ public class VP8Decoder {
 				for (int x = 0; x < (f.getWidth() + 1) / 2; x++) {
 					out.write(vData[x][y]);
 				}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

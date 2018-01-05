@@ -53,7 +53,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> tmp = getDataSource().next();
@@ -71,7 +71,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 
 		final Positionner2 positionner = new Positionner2();
 
-		while (getDataSource().peek(0).getElement().equals("}") == false) {
+		while (!getDataSource().peek(0).getElement().equals("}")) {
 			final Terminated<Element> next = getNextElement();
 			if (isStar(next.getElement())) {
 				positionner.mergeLeft(next.getTerminator());
@@ -85,10 +85,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 	}
 
 	private boolean isStar(Element element) {
-		if (element instanceof ElementText == false) {
-			return false;
-		}
-		return "*".equals(((ElementText) element).getText());
+		return element instanceof ElementText && "*".equals(((ElementText) element).getText());
 	}
 
 	public boolean ready() {
@@ -96,10 +93,7 @@ public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 		if (text.equals("{") || text.equals("{+") || text.equals("{^") || text.equals("{#") || text.equals("{!")
 				|| text.equals("{-")) {
 			final String text1 = getDataSource().peek(1).getElement();
-			if (text1.matches("[NSEW]=|T")) {
-				return false;
-			}
-			return true;
+			return !text1.matches("[NSEW]=|T");
 		}
 		return false;
 	}

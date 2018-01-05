@@ -58,12 +58,12 @@ import net.sourceforge.plantuml.stats.api.Stats;
 
 public class StatsUtils {
 
-	final static Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);
+	static final Preferences prefs = Preferences.userNodeForPackage(StatsUtils.class);
 
 	static ParsedGenerated fullEver;
 
-	static ConcurrentMap<String, ParsedGenerated> byTypeEver = new ConcurrentHashMap<String, ParsedGenerated>();
-	static ConcurrentMap<String, ParsedGenerated> byTypeCurrent = new ConcurrentHashMap<String, ParsedGenerated>();
+	static ConcurrentMap<String, ParsedGenerated> byTypeEver = new ConcurrentHashMap<>();
+	static ConcurrentMap<String, ParsedGenerated> byTypeCurrent = new ConcurrentHashMap<>();
 
 	static FormatCounter formatCounterCurrent = new FormatCounter("currentformat.");
 	static FormatCounter formatCounterEver = new FormatCounter("format.");
@@ -79,7 +79,7 @@ public class StatsUtils {
 				fullEver);
 	}
 
-	private final static int VERSION = 14;
+	private static final int VERSION = 14;
 
 	static {
 		try {
@@ -177,7 +177,7 @@ public class StatsUtils {
 		}
 	}
 
-	static void xmlOutput(Stats stats) throws FileNotFoundException, TransformerException,
+	static void xmlOutput(Stats stats) throws TransformerException,
 			ParserConfigurationException, IOException {
 		OutputStream os = null;
 		try {

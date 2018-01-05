@@ -48,7 +48,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -65,19 +64,19 @@ import net.sourceforge.plantuml.svg.SvgGraphics;
 
 public class FontChecker {
 
-	final private UFont font;
-	private static final Set<String> SQUARRE = new HashSet<String>(Arrays.asList("MI=I=XM=I=IX",
-			"MI=I=XM=I=IXMI=I=XM=I=IX"));
+	private final UFont font;
+	private static final Set<String> SQUARRE = new HashSet<>(Arrays.asList("MI=I=XM=I=IX",
+	                                                                       "MI=I=XM=I=IXMI=I=XM=I=IX"));
 
 	public FontChecker(UFont font) {
 		this.font = font;
 	}
 
 	public boolean isCharOk(char c) {
-		return SQUARRE.contains(getCharDesc(c)) == false;
+		return !SQUARRE.contains(getCharDesc(c));
 	}
 
-	static private String getType(int type, double oldX, double oldY, double x, double y) {
+	private static String getType(int type, double oldX, double oldY, double x, double y) {
 		if (type == PathIterator.SEG_CLOSE) {
 			return "X";
 		}
@@ -109,7 +108,7 @@ public class FontChecker {
 		final PathIterator it = sh.getPathIterator(null);
 		int sum = 0;
 		final StringBuilder result = new StringBuilder();
-		while (it.isDone() == false) {
+		while (!it.isDone()) {
 			final double oldX = current[0];
 			final double oldY = current[1];
 			final int nb = it.currentSegment(current);
@@ -127,7 +126,7 @@ public class FontChecker {
 		final PathIterator it = sh.getPathIterator(null);
 		int sum = 0;
 		final StringBuilder result = new StringBuilder();
-		while (it.isDone() == false) {
+		while (!it.isDone()) {
 			final double oldX = current[0];
 			final double oldY = current[1];
 			final int nb = it.currentSegment(current);
@@ -177,7 +176,7 @@ public class FontChecker {
 				ug = ug.apply(new UChangeColor(HtmlColorUtils.BLACK));
 				ug.draw(new URectangle(dim - 1, dim - 1));
 				if (ug instanceof UGraphic2) {
-					ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
+					ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
 					final UText text = new UText("" + c, FontConfiguration.blackBlueTrue(font));
 					ug.draw(text);
 				}
@@ -218,7 +217,7 @@ public class FontChecker {
 		for (int i = v1; i <= v2; i++) {
 			final char c = (char) i;
 			final boolean ok = fc.isCharOk(c);
-			if (ok == false) {
+			if (!ok) {
 				fc.printChar(pw, c);
 				pw.println("</p>");
 			}

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import java.awt.Font;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,8 +48,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryRadioOn implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryRadioOn(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;
@@ -58,7 +57,7 @@ public class ElementFactoryRadioOn implements ElementFactory {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();

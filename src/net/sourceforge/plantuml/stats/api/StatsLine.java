@@ -39,8 +39,8 @@ import java.util.Collection;
 
 public interface StatsLine {
 
-	public Collection<StatsColumn> getColumnHeaders();
+	Collection<StatsColumn> getColumnHeaders();
 
-	public Object getValue(StatsColumn column);
+	Object getValue(StatsColumn column);
 
 }

@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.ugraphic.sprite.Sprite;
 
 public interface SpriteContainer {
 
-	public Sprite getSprite(String name);
+	Sprite getSprite(String name);
 
-	public boolean useGuillemet();
+	boolean useGuillemet();
 
 }

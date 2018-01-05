@@ -39,6 +39,6 @@ import java.awt.image.BufferedImage;
 
 public interface FlashCodeUtils {
 
-	public BufferedImage exportFlashcode(String s);
+	BufferedImage exportFlashcode(String s);
 
 }

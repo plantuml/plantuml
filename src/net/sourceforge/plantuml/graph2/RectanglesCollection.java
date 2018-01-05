@@ -42,7 +42,7 @@ import java.util.List;
 
 public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 
-	private final List<Rectangle2D.Double> areas = new ArrayList<Rectangle2D.Double>();
+	private final List<Rectangle2D.Double> areas = new ArrayList<>();
 	private final SortedListImpl<Rectangle2D.Double> sortedX1;
 	private final SortedListImpl<Rectangle2D.Double> sortedX2;
 	private final SortedListImpl<Rectangle2D.Double> sortedY1;
@@ -51,26 +51,26 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 	private Rectangle2D.Double max = null;
 
 	public RectanglesCollection() {
-		sortedX1 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) data.x;
-			}
-		});
-		sortedX2 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) (data.x + data.width);
-			}
-		});
-		sortedY1 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) data.y;
-			}
-		});
-		sortedY2 = new SortedListImpl<Rectangle2D.Double>(new Measurer<Rectangle2D.Double>() {
-			public int getMeasure(Rectangle2D.Double data) {
-				return (int) (data.y + data.height);
-			}
-		});
+		sortedX1 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) data.x;
+            }
+        });
+		sortedX2 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) (data.x + data.width);
+            }
+        });
+		sortedY1 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) data.y;
+            }
+        });
+		sortedY2 = new SortedListImpl<>(new Measurer<Rectangle2D.Double>() {
+            public int getMeasure(Rectangle2D.Double data) {
+                return (int) (data.y + data.height);
+            }
+        });
 	}
 
 	public RectanglesCollection(Rectangle2D.Double rect) {
@@ -109,8 +109,8 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 		return intersectSeveral(other, this);
 	}
 
-	static private long TPS1;
-	static private long TPS2;
+	private static long TPS1;
+	private static long TPS2;
 
 	private static boolean intersectSeveral(RectanglesCollection large, RectanglesCollection compact) {
 		assert large.size() >= compact.size();
@@ -130,7 +130,7 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 	private boolean intersectSimple(Rectangle2D.Double rect) {
 		final long start = System.currentTimeMillis();
 		try {
-			if (max == null || max.intersects(rect) == false) {
+			if (max == null || !max.intersects(rect)) {
 				return false;
 			}
 			for (Rectangle2D.Double r : areas) {
@@ -147,30 +147,30 @@ public class RectanglesCollection implements Iterable<Rectangle2D.Double> {
 	private boolean intersectSimpleOld(Rectangle2D.Double rect) {
 		final long start = System.currentTimeMillis();
 		try {
-			if (max == null || max.intersects(rect) == false) {
+			if (max == null || !max.intersects(rect)) {
 				return false;
 			}
 			final List<Rectangle2D.Double> lX1 = sortedX1.lesserOrEquals((int) (rect.x + rect.width));
 			List<Rectangle2D.Double> lmin = lX1;
-			if (lX1.size() == 0) {
+			if (lX1.isEmpty()) {
 				return false;
 			}
 			final List<Rectangle2D.Double> lX2 = sortedX2.biggerOrEquals((int) rect.x);
-			if (lX2.size() == 0) {
+			if (lX2.isEmpty()) {
 				return false;
 			}
 			if (lX2.size() < lmin.size()) {
 				lmin = lX2;
 			}
 			final List<Rectangle2D.Double> lY1 = sortedY1.lesserOrEquals((int) (rect.y + rect.height));
-			if (lY1.size() == 0) {
+			if (lY1.isEmpty()) {
 				return false;
 			}
 			if (lY1.size() < lmin.size()) {
 				lmin = lY1;
 			}
 			final List<Rectangle2D.Double> lY2 = sortedY2.biggerOrEquals((int) rect.y);
-			if (lY2.size() == 0) {
+			if (lY2.isEmpty()) {
 				return false;
 			}
 			if (lY2.size() < lmin.size()) {

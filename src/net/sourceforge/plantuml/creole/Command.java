@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.creole;
 
 public interface Command {
 	
-	public int matchingSize(String line);
+	int matchingSize(String line);
 	
-	public String executeAndGetRemaining(String line, StripeSimple stripe);
+	String executeAndGetRemaining(String line, StripeSimple stripe);
 }

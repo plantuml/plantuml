@@ -152,7 +152,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
 		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
-		if (Display.isNull(link.getLabel()) == false) {
+		if (!Display.isNull(link.getLabel())) {
 			association.setAttribute("name", forXMI(link.getLabel()));
 		}
 
@@ -240,7 +240,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 		return cla;
 	}
 
-	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
+	public void transformerXml(OutputStream os) throws TransformerException {
 		final Source source = new DOMSource(document);
 
 		final Result resultat = new StreamResult(os);

@@ -47,7 +47,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
@@ -58,12 +57,12 @@ import net.sourceforge.plantuml.StringUtils;
 class FtpLoop implements Runnable {
 	enum Mode {
 		ACTIF, PASSIF
-	};
+	}
 
-	final private Socket incoming;
-	final private FtpServer ftpServer;
-	final private BufferedReader br;
-	final private PrintWriter pw;
+    private final Socket incoming;
+	private final FtpServer ftpServer;
+	private final BufferedReader br;
+	private final PrintWriter pw;
 
 	private FtpConnexion connexion;
 	private String ipClient = null;
@@ -103,7 +102,7 @@ class FtpLoop implements Runnable {
 		}
 	}
 
-	private boolean manage(final String cmd) throws UnknownHostException, IOException, InterruptedException {
+	private boolean manage(final String cmd) throws IOException, InterruptedException {
 		final String upper = StringUtils.goUpperCase(cmd);
 		if (upper.startsWith("USER")) {
 			myOut("331 Password required");
@@ -178,7 +177,7 @@ class FtpLoop implements Runnable {
 	private void localLog(String s) {
 	}
 
-	private void retr(final String fileName, Socket soc) throws UnknownHostException, IOException, InterruptedException {
+	private void retr(final String fileName, Socket soc) throws IOException {
 		final OutputStream os = soc.getOutputStream();
 		final byte[] data = connexion.getData(fileName);
 
@@ -191,10 +190,10 @@ class FtpLoop implements Runnable {
 		myOut("226 Transfer complete.");
 	}
 
-	private void retrPassif(final String s) throws UnknownHostException, IOException, InterruptedException {
+	private void retrPassif(final String s) throws IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
-		if (connexion.willExist(fileName) == false) {
+		if (!connexion.willExist(fileName)) {
 			myOut("550 No such file.");
 			return;
 		}
@@ -215,10 +214,10 @@ class FtpLoop implements Runnable {
 		} while (true);
 	}
 
-	private void retrActif(final String s) throws UnknownHostException, IOException, InterruptedException {
+	private void retrActif(final String s) throws IOException, InterruptedException {
 		String fileName = s.substring("STOR ".length());
 		fileName = removeStartingsSlash(fileName);
-		if (connexion.willExist(fileName) == false) {
+		if (!connexion.willExist(fileName)) {
 			myOut("550 No such file.");
 			return;
 		}
@@ -251,7 +250,7 @@ class FtpLoop implements Runnable {
 		return fileName;
 	}
 
-	private void stor(String fileName, Socket socket) throws UnknownHostException, IOException {
+	private void stor(String fileName, Socket socket) throws IOException {
 		final InputStream is = socket.getInputStream();
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		FileUtils.copyToStream(is, baos);
@@ -276,13 +275,13 @@ class FtpLoop implements Runnable {
 		}
 	}
 
-	private void listActif() throws UnknownHostException, IOException {
+	private void listActif() throws IOException {
 		myOut("150 Opening ASCII mode data");
 		final Socket soc = new Socket(ipClient, port);
 		list(soc);
 	}
 
-	private void listPassif() throws UnknownHostException, IOException {
+	private void listPassif() throws IOException {
 		myOut("150 Opening ASCII mode data");
 		final ServerSocket ss = new ServerSocket(port);
 		final Socket incoming = ss.accept();
@@ -293,7 +292,7 @@ class FtpLoop implements Runnable {
 	private void list(final Socket soc) throws IOException {
 		final PrintWriter listing = new PrintWriter(soc.getOutputStream(), true);
 		final Collection<String> files = connexion.getFiles();
-		if (files.size() > 0) {
+		if (!files.isEmpty()) {
 			int total = 0;
 			for (String n : files) {
 				total += (connexion.getSize(n) + 511) / 512;

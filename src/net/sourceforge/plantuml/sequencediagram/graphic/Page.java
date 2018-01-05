@@ -94,7 +94,7 @@ public final class Page {
 	}
 
 	public double getSignatureRelativePosition() {
-		if (displaySignature() == false) {
+		if (!displaySignature()) {
 			return -1;
 		}
 		return getTailRelativePosition() + tailHeight;

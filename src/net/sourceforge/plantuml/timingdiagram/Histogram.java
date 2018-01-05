@@ -63,10 +63,10 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Histogram implements TimeDrawing {
 
-	private final List<ChangeState> changes = new ArrayList<ChangeState>();
-	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
+	private final List<ChangeState> changes = new ArrayList<>();
+	private final List<TimeConstraint> constraints = new ArrayList<>();
 
-	private List<String> allStates = new ArrayList<String>();
+	private List<String> allStates = new ArrayList<>();
 	private final double stepHeight = 20;
 
 	private final ISkinParam skinParam;
@@ -81,7 +81,7 @@ public class Histogram implements TimeDrawing {
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
 		final List<String> states = getStatesAt(tick);
-		if (states.size() == 0) {
+		if (states.isEmpty()) {
 			return null;
 		}
 		if (states.size() == 1) {
@@ -100,7 +100,7 @@ public class Histogram implements TimeDrawing {
 	}
 
 	private List<String> getStatesAt(TimeTick tick) {
-		if (changes.size() == 0) {
+		if (changes.isEmpty()) {
 			return Collections.emptyList();
 		}
 		for (int i = 0; i < changes.size(); i++) {
@@ -122,7 +122,7 @@ public class Histogram implements TimeDrawing {
 
 	public void addChange(ChangeState change) {
 		final String state = change.getState();
-		if (allStates.contains(state) == false) {
+		if (!allStates.contains(state)) {
 			allStates.add(state);
 		}
 		changes.add(change);
@@ -145,7 +145,7 @@ public class Histogram implements TimeDrawing {
 	public void drawU(UGraphic ug) {
 		ug = getContext().apply(ug);
 		final UTranslate deltaY = new UTranslate(0, getFullDeltaY());
-		if (changes.size() == 0) {
+		if (changes.isEmpty()) {
 			return;
 		}
 		if (initialState != null) {

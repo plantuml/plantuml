@@ -42,7 +42,7 @@ import java.util.List;
 public class Cell {
 
 	private Placeable data;
-	private final List<Placeable> destinations = new ArrayList<Placeable>();
+	private final List<Placeable> destinations = new ArrayList<>();
 
 	public final Placeable getData() {
 		return data;
@@ -62,7 +62,7 @@ public class Cell {
 
 	public void addConnectionTo2(Placeable other) {
 		// Should be an assert
-		if (other instanceof BpmElement == false) {
+		if (!(other instanceof BpmElement)) {
 			throw new IllegalArgumentException();
 		}
 		this.destinations.add(other);

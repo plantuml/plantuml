@@ -74,7 +74,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (getSwimlaneIn() != null) {
 			result.add(getSwimlaneIn());
 		}

@@ -63,7 +63,7 @@ public class CrossingSimple {
 	}
 
 	public List<Point2D> intersection() {
-		final List<Point2D> result = new ArrayList<Point2D>();
+		final List<Point2D> result = new ArrayList<>();
 		final double delta = pow2(radius * line.getDr()) - pow2(line.getDiscriminant());
 
 		if (delta < 0) {

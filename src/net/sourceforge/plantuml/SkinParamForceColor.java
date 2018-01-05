@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamForceColor extends SkinParamDelegator {
 
-	final private ColorParam colorParam;;
-	final private HtmlColor color;
+	private final ColorParam colorParam;
+    private final HtmlColor color;
 
 	public SkinParamForceColor(ISkinParam skinParam, ColorParam colorParam, HtmlColor color) {
 		super(skinParam);

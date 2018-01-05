@@ -46,47 +46,47 @@ import net.sourceforge.plantuml.graphic.USymbol;
 
 public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, LineConfigurable {
 
-	public Code getCode();
+	Code getCode();
 
-	public LongCode getLongCode();
+	LongCode getLongCode();
 
-	public USymbol getUSymbol();
+	USymbol getUSymbol();
 
-	public void setUSymbol(USymbol symbol);
+	void setUSymbol(USymbol symbol);
 
-	public LeafType getLeafType();
+	LeafType getLeafType();
 
-	public Display getDisplay();
+	Display getDisplay();
 
-	public IGroup getParentContainer();
+	IGroup getParentContainer();
 
-	public void setDisplay(Display display);
+	void setDisplay(Display display);
 
-	public String getUid();
+	String getUid();
 
-	public Url getUrl99();
+	Url getUrl99();
 
-	public Stereotype getStereotype();
+	Stereotype getStereotype();
 
-	public void setStereotype(Stereotype stereotype);
+	void setStereotype(Stereotype stereotype);
 
-	public Bodier getBodier();
+	Bodier getBodier();
 
-	public void addUrl(Url url);
+	void addUrl(Url url);
 
-	public boolean isGroup();
+	boolean isGroup();
 
-	public boolean hasUrl();
+	boolean hasUrl();
 
-	public int getHectorLayer();
+	int getHectorLayer();
 
-	public void setHectorLayer(int layer);
+	void setHectorLayer(int layer);
 
-	public int getRawLayout();
+	int getRawLayout();
 
-	public void putTip(String member, Display display);
+	void putTip(String member, Display display);
 
-	public Map<String, Display> getTips();
+	Map<String, Display> getTips();
 
-	public void setRemoved(boolean removed);
+	void setRemoved(boolean removed);
 }

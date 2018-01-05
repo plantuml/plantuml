@@ -69,9 +69,9 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 		this.created.set(now);
 		this.modified.set(now);
 		this.comment = " ";
-	};
+	}
 
-	@Override
+    @Override
 	public void addValue(long v) {
 		super.addValue(v);
 		this.modified.set(System.currentTimeMillis());
@@ -90,7 +90,7 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 
 	public static NumberAnalyzedDated load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			Log.info("Cannot load " + name);
 			return null;
 		}
@@ -108,19 +108,19 @@ public class NumberAnalyzedDated extends NumberAnalyzed {
 		}
 	}
 
-	final public long getCreationTime() {
+	public final long getCreationTime() {
 		return created.get();
 	}
 
-	final public long getModificationTime() {
+	public final long getModificationTime() {
 		return modified.get();
 	}
 
-	final public synchronized String getComment() {
+	public final synchronized String getComment() {
 		return comment;
 	}
 
-	final public synchronized void setComment(String comment) {
+	public final synchronized void setComment(String comment) {
 		this.comment = comment;
 	}
 

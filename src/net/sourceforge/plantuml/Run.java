@@ -152,7 +152,7 @@ public class Run {
 				final double duration = (System.currentTimeMillis() - start2) / 1000.0;
 				Log.error("Check Duration = " + duration + " seconds");
 			}
-			if (error == false) {
+			if (!error) {
 				error = manageAllFiles(option);
 			}
 			forceQuit = true;
@@ -181,7 +181,7 @@ public class Run {
 
 	private static String commandLine = "";
 
-	public static final String getCommandLine() {
+	public static String getCommandLine() {
 		return commandLine;
 	}
 
@@ -228,7 +228,7 @@ public class Run {
 
 	private static String getSpriteName(File f) {
 		final String s = getSpriteNameInternal(f);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return "test";
 		}
 		return s;
@@ -310,12 +310,12 @@ public class Run {
 	}
 
 	private static boolean processArgs(Option option) throws IOException, InterruptedException {
-		if (option.isDecodeurl() == false && option.getNbThreads() > 1 && option.isCheckOnly() == false
-				&& OptionFlags.getInstance().isExtractFromMetadata() == false) {
+		if (!option.isDecodeurl() && option.getNbThreads() > 1 && !option.isCheckOnly()
+				&& !OptionFlags.getInstance().isExtractFromMetadata()) {
 			return multithread(option);
 		}
 		boolean errorGlobal = false;
-		final List<File> files = new ArrayList<File>();
+		final List<File> files = new ArrayList<>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
 				final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
@@ -365,10 +365,8 @@ public class Run {
 							}
 						} catch (IOException e) {
 							e.printStackTrace();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
 						}
-						incDone(errors.get());
+                        incDone(errors.get());
 					}
 				});
 			}
@@ -388,7 +386,7 @@ public class Run {
 		ProgressBar.incTotal(nb);
 	}
 
-	private static boolean manageFileInternal(File f, Option option) throws IOException, InterruptedException {
+	private static boolean manageFileInternal(File f, Option option) throws IOException {
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
 			System.out.println("------------------------");
 			System.out.println(f);

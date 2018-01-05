@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemWelcome extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private final GraphicPosition position;
 
 	public PSystemWelcome(GraphicPosition position) {
@@ -81,7 +81,7 @@ public class PSystemWelcome extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
@@ -91,7 +91,7 @@ public class PSystemWelcome extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	public TextBlockBackcolored getGraphicStrings() throws IOException {
+	public TextBlockBackcolored getGraphicStrings() {
 		if (position != null) {
 			return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(), position);
 		}

@@ -44,6 +44,6 @@ import net.sourceforge.plantuml.core.ImageData;
 
 public interface CucaDiagramFileMaker {
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException;
 }

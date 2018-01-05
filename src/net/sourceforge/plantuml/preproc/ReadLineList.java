@@ -56,7 +56,7 @@ public class ReadLineList implements ReadLine {
 	}
 
 	public CharSequence2 readLine() {
-		if (iterator.hasNext() == false) {
+		if (!iterator.hasNext()) {
 			return null;
 		}
 		return new CharSequence2Impl(iterator.next(), location);

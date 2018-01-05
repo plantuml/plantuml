@@ -42,7 +42,7 @@ import java.util.List;
 public class SmartKeyboard {
 
 	private final Keyboard keyboard;
-	private final List<String> history = new ArrayList<String>();
+	private final List<String> history = new ArrayList<>();
 
 	public SmartKeyboard(Keyboard keyboard) {
 		this.keyboard = keyboard;
@@ -57,7 +57,7 @@ public class SmartKeyboard {
 
 	public int inputInt(Screen screen) throws NoInputException {
 		final String s = input(screen);
-		if (s.matches("\\d+") == false) {
+		if (!s.matches("\\d+")) {
 			screen.print("Please enter a valid number instead of " + s);
 			throw new NoInputException();
 		}

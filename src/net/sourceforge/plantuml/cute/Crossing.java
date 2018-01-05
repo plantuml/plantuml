@@ -52,7 +52,7 @@ public class Crossing {
 	}
 
 	public List<Point2D> intersection() {
-		final List<Point2D> result = new ArrayList<Point2D>();
+		final List<Point2D> result = new ArrayList<>();
 
 		final UTranslate tr = new UTranslate(balloon.getCenter());
 		final UTranslate trInverse = tr.reverse();

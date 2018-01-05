@@ -85,7 +85,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 			if (stringBounder == null) {
 				throw new IllegalStateException();
 			}
-			this.lines2 = new ArrayList<Line>();
+			this.lines2 = new ArrayList<>();
 			for (CharSequence s : texts) {
 				if (s instanceof Stereotype) {
 					lines2.addAll(createLinesForStereotype(
@@ -113,7 +113,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 				if (w > maxMessageSize) {
 					addSingleLineNoSpace(currentLine.toString());
 					currentLine.setLength(0);
-					if (token.startsWith(" ") == false) {
+					if (!token.startsWith(" ")) {
 						currentLine.append(token);
 					}
 				} else {
@@ -141,7 +141,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 	}
 
 	private void addSingleLineNoSpace(String s) {
-		if (s.length() == 0 || MyPattern.mtches(s, "^[%s]*$ ")) {
+		if (s.isEmpty() || MyPattern.mtches(s, "^[%s]*$ ")) {
 			return;
 		}
 		lines2.add(new SingleLine(s, fontConfiguration, horizontalAlignment, spriteContainer));
@@ -159,7 +159,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 	private List<SingleLine> createLinesForStereotype(FontConfiguration fontConfiguration, Stereotype s,
 			HorizontalAlignment horizontalAlignment, SpriteContainer spriteContainer) {
 		assert s.getLabel(false) != null;
-		final List<SingleLine> result = new ArrayList<SingleLine>();
+		final List<SingleLine> result = new ArrayList<>();
 		for (String st : s.getLabels(spriteContainer.useGuillemet())) {
 			result.add(new SingleLine(st, fontConfiguration, horizontalAlignment, spriteContainer));
 		}
@@ -192,8 +192,7 @@ public class TextBlockSimple extends AbstractTextBlock implements TextBlock {
 				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
 				deltaX = diff / 2.0;
 			} else if (lineHorizontalAlignment == HorizontalAlignment.RIGHT) {
-				final double diff = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
-				deltaX = diff;
+                deltaX = dimText.getWidth() - line.calculateDimension(ug.getStringBounder()).getWidth();
 			}
 			line.drawU(ug.apply(new UTranslate(deltaX, y)));
 			y += line.calculateDimension(ug.getStringBounder()).getHeight();

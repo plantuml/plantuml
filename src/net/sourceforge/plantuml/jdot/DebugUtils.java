@@ -110,23 +110,19 @@ public class DebugUtils {
 	}
 
 	public static String pointftoString(__struct__<pointf> point) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("(");
-		sb.append(point.getDouble("x"));
-		sb.append(" ; ");
-		sb.append(point.getDouble("y"));
-		sb.append(")");
-		return sb.toString();
+		return "(" +
+			point.getDouble("x") +
+			" ; " +
+			point.getDouble("y") +
+			")";
 
 	}
 
 	public static String pointftoString(__ptr__ point) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("(");
-		sb.append(point.getDouble("x"));
-		sb.append(" ; ");
-		sb.append(point.getDouble("y"));
-		sb.append(")");
-		return sb.toString();
+		return "(" +
+			point.getDouble("x") +
+			" ; " +
+			point.getDouble("y") +
+			")";
 	}
 }

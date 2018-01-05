@@ -40,8 +40,8 @@ import java.awt.geom.Point2D;
 
 public interface Positionable extends Moveable {
 
-	public Dimension2D getSize();
+	Dimension2D getSize();
 
-	public Point2D getPosition();
+	Point2D getPosition();
 
 }

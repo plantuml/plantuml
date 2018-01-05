@@ -77,17 +77,13 @@ public class Grid2 {
 	}
 
 	private boolean drawHorizontal() {
-		if (strategy == TableStrategy.DRAW_HORIZONTAL || strategy == TableStrategy.DRAW_ALL) {
-			return true;
-		}
-		return false;
+		return strategy == TableStrategy.DRAW_HORIZONTAL
+			|| strategy == TableStrategy.DRAW_ALL;
 	}
 
 	private boolean drawVertical() {
-		if (strategy == TableStrategy.DRAW_VERTICAL || strategy == TableStrategy.DRAW_ALL) {
-			return true;
-		}
-		return false;
+		return strategy == TableStrategy.DRAW_VERTICAL
+			|| strategy == TableStrategy.DRAW_ALL;
 	}
 
 }

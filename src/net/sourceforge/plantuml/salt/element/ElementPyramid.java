@@ -36,11 +36,7 @@
 package net.sourceforge.plantuml.salt.element;
 
 import java.awt.geom.Dimension2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
@@ -63,7 +59,7 @@ public class ElementPyramid extends AbstractElement {
 	private final TextBlock title;
 	private final TableStrategy tableStrategy;
 	private final Map<Element, Cell> positions1;
-	private final Map<Cell, Element> positions2 = new HashMap<Cell, Element>();
+	private final Map<Cell, Element> positions2 = new HashMap<>();
 
 	private double rowsStart[];
 	private double colsStart[];
@@ -130,7 +126,7 @@ public class ElementPyramid extends AbstractElement {
 			rowsStart[i] = titleHeight / 2;
 		}
 		colsStart = new double[cols + 1];
-		final List<Cell> all = new ArrayList<Cell>(positions1.values());
+		final List<Cell> all = new ArrayList<>(positions1.values());
 		Collections.sort(all, new LeftFirst());
 		for (Cell cell : all) {
 			final Element elt = positions2.get(cell);

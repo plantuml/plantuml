@@ -189,9 +189,8 @@ public class ImageBuilder {
 		if (MAX_PRICE == 0) {
 			return 0;
 		}
-		final int price = Math.min(MAX_PRICE, ((int) (dim.getHeight() * dpiFactor))
-				* ((int) (dim.getWidth() * dpiFactor)));
-		return price;
+        return Math.min(MAX_PRICE, ((int) (dim.getHeight() * dpiFactor))
+                * ((int) (dim.getWidth() * dpiFactor)));
 	}
 
 	private Semaphore getSemaphore(int price) {
@@ -252,7 +251,7 @@ public class ImageBuilder {
 
 			if (ug instanceof UGraphicG2d) {
 				final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
-				if (urls.size() > 0) {
+				if (!urls.isEmpty()) {
 					final CMapData cmap = CMapData.cmapString(urls, dpiFactor);
 					return new ImageDataComplex(dim, cmap, warningOrError);
 				}
@@ -273,9 +272,8 @@ public class ImageBuilder {
 	public Dimension2D getFinalDimension(StringBounder stringBounder) {
 		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 		udrawable.drawU(limitFinder);
-		Dimension2D dim = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2 + externalMargin(),
-				limitFinder.getMaxY() + 1 + margin1 + margin2 + externalMargin());
-		return dim;
+        return new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin1 + margin2 + externalMargin(),
+                                     limitFinder.getMaxY() + 1 + margin1 + margin2 + externalMargin());
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
@@ -428,7 +426,7 @@ public class ImageBuilder {
 		final UGraphicG2d ug = new UGraphicG2d(colorMapper, graphics2D, dpiFactor, affineTransforms == null ? null
 				: affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
-		final BufferedImage im = ((UGraphicG2d) ug).getBufferedImage();
+		final BufferedImage im = ug.getBufferedImage();
 		if (mybackcolor instanceof HtmlColorGradient) {
 			ug.apply(new UChangeBackColor(mybackcolor)).draw(new URectangle(im.getWidth(), im.getHeight()));
 		}

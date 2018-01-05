@@ -42,9 +42,9 @@ import java.util.TreeSet;
 
 public class Singularity {
 
-	private final TreeSet<Double> angles = new TreeSet<Double>();
+	private final TreeSet<Double> angles = new TreeSet<>();
 
-	final private Point2DInt center;
+	private final Point2DInt center;
 
 	public Singularity(Point2DInt center) {
 		this.center = center;
@@ -92,7 +92,7 @@ public class Singularity {
 	}
 
 	List<Double> getAngles() {
-		return new ArrayList<Double>(angles);
+		return new ArrayList<>(angles);
 	}
 
 	public boolean crossing(Point2DInt direction1, Point2DInt direction2) {
@@ -119,10 +119,8 @@ public class Singularity {
 			last = current;
 		}
 		final double first = angles.first();
-		if ((angle1 <= first || angle1 >= last) && (angle2 <= first || angle2 >= last)) {
-			return false;
-		}
-		return true;
+		return (!(angle1 <= first) && !(angle1 >= last))
+			|| (!(angle2 <= first) && !(angle2 >= last));
 	}
 
 	private boolean isBetween(double test, double v1, double v2) {
@@ -139,10 +137,10 @@ public class Singularity {
 	}
 
 	public List<Neighborhood> getNeighborhoods() {
-		if (angles.size() == 0) {
+		if (angles.isEmpty()) {
 			return Collections.singletonList(new Neighborhood(center));
 		}
-		final List<Neighborhood> result = new ArrayList<Neighborhood>();
+		final List<Neighborhood> result = new ArrayList<>();
 		double last = angles.last();
 		for (Double currentAngle : angles) {
 			result.add(new Neighborhood(center, last, currentAngle));

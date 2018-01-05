@@ -44,9 +44,9 @@ import java.util.Map;
 
 public class Heap {
 
-	private final Map<String, ANode> nodes = new LinkedHashMap<String, ANode>();
-	private final Map<ANode, LinkedHashMap<ANode, ALink>> directChildren = new LinkedHashMap<ANode, LinkedHashMap<ANode, ALink>>();
-	private final List<ALink> links = new ArrayList<ALink>();
+	private final Map<String, ANode> nodes = new LinkedHashMap<>();
+	private final Map<ANode, LinkedHashMap<ANode, ALink>> directChildren = new LinkedHashMap<>();
+	private final List<ALink> links = new ArrayList<>();
 
 	public boolean isEmpty() {
 		if (links.isEmpty()) {
@@ -62,9 +62,9 @@ public class Heap {
 		assert this.nodes.values().contains(under);
 		assert otherHeap.nodes.values().contains(otherRoot);
 		assert otherHeap.directChildren.keySet().contains(otherRoot);
-		assert this.nodes.values().contains(otherRoot) == false;
-		assert this.directChildren.keySet().contains(otherRoot) == false;
-		assert otherHeap.directChildren.keySet().contains(under) == false;
+		assert !this.nodes.values().contains(otherRoot);
+		assert !this.directChildren.keySet().contains(otherRoot);
+		assert !otherHeap.directChildren.keySet().contains(under);
 		final int oldSize = this.nodes.size();
 		assert oldSize == this.directChildren.size();
 		this.nodes.putAll(otherHeap.nodes);
@@ -185,15 +185,15 @@ public class Heap {
 	}
 
 	public List<ANode> getNodes() {
-		return Collections.unmodifiableList(new ArrayList<ANode>(nodes.values()));
+		return Collections.unmodifiableList(new ArrayList<>(nodes.values()));
 	}
 
 	HashSet<ANode> getAllChildren(ANode n) {
-		final HashSet<ANode> result = new HashSet<ANode>(directChildren.get(n).keySet());
-		int size = 0;
+		final HashSet<ANode> result = new HashSet<>(directChildren.get(n).keySet());
+		int size;
 		do {
 			size = result.size();
-			for (ANode other : new HashSet<ANode>(result)) {
+			for (ANode other : new HashSet<>(result)) {
 				result.addAll(getAllChildren(other));
 			}
 		} while (result.size() != size);
@@ -225,10 +225,10 @@ public class Heap {
 	}
 
 	private void addUnderMe(final ANode n1, final ANode n2, final ALinkImpl link) {
-		assert getAllChildren(n2).contains(n1) == false;
+		assert !getAllChildren(n2).contains(n1);
 		directChildren.get(n1).put(n2, link);
 		assert getAllChildren(n1).contains(n2);
-		assert getAllChildren(n2).contains(n1) == false;
+		assert !getAllChildren(n2).contains(n1);
 	}
 
 	public int getRowMax() {

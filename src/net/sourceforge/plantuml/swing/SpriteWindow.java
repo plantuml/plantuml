@@ -134,7 +134,7 @@ public class SpriteWindow extends JFrame {
 	private String last;
 
 	private void printData(final String s) {
-		if (s.equals(last) == false) {
+		if (!s.equals(last)) {
 			area.setText(s);
 			last = s;
 		}
@@ -145,16 +145,13 @@ public class SpriteWindow extends JFrame {
 
 		try {
 			if (t != null && t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-				final BufferedImage text = (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
-				return text;
+                return (BufferedImage) t.getTransferData(DataFlavor.imageFlavor);
 			}
 
-		} catch (UnsupportedFlavorException e) {
-			Log.error(e.toString());
-		} catch (IOException e) {
+		} catch (UnsupportedFlavorException | IOException e) {
 			Log.error(e.toString());
 		}
-		return null;
+        return null;
 	}
 
 	public static void main(String[] args) {

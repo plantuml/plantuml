@@ -57,7 +57,7 @@ public class CreoleConverter {
 	}
 
 	public List<String> toCreole() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add("<b><size:16>Statistics</b>");
 		printTableCreole(result, stats.getLastSessions());
 		result.add(" ");
@@ -99,10 +99,10 @@ public class CreoleConverter {
 				result.append("<b>");
 			}
 			if (v instanceof Long) {
-				result.append(String.format("%,d", v));
+				result.append(v);
 			} else if (v instanceof Date) {
 				result.append(formatter.format(v));
-			} else if (v == null || v.toString().length() == 0) {
+			} else if (v == null || v.toString().isEmpty()) {
 				result.append(" ");
 			} else {
 				result.append(v.toString());

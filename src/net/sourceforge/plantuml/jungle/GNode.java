@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 public class GNode {
 
 	private final Display display;
-	private final List<GNode> children = new ArrayList<GNode>();
+	private final List<GNode> children = new ArrayList<>();
 
 	public GNode(Display display) {
 		this.display = display;

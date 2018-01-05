@@ -75,13 +75,13 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageObject extends AbstractEntityImage implements Stencil {
 
-	final private TextBlock name;
-	final private TextBlock stereo;
-	final private TextBlock fields;
-	final private Url url;
-	final private double roundCorner;
+	private final TextBlock name;
+	private final TextBlock stereo;
+	private final TextBlock fields;
+	private final Url url;
+	private final double roundCorner;
 
-	final private LineConfigurable lineConfig;
+	private final LineConfigurable lineConfig;
 
 	public EntityImageObject(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
@@ -92,7 +92,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
 		if (stereotype == null || stereotype.getLabel(false) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				|| !portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			this.stereo = null;
 		} else {
 			this.stereo = Display.create(stereotype.getLabels(skinParam.useGuillemet())).create(
@@ -103,7 +103,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		// final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 
-		if (entity.getBodier().getFieldsToDisplay().size() == 0) {
+		if (entity.getBodier().getFieldsToDisplay().isEmpty()) {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
 			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, showFields,
@@ -124,7 +124,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		return new Dimension2DDouble(width, height);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimTitle = getTitleDimension(stringBounder);
@@ -193,9 +193,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		final Dimension2D nameDim = name.calculateDimension(stringBounder);
 		final Dimension2D stereoDim = stereo == null ? new Dimension2DDouble(0, 0) : stereo
 				.calculateDimension(stringBounder);
-		final Dimension2D nameAndStereo = new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
-				nameDim.getHeight() + stereoDim.getHeight());
-		return nameAndStereo;
+        return new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
+                                     nameDim.getHeight() + stereoDim.getHeight());
 	}
 
 	public ShapeType getShapeType() {

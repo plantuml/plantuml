@@ -66,7 +66,7 @@ public class SyntaxChecker {
 		OptionFlags.getInstance().setQuiet(true);
 		final SyntaxResult result = new SyntaxResult();
 
-		if (source.startsWith("@startuml\n") == false) {
+		if (!source.startsWith("@startuml\n")) {
 			result.setError(true);
 			result.setLineLocation(new LineLocationImpl(null, null).oneLineRead());
 			// result.setErrorLinePosition(0);
@@ -74,7 +74,7 @@ public class SyntaxChecker {
 			result.setSuggest(Arrays.asList("Did you mean:", "@startuml"));
 			return result;
 		}
-		if (source.endsWith("@enduml\n") == false && source.endsWith("@enduml") == false) {
+		if (!source.endsWith("@enduml\n") && !source.endsWith("@enduml")) {
 			result.setError(true);
 			result.setLineLocation(lastLineNumber2(source));
 			// result.setErrorLinePosition(lastLineNumber(source));
@@ -86,7 +86,7 @@ public class SyntaxChecker {
 				Collections.<String> emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			result.setError(true);
 			result.setLineLocation(lastLineNumber2(source));
 			// result.setErrorLinePosition(lastLineNumber(source));
@@ -121,7 +121,7 @@ public class SyntaxChecker {
 				Collections.<String> emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			result.setError(true);
 			result.setLineLocation(lastLineNumber2(source));
 			result.addErrorText("No @enduml found");

@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 
 public final class Message extends AbstractMessage {
 
-	final private Participant p1;
-	final private Participant p2;
+	private final Participant p1;
+	private final Participant p2;
 
 	public Message(Participant p1, Participant p2, Display label, ArrowConfiguration arrowConfiguration,
 			String messageNumber) {

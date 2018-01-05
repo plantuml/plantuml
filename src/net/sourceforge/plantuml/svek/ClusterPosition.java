@@ -183,10 +183,9 @@ public class ClusterPosition {
 	}
 
 	public boolean isPointJustUpper(Point2D pt) {
-		if (pt.getX() >= minX && pt.getX() <= maxX && pt.getY() <= minY) {
-			return true;
-		}
-		return false;
+		return pt.getX() >= minX
+			&& pt.getX() <= maxX
+			&& pt.getY() <= minY;
 	}
 
 	public Side getClosestSide(Point2D pt) {

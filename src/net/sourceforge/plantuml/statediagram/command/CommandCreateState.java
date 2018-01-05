@@ -102,7 +102,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		}
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		final LeafType type = getTypeFromStereotype(stereotype);
-		if (diagram.checkConcurrentStateOk(code) == false) {
+		if (!diagram.checkConcurrentStateOk(code)) {
 			return CommandExecutionResult.error("The state " + code.getFullName()
 					+ " has been created in a concurrent state : it cannot be used here.");
 		}

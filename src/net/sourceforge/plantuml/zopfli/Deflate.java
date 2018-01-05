@@ -20,7 +20,7 @@ package net.sourceforge.plantuml.zopfli;
 
 class Deflate {
 
-  static enum BlockType {
+  enum BlockType {
     DYNAMIC,
     FIXED
   }
@@ -534,13 +534,17 @@ class Deflate {
     for (int i = 0; i < rleSize; i++) {
       int symbol = clSymbols[rle[i]];
       output.addHuffmanBits(symbol, clCl[rle[i]]);
-      if (rle[i] == 16) {
-        output.addBits(rleBits[i], 2);
-      } else if (rle[i] == 17) {
-        output.addBits(rleBits[i], 3);
-      } else if (rle[i] == 18) {
-        output.addBits(rleBits[i], 7);
-      }
+        switch (rle[i]) {
+            case 16:
+                output.addBits(rleBits[i], 2);
+                break;
+            case 17:
+                output.addBits(rleBits[i], 3);
+                break;
+            case 18:
+                output.addBits(rleBits[i], 7);
+                break;
+        }
     }
   }
 

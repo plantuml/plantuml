@@ -48,8 +48,8 @@ import java.util.List;
 public class MyCurve {
 
 	private final CubicCurve2D.Double curve;
-	private final List<Line2D.Double> lines = new ArrayList<Line2D.Double>();
-	private final List<Line2D.Double> linesForInters = new ArrayList<Line2D.Double>();
+	private final List<Line2D.Double> lines = new ArrayList<>();
+	private final List<Line2D.Double> linesForInters = new ArrayList<>();
 	private Color color = Color.GREEN;
 	private double lenght = 0;
 
@@ -65,7 +65,7 @@ public class MyCurve {
 	}
 
 	private Line2D.Double change(Line2D.Double line, Point2D p1, Point2D p2) {
-		if (line.getP1().equals(p1) == false && line.getP2().equals(p2) == false) {
+		if (!line.getP1().equals(p1) && !line.getP2().equals(p2)) {
 			return line;
 		}
 		final double dx = line.x2 - line.x1;

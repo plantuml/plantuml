@@ -72,7 +72,7 @@ public class Dijkstra {
 
 	static class Vertex implements Comparable<Vertex> {
 		private final Object data;
-		private final List<Edge> adjacencies = new ArrayList<Edge>();
+		private final List<Edge> adjacencies = new ArrayList<>();
 		private double minDistance = Double.POSITIVE_INFINITY;
 		private Vertex previous;
 
@@ -111,7 +111,7 @@ public class Dijkstra {
 		}
 	}
 
-	private final List<Vertex> vertices = new ArrayList<Vertex>();
+	private final List<Vertex> vertices = new ArrayList<>();
 
 	public Vertex addVertex(Object data) {
 		final Vertex v = new Vertex(data);
@@ -121,10 +121,10 @@ public class Dijkstra {
 
 	private void computePaths(Vertex source) {
 		source.minDistance = 0.;
-		final PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
+		final PriorityQueue<Vertex> vertexQueue = new PriorityQueue<>();
 		vertexQueue.add(source);
 
-		while (vertexQueue.isEmpty() == false) {
+		while (!vertexQueue.isEmpty()) {
 			final Vertex u = vertexQueue.poll();
 
 			// Visit each edge exiting u
@@ -145,7 +145,7 @@ public class Dijkstra {
 
 	public List<Vertex> getShortestPathTo(Vertex source, Vertex target) {
 		computePaths(source);
-		final List<Vertex> path = new ArrayList<Vertex>();
+		final List<Vertex> path = new ArrayList<>();
 		for (Vertex vertex = target; vertex != null; vertex = vertex.previous) {
 			path.add(0, vertex);
 		}

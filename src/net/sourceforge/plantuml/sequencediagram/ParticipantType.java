@@ -49,7 +49,7 @@ public enum ParticipantType {
 
 	private final ColorParam background;
 
-	private ParticipantType(ColorParam background) {
+	ParticipantType(ColorParam background) {
 		this.background = background;
 	}
 

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class RowLayout implements UDrawable {
 
-	private final List<TextBlock> all = new ArrayList<TextBlock>();
+	private final List<TextBlock> all = new ArrayList<>();
 
 	public void addLeaf(TextBlock entityImageClass) {
 		this.all.add(entityImageClass);

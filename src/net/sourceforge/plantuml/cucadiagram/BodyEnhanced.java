@@ -35,32 +35,20 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.*;
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.CreoleParser;
+import net.sourceforge.plantuml.graphic.*;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.CreoleParser;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.InnerStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.TextBlockVertical2;
-import net.sourceforge.plantuml.svek.Ports;
-import net.sourceforge.plantuml.svek.WithPorts;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -73,13 +61,13 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final HorizontalAlignment align;
 	private final boolean manageHorizontalLine;
 	private final boolean manageModifier;
-	private final List<Url> urls = new ArrayList<Url>();
+	private final List<Url> urls = new ArrayList<>();
 	private final Stereotype stereotype;
 	private final ILeaf entity;
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
 			Stereotype stereotype, ILeaf entity) {
-		this.rawBody = new ArrayList<String>(rawBody);
+		this.rawBody = new ArrayList<>(rawBody);
 		this.stereotype = stereotype;
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
@@ -96,7 +84,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			Stereotype stereotype, boolean manageHorizontalLine, boolean manageModifier, ILeaf entity) {
 		this.entity = entity;
 		this.stereotype = stereotype;
-		this.rawBody = new ArrayList<String>();
+		this.rawBody = new ArrayList<>();
 		for (CharSequence s : display) {
 			this.rawBody.add(s.toString());
 		}
@@ -133,11 +121,11 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 			return area2;
 		}
 		urls.clear();
-		final List<TextBlock> blocks = new ArrayList<TextBlock>();
+		final List<TextBlock> blocks = new ArrayList<>();
 
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
-		List<Member> members = new ArrayList<Member>();
+		List<Member> members = new ArrayList<>();
 		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {
@@ -145,13 +133,13 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 						stereotype, entity), separator, title));
 				separator = s.charAt(0);
 				title = getTitle(s, skinParam);
-				members = new ArrayList<Member>();
+				members = new ArrayList<>();
 			} else if (CreoleParser.isTreeStart(s)) {
-				if (members.size() > 0) {
+				if (!members.isEmpty()) {
 					blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align,
 							stereotype, entity), separator, title));
 				}
-				members = new ArrayList<Member>();
+				members = new ArrayList<>();
 				final List<String> allTree = buildAllTree(s, it);
 				final TextBlock bloc = Display.create(allTree).create(fontParam.getFontConfiguration(skinParam), align,
 						skinParam, CreoleMode.FULL);
@@ -177,7 +165,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	private static List<String> buildAllTree(String init, ListIterator<String> it) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add(init);
 		while (it.hasNext()) {
 			final String s = it.next();
@@ -193,19 +181,10 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	}
 
 	public static boolean isBlockSeparator(String s) {
-		if (s.startsWith("--") && s.endsWith("--")) {
-			return true;
-		}
-		if (s.startsWith("==") && s.endsWith("==")) {
-			return true;
-		}
-		if (s.startsWith("..") && s.endsWith("..") && s.equals("...") == false) {
-			return true;
-		}
-		if (s.startsWith("__") && s.endsWith("__")) {
-			return true;
-		}
-		return false;
+		return s.startsWith("--") && s.endsWith("--")
+			|| s.startsWith("==") && s.endsWith("==")
+			|| s.startsWith("..") && s.endsWith("..") && !s.equals("...")
+			|| s.startsWith("__") && s.endsWith("__");
 	}
 
 	private TextBlock getTitle(String s, ISkinSimple spriteContainer) {

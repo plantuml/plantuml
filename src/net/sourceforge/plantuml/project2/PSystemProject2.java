@@ -73,29 +73,36 @@ public class PSystemProject2 extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final GanttDiagram2 diagram = new GanttDiagram2(project);
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		if (fileFormat == FileFormat.PNG) {
-			final BufferedImage im = createImage(diagram);
-			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
-		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(new Dimension2DDouble(0, 0),colorMapper, StringUtils.getAsHtml(background), false, 1.0,
-					fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor(), seed());
-			diagram.draw(svg, 0, 0);
-			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
-		} else if (fileFormat == FileFormat.EPS) {
-			final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
-			diagram.draw(eps, 0, 0);
-			os.write(eps.getEPSCode().getBytes());
-		} else if (fileFormat == FileFormat.EPS_TEXT) {
-			final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.WITH_MACRO_AND_TEXT);
-			diagram.draw(eps, 0, 0);
-			os.write(eps.getEPSCode().getBytes());
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (fileFormat) {
+            case PNG:
+                final BufferedImage im = createImage(diagram);
+                PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
+                break;
+            case SVG:
+                final UGraphicSvg svg = new UGraphicSvg(new Dimension2DDouble(0, 0), colorMapper, StringUtils.getAsHtml(background), false, 1.0,
+                        fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor(), seed());
+                diagram.draw(svg, 0, 0);
+                svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
+                break;
+            case EPS: {
+                final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.getDefault2());
+                diagram.draw(eps, 0, 0);
+                os.write(eps.getEPSCode().getBytes());
+                break;
+            }
+            case EPS_TEXT: {
+                final UGraphicEps eps = new UGraphicEps(colorMapper, EpsStrategy.WITH_MACRO_AND_TEXT);
+                diagram.draw(eps, 0, 0);
+                os.write(eps.getEPSCode().getBytes());
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException();
+        }
 		return new ImageDataSimple();
 	}
 

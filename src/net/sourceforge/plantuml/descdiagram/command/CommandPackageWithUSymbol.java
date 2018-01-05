@@ -108,7 +108,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
 		final Code code;
 		final String display;
-		if (codeRaw.length() == 0) {
+		if (codeRaw.isEmpty()) {
 			code = UniqueSequence.getCode("##");
 			display = null;
 		} else {

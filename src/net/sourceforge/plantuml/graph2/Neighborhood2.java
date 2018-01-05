@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.geom.Orientation;
 
 public class Neighborhood2 {
 
-	final private double angle1;
-	final private double angle2;
-	final private Point2D.Double center;
+	private final double angle1;
+	private final double angle2;
+	private final Point2D.Double center;
 
 	public Neighborhood2(Point2D.Double center) {
 		this(center, 0, 0);

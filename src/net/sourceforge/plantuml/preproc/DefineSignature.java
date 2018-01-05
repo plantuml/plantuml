@@ -72,7 +72,7 @@ public class DefineSignature {
 	}
 
 	public List<Variables> getVariationVariables() {
-		final List<Variables> result = new ArrayList<Variables>();
+		final List<Variables> result = new ArrayList<>();
 		final int count = vars.countDefaultValue();
 		for (int i = 0; i <= count; i++) {
 			result.add(vars.removeSomeDefaultValues(i));

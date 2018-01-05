@@ -48,7 +48,7 @@ public enum AlignParam {
 	
 	private final HorizontalAlignment defaultValue;
 	
-	private AlignParam(HorizontalAlignment defaultValue) {
+	AlignParam(HorizontalAlignment defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 

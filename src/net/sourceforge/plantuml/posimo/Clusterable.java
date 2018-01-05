@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.posimo;
 
 public interface Clusterable extends Positionable {
 
-	public Cluster getParent();
+	Cluster getParent();
 
 }

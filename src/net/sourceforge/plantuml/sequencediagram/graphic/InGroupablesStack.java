@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 
 class InGroupablesStack {
 
-	final private List<InGroupableList> inGroupableStack = new ArrayList<InGroupableList>();
+	private final List<InGroupableList> inGroupableStack = new ArrayList<>();
 
 	public void addList(InGroupableList inGroupableList) {
 		for (InGroupableList other : inGroupableStack) {
@@ -65,7 +65,7 @@ class InGroupablesStack {
 	}
 
 	public InGroupableList getTopGroupingStructure() {
-		if (inGroupableStack.size() == 0) {
+		if (inGroupableStack.isEmpty()) {
 			return null;
 		}
 		return inGroupableStack.get(inGroupableStack.size() - 1);

@@ -47,7 +47,7 @@ public class MagicPointsFactory {
 	}
 
 	public static List<Point2D.Double> get(Rectangle2D.Double rect) {
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+		final List<Point2D.Double> result = new ArrayList<>();
 		result.add(new Point2D.Double(rect.x - rect.width, rect.y - rect.height));
 		result.add(new Point2D.Double(rect.x, rect.y - rect.height));
 		result.add(new Point2D.Double(rect.x + rect.width, rect.y - rect.height));
@@ -67,7 +67,7 @@ public class MagicPointsFactory {
 	}
 
 	public static List<Point2D.Double> get(Point2D.Double p1, Point2D.Double p2) {
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+		final List<Point2D.Double> result = new ArrayList<>();
 		result.add(new Point2D.Double(p1.x, p2.y));
 		result.add(new Point2D.Double(p2.x, p1.y));
 		return result;

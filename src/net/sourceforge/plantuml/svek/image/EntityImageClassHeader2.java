@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class EntityImageClassHeader2 extends AbstractEntityImage {
 
-	final private HeaderLayout headerLayout;
+	private final HeaderLayout headerLayout;
 
 	public EntityImageClassHeader2(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
@@ -101,7 +101,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 
 		final TextBlock stereo;
 		if (stereotype == null || stereotype.getLabel(false) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				|| !portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereo = null;
 		} else {
 			stereo = TextBlockUtils.withMargin(
@@ -128,7 +128,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		}
 
 		final TextBlock circledCharacter;
-		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (ILeaf) getEntity())) {
+		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, getEntity())) {
 			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, skinParam), 4, 0, 5, 5);
 		} else {
 			circledCharacter = null;
@@ -186,7 +186,7 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		return headerLayout.getDimension(stringBounder);
 	}
 
-	final public void drawU(UGraphic ug) {
+	public final void drawU(UGraphic ug) {
 		throw new UnsupportedOperationException();
 	}
 

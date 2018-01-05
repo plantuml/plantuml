@@ -35,15 +35,13 @@
  */
 package net.sourceforge.plantuml.code;
 
-import java.io.IOException;
-
 public class StringCompressorNone implements StringCompressor {
 
-	public String compress(String s) throws IOException {
+	public String compress(String s) {
 		return s;
 	}
 
-	public String decompress(String stringAnnoted) throws IOException {
+	public String decompress(String stringAnnoted) {
 		return stringAnnoted;
 	}
 }

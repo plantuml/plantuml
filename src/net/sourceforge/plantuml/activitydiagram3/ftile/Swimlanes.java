@@ -84,10 +84,10 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
-	private final ISkinParam skinParam;;
-	private final Pragma pragma;
+	private final ISkinParam skinParam;
+    private final Pragma pragma;
 
-	private final List<Swimlane> swimlanes = new ArrayList<Swimlane>();
+	private final List<Swimlane> swimlanes = new ArrayList<>();
 	private Swimlane currentSwimlane = null;
 
 	private final Instruction root = new InstructionList();
@@ -124,7 +124,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		if (color != null) {
 			currentSwimlane.setSpecificColorTOBEREMOVED(ColorType.BACK, color);
 		}
-		if (Display.isNull(label) == false) {
+		if (!Display.isNull(label)) {
 			currentSwimlane.setDisplay(label);
 		}
 	}
@@ -172,7 +172,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 	}
 
-	static private final double separationMargin = 10;
+    private static final double separationMargin = 10;
 	private TextBlock full;
 
 	public void drawU(UGraphic ug) {
@@ -232,7 +232,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		// getCollisionDetector(ug, titleHeightTranslate).drawDebug(ug);
 	}
 
-	static private void printDebug(UGraphic ug, SlotSet slot, HtmlColor col, TextBlock full) {
+	private static void printDebug(UGraphic ug, SlotSet slot, HtmlColor col, TextBlock full) {
 		slot.drawDebugX(ug.apply(new UChangeColor(col)).apply(new UChangeBackColor(col)),
 				full.calculateDimension(ug.getStringBounder()).getHeight());
 
@@ -354,8 +354,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 
 			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());
 		}
-		final UTranslate titleHeightTranslate = new UTranslate(0, titlesHeight);
-		return titleHeightTranslate;
+        return new UTranslate(0, titlesHeight);
 	}
 
 	private CollisionDetector getCollisionDetector(UGraphic ug, final UTranslate titleHeightTranslate) {
@@ -387,20 +386,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock {
 		ug.apply(thickness).apply(new UChangeColor(color)).draw(new ULine(0, height));
 	}
 
-	// private Dimension2D cachedDimension;
-
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return getMinMax(stringBounder).getDimension();
-		// if (cachedDimension == null) {
-		// cachedDimension = calculateDimensionSlow(stringBounder);
-		// }
-		// return cachedDimension;
 	}
-
-	// private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
-	// final Dimension2D result = TextBlockUtils.getMinMax(this, stringBounder).getDimension();
-	// return result;
-	// }
 
 	public Instruction getCurrent() {
 		return currentInstruction;

@@ -38,15 +38,12 @@ package net.sourceforge.plantuml.command.regex;
 import java.util.regex.Pattern;
 
 public class RegexOptional extends RegexComposed implements IRegex {
-
 	private final Pattern2 full;
 
 	public RegexOptional(IRegex partial) {
 		super(partial);
-		final StringBuilder sb = new StringBuilder("(?:");
-		sb.append(partial.getPattern());
-		sb.append(")?");
-		this.full = MyPattern.cmpileNockeck(sb.toString(), Pattern.CASE_INSENSITIVE);
+		final String sb = "(?:" + partial.getPattern() + ")?";
+		this.full = MyPattern.cmpileNockeck(sb, Pattern.CASE_INSENSITIVE);
 	}
 
 	@Override

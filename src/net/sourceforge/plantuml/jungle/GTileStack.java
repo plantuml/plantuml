@@ -52,7 +52,7 @@ public class GTileStack extends AbstractTextBlock implements GTile {
 	public GTileStack(List<GTile> tiles, double space) {
 		this.tiles = tiles;
 		this.space = space;
-		if (tiles.size() == 0) {
+		if (tiles.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -69,7 +69,7 @@ public class GTileStack extends AbstractTextBlock implements GTile {
 		double width = 0;
 		double height = 0;
 		double delta = 0;
-		final List<Double> wests = new ArrayList<Double>();
+		final List<Double> wests = new ArrayList<>();
 		for (GTile tile : tiles) {
 			final GTileGeometry dim = tile.calculateDimension(stringBounder);
 			wests.add(delta + dim.getWestPositions().get(0));

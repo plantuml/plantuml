@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 
 public class SkinParamForecolored extends SkinParamDelegator {
 
-	final private HtmlColor forecolor;
+	private final HtmlColor forecolor;
 
 	public SkinParamForecolored(ISkinParam skinParam, HtmlColor forecolor) {
 		super(skinParam);

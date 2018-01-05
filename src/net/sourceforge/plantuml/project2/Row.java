@@ -39,14 +39,14 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface Row {
 
-	public TextBlock asTextBloc(TimeConverter timeConverter);
+	TextBlock asTextBloc(TimeConverter timeConverter);
 
-	public double getMinXwithoutHeader(TimeConverter timeConverter);
+	double getMinXwithoutHeader(TimeConverter timeConverter);
 
-	public double getMaxXwithoutHeader(TimeConverter timeConverter);
+	double getMaxXwithoutHeader(TimeConverter timeConverter);
 
-	public TextBlock header();
+	TextBlock header();
 
-	public double getHeight();
+	double getHeight();
 
 }

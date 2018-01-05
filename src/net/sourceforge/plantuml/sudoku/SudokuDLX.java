@@ -50,7 +50,7 @@ public class SudokuDLX implements ISudoku {
 		if (seed == null) {
 			this.seed = Math.abs(new Random().nextLong());
 		} else {
-			this.seed = Math.abs(seed.longValue());
+			this.seed = Math.abs(seed);
 		}
 		final DLXEngine engine = new DLXEngine(new Random(this.seed));
 		final String s = engine.generate(10000, 100000);

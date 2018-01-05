@@ -29,7 +29,6 @@
 package net.sourceforge.plantuml.api;
 
 import java.util.StringTokenizer;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.prefs.Preferences;
@@ -69,7 +68,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 	}
 
 	public final void save(Preferences prefs) {
-		if (name.length() == 0) {
+		if (name.isEmpty()) {
 			throw new UnsupportedOperationException();
 		}
 		if (saveLock.tryLock())
@@ -111,7 +110,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 
 	public static NumberAnalyzed load(String name, Preferences prefs) {
 		final String value = prefs.get(name + ".saved", "");
-		if (value.length() == 0) {
+		if (value.isEmpty()) {
 			Log.info("Cannot load " + name);
 			return null;
 		}
@@ -143,8 +142,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 	}
 
 	public synchronized INumberAnalyzed getCopyImmutable() {
-		final NumberAnalyzed copy = new NumberAnalyzed(name, nb, sum, min, max, sumOfSquare, sliddingSum);
-		return copy;
+        return new NumberAnalyzed(name, nb, sum, min, max, sumOfSquare, sliddingSum);
 	}
 
 	public synchronized void addValue(long v) {
@@ -188,23 +186,23 @@ public class NumberAnalyzed implements INumberAnalyzed {
 		}
 	}
 
-	synchronized public final long getNb() {
+	public final synchronized long getNb() {
 		return nb;
 	}
 
-	synchronized public final long getSum() {
+	public final synchronized long getSum() {
 		return sum;
 	}
 
-	synchronized public final long getMin() {
+	public final synchronized long getMin() {
 		return min;
 	}
 
-	synchronized public final long getMax() {
+	public final synchronized long getMax() {
 		return max;
 	}
 
-	synchronized public final long getMean() {
+	public final synchronized long getMean() {
 		if (nb == 0) {
 			return 0;
 		}
@@ -227,7 +225,7 @@ public class NumberAnalyzed implements INumberAnalyzed {
 		return Math.round(Math.sqrt(sumOfSquare1 / nb1 - mean * mean));
 	}
 
-	final public String getName() {
+	public final String getName() {
 		return name;
 	}
 

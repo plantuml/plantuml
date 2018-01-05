@@ -83,7 +83,7 @@ public final class CucaDiagramTxtMaker {
 		final Cluster root = new Cluster(null, 0, 0);
 		int uid = 0;
 
-		final Map<IEntity, Block> blocks = new HashMap<IEntity, Block>();
+		final Map<IEntity, Block> blocks = new HashMap<>();
 
 		for (IEntity ent : diagram.getLeafsvalues()) {
 			// printClass(ent);
@@ -97,7 +97,7 @@ public final class CucaDiagramTxtMaker {
 
 		final GraphvizSolverB solver = new GraphvizSolverB();
 
-		final Collection<Path> paths = new ArrayList<Path>();
+		final Collection<Path> paths = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			final Block b1 = blocks.get(link.getEntity1());
 			final Block b2 = blocks.get(link.getEntity2());

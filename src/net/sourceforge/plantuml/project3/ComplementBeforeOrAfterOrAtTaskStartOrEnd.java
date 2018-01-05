@@ -51,7 +51,7 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements ComplementPatt
 		final String position = arg.get("COMPLEMENT" + suffix, 3);
 		final Task task = system.getExistingTask(code);
 		if (task == null) {
-			return Failable.<Complement> error("No such task " + code);
+			return Failable.error("No such task " + code);
 		}
 		final String days = arg.get("COMPLEMENT" + suffix, 0);
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(position));

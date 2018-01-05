@@ -41,14 +41,14 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public interface TimeDrawing extends TimeProjected, UDrawable {
 
-	public double getHeight(StringBounder stringBounder);
+	double getHeight(StringBounder stringBounder);
 
-	public void addChange(ChangeState change);
+	void addChange(ChangeState change);
 
-	public TextBlock getWidthHeader(StringBounder stringBounder);
+	TextBlock getWidthHeader(StringBounder stringBounder);
 
-	public void setInitialState(String initialState, Colors initialColors);
+	void setInitialState(String initialState, Colors initialColors);
 
-	public void addConstraint(TimeConstraint constraint);
+	void addConstraint(TimeConstraint constraint);
 
 }

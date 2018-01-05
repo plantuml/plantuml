@@ -50,11 +50,11 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 @Deprecated
 public class DirWatcher {
 
-	final private File dir;
-	final private Option option;
-	final private String pattern;
+	private final File dir;
+	private final Option option;
+	private final String pattern;
 
-	final private Map<File, FileWatcher> modifieds = new HashMap<File, FileWatcher>();
+	private final Map<File, FileWatcher> modifieds = new HashMap<>();
 
 	public DirWatcher(File dir, Option option, String pattern) {
 		this.dir = dir;
@@ -62,17 +62,17 @@ public class DirWatcher {
 		this.pattern = pattern;
 	}
 
-	public List<GeneratedImage> buildCreatedFiles() throws IOException, InterruptedException {
+	public List<GeneratedImage> buildCreatedFiles() throws IOException {
 		boolean error = false;
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
+		final List<GeneratedImage> result = new ArrayList<>();
 		for (File f : dir.listFiles()) {
 			if (error) {
 				continue;
 			}
-			if (f.isFile() == false) {
+			if (!f.isFile()) {
 				continue;
 			}
-			if (fileToProcess(f.getName()) == false) {
+			if (!fileToProcess(f.getName())) {
 				continue;
 			}
 			final FileWatcher watcher = modifieds.get(f);
@@ -95,12 +95,12 @@ public class DirWatcher {
 		return Collections.unmodifiableList(result);
 	}
 
-	public File getErrorFile() throws IOException, InterruptedException {
+	public File getErrorFile() throws IOException {
 		for (File f : dir.listFiles()) {
-			if (f.isFile() == false) {
+			if (!f.isFile()) {
 				continue;
 			}
-			if (fileToProcess(f.getName()) == false) {
+			if (!fileToProcess(f.getName())) {
 				continue;
 			}
 			final FileWatcher watcher = modifieds.get(f);

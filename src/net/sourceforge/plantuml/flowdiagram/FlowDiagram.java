@@ -78,7 +78,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	private static double SINGLE_SIZE_Y = 35;
 
 	private TilesField field;
-	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<Tile, ActivityBox>();
+	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<>();
 	private Tile lastTile;
 
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
@@ -106,7 +106,6 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		final ActivityBox box = new ActivityBox(newTile, idDest, label);
 		tilesBoxes.put(newTile, box);
 		lastTile = newTile;
-		return;
 	}
 
 	public void linkSimple(TileGeometry orientation, String idDest) {

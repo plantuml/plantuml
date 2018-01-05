@@ -55,8 +55,8 @@ public interface Item {
 
 	List<Item> getChildren();
 
-	public String getCode();
+	String getCode();
 	
-	public boolean isValid();
+	boolean isValid();
 
 }

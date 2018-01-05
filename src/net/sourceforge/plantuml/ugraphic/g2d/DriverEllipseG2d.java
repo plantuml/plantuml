@@ -88,7 +88,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graph
 					DriverRectangleG2d.managePattern(param, g2d);
 					g2d.fill(shape);
 				}
-				if (color != null && color.equals(param.getBackcolor()) == false) {
+				if (color != null && !color.equals(param.getBackcolor())) {
 					DriverRectangleG2d.drawBorder(param, color, mapper, ellipse, shape, g2d, x, y);
 				}
 			}

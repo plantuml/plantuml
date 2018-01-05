@@ -43,7 +43,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class BlocLines implements Iterable<CharSequence> {
@@ -56,7 +55,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	private BlocLines(List<? extends CharSequence> lines) {
-		this.lines = (List<CharSequence>) Collections.unmodifiableList(lines);
+		this.lines = Collections.unmodifiableList(lines);
 	}
 
 	public Display toDisplay() {
@@ -76,7 +75,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines add2(CharSequence s) {
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		copy.add(s);
 		return new BlocLines(copy);
 	}
@@ -94,7 +93,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public CharSequence getFirst499() {
-		if (lines.size()==0) {
+		if (lines.isEmpty()) {
 			return null;
 		}
 		return lines.get(0);
@@ -105,13 +104,13 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines cleanList2(MultilinesStrategy strategy) {
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		strategy.cleanList(copy);
 		return new BlocLines(copy);
 	}
 
 	public BlocLines trim(boolean removeEmptyLines) {
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		for (int i = 0; i < copy.size(); i++) {
 			final CharSequence s = copy.get(i);
 			copy.set(i, StringUtils.trin(s));
@@ -127,10 +126,10 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines removeEmptyColumns() {
-		if (firstColumnRemovable(lines) == false) {
+		if (!firstColumnRemovable(lines)) {
 			return this;
 		}
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		do {
 			for (int i = 0; i < copy.size(); i++) {
 				final CharSequence s = copy.get(i);
@@ -154,7 +153,7 @@ public class BlocLines implements Iterable<CharSequence> {
 				return false;
 			}
 		}
-		return allEmpty == false;
+		return !allEmpty;
 	}
 
 	public char getLastChar() {
@@ -163,10 +162,10 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines removeStartingAndEnding2(String data) {
-		if (lines.size() == 0) {
+		if (lines.isEmpty()) {
 			return this;
 		}
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		copy.set(0, data);
 		final int n = copy.size() - 1;
 		final CharSequence s = copy.get(n);
@@ -187,7 +186,7 @@ public class BlocLines implements Iterable<CharSequence> {
 		if (lines.size() <= referenceLine) {
 			return this;
 		}
-		final List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		final List<CharSequence> copy = new ArrayList<>(lines);
 		final int nbStartingSpace = nbStartingSpace(copy.get(referenceLine));
 		for (int i = referenceLine; i < copy.size(); i++) {
 			final CharSequence s = copy.get(i);
@@ -223,7 +222,7 @@ public class BlocLines implements Iterable<CharSequence> {
 	}
 
 	public BlocLines subExtract(int start, int end) {
-		List<CharSequence> copy = new ArrayList<CharSequence>(lines);
+		List<CharSequence> copy = new ArrayList<>(lines);
 		copy = copy.subList(start, copy.size() - end);
 		return new BlocLines(copy);
 	}

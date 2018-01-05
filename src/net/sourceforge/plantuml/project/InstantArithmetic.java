@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.project;
 
 interface InstantArithmetic {
 
-	public Instant add(Instant i1, Duration duration);
+	Instant add(Instant i1, Duration duration);
 
-	public Instant sub(Instant i1, Duration duration);
+	Instant sub(Instant i1, Duration duration);
 
-	public Duration diff(Instant i1, Instant i2);
+	Duration diff(Instant i1, Instant i2);
 }

@@ -76,7 +76,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 			if (StringUtils.isEmpty(comment)) {
 				comment = "group";
 			} else {
-				final Pattern p = Pattern.compile("^(.*?)\\[(.*)\\]$");
+				final Pattern p = Pattern.compile("^(.*?)\\[(.*)]$");
 				final Matcher m = p.matcher(comment);
 				if (m.find()) {
 					type = m.group(1);
@@ -85,7 +85,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 			}
 		}
 		final boolean result = diagram.grouping(type, comment, groupingType, backColorGeneral, backColorElement);
-		if (result == false) {
+		if (!result) {
 			return CommandExecutionResult.error("Cannot create group");
 		}
 		return CommandExecutionResult.ok();

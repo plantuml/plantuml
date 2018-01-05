@@ -41,8 +41,8 @@ import java.util.List;
 public class BoardCollection {
 
 	static class Entry implements Comparable<Entry> {
-		final private Board board;
-		final private double cost;
+		private final Board board;
+		private final double cost;
 		private boolean explored;
 
 		public Entry(Board b, CostComputer costComputer) {
@@ -71,7 +71,7 @@ public class BoardCollection {
 
 	}
 
-	private final SortedCollection<Entry> all = new SortedCollectionArrayList<Entry>();
+	private final SortedCollection<Entry> all = new SortedCollectionArrayList<>();
 
 	private final CostComputer costComputer;
 
@@ -85,7 +85,7 @@ public class BoardCollection {
 
 	public Board getAndSetExploredSmallest() {
 		for (Entry ent : all) {
-			if (ent.explored == false) {
+			if (!ent.explored) {
 				ent.explored = true;
 				assert costComputer.getCost(ent.board) == ent.cost;
 				// Log.println("Peeking " + ent.cost);
@@ -110,7 +110,7 @@ public class BoardCollection {
 	}
 
 	public List<Double> getCosts() {
-		final List<Double> result = new ArrayList<Double>();
+		final List<Double> result = new ArrayList<>();
 		for (Entry ent : all) {
 			result.add(costComputer.getCost(ent.board));
 		}

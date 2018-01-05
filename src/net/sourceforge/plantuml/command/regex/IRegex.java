@@ -40,10 +40,10 @@ import java.util.Map;
 
 public interface IRegex {
 
-	public String getPattern();
+	String getPattern();
 
-	public int count();
+	int count();
 
-	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it);
+	Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it);
 
 }

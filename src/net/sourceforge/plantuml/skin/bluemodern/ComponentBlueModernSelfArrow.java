@@ -113,19 +113,23 @@ public class ComponentBlueModernSelfArrow extends AbstractComponentBlueModernArr
 
 	private UPolygon getPolygon(final int textHeight, final int delta) {
 		final UPolygon polygon = new UPolygon();
-		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
-			polygon.addPoint(0, textHeight + delta);
-			polygon.addPoint(getArrowDeltaX(), textHeight + delta);
-		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(getArrowDeltaX(), textHeight + delta);
-			polygon.addPoint(0, textHeight + delta);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + delta);
-		} else {
-			polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
-			polygon.addPoint(0, textHeight + delta);
-			polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + delta);
-		}
+        switch (getArrowConfiguration().getPart()) {
+            case TOP_PART:
+                polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
+                polygon.addPoint(0, textHeight + delta);
+                polygon.addPoint(getArrowDeltaX(), textHeight + delta);
+                break;
+            case BOTTOM_PART:
+                polygon.addPoint(getArrowDeltaX(), textHeight + delta);
+                polygon.addPoint(0, textHeight + delta);
+                polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + delta);
+                break;
+            default:
+                polygon.addPoint(getArrowDeltaX(), textHeight - getArrowDeltaY() + delta);
+                polygon.addPoint(0, textHeight + delta);
+                polygon.addPoint(getArrowDeltaX(), textHeight + getArrowDeltaY() + delta);
+                break;
+        }
 		return polygon;
 	}
 

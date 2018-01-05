@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionSplit implements Instruction {
 
-	private final List<InstructionList> splits = new ArrayList<InstructionList>();
+	private final List<InstructionList> splits = new ArrayList<>();
 	private final Instruction parent;
 	private final LinkRendering inlinkRendering;
 
@@ -71,7 +71,7 @@ public class InstructionSplit implements Instruction {
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		final List<Ftile> all = new ArrayList<Ftile>();
+		final List<Ftile> all = new ArrayList<>();
 		for (InstructionList list : splits) {
 			all.add(list.createFtile(factory));
 		}
@@ -97,7 +97,7 @@ public class InstructionSplit implements Instruction {
 
 	}
 
-	final public boolean kill() {
+	public final boolean kill() {
 		return getLast().kill();
 	}
 

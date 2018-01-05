@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 
 public class GraphvizJs implements Graphviz {
 
-	private final static ExecutorService executorService = Executors
+	private static final ExecutorService executorService = Executors
 			.newSingleThreadScheduledExecutor(new ThreadFactory() {
 				public Thread newThread(Runnable runnable) {
 					return new JsThread(runnable);

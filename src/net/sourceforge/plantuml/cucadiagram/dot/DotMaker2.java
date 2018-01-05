@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-final public class DotMaker2 {
+public final class DotMaker2 {
 
 	private static boolean isJunit = false;
 
@@ -43,7 +43,7 @@ final public class DotMaker2 {
 		isJunit = true;
 	}
 
-	public static final boolean isJunit() {
+	public static boolean isJunit() {
 		return isJunit;
 	}
 

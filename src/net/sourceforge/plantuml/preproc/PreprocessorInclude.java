@@ -122,7 +122,7 @@ public class PreprocessorInclude implements ReadLine {
 	public CharSequence2 readLine() throws IOException {
 		final CharSequence2 result = readLineInternal();
 		if (result != null && StartUtils.isArobaseStartDiagram(result) && config.size() > 0) {
-			final List<String> empty = new ArrayList<String>();
+			final List<String> empty = new ArrayList<>();
 			included = new PreprocessorInclude(empty, new ReadLineList(config, result.getLocation()), defines, charset,
 					null, filesUsedCurrent, filesUsedGlobal, definitionsContainer);
 		}
@@ -223,9 +223,9 @@ public class PreprocessorInclude implements ReadLine {
 		}
 		final File f = FileSystem.getInstance().getFile(withEnvironmentVariable(fileName));
 		final FileWithSuffix f2 = new FileWithSuffix(f, suf);
-		if (f.exists() == false || f.isDirectory()) {
+		if (!f.exists() || f.isDirectory()) {
 			return s.withErrorPreprocessor("Cannot include " + f.getAbsolutePath());
-		} else if (allowMany == false && filesUsedCurrent.contains(f2)) {
+		} else if (!allowMany && filesUsedCurrent.contains(f2)) {
 			// return CharSequence2Impl.errorPreprocessor("File already included " + f.getAbsolutePath(), lineLocation);
 			return this.readLine();
 		}
@@ -270,7 +270,7 @@ public class PreprocessorInclude implements ReadLine {
 	}
 
 	private InputStream getStdlibInputStreamOld(String filename) {
-		if (filename.endsWith(".puml") == false) {
+		if (!filename.endsWith(".puml")) {
 			filename = filename + ".puml";
 		}
 		InputStream is = PreprocessorInclude.class.getResourceAsStream("/stdlib/" + filename);

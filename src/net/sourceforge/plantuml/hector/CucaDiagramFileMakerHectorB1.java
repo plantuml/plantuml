@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.hector;
 
 import java.awt.geom.Dimension2D;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -80,7 +79,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 	// final private Map<Pin, IEntityImage> images = new LinkedHashMap<Pin, IEntityImage>();
 	// final private Map<Pin, Box2D> boxes = new LinkedHashMap<Pin, Box2D>();
 
-	final private Map<Link, PinLink> links = new LinkedHashMap<Link, PinLink>();
+	private final Map<Link, PinLink> links = new LinkedHashMap<>();
 
 	// final private List<Box2D> forbidden = new ArrayList<Box2D>();
 
@@ -100,8 +99,7 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 	// return singleHeight * pin.getRow() + singleHeight / 2.0;
 	// }
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
+	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption) {
 		final PinFactory pinFactory = new PinFactory();
 		final SkeletonBuilder skeletonBuilder = new SkeletonBuilder();
 		links.clear();
@@ -156,14 +154,13 @@ public class CucaDiagramFileMakerHectorB1 implements CucaDiagramFileMaker {
 
 		final Rose rose = new Rose();
 		final HtmlColor color = rose.getHtmlColor(diagram.getSkinParam(), ColorParam.arrow);
-		final List<Box2D> b = new ArrayList<Box2D>();
+		final List<Box2D> b = new ArrayList<>();
 		final SmartConnection connection = new SmartConnection(x1, y1, x2, y2, b);
 		connection.draw(ug, color);
 	}
 
 	private IEntityImage computeImage(final ILeaf leaf) {
-		final IEntityImage image = DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
-				false, diagram, null, null, null, diagram.getLinks());
-		return image;
+        return DotDataImageBuilder.createEntityImageBlock(leaf, diagram.getSkinParam(),
+false, diagram, null, null, null, diagram.getLinks());
 	}
 }

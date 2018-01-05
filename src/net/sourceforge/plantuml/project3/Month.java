@@ -44,17 +44,17 @@ public enum Month {
 
 	private final int daysPerMonth;
 
-	private Month(int daysPerMonth) {
+	Month(int daysPerMonth) {
 		this.daysPerMonth = daysPerMonth;
 	}
 
-	static public String getRegexString() {
+	public static String getRegexString() {
 		final StringBuilder sb = new StringBuilder();
 		for (Month month : Month.values()) {
 			if (sb.length() > 0) {
 				sb.append("|");
 			}
-			sb.append(month.name().substring(0, 3) + "[a-z]*");
+			sb.append(month.name().substring(0, 3)).append("[a-z]*");
 		}
 		return sb.toString();
 	}

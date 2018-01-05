@@ -35,11 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
@@ -49,9 +44,14 @@ import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 public class Bodier {
 
-	private final List<String> rawBody = new ArrayList<String>();
+	private final List<String> rawBody = new ArrayList<>();
 	private final Set<VisibilityModifier> hides;
 	private LeafType type;
 	private List<Member> methodsToDisplay;
@@ -68,7 +68,7 @@ public class Bodier {
 	public Bodier(LeafType type, Set<VisibilityModifier> hides) {
 		this.hides = hides;
 		this.type = type;
-		this.manageModifier = type == null ? false : type.manageModifier();
+		this.manageModifier = type != null && type.manageModifier();
 	}
 
 	public void addFieldOrMethod(String s, IEntity leaf) {
@@ -97,26 +97,27 @@ public class Bodier {
 	}
 
 	private boolean isMethod(String s) {
-		if (type == LeafType.ANNOTATION || type == LeafType.ABSTRACT_CLASS || type == LeafType.CLASS
-				|| type == LeafType.INTERFACE || type == LeafType.ENUM) {
-			return MemberImpl.isMethod(s);
-		}
-		return false;
+		return (type == LeafType.ANNOTATION
+			|| type == LeafType.ABSTRACT_CLASS
+			|| type == LeafType.CLASS
+			|| type == LeafType.INTERFACE
+			|| type == LeafType.ENUM)
+			&& MemberImpl.isMethod(s);
 	}
 
 	public List<Member> getMethodsToDisplay() {
 		if (methodsToDisplay == null) {
-			methodsToDisplay = new ArrayList<Member>();
+			methodsToDisplay = new ArrayList<>();
 			for (int i = 0; i < rawBody.size(); i++) {
 				final String s = rawBody.get(i);
-				if (isMethod(i, rawBody) == false) {
+				if (!isMethod(i, rawBody)) {
 					continue;
 				}
-				if (s.length() == 0 && methodsToDisplay.size() == 0) {
+				if (s.isEmpty() && methodsToDisplay.isEmpty()) {
 					continue;
 				}
 				final Member m = new MemberImpl(s, true, manageModifier);
-				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
+				if (hides == null || !hides.contains(m.getVisibilityModifier())) {
 					methodsToDisplay.add(m);
 				}
 			}
@@ -126,25 +127,26 @@ public class Bodier {
 	}
 
 	private boolean isMethod(int i, List<String> rawBody) {
-		if (i > 0 && i < rawBody.size() - 1 && rawBody.get(i).length() == 0 && isMethod(rawBody.get(i - 1))
-				&& isMethod(rawBody.get(i + 1))) {
-			return true;
-		}
-		return isMethod(rawBody.get(i));
+		return i > 0
+			&& i < rawBody.size() - 1
+			&& rawBody.get(i).isEmpty()
+			&& isMethod(rawBody.get(i - 1))
+			&& isMethod(rawBody.get(i + 1))
+			|| isMethod(rawBody.get(i));
 	}
 
 	public List<Member> getFieldsToDisplay() {
 		if (fieldsToDisplay == null) {
-			fieldsToDisplay = new ArrayList<Member>();
+			fieldsToDisplay = new ArrayList<>();
 			for (String s : rawBody) {
-				if (isMethod(s) == true) {
+				if (isMethod(s)) {
 					continue;
 				}
-				if (s.length() == 0 && fieldsToDisplay.size() == 0) {
+				if (s.isEmpty() && fieldsToDisplay.isEmpty()) {
 					continue;
 				}
 				final Member m = new MemberImpl(s, false, manageModifier);
-				if (hides == null || hides.contains(m.getVisibilityModifier()) == false) {
+				if (hides == null || !hides.contains(m.getVisibilityModifier())) {
 					fieldsToDisplay.add(m);
 				}
 			}
@@ -154,7 +156,7 @@ public class Bodier {
 	}
 
 	private void removeFinalEmptyMembers(List<Member> result) {
-		while (result.size() > 0 && StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).length() == 0) {
+		while (!result.isEmpty() && StringUtils.trin(result.get(result.size() - 1).getDisplay(false)).isEmpty()) {
 			result.remove(result.size() - 1);
 		}
 	}
@@ -174,13 +176,13 @@ public class Bodier {
 	}
 
 	private List<String> rawBodyWithoutHidden() {
-		if (hides == null || hides.size() == 0) {
+		if (hides == null || hides.isEmpty()) {
 			return rawBody;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String s : rawBody) {
 			final Member m = new MemberImpl(s, isMethod(s), manageModifier);
-			if (hides.contains(m.getVisibilityModifier()) == false) {
+			if (!hides.contains(m.getVisibilityModifier())) {
 				result.add(s);
 			}
 
@@ -199,21 +201,21 @@ public class Bodier {
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
 				stereotype, leaf);
 		if (type == LeafType.OBJECT) {
-			if (showFields == false) {
+			if (!showFields) {
 				return new TextBlockLineBefore(TextBlockUtils.empty(0, 0));
 			}
 			return fields.asBlockMemberImpl();
 		}
-		if (type.isLikeClass() == false) {
+		if (!type.isLikeClass()) {
 			throw new UnsupportedOperationException();
 		}
 		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
 				stereotype, leaf);
-		if (showFields && showMethods == false) {
+		if (showFields && !showMethods) {
 			return fields.asBlockMemberImpl();
-		} else if (showMethods && showFields == false) {
+		} else if (showMethods && !showFields) {
 			return methods.asBlockMemberImpl();
-		} else if (showFields == false && showMethods == false) {
+		} else if (!showFields && !showMethods) {
 			return TextBlockUtils.empty(0, 0);
 		}
 

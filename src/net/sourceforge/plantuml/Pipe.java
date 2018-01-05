@@ -112,7 +112,7 @@ public class Pipe {
 				}
 			}
 			ps.flush();
-		} while (closed == false);
+		} while (!closed);
 		return error;
 	}
 
@@ -154,33 +154,34 @@ public class Pipe {
 			return null;
 		}
 		String source = sb.toString();
-		if (source.startsWith("@start") == false) {
+		if (!source.startsWith("@start")) {
 			source = "@startuml\n" + source + "\n@enduml";
 		}
 		return source;
 	}
 
 	private String readOneLine() throws IOException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		while (true) {
-			final int read = is.read();
-			if (read == -1) {
-				if (baos.size() == 0) {
-					return null;
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			while (true) {
+				final int read = is.read();
+				if (read == -1) {
+					if (baos.size() == 0) {
+						return null;
+					}
+					break;
 				}
-				break;
+				if (read != '\r' && read != '\n') {
+					baos.write(read);
+				}
+				if (read == '\n') {
+					break;
+				}
 			}
-			if (read != '\r' && read != '\n') {
-				baos.write(read);
+			if (charset == null) {
+				return new String(baos.toByteArray());
 			}
-			if (read == '\n') {
-				break;
-			}
+			return new String(baos.toByteArray(), charset);
 		}
-		if (charset == null) {
-			return new String(baos.toByteArray());
-		}
-		return new String(baos.toByteArray(), charset);
 
 	}
 }

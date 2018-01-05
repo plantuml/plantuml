@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionList extends WithNote implements Instruction, InstructionCollection {
 
-	private final List<Instruction> all = new ArrayList<Instruction>();
+	private final List<Instruction> all = new ArrayList<>();
 	private final Swimlane defaultSwimlane;
 
 	public InstructionList() {
@@ -67,7 +67,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public boolean isOnlySingleStop() {
 		return all.size() == 1 && getLast() instanceof InstructionStop
-				&& ((InstructionStop) getLast()).hasNotes() == false;
+				&& !((InstructionStop) getLast()).hasNotes();
 	}
 
 	public InstructionList(Swimlane defaultSwimlane) {
@@ -79,15 +79,15 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
 		}
-		final List<WeldingPoint> breaks = new ArrayList<WeldingPoint>();
+		final List<WeldingPoint> breaks = new ArrayList<>();
 		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn());
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
 			breaks.addAll(cur.getWeldingPoints());
-			if (ins.getInLinkRendering().isNone() == false) {
+			if (!ins.getInLinkRendering().isNone()) {
 				cur = factory.decorateIn(cur, ins.getInLinkRendering());
 			}
 
@@ -100,7 +100,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		if (outlinkRendering != null) {
 			result = factory.decorateOut(result, outlinkRendering);
 		}
-		if (breaks.size() > 0) {
+		if (!breaks.isEmpty()) {
 			result = new FtileDecorateWelding(result, breaks);
 		}
 
@@ -110,11 +110,8 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return result;
 	}
 
-	final public boolean kill() {
-		if (all.size() == 0) {
-			return false;
-		}
-		return getLast().kill();
+	public final boolean kill() {
+		return !all.isEmpty() && getLast().kill();
 	}
 
 	public LinkRendering getInLinkRendering() {
@@ -122,7 +119,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public Instruction getLast() {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return null;
 		}
 		return all.get(all.size() - 1);
@@ -154,7 +151,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	public Swimlane getSwimlaneOut() {
 		final Set<Swimlane> swimlanes = getSwimlanes();
-		if (swimlanes.size() == 0) {
+		if (swimlanes.isEmpty()) {
 			return null;
 		}
 		if (swimlanes.size() == 1) {
@@ -164,7 +161,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public static Set<Swimlane> getSwimlanes2(List<? extends Instruction> list) {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		for (Instruction ins : list) {
 			result.addAll(ins.getSwimlanes());
 		}

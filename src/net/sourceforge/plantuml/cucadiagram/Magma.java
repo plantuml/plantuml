@@ -71,10 +71,7 @@ class Magma {
 
 	public boolean isComplete() {
 		final IGroup parent = getContainer();
-		if (parent == null) {
-			return false;
-		}
-		return parent.size() == standalones.size();
+		return parent != null && parent.size() == standalones.size();
 	}
 
 	private int squareSize() {

@@ -43,7 +43,7 @@ import java.util.List;
 public class CollectionUtils {
 
 	public static <E> Collection<List<E>> selectUpTo(List<E> original, int nb) {
-		final List<List<E>> result = new ArrayList<List<E>>();
+		final List<List<E>> result = new ArrayList<>();
 		for (int i = 1; i <= nb; i++) {
 			result.addAll(selectExactly(original, i));
 		}
@@ -58,7 +58,7 @@ public class CollectionUtils {
 			return Collections.emptyList();
 		}
 		if (nb == 1) {
-			final List<List<E>> result = new ArrayList<List<E>>();
+			final List<List<E>> result = new ArrayList<>();
 			for (E element : original) {
 				result.add(Collections.singletonList(element));
 			}
@@ -71,10 +71,10 @@ public class CollectionUtils {
 		if (nb == original.size()) {
 			return Collections.singletonList(original);
 		}
-		final List<List<E>> result = new ArrayList<List<E>>();
+		final List<List<E>> result = new ArrayList<>();
 
 		for (List<E> subList : selectExactly(original.subList(1, original.size()), nb - 1)) {
-			final List<E> newList = new ArrayList<E>();
+			final List<E> newList = new ArrayList<>();
 			newList.add(original.get(0));
 			newList.addAll(subList);
 			result.add(Collections.unmodifiableList(newList));

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 
 public class CutePath {
 
-	private final List<Arc> arcs = new ArrayList<Arc>();
+	private final List<Arc> arcs = new ArrayList<>();
 
 	public CutePath(String value) {
 
@@ -58,22 +58,25 @@ public class CutePath {
 		final StringTokenizer spl = new StringTokenizer(value, "~:", true);
 		while (spl.hasMoreTokens()) {
 			final String token = spl.nextToken();
-			if (token.equals(":")) {
-				continue;
-			} else if (token.equals("~")) {
-				tension = spl.nextToken();
-				final String next = spl.nextToken();
-				if (next.equals("~") == false) {
-					throw new IllegalArgumentException();
-				}
-			} else {
-				final StringTokenizer st = new StringTokenizer(token.replaceAll("[()]", ""), ",^");
-				final MyPoint2D current = new MyPoint2D(st);
-				if (lastAdded != null) {
-					add(new Arc(lastAdded, current).withTension(tension));
-				}
-				lastAdded = current;
-				tension = null;
+			switch (token) {
+				case ":":
+					break;
+				case "~":
+					tension = spl.nextToken();
+					final String next = spl.nextToken();
+					if (!next.equals("~")) {
+						throw new IllegalArgumentException();
+					}
+					break;
+				default:
+					final StringTokenizer st = new StringTokenizer(token.replaceAll("[()]", ""), ",^");
+					final MyPoint2D current = new MyPoint2D(st);
+					if (lastAdded != null) {
+						add(new Arc(lastAdded, current).withTension(tension));
+					}
+					lastAdded = current;
+					tension = null;
+					break;
 			}
 		}
 		add(new Arc(lastAdded, arcs.get(0).getA()).withTension(tension));
@@ -84,16 +87,16 @@ public class CutePath {
 	}
 
 	public void add(Arc arc) {
-		if (arcs.size() > 0) {
+		if (!arcs.isEmpty()) {
 			final Arc last = arcs.get(arcs.size() - 1);
-			if (last.getB().equals(arc.getA()) == false) {
+			if (!last.getB().equals(arc.getA())) {
 				throw new IllegalArgumentException("last=" + last.getB() + " arc=" + arc.getA());
 			}
 		}
 		this.arcs.add(arc);
 	}
 
-	private final MyPoint2D getMyPoint2D(int i) {
+	private MyPoint2D getMyPoint2D(int i) {
 		return getArc(i).getA();
 	}
 

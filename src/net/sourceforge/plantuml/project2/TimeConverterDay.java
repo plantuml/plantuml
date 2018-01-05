@@ -43,8 +43,8 @@ public class TimeConverterDay implements TimeConverter {
 	private Day biggest;
 	private Day smallest;
 	private final double dayWith;
-	private final Map<Day, Integer> map1 = new HashMap<Day, Integer>();
-	private final Map<Integer, Day> map2 = new HashMap<Integer, Day>();
+	private final Map<Day, Integer> map1 = new HashMap<>();
+	private final Map<Integer, Day> map2 = new HashMap<>();
 	private final TimeLine timeLine;
 
 	public TimeConverterDay(TimeLine timeLine, Day start, double dayWith) {
@@ -66,12 +66,12 @@ public class TimeConverterDay implements TimeConverter {
 	private int getPosition(Day d) {
 		Integer result = map1.get(d);
 		if (result != null) {
-			return result.intValue();
+			return result;
 		}
 		while (d.compareTo(biggest) > 0) {
 			int n = getPosition(biggest);
 			biggest = biggest.next();
-			if (timeLine.isClosed(biggest) == false) {
+			if (!timeLine.isClosed(biggest)) {
 				n++;
 			}
 			putDay(biggest, n);
@@ -79,14 +79,14 @@ public class TimeConverterDay implements TimeConverter {
 		while (d.compareTo(smallest) < 0) {
 			int n = getPosition(smallest);
 			smallest = smallest.previous();
-			if (timeLine.isClosed(smallest) == false) {
+			if (!timeLine.isClosed(smallest)) {
 				n--;
 			}
 			putDay(smallest, n);
 		}
 		result = map1.get(d);
 		if (result != null) {
-			return result.intValue();
+			return result;
 		}
 		throw new UnsupportedOperationException();
 	}

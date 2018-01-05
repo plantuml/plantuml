@@ -116,11 +116,8 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
 
 	@Override
-	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
-			return true;
-		}
-		return false;
+    protected final boolean isForbidden(CharSequence line) {
+		return line.toString().matches("^[\\p{L}0-9_.]+$");
 	}
 
 	@Override
@@ -207,17 +204,12 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	public static boolean existsWithBadType(AbstractEntityDiagram diagram, final Code code, LeafType type,
 			USymbol usymbol) {
-		if (diagram.leafExist(code) == false) {
+		if (!diagram.leafExist(code)) {
 			return false;
 		}
 		final ILeaf other = diagram.getLeafsget(code);
-		if (other.getLeafType() != type) {
-			return true;
-		}
-		if (usymbol != null && other.getUSymbol() != usymbol) {
-			return true;
-		}
-		return false;
+		return other.getLeafType() != type
+			|| (usymbol != null && other.getUSymbol() != usymbol);
 	}
 
 	private char getCharEncoding(final String codeRaw) {

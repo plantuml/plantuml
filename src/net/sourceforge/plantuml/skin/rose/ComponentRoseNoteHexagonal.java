@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
+public final class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 
 	private final int cornersize = 10;
 	private final SymbolContext symbolContext;
@@ -62,13 +62,12 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getTextWidth(stringBounder) + 2 * getPaddingX();
-		return result;
+    public final double getPreferredWidth(StringBounder stringBounder) {
+        return getTextWidth(stringBounder) + 2 * getPaddingX();
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return getTextHeight(stringBounder) + 2 * getPaddingY();
 	}
 

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.LineLocation;
 public class Sub {
 
 	private final String name;
-	private final List<CharSequence2> lines = new ArrayList<CharSequence2>();
+	private final List<CharSequence2> lines = new ArrayList<>();
 
 	public Sub(String name) {
 		this.name = name;

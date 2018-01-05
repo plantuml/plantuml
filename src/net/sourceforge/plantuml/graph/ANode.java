@@ -43,6 +43,6 @@ public interface ANode {
 
 	String getCode();
 
-	public Object getUserData();
+	Object getUserData();
 
 }

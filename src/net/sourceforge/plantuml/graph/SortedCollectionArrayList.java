@@ -44,8 +44,8 @@ import java.util.Set;
 
 public class SortedCollectionArrayList<S extends Comparable<S>> implements SortedCollection<S> {
 
-	private final List<S> allAsList = new ArrayList<S>();
-	private final Set<S> allAsSet = new HashSet<S>();
+	private final List<S> allAsList = new ArrayList<>();
+	private final Set<S> allAsSet = new HashSet<>();
 
 	public Iterator<S> iterator() {
 		return allAsList.iterator();
@@ -68,7 +68,7 @@ public class SortedCollectionArrayList<S extends Comparable<S>> implements Sorte
 	}
 
 	List<S> toList() {
-		return new ArrayList<S>(allAsList);
+		return new ArrayList<>(allAsList);
 	}
 
 	boolean isSorted() {

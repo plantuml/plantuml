@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class Arrows {
 
-	final static private double delta1 = 10;
-	final static private double delta2 = 4;
+	private static final double delta1 = 10;
+	private static final double delta2 = 4;
 
 	public static UPolygon asToUp() {
 		final UPolygon polygon = new UPolygon("asToUp");

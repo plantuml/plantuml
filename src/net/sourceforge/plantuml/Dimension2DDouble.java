@@ -41,8 +41,8 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Dimension2DDouble extends Dimension2D {
 
-	final private double width;
-	final private double height;
+	private final double width;
+	private final double height;
 
 	public Dimension2DDouble(double width, double height) {
 		this.width = width;

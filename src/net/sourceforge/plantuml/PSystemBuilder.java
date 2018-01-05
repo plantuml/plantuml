@@ -94,7 +94,7 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(final List<CharSequence2> strings2, int startLine) {
+	public final Diagram createPSystem(final List<CharSequence2> strings2, int startLine) {
 
 		final long now = System.currentTimeMillis();
 
@@ -115,7 +115,7 @@ public class PSystemBuilder {
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
-			final List<PSystemError> errors = new ArrayList<PSystemError>();
+			final List<PSystemError> errors = new ArrayList<>();
 			final List<PSystemFactory> factories = getAllFactories();
 			for (PSystemFactory systemFactory : factories) {
 				if (diagramType != systemFactory.getDiagramType()) {
@@ -141,7 +141,7 @@ public class PSystemBuilder {
 	}
 
 	private List<PSystemFactory> getAllFactories() {
-		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
+		final List<PSystemFactory> factories = new ArrayList<>();
 		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory());
@@ -201,10 +201,7 @@ public class PSystemBuilder {
 	}
 
 	private boolean isOk(Diagram ps) {
-		if (ps == null || ps instanceof PSystemError) {
-			return false;
-		}
-		return true;
+		return ps != null && !(ps instanceof PSystemError);
 	}
 
 }

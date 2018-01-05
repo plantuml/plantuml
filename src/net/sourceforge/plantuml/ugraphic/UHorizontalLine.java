@@ -165,18 +165,19 @@ public class UHorizontalLine implements UShape {
 	}
 
 	public UStroke getStroke() {
-		if (style == '\0') {
-			throw new IllegalStateException();
-			// return null;
-		} else if (style == '=') {
-			return new UStroke();
-		} else if (style == '.') {
-			return new UStroke(1, 2, 1);
-		} else if (style == '-') {
-			return new UStroke();
-		} else {
-			return new UStroke(1.5);
-		}
+        switch (style) {
+            case '\0':
+                throw new IllegalStateException();
+                // return null;
+            case '=':
+                return new UStroke();
+            case '.':
+                return new UStroke(1, 2, 1);
+            case '-':
+                return new UStroke();
+            default:
+                return new UStroke(1.5);
+        }
 	}
 
 }

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +69,7 @@ class GrayComponent extends AbstractComponent {
 
 		final String n = type.name();
 		final int split = 9;
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		for (int i = 0; i < n.length(); i += split) {
 			strings.add(n.substring(i, Math.min(i + split, n.length())));
 		}

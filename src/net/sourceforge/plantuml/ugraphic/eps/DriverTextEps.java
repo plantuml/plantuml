@@ -79,7 +79,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && !clip.isInside(x, y)) {
 			return;
 		}
 
@@ -137,8 +137,8 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			}
 			eps.setStrokeWidth("1.1", 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
-				eps.epsLine(i, ypos - 0, i + 3, ypos + 1);
-				eps.epsLine(i + 3, ypos + 1, i + 6, ypos - 0);
+				eps.epsLine(i, ypos, i + 3, ypos + 1);
+				eps.epsLine(i + 3, ypos + 1, i + 6, ypos);
 			}
 			eps.setStrokeWidth("1", 0, 0);
 		}
@@ -176,7 +176,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 
 	static void drawPathIterator(EpsGraphics eps, double x, double y, Shape shape) {
 		final List<Integer> breaks = analyze(shape);
-		if (breaks.size() == 0) {
+		if (breaks.isEmpty()) {
 			final PathIterator path = shape.getPathIterator(null);
 			drawSingle(eps, x, y, path);
 			return;
@@ -196,21 +196,27 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private static void drawSingle(EpsGraphics eps, double x, double y, final PathIterator path) {
 		eps.newpath();
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
-				eps.moveto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_LINETO) {
-				eps.lineto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_CLOSE) {
-				eps.closepath();
-			} else if (code == PathIterator.SEG_CUBICTO) {
-				eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-			} else if (code == PathIterator.SEG_QUADTO) {
-				eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
-			} else {
-				throw new UnsupportedOperationException("code=" + code);
-			}
+            switch (code) {
+                case PathIterator.SEG_MOVETO:
+                    eps.moveto(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_LINETO:
+                    eps.lineto(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_CLOSE:
+                    eps.closepath();
+                    break;
+                case PathIterator.SEG_CUBICTO:
+                    eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                    break;
+                case PathIterator.SEG_QUADTO:
+                    eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+                    break;
+                default:
+                    throw new UnsupportedOperationException("code=" + code);
+            }
 
 			path.next();
 		}
@@ -221,7 +227,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private static List<Integer> analyze(Shape shape) {
 		int count = PathIteratorLimited.count(shape);
 		final List<Integer> closings = getClosings(shape.getPathIterator(null));
-		final List<Integer> result = new ArrayList<Integer>();
+		final List<Integer> result = new ArrayList<>();
 		for (Integer cl : closings) {
 			if (cl + 2 >= count) {
 				break;
@@ -238,10 +244,10 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	}
 
 	private static List<Integer> getClosings(PathIterator path) {
-		final List<Integer> result = new ArrayList<Integer>();
+		final List<Integer> result = new ArrayList<>();
 		int current = 0;
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
 			if (code == PathIterator.SEG_CLOSE) {
 				result.add(current);
@@ -252,28 +258,34 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 		return result;
 	}
 
-	static private MinMax getMinMax(double x, double y, PathIterator path) {
+	private static MinMax getMinMax(double x, double y, PathIterator path) {
 
 		MinMax result = MinMax.getEmpty(false);
 
 		final double coord[] = new double[6];
-		while (path.isDone() == false) {
+		while (!path.isDone()) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_LINETO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_CLOSE) {
-			} else if (code == PathIterator.SEG_CUBICTO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-				result = result.addPoint(coord[2] + x, coord[3] + y);
-				result = result.addPoint(coord[4] + x, coord[5] + y);
-			} else if (code == PathIterator.SEG_QUADTO) {
-				result = result.addPoint(coord[0] + x, coord[1] + y);
-				result = result.addPoint(coord[2] + x, coord[3] + y);
-			} else {
-				throw new UnsupportedOperationException("code=" + code);
-			}
+            switch (code) {
+                case PathIterator.SEG_MOVETO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_LINETO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    break;
+                case PathIterator.SEG_CLOSE:
+                    break;
+                case PathIterator.SEG_CUBICTO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    result = result.addPoint(coord[2] + x, coord[3] + y);
+                    result = result.addPoint(coord[4] + x, coord[5] + y);
+                    break;
+                case PathIterator.SEG_QUADTO:
+                    result = result.addPoint(coord[0] + x, coord[1] + y);
+                    result = result.addPoint(coord[2] + x, coord[3] + y);
+                    break;
+                default:
+                    throw new UnsupportedOperationException("code=" + code);
+            }
 			path.next();
 		}
 

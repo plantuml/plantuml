@@ -51,9 +51,9 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
-	private final Map<String, String> environment = new LinkedHashMap<String, String>();
-	private final Map<String, Define> values = new LinkedHashMap<String, Define>();
-	private final Map<String, Define> savedState = new LinkedHashMap<String, Define>();
+	private final Map<String, String> environment = new LinkedHashMap<>();
+	private final Map<String, Define> values = new LinkedHashMap<>();
+	private final Map<String, Define> savedState = new LinkedHashMap<>();
 
 	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")
@@ -154,8 +154,8 @@ public class Defines implements Truth {
 		return line;
 	}
 
-	private static final String DATE = "(?i)%date(\\[(.+?)\\])?%";
-	private final static Pattern datePattern = Pattern.compile(DATE);
+	private static final String DATE = "(?i)%date(\\[(.+?)])?%";
+	private static final Pattern datePattern = Pattern.compile(DATE);
 
 	private String manageDate(String line) {
 		final Matcher m = datePattern.matcher(line);
@@ -177,7 +177,7 @@ public class Defines implements Truth {
 	}
 
 	public void saveState() {
-		if (savedState.size() > 0) {
+		if (!savedState.isEmpty()) {
 			throw new IllegalStateException();
 		}
 		this.savedState.putAll(values);

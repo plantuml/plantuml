@@ -57,11 +57,11 @@ public class TikzFontDistortion {
 			return getDefault();
 		}
 		final StringTokenizer st = new StringTokenizer(value, ";");
-		if (st.hasMoreElements() == false) {
+		if (!st.hasMoreElements()) {
 			return getDefault();
 		}
 		final String v1 = st.nextToken();
-		if (st.hasMoreElements() == false) {
+		if (!st.hasMoreElements()) {
 			return getDefault();
 		}
 		final String v2 = st.nextToken();

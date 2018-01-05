@@ -148,10 +148,9 @@ public class MessageExoArrow extends Arrow {
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double x1 = getStartingX(stringBounder);
-		final double x2 = maxX;
-		ug = ug.apply(new UTranslate(x1, getStartingY()));
+        ug = ug.apply(new UTranslate(x1, getStartingY()));
 		startUrl(ug);
-		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, x2)), context);
+		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, maxX)), context);
 		endUrl(ug);
 	}
 

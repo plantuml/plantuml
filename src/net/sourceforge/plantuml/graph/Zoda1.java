@@ -48,8 +48,8 @@ import java.util.Map;
  */
 public class Zoda1 {
 
-	private final Map<String, ANodeImpl> nodes = new LinkedHashMap<String, ANodeImpl>();
-	private final List<ALink> links = new ArrayList<ALink>();
+	private final Map<String, ANodeImpl> nodes = new LinkedHashMap<>();
+	private final List<ALink> links = new ArrayList<>();
 
 	public ANodeImpl getNode(String code) {
 		ANodeImpl result = nodes.get(code);

@@ -49,7 +49,7 @@ public class Positionner2 {
 	private int maxRow;
 	private int maxCol;
 
-	private final Map<Element, Cell> positions = new LinkedHashMap<Element, Cell>();
+	private final Map<Element, Cell> positions = new LinkedHashMap<>();
 
 	private Cell last;
 

@@ -59,9 +59,9 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class EntityFactory {
 
-	private final Map<Code, ILeaf> leafs = new Protect<ILeaf>(new LinkedHashMap<Code, ILeaf>());
-	private final List<Link> links = new ArrayList<Link>();
-	private final Map<Code, IGroup> groups = new Protect<IGroup>(new LinkedHashMap<Code, IGroup>());
+	private final Map<Code, ILeaf> leafs = new Protect<>(new LinkedHashMap<Code, ILeaf>());
+	private final List<Link> links = new ArrayList<>();
+	private final Map<Code, IGroup> groups = new Protect<>(new LinkedHashMap<Code, IGroup>());
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);
@@ -78,10 +78,8 @@ public class EntityFactory {
 			return true;
 		}
 		final Stereotype stereotype = leaf.getStereotype();
-		if (stereotype != null && hiddenStereotype.contains(stereotype.getLabel(false))) {
-			return true;
-		}
-		return false;
+		return stereotype != null
+			&& hiddenStereotype.contains(stereotype.getLabel(false));
 
 	}
 
@@ -99,13 +97,12 @@ public class EntityFactory {
 	}
 
 	private LongCode getLongCode(Code code, String namespaceSeparator) {
-		final LongCode result = LongCode.of(code.getFullName(), namespaceSeparator);
 		// if (result.toString().equals(code.toString()) == false) {
 		// System.err.println("result=" + result);
 		// System.err.println(" code =" + code);
 		// throw new UnsupportedOperationException();
 		// }
-		return result;
+		return LongCode.of(code.getFullName(), namespaceSeparator);
 	}
 
 	public IGroup createGroup(Code code, Display display, Code namespace2, GroupType groupType, IGroup parentContainer,
@@ -117,7 +114,7 @@ public class EntityFactory {
 		final LongCode longCode = getLongCode(code, namespaceSeparator);
 		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, groupType, namespace2, longCode,
 				namespaceSeparator, rawLayout);
-		if (Display.isNull(display) == false) {
+		if (!Display.isNull(display)) {
 			result.setDisplay(display);
 		}
 		return result;
@@ -171,7 +168,7 @@ public class EntityFactory {
 
 	public void removeLink(Link link) {
 		final boolean ok = links.remove(link);
-		if (ok == false) {
+		if (!ok) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -184,7 +181,7 @@ public class EntityFactory {
 		return result;
 	}
 
-	static class Protect<O extends Object> implements Map<Code, O> {
+	static class Protect<O> implements Map<Code, O> {
 
 		private final Map<Code, O> m;
 
@@ -193,14 +190,14 @@ public class EntityFactory {
 		}
 
 		public O remove(Object key) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.remove(key);
 		}
 
 		public O get(Object key) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.get(key);
@@ -215,7 +212,7 @@ public class EntityFactory {
 		}
 
 		public boolean containsKey(Object key) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.containsKey(key);
@@ -226,7 +223,7 @@ public class EntityFactory {
 		}
 
 		public O put(Code key, O value) {
-			if (key instanceof Code == false) {
+			if (!(key instanceof Code)) {
 				throw new IllegalArgumentException();
 			}
 			return m.put(key, value);

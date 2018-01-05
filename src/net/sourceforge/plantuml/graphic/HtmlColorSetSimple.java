@@ -35,17 +35,12 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
+
+import java.awt.*;
+import java.util.*;
 
 public class HtmlColorSetSimple implements IHtmlColorSet {
 
@@ -70,13 +65,13 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 			final int idx = s.indexOf(sep);
 			final String s1 = s.substring(0, idx);
 			final String s2 = s.substring(idx + 1);
-			if (isValid(s1, false) == false || isValid(s2, false) == false) {
+			if (!isValid(s1, false) || !isValid(s2, false)) {
 				return null;
 			}
 			return new HtmlColorGradient(build(s1), build(s2), sep);
 			// return getColorIfValid(s2);
 		}
-		if (isValid(s, acceptTransparent) == false) {
+		if (!isValid(s, acceptTransparent)) {
 			return new HtmlColorUserDef();
 		}
 		return build(s);
@@ -85,8 +80,8 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 	public HtmlColorSetSimple() {
 		// Taken from http://perl.wikipedia.com/wiki/Named_colors ?
 		// http://www.w3schools.com/HTML/html_colornames.asp
-		htmlNames = new HashMap<String, String>();
-		names = new TreeSet<String>();
+		htmlNames = new HashMap<>();
+		names = new TreeSet<>();
 		register("AliceBlue", "#F0F8FF");
 		register("AntiqueWhite", "#FAEBD7");
 		register("Aqua", "#00FFFF");
@@ -272,19 +267,10 @@ public class HtmlColorSetSimple implements IHtmlColorSet {
 
 	private boolean isValid(String s, boolean acceptTransparent) {
 		s = removeFirstDieseAndgoLowerCase(s);
-		if (s.matches("[0-9A-Fa-f]{3}")) {
-			return true;
-		}
-		if (s.matches("[0-9A-Fa-f]{6}")) {
-			return true;
-		}
-		if (acceptTransparent && s.equalsIgnoreCase("transparent")) {
-			return true;
-		}
-		if (htmlNames.containsKey(s)) {
-			return true;
-		}
-		return false;
+		return acceptTransparent && s.equalsIgnoreCase("transparent")
+			|| s.matches("[0-9A-Fa-f]{3}")
+			|| s.matches("[0-9A-Fa-f]{6}")
+			|| htmlNames.containsKey(s);
 
 	}
 

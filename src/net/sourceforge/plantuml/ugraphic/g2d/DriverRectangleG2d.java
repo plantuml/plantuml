@@ -101,7 +101,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 				managePattern(param, g2d);
 				g2d.fill(shape);
 			}
-			if (color != null && color.equals(param.getBackcolor()) == false) {
+			if (color != null && !color.equals(param.getBackcolor())) {
 				drawBorder(param, color, mapper, rect, shape, g2d, x, y);
 			}
 		}
@@ -127,60 +127,72 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<Gra
 		final HtmlColorGradient gr = (HtmlColorGradient) back;
 		final char policy = gr.getPolicy();
 		final GradientPaint paint;
-		if (policy == '|') {
-			paint = new GradientPaint((float) x, (float) (y + height) / 2, mapper.getMappedColor(gr.getColor1()),
-					(float) (x + width), (float) (y + height) / 2, mapper.getMappedColor(gr.getColor2()));
-		} else if (policy == '\\') {
-			paint = new GradientPaint((float) x, (float) (y + height), mapper.getMappedColor(gr.getColor1()),
-					(float) (x + width), (float) y, mapper.getMappedColor(gr.getColor2()));
-		} else if (policy == '-') {
-			paint = new GradientPaint((float) (x + width) / 2, (float) y, mapper.getMappedColor(gr.getColor1()),
-					(float) (x + width) / 2, (float) (y + height), mapper.getMappedColor(gr.getColor2()));
-		} else {
-			// for /
-			paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()), (float) (x + width),
-					(float) (y + height), mapper.getMappedColor(gr.getColor2()));
-		}
+        switch (policy) {
+            case '|':
+                paint = new GradientPaint((float) x, (float) (y + height) / 2, mapper.getMappedColor(gr.getColor1()),
+                        (float) (x + width), (float) (y + height) / 2, mapper.getMappedColor(gr.getColor2()));
+                break;
+            case '\\':
+                paint = new GradientPaint((float) x, (float) (y + height), mapper.getMappedColor(gr.getColor1()),
+                        (float) (x + width), (float) y, mapper.getMappedColor(gr.getColor2()));
+                break;
+            case '-':
+                paint = new GradientPaint((float) (x + width) / 2, (float) y, mapper.getMappedColor(gr.getColor1()),
+                        (float) (x + width) / 2, (float) (y + height), mapper.getMappedColor(gr.getColor2()));
+                break;
+            default:
+                // for /
+                paint = new GradientPaint((float) x, (float) y, mapper.getMappedColor(gr.getColor1()), (float) (x + width),
+                        (float) (y + height), mapper.getMappedColor(gr.getColor2()));
+                break;
+        }
 		return paint;
 	}
 
 	public static void managePattern(UParam param, Graphics2D g2d) {
 		final UPattern pattern = param.getPattern();
-		if (pattern == UPattern.VERTICAL_STRIPE) {
-			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
-			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 4; j++) {
-					if (i == 0 || i == 1) {
-						bi.setRGB(i, j, rgb);
-					}
-				}
-			}
-			g2d.setPaint(new TexturePaint(bi, r));
-		} else if (pattern == UPattern.HORIZONTAL_STRIPE) {
-			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
-			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 4; j++) {
-					if (j == 0 || j == 1) {
-						bi.setRGB(i, j, rgb);
-					}
-				}
-			}
-			g2d.setPaint(new TexturePaint(bi, r));
-		} else if (pattern == UPattern.SMALL_CIRCLE) {
-			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
-			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
-			bi.setRGB(0, 1, rgb);
-			bi.setRGB(1, 0, rgb);
-			bi.setRGB(1, 1, rgb);
-			bi.setRGB(1, 2, rgb);
-			bi.setRGB(2, 1, rgb);
-			g2d.setPaint(new TexturePaint(bi, r));
-		}
+        switch (pattern) {
+            case VERTICAL_STRIPE: {
+                final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
+                final Rectangle r = new Rectangle(0, 0, 4, 4);
+                final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        if (i == 0 || i == 1) {
+                            bi.setRGB(i, j, rgb);
+                        }
+                    }
+                }
+                g2d.setPaint(new TexturePaint(bi, r));
+                break;
+            }
+            case HORIZONTAL_STRIPE: {
+                final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
+                final Rectangle r = new Rectangle(0, 0, 4, 4);
+                final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        if (j == 0 || j == 1) {
+                            bi.setRGB(i, j, rgb);
+                        }
+                    }
+                }
+                g2d.setPaint(new TexturePaint(bi, r));
+                break;
+            }
+            case SMALL_CIRCLE: {
+                final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
+                final Rectangle r = new Rectangle(0, 0, 4, 4);
+                final int rgb = ((HtmlColorSimple) param.getBackcolor()).getColor999().getRGB();
+                bi.setRGB(0, 1, rgb);
+                bi.setRGB(1, 0, rgb);
+                bi.setRGB(1, 1, rgb);
+                bi.setRGB(1, 2, rgb);
+                bi.setRGB(2, 1, rgb);
+                g2d.setPaint(new TexturePaint(bi, r));
+                break;
+            }
+        }
 	}
 
 }

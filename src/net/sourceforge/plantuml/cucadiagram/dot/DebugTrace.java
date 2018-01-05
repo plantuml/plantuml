@@ -45,7 +45,7 @@ public class DebugTrace {
 
 	private static PrintWriter pw;
 
-	private synchronized static PrintWriter getPrintWriter() {
+	private static synchronized PrintWriter getPrintWriter() {
 		if (pw == null) {
 			try {
 				pw = new PrintWriter(out);
@@ -56,13 +56,13 @@ public class DebugTrace {
 		return pw;
 	}
 
-	public synchronized static void DEBUG(String s) {
+	public static synchronized void DEBUG(String s) {
 		final PrintWriter pw = getPrintWriter();
 		pw.println(s);
 		pw.flush();
 	}
 
-	public synchronized static void DEBUG(String s, Throwable t) {
+	public static synchronized void DEBUG(String s, Throwable t) {
 		DEBUG(s);
 		t.printStackTrace(pw);
 		pw.flush();

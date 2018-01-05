@@ -39,6 +39,6 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 
 public interface CuteShape extends UDrawable {
 
-	public UDrawable rotateZoom(RotationZoom other);
+	UDrawable rotateZoom(RotationZoom other);
 
 }

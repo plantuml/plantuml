@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemDefinition extends AbstractPSystem implements UDrawable {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 	private final String startLine;
 
 	public PSystemDefinition(String startLine) {
@@ -69,7 +69,7 @@ public class PSystemDefinition extends AbstractPSystem implements UDrawable {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1, null, "", "", 0, 0, null,
 				false);

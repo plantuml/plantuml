@@ -36,13 +36,13 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 public interface GraphvizVersion {
-	public boolean useShield();
+	boolean useShield();
 
-	public boolean useProtectionWhenThereALinkFromOrToGroup();
+	boolean useProtectionWhenThereALinkFromOrToGroup();
 
-	public boolean modeSafe();
+	boolean modeSafe();
 
-	public boolean isVizjs();
+	boolean isVizjs();
 
 	// COMMON, V2_34_0
 

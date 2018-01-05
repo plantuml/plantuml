@@ -81,7 +81,7 @@ public class UGraphicCrossing implements UGraphic {
 		}
 
 		List<Point2D> getCollisionsWith(List<Pending> others) {
-			final List<Point2D> result = new ArrayList<Point2D>();
+			final List<Point2D> result = new ArrayList<>();
 			for (Pending other : others) {
 				if (isClose(segment.getP1(), other.segment.getP1()) || isClose(segment.getP1(), other.segment.getP2())
 						|| isClose(segment.getP2(), other.segment.getP1())
@@ -158,8 +158,8 @@ public class UGraphicCrossing implements UGraphic {
 	}
 
 	public void flushUg() {
-		final List<Pending> pendings = new ArrayList<Pending>();
-		final List<Balloon> balloons = new ArrayList<Balloon>();
+		final List<Pending> pendings = new ArrayList<>();
+		final List<Balloon> balloons = new ArrayList<>();
 		for (Pending p : lines) {
 			final List<Point2D> tmp = p.getCollisionsWith(lines);
 			for (Point2D pt : tmp) {

@@ -75,7 +75,7 @@ public class EpsGraphics {
 
 	public EpsGraphics() {
 		header.append("%!PS-Adobe-3.0 EPSF-3.0\n");
-		header.append("%%Creator: PlantUML v" + Version.versionString(15) + BackSlash.NEWLINE);
+		header.append("%%Creator: PlantUML v").append(Version.versionString(15)).append(BackSlash.NEWLINE);
 		header.append("%%Title: noTitle\n");
 		// header.append("%%CreationDate: " + new Date() + BackSlash.BS_N);
 		setcolorgradient.add(new PostScriptCommandRaw("3 index 7 index sub 1 index mul 7 index add", true));
@@ -105,7 +105,7 @@ public class EpsGraphics {
 	private int maxX = 10;
 	private int maxY = 10;
 
-	final protected void ensureVisible(double x, double y) {
+	protected final void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
 		}
@@ -124,14 +124,14 @@ public class EpsGraphics {
 	public void close() {
 		checkCloseDone();
 
-		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + BackSlash.NEWLINE);
+		header.append("%%BoundingBox: 0 0 ").append(maxX).append(" ").append(maxY).append(BackSlash.NEWLINE);
 		// header.append("%%DocumentData: Clean7Bit\n");
 		// header.append("%%DocumentProcessColors: Black\n");
 		header.append("%%ColorUsage: Color\n");
 		header.append("%%Origin: 0 0\n");
 		header.append("%%EndComments\n\n");
 		header.append("gsave\n");
-		header.append("0 " + maxY + " translate\n");
+		header.append("0 ").append(maxY).append(" translate\n");
 		header.append("1 -1 scale\n");
 
 		if (setcolorgradientUsed) {
@@ -162,7 +162,7 @@ public class EpsGraphics {
 	}
 
 	public String getEPSCode() {
-		if (closeDone == false) {
+		if (!closeDone) {
 			close();
 		}
 		return header.toString() + getBodyString();
@@ -267,19 +267,25 @@ public class EpsGraphics {
 			for (USegment seg : path) {
 				final USegmentType type = seg.getSegmentType();
 				final double coord[] = seg.getCoord();
-				if (type == USegmentType.SEG_MOVETO) {
-					movetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_LINETO) {
-					linetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_QUADTO) {
-					throw new UnsupportedOperationException();
-				} else if (type == USegmentType.SEG_CUBICTO) {
-					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-				} else if (type == USegmentType.SEG_CLOSE) {
-					// Nothing
-				} else {
-					Log.println("unknown " + seg);
-				}
+                switch (type) {
+                    case SEG_MOVETO:
+                        movetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_LINETO:
+                        linetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_QUADTO:
+                        throw new UnsupportedOperationException();
+                    case SEG_CUBICTO:
+                        curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                        break;
+                    case SEG_CLOSE:
+                        // Nothing
+                        break;
+                    default:
+                        Log.println("unknown " + seg);
+                        break;
+                }
 			}
 			append("closepath eofill", true);
 		}
@@ -291,19 +297,25 @@ public class EpsGraphics {
 			for (USegment seg : path) {
 				final USegmentType type = seg.getSegmentType();
 				final double coord[] = seg.getCoord();
-				if (type == USegmentType.SEG_MOVETO) {
-					movetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_LINETO) {
-					linetoNoMacro(coord[0] + x, coord[1] + y);
-				} else if (type == USegmentType.SEG_QUADTO) {
-					throw new UnsupportedOperationException();
-				} else if (type == USegmentType.SEG_CUBICTO) {
-					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-				} else if (type == USegmentType.SEG_CLOSE) {
-					// Nothing
-				} else {
-					Log.println("unknown " + seg);
-				}
+                switch (type) {
+                    case SEG_MOVETO:
+                        movetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_LINETO:
+                        linetoNoMacro(coord[0] + x, coord[1] + y);
+                        break;
+                    case SEG_QUADTO:
+                        throw new UnsupportedOperationException();
+                    case SEG_CUBICTO:
+                        curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+                        break;
+                    case SEG_CLOSE:
+                        // Nothing
+                        break;
+                    default:
+                        Log.println("unknown " + seg);
+                        break;
+                }
 			}
 			append("stroke", true);
 		}
@@ -552,23 +564,23 @@ public class EpsGraphics {
 	}
 
 	protected void append(String s, boolean checkConsistence) {
-		if (checkConsistence && s.indexOf("  ") != -1) {
+		if (checkConsistence && s.contains("  ")) {
 			throw new IllegalArgumentException(s);
 		}
-		body.append(s + BackSlash.NEWLINE);
+		body.append(s).append(BackSlash.NEWLINE);
 	}
 
-	final public void linetoNoMacro(double x1, double y1) {
+	public final void linetoNoMacro(double x1, double y1) {
 		append(format(x1) + " " + format(y1) + " lineto", true);
 		ensureVisible(x1, y1);
 	}
 
-	final public void movetoNoMacro(double x1, double y1) {
+	public final void movetoNoMacro(double x1, double y1) {
 		append(format(x1) + " " + format(y1) + " moveto", true);
 		ensureVisible(x1, y1);
 	}
 
-	final public void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
+	public final void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
 		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " "
 				+ format(y3) + " curveto", true);
 		ensureVisible(x1, y1);
@@ -734,16 +746,15 @@ public class EpsGraphics {
 	}
 
 	// Shadow
-	final private ShadowManager shadowManager = new ShadowManager(50, 200);
+    private final ShadowManager shadowManager = new ShadowManager(50, 200);
 
 	public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
 			double deltaShadow) {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
-			final double diff = i;
-			epsRectangle(x + deltaShadow + diff, y + deltaShadow + diff, width - 2 * diff, height - 2 * diff, rx + 1,
-					ry + 1);
+            epsRectangle(x + deltaShadow + i, y + deltaShadow + i, width - 2 * i, height - 2 * i, rx + 1,
+                         ry + 1);
 		}
 	}
 
@@ -751,8 +762,7 @@ public class EpsGraphics {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
-			final double diff = i;
-			epsPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, diff, points));
+            epsPolygon(shadowManager.getShadowDeltaPoints(deltaShadow, i, points));
 		}
 	}
 
@@ -760,8 +770,7 @@ public class EpsGraphics {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
-			final double diff = i;
-			epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - diff, yRadius - diff);
+            epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - i, yRadius - i);
 		}
 	}
 

@@ -46,7 +46,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	private final Pattern2 starting;
 
 	public CommandMultilines(String patternStart) {
-		if (patternStart.startsWith("(?i)^") == false || patternStart.endsWith("$") == false) {
+		if (!patternStart.startsWith("(?i)^") || !patternStart.endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
 		}
 		this.starting = MyPattern.cmpile(patternStart);
@@ -58,12 +58,12 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		return new String[] { "START: " + starting.pattern(), "END: " + getPatternEnd() };
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
 		}
 		Matcher2 m1 = starting.matcher(StringUtils.trin(lines.getFirst499()));
-		if (m1.matches() == false) {
+		if (!m1.matches()) {
 			return CommandControl.NOT_OK;
 		}
 		if (lines.size() == 1) {
@@ -71,7 +71,7 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		}
 
 		m1 = MyPattern.cmpile(getPatternEnd()).matcher(StringUtils.trin(lines.getLast499()));
-		if (m1.matches() == false) {
+		if (!m1.matches()) {
 			return CommandControl.OK_PARTIAL;
 		}
 

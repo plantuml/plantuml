@@ -20,7 +20,6 @@ import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
-
 import javax.imageio.event.IIOReadProgressListener;
 import javax.imageio.stream.ImageInputStream;
 
@@ -34,7 +33,7 @@ public class VP8Frame {
 	private static int PREV_COEF_CONTEXTS = 3;
 	
 
-    private ArrayList<IIOReadProgressListener> _listeners = new ArrayList<IIOReadProgressListener>();
+    private ArrayList<IIOReadProgressListener> _listeners = new ArrayList<>();
 
 	private int bufferCount;
 	private int buffersToCreate=1;
@@ -76,13 +75,13 @@ public class VP8Frame {
 		this.frame = stream;
 		offset = frame.getStreamPosition();
 		this.coefProbs=Globals.getDefaultCoefProbs();
-		tokenBoolDecoders = new Vector<BoolDecoder>();
+		tokenBoolDecoders = new Vector<>();
 	}
 	public VP8Frame(ImageInputStream stream, int[][][][] coefProbs) throws IOException {
 		this.frame = stream;
 		offset = frame.getStreamPosition();
 		this.coefProbs=coefProbs;
-		tokenBoolDecoders = new Vector<BoolDecoder>();
+		tokenBoolDecoders = new Vector<>();
 	}
 	public void addIIOReadProgressListener(IIOReadProgressListener listener) {
 		_listeners.add(listener);
@@ -109,8 +108,7 @@ public class VP8Frame {
 		int versionNumber = getBitAsInt(c, 1) << 1;
 
 		versionNumber += getBitAsInt(c, 2) << 1;
-		versionNumber += getBitAsInt(c, 3);
-		int firstPartitionLengthInBytes;
+        int firstPartitionLengthInBytes;
 		firstPartitionLengthInBytes = getBitAsInt(c, 5) << 0;
 		firstPartitionLengthInBytes += getBitAsInt(c, 6) << 1;
 		firstPartitionLengthInBytes += getBitAsInt(c, 7) << 2;
@@ -179,7 +177,7 @@ public class VP8Frame {
 					if(updateMacroBlockSegmentationMap > 0) {
 						macroBlockSegmentTreeProbs = new int[Globals.MB_FEATURE_TREE_PROBS];
 						for (int i = 0; i < Globals.MB_FEATURE_TREE_PROBS; i++) {
-							int value=255;
+							int value;
 							if (bc.readBit()>0) {
 								value = bc.readLiteral(8);
 							}
@@ -253,7 +251,7 @@ public class VP8Frame {
 					}
 
 		// Read the mb_no_coeff_skip flag
-		macroBlockNoCoeffSkip = (int) bc.readBit();
+		macroBlockNoCoeffSkip = bc.readBit();
 		if (frameType == 0) {
 			readModes(bc);
 		} else {
@@ -299,22 +297,21 @@ public class VP8Frame {
 	}
 	
 	public void fireLFProgressUpdate(float p) {
-        java.util.Iterator<IIOReadProgressListener> listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-            ( (IIOReadProgressListener)listeners.next() ).imageProgress( null, (100/buffersToCreate)+(p/buffersToCreate));
-        }
+		for (final IIOReadProgressListener _listener : _listeners) {
+			(_listener).imageProgress(null, (100 / buffersToCreate) + (p / buffersToCreate));
+		}
 	}
+
 	private void fireProgressUpdate(int mb_row) {
-        java.util.Iterator<IIOReadProgressListener> listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-            ( (IIOReadProgressListener)listeners.next() ).imageProgress( null, (100.0f*((float)(mb_row+1)/(float)getMacroBlockRows()))/buffersToCreate);
-        }
+		for (final IIOReadProgressListener _listener : _listeners) {
+			(_listener).imageProgress(null, (100.0f * ((float) (mb_row + 1) / (float) getMacroBlockRows())) / buffersToCreate);
+		}
 	}
+
 	public void fireRGBProgressUpdate(float p) {
-        java.util.Iterator<IIOReadProgressListener> listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-            ( (IIOReadProgressListener)listeners.next() ).imageProgress( null, ((bufferCount+4)*(100/buffersToCreate))+(p/buffersToCreate));
-        }
+		for (final IIOReadProgressListener _listener : _listeners) {
+			(_listener).imageProgress(null, ((bufferCount + 4) * (100 / buffersToCreate)) + (p / buffersToCreate));
+		}
 	}
 
 	public SubBlock getAboveRightSubBlock(SubBlock sb, SubBlock.PLANE plane) {
@@ -395,9 +392,7 @@ public class VP8Frame {
 
 	private boolean getBit(int data, int bit) {
 		int r = data & (1 << bit);
-		if (r > 0)
-			return true;
-		return false;
+		return r > 0;
 	}
 	
 	private int getBitAsInt(int data, int bit) {
@@ -747,7 +742,7 @@ public class VP8Frame {
 		return macroBlockCols;
 	}
 	public String getMacroBlockDebugString(int mbx, int mby, int sbx, int sby) {
-		String r = new String();
+		String r = "";
 		if(mbx<this.macroBlockCols && mby<this.getMacroBlockRows()) {
 			MacroBlock mb = getMacroBlock(mbx, mby);
 			r=r+mb.getDebugString();
@@ -888,7 +883,7 @@ public class VP8Frame {
 //					logger.error("TODO:");
 				}
 				
-				int mb_skip_coeff = 0;
+				int mb_skip_coeff;
 				if (macroBlockNoCoeffSkip > 0)
 					mb_skip_coeff = bc.readBool(prob_skip_false);
 				else
@@ -960,22 +955,18 @@ public class VP8Frame {
 	
 	private int readPartitionSize(long l) throws IOException {
 		frame.seek(l);
-		int size =frame.readUnsignedByte() + (frame.readUnsignedByte() << 8) + (frame.readUnsignedByte() << 16);
-		return size;
+        return frame.readUnsignedByte() + (frame.readUnsignedByte() << 8) + (frame.readUnsignedByte() << 16);
 		
 	}
 	private int readSubBlockMode(BoolDecoder bc, int A, int L) throws IOException {
-		int i = bc.readTree(Globals.vp8SubBlockModeTree, Globals.vp8KeyFrameSubBlockModeProb[A][L]);
-		return i;
+        return bc.readTree(Globals.vp8SubBlockModeTree, Globals.vp8KeyFrameSubBlockModeProb[A][L]);
 	}
 	private int readUvMode(BoolDecoder bc) throws IOException {
-		int i = bc.readTree(Globals.vp8UVModeTree, Globals.vp8KeyFrameUVModeProb);
-		return i;
+        return bc.readTree(Globals.vp8UVModeTree, Globals.vp8KeyFrameUVModeProb);
 	}
 	
 	private int readYMode(BoolDecoder bc) throws IOException {
-		int i = bc.readTree(Globals.vp8KeyFrameYModeTree, Globals.vp8KeyFrameYModeProb);
-		return i;
+        return bc.readTree(Globals.vp8KeyFrameYModeTree, Globals.vp8KeyFrameYModeProb);
 	}
 	
 	public void removeIIOReadProgressListener(IIOReadProgressListener listener) {
@@ -989,7 +980,7 @@ public class VP8Frame {
 	
 	private void setupTokenDecoder(BoolDecoder bc, int first_partition_length_in_bytes, long offset) throws IOException {
 
-		long partitionSize = 0;
+		long partitionSize;
 		long partitionsStart = offset+first_partition_length_in_bytes;
 		long partition = partitionsStart;
 		multiTokenPartition = bc.readLiteral(2);
@@ -1048,7 +1039,7 @@ public class VP8Frame {
 			this.frame = frame;
 			offset = frame.getStreamPosition();
 			this.coefProbs=Globals.getDefaultCoefProbs();
-			tokenBoolDecoders = new Vector<BoolDecoder>();
+			tokenBoolDecoders = new Vector<>();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

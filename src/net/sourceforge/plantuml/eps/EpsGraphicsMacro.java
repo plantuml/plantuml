@@ -51,7 +51,7 @@ public class EpsGraphicsMacro extends EpsGraphics {
 
 	@Override
 	protected void append(String s, boolean checkConsistence) {
-		if (checkConsistence && s.indexOf("  ") != -1) {
+		if (checkConsistence && s.contains("  ")) {
 			throw new IllegalArgumentException(s);
 		}
 		data.add(new PostScriptCommandRaw(s, checkConsistence));
@@ -72,7 +72,7 @@ public class EpsGraphicsMacro extends EpsGraphics {
 	private double posX;
 	private double posY;
 	private int macroCpt;
-	private final Map<PostScriptCommandMacro, String> macros = new HashMap<PostScriptCommandMacro, String>();
+	private final Map<PostScriptCommandMacro, String> macros = new HashMap<>();
 
 	@Override
 	public void newpath() {
@@ -175,7 +175,6 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		final double lastY = ymin + nb * (getDashVisible() + getDashSpace());
 		double v = ymax - lastY;
 		if (v > getDashVisible()) {
-			v = getDashVisible();
 			nb++;
 			v = 0;
 		}
@@ -195,7 +194,6 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		final double lastX = xmin + nb * (getDashVisible() + getDashSpace());
 		double v = xmax - lastX;
 		if (v > getDashVisible()) {
-			v = getDashVisible();
 			nb++;
 			v = 0;
 		}

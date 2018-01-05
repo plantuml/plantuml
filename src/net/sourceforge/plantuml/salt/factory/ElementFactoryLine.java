@@ -42,14 +42,14 @@ import net.sourceforge.plantuml.salt.element.ElementLine;
 
 public class ElementFactoryLine implements ElementFactory {
 
-	final private DataSource dataSource;
+	private final DataSource dataSource;
 
 	public ElementFactoryLine(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();
@@ -59,19 +59,10 @@ public class ElementFactoryLine implements ElementFactory {
 
 	public boolean ready() {
 		final String text = dataSource.peek(0).getElement();
-		if (isLine(text, '-')) {
-			return true;
-		}
-		if (isLine(text, '=')) {
-			return true;
-		}
-		if (isLine(text, '~')) {
-			return true;
-		}
-		if (isLine(text, '.')) {
-			return true;
-		}
-		return false;
+		return isLine(text, '-')
+			|| isLine(text, '=')
+			|| isLine(text, '~')
+			|| isLine(text, '.');
 	}
 
 	private boolean isLine(String text, char c) {

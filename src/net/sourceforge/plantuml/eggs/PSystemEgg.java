@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class PSystemEgg extends AbstractPSystem {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 
 	PSystemEgg(String sentence) {
 		final StringTokenizer st = new StringTokenizer(sentence, "|");
@@ -62,7 +62,7 @@ public class PSystemEgg extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
@@ -71,7 +71,7 @@ public class PSystemEgg extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 

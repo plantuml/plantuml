@@ -43,7 +43,6 @@ public enum ColorType {
 		if (x != -1) {
 			s = s.substring(0, x);
 		}
-		final ColorType key = ColorType.valueOf(s.toUpperCase());
-		return key;
+        return ColorType.valueOf(s.toUpperCase());
 	}
 }

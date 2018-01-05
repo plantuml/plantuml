@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import java.awt.Font;
 import java.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -68,7 +67,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 
 	Tile(int num) {
 		this.num = num;
-		final Map<TileGeometry, TileArea> tmp = new EnumMap<TileGeometry, TileArea>(TileGeometry.class);
+		final Map<TileGeometry, TileArea> tmp = new EnumMap<>(TileGeometry.class);
 		for (TileGeometry g : TileGeometry.values()) {
 			tmp.put(g, new TileArea(this, g));
 		}

@@ -37,14 +37,7 @@ package net.sourceforge.plantuml.statediagram;
 
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.EntityUtils;
-import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.*;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -53,24 +46,19 @@ public class StateDiagram extends AbstractEntityDiagram {
 	private static final String CONCURRENT_PREFIX = "CONC";
 
 	public boolean checkConcurrentStateOk(Code code) {
-		if (leafExist(code) == false) {
+		if (!leafExist(code)) {
 			return true;
 		}
 		final IEntity existing = this.getLeafsget(code);
-		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE
-				&& getCurrentGroup() != existing.getParentContainer()) {
-			return false;
-		}
-		if (existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
-				&& getCurrentGroup() != existing.getParentContainer()) {
-			return false;
-		}
-		return true;
+		return (getCurrentGroup().getGroupType() != GroupType.CONCURRENT_STATE
+			|| getCurrentGroup() == existing.getParentContainer())
+			&& (existing.getParentContainer().getGroupType() != GroupType.CONCURRENT_STATE
+			|| getCurrentGroup() == existing.getParentContainer());
 	}
 
 	@Override
 	public IEntity getOrCreateLeaf(Code code, LeafType type, USymbol symbol) {
-		if (checkConcurrentStateOk(code) == false) {
+		if (!checkConcurrentStateOk(code)) {
 			throw new IllegalStateException("Concurrent State " + code);
 		}
 		if (type == null) {
@@ -121,13 +109,13 @@ public class StateDiagram extends AbstractEntityDiagram {
 	public boolean concurrentState(char direction) {
 		final IGroup cur = getCurrentGroup();
 		// printlink("BEFORE");
-		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
+		if (!EntityUtils.groupRoot(cur) && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
 			super.endGroup();
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
 		final IGroup conc1 = getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""),
 				GroupType.CONCURRENT_STATE, getCurrentGroup());
-		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
+		if (!EntityUtils.groupRoot(cur) && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
 			getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
@@ -147,7 +135,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 	@Override
 	public void endGroup() {
 		final IGroup cur = getCurrentGroup();
-		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
+		if (!EntityUtils.groupRoot(cur) && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
 			super.endGroup();
 		}
 		super.endGroup();
@@ -173,7 +161,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		for (Link link : this.getLinks()) {
 			final IGroup parent1 = getGroupParentIfItIsConcurrentState(link.getEntity1());
 			final IGroup parent2 = getGroupParentIfItIsConcurrentState(link.getEntity2());
-			if (isCompatible(parent1, parent2) == false) {
+			if (!isCompatible(parent1, parent2)) {
 				return "State within concurrent state cannot be linked out of this concurrent state (between "
 						+ link.getEntity1().getCode().getFullName() + " and "
 						+ link.getEntity2().getCode().getFullName() + ")";
@@ -183,14 +171,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 	}
 
 	private static boolean isCompatible(IGroup parent1, IGroup parent2) {
-		if (parent1 == null && parent2 == null) {
-			return true;
-		}
-		if (parent1 != null ^ parent2 != null) {
-			return false;
-		}
-		assert parent1 != null && parent2 != null;
-		return parent1 == parent2;
+		return (parent1 == null && parent2 == null)
+			|| (parent1 == parent2);
 	}
 
 	private static IGroup getGroupParentIfItIsConcurrentState(IEntity ent) {

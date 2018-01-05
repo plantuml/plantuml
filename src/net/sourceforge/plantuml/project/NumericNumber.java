@@ -65,13 +65,7 @@ class NumericNumber implements Numeric {
 
 	public int compareTo(Numeric other) {
 		final NumericNumber this2 = (NumericNumber) other;
-		if (this2.value > value) {
-			return -1;
-		}
-		if (this2.value < value) {
-			return 1;
-		}
-		return 0;
+		return Integer.compare(value, this2.value);
 	}
 
 }

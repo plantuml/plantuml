@@ -47,7 +47,7 @@ public interface Pushable {
 
 	void pushToLeft(double deltaX);
 	
-	public Collection<Segment> getDelays(StringBounder stringBounder);
+	Collection<Segment> getDelays(StringBounder stringBounder);
 
 
 }

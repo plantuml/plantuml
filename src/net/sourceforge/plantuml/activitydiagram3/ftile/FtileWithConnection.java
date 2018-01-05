@@ -46,11 +46,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class FtileWithConnection extends FtileDecorate {
 
-	private final List<Connection> connections = new ArrayList<Connection>();
+	private final List<Connection> connections = new ArrayList<>();
 
 	FtileWithConnection(Ftile ftile, Collection<Connection> connections) {
 		super(ftile);
-		if (connections == null || connections.size() == 0) {
+		if (connections == null || connections.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		this.connections.addAll(connections);
@@ -76,7 +76,7 @@ class FtileWithConnection extends FtileDecorate {
 	}
 
 	public Collection<Connection> getInnerConnections() {
-		final List<Connection> result = new ArrayList<Connection>(super.getInnerConnections());
+		final List<Connection> result = new ArrayList<>(super.getInnerConnections());
 		result.addAll(connections);
 		return Collections.unmodifiableList(connections);
 	}

@@ -46,7 +46,7 @@ public class TaskCodeSimpleOrder implements Comparator<TaskCode> {
 	private final int hierarchySize;
 
 	public TaskCodeSimpleOrder(Collection<TaskCode> order, int hierarchySize) {
-		this.order = new ArrayList<TaskCode>(order);
+		this.order = new ArrayList<>(order);
 		this.hierarchySize = hierarchySize;
 		for (TaskCode code : order) {
 			if (code.getHierarchySize() != hierarchySize) {

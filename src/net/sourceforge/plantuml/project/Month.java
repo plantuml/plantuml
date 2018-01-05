@@ -43,9 +43,9 @@ public enum Month {
 
 	JAN(31), FEB(28), MAR(31), APR(30), MAY(31), JUN(30), JUL(31), AUG(31), SEP(30), OCT(31), NOV(30), DEC(31);
 
-	final private int nbDays;
+	private final int nbDays;
 
-	private Month(int nbDays) {
+	Month(int nbDays) {
 		this.nbDays = nbDays;
 	}
 
@@ -68,7 +68,7 @@ public enum Month {
 		if (this == DEC) {
 			return null;
 		}
-		final List<Month> all = new ArrayList<Month>(EnumSet.allOf(Month.class));
+		final List<Month> all = new ArrayList<>(EnumSet.allOf(Month.class));
 		return all.get(getNum());
 	}
 
@@ -76,7 +76,7 @@ public enum Month {
 		if (this == JAN) {
 			return null;
 		}
-		final List<Month> all = new ArrayList<Month>(EnumSet.allOf(Month.class));
+		final List<Month> all = new ArrayList<>(EnumSet.allOf(Month.class));
 		return all.get(getNum() - 2);
 	}
 
@@ -84,7 +84,7 @@ public enum Month {
 		if (num < 1 || num > 12) {
 			throw new IllegalArgumentException();
 		}
-		final List<Month> all = new ArrayList<Month>(EnumSet.allOf(Month.class));
+		final List<Month> all = new ArrayList<>(EnumSet.allOf(Month.class));
 		return all.get(num - 1);
 	}
 }

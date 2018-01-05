@@ -45,16 +45,16 @@ import net.sourceforge.plantuml.SvgString;
 
 public interface ScientificEquation {
 
-	public Dimension2D getDimension();
+	Dimension2D getDimension();
 
-	public SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
+	SvgString getSvg(double scale, Color foregroundColor, Color backgroundColor) throws ClassNotFoundException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, InstantiationException, IOException;
 
-	public BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)
+	BufferedImage getImage(double scale, Color foregroundColor, Color backgroundColor)
 			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException;
 
-	public String getSource();
+	String getSource();
 
 }

@@ -60,8 +60,8 @@ class Point2DIntComparatorDistance implements Comparator<Point2DInt> {
 
 public class InflationTransform {
 
-	private final List<InflateData> inflateX = new ArrayList<InflateData>();
-	private final List<InflateData> inflateY = new ArrayList<InflateData>();
+	private final List<InflateData> inflateX = new ArrayList<>();
+	private final List<InflateData> inflateY = new ArrayList<>();
 
 	public void addInflationX(int xpos, int inflation) {
 		add(inflateX, xpos, inflation);
@@ -76,7 +76,7 @@ public class InflationTransform {
 		add(inflateY, ypos, inflation);
 	}
 
-	static private void add(List<InflateData> list, int ypos, int inflation) {
+	private static void add(List<InflateData> list, int ypos, int inflation) {
 		for (final ListIterator<InflateData> it = list.listIterator(); it.hasNext();) {
 			final InflateData cur = it.next();
 			if (cur.getPos() == ypos) {
@@ -94,9 +94,10 @@ public class InflationTransform {
 		// Log.println("inflateX=" + inflateX);
 		// Log.println("inflateY=" + inflateY);
 
-		final SortedSet<Point2DInt> result = new TreeSet<Point2DInt>(new Point2DIntComparatorDistance(original.getP1()));
+		final SortedSet<Point2DInt> result = new TreeSet<>(new Point2DIntComparatorDistance(original
+                                                                                                .getP1()));
 
-		if (original.isHorizontal() == false) {
+		if (!original.isHorizontal()) {
 			for (InflateData x : inflateX) {
 				final LineSegmentInt vertical = new LineSegmentInt(x.getPos(), original.getMinY(), x.getPos(), original
 						.getMaxY());
@@ -106,7 +107,7 @@ public class InflationTransform {
 				}
 			}
 		}
-		if (original.isVertical() == false) {
+		if (!original.isVertical()) {
 			for (InflateData y : inflateY) {
 				final LineSegmentInt horizontal = new LineSegmentInt(original.getMinX(), y.getPos(),
 						original.getMaxX(), y.getPos());
@@ -120,7 +121,7 @@ public class InflationTransform {
 	}
 
 	Collection<LineSegmentInt> cutSegments(LineSegmentInt original) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		Point2DInt cur = original.getP1();
 		final Collection<Point2DInt> cutPoints = cutPoints(original);
 		for (Point2DInt inter : cutPoints) {
@@ -130,14 +131,14 @@ public class InflationTransform {
 			result.add(new LineSegmentInt(cur, inter));
 			cur = inter;
 		}
-		if (cur.equals(original.getP2()) == false) {
+		if (!cur.equals(original.getP2())) {
 			result.add(new LineSegmentInt(cur, original.getP2()));
 		}
 		return result;
 	}
 
 	Collection<LineSegmentInt> cutSegments(Collection<LineSegmentInt> segments) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		for (LineSegmentInt seg : segments) {
 			result.addAll(cutSegments(seg));
 		}
@@ -164,7 +165,7 @@ public class InflationTransform {
 				onGrid = true;
 			}
 		}
-		if (onGrid == false) {
+		if (!onGrid) {
 			return false;
 		}
 		for (InflateData y : inflateY) {
@@ -187,7 +188,7 @@ public class InflationTransform {
 	}
 
 	List<LineSegmentInt> inflateSegmentCollection(Collection<LineSegmentInt> segments) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		for (LineSegmentInt seg : segments) {
 			result.add(inflateSegment(seg));
 		}
@@ -195,11 +196,11 @@ public class InflationTransform {
 	}
 
 	public List<LineSegmentInt> inflate(Collection<LineSegmentInt> segments) {
-		final List<LineSegmentInt> result = new ArrayList<LineSegmentInt>();
+		final List<LineSegmentInt> result = new ArrayList<>();
 		LineSegmentInt last = null;
 		final Collection<LineSegmentInt> cutSegments = cutSegments(segments);
 		for (LineSegmentInt seg : inflateSegmentCollection(cutSegments)) {
-			if (last != null && last.getP2().equals(seg.getP1()) == false) {
+			if (last != null && !last.getP2().equals(seg.getP1())) {
 				result.add(new LineSegmentInt(last.getP2(), seg.getP1()));
 			}
 			result.add(seg);

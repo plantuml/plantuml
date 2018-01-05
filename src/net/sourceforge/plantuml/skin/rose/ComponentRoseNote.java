@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
+public final class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
 
 	private final int cornersize = 10;
 	private final double paddingX;
@@ -68,13 +68,12 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	}
 
 	@Override
-	final public double getPreferredWidth(StringBounder stringBounder) {
-		final double result = getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();
-		return result;
+    public final double getPreferredWidth(StringBounder stringBounder) {
+        return getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();
 	}
 
 	@Override
-	final public double getPreferredHeight(StringBounder stringBounder) {
+    public final double getPreferredHeight(StringBounder stringBounder) {
 		return getTextHeight(stringBounder) + 2 * getPaddingY() + symbolContext.getDeltaShadow();
 	}
 

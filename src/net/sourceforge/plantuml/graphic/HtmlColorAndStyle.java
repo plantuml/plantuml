@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class HtmlColorAndStyle {
 
-	private final static Rose rose = new Rose();
+	private static final Rose rose = new Rose();
 
 	private final HtmlColor color;
 	private final LinkStyle style;
@@ -89,7 +89,7 @@ public class HtmlColorAndStyle {
 		final IHtmlColorSet set = skinParam.getIHtmlColorSet();
 		for (String s : definition.split(",")) {
 			final LinkStyle tmpStyle = LinkStyle.fromString1(s);
-			if (tmpStyle.isNormal() == false) {
+			if (!tmpStyle.isNormal()) {
 				style = tmpStyle;
 				continue;
 			}

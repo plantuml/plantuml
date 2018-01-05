@@ -89,10 +89,7 @@ public class Circle {
 
 	public boolean isOutside(Point2D point) {
 		final double d = center.distance(point);
-		if (d > radius) {
-			return true;
-		}
-		return false;
+		return d > radius;
 	}
 
 }

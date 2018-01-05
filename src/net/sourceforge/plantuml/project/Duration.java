@@ -70,13 +70,7 @@ class Duration implements Numeric {
 
 	public int compareTo(Numeric other) {
 		final Duration this2 = (Duration) other;
-		if (this2.minutes > minutes) {
-			return -1;
-		}
-		if (this2.minutes < minutes) {
-			return 1;
-		}
-		return 0;
+		return Long.compare(minutes, this2.minutes);
 	}
 
 }

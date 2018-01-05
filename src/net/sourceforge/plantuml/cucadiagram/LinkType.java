@@ -172,11 +172,11 @@ public class LinkType {
 		if (isEmpty1 && isEmpty2) {
 			sb.append("arrowtail=none");
 			sb.append(",arrowhead=none");
-		} else if (isEmpty1 == false && isEmpty2 == false) {
+		} else if (!isEmpty1 && !isEmpty2) {
 			sb.append("dir=both,");
 			sb.append("arrowtail=empty");
 			sb.append(",arrowhead=empty");
-		} else if (isEmpty1 && isEmpty2 == false) {
+		} else if (isEmpty1 && !isEmpty2) {
 			sb.append("arrowtail=empty");
 			sb.append(",arrowhead=none");
 			sb.append(",dir=back");
@@ -190,7 +190,7 @@ public class LinkType {
 			if (sb.length() > 0) {
 				sb.append(",");
 			}
-			sb.append("arrowsize=" + arrowsize);
+			sb.append("arrowsize=").append(arrowsize);
 		}
 		return sb.toString();
 	}

@@ -63,7 +63,7 @@ public class DotxMaker {
 		printCluster(sb, root);
 
 		for (Path p : paths) {
-			sb.append(getPathString(p) + ";");
+			sb.append(getPathString(p)).append(";");
 		}
 
 		sb.append("}");
@@ -72,14 +72,14 @@ public class DotxMaker {
 	}
 
 	private void printCluster(StringBuilder sb, Cluster cl) {
-		if (cl.getContents().size() == 0 && cl.getSubClusters().size() == 0) {
+		if (cl.getContents().isEmpty() && cl.getSubClusters().isEmpty()) {
 			throw new IllegalStateException(cl.toString());
 		}
 		for (Cluster sub : cl.getSubClusters()) {
-			sb.append("subgraph cluster" + sub.getUid() + " {");
+			sb.append("subgraph cluster").append(sub.getUid()).append(" {");
 			if (sub.getTitleWidth() > 0 && sub.getTitleHeight() > 0) {
-				sb.append("label=<<TABLE FIXEDSIZE=\"TRUE\" WIDTH=\"" + sub.getTitleWidth() + "\" HEIGHT=\""
-						+ sub.getTitleHeight() + "\"><TR><TD></TD></TR></TABLE>>");
+				sb.append("label=<<TABLE FIXEDSIZE=\"TRUE\" WIDTH=\"").append(sub.getTitleWidth()).append("\" HEIGHT=\"")
+                  .append(sub.getTitleHeight()).append("\"><TR><TD></TD></TR></TABLE>>");
 			}
 
 			printCluster(sb, sub);
@@ -87,7 +87,7 @@ public class DotxMaker {
 
 		}
 		for (Block b : cl.getContents()) {
-			sb.append("b" + b.getUid() + getNodeAttibute(b) + ";");
+			sb.append("b").append(b.getUid()).append(getNodeAttibute(b)).append(";");
 		}
 
 	}
@@ -100,20 +100,20 @@ public class DotxMaker {
 		sb.append(" [dir=none, arrowhead=none, headclip=true, tailclip=true");
 		final int len = p.getLength();
 		if (len >= 3) {
-			sb.append(",minlen=" + (len - 1));
+			sb.append(",minlen=").append(len - 1);
 		}
 		if (p.getLabel() == null) {
 			sb.append("]");
 		} else {
 			final Dimension2D size = p.getLabel().getSize();
-			sb.append(", label=<<TABLE FIXEDSIZE=\"TRUE\" WIDTH=\"" + size.getWidth() + "\" HEIGHT=\""
-					+ size.getHeight() + "\"><TR><TD></TD></TR></TABLE>>]");
+			sb.append(", label=<<TABLE FIXEDSIZE=\"TRUE\" WIDTH=\"").append(size.getWidth()).append("\" HEIGHT=\"").append(size.getHeight())
+              .append("\"><TR><TD></TD></TR></TABLE>>]");
 		}
 
 		if (p.getLength() <= 1) {
 			final boolean samePackage = p.getStart().getParent() == p.getEnd().getParent();
 			if (samePackage) {
-				sb.append("{rank=same; b" + p.getStart().getUid() + "; b" + p.getEnd().getUid() + "}");
+				sb.append("{rank=same; b").append(p.getStart().getUid()).append("; b").append(p.getEnd().getUid()).append("}");
 			} else {
 				Log.println("!!!!!!!!!!!!!!!!!TURNING ARROUND DOT BUG!!!!!!!!!!!!!!!!!!");
 			}
@@ -123,14 +123,12 @@ public class DotxMaker {
 	}
 
 	private String getNodeAttibute(Block b) {
-		final StringBuilder sb = new StringBuilder("[");
-		sb.append("label=\"\",");
-		sb.append("fixedsize=true,");
-		sb.append("width=" + b.getSize().getWidth() / 72.0 + ",");
-		sb.append("height=" + b.getSize().getHeight() / 72.0 + ",");
-		sb.append("shape=rect");
-		sb.append("]");
-		return sb.toString();
+		return "[" + "label=\"\"," +
+			"fixedsize=true," +
+			"width=" + b.getSize().getWidth() / 72.0 + "," +
+			"height=" + b.getSize().getHeight() / 72.0 + "," +
+			"shape=rect" +
+			"]";
 	}
 
 }

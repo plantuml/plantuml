@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemCreole extends AbstractPSystem {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 
 	public PSystemCreole() {
 	}
@@ -71,7 +70,7 @@ public class PSystemCreole extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);

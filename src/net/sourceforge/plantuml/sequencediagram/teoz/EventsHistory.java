@@ -52,7 +52,7 @@ public class EventsHistory {
 
 	private final Participant p;
 	private final List<Event> events;
-	private final Map<Event, Double> ys3 = new HashMap<Event, Double>();
+	private final Map<Event, Double> ys3 = new HashMap<>();
 
 	public EventsHistory(Participant p, List<Event> events) {
 		this.p = p;
@@ -68,9 +68,8 @@ public class EventsHistory {
 	}
 
 	public int getLevelAt(Event event, EventsHistoryMode mode) {
-		final int result = getLevelAtInternal(event, mode);
-		// System.err.println("EventsHistory::getLevelAt " + mode + " " + result + " " + event);
-		return result;
+        // System.err.println("EventsHistory::getLevelAt " + mode + " " + result + " " + event);
+		return getLevelAtInternal(event, mode);
 	}
 
 	private int getLevelAtInternal(Event event, EventsHistoryMode mode) {
@@ -157,7 +156,7 @@ public class EventsHistory {
 
 	private Event nextButSkippingNotes(Iterator<Event> it) {
 		while (true) {
-			if (it.hasNext() == false) {
+			if (!it.hasNext()) {
 				return null;
 			}
 			final Event next = it.next();

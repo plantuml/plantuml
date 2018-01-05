@@ -78,7 +78,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		return tile2.getSwimlaneOut();
 	}
 
-	private final Map<Ftile, UTranslate> cachedTranslation = new HashMap<Ftile, UTranslate>();
+	private final Map<Ftile, UTranslate> cachedTranslation = new HashMap<>();
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 		UTranslate result = cachedTranslation.get(child);
@@ -147,7 +147,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		result.addAll(tile1.getSwimlanes());
 		result.addAll(tile2.getSwimlanes());
 		return Collections.unmodifiableSet(result);
@@ -162,7 +162,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 	}
 
 	public List<WeldingPoint> getWeldingPoints() {
-		final List<WeldingPoint> result = new ArrayList<WeldingPoint>(tile1.getWeldingPoints());
+		final List<WeldingPoint> result = new ArrayList<>(tile1.getWeldingPoints());
 		result.addAll(tile2.getWeldingPoints());
 		return Collections.unmodifiableList(result);
 	}

@@ -86,7 +86,7 @@ public class AtomImg implements Atom {
 		}
 		try {
 			final File f = FileSystem.getInstance().getFile(src);
-			if (f.exists() == false) {
+			if (!f.exists()) {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 					// final byte image[] = getFile(src);
@@ -116,7 +116,7 @@ public class AtomImg implements Atom {
 		return new AtomImg(read, scale);
 	}
 
-	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) throws IOException {
+	private static Atom build(String source, final FontConfiguration fc, URL url, double scale) {
 		final BufferedImage read = FileUtils.ImageIO_read(url);
 		if (read == null) {
 			return AtomText.create("(Cannot decode: " + source + ")", fc);

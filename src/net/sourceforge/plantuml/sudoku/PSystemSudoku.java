@@ -45,10 +45,10 @@ import net.sourceforge.plantuml.core.ImageData;
 
 public class PSystemSudoku extends AbstractPSystem {
 
-	final private ISudoku sudoku;
+	private final ISudoku sudoku;
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		return new GraphicsSudoku(sudoku).writeImage(os);
 	}

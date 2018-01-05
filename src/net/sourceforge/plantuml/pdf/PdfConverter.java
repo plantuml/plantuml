@@ -41,7 +41,7 @@ public class PdfConverter {
 
 	public static void convert(File svgFile, File pdfFile) {
 
-		if (svgFile.exists() == false) {
+		if (!svgFile.exists()) {
 			throw new IllegalArgumentException();
 		}
 		pdfFile.delete();
@@ -64,14 +64,14 @@ public class PdfConverter {
 			final Method setSources = clSVGConverter.getMethod("setSources", path.getClass());
 			setSources.invoke(converter, new Object[] { path });
 			final Method setDst = clSVGConverter.getMethod("setDst", pdfFile.getClass());
-			setDst.invoke(converter, new Object[] { pdfFile });
+			setDst.invoke(converter, pdfFile);
 			final Method execute = clSVGConverter.getMethod("execute");
 			execute.invoke(converter);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException();
 		}
-		if (pdfFile.exists() == false) {
+		if (!pdfFile.exists()) {
 			throw new IllegalStateException();
 		}
 	}

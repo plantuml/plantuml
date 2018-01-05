@@ -64,10 +64,10 @@ class GraphvizWindows extends AbstractGraphviz {
 	}
 
 	private static File searchInDir(final File programFile) {
-		if (programFile.exists() == false || programFile.isDirectory() == false) {
+		if (!programFile.exists() || !programFile.isDirectory()) {
 			return null;
 		}
-		final List<File> dots = new ArrayList<File>();
+		final List<File> dots = new ArrayList<>();
 		for (File f : programFile.listFiles(new FileFilter() {
 			public boolean accept(File pathname) {
 				return pathname.isDirectory() && StringUtils.goLowerCase(pathname.getName()).startsWith("graphviz");
@@ -82,7 +82,7 @@ class GraphvizWindows extends AbstractGraphviz {
 	}
 
 	static File higherVersion(List<File> dots) {
-		if (dots.size() == 0) {
+		if (dots.isEmpty()) {
 			return null;
 		}
 		Collections.sort(dots, Collections.reverseOrder());

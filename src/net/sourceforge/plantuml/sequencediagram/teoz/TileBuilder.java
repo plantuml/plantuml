@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.skin.Skin;
 public class TileBuilder {
 
 	public static List<Tile> buildSeveral(Iterator<Event> it, TileArguments tileArguments, Tile parent) {
-		final List<Tile> tiles = new ArrayList<Tile>();
+		final List<Tile> tiles = new ArrayList<>();
 		while (it.hasNext()) {
 			final Event ev = it.next();
 			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent)) {
@@ -81,15 +81,15 @@ public class TileBuilder {
 		final ISkinParam skinParam = tileArguments.getSkinParam();
 		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();
 
-		final List<Tile> tiles = new ArrayList<Tile>();
+		final List<Tile> tiles = new ArrayList<>();
 		// System.err.println("TileBuilder::buildOne " + ev);
 		if (ev instanceof Message) {
 			final Message msg = (Message) ev;
 			final LivingSpace livingSpace1 = livingSpaces.get(msg.getParticipant1());
 			final LivingSpace livingSpace2 = livingSpaces.get(msg.getParticipant2());
 			boolean reverse = false;
-			Tile result = null;
-			if (msg.isSelfMessage()) {
+			Tile result;
+            if (msg.isSelfMessage()) {
 				result = new CommunicationTileSelf(livingSpace1, msg, skin, skinParam, livingSpaces);
 			} else {
 				// System.err.println("msg=" + msg);
@@ -113,7 +113,7 @@ public class TileBuilder {
 		} else if (ev instanceof MessageExo) {
 			final MessageExo exo = (MessageExo) ev;
 			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
-			Tile result = null;
+			Tile result;
 			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments);
 			for (NoteOnMessage noteOnMessage : exo.getNoteOnMessages()) {
 				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getNotePosition();

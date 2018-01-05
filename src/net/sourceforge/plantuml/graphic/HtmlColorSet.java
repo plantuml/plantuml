@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 public class HtmlColorSet {
 
-	private final static IHtmlColorSet singleton = new HtmlColorSetSimple();
+	private static final IHtmlColorSet singleton = new HtmlColorSetSimple();
 
 	public static IHtmlColorSet getInstance() {
 		return singleton;

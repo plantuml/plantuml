@@ -35,15 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.Color;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -53,6 +44,15 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.HtmlColorTransparent;
 import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 // Do not move
 public class StringUtils {
 
@@ -60,12 +60,12 @@ public class StringUtils {
 		return file.getAbsolutePath();
 	}
 
-	final static public List<String> getSplit(Pattern2 pattern, String line) {
+	public static List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return null;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (int i = 1; i <= m.groupCount(); i++) {
 			result.add(m.group(i));
 		}
@@ -74,15 +74,15 @@ public class StringUtils {
 	}
 
 	public static boolean isNotEmpty(String input) {
-		return input != null && trin(input).length() > 0;
+		return input != null && !trin(input).isEmpty();
 	}
 
 	public static boolean isNotEmpty(List<? extends CharSequence> input) {
-		return input != null && input.size() > 0;
+		return input != null && !input.isEmpty();
 	}
 
 	public static boolean isEmpty(String input) {
-		return input == null || trin(input).length() == 0;
+		return input == null || trin(input).isEmpty();
 	}
 
 	public static String manageHtml(String s) {
@@ -95,8 +95,7 @@ public class StringUtils {
 		final StringBuilder result = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			if (c > 127 || c == '&' || c == '|') {
-				final int i = c;
-				result.append("&#" + i + ";");
+				result.append("&#").append((int) c).append(";");
 			} else {
 				result.append(c);
 			}
@@ -108,8 +107,7 @@ public class StringUtils {
 		final StringBuilder result = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			if (c > 127 || c == '&' || c == '|' || c == '<' || c == '>') {
-				final int i = c;
-				result.append("&#" + i + ";");
+				result.append("&#").append((int) c).append(";");
 			} else {
 				result.append(c);
 			}
@@ -320,34 +318,19 @@ public class StringUtils {
 
 	public static boolean isDiagramCacheable(String uml) {
 		uml = uml.toLowerCase();
-		if (uml.startsWith("@startuml\nversion\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nlicense\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nlicence\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nauthor\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\ncheckversion")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\ntestdot\n")) {
-			return false;
-		}
-		if (uml.startsWith("@startuml\nsudoku\n")) {
-			return false;
-		}
-		return true;
+		return !uml.startsWith("@startuml\nversion\n")
+			&& !uml.startsWith("@startuml\nlicense\n")
+			&& !uml.startsWith("@startuml\nlicence\n")
+			&& !uml.startsWith("@startuml\nauthor\n")
+			&& !uml.startsWith("@startuml\ncheckversion")
+			&& !uml.startsWith("@startuml\ntestdot\n")
+			&& !uml.startsWith("@startuml\nsudoku\n");
 	}
 
 	public static int getPragmaRevision(String uml) {
 		uml = uml.toLowerCase();
 		final String header = "@startuml\n!pragma revision ";
-		if (uml.startsWith(header) == false) {
+		if (!uml.startsWith(header)) {
 			return -1;
 		}
 		int x1 = header.length();
@@ -366,7 +349,7 @@ public class StringUtils {
 		// if (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*") == false) {
 		// throw new IllegalArgumentException();
 		// }
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final Pattern2 p = MyPattern.cmpile("([\\p{L}0-9_.]+|[%g][^%g]+[%g])");
 		final Matcher2 m = p.matcher(s);
 		while (m.find()) {
@@ -404,13 +387,13 @@ public class StringUtils {
 	}
 
 	public static <O> List<O> merge(List<O> l1, List<O> l2) {
-		final List<O> result = new ArrayList<O>(l1);
+		final List<O> result = new ArrayList<>(l1);
 		result.addAll(l2);
 		return Collections.unmodifiableList(result);
 	}
 
 	public static boolean endsWithBackslash(final String s) {
-		return s.endsWith("\\") && s.endsWith("\\\\") == false;
+		return s.endsWith("\\") && !s.endsWith("\\\\");
 	}
 
 	public static String manageGuillemetStrict(String st) {
@@ -444,11 +427,11 @@ public class StringUtils {
 	}
 
 	public static String manageGuillemet(String st) {
-		return st.replaceAll("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>", "\u00AB$1\u00BB");
+		return st.replaceAll("<<\\s?((?:<&\\w+>|[^<>])+?)\\s?>>", "\u00AB$1\u00BB");
 	}
 
 	public static String manageUnicodeNotationUplus(String s) {
-		final Pattern pattern = Pattern.compile("\\<U\\+([0-9a-fA-F]{4,5})\\>");
+		final Pattern pattern = Pattern.compile("<U\\+([0-9a-fA-F]{4,5})>");
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer();
 		while (matcher.find()) {
@@ -461,7 +444,7 @@ public class StringUtils {
 	}
 
 	public static String manageAmpDiese(String s) {
-		final Pattern pattern = Pattern.compile("\\&#([0-9]+);");
+		final Pattern pattern = Pattern.compile("&#([0-9]+);");
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer();
 		while (matcher.find()) {

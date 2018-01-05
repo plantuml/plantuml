@@ -50,14 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.graphic.*;
 import net.sourceforge.plantuml.png.PngTitler;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
@@ -107,14 +100,14 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			// }
 		}
 		drawableSet = initializer.createDrawableSet(stringBounder);
-		final List<Newpage> newpages = new ArrayList<Newpage>();
+		final List<Newpage> newpages = new ArrayList<>();
 		for (Event ev : drawableSet.getAllEvents()) {
 			if (ev instanceof Newpage) {
 				newpages.add((Newpage) ev);
 			}
 		}
 		fullDimension = drawableSet.getDimension();
-		final Map<Newpage, Double> positions = new LinkedHashMap<Newpage, Double>();
+		final Map<Newpage, Double> positions = new LinkedHashMap<>();
 		for (Newpage n : newpages) {
 			positions.put(n, initializer.getYposition(stringBounder, n));
 		}
@@ -203,7 +196,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 				final double delta1 = Math.max(0, dimLegend.getWidth() - area.getWidth());
 
-				final boolean legendTop = DisplayPositionned.isNull(legend) == false
+				final boolean legendTop = !DisplayPositionned.isNull(legend)
 						&& legend.getVerticalAlignment() == VerticalAlignment.TOP;
 
 				double sequenceAreaY = area.getSequenceAreaY();
@@ -216,15 +209,19 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				drawHeader(area, ug, index);
 				drawFooter(area, ug, index);
 
-				if (DisplayPositionned.isNull(legend) == false) {
+				if (!DisplayPositionned.isNull(legend)) {
 					final double delta2;
-					if (legend.getHorizontalAlignment() == HorizontalAlignment.LEFT) {
-						delta2 = 0;
-					} else if (legend.getHorizontalAlignment() == HorizontalAlignment.RIGHT) {
-						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth());
-					} else {
-						delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth()) / 2;
-					}
+                    switch (legend.getHorizontalAlignment()) {
+                        case LEFT:
+                            delta2 = 0;
+                            break;
+                        case RIGHT:
+                            delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth());
+                            break;
+                        default:
+                            delta2 = Math.max(0, area.getWidth() - dimLegend.getWidth()) / 2;
+                            break;
+                    }
 					legendBlock.drawU(ug.apply(new UTranslate(delta2, legendTop ? legendYdelta : legendYdelta
 							+ area.getHeight())));
 				}

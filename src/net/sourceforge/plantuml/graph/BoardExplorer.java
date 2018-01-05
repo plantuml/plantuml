@@ -74,7 +74,7 @@ public class BoardExplorer {
 	}
 
 	public Set<Board> nextBoards(Board board) {
-		final Set<Board> result = new HashSet<Board>();
+		final Set<Board> result = new HashSet<>();
 		for (Move m : board.getAllPossibleMoves()) {
 			final Board copy = board.copy();
 			copy.applyMove(m);

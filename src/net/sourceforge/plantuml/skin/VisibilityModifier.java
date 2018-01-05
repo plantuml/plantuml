@@ -72,7 +72,7 @@ public enum VisibilityModifier {
 		return "[-#+~]";
 	}
 
-	private VisibilityModifier(ColorParam foreground, ColorParam background) {
+	VisibilityModifier(ColorParam foreground, ColorParam background) {
 		this.foregroundParam = foreground;
 		this.backgroundParam = background;
 	}
@@ -162,7 +162,7 @@ public enum VisibilityModifier {
 		ug.apply(new UTranslate(x + 2, y + 2)).draw(new UEllipse(size - 4, size - 4));
 	}
 
-	static private int ensureEven(int n) {
+	private static int ensureEven(int n) {
 		if (n % 2 == 1) {
 			n--;
 		}
@@ -193,25 +193,12 @@ public enum VisibilityModifier {
 			return false;
 		}
 		final char c = s.charAt(0);
-		if (s.charAt(1) == c) {
-			return false;
-		}
-		if (c == '-') {
-			return true;
-		}
-		if (c == '#') {
-			return true;
-		}
-		if (c == '+') {
-			return true;
-		}
-		if (c == '~') {
-			return true;
-		}
-		if (c == '*') {
-			return true;
-		}
-		return false;
+		return s.charAt(1) != c
+			&& (c == '-'
+			|| c == '#'
+			|| c == '+'
+			|| c == '~'
+			|| c == '*');
 	}
 
 	public static VisibilityModifier getVisibilityModifier(CharSequence s, boolean isField) {

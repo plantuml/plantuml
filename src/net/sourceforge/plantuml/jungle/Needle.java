@@ -83,7 +83,7 @@ public class Needle implements UDrawable {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
 				Needle.this.drawU(ug);
-				if (children.size() == 0) {
+				if (children.isEmpty()) {
 					return;
 				}
 				ug = ug.apply(getTranslate(length / 2));

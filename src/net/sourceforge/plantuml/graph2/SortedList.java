@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.graph2;
 import java.util.List;
 
 public interface SortedList<V> extends Iterable<V> {
-	public void add(V data);
+	void add(V data);
 
-	public List<V> lesserOrEquals(int v);
+	List<V> lesserOrEquals(int v);
 
-	public List<V> biggerOrEquals(int v);
+	List<V> biggerOrEquals(int v);
 }

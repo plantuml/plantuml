@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project2;
 
 public class TimeUtils {
 
-	static public TimeElement max(TimeElement t1, TimeElement t2) {
+	public static TimeElement max(TimeElement t1, TimeElement t2) {
 		if (t1 == null) {
 			throw new IllegalArgumentException();
 		}
@@ -50,7 +50,7 @@ public class TimeUtils {
 		return t2;
 	}
 
-	static public TimeElement min(TimeElement t1, TimeElement t2) {
+	public static TimeElement min(TimeElement t1, TimeElement t2) {
 		if (t1 == null) {
 			throw new IllegalArgumentException();
 		}

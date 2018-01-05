@@ -35,28 +35,21 @@
  */
 package net.sourceforge.plantuml.hector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class GrowingTree {
 
-	private final List<PinLink> all = new ArrayList<PinLink>();
-	private final Map<Pin, ArrayList<Pin>> directlyAfter = new HashMap<Pin, ArrayList<Pin>>();
+	private final List<PinLink> all = new ArrayList<>();
+	private final Map<Pin, ArrayList<Pin>> directlyAfter = new HashMap<>();
 
 	public Skeleton createSkeleton() {
-		final Set<Pin> pins = new LinkedHashSet<Pin>();
+		final Set<Pin> pins = new LinkedHashSet<>();
 		for (PinLink link : all) {
 			pins.add(link.getPin1());
 			pins.add(link.getPin2());
 		}
 		normalizeRowToZero(pins);
-		return new Skeleton(new ArrayList<Pin>(pins), new ArrayList<PinLink>(all));
+		return new Skeleton(new ArrayList<>(pins), new ArrayList<>(all));
 	}
 
 	private void normalizeRowToZero(Collection<Pin> pins) {
@@ -76,21 +69,19 @@ public class GrowingTree {
 	}
 
 	public boolean canBeAdded(PinLink candidat) {
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			return true;
 		}
 		final Pin p1 = candidat.getPin1();
 		final Pin p2 = candidat.getPin2();
-		if (p1.getRow() == Integer.MAX_VALUE && p2.getRow() == Integer.MAX_VALUE) {
-			return false;
-		}
-		return true;
+		return p1.getRow() != Integer.MAX_VALUE
+			|| p2.getRow() != Integer.MAX_VALUE;
 	}
 
 	public void add(PinLink newPinLink) {
 		final Pin p1 = newPinLink.getPin1();
 		final Pin p2 = newPinLink.getPin2();
-		if (all.size() == 0) {
+		if (all.isEmpty()) {
 			newPinLink.getPin1().setRow(0);
 			simpleRowComputation(newPinLink);
 		} else if (isPartiallyNew(newPinLink)) {
@@ -109,17 +100,17 @@ public class GrowingTree {
 	private List<Pin> getDirectlyAfter(Pin p) {
 		ArrayList<Pin> result = directlyAfter.get(p);
 		if (result == null) {
-			result = new ArrayList<Pin>();
+			result = new ArrayList<>();
 			directlyAfter.put(p, result);
 		}
 		return result;
 	}
 
 	private Collection<Pin> getIndirectlyAfter(Pin pin) {
-		final Set<Pin> result = new HashSet<Pin>(getDirectlyAfter(pin));
+		final Set<Pin> result = new HashSet<>(getDirectlyAfter(pin));
 		int lastSize = result.size();
 		while (true) {
-			for (Pin p : new ArrayList<Pin>(result)) {
+			for (Pin p : new ArrayList<>(result)) {
 				result.addAll(getDirectlyAfter(p));
 			}
 			if (result.size() == lastSize) {
@@ -158,13 +149,8 @@ public class GrowingTree {
 	private boolean isPartiallyNew(PinLink link) {
 		final Pin p1 = link.getPin1();
 		final Pin p2 = link.getPin2();
-		if (p1.getRow() == Integer.MAX_VALUE && p2.getRow() != Integer.MAX_VALUE) {
-			return true;
-		} else if (p1.getRow() != Integer.MAX_VALUE && p2.getRow() == Integer.MAX_VALUE) {
-			return true;
-		} else {
-			return false;
-		}
+		return p1.getRow() == Integer.MAX_VALUE && p2.getRow() != Integer.MAX_VALUE
+			|| p1.getRow() != Integer.MAX_VALUE && p2.getRow() == Integer.MAX_VALUE;
 	}
 
 	public void normalizeRowToZero() {

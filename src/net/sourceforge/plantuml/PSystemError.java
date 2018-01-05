@@ -76,7 +76,7 @@ public class PSystemError extends AbstractPSystem {
 
 	private final LineLocation higherErrorPosition;
 	private final List<ErrorUml> printedErrors;
-	private final List<String> debugLines = new ArrayList<String>();
+	private final List<String> debugLines = new ArrayList<>();
 
 	public PSystemError(UmlSource source, ErrorUml singleError, List<String> debugLines) {
 		this(source, Collections.singletonList(singleError), debugLines);
@@ -122,7 +122,7 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+	protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
@@ -151,16 +151,16 @@ public class PSystemError extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
 	}
 
-	private TextBlockBackcolored getWelcome() throws IOException {
+	private TextBlockBackcolored getWelcome() {
 		return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
 	}
 
-	private TextBlock addWelcome(final TextBlockBackcolored result) throws IOException {
+	private TextBlock addWelcome(final TextBlockBackcolored result) {
 		final TextBlockBackcolored welcome = getWelcome();
 		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
 	}
 
-	private TextBlock addMessage(final TextBlock source) throws IOException {
+	private TextBlock addMessage(final TextBlock source) {
 		final TextBlock message = getMessage();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
@@ -198,8 +198,8 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private List<String> getTextStrings() {
-		final List<String> result = new ArrayList<String>(getStack());
-		if (result.size() > 0) {
+		final List<String> result = new ArrayList<>(getStack());
+		if (!result.isEmpty()) {
 			result.add(" ");
 		}
 
@@ -219,9 +219,7 @@ public class PSystemError extends AbstractPSystem {
 		// for (int i = start; i < higherErrorPosition; i++) {
 		// result.add(getSource().getLine(i));
 		// }
-		for (String s : getPartialCode()) {
-			result.add(s);
-		}
+		result.addAll(getPartialCode());
 		final String errorLine = getSource().getLine(higherErrorPosition);
 		final String err = StringUtils.hideComparatorCharacters(errorLine);
 		if (StringUtils.isNotEmpty(err)) {
@@ -232,7 +230,7 @@ public class PSystemError extends AbstractPSystem {
 			underscore.append("^");
 		}
 		result.add(underscore.toString());
-		final Collection<String> textErrors = new LinkedHashSet<String>();
+		final Collection<String> textErrors = new LinkedHashSet<>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());
 		}
@@ -255,7 +253,7 @@ public class PSystemError extends AbstractPSystem {
 
 	private List<String> getStack() {
 		LineLocation lineLocation = getLineLocation();
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (lineLocation != null) {
 			append(result, lineLocation);
 			while (lineLocation.getParent() != null) {
@@ -282,7 +280,7 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private List<String> getPartialCode() {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (Iterator<CharSequence2> it = getSource().iterator2(); it.hasNext();) {
 			final CharSequence2 s = it.next();
 			if (s.getLocation().compareTo(higherErrorPosition) < 0) {
@@ -298,7 +296,7 @@ public class PSystemError extends AbstractPSystem {
 			} else {
 				skipMessage = "... (skipping " + skip + " lines) ...";
 			}
-			result = new ArrayList<String>(result.subList(skip, result.size()));
+			result = new ArrayList<>(result.subList(skip, result.size()));
 			result.add(0, skipMessage);
 		}
 		return result;
@@ -306,8 +304,8 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private List<String> getHtmlStrings(boolean useRed) {
-		final List<String> htmlStrings = new ArrayList<String>(getStack());
-		if (htmlStrings.size() > 0) {
+		final List<String> htmlStrings = new ArrayList<>(getStack());
+		if (!htmlStrings.isEmpty()) {
 			htmlStrings.add("----");
 		}
 
@@ -335,7 +333,7 @@ public class PSystemError extends AbstractPSystem {
 		if (StringUtils.isNotEmpty(err)) {
 			htmlStrings.add("<w:" + getRed(useRed) + ">" + err + "</w>");
 		}
-		final Collection<String> textErrors = new LinkedHashSet<String>();
+		final Collection<String> textErrors = new LinkedHashSet<>();
 		for (ErrorUml er : printedErrors) {
 			textErrors.add(er.getError());
 		}
@@ -364,10 +362,10 @@ public class PSystemError extends AbstractPSystem {
 				suggested = true;
 			}
 		}
-		if (suggested == false) {
+		if (!suggested) {
 			return Collections.emptyList();
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add("Did you mean:");
 		for (ErrorUml er : printedErrors) {
 			if (er.hasSuggest()) {
@@ -379,7 +377,7 @@ public class PSystemError extends AbstractPSystem {
 	}
 
 	private Collection<ErrorUml> getErrors(ErrorUmlType type, List<ErrorUml> all) {
-		final Collection<ErrorUml> result = new LinkedHashSet<ErrorUml>();
+		final Collection<ErrorUml> result = new LinkedHashSet<>();
 		for (ErrorUml error : all) {
 			if (error.getType() == type) {
 				result.add(error);
@@ -419,7 +417,7 @@ public class PSystemError extends AbstractPSystem {
 	// }
 
 	private List<ErrorUml> getErrorsAt2(LineLocation position, ErrorUmlType type, List<ErrorUml> all) {
-		final List<ErrorUml> result = new ArrayList<ErrorUml>();
+		final List<ErrorUml> result = new ArrayList<>();
 		for (ErrorUml error : getErrors(type, all)) {
 			if (error.getLineLocation().compareTo(position) == 0 && StringUtils.isNotEmpty(error.getError())) {
 				result.add(error);
@@ -459,8 +457,8 @@ public class PSystemError extends AbstractPSystem {
 
 	public static PSystemError merge(Collection<PSystemError> ps) {
 		UmlSource source = null;
-		final List<ErrorUml> errors = new ArrayList<ErrorUml>();
-		final List<String> debugs = new ArrayList<String>();
+		final List<ErrorUml> errors = new ArrayList<>();
+		final List<String> debugs = new ArrayList<>();
 		for (PSystemError system : ps) {
 			if (system == null) {
 				continue;
@@ -470,7 +468,7 @@ public class PSystemError extends AbstractPSystem {
 			}
 			errors.addAll(system.getErrorsUml());
 			debugs.addAll(system.debugLines);
-			if (system.debugLines.size() > 0) {
+			if (!system.debugLines.isEmpty()) {
 				debugs.add("-");
 			}
 		}

@@ -46,19 +46,19 @@ public abstract class EntityUtils {
 	}
 
 	private static boolean isParent(IGroup groupToBeTested, IGroup parentGroup) {
-		if (groupToBeTested.isGroup() == false) {
+		if (!groupToBeTested.isGroup()) {
 			// Very strange!
 			return false;
 		}
-		if (groupToBeTested.isGroup() == false) {
+		if (!groupToBeTested.isGroup()) {
 			throw new IllegalArgumentException();
 		}
-		while (EntityUtils.groupRoot(groupToBeTested) == false) {
+		while (!EntityUtils.groupRoot(groupToBeTested)) {
 			if (groupToBeTested == parentGroup) {
 				return true;
 			}
 			groupToBeTested = groupToBeTested.getParentContainer();
-			if (groupToBeTested.isGroup() == false) {
+			if (!groupToBeTested.isGroup()) {
 				throw new IllegalStateException();
 			}
 		}
@@ -66,30 +66,24 @@ public abstract class EntityUtils {
 	}
 
 	public static boolean isPureInnerLink12(IGroup group, Link link) {
-		if (group.isGroup() == false) {
+		if (!group.isGroup()) {
 			throw new IllegalArgumentException();
 		}
 		final IEntity e1 = link.getEntity1();
 		final IEntity e2 = link.getEntity2();
 		final IGroup group1 = e1.getParentContainer();
 		final IGroup group2 = e2.getParentContainer();
-		if (isParent(group1, group) && isParent(group2, group)) {
-			return true;
-		}
-		return false;
+		return isParent(group1, group) && isParent(group2, group);
 	}
 
 	public static boolean isPureInnerLink3(IGroup group, Link link) {
-		if (group.isGroup() == false) {
+		if (!group.isGroup()) {
 			throw new IllegalArgumentException();
 		}
 		final IEntity e1 = link.getEntity1();
 		final IEntity e2 = link.getEntity2();
 		final IGroup group1 = e1.getParentContainer();
 		final IGroup group2 = e2.getParentContainer();
-		if (isParent(group2, group) == isParent(group1, group)) {
-			return true;
-		}
-		return false;
+		return isParent(group2, group) == isParent(group1, group);
 	}
 }

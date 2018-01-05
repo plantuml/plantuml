@@ -126,9 +126,9 @@ class Step1Message extends Step1Abstract {
 
 		assert graphic instanceof InGroupable;
 		if (graphic instanceof InGroupable) {
-			inGroupablesStack.addElement((InGroupable) graphic);
+			inGroupablesStack.addElement(graphic);
 			inGroupablesStack.addElement(getLivingParticipantBox1());
-			if (isSelfMessage() == false) {
+			if (!isSelfMessage()) {
 				inGroupablesStack.addElement(getLivingParticipantBox2());
 			}
 		}
@@ -167,17 +167,17 @@ class Step1Message extends Step1Abstract {
 		if (getMessage().isCreate()) {
 			return createArrowCreate();
 		}
-		if (getMessage().getNoteOnMessages().size() > 0 && isSelfMessage()) {
+		if (!getMessage().getNoteOnMessages().isEmpty() && isSelfMessage()) {
 			final MessageSelfArrow messageSelfArrow = createMessageSelfArrow();
-			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+			final List<NoteBox> noteBoxes = new ArrayList<>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
 				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
 				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));
 			}
 			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBoxes);
-		} else if (getMessage().getNoteOnMessages().size() > 0) {
-			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+		} else if (!getMessage().getNoteOnMessages().isEmpty()) {
+			final List<NoteBox> noteBoxes = new ArrayList<>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
 				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);
@@ -223,8 +223,8 @@ class Step1Message extends Step1Abstract {
 		}
 		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2(), getDrawingSet()
 				.getSkinParam().getPadding(PaddingParam.PARTICIPANT));
-		if (getMessage().getNoteOnMessages().size() > 0) {
-			final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+		if (!getMessage().getNoteOnMessages().isEmpty()) {
+			final List<NoteBox> noteBoxes = new ArrayList<>();
 			for (int i = 0; i < getNotes().size(); i++) {
 				final Component note = getNotes().get(i);
 				final NoteOnMessage noteOnMessage = getMessage().getNoteOnMessages().get(i);

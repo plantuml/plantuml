@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.ugraphic.ColorMapper;
 
 class EntityImageCircleInterface extends AbstractEntityImage {
 
-	final private TextBlock name;
-	final private CircleInterface circleInterface;
+	private final TextBlock name;
+	private final CircleInterface circleInterface;
 
 	public EntityImageCircleInterface(IEntity entity) {
 		super(entity);

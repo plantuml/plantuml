@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.sequencediagram.NoteOnMessage;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
-import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -155,14 +154,14 @@ class DrawableSetInitializer {
 			}
 		}
 
-		final List<ParticipantBox> col = new ArrayList<ParticipantBox>();
+		final List<ParticipantBox> col = new ArrayList<>();
 		for (LivingParticipantBox livingParticipantBox : drawableSet.getAllLivingParticipantBox()) {
 			col.add(livingParticipantBox.getParticipantBox());
 		}
 
 		constraintSet = new ConstraintSet(col, freeX);
 
-		for (Event ev : new ArrayList<Event>(drawableSet.getAllEvents())) {
+		for (Event ev : new ArrayList<>(drawableSet.getAllEvents())) {
 			final ParticipantRange range = getParticipantRange(ev);
 			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);
 			// final double diffY = freeY2.diff(lastFreeY2);
@@ -350,7 +349,7 @@ class DrawableSetInitializer {
 		drawableSet.addEvent(delay, graphicalDivider);
 	}
 
-	final private InGroupablesStack inGroupableStack = new InGroupablesStack();
+	private final InGroupablesStack inGroupableStack = new InGroupablesStack();
 
 	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart m, ParticipantRange range) {
 		if (m.getType() != GroupingType.START) {
@@ -386,54 +385,59 @@ class DrawableSetInitializer {
 	private void prepareGroupingLeaf(StringBounder stringBounder, final GroupingLeaf m, ParticipantRange range) {
 		final GraphicalElement element;
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), null, m.getBackColorGeneral());
-		if (m.getType() == GroupingType.ELSE) {
-			if (m.isParallel()) {
-				freeY2 = ((FrontierStack) freeY2).restore();
-			}
-			final Component compElse = drawableSet.getSkin().createComponent(ComponentType.GROUPING_ELSE, null,
-					skinParam, Display.create(m.getComment()));
-			final Lazy lazy = new Lazy() {
-				public double getNow() {
-					final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());
-					if (after == null) {
-						return 0;
-					}
-					return after.getStartingY();
-				}
-			};
-			element = new GroupingGraphicalElementElse(freeY2.getFreeY(range), compElse,
-					inGroupableStack.getTopGroupingStructure(), m.isParallel(), lazy);
-			final double preferredHeight = element.getPreferredHeight(stringBounder);
-			freeY2 = freeY2.add(preferredHeight, range);
-			// MODIF42
-			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
-		} else if (m.getType() == GroupingType.END) {
-			final List<Component> notes = new ArrayList<Component>();
-			for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
-				final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
-				final Component note = drawableSet.getSkin().createComponent(
-						noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
-				notes.add(note);
-			}
-			if (m.isParallel()) {
-				freeY2 = ((FrontierStack) freeY2).closeBar();
-			}
-			final GroupingGraphicalElementHeader groupingHeaderStart = (GroupingGraphicalElementHeader) drawableSet
-					.getEvent(m.getGroupingStart());
-			if (groupingHeaderStart != null) {
-				groupingHeaderStart.setEndY(freeY2.getFreeY(range));
-				groupingHeaderStart.addNotes(stringBounder, notes);
-			}
-			element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
-					inGroupableStack.getTopGroupingStructure(), m.isParallel());
-			final Component comp = drawableSet.getSkin().createComponent(ComponentType.GROUPING_SPACE, null, skinParam,
-					Display.create(m.getComment()));
-			final double preferredHeight = comp.getPreferredHeight(stringBounder);
-			freeY2 = freeY2.add(preferredHeight, range);
-			inGroupableStack.pop();
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (m.getType()) {
+            case ELSE: {
+                if (m.isParallel()) {
+                    freeY2 = ((FrontierStack) freeY2).restore();
+                }
+                final Component compElse = drawableSet.getSkin().createComponent(ComponentType.GROUPING_ELSE, null,
+                        skinParam, Display.create(m.getComment()));
+                final Lazy lazy = new Lazy() {
+                    public double getNow() {
+                        final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());
+                        if (after == null) {
+                            return 0;
+                        }
+                        return after.getStartingY();
+                    }
+                };
+                element = new GroupingGraphicalElementElse(freeY2.getFreeY(range), compElse,
+                        inGroupableStack.getTopGroupingStructure(), m.isParallel(), lazy);
+                final double preferredHeight = element.getPreferredHeight(stringBounder);
+                freeY2 = freeY2.add(preferredHeight, range);
+                // MODIF42
+                inGroupableStack.addElement((GroupingGraphicalElementElse) element);
+                break;
+            }
+            case END: {
+                final List<Component> notes = new ArrayList<>();
+                for (NoteOnMessage noteOnMessage : m.getNoteOnMessages()) {
+                    final ISkinParam sk = noteOnMessage.getSkinParamNoteBackcolored(drawableSet.getSkinParam());
+                    final Component note = drawableSet.getSkin().createComponent(
+                            noteOnMessage.getNoteStyle().getNoteComponentType(), null, sk, noteOnMessage.getDisplay());
+                    notes.add(note);
+                }
+                if (m.isParallel()) {
+                    freeY2 = ((FrontierStack) freeY2).closeBar();
+                }
+                final GroupingGraphicalElementHeader groupingHeaderStart = (GroupingGraphicalElementHeader) drawableSet
+                        .getEvent(m.getGroupingStart());
+                if (groupingHeaderStart != null) {
+                    groupingHeaderStart.setEndY(freeY2.getFreeY(range));
+                    groupingHeaderStart.addNotes(stringBounder, notes);
+                }
+                element = new GroupingGraphicalElementTail(freeY2.getFreeY(range),
+                        inGroupableStack.getTopGroupingStructure(), m.isParallel());
+                final Component comp = drawableSet.getSkin().createComponent(ComponentType.GROUPING_SPACE, null, skinParam,
+                        Display.create(m.getComment()));
+                final double preferredHeight = comp.getPreferredHeight(stringBounder);
+                freeY2 = freeY2.add(preferredHeight, range);
+                inGroupableStack.pop();
+                break;
+            }
+            default:
+                throw new IllegalStateException();
+        }
 		drawableSet.addEvent(m, element);
 
 	}
@@ -461,9 +465,8 @@ class DrawableSetInitializer {
 		}
 		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final ComponentType type = n.getStyle().getNoteComponentType();
-		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
-				skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
-		return noteBox;
+        return new NoteBox(freeY2.getFreeY(range), drawableSet.getSkin().createComponent(type, null,
+skinParam, n.getStrings()), p1, p2, n.getPosition(), n.getUrl());
 	}
 
 	private void prepareNotes(StringBounder stringBounder, Notes notes, ParticipantRange range) {
@@ -518,7 +521,7 @@ class DrawableSetInitializer {
 			final double delta = comp.getPreferredHeight(stringBounder) / 2;
 			final LivingParticipantBox livingParticipantBox = drawableSet.getLivingParticipantBox(lifeEvent
 					.getParticipant());
-			double pos2 = y;
+			double pos2;
 			if (message == null) {
 				pos2 = y;
 				freeY2 = freeY2.add(comp.getPreferredHeight(stringBounder), range);
@@ -584,33 +587,42 @@ class DrawableSetInitializer {
 	private void prepareParticipant(StringBounder stringBounder, Participant p) {
 		final ComponentType headType;
 		final ComponentType tailType;
-		if (p.getType() == ParticipantType.PARTICIPANT) {
-			headType = ComponentType.PARTICIPANT_HEAD;
-			tailType = ComponentType.PARTICIPANT_TAIL;
-		} else if (p.getType() == ParticipantType.ACTOR) {
-			headType = ComponentType.ACTOR_HEAD;
-			tailType = ComponentType.ACTOR_TAIL;
-		} else if (p.getType() == ParticipantType.BOUNDARY) {
-			headType = ComponentType.BOUNDARY_HEAD;
-			tailType = ComponentType.BOUNDARY_TAIL;
-		} else if (p.getType() == ParticipantType.CONTROL) {
-			headType = ComponentType.CONTROL_HEAD;
-			tailType = ComponentType.CONTROL_TAIL;
-		} else if (p.getType() == ParticipantType.ENTITY) {
-			headType = ComponentType.ENTITY_HEAD;
-			tailType = ComponentType.ENTITY_TAIL;
-		} else if (p.getType() == ParticipantType.QUEUE) {
-			headType = ComponentType.QUEUE_HEAD;
-			tailType = ComponentType.QUEUE_TAIL;
-		} else if (p.getType() == ParticipantType.DATABASE) {
-			headType = ComponentType.DATABASE_HEAD;
-			tailType = ComponentType.DATABASE_TAIL;
-		} else if (p.getType() == ParticipantType.COLLECTIONS) {
-			headType = ComponentType.COLLECTIONS_HEAD;
-			tailType = ComponentType.COLLECTIONS_TAIL;
-		} else {
-			throw new IllegalArgumentException();
-		}
+        switch (p.getType()) {
+            case PARTICIPANT:
+                headType = ComponentType.PARTICIPANT_HEAD;
+                tailType = ComponentType.PARTICIPANT_TAIL;
+                break;
+            case ACTOR:
+                headType = ComponentType.ACTOR_HEAD;
+                tailType = ComponentType.ACTOR_TAIL;
+                break;
+            case BOUNDARY:
+                headType = ComponentType.BOUNDARY_HEAD;
+                tailType = ComponentType.BOUNDARY_TAIL;
+                break;
+            case CONTROL:
+                headType = ComponentType.CONTROL_HEAD;
+                tailType = ComponentType.CONTROL_TAIL;
+                break;
+            case ENTITY:
+                headType = ComponentType.ENTITY_HEAD;
+                tailType = ComponentType.ENTITY_TAIL;
+                break;
+            case QUEUE:
+                headType = ComponentType.QUEUE_HEAD;
+                tailType = ComponentType.QUEUE_TAIL;
+                break;
+            case DATABASE:
+                headType = ComponentType.DATABASE_HEAD;
+                tailType = ComponentType.DATABASE_TAIL;
+                break;
+            case COLLECTIONS:
+                headType = ComponentType.COLLECTIONS_HEAD;
+                tailType = ComponentType.COLLECTIONS_TAIL;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
 
 		final ISkinParam skinParam = p.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());

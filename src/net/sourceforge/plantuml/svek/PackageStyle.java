@@ -96,30 +96,41 @@ public enum PackageStyle {
 		}
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();
-		if (this == DATABASE) {
-			drawDatabase(ug, width, height, shadowing);
-		} else if (this == FOLDER) {
-			drawFolder(ug, width, height, shadowing);
-		} else if (this == FRAME) {
-			drawFrame(ug, width, height, titleDim, shadowing);
-		} else if (this == CLOUD) {
-			drawCloud(ug, width, height, shadowing);
-		} else if (this == RECTANGLE) {
-			drawRect(ug, width, height, shadowing);
-		} else if (this == COMPONENT1) {
-			drawComponent1(ug, width, height, shadowing);
-		} else if (this == COMPONENT2) {
-			drawComponent2(ug, width, height, shadowing);
-		} else if (this == STORAGE) {
-			drawStorage(ug, width, height, shadowing);
-		} else if (this == AGENT) {
-			drawRect(ug, width, height, shadowing);
-		} else if (this == ARTIFACT) {
-			drawArtifact(ug, width, height, shadowing);
-		} else {
-			// drawNode(ug, xTheoricalPosition, yTheoricalPosition, width, height, shadowing);
-			throw new UnsupportedOperationException();
-		}
+        switch (this) {
+            case DATABASE:
+                drawDatabase(ug, width, height, shadowing);
+                break;
+            case FOLDER:
+                drawFolder(ug, width, height, shadowing);
+                break;
+            case FRAME:
+                drawFrame(ug, width, height, titleDim, shadowing);
+                break;
+            case CLOUD:
+                drawCloud(ug, width, height, shadowing);
+                break;
+            case RECTANGLE:
+                drawRect(ug, width, height, shadowing);
+                break;
+            case COMPONENT1:
+                drawComponent1(ug, width, height, shadowing);
+                break;
+            case COMPONENT2:
+                drawComponent2(ug, width, height, shadowing);
+                break;
+            case STORAGE:
+                drawStorage(ug, width, height, shadowing);
+                break;
+            case AGENT:
+                drawRect(ug, width, height, shadowing);
+                break;
+            case ARTIFACT:
+                drawArtifact(ug, width, height, shadowing);
+                break;
+            default:
+                // drawNode(ug, xTheoricalPosition, yTheoricalPosition, width, height, shadowing);
+                throw new UnsupportedOperationException();
+        }
 	}
 
 	private void drawArtifact(UGraphic ug, double width, double height, boolean shadowing) {

@@ -74,7 +74,7 @@ class dlx_solver {
 	 * puzzle
 	 */
 	String solve(String puzzle) {
-		String result = new String();
+		String result = "";
 		int STATE = M6;
 
 		vmax = 4000000;
@@ -618,7 +618,7 @@ class dlx_generator {
 	 * Save the generated Sudoku to a file.
 	 */
 	void saveSudokuToFile(String s) {
-		FileOutputStream FO = null;
+		FileOutputStream FO;
 		byte[] buffer = new byte[s.length() + 1];
 		int i = 0;
 
@@ -633,7 +633,6 @@ class dlx_generator {
 			FO.close();
 		} catch (IOException IOE) {
 			// Well, well, well....
-			return;
 		}
 	}
 
@@ -816,7 +815,7 @@ class dlx_generator {
 			samples = Samples;
 
 		for (i = 0; i < samples; i++)
-			result[i] = new String();
+			result[i] = "";
 
 		// Set to 1 for rating, set to 2 for rating and hint
 		rate = 0;
@@ -1009,9 +1008,8 @@ class dlx_generator {
 							w++;
 							W[(int) w] = c;
 						}
-						;
 
-						if (V[c] < min) {
+                        if (V[c] < min) {
 							w = 1;
 							W[(int) w] = c;
 							min = V[c];
@@ -1169,7 +1167,6 @@ public class DLXEngine {
 	}
 
 	String solve(String s) {
-		String result = solver.solve(s);
-		return result;
+		return solver.solve(s);
 	}
 }

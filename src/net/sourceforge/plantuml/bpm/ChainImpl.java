@@ -42,21 +42,21 @@ import java.util.List;
 
 public class ChainImpl<O> implements Chain<O> {
 
-	private final List<O> positive = new ArrayList<O>();
-	private final List<O> negative = new ArrayList<O>();
+	private final List<O> positive = new ArrayList<>();
+	private final List<O> negative = new ArrayList<>();
 	private int currentVersion;
 
 	public boolean remove(O data) {
 		updateStructuralVersion();
 		boolean result = positive.remove(data);
-		if (result == false) {
+		if (!result) {
 			result = negative.remove(data);
 		}
 		return result;
 	}
 
 	public ChainImpl<O> cloneMe() {
-		final ChainImpl<O> result = new ChainImpl<O>();
+		final ChainImpl<O> result = new ChainImpl<>();
 		result.currentVersion = this.currentVersion;
 		result.positive.addAll(this.positive);
 		result.negative.addAll(this.negative);
@@ -87,7 +87,7 @@ public class ChainImpl<O> implements Chain<O> {
 	}
 
 	public List<O> toList() {
-		final List<O> result = new ArrayList<O>();
+		final List<O> result = new ArrayList<>();
 		for (O element : negative) {
 			if (element != null) {
 				result.add(0, element);
@@ -203,7 +203,7 @@ public class ChainImpl<O> implements Chain<O> {
 
 	class InternalNavigator implements Navigator<O> {
 
-		private int position = 0;
+		private int position;
 		private int version;
 
 		private InternalNavigator(int position, int version) {

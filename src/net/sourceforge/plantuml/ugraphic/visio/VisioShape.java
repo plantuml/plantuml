@@ -40,8 +40,8 @@ import java.io.OutputStream;
 
 public interface VisioShape {
 
-	public void print(OutputStream os) throws IOException;
+	void print(OutputStream os) throws IOException;
 
-	public VisioShape yReverse(double maxY);
+	VisioShape yReverse(double maxY);
 
 }

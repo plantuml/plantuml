@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.cucadiagram;
 
 public class EntityGenderUtils {
 
-	static public EntityGender byEntityType(final LeafType type) {
+	public static EntityGender byEntityType(final LeafType type) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
 				return test.getLeafType() == type;
@@ -45,7 +45,7 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender byEntityAlone(final IEntity entity) {
+	public static EntityGender byEntityAlone(final IEntity entity) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
 				return test.getUid().equals(entity.getUid());
@@ -53,35 +53,27 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender byStereotype(final String stereotype) {
+	public static EntityGender byStereotype(final String stereotype) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				if (test.getStereotype() == null) {
-					return false;
-				}
-				return stereotype.equals(test.getStereotype().getLabel(false));
+				return test.getStereotype() != null && stereotype.equals(test.getStereotype().getLabel(false));
 			}
 		};
 	}
 
-	static public EntityGender byPackage(final IGroup group) {
+	public static EntityGender byPackage(final IGroup group) {
 		if (EntityUtils.groupRoot(group)) {
 			throw new IllegalArgumentException();
 		}
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				if (EntityUtils.groupRoot(test.getParentContainer())) {
-					return false;
-				}
-				if (group == test.getParentContainer()) {
-					return true;
-				}
-				return false;
+				return !EntityUtils.groupRoot(test.getParentContainer())
+					&& group == test.getParentContainer();
 			}
 		};
 	}
 
-	static public EntityGender and(final EntityGender g1, final EntityGender g2) {
+	public static EntityGender and(final EntityGender g1, final EntityGender g2) {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
 				return g1.contains(test) && g2.contains(test);
@@ -89,7 +81,7 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender all() {
+	public static EntityGender all() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
 				return true;
@@ -97,18 +89,18 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender emptyMethods() {
+	public static EntityGender emptyMethods() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getBodier().getMethodsToDisplay().size() == 0;
+				return test.getBodier().getMethodsToDisplay().isEmpty();
 			}
 		};
 	}
 
-	static public EntityGender emptyFields() {
+	public static EntityGender emptyFields() {
 		return new EntityGender() {
 			public boolean contains(IEntity test) {
-				return test.getBodier().getFieldsToDisplay().size() == 0;
+				return test.getBodier().getFieldsToDisplay().isEmpty();
 			}
 		};
 	}

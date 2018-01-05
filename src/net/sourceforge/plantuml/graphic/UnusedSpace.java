@@ -48,15 +48,15 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 public class UnusedSpace {
 
 	static class Point {
-		final private double x;
-		final private double y;
+		private final double x;
+		private final double y;
 
 		Point(double x, double y) {
 			this.x = x;
 			this.y = y;
 		}
 
-		public double getDistSq(Point other) {
+		double getDistSq(Point other) {
 			final double dx = this.x - other.x;
 			final double dy = this.y - other.y;
 			return dx * dx + dy * dy;
@@ -68,9 +68,9 @@ public class UnusedSpace {
 	private double meanX2;
 	private double meanY2;
 
-	private final List<Point> points = new ArrayList<Point>();
+	private final List<Point> points = new ArrayList<>();
 
-	final private static Map<Object, UnusedSpace> cache = new HashMap<Object, UnusedSpace>();
+	private static final Map<Object, UnusedSpace> cache = new HashMap<>();
 
 	public static UnusedSpace getUnusedSpace(UFont font, char c) {
 		final Object key = Arrays.asList(font, c);
@@ -125,23 +125,6 @@ public class UnusedSpace {
 				}
 			}
 		}
-
-		// g2d.setColor(Color.RED);
-		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE - 1, meanY2 + HALF_SIZE
-		// - 1, meanX2 + HALF_SIZE + 1, meanY2
-		// + HALF_SIZE + 1));
-		// g2d.draw(new Line2D.Double(meanX2 + HALF_SIZE + 1, meanY2 + HALF_SIZE
-		// - 1, meanX2 + HALF_SIZE - 1, meanY2
-		// + HALF_SIZE + 1));
-
-		// int cpt = 1;
-		// try {
-		// ImageIO.write(im, "png", new File("c:/img" + cpt + ".png"));
-		// cpt++;
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-
 	}
 
 	private double biggestDistSqFromPoint(Point p) {
@@ -157,10 +140,7 @@ public class UnusedSpace {
 
 	private static boolean isPoint(BufferedImage im, int x, int y) {
 		final int color = im.getRGB(x, y) & 0x00FFFFFF;
-		if (color == 0) {
-			return false;
-		}
-		return true;
+		return color != 0;
 	}
 
 	public double getCenterX() {

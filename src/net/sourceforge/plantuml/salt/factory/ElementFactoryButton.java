@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import java.awt.Font;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
@@ -46,8 +44,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryButton implements ElementFactory {
 
-	final private DataSource dataSource;
-	final private ISkinSimple spriteContainer;
+	private final DataSource dataSource;
+	private final ISkinSimple spriteContainer;
 
 	public ElementFactoryButton(DataSource dataSource, ISkinSimple spriteContainer) {
 		this.dataSource = dataSource;
@@ -55,7 +53,7 @@ public class ElementFactoryButton implements ElementFactory {
 	}
 
 	public Terminated<Element> create() {
-		if (ready() == false) {
+		if (!ready()) {
 			throw new IllegalStateException();
 		}
 		final Terminated<String> next = dataSource.next();

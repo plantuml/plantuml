@@ -45,7 +45,7 @@ public class ParentItem implements Item {
 	private final String code;
 	private final Item parent;
 
-	private final List<Item> children = new ArrayList<Item>();
+	private final List<Item> children = new ArrayList<>();
 
 	public ParentItem(String code, Item parent) {
 		this.code = code;
@@ -119,11 +119,11 @@ public class ParentItem implements Item {
 	}
 
 	public boolean isValid() {
-		if (children.size() == 0) {
+		if (children.isEmpty()) {
 			return false;
 		}
 		for (Item it : children) {
-			if (it.isValid() == false) {
+			if (!it.isValid()) {
 				return false;
 			}
 		}

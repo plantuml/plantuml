@@ -46,7 +46,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final MultilinesStrategy strategy;
 
 	public CommandMultilines3(RegexConcat patternStart, MultilinesStrategy strategy) {
-		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false) {
+		if (!patternStart.getPattern().startsWith("^") || !patternStart.getPattern().endsWith("$")) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
 		}
 		this.strategy = strategy;
@@ -59,7 +59,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return new String[] { "START: " + starting.getPattern(), "END: " + getPatternEnd2().getPattern() };
 	}
 
-	final public CommandControl isValid(BlocLines lines) {
+	public final CommandControl isValid(BlocLines lines) {
 		lines = lines.cleanList2(strategy);
 		if (isCommandForbidden()) {
 			return CommandControl.NOT_OK;
@@ -69,7 +69,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 			return CommandControl.NOT_OK;
 		}
 		final boolean result1 = starting.match(StringUtils.trin(first));
-		if (result1 == false) {
+		if (!result1) {
 			return CommandControl.NOT_OK;
 		}
 		if (lines.size() == 1) {
@@ -78,7 +78,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 
 		final String potentialLast = StringUtils.trinNoTrace(lines.getLast499());
 		final boolean m1 = getPatternEnd2().match(potentialLast);
-		if (m1 == false) {
+		if (!m1) {
 			return CommandControl.OK_PARTIAL;
 		}
 

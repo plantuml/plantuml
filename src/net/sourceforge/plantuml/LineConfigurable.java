@@ -41,9 +41,9 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 
 public interface LineConfigurable {
 
-	public Colors getColors(ISkinParam skinParam);
+	Colors getColors(ISkinParam skinParam);
 	
-	public void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
+	void setSpecificColorTOBEREMOVED(ColorType type, HtmlColor color);
 
 
 

@@ -53,11 +53,11 @@ abstract class RealMoveable extends AbstractReal implements Real {
 
 	abstract void move(double delta);
 
-	final public void printCreationStackTrace() {
+	public final void printCreationStackTrace() {
 		creationPoint.printStackTrace();
 	}
 
-	final public Real addFixed(double delta) {
+	public final Real addFixed(double delta) {
 		return new RealDelta(this, delta);
 	}
 
@@ -66,7 +66,7 @@ abstract class RealMoveable extends AbstractReal implements Real {
 		return "#" + cpt + "_" + name;
 	}
 
-	final public String getName() {
+	public final String getName() {
 		return name;
 	}
 }

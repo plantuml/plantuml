@@ -117,7 +117,7 @@ public class EvalMath {
 			x = parseFactor();
 			throw new RuntimeException("Unknown function: " + func);
 		} else {
-			throw new RuntimeException("Unexpected: " + (char) ch);
+			throw new RuntimeException("Unexpected: " + ch);
 		}
 
 		return x;
@@ -127,7 +127,7 @@ public class EvalMath {
 		nextChar();
 		double x = parseExpression();
 		if (pos < str.length()) {
-			throw new RuntimeException("Unexpected: " + (char) ch);
+			throw new RuntimeException("Unexpected: " + ch);
 		}
 		return x;
 	}

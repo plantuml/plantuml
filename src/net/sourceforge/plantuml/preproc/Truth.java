@@ -36,6 +36,6 @@
 package net.sourceforge.plantuml.preproc;
 
 interface Truth {
-	public boolean isTrue(String name);
+	boolean isTrue(String name);
 
 }

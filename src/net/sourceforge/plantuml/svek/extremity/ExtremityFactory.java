@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.svek.Side;
 
 public interface ExtremityFactory {
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side);
+	UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side);
 	
-	public UDrawable createUDrawable(Point2D p0, double angle, Side side);
+	UDrawable createUDrawable(Point2D p0, double angle, Side side);
 
 }

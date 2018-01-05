@@ -78,7 +78,7 @@ public class PSystemDitaa extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT) {
 			os.write(getSource().getPlainString().getBytes());

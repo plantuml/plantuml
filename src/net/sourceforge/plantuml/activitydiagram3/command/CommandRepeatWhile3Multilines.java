@@ -91,7 +91,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 			testDisplay = testDisplay.add(s);
 		}
 		final String trailTest = lineLast.get("TEST1", 0);
-		if (StringUtils.isEmpty(trailTest) == false) {
+		if (!StringUtils.isEmpty(trailTest)) {
 			testDisplay = testDisplay.add(trailTest);
 		}
 

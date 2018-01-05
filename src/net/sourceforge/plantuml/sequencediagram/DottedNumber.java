@@ -53,8 +53,8 @@ public class DottedNumber {
 	public static DottedNumber create(String value) {
 		final Pattern p = Pattern.compile("(\\d+)|(\\D+)");
 		final Matcher m = p.matcher(value);
-		final List<Integer> nums = new ArrayList<Integer>();
-		final List<String> separators = new ArrayList<String>();
+		final List<Integer> nums = new ArrayList<>();
+		final List<String> separators = new ArrayList<>();
 		while (m.find()) {
 			final String part = m.group();
 			if (isDigit(part.charAt(0))) {
@@ -94,16 +94,15 @@ public class DottedNumber {
 	}
 
 	public void incrementIntermediate(int position) {
-		final int intermediate = position;
-		final int newValue = nums.get(intermediate) + 1;
-		for (int i = intermediate + 1; i < nums.size(); i++) {
+        final int newValue = nums.get(position) + 1;
+		for (int i = position + 1; i < nums.size(); i++) {
 			nums.set(i, 1);
 		}
-		nums.set(intermediate, newValue);
+		nums.set(position, newValue);
 	}
 
 	public String format(DecimalFormat format) {
-		if (nums.size() == 1 && separators.size() == 0) {
+		if (nums.size() == 1 && separators.isEmpty()) {
 			return format.format(nums.get(0));
 		}
 		return "<b>" + toString() + "</b>";

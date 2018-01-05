@@ -39,10 +39,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface InGroupable {
 	
-	public double getMinX(StringBounder stringBounder);
+	double getMinX(StringBounder stringBounder);
 
-	public double getMaxX(StringBounder stringBounder);
+	double getMaxX(StringBounder stringBounder);
 	
-	public String toString(StringBounder stringBounder);
+	String toString(StringBounder stringBounder);
 	
 }

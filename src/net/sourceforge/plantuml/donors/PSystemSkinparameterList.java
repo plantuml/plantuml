@@ -68,7 +68,7 @@ public class PSystemSkinparameterList extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private UDrawable getGraphicStrings() throws IOException {
+	private UDrawable getGraphicStrings() {
 		final List<TextBlock> cols = getCols(getDonors(), 5);
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
@@ -85,8 +85,8 @@ public class PSystemSkinparameterList extends AbstractPSystem {
 		};
 	}
 
-	public static List<TextBlock> getCols(List<String> lines, final int nbCol) throws IOException {
-		final List<TextBlock> result = new ArrayList<TextBlock>();
+	public static List<TextBlock> getCols(List<String> lines, final int nbCol) {
+		final List<TextBlock> result = new ArrayList<>();
 		final int maxLine = (lines.size() + (nbCol - 1)) / nbCol;
 		for (int i = 0; i < lines.size(); i += maxLine) {
 			final List<String> current = lines.subList(i, Math.min(lines.size(), i + maxLine));
@@ -95,9 +95,8 @@ public class PSystemSkinparameterList extends AbstractPSystem {
 		return result;
 	}
 
-	private List<String> getDonors() throws IOException {
-		final List<String> lines = new ArrayList<String>(SkinParam.getPossibleValues());
-		return lines;
+	private List<String> getDonors() {
+		return new ArrayList<>(SkinParam.getPossibleValues());
 	}
 
 	public DiagramDescription getDescription() {

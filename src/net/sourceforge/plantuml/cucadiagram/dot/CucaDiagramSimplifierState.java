@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -55,8 +54,7 @@ public final class CucaDiagramSimplifierState {
 	private final CucaDiagram diagram;
 	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
-			throws IOException, InterruptedException {
+	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		boolean changed;
@@ -76,9 +74,9 @@ public final class CucaDiagramSimplifierState {
 	}
 
 	private Collection<IGroup> getOrdered(IGroup root) {
-		final Collection<IGroup> ordered = new LinkedHashSet<IGroup>();
+		final Collection<IGroup> ordered = new LinkedHashSet<>();
 		ordered.add(root);
-		int size = 1;
+		int size;
 		while (true) {
 			size = ordered.size();
 			addOneLevel(ordered);
@@ -86,9 +84,9 @@ public final class CucaDiagramSimplifierState {
 				break;
 			}
 		}
-		final List<IGroup> result = new ArrayList<IGroup>();
+		final List<IGroup> result = new ArrayList<>();
 		for (IGroup g : ordered) {
-			if (g instanceof GroupRoot == false) {
+			if (!(g instanceof GroupRoot)) {
 				result.add(0, g);
 			}
 		}
@@ -96,22 +94,20 @@ public final class CucaDiagramSimplifierState {
 	}
 
 	private void addOneLevel(Collection<IGroup> currents) {
-		for (IGroup g : new ArrayList<IGroup>(currents)) {
-			for (IGroup child : reverse(g.getChildren())) {
-				currents.add(child);
-			}
+		for (IGroup g : new ArrayList<>(currents)) {
+            currents.addAll(reverse(g.getChildren()));
 		}
 	}
 
 	private List<IGroup> reverse(Collection<IGroup> source) {
-		final List<IGroup> result = new ArrayList<IGroup>();
+		final List<IGroup> result = new ArrayList<>();
 		for (IGroup g : source) {
 			result.add(0, g);
 		}
 		return result;
 	}
 
-	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(IGroup g) {
 		final GroupPngMakerState maker = new GroupPngMakerState(diagram, g, stringBounder);
 		return maker.getImage();
 	}

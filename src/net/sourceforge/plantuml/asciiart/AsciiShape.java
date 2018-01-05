@@ -45,21 +45,26 @@ public enum AsciiShape {
 	private final int width;
 	private final int height;
 
-	private AsciiShape(int width, int height) {
+	AsciiShape(int width, int height) {
 		this.width = width;
 		this.height = height;
 	}
 
 	public void draw(BasicCharArea area, int x, int y) {
-		if (this == STICKMAN) {
-			drawStickMan(area, x, y);
-		} else if (this == STICKMAN_UNICODE) {
-			drawStickManUnicode(area, x, y);
-		} else if (this == BOUNDARY) {
-			drawBoundary(area, x, y);
-		} else if (this == DATABASE) {
-			drawDatabase(area, x, y);
-		}
+        switch (this) {
+            case STICKMAN:
+                drawStickMan(area, x, y);
+                break;
+            case STICKMAN_UNICODE:
+                drawStickManUnicode(area, x, y);
+                break;
+            case BOUNDARY:
+                drawBoundary(area, x, y);
+                break;
+            case DATABASE:
+                drawDatabase(area, x, y);
+                break;
+        }
 	}
 
 	private void drawDatabase(BasicCharArea area, int x, int y) {

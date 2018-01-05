@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface Stencil {
 
-	public double getStartingX(StringBounder stringBounder, double y);
+	double getStartingX(StringBounder stringBounder, double y);
 
-	public double getEndingX(StringBounder stringBounder, double y);
+	double getEndingX(StringBounder stringBounder, double y);
 
 }

@@ -57,19 +57,19 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Link implements Hideable, Removeable {
 
-	final private IEntity cl1;
-	final private IEntity cl2;
+	private final IEntity cl1;
+	private final IEntity cl2;
 
 	private String port1;
 	private String port2;
 
 	private LinkType type;
-	final private Display label;
+	private final Display label;
 
 	private int length;
-	final private String qualifier1;
-	final private String qualifier2;
-	final private String uid = "LNK" + UniqueSequence.getValue();
+	private final String qualifier1;
+	private final String qualifier2;
+	private final String uid = "LNK" + UniqueSequence.getValue();
 
 	private Display note;
 	private Position notePosition;
@@ -207,10 +207,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public final boolean isInvis() {
-		if (type.isInvisible()) {
-			return true;
-		}
-		return invis;
+		return type.isInvisible() || invis;
 	}
 
 	public final void setInvis(boolean invis) {
@@ -218,13 +215,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean isBetween(IEntity cl1, IEntity cl2) {
-		if (cl1.equals(this.cl1) && cl2.equals(this.cl2)) {
-			return true;
-		}
-		if (cl1.equals(this.cl2) && cl2.equals(this.cl1)) {
-			return true;
-		}
-		return false;
+		return cl1.equals(this.cl1) && cl2.equals(this.cl2) || cl1.equals(this.cl2) && cl2.equals(this.cl1);
 	}
 
 	@Override
@@ -268,7 +259,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	private boolean isReallyGroup(IEntity ent) {
-		if (ent.isGroup() == false) {
+		if (!ent.isGroup()) {
 			return false;
 		}
 		final IGroup group = (IGroup) ent;
@@ -365,30 +356,19 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean isAutoLinkOfAGroup() {
-		if (getEntity1().isGroup() == false) {
-			return false;
-		}
-		if (getEntity2().isGroup() == false) {
-			return false;
-		}
-		if (getEntity1() == getEntity2()) {
-			return true;
-		}
-		return false;
+		return getEntity1().isGroup()
+			&& getEntity2().isGroup()
+			&& getEntity1() == getEntity2();
 	}
 
 	public boolean containsType(LeafType type) {
-		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type) {
-			return true;
-		}
-		return false;
+		return getEntity1().getLeafType() == type
+			|| getEntity2().getLeafType() == type;
 	}
 
 	public boolean contains(IEntity entity) {
-		if (getEntity1() == entity || getEntity2() == entity) {
-			return true;
-		}
-		return false;
+		return getEntity1() == entity
+			|| getEntity2() == entity;
 	}
 
 	public IEntity getOther(IEntity entity) {
@@ -468,12 +448,12 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean hasEntryPoint() {
-		return (getEntity1().isGroup() == false && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
-				|| (getEntity2().isGroup() == false && ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
+		return (!getEntity1().isGroup() && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
+				|| (!getEntity2().isGroup() && ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
 	}
 
 	public boolean hasTwoEntryPointsSameContainer() {
-		return getEntity1().isGroup() == false && getEntity2().isGroup() == false
+		return !getEntity1().isGroup() && !getEntity2().isGroup()
 				&& ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL
 				&& ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL
 				&& getEntity1().getParentContainer() == getEntity2().getParentContainer();
@@ -492,29 +472,15 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean sameConnections(Link other) {
-		if (this.cl1 == other.cl1 && this.cl2 == other.cl2) {
-			return true;
-		}
-		if (this.cl1 == other.cl2 && this.cl2 == other.cl1) {
-			return true;
-		}
-		return false;
+		return this.cl1 == other.cl1 && this.cl2 == other.cl2
+			|| this.cl1 == other.cl2 && this.cl2 == other.cl1;
 	}
 
 	public boolean doesTouch(Link other) {
-		if (this.cl1 == other.cl1) {
-			return true;
-		}
-		if (this.cl1 == other.cl2) {
-			return true;
-		}
-		if (this.cl2 == other.cl1) {
-			return true;
-		}
-		if (this.cl2 == other.cl2) {
-			return true;
-		}
-		return false;
+		return this.cl1 == other.cl1
+			|| this.cl1 == other.cl2
+			|| this.cl2 == other.cl1
+			|| this.cl2 == other.cl2;
 	}
 
 	public boolean isAutolink() {
@@ -526,10 +492,7 @@ public class Link implements Hideable, Removeable {
 	}
 
 	public boolean hasUrl() {
-		if (Display.isNull(label) == false && label.hasUrl()) {
-			return true;
-		}
-		return getUrl() != null;
+		return !Display.isNull(label) && label.hasUrl() || getUrl() != null;
 	}
 
 	public String getSametail() {

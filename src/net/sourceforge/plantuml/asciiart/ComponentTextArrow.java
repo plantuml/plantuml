@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
-import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -68,7 +67,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	private static Display clean(Display orig) {
-		if (orig.size() == 0 || orig.get(0) instanceof MessageNumber == false) {
+		if (orig.size() == 0 || !(orig.get(0) instanceof MessageNumber)) {
 			return orig;
 		}
 		Display result = Display.empty();
@@ -85,7 +84,7 @@ public class ComponentTextArrow extends AbstractComponentText {
 	}
 
 	private static String removeTag(String s) {
-		return s.replaceAll("\\<[^<>]+\\>", "");
+		return s.replaceAll("<[^<>]+>", "");
 	}
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
@@ -106,16 +105,20 @@ public class ComponentTextArrow extends AbstractComponentText {
 			}
 		}
 
-		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {
-			charArea.drawChar('>', width - 1, yarrow);
-		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {
-			charArea.drawChar('<', 1, yarrow);
-		} else if (config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {
-			charArea.drawChar('>', width - 1, yarrow);
-			charArea.drawChar('<', 1, yarrow);
-		} else {
-			throw new UnsupportedOperationException();
-		}
+        switch (config.getArrowDirection()) {
+            case LEFT_TO_RIGHT_NORMAL:
+                charArea.drawChar('>', width - 1, yarrow);
+                break;
+            case RIGHT_TO_LEFT_REVERSE:
+                charArea.drawChar('<', 1, yarrow);
+                break;
+            case BOTH_DIRECTION:
+                charArea.drawChar('>', width - 1, yarrow);
+                charArea.drawChar('<', 1, yarrow);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 		// final int position = Math.max(0, (width - textWidth) / 2);
 		charArea.drawStringsLR(stringsToDisplay.as(), (width - textWidth) / 2, 0);
 	}

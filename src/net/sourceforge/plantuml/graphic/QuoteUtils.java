@@ -40,7 +40,7 @@ import java.util.List;
 
 public class QuoteUtils {
 
-	static private final List<String> quotes = Arrays
+	private static final List<String> quotes = Arrays
 			.asList("Ur'f qrnq, Wvz.",
 					"Ol Tenogune'f unzzre, ol gur fbaf bs Jbeina, lbh funyy or niratrq.",
 					"Ebnqf? Jurer jr'er tbvat, jr qba'g arrq ebnqf.",

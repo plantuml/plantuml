@@ -49,15 +49,15 @@ public class MonoSwimable extends WithNote implements Swimable {
 		this.swimlane = swimlane;
 	}
 
-	final public Set<Swimlane> getSwimlanes() {
-		return swimlane == null ? Collections.<Swimlane> emptySet() : Collections.<Swimlane> singleton(swimlane);
+	public final Set<Swimlane> getSwimlanes() {
+		return swimlane == null ? Collections.<Swimlane> emptySet() : Collections.singleton(swimlane);
 	}
 
-	final public Swimlane getSwimlaneIn() {
+	public final Swimlane getSwimlaneIn() {
 		return swimlane;
 	}
 
-	final public Swimlane getSwimlaneOut() {
+	public final Swimlane getSwimlaneOut() {
 		return swimlane;
 	}
 

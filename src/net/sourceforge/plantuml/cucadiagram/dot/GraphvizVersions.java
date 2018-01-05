@@ -41,9 +41,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GraphvizVersions {
 
-	private final static GraphvizVersions singleton = new GraphvizVersions();
+	private static final GraphvizVersions singleton = new GraphvizVersions();
 
-	private final Map<File, GraphvizVersion> map = new ConcurrentHashMap<File, GraphvizVersion>();
+	private final Map<File, GraphvizVersion> map = new ConcurrentHashMap<>();
 
 	private GraphvizVersions() {
 	}

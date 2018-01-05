@@ -39,10 +39,10 @@ import java.util.Locale;
 
 public class SvgCommandNumber implements SvgCommand {
 
-	final private String number;
+	private final String number;
 
 	public SvgCommandNumber(String number) {
-		if (number.matches("[-.0-9]+") == false) {
+		if (!number.matches("[-.0-9]+")) {
 			throw new IllegalArgumentException();
 		}
 		this.number = number;

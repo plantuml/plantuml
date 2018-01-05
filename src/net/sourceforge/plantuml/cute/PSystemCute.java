@@ -63,7 +63,7 @@ public class PSystemCute extends AbstractPSystem {
 
 	public void doCommandLine(String line) {
 		line = StringUtils.trin(line);
-		if (line.length() == 0 || line.startsWith("'")) {
+		if (line.isEmpty() || line.startsWith("'")) {
 			return;
 		}
 		if (line.startsWith("group ")) {
@@ -84,7 +84,7 @@ public class PSystemCute extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ImageBuilder builder = new ImageBuilder(new ColorMapperIdentity(), 1.0, null, null, null, 10, 10, null,
 				false);

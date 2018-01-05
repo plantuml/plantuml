@@ -57,7 +57,7 @@ abstract class Step1Abstract {
 
 	private ArrowConfiguration config;
 
-	private final List<Component> notes = new ArrayList<Component>();
+	private final List<Component> notes = new ArrayList<>();
 
 	private ParticipantRange range;
 

@@ -55,9 +55,9 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
 public class Stereotype implements CharSequence, Hideable {
-	private final static Pattern2 circleChar = MyPattern
+	private static final Pattern2 circleChar = MyPattern
 			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
-	private final static Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
+	private static final Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
 			+ ")[%s]*(?:,[%s]*(#[0-9a-fA-F]{6}|\\w+))?[%s]*(?:[),](.*?))?\\>\\>");
 
 	private final double radius;
@@ -78,7 +78,7 @@ public class Stereotype implements CharSequence, Hideable {
 		if (label == null) {
 			throw new IllegalArgumentException();
 		}
-		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
+		if (!label.startsWith("<<") || !label.endsWith(">>")) {
 			throw new IllegalArgumentException(label);
 		}
 		this.automaticPackageStyle = automaticPackageStyle;
@@ -157,9 +157,9 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	public List<String> getMultipleLabels() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (label != null) {
-			final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
+			final Pattern p = Pattern.compile("<<\\s?((?:<&\\w+>|[^<>])+?)\\s?>>");
 			final Matcher m = p.matcher(label);
 			while (m.find()) {
 				result.add(m.group(1));
@@ -204,7 +204,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	public String getLabel(boolean withGuillement) {
-		assert label == null || label.length() > 0;
+		assert label == null || !label.isEmpty();
 		if (isWithOOSymbol()) {
 			return null;
 		}
@@ -223,7 +223,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	private static List<String> cutLabels(final String label, boolean useGuillemet) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
 		final Matcher2 m = p.matcher(label);
 		while (m.find()) {
@@ -237,7 +237,7 @@ public class Stereotype implements CharSequence, Hideable {
 	}
 
 	public PackageStyle getPackageStyle() {
-		if (automaticPackageStyle == false) {
+		if (!automaticPackageStyle) {
 			return null;
 		}
 		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {

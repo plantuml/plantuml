@@ -82,8 +82,7 @@ public class TextBlockCompressed extends AbstractTextBlock implements TextBlock 
 		final SlotFinder slotFinder = new SlotFinder(stringBounder);
 		textBlock.drawU(slotFinder);
 		final SlotSet ysSlotSet = slotFinder.getYSlotSet().reverse().smaller(5.0);
-		final CompressionTransform compressionTransform = new CompressionTransform(ysSlotSet);
-		return compressionTransform;
+        return new CompressionTransform(ysSlotSet);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

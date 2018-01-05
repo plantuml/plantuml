@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.project2;
 
 public interface TimeLine {
 
-	public TimeElement next(TimeElement timeElement);
+	TimeElement next(TimeElement timeElement);
 
-	public TimeElement previous(TimeElement timeElement);
+	TimeElement previous(TimeElement timeElement);
 
-	public TimeResolution getTimeResolution();
+	TimeResolution getTimeResolution();
 
-	public boolean isClosed(TimeElement timeElement);
+	boolean isClosed(TimeElement timeElement);
 
 }

@@ -43,17 +43,17 @@ import java.util.Map;
 
 public class Stairs {
 
-	private final List<Double> ys = new ArrayList<Double>();
-	private final List<Integer> values = new ArrayList<Integer>();
-	private final Map<Double, Integer> cache = new HashMap<Double, Integer>();
+	private final List<Double> ys = new ArrayList<>();
+	private final List<Integer> values = new ArrayList<>();
+	private final Map<Double, Integer> cache = new HashMap<>();
 
 	@Override
 	public String toString() {
-		final List<Double> copy = new ArrayList<Double>(ys);
+		final List<Double> copy = new ArrayList<>(ys);
 		Collections.sort(copy);
 		final StringBuilder sb = new StringBuilder("[");
 		for (Double y : copy) {
-			sb.append(y + "=" + getValue(y) + " ");
+			sb.append(y).append("=").append(getValue(y)).append(" ");
 		}
 		sb.append("]");
 		return sb.toString();
@@ -61,7 +61,7 @@ public class Stairs {
 
 	public void addStep(double y, int value) {
 		assert ys.size() == values.size();
-		if (ys.size() > 0) {
+		if (!ys.isEmpty()) {
 			final double lastY = ys.get(ys.size() - 1);
 			if (y < lastY) {
 				throw new IllegalArgumentException();
@@ -92,7 +92,7 @@ public class Stairs {
 	}
 
 	private double getLastY() {
-		if (ys.size() == 0) {
+		if (ys.isEmpty()) {
 			return 0;
 		}
 		return ys.get(ys.size() - 1);

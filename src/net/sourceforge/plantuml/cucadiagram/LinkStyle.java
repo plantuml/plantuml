@@ -39,9 +39,9 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class LinkStyle {
 
-	static enum Type {
-		NORMAL, DASHED, DOTTED, BOLD, INVISIBLE;
-	}
+	enum Type {
+		NORMAL, DASHED, DOTTED, BOLD, INVISIBLE
+    }
 
 	private LinkStyle(Type type, double thickness) {
 		this.type = type;

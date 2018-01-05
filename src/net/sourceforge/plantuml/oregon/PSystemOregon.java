@@ -69,7 +69,7 @@ public class PSystemOregon extends AbstractPSystem {
 	}
 
 	public PSystemOregon() {
-		this.inputs = new ArrayList<String>();
+		this.inputs = new ArrayList<>();
 	}
 
 	public void add(String line) {
@@ -95,7 +95,7 @@ public class PSystemOregon extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final TextBlockBackcolored result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, result.getBackcolor(),
@@ -104,7 +104,7 @@ public class PSystemOregon extends AbstractPSystem {
 		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed, os);
 	}
 
-	private TextBlockBackcolored getGraphicStrings() throws IOException {
+	private TextBlockBackcolored getGraphicStrings() {
 		return GraphicStrings.createGreenOnBlackMonospaced(getScreen().getLines());
 	}
 

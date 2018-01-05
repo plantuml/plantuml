@@ -61,7 +61,7 @@ public abstract class AbstractComponent implements Component {
 //		return stroke(ug, dashVisible, dashSpace, 1);
 //	}
 
-	abstract protected void drawInternalU(UGraphic ug, Area area);
+	protected abstract void drawInternalU(UGraphic ug, Area area);
 
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
 	}

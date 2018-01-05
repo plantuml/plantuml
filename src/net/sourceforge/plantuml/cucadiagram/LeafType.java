@@ -66,8 +66,12 @@ public enum LeafType {
 	}
 
 	public boolean isLikeClass() {
-		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS
-				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY;
+		return this == LeafType.ANNOTATION
+			|| this == LeafType.ABSTRACT_CLASS
+			|| this == LeafType.CLASS
+			|| this == LeafType.INTERFACE
+			|| this == LeafType.ENUM
+			|| this == LeafType.ENTITY;
 	}
 
 	public String toHtml() {
@@ -76,10 +80,12 @@ public enum LeafType {
 	}
 
 	public boolean manageModifier() {
-		if (this == ANNOTATION || this == ABSTRACT_CLASS || this == CLASS || this == INTERFACE || this == ENUM
-				|| this == OBJECT || this == ENTITY) {
-			return true;
-		}
-		return false;
+		return this == ANNOTATION
+			|| this == ABSTRACT_CLASS
+			|| this == CLASS
+			|| this == INTERFACE
+			|| this == ENUM
+			|| this == OBJECT
+			|| this == ENTITY;
 	}
 }

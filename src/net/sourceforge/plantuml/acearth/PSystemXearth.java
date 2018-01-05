@@ -59,17 +59,17 @@ import com.ctreber.acearth.plugins.markers.Marker;
 
 public class PSystemXearth extends AbstractPSystem {
 
-	final private int width;
-	final private int height;
-	final private Map<String, String> config;
-	final private List<Marker> markers;
+	private final int width;
+	private final int height;
+	private final Map<String, String> config;
+	private final List<Marker> markers;
 
-	final private Collection<String> enums = Arrays.asList("viewPositionType");
-	final private Collection<String> doubles = Arrays.asList("sunPosRelLat", "sunPosRelLong", "orbitPeriod",
-			"orbitInclination", "viewPosLat", "viewPosLong", "starFrequency", "viewMagnification");
-	final private Collection<String> integers = Arrays.asList("daySideBrightness", "nightSideBrightness",
-			"terminatorDiscontinuity", "gridDivision", "gridPixelDivision", "bigStars");
-	final private Collection<String> booleans = Arrays.asList("shadeP", "gridP", "starsP");
+	private final Collection<String> enums = Arrays.asList("viewPositionType");
+	private final Collection<String> doubles = Arrays.asList("sunPosRelLat", "sunPosRelLong", "orbitPeriod",
+                                                             "orbitInclination", "viewPosLat", "viewPosLong", "starFrequency", "viewMagnification");
+	private final Collection<String> integers = Arrays.asList("daySideBrightness", "nightSideBrightness",
+                                                              "terminatorDiscontinuity", "gridDivision", "gridPixelDivision", "bigStars");
+	private final Collection<String> booleans = Arrays.asList("shadeP", "gridP", "starsP");
 
 	public PSystemXearth(int width, int height, Map<String, String> config, List<Marker> markers) {
 		this.width = width;
@@ -79,7 +79,7 @@ public class PSystemXearth extends AbstractPSystem {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final ACearth earth = new ACearth(markers);
 		final ConfigurationACearth conf = earth.getConf();

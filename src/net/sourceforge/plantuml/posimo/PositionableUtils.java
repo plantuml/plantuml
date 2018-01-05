@@ -35,72 +35,39 @@
  */
 package net.sourceforge.plantuml.posimo;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-
 public class PositionableUtils {
 
-	static public Rectangle2D convert(Positionable positionable) {
+	public static Rectangle2D convert(Positionable positionable) {
 		final Point2D position = positionable.getPosition();
 		final Dimension2D size = positionable.getSize();
 		return new Rectangle2D.Double(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 	}
 
-	static public boolean contains(Positionable positionable, Point2D p) {
+	public static boolean contains(Positionable positionable, Point2D p) {
 		final Point2D position = positionable.getPosition();
 		final Dimension2D size = positionable.getSize();
 		final double width = size.getWidth();
 		final double height = size.getHeight();
 
-		if (p.getX() < position.getX()) {
-			return false;
-		}
-		if (p.getX() > position.getX() + width) {
-			return false;
-		}
-		if (p.getY() < position.getY()) {
-			return false;
-		}
-		if (p.getY() > position.getY() + height) {
-			return false;
-		}
-		return true;
+		return !(p.getX() < position.getX())
+			&& !(p.getX() > position.getX() + width)
+			&& !(p.getY() < position.getY())
+			&& !(p.getY() > position.getY() + height);
 	}
 
-	static public boolean intersect(Positionable big, Positionable small) {
+	public static boolean intersect(Positionable big, Positionable small) {
 		final Rectangle2D bigR = convert(big);
 		final Rectangle2D smallR = convert(small);
 		return bigR.intersects(smallR);
-		// final Point2D pt = small.getPosition();
-		// final Dimension2D dim = small.getSize();
-		//
-		// if (contains(big, pt)) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
-		// pt.getY()))) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
-		// pt.getY() + dim.getHeight()))) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX(), pt.getY() +
-		// dim.getHeight()))) {
-		// return true;
-		// }
-		// return false;
 	}
 
-	//
-	// public boolean intersect(Positionable p) {
-	// return intersect(p.getPosition(), p.getSize());
-	// }
-
-	static public Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
+	public static Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
 		return new Positionable() {
 
 			public Point2D getPosition() {
@@ -122,13 +89,13 @@ public class PositionableUtils {
 		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
 	}
 
-	static public Point2D getCenter(Positionable p) {
+	public static Point2D getCenter(Positionable p) {
 		final Point2D pt = p.getPosition();
 		final Dimension2D dim = p.getSize();
 		return new Point2D.Double(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);
 	}
 
-	static public Positionable move(Positionable p, double deltaX, double deltaY) {
+	public static Positionable move(Positionable p, double deltaX, double deltaY) {
 		final Point2D pt = p.getPosition();
 		final Dimension2D dim = p.getSize();
 		return new PositionableImpl(pt.getX() + deltaX, pt.getY() + deltaY, dim);
@@ -146,7 +113,7 @@ public class PositionableUtils {
 		final double deltaY = centerToMove.getY() - centerFixe.getY();
 
 		double min = 0.0;
-		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false) {
+		if (!doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min)) {
 			throw new IllegalArgumentException();
 		}
 		double max = 0.1;
@@ -155,7 +122,7 @@ public class PositionableUtils {
 		}
 		for (int i = 0; i < 5; i++) {
 			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);
-			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;
+			assert !doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max);
 			final double candidat = (min + max) / 2.0;
 			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat)) {
 				min = candidat;

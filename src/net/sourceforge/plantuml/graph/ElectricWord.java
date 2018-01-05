@@ -43,7 +43,7 @@ import java.util.List;
 
 public class ElectricWord {
 
-	private List<ElectricCharge> charges = new ArrayList<ElectricCharge>();
+	private List<ElectricCharge> charges = new ArrayList<>();
 
 	public ElectricWord(Rectangle2D playingZone) {
 

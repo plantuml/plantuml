@@ -40,9 +40,9 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface IEntityImage extends Hideable, TextBlockBackcolored {
 
-	public static final int CORNER = 25;
-	public static final int MARGIN = 5;
-	public static final int MARGIN_LINE = 5;
+	int CORNER = 25;
+	int MARGIN = 5;
+	int MARGIN_LINE = 5;
 
 	ShapeType getShapeType();
 

@@ -69,8 +69,8 @@ public class Group implements Positionned {
 	private Group(Group parent, String groupName) {
 		this.parent = parent;
 		this.groupName = groupName;
-		this.shapes = new ArrayList<Positionned>();
-		this.children = new HashMap<String, Group>();
+		this.shapes = new ArrayList<>();
+		this.children = new HashMap<>();
 	}
 
 	private Group(Group parent, String groupName, List<Positionned> shapes) {
@@ -104,7 +104,7 @@ public class Group implements Positionned {
 		if (rotationZoom.isNone()) {
 			return this;
 		}
-		final List<Positionned> result = new ArrayList<Positionned>();
+		final List<Positionned> result = new ArrayList<>();
 		for (Positionned shape : shapes) {
 			result.add(shape.rotateZoom(rotationZoom));
 		}

@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
 
-	private final List<TextBlock> blocks = new ArrayList<TextBlock>();
+	private final List<TextBlock> blocks = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
 	TextBlockVertical2(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
@@ -92,17 +92,23 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
 				}
 			}
-			if (horizontalAlignment == HorizontalAlignment.LEFT) {
-				block.drawU(ug.apply(new UTranslate(0, y)));
-			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
-				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;
-				block.drawU(ug.apply(new UTranslate(dx, y)));
-			} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
-				final double dx = dimtotal.getWidth() - dimb.getWidth();
-				block.drawU(ug.apply(new UTranslate(dx, y)));
-			} else {
-				throw new UnsupportedOperationException();
-			}
+            switch (horizontalAlignment) {
+                case LEFT:
+                    block.drawU(ug.apply(new UTranslate(0, y)));
+                    break;
+                case CENTER: {
+                    final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;
+                    block.drawU(ug.apply(new UTranslate(dx, y)));
+                    break;
+                }
+                case RIGHT: {
+                    final double dx = dimtotal.getWidth() - dimb.getWidth();
+                    block.drawU(ug.apply(new UTranslate(dx, y)));
+                    break;
+                }
+                default:
+                    throw new UnsupportedOperationException();
+            }
 			y += dimb.getHeight();
 		}
 	}

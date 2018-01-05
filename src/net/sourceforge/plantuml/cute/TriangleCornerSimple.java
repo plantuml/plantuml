@@ -49,7 +49,7 @@ public class TriangleCornerSimple {
 	}
 
 	public TriangleCornerSimple(Point2D a, Point2D b) {
-		if (isZero(a.getX()) == false) {
+		if (!isZero(a.getX())) {
 			throw new IllegalArgumentException("a=" + a);
 		}
 		this.a = a;
@@ -109,9 +109,8 @@ public class TriangleCornerSimple {
 		final double sign = Math.signum(a.getY());
 		// System.err.println("sgn=" + sign);
 		final double x = solveX(alpha, y);
-		final Balloon result = new Balloon(new Point2D.Double(x * sign, y * sign), Math.abs(x));
 		// System.err.println("result=" + result);
-		return result;
+		return new Balloon(new Point2D.Double(x * sign, y * sign), Math.abs(x));
 	}
 
 }

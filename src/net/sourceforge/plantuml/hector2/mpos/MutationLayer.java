@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.hector2.layering.Layer;
 
 public interface MutationLayer {
 
-	public Layer getOriginal();
+	Layer getOriginal();
 
-	public Layer mute();
+	Layer mute();
 
 }

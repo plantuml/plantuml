@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 
 class AtomEmbededSystem implements Atom {
 
-	final private List<CharSequence2> lines2;
+	private final List<CharSequence2> lines2;
 
 	public AtomEmbededSystem(EmbededDiagram sys) {
 		this.lines2 = sys.getLines().as2();
@@ -77,10 +77,8 @@ class AtomEmbededSystem implements Atom {
 			return new Dimension2DDouble(im.getWidth(), im.getHeight());
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
-		return new Dimension2DDouble(42, 42);
+        return new Dimension2DDouble(42, 42);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -97,13 +95,10 @@ class AtomEmbededSystem implements Atom {
 			ug.draw(image);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
+    }
 
-	}
-
-	private String getImageSvg() throws IOException, InterruptedException {
+	private String getImageSvg() throws IOException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
@@ -111,7 +106,7 @@ class AtomEmbededSystem implements Atom {
 		return new String(os.toByteArray());
 	}
 
-	private BufferedImage getImage() throws IOException, InterruptedException {
+	private BufferedImage getImage() throws IOException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
@@ -126,7 +121,7 @@ class AtomEmbededSystem implements Atom {
 	// return HorizontalAlignment.LEFT;
 	// }
 	//
-	private Diagram getSystem() throws IOException, InterruptedException {
+	private Diagram getSystem() {
 		final BlockUml blockUml = new BlockUml(lines2, 0, Defines.createEmpty());
 		return blockUml.getDiagram();
 	}

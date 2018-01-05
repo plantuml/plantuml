@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 public class PSystemListOpenIconic extends AbstractPSystem {
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
+    protected final ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat, long seed)
 			throws IOException {
 		final UDrawable result = getGraphicStrings();
 		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1.0, HtmlColorUtils.WHITE,
@@ -70,13 +70,13 @@ public class PSystemListOpenIconic extends AbstractPSystem {
 	}
 
 	private UDrawable getGraphicStrings() throws IOException {
-		final List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<>();
 		lines.add("<b>List Open Iconic");
 		lines.add("<i>Credit to");
 		lines.add("https://useiconic.com/open");
 		lines.add(" ");
 		final BufferedReader br = new BufferedReader(new InputStreamReader(getRessourceAllTxt()));
-		String s = null;
+		String s;
 		while ((s = br.readLine()) != null) {
 			// lines.add("<&yen> " + s);
 			// System.err.println("s=" + s);

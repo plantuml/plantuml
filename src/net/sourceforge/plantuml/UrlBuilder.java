@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 public class UrlBuilder {
 
-	public static enum ModeUrl {
+	public enum ModeUrl {
 		STRICT, ANYWHERE
 	}
 
@@ -89,15 +89,18 @@ public class UrlBuilder {
 
 	public Url getUrl(String s) {
 		final Pattern2 p;
-		if (mode == ModeUrl.STRICT) {
-			p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
-		} else if (mode == ModeUrl.ANYWHERE) {
-			p = MyPattern.cmpile("(?i).*" + URL_PATTERN + ".*");
-		} else {
-			throw new IllegalStateException();
-		}
+        switch (mode) {
+            case STRICT:
+                p = MyPattern.cmpile("(?i)^" + URL_PATTERN + "$");
+                break;
+            case ANYWHERE:
+                p = MyPattern.cmpile("(?i).*" + URL_PATTERN + ".*");
+                break;
+            default:
+                throw new IllegalStateException();
+        }
 		final Matcher2 m = p.matcher(StringUtils.trinNoTrace(s));
-		if (m.matches() == false) {
+		if (!m.matches()) {
 			return null;
 		}
 		// String url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(1));
@@ -131,7 +134,7 @@ public class UrlBuilder {
 	}
 
 	private String withTopUrl(String url) {
-		if (url.startsWith("http:") == false && url.startsWith("https:") == false && topurl != null) {
+		if (!url.startsWith("http:") && !url.startsWith("https:") && topurl != null) {
 			return topurl + url;
 		}
 		return url;

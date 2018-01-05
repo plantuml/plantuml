@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.project2;
 
 public interface TimeConverter {
 
-	public TimeElement getCorrespondingElement(long position);
+	TimeElement getCorrespondingElement(long position);
 
-	public double getStartPosition(TimeElement timeElement);
+	double getStartPosition(TimeElement timeElement);
 
-	public double getEndPosition(TimeElement timeElement);
+	double getEndPosition(TimeElement timeElement);
 
 }

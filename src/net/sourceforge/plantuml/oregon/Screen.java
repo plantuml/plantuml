@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Screen {
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 
 	public void clear() {
 		lines.clear();

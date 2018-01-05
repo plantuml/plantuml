@@ -55,5 +55,5 @@ public abstract class FtileDimensionMemoize extends AbstractFtile {
 		return calculateDimensionInternal;
 	}
 
-	abstract protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder);
+	protected abstract FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder);
 }

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.List;
 
-class SquareMaker<O extends Object> {
+class SquareMaker<O> {
 
 	public void putInSquare(List<O> data, SquareLinker<O> linker) {
 		final int branch = computeBranch(data.size());

@@ -55,7 +55,7 @@ public class CommandAtPlayer extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final String code = arg.get("PLAYER", 0);
 		final Player player = diagram.getPlayer(code);
 		if (player == null) {

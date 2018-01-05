@@ -72,7 +72,7 @@ public class LiveBoxesDrawer {
 		this.context = context;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.delays = new HashSet<Segment>();
+		this.delays = new HashSet<>();
 		for (Map.Entry<Double, Double> ent : delays.entrySet()) {
 			this.delays.add(new Segment(ent.getKey(), ent.getKey() + ent.getValue()));
 		}
@@ -96,7 +96,7 @@ public class LiveBoxesDrawer {
 		}
 		for (Iterator<Segment> it = segments.iterator(); it.hasNext();) {
 			final Segment seg = it.next();
-			if (it.hasNext() == false && type != ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
+			if (!it.hasNext() && type != ComponentType.ALIVE_BOX_CLOSE_CLOSE) {
 				type = ComponentType.ALIVE_BOX_OPEN_CLOSE;
 			}
 			drawInternal(ug, yposition, seg.getPos1(), seg.getPos2(), type);

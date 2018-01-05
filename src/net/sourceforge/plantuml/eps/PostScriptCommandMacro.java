@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.eps;
 
 public class PostScriptCommandMacro implements PostScriptCommand {
 
-	final private String name;
-	final private PostScriptData data = new PostScriptData();
+	private final String name;
+	private final PostScriptData data = new PostScriptData();
 
 	public PostScriptCommandMacro(String name) {
 		this.name = name;
@@ -57,11 +57,9 @@ public class PostScriptCommandMacro implements PostScriptCommand {
 	}
 
 	public String getPostStringDefinition() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("/" + name + " {\n");
-		sb.append(data.toPostString());
-		sb.append("} def\n");
-		return sb.toString();
+		return ("/" + name + " {\n") +
+			data.toPostString() +
+			"} def\n";
 	}
 
 	@Override

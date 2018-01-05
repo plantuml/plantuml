@@ -63,9 +63,9 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 	enum Mode {
 		EXTENDS, IMPLEMENTS
-	};
+	}
 
-	public CommandCreateElementMultilines(int type) {
+    public CommandCreateElementMultilines(int type) {
 		super(getRegexConcat(type), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 		this.type = type;
 	}

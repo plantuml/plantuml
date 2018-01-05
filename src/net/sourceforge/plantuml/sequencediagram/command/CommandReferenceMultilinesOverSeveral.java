@@ -69,7 +69,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		// final HtmlColor backColorGeneral = HtmlColorSet.getInstance().getColorIfValid(line0.get(1));
 
 		final List<String> participants = StringUtils.splitComma(line0.get(1));
-		final List<Participant> p = new ArrayList<Participant>();
+		final List<Participant> p = new ArrayList<>();
 		for (String s : participants) {
 			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 		}

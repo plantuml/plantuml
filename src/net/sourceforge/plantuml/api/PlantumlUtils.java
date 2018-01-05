@@ -45,10 +45,10 @@ public class PlantumlUtils {
 
 	public static boolean hasCMapData(String uml) {
 		List<BlockUml> blocks = new SourceStringReader(uml).getBlocks();
-		if (blocks.size() == 0) {
+		if (blocks.isEmpty()) {
 			uml = "@startuml\n" + uml + "\n@enduml";
 			blocks = new SourceStringReader(uml).getBlocks();
-			if (blocks.size() == 0) {
+			if (blocks.isEmpty()) {
 				return false;
 			}
 		}

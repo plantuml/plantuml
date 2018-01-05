@@ -56,9 +56,9 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 
 public class Option {
 
-	private final List<String> excludes = new ArrayList<String>();
-	private final List<String> config = new ArrayList<String>();
-	private final Map<String, String> defines = new LinkedHashMap<String, String>();
+	private final List<String> excludes = new ArrayList<>();
+	private final List<String> config = new ArrayList<>();
+	private final Map<String, String> defines = new LinkedHashMap<>();
 	private String charset;
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
@@ -84,20 +84,20 @@ public class Option {
 	private File outputFile = null;
 	private String filename;
 
-	private final List<String> result = new ArrayList<String>();
+	private final List<String> result = new ArrayList<>();
 
 	public Option() {
 	}
 
 	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
 
-	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")
-	final public void setFileFormat(FileFormat fileFormat) {
+    @Deprecated
+    public final void setFileFormat(FileFormat fileFormat) {
 		setFileFormatOption(new FileFormatOption(fileFormat));
 	}
 
-	final public void setFileFormatOption(FileFormatOption newFormat) {
+	public final void setFileFormatOption(FileFormatOption newFormat) {
 		this.fileFormatOption = newFormat;
 	}
 
@@ -352,7 +352,7 @@ public class Option {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(source);
-			String s = null;
+			String s;
 			while ((s = br.readLine()) != null) {
 				config.add(s);
 			}
@@ -405,7 +405,7 @@ public class Option {
 		return outputDir;
 	}
 
-	public final static String getPattern() {
+	public static String getPattern() {
 		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu)$";
 	}
 

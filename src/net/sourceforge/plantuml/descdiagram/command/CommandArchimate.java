@@ -101,10 +101,8 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		final String icon = arg.getLazzy("STEREOTYPE", 0);
 
 		final IEntity entity = diagram.getOrCreateLeaf(code, LeafType.DESCRIPTION, USymbol.RECTANGLE);
-		
-		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 
-		String display = displayRaw;
+        String display = arg.getLazzy("DISPLAY", 0);
 		if (display == null) {
 			display = code.getFullName();
 		}

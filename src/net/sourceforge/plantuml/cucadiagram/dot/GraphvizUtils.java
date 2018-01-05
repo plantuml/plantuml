@@ -35,20 +35,19 @@
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GraphvizUtils {
 
@@ -61,11 +60,11 @@ public class GraphvizUtils {
 
 	private static String dotExecutable;
 
-	public static final String getDotExecutableForTest() {
+	public static String getDotExecutableForTest() {
 		return dotExecutable;
 	}
 
-	public static final void setDotExecutable(String value) {
+	public static void setDotExecutable(String value) {
 		dotExecutable = value;
 	}
 
@@ -89,16 +88,11 @@ public class GraphvizUtils {
 	}
 
 	private static boolean useVizJs(ISkinParam skinParam) {
-		if (skinParam != null && VIZJS.equalsIgnoreCase(skinParam.getDotExecutable()) && VizJsEngine.isOk()) {
-			return true;
-		}
-		if (VIZJS.equalsIgnoreCase(getenvGraphvizDot()) && VizJsEngine.isOk()) {
-			return true;
-		}
-		return false;
+		return skinParam != null && VIZJS.equalsIgnoreCase(skinParam.getDotExecutable()) && VizJsEngine.isOk()
+			|| VIZJS.equalsIgnoreCase(getenvGraphvizDot()) && VizJsEngine.isOk();
 	}
 
-	static public File getDotExe() {
+	public static File getDotExe() {
 		return create(null, "png").getDotExe();
 	}
 
@@ -117,7 +111,7 @@ public class GraphvizUtils {
 		return null;
 	}
 
-	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<Integer>();
+	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<>();
 
 	public static void removeLocalLimitSize() {
 		limitSize.remove();
@@ -153,7 +147,7 @@ public class GraphvizUtils {
 
 	private static String dotVersion = null;
 
-	public static String dotVersion() throws IOException, InterruptedException {
+	public static String dotVersion() {
 		if (dotVersion == null) {
 			final File dotExe = GraphvizUtils.getDotExe();
 			final ExeState exeState = ExeState.checkFile(dotExe);
@@ -172,17 +166,17 @@ public class GraphvizUtils {
 		}
 		final Pattern p = Pattern.compile("\\s([12].\\d\\d)\\D");
 		final Matcher m = p.matcher(s);
-		if (m.find() == false) {
+		if (!m.find()) {
 			return -1;
 		}
 		return Integer.parseInt(m.group(1).replaceAll("\\.", ""));
 	}
 
-	public static int getDotVersion() throws IOException, InterruptedException {
+	public static int getDotVersion() {
 		return retrieveVersion(dotVersion());
 	}
 
-	static public List<String> getTestDotStrings(boolean withRichText) {
+	public static List<String> getTestDotStrings(boolean withRichText) {
 		String red = "";
 		String bold = "";
 		if (withRichText) {
@@ -190,7 +184,7 @@ public class GraphvizUtils {
 			bold = "<b>";
 		}
 
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (useVizJs(null)) {
 			result.add("VizJs library is used!");
 			try {
@@ -248,7 +242,7 @@ public class GraphvizUtils {
 		return Collections.unmodifiableList(result);
 	}
 
-	static String getTestCreateSimpleFile() throws IOException {
+	static String getTestCreateSimpleFile() {
 		final Graphviz graphviz2 = GraphvizUtils.create(null, "digraph foo { test; }", "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz2.createFile3(baos);
@@ -262,7 +256,7 @@ public class GraphvizUtils {
 			return "Error: dot generates empty file. Check you dot installation.";
 		}
 		final String s = new String(data);
-		if (s.indexOf("<svg") == -1) {
+		if (!s.contains("<svg")) {
 			return "Error: dot generates unreadable SVG file. Check you dot installation.";
 		}
 		return null;

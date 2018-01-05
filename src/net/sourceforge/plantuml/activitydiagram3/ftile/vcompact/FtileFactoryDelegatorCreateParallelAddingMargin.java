@@ -63,7 +63,7 @@ public class FtileFactoryDelegatorCreateParallelAddingMargin extends FtileFactor
 				getStringBounder());
 		final double height1 = dimSuper.getHeight() + 2 * spaceArroundBlackBar;
 
-		final List<Ftile> list = new ArrayList<Ftile>();
+		final List<Ftile> list = new ArrayList<>();
 		for (Ftile tmp : all) {
 			list.add(new FtileHeightFixed(FtileUtils.addHorizontalMargin(tmp, xMargin), height1));
 		}

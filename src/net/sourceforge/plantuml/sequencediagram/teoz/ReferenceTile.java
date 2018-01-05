@@ -94,9 +94,8 @@ public class ReferenceTile implements Tile {
 		strings = strings.add("ref");
 		strings = strings.addAll(reference.getStrings());
 
-		final Component comp = tileArguments.getSkin().createComponent(ComponentType.REFERENCE, null,
-				tileArguments.getSkinParam(), strings);
-		return comp;
+        return tileArguments.getSkin().createComponent(ComponentType.REFERENCE, null,
+tileArguments.getSkinParam(), strings);
 	}
 
 	public void drawU(UGraphic ug) {

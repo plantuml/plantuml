@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.project2;
 
 public interface TaskContainer {
 
-	public Task getTask(String code);
+	Task getTask(String code);
 
 }

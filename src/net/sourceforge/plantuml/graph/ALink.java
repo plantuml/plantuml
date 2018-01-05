@@ -43,6 +43,6 @@ public interface ALink {
 
 	ANode getNode2();
 
-	public Object getUserData();
+	Object getUserData();
 
 }

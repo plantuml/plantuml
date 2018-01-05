@@ -41,11 +41,11 @@ import java.util.List;
 
 public class SmallestEnclosingCircle {
 
-	private final List<Point2D> all = new ArrayList<Point2D>();
+	private final List<Point2D> all = new ArrayList<>();
 	private Circle lastSolution;
 
 	public void append(Point2D pt) {
-		if (all.contains(pt) == false) {
+		if (!all.contains(pt)) {
 			all.add(pt);
 		}
 		this.lastSolution = null;
@@ -53,7 +53,7 @@ public class SmallestEnclosingCircle {
 
 	public Circle getCircle() {
 		if (lastSolution == null) {
-			lastSolution = findSec(all.size(), all, 0, new ArrayList<Point2D>(all));
+			lastSolution = findSec(all.size(), all, 0, new ArrayList<>(all));
 		}
 		return lastSolution;
 	}
@@ -62,13 +62,16 @@ public class SmallestEnclosingCircle {
 		Circle sec = new Circle();
 
 		// Compute the Smallest Enclosing Circle defined by B
-		if (m == 1) {
-			sec = new Circle(b.get(0));
-		} else if (m == 2) {
-			sec = new Circle(b.get(0), b.get(1));
-		} else if (m == 3) {
-			return Circle.getCircle(b.get(0), b.get(1), b.get(2));
-		}
+        switch (m) {
+            case 1:
+                sec = new Circle(b.get(0));
+                break;
+            case 2:
+                sec = new Circle(b.get(0), b.get(1));
+                break;
+            case 3:
+                return Circle.getCircle(b.get(0), b.get(1), b.get(2));
+        }
 
 		// Check if all the points in p are enclosed
 		for (int i = 0; i < n; i++) {

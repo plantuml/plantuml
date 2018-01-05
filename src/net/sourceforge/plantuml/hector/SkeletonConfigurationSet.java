@@ -35,11 +35,7 @@
  */
 package net.sourceforge.plantuml.hector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class SkeletonConfigurationSet implements Iterable<SkeletonConfiguration> {
 
@@ -49,7 +45,7 @@ public class SkeletonConfigurationSet implements Iterable<SkeletonConfiguration>
 
 	public SkeletonConfigurationSet(int limitSize, SkeletonConfigurationEvaluator evaluator) {
 		this.comparator = new SkeletonConfigurationComparator(evaluator);
-		this.all = new ArrayList<SkeletonConfiguration>();
+		this.all = new ArrayList<>();
 		this.limitSize = limitSize;
 	}
 
@@ -80,7 +76,7 @@ public class SkeletonConfigurationSet implements Iterable<SkeletonConfiguration>
 	}
 
 	public Iterator<SkeletonConfiguration> iterator() {
-		return new ArrayList<SkeletonConfiguration>(all).iterator();
+		return new ArrayList<>(all).iterator();
 	}
 
 	public SkeletonConfiguration first() {

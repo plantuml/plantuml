@@ -49,13 +49,13 @@ import net.sourceforge.plantuml.preproc.UncommentReadLine;
 
 public class ArobaseStringCompressor implements StringCompressor {
 
-	private final static Pattern2 p = MyPattern.cmpile("(?s)(?i)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+	private static final Pattern2 p = MyPattern.cmpile("(?s)(?i)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
 
 	public String compress(final String data) throws IOException {
 		final ReadLine r = new UncommentReadLine(new ReadLineReader(new StringReader(data), "COMPRESS"));
 		final StringBuilder sb = new StringBuilder();
 		final StringBuilder full = new StringBuilder();
-		CharSequence2 s = null;
+		CharSequence2 s;
 		boolean startDone = false;
 		while ((s = r.readLine()) != null) {
 			append(full, s);
@@ -67,7 +67,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 				append(sb, s);
 			}
 		}
-		if (startDone == false) {
+		if (!startDone) {
 			return compressOld(full.toString());
 		}
 		return sb.toString();
@@ -80,7 +80,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 		sb.append(s.toString2());
 	}
 
-	private String compressOld(String s) throws IOException {
+	private String compressOld(String s) {
 		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
 			return clean(m.group(2));
@@ -88,13 +88,13 @@ public class ArobaseStringCompressor implements StringCompressor {
 		return "";
 	}
 
-	public String decompress(String s) throws IOException {
+	public String decompress(String s) {
 		String result = clean(s);
 		if (result.startsWith("@start")) {
 			return result;
 		}
 		result = "@startuml\n" + result;
-		if (result.endsWith("\n") == false) {
+		if (!result.endsWith("\n")) {
 			result += "\n";
 		}
 		result += "@enduml";

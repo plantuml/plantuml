@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 
 public class Bibliotekon {
 
-	private final List<Cluster> allCluster = new ArrayList<Cluster>();
+	private final List<Cluster> allCluster = new ArrayList<>();
 
-	private final Map<ILeaf, Shape> shapeMap = new LinkedHashMap<ILeaf, Shape>();;
+	private final Map<ILeaf, Shape> shapeMap = new LinkedHashMap<>();
 
-	private final List<Line> lines0 = new ArrayList<Line>();
-	private final List<Line> lines1 = new ArrayList<Line>();
-	private final List<Line> allLines = new ArrayList<Line>();
+    private final List<Line> lines0 = new ArrayList<>();
+	private final List<Line> lines1 = new ArrayList<>();
+	private final List<Line> allLines = new ArrayList<>();
 
 	public void putShape(ILeaf ent, Shape shape) {
 		shapeMap.put(ent, shape);
@@ -79,7 +79,7 @@ public class Bibliotekon {
 				// lines0.add(0, line);
 				for (int i = 0; i < lines0.size(); i++) {
 					final Line other = lines0.get(i);
-					if (other.hasNoteLabelText() == false && line.sameConnections(other)) {
+					if (!other.hasNoteLabelText() && line.sameConnections(other)) {
 						lines0.add(i, line);
 						return;
 					}
@@ -95,10 +95,7 @@ public class Bibliotekon {
 
 	private static boolean first(Line line) {
 		final int length = line.getLength();
-		if (length == 1) {
-			return true;
-		}
-		return false;
+		return length == 1;
 	}
 
 	public void addCluster(Cluster current) {
@@ -118,7 +115,6 @@ public class Bibliotekon {
 			}
 			return uid;
 		}
-		assert result == null;
 		if (ent.isGroup()) {
 			for (IEntity i : shapeMap.keySet()) {
 				if (ent.getCode().equals(i.getCode())) {
@@ -137,7 +133,7 @@ public class Bibliotekon {
 			final double maxX = sh.getMinX() + sh.getWidth();
 			if (maxX > warningOrError) {
 				final IEntity entity = ent.getKey();
-				sb.append(entity.getCode() + " is overpassing the width limit.");
+				sb.append(entity.getCode()).append(" is overpassing the width limit.");
 				sb.append("\n");
 			}
 
@@ -146,7 +142,7 @@ public class Bibliotekon {
 	}
 
 	public Map<Code, Double> getMaxX() {
-		final Map<Code, Double> result = new HashMap<Code, Double>();
+		final Map<Code, Double> result = new HashMap<>();
 		for (Map.Entry<ILeaf, Shape> ent : shapeMap.entrySet()) {
 			final Shape sh = ent.getValue();
 			final double maxX = sh.getMinX() + sh.getWidth();
@@ -177,7 +173,7 @@ public class Bibliotekon {
 	}
 
 	public List<Line> getAllLineConnectedTo(IEntity leaf) {
-		final List<Line> result = new ArrayList<Line>();
+		final List<Line> result = new ArrayList<>();
 		for (Line line : allLines) {
 			if (line.isLinkFromOrTo(leaf)) {
 				result.add(line);

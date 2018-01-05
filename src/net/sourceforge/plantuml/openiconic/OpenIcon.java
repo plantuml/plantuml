@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class OpenIcon {
 
 	private SvgPath svgPath;
-	private List<String> rawData = new ArrayList<String>();
+	private List<String> rawData = new ArrayList<>();
 	private final String id;
 
 	public static OpenIcon retrieve(String name) {
@@ -85,7 +85,7 @@ public class OpenIcon {
 	private OpenIcon(InputStream is, String id) throws IOException {
 		this.id = id;
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		String s = null;
+		String s;
 		while ((s = br.readLine()) != null) {
 			rawData.add(s);
 			if (s.contains("<path")) {

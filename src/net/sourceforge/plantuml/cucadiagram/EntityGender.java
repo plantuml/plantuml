@@ -36,5 +36,5 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 public interface EntityGender {
-	public boolean contains(IEntity test);
+	boolean contains(IEntity test);
 }

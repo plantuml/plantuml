@@ -73,8 +73,7 @@ public class ElseTile implements TileWithCallbackY {
 				anElse.getBackColorGeneral());
 
 		final Display display = Display.create(anElse.getComment());
-		final Component comp = skin.createComponent(ComponentType.GROUPING_ELSE, null, tmp, display);
-		return comp;
+        return skin.createComponent(ComponentType.GROUPING_ELSE, null, tmp, display);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -51,100 +51,100 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public interface ISkinParam extends ISkinSimple {
 
-	public HtmlColor getHyperlinkColor();
+	HtmlColor getHyperlinkColor();
 
-	public boolean useUnderlineForHyperlink();
+	boolean useUnderlineForHyperlink();
 
-	public HtmlColor getBackgroundColor();
+	HtmlColor getBackgroundColor();
 
-	public HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable);
+	HtmlColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable);
 
-	public Colors getColors(ColorParam param, Stereotype stereotype);
+	Colors getColors(ColorParam param, Stereotype stereotype);
 
-	public HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param);
+	HtmlColor getFontHtmlColor(Stereotype stereotype, FontParam... param);
 
-	public UStroke getThickness(LineParam param, Stereotype stereotype);
+	UStroke getThickness(LineParam param, Stereotype stereotype);
 
-	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
+	UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
 
-	public HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection);
+	HorizontalAlignment getHorizontalAlignment(AlignParam param, ArrowDirection arrowDirection);
 
-	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
+	HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
 
-	public int getCircledCharacterRadius();
+	int getCircledCharacterRadius();
 
-	public int classAttributeIconSize();
+	int classAttributeIconSize();
 
-	public ColorMapper getColorMapper();
+	ColorMapper getColorMapper();
 
-	public DotSplines getDotSplines();
+	DotSplines getDotSplines();
 
-	public String getDotExecutable();
+	String getDotExecutable();
 
-	public boolean shadowing();
+	boolean shadowing();
 
-	public boolean shadowingForNote(Stereotype stereotype);
+	boolean shadowingForNote(Stereotype stereotype);
 
-	public boolean shadowing2(SkinParameter skinParameter);
+	boolean shadowing2(SkinParameter skinParameter);
 
-	public PackageStyle getPackageStyle();
+	PackageStyle getPackageStyle();
 
-	public boolean useUml2ForComponent();
+	boolean useUml2ForComponent();
 
-	public boolean stereotypePositionTop();
+	boolean stereotypePositionTop();
 
-	public boolean useSwimlanes(UmlDiagramType type);
+	boolean useSwimlanes(UmlDiagramType type);
 
-	public double getNodesep();
+	double getNodesep();
 
-	public double getRanksep();
+	double getRanksep();
 
-	public double getRoundCorner(String param, Stereotype stereotype);
+	double getRoundCorner(String param, Stereotype stereotype);
 
-	public LineBreakStrategy maxMessageSize();
+	LineBreakStrategy maxMessageSize();
 
-	public boolean strictUmlStyle();
+	boolean strictUmlStyle();
 
-	public boolean forceSequenceParticipantUnderlined();
+	boolean forceSequenceParticipantUnderlined();
 
-	public ConditionStyle getConditionStyle();
+	ConditionStyle getConditionStyle();
 
-	public double minClassWidth();
+	double minClassWidth();
 
-	public boolean sameClassWidth();
+	boolean sameClassWidth();
 
-	public Rankdir getRankdir();
+	Rankdir getRankdir();
 
-	public boolean useOctagonForActivity(Stereotype stereotype);
+	boolean useOctagonForActivity(Stereotype stereotype);
 
-	public int groupInheritance();
+	int groupInheritance();
 
-	public boolean useGuillemet();
+	boolean useGuillemet();
 
-	public boolean handwritten();
+	boolean handwritten();
 
-	public String getSvgLinkTarget();
+	String getSvgLinkTarget();
 
-	public int getTabSize();
+	int getTabSize();
 
-	public int maxAsciiMessageLength();
+	int maxAsciiMessageLength();
 
-	public int colorArrowSeparationSpace();
+	int colorArrowSeparationSpace();
 
-	public SplitParam getSplitParam();
+	SplitParam getSplitParam();
 
-	public int swimlaneWidth();
+	int swimlaneWidth();
 
-	public UmlDiagramType getUmlDiagramType();
+	UmlDiagramType getUmlDiagramType();
 
-	public HtmlColor getHoverPathColor();
+	HtmlColor getHoverPathColor();
 
-	public TikzFontDistortion getTikzFontDistortion();
+	TikzFontDistortion getTikzFontDistortion();
 
-	public double getPadding(PaddingParam param);
+	double getPadding(PaddingParam param);
 
-	public boolean useRankSame();
+	boolean useRankSame();
 
-	public boolean displayGenericWithOldFashion();
+	boolean displayGenericWithOldFashion();
 
 }

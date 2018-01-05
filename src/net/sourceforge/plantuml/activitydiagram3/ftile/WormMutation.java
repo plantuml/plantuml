@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class WormMutation {
 
-	private final List<UTranslate> translations = new ArrayList<UTranslate>();
+	private final List<UTranslate> translations = new ArrayList<>();
 
 	private WormMutation() {
 
@@ -64,7 +64,7 @@ public class WormMutation {
 				result.translations.add(tmp.translations.get(0));
 			} else {
 				UTranslate last = result.getLast();
-				if (last.isAlmostSame(tmp.translations.get(0)) == false) {
+				if (!last.isAlmostSame(tmp.translations.get(0))) {
 					tmp = tmp.reverse();
 				}
 			}
@@ -156,7 +156,7 @@ public class WormMutation {
 		throw new UnsupportedOperationException(signature);
 	}
 
-	static private class MinMax {
+	private static class MinMax {
 
 		private double min = Double.MAX_VALUE;
 		private double max = Double.MIN_VALUE;

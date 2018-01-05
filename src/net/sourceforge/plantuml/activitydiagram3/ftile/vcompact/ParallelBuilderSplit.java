@@ -68,7 +68,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1() {
 		Ftile result = getMiddle();
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 
 		double x1 = 0;
 		for (Ftile tmp : getList()) {
@@ -85,7 +85,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 
 	@Override
 	protected Ftile doStep2(Ftile result) {
-		final List<Connection> conns2 = new ArrayList<Connection>();
+		final List<Connection> conns2 = new ArrayList<>();
 		double x2 = 0;
 		boolean hasOut = false;
 		for (Ftile tmp : getList()) {
@@ -139,13 +139,13 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 						found = true;
 					}
 				}
-				if (found == false) {
+				if (!found) {
 					return;
 				}
 			}
 			final StringBounder stringBounder = ug.getStringBounder();
 			for (Ftile tmp : list) {
-				if (y > 0 && tmp.calculateDimension(stringBounder).hasPointOut() == false) {
+				if (y > 0 && !tmp.calculateDimension(stringBounder).hasPointOut()) {
 					continue;
 				}
 				final UTranslate ut = inner.getTranslateFor(tmp, stringBounder);
@@ -261,7 +261,7 @@ public class ParallelBuilderSplit extends ParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(new UTranslate(x, 0));
 			final FtileGeometry geo = getFtile1().calculateDimension(ug.getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (!geo.hasPointOut()) {
 				assert false;
 				return;
 			}

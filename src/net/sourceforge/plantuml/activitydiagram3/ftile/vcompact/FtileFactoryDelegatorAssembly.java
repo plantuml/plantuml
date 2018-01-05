@@ -67,7 +67,7 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 		final Ftile tile1andSpace = FtileUtils.addBottom(tile1, height);
 		Ftile result = super.assembly(tile1andSpace, tile2);
 		final FtileGeometry geo = tile1.calculateDimension(stringBounder);
-		if (geo.hasPointOut() == false) {
+		if (!geo.hasPointOut()) {
 			return result;
 		}
 		final UTranslate translate1 = result.getTranslateFor(tile1andSpace, stringBounder);

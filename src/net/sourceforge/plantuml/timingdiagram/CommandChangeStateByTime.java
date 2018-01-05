@@ -68,7 +68,7 @@ public class CommandChangeStateByTime extends SingleLineCommand2<TimingDiagram> 
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
+    protected final CommandExecutionResult executeArg(TimingDiagram diagram, RegexResult arg) {
 		final Player player = diagram.getLastPlayer();
 		if (player == null) {
 			return CommandExecutionResult.error("Missing @ line before this");

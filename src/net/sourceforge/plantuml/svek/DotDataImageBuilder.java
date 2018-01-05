@@ -155,7 +155,7 @@ public final class DotDataImageBuilder {
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
-				if (link.getEntity1().isGroup() == false && link.getEntity1().getLeafType() == LeafType.NOTE
+				if (!link.getEntity1().isGroup() && link.getEntity1().getLeafType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity1())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
@@ -163,7 +163,7 @@ public final class DotDataImageBuilder {
 						((EntityImageNote) shape.getImage()).setOpaleLine(line, shape, other);
 						line.setOpale(true);
 					}
-				} else if (link.getEntity2().isGroup() == false && link.getEntity2().getLeafType() == LeafType.NOTE
+				} else if (!link.getEntity2().isGroup() && link.getEntity2().getLeafType() == LeafType.NOTE
 						&& onlyOneLink(link.getEntity2())) {
 					final Shape shape = dotStringFactory.getBibliotekon().getShape(link.getEntity2());
 					final Shape other = dotStringFactory.getBibliotekon().getShape(link.getEntity1());
@@ -194,7 +194,7 @@ public final class DotDataImageBuilder {
 		} catch (IOException e) {
 			return new GraphvizCrash(source.getPlainString());
 		}
-		if (svg.length() == 0) {
+		if (svg.isEmpty()) {
 			return new GraphvizCrash(source.getPlainString());
 		}
 		final String graphvizVersion = extractGraphvizVersion(svg);
@@ -248,7 +248,7 @@ public final class DotDataImageBuilder {
 
 	private IEntityImage error(File dotExe) {
 
-		final List<String> msg = new ArrayList<String>();
+		final List<String> msg = new ArrayList<>();
 		msg.add("Dot Executable: " + dotExe);
 		final ExeState exeState = ExeState.checkFile(dotExe);
 		msg.add(exeState.getTextMessage());
@@ -307,7 +307,7 @@ public final class DotDataImageBuilder {
 	private double getMaxWidth(DotStringFactory dotStringFactory) {
 		double result = 0;
 		for (ILeaf ent : dotData.getLeafs()) {
-			if (ent.getLeafType().isLikeClass() == false) {
+			if (!ent.getLeafType().isLikeClass()) {
 				continue;
 			}
 			final IEntityImage im = new EntityImageClass(dotStringFactory.getGraphvizVersion(), ent,
@@ -327,8 +327,8 @@ public final class DotDataImageBuilder {
 			throw new IllegalStateException();
 		}
 		if (leaf.getLeafType().isLikeClass()) {
-			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, (ILeaf) leaf, skinParam,
-					portionShower);
+			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, leaf, skinParam,
+                                                                           portionShower);
 			final Neighborhood neighborhood = leaf.getNeighborhood();
 			if (neighborhood != null) {
 				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
@@ -346,7 +346,7 @@ public final class DotDataImageBuilder {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
 				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
 			}
-			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().size() == 0) {
+			if (isHideEmptyDescriptionForState && leaf.getBodier().getFieldsToDisplay().isEmpty()) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
 			}
 			if (leaf.getStereotype() != null && "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(false))) {
@@ -429,7 +429,7 @@ public final class DotDataImageBuilder {
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : dotData.getLeafs()) {
 			if (dotData.getTopParent() == ent.getParentContainer()) {
 				result.add(ent);
@@ -480,9 +480,9 @@ public final class DotDataImageBuilder {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final List<Member> members = ((IEntity) g).getBodier().getFieldsToDisplay();
+			final List<Member> members = g.getBodier().getFieldsToDisplay();
 			final TextBlockWidth attribute;
-			if (members.size() == 0) {
+			if (members.isEmpty()) {
 				attribute = new TextBlockEmpty();
 			} else {
 				attribute = new MethodsOrFieldsArea(members, FontParam.STATE_ATTRIBUTE, dotData.getSkinParam(),
@@ -535,7 +535,7 @@ public final class DotDataImageBuilder {
 			return TextBlockUtils.empty(0, 0);
 		}
 		final boolean show = dotData.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false) {
+		if (!show) {
 			return TextBlockUtils.empty(0, 0);
 		}
 
@@ -551,7 +551,7 @@ public final class DotDataImageBuilder {
 		final StringBuilder sb = new StringBuilder();
 		for (Map.Entry<Code, Double> ent : maxX.entrySet()) {
 			if (ent.getValue() > warningOrError) {
-				sb.append(ent.getKey() + " is overpassing the width limit.");
+				sb.append(ent.getKey()).append(" is overpassing the width limit.");
 				sb.append("\n");
 			}
 		}
