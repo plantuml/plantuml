@@ -208,7 +208,7 @@ public class Stdlib6 {
 		return sb.toString().getBytes("UTF-8");
 	}
 
-	public static void extractStdLib() throws IOException {
+	public static void extractStdLib() {
 		// for (String name : getAll()) {
 		// final Stdlib6 folder = new Stdlib6(name);
 		// folder.extractMeFull(new File("stdlib", name));

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.*;
 import net.sourceforge.plantuml.graphic.color.Colors;
