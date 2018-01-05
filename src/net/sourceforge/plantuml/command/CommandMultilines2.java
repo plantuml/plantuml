@@ -71,7 +71,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 			return CommandControl.NOT_OK;
 		}
 		final boolean result1 = starting.match(StringUtils.trin(first));
-		if (result1 == false) {
+		if (!result1) {
 			return CommandControl.NOT_OK;
 		}
 		if (lines.size() == 1) {

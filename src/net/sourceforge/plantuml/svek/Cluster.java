@@ -302,7 +302,7 @@ public class Cluster implements Moveable {
 
 	public void drawU(UGraphic ug, UStroke stroke, final UmlDiagramType umlDiagramType, final ISkinParam skinParam2) {
 		final String fullName = group.getCode().getFullName();
-		if (fullName.startsWith("##") == false) {
+		if (!fullName.startsWith("##")) {
 			ug.draw(new UComment("cluster " + fullName));
 		}
 		final Stereotype stereotype = group.getStereotype();

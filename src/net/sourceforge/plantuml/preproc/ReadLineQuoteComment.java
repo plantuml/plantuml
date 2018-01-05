@@ -73,7 +73,7 @@ public class ReadLineQuoteComment implements ReadLine {
 			if (trim.startsWith("/'") && trim.endsWith("'/")) {
 				continue;
 			}
-			if (trim.startsWith("/'") && trim.contains("'/") == false) {
+			if (trim.startsWith("/'") && !trim.contains("'/")) {
 				this.longComment = true;
 				continue;
 			}

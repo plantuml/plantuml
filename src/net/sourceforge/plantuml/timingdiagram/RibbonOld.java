@@ -117,14 +117,14 @@ public class RibbonOld implements TimeDrawing {
 			final double a = getPosInPixel(changes.get(i));
 			final double b = getPosInPixel(changes.get(i + 1));
 			assert b > a;
-			if (changes.get(i).isCompletelyHidden() == false) {
+			if (!changes.get(i).isCompletelyHidden()) {
 				drawHexa(ugDown.apply(new UTranslate(a, -delta / 2)), b - a, changes.get(i));
 			}
 		}
 		if (changes.size() >= 1) {
 			final ChangeState last = changes.get(changes.size() - 1);
 			final double a = getPosInPixel(last);
-			if (last.isCompletelyHidden() == false) {
+			if (!last.isCompletelyHidden()) {
 				drawPentaB(ugDown.apply(new UTranslate(a, -delta / 2)), ruler.getWidth() - a, last);
 			}
 		}
@@ -138,7 +138,7 @@ public class RibbonOld implements TimeDrawing {
 		for (int i = 0; i < changes.size(); i++) {
 			final ChangeState change = changes.get(i);
 			final double x = ruler.getPosInPixel(change.getWhen());
-			if (change.isBlank() == false && change.isCompletelyHidden() == false) {
+			if (!change.isBlank() && !change.isCompletelyHidden()) {
 				final TextBlock state = getTextBlock(change.getState());
 				final Dimension2D dim = state.calculateDimension(stringBounder);
 				final double xtext;

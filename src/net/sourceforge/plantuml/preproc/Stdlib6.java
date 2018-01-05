@@ -94,7 +94,7 @@ public class Stdlib6 {
 				if (isSpriteLine(s)) {
 					final Matcher m = sizePattern.matcher(s);
 					final boolean ok = m.find();
-					if (ok == false) {
+					if (!ok) {
 						throw new IOException(s);
 					}
 					final int width = Integer.parseInt(m.group(1));
@@ -191,7 +191,7 @@ public class Stdlib6 {
 			if (isSpriteLine(s)) {
 				final Matcher m = sizePattern.matcher(s);
 				final boolean ok = m.find();
-				if (ok == false) {
+				if (!ok) {
 					throw new IOException(s);
 				}
 				final int width = Integer.parseInt(m.group(1));

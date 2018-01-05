@@ -84,7 +84,7 @@ public class CMapData {
 
 		int seq = 1;
 		for (Url u : all) {
-			if (u.hasData() == false) {
+			if (!u.hasData()) {
 				continue;
 			}
 			cmapdata.appendUrl(seq, u, scale);

@@ -165,7 +165,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		if (hideText == false) {
+		if (!hideText) {
 			return Margins.NONE;
 		}
 		if (useRankSame && hasSomeHorizontalLink((ILeaf) getEntity(), links)) {
