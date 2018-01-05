@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'maven'
+    id 'signing'
+    id 'com.github.johnrengelman.shadow' version '2.0.2'
+}
+
+group = 'net.sourceforge.plantuml'
+archivesBaseName = 'plantuml'
+version = '1.2017.21-SNAPSHOT'
+
+description = """PlantUML is a component that allows to quickly write:
+        * sequence diagram,
+        * use case diagram,
+        * class diagram,
+        * activity diagram,
+        * component diagram,
+        * state diagram
+        * object diagram"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compileOnly 'org.apache.ant:ant:1.10.1'
+    compile 'org.brotli:dec:0.1.2'
+    compile 'com.google.zxing:javase:3.3.1'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'net.sourceforge.plantuml.Run'
+        )
+    }
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+        }
+    }
+}
