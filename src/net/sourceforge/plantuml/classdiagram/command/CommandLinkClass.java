@@ -35,36 +35,20 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import java.util.StringTokenizer;
-
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.*;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOr;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkArrow;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.command.regex.*;
+import net.sourceforge.plantuml.cucadiagram.*;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.HtmlColorSet;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+import java.util.StringTokenizer;
 
 public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -621,22 +605,13 @@ public final class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private boolean isInversed(LinkDecor decors1, LinkDecor decors2) {
-		if (decors1 == LinkDecor.ARROW && decors2 != LinkDecor.ARROW) {
-			return true;
-		}
-		if (decors2 == LinkDecor.AGREGATION) {
-			return true;
-		}
-		if (decors2 == LinkDecor.COMPOSITION) {
-			return true;
-		}
-		if (decors2 == LinkDecor.PLUS) {
-			return true;
-		}
+		return decors1 == LinkDecor.ARROW && decors2 != LinkDecor.ARROW
+				|| decors2 == LinkDecor.AGREGATION
+				|| decors2 == LinkDecor.COMPOSITION
+				|| decors2 == LinkDecor.PLUS;
 		// if (decors2 == LinkDecor.EXTENDS) {
 		// return true;
 		// }
-		return false;
 	}
 
 }
