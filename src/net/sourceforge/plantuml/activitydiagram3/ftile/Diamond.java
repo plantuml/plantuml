@@ -83,7 +83,7 @@ public class Diamond {
 	public static Stencil asStencil(final TextBlock tb) {
 		return new Stencil() {
 
-			private final double getDeltaX(double height, double y) {
+			private double getDeltaX(double height, double y) {
 				final double p = y / height * 2;
 				if (p <= 1) {
 					return diamondHalfSize * p;

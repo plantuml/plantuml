@@ -43,7 +43,7 @@ public final class DotMaker2 {
 		isJunit = true;
 	}
 
-	public static final boolean isJunit() {
+	public static boolean isJunit() {
 		return isJunit;
 	}
 

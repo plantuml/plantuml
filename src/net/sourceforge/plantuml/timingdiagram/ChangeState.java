@@ -72,14 +72,14 @@ public class ChangeState implements Comparable<ChangeState> {
 		return comment;
 	}
 
-	private final HtmlColor getBackColor() {
+	private HtmlColor getBackColor() {
 		if (colors == null || colors.getColor(ColorType.BACK) == null) {
 			return HtmlColorUtils.COL_D7E0F2;
 		}
 		return colors.getColor(ColorType.BACK);
 	}
 
-	private final HtmlColor getLineColor() {
+	private HtmlColor getLineColor() {
 		if (colors == null || colors.getColor(ColorType.LINE) == null) {
 			return HtmlColorUtils.COL_038048;
 		}

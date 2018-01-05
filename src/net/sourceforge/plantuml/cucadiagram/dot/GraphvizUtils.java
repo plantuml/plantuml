@@ -60,11 +60,11 @@ public class GraphvizUtils {
 
 	private static String dotExecutable;
 
-	public static final String getDotExecutableForTest() {
+	public static String getDotExecutableForTest() {
 		return dotExecutable;
 	}
 
-	public static final void setDotExecutable(String value) {
+	public static void setDotExecutable(String value) {
 		dotExecutable = value;
 	}
 

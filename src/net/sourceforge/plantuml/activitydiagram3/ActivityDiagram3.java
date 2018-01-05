@@ -211,7 +211,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	}
 
-	private final double getDpiFactor(FileFormatOption fileFormatOption, final Dimension2D dim) {
+	private double getDpiFactor(FileFormatOption fileFormatOption, final Dimension2D dim) {
 		final double dpiFactor;
 		final Scale scale = getScale();
 		if (scale == null) {

@@ -405,7 +405,7 @@ public class Option {
 		return outputDir;
 	}
 
-	public static final String getPattern() {
+	public static String getPattern() {
 		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu)$";
 	}
 

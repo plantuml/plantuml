@@ -78,7 +78,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 				new RegexLeaf("$"));
 	}
 
-	private final EntityGender emptyByGender(Set<EntityPortion> portion) {
+	private EntityGender emptyByGender(Set<EntityPortion> portion) {
 		if (portion == PORTION_METHOD) {
 			return EntityGenderUtils.emptyMethods();
 		}

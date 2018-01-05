@@ -121,7 +121,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 						CreoleMode.SIMPLE_LINE) : display, type, group, symbol);
 	}
 
-	private final String getNamespace(Code fullyCode) {
+	private String getNamespace(Code fullyCode) {
 		String name = fullyCode.getFullName();
 		do {
 			final int x = name.lastIndexOf(getNamespaceSeparator());

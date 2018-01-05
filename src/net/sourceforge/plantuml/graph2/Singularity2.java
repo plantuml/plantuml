@@ -75,14 +75,14 @@ public class Singularity2 {
 
 	}
 
-	static final double getAngle(Line2D.Double line) {
+	static double getAngle(Line2D.Double line) {
 		if (line.getP1().equals(line.getP2())) {
 			throw new IllegalArgumentException();
 		}
 		return Math.atan2(line.getP2().getY() - line.getP1().getY(), line.getP2().getX() - line.getP1().getX());
 	}
 
-	static final double getOppositeAngle(Line2D.Double line) {
+	static double getOppositeAngle(Line2D.Double line) {
 		return Math.atan2(line.getP1().getY() - line.getP2().getY(), line.getP1().getX() - line.getP2().getX());
 	}
 

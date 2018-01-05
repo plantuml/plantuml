@@ -300,7 +300,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
 	}
 
-	private final ArrowDirection getDirection2() {
+	private ArrowDirection getDirection2() {
 		return getArrowConfiguration().getArrowDirection();
 	}
 

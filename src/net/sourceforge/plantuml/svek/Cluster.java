@@ -817,7 +817,7 @@ public class Cluster implements Moveable {
 		return colorTitle;
 	}
 
-	private final HtmlColor getBackColor(final UmlDiagramType umlDiagramType) {
+	private HtmlColor getBackColor(final UmlDiagramType umlDiagramType) {
 		if (EntityUtils.groupRoot(group)) {
 			return null;
 		}

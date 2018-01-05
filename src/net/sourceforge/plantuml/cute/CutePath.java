@@ -96,7 +96,7 @@ public class CutePath {
 		this.arcs.add(arc);
 	}
 
-	private final MyPoint2D getMyPoint2D(int i) {
+	private MyPoint2D getMyPoint2D(int i) {
 		return getArc(i).getA();
 	}
 

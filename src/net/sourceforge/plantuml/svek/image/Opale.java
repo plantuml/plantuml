@@ -85,11 +85,11 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		this.pp2 = pp2;
 	}
 
-	private final double getWidth(StringBounder stringBounder) {
+	private double getWidth(StringBounder stringBounder) {
 		return textBlock.calculateDimension(stringBounder).getWidth() + marginX1 + marginX2;
 	}
 
-	private final double getHeight(StringBounder stringBounder) {
+	private double getHeight(StringBounder stringBounder) {
 		final Dimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + 2 * marginY;
 	}

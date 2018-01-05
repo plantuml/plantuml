@@ -200,7 +200,7 @@ public class InGroupableList implements InGroupable {
 		return max + hack2;
 	}
 
-	private final double getMaxXInternal(StringBounder stringBounder) {
+	private double getMaxXInternal(StringBounder stringBounder) {
 		final InGroupable max = getMax(stringBounder);
 		if (max == null) {
 			return MARGIN10 + MARGIN5 + minWidth;

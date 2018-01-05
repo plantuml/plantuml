@@ -181,7 +181,7 @@ public class Run {
 
 	private static String commandLine = "";
 
-	public static final String getCommandLine() {
+	public static String getCommandLine() {
 		return commandLine;
 	}
 

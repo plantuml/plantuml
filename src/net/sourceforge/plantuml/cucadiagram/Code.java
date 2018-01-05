@@ -125,7 +125,7 @@ public class Code implements Comparable<Code> {
 		return Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fullName, format), separator);
 	}
 
-	private final String getNamespace(Map<Code, ILeaf> leafs) {
+	private String getNamespace(Map<Code, ILeaf> leafs) {
 		String name = this.getFullName();
 		if (separator == null) {
 			throw new IllegalArgumentException(toString());
