@@ -54,10 +54,13 @@ public class CommandParticipantA4 extends CommandParticipant {
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				new RegexLeaf("[%s]*"), //
+				getOrderRegex(), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("$"));
 	}
+
 
 }

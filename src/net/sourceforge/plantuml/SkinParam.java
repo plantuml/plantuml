@@ -642,8 +642,23 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public double getRoundCorner(String param, Stereotype stereotype) {
-		String key = param + "roundcorner";
+	public double getRoundCorner(RoundParam param, Stereotype stereotype) {
+		Double result = getRoundCornerInternal(param, stereotype);
+		if (result != null) {
+			return result;
+		}
+		result = getRoundCornerInternal(param, null);
+		if (result != null) {
+			return result;
+		}
+		if (param == RoundParam.DEFAULT) {
+			return 0;
+		}
+		return getRoundCorner(RoundParam.DEFAULT, stereotype);
+	}
+
+	private Double getRoundCornerInternal(RoundParam param, Stereotype stereotype) {
+		String key = param.getKey();
 		if (stereotype != null) {
 			key += stereotype.getLabel(false);
 		}
@@ -651,7 +666,7 @@ public class SkinParam implements ISkinParam {
 		if (value != null && value.matches("\\d+")) {
 			return Double.parseDouble(value);
 		}
-		return 0;
+		return null;
 	}
 
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {

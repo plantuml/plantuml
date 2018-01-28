@@ -87,7 +87,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, sequenceDiagram.getSkinParam(),
 				sequenceDiagram.isShowFootbox(), sequenceDiagram.getAutonewpage());
 
-		for (Participant p : sequenceDiagram.participants().values()) {
+		for (Participant p : sequenceDiagram.participants()) {
 			initializer.addParticipant(p, sequenceDiagram.getEnglober(p));
 		}
 

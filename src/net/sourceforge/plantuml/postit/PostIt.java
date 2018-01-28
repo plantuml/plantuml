@@ -117,7 +117,7 @@ public class PostIt {
 		final FontConfiguration font2 = fontNote.toFont2(HtmlColorUtils.BLACK, true, HtmlColorUtils.BLUE, 8);
 		final ComponentRoseNote note = new ComponentRoseNote(
 				new SymbolContext(noteBackgroundColor, borderColor).withStroke(new UStroke()), font2, text, 0, 0,
-				new SpriteContainerEmpty());
+				new SpriteContainerEmpty(), 0);
 		return note;
 	}
 }

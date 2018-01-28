@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -108,7 +109,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
-		if (getSkinParam().shadowing()) {
+		if (getSkinParam().shadowing2(SkinParameter.USECASE)) {
 			ellipse.setDeltaShadow(3);
 		}
 

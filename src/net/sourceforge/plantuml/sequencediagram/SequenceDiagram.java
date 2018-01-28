@@ -39,10 +39,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,7 +73,8 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class SequenceDiagram extends UmlDiagram {
 
-	private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
+	// private final Map<String, Participant> participants = new LinkedHashMap<String, Participant>();
+	private final List<Participant> participantsList = new ArrayList<Participant>();
 
 	private final List<Event> events = new ArrayList<Event>();
 
@@ -88,13 +89,22 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public Participant getOrCreateParticipant(String code, Display display) {
-		Participant result = participants.get(code);
+		Participant result = participantsget(code);
 		if (result == null) {
-			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions);
-			participants.put(code, result);
+			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0);
+			addWithOrder(result);
 			participantEnglobers2.put(result, participantEnglober);
 		}
 		return result;
+	}
+
+	private Participant participantsget(String code) {
+		for (Participant p : participantsList) {
+			if (p.getCode().equals(code)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	private EventWithDeactivate lastEventWithDeactivate;
@@ -103,22 +113,36 @@ public class SequenceDiagram extends UmlDiagram {
 		return lastEventWithDeactivate;
 	}
 
-	public Participant createNewParticipant(ParticipantType type, String code, Display display) {
-		if (participants.containsKey(code)) {
+	public Participant createNewParticipant(ParticipantType type, String code, Display display, int order) {
+		if (participantsget(code) != null) {
 			throw new IllegalArgumentException();
 		}
 		if (Display.isNull(display)) {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(code);
 		}
-		final Participant result = new Participant(type, code, display, hiddenPortions);
-		participants.put(code, result);
+		final Participant result = new Participant(type, code, display, hiddenPortions, order);
+		addWithOrder(result);
 		participantEnglobers2.put(result, participantEnglober);
 		return result;
 	}
 
-	public Map<String, Participant> participants() {
-		return Collections.unmodifiableMap(participants);
+	private void addWithOrder(final Participant result) {
+		for (int i = 0; i < participantsList.size(); i++) {
+			if (result.getOrder() < participantsList.get(i).getOrder()) {
+				participantsList.add(i, result);
+				return;
+			}
+		}
+		participantsList.add(result);
+	}
+
+	public Collection<Participant> participants() {
+		return Collections.unmodifiableCollection(participantsList);
+	}
+
+	public boolean participantsContainsKey(String code) {
+		return participantsget(code) != null;
 	}
 
 	public String addMessage(AbstractMessage m) {
@@ -302,7 +326,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescription("(" + participants.size() + " participants)");
+		return new DiagramDescription("(" + participantsList.size() + " participants)");
 	}
 
 	public boolean changeSkin(String className) {
@@ -336,13 +360,13 @@ public class SequenceDiagram extends UmlDiagram {
 		return autoNumber;
 	}
 
-//	public final void autonumberResume(DecimalFormat decimalFormat) {
-//		autoNumber.resume(decimalFormat);
-//	}
-//
-//	public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
-//		autoNumber.resume(increment, decimalFormat);
-//	}
+	// public final void autonumberResume(DecimalFormat decimalFormat) {
+	// autoNumber.resume(decimalFormat);
+	// }
+	//
+	// public final void autonumberResume(int increment, DecimalFormat decimalFormat) {
+	// autoNumber.resume(increment, decimalFormat);
+	// }
 
 	public String getNextMessageNumber() {
 		return autoNumber.getNextMessageNumber();
@@ -405,7 +429,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void removeHiddenParticipants() {
-		for (Participant p : new ArrayList<Participant>(participants.values())) {
+		for (Participant p : new ArrayList<Participant>(participantsList)) {
 			if (isAlone(p)) {
 				remove(p);
 			}
@@ -413,7 +437,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	private void remove(Participant p) {
-		final boolean ok = participants.values().remove(p);
+		final boolean ok = participantsList.remove(p);
 		if (ok == false) {
 			throw new IllegalArgumentException();
 		}
@@ -430,12 +454,13 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void putParticipantInLast(String code) {
-		final Participant p = participants.get(code);
+		final Participant p = participantsget(code);
 		if (p == null) {
 			throw new IllegalArgumentException(code);
 		}
-		participants.remove(code);
-		participants.put(code, p);
+		final boolean ok = participantsList.remove(p);
+		assert ok;
+		addWithOrder(p);
 		participantEnglobers2.put(p, participantEnglober);
 	}
 
@@ -454,7 +479,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public boolean hasUrl() {
-		for (Participant p : participants.values()) {
+		for (Participant p : participantsList) {
 			if (p.getUrl() != null) {
 				return true;
 			}
@@ -476,7 +501,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public boolean isOk() {
-		if (participants.size() == 0) {
+		if (participantsList.size() == 0) {
 			return false;
 		}
 		return true;

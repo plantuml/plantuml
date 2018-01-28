@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.RoundParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
@@ -73,14 +74,12 @@ import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
-	private final int cornersize = 10;
 	private final HtmlColor noteBackgroundColor;
 	private final HtmlColor borderColor;
 	private final int marginX1 = 6;
@@ -211,6 +210,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -shape.getMinX(),
 					-shape.getMinY());
 			final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), true);
+			opale.setRoundCorner(getRoundCorner());
 			opale.setOpale(strategy, pp1, projection);
 			final UGraphic stroked = applyStroke(ug2);
 			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors(skinParam)));
@@ -220,22 +220,26 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		}
 	}
 
+	private double getRoundCorner() {
+		return skinParam.getRoundCorner(RoundParam.DEFAULT, null);
+	}
+
 	private static Point2D move(Point2D pt, double dx, double dy) {
 		return new Point2D.Double(pt.getX() + dx, pt.getY() + dy);
 	}
 
 	private void drawNormal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final UPolygon polygon = getPolygonNormal(stringBounder);
+		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),
+				getRoundCorner());
 		if (withShadow) {
 			polygon.setDeltaShadow(4);
 		}
 		ug = ug.apply(new UChangeBackColor(noteBackgroundColor)).apply(new UChangeColor(borderColor));
 		final UGraphic stroked = applyStroke(ug);
 		stroked.draw(polygon);
+		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));
 
-		stroked.apply(new UTranslate(getTextWidth(stringBounder) - cornersize, 0)).draw(new ULine(0, cornersize));
-		stroked.apply(new UTranslate(getTextWidth(stringBounder), cornersize)).draw(new ULine(-cornersize, 0));
 		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));
 	}
 
@@ -245,17 +249,6 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			return ug;
 		}
 		return ug.apply(stroke);
-	}
-
-	private UPolygon getPolygonNormal(final StringBounder stringBounder) {
-		final UPolygon polygon = new UPolygon();
-		polygon.addPoint(0, 0);
-		polygon.addPoint(0, getTextHeight(stringBounder));
-		polygon.addPoint(getTextWidth(stringBounder), getTextHeight(stringBounder));
-		polygon.addPoint(getTextWidth(stringBounder), cornersize);
-		polygon.addPoint(getTextWidth(stringBounder) - cornersize, 0);
-		polygon.addPoint(0, 0);
-		return polygon;
 	}
 
 	private Direction getOpaleStrategy(double width, double height, Point2D pt) {

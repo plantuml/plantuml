@@ -63,15 +63,21 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		super(pattern);
 	}
 
+	static RegexLeaf getOrderRegex() {
+		return new RegexLeaf("ORDER", "(?:order[%s]+(-?\\d{1,7}))?");
+	}
+
 	static IRegex getRegexType() {
-		return new RegexOr(new RegexLeaf("TYPE", "(participant|actor|create|boundary|control|entity|queue|database|collections)"), //
-				new RegexLeaf("CREATE", "create[%s](participant|actor|boundary|control|entity|queue|database|collections)"));
+		return new RegexOr(//
+				new RegexLeaf("TYPE", "(participant|actor|create|boundary|control|entity|queue|database|collections)"), //
+				new RegexLeaf("CREATE",
+						"create[%s](participant|actor|boundary|control|entity|queue|database|collections)"));
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, RegexResult arg) {
 		final String code = arg.get("CODE", 0);
-		if (diagram.participants().containsKey(code)) {
+		if (diagram.participantsContainsKey(code)) {
 			diagram.putParticipantInLast(code);
 			return CommandExecutionResult.ok();
 		}
@@ -95,7 +101,9 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));
 			create = false;
 		}
-		final Participant participant = diagram.createNewParticipant(type, code, strings);
+		final String orderString = arg.get("ORDER", 0);
+		final int order = orderString == null ? 0 : Integer.parseInt(orderString);
+		final Participant participant = diagram.createNewParticipant(type, code, strings, order);
 
 		final String stereotype = arg.get("STEREO", 0);
 
@@ -106,8 +114,8 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 			participant.setStereotype(new Stereotype(stereotype, skinParam.getCircledCharacterRadius(), font, diagram
 					.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);
 		}
-		participant
-				.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		participant.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
+				.getColorIfValid(arg.get("COLOR", 0)));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

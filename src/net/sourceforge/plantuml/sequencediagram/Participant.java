@@ -61,9 +61,11 @@ public class Participant implements SpecificBackcolorable {
 	private Stereotype stereotype;
 	private boolean stereotypePositionTop;
 	private final Set<EntityPortion> hiddenPortions;
+	private final int order;
 
-	public Participant(ParticipantType type, String code, Display display, Set<EntityPortion> hiddenPortions) {
+	public Participant(ParticipantType type, String code, Display display, Set<EntityPortion> hiddenPortions, int order) {
 		this.hiddenPortions = hiddenPortions;
+		this.order = order;
 		if (type == null) {
 			throw new IllegalArgumentException();
 		}
@@ -177,6 +179,10 @@ public class Participant implements SpecificBackcolorable {
 			result.forceColor(ColorParam.participantBorder, stereoBorderColor);
 		}
 		return result;
+	}
+
+	public int getOrder() {
+		return order;
 	}
 
 }

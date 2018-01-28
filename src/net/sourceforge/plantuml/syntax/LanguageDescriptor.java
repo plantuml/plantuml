@@ -149,7 +149,9 @@ public class LanguageDescriptor {
 		keyword.add("fork");
 		keyword.add("again");
 		keyword.add("kill");
+		keyword.add("order");
 
+		preproc.add("!exit");
 		preproc.add("!include");
 		preproc.add("!pragma");
 		preproc.add("!define");

@@ -56,8 +56,8 @@ class USymbolCard extends USymbol {
 		return skinParameter;
 	}
 
-	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double top) {
-		final URectangle shape = new URectangle(width, height);
+	private void drawCard(UGraphic ug, double width, double height, boolean shadowing, double top, double roundCorner) {
+		final URectangle shape = new URectangle(width, height, roundCorner, roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
@@ -79,7 +79,8 @@ class USymbolCard extends USymbol {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(), 0);
+				drawCard(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(), 0,
+						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -103,8 +104,8 @@ class USymbolCard extends USymbol {
 				ug = symbolContext.apply(ug);
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(), dimTitle.getHeight()
-						+ dimStereo.getHeight() + 4);
+				drawCard(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(), dimTitle.getHeight()
+						+ dimStereo.getHeight() + 4, symbolContext.getRoundCorner());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 				stereotype.drawU(ug.apply(new UTranslate(posStereo, 2)));
 				final double posTitle = (width - dimTitle.getWidth()) / 2;

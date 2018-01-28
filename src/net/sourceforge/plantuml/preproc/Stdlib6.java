@@ -17,8 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
-
-import org.brotli.dec.BrotliInputStream;
+import net.sourceforge.plantuml.brotli.BrotliInputStream;
 
 public class Stdlib6 {
 

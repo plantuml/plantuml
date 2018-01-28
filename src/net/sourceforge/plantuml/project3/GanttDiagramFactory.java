@@ -42,9 +42,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandComment;
-import net.sourceforge.plantuml.command.CommandMultilinesComment;
 import net.sourceforge.plantuml.command.CommandNope;
+import net.sourceforge.plantuml.command.CommandScale;
 import net.sourceforge.plantuml.command.UmlDiagramFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 
@@ -69,6 +68,15 @@ public class GanttDiagramFactory extends UmlDiagramFactory {
 			cmds.add(cmd);
 		}
 		cmds.add(new CommandGanttArrow());
+		
+		cmds.add(new CommandScale());
+//		cmds.add(new CommandScaleWidthAndHeight());
+//		cmds.add(new CommandScaleWidthOrHeight());
+//		cmds.add(new CommandScaleMaxWidth());
+//		cmds.add(new CommandScaleMaxHeight());
+//		cmds.add(new CommandScaleMaxWidthAndHeight());
+
+		
 		return cmds;
 	}
 

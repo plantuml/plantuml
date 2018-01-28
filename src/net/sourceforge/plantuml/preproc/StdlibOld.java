@@ -17,8 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.Log;
-
-import org.brotli.dec.BrotliInputStream;
+import net.sourceforge.plantuml.brotli.BrotliInputStream;
 
 public class StdlibOld {
 

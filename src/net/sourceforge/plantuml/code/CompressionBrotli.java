@@ -40,8 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.FileUtils;
-
-import org.brotli.dec.BrotliInputStream;
+import net.sourceforge.plantuml.brotli.BrotliInputStream;
 
 public class CompressionBrotli implements Compression {
 

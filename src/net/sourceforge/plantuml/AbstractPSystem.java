@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.version.Version;
 public abstract class AbstractPSystem implements Diagram {
 
 	private UmlSource source;
+	private Scale scale;
 
 	private String getVersion() {
 		final StringBuilder toAppend = new StringBuilder();
@@ -138,6 +139,14 @@ public abstract class AbstractPSystem implements Diagram {
 						fileFormatOption.getFileFormat());
 			}
 		}
+	}
+
+	final public void setScale(Scale scale) {
+		this.scale = scale;
+	}
+
+	final public Scale getScale() {
+		return scale;
 	}
 
 	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption,

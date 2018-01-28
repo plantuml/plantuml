@@ -87,10 +87,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Collection<Link> links;
 	private final boolean useRankSame;
 
+
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
 			Collection<Link> links) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.useRankSame = skinParam.useRankSame();
+
 		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
 		USymbol symbol = getUSymbol(entity);

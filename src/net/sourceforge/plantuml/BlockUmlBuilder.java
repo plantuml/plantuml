@@ -93,6 +93,10 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				paused = true;
 				reader2.setPaused(true);
 			}
+			if (StartUtils.isExit(s)) {
+				paused = true;
+				reader2.setPaused(true);
+			}
 			if (current2 != null && paused == false) {
 				current2.add(s);
 			} else if (paused) {
@@ -107,7 +111,9 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				reader2.setPaused(false);
 			}
 			if (StartUtils.isArobaseEndDiagram(s) && current2 != null) {
-				// current2.addAll(1, convert(config, new LineLocationImpl(null, null).oneLineRead()));
+				if (paused) {
+					current2.add(s);
+				}
 				blocks.add(new BlockUml(current2, startLine/* - config.size() */, defines.cloneMe()));
 				current2 = null;
 				reader2.setPaused(false);

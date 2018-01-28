@@ -37,18 +37,18 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleHeight;
 import net.sourceforge.plantuml.ScaleWidth;
-import net.sourceforge.plantuml.UmlDiagram;
 
-public class CommandScaleWidthOrHeight extends SingleLineCommand<UmlDiagram> {
+public class CommandScaleWidthOrHeight extends SingleLineCommand<AbstractPSystem> {
 
 	public CommandScaleWidthOrHeight() {
 		super("(?i)^scale[%s]+([0-9.]+)[%s]+(width|height)$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, List<String> arg) {
 		final double size = Double.parseDouble(arg.get(0));
 		final boolean width = "width".equalsIgnoreCase(arg.get(1));
 		if (width) {

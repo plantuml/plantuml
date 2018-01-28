@@ -614,8 +614,9 @@ public class SvgGraphics {
 				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
 				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_ARCTO) {
-				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + ","
-						+ format(coord[3]) + " " + format(coord[4]) + "," + format(coord[5] + x) + ","
+				// A25,25 0,0 5,395,40
+				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + formatBoolean(coord[2]) + " "
+						+ formatBoolean(coord[3]) + " " + formatBoolean(coord[4]) + " " + format(coord[5] + x) + ","
 						+ format(coord[6] + y) + " ");
 				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_CLOSE) {
@@ -684,6 +685,10 @@ public class SvgGraphics {
 
 	private String format(double x) {
 		return EpsGraphics.format(x * scale);
+	}
+
+	private String formatBoolean(double x) {
+		return x == 0 ? "0" : "1";
 	}
 
 	public void fill(int windingRule) {

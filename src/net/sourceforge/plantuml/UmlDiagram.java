@@ -98,7 +98,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private DisplayPositionned legend = DisplayPositionned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 
 	private final Pragma pragma = new Pragma();
-	private Scale scale;
 	private Animation animation;
 
 	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
@@ -174,14 +173,6 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 
 	public Pragma getPragma() {
 		return pragma;
-	}
-
-	final public void setScale(Scale scale) {
-		this.scale = scale;
-	}
-
-	final public Scale getScale() {
-		return scale;
 	}
 
 	final public void setAnimation(Iterable<CharSequence> animationData) {

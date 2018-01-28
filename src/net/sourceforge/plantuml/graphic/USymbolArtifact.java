@@ -53,9 +53,9 @@ class USymbolArtifact extends USymbol {
 		return SkinParameter.ARTIFACT;
 	}
 
-	private void drawArtifact(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing) {
+	private void drawArtifact(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing, double roundCorner) {
 
-		final URectangle form = new URectangle(widthTotal, heightTotal);
+		final URectangle form = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner);
 		if (shadowing) {
 			form.setDeltaShadow(4);
 		}
@@ -102,7 +102,8 @@ class USymbolArtifact extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
-				drawArtifact(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawArtifact(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -124,7 +125,8 @@ class USymbolArtifact extends USymbol {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawArtifact(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawArtifact(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 				stereotype.drawU(ug.apply(new UTranslate(posStereo, 2)));

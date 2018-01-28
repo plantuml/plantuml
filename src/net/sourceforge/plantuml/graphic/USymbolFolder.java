@@ -36,11 +36,14 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -65,7 +68,8 @@ public class USymbolFolder extends USymbol {
 		return skinParameter;
 	}
 
-	private void drawFolder(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing) {
+	private void drawFolder(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing,
+			double roundCorner) {
 
 		final double wtitle;
 		if (dimTitle.getWidth() == 0) {
@@ -75,15 +79,36 @@ public class USymbolFolder extends USymbol {
 		}
 		final double htitle = getHTitle(dimTitle);
 
-		final UPolygon shape = new UPolygon();
-		shape.addPoint(0, 0);
-		shape.addPoint(wtitle, 0);
+		final Shadowable shape;
+		if (roundCorner == 0) {
+			final UPolygon poly = new UPolygon();
+			poly.addPoint(0, 0);
+			poly.addPoint(wtitle, 0);
 
-		shape.addPoint(wtitle + marginTitleX3, htitle);
-		shape.addPoint(width, htitle);
-		shape.addPoint(width, height);
-		shape.addPoint(0, height);
-		shape.addPoint(0, 0);
+			poly.addPoint(wtitle + marginTitleX3, htitle);
+			poly.addPoint(width, htitle);
+			poly.addPoint(width, height);
+			poly.addPoint(0, height);
+			poly.addPoint(0, 0);
+			shape = poly;
+		} else {
+			final UPath path = new UPath();
+			path.moveTo(roundCorner / 2, 0);
+			path.lineTo(wtitle - roundCorner / 2, 0);
+			// path.lineTo(wtitle, roundCorner / 2);
+			path.arcTo(new Point2D.Double(wtitle, roundCorner / 2), roundCorner / 2 * 1.5, 0, 1);
+			path.lineTo(wtitle + marginTitleX3, htitle);
+			path.lineTo(width - roundCorner / 2, htitle);
+			path.arcTo(new Point2D.Double(width, htitle + roundCorner / 2), roundCorner / 2, 0, 1);
+			path.lineTo(width, height - roundCorner / 2);
+			path.arcTo(new Point2D.Double(width - roundCorner / 2, height), roundCorner / 2, 0, 1);
+			path.lineTo(roundCorner / 2, height);
+			path.arcTo(new Point2D.Double(0, height - roundCorner / 2), roundCorner / 2, 0, 1);
+			path.lineTo(0, roundCorner / 2);
+			path.arcTo(new Point2D.Double(roundCorner / 2, 0), roundCorner / 2, 0, 1);
+			path.closePath();
+			shape = path;
+		}
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
@@ -118,7 +143,8 @@ public class USymbolFolder extends USymbol {
 				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
 				final Dimension2D dimName = name.calculateDimension(ug.getStringBounder());
-				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.isShadowing());
+				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				name.drawU(ug.apply(new UTranslate(4, 3)));
@@ -144,7 +170,8 @@ public class USymbolFolder extends USymbol {
 				final Dimension2D dim = calculateDimension(stringBounder);
 				ug = symbolContext.apply(ug);
 				final Dimension2D dimTitle = title.calculateDimension(stringBounder);
-				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.isShadowing());
+				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				title.drawU(ug.apply(new UTranslate(4, 2)));
 				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
@@ -158,12 +185,10 @@ public class USymbolFolder extends USymbol {
 
 		};
 	}
-	
 
 	@Override
 	public boolean manageHorizontalLine() {
 		return true;
 	}
-
 
 }

@@ -106,6 +106,11 @@ public class StartUtils {
 		return startsWithSymbolAnd("unpause", s2);
 	}
 
+	public static boolean isExit(CharSequence s) {
+		final String s2 = StringUtils.trinNoTrace(s);
+		return s2.equals("!exit");
+	}
+
 	private static final Pattern2 append = MyPattern.cmpile("^\\W*[@\\\\]append");
 
 	public static CharSequence2 getPossibleAppend(CharSequence2 s) {

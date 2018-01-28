@@ -37,17 +37,17 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleSimple;
-import net.sourceforge.plantuml.UmlDiagram;
 
-public class CommandScale extends SingleLineCommand<UmlDiagram> {
+public class CommandScale extends SingleLineCommand<AbstractPSystem> {
 
 	public CommandScale() {
 		super("(?i)^scale[%s]+([0-9.]+)(?:[%s]*/[%s]*([0-9.]+))?$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, List<String> arg) {
 		double scale = Double.parseDouble(arg.get(0));
 		if (arg.get(1) != null) {
 			scale /= Double.parseDouble(arg.get(1));

@@ -53,9 +53,9 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 
-import com.ctreber.acearth.ACearth;
-import com.ctreber.acearth.ConfigurationACearth;
-import com.ctreber.acearth.plugins.markers.Marker;
+import ext.plantuml.com.ctreber.acearth.ACearth;
+import ext.plantuml.com.ctreber.acearth.ConfigurationACearth;
+import ext.plantuml.com.ctreber.acearth.plugins.markers.Marker;
 
 public class PSystemXearth extends AbstractPSystem {
 

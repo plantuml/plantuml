@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.RoundParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -87,7 +88,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
-		this.roundCorner = skinParam.getRoundCorner("", null);
+		this.roundCorner = skinParam.getRoundCorner(RoundParam.DEFAULT, null);
 		this.name = TextBlockUtils.withMargin(
 				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);

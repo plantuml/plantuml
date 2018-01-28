@@ -52,9 +52,10 @@ class USymbolComponent1 extends USymbol {
 		return SkinParameter.COMPONENT1;
 	}
 
-	private void drawNode(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing) {
+	private void drawComponent1(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing,
+			double roundCorner) {
 
-		final URectangle form = new URectangle(widthTotal, heightTotal);
+		final URectangle form = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner);
 		if (shadowing) {
 			form.setDeltaShadow(4);
 		}
@@ -82,7 +83,8 @@ class USymbolComponent1 extends USymbol {
 				final Dimension2D dimTotal = calculateDimension(stringBounder);
 				ug = UGraphicStencil.create(ug, getRectangleStencil(dimTotal), new UStroke());
 				ug = symbolContext.apply(ug);
-				drawNode(ug, dimTotal.getWidth(), dimTotal.getHeight(), symbolContext.isShadowing());
+				drawComponent1(ug, dimTotal.getWidth(), dimTotal.getHeight(), symbolContext.isShadowing(),
+						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));

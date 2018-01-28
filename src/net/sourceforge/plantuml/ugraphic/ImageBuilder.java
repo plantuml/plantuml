@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.RoundParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
@@ -139,7 +140,7 @@ public class ImageBuilder {
 		final Rose rose = new Rose();
 		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.diagramBorder);
 		this.borderStroke = skinParam.getThickness(LineParam.diagramBorder, null);
-		this.borderCorner = skinParam.getRoundCorner("diagramBorder", null);
+		this.borderCorner = skinParam.getRoundCorner(RoundParam.diagramBorder, null);
 		if (borderStroke == null && borderColor != null) {
 			this.borderStroke = new UStroke();
 		}

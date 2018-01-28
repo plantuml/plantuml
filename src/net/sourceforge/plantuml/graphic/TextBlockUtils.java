@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.RoundParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
@@ -81,7 +82,7 @@ public class TextBlockUtils {
 		if (borderColor == null) {
 			borderColor = HtmlColorUtils.BLACK;
 		}
-		final double corner = skinParam.getRoundCorner("titleBorder", null);
+		final double corner = skinParam.getRoundCorner(RoundParam.titleBorder, null);
 		return withMargin(bordered(result, stroke, borderColor, backgroundColor, corner), 2, 2);
 	}
 

@@ -76,6 +76,7 @@ public class UPathHand {
 			}
 		}
 		this.path = jigglePath;
+		this.path.setDeltaShadow(source.getDeltaShadow());
 	}
 
 	public UPath getHanddrawn() {

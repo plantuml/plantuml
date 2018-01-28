@@ -37,17 +37,17 @@ package net.sourceforge.plantuml.command;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleMaxWidth;
-import net.sourceforge.plantuml.UmlDiagram;
 
-public class CommandScaleMaxWidth extends SingleLineCommand<UmlDiagram> {
+public class CommandScaleMaxWidth extends SingleLineCommand<AbstractPSystem> {
 
 	public CommandScaleMaxWidth() {
 		super("(?i)^scale[%s]+max[%s]+([0-9.]+)[%s]+width$");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, List<String> arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, List<String> arg) {
 		final double width = Double.parseDouble(arg.get(0));
 		diagram.setScale(new ScaleMaxWidth(width));
 		return CommandExecutionResult.ok();

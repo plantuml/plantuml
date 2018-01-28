@@ -147,7 +147,7 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getRanksep();
 	}
 
-	public double getRoundCorner(String param, Stereotype stereotype) {
+	public double getRoundCorner(RoundParam param, Stereotype stereotype) {
 		return skinParam.getRoundCorner(param, stereotype);
 	}
 

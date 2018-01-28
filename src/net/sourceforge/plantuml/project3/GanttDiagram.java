@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -48,6 +47,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -85,16 +85,17 @@ public class GanttDiagram extends AbstractPSystem implements Subject {
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption, long seed)
 			throws IOException {
-		final double dpiFactor = 1;
 		final double margin = 10;
 
 		// public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HtmlColor mybackcolor, String metadata,
 		// String warningOrError, double margin1, double margin2, Animation animation, boolean useHandwritten) {
 
 		sortTasks();
+		final Scale scale = getScale();
 
-		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), 1, null, "", "", 0, 0, null,
-				false);
+		final double dpiFactor = scale == null ? 1 : scale.getScale(100, 100);
+		final ImageBuilder imageBuilder = new ImageBuilder(new ColorMapperIdentity(), dpiFactor, null, "", "", 0, 0,
+				null, false);
 		final UDrawable result = getUDrawable();
 		imageBuilder.setUDrawable(result);
 

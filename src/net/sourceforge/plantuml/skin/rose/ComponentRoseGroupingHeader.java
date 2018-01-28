@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -66,12 +66,14 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	private final HtmlColor background;
 	private final SymbolContext symbolContext;
+	private final double roundCorner;
 
 	public ComponentRoseGroupingHeader(HtmlColor background, SymbolContext symbolContext, FontConfiguration bigFont,
-			FontConfiguration smallFont2, Display strings, ISkinSimple spriteContainer) {
+			FontConfiguration smallFont2, Display strings, ISkinSimple spriteContainer, double roundCorner) {
 		super(LineBreakStrategy.NONE, strings.get(0), bigFont, HorizontalAlignment.LEFT, 15, 30, 1, spriteContainer,
 				null, null);
 
+		this.roundCorner = roundCorner;
 		this.symbolContext = symbolContext;
 		this.background = background;
 		if (strings.size() == 1 || strings.get(1) == null) {
@@ -126,7 +128,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		ug = symbolContext.applyStroke(ug).apply(new UChangeColor(symbolContext.getForeColor()));
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), roundCorner,
+				roundCorner);
 		rect.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UChangeBackColor(background)).draw(rect);
 	}
@@ -134,25 +137,16 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
-		ug = symbolContext.applyStroke(ug).apply(new UChangeColor(symbolContext.getForeColor()));
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
-		ug.draw(rect);
-
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int textWidth = (int) getTextWidth(stringBounder);
 		final int textHeight = (int) getTextHeight(stringBounder);
 
-		final UPolygon polygon = new UPolygon();
-		polygon.addPoint(0, 0);
-		polygon.addPoint(textWidth, 0);
+		symbolContext.applyColors(ug).draw(getCorner(textWidth, textHeight));
 
-		polygon.addPoint(textWidth, textHeight - cornersize);
-		polygon.addPoint(textWidth - cornersize, textHeight);
-
-		polygon.addPoint(0, textHeight);
-		polygon.addPoint(0, 0);
-
-		symbolContext.applyColors(ug).draw(polygon);
+		ug = symbolContext.applyStroke(ug).apply(new UChangeColor(symbolContext.getForeColor()));
+		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight(), roundCorner,
+				roundCorner);
+		ug.draw(rect);
 
 		ug = ug.apply(new UStroke());
 
@@ -164,6 +158,30 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));
 		}
+	}
+
+	private UPath getCorner(final double width, final double height) {
+		final UPath polygon = new UPath();
+		if (roundCorner == 0) {
+			polygon.moveTo(0, 0);
+			polygon.lineTo(width, 0);
+
+			polygon.lineTo(width, height - cornersize);
+			polygon.lineTo(width - cornersize, height);
+
+			polygon.lineTo(0, height);
+			polygon.lineTo(0, 0);
+		} else {
+			polygon.moveTo(roundCorner / 2, 0);
+			polygon.lineTo(width, 0);
+
+			polygon.lineTo(width, height - cornersize);
+			polygon.lineTo(width - cornersize, height);
+
+			polygon.lineTo(0, height);
+			polygon.lineTo(0, roundCorner / 2);
+		}
+		return polygon;
 	}
 
 }

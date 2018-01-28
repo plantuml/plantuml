@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
@@ -62,12 +63,25 @@ class USymbolStack extends USymbol {
 		}
 		ug.apply(new UChangeColor(null)).apply(new UTranslate(border, 0)).draw(rect);
 		final UPath path = new UPath();
-		path.moveTo(0, 0);
-		path.lineTo(border, 0);
-		path.lineTo(border, height);
-		path.lineTo(width - border, height);
-		path.lineTo(width - border, 0);
-		path.lineTo(width, 0);
+		if (roundCorner == 0) {
+			path.moveTo(0, 0);
+			path.lineTo(border, 0);
+			path.lineTo(border, height);
+			path.lineTo(width - border, height);
+			path.lineTo(width - border, 0);
+			path.lineTo(width, 0);
+		} else {
+			path.moveTo(0, 0);
+			path.lineTo(border - roundCorner / 2, 0);
+			path.arcTo(new Point2D.Double(border, roundCorner / 2), roundCorner / 2, 0, 1);
+			path.lineTo(border, height - roundCorner / 2);
+			path.arcTo(new Point2D.Double(border + roundCorner / 2, height), roundCorner / 2, 0, 0);
+			path.lineTo(width - border - roundCorner / 2, height);
+			path.arcTo(new Point2D.Double(width - border, height - roundCorner / 2), roundCorner / 2, 0, 0);
+			path.lineTo(width - border, roundCorner / 2);
+			path.arcTo(new Point2D.Double(width - border + roundCorner / 2, 0), roundCorner / 2, 0, 1);
+			path.lineTo(width, 0);
+		}
 		ug.apply(new UChangeBackColor(null)).draw(path);
 	}
 

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -65,7 +66,8 @@ public class StickMan extends AbstractTextBlock implements TextBlock {
 	}
 
 	private StickMan(HtmlColor backgroundColor, HtmlColor foregroundColor, double deltaShadow) {
-		this(new SymbolContext(backgroundColor, foregroundColor).withDeltaShadow(deltaShadow).withStroke(new UStroke(2)));
+		this(new SymbolContext(backgroundColor, foregroundColor).withDeltaShadow(deltaShadow)
+				.withStroke(new UStroke(2)));
 	}
 
 	public StickMan(HtmlColor backgroundColor, HtmlColor foregroundColor) {
@@ -73,12 +75,12 @@ public class StickMan extends AbstractTextBlock implements TextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		
+
 		final double startX = Math.max(armsLenght, legsX) - headDiam / 2.0 + thickness();
-		
+
 		final UEllipse head = new UEllipse(headDiam, headDiam);
 		final double centerX = startX + headDiam / 2;
-		
+
 		final UPath path = new UPath();
 		path.moveTo(0, 0);
 		path.lineTo(0, bodyLenght);
@@ -92,10 +94,10 @@ public class StickMan extends AbstractTextBlock implements TextBlock {
 			head.setDeltaShadow(symbolContext.getDeltaShadow());
 			path.setDeltaShadow(symbolContext.getDeltaShadow());
 		}
-		
+
 		ug = symbolContext.apply(ug);
 		ug.apply(new UTranslate(startX, thickness())).draw(head);
-		ug.apply(new UTranslate(centerX, headDiam + thickness())).draw(path);
+		ug.apply(new UTranslate(centerX, headDiam + thickness())).apply(new UChangeBackColor(null)).draw(path);
 	}
 
 	private double thickness() {

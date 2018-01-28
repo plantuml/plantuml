@@ -99,7 +99,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public double getRanksep();
 
-	public double getRoundCorner(String param, Stereotype stereotype);
+	public double getRoundCorner(RoundParam param, Stereotype stereotype);
 
 	public LineBreakStrategy maxMessageSize();
 
