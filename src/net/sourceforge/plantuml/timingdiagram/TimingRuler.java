@@ -78,6 +78,9 @@ public class TimingRuler {
 	}
 
 	private int getNbTick() {
+		if (times.size() == 0) {
+			return 1;
+		}
 		return (int) (1 + getMax().getTime().longValue() / tickUnitary());
 	}
 

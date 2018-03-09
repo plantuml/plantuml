@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,6 +82,14 @@ class FtileWhile extends AbstractFtile {
 	private final Ftile whileBlock;
 	private final Ftile diamond1;
 	private final Ftile specialOut;
+
+	@Override
+	public Collection<Ftile> getMyChildren() {
+		if (specialOut == null) {
+			return Arrays.asList(whileBlock, diamond1);
+		}
+		return Arrays.asList(whileBlock, diamond1, specialOut);
+	}
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<Swimlane>(whileBlock.getSwimlanes());

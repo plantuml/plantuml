@@ -216,10 +216,12 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			diagram.activate(p2, LifeEventType.CREATE, null);
 		}
 
-		final Message msg = new Message(p1, p2, labels, config, diagram.getNextMessageNumber());
-		if (arg.get("URL", 0) != null) {
+		final String messageNumber = diagram.getNextMessageNumber();
+		final Message msg = new Message(p1, p2, diagram.manageVariable(labels), config, messageNumber);
+		final String url = arg.get("URL", 0);
+		if (url != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
+			final Url urlLink = urlBuilder.getUrl(url);
 			msg.setUrl(urlLink);
 		}
 

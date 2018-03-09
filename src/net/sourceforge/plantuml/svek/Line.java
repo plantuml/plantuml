@@ -80,7 +80,6 @@ import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableUtils;
-import net.sourceforge.plantuml.svek.SvekUtils.PointListIterator;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
@@ -516,27 +515,27 @@ public class Line implements Moveable, Hideable {
 
 	}
 
-	public void solveLine(final String svg, final int fullHeight, MinFinder corner1) {
+	public void solveLine(SvgResult fullSvg, MinFinder corner1) {
 		if (this.link.isInvis()) {
 			return;
 		}
 
-		int idx = SvekUtils.getIndexFromColor(svg, this.lineColor);
+		int idx = fullSvg.getIndexFromColor(this.lineColor);
 		if (idx == -1) {
 			return;
 			// throw new IllegalStateException();
 		}
-		idx = svg.indexOf("d=\"", idx);
+		idx = fullSvg.indexOf("d=\"", idx);
 		if (idx == -1) {
 			throw new IllegalStateException();
 		}
-		final int end = svg.indexOf("\"", idx + 3);
-		final String path = svg.substring(idx + 3, end);
+		final int end = fullSvg.indexOf("\"", idx + 3);
+		final SvgResult path = fullSvg.substring(idx + 3, end);
 
-		if (DotPath.isPathConsistent(path) == false) {
+		if (DotPath.isPathConsistent(path.getSvg()) == false) {
 			return;
 		}
-		dotPath = new DotPath(path, fullHeight);
+		dotPath = new DotPath(path);
 
 		if (projectionCluster != null) {
 			// System.err.println("Line::solveLine1 projectionCluster=" + projectionCluster.getClusterPosition());
@@ -549,7 +548,8 @@ public class Line implements Moveable, Hideable {
 		}
 		dotPath = dotPath.simulateCompound(lhead, ltail);
 
-		PointListIterator pointListIterator = PointListIterator.create(svg.substring(end), fullHeight, lineColor);
+		final SvgResult lineSvg = fullSvg.substring(end);
+		PointListIterator pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
 
 		final LinkType linkType = link.getType();
 		this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
@@ -566,7 +566,7 @@ public class Line implements Moveable, Hideable {
 				final double dist2start = p2.distance(dotPath.getStartPoint());
 				final double dist2end = p2.distance(dotPath.getEndPoint());
 				if (dist1start > dist1end && dist2end > dist2start) {
-					pointListIterator = PointListIterator.create(svg.substring(end), fullHeight, lineColor);
+					pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
 					this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
 							dotPath.getEndAngle(), lhead, bibliotekon.getShape(link.getEntity2()));
 					this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
@@ -577,7 +577,7 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (this.labelText != null) {
-			final Point2D pos = getXY(svg, this.noteLabelColor, fullHeight);
+			final Point2D pos = getXY(fullSvg, this.noteLabelColor);
 			if (pos != null) {
 				corner1.manage(pos);
 				this.labelXY = TextBlockUtils.asPositionable(labelText, stringBounder, pos);
@@ -585,7 +585,7 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (this.startTailText != null) {
-			final Point2D pos = getXY(svg, this.startTailColor, fullHeight);
+			final Point2D pos = getXY(fullSvg, this.startTailColor);
 			if (pos != null) {
 				corner1.manage(pos);
 				this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, pos);
@@ -593,7 +593,7 @@ public class Line implements Moveable, Hideable {
 		}
 
 		if (this.endHeadText != null) {
-			final Point2D pos = getXY(svg, this.endHeadColor, fullHeight);
+			final Point2D pos = getXY(fullSvg, this.endHeadColor);
 			if (pos != null) {
 				corner1.manage(pos);
 				this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, pos);
@@ -610,12 +610,12 @@ public class Line implements Moveable, Hideable {
 		return dotPath.getBeziers().size() <= 1;
 	}
 
-	private Point2D.Double getXY(String svg, int color, int height) {
-		final int idx = SvekUtils.getIndexFromColor(svg, color);
+	private Point2D.Double getXY(SvgResult svgResult, int color) {
+		final int idx = svgResult.getIndexFromColor(color);
 		if (idx == -1) {
 			return null;
 		}
-		return SvekUtils.getMinXY(SvekUtils.extractPointsList(svg, idx, height));
+		return SvekUtils.getMinXY(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));
 
 	}
 

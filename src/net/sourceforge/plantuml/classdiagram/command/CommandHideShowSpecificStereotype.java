@@ -60,9 +60,10 @@ public class CommandHideShowSpecificStereotype extends SingleLineCommand2<CucaDi
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, RegexResult arg) {
 
-		final String stereotype = arg.get("STEREOTYPE", 0);
-		diagram.hideOrShow(new Stereotype(stereotype), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-
-		return CommandExecutionResult.ok();
+//		final String stereotype = arg.get("STEREOTYPE", 0);
+//		diagram.hideOrShow(new Stereotype(stereotype), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//
+//		return CommandExecutionResult.ok();
+		throw new UnsupportedOperationException();
 	}
 }

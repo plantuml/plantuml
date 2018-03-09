@@ -43,6 +43,7 @@ public class AutoNumber {
 	private int increment;
 
 	private DecimalFormat format;
+	private String last = "";
 
 	public final void go(DottedNumber startingNumber, int increment, DecimalFormat format) {
 		this.running = true;
@@ -82,9 +83,15 @@ public class AutoNumber {
 		if (running == false) {
 			return null;
 		}
-		final String result = current.format(format);
+		last = current.format(format);
 		current.incrementMinor(increment);
-		return result;
+		return last;
 	}
 
+	public String getCurrentMessageNumber(boolean formatted) {
+		if (formatted) {
+			return last;
+		}
+		return last.replace("<b>", "").replace("</b>", "");
+	}
 }

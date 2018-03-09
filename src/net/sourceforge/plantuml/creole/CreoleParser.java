@@ -82,11 +82,11 @@ public class CreoleParser {
 	}
 
 	private static boolean isTableLine(String line) {
-		return line.matches("^(\\<#\\w+\\>)?\\|(\\=)?.*\\|$");
+		return line.matches("^(\\<#\\w+(,#?\\w+)?\\>)?\\|(\\=)?.*\\|$");
 	}
 
 	public static boolean doesStartByColor(String line) {
-		return line.matches("^(\\<#\\w+\\>).*");
+		return line.matches("^(\\<#\\w+(,#?\\w+)?\\>).*");
 	}
 
 	public static boolean isTreeStart(String line) {

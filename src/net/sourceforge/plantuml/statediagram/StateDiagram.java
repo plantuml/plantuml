@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -110,8 +111,9 @@ public class StateDiagram extends AbstractEntityDiagram {
 	}
 
 	public IEntity getHistorical(Code codeGroup) {
-		final IEntity g = getOrCreateGroup(codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE,
-				getRootGroup());
+		gotoGroup2(codeGroup, Display.getWithNewlines(codeGroup), GroupType.STATE, getRootGroup(),
+				NamespaceStrategy.SINGLE);
+		final IEntity g = getCurrentGroup();
 		final IEntity result = getOrCreateLeaf(Code.of("*historical*" + g.getCode().getFullName()),
 				LeafType.PSEUDO_STATE, null);
 		endGroup();
@@ -125,13 +127,14 @@ public class StateDiagram extends AbstractEntityDiagram {
 			super.endGroup();
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
-		final IGroup conc1 = getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""),
-				GroupType.CONCURRENT_STATE, getCurrentGroup());
+		gotoGroup2(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
+				getCurrentGroup(), NamespaceStrategy.SINGLE);
+		final IGroup conc1 = getCurrentGroup();
 		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
-			getOrCreateGroup(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
-					getCurrentGroup());
+			gotoGroup2(UniqueSequence.getCode(CONCURRENT_PREFIX), Display.create(""), GroupType.CONCURRENT_STATE,
+					getCurrentGroup(), NamespaceStrategy.SINGLE);
 		}
 		// printlink("AFTER");
 		return true;

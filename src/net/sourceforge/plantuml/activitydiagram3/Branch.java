@@ -149,8 +149,8 @@ public class Branch {
 		return list.getLast();
 	}
 
-	public boolean isOnlySingleStop() {
-		return list.isOnlySingleStop();
+	public boolean isOnlySingleStopOrSpot() {
+		return list.isOnlySingleStopOrSpot();
 	}
 
 }

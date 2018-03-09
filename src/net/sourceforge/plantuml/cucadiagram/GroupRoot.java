@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -66,7 +67,7 @@ public class GroupRoot implements IGroup {
 
 	public Collection<ILeaf> getLeafsDirect() {
 		final List<ILeaf> result = new ArrayList<ILeaf>();
-		for (ILeaf ent : entityFactory.getLeafs().values()) {
+		for (ILeaf ent : entityFactory.getLeafsvalues()) {
 			if (ent.getParentContainer() == this) {
 				result.add(ent);
 			}
@@ -142,7 +143,7 @@ public class GroupRoot implements IGroup {
 
 	public Collection<IGroup> getChildren() {
 		final List<IGroup> result = new ArrayList<IGroup>();
-		for (IGroup ent : entityFactory.getGroups().values()) {
+		for (IGroup ent : entityFactory.getGroupsvalues()) {
 			if (ent.getParentContainer() == this) {
 				result.add(ent);
 			}
@@ -253,7 +254,11 @@ public class GroupRoot implements IGroup {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setRemoved(boolean removed) {
+	public void addStereotag(Stereotag tag) {
+		throw new UnsupportedOperationException();
+	}
+
+	public Set<Stereotag> stereotags() {
 		throw new UnsupportedOperationException();
 	}
 }

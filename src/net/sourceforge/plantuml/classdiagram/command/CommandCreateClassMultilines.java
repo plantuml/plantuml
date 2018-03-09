@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -102,6 +103,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
@@ -127,15 +130,15 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		if (lines.size() > 1) {
 			lines = lines.subExtract(1, 1);
 			final Url url = null;
-//			if (lines.size() > 0) {
-//				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
-//				url = urlBuilder.getUrl(lines.getFirst499().toString());
-//			} else {
-//				url = null;
-//			}
-//			if (url != null) {
-//				lines = lines.subExtract(1, 0);
-//			}
+			// if (lines.size() > 0) {
+			// final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			// url = urlBuilder.getUrl(lines.getFirst499().toString());
+			// } else {
+			// url = null;
+			// }
+			// if (url != null) {
+			// lines = lines.subExtract(1, 0);
+			// }
 			for (CharSequence s : lines) {
 				if (s.length() > 0 && VisibilityModifier.isVisibilityCharacter(s)) {
 					diagram.setVisibilityModifierPresent(true);
@@ -149,8 +152,20 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		manageExtends("EXTENDS", diagram, line0, entity);
 		manageExtends("IMPLEMENTS", diagram, line0, entity);
+		addTags(entity, line0.get("TAGS", 0));
 
 		return CommandExecutionResult.ok();
+	}
+
+	public static void addTags(IEntity entity, String tags) {
+		if (tags == null) {
+			return;
+		}
+		for (String tag : tags.split("[ ]+")) {
+			assert tag.startsWith("$");
+			tag = tag.substring(1);
+			entity.addStereotag(new Stereotag(tag));
+		}
 	}
 
 	public static void manageExtends(String keyword, ClassDiagram system, RegexResult arg, final IEntity entity) {

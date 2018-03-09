@@ -44,7 +44,7 @@ import javax.imageio.ImageIO;
 
 public class IconLoader {
 
-	private static final int NUMBER_OF_ICONS = 21;
+	private static final int NUMBER_OF_ICONS = 25;
 	
 	private final static Map<String, BufferedImage> all = new ConcurrentHashMap<String, BufferedImage>();
 

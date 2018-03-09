@@ -103,6 +103,9 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 	private final SkinParam skinParam = SkinParam.create(getUmlDiagramType());
 
 	final public void setTitle(DisplayPositionned title) {
+		if (DisplayPositionned.isNull(title) || title.getDisplay().isWhite()) {
+			return;
+		}
 		this.title = title;
 	}
 

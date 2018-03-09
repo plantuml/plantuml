@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -129,7 +130,8 @@ public class EntityImageTips extends AbstractEntityImage {
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
-			final Rectangle2D memberPosition = shapeOther.getImage().getInnerPosition(ent.getKey(), stringBounder, InnerStrategy.STRICT);
+			final Rectangle2D memberPosition = shapeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
+					InnerStrategy.STRICT);
 			if (memberPosition == null) {
 				return;
 			}
@@ -160,7 +162,7 @@ public class EntityImageTips extends AbstractEntityImage {
 		// final HtmlColor fontColor = rose.getFontColor(skinParam, FontParam.NOTE);
 		// final UFont fontNote = skinParam.getFont(FontParam.NOTE, null, false);
 		final TextBlock textBlock = new BodyEnhanced2(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
-				new FontConfiguration(skinParam, FontParam.NOTE, null));
+				new FontConfiguration(skinParam, FontParam.NOTE, null), LineBreakStrategy.NONE);
 		final Opale opale = new Opale(borderColor, noteBackgroundColor, textBlock, skinParam.shadowing(), true);
 		return opale;
 	}

@@ -73,6 +73,8 @@ public interface ISkinParam extends ISkinSimple {
 
 	public int getCircledCharacterRadius();
 
+	public char getCircledCharacter(Stereotype stereotype);
+
 	public int classAttributeIconSize();
 
 	public ColorMapper getColorMapper();
@@ -102,6 +104,8 @@ public interface ISkinParam extends ISkinSimple {
 	public double getRoundCorner(RoundParam param, Stereotype stereotype);
 
 	public LineBreakStrategy maxMessageSize();
+
+	public LineBreakStrategy wrapWidth();
 
 	public boolean strictUmlStyle();
 
@@ -146,5 +150,9 @@ public interface ISkinParam extends ISkinSimple {
 	public boolean useRankSame();
 
 	public boolean displayGenericWithOldFashion();
+
+	public boolean responseMessageBelowArrow();
+
+	public boolean svgDimensionStyle();
 
 }

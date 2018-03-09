@@ -45,6 +45,7 @@ import java.util.ListIterator;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -138,6 +139,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
 		List<Member> members = new ArrayList<Member>();
+		final LineBreakStrategy lineBreakStrategy = skinParam.wrapWidth();
 		for (ListIterator<String> it = rawBody.listIterator(); it.hasNext();) {
 			final String s = it.next();
 			if (manageHorizontalLine && isBlockSeparator(s)) {

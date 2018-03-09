@@ -179,7 +179,7 @@ public final class GroupPngMakerState {
 			inners.add(inner.getSvekImage());
 		}
 		return new CucaDiagramFileMakerSvek2InternalImage(inners, dotData.getTopParent().getConcurrentSeparator(),
-				dotData.getSkinParam());
+				dotData.getSkinParam(), group.getStereotype());
 
 	}
 

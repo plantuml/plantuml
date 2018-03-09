@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import h.tedge_t;
+
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -143,43 +145,83 @@ public class EntityImageClassHeader2 extends AbstractEntityImage {
 		}
 		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
 		final HtmlColor classBorder = SkinParamUtils.getColor(getSkinParam(), ColorParam.classBorder, stereotype);
+		final HtmlColor fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
 		if (stereotype != null && stereotype.getCharacter() != 0) {
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
-					stereotype.getHtmlColor(), classBorder, SkinParamUtils.getFontColor(getSkinParam(),
-							FontParam.CIRCLED_CHARACTER, null));
+					stereotype.getHtmlColor(), classBorder, fontColor);
 		}
-		if (entity.getLeafType() == LeafType.ANNOTATION) {
-			return new CircledCharacter('@', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeNBackground, stereotype), classBorder,
-					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
+		final LeafType leafType = entity.getLeafType();
+		final HtmlColor spotBackColor = SkinParamUtils.getColor(getSkinParam(), spotBackground(leafType), stereotype);
+		HtmlColor spotBorder = SkinParamUtils.getColor(getSkinParam(), spotBorder(leafType), stereotype);
+		if (spotBorder == null) {
+			spotBorder = classBorder;
 		}
-		if (entity.getLeafType() == LeafType.ABSTRACT_CLASS) {
-			return new CircledCharacter('A', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeABackground, stereotype), classBorder,
-					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
+		char circledChar = 0;
+		if (stereotype != null) {
+			circledChar = getSkinParam().getCircledCharacter(stereotype);
 		}
-		if (entity.getLeafType() == LeafType.CLASS) {
-			return new CircledCharacter('C', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeCBackground, stereotype), classBorder,
-					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
+		if (circledChar == 0) {
+			circledChar = getCircledChar(leafType);
 		}
-		if (entity.getLeafType() == LeafType.INTERFACE) {
-			return new CircledCharacter('I', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeIBackground, stereotype), classBorder,
-					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
-		}
-		if (entity.getLeafType() == LeafType.ENUM) {
-			return new CircledCharacter('E', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeEBackground, stereotype), classBorder,
-					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
-		}
-		if (entity.getLeafType() == LeafType.ENTITY) {
-			return new CircledCharacter('E', getSkinParam().getCircledCharacterRadius(), font, SkinParamUtils.getColor(
-					getSkinParam(), ColorParam.stereotypeCBackground, stereotype), classBorder,
-					SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null));
+		return new CircledCharacter(circledChar, getSkinParam().getCircledCharacterRadius(), font, spotBackColor,
+				spotBorder, fontColor);
+	}
+
+	private ColorParam spotBackground(LeafType leafType) {
+		switch (leafType) {
+		case ANNOTATION:
+			return ColorParam.stereotypeNBackground;
+		case ABSTRACT_CLASS:
+			return ColorParam.stereotypeABackground;
+		case CLASS:
+			return ColorParam.stereotypeCBackground;
+		case INTERFACE:
+			return ColorParam.stereotypeIBackground;
+		case ENUM:
+			return ColorParam.stereotypeEBackground;
+		case ENTITY:
+			return ColorParam.stereotypeCBackground;
 		}
 		assert false;
 		return null;
+	}
+
+	private ColorParam spotBorder(LeafType leafType) {
+		switch (leafType) {
+		case ANNOTATION:
+			return ColorParam.stereotypeNBorder;
+		case ABSTRACT_CLASS:
+			return ColorParam.stereotypeABorder;
+		case CLASS:
+			return ColorParam.stereotypeCBorder;
+		case INTERFACE:
+			return ColorParam.stereotypeIBorder;
+		case ENUM:
+			return ColorParam.stereotypeEBorder;
+		case ENTITY:
+			return ColorParam.stereotypeCBorder;
+		}
+		assert false;
+		return null;
+	}
+
+	private char getCircledChar(LeafType leafType) {
+		switch (leafType) {
+		case ANNOTATION:
+			return '@';
+		case ABSTRACT_CLASS:
+			return 'A';
+		case CLASS:
+			return 'C';
+		case INTERFACE:
+			return 'I';
+		case ENUM:
+			return 'E';
+		case ENTITY:
+			return 'E';
+		}
+		assert false;
+		return '?';
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

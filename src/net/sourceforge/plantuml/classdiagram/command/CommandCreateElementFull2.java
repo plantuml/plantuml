@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -89,6 +90,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 				), //
 				new RegexLeaf("STEREOTYPE", "(?:[%s]*(\\<\\<.+\\>\\>))?"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				new RegexLeaf("[%s]*"), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*"), //
@@ -165,6 +168,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 					.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
 					.getIHtmlColorSet()));
 		}
+		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -56,6 +57,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	private final List<IEntityImage> inners;
 	private final Separator separator;
 	private final ISkinParam skinParam;
+	private final Stereotype stereotype;
 
 	static enum Separator {
 		VERTICAL, HORIZONTAL;
@@ -99,19 +101,20 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		}
 	}
 
-	private HtmlColor getColor(ColorParam colorParam) {
-		return new Rose().getHtmlColor(skinParam, colorParam);
+	private HtmlColor getColor(ColorParam colorParam, Stereotype stereotype) {
+		return new Rose().getHtmlColor(skinParam, colorParam, stereotype);
 	}
 
 	public CucaDiagramFileMakerSvek2InternalImage(List<IEntityImage> inners, char concurrentSeparator,
-			ISkinParam skinParam) {
+			ISkinParam skinParam, Stereotype stereotype) {
 		this.separator = Separator.fromChar(concurrentSeparator);
 		this.skinParam = skinParam;
+		this.stereotype = stereotype;
 		this.inners = inners;
 	}
 
 	public void drawU(UGraphic ug) {
-		final HtmlColor dotColor = getColor(ColorParam.stateBorder);
+		final HtmlColor dotColor = getColor(ColorParam.stateBorder, stereotype);
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParamForecolored;
 import net.sourceforge.plantuml.SkinParamSameClassWidth;
+import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -81,7 +82,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.HtmlColor;
-import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
@@ -281,7 +281,8 @@ public final class DotDataImageBuilder {
 		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
 		final Dimension2D dim = image.calculateDimension(stringBounder);
 		final Shape shape = new Shape(image, image.getShapeType(), dim.getWidth(), dim.getHeight(),
-				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder), ent.getEntityPosition());
+				dotStringFactory.getColorSequence(), ent.isTop(), image.getShield(stringBounder),
+				ent.getEntityPosition());
 		dotStringFactory.addShape(shape);
 		dotStringFactory.getBibliotekon().putShape(ent, shape);
 	}
@@ -411,8 +412,11 @@ public final class DotDataImageBuilder {
 		}
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null) {
-				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, HtmlColorUtils.BLACK),
-						portionShower, links);
+				// final HtmlColor black = HtmlColorUtils.BLACK;
+				final HtmlColor black = SkinParamUtils.getColor(skinParam, leaf.getUSymbol().getColorParamBorder(),
+						leaf.getStereotype());
+				return new EntityImageDescription(leaf, new SkinParamForecolored(skinParam, black), portionShower,
+						links);
 			}
 			return new EntityImageEmptyPackage(leaf, skinParam, portionShower);
 		}

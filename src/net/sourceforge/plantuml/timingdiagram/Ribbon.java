@@ -116,9 +116,11 @@ public class Ribbon implements TimeDrawing {
 			initial = null;
 		} else {
 			initial = createTextBlock(initialState);
-			final double a = getPosInPixel(changes.get(0));
-			drawPentaA(ugDown.apply(new UTranslate(-getInitialWidth(stringBounder), -halfDelta)),
-					getInitialWidth(stringBounder) + a, changes.get(0));
+			if (changes.size() > 0) {
+				final double a = getPosInPixel(changes.get(0));
+				drawPentaA(ugDown.apply(new UTranslate(-getInitialWidth(stringBounder), -halfDelta)),
+						getInitialWidth(stringBounder) + a, changes.get(0));
+			}
 		}
 
 		for (int i = 0; i < changes.size() - 1; i++) {

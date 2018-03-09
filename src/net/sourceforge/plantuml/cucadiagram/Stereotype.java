@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -54,7 +53,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.sprite.SpriteUtils;
 
-public class Stereotype implements CharSequence, Hideable {
+public class Stereotype implements CharSequence {
 	private final static Pattern2 circleChar = MyPattern
 			.cmpile("\\<\\<[%s]*\\(?(\\S)[%s]*,[%s]*(#[0-9a-fA-F]{6}|\\w+)[%s]*(?:[),](.*?))?\\>\\>");
 	private final static Pattern2 circleSprite = MyPattern.cmpile("\\<\\<[%s]*\\(?\\$(" + SpriteUtils.SPRITE_NAME
@@ -246,10 +245,6 @@ public class Stereotype implements CharSequence, Hideable {
 			}
 		}
 		return null;
-	}
-
-	public boolean isHidden() {
-		return "<<hidden>>".equalsIgnoreCase(label);
 	}
 
 }

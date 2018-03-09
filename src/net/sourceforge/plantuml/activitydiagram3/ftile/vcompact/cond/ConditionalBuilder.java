@@ -108,16 +108,16 @@ public class ConditionalBuilder {
 			ISkinParam skinParam, StringBounder stringBounder, FontConfiguration fcArrow, FontConfiguration fcTest) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, branch1, branch2, skinParam, stringBounder, fcArrow, fcTest);
-		if (isEmptyOrOnlySingleStop(branch2) && isEmptyOrOnlySingleStop(branch1) == false) {
+		if (isEmptyOrOnlySingleStopOrSpot(branch2) && isEmptyOrOnlySingleStopOrSpot(branch1) == false) {
 			return builder.createDown(builder.branch1, builder.branch2);
 		}
-		if (branch1.isEmpty() && branch2.isOnlySingleStop()) {
+		if (branch1.isEmpty() && branch2.isOnlySingleStopOrSpot()) {
 			return builder.createDown(builder.branch1, builder.branch2);
 		}
-		if (isEmptyOrOnlySingleStop(branch1) && isEmptyOrOnlySingleStop(branch2) == false) {
+		if (isEmptyOrOnlySingleStopOrSpot(branch1) && isEmptyOrOnlySingleStopOrSpot(branch2) == false) {
 			return builder.createDown(builder.branch2, builder.branch1);
 		}
-		if (branch2.isEmpty() && branch1.isOnlySingleStop()) {
+		if (branch2.isEmpty() && branch1.isOnlySingleStopOrSpot()) {
 			return builder.createDown(builder.branch2, builder.branch1);
 		}
 		return builder.createWithLinks();
@@ -125,8 +125,8 @@ public class ConditionalBuilder {
 		// return builder.createNude();
 	}
 
-	private static boolean isEmptyOrOnlySingleStop(Branch branch) {
-		return branch.isEmpty() || branch.isOnlySingleStop();
+	private static boolean isEmptyOrOnlySingleStopOrSpot(Branch branch) {
+		return branch.isEmpty() || branch.isOnlySingleStopOrSpot();
 	}
 
 	private Ftile createDown(Branch branch1, Branch branch2) {
@@ -136,11 +136,11 @@ public class ConditionalBuilder {
 		final TextBlock tb2 = getLabelPositive(branch2);
 		final Ftile diamond1 = getDiamond1(false, tb1, tb2);
 		final Ftile diamond2 = getDiamond2(branch1, branch2, true);
-		if (branch2.isOnlySingleStop()) {
+		if (branch2.isOnlySingleStopOrSpot()) {
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10),
 					arrowColor, ftileFactory, branch2.getFtile(), branch2.getInlinkRenderingColorAndStyle());
 		}
-		if (branch1.isOnlySingleStop()) {
+		if (branch1.isOnlySingleStopOrSpot()) {
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
 					arrowColor, ftileFactory, branch1.getFtile(), branch1.getInlinkRenderingColorAndStyle());
 		}

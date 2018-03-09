@@ -60,9 +60,13 @@ public class StripeTable implements Stripe {
 	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.NORMAL, 0, '\0');
 
 	public StripeTable(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {
-		this.fontConfiguration = fontConfiguration;
 		this.skinParam = skinParam;
-		this.table = new AtomTable(fontConfiguration.getColor());
+		this.fontConfiguration = fontConfiguration;
+		HtmlColor lineColor = getBackOrFrontColor(line, 1);
+		if (lineColor == null) {
+			lineColor = fontConfiguration.getColor();
+		}
+		this.table = new AtomTable(lineColor);
 		this.marged = new AtomWithMargin(table, 2, 2);
 		analyzeAndAddInternal(line, Mode.HEADER);
 	}
@@ -79,15 +83,17 @@ public class StripeTable implements Stripe {
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 	}
 
-	private HtmlColor getBackColor(String line) {
+	private HtmlColor getBackOrFrontColor(String line, int idx) {
 		if (CreoleParser.doesStartByColor(line)) {
 			final int idx1 = line.indexOf('#');
 			final int idx2 = line.indexOf('>');
 			if (idx2 == -1) {
 				throw new IllegalStateException();
 			}
-			final String color = line.substring(idx1, idx2);
-			return skinParam.getIHtmlColorSet().getColorIfValid(color);
+			final String[] color = line.substring(idx1, idx2).split(",");
+			if (idx < color.length) {
+				return skinParam.getIHtmlColorSet().getColorIfValid(color[idx]);
+			}
 		}
 		return null;
 	}
@@ -101,14 +107,14 @@ public class StripeTable implements Stripe {
 	}
 
 	private void analyzeAndAddInternal(String line, Mode mode) {
-		HtmlColor lineBackColor = getBackColor(line);
+		HtmlColor lineBackColor = getBackOrFrontColor(line, 0);
 		if (lineBackColor != null) {
 			line = withouBackColor(line);
 		}
 		table.newLine(lineBackColor);
 		for (final StringTokenizer st = new StringTokenizer(line, "|"); st.hasMoreTokens();) {
 			String v = st.nextToken();
-			HtmlColor cellBackColor = getBackColor(v);
+			HtmlColor cellBackColor = getBackOrFrontColor(v, 0);
 			if (cellBackColor != null) {
 				v = withouBackColor(v);
 			}

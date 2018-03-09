@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 
 public class CommandCreatePackageBlock extends SingleLineCommand<CompositeDiagram> {
 
@@ -59,7 +60,8 @@ public class CommandCreatePackageBlock extends SingleLineCommand<CompositeDiagra
 		if (display == null) {
 			display = code.getFullName();
 		}
-		diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage);
+		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+				NamespaceStrategy.SINGLE);
 		return CommandExecutionResult.ok();
 	}
 

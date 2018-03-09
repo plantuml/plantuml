@@ -37,36 +37,4 @@ package net.sourceforge.plantuml.cucadiagram;
 
 public class Namespace {
 
-	private final String namespace;
-
-	private Namespace(String namespace) {
-		if (namespace == null) {
-			throw new IllegalArgumentException();
-		}
-		this.namespace = namespace;
-	}
-
-	public final String getNamespace() {
-		return namespace;
-	}
-
-	public static Namespace of(String namespace) {
-		return new Namespace(namespace);
-	}
-
-	@Override
-	public int hashCode() {
-		return namespace.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		final Namespace other = (Namespace) obj;
-		return this.namespace.equals(other.namespace);
-	}
-
-	public boolean isMain() {
-		return namespace.length() == 0;
-	}
-
 }

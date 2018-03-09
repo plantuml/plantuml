@@ -110,9 +110,12 @@ public class ImageBuilder {
 	private UStroke borderStroke;
 	private HtmlColor borderColor;
 	private double borderCorner;
+	
+	private boolean svgDimensionStyle;
 
 	public ImageBuilder(ColorMapper colorMapper, double dpiFactor, HtmlColor mybackcolor, String metadata,
 			String warningOrError, double margin1, double margin2, Animation animation, boolean useHandwritten) {
+		this.svgDimensionStyle = true;
 		this.colorMapper = colorMapper;
 		this.dpiFactor = dpiFactor;
 		this.mybackcolor = mybackcolor;
@@ -146,6 +149,7 @@ public class ImageBuilder {
 		}
 
 		this.colorMapper = skinParam.getColorMapper();
+		this.svgDimensionStyle = skinParam.svgDimensionStyle();
 		this.dpiFactor = dpiFactor;
 		this.mybackcolor = backColor;
 		this.metadata = metadata;
@@ -387,21 +391,21 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale, Dimension2D dim, HtmlColor mybackcolor,
-			String svgLinkTarget, String hover, long seed) {
+	private UGraphic2 createUGraphicSVG(ColorMapper colorMapper, double scale,
+			Dimension2D dim, HtmlColor mybackcolor, String svgLinkTarget, String hover, long seed) {
 		Color backColor = Color.WHITE;
 		if (mybackcolor instanceof HtmlColorSimple) {
 			backColor = colorMapper.getMappedColor(mybackcolor);
 		}
 		final UGraphicSvg ug;
 		if (mybackcolor instanceof HtmlColorGradient) {
-			ug = new UGraphicSvg(dim, colorMapper, (HtmlColorGradient) mybackcolor, false, scale, svgLinkTarget, hover,
-					seed);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, (HtmlColorGradient) mybackcolor, false, scale,
+					svgLinkTarget, hover, seed);
 		} else if (backColor == null || backColor.equals(Color.WHITE)) {
-			ug = new UGraphicSvg(dim, colorMapper, false, scale, svgLinkTarget, hover, seed);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, false, scale, svgLinkTarget, hover, seed);
 		} else {
-			ug = new UGraphicSvg(dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale, svgLinkTarget,
-					hover, seed);
+			ug = new UGraphicSvg(svgDimensionStyle, dim, colorMapper, StringUtils.getAsHtml(backColor), false, scale,
+					svgLinkTarget, hover, seed);
 		}
 		return ug;
 

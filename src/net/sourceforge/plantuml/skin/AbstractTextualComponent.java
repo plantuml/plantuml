@@ -64,17 +64,16 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final UFont font;
 	private final HtmlColor fontColor;
 
-	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, CharSequence label,
-			FontConfiguration font, HorizontalAlignment horizontalAlignment, int marginX1, int marginX2,
-			int marginY, ISkinSimple spriteContainer, UFont fontForStereotype,
-			HtmlColor htmlColorForStereotype) {
+	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, CharSequence label, FontConfiguration font,
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
+			ISkinSimple spriteContainer, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this(maxMessageSize, Display.getWithNewlines(label == null ? "" : label.toString()), font, horizontalAlignment,
 				marginX1, marginX2, marginY, spriteContainer, false, fontForStereotype, htmlColorForStereotype);
 	}
 
 	public AbstractTextualComponent(LineBreakStrategy maxMessageSize, Display strings, FontConfiguration font,
-			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY, ISkinSimple spriteContainer,
-			boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
+			HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
+			ISkinSimple spriteContainer, boolean enhanced, UFont fontForStereotype, HtmlColor htmlColorForStereotype) {
 		this.font = font.getFont();
 		this.fontColor = font.getColor();
 		this.marginX1 = marginX1;
@@ -85,7 +84,8 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else if (enhanced) {
-			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font);
+			textBlock = new BodyEnhanced2(strings, FontParam.NOTE, spriteContainer, HorizontalAlignment.LEFT, font,
+					maxMessageSize);
 		} else {
 			textBlock = strings.create(font, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
 					fontForStereotype, htmlColorForStereotype);

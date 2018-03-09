@@ -91,7 +91,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					new RegexLeaf("[%s]*"), //
 					ColorParser.exp1(), //
 					new RegexLeaf("[%s]*"), //
-					new RegexLeaf("DESC", "as[%s]*[%g](.*)$"));
+					new RegexLeaf("DESC", "as[%s]*[%g]([^%g]*)$"));
 		}
 		if (type == 1) {
 			return new RegexConcat(new RegexLeaf("^"), //
@@ -145,6 +145,9 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
 		}
 		final ILeaf result = diagram.createLeaf(code, display, type, usymbol);
+		if (result == null) {
+			return CommandExecutionResult.error("This element (" + code.getFullName() + ") is already defined");
+		}
 		result.setUSymbol(usymbol);
 		if (stereotype != null) {
 			result.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram

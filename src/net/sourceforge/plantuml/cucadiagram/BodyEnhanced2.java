@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -60,12 +61,14 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	private final ISkinSimple spriteContainer;
 
 	private final HorizontalAlignment align;
+	private final LineBreakStrategy lineBreakStrategy;
 
 	// private final List<Url> urls = new ArrayList<Url>();
 
 	public BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple spriteContainer, HorizontalAlignment align,
-			FontConfiguration titleConfig) {
+			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy) {
 		this.rawBody2 = rawBody;
+		this.lineBreakStrategy = lineBreakStrategy;
 		this.spriteContainer = spriteContainer;
 
 		this.titleConfig = titleConfig;
@@ -121,7 +124,7 @@ public class BodyEnhanced2 extends AbstractTextBlock implements TextBlock {
 	}
 
 	private TextBlock getTextBlock(Display members2, StringBounder stringBounder) {
-		final TextBlock result = members2.create(titleConfig, align, spriteContainer);
+		final TextBlock result = members2.create(titleConfig, align, spriteContainer, lineBreakStrategy);
 		return result;
 	}
 

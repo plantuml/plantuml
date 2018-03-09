@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 
@@ -57,6 +59,8 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 	private RegexConcat getRegexConcatMultiLine() {
 		return new RegexConcat(new RegexLeaf("^[%s]*(note)[%s]+"), //
 				new RegexLeaf("CODE", "as[%s]+([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				new RegexLeaf("[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("$") //
@@ -67,6 +71,9 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		return new RegexConcat(new RegexLeaf("^[%s]*note[%s]+"), //
 				new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g][%s]+as[%s]+"), //
 				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)[%s]*"), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("[%s]*"), //
 				ColorParser.exp1(), //
 				new RegexLeaf("$") //
 		);
@@ -112,6 +119,7 @@ public final class FactoryNoteCommand implements SingleMultiFactoryCommand<Abstr
 		final IEntity entity = diagram.createLeaf(code, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 		return CommandExecutionResult.ok();
 	}
 

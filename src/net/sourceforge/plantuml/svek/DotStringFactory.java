@@ -343,7 +343,7 @@ public class DotStringFactory implements Moveable {
 		return graphviz.getDotExe();
 	}
 
-	public ClusterPosition solve(String svg) throws IOException, InterruptedException {
+	public ClusterPosition solve(final String svg) throws IOException, InterruptedException {
 		if (svg.length() == 0) {
 			throw new EmptySvgException();
 		}
@@ -358,11 +358,13 @@ public class DotStringFactory implements Moveable {
 
 		final MinFinder corner1 = new MinFinder();
 
+		final Point2DFunction move = new YDelta(fullHeight);
+		final SvgResult svgResult = new SvgResult(svg, move);
 		for (Shape sh : bibliotekon.allShapes()) {
 			int idx = svg.indexOf("<title>" + sh.getUid() + "</title>");
 			if (sh.getType() == ShapeType.RECTANGLE || sh.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
 					|| sh.getType() == ShapeType.FOLDER || sh.getType() == ShapeType.DIAMOND) {
-				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);
 				corner1.manage(minX, minY);
@@ -373,12 +375,12 @@ public class DotStringFactory implements Moveable {
 				final List<Point2D.Double> points;
 				if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
 					// GraphViz 2.30
-					points = SvekUtils.extractD(svg, idx2, fullHeight);
+					points = svgResult.substring(idx2).extractList(SvgResult.D_EQUALS);
 				} else {
-					points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+					points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 					for (int i = 0; i < 3; i++) {
 						idx = svg.indexOf("points=\"", idx + 1);
-						points.addAll(SvekUtils.extractPointsList(svg, idx, fullHeight));
+						points.addAll(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));
 					}
 				}
 				final double minX = SvekUtils.getMinX(points);
@@ -387,7 +389,8 @@ public class DotStringFactory implements Moveable {
 				sh.moveSvek(minX, minY);
 			} else if (sh.getType() == ShapeType.OCTAGON) {
 				idx = svg.indexOf("points=\"", idx + 1);
-				final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+				final int starting = idx;
+				final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
 				final double minX = SvekUtils.getMinX(points);
 				final double minY = SvekUtils.getMinY(points);
 				corner1.manage(minX, minY);
@@ -407,7 +410,8 @@ public class DotStringFactory implements Moveable {
 
 		for (Cluster cluster : bibliotekon.allCluster()) {
 			int idx = getClusterIndex(svg, cluster.getColor());
-			final List<Point2D.Double> points = SvekUtils.extractPointsList(svg, idx, fullHeight);
+			final int starting = idx;
+			final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
 			final double minX = SvekUtils.getMinX(points);
 			final double minY = SvekUtils.getMinY(points);
 			final double maxX = SvekUtils.getMaxX(points);
@@ -419,14 +423,16 @@ public class DotStringFactory implements Moveable {
 				continue;
 			}
 			idx = getClusterIndex(svg, cluster.getTitleColor());
-			final List<Point2D.Double> pointsTitle = SvekUtils.extractPointsList(svg, idx, fullHeight);
+			final int starting1 = idx;
+			final List<Point2D.Double> pointsTitle = svgResult.substring(starting1)
+					.extractList(SvgResult.POINTS_EQUALS);
 			final double minXtitle = SvekUtils.getMinX(pointsTitle);
 			final double minYtitle = SvekUtils.getMinY(pointsTitle);
 			cluster.setTitlePosition(minXtitle, minYtitle);
 		}
 
 		for (Line line : bibliotekon.allLines()) {
-			line.solveLine(svg, fullHeight, corner1);
+			line.solveLine(svgResult, corner1);
 		}
 
 		for (Line line : bibliotekon.allLines()) {

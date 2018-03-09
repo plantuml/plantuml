@@ -43,20 +43,14 @@ public class LinkStyle {
 		NORMAL, DASHED, DOTTED, BOLD, INVISIBLE;
 	}
 
-	private LinkStyle(Type type, double thickness) {
+	private LinkStyle(Type type, Double thickness) {
 		this.type = type;
 		this.thickness = thickness;
 
 	}
 
-	// private final static LinkStyle NORMAL = new LinkStyle();
-	// private final static LinkStyle DASHED = new LinkStyle();
-	// private final static LinkStyle DOTTED = new LinkStyle();
-	// private final static LinkStyle BOLD = new LinkStyle();
-	// private final static LinkStyle INVISIBLE = new LinkStyle();
-
 	private final Type type;
-	private final double thickness;
+	private final Double thickness;
 
 	@Override
 	public String toString() {
@@ -78,23 +72,23 @@ public class LinkStyle {
 	}
 
 	public static LinkStyle NORMAL() {
-		return new LinkStyle(Type.NORMAL, 0);
+		return new LinkStyle(Type.NORMAL, null);
 	}
 
 	public static LinkStyle INVISIBLE() {
-		return new LinkStyle(Type.INVISIBLE, 0);
+		return new LinkStyle(Type.INVISIBLE, null);
 	}
 
 	public static LinkStyle BOLD() {
-		return new LinkStyle(Type.BOLD, 0);
+		return new LinkStyle(Type.BOLD, null);
 	}
 
 	public static LinkStyle DOTTED() {
-		return new LinkStyle(Type.DOTTED, 0);
+		return new LinkStyle(Type.DOTTED, null);
 	}
 
 	public static LinkStyle DASHED() {
-		return new LinkStyle(Type.DASHED, 0);
+		return new LinkStyle(Type.DASHED, null);
 	}
 
 	public LinkStyle goThickness(double thickness) {
@@ -122,7 +116,7 @@ public class LinkStyle {
 	}
 
 	private double nonZeroThickness() {
-		if (thickness == 0) {
+		if (thickness == null) {
 			return 1;
 		}
 		return thickness;
@@ -153,7 +147,7 @@ public class LinkStyle {
 	}
 
 	public boolean isThicknessOverrided() {
-		return thickness != 0;
+		return thickness != null;
 	}
 
 }

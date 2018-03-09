@@ -52,11 +52,13 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HtmlColor;
+import net.sourceforge.plantuml.graphic.HtmlColorAutomatic;
+import net.sourceforge.plantuml.graphic.HtmlColorSimple;
 import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
-import net.sourceforge.plantuml.ugraphic.UChangeColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -230,7 +232,12 @@ public class AtomText implements Atom {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		ug = ug.apply(new UChangeColor(fontConfiguration.getColor()));
+		HtmlColor textColor = fontConfiguration.getColor();
+		FontConfiguration useFontConfiguration = fontConfiguration;
+		if (textColor instanceof HtmlColorAutomatic && ug.getParam().getBackcolor() != null) {
+			textColor = ((HtmlColorSimple) ug.getParam().getBackcolor()).opposite();
+			useFontConfiguration = fontConfiguration.changeColor(textColor);
+		}
 		if (marginLeft != ZERO) {
 			ug = ug.apply(new UTranslate(marginLeft.getDouble(ug.getStringBounder()), 0));
 		}
@@ -250,7 +257,7 @@ public class AtomText implements Atom {
 					final double remainder = x % tabSize;
 					x += tabSize - remainder;
 				} else {
-					final UText utext = new UText(s, fontConfiguration);
+					final UText utext = new UText(s, useFontConfiguration);
 					final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);
 					ug.apply(new UTranslate(x, ypos)).draw(utext);
 					x += dim.getWidth();

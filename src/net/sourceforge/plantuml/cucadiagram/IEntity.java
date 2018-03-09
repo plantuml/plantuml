@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.LineConfigurable;
@@ -88,5 +89,8 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public Map<String, Display> getTips();
 
-	public void setRemoved(boolean removed);
+	public void addStereotag(Stereotag tag);
+
+	public Set<Stereotag> stereotags();
+
 }

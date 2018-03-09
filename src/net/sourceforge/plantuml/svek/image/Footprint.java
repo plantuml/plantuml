@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UParamNull;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -113,6 +114,8 @@ public class Footprint {
 				// Probably a Horizontal line
 			} else if (shape instanceof UImage) {
 				drawImage(x, y, (UImage) shape);
+			} else if (shape instanceof UPath) {
+				drawPath(x, y, (UPath) shape);
 			} else {
 				throw new UnsupportedOperationException(shape.getClass().toString());
 			}
@@ -147,6 +150,11 @@ public class Footprint {
 			addPoint(x, y + image.getHeight());
 			addPoint(x + image.getWidth(), y);
 			addPoint(x + image.getWidth(), y + image.getHeight());
+		}
+
+		private void drawPath(double x, double y, UPath path) {
+			addPoint(x + path.getMinX(), y + path.getMinY());
+			addPoint(x + path.getMaxX(), y + path.getMaxY());
 		}
 
 		public void flushUg() {

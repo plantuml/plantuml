@@ -298,8 +298,11 @@ public class StringUtils {
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
+			if (s == null) {
+				continue;
+			}
 			final int length = Wcwidth.length(s);
-			if (s != null && result < length) {
+			if (result < length) {
 				result = length;
 			}
 		}

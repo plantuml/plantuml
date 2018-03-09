@@ -106,6 +106,7 @@ public class SvgGraphics {
 	private final String filterUid;
 	private final String shadowId;
 	private final String gradientId;
+	private final boolean svgDimensionStyle;
 
 	final protected void ensureVisible(double x, double y) {
 		if (x > maxX) {
@@ -116,12 +117,14 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(Dimension2D minDim, double scale, String hover, long seed) {
-		this(minDim, null, scale, hover, seed);
+	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover, long seed) {
+		this(svgDimensionStyle, minDim, null, scale, hover, seed);
 	}
 
-	public SvgGraphics(Dimension2D minDim, String backcolor, double scale, String hover, long seed) {
+	public SvgGraphics(boolean svgDimensionStyle, Dimension2D minDim, String backcolor, double scale, String hover,
+			long seed) {
 		try {
+			this.svgDimensionStyle = svgDimensionStyle;
 			this.scale = scale;
 			this.document = getDocument();
 			this.backcolor = backcolor;
@@ -341,7 +344,9 @@ public class SvgGraphics {
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow,
 			String id) {
 		if (height <= 0 || width <= 0) {
-			throw new IllegalArgumentException();
+			return;
+			// To be restored when Teoz will be finished
+			// throw new IllegalArgumentException();
 		}
 		manageShadow(deltaShadow);
 		if (hidden == false) {
@@ -567,9 +572,11 @@ public class SvgGraphics {
 		if (backcolor != null) {
 			style += "background:" + backcolor + ";";
 		}
-		root.setAttribute("style", style);
-		root.setAttribute("width", format(maxX) + "px");
-		root.setAttribute("height", format(maxY) + "px");
+		if (svgDimensionStyle) {
+			root.setAttribute("style", style);
+			root.setAttribute("width", format(maxX) + "px");
+			root.setAttribute("height", format(maxY) + "px");
+		}
 		root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
 		root.setAttribute("zoomAndPan", "magnify");
 		root.setAttribute("preserveAspectRatio", "none");

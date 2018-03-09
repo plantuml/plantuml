@@ -105,7 +105,7 @@ public class Rose implements Skin {
 					AlignParam.SEQUENCE_MESSAGETEXT_ALIGN, config.getArrowDirection());
 			return new ComponentRoseArrow(sequenceArrow, getUFont2(param, FontParam.ARROW), stringsToDisplay, config,
 					messageHorizontalAlignment, param, textHorizontalAlignment, param.maxMessageSize(),
-					param.strictUmlStyle() == false);
+					param.strictUmlStyle() == false, param.responseMessageBelowArrow());
 		}
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 		final double roundCorner = param.getRoundCorner(RoundParam.DEFAULT, null);

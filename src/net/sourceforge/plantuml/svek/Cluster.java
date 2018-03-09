@@ -303,6 +303,9 @@ public class Cluster implements Moveable {
 	}
 
 	public void drawU(UGraphic ug, UStroke stroke, final UmlDiagramType umlDiagramType, final ISkinParam skinParam2) {
+		if (group.isHidden()) {
+			return;
+		}
 		final String fullName = group.getCode().getFullName();
 		if (fullName.startsWith("##") == false) {
 			ug.draw(new UComment("cluster " + fullName));

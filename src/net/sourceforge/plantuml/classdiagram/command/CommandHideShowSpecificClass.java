@@ -62,22 +62,23 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, RegexResult arg) {
 
-		final String codeString = arg.get("CODE", 0);
-		if (codeString.equals("class")) {
-			diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		} else if (codeString.equals("interface")) {
-			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		} else {
-			final Code code = Code.of(codeString);
-			IEntity hidden = diagram.getEntityFactory().getLeafs().get(code);
-			if (hidden == null) {
-				hidden = diagram.getEntityFactory().getGroups().get(code);
-			}
-			if (hidden == null) {
-				return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
-			}
-			diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-		}
-		return CommandExecutionResult.ok();
+//		final String codeString = arg.get("CODE", 0);
+//		if (codeString.equals("class")) {
+//			diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//		} else if (codeString.equals("interface")) {
+//			diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//		} else {
+//			final Code code = Code.of(codeString);
+//			IEntity hidden = diagram.getEntityFactory().getLeafsget(code);
+//			if (hidden == null) {
+//				hidden = diagram.getEntityFactory().getGroupsget(code);
+//			}
+//			if (hidden == null) {
+//				return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
+//			}
+//			diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+//		}
+//		return CommandExecutionResult.ok();
+		throw new UnsupportedOperationException();
 	}
 }

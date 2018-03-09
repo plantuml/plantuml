@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HtmlColor;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -81,11 +82,10 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 				new RegexLeaf("LINECOLOR", "(?:##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?)?"), //
 				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)$"));
 	}
-	
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
-
 
 	private String getNotNull(RegexResult arg, String v1, String v2) {
 		if (arg.get(v1, 0) == null) {
@@ -102,8 +102,9 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		if (display == null) {
 			display = code.getFullName();
 		}
-		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.STATE,
-				currentPackage);
+		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.STATE, currentPackage,
+				NamespaceStrategy.SINGLE);
+		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
 			p.setStereotype(new Stereotype(stereotype));
@@ -114,7 +115,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 			final Url url = urlBuilder.getUrl(urlString);
 			p.addUrl(url);
 		}
-		
+
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 
 		final HtmlColor lineColor = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1));
@@ -126,9 +127,11 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		}
 		p.setColors(colors);
 
-//		p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
-//		p.setSpecificColorTOBEREMOVED(ColorType.LINE, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
-//		p.applyStroke(arg.get("LINECOLOR", 0));
+		// p.setSpecificColorTOBEREMOVED(ColorType.BACK,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR", 0)));
+		// p.setSpecificColorTOBEREMOVED(ColorType.LINE,
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR", 1)));
+		// p.applyStroke(arg.get("LINECOLOR", 0));
 		return CommandExecutionResult.ok();
 	}
 

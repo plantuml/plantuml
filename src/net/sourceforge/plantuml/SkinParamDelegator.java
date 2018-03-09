@@ -159,6 +159,10 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.maxMessageSize();
 	}
 
+	public LineBreakStrategy wrapWidth() {
+		return skinParam.wrapWidth();
+	}
+
 	public boolean strictUmlStyle() {
 		return skinParam.strictUmlStyle();
 	}
@@ -273,6 +277,18 @@ public class SkinParamDelegator implements ISkinParam {
 
 	public TikzFontDistortion getTikzFontDistortion() {
 		return skinParam.getTikzFontDistortion();
+	}
+
+	public boolean responseMessageBelowArrow() {
+		return skinParam.responseMessageBelowArrow();
+	}
+
+	public boolean svgDimensionStyle() {
+		return skinParam.svgDimensionStyle();
+	}
+
+	public char getCircledCharacter(Stereotype stereotype) {
+		return skinParam.getCircledCharacter(stereotype);
 	}
 
 }

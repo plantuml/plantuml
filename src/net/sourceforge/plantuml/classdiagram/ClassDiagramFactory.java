@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultiline
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateElementFull2.Mode;
 import net.sourceforge.plantuml.classdiagram.command.CommandDiamondAssociation;
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandImport;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkLollipop;
 import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
+import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
@@ -91,10 +93,12 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
-		cmds.add(new CommandHideShowSpecificStereotype());
+//		cmds.add(new CommandHideShowSpecificStereotype());
 		cmds.add(new CommandPage());
 		cmds.add(new CommandAddMethod());
 
+		cmds.add(new CommandHideShow2());
+		cmds.add(new CommandRemoveRestore());
 		cmds.add(new CommandCreateClass());
 		cmds.add(new CommandCreateEntityObject());
 
@@ -142,7 +146,7 @@ public class ClassDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandDiamondAssociation());
 
-		cmds.add(new CommandHideShowSpecificClass());
+//		cmds.add(new CommandHideShowSpecificClass());
 
 		cmds.add(new CommandNamespaceSeparator());
 

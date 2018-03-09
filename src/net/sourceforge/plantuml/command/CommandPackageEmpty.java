@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -71,11 +72,13 @@ public class CommandPackageEmpty extends SingleLineCommand<AbstractEntityDiagram
 			code = Code.of(arg.get(1));
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(display), GroupType.PACKAGE,
-				currentPackage);
+		diagram.gotoGroup2(code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+				NamespaceStrategy.SINGLE);
+		final IEntity p = diagram.getCurrentGroup();
 		final String color = arg.get(2);
 		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
+					diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(color));
 		}
 		diagram.endGroup();
 		return CommandExecutionResult.ok();

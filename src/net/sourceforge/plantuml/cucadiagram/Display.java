@@ -83,6 +83,17 @@ public class Display implements Iterable<CharSequence> {
 
 	public final static Display NULL = new Display(null, null, true, CreoleMode.FULL);
 
+	public Display replace(String src, String dest) {
+		final List<CharSequence> newDisplay = new ArrayList<CharSequence>();
+		for (CharSequence cs : display) {
+			if (cs.toString().contains(src)) {
+				cs = cs.toString().replace(src, dest);
+			}
+			newDisplay.add(cs);
+		}
+		return new Display(newDisplay, naturalHorizontalAlignment, isNull, defaultCreoleMode);
+	}
+
 	public boolean isWhite() {
 		return display.size() == 0 || (display.size() == 1 && display.get(0).toString().matches("\\s*"));
 	}
@@ -382,6 +393,12 @@ public class Display implements Iterable<CharSequence> {
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode modeSimpleLine) {
 		return create(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, modeSimpleLine,
+				null, null);
+	}
+
+	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			ISkinSimple spriteContainer, CreoleMode modeSimpleLine, LineBreakStrategy maxMessageSize) {
+		return create(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine,
 				null, null);
 	}
 

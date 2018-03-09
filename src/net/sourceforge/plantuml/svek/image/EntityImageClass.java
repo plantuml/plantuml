@@ -140,7 +140,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner, getEntity().getCode().getFullName());
+		final Shadowable rect = new URectangle(widthTotal, heightTotal, roundCorner, roundCorner, getEntity().getCode()
+				.getFullName());
 		if (getSkinParam().shadowing()) {
 			rect.setDeltaShadow(4);
 		}
@@ -163,11 +164,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		if (headerBackcolor == null) {
 			headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
 		}
+		UGraphic ugHeader = ug;
 		if (headerBackcolor != null) {
 			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight());
-			ug.apply(new UChangeBackColor(headerBackcolor)).apply(stroke).draw(rect2);
+			ugHeader = ugHeader.apply(new UChangeBackColor(headerBackcolor));
+			ugHeader.apply(stroke).draw(rect2);
 		}
-		header.drawU(ug, dimTotal.getWidth(), dimHeader.getHeight());
+		header.drawU(ugHeader, dimTotal.getWidth(), dimHeader.getHeight());
 
 		if (body != null) {
 			final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);

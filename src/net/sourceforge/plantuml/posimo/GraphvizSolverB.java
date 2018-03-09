@@ -43,10 +43,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +53,8 @@ import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.svek.MinFinder;
+import net.sourceforge.plantuml.svek.SvgResult;
+import net.sourceforge.plantuml.svek.YDelta;
 
 public class GraphvizSolverB {
 
@@ -122,15 +122,16 @@ public class GraphvizSolverB {
 		final int width = Integer.parseInt(mGraph.group(1));
 		final int height = Integer.parseInt(mGraph.group(2));
 
+		final YDelta yDelta = new YDelta(height);
 		for (Block b : root.getRecursiveContents()) {
 			final String start = "b" + b.getUid();
 			final int p1 = s.indexOf("<title>" + start + "</title>");
 			if (p1 == -1) {
 				throw new IllegalStateException();
 			}
-			final List<Point2D.Double> pointsList = extractPointsList(s, p1);
+			final List<Point2D.Double> pointsList = extractPointsList(s, p1, yDelta);
 			b.setX(getMinX(pointsList));
-			b.setY(getMinY(pointsList) + height);
+			b.setY(getMinY(pointsList));
 			minMax.manage(b.getPosition());
 		}
 
@@ -140,9 +141,9 @@ public class GraphvizSolverB {
 			if (p1 == -1) {
 				throw new IllegalStateException();
 			}
-			final List<Point2D.Double> pointsList = extractPointsList(s, p1);
+			final List<Point2D.Double> pointsList = extractPointsList(s, p1, yDelta);
 			cl.setX(getMinX(pointsList));
-			cl.setY(getMinY(pointsList) + height);
+			cl.setY(getMinY(pointsList));
 			final double w = getMaxX(pointsList) - getMinX(pointsList);
 			final double h = getMaxY(pointsList) - getMinY(pointsList);
 			cl.setHeight(h);
@@ -161,15 +162,15 @@ public class GraphvizSolverB {
 			final int p2 = s.indexOf(" d=\"", p1);
 			final int p3 = s.indexOf("\"", p2 + " d=\"".length());
 			final String points = s.substring(p2 + " d=\"".length(), p3);
-			final DotPath dotPath = new DotPath(points, height);
+			final DotPath dotPath = new DotPath(new SvgResult(points, yDelta));
 			p.setDotPath(dotPath);
 			minMax.manage(dotPath.getMinFinder());
 
 			// Log.println("pointsList=" + pointsList);
 			if (p.getLabel() != null) {
-				final List<Point2D.Double> pointsList = extractPointsList(s, p1);
+				final List<Point2D.Double> pointsList = extractPointsList(s, p1, yDelta);
 				final double x = getMinX(pointsList);
-				final double y = getMinY(pointsList) + height;
+				final double y = getMinY(pointsList);
 				p.setLabelPosition(x, y);
 				minMax.manage(x, y);
 			}
@@ -177,13 +178,8 @@ public class GraphvizSolverB {
 		return new Dimension2DDouble(width, height);
 	}
 
-	static private List<Point2D.Double> extractPointsList(final String svg, final int starting) {
-		final String pointsString = "points=\"";
-		final int p2 = svg.indexOf(pointsString, starting);
-		final int p3 = svg.indexOf("\"", p2 + pointsString.length());
-		final String points = svg.substring(p2 + pointsString.length(), p3);
-		final List<Point2D.Double> pointsList = getPoints(points);
-		return pointsList;
+	static private List<Point2D.Double> extractPointsList(final String svg, final int starting, final YDelta yDelta) {
+		return new SvgResult(svg, yDelta).substring(starting).extractList(SvgResult.POINTS_EQUALS);
 	}
 
 	static private double getMaxX(List<Point2D.Double> points) {
@@ -222,19 +218,6 @@ public class GraphvizSolverB {
 			if (points.get(i).y < result) {
 				result = points.get(i).y;
 			}
-		}
-		return result;
-	}
-
-	static private List<Point2D.Double> getPoints(String points) {
-		final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
-		final StringTokenizer st = new StringTokenizer(points, " ");
-		while (st.hasMoreTokens()) {
-			final String t = st.nextToken();
-			final StringTokenizer st2 = new StringTokenizer(t, ",");
-			final double x = Double.parseDouble(st2.nextToken());
-			final double y = Double.parseDouble(st2.nextToken());
-			result.add(new Point2D.Double(x, y));
 		}
 		return result;
 	}

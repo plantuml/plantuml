@@ -38,7 +38,9 @@ package net.sourceforge.plantuml.descdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowSpecificClass;
+import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandEndPackage;
@@ -78,6 +80,8 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 
 		cmds.add(new CommandPage());
 		cmds.add(new CommandLinkElement());
+		cmds.add(new CommandHideShow2());
+		cmds.add(new CommandRemoveRestore());
 		//
 		cmds.add(new CommandPackageWithUSymbol());
 		cmds.add(new CommandEndPackage());
@@ -110,7 +114,7 @@ public class DescriptionDiagramFactory extends UmlDiagramFactory {
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
-		cmds.add(new CommandHideShowSpecificClass());
+		// cmds.add(new CommandHideShowSpecificClass());
 
 		cmds.add(new CommandArchimate());
 

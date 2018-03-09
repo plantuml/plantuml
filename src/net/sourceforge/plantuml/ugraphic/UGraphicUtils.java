@@ -63,7 +63,7 @@ public abstract class UGraphicUtils {
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? metadata : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
 			final Dimension2D size = computeSize(colorMapper, background, image);
-			final UGraphicSvg svg = new UGraphicSvg(size, colorMapper, StringUtils.getAsHtml(colorMapper
+			final UGraphicSvg svg = new UGraphicSvg(true, size, colorMapper, StringUtils.getAsHtml(colorMapper
 					.getMappedColor(background)), false, 1.0, fileFormatOption.getSvgLinkTarget(),
 					fileFormatOption.getHoverColor(), seed);
 			image.drawU(svg);

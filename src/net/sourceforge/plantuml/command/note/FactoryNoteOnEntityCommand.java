@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -59,6 +60,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -82,6 +84,8 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
 				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
 				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
 				new RegexLeaf("[%s]*:[%s]*"), //
@@ -100,6 +104,8 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				new RegexOr(//
 						new RegexConcat(new RegexLeaf("[%s]+of[%s]+"), partialPattern), //
 						new RegexLeaf("")), //
+				new RegexLeaf("[%s]*"), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				new RegexLeaf("[%s]*"), //
 				color().getRegex(), //
 				new RegexLeaf("URL", "[%s]*(" + UrlBuilder.getRegexp() + ")?"), //
@@ -136,10 +142,11 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 				final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst499()));
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
-				
+
 				Url url = null;
 				if (line0.get("URL", 0) != null) {
-					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue("topurl"),
+							ModeUrl.STRICT);
 					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
@@ -174,6 +181,7 @@ public final class FactoryNoteOnEntityCommand implements SingleMultiFactoryComma
 		if (url != null) {
 			note.addUrl(url);
 		}
+		CommandCreateClassMultilines.addTags(note, line0.get("TAGS", 0));
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
 				diagram.getSkinParam().getRankdir());

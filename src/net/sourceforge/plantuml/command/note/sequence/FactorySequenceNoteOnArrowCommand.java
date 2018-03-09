@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
@@ -122,10 +123,11 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			}
 
 			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
+			final Display display = system.manageVariable(lines.toDisplay());
 			if (m instanceof AbstractMessage) {
-				((AbstractMessage) m).setNote(lines.toDisplay(), position, style, line0.get("COLOR", 0), url);
+				((AbstractMessage) m).setNote(display, position, style, line0.get("COLOR", 0), url);
 			} else {
-				((GroupingLeaf) m).setNote(lines.toDisplay(), position, style, line0.get("COLOR", 0), url);
+				((GroupingLeaf) m).setNote(display, position, style, line0.get("COLOR", 0), url);
 			}
 		}
 

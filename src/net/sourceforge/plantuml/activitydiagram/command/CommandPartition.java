@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -79,8 +80,9 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, RegexResult arg) {
 		final Code code = Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0)));
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final IEntity p = diagram.getOrCreateGroup(code, Display.getWithNewlines(code), GroupType.PACKAGE,
-				currentPackage);
+		diagram.gotoGroup2(code, Display.getWithNewlines(code), GroupType.PACKAGE, currentPackage,
+				NamespaceStrategy.SINGLE);
+		final IEntity p = diagram.getCurrentGroup();
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		if (colors.isEmpty() == false) {

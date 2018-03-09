@@ -536,4 +536,7 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 	}
 
+	public Display manageVariable(Display labels) {
+		return labels.replace("%autonumber%", autoNumber.getCurrentMessageNumber(false));
+	}
 }

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.Map;
-
 import net.sourceforge.plantuml.StringUtils;
 
 public class Code implements Comparable<Code> {
@@ -67,10 +65,6 @@ public class Code implements Comparable<Code> {
 		}
 		return fullName.substring(x + 2);
 	}
-
-	// public String getNamespaceSeparator() {
-	// return separator;
-	// }
 
 	public Code withSeparator(String separator) {
 		if (separator == null) {
@@ -125,52 +119,8 @@ public class Code implements Comparable<Code> {
 		return Code.of(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fullName, format), separator);
 	}
 
-	private final String getNamespace(Map<Code, ILeaf> leafs) {
-		String name = this.getFullName();
-		if (separator == null) {
-			throw new IllegalArgumentException(toString());
-		}
-		do {
-			final int x = name.lastIndexOf(separator);
-			if (x == -1) {
-				return null;
-			}
-			name = name.substring(0, x);
-		} while (leafs.containsKey(Code.of(name, separator)));
-		return name;
-	}
-
-	public final Code getShortName(Map<Code, ILeaf> leafs) {
-		if (separator == null) {
-			throw new IllegalArgumentException();
-		}
-		final String code = this.getFullName();
-		final String namespace = getNamespace(leafs);
-		if (namespace == null) {
-			return Code.of(code, separator);
-		}
-		return Code.of(code.substring(namespace.length() + separator.length()), separator);
-	}
-
-	public final Code getFullyQualifiedCode(IGroup g) {
-		if (separator == null) {
-			throw new IllegalArgumentException();
-		}
-		final String full = this.getFullName();
-		if (full.startsWith(separator)) {
-			return Code.of(full.substring(separator.length()), separator);
-		}
-		if (full.contains(separator)) {
-			return Code.of(full, separator);
-		}
-		if (EntityUtils.groupRoot(g)) {
-			return Code.of(full, separator);
-		}
-		final Code namespace2 = g.getNamespace2();
-		if (namespace2 == null) {
-			return Code.of(full, separator);
-		}
-		return Code.of(namespace2.fullName + separator + full, separator);
+	public final String getSeparator() {
+		return separator;
 	}
 
 }

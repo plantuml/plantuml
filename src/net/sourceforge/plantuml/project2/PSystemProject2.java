@@ -81,7 +81,7 @@ public class PSystemProject2 extends AbstractPSystem {
 			final BufferedImage im = createImage(diagram);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(new Dimension2DDouble(0, 0),colorMapper, StringUtils.getAsHtml(background), false, 1.0,
+			final UGraphicSvg svg = new UGraphicSvg(true, new Dimension2DDouble(0, 0),colorMapper, StringUtils.getAsHtml(background), false, 1.0,
 					fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor(), seed());
 			diagram.draw(svg, 0, 0);
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);

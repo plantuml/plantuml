@@ -65,9 +65,14 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return all.isEmpty();
 	}
 
-	public boolean isOnlySingleStop() {
-		return all.size() == 1 && getLast() instanceof InstructionStop
-				&& ((InstructionStop) getLast()).hasNotes() == false;
+	public boolean isOnlySingleStopOrSpot() {
+		if (all.size() != 1) {
+			return false;
+		}
+		if (getLast() instanceof InstructionSpot) {
+			return true;
+		}
+		return getLast() instanceof InstructionStop && ((InstructionStop) getLast()).hasNotes() == false;
 	}
 
 	public InstructionList(Swimlane defaultSwimlane) {

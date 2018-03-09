@@ -216,6 +216,17 @@ public class SkinParam implements ISkinParam {
 		return getIHtmlColorSet().getColorIfValid(value, acceptTransparent);
 	}
 
+	public char getCircledCharacter(Stereotype stereotype) {
+		if (stereotype == null) {
+			throw new IllegalArgumentException();
+		}
+		final String value2 = getValue("spotchar" + stereotype.getLabel(false));
+		if (value2 != null && value2.length() > 0) {
+			return value2.charAt(0);
+		}
+		return 0;
+	}
+
 	public Colors getColors(ColorParam param, Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -707,7 +718,16 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public LineBreakStrategy maxMessageSize() {
-		return new LineBreakStrategy(getValue("maxmessagesize"));
+		String value = getValue("wrapmessagewidth");
+		if (value == null) {
+			value = getValue("maxmessagesize");
+		}
+		return new LineBreakStrategy(value);
+	}
+
+	public LineBreakStrategy wrapWidth() {
+		final String value = getValue("wrapwidth");
+		return new LineBreakStrategy(value);
 	}
 
 	public boolean strictUmlStyle() {
@@ -920,9 +940,25 @@ public class SkinParam implements ISkinParam {
 		return false;
 	}
 
+	public boolean responseMessageBelowArrow() {
+		final String value = getValue("responsemessagebelowarrow");
+		if ("true".equalsIgnoreCase(value)) {
+			return true;
+		}
+		return false;
+	}
+
 	public TikzFontDistortion getTikzFontDistortion() {
 		final String value = getValue("tikzFont");
 		return TikzFontDistortion.fromValue(value);
+	}
+
+	public boolean svgDimensionStyle() {
+		final String value = getValue("svgdimensionstyle");
+		if ("false".equalsIgnoreCase(value)) {
+			return false;
+		}
+		return true;
 	}
 
 }

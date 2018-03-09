@@ -73,7 +73,7 @@ public class MDADiagramImpl implements MDADiagram {
 	private MDADiagramImpl(ClassDiagram classDiagram) {
 		final EntityFactory entityFactory = classDiagram.getEntityFactory();
 		packages.add(new MDAPackageImpl(entityFactory.getRootGroup()));
-		for (IGroup group : entityFactory.getGroups().values()) {
+		for (IGroup group : entityFactory.getGroupsvalues()) {
 			packages.add(new MDAPackageImpl(group));
 		}
 	}

@@ -95,16 +95,28 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		return ug.apply(stroke);
 	}
 
+	private boolean noBorder() {
+		if (stroke == null) {
+			return false;
+		}
+		return stroke.getThickness() == 0;
+	}
+
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Shadowable polygon = getPolygonNormal(stringBounder);
+		final UGraphic ugOriginal = ug;
 		if (withShadow) {
 			polygon.setDeltaShadow(4);
 		}
-		ug = ug.apply(new UChangeBackColor(backgroundColor)).apply(new UChangeColor(borderColor));
-		ug = applyStroke(ug);
+		if (noBorder()) {
+			ug = ug.apply(new UChangeBackColor(backgroundColor)).apply(new UChangeColor(backgroundColor));
+		} else {
+			ug = ug.apply(new UChangeBackColor(backgroundColor)).apply(new UChangeColor(borderColor));
+			ug = applyStroke(ug);
+		}
 		ug.draw(polygon);
-		textBlock.drawU(ug.apply(new UTranslate(marginX, marginY)));
+		textBlock.drawU(ugOriginal.apply(new UTranslate(marginX, marginY)));
 	}
 
 	private Shadowable getPolygonNormal(final StringBounder stringBounder) {
