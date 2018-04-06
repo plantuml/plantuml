@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public class DayAsDate implements Complement, Comparable<DayAsDate> {
+public class DayAsDate implements Complement, Comparable<DayAsDate>, Subject {
 
 	private final int year;
 	private final int dayOfMonth;
@@ -62,6 +62,17 @@ public class DayAsDate implements Complement, Comparable<DayAsDate> {
 	@Override
 	public String toString() {
 		return "" + year + "/" + month + "/" + dayOfMonth;
+	}
+
+	@Override
+	public int hashCode() {
+		return year * 113 + dayOfMonth * 17 + month.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final DayAsDate other = (DayAsDate) obj;
+		return other.internalNumber() == this.internalNumber();
 	}
 
 	public final int getDayOfMonth() {

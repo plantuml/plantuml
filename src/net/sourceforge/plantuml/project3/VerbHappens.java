@@ -58,7 +58,7 @@ public class VerbHappens implements VerbPattern {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Task task = (Task) subject;
 				final TaskInstant when = (TaskInstant) complement;
-				task.setDuration(new DurationDay(1));
+				task.setLoad(LoadInDays.inDay(1));
 				task.setStart(when.getInstantTheorical());
 				return CommandExecutionResult.ok();
 			}

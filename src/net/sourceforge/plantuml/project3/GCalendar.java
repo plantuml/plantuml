@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.project3;
 
 public interface GCalendar {
 
-	// public DayAsDate next(DayAsDate day);
-
 	public DayAsDate toDayAsDate(InstantDay day);
 
 	public DayAsDate getStartingDate();
+	
+	public InstantDay fromDayAsDate(DayAsDate day);
 
 }

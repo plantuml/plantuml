@@ -110,6 +110,7 @@ public class Footprint {
 				drawText(x, y, (UText) shape);
 			} else if (shape instanceof UHorizontalLine) {
 				// Definitively a Horizontal line
+//				line.drawTitleInternalForFootprint(this, x, y);
 			} else if (shape instanceof ULine) {
 				// Probably a Horizontal line
 			} else if (shape instanceof UImage) {

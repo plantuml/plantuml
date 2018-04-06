@@ -37,10 +37,6 @@ package net.sourceforge.plantuml.project3;
 
 public interface Instant extends Value, Comparable<Instant> {
 
-	public Instant add(Duration duration);
-
-	public Instant sub(Duration duration);
-
 	public Instant increment();
 
 	public Instant decrement();

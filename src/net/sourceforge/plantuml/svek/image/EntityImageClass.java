@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.RoundParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -85,7 +85,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.lineConfig = entity;
-		this.roundCorner = getSkinParam().getRoundCorner(RoundParam.DEFAULT, null);
+		this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? Margins.uniform(16)
 				: Margins.NONE;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);

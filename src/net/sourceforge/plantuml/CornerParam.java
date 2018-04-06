@@ -35,14 +35,21 @@
  */
 package net.sourceforge.plantuml;
 
-public enum RoundParam {
+public enum CornerParam {
 	DEFAULT, diagramBorder, titleBorder, rectangle, component;
 
-	public String getKey() {
+	public String getRoundKey() {
 		if (this == DEFAULT) {
 			return "roundcorner";
 		}
 		return name() + "roundcorner";
+	}
+
+	public String getDiagonalKey() {
+		if (this == DEFAULT) {
+			return "diagonalcorner";
+		}
+		return name() + "diagonalcorner";
 	}
 
 }

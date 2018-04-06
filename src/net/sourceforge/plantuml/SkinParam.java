@@ -653,23 +653,39 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
-	public double getRoundCorner(RoundParam param, Stereotype stereotype) {
-		Double result = getRoundCornerInternal(param, stereotype);
+	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
+		final String key = param.getDiagonalKey();
+		Double result = getCornerInternal(key, param, stereotype);
 		if (result != null) {
 			return result;
 		}
-		result = getRoundCornerInternal(param, null);
+		result = getCornerInternal(key, param, null);
 		if (result != null) {
 			return result;
 		}
-		if (param == RoundParam.DEFAULT) {
+		if (param == CornerParam.DEFAULT) {
 			return 0;
 		}
-		return getRoundCorner(RoundParam.DEFAULT, stereotype);
+		return getDiagonalCorner(CornerParam.DEFAULT, stereotype);
 	}
 
-	private Double getRoundCornerInternal(RoundParam param, Stereotype stereotype) {
-		String key = param.getKey();
+	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
+		final String key = param.getRoundKey();
+		Double result = getCornerInternal(key, param, stereotype);
+		if (result != null) {
+			return result;
+		}
+		result = getCornerInternal(key, param, null);
+		if (result != null) {
+			return result;
+		}
+		if (param == CornerParam.DEFAULT) {
+			return 0;
+		}
+		return getRoundCorner(CornerParam.DEFAULT, stereotype);
+	}
+
+	private Double getCornerInternal(String key, CornerParam param, Stereotype stereotype) {
 		if (stereotype != null) {
 			key += stereotype.getLabel(false);
 		}

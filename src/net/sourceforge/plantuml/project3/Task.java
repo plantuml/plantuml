@@ -43,18 +43,20 @@ public interface Task extends Subject {
 
 	public Instant getEnd();
 
-	public Duration getDuration();
+	public Load getLoad();
+
+	public void setLoad(Load load);
 
 	public void setStart(Instant start);
 
 	public void setEnd(Instant end);
-
-	public void setDuration(Duration duration);
 
 	public void setTaskDraw(TaskDraw taskDraw);
 
 	public TaskDraw getTaskDraw();
 
 	public void setColors(ComplementColors colors);
+
+	public void addResource(Resource resource);
 
 }

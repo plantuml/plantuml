@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2017, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -104,7 +104,8 @@ public class Histogram implements TimeDrawing {
 			return Collections.emptyList();
 		}
 		for (int i = 0; i < changes.size(); i++) {
-			if (changes.get(i).getWhen().compareTo(tick) == 0) {
+			final int tickWithCurrentChangeTimeComparisonResult = changes.get(i).getWhen().compareTo(tick);
+			if (tickWithCurrentChangeTimeComparisonResult == 0) {
 				if (i == 0 && initialState == null) {
 					return Arrays.asList(changes.get(i).getState());
 				}
@@ -113,8 +114,16 @@ public class Histogram implements TimeDrawing {
 				}
 				return Arrays.asList(changes.get(i - 1).getState(), changes.get(i).getState());
 			}
-			if (changes.get(i).getWhen().compareTo(tick) > 0) {
-				return Collections.singletonList(changes.get(i - 1).getState());
+			if (tickWithCurrentChangeTimeComparisonResult > 0) {
+				final int changeIndex;
+				if (i == 0) {
+					// if this time tick was not yet defined in any place, and is less then the first one,
+					// assume it's the leftmost
+					changeIndex = 0;
+				} else {
+					changeIndex = i - 1;
+				}
+				return Collections.singletonList(changes.get(changeIndex).getState());
 			}
 		}
 		return Collections.singletonList(changes.get(changes.size() - 1).getState());
@@ -254,7 +263,7 @@ public class Histogram implements TimeDrawing {
 				}
 				return new Dimension2DDouble(width, getFullDeltaY());
 			}
-			
+
 			public MinMax getMinMax(StringBounder stringBounder) {
 				throw new UnsupportedOperationException();
 			}

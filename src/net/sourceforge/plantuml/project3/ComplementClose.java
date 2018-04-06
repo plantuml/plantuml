@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 public class ComplementClose implements ComplementPattern {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("ADAY" + suffix, "(closed?)");
+		return new RegexLeaf("CLOSED" + suffix, "(closed?)");
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {

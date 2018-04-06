@@ -364,6 +364,10 @@ public class EpsGraphics {
 			appendColor(fillcolor);
 			epsRectangleInternal(x, y, width, height, rx, ry, true);
 			append("closepath eofill", true);
+			if (dashSpace != 0 && dashVisible != 0) {
+				append("[] 0 setdash", true);
+			}
+
 		}
 
 		if (color != null) {
@@ -371,6 +375,9 @@ public class EpsGraphics {
 			appendColor(color);
 			epsRectangleInternal(x, y, width, height, rx, ry, false);
 			append("closepath stroke", true);
+			if (dashSpace != 0 && dashVisible != 0) {
+				append("[] 0 setdash", true);
+			}
 		}
 	}
 
@@ -441,20 +448,26 @@ public class EpsGraphics {
 	}
 
 	private void roundRectangle(double x, double y, double width, double height, double rx, double ry) {
+		if (dashSpace != 0 && dashVisible != 0) {
+			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
+		}
 		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format((rx + ry) / 2)
 				+ " roundrect", true);
 		roundrectUsed = true;
 	}
 
 	private void simpleRectangle(double x, double y, double width, double height, boolean fill) {
+		if (dashSpace != 0 && dashVisible != 0) {
+			append("[" + (int) dashSpace + " " + (int) dashVisible + "] 0 setdash", true);
+		}
 		if ((dashSpace == 0 && dashVisible == 0) || fill) {
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
 			simplerectUsed = true;
-		} else {
-			epsVLine(y, x, x + width);
-			epsVLine(y + height, x, x + width);
-			epsHLine(x, y, y + height);
-			epsHLine(x + width, y, y + height);
+			// } else {
+			// epsVLine(y, x, x + width);
+			// epsVLine(y + height, x, x + width);
+			// epsHLine(x, y, y + height);
+			// epsHLine(x + width, y, y + height);
 		}
 	}
 

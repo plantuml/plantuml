@@ -66,4 +66,8 @@ public class TimeScaleWithoutWeekEnd implements TimeScale {
 		return scale;
 	}
 
+	public double getEndingPosition(Instant instant) {
+		throw new UnsupportedOperationException();
+	}
+
 }

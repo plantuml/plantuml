@@ -35,21 +35,31 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public class DurationDay implements Duration {
+public class LoadInDays implements Load {
 
 	private final int days;
+	private final int loadPerDay;
 
-	public DurationDay(int days) {
+	private LoadInDays(int days, int loadPerDay) {
 		this.days = days;
+		this.loadPerDay = loadPerDay;
 	}
 
-	public int getDays() {
-		return days;
+	public static LoadInDays inDay(int days) {
+		return new LoadInDays(days, 100);
 	}
 
-	@Override
-	public String toString() {
-		return "{" + days + " days}";
+	public static Complement inDayWithLoad(int days, int loadPerDay) {
+		final int tmp = (int) Math.ceil(days * 100.0 / loadPerDay);
+		return new LoadInDays(tmp, loadPerDay);
+	}
+
+	public int getFullLoad() {
+		return days * loadPerDay;
+	}
+
+	public int getLoadAt(Instant instant) {
+		return loadPerDay;
 	}
 
 }

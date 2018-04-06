@@ -37,8 +37,10 @@ package net.sourceforge.plantuml.project3;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
@@ -50,17 +52,31 @@ public class SubjectTask implements SubjectPattern {
 	}
 
 	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?");
+		return new RegexConcat( //
+				new RegexLeaf("THEN", "(then[%s]+)?"), //
+				new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
+				new RegexLeaf("RESOURCE", "(?:[%s]+on[%s]+((?:\\{[^{}]+\\}[%s]*)+))?") //
+		);
 	}
 
 	public Subject getSubject(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
 		final String shortName = arg.get("SUBJECT", 1);
-		final Task result = project.getOrCreateTask(s, shortName);
+		final String then = arg.get("THEN", 0);
+		final String resource = arg.get("RESOURCE", 0);
+		final Task result = project.getOrCreateTask(s, shortName, then != null);
 		if (result == null) {
 			throw new IllegalStateException();
 		}
+		if (resource != null) {
+			for (final StringTokenizer st = new StringTokenizer(resource, "{}"); st.hasMoreTokens();) {
+				final String part = st.nextToken().trim();
+				if (part.length() > 0) {
+					project.affectResource(result, part);
+				}
+			}
+
+		}
 		return result;
 	}
-
 }

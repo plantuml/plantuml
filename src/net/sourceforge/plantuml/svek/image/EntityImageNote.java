@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.RoundParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
@@ -221,7 +221,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private double getRoundCorner() {
-		return skinParam.getRoundCorner(RoundParam.DEFAULT, null);
+		return skinParam.getRoundCorner(CornerParam.DEFAULT, null);
 	}
 
 	private static Point2D move(Point2D pt, double dx, double dy) {

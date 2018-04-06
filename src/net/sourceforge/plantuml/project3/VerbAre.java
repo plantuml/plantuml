@@ -57,9 +57,9 @@ public class VerbAre implements VerbPattern {
 		return new Verb() {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final DayOfWeek day = (DayOfWeek) subject;
+				project.closeDayOfWeek(day);
 				return CommandExecutionResult.ok();
 			}
-
 		};
 	}
 }

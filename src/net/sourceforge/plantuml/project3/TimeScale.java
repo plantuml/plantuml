@@ -39,6 +39,8 @@ public interface TimeScale {
 
 	public double getStartingPosition(Instant instant);
 
+	public double getEndingPosition(Instant instant);
+
 	public double getWidth(Instant instant);
 
 }

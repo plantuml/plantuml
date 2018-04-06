@@ -289,6 +289,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.horizontalPages = horizontalPages;
 	}
 
+
 	final public int getVerticalPages() {
 		return verticalPages;
 	}
@@ -296,6 +297,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	final public void setVerticalPages(int verticalPages) {
 		this.verticalPages = verticalPages;
 	}
+	
+	@Override
+	public int getNbImages() {
+		return this.horizontalPages * this.verticalPages;
+	}
+
+
 
 	// final public List<File> createPng2(File pngFile) throws IOException,
 	// InterruptedException {
@@ -567,11 +575,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			this.portion = portion;
 			this.show = show;
 		}
-	}
-
-	@Override
-	public int getNbImages() {
-		return this.horizontalPages * this.verticalPages;
 	}
 
 	public final Set<VisibilityModifier> getHides() {

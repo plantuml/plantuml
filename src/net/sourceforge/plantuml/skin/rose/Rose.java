@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.PaddingParam;
-import net.sourceforge.plantuml.RoundParam;
+import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -108,7 +108,7 @@ public class Rose implements Skin {
 					param.strictUmlStyle() == false, param.responseMessageBelowArrow());
 		}
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
-		final double roundCorner = param.getRoundCorner(RoundParam.DEFAULT, null);
+		final double roundCorner = param.getRoundCorner(CornerParam.DEFAULT, null);
 		if (type == ComponentType.PARTICIPANT_HEAD) {
 			return new ComponentRoseParticipant(getSymbolContext(param, ColorParam.participantBorder), getUFont2(param,
 					FontParam.PARTICIPANT), stringsToDisplay, param, roundCorner, newFontForStereotype, getFontColor(

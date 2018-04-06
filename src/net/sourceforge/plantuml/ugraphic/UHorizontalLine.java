@@ -144,6 +144,15 @@ public class UHorizontalLine implements UShape {
 		ug.apply(new UTranslate(startingX, y)).draw(new ULine(endingX - startingX, 0));
 	}
 
+//	public void drawTitleInternalForFootprint(UGraphic ug, double x, double y) {
+//		if (title == null || blankTitle) {
+//			return;
+//		}
+//		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+//		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;
+//		title.drawU(ug.apply(new UTranslate(skipAtStart, y1)));
+//	}
+
 	public void drawTitleInternal(UGraphic ug, double startingX, double endingX, double y, boolean clearArea) {
 		if (title == null || blankTitle) {
 			return;

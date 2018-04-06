@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public interface Duration extends Value, Complement {
+public interface LoadPlanable {
 
+	public int getLoadAt(Instant instant);
 }

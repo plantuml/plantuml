@@ -101,7 +101,9 @@ public interface ISkinParam extends ISkinSimple {
 
 	public double getRanksep();
 
-	public double getRoundCorner(RoundParam param, Stereotype stereotype);
+	public double getRoundCorner(CornerParam param, Stereotype stereotype);
+
+	public double getDiagonalCorner(CornerParam param, Stereotype stereotype);
 
 	public LineBreakStrategy maxMessageSize();
 

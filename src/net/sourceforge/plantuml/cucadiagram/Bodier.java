@@ -71,6 +71,14 @@ public class Bodier {
 		this.manageModifier = type == null ? false : type.manageModifier();
 	}
 
+	public void setLeaf(ILeaf leaf) {
+		if (leaf == null) {
+			throw new IllegalArgumentException();
+		}
+		this.leaf = leaf;
+
+	}
+
 	public void addFieldOrMethod(String s, IEntity leaf) {
 		if (leaf == null) {
 			throw new IllegalArgumentException();
@@ -195,6 +203,9 @@ public class Bodier {
 				return new BodyEnhanced(rawBodyWithoutHidden(), fontParam, skinParam, manageModifier, stereotype, leaf);
 			}
 			return null;
+		}
+		if (leaf == null) {
+			throw new IllegalStateException();
 		}
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
 				stereotype, leaf);

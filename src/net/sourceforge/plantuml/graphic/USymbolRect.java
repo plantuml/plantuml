@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -64,12 +66,28 @@ class USymbolRect extends USymbol {
 		return skinParameter;
 	}
 
-	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner) {
-		final URectangle shape = new URectangle(width, height, roundCorner, roundCorner);
+	private void drawRect(UGraphic ug, double width, double height, boolean shadowing, double roundCorner,
+			double diagonalCorner) {
+		final Shadowable shape = diagonalCorner > 0 ? getDiagonalShape(width, height, diagonalCorner) : new URectangle(
+				width, height, roundCorner, roundCorner);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);
 		}
 		ug.draw(shape);
+	}
+
+	private Shadowable getDiagonalShape(double width, double height, double diagonalCorner) {
+		final UPath result = new UPath();
+		result.moveTo(diagonalCorner, 0);
+		result.lineTo(width - diagonalCorner, 0);
+		result.lineTo(width, diagonalCorner);
+		result.lineTo(width, height - diagonalCorner);
+		result.lineTo(width - diagonalCorner, height);
+		result.lineTo(diagonalCorner, height);
+		result.lineTo(0, height - diagonalCorner);
+		result.lineTo(0, diagonalCorner);
+		result.lineTo(diagonalCorner, 0);
+		return result;
 	}
 
 	private Margin getMargin() {
@@ -86,7 +104,7 @@ class USymbolRect extends USymbol {
 				ug = UGraphicStencil.create(ug, getRectangleStencil(dim), new UStroke());
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
-						symbolContext.getRoundCorner());
+						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereotypeAlignement);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -108,7 +126,7 @@ class USymbolRect extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing(),
-						symbolContext.getRoundCorner());
+						symbolContext.getRoundCorner(), 0);
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereoX;
 				final double posStereoY;

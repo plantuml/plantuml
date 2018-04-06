@@ -57,8 +57,8 @@ public class VerbLasts implements VerbPattern {
 		return new Verb() {
 			public CommandExecutionResult execute(Subject subject, Complement complement) {
 				final Task task = (Task) subject;
-				final Duration duration = (Duration) complement;
-				task.setDuration(duration);
+				final Load duration = (Load) complement;
+				task.setLoad(duration);
 				return CommandExecutionResult.ok();
 			}
 

@@ -139,6 +139,8 @@ public enum ColorParam {
 	nodeBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	rectangleBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	rectangleBorder(HtmlColorUtils.BLACK, ColorType.LINE),
+	cardBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
+	cardBorder(HtmlColorUtils.BLACK, ColorType.LINE),
 	agentBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),
 	agentBorder(HtmlColorUtils.MY_RED, ColorType.LINE),
 	storageBackground(HtmlColorUtils.MY_YELLOW, true, ColorType.BACK),

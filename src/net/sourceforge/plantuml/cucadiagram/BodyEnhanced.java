@@ -77,6 +77,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 	private final List<Url> urls = new ArrayList<Url>();
 	private final Stereotype stereotype;
 	private final ILeaf entity;
+	private final boolean inEllipse;
 
 	public BodyEnhanced(List<String> rawBody, FontParam fontParam, ISkinParam skinParam, boolean manageModifier,
 			Stereotype stereotype, ILeaf entity) {
@@ -91,6 +92,7 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.manageHorizontalLine = true;
 		this.manageModifier = manageModifier;
 		this.entity = entity;
+		this.inEllipse = false;
 	}
 
 	public BodyEnhanced(Display display, FontParam fontParam, ISkinParam skinParam, HorizontalAlignment align,
@@ -98,9 +100,6 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.entity = entity;
 		this.stereotype = stereotype;
 		this.rawBody = new ArrayList<String>();
-		for (CharSequence s : display) {
-			this.rawBody.add(s.toString());
-		}
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
 
@@ -109,6 +108,14 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 		this.align = skinParam.getDefaultTextAlignment(align);
 		this.manageHorizontalLine = manageHorizontalLine;
 		this.manageModifier = manageModifier;
+		this.inEllipse = fontParam == FontParam.USECASE;
+
+		if (manageHorizontalLine && inEllipse && display.size() > 0 && isBlockSeparator(display.get(0).toString())) {
+			this.rawBody.add("");
+		}
+		for (CharSequence s : display) {
+			this.rawBody.add(s.toString());
+		}
 
 	}
 
@@ -165,6 +172,9 @@ public class BodyEnhanced extends AbstractTextBlock implements TextBlock, WithPo
 					urls.add(m.getUrl());
 				}
 			}
+		}
+		if (inEllipse && members.size() == 0) {
+			members.add(new MemberImpl("", false, false));
 		}
 		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(members, fontParam, skinParam, align, stereotype,
 				entity), separator, title));

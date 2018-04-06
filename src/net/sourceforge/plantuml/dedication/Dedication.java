@@ -40,12 +40,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
-
-import net.sourceforge.plantuml.webp.VP8Decoder;
 
 public class Dedication {
 
@@ -73,13 +72,21 @@ public class Dedication {
 
 	public BufferedImage getBufferedImage(String keepLetter) {
 		try {
+			final Class<?> clVP8Decoder = Class.forName("net.sourceforge.plantuml.webp.VP8Decoder");
+			final Object vp8Decoder = clVP8Decoder.newInstance();
+			// final VP8Decoder vp8Decoder = new VP8Decoder();
+			final Method decodeFrame = clVP8Decoder.getMethod("decodeFrame", ImageInputStream.class);
 			final InputStream is = getInputStream(keepLetter);
 			final ImageInputStream iis = ImageIO.createImageInputStream(is);
-			final VP8Decoder vp8Decoder = new VP8Decoder();
-			vp8Decoder.decodeFrame(iis, false);
+			decodeFrame.invoke(vp8Decoder, iis);
+			// vp8Decoder.decodeFrame(iis);
 			iis.close();
-			return vp8Decoder.getFrame().getBufferedImage();
+			final Object frame = clVP8Decoder.getMethod("getFrame").invoke(vp8Decoder);
+			return (BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame);
+			// final VP8Frame frame = vp8Decoder.getFrame();
+			// return frame.getBufferedImage();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

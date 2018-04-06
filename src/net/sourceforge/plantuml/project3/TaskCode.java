@@ -81,9 +81,8 @@ public class TaskCode {
 		return hierarchy.toString();
 	}
 
-	public Display getSimpleDisplay() {
-		final String last = hierarchy.get(hierarchy.size() - 1);
-		return Display.getWithNewlines(last);
+	public String getSimpleDisplay() {
+		return hierarchy.get(hierarchy.size() - 1);
 	}
 
 	public int getHierarchySize() {

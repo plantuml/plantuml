@@ -35,15 +35,80 @@
  */
 package net.sourceforge.plantuml.project3;
 
-public class TaskImpl implements Task {
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public class TaskImpl implements Task, LoadPlanable {
 
 	private final TaskCode code;
-	private final Solver solver = new Solver();
+	private final Solver3 solver;
+	private final Set<Resource> resources = new LinkedHashSet<Resource>();
+	private final LoadPlanable defaultPlan;
 
-	public TaskImpl(TaskCode code) {
+	public TaskImpl(TaskCode code, LoadPlanable defaultPlan) {
 		this.code = code;
+		this.defaultPlan = defaultPlan;
+		this.solver = new Solver3(this);
 		setStart(new InstantDay(0));
-		setDuration(new DurationDay(1));
+		setLoad(LoadInDays.inDay(1));
+	}
+
+	public int getLoadAt(Instant instant) {
+		LoadPlanable plan1 = defaultPlan;
+		if (resources.size() > 0) {
+			plan1 = PlanUtils.minOf(plan1, getRessourcePlan());
+		}
+		return PlanUtils.minOf(getLoad(), plan1).getLoadAt(instant);
+	}
+
+	public int loadForResource(Resource res, Instant i) {
+		if (resources.contains(res) && i.compareTo(getStart()) >= 0 && i.compareTo(getEnd()) <= 0) {
+			if (res.getLoadAt(i) == 0) {
+				return 0;
+			}
+			int size = 0;
+			for (Resource r : resources) {
+				if (r.getLoadAt(i) > 0) {
+					size++;
+				}
+			}
+			return getLoadAt(i) / size;
+		}
+		return 0;
+	}
+
+	private LoadPlanable getRessourcePlan() {
+		if (resources.size() == 0) {
+			throw new IllegalStateException();
+		}
+		return new LoadPlanable() {
+
+			public int getLoadAt(Instant instant) {
+				int result = 0;
+				for (Resource res : resources) {
+					result += res.getLoadAt(instant);
+				}
+				return result;
+			}
+		};
+	}
+
+	public String getPrettyDisplay() {
+		if (resources.size() > 0) {
+			final StringBuilder result = new StringBuilder(code.getSimpleDisplay());
+			result.append(" ");
+			for (Iterator<Resource> it = resources.iterator(); it.hasNext();) {
+				result.append("{");
+				result.append(it.next().getName());
+				result.append("}");
+				if (it.hasNext()) {
+					result.append(" ");
+				}
+			}
+			return result.toString();
+		}
+		return code.getSimpleDisplay();
 	}
 
 	@Override
@@ -52,7 +117,7 @@ public class TaskImpl implements Task {
 	}
 
 	public String debug() {
-		return "" + getStart() + " ---> " + getEnd() + "   [" + getDuration() + "]";
+		return "" + getStart() + " ---> " + getEnd() + "   [" + getLoad() + "]";
 	}
 
 	public TaskCode getCode() {
@@ -60,15 +125,23 @@ public class TaskImpl implements Task {
 	}
 
 	public Instant getStart() {
-		return (Instant) solver.getData(TaskAttribute.START);
+		Instant result = (Instant) solver.getData(TaskAttribute.START);
+		while (getLoadAt(result) == 0) {
+			result = result.increment();
+		}
+		return result;
 	}
 
 	public Instant getEnd() {
 		return (Instant) solver.getData(TaskAttribute.END);
 	}
 
-	public Duration getDuration() {
-		return (Duration) solver.getData(TaskAttribute.DURATION);
+	public Load getLoad() {
+		return (Load) solver.getData(TaskAttribute.LOAD);
+	}
+
+	public void setLoad(Load load) {
+		solver.setData(TaskAttribute.LOAD, load);
 	}
 
 	public void setStart(Instant start) {
@@ -77,10 +150,6 @@ public class TaskImpl implements Task {
 
 	public void setEnd(Instant end) {
 		solver.setData(TaskAttribute.END, end);
-	}
-
-	public void setDuration(Duration duration) {
-		solver.setData(TaskAttribute.DURATION, duration);
 	}
 
 	private TaskDraw taskDraw;
@@ -97,6 +166,10 @@ public class TaskImpl implements Task {
 
 	public void setColors(ComplementColors colors) {
 		this.colors = colors;
+	}
+
+	public void addResource(Resource resource) {
+		this.resources.add(resource);
 	}
 
 }

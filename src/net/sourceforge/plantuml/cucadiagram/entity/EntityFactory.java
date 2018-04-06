@@ -99,6 +99,7 @@ public class EntityFactory {
 		final LongCode longCode = getLongCode(code, namespaceSeparator);
 		final EntityImpl result = new EntityImpl(this, code, bodier, parentContainer, entityType, longCode,
 				namespaceSeparator, rawLayout);
+		bodier.setLeaf(result);
 		result.setDisplay(display);
 		return result;
 	}

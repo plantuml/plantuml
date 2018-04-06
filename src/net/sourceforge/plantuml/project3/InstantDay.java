@@ -48,16 +48,6 @@ public class InstantDay implements Instant {
 		return "(day +" + numDay + ")";
 	}
 
-	public InstantDay add(Duration duration) {
-		final int nbdays = ((DurationDay) duration).getDays();
-		return new InstantDay(numDay + nbdays);
-	}
-
-	public InstantDay sub(Duration duration) {
-		final int nbdays = ((DurationDay) duration).getDays();
-		return new InstantDay(numDay - nbdays);
-	}
-
 	public InstantDay increment() {
 		return new InstantDay(numDay + 1);
 	}

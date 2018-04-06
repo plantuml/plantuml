@@ -35,57 +35,45 @@
  */
 package net.sourceforge.plantuml.project3;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.TreeMap;
 
-public class Solver {
+public class TimeScaleBasic2 implements TimeScale {
 
-	private final Map<TaskAttribute, Value> values = new LinkedHashMap<TaskAttribute, Value>();
+	private final GCalendar calendar;
+	private final GCalendar calendarAllOpen;
+	private final TimeScaleBasic basic = new TimeScaleBasic();
+	private final Map<Instant, Instant> cache = new TreeMap<Instant, Instant>();
 
-	public void setData(TaskAttribute attribute, Value value) {
-		values.remove(attribute);
-		values.put(attribute, value);
-		if (values.size() > 2) {
-			removeFirstElement();
-		}
-		assert values.size() <= 2;
-
+	public TimeScaleBasic2(GCalendarSimple calendar) {
+		this.calendar = calendar;
+		this.calendarAllOpen = calendar;
 	}
 
-	private void removeFirstElement() {
-		final Iterator<Entry<TaskAttribute, Value>> it = values.entrySet().iterator();
-		it.next();
-		it.remove();
+	private Instant changeInstantSlow(Instant instant) {
+		final DayAsDate day = calendar.toDayAsDate((InstantDay) instant);
+		return calendarAllOpen.fromDayAsDate(day);
 	}
 
-	public Value getData(TaskAttribute attribute) {
-		Value result = values.get(attribute);
+	private Instant changeInstant(Instant instant) {
+		Instant result = cache.get(instant);
 		if (result == null) {
-			if (attribute == TaskAttribute.END) {
-				return computeEnd();
-			}
-			if (attribute == TaskAttribute.START) {
-				return computeStart();
-			}
-			throw new UnsupportedOperationException(attribute.toString());
+			result = changeInstantSlow(instant);
+			cache.put(instant, result);
 		}
 		return result;
 	}
 
-	private Instant computeStart() {
-		final Instant end = (Instant) values.get(TaskAttribute.END);
-		final Duration duration = (Duration) values.get(TaskAttribute.DURATION);
-		assert end != null && duration != null;
-		return end.sub(duration).increment();
+	public double getStartingPosition(Instant instant) {
+		return basic.getStartingPosition(changeInstant(instant));
 	}
 
-	private Instant computeEnd() {
-		final Instant start = (Instant) values.get(TaskAttribute.START);
-		final Duration duration = (Duration) values.get(TaskAttribute.DURATION);
-		assert start != null && duration != null;
-		return start.add(duration).decrement();
+	public double getEndingPosition(Instant instant) {
+		return basic.getEndingPosition(changeInstant(instant));
+	}
+
+	public double getWidth(Instant instant) {
+		return basic.getWidth(changeInstant(instant));
 	}
 
 }

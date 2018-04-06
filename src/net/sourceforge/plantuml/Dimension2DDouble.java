@@ -45,6 +45,9 @@ public class Dimension2DDouble extends Dimension2D {
 	final private double height;
 
 	public Dimension2DDouble(double width, double height) {
+		if (Double.isNaN(width) || Double.isNaN(height)) {
+			throw new IllegalArgumentException();
+		}
 		this.width = width;
 		this.height = height;
 	}

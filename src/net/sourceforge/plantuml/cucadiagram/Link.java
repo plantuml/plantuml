@@ -160,9 +160,10 @@ public class Link implements Hideable, Removeable {
 		// }
 		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
 				labeldistance, labelangle, specificColor);
-		result.inverted = true;
+		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;
+		result.url = this.url;
 		return result;
 	}
 

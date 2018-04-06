@@ -36,17 +36,24 @@
 package net.sourceforge.plantuml.project3;
 
 import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class ComplementSeveralDays implements ComplementPattern {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+days?");
+		return new RegexConcat( //
+				new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+days?"), //
+				new RegexLeaf("LOAD" + suffix, "([%s]+at[%s]+(\\d+)%)?"));
 	}
 
 	public Failable<Complement> getComplement(GanttDiagram system, RegexResult arg, String suffix) {
 		final String days = arg.get("COMPLEMENT" + suffix, 0);
-		return Failable.<Complement> ok(new DurationDay(Integer.parseInt(days)));
+		final String load = arg.get("LOAD" + suffix, 1);
+		if (load == null) {
+			return Failable.<Complement> ok(LoadInDays.inDay(Integer.parseInt(days)));
+		}
+		return Failable.<Complement> ok(LoadInDays.inDayWithLoad(Integer.parseInt(days), Integer.parseInt(load)));
 	}
 }

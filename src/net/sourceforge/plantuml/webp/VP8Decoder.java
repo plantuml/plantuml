@@ -30,8 +30,9 @@ public class VP8Decoder {
 		coefProbs = Globals.getDefaultCoefProbs();
 	}
 
-	public void decodeFrame(ImageInputStream stream, boolean debug)
+	public void decodeFrame(ImageInputStream stream)
 			throws IOException {
+		final boolean debug = false;
 		coefProbs = Globals.getDefaultCoefProbs();
 		f = new VP8Frame(stream, coefProbs);
 		if (f.decodeFrame(debug)) {
@@ -52,26 +53,8 @@ public class VP8Decoder {
 		return f.getWidth();
 	}
 
-	@SuppressWarnings("unused")
-	private void writeFile(int[][] data) {
-		FileOutputStream out;
-		try {
-			out = new FileOutputStream("outagain.raw");
-			for (int y = 0; y < data[0].length; y++)
-				for (int x = 0; x < data.length; x++) {
-					out.write(data[x][y]);
-					out.write(data[x][y]);
-					out.write(data[x][y]);
-				}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void writePGMFile(String fileName, VP8Frame frame) {
-
 
 		FileOutputStream out;
 		try {

@@ -44,6 +44,10 @@ public class TimeScaleBasic implements TimeScale {
 		return day * scale;
 	}
 
+	public double getEndingPosition(Instant instant) {
+		return getStartingPosition(instant) + getWidth(instant);
+	}
+
 	public double getWidth(Instant instant) {
 		return scale;
 	}

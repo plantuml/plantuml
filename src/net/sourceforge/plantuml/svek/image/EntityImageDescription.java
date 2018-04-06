@@ -87,7 +87,6 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Collection<Link> links;
 	private final boolean useRankSame;
 
-
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam, PortionShower portionShower,
 			Collection<Link> links) {
 		super(entity, entity.getColors(skinParam).mute(skinParam));
@@ -116,10 +115,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 		assert getStereo() == stereotype;
 		final HtmlColor forecolor = SkinParamUtils.getColor(getSkinParam(), symbol.getColorParamBorder(), stereotype);
 		final double roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
+		final double diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 		final UStroke stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
 
 		final SymbolContext ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke)
-				.withShadow(getSkinParam().shadowing2(symbol.getSkinParameter())).withRoundCorner(roundCorner);
+				.withShadow(getSkinParam().shadowing2(symbol.getSkinParameter()))
+				.withCorner(roundCorner, diagonalCorner);
 
 		stereo = TextBlockUtils.empty(0, 0);
 

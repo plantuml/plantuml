@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project3;
 
 public enum TaskAttribute {
-	START, END, DURATION;
+	START, END, LOAD;
 
 	public static TaskAttribute fromString(String value) {
 		return valueOf(value.toUpperCase());

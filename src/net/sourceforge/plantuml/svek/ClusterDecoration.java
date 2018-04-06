@@ -93,7 +93,7 @@ public class ClusterDecoration {
 			throw new UnsupportedOperationException();
 		}
 		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke)
-				.withRoundCorner(roundCorner);
+				.withCorner(roundCorner, 0);
 		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext).drawU(
 				ug.apply(new UTranslate(minX, minY)));
 		// return;

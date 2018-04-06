@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -209,6 +210,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		private String firstLabel;
 		private String secondLabel;
 		private String labelLink;
+		private LinkArrow linkArrow = LinkArrow.NONE;
 
 		Labels(RegexResult arg) {
 			firstLabel = arg.get("LABEL1", 0);
@@ -220,6 +222,27 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 					init();
 				}
 				labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink);
+
+				if ("<".equals(labelLink)) {
+					linkArrow = LinkArrow.BACKWARD;
+					labelLink = null;
+				} else if (">".equals(labelLink)) {
+					linkArrow = LinkArrow.DIRECT_NORMAL;
+					labelLink = null;
+				} else if (labelLink != null && labelLink.startsWith("< ")) {
+					linkArrow = LinkArrow.BACKWARD;
+					labelLink = StringUtils.trin(labelLink.substring(2));
+				} else if (labelLink != null && labelLink.startsWith("> ")) {
+					linkArrow = LinkArrow.DIRECT_NORMAL;
+					labelLink = StringUtils.trin(labelLink.substring(2));
+				} else if (labelLink != null && labelLink.endsWith(" >")) {
+					linkArrow = LinkArrow.DIRECT_NORMAL;
+					labelLink = StringUtils.trin(labelLink.substring(0, labelLink.length() - 2));
+				} else if (labelLink != null && labelLink.endsWith(" <")) {
+					linkArrow = LinkArrow.BACKWARD;
+					labelLink = StringUtils.trin(labelLink.substring(0, labelLink.length() - 2));
+				}
+
 			}
 
 		}
@@ -289,7 +312,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(labels.labelLink), queue.length(),
 				labels.firstLabel, labels.secondLabel, diagram.getLabeldistance(), diagram.getLabelangle());
-
+		link.setLinkArrow(labels.linkArrow);
 		if (dir == Direction.LEFT || dir == Direction.UP) {
 			link = link.getInv();
 		}

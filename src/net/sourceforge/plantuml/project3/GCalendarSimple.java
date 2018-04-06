@@ -45,8 +45,22 @@ public class GCalendarSimple implements GCalendar {
 
 	public DayAsDate toDayAsDate(InstantDay day) {
 		DayAsDate result = start;
-		for (int i = 0; i < day.getNumDay(); i++) {
+		final int target = day.getNumDay();
+		int work = 0;
+		while (work < target) {
 			result = result.next();
+			work++;
+		}
+		return result;
+	}
+
+	public InstantDay fromDayAsDate(DayAsDate day) {
+		if (day.compareTo(start) < 0) {
+			throw new IllegalArgumentException();
+		}
+		InstantDay result = new InstantDay(0);
+		while (toDayAsDate(result).equals(day) == false) {
+			result = result.increment();
 		}
 		return result;
 	}
