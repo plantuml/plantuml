@@ -39,30 +39,18 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.core.ImageData;
 
-public class ImageDataSimple implements ImageData {
-
-	private final int width;
-	private final int height;
+public class ImageDataSimple extends ImageDataAbstract {
 
 	public ImageDataSimple(int width, int height) {
-		this.width = width;
-		this.height = height;
-	}
-
-	public ImageDataSimple() {
-		this(0, 0);
+		super(width, height);
 	}
 
 	public ImageDataSimple(Dimension2D dim) {
-		this((int) dim.getWidth(), (int) dim.getHeight());
+		super(dim);
 	}
 
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
+	private ImageDataSimple() {
+		this(0, 0);
 	}
 
 	public boolean containsCMapData() {
@@ -75,6 +63,16 @@ public class ImageDataSimple implements ImageData {
 
 	public String getWarningOrError() {
 		return null;
+	}
+
+	public static ImageData error() {
+		final ImageDataSimple result = new ImageDataSimple();
+		result.setStatus(503);
+		return result;
+	}
+
+	public static ImageData ok() {
+		return new ImageDataSimple();
 	}
 
 }

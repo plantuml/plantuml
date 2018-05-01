@@ -582,7 +582,8 @@ public class Cluster implements Moveable {
 			added = true;
 		}
 
-		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
+		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
+				&& graphvizVersion.ignoreHorizontalLinks() == false) {
 			appendRankSame(sb, lines);
 		}
 

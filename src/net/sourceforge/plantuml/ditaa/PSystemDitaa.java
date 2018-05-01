@@ -69,8 +69,8 @@ public class PSystemDitaa extends AbstractPSystem {
 	}
 
 	PSystemDitaa add(String line) {
-		return new PSystemDitaa(data + line + BackSlash.NEWLINE, processingOptions.performSeparationOfCommonEdges(), dropShadows,
-				scale);
+		return new PSystemDitaa(data + line + BackSlash.NEWLINE, processingOptions.performSeparationOfCommonEdges(),
+				dropShadows, scale);
 	}
 
 	public DiagramDescription getDescription() {
@@ -82,7 +82,7 @@ public class PSystemDitaa extends AbstractPSystem {
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT) {
 			os.write(getSource().getPlainString().getBytes());
-			return new ImageDataSimple();
+			return ImageDataSimple.ok();
 		}
 		// ditaa can only export png so file format is mostly ignored
 		final ConversionOptions options = new ConversionOptions();

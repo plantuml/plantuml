@@ -149,53 +149,53 @@ public class Rose implements Skin {
 		}
 		if (type == ComponentType.BOUNDARY_HEAD) {
 			return new ComponentRoseBoundary(getSymbolContext(param, ColorParam.boundaryBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.BOUNDARY), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
+					FontParam.BOUNDARY_STEREOTYPE));
 		}
 		if (type == ComponentType.BOUNDARY_TAIL) {
 			return new ComponentRoseBoundary(getSymbolContext(param, ColorParam.boundaryBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.BOUNDARY), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
+					FontParam.BOUNDARY_STEREOTYPE));
 		}
 		if (type == ComponentType.CONTROL_HEAD) {
 			return new ComponentRoseControl(getSymbolContext(param, ColorParam.controlBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.CONTROL), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
+					FontParam.CONTROL_STEREOTYPE));
 		}
 		if (type == ComponentType.CONTROL_TAIL) {
 			return new ComponentRoseControl(getSymbolContext(param, ColorParam.controlBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.CONTROL), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
+					FontParam.CONTROL_STEREOTYPE));
 		}
 		if (type == ComponentType.ENTITY_HEAD) {
 			return new ComponentRoseEntity(getSymbolContext(param, ColorParam.entityBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.ENTITY), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
+					FontParam.ENTITY_STEREOTYPE));
 		}
 		if (type == ComponentType.ENTITY_TAIL) {
 			return new ComponentRoseEntity(getSymbolContext(param, ColorParam.entityBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.ENTITY), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
+					FontParam.ENTITY_STEREOTYPE));
 		}
 		if (type == ComponentType.QUEUE_HEAD) {
 			return new ComponentRoseQueue(getSymbolContext(param, ColorParam.entityBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.QUEUE), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
+					FontParam.QUEUE_STEREOTYPE));
 		}
 		if (type == ComponentType.QUEUE_TAIL) {
 			return new ComponentRoseQueue(getSymbolContext(param, ColorParam.entityBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.QUEUE), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
+					FontParam.QUEUE_STEREOTYPE));
 		}
 		if (type == ComponentType.DATABASE_HEAD) {
 			return new ComponentRoseDatabase(getSymbolContext(param, ColorParam.databaseBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.DATABASE), stringsToDisplay, true, param, newFontForStereotype, getFontColor(param,
+					FontParam.DATABASE_STEREOTYPE));
 		}
 		if (type == ComponentType.DATABASE_TAIL) {
 			return new ComponentRoseDatabase(getSymbolContext(param, ColorParam.databaseBorder), getUFont2(param,
-					FontParam.ACTOR), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
-					FontParam.SEQUENCE_STEREOTYPE));
+					FontParam.DATABASE), stringsToDisplay, false, param, newFontForStereotype, getFontColor(param,
+					FontParam.DATABASE_STEREOTYPE));
 		}
 		if (type == ComponentType.NOTE) {
 			return new ComponentRoseNote(getSymbolContext(param, ColorParam.noteBorder), getUFont2(param,

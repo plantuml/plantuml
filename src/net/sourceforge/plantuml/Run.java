@@ -406,6 +406,7 @@ public class Run {
 			sourceFileReader = new SourceFileReader2(option.getDefaultDefines(f), f, option.getOutputFile(),
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
+		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
 		if (option.isComputeurl()) {
 			for (BlockUml s : sourceFileReader.getBlocks()) {
 				System.out.println(s.getEncodedUrl());

@@ -94,7 +94,7 @@ public class PSystemSalt extends AbstractPSystem {
 		} catch (Exception e) {
 			e.printStackTrace();
 			UmlDiagram.exportDiagramError(os, e, fileFormat, seed, getMetadata(), "none", new ArrayList<String>());
-			return new ImageDataSimple();
+			return ImageDataSimple.error();
 		}
 	}
 

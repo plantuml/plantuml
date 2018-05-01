@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.extremity;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UChangeBackColor;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -47,19 +48,31 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class ExtremityCircle extends Extremity {
 
 	private final Point2D dest;
-	private final double radius = 6;
+	private static final double radius = 6;
 
 	@Override
 	public Point2D somePoint() {
 		return dest;
 	}
 
-	public ExtremityCircle(Point2D p1) {
-		this.dest = new Point2D.Double(p1.getX(), p1.getY());
+	// public static UDrawable createContact(Point2D p1, double angle) {
+	// final double x = p1.getX() - radius + radius * Math.sin(angle);
+	// final double y = p1.getY() - radius - radius * Math.cos(angle);
+	// return new ExtremityCircle(x, y);
+	// }
+
+	public static UDrawable create(Point2D center) {
+		return new ExtremityCircle(center.getX(), center.getY());
+	}
+
+	private ExtremityCircle(double x, double y) {
+		this.dest = new Point2D.Double(x, y);
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HtmlColorUtils.WHITE)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
+		ug.apply(new UStroke(1.5)).apply(new UChangeBackColor(HtmlColorUtils.WHITE))
+				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
+				.draw(new UEllipse(radius * 2, radius * 2));
 	}
 
 }

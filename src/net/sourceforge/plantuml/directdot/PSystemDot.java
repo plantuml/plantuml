@@ -75,21 +75,22 @@ public class PSystemDot extends AbstractPSystem {
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings.createForError(
 					Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
-			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(),
-					HtmlColorUtils.WHITE, result);
-			return new ImageDataSimple();
+			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+					result);
+			return ImageDataSimple.error();
 		}
 		final CounterOutputStream counter = new CounterOutputStream(os);
 		final ProcessState state = graphviz.createFile3(counter);
-		if (state.differs(ProcessState.TERMINATED_OK())) {
-			throw new IllegalStateException("Timeout1 " + state);
-		}
-		if (counter.getLength() == 0) {
+		// if (state.differs(ProcessState.TERMINATED_OK())) {
+		// throw new IllegalStateException("Timeout1 " + state);
+		// }
+		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {
 			final TextBlock result = GraphicStrings.createForError(Arrays.asList("Graphivz has crashed"), false);
-			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(),
-					HtmlColorUtils.WHITE, result);
+			UGraphicUtils.writeImage(os, null, fileFormat, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+					result);
+			return ImageDataSimple.error();
 		}
 
-		return new ImageDataSimple();
+		return ImageDataSimple.ok();
 	}
 }

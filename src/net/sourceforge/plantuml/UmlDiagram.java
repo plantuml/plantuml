@@ -238,7 +238,7 @@ public abstract class UmlDiagram extends AbstractPSystem implements Diagram, Ann
 			e.printStackTrace();
 			exportDiagramError(os, e, fileFormatOption, seed, null);
 		}
-		return new ImageDataSimple();
+		return ImageDataSimple.error();
 	}
 
 	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,

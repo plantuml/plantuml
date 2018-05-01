@@ -78,6 +78,7 @@ public class Option {
 	private int nbThreads = 0;
 	private int ftpPort = -1;
 	private boolean hideMetadata = false;
+	private boolean checkMetadata = false;
 	private int imageIndex = 0;
 
 	private File outputDir = null;
@@ -319,6 +320,8 @@ public class Option {
 				textProgressBar = true;
 			} else if (s.equalsIgnoreCase("-nometadata")) {
 				hideMetadata = true;
+			} else if (s.equalsIgnoreCase("-checkmetadata")) {
+				checkMetadata = true;
 			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
 				i++;
 				if (i == arg.length) {
@@ -406,7 +409,7 @@ public class Option {
 	}
 
 	public final static String getPattern() {
-		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu)$";
+		return "(?i)^.*\\.(txt|tex|java|htm|html|c|h|cpp|apt|pu|pump|hpp|hh)$";
 	}
 
 	public void setOutputDir(File f) {
@@ -567,6 +570,10 @@ public class Option {
 
 	public final void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public final boolean isCheckMetadata() {
+		return checkMetadata;
 	}
 
 }

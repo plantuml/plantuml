@@ -356,9 +356,9 @@ public class Line implements Moveable, Hideable {
 		sb.append(decoration);
 
 		int length = link.getLength();
-		// if (graphvizVersion == GraphvizVersion.V2_34_0 && length == 1) {
-		// length = 2;
-		// }
+		if (graphvizVersion.ignoreHorizontalLinks() && length == 1) {
+			length = 2;
+		}
 		if (useRankSame) {
 			if (pragma.horizontalLineBetweenDifferentPackageAllowed() || link.isInvis() || length != 1) {
 				// if (graphvizVersion.isJs() == false) {
@@ -373,7 +373,7 @@ public class Line implements Moveable, Hideable {
 		sb.append("color=\"" + StringUtils.getAsHtml(lineColor) + "\"");
 		if (labelText != null) {
 			sb.append(",");
-			if (graphvizVersion.modeSafe() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
+			if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL) {
 				sb.append("xlabel=<");
 			} else {
 				sb.append("label=<");

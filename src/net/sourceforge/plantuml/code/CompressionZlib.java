@@ -96,6 +96,9 @@ public class CompressionZlib implements Compression {
 	}
 
 	private byte[] tryDecompress(byte[] in, final int len) throws IOException {
+		if (len > 200000) {
+			throw new IOException("OutOfMemory");
+		}
 		// Decompress the bytes
 		final byte[] tmp = new byte[len];
 		final Inflater decompresser = new Inflater(true);

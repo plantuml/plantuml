@@ -129,12 +129,16 @@ public class GraphvizJs implements Graphviz {
 				return true;
 			}
 
-			public boolean modeSafe() {
+			public boolean useXLabelInsteadOfLabel() {
 				return modeSafe;
 			}
 
 			public boolean isVizjs() {
 				return true;
+			}
+
+			public boolean ignoreHorizontalLinks() {
+				return false;
 			}
 		};
 	}

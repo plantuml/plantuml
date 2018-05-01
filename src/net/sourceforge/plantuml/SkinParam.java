@@ -420,6 +420,15 @@ public class SkinParam implements ISkinParam {
 		result.add("TabSize");
 		result.add("MaxAsciiMessageLength");
 		result.add("ColorArrowSeparationSpace");
+		result.add("ResponseMessageBelowArrow");
+		result.add("GenericDisplay");
+		result.add("PathHoverColor");
+		result.add("SwimlaneWidth");
+		result.add("PageBorderColor");
+		result.add("PageExternalColor");
+		result.add("PageMargin");
+
+		
 		for (FontParam p : EnumSet.allOf(FontParam.class)) {
 			final String h = humanName(p.name());
 			result.add(h + "FontStyle");

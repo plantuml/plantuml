@@ -51,7 +51,13 @@ public class Solver3 {
 	}
 
 	public void setData(TaskAttribute attribute, Value value) {
-		values.remove(attribute);
+		final Value previous = values.remove(attribute);
+		if (previous != null && attribute == TaskAttribute.START) {
+			final Instant previousInstant = (Instant) previous;
+			if (previousInstant.compareTo((Instant) value) > 0) {
+				value = previous;
+			}
+		}
 		values.put(attribute, value);
 		if (values.size() > 2) {
 			removeFirstElement();

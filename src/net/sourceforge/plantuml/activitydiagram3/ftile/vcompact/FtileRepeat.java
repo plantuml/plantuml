@@ -125,7 +125,7 @@ class FtileRepeat extends AbstractFtile {
 
 		final Ftile diamond1;
 		if (backStart == null) {
-			diamond1 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, swimlane);
+			diamond1 = new FtileDiamond(repeat.skinParam(), backColor, borderColor, repeat.getSwimlaneIn());
 		} else {
 			diamond1 = backStart;
 		}

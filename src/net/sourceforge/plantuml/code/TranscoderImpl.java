@@ -43,11 +43,11 @@ public class TranscoderImpl implements Transcoder {
 	private final URLEncoder urlEncoder;
 	private final StringCompressor stringCompressor;
 
-	public TranscoderImpl() {
+	private TranscoderImpl() {
 		this(new AsciiEncoder(), new StringCompressorNone(), new CompressionHuffman());
 	}
 
-	public TranscoderImpl(Compression compression) {
+	private TranscoderImpl(Compression compression) {
 		this(new AsciiEncoder(), new StringCompressorNone(), compression);
 	}
 

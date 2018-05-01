@@ -53,11 +53,15 @@ public class GraphvizVersionFinder {
 			return true;
 		}
 
-		public boolean modeSafe() {
+		public boolean useXLabelInsteadOfLabel() {
 			return false;
 		}
 
 		public boolean isVizjs() {
+			return false;
+		}
+
+		public boolean ignoreHorizontalLinks() {
 			return false;
 		}
 	};
@@ -89,11 +93,18 @@ public class GraphvizVersionFinder {
 				return true;
 			}
 
-			public boolean modeSafe() {
+			public boolean useXLabelInsteadOfLabel() {
 				return false;
 			}
 
 			public boolean isVizjs() {
+				return false;
+			}
+
+			public boolean ignoreHorizontalLinks() {
+				if (v == 230) {
+					return true;
+				}
 				return false;
 			}
 

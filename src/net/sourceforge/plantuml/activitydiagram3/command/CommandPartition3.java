@@ -63,24 +63,27 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("[%s]+"), //
 				new RegexOptional(//
 						new RegexConcat( //
-								color().getRegex(),//
+								color("BACK1").getRegex(),//
 								new RegexLeaf("[%s]+"))), //
-				new RegexLeaf("TITLECOLOR", "(?:(#\\w+)[%s]+)?"), //
 				new RegexLeaf("NAME", "([%g][^%g]+[%g]|\\S+)"), //
+				new RegexOptional(//
+						new RegexConcat( //
+								new RegexLeaf("[%s]+"), //
+								color("BACK2").getRegex())), //
 				new RegexLeaf("[%s]*\\{?$"));
 	}
 
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
+	private static ColorParser color(String id) {
+		return ColorParser.simpleColor(ColorType.BACK, id);
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, RegexResult arg) {
 		final String partitionTitle = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-		final HtmlColor titleColor = diagram.getSkinParam().getIHtmlColorSet()
-				.getColorIfValid(arg.get("TITLECOLOR", 0));
 
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final String b1 = arg.get("BACK1", 0);
+		final Colors colors = color(b1 == null ? "BACK2" : "BACK1").getColor(arg,
+				diagram.getSkinParam().getIHtmlColorSet());
 
 		final HtmlColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(ColorParam.partitionBackground,
 				null, false);
@@ -89,9 +92,10 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 			backColor = colors.getColor(ColorType.BACK);
 		} else {
 			backColor = backColorInSkinparam;
-
 		}
+		final HtmlColor titleColor = colors.getColor(ColorType.HEADER);
 
+		// Warning : titleColor unused in FTileGroupW
 		HtmlColor borderColor = diagram.getSkinParam().getHtmlColor(ColorParam.partitionBorder, null, false);
 		if (borderColor == null) {
 			borderColor = HtmlColorUtils.BLACK;

@@ -38,33 +38,16 @@ package net.sourceforge.plantuml.api;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.CMapData;
-import net.sourceforge.plantuml.core.ImageData;
 
-public class ImageDataComplex implements ImageData {
+public class ImageDataComplex extends ImageDataAbstract {
 
-	private final Dimension2D info;
 	private final CMapData cmap;
 	private final String warningOrError;
 
-//	public ImageDataComplex(Dimension2D info, CMapData cmap) {
-//		this(info, cmap, null);
-//	}
-
 	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError) {
-		if (info==null) {
-			throw new IllegalArgumentException();
-		}
-		this.info = info;
+		super(info);
 		this.cmap = cmap;
 		this.warningOrError = warningOrError;
-	}
-
-	public int getWidth() {
-		return (int) info.getWidth();
-	}
-
-	public int getHeight() {
-		return (int) info.getHeight();
 	}
 
 	public boolean containsCMapData() {

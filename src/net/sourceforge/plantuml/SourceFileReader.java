@@ -35,33 +35,14 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
-public class SourceFileReader implements ISourceFileReader {
-
-	private final File file;
-	private final File outputDirectory;
-
-	private final BlockUmlBuilder builder;
-	private FileFormatOption fileFormatOption;
+public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
 
 	public SourceFileReader(File file) throws IOException {
 		this(file, file.getAbsoluteFile().getParentFile());
@@ -103,15 +84,6 @@ public class SourceFileReader implements ISourceFileReader {
 
 		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
 				.getParentFile(), file.getAbsolutePath());
-	}
-
-	public boolean hasError() {
-		for (final BlockUml b : builder.getBlockUmls()) {
-			if (b.getDiagram() instanceof PSystemError) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private File getDirIfDirectory(String newName) {
@@ -161,107 +133,31 @@ public class SourceFileReader implements ISourceFileReader {
 
 	}
 
-	public List<GeneratedImage> getGeneratedImages() throws IOException {
-		Log.info("Reading file: " + file);
-
-		int cpt = 0;
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
-
-		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final String newName = blockUml.getFileOrDirname();
-			SuggestedFile suggested = null;
-			if (newName != null) {
-				Log.info("name from block=" + newName);
-				final File dir = getDirIfDirectory(newName);
-				if (dir == null) {
-					Log.info(newName + " is not taken as a directory");
-					suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
-							fileFormatOption.getFileFormat(), 0);
-				} else {
-					Log.info("We are going to create files in directory " + dir);
-					suggested = SuggestedFile.fromOutputFile(new File(dir, file.getName()),
-							fileFormatOption.getFileFormat(), 0);
-				}
-				Log.info("We are going to put data in " + suggested);
+	@Override
+	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
+		final String newName = blockUml.getFileOrDirname();
+		SuggestedFile suggested = null;
+		if (newName != null) {
+			Log.info("name from block=" + newName);
+			final File dir = getDirIfDirectory(newName);
+			if (dir == null) {
+				Log.info(newName + " is not taken as a directory");
+				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
+						fileFormatOption.getFileFormat(), 0);
+			} else {
+				Log.info("We are going to create files in directory " + dir);
+				suggested = SuggestedFile.fromOutputFile(new File(dir, file.getName()),
+						fileFormatOption.getFileFormat(), 0);
 			}
-			if (suggested == null) {
-				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
-						fileFormatOption.getFileFormat(), cpt++);
-			}
-			suggested.getParentFile().mkdirs();
-
-			final Diagram system;
-			try {
-				system = blockUml.getDiagram();
-			} catch (Throwable t) {
-				final GeneratedImage image = new GeneratedImageImpl(suggested.getFile(0), "Crash Error", blockUml);
-				OutputStream os = null;
-				try {
-					os = new BufferedOutputStream(new FileOutputStream(suggested.getFile(0)));
-					UmlDiagram.exportDiagramError(os, t, fileFormatOption, 42, null, blockUml.getFlashData(),
-							UmlDiagram.getFailureText2(t, blockUml.getFlashData()));
-				} finally {
-					if (os != null) {
-						os.close();
-					}
-				}
-
-				return Collections.singletonList(image);
-			}
-
-			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption);
-			if (exportDiagrams.size() > 1) {
-				cpt += exportDiagrams.size() - 1;
-			}
-			OptionFlags.getInstance().logData(file, system);
-
-			for (FileImageData fdata : exportDiagrams) {
-				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final File f = fdata.getFile();
-				if (OptionFlags.getInstance().isWord()) {
-					final String warnOrError = system.getWarningOrError();
-					if (warnOrError != null) {
-						final String name = f.getName().substring(0, f.getName().length() - 4) + ".err";
-						final File errorFile = new File(f.getParentFile(), name);
-						final PrintStream ps = new PrintStream(new FileOutputStream(errorFile));
-						ps.print(warnOrError);
-						ps.close();
-					}
-				}
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml);
-				result.add(generatedImage);
-			}
-
+			Log.info("We are going to put data in " + suggested);
 		}
-
-		Log.info("Number of image(s): " + result.size());
-
-		return Collections.unmodifiableList(result);
-	}
-
-	private boolean endsWithSlashOrAntislash(String newName) {
-		return newName.endsWith("/") || newName.endsWith("\\");
-	}
-
-	public List<BlockUml> getBlocks() {
-		return builder.getBlockUmls();
-	}
-
-	private Reader getReader(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new InputStreamReader(new FileInputStream(file));
+		if (suggested == null) {
+			suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
+					fileFormatOption.getFileFormat(), cpt++);
 		}
-		Log.info("Using charset " + charset);
-		return new InputStreamReader(new FileInputStream(file), charset);
+		suggested.getParentFile().mkdirs();
+		return suggested;
 	}
 
-	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
-		this.fileFormatOption = fileFormatOption;
-	}
-
-	public final Set<FileWithSuffix> getIncludedFiles() {
-		return builder.getIncludedFiles();
-	}
 
 }

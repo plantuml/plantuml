@@ -51,14 +51,37 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.graphic.HtmlColorUtils;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
+import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.project3.GanttDiagram;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class PSystemUtils {
 
-	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggestedFile,
+	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggested,
 			FileFormatOption fileFormatOption) throws IOException {
+		return exportDiagrams(system, suggested, fileFormatOption, false);
+	}
+
+	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggestedFile,
+			FileFormatOption fileFormatOption, boolean checkMetadata) throws IOException {
+
+		final File existing = suggestedFile.getFile(0);
+		if (checkMetadata && existing.exists() && system.getNbImages() == 1) {
+			final MetadataTag tag = new MetadataTag(existing, "plantuml");
+			final String previousMetadata = tag.getData();
+			// final String version = Version.versionString();
+			// System.out.println(system.getMetadata());
+			// System.out.println(data);
+			// System.out.println(version);
+			// System.out.println(data.contains(version));
+			final boolean sameMetadata = system.getMetadata().equals(previousMetadata);
+			if (sameMetadata) {
+				Log.info("Skipping " + existing.getAbsolutePath() + " because metadata has not changed.");
+				return Arrays.asList(new FileImageData(existing, null));
+			}
+		}
+
 		if (system instanceof NewpagedDiagram) {
 			return exportDiagramsNewpaged((NewpagedDiagram) system, suggestedFile, fileFormatOption);
 		}

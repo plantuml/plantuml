@@ -119,9 +119,9 @@ public class Link implements Hideable, Removeable {
 		this.type = type;
 		if (Display.isNull(label)) {
 			this.label = Display.NULL;
-//		} else if (doWeHaveToRemoveUrlAtStart(label)) {
-//			this.url = label.initUrl();
-//			this.label = label.removeHeadingUrl(url).manageGuillemet();
+			// } else if (doWeHaveToRemoveUrlAtStart(label)) {
+			// this.url = label.initUrl();
+			// this.label = label.removeHeadingUrl(url).manageGuillemet();
 		} else {
 			this.label = label.manageGuillemet();
 		}
@@ -142,16 +142,16 @@ public class Link implements Hideable, Removeable {
 		// }
 	}
 
-//	private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
-//		if (label.size() == 0) {
-//			return false;
-//		}
-//		final String s = label.get(0).toString();
-//		if (s.matches("^\\[\\[\\S+\\]\\].+$")) {
-//			return true;
-//		}
-//		return false;
-//	}
+	// private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
+	// if (label.size() == 0) {
+	// return false;
+	// }
+	// final String s = label.get(0).toString();
+	// if (s.matches("^\\[\\[\\S+\\]\\].+$")) {
+	// return true;
+	// }
+	// return false;
+	// }
 
 	public Link getInv() {
 		// if (getLength() == 1) {
@@ -391,6 +391,20 @@ public class Link implements Hideable, Removeable {
 		}
 		return false;
 	}
+
+//	public boolean containsWithDecors(ILeaf leaf) {
+//		LinkType linkType = this.getType();
+//		if (isInverted()) {
+//			linkType = linkType.getInversed();
+//		}
+//		if (getEntity2() == leaf && linkType.getDecor1() != LinkDecor.NONE) {
+//			return true;
+//		}
+//		if (getEntity1() == leaf && linkType.getDecor2() != LinkDecor.NONE) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public IEntity getOther(IEntity entity) {
 		if (getEntity1() == entity) {

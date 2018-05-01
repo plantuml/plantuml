@@ -84,6 +84,8 @@ public interface ImageData {
 	public String getCMapData(String nameId);
 	
 	public String getWarningOrError();
+	
+	public int getStatus();
 
 
 }

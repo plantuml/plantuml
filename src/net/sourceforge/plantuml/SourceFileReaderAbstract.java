@@ -54,7 +54,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
-public abstract class ZSourceFileReaderAbstract {
+public abstract class SourceFileReaderAbstract {
 
 	protected File file;
 	protected File outputDirectory;
@@ -62,6 +62,11 @@ public abstract class ZSourceFileReaderAbstract {
 
 	protected BlockUmlBuilder builder;
 	protected FileFormatOption fileFormatOption;
+	private boolean checkMetadata;
+
+	public void setCheckMetadata(boolean checkMetadata) {
+		this.checkMetadata = checkMetadata;
+	}
 
 	public boolean hasError() {
 		for (final BlockUml b : builder.getBlockUmls()) {
@@ -97,8 +102,8 @@ public abstract class ZSourceFileReaderAbstract {
 		return newName.endsWith("/") || newName.endsWith("\\");
 	}
 
-	protected List<GeneratedImage> getCrashedImage(BlockUml blockUml, Throwable t, File outputFile) throws IOException {
-		final GeneratedImage image = new GeneratedImageImpl(outputFile, "Crash Error", blockUml);
+	private List<GeneratedImage> getCrashedImage(BlockUml blockUml, Throwable t, File outputFile) throws IOException {
+		final GeneratedImage image = new GeneratedImageImpl(outputFile, "Crash Error", blockUml, 503);
 		OutputStream os = null;
 		try {
 			os = new BufferedOutputStream(new FileOutputStream(outputFile));
@@ -145,7 +150,7 @@ public abstract class ZSourceFileReaderAbstract {
 			}
 
 			OptionFlags.getInstance().logData(file, system);
-			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption);
+			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
 			if (exportDiagrams.size() > 1) {
 				cpt += exportDiagrams.size() - 1;
 			}
@@ -154,7 +159,7 @@ public abstract class ZSourceFileReaderAbstract {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
 				final File f = fdata.getFile();
 				exportWarnOrErrIfWord(f, system);
-				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml);
+				final GeneratedImage generatedImage = new GeneratedImageImpl(f, desc, blockUml, fdata.getImageData().getStatus());
 				result.add(generatedImage);
 			}
 

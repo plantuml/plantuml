@@ -47,6 +47,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -148,7 +149,9 @@ public class PSystemError extends AbstractPSystem {
 			udrawable = addMessage(udrawable);
 		}
 		imageBuilder.setUDrawable(udrawable);
-		return imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
+		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormat, seed(), os);
+		((ImageDataAbstract) imageData).setStatus(400);
+		return imageData;
 	}
 
 	private TextBlockBackcolored getWelcome() throws IOException {

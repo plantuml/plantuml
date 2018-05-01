@@ -59,15 +59,15 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 	private double deltaX;
 	private double deltaY;
 
-	public static DecorateEntityImage addTop(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
+	public static TextBlock addTop(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
 		return new DecorateEntityImage(original, text, horizontal, null, null);
 	}
 
-	public static DecorateEntityImage addBottom(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
+	public static TextBlock addBottom(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
 		return new DecorateEntityImage(original, null, null, text, horizontal);
 	}
 
-	public static DecorateEntityImage add(TextBlock original, TextBlock text, HorizontalAlignment horizontal,
+	public static TextBlock add(TextBlock original, TextBlock text, HorizontalAlignment horizontal,
 			VerticalAlignment verticalAlignment) {
 		if (verticalAlignment == VerticalAlignment.TOP) {
 			return addTop(original, text, horizontal);
@@ -75,7 +75,12 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 		return addBottom(original, text, horizontal);
 	}
 
-	public DecorateEntityImage(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1, TextBlock text2,
+	public static TextBlock addTopAndBottom(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1,
+			TextBlock text2, HorizontalAlignment horizontal2) {
+		return new DecorateEntityImage(original, text1, horizontal1, text2, horizontal2);
+	}
+
+	private DecorateEntityImage(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1, TextBlock text2,
 			HorizontalAlignment horizontal2) {
 		this.original = original;
 		this.horizontal1 = horizontal1;
@@ -141,7 +146,7 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 				getTextDim(text2, stringBounder));
 		return Dimension2DDouble.mergeTB(dimOriginal, dimText);
 	}
-	
+
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
 		return MinMax.fromDim(calculateDimension(stringBounder));

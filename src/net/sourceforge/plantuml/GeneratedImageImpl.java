@@ -44,11 +44,17 @@ public class GeneratedImageImpl implements GeneratedImage {
 	private final File pngFile;
 	private final String description;
 	private final BlockUml blockUml;
+	private final int status;
 
-	public GeneratedImageImpl(File pngFile, String description, BlockUml blockUml) {
+	public final int getStatus() {
+		return status;
+	}
+
+	public GeneratedImageImpl(File pngFile, String description, BlockUml blockUml, int status) {
 		this.blockUml = blockUml;
 		this.pngFile = pngFile;
 		this.description = description;
+		this.status = status;
 	}
 
 	public File getPngFile() {

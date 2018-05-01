@@ -46,12 +46,14 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 
 	private final Arrow arrow;
 	private final ParticipantBox participantBox;
+	private final double paddingParticipant;
 
 	public ArrowAndParticipant(StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox,
 			double paddingParticipant) {
 		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());
 		this.arrow = arrow;
 		this.participantBox = participantBox;
+		this.paddingParticipant = paddingParticipant;
 		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - paddingParticipant);
 	}
 
@@ -95,7 +97,7 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 			arrow.drawInternalU(ug, maxX, context);
 		} else {
 			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());
-			arrow.drawInternalU(ug.apply(new UTranslate(boxWidth / 2, 0)), maxX, context);
+			arrow.drawInternalU(ug.apply(new UTranslate(boxWidth / 2 - paddingParticipant, 0)), maxX, context);
 		}
 
 		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());

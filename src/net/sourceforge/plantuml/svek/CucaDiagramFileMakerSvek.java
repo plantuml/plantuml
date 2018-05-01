@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.NamedOutputStream;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ImageDataAbstract;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -107,6 +108,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 					fileFormatOption.getDefaultStringBounder());
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
+		final boolean isGraphvizCrash = result instanceof GraphvizCrash;
 		result = new AnnotatedWorker(diagram, diagram.getSkinParam()).addAdd(result);
 
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
@@ -121,8 +123,11 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, warningOrError, 0, 10,
 				diagram.getAnimation(), result.getBackcolor());
 		imageBuilder.setUDrawable(result);
-		return imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
-
+		final ImageData imageData = imageBuilder.writeImageTOBEMOVED(fileFormatOption, diagram.seed(), os);
+		if (isGraphvizCrash) {
+			((ImageDataAbstract) imageData).setStatus(503);
+		}
+		return imageData;
 	}
 
 	private List<Link> getOrderedLinks() {

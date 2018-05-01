@@ -46,6 +46,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.CompressionBrotli;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderImpl;
@@ -126,7 +127,7 @@ public class PSystemDonors extends AbstractPSystem {
 
 	private List<String> getDonors() throws IOException {
 		final List<String> lines = new ArrayList<String>();
-		final Transcoder t = new TranscoderImpl(new CompressionBrotli());
+		final Transcoder t = new TranscoderImpl(new AsciiEncoder(), new CompressionBrotli());
 		final String s = t.decode(DONORS).replace('*', '.');
 		final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);
 		while (st.hasMoreTokens()) {

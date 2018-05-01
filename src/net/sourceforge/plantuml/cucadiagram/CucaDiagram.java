@@ -289,7 +289,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.horizontalPages = horizontalPages;
 	}
 
-
 	final public int getVerticalPages() {
 		return verticalPages;
 	}
@@ -297,13 +296,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	final public void setVerticalPages(int verticalPages) {
 		this.verticalPages = verticalPages;
 	}
-	
+
 	@Override
 	public int getNbImages() {
 		return this.horizontalPages * this.verticalPages;
 	}
-
-
 
 	// final public List<File> createPng2(File pngFile) throws IOException,
 	// InterruptedException {
@@ -357,17 +354,17 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			} catch (Throwable t) {
 				t.printStackTrace(new PrintStream(os));
 			}
-			return new ImageDataSimple();
+			return ImageDataSimple.ok();
 		}
 
 		if (fileFormat.name().startsWith("XMI")) {
 			createFilesXmi(os, fileFormat);
-			return new ImageDataSimple();
+			return ImageDataSimple.ok();
 		}
 
 		if (fileFormat == FileFormat.SCXML) {
 			createFilesScxml(os);
-			return new ImageDataSimple();
+			return ImageDataSimple.ok();
 		}
 
 		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE) {
@@ -382,7 +379,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
 
 		if (result == null) {
-			return new ImageDataSimple();
+			return ImageDataSimple.error();
 		}
 		this.warningOrError = result.getWarningOrError();
 		return result;

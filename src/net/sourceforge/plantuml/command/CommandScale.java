@@ -49,8 +49,15 @@ public class CommandScale extends SingleLineCommand<AbstractPSystem> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractPSystem diagram, List<String> arg) {
 		double scale = Double.parseDouble(arg.get(0));
+		if (scale == 0) {
+			return CommandExecutionResult.error("Scale cannot be zero");
+		}
 		if (arg.get(1) != null) {
-			scale /= Double.parseDouble(arg.get(1));
+			final double div = Double.parseDouble(arg.get(1));
+			if (div == 0) {
+				return CommandExecutionResult.error("Scale cannot be zero");
+			}
+			scale /= div;
 		}
 		diagram.setScale(new ScaleSimple(scale));
 		return CommandExecutionResult.ok();

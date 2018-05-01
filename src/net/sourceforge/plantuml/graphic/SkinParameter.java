@@ -79,7 +79,7 @@ public class SkinParameter {
 			CornerParam.component);
 
 	public static final SkinParameter AGENT = new SkinParameter("AGENT", ColorParam.agentBackground,
-			ColorParam.agentBorder, FontParam.AGENT, FontParam.AGENT_STEREOTYPE);
+			ColorParam.agentBorder, FontParam.AGENT, FontParam.AGENT_STEREOTYPE, LineParam.agentBorder, CornerParam.agent);
 
 	public static final SkinParameter FOLDER = new SkinParameter("FOLDER", ColorParam.folderBackground,
 			ColorParam.folderBorder, FontParam.FOLDER, FontParam.FOLDER_STEREOTYPE);
@@ -91,7 +91,8 @@ public class SkinParameter {
 			ColorParam.packageBorder, FontParam.FOLDER, FontParam.FOLDER_STEREOTYPE);
 
 	public static final SkinParameter CARD = new SkinParameter("CARD", ColorParam.cardBackground,
-			ColorParam.cardBorder, FontParam.CARD, FontParam.CARD_STEREOTYPE);
+			ColorParam.cardBorder, FontParam.CARD, FontParam.CARD_STEREOTYPE, LineParam.cardBorder,
+			CornerParam.card);
 
 	public static final SkinParameter RECTANGLE = new SkinParameter("RECTANGLE", ColorParam.rectangleBackground,
 			ColorParam.rectangleBorder, FontParam.RECTANGLE, FontParam.RECTANGLE_STEREOTYPE, LineParam.rectangleBorder,

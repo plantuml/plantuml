@@ -72,7 +72,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 				new RegexLeaf("[%s]+"), //
 				new RegexOr(//
 						new RegexConcat( //
-								new RegexLeaf("DISPLAY1", "([%g][^%g]+[%g])"), //
+								new RegexLeaf("DISPLAY1", "([%g].+?[%g])"), //
 								new RegexLeaf("STEREOTYPE1", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
 								new RegexLeaf("[%s]*as[%s]+"), //
 								new RegexLeaf("CODE1", "([^#%s{}]+)") //
@@ -81,7 +81,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 								new RegexLeaf("CODE2", "([^#%s{}%g]+)"), //
 								new RegexLeaf("STEREOTYPE2", "(?:[%s]+(\\<\\<.+\\>\\>))?"), //
 								new RegexLeaf("[%s]*as[%s]+"), //
-								new RegexLeaf("DISPLAY2", "([%g][^%g]+[%g])") //
+								new RegexLeaf("DISPLAY2", "([%g].+?[%g])") //
 						), //
 						new RegexConcat( //
 								new RegexLeaf("DISPLAY3", "([^#%s{}%g]+)"), //

@@ -449,7 +449,7 @@ public class CucaDiagramFileMakerJDot implements CucaDiagramFileMaker {
 		} catch (Throwable e) {
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
 					diagram.getFlashData(), getFailureText3(e));
-			return new ImageDataSimple();
+			return ImageDataSimple.error();
 		} finally {
 			Z.close();
 		}

@@ -43,9 +43,14 @@ import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryCircle extends AbstractExtremityFactory implements ExtremityFactory {
 
+	@Override
+	public UDrawable createUDrawable(Point2D center, double angle, Side side) {
+		// return ExtremityCircle.createContact(center, angle);
+		return ExtremityCircle.create(center);
+	}
+
 	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
-		// final double ortho = atan2(p0, p2);
-		return new ExtremityCircle(p1);
+		return ExtremityCircle.create(p1);
 	}
 
 }

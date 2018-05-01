@@ -126,9 +126,9 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		UGraphicUtils.writeImage(os, null, fileFormatOption, seed(), new ColorMapperIdentity(),
-				HtmlColorUtils.WHITE, this);
-		return new ImageDataSimple();
+		UGraphicUtils.writeImage(os, null, fileFormatOption, seed(), new ColorMapperIdentity(), HtmlColorUtils.WHITE,
+				this);
+		return ImageDataSimple.ok();
 	}
 
 	public void drawU(UGraphic ug) {
@@ -210,7 +210,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		final MinMaxGolem minMax = getMinMax();
 		return new Dimension2DDouble(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);
 	}
-	
+
 	public MinMax getMinMax(StringBounder stringBounder) {
 		throw new UnsupportedOperationException();
 	}

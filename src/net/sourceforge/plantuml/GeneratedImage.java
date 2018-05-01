@@ -45,4 +45,6 @@ public interface GeneratedImage extends Comparable<GeneratedImage> {
 
 	public int lineErrorRaw();
 
+	public int getStatus();
+
 }

@@ -36,28 +36,12 @@
 package net.sourceforge.plantuml;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
-public class SourceFileReader2 implements ISourceFileReader {
-
-	private final File file;
-	private final File outputFile;
-
-	private final BlockUmlBuilder builder;
-	private FileFormatOption fileFormatOption;
+public class SourceFileReader2 extends SourceFileReaderAbstract implements ISourceFileReader {
 
 	public SourceFileReader2(Defines defines, final File file, File outputFile, List<String> config, String charset,
 			FileFormatOption fileFormatOption) throws IOException {
@@ -73,58 +57,10 @@ public class SourceFileReader2 implements ISourceFileReader {
 				.getParentFile(), file.getAbsolutePath());
 	}
 
-	public boolean hasError() {
-		for (final BlockUml b : builder.getBlockUmls()) {
-			if (b.getDiagram() instanceof PSystemError) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public List<GeneratedImage> getGeneratedImages() throws IOException {
-		Log.info("Reading file: " + file);
-
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
-
-		for (BlockUml blockUml : builder.getBlockUmls()) {
-			final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
-
-			final Diagram system = blockUml.getDiagram();
-			OptionFlags.getInstance().logData(file, system);
-
-			for (FileImageData fdata : PSystemUtils.exportDiagrams(system, suggested, fileFormatOption)) {
-				final String desc = "[" + file.getName() + "] " + system.getDescription();
-				final GeneratedImage generatedImage = new GeneratedImageImpl(fdata.getFile(), desc, blockUml);
-				result.add(generatedImage);
-			}
-
-		}
-
-		Log.info("Number of image(s): " + result.size());
-
-		return Collections.unmodifiableList(result);
-	}
-
-	private Reader getReader(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new InputStreamReader(new FileInputStream(file));
-		}
-		Log.info("Using charset " + charset);
-		return new InputStreamReader(new FileInputStream(file), charset);
-	}
-
-	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
-		this.fileFormatOption = fileFormatOption;
-	}
-
-	public final Set<FileWithSuffix> getIncludedFiles2() {
-		return builder.getIncludedFiles();
-	}
-
-	public List<BlockUml> getBlocks() {
-		return builder.getBlockUmls();
+	@Override
+	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
+		final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
+		return suggested;
 	}
 
 }

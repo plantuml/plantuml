@@ -33,34 +33,41 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.api;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.core.ImageData;
 
-public class ZSourceFileReader2 extends ZSourceFileReaderAbstract implements ISourceFileReader {
+public abstract class ImageDataAbstract implements ImageData {
 
-	public ZSourceFileReader2(Defines defines, final File file, File outputFile, List<String> config, String charset,
-			FileFormatOption fileFormatOption) throws IOException {
-		this.file = file;
-		this.fileFormatOption = fileFormatOption;
-		this.outputFile = outputFile;
-		if (file.exists() == false) {
-			throw new IllegalArgumentException();
-		}
-		FileSystem.getInstance().setCurrentDir(file.getAbsoluteFile().getParentFile());
+	private final int width;
+	private final int height;
+	private int status;
 
-		builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), file.getAbsoluteFile()
-				.getParentFile(), file.getAbsolutePath());
+	public ImageDataAbstract(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 
-	@Override
-	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
-		final SuggestedFile suggested = SuggestedFile.fromOutputFile(outputFile, fileFormatOption.getFileFormat());
-		return suggested;
+	public ImageDataAbstract(Dimension2D dim) {
+		this((int) dim.getWidth(), (int) dim.getHeight());
+	}
+
+	public final int getWidth() {
+		return width;
+	}
+
+	public final int getHeight() {
+		return height;
+	}
+
+	public final int getStatus() {
+		return status;
+	}
+
+	public final void setStatus(int status) {
+		this.status = status;
 	}
 
 }

@@ -40,12 +40,16 @@ import java.io.IOException;
 public class TranscoderSmart implements Transcoder {
 
 	private final Transcoder oldOne = new TranscoderImpl(new AsciiEncoder(), new CompressionHuffman());
+	private final Transcoder zlibBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new CompressionZlib());
 	private final Transcoder zlib = new TranscoderImpl(new AsciiEncoder(), new CompressionZlib());
-	private final Transcoder brotli = new TranscoderImpl(new AsciiEncoder(), new CompressionBrotli());
+	private final Transcoder brotliBase64 = new TranscoderImpl(new AsciiEncoderBase64(), new CompressionBrotli());
 
 	public String decode(String code) throws IOException {
 		if (code.startsWith("0")) {
-			return brotli.decode(code.substring(1));
+			return zlibBase64.decode(code.substring(1));
+		}
+		if (code.startsWith("1")) {
+			return brotliBase64.decode(code.substring(1));
 		}
 		try {
 			return zlib.decode(code);

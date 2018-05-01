@@ -85,7 +85,7 @@ public class PostItDiagram extends UmlDiagram {
 			final UGraphicEps eps = (UGraphicEps) ug;
 			os.write(eps.getEPSCode().getBytes());
 		}
-		return new ImageDataSimple();
+		return ImageDataSimple.ok();
 	}
 
 	public DiagramDescription getDescription() {

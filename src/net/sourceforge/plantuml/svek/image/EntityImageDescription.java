@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
@@ -46,6 +48,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.BodyEnhanced;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
+import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
@@ -171,7 +174,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (hideText == false) {
 			return Margins.NONE;
 		}
-		if (useRankSame && hasSomeHorizontalLink((ILeaf) getEntity(), links)) {
+		// if (useRankSame && hasSomeHorizontalLink((ILeaf) getEntity(), links)) {
+		// return Margins.NONE;
+		// }
+		if (isThereADoubleLink((ILeaf) getEntity(), links)) {
+			return Margins.NONE;
+		}
+		if (hasSomeHorizontalLinkVisible((ILeaf) getEntity(), links)) {
 			return Margins.NONE;
 		}
 		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links)) {
@@ -189,10 +198,24 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return new Margins(suppX / 2, suppX / 2, y, y);
 	}
 
-	private boolean hasSomeHorizontalLink(ILeaf leaf, Collection<Link> links) {
+	private boolean hasSomeHorizontalLinkVisible(ILeaf leaf, Collection<Link> links) {
 		for (Link link : links) {
-			if (link.getLength() == 1 && link.contains(leaf)) {
+			if (link.getLength() == 1 && link.contains(leaf) && link.isInvis() == false) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isThereADoubleLink(ILeaf leaf, Collection<Link> links) {
+		final Set<IEntity> others = new HashSet<IEntity>();
+		for (Link link : links) {
+			if (link.contains(leaf)) {
+				final IEntity other = link.getOther(leaf);
+				final boolean changed = others.add(other);
+				if (changed == false) {
+					return true;
+				}
 			}
 		}
 		return false;

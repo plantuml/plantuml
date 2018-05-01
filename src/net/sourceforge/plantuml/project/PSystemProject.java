@@ -82,8 +82,9 @@ public class PSystemProject extends AbstractPSystem {
 			final BufferedImage im = createImage(diagram);
 			PngIO.write(im, os, fileFormatOption.isWithMetadata() ? getMetadata() : null, 96);
 		} else if (fileFormat == FileFormat.SVG) {
-			final UGraphicSvg svg = new UGraphicSvg(true, new Dimension2DDouble(0, 0), colorMapper, StringUtils.getAsHtml(background), false, 1.0,
-					fileFormatOption.getSvgLinkTarget(), fileFormatOption.getHoverColor(), seed());
+			final UGraphicSvg svg = new UGraphicSvg(true, new Dimension2DDouble(0, 0), colorMapper,
+					StringUtils.getAsHtml(background), false, 1.0, fileFormatOption.getSvgLinkTarget(),
+					fileFormatOption.getHoverColor(), seed());
 			diagram.draw(svg, 0, 0);
 			svg.createXml(os, fileFormatOption.isWithMetadata() ? getMetadata() : null);
 		} else if (fileFormat == FileFormat.EPS) {
@@ -97,7 +98,7 @@ public class PSystemProject extends AbstractPSystem {
 		} else {
 			throw new UnsupportedOperationException();
 		}
-		return new ImageDataSimple();
+		return ImageDataSimple.ok();
 	}
 
 	private BufferedImage createImage(GanttDiagramUnused diagram) {
